@@ -263,7 +263,7 @@ namespace Generator.Writing
 
     internal record CSRef(CSRef.Type RefType, BaseCSType ReferencedType) : BaseCSType, IBaseTypeCSType
     {
-        internal enum Type { Ref, Out, In }
+        internal enum Type { Ref, Out, RefReadonly }
 
         public BaseCSType BaseType => ReferencedType;
 
@@ -275,7 +275,7 @@ namespace Generator.Writing
             {
                 Type.Ref => "ref",
                 Type.Out => "out",
-                Type.In => "in",
+                Type.RefReadonly => "ref readonly",
                 _ => throw new Exception()
             };
             return $"{modifier} {ReferencedType.ToCSString()}";

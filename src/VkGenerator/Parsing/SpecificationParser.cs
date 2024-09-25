@@ -42,7 +42,10 @@ namespace VkGenerator.Parsing
 
     public record ExternalType(string Name, string? HeaderFile);
 
-    public record StructType(string Name, List<StructMember> Members, bool Union, string? Comment);
+    public record StructType(string Name, List<StructMember> Members, bool Union, string? Comment)
+    {
+        public VersionInfo? VersionInfo;
+    }
     public record StructMember(string Type, string Name, string? Values)
     {
         public BaseCSType? StrongType { get; set; }
@@ -51,12 +54,19 @@ namespace VkGenerator.Parsing
     public record EnumType(string Name, List<EnumMember> Members, bool Bitmask, string? Extension)
     {
         public BaseCSType? StrongUnderlyingType { get; set; }
-    }
-    public record EnumMember(string Name, ulong Value, string? Comment, string? Alias, string? Extension);
 
-    public record Command(string Name, string ReturnType, List<CommandParameter> Parameters)
+        public VersionInfo? VersionInfo;
+    }
+    public record EnumMember(string Name, ulong Value, string? Comment, string? Alias, string? Extension)
+    {
+        public VersionInfo? VersionInfo;
+    }
+
+    public record Command(string Name, string ReturnType, List<CommandParameter> Parameters, string? Alias)
     {
         public BaseCSType? StrongReturnType;
+
+        public VersionInfo? VersionInfo;
     }
     public record CommandParameter(string Name, string Type, bool Optional, bool ExternSync, string? Length)
     {
@@ -99,6 +109,14 @@ namespace VkGenerator.Parsing
     }
 
     public record Constant(ConstantType Type, string Name, string? Extension, string? Comment, ulong IntValue, float FloatValue, string StringValue);
+
+    public record VersionInfo(Version? Version, Version? Deprecated, List<string> Extensions)
+    {
+        public override string ToString()
+        {
+            return $"V: {Version}{(Deprecated != null ? $" Deprecated: {Deprecated}" : "")} Extensions: {string.Join(", ", Extensions)}";
+        }
+    }
 
     internal class SpecificationParser
     {
@@ -201,11 +219,6 @@ namespace VkGenerator.Parsing
                 {
                     continue;
                 }
-
-                // FIXME: union
-                // FIXME: functionpointer
-                // FIXME: define
-                // ....
 
                 if (category == "include")
                 {
@@ -464,7 +477,11 @@ namespace VkGenerator.Parsing
                 if (alias != null)
                 {
                     string entryPoint = command.Attribute("name")?.Value ?? throw new Exception();
-                    // FIXME: Do alias things.
+
+                    Command cmd = commands.Find(c => c.Name == alias) ?? throw new Exception();
+
+                    // Add a copy of the aliased function and mark it as an alias.
+                    commands.Add(cmd with { Name = entryPoint, Alias = cmd.Name });
                 }
                 else
                 {
@@ -495,7 +512,7 @@ namespace VkGenerator.Parsing
                         parameters.Add(new CommandParameter(paramName, paramTypeStr, optional, externsync, len));
                     }
 
-                    commands.Add(new Command(entryPoint, returnTypeStr, parameters));
+                    commands.Add(new Command(entryPoint, returnTypeStr, parameters, null));
                 }
             }
 
@@ -542,6 +559,9 @@ namespace VkGenerator.Parsing
                 if (extension.Attribute("api")?.Value == "vulkansc")
                     continue;
 
+                // FIXME: We should use this field to mark all Commands and EnumTypes as
+                // "supported" or not. Currently we expose some APIs that we "shouldn't" expose.
+                // - Noggin_bops 2024-09-24
                 string? supported = extension.Attribute("supported")?.Value;
                 if (supported == "disabled")
                     continue;

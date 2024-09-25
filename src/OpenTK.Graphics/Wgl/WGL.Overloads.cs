@@ -1,4 +1,4 @@
-// This file is auto generated, do not edit. Generated: 2024-07-16 18:34:15 GMT+02:00
+// This file is auto generated, do not edit. Generated: 2024-09-24 18:01:57 GMT+02:00
 using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -12,7 +12,7 @@ namespace OpenTK.Graphics.Wgl
     public static unsafe partial class Wgl
     {
         /// <inheritdoc cref="ChoosePixelFormat(IntPtr, PixelFormatDescriptor*)"/>
-        public static unsafe int ChoosePixelFormat(IntPtr hDc, in PixelFormatDescriptor pPfd)
+        public static unsafe int ChoosePixelFormat(IntPtr hDc, ref readonly PixelFormatDescriptor pPfd)
         {
             int returnValue;
             fixed (PixelFormatDescriptor* pPfd_ptr = &pPfd)
@@ -149,7 +149,7 @@ namespace OpenTK.Graphics.Wgl
             return returnValue;
         }
         /// <inheritdoc cref="SetLayerPaletteEntries(IntPtr, int, int, int, ColorRef*)"/>
-        public static unsafe int SetLayerPaletteEntries(IntPtr hdc, int iLayerPlane, int iStart, int cEntries, in ColorRef pcr)
+        public static unsafe int SetLayerPaletteEntries(IntPtr hdc, int iLayerPlane, int iStart, int cEntries, ref readonly ColorRef pcr)
         {
             int returnValue;
             fixed (ColorRef* pcr_ptr = &pcr)
@@ -159,7 +159,7 @@ namespace OpenTK.Graphics.Wgl
             return returnValue;
         }
         /// <inheritdoc cref="SetPixelFormat(IntPtr, int, PixelFormatDescriptor*)"/>
-        public static unsafe bool SetPixelFormat(IntPtr hdc, int ipfd, in PixelFormatDescriptor ppfd)
+        public static unsafe bool SetPixelFormat(IntPtr hdc, int ipfd, ref readonly PixelFormatDescriptor ppfd)
         {
             bool returnValue_bool;
             fixed (PixelFormatDescriptor* ppfd_ptr = &ppfd)
@@ -286,7 +286,7 @@ namespace OpenTK.Graphics.Wgl
                 return returnValue;
             }
             /// <inheritdoc cref="CreateAssociatedContextAttribsAMD(uint, IntPtr, int*)"/>
-            public static unsafe IntPtr CreateAssociatedContextAttribsAMD(uint id, IntPtr hShareContext, in int attribList)
+            public static unsafe IntPtr CreateAssociatedContextAttribsAMD(uint id, IntPtr hShareContext, ref readonly int attribList)
             {
                 IntPtr returnValue;
                 fixed (int* attribList_ptr = &attribList)
@@ -439,7 +439,7 @@ namespace OpenTK.Graphics.Wgl
                 return returnValue_bool;
             }
             /// <inheritdoc cref="ChoosePixelFormatARB(IntPtr, PixelFormatAttribute*, float*, uint, int*, uint*)"/>
-            public static unsafe bool ChoosePixelFormatARB(IntPtr hdc, in PixelFormatAttribute piAttribIList, in float pfAttribFList, uint nMaxFormats, ref int piFormats, out uint nNumFormats)
+            public static unsafe bool ChoosePixelFormatARB(IntPtr hdc, ref readonly PixelFormatAttribute piAttribIList, ref readonly float pfAttribFList, uint nMaxFormats, ref int piFormats, out uint nNumFormats)
             {
                 bool returnValue_bool;
                 fixed (PixelFormatAttribute* piAttribIList_ptr = &piAttribIList)
@@ -474,7 +474,7 @@ namespace OpenTK.Graphics.Wgl
                 return returnValue;
             }
             /// <inheritdoc cref="CreateContextAttribsARB(IntPtr, IntPtr, ContextAttribs*)"/>
-            public static unsafe IntPtr CreateContextAttribsARB(IntPtr hDC, IntPtr hShareContext, in ContextAttribs attribList)
+            public static unsafe IntPtr CreateContextAttribsARB(IntPtr hDC, IntPtr hShareContext, ref readonly ContextAttribs attribList)
             {
                 IntPtr returnValue;
                 fixed (ContextAttribs* attribList_ptr = &attribList)
@@ -504,7 +504,7 @@ namespace OpenTK.Graphics.Wgl
                 return returnValue;
             }
             /// <inheritdoc cref="CreatePbufferARB(IntPtr, int, int, int, int*)"/>
-            public static unsafe IntPtr CreatePbufferARB(IntPtr hDC, int iPixelFormat, int iWidth, int iHeight, in int piAttribList)
+            public static unsafe IntPtr CreatePbufferARB(IntPtr hDC, int iPixelFormat, int iWidth, int iHeight, ref readonly int piAttribList)
             {
                 IntPtr returnValue;
                 fixed (int* piAttribList_ptr = &piAttribList)
@@ -562,7 +562,7 @@ namespace OpenTK.Graphics.Wgl
                 return returnValue_bool;
             }
             /// <inheritdoc cref="GetPixelFormatAttribfvARB(IntPtr, int, int, uint, PixelFormatAttribute*, float*)"/>
-            public static unsafe bool GetPixelFormatAttribfvARB(IntPtr hdc, int iPixelFormat, int iLayerPlane, uint nAttributes, in PixelFormatAttribute piAttributes, ref float pfValues)
+            public static unsafe bool GetPixelFormatAttribfvARB(IntPtr hdc, int iPixelFormat, int iLayerPlane, uint nAttributes, ref readonly PixelFormatAttribute piAttributes, ref float pfValues)
             {
                 bool returnValue_bool;
                 fixed (PixelFormatAttribute* piAttributes_ptr = &piAttributes)
@@ -605,7 +605,7 @@ namespace OpenTK.Graphics.Wgl
                 return returnValue_bool;
             }
             /// <inheritdoc cref="GetPixelFormatAttribivARB(IntPtr, int, int, uint, PixelFormatAttribute*, int*)"/>
-            public static unsafe bool GetPixelFormatAttribivARB(IntPtr hdc, int iPixelFormat, int iLayerPlane, uint nAttributes, in PixelFormatAttribute piAttributes, ref int piValues)
+            public static unsafe bool GetPixelFormatAttribivARB(IntPtr hdc, int iPixelFormat, int iLayerPlane, uint nAttributes, ref readonly PixelFormatAttribute piAttributes, ref int piValues)
             {
                 bool returnValue_bool;
                 fixed (PixelFormatAttribute* piAttributes_ptr = &piAttributes)
@@ -690,7 +690,7 @@ namespace OpenTK.Graphics.Wgl
                 return returnValue_bool;
             }
             /// <inheritdoc cref="SetPbufferAttribARB(IntPtr, int*)"/>
-            public static unsafe bool SetPbufferAttribARB(IntPtr hPbuffer, in int piAttribList)
+            public static unsafe bool SetPbufferAttribARB(IntPtr hPbuffer, ref readonly int piAttribList)
             {
                 bool returnValue_bool;
                 fixed (int* piAttribList_ptr = &piAttribList)
@@ -747,7 +747,7 @@ namespace OpenTK.Graphics.Wgl
                 return returnValue_bool;
             }
             /// <inheritdoc cref="ChoosePixelFormatEXT(IntPtr, int*, float*, uint, int*, uint*)"/>
-            public static unsafe bool ChoosePixelFormatEXT(IntPtr hdc, in int piAttribIList, in float pfAttribFList, uint nMaxFormats, ref int piFormats, out uint nNumFormats)
+            public static unsafe bool ChoosePixelFormatEXT(IntPtr hdc, ref readonly int piAttribIList, ref readonly float pfAttribFList, uint nMaxFormats, ref int piFormats, out uint nNumFormats)
             {
                 bool returnValue_bool;
                 fixed (int* piAttribIList_ptr = &piAttribIList)
@@ -782,7 +782,7 @@ namespace OpenTK.Graphics.Wgl
                 return returnValue;
             }
             /// <inheritdoc cref="CreatePbufferEXT(IntPtr, int, int, int, int*)"/>
-            public static unsafe IntPtr CreatePbufferEXT(IntPtr hDC, int iPixelFormat, int iWidth, int iHeight, in int piAttribList)
+            public static unsafe IntPtr CreatePbufferEXT(IntPtr hDC, int iPixelFormat, int iWidth, int iHeight, ref readonly int piAttribList)
             {
                 IntPtr returnValue;
                 fixed (int* piAttribList_ptr = &piAttribList)
@@ -840,7 +840,7 @@ namespace OpenTK.Graphics.Wgl
                 return returnValue_bool;
             }
             /// <inheritdoc cref="GetPixelFormatAttribfvEXT(IntPtr, int, int, uint, PixelFormatAttribute*, float*)"/>
-            public static unsafe bool GetPixelFormatAttribfvEXT(IntPtr hdc, int iPixelFormat, int iLayerPlane, uint nAttributes, in PixelFormatAttribute piAttributes, ref float pfValues)
+            public static unsafe bool GetPixelFormatAttribfvEXT(IntPtr hdc, int iPixelFormat, int iLayerPlane, uint nAttributes, ref readonly PixelFormatAttribute piAttributes, ref float pfValues)
             {
                 bool returnValue_bool;
                 fixed (PixelFormatAttribute* piAttributes_ptr = &piAttributes)
@@ -883,7 +883,7 @@ namespace OpenTK.Graphics.Wgl
                 return returnValue_bool;
             }
             /// <inheritdoc cref="GetPixelFormatAttribivEXT(IntPtr, int, int, uint, PixelFormatAttribute*, int*)"/>
-            public static unsafe bool GetPixelFormatAttribivEXT(IntPtr hdc, int iPixelFormat, int iLayerPlane, uint nAttributes, in PixelFormatAttribute piAttributes, ref int piValues)
+            public static unsafe bool GetPixelFormatAttribivEXT(IntPtr hdc, int iPixelFormat, int iLayerPlane, uint nAttributes, ref readonly PixelFormatAttribute piAttributes, ref int piValues)
             {
                 bool returnValue_bool;
                 fixed (PixelFormatAttribute* piAttributes_ptr = &piAttributes)
@@ -916,7 +916,7 @@ namespace OpenTK.Graphics.Wgl
                 return returnValue;
             }
             /// <inheritdoc cref="LoadDisplayColorTableEXT(ushort*, uint)"/>
-            public static unsafe bool LoadDisplayColorTableEXT(in ushort table, uint length)
+            public static unsafe bool LoadDisplayColorTableEXT(ref readonly ushort table, uint length)
             {
                 bool returnValue;
                 fixed (ushort* table_ptr = &table)
@@ -995,7 +995,7 @@ namespace OpenTK.Graphics.Wgl
                 return returnValue_bool;
             }
             /// <inheritdoc cref="AssociateImageBufferEventsI3D(IntPtr, IntPtr*, IntPtr*, uint*, uint)"/>
-            public static unsafe bool AssociateImageBufferEventsI3D(IntPtr hDC, in IntPtr pEvent, in IntPtr pAddress, in uint pSize, uint count)
+            public static unsafe bool AssociateImageBufferEventsI3D(IntPtr hDC, ref readonly IntPtr pEvent, ref readonly IntPtr pAddress, ref readonly uint pSize, uint count)
             {
                 bool returnValue_bool;
                 fixed (IntPtr* pEvent_ptr = &pEvent)
@@ -1329,7 +1329,7 @@ namespace OpenTK.Graphics.Wgl
                 return returnValue_bool;
             }
             /// <inheritdoc cref="ReleaseImageBufferEventsI3D(IntPtr, IntPtr*, uint)"/>
-            public static unsafe bool ReleaseImageBufferEventsI3D(IntPtr hDC, in IntPtr pAddress, uint count)
+            public static unsafe bool ReleaseImageBufferEventsI3D(IntPtr hDC, ref readonly IntPtr pAddress, uint count)
             {
                 bool returnValue_bool;
                 fixed (IntPtr* pAddress_ptr = &pAddress)
@@ -1341,7 +1341,7 @@ namespace OpenTK.Graphics.Wgl
                 return returnValue_bool;
             }
             /// <inheritdoc cref="SetDigitalVideoParametersI3D(IntPtr, DigitalVideoAttribute, int*)"/>
-            public static unsafe bool SetDigitalVideoParametersI3D(IntPtr hDC, DigitalVideoAttribute iAttribute, in int piValue)
+            public static unsafe bool SetDigitalVideoParametersI3D(IntPtr hDC, DigitalVideoAttribute iAttribute, ref readonly int piValue)
             {
                 bool returnValue_bool;
                 fixed (int* piValue_ptr = &piValue)
@@ -1389,7 +1389,7 @@ namespace OpenTK.Graphics.Wgl
                 return returnValue_bool;
             }
             /// <inheritdoc cref="SetGammaTableI3D(IntPtr, int, ushort*, ushort*, ushort*)"/>
-            public static unsafe bool SetGammaTableI3D(IntPtr hDC, int iEntries, in ushort puRed, in ushort puGreen, in ushort puBlue)
+            public static unsafe bool SetGammaTableI3D(IntPtr hDC, int iEntries, ref readonly ushort puRed, ref readonly ushort puGreen, ref readonly ushort puBlue)
             {
                 bool returnValue_bool;
                 fixed (ushort* puRed_ptr = &puRed)
@@ -1403,7 +1403,7 @@ namespace OpenTK.Graphics.Wgl
                 return returnValue_bool;
             }
             /// <inheritdoc cref="SetGammaTableParametersI3D(IntPtr, GammaTableAttribute, int*)"/>
-            public static unsafe bool SetGammaTableParametersI3D(IntPtr hDC, GammaTableAttribute iAttribute, in int piValue)
+            public static unsafe bool SetGammaTableParametersI3D(IntPtr hDC, GammaTableAttribute iAttribute, ref readonly int piValue)
             {
                 bool returnValue_bool;
                 fixed (int* piValue_ptr = &piValue)
@@ -1460,7 +1460,7 @@ namespace OpenTK.Graphics.Wgl
                 return returnValue_bool;
             }
             /// <inheritdoc cref="BindVideoDeviceNV(IntPtr, uint, IntPtr, int*)"/>
-            public static unsafe bool BindVideoDeviceNV(IntPtr hDc, uint uVideoSlot, IntPtr hVideoDevice, in int piAttribList)
+            public static unsafe bool BindVideoDeviceNV(IntPtr hDc, uint uVideoSlot, IntPtr hVideoDevice, ref readonly int piAttribList)
             {
                 bool returnValue_bool;
                 fixed (int* piAttribList_ptr = &piAttribList)
@@ -1510,7 +1510,7 @@ namespace OpenTK.Graphics.Wgl
                 return returnValue;
             }
             /// <inheritdoc cref="CreateAffinityDCNV(IntPtr*)"/>
-            public static unsafe IntPtr CreateAffinityDCNV(in IntPtr phGpuList)
+            public static unsafe IntPtr CreateAffinityDCNV(ref readonly IntPtr phGpuList)
             {
                 IntPtr returnValue;
                 fixed (IntPtr* phGpuList_ptr = &phGpuList)
@@ -1571,7 +1571,7 @@ namespace OpenTK.Graphics.Wgl
                 return returnValue_bool;
             }
             /// <inheritdoc cref="DXLockObjectsNV(IntPtr, int, IntPtr*)"/>
-            public static unsafe bool DXLockObjectsNV(IntPtr hDevice, int count, in IntPtr hObjects)
+            public static unsafe bool DXLockObjectsNV(IntPtr hDevice, int count, ref readonly IntPtr hObjects)
             {
                 bool returnValue_bool;
                 fixed (IntPtr* hObjects_ptr = &hObjects)
@@ -1600,7 +1600,7 @@ namespace OpenTK.Graphics.Wgl
                 return returnValue;
             }
             /// <inheritdoc cref="DXOpenDeviceNV(void*)"/>
-            public static unsafe IntPtr DXOpenDeviceNV<T1>(in T1 dxDevice)
+            public static unsafe IntPtr DXOpenDeviceNV<T1>(ref readonly T1 dxDevice)
                 where T1 : unmanaged
             {
                 IntPtr returnValue;
@@ -1619,7 +1619,7 @@ namespace OpenTK.Graphics.Wgl
                 return returnValue;
             }
             /// <inheritdoc cref="DXRegisterObjectNV(IntPtr, void*, uint, ObjectTypeDX, DXInteropMaskNV)"/>
-            public static unsafe IntPtr DXRegisterObjectNV<T1>(IntPtr hDevice, in T1 dxObject, uint name, ObjectTypeDX type, DXInteropMaskNV access)
+            public static unsafe IntPtr DXRegisterObjectNV<T1>(IntPtr hDevice, ref readonly T1 dxObject, uint name, ObjectTypeDX type, DXInteropMaskNV access)
                 where T1 : unmanaged
             {
                 IntPtr returnValue;
@@ -1640,7 +1640,7 @@ namespace OpenTK.Graphics.Wgl
                 return returnValue_bool;
             }
             /// <inheritdoc cref="DXSetResourceShareHandleNV(void*, IntPtr)"/>
-            public static unsafe bool DXSetResourceShareHandleNV<T1>(in T1 dxObject, IntPtr shareHandle)
+            public static unsafe bool DXSetResourceShareHandleNV<T1>(ref readonly T1 dxObject, IntPtr shareHandle)
                 where T1 : unmanaged
             {
                 bool returnValue_bool;
@@ -1677,7 +1677,7 @@ namespace OpenTK.Graphics.Wgl
                 return returnValue_bool;
             }
             /// <inheritdoc cref="DXUnlockObjectsNV(IntPtr, int, IntPtr*)"/>
-            public static unsafe bool DXUnlockObjectsNV(IntPtr hDevice, int count, in IntPtr hObjects)
+            public static unsafe bool DXUnlockObjectsNV(IntPtr hDevice, int count, ref readonly IntPtr hObjects)
             {
                 bool returnValue_bool;
                 fixed (IntPtr* hObjects_ptr = &hObjects)

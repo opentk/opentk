@@ -6,6 +6,7 @@ using System.Runtime.CompilerServices;
 namespace OpenTK.Graphics.Vulkan
 {
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkInstance.html" /></remarks>
     [DebuggerDisplay("VkInstance\\{{Handle}\\}")]
     public unsafe struct VkInstance : IEquatable<VkInstance>
     {
@@ -21,6 +22,7 @@ namespace OpenTK.Graphics.Vulkan
         public static explicit operator ulong(VkInstance handle) => handle.Handle;
         public static explicit operator VkInstance(ulong handle) => new VkInstance(handle);
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPhysicalDevice.html" /></remarks>
     [DebuggerDisplay("VkPhysicalDevice\\{{Handle}\\}")]
     public unsafe struct VkPhysicalDevice : IEquatable<VkPhysicalDevice>
     {
@@ -36,6 +38,7 @@ namespace OpenTK.Graphics.Vulkan
         public static explicit operator ulong(VkPhysicalDevice handle) => handle.Handle;
         public static explicit operator VkPhysicalDevice(ulong handle) => new VkPhysicalDevice(handle);
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDevice.html" /></remarks>
     [DebuggerDisplay("VkDevice\\{{Handle}\\}")]
     public unsafe struct VkDevice : IEquatable<VkDevice>
     {
@@ -51,6 +54,7 @@ namespace OpenTK.Graphics.Vulkan
         public static explicit operator ulong(VkDevice handle) => handle.Handle;
         public static explicit operator VkDevice(ulong handle) => new VkDevice(handle);
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkQueue.html" /></remarks>
     [DebuggerDisplay("VkQueue\\{{Handle}\\}")]
     public unsafe struct VkQueue : IEquatable<VkQueue>
     {
@@ -66,6 +70,7 @@ namespace OpenTK.Graphics.Vulkan
         public static explicit operator ulong(VkQueue handle) => handle.Handle;
         public static explicit operator VkQueue(ulong handle) => new VkQueue(handle);
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkCommandBuffer.html" /></remarks>
     [DebuggerDisplay("VkCommandBuffer\\{{Handle}\\}")]
     public unsafe struct VkCommandBuffer : IEquatable<VkCommandBuffer>
     {
@@ -81,6 +86,7 @@ namespace OpenTK.Graphics.Vulkan
         public static explicit operator ulong(VkCommandBuffer handle) => handle.Handle;
         public static explicit operator VkCommandBuffer(ulong handle) => new VkCommandBuffer(handle);
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDeviceMemory.html" /></remarks>
     [DebuggerDisplay("VkDeviceMemory\\{{Handle}\\}")]
     public unsafe struct VkDeviceMemory : IEquatable<VkDeviceMemory>
     {
@@ -96,6 +102,7 @@ namespace OpenTK.Graphics.Vulkan
         public static explicit operator ulong(VkDeviceMemory handle) => handle.Handle;
         public static explicit operator VkDeviceMemory(ulong handle) => new VkDeviceMemory(handle);
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkCommandPool.html" /></remarks>
     [DebuggerDisplay("VkCommandPool\\{{Handle}\\}")]
     public unsafe struct VkCommandPool : IEquatable<VkCommandPool>
     {
@@ -111,6 +118,7 @@ namespace OpenTK.Graphics.Vulkan
         public static explicit operator ulong(VkCommandPool handle) => handle.Handle;
         public static explicit operator VkCommandPool(ulong handle) => new VkCommandPool(handle);
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkBuffer.html" /></remarks>
     [DebuggerDisplay("VkBuffer\\{{Handle}\\}")]
     public unsafe struct VkBuffer : IEquatable<VkBuffer>
     {
@@ -126,6 +134,7 @@ namespace OpenTK.Graphics.Vulkan
         public static explicit operator ulong(VkBuffer handle) => handle.Handle;
         public static explicit operator VkBuffer(ulong handle) => new VkBuffer(handle);
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkBufferView.html" /></remarks>
     [DebuggerDisplay("VkBufferView\\{{Handle}\\}")]
     public unsafe struct VkBufferView : IEquatable<VkBufferView>
     {
@@ -141,6 +150,7 @@ namespace OpenTK.Graphics.Vulkan
         public static explicit operator ulong(VkBufferView handle) => handle.Handle;
         public static explicit operator VkBufferView(ulong handle) => new VkBufferView(handle);
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkImage.html" /></remarks>
     [DebuggerDisplay("VkImage\\{{Handle}\\}")]
     public unsafe struct VkImage : IEquatable<VkImage>
     {
@@ -156,6 +166,7 @@ namespace OpenTK.Graphics.Vulkan
         public static explicit operator ulong(VkImage handle) => handle.Handle;
         public static explicit operator VkImage(ulong handle) => new VkImage(handle);
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkImageView.html" /></remarks>
     [DebuggerDisplay("VkImageView\\{{Handle}\\}")]
     public unsafe struct VkImageView : IEquatable<VkImageView>
     {
@@ -171,6 +182,7 @@ namespace OpenTK.Graphics.Vulkan
         public static explicit operator ulong(VkImageView handle) => handle.Handle;
         public static explicit operator VkImageView(ulong handle) => new VkImageView(handle);
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkShaderModule.html" /></remarks>
     [DebuggerDisplay("VkShaderModule\\{{Handle}\\}")]
     public unsafe struct VkShaderModule : IEquatable<VkShaderModule>
     {
@@ -186,6 +198,7 @@ namespace OpenTK.Graphics.Vulkan
         public static explicit operator ulong(VkShaderModule handle) => handle.Handle;
         public static explicit operator VkShaderModule(ulong handle) => new VkShaderModule(handle);
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPipeline.html" /></remarks>
     [DebuggerDisplay("VkPipeline\\{{Handle}\\}")]
     public unsafe struct VkPipeline : IEquatable<VkPipeline>
     {
@@ -201,6 +214,7 @@ namespace OpenTK.Graphics.Vulkan
         public static explicit operator ulong(VkPipeline handle) => handle.Handle;
         public static explicit operator VkPipeline(ulong handle) => new VkPipeline(handle);
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPipelineLayout.html" /></remarks>
     [DebuggerDisplay("VkPipelineLayout\\{{Handle}\\}")]
     public unsafe struct VkPipelineLayout : IEquatable<VkPipelineLayout>
     {
@@ -216,6 +230,7 @@ namespace OpenTK.Graphics.Vulkan
         public static explicit operator ulong(VkPipelineLayout handle) => handle.Handle;
         public static explicit operator VkPipelineLayout(ulong handle) => new VkPipelineLayout(handle);
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkSampler.html" /></remarks>
     [DebuggerDisplay("VkSampler\\{{Handle}\\}")]
     public unsafe struct VkSampler : IEquatable<VkSampler>
     {
@@ -231,6 +246,7 @@ namespace OpenTK.Graphics.Vulkan
         public static explicit operator ulong(VkSampler handle) => handle.Handle;
         public static explicit operator VkSampler(ulong handle) => new VkSampler(handle);
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDescriptorSet.html" /></remarks>
     [DebuggerDisplay("VkDescriptorSet\\{{Handle}\\}")]
     public unsafe struct VkDescriptorSet : IEquatable<VkDescriptorSet>
     {
@@ -246,6 +262,7 @@ namespace OpenTK.Graphics.Vulkan
         public static explicit operator ulong(VkDescriptorSet handle) => handle.Handle;
         public static explicit operator VkDescriptorSet(ulong handle) => new VkDescriptorSet(handle);
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDescriptorSetLayout.html" /></remarks>
     [DebuggerDisplay("VkDescriptorSetLayout\\{{Handle}\\}")]
     public unsafe struct VkDescriptorSetLayout : IEquatable<VkDescriptorSetLayout>
     {
@@ -261,6 +278,7 @@ namespace OpenTK.Graphics.Vulkan
         public static explicit operator ulong(VkDescriptorSetLayout handle) => handle.Handle;
         public static explicit operator VkDescriptorSetLayout(ulong handle) => new VkDescriptorSetLayout(handle);
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDescriptorPool.html" /></remarks>
     [DebuggerDisplay("VkDescriptorPool\\{{Handle}\\}")]
     public unsafe struct VkDescriptorPool : IEquatable<VkDescriptorPool>
     {
@@ -276,6 +294,7 @@ namespace OpenTK.Graphics.Vulkan
         public static explicit operator ulong(VkDescriptorPool handle) => handle.Handle;
         public static explicit operator VkDescriptorPool(ulong handle) => new VkDescriptorPool(handle);
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkFence.html" /></remarks>
     [DebuggerDisplay("VkFence\\{{Handle}\\}")]
     public unsafe struct VkFence : IEquatable<VkFence>
     {
@@ -291,6 +310,7 @@ namespace OpenTK.Graphics.Vulkan
         public static explicit operator ulong(VkFence handle) => handle.Handle;
         public static explicit operator VkFence(ulong handle) => new VkFence(handle);
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkSemaphore.html" /></remarks>
     [DebuggerDisplay("VkSemaphore\\{{Handle}\\}")]
     public unsafe struct VkSemaphore : IEquatable<VkSemaphore>
     {
@@ -306,6 +326,7 @@ namespace OpenTK.Graphics.Vulkan
         public static explicit operator ulong(VkSemaphore handle) => handle.Handle;
         public static explicit operator VkSemaphore(ulong handle) => new VkSemaphore(handle);
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkEvent.html" /></remarks>
     [DebuggerDisplay("VkEvent\\{{Handle}\\}")]
     public unsafe struct VkEvent : IEquatable<VkEvent>
     {
@@ -321,6 +342,7 @@ namespace OpenTK.Graphics.Vulkan
         public static explicit operator ulong(VkEvent handle) => handle.Handle;
         public static explicit operator VkEvent(ulong handle) => new VkEvent(handle);
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkQueryPool.html" /></remarks>
     [DebuggerDisplay("VkQueryPool\\{{Handle}\\}")]
     public unsafe struct VkQueryPool : IEquatable<VkQueryPool>
     {
@@ -336,6 +358,7 @@ namespace OpenTK.Graphics.Vulkan
         public static explicit operator ulong(VkQueryPool handle) => handle.Handle;
         public static explicit operator VkQueryPool(ulong handle) => new VkQueryPool(handle);
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkFramebuffer.html" /></remarks>
     [DebuggerDisplay("VkFramebuffer\\{{Handle}\\}")]
     public unsafe struct VkFramebuffer : IEquatable<VkFramebuffer>
     {
@@ -351,6 +374,7 @@ namespace OpenTK.Graphics.Vulkan
         public static explicit operator ulong(VkFramebuffer handle) => handle.Handle;
         public static explicit operator VkFramebuffer(ulong handle) => new VkFramebuffer(handle);
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkRenderPass.html" /></remarks>
     [DebuggerDisplay("VkRenderPass\\{{Handle}\\}")]
     public unsafe struct VkRenderPass : IEquatable<VkRenderPass>
     {
@@ -366,6 +390,7 @@ namespace OpenTK.Graphics.Vulkan
         public static explicit operator ulong(VkRenderPass handle) => handle.Handle;
         public static explicit operator VkRenderPass(ulong handle) => new VkRenderPass(handle);
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPipelineCache.html" /></remarks>
     [DebuggerDisplay("VkPipelineCache\\{{Handle}\\}")]
     public unsafe struct VkPipelineCache : IEquatable<VkPipelineCache>
     {
@@ -381,6 +406,23 @@ namespace OpenTK.Graphics.Vulkan
         public static explicit operator ulong(VkPipelineCache handle) => handle.Handle;
         public static explicit operator VkPipelineCache(ulong handle) => new VkPipelineCache(handle);
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPipelineBinaryKHR.html" /></remarks>
+    [DebuggerDisplay("VkPipelineBinaryKHR\\{{Handle}\\}")]
+    public unsafe struct VkPipelineBinaryKHR : IEquatable<VkPipelineBinaryKHR>
+    {
+        public static VkPipelineBinaryKHR Zero => new VkPipelineBinaryKHR(0);
+        public ulong Handle;
+        public VkPipelineBinaryKHR(ulong handle) => Handle = handle;
+        public override bool Equals(object? obj) => obj is VkPipelineBinaryKHR instance && Equals(instance);
+        public bool Equals(VkPipelineBinaryKHR other) => Handle.Equals(other.Handle);
+        public override int GetHashCode() => HashCode.Combine(Handle);
+        public override string? ToString() => Handle.ToString();
+        public static bool operator ==(VkPipelineBinaryKHR left, VkPipelineBinaryKHR right) => left.Equals(right);
+        public static bool operator !=(VkPipelineBinaryKHR left, VkPipelineBinaryKHR right) => !(left == right);
+        public static explicit operator ulong(VkPipelineBinaryKHR handle) => handle.Handle;
+        public static explicit operator VkPipelineBinaryKHR(ulong handle) => new VkPipelineBinaryKHR(handle);
+    }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkIndirectCommandsLayoutNV.html" /></remarks>
     [DebuggerDisplay("VkIndirectCommandsLayoutNV\\{{Handle}\\}")]
     public unsafe struct VkIndirectCommandsLayoutNV : IEquatable<VkIndirectCommandsLayoutNV>
     {
@@ -396,6 +438,7 @@ namespace OpenTK.Graphics.Vulkan
         public static explicit operator ulong(VkIndirectCommandsLayoutNV handle) => handle.Handle;
         public static explicit operator VkIndirectCommandsLayoutNV(ulong handle) => new VkIndirectCommandsLayoutNV(handle);
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDescriptorUpdateTemplate.html" /></remarks>
     [DebuggerDisplay("VkDescriptorUpdateTemplate\\{{Handle}\\}")]
     public unsafe struct VkDescriptorUpdateTemplate : IEquatable<VkDescriptorUpdateTemplate>
     {
@@ -411,6 +454,7 @@ namespace OpenTK.Graphics.Vulkan
         public static explicit operator ulong(VkDescriptorUpdateTemplate handle) => handle.Handle;
         public static explicit operator VkDescriptorUpdateTemplate(ulong handle) => new VkDescriptorUpdateTemplate(handle);
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDescriptorUpdateTemplateKHR.html" /></remarks>
     [DebuggerDisplay("VkDescriptorUpdateTemplateKHR\\{{Handle}\\}")]
     public unsafe struct VkDescriptorUpdateTemplateKHR : IEquatable<VkDescriptorUpdateTemplateKHR>
     {
@@ -426,6 +470,7 @@ namespace OpenTK.Graphics.Vulkan
         public static explicit operator ulong(VkDescriptorUpdateTemplateKHR handle) => handle.Handle;
         public static explicit operator VkDescriptorUpdateTemplateKHR(ulong handle) => new VkDescriptorUpdateTemplateKHR(handle);
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkSamplerYcbcrConversion.html" /></remarks>
     [DebuggerDisplay("VkSamplerYcbcrConversion\\{{Handle}\\}")]
     public unsafe struct VkSamplerYcbcrConversion : IEquatable<VkSamplerYcbcrConversion>
     {
@@ -441,6 +486,7 @@ namespace OpenTK.Graphics.Vulkan
         public static explicit operator ulong(VkSamplerYcbcrConversion handle) => handle.Handle;
         public static explicit operator VkSamplerYcbcrConversion(ulong handle) => new VkSamplerYcbcrConversion(handle);
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkSamplerYcbcrConversionKHR.html" /></remarks>
     [DebuggerDisplay("VkSamplerYcbcrConversionKHR\\{{Handle}\\}")]
     public unsafe struct VkSamplerYcbcrConversionKHR : IEquatable<VkSamplerYcbcrConversionKHR>
     {
@@ -456,6 +502,7 @@ namespace OpenTK.Graphics.Vulkan
         public static explicit operator ulong(VkSamplerYcbcrConversionKHR handle) => handle.Handle;
         public static explicit operator VkSamplerYcbcrConversionKHR(ulong handle) => new VkSamplerYcbcrConversionKHR(handle);
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkValidationCacheEXT.html" /></remarks>
     [DebuggerDisplay("VkValidationCacheEXT\\{{Handle}\\}")]
     public unsafe struct VkValidationCacheEXT : IEquatable<VkValidationCacheEXT>
     {
@@ -471,6 +518,7 @@ namespace OpenTK.Graphics.Vulkan
         public static explicit operator ulong(VkValidationCacheEXT handle) => handle.Handle;
         public static explicit operator VkValidationCacheEXT(ulong handle) => new VkValidationCacheEXT(handle);
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkAccelerationStructureKHR.html" /></remarks>
     [DebuggerDisplay("VkAccelerationStructureKHR\\{{Handle}\\}")]
     public unsafe struct VkAccelerationStructureKHR : IEquatable<VkAccelerationStructureKHR>
     {
@@ -486,6 +534,7 @@ namespace OpenTK.Graphics.Vulkan
         public static explicit operator ulong(VkAccelerationStructureKHR handle) => handle.Handle;
         public static explicit operator VkAccelerationStructureKHR(ulong handle) => new VkAccelerationStructureKHR(handle);
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkAccelerationStructureNV.html" /></remarks>
     [DebuggerDisplay("VkAccelerationStructureNV\\{{Handle}\\}")]
     public unsafe struct VkAccelerationStructureNV : IEquatable<VkAccelerationStructureNV>
     {
@@ -501,6 +550,7 @@ namespace OpenTK.Graphics.Vulkan
         public static explicit operator ulong(VkAccelerationStructureNV handle) => handle.Handle;
         public static explicit operator VkAccelerationStructureNV(ulong handle) => new VkAccelerationStructureNV(handle);
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPerformanceConfigurationINTEL.html" /></remarks>
     [DebuggerDisplay("VkPerformanceConfigurationINTEL\\{{Handle}\\}")]
     public unsafe struct VkPerformanceConfigurationINTEL : IEquatable<VkPerformanceConfigurationINTEL>
     {
@@ -516,6 +566,7 @@ namespace OpenTK.Graphics.Vulkan
         public static explicit operator ulong(VkPerformanceConfigurationINTEL handle) => handle.Handle;
         public static explicit operator VkPerformanceConfigurationINTEL(ulong handle) => new VkPerformanceConfigurationINTEL(handle);
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkBufferCollectionFUCHSIA.html" /></remarks>
     [DebuggerDisplay("VkBufferCollectionFUCHSIA\\{{Handle}\\}")]
     public unsafe struct VkBufferCollectionFUCHSIA : IEquatable<VkBufferCollectionFUCHSIA>
     {
@@ -531,6 +582,7 @@ namespace OpenTK.Graphics.Vulkan
         public static explicit operator ulong(VkBufferCollectionFUCHSIA handle) => handle.Handle;
         public static explicit operator VkBufferCollectionFUCHSIA(ulong handle) => new VkBufferCollectionFUCHSIA(handle);
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDeferredOperationKHR.html" /></remarks>
     [DebuggerDisplay("VkDeferredOperationKHR\\{{Handle}\\}")]
     public unsafe struct VkDeferredOperationKHR : IEquatable<VkDeferredOperationKHR>
     {
@@ -546,6 +598,7 @@ namespace OpenTK.Graphics.Vulkan
         public static explicit operator ulong(VkDeferredOperationKHR handle) => handle.Handle;
         public static explicit operator VkDeferredOperationKHR(ulong handle) => new VkDeferredOperationKHR(handle);
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPrivateDataSlot.html" /></remarks>
     [DebuggerDisplay("VkPrivateDataSlot\\{{Handle}\\}")]
     public unsafe struct VkPrivateDataSlot : IEquatable<VkPrivateDataSlot>
     {
@@ -561,6 +614,7 @@ namespace OpenTK.Graphics.Vulkan
         public static explicit operator ulong(VkPrivateDataSlot handle) => handle.Handle;
         public static explicit operator VkPrivateDataSlot(ulong handle) => new VkPrivateDataSlot(handle);
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPrivateDataSlotEXT.html" /></remarks>
     [DebuggerDisplay("VkPrivateDataSlotEXT\\{{Handle}\\}")]
     public unsafe struct VkPrivateDataSlotEXT : IEquatable<VkPrivateDataSlotEXT>
     {
@@ -576,6 +630,7 @@ namespace OpenTK.Graphics.Vulkan
         public static explicit operator ulong(VkPrivateDataSlotEXT handle) => handle.Handle;
         public static explicit operator VkPrivateDataSlotEXT(ulong handle) => new VkPrivateDataSlotEXT(handle);
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkCuModuleNVX.html" /></remarks>
     [DebuggerDisplay("VkCuModuleNVX\\{{Handle}\\}")]
     public unsafe struct VkCuModuleNVX : IEquatable<VkCuModuleNVX>
     {
@@ -591,6 +646,7 @@ namespace OpenTK.Graphics.Vulkan
         public static explicit operator ulong(VkCuModuleNVX handle) => handle.Handle;
         public static explicit operator VkCuModuleNVX(ulong handle) => new VkCuModuleNVX(handle);
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkCuFunctionNVX.html" /></remarks>
     [DebuggerDisplay("VkCuFunctionNVX\\{{Handle}\\}")]
     public unsafe struct VkCuFunctionNVX : IEquatable<VkCuFunctionNVX>
     {
@@ -606,6 +662,7 @@ namespace OpenTK.Graphics.Vulkan
         public static explicit operator ulong(VkCuFunctionNVX handle) => handle.Handle;
         public static explicit operator VkCuFunctionNVX(ulong handle) => new VkCuFunctionNVX(handle);
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkOpticalFlowSessionNV.html" /></remarks>
     [DebuggerDisplay("VkOpticalFlowSessionNV\\{{Handle}\\}")]
     public unsafe struct VkOpticalFlowSessionNV : IEquatable<VkOpticalFlowSessionNV>
     {
@@ -621,6 +678,7 @@ namespace OpenTK.Graphics.Vulkan
         public static explicit operator ulong(VkOpticalFlowSessionNV handle) => handle.Handle;
         public static explicit operator VkOpticalFlowSessionNV(ulong handle) => new VkOpticalFlowSessionNV(handle);
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkMicromapEXT.html" /></remarks>
     [DebuggerDisplay("VkMicromapEXT\\{{Handle}\\}")]
     public unsafe struct VkMicromapEXT : IEquatable<VkMicromapEXT>
     {
@@ -636,6 +694,7 @@ namespace OpenTK.Graphics.Vulkan
         public static explicit operator ulong(VkMicromapEXT handle) => handle.Handle;
         public static explicit operator VkMicromapEXT(ulong handle) => new VkMicromapEXT(handle);
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkShaderEXT.html" /></remarks>
     [DebuggerDisplay("VkShaderEXT\\{{Handle}\\}")]
     public unsafe struct VkShaderEXT : IEquatable<VkShaderEXT>
     {
@@ -651,6 +710,7 @@ namespace OpenTK.Graphics.Vulkan
         public static explicit operator ulong(VkShaderEXT handle) => handle.Handle;
         public static explicit operator VkShaderEXT(ulong handle) => new VkShaderEXT(handle);
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDisplayKHR.html" /></remarks>
     [DebuggerDisplay("VkDisplayKHR\\{{Handle}\\}")]
     public unsafe struct VkDisplayKHR : IEquatable<VkDisplayKHR>
     {
@@ -666,6 +726,7 @@ namespace OpenTK.Graphics.Vulkan
         public static explicit operator ulong(VkDisplayKHR handle) => handle.Handle;
         public static explicit operator VkDisplayKHR(ulong handle) => new VkDisplayKHR(handle);
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDisplayModeKHR.html" /></remarks>
     [DebuggerDisplay("VkDisplayModeKHR\\{{Handle}\\}")]
     public unsafe struct VkDisplayModeKHR : IEquatable<VkDisplayModeKHR>
     {
@@ -681,6 +742,7 @@ namespace OpenTK.Graphics.Vulkan
         public static explicit operator ulong(VkDisplayModeKHR handle) => handle.Handle;
         public static explicit operator VkDisplayModeKHR(ulong handle) => new VkDisplayModeKHR(handle);
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkSurfaceKHR.html" /></remarks>
     [DebuggerDisplay("VkSurfaceKHR\\{{Handle}\\}")]
     public unsafe struct VkSurfaceKHR : IEquatable<VkSurfaceKHR>
     {
@@ -696,6 +758,7 @@ namespace OpenTK.Graphics.Vulkan
         public static explicit operator ulong(VkSurfaceKHR handle) => handle.Handle;
         public static explicit operator VkSurfaceKHR(ulong handle) => new VkSurfaceKHR(handle);
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkSwapchainKHR.html" /></remarks>
     [DebuggerDisplay("VkSwapchainKHR\\{{Handle}\\}")]
     public unsafe struct VkSwapchainKHR : IEquatable<VkSwapchainKHR>
     {
@@ -711,6 +774,7 @@ namespace OpenTK.Graphics.Vulkan
         public static explicit operator ulong(VkSwapchainKHR handle) => handle.Handle;
         public static explicit operator VkSwapchainKHR(ulong handle) => new VkSwapchainKHR(handle);
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDebugReportCallbackEXT.html" /></remarks>
     [DebuggerDisplay("VkDebugReportCallbackEXT\\{{Handle}\\}")]
     public unsafe struct VkDebugReportCallbackEXT : IEquatable<VkDebugReportCallbackEXT>
     {
@@ -726,6 +790,7 @@ namespace OpenTK.Graphics.Vulkan
         public static explicit operator ulong(VkDebugReportCallbackEXT handle) => handle.Handle;
         public static explicit operator VkDebugReportCallbackEXT(ulong handle) => new VkDebugReportCallbackEXT(handle);
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDebugUtilsMessengerEXT.html" /></remarks>
     [DebuggerDisplay("VkDebugUtilsMessengerEXT\\{{Handle}\\}")]
     public unsafe struct VkDebugUtilsMessengerEXT : IEquatable<VkDebugUtilsMessengerEXT>
     {
@@ -741,6 +806,7 @@ namespace OpenTK.Graphics.Vulkan
         public static explicit operator ulong(VkDebugUtilsMessengerEXT handle) => handle.Handle;
         public static explicit operator VkDebugUtilsMessengerEXT(ulong handle) => new VkDebugUtilsMessengerEXT(handle);
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkVideoSessionKHR.html" /></remarks>
     [DebuggerDisplay("VkVideoSessionKHR\\{{Handle}\\}")]
     public unsafe struct VkVideoSessionKHR : IEquatable<VkVideoSessionKHR>
     {
@@ -756,6 +822,7 @@ namespace OpenTK.Graphics.Vulkan
         public static explicit operator ulong(VkVideoSessionKHR handle) => handle.Handle;
         public static explicit operator VkVideoSessionKHR(ulong handle) => new VkVideoSessionKHR(handle);
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkVideoSessionParametersKHR.html" /></remarks>
     [DebuggerDisplay("VkVideoSessionParametersKHR\\{{Handle}\\}")]
     public unsafe struct VkVideoSessionParametersKHR : IEquatable<VkVideoSessionParametersKHR>
     {
@@ -771,6 +838,7 @@ namespace OpenTK.Graphics.Vulkan
         public static explicit operator ulong(VkVideoSessionParametersKHR handle) => handle.Handle;
         public static explicit operator VkVideoSessionParametersKHR(ulong handle) => new VkVideoSessionParametersKHR(handle);
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkSemaphoreSciSyncPoolNV.html" /></remarks>
     [DebuggerDisplay("VkSemaphoreSciSyncPoolNV\\{{Handle}\\}")]
     public unsafe struct VkSemaphoreSciSyncPoolNV : IEquatable<VkSemaphoreSciSyncPoolNV>
     {
@@ -786,6 +854,7 @@ namespace OpenTK.Graphics.Vulkan
         public static explicit operator ulong(VkSemaphoreSciSyncPoolNV handle) => handle.Handle;
         public static explicit operator VkSemaphoreSciSyncPoolNV(ulong handle) => new VkSemaphoreSciSyncPoolNV(handle);
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkCudaModuleNV.html" /></remarks>
     [DebuggerDisplay("VkCudaModuleNV\\{{Handle}\\}")]
     public unsafe struct VkCudaModuleNV : IEquatable<VkCudaModuleNV>
     {
@@ -801,6 +870,7 @@ namespace OpenTK.Graphics.Vulkan
         public static explicit operator ulong(VkCudaModuleNV handle) => handle.Handle;
         public static explicit operator VkCudaModuleNV(ulong handle) => new VkCudaModuleNV(handle);
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkCudaFunctionNV.html" /></remarks>
     [DebuggerDisplay("VkCudaFunctionNV\\{{Handle}\\}")]
     public unsafe struct VkCudaFunctionNV : IEquatable<VkCudaFunctionNV>
     {

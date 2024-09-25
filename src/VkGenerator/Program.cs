@@ -41,6 +41,7 @@ namespace VkGenerator
 
             Processor.ResolveStructMemberTypes(specData, typeMap, constMap);
             Processor.ResolveCommandTypes(specData, typeMap);
+            Processor.ResolveVersionInfo(specData, typeMap);
 
             Processor.ResolveStructMemberTypes(videoSpecData, typeMap, constMap);
 
