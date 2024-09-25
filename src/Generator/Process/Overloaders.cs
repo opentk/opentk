@@ -10,7 +10,6 @@ using Generator.Parsing;
 using Generator.Utility;
 using Generator.Utility.Extensions;
 using Generator.Writing;
-using static Generator.Process.ColorTypeOverloader;
 
 namespace Generator.Process
 {
@@ -355,8 +354,8 @@ namespace Generator.Process
 
                         nameTable.Rename(parameter, $"{parameter.Name}_ptr");
 
-                        // FIXME: ref vs in depending on Constant memeber
-                        Parameter colorParameter = parameter with { Type = new CSRef(CSRef.Type.In, new CSPrimitive($"Color{colorSize}<{colorSpace}>", pointer.Constant)), Length = null };
+                        // FIXME: ref vs ref readonly depending on Constant memeber
+                        Parameter colorParameter = parameter with { Type = new CSRef(CSRef.Type.RefReadonly, new CSPrimitive($"Color{colorSize}<{colorSpace}>", pointer.Constant)), Length = null };
 
                         pointerParameters.Add(parameter);
                         colorParameters.Add(colorParameter);
@@ -549,7 +548,7 @@ namespace Generator.Process
 
                         CSStruct mathType = new CSStruct(name, baseType.Constant);
 
-                        Parameter refParamter = parameter with { Type = new CSRef(baseType.Constant ? CSRef.Type.In : CSRef.Type.Ref, mathType), Length = null };
+                        Parameter refParamter = parameter with { Type = new CSRef(baseType.Constant ? CSRef.Type.RefReadonly : CSRef.Type.Ref, mathType), Length = null };
                         Parameter spanParamter = parameter with { Type = new CSSpan(mathType, baseType.Constant), Length = null };
                         Parameter arrayParamter = parameter with { Type = new CSArray(mathType), Length = null };
 
@@ -592,7 +591,7 @@ namespace Generator.Process
 
                             CSStruct mathType = new CSStruct(typeName, baseType.Constant);
 
-                            Parameter refParamter = parameter with { Type = new CSRef(baseType.Constant ? CSRef.Type.In : CSRef.Type.Ref, mathType), Length = null };
+                            Parameter refParamter = parameter with { Type = new CSRef(baseType.Constant ? CSRef.Type.RefReadonly : CSRef.Type.Ref, mathType), Length = null };
                             Parameter spanParamter = parameter with { Type = new CSSpan(mathType, baseType.Constant), Length = null };
                             Parameter arrayParamter = parameter with { Type = new CSArray(mathType), Length = null };
 
@@ -1087,7 +1086,7 @@ namespace Generator.Process
             nameTable.Rename(pointerParameter, $"{pointerParameter.Name}_handle");
             nameTable.MarkFixed(overload.InputParameters[lengthParameterIndex]);
 
-            CSRef.Type refType = nativeName.StartsWith("Delete") ? CSRef.Type.In : CSRef.Type.Out;
+            CSRef.Type refType = nativeName.StartsWith("Delete") ? CSRef.Type.RefReadonly : CSRef.Type.Out;
             parameters[^1] = pointerParameter with
             {
                 // Remove ending 's' in parameter name.
@@ -1097,7 +1096,7 @@ namespace Generator.Process
                 Type = new CSRef(refType, pointerParameterType.BaseType),
                 Length = null
             };
-            IOverloadLayer layer = refType == CSRef.Type.In
+            IOverloadLayer layer = refType == CSRef.Type.RefReadonly
                 ? new DeleteOverloadLayer(overload.InputParameters[lengthParameterIndex], parameters[^1],
                     pointerParameter)
                 : new GenAndCreateOverloadLayer(overload.InputParameters[lengthParameterIndex], parameters[^1],
@@ -1174,9 +1173,33 @@ namespace Generator.Process
             Overload newOverload = overload;
             for (int i = newParams.Count - 1; i >= 0; i--)
             {
-                // FIXME: We want to handle sized strings different!!!
                 var param = newParams[i];
-                if (param.Type is CSPointer pt && pt.BaseType is ICSCharType bt)
+
+                // There are a few functions that are supposed to take string arguments but are defined as
+                // GLubyte* or unsigned byte*. The ones marked with kind="String" we overload so that they get the correct signature.
+                // - Noggin_bops 2024-09-23
+                if (param.Kinds.Contains("String") && param.Type is CSPointer spt && spt.BaseType is CSPrimitive sbt && sbt.TypeName == "byte")
+                {
+                    var pointerParam = newParams[i];
+                    var nameTable = newOverload.NameTable.New();
+                    nameTable.Rename(pointerParam, $"{pointerParam.Name}_ptr");
+
+                    StringLayer.StringType stringType = StringLayer.StringType.Char8;
+
+                    // FIXME: Can we know if the string is nullable or not?
+                    newParams[i] = newParams[i] with { Type = new CSString(Nullable: false), Length = null };
+                    var stringParams = newParams.ToArray();
+                    var stringLayer = new StringLayer(pointerParam, newParams[i], stringType);
+
+                    newOverload = newOverload with
+                    {
+                        NestedOverload = newOverload,
+                        MarshalLayerToNested = stringLayer,
+                        InputParameters = stringParams,
+                        NameTable = nameTable
+                    };
+                }
+                else if (param.Type is CSPointer pt && pt.BaseType is ICSCharType bt)
                 {
                     var pointerParam = newParams[i];
                     var nameTable = newOverload.NameTable.New();
@@ -1571,36 +1594,36 @@ namespace Generator.Process
                     }
 
                     CSRef.Type refType;
-                    // This is a list of functions that either have in parameters not marked with const in gl.xml
+                    // This is a list of functions that either have "in" parameters not marked with const in gl.xml
                     // or functions that use the same pointer parameter for both input and output.
                     // - Noggin_bops 2024-03-16
                     // FIXME: Check GLX for non-const in parameters and ref parameters!
                     switch (overload.NativeFunction.EntryPoint)
                     {
                         // FIXME: glImportMemoryWin32HandleEXT should take a HANDLE object, i.e. IntPtr....
-                        case "glImportMemoryWin32HandleEXT"   when parameter.Name == "handle":       refType = CSRef.Type.In; break;
-                        case "glSelectPerfMonitorCountersAMD" when parameter.Name == "counterList":  refType = CSRef.Type.In; break;
-                        case "glSharpenTexFuncSGIS"           when parameter.Name == "points":       refType = CSRef.Type.In; break;
-                        case "glVertexArrayRangeAPPLE"        when parameter.Name == "pointer":      refType = CSRef.Type.In; break;
+                        case "glImportMemoryWin32HandleEXT"   when parameter.Name == "handle":       refType = CSRef.Type.RefReadonly; break;
+                        case "glSelectPerfMonitorCountersAMD" when parameter.Name == "counterList":  refType = CSRef.Type.RefReadonly; break;
+                        case "glSharpenTexFuncSGIS"           when parameter.Name == "points":       refType = CSRef.Type.RefReadonly; break;
+                        case "glVertexArrayRangeAPPLE"        when parameter.Name == "pointer":      refType = CSRef.Type.RefReadonly; break;
                         // FIXME: Should we have glCullParameter*vEXT here? They have len="4" and never get triggered...
-                        case "glCullParameterdvEXT"           when parameter.Name == "params":       refType = CSRef.Type.In; break;
-                        case "glCullParameterfvEXT"           when parameter.Name == "params":       refType = CSRef.Type.In; break;
-                        case "glDeletePerfMonitorsAMD"        when parameter.Name == "monitors":     refType = CSRef.Type.In; break;
-                        case "glFlushVertexArrayRangeAPPLE"   when parameter.Name == "pointer":      refType = CSRef.Type.In; break;
+                        case "glCullParameterdvEXT"           when parameter.Name == "params":       refType = CSRef.Type.RefReadonly; break;
+                        case "glCullParameterfvEXT"           when parameter.Name == "params":       refType = CSRef.Type.RefReadonly; break;
+                        case "glDeletePerfMonitorsAMD"        when parameter.Name == "monitors":     refType = CSRef.Type.RefReadonly; break;
+                        case "glFlushVertexArrayRangeAPPLE"   when parameter.Name == "pointer":      refType = CSRef.Type.RefReadonly; break;
 
-                        case "wglDXLockObjectsNV"             when parameter.Name == "hObjects":     refType = CSRef.Type.In; break;
-                        case "wglDXOpenDeviceNV"              when parameter.Name == "dxDevice":     refType = CSRef.Type.In; break;
-                        case "wglDXRegisterObjectNV"          when parameter.Name == "dxObject":     refType = CSRef.Type.In; break;
-                        case "wglDXSetResourceShareHandleNV"  when parameter.Name == "dxObject":     refType = CSRef.Type.In; break;
-                        case "wglDXUnlockObjectsNV"           when parameter.Name == "hObjects":     refType = CSRef.Type.In; break;
-                        case "wglGetPixelFormatAttribfvEXT"   when parameter.Name == "piAttributes": refType = CSRef.Type.In; break;
-                        case "wglGetPixelFormatAttribivEXT"   when parameter.Name == "piAttributes": refType = CSRef.Type.In; break;
+                        case "wglDXLockObjectsNV"             when parameter.Name == "hObjects":     refType = CSRef.Type.RefReadonly; break;
+                        case "wglDXOpenDeviceNV"              when parameter.Name == "dxDevice":     refType = CSRef.Type.RefReadonly; break;
+                        case "wglDXRegisterObjectNV"          when parameter.Name == "dxObject":     refType = CSRef.Type.RefReadonly; break;
+                        case "wglDXSetResourceShareHandleNV"  when parameter.Name == "dxObject":     refType = CSRef.Type.RefReadonly; break;
+                        case "wglDXUnlockObjectsNV"           when parameter.Name == "hObjects":     refType = CSRef.Type.RefReadonly; break;
+                        case "wglGetPixelFormatAttribfvEXT"   when parameter.Name == "piAttributes": refType = CSRef.Type.RefReadonly; break;
+                        case "wglGetPixelFormatAttribivEXT"   when parameter.Name == "piAttributes": refType = CSRef.Type.RefReadonly; break;
 
                         // We do the special handling above so that we can assume that any parameter that is not marked
                         // "const" here is an out parameter.
                         // Any potential ref parameters should be handled above.
                         // - Noggin_bops 2024-03-16
-                        default: refType = constant ? CSRef.Type.In : outParamSuitable ? CSRef.Type.Out : CSRef.Type.Ref;  break;
+                        default: refType = constant ? CSRef.Type.RefReadonly : outParamSuitable ? CSRef.Type.Out : CSRef.Type.Ref;  break;
                     }
 
                     // Rename the parameter

@@ -28,6 +28,8 @@ namespace OpenTK.Platform.Native.X11
         {
             return new GLXDrawable((ulong)pixmap.Value);
         }
+
+        public static implicit operator Graphics.Glx.GLXDrawable(GLXDrawable drawable) => new Graphics.Glx.GLXDrawable((nuint)drawable.Id);
     }
 
     [DebuggerDisplay("{Value}")]
@@ -39,6 +41,9 @@ namespace OpenTK.Platform.Native.X11
         {
             Value = value;
         }
+
+        public static implicit operator Graphics.Glx.GLXWindow(GLXWindow window) => new Graphics.Glx.GLXWindow((nuint)window.Value);
+        public static implicit operator GLXWindow(Graphics.Glx.GLXWindow window) => new GLXWindow((IntPtr)window.XID);
     }
 
     [DebuggerDisplay("{Value}")]
@@ -61,8 +66,12 @@ namespace OpenTK.Platform.Native.X11
         {
             Value = value;
         }
+
+        public static implicit operator Graphics.Glx.GLXContext(GLXContext context) => new Graphics.Glx.GLXContext(context.Value);
+        public static implicit operator GLXContext(Graphics.Glx.GLXContext context) => new GLXContext(context.Value);
     }
 
+    // FIXME: Remove this as it's not needed anymore.
     [DebuggerDisplay("{Value}")]
     internal struct GLXFBConfig
     {
@@ -72,5 +81,7 @@ namespace OpenTK.Platform.Native.X11
         {
             Value = value;
         }
+
+        public static implicit operator Graphics.Glx.GLXFBConfig(GLXFBConfig config) => new Graphics.Glx.GLXFBConfig(config.Value);
     }
 }

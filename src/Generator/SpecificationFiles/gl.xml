@@ -6961,7 +6961,7 @@ typedef unsigned int GLhandleARB;
             <unused start="0x96AF" end="0x96AF" vendor="QCOM"/>
     </enums>
 
-    <enums namespace="GL" start="0x96B0" end="0x96BF" vendor="ANGLE" comment="github pull request">
+    <enums namespace="GL" start="0x96B0" end="0x96BF" vendor="ANGLE" comment="github pull request 311">
             <unused start="0x96B0" end="0x96BF" vendor="ANGLE"/>
     </enums>
 
@@ -7003,7 +7003,7 @@ typedef unsigned int GLhandleARB;
         <enum value="0x96DF" name="GL_FRAGMENT_SHADING_RATE_ATTACHMENT_WITH_DEFAULT_FRAMEBUFFER_SUPPORTED_EXT" group="GetPName"/>
     </enums>
 
-    <enums namespace="GL" start="0x96E0" end="0x96EF" vendor="ANGLE" comment="Reserved for Ken Russell - ANGLE (via github pull request)">
+    <enums namespace="GL" start="0x96E0" end="0x96EF" vendor="ANGLE" comment="Reserved for Ken Russell - ANGLE (github pull request 493)">
             <unused start="0x96E0" end="0x96EF" vendor="ANGLE"/>
     </enums>
 
@@ -7028,6 +7028,10 @@ typedef unsigned int GLhandleARB;
             <unused start="0x9712" end="0x971F" vendor="QCOM"/>
     </enums>
 
+    <enums namespace="GL" start="0x9720" end="0x973F" vendor="ANGLE" comment="github pull request 626">
+            <unused start="0x9720" end="0x973F" vendor="ANGLE"/>
+    </enums>
+
 <!-- Enums reservable for future use. To reserve a new range, allocate one
      or more multiples of 16 starting at the lowest available point in this
      block and note it in a new <enums> block immediately above.
@@ -7037,8 +7041,8 @@ typedef unsigned int GLhandleARB;
      file) File requests in the Khronos Bugzilla, OpenGL project, Registry
      component. -->
 
-    <enums namespace="GL" start="0x9720" end="99999" vendor="ARB" comment="RESERVED FOR FUTURE ALLOCATIONS BY KHRONOS">
-        <unused start="0x9720" end="99999" comment="RESERVED"/>
+    <enums namespace="GL" start="0x9740" end="99999" vendor="ARB" comment="RESERVED FOR FUTURE ALLOCATIONS BY KHRONOS">
+        <unused start="0x9740" end="99999" comment="RESERVED"/>
     </enums>
 
 <!-- Historical large block allocations, all unused except (in older days) by IBM -->

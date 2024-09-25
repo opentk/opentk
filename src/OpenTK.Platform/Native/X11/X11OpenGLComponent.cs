@@ -6,7 +6,8 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 using OpenTK.Platform;
 using OpenTK.Core.Utility;
-using static OpenTK.Platform.Native.X11.GLX;
+//using static OpenTK.Platform.Native.X11.GLX;
+using OpenTK.Graphics.Glx;
 
 namespace OpenTK.Platform.Native.X11
 {
@@ -24,12 +25,12 @@ namespace OpenTK.Platform.Native.X11
         /// <inheritdoc />
         public void Initialize(ToolkitOptions options)
         {
-            if (!glXQueryExtension(X11.Display, out int errorBase, out int eventBase))
+            if (!Glx.QueryExtension(X11.Display, out int errorBase, out int eventBase))
             {
                 throw new PalException(this, "This display does not support GLX. Cannot create OpenGL contexts.");
             }
 
-            glXQueryVersion(X11.Display, out int major, out int minor);
+            Glx.QueryVersion(X11.Display, out int major, out int minor);
             GLXVersion = new Version(major, minor);
 
             if (GLXVersion < new Version(1, 3))
@@ -38,27 +39,28 @@ namespace OpenTK.Platform.Native.X11
                 throw new PalException(this, "GLX Versions less than 1.3 are not supported.");
             }
 
-            string extensions = glXQueryExtensionsString(X11.Display, X11.DefaultScreen);
+            string extensions = Glx.QueryExtensionsString(X11.Display, X11.DefaultScreen)!;
             foreach (string extension in extensions.Split(' '))
             {
                 GLXExtensions.Add(extension);
             }
 
             Version? version;
-            GLXServerVendor = glXQueryServerString(X11.Display, X11.DefaultScreen, GLX_VENDOR);
-            Version.TryParse(glXQueryServerString(X11.Display, X11.DefaultScreen, GLX_VERSION), out version);
+            
+            GLXServerVendor = Glx.QueryServerString(X11.Display, X11.DefaultScreen, StringName.Vendor)!;
+            Version.TryParse(Glx.QueryServerString(X11.Display, X11.DefaultScreen, StringName.Version), out version);
             GLXServerVersion = version;
-            string serverExtensions = glXQueryServerString(X11.Display, X11.DefaultScreen, GLX_EXTENSIONS);
+            string serverExtensions = Glx.QueryServerString(X11.Display, X11.DefaultScreen, StringName.Extensions)!;
             foreach (string extension in serverExtensions.Split(' '))
             {
                 GLXServerExtensions.Add(extension);
             }
 
-            GLXClientVendor = glXGetClientString(X11.Display, GLX_VENDOR);
-            Version.TryParse(glXGetClientString(X11.Display, GLX_VERSION), out version);
+            GLXClientVendor = Glx.GetClientString(X11.Display, StringName.Vendor)!;
+            Version.TryParse(Glx.GetClientString(X11.Display, StringName.Vendor), out version);
             GLXClientVersion = version;
 
-            string clientExtensions = glXGetClientString(X11.Display, GLX_EXTENSIONS);
+            string clientExtensions = Glx.GetClientString(X11.Display, StringName.Extensions)!;
             foreach (string extension in clientExtensions.Split(' '))
             {
                 GLXClientExtensions.Add(extension);
@@ -66,11 +68,11 @@ namespace OpenTK.Platform.Native.X11
 
             if (GLXVersion >= new Version(1, 4))
             {
-                s_glXGetProcAddress = glXGetProcAddress;
+                s_glXGetProcAddress = Glx.GetProcAddress;
             }
             else if (GLXExtensions.Contains("GLX_ARB_get_proc_address"))
             {
-                s_glXGetProcAddress = glXGetProcAddressARB;
+                s_glXGetProcAddress = Glx.ARB.GetProcAddressARB;
             }
             else
             {
@@ -79,8 +81,10 @@ namespace OpenTK.Platform.Native.X11
 
             if (GLXExtensions.Contains("GLX_ARB_create_context"))
             {
-                // FIXME: Can we use a function pointer instead of a delegate?
-                s_glXCreateContextAttribsARB = Marshal.GetDelegateForFunctionPointer<glXCreateContextAttribARBProc>(s_glXGetProcAddress("glXCreateContextAttribsARB"));
+                unsafe
+                {
+                    GlxPointers._glXCreateContextAttribsARB_fnptr = (delegate* unmanaged<nint, nint, nint, byte, int*, nint>)s_glXGetProcAddress("glXCreateContextAttribsARB");
+                }
             }
             else
             {
@@ -134,7 +138,6 @@ namespace OpenTK.Platform.Native.X11
         private delegate IntPtr glXGetProcAddressProc(string procName);
 
         private glXGetProcAddressProc s_glXGetProcAddress = null!;
-        private glXCreateContextAttribARBProc s_glXCreateContextAttribsARB = null!;
 
         /// <inheritdoc />
         public OpenGLContextHandle CreateFromSurface()
@@ -154,58 +157,58 @@ namespace OpenTK.Platform.Native.X11
 
             List<int> attribs = new List<int>()
             {
-                GLX_CONTEXT_MAJOR_VERSION_ARB, hints.Version.Major,
-                GLX_CONTEXT_MINOR_VERSION_ARB, hints.Version.Minor,
+                (int)ContextAttribs.ContextMajorVersionArb, hints.Version.Major,
+                (int)ContextAttribs.ContextMinorVersionArb, hints.Version.Minor,
             };
 
             {
-                int flags = 0;
+                ContextFlags flags = 0;
 
                 if (hints.DebugFlag)
                 {
-                    flags |= GLX_CONTEXT_DEBUG_BIT_ARB;
+                    flags |= ContextFlags.ContextDebugBitArb;
                 }
 
                 if (hints.ForwardCompatibleFlag)
                 {
-                    flags |= GLX_CONTEXT_FORWARD_COMPATIBLE_BIT;
+                    flags |= ContextFlags.ContextForwardCompatibleBitArb;
                 }
 
                 if (ARB_create_context_robustness && hints.RobustnessFlag)
                 {
-                    flags |= GLX_CONTEXT_ROBUST_ACCESS_BIT_ARB;
+                    flags |= ContextFlags.ContextRobustAccessBitArb;
                 }
 
                 if (ARB_robustness_isolation && hints.ResetIsolationFlag)
                 {
-                    flags |= GLX_CONTEXT_RESET_ISOLATION_BIT_ARB;
+                    flags |= ContextFlags.ContextResetIsolationBitArb;
                 }
 
-                attribs.Add(GLX_CONTEXT_FLAGS_ARB);
-                attribs.Add(flags);
+                attribs.Add((int)ContextAttribs.ContextFlagsArb);
+                attribs.Add((int)flags);
             }
 
             if (hints.Profile != OpenGLProfile.None)
             {
-                attribs.Add(GLX_CONTEXT_PROFILE_MASK_ARB);
+                attribs.Add((int)ContextAttribs.ContextProfileMaskArb);
                 attribs.Add(hints.Profile switch
                 {
-                    OpenGLProfile.Compatibility => GLX_CONTEXT_COMPATIBILITY_PROFILE_BIT_ARB,
-                    OpenGLProfile.Core => GLX_CONTEXT_CORE_PROFILE_BIT_ARB,
+                    OpenGLProfile.Compatibility => (int)ContextProfileMask.ContextCompatibilityProfileBitArb,
+                    OpenGLProfile.Core => (int)ContextProfileMask.ContextCoreProfileBitArb,
                     _ => throw new Exception() // This exception satisfies the linter.
                 });
             }
 
             if (ARB_create_context_robustness && hints.RobustnessFlag)
             {
-                attribs.Add(GLX_CONTEXT_RESET_NOTIFICATION_STRATEGY_ARB);
+                attribs.Add((int)ContextAttribs.ContextResetNotificationStrategyArb);
                 switch (hints.ResetNotificationStrategy)
                 {
                     case ContextResetNotificationStrategy.NoResetNotification:
-                        attribs.Add(GLX_NO_RESET_NOTIFICATION_ARB);
+                        attribs.Add((int)ResetNotificationStrategy.NoResetNotificationArb);
                         break;
                     case ContextResetNotificationStrategy.LoseContextOnReset:
-                        attribs.Add(GLX_LOSE_CONTEXT_ON_RESET_ARB);
+                        attribs.Add((int)ResetNotificationStrategy.LoseContextOnResetArb);
                         break;
                     default:
                         throw new InvalidEnumArgumentException(nameof(hints.ResetNotificationStrategy), (int)hints.ResetNotificationStrategy, hints.ResetNotificationStrategy.GetType());
@@ -214,20 +217,20 @@ namespace OpenTK.Platform.Native.X11
 
             if (ARB_create_context_no_error && hints.NoErrorFlag)
             {
-                attribs.Add(GLX_CONTEXT_OPENGL_NO_ERROR_ARB);
+                attribs.Add((int)ContextAttribs.ContextOpenglNoErrorArb);
                 attribs.Add(1);
             }
 
             if (ARB_context_flush_control && hints.UseFlushControl)
             {
-                attribs.Add(GLX_CONTEXT_RELEASE_BEHAVIOR_FLUSH_ARB);
+                attribs.Add((int)ContextAttribs.ContextReleaseBehaviorArb);
                 switch (hints.ReleaseBehaviour)
                 {
                     case ContextReleaseBehaviour.None:
-                        attribs.Add(GLX_CONTEXT_RELEASE_BEHAVIOR_NONE_ARB);
+                        attribs.Add((int)ContextReleaseBehavior.ContextReleaseBehaviorNoneArb);
                         break;
                     case ContextReleaseBehaviour.Flush:
-                        attribs.Add(GLX_CONTEXT_RELEASE_BEHAVIOR_FLUSH_ARB);
+                        attribs.Add((int)ContextReleaseBehavior.ContextReleaseBehaviorFlushArb);
                         break;
                     default:
                         throw new InvalidEnumArgumentException(nameof(hints.ReleaseBehaviour), (int)hints.ReleaseBehaviour, hints.ReleaseBehaviour.GetType());
@@ -235,17 +238,17 @@ namespace OpenTK.Platform.Native.X11
             }
 
             {
-                attribs.Add(GLX_RENDER_TYPE);
+                attribs.Add((int)ContextAttribs.RenderType);
                 switch (window.PixelFormat)
                 {
                     case ContextPixelFormat.RGBAPackedFloat:
-                        attribs.Add(GLX_RGBA_UNSIGNED_FLOAT_TYPE_EXT);
+                        attribs.Add((int)RenderType.RgbaUnsignedFloatTypeExt);
                         break;
                     case ContextPixelFormat.RGBAFloat:
-                        attribs.Add(GLX_RGBA_FLOAT_TYPE);
+                        attribs.Add((int)RenderType.RgbaFloatTypeArb);
                         break;
                     case ContextPixelFormat.RGBA:
-                        attribs.Add(GLX_RGBA_TYPE);
+                        attribs.Add((int)RenderType.RgbaType);
                         break;
                     default:
                         throw new InvalidEnumArgumentException(nameof(window.PixelFormat), (int)window.PixelFormat, window.PixelFormat.GetType());
@@ -261,7 +264,7 @@ namespace OpenTK.Platform.Native.X11
             // FIXME: This might not be able to create OpenGL 1.0 contexts...
             // See: https://github.com/glfw/glfw/blob/3eaf1255b29fdf5c2895856c7be7d7185ef2b241/src/glx_context.c#L592-L595
             // - Noggin_bops 2023-08-26
-            GLXContext context = s_glXCreateContextAttribsARB(
+            GLXContext context = Glx.ARB.CreateContextAttribsARB(
                 window.Display,
                 window.FBConfig!.Value,
                 sharedContext?.Context ?? new GLXContext(IntPtr.Zero),
@@ -272,8 +275,12 @@ namespace OpenTK.Platform.Native.X11
             // Window itself instead of making a GLXWindow. Maybe we should do something to
             // check the glX version.
             // - Noggin_bops 2023-08-27
-            GLXWindow glxWindow = glXCreateWindow(X11.Display, window.FBConfig!.Value, window.Window, IntPtr.Zero);
-            
+            GLXWindow glxWindow;
+            unsafe
+            {
+                glxWindow = Glx.CreateWindow(X11.Display, window.FBConfig!.Value, window.Window, (int*)null);
+            }
+
             XOpenGLContextHandle contextHandle = new XOpenGLContextHandle(window.Display, context, glxWindow, window.Window, sharedContext);
 
             contextDict[contextHandle.Context] = contextHandle;
@@ -286,8 +293,8 @@ namespace OpenTK.Platform.Native.X11
         {
             var xhandle = handle.As<XOpenGLContextHandle>(this);
             // FIXME: Remove the glxWindow from the window handle!
-            glXDestroyWindow(X11.Display, xhandle.GLXWindow);
-            glXDestroyContext(X11.Display, xhandle.Context);
+            Glx.DestroyWindow(X11.Display, xhandle.GLXWindow);
+            Glx.DestroyContext(X11.Display, xhandle.Context);
         }
 
         /// <inheritdoc />
@@ -306,7 +313,7 @@ namespace OpenTK.Platform.Native.X11
         /// <inheritdoc />
         public OpenGLContextHandle? GetCurrentContext()
         {
-            GLXContext context = glXGetCurrentContext();
+            GLXContext context = Glx.GetCurrentContext();
 
             return context.Value != IntPtr.Zero ? contextDict[context] : null;
         }
@@ -318,11 +325,11 @@ namespace OpenTK.Platform.Native.X11
 
             if (xhandle != null)
             {
-                return glXMakeCurrent(X11.Display, (GLXDrawable)xhandle.GLXWindow, xhandle.Context);
+                return Glx.MakeCurrent(X11.Display, (GLXDrawable)xhandle.GLXWindow, xhandle.Context);
             }
             else
             {
-                return glXMakeCurrent(X11.Display, GLXDrawable.None, new GLXContext(IntPtr.Zero));
+                return Glx.MakeCurrent(X11.Display, GLXDrawable.None, new GLXContext(IntPtr.Zero));
             }
         }
 
@@ -346,7 +353,7 @@ namespace OpenTK.Platform.Native.X11
                     throw new InvalidOperationException("No context bound. Can't set swap interval.");
                 }
 
-                glXQueryDrawable(X11.Display, (GLXDrawable)context.GLXWindow, GLX_MAX_SWAP_INTERVAL_EXT, out uint max_interval);
+                Glx.QueryDrawable(X11.Display, (GLXDrawable)context.GLXWindow, DrawableAttrib.MaxSwapIntervalExt, out uint max_interval);
 
                 return (int)max_interval;
             }
@@ -367,18 +374,18 @@ namespace OpenTK.Platform.Native.X11
 
             if (GLXExtensions.Contains("GLX_EXT_swap_control"))
             {
-                glXQueryDrawable(X11.Display, (GLXDrawable)context.GLXWindow, GLX_MAX_SWAP_INTERVAL_EXT, out uint max_interval);
+                Glx.QueryDrawable(X11.Display, (GLXDrawable)context.GLXWindow, DrawableAttrib.MaxSwapIntervalExt, out uint max_interval);
                 if (interval > max_interval)
                 {
                     Logger?.LogWarning($"Specified swap interval '{interval}' is larger than the max supported inverval of '{max_interval}'. Clamping to the maximum swap interval.");
                     interval = (int)max_interval;
                 }
 
-                glXSwapIntervalEXT(X11.Display, (GLXDrawable)context.GLXWindow, interval);
+                Glx.EXT.SwapIntervalEXT(X11.Display, (GLXDrawable)context.GLXWindow, interval);
             }
             else if (GLXExtensions.Contains("GLX_MESA_swap_control"))
             {
-                int status = glXSwapIntervalMESA((uint)interval);
+                int status = Glx.MESA.SwapIntervalMESA((uint)interval);
                 if (status != 0)
                 {
                     Logger?.LogWarning($"glXSwapIntervalMESA failed with: {status}");
@@ -386,7 +393,7 @@ namespace OpenTK.Platform.Native.X11
             }
             else if (GLXExtensions.Contains("GLX_SGI_swap_control"))
             {
-                int status = glXSwapIntervalSGI(interval);
+                int status = Glx.SGI.SwapIntervalSGI(interval);
                 if (status != 0)
                 {
                     Logger?.LogWarning($"glXSwapIntervalSGI failed with: {status}");
@@ -413,12 +420,12 @@ namespace OpenTK.Platform.Native.X11
 
             if (GLXExtensions.Contains("GLX_EXT_swap_control"))
             {
-                glXQueryDrawable(X11.Display, (GLXDrawable)context.GLXWindow, GLX_SWAP_INTERVAL_EXT, out uint interval);
+                Glx.QueryDrawable(X11.Display, (GLXDrawable)context.GLXWindow, DrawableAttrib.SwapIntervalExt, out uint interval);
                 return (int)interval;
             }
             else if (GLXExtensions.Contains("GLX_MESA_swap_control"))
             {
-                int interval = glXGetSwapIntervalMESA();
+                int interval = Glx.MESA.GetSwapIntervalMESA();
                 return interval;
             }
             else if (GLXExtensions.Contains("GLX_SGI_swap_control"))
@@ -436,7 +443,7 @@ namespace OpenTK.Platform.Native.X11
         public void SwapBuffers(OpenGLContextHandle handle)
         {
             XOpenGLContextHandle context = handle.As<XOpenGLContextHandle>(this);
-            glXSwapBuffers(context.Display, (GLXDrawable)context.GLXWindow);
+            Glx.SwapBuffers(context.Display, (GLXDrawable)context.GLXWindow);
         }
 
         /// <summary>

@@ -1,5 +1,4 @@
-﻿using Microsoft.VisualBasic.FileIO;
-using OpenTK.Platform;
+﻿using OpenTK.Platform;
 using OpenTK.Core.Utility;
 using System;
 using System.Collections.Generic;
@@ -11,6 +10,8 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Wgl = OpenTK.Graphics.Wgl.Wgl;
+using OpenTK.Graphics.Wgl;
 
 namespace OpenTK.Platform.Native.Windows
 {
@@ -131,21 +132,21 @@ namespace OpenTK.Platform.Native.Windows
 
             unsafe
             {
-                Wgl._GetExtensionsStringARB__fnptr = (delegate* unmanaged<IntPtr, byte*>)Wgl.GetProcAddress("wglGetExtensionsStringARB");
+                WglPointers._wglGetExtensionsStringARB_fnptr = (delegate* unmanaged<IntPtr, byte*>)Wgl.GetProcAddress("wglGetExtensionsStringARB");
                 
-                Wgl._GetPixelFormatAttribivARB__fnptr = (delegate* unmanaged<IntPtr, int, int, uint, int*, int*, int>)Wgl.GetProcAddress("wglGetPixelFormatAttribivARB");
+                WglPointers._wglGetPixelFormatAttribivARB_fnptr = (delegate* unmanaged<IntPtr, int, int, uint, int*, int*, int>)Wgl.GetProcAddress("wglGetPixelFormatAttribivARB");
 
-                Wgl._ChoosePixelFormatARB__fnptr = (delegate* unmanaged<IntPtr, int*, float*, uint, int*, uint*, int>)Wgl.GetProcAddress("wglChoosePixelFormatARB");
+                WglPointers._wglChoosePixelFormatARB_fnptr = (delegate* unmanaged<IntPtr, int*, float*, uint, int*, uint*, int>)Wgl.GetProcAddress("wglChoosePixelFormatARB");
 
-                Wgl._CreateContextAttribsARB__fnptr = (delegate* unmanaged<IntPtr, IntPtr, int*, IntPtr>)Wgl.GetProcAddress("wglCreateContextAttribsARB");
+                WglPointers._wglCreateContextAttribsARB_fnptr = (delegate* unmanaged<IntPtr, IntPtr, int*, IntPtr>)Wgl.GetProcAddress("wglCreateContextAttribsARB");
 
-                Wgl._SwapIntervalEXT__fnptr = (delegate* unmanaged<int, void>)Wgl.GetProcAddress("wglSwapIntervalEXT");
+                WglPointers._wglSwapIntervalEXT_fnptr = (delegate* unmanaged<int, int>)Wgl.GetProcAddress("wglSwapIntervalEXT");
 
-                Wgl._GetSwapIntervalEXT__fnptr = (delegate* unmanaged<int>)Wgl.GetProcAddress("wglGetSwapIntervalEXT");
+                WglPointers._wglGetSwapIntervalEXT_fnptr = (delegate* unmanaged<int>)Wgl.GetProcAddress("wglGetSwapIntervalEXT");
 
-                if (Wgl._GetExtensionsStringARB__fnptr != null)
+                if (WglPointers._wglGetExtensionsStringARB_fnptr != null)
                 {
-                    string[] wglExts = Wgl.GetExtensionsStringARB(hDC)?.Split(" ") ?? Array.Empty<string>();
+                    string[] wglExts = Wgl.ARB.GetExtensionsStringARB(hDC)?.Split(" ") ?? Array.Empty<string>();
 
                     ARB_multisample = wglExts.Contains("WGL_ARB_multisample");
                     ARB_framebuffer_sRGB = wglExts.Contains("WGL_ARB_framebuffer_sRGB");
@@ -310,60 +311,60 @@ namespace OpenTK.Platform.Native.Windows
             if (ARB_pixel_format)
             {
                 // We have the pixel format extension!
-                Span<WGLPixelFormatAttribute> attrib = stackalloc WGLPixelFormatAttribute[1] { WGLPixelFormatAttribute.NUMBER_PIXEL_FORMATS_ARB };
+                Span<PixelFormatAttribute> attrib = stackalloc PixelFormatAttribute[1] { PixelFormatAttribute.NumberPixelFormatsArb };
                 int numberOfFormats = 0;
                 unsafe
                 {
-                    success = Wgl.GetPixelFormatAttribivARB(hDC, 1, 0, 1, attrib, new Span<int>(&numberOfFormats, 1));
+                    success = Wgl.ARB.GetPixelFormatAttribivARB(hDC, 1, 0, 1, attrib, new Span<int>(&numberOfFormats, 1));
                     if (success == false)
                     {
                         throw new Win32Exception();
                     }
                 }
                 
-                List<WGLPixelFormatAttribute> attribList = new List<WGLPixelFormatAttribute>()
+                List<PixelFormatAttribute> attribList = new List<PixelFormatAttribute>()
                 {
-                    WGLPixelFormatAttribute.SUPPORT_OPENGL_ARB,
-                    WGLPixelFormatAttribute.DRAW_TO_WINDOW_ARB,
-                    WGLPixelFormatAttribute.PIXEL_TYPE_ARB,
-                    WGLPixelFormatAttribute.ACCELERATION_ARB,
-                    WGLPixelFormatAttribute.SWAP_METHOD_ARB,
-                    WGLPixelFormatAttribute.DOUBLE_BUFFER_ARB,
-                    WGLPixelFormatAttribute.STEREO_ARB,
-                    WGLPixelFormatAttribute.RED_BITS_ARB,
-                    WGLPixelFormatAttribute.GREEN_BITS_ARB,
-                    WGLPixelFormatAttribute.BLUE_BITS_ARB,
-                    WGLPixelFormatAttribute.ALPHA_BITS_ARB,
-                    WGLPixelFormatAttribute.DEPTH_BITS_ARB,
-                    WGLPixelFormatAttribute.STENCIL_BITS_ARB,
+                    PixelFormatAttribute.SupportOpenglArb,
+                    PixelFormatAttribute.DrawToWindowArb,
+                    PixelFormatAttribute.PixelTypeArb,
+                    PixelFormatAttribute.AccelerationArb,
+                    PixelFormatAttribute.SwapMethodArb,
+                    PixelFormatAttribute.DoubleBufferArb,
+                    PixelFormatAttribute.StereoArb,
+                    PixelFormatAttribute.RedBitsArb,
+                    PixelFormatAttribute.GreenBitsArb,
+                    PixelFormatAttribute.BlueBitsArb,
+                    PixelFormatAttribute.AlphaBitsArb,
+                    PixelFormatAttribute.DepthBitsArb,
+                    PixelFormatAttribute.StencilBitsArb,
                 };
 
                 if (ARB_multisample)
                 {
-                    attribList.Add(WGLPixelFormatAttribute.SAMPLES_ARB);
+                    attribList.Add(PixelFormatAttribute.SamplesArb);
                 }
 
                 if (ARB_framebuffer_sRGB)
                 {
-                    attribList.Add(WGLPixelFormatAttribute.FRAMEBUFFER_SRGB_CAPABLE_ARB);
+                    attribList.Add(PixelFormatAttribute.FramebufferSrgbCapableArb);
                 }
                 else if (EXT_framebuffer_sRGB)
                 {
-                    attribList.Add(WGLPixelFormatAttribute.FRAMEBUFFER_SRGB_CAPABLE_ARB);
+                    attribList.Add(PixelFormatAttribute.FramebufferSrgbCapableExt);
                 }
                 else if (EXT_colorspace)
                 {
-                    attribList.Add(WGLPixelFormatAttribute.COLORSPACE_EXT);
+                    attribList.Add(PixelFormatAttribute.ColorspaceExt);
                 }
 
                 // Extract the span directly from the list to avoid allocation?
-                WGLPixelFormatAttribute[] contextValueAttrib = attribList.ToArray();
+                PixelFormatAttribute[] contextValueAttrib = attribList.ToArray();
                 // FIXME: Stack alloc this?
                 int[] contextValues = new int[contextValueAttrib.Length];
 
                 // FIXME: Don't always return -1? Pass the default value...
                 // Should we throw exceptions for the ones we always expect to get answers to?
-                static int FindAttribute(WGLPixelFormatAttribute[] attribs, int[] values, WGLPixelFormatAttribute search)
+                static int FindAttribute(PixelFormatAttribute[] attribs, int[] values, PixelFormatAttribute search)
                 {
                     for (int i = 0; i < attribs.Length; i++)
                     {
@@ -379,23 +380,23 @@ namespace OpenTK.Platform.Native.Windows
                 List<ContextValues> possibleContextValues = new List<ContextValues>(numberOfFormats);
                 for (int i = 1; i <= numberOfFormats; i++)
                 {
-                    success = Wgl.GetPixelFormatAttribivARB(hDC, i, 0, contextValueAttrib.Length, contextValueAttrib, contextValues);
+                    success = Wgl.ARB.GetPixelFormatAttribivARB(hDC, i, 0, (uint)contextValueAttrib.Length, contextValueAttrib, contextValues);
                     if (success == false)
                     {
                         throw new Win32Exception();
                     }
 
-                    if (FindAttribute(contextValueAttrib, contextValues, WGLPixelFormatAttribute.DRAW_TO_WINDOW_ARB) == 0)
+                    if (FindAttribute(contextValueAttrib, contextValues, PixelFormatAttribute.DrawToWindowArb) == 0)
                     {
                         continue;
                     }
 
-                    if (FindAttribute(contextValueAttrib, contextValues, WGLPixelFormatAttribute.SUPPORT_OPENGL_ARB) == 0)
+                    if (FindAttribute(contextValueAttrib, contextValues, PixelFormatAttribute.SupportOpenglArb) == 0)
                     {
                         continue;
                     }
 
-                    WGLColorType colorType = (WGLColorType)FindAttribute(contextValueAttrib, contextValues, WGLPixelFormatAttribute.PIXEL_TYPE_ARB);
+                    WGLColorType colorType = (WGLColorType)FindAttribute(contextValueAttrib, contextValues, PixelFormatAttribute.PixelTypeArb);
                     ContextPixelFormat pixelFormat;
                     if (EXT_pixel_format_packed_float && colorType == WGLColorType.TYPE_RGBA_UNSIGNED_FLOAT_EXT)
                     {
@@ -415,23 +416,23 @@ namespace OpenTK.Platform.Native.Windows
                     }
 
                     // FIXME: Add this as a parameter.
-                    if ((WGLAcceleration)FindAttribute(contextValueAttrib, contextValues, WGLPixelFormatAttribute.ACCELERATION_ARB) == WGLAcceleration.NO_ACCELERATION_ARB)
+                    if ((WGLAcceleration)FindAttribute(contextValueAttrib, contextValues, PixelFormatAttribute.AccelerationArb) == WGLAcceleration.NO_ACCELERATION_ARB)
                     {
                         //Logger?.LogWarning("OpenGL context doesn't have hardware acceleration");
                         continue;
                     }
 
-                    WGLSwapMethod wglSwapMethod = (WGLSwapMethod)FindAttribute(contextValueAttrib, contextValues, WGLPixelFormatAttribute.SWAP_METHOD_ARB);
+                    SwapMethod wglSwapMethod = (SwapMethod)FindAttribute(contextValueAttrib, contextValues, PixelFormatAttribute.SwapMethodArb);
                     ContextSwapMethod swapMethod;
-                    if (wglSwapMethod == WGLSwapMethod.SWAP_UNDEFINED_ARB)
+                    if (wglSwapMethod == SwapMethod.SwapUndefinedArb)
                     {
                         swapMethod = ContextSwapMethod.Undefined;
                     }
-                    else if (wglSwapMethod == WGLSwapMethod.SWAP_EXCHANGE_ARB)
+                    else if (wglSwapMethod == SwapMethod.SwapExchangeArb)
                     {
                         swapMethod = ContextSwapMethod.Exchange;
                     }
-                    else if (wglSwapMethod == WGLSwapMethod.SWAP_COPY_ARB)
+                    else if (wglSwapMethod == SwapMethod.SwapCopyArb)
                     {
                         swapMethod = ContextSwapMethod.Copy;
                     }
@@ -442,7 +443,7 @@ namespace OpenTK.Platform.Native.Windows
                     }
 
 
-                    if ((WGLSwapMethod)FindAttribute(contextValueAttrib, contextValues, WGLPixelFormatAttribute.SWAP_METHOD_ARB) == WGLSwapMethod.SWAP_UNDEFINED_ARB)
+                    if ((SwapMethod)FindAttribute(contextValueAttrib, contextValues, PixelFormatAttribute.SwapMethodArb) == SwapMethod.SwapUndefinedArb)
                     {
                         //Logger?.LogWarning("OpenGL context has undefined swap method");
                     }
@@ -451,20 +452,20 @@ namespace OpenTK.Platform.Native.Windows
                     // FIXME: Add stereo to this?
                     ContextValues option = default;
                     option.ID = (ulong)i;
-                    option.RedBits = FindAttribute(contextValueAttrib, contextValues, WGLPixelFormatAttribute.RED_BITS_ARB);
-                    option.GreenBits = FindAttribute(contextValueAttrib, contextValues, WGLPixelFormatAttribute.GREEN_BITS_ARB);
-                    option.BlueBits = FindAttribute(contextValueAttrib, contextValues, WGLPixelFormatAttribute.BLUE_BITS_ARB);
-                    option.AlphaBits = FindAttribute(contextValueAttrib, contextValues, WGLPixelFormatAttribute.ALPHA_BITS_ARB);
-                    option.DepthBits = FindAttribute(contextValueAttrib, contextValues, WGLPixelFormatAttribute.DEPTH_BITS_ARB);
-                    option.StencilBits = FindAttribute(contextValueAttrib, contextValues, WGLPixelFormatAttribute.STENCIL_BITS_ARB);
-                    option.DoubleBuffered = (FindAttribute(contextValueAttrib, contextValues, WGLPixelFormatAttribute.DOUBLE_BUFFER_ARB) == 1);
+                    option.RedBits = FindAttribute(contextValueAttrib, contextValues, PixelFormatAttribute.RedBitsArb);
+                    option.GreenBits = FindAttribute(contextValueAttrib, contextValues, PixelFormatAttribute.GreenBitsArb);
+                    option.BlueBits = FindAttribute(contextValueAttrib, contextValues, PixelFormatAttribute.BlueBitsArb);
+                    option.AlphaBits = FindAttribute(contextValueAttrib, contextValues, PixelFormatAttribute.AlphaBitsArb);
+                    option.DepthBits = FindAttribute(contextValueAttrib, contextValues, PixelFormatAttribute.DepthBitsArb);
+                    option.StencilBits = FindAttribute(contextValueAttrib, contextValues, PixelFormatAttribute.StencilBitsArb);
+                    option.DoubleBuffered = (FindAttribute(contextValueAttrib, contextValues, PixelFormatAttribute.DoubleBufferArb) == 1);
                     if (ARB_framebuffer_sRGB || EXT_framebuffer_sRGB)
                     {
-                        option.SRGBFramebuffer = FindAttribute(contextValueAttrib, contextValues, WGLPixelFormatAttribute.FRAMEBUFFER_SRGB_CAPABLE_ARB) == 1;
+                        option.SRGBFramebuffer = FindAttribute(contextValueAttrib, contextValues, PixelFormatAttribute.FramebufferSrgbCapableArb) == 1;
                     }
                     else if (EXT_colorspace)
                     {
-                        option.SRGBFramebuffer = FindAttribute(contextValueAttrib, contextValues, WGLPixelFormatAttribute.COLORSPACE_EXT) == (int)WGLColorspaceEXT.WGL_COLORSPACE_SRGB_EXT;
+                        option.SRGBFramebuffer = FindAttribute(contextValueAttrib, contextValues, PixelFormatAttribute.ColorspaceExt) == (int)ColorspaceEXT.ColorspaceSrgbExt;
                     }
                     else
                     {
@@ -472,7 +473,7 @@ namespace OpenTK.Platform.Native.Windows
                     }
                     option.PixelFormat = pixelFormat;
                     option.SwapMethod = swapMethod;
-                    option.Samples = ARB_multisample ? FindAttribute(contextValueAttrib, contextValues, WGLPixelFormatAttribute.SAMPLES_ARB) : 0;
+                    option.Samples = ARB_multisample ? FindAttribute(contextValueAttrib, contextValues, PixelFormatAttribute.SamplesArb) : 0;
                     possibleContextValues.Add(option);
                 }
 
@@ -484,33 +485,33 @@ namespace OpenTK.Platform.Native.Windows
                 }
 
                 int selectedFormat = (int)possibleContextValues[selectedFormatIndex].ID;
-                success = Wgl.GetPixelFormatAttribivARB(hDC, selectedFormat, 0, contextValueAttrib.Length, contextValueAttrib, contextValues);
+                success = Wgl.ARB.GetPixelFormatAttribivARB(hDC, selectedFormat, 0, (uint)contextValueAttrib.Length, contextValueAttrib, contextValues);
                 if (success == false)
                 {
                     throw new Win32Exception();
                 }
 
-                if (FindAttribute(contextValueAttrib, contextValues, WGLPixelFormatAttribute.DRAW_TO_WINDOW_ARB) == 0)
+                if (FindAttribute(contextValueAttrib, contextValues, PixelFormatAttribute.DrawToWindowArb) == 0)
                 {
                     Logger?.LogError("Drawing to window is not supported");
                 }
 
-                if (FindAttribute(contextValueAttrib, contextValues, WGLPixelFormatAttribute.SUPPORT_OPENGL_ARB) == 0)
+                if (FindAttribute(contextValueAttrib, contextValues, PixelFormatAttribute.SupportOpenglArb) == 0)
                 {
                     Logger?.LogError("OpneGL is not supported");
                 }
 
-                WGLColorType chosenColorType = (WGLColorType)FindAttribute(contextValueAttrib, contextValues, WGLPixelFormatAttribute.PIXEL_TYPE_ARB);
+                PixelType chosenColorType = (PixelType)FindAttribute(contextValueAttrib, contextValues, PixelFormatAttribute.PixelTypeArb);
                 ContextPixelFormat chosenPixelFormat;
-                if (EXT_pixel_format_packed_float && chosenColorType == WGLColorType.TYPE_RGBA_UNSIGNED_FLOAT_EXT)
+                if (EXT_pixel_format_packed_float && chosenColorType == PixelType.TypeRgbaUnsignedFloatExt)
                 {
                     chosenPixelFormat = ContextPixelFormat.RGBAPackedFloat;
                 }
-                else if ((ARB_color_buffer_float || ATI_pixel_format_float) && chosenColorType == WGLColorType.TYPE_RGBA_FLOAT_ARB)
+                else if ((ARB_color_buffer_float || ATI_pixel_format_float) && chosenColorType == PixelType.TypeRgbaFloatArb)
                 {
                     chosenPixelFormat = ContextPixelFormat.RGBAFloat;
                 }
-                else if (chosenColorType == WGLColorType.TYPE_RGBA_ARB)
+                else if (chosenColorType == PixelType.TypeRgbaArb)
                 {
                     chosenPixelFormat = ContextPixelFormat.RGBA;
                 }
@@ -520,22 +521,22 @@ namespace OpenTK.Platform.Native.Windows
                     chosenPixelFormat = ContextPixelFormat.RGBA;
                 }
 
-                if ((WGLAcceleration)FindAttribute(contextValueAttrib, contextValues, WGLPixelFormatAttribute.ACCELERATION_ARB) == WGLAcceleration.NO_ACCELERATION_ARB)
+                if ((AccelerationType)FindAttribute(contextValueAttrib, contextValues, PixelFormatAttribute.AccelerationArb) == AccelerationType.NoAccelerationArb)
                 {
                     Logger?.LogWarning("OpenGL context doesn't have hardware acceleration");
                 }
 
-                WGLSwapMethod chosenWglSwapMethod = (WGLSwapMethod)FindAttribute(contextValueAttrib, contextValues, WGLPixelFormatAttribute.SWAP_METHOD_ARB);
+                SwapMethod chosenWglSwapMethod = (SwapMethod)FindAttribute(contextValueAttrib, contextValues, PixelFormatAttribute.SwapMethodArb);
                 ContextSwapMethod chosenSwapMethod;
-                if (chosenWglSwapMethod == WGLSwapMethod.SWAP_UNDEFINED_ARB)
+                if (chosenWglSwapMethod == SwapMethod.SwapUndefinedArb)
                 {
                     chosenSwapMethod = ContextSwapMethod.Undefined;
                 }
-                else if (chosenWglSwapMethod == WGLSwapMethod.SWAP_EXCHANGE_ARB)
+                else if (chosenWglSwapMethod == SwapMethod.SwapExchangeArb)
                 {
                     chosenSwapMethod = ContextSwapMethod.Exchange;
                 }
-                else if (chosenWglSwapMethod == WGLSwapMethod.SWAP_COPY_ARB)
+                else if (chosenWglSwapMethod == SwapMethod.SwapCopyArb)
                 {
                     chosenSwapMethod = ContextSwapMethod.Copy;
                 }
@@ -548,26 +549,26 @@ namespace OpenTK.Platform.Native.Windows
                 bool chosenSRGB = false;
                 if (ARB_framebuffer_sRGB || EXT_framebuffer_sRGB)
                 {
-                    chosenSRGB = FindAttribute(contextValueAttrib, contextValues, WGLPixelFormatAttribute.FRAMEBUFFER_SRGB_CAPABLE_ARB) == 1;
+                    chosenSRGB = FindAttribute(contextValueAttrib, contextValues, PixelFormatAttribute.FramebufferSrgbCapableArb) == 1;
                 }
                 else if (EXT_colorspace)
                 {
-                    chosenSRGB = FindAttribute(contextValueAttrib, contextValues, WGLPixelFormatAttribute.COLORSPACE_EXT) == (int)WGLColorspaceEXT.WGL_COLORSPACE_SRGB_EXT;
+                    chosenSRGB = FindAttribute(contextValueAttrib, contextValues, PixelFormatAttribute.ColorspaceExt) == (int)ColorspaceEXT.ColorspaceSrgbExt;
                 }
 
                 ContextValues chosenValues;
                 chosenValues.ID = (ulong)selectedFormat;
-                chosenValues.RedBits = FindAttribute(contextValueAttrib, contextValues, WGLPixelFormatAttribute.RED_BITS_ARB);
-                chosenValues.GreenBits = FindAttribute(contextValueAttrib, contextValues, WGLPixelFormatAttribute.GREEN_BITS_ARB);
-                chosenValues.BlueBits = FindAttribute(contextValueAttrib, contextValues, WGLPixelFormatAttribute.BLUE_BITS_ARB);
-                chosenValues.AlphaBits = FindAttribute(contextValueAttrib, contextValues, WGLPixelFormatAttribute.ALPHA_BITS_ARB);
-                chosenValues.DepthBits = FindAttribute(contextValueAttrib, contextValues, WGLPixelFormatAttribute.DEPTH_BITS_ARB);
-                chosenValues.StencilBits = FindAttribute(contextValueAttrib, contextValues, WGLPixelFormatAttribute.STENCIL_BITS_ARB);
-                chosenValues.DoubleBuffered = FindAttribute(contextValueAttrib, contextValues, WGLPixelFormatAttribute.DOUBLE_BUFFER_ARB) == 1;
+                chosenValues.RedBits = FindAttribute(contextValueAttrib, contextValues, PixelFormatAttribute.RedBitsArb);
+                chosenValues.GreenBits = FindAttribute(contextValueAttrib, contextValues, PixelFormatAttribute.GreenBitsArb);
+                chosenValues.BlueBits = FindAttribute(contextValueAttrib, contextValues, PixelFormatAttribute.BlueBitsArb);
+                chosenValues.AlphaBits = FindAttribute(contextValueAttrib, contextValues, PixelFormatAttribute.AlphaBitsArb);
+                chosenValues.DepthBits = FindAttribute(contextValueAttrib, contextValues, PixelFormatAttribute.DepthBitsArb);
+                chosenValues.StencilBits = FindAttribute(contextValueAttrib, contextValues, PixelFormatAttribute.StencilBitsArb);
+                chosenValues.DoubleBuffered = FindAttribute(contextValueAttrib, contextValues, PixelFormatAttribute.DoubleBufferArb) == 1;
                 chosenValues.SRGBFramebuffer = chosenSRGB;
                 chosenValues.PixelFormat = chosenPixelFormat;
                 chosenValues.SwapMethod = chosenSwapMethod;
-                chosenValues.Samples = ARB_multisample ? FindAttribute(contextValueAttrib, contextValues, WGLPixelFormatAttribute.SAMPLES_ARB) : 0;
+                chosenValues.Samples = ARB_multisample ? FindAttribute(contextValueAttrib, contextValues, PixelFormatAttribute.SamplesArb) : 0;
 
                 StringBuilder sb = new StringBuilder();
                 for (int j = 0; j < contextValueAttrib.Length; j++)
@@ -709,73 +710,59 @@ namespace OpenTK.Platform.Native.Windows
             IntPtr hGLRC;
             unsafe
             {
-                if (Wgl._CreateContextAttribsARB__fnptr != null)
+                if (WglPointers._wglCreateContextAttribsARB_fnptr != null)
                 {
-                    const int WGL_CONTEXT_DEBUG_BIT_ARB = 0x0001;
-                    const int WGL_CONTEXT_FORWARD_COMPATIBLE_BIT_ARB = 0x0002;
-                    const int WGL_CONTEXT_ROBUST_ACCESS_BIT_ARB = 0x00000004;
-                    const int WGL_CONTEXT_RESET_ISOLATION_BIT_ARB = 0x00000008;
+                    ContextFlagsMask flags = 0;
+                    if (settings.DebugFlag) flags |= ContextFlagsMask.ContextDebugBitArb;
+                    if (settings.ForwardCompatibleFlag) flags |= ContextFlagsMask.ContextForwardCompatibleBitArb;
+                    if (ARB_create_context_robustness && settings.RobustnessFlag) flags |= ContextFlagsMask.ContextRobustAccessBitArb;
+                    if (ARB_robustness_application_isolation && settings.ResetIsolationFlag) flags |= ContextFlagsMask.ContextResetIsolationBitArb;
 
-                    const int WGL_CONTEXT_CORE_PROFILE_BIT_ARB = 0x1;
-                    const int WGL_CONTEXT_COMPATIBILITY_PROFILE_BIT_ARB = 0x2;
-
-                    const int WGL_NO_RESET_NOTIFICATION_ARB = 0x8261;
-                    const int WGL_LOSE_CONTEXT_ON_RESET_ARB = 0x8252;
-
-                    const int WGL_CONTEXT_RELEASE_BEHAVIOR_NONE_ARB = 0x0000;
-                    const int WGL_CONTEXT_RELEASE_BEHAVIOR_FLUSH_ARB = 0x2098;
-
-                    int flags = 0;
-                    if (settings.DebugFlag) flags |= WGL_CONTEXT_DEBUG_BIT_ARB;
-                    if (settings.ForwardCompatibleFlag) flags |= WGL_CONTEXT_FORWARD_COMPATIBLE_BIT_ARB;
-                    if (ARB_create_context_robustness && settings.RobustnessFlag) flags |= WGL_CONTEXT_ROBUST_ACCESS_BIT_ARB;
-                    if (ARB_robustness_application_isolation && settings.ResetIsolationFlag) flags |= WGL_CONTEXT_RESET_ISOLATION_BIT_ARB;
-                    
-                    int profile = 0;
+                    ContextProfileMask profile = 0;
                     switch (settings.Profile)
                     {
                         case OpenGLProfile.None:
                             break;
                         case OpenGLProfile.Core:
-                            profile = WGL_CONTEXT_CORE_PROFILE_BIT_ARB;
+                            profile = ContextProfileMask.ContextCoreProfileBitArb;
                             break;
                         case OpenGLProfile.Compatibility:
-                            profile = WGL_CONTEXT_CORE_PROFILE_BIT_ARB | WGL_CONTEXT_COMPATIBILITY_PROFILE_BIT_ARB;
+                            profile = ContextProfileMask.ContextCoreProfileBitArb | ContextProfileMask.ContextCompatibilityProfileBitArb;
                             break;
                         default:
                             break;
                     }
 
-                    List<int> attribs = new List<int>();
+                    List<ContextAttribs> attribs = new List<ContextAttribs>();
 
-                    attribs.Add((int)WGLContextAttribs.CONTEXT_MAJOR_VERSION_ARB);
-                    attribs.Add(settings.Version.Major);
+                    attribs.Add(ContextAttribs.ContextMajorVersionArb);
+                    attribs.Add((ContextAttribs)settings.Version.Major);
 
-                    attribs.Add((int)WGLContextAttribs.CONTEXT_MINOR_VERSION_ARB);
-                    attribs.Add(settings.Version.Minor);
+                    attribs.Add(ContextAttribs.ContextMinorVersionArb);
+                    attribs.Add((ContextAttribs)settings.Version.Minor);
 
                     if (flags != 0)
                     {
-                        attribs.Add((int)WGLContextAttribs.CONTEXT_FLAGS_ARB);
-                        attribs.Add(flags);
+                        attribs.Add(ContextAttribs.ContextFlagsArb);
+                        attribs.Add((ContextAttribs)flags);
                     }
 
                     if (profile != 0)
                     {
-                        attribs.Add((int)WGLContextAttribs.CONTEXT_PROFILE_MASK_ARB);
-                        attribs.Add(profile);
+                        attribs.Add(ContextAttribs.ContextProfileMaskArb);
+                        attribs.Add((ContextAttribs)profile);
                     }
 
                     if (ARB_create_context_robustness && settings.RobustnessFlag)
                     {
-                        attribs.Add((int)WGLContextAttribs.CONTEXT_RESET_NOTIFICATION_STRATEGY_ARB);
+                        attribs.Add(ContextAttribs.ContextResetNotificationStrategyArb);
                         switch (settings.ResetNotificationStrategy)
                         {
                             case ContextResetNotificationStrategy.NoResetNotification:
-                                attribs.Add(WGL_NO_RESET_NOTIFICATION_ARB);
+                                attribs.Add((ContextAttribs)Graphics.Wgl.ContextResetNotificationStrategy.NoResetNotificationArb);
                                 break;
                             case ContextResetNotificationStrategy.LoseContextOnReset:
-                                attribs.Add(WGL_LOSE_CONTEXT_ON_RESET_ARB);
+                                attribs.Add((ContextAttribs)Graphics.Wgl.ContextResetNotificationStrategy.LoseContextOnResetArb);
                                 break;
                             default:
                                 throw new InvalidEnumArgumentException(nameof(settings.ResetNotificationStrategy), (int)settings.ResetNotificationStrategy, settings.ResetNotificationStrategy.GetType());
@@ -784,20 +771,20 @@ namespace OpenTK.Platform.Native.Windows
 
                     if (ARB_create_context_no_error && settings.NoErrorFlag)
                     {
-                        attribs.Add((int)WGLContextAttribs.CONTEXT_OPENGL_NO_ERROR_ARB);
-                        attribs.Add(1);
+                        attribs.Add(ContextAttribs.ContextOpenglNoErrorArb);
+                        attribs.Add((ContextAttribs)1);
                     }
 
                     if (ARB_context_flush_control && settings.UseFlushControl)
                     {
-                        attribs.Add((int)WGLContextAttribs.CONTEXT_RELEASE_BEHAVIOR_ARB);
+                        attribs.Add(ContextAttribs.ContextReleaseBehaviorArb);
                         switch (settings.ReleaseBehaviour)
                         {
                             case ContextReleaseBehaviour.None:
-                                attribs.Add(WGL_CONTEXT_RELEASE_BEHAVIOR_NONE_ARB);
+                                attribs.Add((ContextAttribs)ContextReleaseBehavior.ContextReleaseBehaviorNoneArb);
                                 break;
                             case ContextReleaseBehaviour.Flush:
-                                attribs.Add(WGL_CONTEXT_RELEASE_BEHAVIOR_FLUSH_ARB);
+                                attribs.Add((ContextAttribs)ContextReleaseBehavior.ContextReleaseBehaviorFlushArb);
                                 break;
                             default:
                                 throw new InvalidEnumArgumentException(nameof(settings.ReleaseBehaviour), (int)settings.ReleaseBehaviour, settings.ReleaseBehaviour.GetType());
@@ -807,7 +794,7 @@ namespace OpenTK.Platform.Native.Windows
 
                     IntPtr hshare = hshareContext?.HGlrc ?? IntPtr.Zero;
 
-                    hGLRC = Wgl.CreateContextAttribsARB(hDC, hshare, CollectionsMarshal.AsSpan(attribs));
+                    hGLRC = Wgl.ARB.CreateContextAttribsARB(hDC, hshare, CollectionsMarshal.AsSpan(attribs));
                     if (hGLRC == IntPtr.Zero)
                     {
                         throw new Win32Exception();
@@ -872,7 +859,20 @@ namespace OpenTK.Platform.Native.Windows
         {
             HGLRC hglrc = handle.As<HGLRC>(this);
 
-            return (IntPtr)Wgl.GetAnyProcAddress(procedureName);
+            return (IntPtr)GetAnyProcAddress(procedureName);
+
+            static unsafe IntPtr GetAnyProcAddress(string procName)
+            {
+                IntPtr p = Wgl.GetProcAddress(procName);
+                if (p == 0 || (p == 0x1) || (p == 0x2) || (p == 0x3) || (p == -1))
+                {
+                    // FIXME: Make this only load this once?
+                    IntPtr module = Win32.LoadLibrary("opengl32.dll");
+                    p = Win32.GetProcAddress(module, procName);
+                }
+
+                return p;
+            }
         }
 
         /// <inheritdoc/>
@@ -928,7 +928,7 @@ namespace OpenTK.Platform.Native.Windows
         {
             if (EXT_swap_control)
             {
-                Wgl.SwapIntervalEXT(interval);
+                Wgl.EXT.SwapIntervalEXT(interval);
             }
             else
             {
@@ -941,7 +941,7 @@ namespace OpenTK.Platform.Native.Windows
         {
             if (EXT_swap_control)
             {
-                return Wgl.GetSwapIntervalEXT();
+                return Wgl.EXT.GetSwapIntervalEXT();
             }
             else
             {

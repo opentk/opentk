@@ -21,6 +21,8 @@ namespace OpenTK.Platform.Native.X11
         {
             Value = value;
         }
+
+        public static implicit operator OpenTK.Graphics.Glx.DisplayPtr(XDisplayPtr display) => new Graphics.Glx.DisplayPtr(display.Value);
     }
 
     [DebuggerDisplay("{Value}")]
@@ -387,6 +389,8 @@ namespace OpenTK.Platform.Native.X11
         {
             return !(left == right);
         }
+
+        public static implicit operator Graphics.Glx.Window(XWindow window) => new Graphics.Glx.Window((nuint)window.Id);
 
         public override string ToString()
         {
