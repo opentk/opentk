@@ -252,7 +252,7 @@ namespace OpenTK.Platform.Native.X11
                         out long bytesAfter,
                         out IntPtr prop);
 
-                    if (status == X11.Success)
+                    if (status == Success)
                     {
                         byte* edid = (byte*)prop;
 
@@ -296,6 +296,8 @@ namespace OpenTK.Platform.Native.X11
                     }
 
                     unsafe {
+                        // We are initializing, so doing a hardware poll is reasonable.
+                        // - Noggin_bops 2024-09-23
                         XRRScreenResources* resources = XRRGetScreenResources(X11.Display, X11.DefaultRootWindow);
 
                         RROutput primaryOutput = XRRGetOutputPrimary(X11.Display, X11.DefaultRootWindow);
@@ -369,7 +371,7 @@ namespace OpenTK.Platform.Native.X11
             switch ((RREventType)(@event.Type - X11.XRandREventBase))
             {
                 case RREventType.RRScreenChangeNotify:
-                    Console.WriteLine("RR Screen change notify.");
+                    logger?.LogInfo("RR Screen change notify.");
                     break;
                 case RREventType.RRNotify:
                 {
@@ -395,6 +397,9 @@ namespace OpenTK.Platform.Native.X11
                             {
                                 unsafe
                                 {
+                                    // FIXME: Do we want to use XRRGetScreenResources or XRRGetScreenResourcesCurrent here?
+                                    // SDL seems to do a simple check to see if the information needs to be updated.
+                                    // - Noggin_bops 2024-09-23
                                     XRRScreenResources* resources = XRRGetScreenResources(X11.Display, X11.DefaultRootWindow);
                                     RROutput primaryOutput = XRRGetOutputPrimary(X11.Display, X11.DefaultRootWindow);
 
@@ -502,7 +507,7 @@ namespace OpenTK.Platform.Native.X11
 
             unsafe
             {
-                XRRScreenResources* resources = XRRGetScreenResources(X11.Display, X11.DefaultRootWindow);
+                XRRScreenResources* resources = XRRGetScreenResourcesCurrent(X11.Display, X11.DefaultRootWindow);
                 XRRCrtcInfo* crtcInfo = XRRGetCrtcInfo(X11.Display, resources, xdisplay.Crtc);
 
                 if (crtcInfo != null)
@@ -538,7 +543,7 @@ namespace OpenTK.Platform.Native.X11
         {
             unsafe
             {
-                XRRScreenResources* resources = XRRGetScreenResources(X11.Display, X11.DefaultRootWindow);
+                XRRScreenResources* resources = XRRGetScreenResourcesCurrent(X11.Display, X11.DefaultRootWindow);
                 XRRCrtcInfo* crtcInfo = XRRGetCrtcInfo(X11.Display, resources, handle.Crtc);
 
                 if (crtcInfo != null)
@@ -577,7 +582,7 @@ namespace OpenTK.Platform.Native.X11
             {
                 XDisplayHandle xdisplay = handle.As<XDisplayHandle>(this);
 
-                XRRScreenResources* resources = XRRGetScreenResources(X11.Display, X11.DefaultRootWindow);
+                XRRScreenResources* resources = XRRGetScreenResourcesCurrent(X11.Display, X11.DefaultRootWindow);
                 XRROutputInfo* outputInfo = XRRGetOutputInfo(X11.Display, resources, xdisplay.Output);
                 if (outputInfo == null)
                 {
@@ -611,7 +616,7 @@ namespace OpenTK.Platform.Native.X11
             {
                 XDisplayHandle xdisplay = handle.As<XDisplayHandle>(this);
 
-                XRRScreenResources* resources = XRRGetScreenResources(X11.Display, X11.DefaultRootWindow);
+                XRRScreenResources* resources = XRRGetScreenResourcesCurrent(X11.Display, X11.DefaultRootWindow);
                 XRRCrtcInfo* crtcInfo = XRRGetCrtcInfo(X11.Display, resources, xdisplay.Crtc);
 
                 if (crtcInfo != null)
@@ -641,7 +646,7 @@ namespace OpenTK.Platform.Native.X11
             {
                 XDisplayHandle xdisplay = handle.As<XDisplayHandle>(this);
 
-                XRRScreenResources* resources = XRRGetScreenResources(X11.Display, X11.DefaultRootWindow);
+                XRRScreenResources* resources = XRRGetScreenResourcesCurrent(X11.Display, X11.DefaultRootWindow);
                 XRRCrtcInfo* crtcInfo = XRRGetCrtcInfo(X11.Display, resources, xdisplay.Crtc);
 
                 if (crtcInfo != null)
@@ -671,7 +676,7 @@ namespace OpenTK.Platform.Native.X11
 
             unsafe
             {
-                XRRScreenResources* resources = XRRGetScreenResources(X11.Display, X11.DefaultRootWindow);
+                XRRScreenResources* resources = XRRGetScreenResourcesCurrent(X11.Display, X11.DefaultRootWindow);
                 XRRCrtcInfo* crtcInfo = XRRGetCrtcInfo(X11.Display, resources, xdisplay.Crtc);
 
                 if (crtcInfo != null)
@@ -702,7 +707,7 @@ namespace OpenTK.Platform.Native.X11
             if (X11.Atoms[KnownAtoms._NET_WORKAREA] != XAtom.None &&
                 X11.Atoms[KnownAtoms._NET_CURRENT_DESKTOP] != XAtom.None)
             {
-                XGetWindowProperty(
+                int result = XGetWindowProperty(
                     X11.Display, 
                     X11.DefaultRootWindow,
                     X11.Atoms[KnownAtoms._NET_WORKAREA],
@@ -715,7 +720,18 @@ namespace OpenTK.Platform.Native.X11
                     out long _,
                     out IntPtr workAreasPtr);
 
-                XGetWindowProperty(X11.Display, 
+                if (result != Success)
+                {
+                    Logger?.LogWarning($"Could not get property _NET_WORKAREA. Reporting display area as work area. DisplayHandle: {xdisplay}");
+                    if (workAreasPtr != IntPtr.Zero)
+                    {
+                        XFree(workAreasPtr);
+                    }
+                    return;
+                }
+
+                result = XGetWindowProperty(
+                    X11.Display, 
                     X11.DefaultRootWindow,
                     X11.Atoms[KnownAtoms._NET_CURRENT_DESKTOP],
                     0, long.MaxValue,
@@ -726,9 +742,19 @@ namespace OpenTK.Platform.Native.X11
                     out long items,
                     out _,
                     out IntPtr desktopPtr);
+
+                if (result != Success)
+                {
+                    Logger?.LogWarning($"Could not get property _NET_CURRENT_DESKTOP. Reporting display area as work area. DisplayHandle: {xdisplay}");
+                    if (desktopPtr != IntPtr.Zero)
+                    {
+                        XFree(desktopPtr);
+                    }
+                    return;
+                }
                 
                 if (items > 0)
-                unsafe 
+                unsafe
                 {
                     int desktop = *(int*)desktopPtr;
 
@@ -764,7 +790,7 @@ namespace OpenTK.Platform.Native.X11
             {
                 XDisplayHandle xdisplay = handle.As<XDisplayHandle>(this);
 
-                XRRScreenResources* resources = XRRGetScreenResources(X11.Display, X11.DefaultRootWindow);
+                XRRScreenResources* resources = XRRGetScreenResourcesCurrent(X11.Display, X11.DefaultRootWindow);
                 XRRCrtcInfo* crtcInfo = XRRGetCrtcInfo(X11.Display, resources, xdisplay.Crtc);
 
                 if (crtcInfo != null)
@@ -802,15 +828,21 @@ namespace OpenTK.Platform.Native.X11
             }
         }
 
+        private static bool hasReportedDisplayScaleWarning = false;
+
         /// <inheritdoc />
         public void GetDisplayScale(DisplayHandle handle, out float scaleX, out float scaleY)
         {
+            if (hasReportedDisplayScaleWarning == false)
+            {
+                Logger?.LogWarning("Display scale is always 1 on X11 atm.");
+                hasReportedDisplayScaleWarning = true;
+            }
+
             // FIXME: We can read something like XrmGetResource "Xft.dpi" or use X11_XGetDefault(dpy, "Xft", "dpi")
             // But the question is how do we get the scale factor from just the DPI?
             scaleX = 1;
             scaleY = 1;
-            Logger?.LogWarning("Display scale is always 1 on X11 atm.");
-            //throw new NotImplementedException();
         }
 
         /// <summary>

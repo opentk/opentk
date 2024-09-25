@@ -1,4 +1,5 @@
 All 3D models are created by Noggin_bops and are part of the OpenTK project.
+"mute.dds" and "unmute.dds" are created by Noggin_bops and are part of the OpenTK project.
 
 dancing_hall_4k evironment map is a CC0 asset downloaded from:
 https://polyhaven.com/a/dancing_hall
@@ -13,3 +14,12 @@ ruby_icon.ico and ruby_icon.png are rendered by Noggin_bops and are part of the 
 
 "Gold Orb_crosshair.ani" and "Gold Orb_pointer.ani" where created by dwaxe and downloaded from:
 http://www.rw-designer.com/cursor-set/gold-orb
+
+"switch8.ogg" is from Kenneys "UI Audio" pack:
+https://kenney.nl/assets/ui-audio
+
+"ChivoMono-Regular.tff" is lisenced under the SIL Open Font License, Version 1.1, see "Fonts/OFL.txt":
+https://github.com/Omnibus-Type/Chivo
+
+
+

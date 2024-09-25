@@ -116,7 +116,7 @@ namespace X11TestProject
                 window = WindowComponent.Create(new OpenGLGraphicsApiHints());
                 context = OpenGLComponent.CreateFromWindow(window);
 
-                WindowComponent.SetSize(window, 800, 600);
+                WindowComponent.SetSize(window, (800, 600));
                 WindowComponent.SetMode(window, WindowMode.Normal);
             });
 
@@ -127,7 +127,7 @@ namespace X11TestProject
             GLLoader.LoadBindings(OpenGLComponent.GetBindingsContext(context!));
 
             _watch.Start();
-            while (WindowComponent.IsWindowDestroyed(window) == false)
+            while (WindowComponent.IsWindowDestroyed(window!) == false)
             {
                 OpenGLComponent.SetCurrentContext(context);
                 Color4<Rgba> color = GetColor();

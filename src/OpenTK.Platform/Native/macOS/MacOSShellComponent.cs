@@ -276,6 +276,22 @@ namespace OpenTK.Platform.Native.macOS
 
             return info;
         }
+    
+        /// <summary>
+        /// Calls <see href="https://developer.apple.com/documentation/foundation/1395275-nslog">NSLog</see> to log a message to the Apple System Log facility.
+        /// This can be useful when running your application as a bundle as stdout and stderr can't be used.
+        /// This function is static so that it can be used before <see cref="Toolkit"/> has been initialized.
+        /// </summary>
+        /// <param name="message">The message to print to the system log.</param>
+        // FIXME: Have a static and a non-static way of accessing this function?
+        public static void NSLog(string message)
+        {
+            // FIXME: Maybe add a way to add extra asl info such as log level etc.
+
+            // Escape all % so we don't accidentally expect additional arguments.
+            IntPtr msg = ToNSString(message.Replace("%", "%%"));
+            ObjC.NSLog(msg);
+        }
     }
 }
 

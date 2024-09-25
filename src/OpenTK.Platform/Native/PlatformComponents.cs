@@ -73,7 +73,7 @@ namespace OpenTK.Platform.Native
             {
                 [PalComponents.Window] = () => new X11.X11WindowComponent(),
                 [PalComponents.OpenGL] = () => new X11.X11OpenGLComponent(),
-                //[PalComponents.Vulkan] = () => new X11.X11VulkanComponent(),
+                [PalComponents.Vulkan] = () => new X11.X11VulkanComponent(),
                 [PalComponents.Display] = () => new X11.X11DisplayComponent(),
                 [PalComponents.Shell] = () => new X11.X11ShellComponent(),
                 [PalComponents.MiceInput] = () => new X11.X11MouseComponent(),

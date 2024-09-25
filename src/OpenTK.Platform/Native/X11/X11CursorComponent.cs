@@ -45,7 +45,7 @@ namespace OpenTK.Platform.Native.X11
                     _hasXFixes = false;
                 }
 
-                Console.WriteLine("Loaded xfixes!");
+                Logger?.LogInfo("Loaded xfixes!");
             }
         }
 

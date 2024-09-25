@@ -562,6 +562,7 @@ namespace OpenTK.Platform.Native.Windows
                             KeyModifier modifiers = KeyboardComponent.GetKeyboardModifiersInternal();
 
                             HWND h = HWndDict[hWnd];
+                            MouseComponent.RegisterButtonState(h, button.Value, true);
                             EventQueue.Raise(h, PlatformEventType.MouseDown, new MouseButtonDownEventArgs(h, button.Value, modifiers));
                         }
 
@@ -623,6 +624,7 @@ namespace OpenTK.Platform.Native.Windows
                             KeyModifier modifiers = KeyboardComponent.GetKeyboardModifiersInternal();
 
                             HWND h = HWndDict[hWnd];
+                            MouseComponent.RegisterButtonState(h, button.Value, false);
                             EventQueue.Raise(h, PlatformEventType.MouseUp, new MouseButtonUpEventArgs(h, button.Value, modifiers));
                         }
 
@@ -640,7 +642,7 @@ namespace OpenTK.Platform.Native.Windows
 
                         HWND h = HWndDict[hWnd];
 
-                        MouseComponent.RegisterMouseWheelDelta((0, delta));
+                        MouseComponent.RegisterMouseWheelDelta(h, (0, delta));
                         EventQueue.Raise(h, PlatformEventType.Scroll, new ScrollEventArgs(h, new Vector2(0, delta), new Vector2(0, delta * lines)));
 
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
@@ -657,7 +659,7 @@ namespace OpenTK.Platform.Native.Windows
 
                         HWND h = HWndDict[hWnd];
 
-                        MouseComponent.RegisterMouseWheelDelta((delta, 0));
+                        MouseComponent.RegisterMouseWheelDelta(h, (delta, 0));
                         EventQueue.Raise(h, PlatformEventType.Scroll, new ScrollEventArgs(h, new Vector2(delta, 0), new Vector2(delta * chars, 0)));
 
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
@@ -713,18 +715,16 @@ namespace OpenTK.Platform.Native.Windows
 
                         HWND h = HWndDict[hWnd];
 
-                        ScreenToClient(h, x, y, out int clientX, out int clientY);
+                        ScreenToClient(h, (x, y), out Vector2 client);
 
                         if (h.HitTest != null)
                         {
-                            HitType type = h.HitTest(h, new Vector2(clientX, clientY));
+                            HitType type = h.HitTest(h, client);
 
                             switch (type)
                             {
                                 case HitType.Default:
-                                    IntPtr ret = Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
-                                    Console.WriteLine($"Hit: {(HT)(int)ret}");
-                                    return ret;
+                                    return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                                 case HitType.Normal:
                                     return (IntPtr)HT.Client;
                                 case HitType.Draggable:
@@ -746,7 +746,8 @@ namespace OpenTK.Platform.Native.Windows
                                 case HitType.ResizeLeft:
                                     return (IntPtr)HT.Left;
                                 default:
-                                    throw new InvalidEnumArgumentException("hit test return", (int)type, typeof(HitType));
+                                    // FIXME: Better exception message?
+                                    throw new InvalidEnumArgumentException("Hit test return", (int)type, typeof(HitType));
                             }
                         }
                         else
@@ -1097,10 +1098,10 @@ namespace OpenTK.Platform.Native.Windows
 
             if (CursorCapturingWindow != null && CursorCapturingWindow.CaptureMode == CursorCaptureMode.Locked)
             {
-                GetClientSize(CursorCapturingWindow, out int width, out int height);
-                if (CursorCapturingWindow.LastMousePosition != (width / 2, height / 2))
+                GetClientSize(CursorCapturingWindow, out Vector2i size);
+                if (CursorCapturingWindow.LastMousePosition != (size / 2))
                 {
-                    Win32.POINT p = new Win32.POINT(width / 2, height / 2);
+                    Win32.POINT p = new Win32.POINT(size.X / 2, size.Y / 2);
                     Win32.ClientToScreen(CursorCapturingWindow.HWnd, ref p);
 
                     bool success = Win32.SetCursorPos(p.X, p.Y);
@@ -1111,7 +1112,7 @@ namespace OpenTK.Platform.Native.Windows
 
                     // Set the last mouse position to the position we are moving to
                     // to avoid generating a mouse move event.
-                    CursorCapturingWindow.LastMousePosition = (width / 2, height / 2);
+                    CursorCapturingWindow.LastMousePosition = (size.X / 2, size.Y / 2);
                 }
             }
         }
@@ -1302,20 +1303,20 @@ namespace OpenTK.Platform.Native.Windows
         }
 
         /// <inheritdoc/>
-        public void GetPosition(WindowHandle handle, out int x, out int y)
+        public void GetPosition(WindowHandle handle, out Vector2i position)
         {
             HWND hwnd = handle.As<HWND>(this);
 
-            GetBounds(hwnd, out x, out y, out _, out _);
+            GetBounds(hwnd, out position.X, out position.Y, out _, out _);
         }
 
         /// <inheritdoc/>
-        public void SetPosition(WindowHandle handle, int x, int y)
+        public void SetPosition(WindowHandle handle, Vector2i newPosition)
         {
             HWND hwnd = handle.As<HWND>(this);
 
             // FIXME: What do we want to do here with SetWindowPosFlags.NoActivate??
-            bool success = Win32.SetWindowPos(hwnd.HWnd, IntPtr.Zero, x, y, 0, 0, SetWindowPosFlags.NoSize | SetWindowPosFlags.NoActivate | SetWindowPosFlags.NoZOrder | SetWindowPosFlags.NoOwnerZOrder);
+            bool success = Win32.SetWindowPos(hwnd.HWnd, IntPtr.Zero, newPosition.X, newPosition.Y, 0, 0, SetWindowPosFlags.NoSize | SetWindowPosFlags.NoActivate | SetWindowPosFlags.NoZOrder | SetWindowPosFlags.NoOwnerZOrder);
             if (success == false)
             {
                 throw new Win32Exception();
@@ -1323,20 +1324,20 @@ namespace OpenTK.Platform.Native.Windows
         }
 
         /// <inheritdoc/>
-        public void GetSize(WindowHandle handle, out int width, out int height)
+        public void GetSize(WindowHandle handle, out Vector2i size)
         {
             HWND hwnd = handle.As<HWND>(this);
 
-            GetBounds(hwnd, out _, out _, out width, out height);
+            GetBounds(hwnd, out _, out _, out size.X, out size.Y);
         }
 
         /// <inheritdoc/>
-        public void SetSize(WindowHandle handle, int width, int height)
+        public void SetSize(WindowHandle handle, Vector2i newSize)
         {
             HWND hwnd = handle.As<HWND>(this);
 
             // FIXME: What do we want to do here with SetWindowPosFlags.NoActivate??
-            bool success = Win32.SetWindowPos(hwnd.HWnd, IntPtr.Zero, 0, 0, width, height, SetWindowPosFlags.NoMove | SetWindowPosFlags.NoActivate | SetWindowPosFlags.NoZOrder | SetWindowPosFlags.NoOwnerZOrder);
+            bool success = Win32.SetWindowPos(hwnd.HWnd, IntPtr.Zero, 0, 0, newSize.X, newSize.Y, SetWindowPosFlags.NoMove | SetWindowPosFlags.NoActivate | SetWindowPosFlags.NoZOrder | SetWindowPosFlags.NoOwnerZOrder);
             if (success == false)
             {
                 throw new Win32Exception();
@@ -1374,7 +1375,7 @@ namespace OpenTK.Platform.Native.Windows
         }
 
         /// <inheritdoc/>
-        public void GetClientPosition(WindowHandle handle, out int x, out int y)
+        public void GetClientPosition(WindowHandle handle, out Vector2i clientPosition)
         {
             HWND hwnd = handle.As<HWND>(this);
 
@@ -1386,16 +1387,16 @@ namespace OpenTK.Platform.Native.Windows
                 throw new Win32Exception();
             }
 
-            x = point.X;
-            y = point.Y;
+            clientPosition.X = point.X;
+            clientPosition.Y = point.Y;
         }
 
         /// <inheritdoc/>
-        public void SetClientPosition(WindowHandle handle, int x, int y)
+        public void SetClientPosition(WindowHandle handle, Vector2i newClientPosition)
         {
             HWND hwnd = handle.As<HWND>(this);
 
-            Win32.RECT rect = new Win32.RECT(x, y, 0, 0);
+            Win32.RECT rect = new Win32.RECT(newClientPosition.X, newClientPosition.Y, 0, 0);
             WindowStyles currentStyle = (WindowStyles)Win32.GetWindowLongPtr(hwnd.HWnd, GetGWLPIndex.Style).ToInt64();
 
             // This assumes the window doesn't have a menu bar or scroll bars. For now our windows don't have those, but it's possible that could change.
@@ -1417,19 +1418,19 @@ namespace OpenTK.Platform.Native.Windows
         }
 
         /// <inheritdoc/>
-        public void GetClientSize(WindowHandle handle, out int width, out int height)
+        public void GetClientSize(WindowHandle handle, out Vector2i clientSize)
         {
             HWND hwnd = handle.As<HWND>(this);
 
-            GetClientBounds(hwnd, out _, out _, out width, out height);
+            GetClientBounds(hwnd, out _, out _, out clientSize.X, out clientSize.Y);
         }
 
         /// <inheritdoc/>
-        public void SetClientSize(WindowHandle handle, int width, int height)
+        public void SetClientSize(WindowHandle handle, Vector2i newClientSize)
         {
             HWND hwnd = handle.As<HWND>(this);
 
-            Win32.RECT rect = new Win32.RECT(0, 0, width, height);
+            Win32.RECT rect = new Win32.RECT(0, 0, newClientSize.X, newClientSize.Y);
 
             WindowStyles currentStyle = (WindowStyles)Win32.GetWindowLongPtr(hwnd.HWnd, GetGWLPIndex.Style).ToInt64();
 
@@ -1496,12 +1497,12 @@ namespace OpenTK.Platform.Native.Windows
         }
 
         /// <inheritdoc/>
-        public void GetFramebufferSize(WindowHandle handle, out int width, out int height)
+        public void GetFramebufferSize(WindowHandle handle, out Vector2i framebufferSize)
         {
             HWND hwnd = handle.As<HWND>(this);
 
             // The client size on windows is already in pixels.
-            GetClientSize(hwnd, out width, out height);
+            GetClientSize(hwnd, out framebufferSize);
         }
 
         /// <inheritdoc/>
@@ -2005,8 +2006,13 @@ namespace OpenTK.Platform.Native.Windows
                             throw new Win32Exception();
                         }
 
-                        ClientToScreen(hwnd, lpRect.left, lpRect.top, out lpRect.left, out lpRect.top);
-                        ClientToScreen(hwnd, lpRect.right, lpRect.bottom, out lpRect.right, out lpRect.bottom);
+                        ClientToScreen(hwnd, (lpRect.left, lpRect.top), out Vector2 topLeft);
+                        lpRect.left = (int)topLeft.X;
+                        lpRect.top = (int)topLeft.Y;
+
+                        ClientToScreen(hwnd, (lpRect.right, lpRect.bottom), out Vector2 bottomRight);
+                        lpRect.right = (int)bottomRight.X;
+                        lpRect.bottom = (int)bottomRight.Y;
 
                         success = Win32.ClipCursor(ref lpRect);
                         if (success == false)
@@ -2074,39 +2080,57 @@ namespace OpenTK.Platform.Native.Windows
         }
 
         /// <inheritdoc/>
-        public void ScreenToClient(WindowHandle handle, int x, int y, out int clientX, out int clientY)
+        public void ScreenToClient(WindowHandle handle, Vector2 screen, out Vector2 client)
         {
             HWND hwnd = handle.As<HWND>(this);
 
             Win32.POINT point;
-            point.X = x;
-            point.Y = y;
+            // Should we round instead of trucate?
+            point.X = (int)screen.X;
+            point.Y = (int)screen.Y;
             bool success = Win32.ScreenToClient(hwnd.HWnd, ref point);
             if (success == false)
             {
                 throw new Win32Exception();
             }
 
-            clientX = point.X;
-            clientY = point.Y;
+            client.X = point.X;
+            client.Y = point.Y;
         }
 
         /// <inheritdoc/>
-        public void ClientToScreen(WindowHandle handle, int clientX, int clientY, out int x, out int y)
+        public void ClientToScreen(WindowHandle handle, Vector2 client, out Vector2 screen)
         {
             HWND hwnd = handle.As<HWND>(this);
 
             Win32.POINT point;
-            point.X = clientX;
-            point.Y = clientY;
+            // Should we round instead of trucate?
+            point.X = (int)client.X;
+            point.Y = (int)client.Y;
             bool success = Win32.ClientToScreen(hwnd.HWnd, ref point);
             if (success == false)
             {
                 throw new Win32Exception();
             }
 
-            x = point.X;
-            y = point.Y;
+            screen.X = point.X;
+            screen.Y = point.Y;
+        }
+
+        /// <inheritdoc/>
+        public void ClientToFramebuffer(WindowHandle handle, Vector2 client, out Vector2 framebuffer)
+        {
+            HWND hwnd = handle.As<HWND>(this);
+
+            framebuffer = client;
+        }
+
+        /// <inheritdoc/>
+        public void FramebufferToClient(WindowHandle handle, Vector2 framebuffer, out Vector2 client)
+        {
+            HWND hwnd = handle.As<HWND>(this);
+
+            client = framebuffer;
         }
 
         /// <inheritdoc/>

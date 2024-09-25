@@ -145,25 +145,25 @@ namespace LocalTestProject
             SetWindowSettings(WindowHandle, "Cool test window", 600, 400);
             SetWindowSettings(WindowHandle2, "Cool test window #2", 300, 300);
 
-            windowComp.GetPosition(WindowHandle, out var x, out var y);
-            windowComp.GetSize(WindowHandle, out var width, out var height);
-            windowComp.GetClientPosition(WindowHandle, out var cx, out var cy);
-            windowComp.GetClientSize(WindowHandle, out var cwidth, out var cheight);
-            Console.WriteLine($"Window: X: {x}, Y: {y}, Width: {width}, Height: {height}");
-            Console.WriteLine($"Client: X: {cx}, Y {cy} Width: {cwidth}, Height: {cheight}");
+            windowComp.GetPosition(WindowHandle, out Vector2i position);
+            windowComp.GetSize(WindowHandle, out Vector2i size);
+            windowComp.GetClientPosition(WindowHandle, out Vector2i cPosition);
+            windowComp.GetClientSize(WindowHandle, out Vector2i cSize);
+            Console.WriteLine($"Window: X: {position.X}, Y: {position.Y}, Width: {size.X}, Height: {size.Y}");
+            Console.WriteLine($"Client: X: {cPosition.X}, Y {cPosition.Y} Width: {cSize.X}, Height: {cSize.Y}");
 
-            windowComp.SetClientSize(WindowHandle, 600, 400);
-            windowComp.SetClientPosition(WindowHandle, 100, 100);
+            windowComp.SetClientSize(WindowHandle, (600, 400));
+            windowComp.SetClientPosition(WindowHandle, (100, 100));
 
             windowComp.SetMinClientSize(WindowHandle, 200, 200);
             windowComp.SetMaxClientSize(WindowHandle, 1600, 900);
 
-            windowComp.GetPosition(WindowHandle, out x, out y);
-            windowComp.GetSize(WindowHandle, out width, out height);
-            windowComp.GetClientPosition(WindowHandle, out cx, out cy);
-            windowComp.GetClientSize(WindowHandle, out cwidth, out cheight);
-            Console.WriteLine($"Window: X: {x}, Y: {y}, Width: {width}, Height: {height}");
-            Console.WriteLine($"Client: X: {cx}, Y {cy} Width: {cwidth}, Height: {cheight}");
+            windowComp.GetPosition(WindowHandle, out position);
+            windowComp.GetSize(WindowHandle, out size);
+            windowComp.GetClientPosition(WindowHandle, out cPosition);
+            windowComp.GetClientSize(WindowHandle, out cSize);
+            Console.WriteLine($"Window: X: {position.X}, Y: {position.Y}, Width: {size.X}, Height: {size.Y}");
+            Console.WriteLine($"Client: X: {cPosition.X}, Y {cPosition.Y} Width: {cSize.X}, Height: {cSize.Y}");
 
             var mode = windowComp.GetMode(WindowHandle);
             Console.WriteLine($"Mode: {mode}");
@@ -171,7 +171,7 @@ namespace LocalTestProject
             windowComp.SetMode(WindowHandle, WindowMode.Normal);
             windowComp.SetMode(WindowHandle2, WindowMode.Normal);
 
-            windowComp.SetPosition(WindowHandle2, 0, 0);
+            windowComp.SetPosition(WindowHandle2, (0, 0));
 
             mode = windowComp.GetMode(WindowHandle);
             Console.WriteLine($"Mode: {mode}");
@@ -316,7 +316,7 @@ namespace LocalTestProject
         {
             windowComp.SetTitle(handle, title);
 
-            windowComp.SetSize(handle, width, height);
+            windowComp.SetSize(handle, (width, height));
             //windowComp.SetPosition(handle, 100, 100);
 
             windowComp.SetBorderStyle(handle, WindowBorderStyle.Borderless);
@@ -343,12 +343,12 @@ namespace LocalTestProject
 
                 //Console.WriteLine($"Delta X: {mouseMoveArgs.DeltaX}, DeltaY: {mouseMoveArgs.DeltaY}");
 
-                MousePos = (mouseMoveArgs.Position.X, mouseMoveArgs.Position.Y);
+                MousePos = mouseMoveArgs.ClientPosition;
 
                 if (windowComp.IsWindowDestroyed(WindowHandle) == false)
                 {
-                    windowComp.ScreenToClient(WindowHandle, (int)MousePos.X, (int)MousePos.Y, out int clientX, out int clientY);
-                    windowComp.SetTitle(WindowHandle, $"({clientX},{clientY})");
+                    windowComp.ScreenToClient(WindowHandle, MousePos, out Vector2 client);
+                    windowComp.SetTitle(WindowHandle, $"({client.X},{client.Y})");
                 }
             }
             else if (type == PlatformEventType.MouseDown)
@@ -612,8 +612,8 @@ namespace LocalTestProject
                 }
                 else if (keyDown.Key == Key.S)
                 {
-                    windowComp.GetClientSize(WindowHandle, out int width, out int height);
-                    Console.WriteLine($"Window 1 client size: ({width}, {height})");
+                    windowComp.GetClientSize(WindowHandle, out Vector2i size);
+                    Console.WriteLine($"Window 1 client size: ({size.X}, {size.Y})");
                 }
                 else if (keyDown.Key == Key.Q)
                 {
@@ -1034,8 +1034,8 @@ void main()
 
                 GL.ClearColor(Color4.ToRgba(color));
                 GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit | ClearBufferMask.StencilBufferBit);
-                windowComp.GetClientSize(WindowHandle, out int width, out int height);
-                GL.Viewport(0, 0, width, height);
+                windowComp.GetFramebufferSize(WindowHandle, out Vector2i fbSize);
+                GL.Viewport(0, 0, fbSize.X, fbSize.Y);
 
                 CheckError("clear");
 
@@ -1069,8 +1069,8 @@ void main()
 
                 GL.ClearColor(new Color4<Rgba>(64 / 255f, 0, 127 / 255f, 255));
                 GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit | ClearBufferMask.StencilBufferBit);
-                windowComp.GetClientSize(WindowHandle2, out int width, out int height);
-                GL.Viewport(0, 0, width, height);
+                windowComp.GetFramebufferSize(WindowHandle2, out Vector2i fbSize);
+                GL.Viewport(0, 0, fbSize.X, fbSize.Y);
 
                 GL.ActiveTexture(TextureUnit.Texture0);
                 GL.BindTexture(TextureTarget.Texture2d, icon_tex);

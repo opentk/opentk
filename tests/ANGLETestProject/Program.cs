@@ -30,7 +30,7 @@ namespace ANGLETestProject
             OpenGLComp.Initialize(options);
 
             var window = WindowComp.Create(new OpenGLGraphicsApiHints());
-            WindowComp.SetSize(window, 800, 600);
+            WindowComp.SetSize(window, (800, 600));
             WindowComp.SetMode(window, WindowMode.Normal);
             WindowComp.SetTitle(window, "ANGLE Window");
 

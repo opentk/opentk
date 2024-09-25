@@ -155,7 +155,6 @@ namespace OpenTK.Platform.Native.Windows
             ClipboardFormat.Audio,
         };
 
-        // FIXME: This should not be needed!
         internal static ClipboardFormat GetClipboardFormatInternal(ILogger? logger)
         {
             bool success = Win32.OpenClipboard(WindowComponent.HelperHWnd);
@@ -322,6 +321,69 @@ namespace OpenTK.Platform.Native.Windows
             Win32.CloseClipboard();
         }
 
+        // FIXME: It's quite possible that we will not be able to open the clipboard
+        // because someone else is either reading or writing from it.
+        // So we need to handle that when opening the clipboard.
+        /// <inheritdoc/>
+        public unsafe string? GetClipboardText()
+        {
+            bool success = Win32.OpenClipboard(WindowComponent.HelperHWnd);
+            if (success == false)
+            {
+                throw new Win32Exception();
+            }
+
+            IntPtr obj = Win32.GetClipboardData(CF.UnicodeText);
+            if (obj == IntPtr.Zero)
+            {
+                int lastError = Marshal.GetLastWin32Error();
+
+                success = Win32.CloseClipboard();
+                if (success == false)
+                {
+                    throw new Win32Exception();
+                }
+
+                if (lastError == 0)
+                {
+                    Logger?.LogDebug($"Could not get CF_UNICODETEXT data from clipboard.");
+                    return null;
+                }
+                else
+                {
+                    throw new Win32Exception(lastError);
+                }
+            }
+
+            char* strData = (char*)Win32.GlobalLock(obj);
+            if (strData == null)
+            {
+                throw new Win32Exception();
+            }
+
+            // FIXME: Can this fail? Or is this a security issue?
+            string str = new string(strData);
+
+            bool stillLocked = Win32.GlobalUnlock(obj);
+            if (stillLocked)
+            {
+                // If the function returns NO_ERROR then there is no error.
+                int errorCode = Marshal.GetLastWin32Error();
+                if (errorCode != 0)
+                {
+                    throw new Win32Exception(errorCode);
+                }
+            }
+
+            bool succeess = Win32.CloseClipboard();
+            if (succeess == false)
+            {
+                throw new Win32Exception();
+            }
+
+            return str;
+        }
+
         unsafe struct wav_header
         {
             // RIFF Header
@@ -342,12 +404,8 @@ namespace OpenTK.Platform.Native.Windows
             // Data
             public fixed byte data_header[4]; // Contains "data"
             public int data_bytes; // Number of bytes in data. Number of samples * num_channels * sample byte size
-                            // uint8_t bytes[]; // Remainder of wave file is bytes
+                                   // uint8_t bytes[]; // Remainder of wave file is bytes
         }
-
-        // FIXME: It's quite possible that we will not be able to open the clipboard
-        // because someone else is either reading or writing from it.
-        // So we need to handle that when opening the clipboard.
 
         /// 
         public unsafe void SetClipboardAudio(AudioData data)
@@ -375,7 +433,7 @@ namespace OpenTK.Platform.Native.Windows
 
             header.fmt_chunk_size = 16;
             header.audio_format = 1; // 1 for PCM. FIXME: Find the valid constants!
-            
+
             header.num_channels = (short)(data.Stereo ? 2 : 1);
             header.sample_rate = data.SampleRate;
             header.byte_rate = header.sample_rate * header.num_channels * sizeof(short);
@@ -447,7 +505,89 @@ namespace OpenTK.Platform.Native.Windows
             Win32.CloseClipboard();
         }
 
-        /// 
+        /// <inheritdoc/>
+        public unsafe AudioData? GetClipboardAudio()
+        {
+            bool success = Win32.OpenClipboard(WindowComponent.HelperHWnd);
+            if (success == false)
+            {
+                throw new Win32Exception();
+            }
+
+            IntPtr obj = Win32.GetClipboardData(CF.Wave);
+            if (obj == IntPtr.Zero)
+            {
+                int lastError = Marshal.GetLastWin32Error();
+
+                success = Win32.CloseClipboard();
+                if (success == false)
+                {
+                    throw new Win32Exception();
+                }
+
+                if (lastError == 0)
+                {
+                    Logger?.LogDebug($"Could not get CF_WAVE data from clipboard.");
+                    return null;
+                }
+                else
+                {
+                    throw new Win32Exception(lastError);
+                }
+            }
+
+            int waveDataSize = (int)Win32.GlobalSize(obj);
+
+            void* waveData = (void*)Win32.GlobalLock(obj);
+            if (waveData == null)
+            {
+                throw new Win32Exception();
+            }
+
+            Span<byte> span = new Span<byte>(waveData, waveDataSize);
+
+            wav_header header = MemoryMarshal.Cast<byte, wav_header>(span)[0];
+
+            Logger?.LogDebug($"wav_size: {header.wav_size}");
+
+
+            Logger?.LogDebug($"fmt_chunk_size: {header.fmt_chunk_size}");
+            Logger?.LogDebug($"audio_format: {header.audio_format}");
+            Logger?.LogDebug($"num_channels: {header.num_channels}");
+            Logger?.LogDebug($"sample_rate: {header.sample_rate}");
+            Logger?.LogDebug($"byte_rate: {header.byte_rate}");
+            Logger?.LogDebug($"sample_alignment: {header.sample_alignment}");
+            Logger?.LogDebug($"bit_depth: {header.bit_depth}");
+            Logger?.LogDebug($"data_bytes: {header.data_bytes}");
+
+            AudioData data = new AudioData();
+
+            data.SampleRate = header.sample_rate;
+            data.Stereo = header.num_channels == 2 ? true : false; // More than 2 channels?
+            // FIXME: Consider sample alignment, format etc
+            data.Audio = MemoryMarshal.Cast<byte, short>(span.Slice(sizeof(wav_header))).ToArray();
+
+            bool stillLocked = Win32.GlobalUnlock(obj);
+            if (stillLocked)
+            {
+                // If the function returns NO_ERROR then there is no error.
+                int errorCode = Marshal.GetLastWin32Error();
+                if (errorCode != 0)
+                {
+                    throw new Win32Exception(errorCode);
+                }
+            }
+
+            bool succeess = Win32.CloseClipboard();
+            if (succeess == false)
+            {
+                throw new Win32Exception();
+            }
+
+            return data;
+        }
+
+        /// <inheritdoc/>
         public unsafe void SetClipboardBitmap(Bitmap bitmap)
         {
             // We don't need to consider alignment as 32bpp image data will always align to DWORDs
@@ -543,148 +683,6 @@ namespace OpenTK.Platform.Native.Windows
             {
                 throw new Win32Exception();
             }
-        }
-
-        /// <inheritdoc/>
-        public unsafe string? GetClipboardText()
-        {
-            bool success = Win32.OpenClipboard(WindowComponent.HelperHWnd);
-            if (success == false)
-            {
-                throw new Win32Exception();
-            }
-
-            IntPtr obj = Win32.GetClipboardData(CF.UnicodeText);
-            if (obj == IntPtr.Zero)
-            {
-                int lastError = Marshal.GetLastWin32Error();
-
-                success = Win32.CloseClipboard();
-                if (success == false)
-                {
-                    throw new Win32Exception();
-                }
-
-                if (lastError == 0)
-                {
-                    Logger?.LogDebug($"Could not get CF_UNICODETEXT data from clipboard.");
-                    return null;
-                }
-                else
-                {
-                    throw new Win32Exception(lastError);
-                }
-            }
-
-            char* strData = (char*)Win32.GlobalLock(obj);
-            if (strData == null)
-            {
-                throw new Win32Exception();
-            }
-
-            // FIXME: Can this fail? Or is this a security issue?
-            string str = new string(strData);
-
-            bool stillLocked = Win32.GlobalUnlock(obj);
-            if (stillLocked)
-            {
-                // If the function returns NO_ERROR then there is no error.
-                int errorCode = Marshal.GetLastWin32Error();
-                if (errorCode != 0)
-                {
-                    throw new Win32Exception(errorCode);
-                }
-            }
-
-            bool succeess = Win32.CloseClipboard();
-            if (succeess == false)
-            {
-                throw new Win32Exception();
-            }
-
-            return str;
-        }
-
-        /// <inheritdoc/>
-        public unsafe AudioData? GetClipboardAudio()
-        {
-            bool success = Win32.OpenClipboard(WindowComponent.HelperHWnd);
-            if (success == false)
-            {
-                throw new Win32Exception();
-            }
-
-            IntPtr obj = Win32.GetClipboardData(CF.Wave);
-            if (obj == IntPtr.Zero)
-            {
-                int lastError = Marshal.GetLastWin32Error();
-
-                success = Win32.CloseClipboard();
-                if (success == false)
-                {
-                    throw new Win32Exception();
-                }
-
-                if (lastError == 0)
-                {
-                    Logger?.LogDebug($"Could not get CF_WAVE data from clipboard.");
-                    return null;
-                }
-                else
-                {
-                    throw new Win32Exception(lastError);
-                }
-            }
-
-            int waveDataSize = (int)Win32.GlobalSize(obj);
-
-            void* waveData = (void*)Win32.GlobalLock(obj);
-            if (waveData == null)
-            {
-                throw new Win32Exception();
-            }
-
-            Span<byte> span = new Span<byte>(waveData, waveDataSize);
-
-            wav_header header = MemoryMarshal.Cast<byte, wav_header>(span)[0];
-
-            Console.WriteLine($"wav_size: {header.wav_size}");
-
-
-            Console.WriteLine($"fmt_chunk_size: {header.fmt_chunk_size}");
-            Console.WriteLine($"audio_format: {header.audio_format}");
-            Console.WriteLine($"num_channels: {header.num_channels}");
-            Console.WriteLine($"sample_rate: {header.sample_rate}");
-            Console.WriteLine($"byte_rate: {header.byte_rate}");
-            Console.WriteLine($"sample_alignment: {header.sample_alignment}");
-            Console.WriteLine($"bit_depth: {header.bit_depth}");
-            Console.WriteLine($"data_bytes: {header.data_bytes}");
-
-            AudioData data = new AudioData();
-
-            data.SampleRate = header.sample_rate;
-            data.Stereo = header.num_channels == 2 ? true : false; // More than 2 channels?
-            // FIXME: Consider sample alignment, format etc
-            data.Audio = MemoryMarshal.Cast<byte, short>(span.Slice(sizeof(wav_header))).ToArray();
-
-            bool stillLocked = Win32.GlobalUnlock(obj);
-            if (stillLocked)
-            {
-                // If the function returns NO_ERROR then there is no error.
-                int errorCode = Marshal.GetLastWin32Error();
-                if (errorCode != 0)
-                {
-                    throw new Win32Exception(errorCode);
-                }
-            }
-
-            bool succeess = Win32.CloseClipboard();
-            if (succeess == false)
-            {
-                throw new Win32Exception();
-            }
-
-            return data;
         }
 
         /// <inheritdoc/>

@@ -35,20 +35,6 @@ namespace OpenTK.Backends.Tests
             {
                 openglSettings.Version = new Version(3, 1);
             }
-
-            // FIXME: Make a useful hit test callback as part of this view.
-            //WindowComponent.SetHitTestCallback(Program.Window, HitTest);
-        }
-
-        // FIXME: Actually make this usable.
-        private HitType HitTest(WindowHandle window, Vector2 point)
-        {
-            if (point.X < 300 && point.Y < 300)
-            {
-                return HitType.Draggable;
-            }
-
-            return HitType.Default;
         }
 
         int selectedWindow = -1;
@@ -180,14 +166,15 @@ namespace OpenTK.Backends.Tests
 
                 if (ImGui.CollapsingHeader("Info"))
                 {
-                    Toolkit.Window.GetClientSize(window, out int cWidth, out int cHeight);
-                    Toolkit.Window.GetSize(window, out int wWidth, out int wHeight);
-                    Toolkit.Window.GetClientPosition(window, out int cx, out int cy);
-                    Toolkit.Window.GetPosition(window, out int wx, out int wy);
-                    ImGui.Text($"Client Position: ({cx}, {cy})");
-                    ImGui.Text($"Position: ({wx}, {wy})");
-                    ImGui.Text($"Client Size: ({cWidth}, {cHeight})");
-                    ImGui.Text($"Size: ({wWidth}, {wHeight})");
+                    Toolkit.Window.GetClientSize(window, out Vector2i cSize);
+                    Toolkit.Window.GetSize(window, out Vector2i size);
+                    Toolkit.Window.GetClientPosition(window, out Vector2i cPos);
+                    Toolkit.Window.GetPosition(window, out Vector2i pos);
+                    ImGui.Text($"Client Position: ({cPos.X}, {cPos.Y})");
+                    ImGui.Text($"Position: ({pos.X}, {pos.Y})");
+                    ImGui.Text($"Client Size: ({cSize.X}, {cSize.Y})");
+                    ImGui.Text($"Size: ({size.X}, {size.Y})");
+                    ImGui.Text($"Mode: {Toolkit.Window.GetMode(window)}");
                 }
 
                 ImGui.AlignTextToFramePadding();
@@ -279,21 +266,21 @@ namespace OpenTK.Backends.Tests
                 ImGui.DragInt2("Position", ref windowPosition.X); ImGui.SameLine();
                 if (ImGui.Button("Set##Position"))
                 {
-                    Toolkit.Window.SetPosition(Program.Window, windowPosition.X, windowPosition.Y);
+                    Toolkit.Window.SetPosition(Program.Window, windowPosition);
                     Program.Logger.LogInfo($"WindowComponent.SetPosition({windowPosition})");
 
-                    Toolkit.Window.GetPosition(Program.Window, out int x, out int y);
-                    Program.Logger.LogInfo($"Window position: ({x}, {y})");
+                    Toolkit.Window.GetPosition(Program.Window, out Vector2i position);
+                    Program.Logger.LogInfo($"Window position: ({position.X}, {position.Y})");
                 }
 
                 ImGui.DragInt2("Client position", ref clientPosition.X); ImGui.SameLine();
                 if (ImGui.Button("Set##ClientPosition"))
                 {
-                    Toolkit.Window.SetClientPosition(Program.Window, clientPosition.X, clientPosition.Y);
+                    Toolkit.Window.SetClientPosition(Program.Window, clientPosition);
                     Program.Logger.LogInfo($"WindowComponent.SetClientPosition({clientPosition})");
 
-                    Toolkit.Window.GetClientPosition(Program.Window, out int x, out int y);
-                    Program.Logger.LogInfo($"Client position: ({x}, {y})");
+                    Toolkit.Window.GetClientPosition(Program.Window, out Vector2i cPos);
+                    Program.Logger.LogInfo($"Client position: ({cPos.X}, {cPos.Y})");
                 }
             }
 
@@ -390,7 +377,7 @@ namespace OpenTK.Backends.Tests
                         Program.ApplicationWindows.Add(new Program.ApplicationWindow(handle));
 
                         Toolkit.Window.SetTitle(handle, $"Child Window #{index}");
-                        Toolkit.Window.SetSize(handle, WindowSize.X, WindowSize.Y);
+                        Toolkit.Window.SetSize(handle, WindowSize);
                         Toolkit.Window.SetMode(handle, WindowMode);
                     }
                     catch (Exception e)

@@ -20,10 +20,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Update="alsoft.conf">
+    <!--<Content Include="alsoft.conf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Update="win32-x64\soft_oal.dll">
+    </Content>-->
+    <!--<Content Include="win32-x64\soft_oal.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>-->
+    <Content Include="info.plist">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

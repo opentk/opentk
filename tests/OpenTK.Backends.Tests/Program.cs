@@ -16,6 +16,8 @@ using System.IO;
 using System.IO.Compression;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Threading;
+using OpenTK.Platform.Native.X11;
 
 namespace OpenTK.Backends.Tests
 {
@@ -74,6 +76,8 @@ namespace OpenTK.Backends.Tests
 
         static void Main(string[] args)
         {
+            Thread.CurrentThread.Name = "Main thread";
+
             EventQueue.EventRaised += EventQueue_EventRaised;
 
             BackendsConfig.Logger = Logger;
@@ -123,6 +127,8 @@ namespace OpenTK.Backends.Tests
 
             // Init all of the components.
             Toolkit.Init(new ToolkitOptions() { ApplicationName = "OpenTK.Backends.Tests", Logger = Logger, });
+
+            (Toolkit.Clipboard as X11ClipboardComponent)?.SetPngCodec(new StbPngCodec());
 
             OpenGLGraphicsApiHints hints = new OpenGLGraphicsApiHints()
             {
@@ -179,7 +185,7 @@ namespace OpenTK.Backends.Tests
             }
 
             Toolkit.Window.SetTitle(Window, "OpenTK PAL Test Application");
-            Toolkit.Window.SetClientSize(Window, 800, 600);
+            Toolkit.Window.SetClientSize(Window, (800, 600));
             Toolkit.Window.SetMode(Window, WindowMode.Normal);
 
             Toolkit.Window.SetMinClientSize(Window, 700, null);
@@ -223,11 +229,11 @@ namespace OpenTK.Backends.Tests
             catch
             { }
 
-            Toolkit.Window.GetFramebufferSize(Window, out int width, out int height);
-            GL.Viewport(0, 0, width, height);
+            Toolkit.Window.GetFramebufferSize(Window, out Vector2i fbSize);
+            GL.Viewport(0, 0, fbSize.X, fbSize.Y);
 
             UsingGLES = Toolkit.OpenGL is ANGLEOpenGLComponent;
-            ImGuiController = new ImGuiController(width, height, UsingGLES);
+            ImGuiController = new ImGuiController(fbSize.X, fbSize.Y, UsingGLES);
             
             float fontSize = 13f;
             try
@@ -308,7 +314,7 @@ namespace OpenTK.Backends.Tests
                 viewport.PlatformHandleRaw = (nint)gchandle;
             }
             // Make it so ImGui can set IME rect.
-            ImGui.GetIO().SetPlatformImeDataFn = Marshal.GetFunctionPointerForDelegate(ImGui_SetPlatformImeDataInst);
+            ImGui.GetIO().PlatformSetImeDataFn = Marshal.GetFunctionPointerForDelegate(ImGui_SetPlatformImeDataInst);
 
             if (Toolkit.Cursor != null && Toolkit.Cursor.CanLoadSystemCursors)
             {
@@ -334,7 +340,7 @@ namespace OpenTK.Backends.Tests
                     
                 });
                 Toolkit.Window.SetTitle(handle, $"Bejeweled");
-                Toolkit.Window.SetClientSize(handle, 1200, 1200);
+                Toolkit.Window.SetClientSize(handle, (1200, 1200));
                 (Toolkit.Shell as Platform.Native.Windows.ShellComponent)?.SetImmersiveDarkMode(handle, true);
                 Toolkit.Window.SetMode(handle, WindowMode.Normal);
                 Toolkit.Window.SetBorderStyle(handle, WindowBorderStyle.FixedBorder);
@@ -576,7 +582,11 @@ namespace OpenTK.Backends.Tests
                     }
                     else if (args is MouseMoveEventArgs mouseMove)
                     {
-                        ImGui.GetIO().AddMousePosEvent(mouseMove.Position.X, mouseMove.Position.Y);
+                        // FIXME: Add screen, client, and framebuffer coords to mouse move events...
+                        
+                        // Imgui works with framebuffer coordinates.
+                        Toolkit.Window.ClientToFramebuffer(mouseMove.Window, mouseMove.ClientPosition, out Vector2 fbPos);
+                        ImGui.GetIO().AddMousePosEvent(fbPos.X, fbPos.Y);
                     }
                     else if (args is RawMouseMoveEventArgs rawMouseMove)
                     {

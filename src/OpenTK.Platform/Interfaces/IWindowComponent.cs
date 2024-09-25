@@ -145,37 +145,33 @@ namespace OpenTK.Platform
         /// Get the window position in display coordinates (top left origin).
         /// </summary>
         /// <param name="handle">Handle to a window.</param>
-        /// <param name="x">X coordinate of the window.</param>
-        /// <param name="y">Y coordinate of the window.</param>
+        /// <param name="position">Coordinate of the window in screen coordinates.</param>
         /// <exception cref="ArgumentNullException"><paramref name="handle"/> is null.</exception>
-        void GetPosition(WindowHandle handle, out int x, out int y);
+        void GetPosition(WindowHandle handle, out Vector2i position);
 
         /// <summary>
         /// Set the window position in display coordinates (top left origin).
         /// </summary>
         /// <param name="handle">Handle to a window.</param>
-        /// <param name="x">New X coordinate of the window.</param>
-        /// <param name="y">New Y coordinate of the window.</param>
+        /// <param name="newPosition">New position of the window in screen coordinates.</param>
         /// <exception cref="ArgumentNullException"><paramref name="handle"/> is null.</exception>
-        void SetPosition(WindowHandle handle, int x, int y);
+        void SetPosition(WindowHandle handle, Vector2i newPosition);
 
         /// <summary>
         /// Get the size of the window.
         /// </summary>
         /// <param name="handle">Handle to a window.</param>
-        /// <param name="width">Width of the window in pixels.</param>
-        /// <param name="height">Height of the window in pixels.</param>
+        /// <param name="size">Size of the window in screen coordinates.</param>
         /// <exception cref="ArgumentNullException"><paramref name="handle"/> is null.</exception>
-        void GetSize(WindowHandle handle, out int width, out int height);
+        void GetSize(WindowHandle handle, out Vector2i size);
 
         /// <summary>
         /// Set the size of the window.
         /// </summary>
         /// <param name="handle">Handle to a window.</param>
-        /// <param name="width">New width of the window in pixels.</param>
-        /// <param name="height">New height of the window in pixels.</param>
+        /// <param name="newSize">New size of the window in screen coordinates.</param>
         /// <exception cref="ArgumentNullException"><paramref name="handle"/> is null.</exception>
-        void SetSize(WindowHandle handle, int width, int height);
+        void SetSize(WindowHandle handle, Vector2i newSize);
 
         /// <summary>
         /// Get the bounds of the window.
@@ -183,8 +179,8 @@ namespace OpenTK.Platform
         /// <param name="handle">Handle to a window.</param>
         /// <param name="x">X coordinate of the window.</param>
         /// <param name="y">Y coordinate of the window.</param>
-        /// <param name="width">Width of the window in pixels.</param>
-        /// <param name="height">Height of the window in pixels.</param>
+        /// <param name="width">Width of the window in screen coordinates.</param>
+        /// <param name="height">Height of the window in screen coordinates.</param>
         void GetBounds(WindowHandle handle, out int x, out int y, out int width, out int height);
 
         /// <summary>
@@ -193,45 +189,41 @@ namespace OpenTK.Platform
         /// <param name="handle">Handle to a window.</param>
         /// <param name="x">New X coordinate of the window.</param>
         /// <param name="y">New Y coordinate of the window.</param>
-        /// <param name="width">New width of the window in pixels.</param>
-        /// <param name="height">New height of the window in pixels.</param>
+        /// <param name="width">New width of the window in screen coordinates.</param>
+        /// <param name="height">New height of the window in screen coordinates.</param>
         void SetBounds(WindowHandle handle, int x, int y, int width, int height);
 
         /// <summary>
         /// Get the position of the client area (drawing area) of a window.
         /// </summary>
         /// <param name="handle">Handle to a window.</param>
-        /// <param name="x">X coordinate of the client area.</param>
-        /// <param name="y">Y coordinate of the client area.</param>
+        /// <param name="clientPosition">The coordinate of the client area in screen coordinates.</param>
         /// <exception cref="ArgumentNullException"><paramref name="handle"/> is null.</exception>
-        void GetClientPosition(WindowHandle handle, out int x, out int y);
+        void GetClientPosition(WindowHandle handle, out Vector2i clientPosition);
 
         /// <summary>
         /// Set the position of the client area (drawing area) of a window.
         /// </summary>
         /// <param name="handle">Handle to a window.</param>
-        /// <param name="x">New X coordinate of the client area.</param>
-        /// <param name="y">New Y coordinate of the client area.</param>
+        /// <param name="newClientPosition">New coordinate of the client area in screen coordinates.</param>
         /// <exception cref="ArgumentNullException"><paramref name="handle"/> is null.</exception>
-        void SetClientPosition(WindowHandle handle, int x, int y);
+        void SetClientPosition(WindowHandle handle, Vector2i newClientPosition);
 
         /// <summary>
         /// Get the size of the client area (drawing area) of a window.
         /// </summary>
         /// <param name="handle">Handle to a window.</param>
-        /// <param name="width">Width of the client area in pixels.</param>
-        /// <param name="height">Height of the client area in pixels.</param>
+        /// <param name="clientSize">Size of the client area in screen coordinates.</param>
         /// <exception cref="ArgumentNullException"><paramref name="handle"/> is null.</exception>
-        void GetClientSize(WindowHandle handle, out int width, out int height);
+        void GetClientSize(WindowHandle handle, out Vector2i clientSize);
 
         /// <summary>
         /// Set the size of the client area (drawing area) of a window.
         /// </summary>
         /// <param name="handle">Handle to a window.</param>
-        /// <param name="width">New width of the client area in pixels.</param>
-        /// <param name="height">New height of the client area in pixels.</param>
+        /// <param name="newClientSize">New size of the client area in screen coordinates.</param>
         /// <exception cref="ArgumentNullException"><paramref name="handle"/> is null.</exception>
-        void SetClientSize(WindowHandle handle, int width, int height);
+        void SetClientSize(WindowHandle handle, Vector2i newClientSize);
 
         /// <summary>
         /// Get the client area bounds (drawing area) of a window.
@@ -258,9 +250,8 @@ namespace OpenTK.Platform
         /// Use this value when calls to graphics APIs that want pixels, e.g. GL.Viewport().
         /// </summary>
         /// <param name="handle">Handle to a window.</param>
-        /// <param name="width">Width in pixels of the window framebuffer.</param>
-        /// <param name="height">Height in pixels of the window framebuffer.</param>
-        void GetFramebufferSize(WindowHandle handle, out int width, out int height);
+        /// <param name="framebufferSize">Size in pixels of the window framebuffer.</param>
+        void GetFramebufferSize(WindowHandle handle, out Vector2i framebufferSize);
 
         /// <summary>
         /// Gets the maximum size of the client area.
@@ -456,24 +447,50 @@ namespace OpenTK.Platform
         /// <summary>
         /// Converts screen coordinates to window relative coordinates.
         /// </summary>
+        /// <remarks>
+        /// On platforms that support non-integer screen and client space coordinates (macOS) this function will return full precision results,
+        /// on integer based platforms (win32 and X11) the input coordinates will (if necessary) be truncated to ints before conversion.
+        /// </remarks>
         /// <param name="handle">The window handle.</param>
-        /// <param name="x">The screen x coordinate.</param>
-        /// <param name="y">The screen y coordinate.</param>
-        /// <param name="clientX">The client x coordinate.</param>
-        /// <param name="clientY">The client y coordinate.</param>
-        /// FIXME: Change to use Vector2i instead of x and y variables.
-        void ScreenToClient(WindowHandle handle, int x, int y, out int clientX, out int clientY);
+        /// <param name="screen">The screen coordinate.</param>
+        /// <param name="client">The client coordinate.</param>
+        void ScreenToClient(WindowHandle handle, Vector2 screen, out Vector2 client);
 
         /// <summary>
         /// Converts window relative coordinates to screen coordinates.
         /// </summary>
+        /// <remarks>
+        /// On platforms that support non-integer screen and client space coordinates (macOS) this function will return full precision results,
+        /// on integer based platforms (win32 and X11) the input coordinates will (if necessary) be truncated to ints before conversion.
+        /// </remarks>
         /// <param name="handle">The window handle.</param>
-        /// <param name="clientX">The client x coordinate.</param>
-        /// <param name="clientY">The client y coordinate.</param>
-        /// <param name="x">The screen x coordinate.</param>
-        /// <param name="y">The screen y coordinate.</param>
-        /// FIXME: Change to use Vector2i instead of x and y variables.
-        void ClientToScreen(WindowHandle handle, int clientX, int clientY, out int x, out int y);
+        /// <param name="client">The client coordinate.</param>
+        /// <param name="screen">The screen coordinate.</param>
+        void ClientToScreen(WindowHandle handle, Vector2 client, out Vector2 screen);
+
+        /// <summary>
+        /// Converts window relative coordinates to framebuffer coordinates.
+        /// </summary>
+        /// <remarks>
+        /// On platforms that support non-integer screen and client space coordinates (macOS) this function will return full precision results,
+        /// on integer based platforms (win32 and X11) the input coordinates will (if necessary) be truncated to ints before conversion.
+        /// </remarks>
+        /// <param name="handle">Handle of the window whose coordinate system to use.</param>
+        /// <param name="client">The client coordinate.</param>
+        /// <param name="framebuffer">The framebuffer coordinate.</param>
+        void ClientToFramebuffer(WindowHandle handle, Vector2 client, out Vector2 framebuffer);
+
+        /// <summary>
+        /// Converts framebuffer coordinates to framebuffer coordinates.
+        /// </summary>
+        /// <remarks>
+        /// On platforms that support non-integer screen and client space coordinates (macOS) this function will return full precision results,
+        /// on integer based platforms (win32 and X11) the input coordinates will (if necessary) be truncated to ints before conversion.
+        /// </remarks>
+        /// <param name="handle">Handle of the window whose coordinate system to use.</param>
+        /// <param name="framebuffer">The framebuffer coordinate.</param>
+        /// <param name="client">The client coordinate.</param>
+        void FramebufferToClient(WindowHandle handle, Vector2 framebuffer, out Vector2 client);
 
         /// <summary>
         /// Returns the current scale factor of this window.

@@ -9,6 +9,10 @@ namespace OpenTK.Platform
     public interface IDisplayComponent : IPalComponent
     {
         // FIXME: Add API for getting the display orientation!
+        // FIXME: Add API for getting the color information of the display.
+        // i.e. the RGB -> XYZ matrix
+        // and potential gamma functions.
+        // FIXME: Ability to query HDR support?
 
         /// <summary>
         /// True if the driver can get the virtual position of the display using <see cref="GetVirtualPosition(DisplayHandle, out int, out int)"/>.

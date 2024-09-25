@@ -113,7 +113,7 @@ void main() {
                 rawMouseMotionEnabled = true;
             }
 
-            Toolkit.Window.GetFramebufferSize(window, out viewportSize.X, out viewportSize.Y);
+            Toolkit.Window.GetFramebufferSize(window, out viewportSize);
 
             env_vao = GL.GenVertexArray();
             GL.BindVertexArray(env_vao);
@@ -193,8 +193,8 @@ void main() {
 
             GL.UseProgram(env_program);
 
-            Toolkit.Window.GetFramebufferSize(window, out int width, out int height);
-            float aspect = width / (float)height;
+            Toolkit.Window.GetFramebufferSize(window, out Vector2i fbSize);
+            float aspect = fbSize.X / (float)fbSize.Y;
             
             Matrix4 model = Matrix4.Identity;
             Matrix4 camera = Matrix4.CreateFromQuaternion(cameraRotation) * Matrix4.CreateTranslation(cameraPosition);
@@ -277,12 +277,12 @@ void main() {
             {
                 if (rawMouseMotionEnabled == false)
                 {
-                    delta += prevPos - mouseMove.Position;
+                    delta += prevPos - mouseMove.ClientPosition;
 
-                    Console.WriteLine($"Mouse move: {mouseMove.Position}");
+                    Console.WriteLine($"Mouse move: {mouseMove.ClientPosition}");
                 }
 
-                prevPos = mouseMove.Position;
+                prevPos = mouseMove.ClientPosition;
             }
             else if (args is RawMouseMoveEventArgs rawMouseMove)
             {
@@ -299,8 +299,8 @@ void main() {
                 {
                     if (Toolkit.Mouse != null)
                     {
-                        Toolkit.Mouse.GetPosition(out int x, out int y);
-                        prevPos = (x, y);
+                        Toolkit.Mouse.GetGlobalPosition(out Vector2 mousePos);
+                        prevPos = mousePos;
                     }
                 }
             }

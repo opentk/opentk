@@ -34,15 +34,23 @@ namespace OpenTK.Platform.Native.SDL
         public bool SupportsRawMouseMotion => throw new NotImplementedException();
 
         /// <inheritdoc/>
-        public void GetPosition(out int x, out int y)
+        public void GetGlobalPosition(out Vector2 globalPosition)
         {
-            SDL_GetGlobalMouseState(out x, out y);
+            SDL_GetGlobalMouseState(out int x, out int y);
+
+            globalPosition = (x, y);
         }
 
         /// <inheritdoc/>
-        public void SetPosition(int x, int y)
+        public void GetPosition(WindowHandle window, out Vector2 position)
         {
-            int result = SDL_WarpMouseGlobal(x, y);
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        public void SetGlobalPosition(Vector2 newGlobalPosition)
+        {
+            int result = SDL_WarpMouseGlobal((int)newGlobalPosition.X, (int)newGlobalPosition.Y);
             if (result < 0)
             {
                 string error = SDL_GetError();
@@ -78,7 +86,7 @@ namespace OpenTK.Platform.Native.SDL
         }
 
         /// <inheritdoc/>
-        public void GetMouseState(out MouseState state)
+        public void GetGlobalMouseState(out MouseState state)
         {
             uint buttons = SDL_GetGlobalMouseState(out int x, out int y);
 
@@ -103,6 +111,12 @@ namespace OpenTK.Platform.Native.SDL
                 state.PressedButtons |= MouseButtonFlags.Button4;
             if ((buttons & SDL_BUTTON_X2MASK) != 0)
                 state.PressedButtons |= MouseButtonFlags.Button5;
+        }
+
+        /// <inheritdoc/>
+        public void GetMouseState(WindowHandle window, out MouseState state)
+        {
+            throw new NotImplementedException();
         }
 
         /// <inheritdoc/>

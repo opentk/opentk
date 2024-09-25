@@ -21,6 +21,7 @@ namespace VulkanTestProject
         static VkSurfaceKHR Surface;
 
         static VkQueue GraphicsQueue;
+        static VkQueue PresentQueue;
         static VkRenderPass RenderPass;
         static VkCommandPool CommandPool;
         static VkCommandBuffer CommandBuffer;
@@ -36,20 +37,20 @@ namespace VulkanTestProject
 
         static unsafe void Main(string[] args)
         {
+            VKLoader.Init();
+
             ToolkitOptions options = new ToolkitOptions() { ApplicationName = "PAL2 Vulkan test app", Logger = new ConsoleLogger() };
             Toolkit.Init(options);
 
             EventQueue.EventRaised += EventQueue_EventRaised;
 
             // FIXME: How do we create a window for OpenGL vs Vulkan?
-            Window = Toolkit.Window.Create(null);
+            Window = Toolkit.Window.Create(new VulkanGraphicsApiHints());
 
-            Toolkit.Window.SetClientSize(Window, 800, 600);
+            Toolkit.Window.SetClientSize(Window, (800, 600));
             Toolkit.Window.SetTitle(Window, options.ApplicationName);
             Toolkit.Window.SetBorderStyle(Window, WindowBorderStyle.ResizableBorder);
             Toolkit.Window.SetMode(Window, WindowMode.Normal);
-
-            VKLoader.Init();
 
             VkApplicationInfo applicationInfo;
             applicationInfo.sType = VkStructureType.StructureTypeApplicationInfo;
@@ -67,6 +68,7 @@ namespace VulkanTestProject
             requiredExtensions.CopyTo(extensions.AsSpan()[1..]);
 
             string[] validationLayers = [ "VK_LAYER_KHRONOS_validation" ];
+            validationLayers = [];
 
             byte** extensionsPtr = MarshalTk.MarshalStringArrayToAnsiStringArrayPtr(extensions, out uint extensionsCount);
             byte** validationLayersPtr = MarshalTk.MarshalStringArrayToAnsiStringArrayPtr(validationLayers, out uint validationLayerCount);
@@ -107,7 +109,9 @@ namespace VulkanTestProject
                 throw new Exception($"Was not able to enumerate physical devices: {result}");
             }
 
-            PhysicalDevice = physicalDevices[0];
+            // FIXME: Do propery physical device selection that takes into account
+            // presentation support and stuff like discrete gpu preference.
+            PhysicalDevice = physicalDevices[1];
 
             uint deviceExtensionCount = 0;
             result = Vk.EnumerateDeviceExtensionProperties(PhysicalDevice, null, &deviceExtensionCount, null);
@@ -132,16 +136,25 @@ namespace VulkanTestProject
                 throw new Exception("Couldn't find VK_KHR_swapchain extension!");
             }
 
-            int queueFamily = FindQueueFamily(PhysicalDevice);
+            int graphicsQueueFamily = FindQueueFamily(PhysicalDevice);
+            int presentationQueueFamily = FindPresentationQueueFamily(PhysicalDevice);
 
-            VkDeviceQueueCreateInfo queueCreateInfo;
-            queueCreateInfo.sType = VkStructureType.StructureTypeDeviceQueueCreateInfo;
-            queueCreateInfo.pNext = null;
-            queueCreateInfo.flags = 0;
-            queueCreateInfo.queueFamilyIndex = (uint)queueFamily;
-            queueCreateInfo.queueCount = 1;
+            VkDeviceQueueCreateInfo* queueCreateInfos = stackalloc VkDeviceQueueCreateInfo[2];
+            
             float priority = 1.0f;
-            queueCreateInfo.pQueuePriorities = &priority;
+            queueCreateInfos[0].sType = VkStructureType.StructureTypeDeviceQueueCreateInfo;
+            queueCreateInfos[0].pNext = null;
+            queueCreateInfos[0].flags = 0;
+            queueCreateInfos[0].queueFamilyIndex = (uint)graphicsQueueFamily;
+            queueCreateInfos[0].queueCount = 1;
+            queueCreateInfos[0].pQueuePriorities = &priority;
+
+            queueCreateInfos[1].sType = VkStructureType.StructureTypeDeviceQueueCreateInfo;
+            queueCreateInfos[1].pNext = null;
+            queueCreateInfos[1].flags = 0;
+            queueCreateInfos[1].queueFamilyIndex = (uint)presentationQueueFamily;
+            queueCreateInfos[1].queueCount = 1;
+            queueCreateInfos[1].pQueuePriorities = &priority;
 
             VkPhysicalDeviceFeatures deviceFeatures = default;
 
@@ -149,8 +162,8 @@ namespace VulkanTestProject
             deviceCreateInfo.sType = VkStructureType.StructureTypeDeviceCreateInfo;
             deviceCreateInfo.pNext = null;
             deviceCreateInfo.flags = 0;
-            deviceCreateInfo.queueCreateInfoCount = 1;
-            deviceCreateInfo.pQueueCreateInfos = &queueCreateInfo;
+            deviceCreateInfo.queueCreateInfoCount = graphicsQueueFamily == presentationQueueFamily ? 1u : 2u;
+            deviceCreateInfo.pQueueCreateInfos = queueCreateInfos;
             deviceCreateInfo.enabledLayerCount = 0;
             deviceCreateInfo.ppEnabledLayerNames = null;
             deviceCreateInfo.enabledExtensionCount = 1;
@@ -171,8 +184,12 @@ namespace VulkanTestProject
 
 
             VkQueue graphicsQueue;
-            Vk.GetDeviceQueue(Device, (uint)queueFamily, 0, &graphicsQueue);
+            Vk.GetDeviceQueue(Device, (uint)graphicsQueueFamily, 0, &graphicsQueue);
             GraphicsQueue = graphicsQueue;
+
+            VkQueue presentQueue;
+            Vk.GetDeviceQueue(Device, (uint)presentationQueueFamily, 0, &presentQueue);
+            PresentQueue = presentQueue;
 
             result = Toolkit.Vulkan.CreateWindowSurface(instance, Window, null, out Surface);
 
@@ -293,7 +310,7 @@ namespace VulkanTestProject
                 imgViewCreate.flags = 0;
                 imgViewCreate.image = swapchainImages[i];
                 imgViewCreate.viewType = VkImageViewType.ImageViewType2d;
-                imgViewCreate.format = VkFormat.FormatR8g8b8a8Srgb;
+                imgViewCreate.format = choosenFormat.format;
                 imgViewCreate.components.r = VkComponentSwizzle.ComponentSwizzleIdentity;
                 imgViewCreate.components.g = VkComponentSwizzle.ComponentSwizzleIdentity;
                 imgViewCreate.components.b = VkComponentSwizzle.ComponentSwizzleIdentity;
@@ -328,7 +345,7 @@ namespace VulkanTestProject
             commandPoolCreate.sType = VkStructureType.StructureTypeCommandPoolCreateInfo;
             commandPoolCreate.pNext = null;
             commandPoolCreate.flags = VkCommandPoolCreateFlagBits.CommandPoolCreateResetCommandBufferBit;
-            commandPoolCreate.queueFamilyIndex = (uint)queueFamily;
+            commandPoolCreate.queueFamilyIndex = (uint)graphicsQueueFamily;
 
             VkCommandPool commandPool;
             result = Vk.CreateCommandPool(Device, &commandPoolCreate, null, &commandPool);
@@ -387,6 +404,24 @@ namespace VulkanTestProject
                 throw new Exception("Found no suitable queue family.");
             }
 
+            static int FindPresentationQueueFamily(VkPhysicalDevice physicalDevice)
+            {
+                uint propertyCount = 0;
+                Vk.GetPhysicalDeviceQueueFamilyProperties(physicalDevice, &propertyCount, null);
+
+                Span<VkQueueFamilyProperties> familyProperties = stackalloc VkQueueFamilyProperties[(int)propertyCount];
+                fixed (VkQueueFamilyProperties* ptr = familyProperties)
+                    Vk.GetPhysicalDeviceQueueFamilyProperties(physicalDevice, &propertyCount, ptr);
+
+                for (int i = 0; i < propertyCount; i++)
+                {
+                    if (Toolkit.Vulkan.GetPhysicalDevicePresentationSupport(VulkanInstance, physicalDevice, (uint)i))
+                        return i;
+                }
+
+                throw new Exception("Found no suitable presentation queue family.");
+            }
+
             Stopwatch watch = Stopwatch.StartNew();
             while (true)
             {
@@ -442,7 +477,7 @@ namespace VulkanTestProject
             fixed (VkFence* inFlightFencePtr = &InFlightFence)
             {
                 result = Vk.WaitForFences(Device, 1, inFlightFencePtr, 1, ulong.MaxValue);
-                Vk.ResetFences(Device, 1, inFlightFencePtr);
+                result = Vk.ResetFences(Device, 1, inFlightFencePtr);
             }
 
             uint imageIndex;
@@ -468,7 +503,7 @@ namespace VulkanTestProject
                 submitInfo.signalSemaphoreCount = 1;
                 submitInfo.pSignalSemaphores = renderFinishedSemaphorePtr;
 
-                Vk.QueueSubmit(GraphicsQueue, 1, &submitInfo, InFlightFence);
+                result = Vk.QueueSubmit(GraphicsQueue, 1, &submitInfo, InFlightFence);
 
                 VkPresentInfoKHR presentInfo;
                 presentInfo.sType = VkStructureType.StructureTypePresentInfoKhr;
@@ -480,7 +515,7 @@ namespace VulkanTestProject
                 presentInfo.pImageIndices = &imageIndex;
                 presentInfo.pResults = null;
 
-                result = Vk.QueuePresentKHR(GraphicsQueue, &presentInfo);
+                result = Vk.QueuePresentKHR(PresentQueue, &presentInfo);
             }
         }
 

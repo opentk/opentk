@@ -78,9 +78,9 @@ void main()
 
             windowComponent.SetTitle(window, "OpenTK Window");
             string title = windowComponent.GetTitle(window);
-            windowComponent.GetPosition(window, out int x, out int y);
+            windowComponent.GetPosition(window, out Vector2i position);
             Console.WriteLine($"Set title: '{title}'");
-            Console.WriteLine($"Position: ({x}, {y})");
+            Console.WriteLine($"Position: ({position.X}, {position.Y})");
 
             OpenGLContextHandle context = openglComponent.CreateFromWindow(window);
             openglComponent.SetCurrentContext(context);

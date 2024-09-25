@@ -82,6 +82,8 @@ namespace OpenTK.Platform.Native.macOS
         internal static readonly SEL selRequestUserAttention = sel_registerName("requestUserAttention"u8);
 
         internal static readonly SEL selConvertRectToBacking = sel_registerName("convertRectToBacking:"u8);
+        internal static readonly SEL selConvertPointToBacking = sel_registerName("convertPointToBacking:"u8);
+        internal static readonly SEL selConvertPointFromBacking = sel_registerName("convertPointFromBacking:"u8);
         internal static readonly SEL selConvertRectToScreen = sel_registerName("convertRectToScreen:"u8);
         internal static readonly SEL selConvertPointFromScreen = sel_registerName("convertPointFromScreen:"u8);
         internal static readonly SEL selConvertPointToScreen = sel_registerName("convertPointToScreen:"u8);
@@ -939,9 +941,9 @@ namespace OpenTK.Platform.Native.macOS
             }
 
             CGPoint point = objc_msgSend_CGPoint(@event, selLocationInWindow);
-            GetClientSize(window, out _, out int height);
+            GetClientSize(window, out Vector2i size);
             // FIXME: Potentially a -1 is needed here.
-            point.y = height - point.y;
+            point.y = size.Y - point.y;
 
             return DoHitTest(window, point);
         }
@@ -1057,6 +1059,7 @@ namespace OpenTK.Platform.Native.macOS
                             ModifierFlags modifierFlags = (ModifierFlags)((UIntPtr)objc_msgSend_IntPtr(@event, selModifierFlags)).ToUInt64();
                             KeyModifier modifiers = MacOSKeyboardComponent.ToKeyModifiers(modifierFlags);
 
+                            MacOSMouseComponent.RegisterButtonState(nswindow, mouseButton, true);
                             EventQueue.Raise(nswindow, PlatformEventType.MouseDown, new MouseButtonDownEventArgs(nswindow, mouseButton, modifiers));
 
                             objc_msgSend(nsApplication, selSendEvent, @event);
@@ -1091,6 +1094,7 @@ namespace OpenTK.Platform.Native.macOS
                             ModifierFlags modifierFlags = (ModifierFlags)((UIntPtr)objc_msgSend_IntPtr(@event, selModifierFlags)).ToUInt64();
                             KeyModifier modifiers = MacOSKeyboardComponent.ToKeyModifiers(modifierFlags);
 
+                            MacOSMouseComponent.RegisterButtonState(nswindow, mouseButton, false);
                             EventQueue.Raise(nswindow, PlatformEventType.MouseUp, new MouseButtonUpEventArgs(nswindow, mouseButton, modifiers));
 
                             // FIXME: If the mouse is outside of the window after a drag we want to send a mouse exit event here
@@ -1111,15 +1115,10 @@ namespace OpenTK.Platform.Native.macOS
 
                             CGPoint point = objc_msgSend_CGPoint(@event, selLocationInWindow);
 
-                            CGRect pointRect = objc_msgSend_CGRect(nswindow.Window, selConvertRectToBacking, new CGRect(point, CGPoint.Zero));
-
-                            CGRect backing = objc_msgSend_CGRect(
-                                nswindow.Window,
-                                selConvertRectToBacking,
-                                objc_msgSend_CGRect(nswindow.View, selBounds));
+                            CGRect bounds = objc_msgSend_CGRect(nswindow.View, selBounds);
 
                             // FIXME: Coordinate space
-                            CGPoint pos = new CGPoint(pointRect.origin.x, backing.size.y - pointRect.origin.y);
+                            CGPoint pos = new CGPoint(point.x, bounds.size.y - point.y);
 
                             if (nswindow.CursorCaptureMode == CursorCaptureMode.Locked)
                             {
@@ -1161,7 +1160,7 @@ namespace OpenTK.Platform.Native.macOS
                                 delta *= 0.1f;
                             }
 
-                            MacOSMouseComponent.RegisterMouseWheelDelta(delta);
+                            MacOSMouseComponent.RegisterMouseWheelDelta(nswindow, delta);
                             EventQueue.Raise(nswindow, PlatformEventType.Scroll, new ScrollEventArgs(nswindow, delta, distance));
 
                             objc_msgSend(nsApplication, selSendEvent, @event);
@@ -1495,47 +1494,46 @@ namespace OpenTK.Platform.Native.macOS
         }
 
         /// <inheritdoc/>
-        public void GetPosition(WindowHandle handle, out int x, out int y)
+        public void GetPosition(WindowHandle handle, out Vector2i position)
         {
             NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
 
             CGRect frame = objc_msgSend_CGRect(nswindow.Window, selFrame);
 
-            x = (int)frame.origin.x;
-            y = (int)CG.FlipYCoordinate(frame.origin.y + frame.size.y);
+            position.X = (int)frame.origin.x;
+            position.Y = (int)CG.FlipYCoordinate(frame.origin.y + frame.size.y);
         }
 
         /// <inheritdoc/>
-        public void SetPosition(WindowHandle handle, int x, int y)
+        public void SetPosition(WindowHandle handle, Vector2i newPosition)
         {
             NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
 
-            float flippedY = CG.FlipYCoordinate(y);
+            float flippedY = CG.FlipYCoordinate(newPosition.Y);
 
-            // FIXME: Coordinate space?
-            objc_msgSend(nswindow.Window, selSetFrameTopLeftPoint, new CGPoint(x, flippedY));
+            objc_msgSend(nswindow.Window, selSetFrameTopLeftPoint, new CGPoint(newPosition.X, flippedY));
         }
 
         /// <inheritdoc/>
-        public void GetSize(WindowHandle handle, out int width, out int height)
+        public void GetSize(WindowHandle handle, out Vector2i size)
         {
             NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
 
             CGRect frame = objc_msgSend_CGRect(nswindow.Window, selFrame);
 
             // FIXME: Do not cast to int?
-            width = (int)frame.size.x;
-            height = (int)frame.size.y;
+            size.X = (int)frame.size.x;
+            size.Y = (int)frame.size.y;
         }
 
         /// <inheritdoc/>
-        public void SetSize(WindowHandle handle, int width, int height)
+        public void SetSize(WindowHandle handle, Vector2i newSize)
         {
             NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
 
             CGRect frame = objc_msgSend_CGRect(nswindow.Window, selFrame);
-            frame.size.x = width;
-            frame.size.y = height;
+            frame.size.x = newSize.X;
+            frame.size.y = newSize.Y;
 
             // FIXME: BOOL
             objc_msgSend(nswindow.Window, selSetFrame_Display, frame, true);
@@ -1573,7 +1571,7 @@ namespace OpenTK.Platform.Native.macOS
         }
 
         /// <inheritdoc/>
-        public void GetClientPosition(WindowHandle handle, out int x, out int y)
+        public void GetClientPosition(WindowHandle handle, out Vector2i clientPosition)
         {
             NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
 
@@ -1581,28 +1579,27 @@ namespace OpenTK.Platform.Native.macOS
 
             CGRect screenFrame = objc_msgSend_CGRect(nswindow.Window, selConvertRectToScreen, frame);
 
-            x = (int)screenFrame.origin.x;
-            y = (int)CG.FlipYCoordinate(screenFrame.origin.y + screenFrame.size.y);
+            clientPosition.X = (int)screenFrame.origin.x;
+            clientPosition.Y = (int)CG.FlipYCoordinate(screenFrame.origin.y + screenFrame.size.y);
         }
 
         /// <inheritdoc/>
-        public void SetClientPosition(WindowHandle handle, int x, int y)
+        public void SetClientPosition(WindowHandle handle, Vector2i newClientPosition)
         {
             NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
 
             // FIXME: Maybe create a more direct implementation?
 
-            GetPosition(nswindow, out int wx, out int wy);
-            GetClientPosition(nswindow, out int cx, out int cy);
+            GetPosition(nswindow, out Vector2i sp);
+            GetClientPosition(nswindow, out Vector2i cp);
 
-            int offsetX = wx - cx;
-            int offsetY = wy - cy;
+            Vector2i offset = sp - cp;
 
-            SetPosition(nswindow, x + offsetX, y + offsetY);
+            SetPosition(nswindow, newClientPosition + offset);
         }
 
         /// <inheritdoc/>
-        public void GetClientSize(WindowHandle handle, out int width, out int height)
+        public void GetClientSize(WindowHandle handle, out Vector2i clientSize)
         {
             NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
 
@@ -1610,16 +1607,16 @@ namespace OpenTK.Platform.Native.macOS
 
             CGRect screenFrame = objc_msgSend_CGRect(nswindow.Window, selConvertRectToScreen, frame);
 
-            width = (int)(screenFrame.size.x);
-            height = (int)(screenFrame.size.y);
+            clientSize.X = (int)(screenFrame.size.x);
+            clientSize.Y = (int)(screenFrame.size.y);
         }
 
         /// <inheritdoc/>
-        public void SetClientSize(WindowHandle handle, int width, int height)
+        public void SetClientSize(WindowHandle handle, Vector2i newClientSize)
         {
             NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
 
-            NSSize size = new NSSize(width, height);
+            NSSize size = new NSSize(newClientSize.X, newClientSize.Y);
 
             objc_msgSend(nswindow.Window, selSetContentSize, size);
         }
@@ -1647,22 +1644,22 @@ namespace OpenTK.Platform.Native.macOS
 
             // FIXME: Find a more direct way to set the contentSize while setting the position.
 
-            SetClientPosition(nswindow, x, y);
+            SetClientPosition(nswindow, (x, y));
 
             NSSize size = new NSSize(width, height);
             objc_msgSend(nswindow.Window, selSetContentSize, size);
         }
 
         /// <inheritdoc/>
-        public void GetFramebufferSize(WindowHandle handle, out int width, out int height)
+        public void GetFramebufferSize(WindowHandle handle, out Vector2i framebufferSize)
         {
             NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
 
             CGRect bounds = objc_msgSend_CGRect(nswindow.View, selBounds);
             CGRect boundsBacking = objc_msgSend_CGRect(nswindow.View, selConvertRectToBacking, bounds);
 
-            width = (int)(boundsBacking.size.x);
-            height = (int)(boundsBacking.size.y);
+            framebufferSize.X = (int)(boundsBacking.size.x);
+            framebufferSize.Y = (int)(boundsBacking.size.y);
         }
 
         /// <inheritdoc/>
@@ -2133,8 +2130,8 @@ namespace OpenTK.Platform.Native.macOS
 
             MacOSMouseComponent.GetPosition(out double x, out double y);
             //ScreenToClient
-            GetClientPosition(window, out int cx, out int cy);
-            CGPoint point = new CGPoint((NFloat)x - cx, (NFloat)y - cy);
+            GetClientPosition(window, out Vector2i client);
+            CGPoint point = new CGPoint((NFloat)x - client.X, (NFloat)y - client.Y);
 
             // FIXME: Do an initial check when setting the delegate.
             DoHitTest(window, point);
@@ -2278,25 +2275,47 @@ namespace OpenTK.Platform.Native.macOS
         }
 
         /// <inheritdoc/>
-        public void ScreenToClient(WindowHandle handle, int x, int y, out int clientX, out int clientY)
+        public void ScreenToClient(WindowHandle handle, Vector2 screen, out Vector2 client)
         {
             NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
 
-            CGPoint clientPoint = objc_msgSend_CGPoint(nswindow.Window, selConvertPointFromScreen, new CGPoint(x, CG.FlipYCoordinate(y)));
+            CGPoint clientPoint = objc_msgSend_CGPoint(nswindow.Window, selConvertPointFromScreen, new CGPoint(screen.X, CG.FlipYCoordinate(screen.Y)));
 
-            clientX = (int)clientPoint.x;
-            clientY = (int)FlipClientYCoordinate(nswindow, clientPoint.y);
+            client.X = (float)clientPoint.x;
+            client.Y = (float)FlipClientYCoordinate(nswindow, clientPoint.y);
         }
 
         /// <inheritdoc/>
-        public void ClientToScreen(WindowHandle handle, int clientX, int clientY, out int x, out int y)
+        public void ClientToScreen(WindowHandle handle, Vector2 client, out Vector2 screen)
         {
             NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
 
-            CGPoint screenPoint = objc_msgSend_CGPoint(nswindow.Window, selConvertPointToScreen, new CGPoint(clientX, FlipClientYCoordinate(nswindow, clientY)));
+            CGPoint screenPoint = objc_msgSend_CGPoint(nswindow.Window, selConvertPointToScreen, new CGPoint(client.X, FlipClientYCoordinate(nswindow, client.Y)));
 
-            x = (int)screenPoint.x;
-            y = (int)CG.FlipYCoordinate(screenPoint.y);
+            screen.X = (float)screenPoint.x;
+            screen.Y = (float)CG.FlipYCoordinate(screenPoint.y);
+        }
+
+        /// <inheritdoc/>
+        public void ClientToFramebuffer(WindowHandle handle, Vector2 client, out Vector2 framebuffer)
+        {
+            NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
+
+            CGPoint backing = objc_msgSend_CGPoint(nswindow.Window, selConvertPointToBacking, new CGPoint(client.X, client.Y));
+
+            framebuffer.X = (float)backing.x;
+            framebuffer.Y = (float)backing.y;
+        }
+
+        /// <inheritdoc/>
+        public void FramebufferToClient(WindowHandle handle, Vector2 framebuffer, out Vector2 client)
+        {
+            NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
+
+            CGPoint clientPoint = objc_msgSend_CGPoint(nswindow.Window, selConvertPointFromBacking, new CGPoint(framebuffer.X, framebuffer.Y));
+
+            client.X = (float)clientPoint.x;
+            client.Y = (float)clientPoint.y;
         }
 
         /// <inheritdoc/>

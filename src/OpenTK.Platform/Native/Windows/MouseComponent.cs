@@ -9,6 +9,7 @@ using System.Resources;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using OpenTK.Platform.Native.X11;
 
 namespace OpenTK.Platform.Native.Windows
 {
@@ -35,7 +36,7 @@ namespace OpenTK.Platform.Native.Windows
         public bool SupportsRawMouseMotion => true;
 
         /// <inheritdoc/>
-        public void GetPosition(out int x, out int y)
+        public void GetGlobalPosition(out Vector2 globalPosition)
         {
             // FIXME: When hibernating (or going out of hibernate) this function fails with 0x5 Access denied.
             bool success = Win32.GetCursorPos(out Win32.POINT lpPoint);
@@ -44,17 +45,44 @@ namespace OpenTK.Platform.Native.Windows
                 //throw new Win32Exception();
             }
 
-            x = lpPoint.X;
-            y = lpPoint.Y;
+            globalPosition.X = lpPoint.X;
+            globalPosition.Y = lpPoint.Y;
         }
 
         /// <inheritdoc/>
-        public void SetPosition(int x, int y)
+        public void GetPosition(WindowHandle window, out Vector2 position)
         {
-            bool success = Win32.SetCursorPos(x, y);
+            HWND hwnd = window.As<HWND>(this);
+
+            if (hwnd.CaptureMode == CursorCaptureMode.Locked)
+            {
+                position = hwnd.VirtualCursorPosition;
+            }
+            else
+            {
+                position = hwnd.LastMousePosition;
+            }
+        }
+
+        /// <inheritdoc/>
+        public void SetGlobalPosition(Vector2 newGlobalPosition)
+        {
+            bool success = Win32.SetCursorPos((int)newGlobalPosition.X, (int)newGlobalPosition.Y);
             if (success == false)
             {
                 throw new Win32Exception();
+            }
+        }
+
+        internal static void RegisterButtonState(HWND? hwnd, MouseButton button, bool pressed)
+        {
+            MouseButtonFlags flag = (MouseButtonFlags)(1 << (int)button);
+
+            if (hwnd != null)
+            {
+                // Record window local state
+                if (pressed) hwnd.PressedMouseButtons |= flag;
+                else hwnd.PressedMouseButtons &= ~flag;
             }
         }
 
@@ -67,17 +95,21 @@ namespace OpenTK.Platform.Native.Windows
         // not the "global" state of the scroll wheel.
         // Should we fix that? or is this what is expected?
         internal static Vector2 ScrollPosition = (0.0f, 0.0f);
-        internal static void RegisterMouseWheelDelta(Vector2 delta)
+        internal static void RegisterMouseWheelDelta(HWND? hwnd, Vector2 delta)
         {
+            if (hwnd != null)
+            {
+                hwnd.ScrollPosition += delta;
+            }
+
             ScrollPosition += delta;
         }
 
         /// <inheritdoc/>
-        public void GetMouseState(out MouseState state)
+        public void GetGlobalMouseState(out MouseState state)
         {
             Win32.GetCursorPos(out Win32.POINT lpPoint);
-            state.Position.X = lpPoint.X;
-            state.Position.Y = lpPoint.Y;
+            state.Position = (lpPoint.X, lpPoint.Y);
 
             state.Scroll = ScrollPosition;
 
@@ -106,6 +138,15 @@ namespace OpenTK.Platform.Native.Windows
             {
                 state.PressedButtons |= MouseButtonFlags.Button5;
             }
+        }
+
+        /// <inheritdoc/>
+        public void GetMouseState(WindowHandle window, out MouseState state)
+        {
+            HWND hwnd = window.As<HWND>(this);
+            state.Position = (hwnd.CaptureMode == CursorCaptureMode.Locked) ? hwnd.VirtualCursorPosition : hwnd.LastMousePosition;
+            state.Scroll = hwnd.ScrollPosition;
+            state.PressedButtons = hwnd.PressedMouseButtons;
         }
 
         /// <inheritdoc/>

@@ -33,7 +33,7 @@ namespace OpenTK.Platform.Native.macOS
         public bool CanSetMousePosition => true;
 
         /// <inheritdoc/>
-        public bool SupportsRawMouseMotion => throw new NotImplementedException();
+        public bool SupportsRawMouseMotion => false;
 
         /// <inheritdoc/>
         public void Initialize(ToolkitOptions options)
@@ -50,20 +50,46 @@ namespace OpenTK.Platform.Native.macOS
         }
 
         /// <inheritdoc/>
-        public void GetPosition(out int x, out int y)
+        public void GetGlobalPosition(out Vector2 globalPosition)
         {
             CGPoint p = objc_msgSend_CGPoint((IntPtr)NSEventClass, selMouseLocation);
             NFloat flippedY = CG.FlipYCoordinate(p.y);
 
-            x = (int)p.x;
-            y = (int)flippedY;
+            globalPosition.X = (float)p.x;
+            globalPosition.Y = (float)flippedY;
         }
 
         /// <inheritdoc/>
-        public void SetPosition(int x, int y)
+        public void GetPosition(WindowHandle window, out Vector2 position)
+        {
+            NSWindowHandle nswindow = window.As<NSWindowHandle>(this);
+
+            if (nswindow.CursorCaptureMode == CursorCaptureMode.Locked)
+            {
+                position = (Vector2)nswindow.VirtualCursorPosition;
+            }
+            else
+            {
+                position = (Vector2)nswindow.LastMousePosition;
+            }
+        }
+
+        /// <inheritdoc/>
+        public void SetGlobalPosition(Vector2 newGlobalPosition)
         {
             // CGWarpMouseCursorPosition uses top left relative coordinates.
-            CGWarpMouseCursorPosition(new CGPoint(x, y));
+            CGWarpMouseCursorPosition(new CGPoint(newGlobalPosition.X, newGlobalPosition.Y));
+        }
+
+        internal static void RegisterButtonState(NSWindowHandle? nswindow, MouseButton button, bool pressed)
+        {
+            MouseButtonFlags flag = (MouseButtonFlags)(1 << (int)button);
+
+            if (nswindow != null)
+            {
+                if (pressed) nswindow.PressedMouseButtons |= flag;
+                else nswindow.PressedMouseButtons &= ~flag;
+            }
         }
 
         // FIXME: This is only a 32-bit float and
@@ -75,13 +101,18 @@ namespace OpenTK.Platform.Native.macOS
         // not the "global" state of the scroll wheel.
         // Should we fix that? or is this what is expected?
         internal static Vector2 ScrollPosition = (0.0f, 0.0f);
-        internal static void RegisterMouseWheelDelta(Vector2 delta)
+        internal static void RegisterMouseWheelDelta(NSWindowHandle? nswindow, Vector2 delta)
         {
+            if (nswindow != null)
+            {
+                nswindow.ScrollPosition += delta;
+            }
+
             ScrollPosition += delta;
         }
 
         /// <inheritdoc/>
-        public void GetMouseState(out MouseState state)
+        public void GetGlobalMouseState(out MouseState state)
         {
             CGPoint p = objc_msgSend_CGPoint((IntPtr)NSEventClass, selMouseLocation);
             NFloat flippedY = CG.FlipYCoordinate(p.y);
@@ -89,7 +120,7 @@ namespace OpenTK.Platform.Native.macOS
             // FIXME: NSUInteger
             ulong buttons = objc_msgSend_ulong((IntPtr)NSEventClass, selPressedMouseButtons);
 
-            state.Position = new Vector2i((int)p.x, (int)flippedY);
+            state.Position = new Vector2((float)p.x, (float)flippedY);
 
             state.Scroll = ScrollPosition;
 
@@ -110,6 +141,16 @@ namespace OpenTK.Platform.Native.macOS
                 state.PressedButtons |= MouseButtonFlags.Button7;
             if ((buttons & 1 << 7) != 0)
                 state.PressedButtons |= MouseButtonFlags.Button8;
+        }
+
+        /// <inheritdoc/>
+        public void GetMouseState(WindowHandle window, out MouseState state)
+        {
+            NSWindowHandle nswindow = window.As<NSWindowHandle>(this);
+
+            state.Position = (nswindow.CursorCaptureMode == CursorCaptureMode.Locked) ? (Vector2)nswindow.VirtualCursorPosition : (Vector2)nswindow.LastMousePosition;
+            state.Scroll = nswindow.ScrollPosition;
+            state.PressedButtons = nswindow.PressedMouseButtons;
         }
 
         /// <inheritdoc/>

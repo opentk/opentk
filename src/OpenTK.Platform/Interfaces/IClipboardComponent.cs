@@ -11,7 +11,6 @@ namespace OpenTK.Platform
     /// <summary>
     /// Interface for drivers which provide the clipboard component of the platform abstraction layer.
     /// </summary>
-    // GOAL: We want to support unicode text, rich text and images.
     public interface IClipboardComponent : IPalComponent
     {
         /// <summary>
@@ -28,7 +27,7 @@ namespace OpenTK.Platform
         /// <summary>
         /// Sets the string currently in the clipboard.
         /// </summary>
-        /// <param name="text">The text to put on the clipboard.</param>
+        /// <param name="text">The text to write to the clipboard.</param>
         void SetClipboardText(string text);
 
         /// <summary>
@@ -46,9 +45,27 @@ namespace OpenTK.Platform
         AudioData? GetClipboardAudio();
 
         /// <summary>
+        /// Writes a bitmap to the clipboard.
+        /// </summary>
+        /// <remarks>
+        /// On linux clipboard bitmaps are defacto transferred as PNG data, as such a PNG encoder/decoder is needed to read and write bitmaps from the clipboard.
+        /// To enable this <see cref="Native.X11.X11ClipboardComponent.SetPngCodec(Native.X11.X11ClipboardComponent.IPngCodec?)"/> must be called with an object that implements the <see cref="Native.X11.X11ClipboardComponent.IPngCodec"/> interface.
+        /// If this is not done, <see cref="SetClipboardBitmap(Bitmap)"/> and <see cref="GetClipboardBitmap"/> will both throw an exception.
+        /// </remarks>
+        /// <param name="bitmap">The bitmap to write to the clipboard.</param>
+        /// <seealso cref="Native.X11.X11ClipboardComponent.SetPngCodec(Native.X11.X11ClipboardComponent.IPngCodec?)"/>
+        // FIXME: What is the orientation of this image? Is it bottom up or top down?
+        void SetClipboardBitmap(Bitmap bitmap);
+
+        /// <summary>
         /// Gets the bitmap currently in the clipboard.
         /// This function returns null if the current clipboard data doesn't have the <see cref="ClipboardFormat.Bitmap"/> format.
         /// </summary>
+        /// <remarks>
+        /// On linux clipboard bitmaps are defacto transferred as PNG data, as such a PNG encoder/decoder is needed to read and write bitmaps from the clipboard.
+        /// To enable this <see cref="Native.X11.X11ClipboardComponent.SetPngCodec(Native.X11.X11ClipboardComponent.IPngCodec?)"/> must be called with an object that implements the <see cref="Native.X11.X11ClipboardComponent.IPngCodec"/> interface.
+        /// If this is not done, <see cref="SetClipboardBitmap(Bitmap)"/> and <see cref="GetClipboardBitmap"/> will both throw an exception.
+        /// </remarks>
         /// <returns>The bitmap currently in the clipboard.</returns>
         // FIXME: What is the orientation of this image? Is it bottom up or top down?
         Bitmap? GetClipboardBitmap();

@@ -12,6 +12,7 @@ namespace OpenTK.Platform
     public class Bitmap
     {
         // FIXME: Add stuff like colorspace info?
+        // FIXME: What is the orientation of this image? Is it bottom up or top down?
 
         /// <summary>
         /// The width of the bitmap in pixels.
