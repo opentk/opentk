@@ -12,6 +12,8 @@
     <ApplicationIcon />
     <OutputType>Library</OutputType>
     <StartupObject />
+    <SignAssembly>True</SignAssembly>
+    <AssemblyOriginatorKeyFile>../../../openTK.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">

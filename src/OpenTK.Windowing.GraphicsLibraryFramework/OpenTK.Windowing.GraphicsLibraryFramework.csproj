@@ -5,6 +5,8 @@
       <RootNamespace>OpenTK.Windowing.GraphicsLibraryFramework</RootNamespace>
       <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
       <LangVersion>8.0</LangVersion>
+      <SignAssembly>False</SignAssembly>
+      <AssemblyOriginatorKeyFile>../../openTK.snk</AssemblyOriginatorKeyFile>
     </PropertyGroup>
     
     <ItemGroup>
