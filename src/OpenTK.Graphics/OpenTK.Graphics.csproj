@@ -3,6 +3,9 @@
     <TargetFrameworks>netstandard2.1;netcoreapp3.1</TargetFrameworks>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <RootNamespace>OpenTK.Graphics</RootNamespace>
+    <SignAssembly>True</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\..\openTK.snk</AssemblyOriginatorKeyFile>
+    <DelaySign>True</DelaySign>
   </PropertyGroup>
 
   <!-- This article is useful for generating code: -->
@@ -80,8 +83,8 @@
   <!-- After we have compiled the dll we run the rewriter -->
   <Target Name="Rewrite" BeforeTargets="PostBuildEvent">
     <Message Text="Rewriting src/OpenTK.Graphics/bin/$(Configuration)/$(TargetFramework)" Importance="high" />
-    <Exec Command=".\src\Generator.Rewrite\bin\$(Configuration)\netcoreapp3.1\Rewrite.exe -a ./src/OpenTK.Graphics/bin/$(Configuration)/$(TargetFramework)/OpenTK.Graphics.dll" WorkingDirectory="../../" StandardOutputImportance="high" StandardErrorImportance="high" Condition="'$(OS)' == 'Windows_NT'" />
-    <Exec Command=".\src\Generator.Rewrite\bin\$(Configuration)\netcoreapp3.1\Rewrite -a ./src/OpenTK.Graphics/bin/$(Configuration)/$(TargetFramework)/OpenTK.Graphics.dll" WorkingDirectory="../../" StandardOutputImportance="high" StandardErrorImportance="high" Condition="'$(OS)' != 'Windows_NT'" />
+    <Exec Command=".\src\Generator.Rewrite\bin\$(Configuration)\netcoreapp3.1\Rewrite.exe -a ./src/OpenTK.Graphics/bin/$(Configuration)/$(TargetFramework)/OpenTK.Graphics.dll -k ./openTK.snk" WorkingDirectory="../../" StandardOutputImportance="high" StandardErrorImportance="high" Condition="'$(OS)' == 'Windows_NT'" />
+    <Exec Command=".\src\Generator.Rewrite\bin\$(Configuration)\netcoreapp3.1\Rewrite -a ./src/OpenTK.Graphics/bin/$(Configuration)/$(TargetFramework)/OpenTK.Graphics.dll -k ./openTK.snk" WorkingDirectory="../../" StandardOutputImportance="high" StandardErrorImportance="high" Condition="'$(OS)' != 'Windows_NT'" />
     <Message Text="Rewrote src/OpenTK.Graphics/bin/$(Configuration)/$(TargetFramework)" Importance="high" />
   </Target>
 

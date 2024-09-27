@@ -4,6 +4,8 @@
       <TargetFrameworks>netcoreapp3.1</TargetFrameworks>
       <RootNamespace>OpenTK.Windowing.Desktop</RootNamespace>
       <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+      <SignAssembly>True</SignAssembly>
+      <AssemblyOriginatorKeyFile>../../openTK.snk</AssemblyOriginatorKeyFile>
     </PropertyGroup>
     
     <ItemGroup>
