@@ -83,9 +83,8 @@
   <!-- After we have compiled the dll we run the rewriter -->
   <Target Name="Rewrite" BeforeTargets="PostBuildEvent">
     <Message Text="Rewriting src/OpenTK.Graphics/bin/$(Configuration)/$(TargetFramework)" Importance="high" />
-    <Exec Command=".\src\Generator.Rewrite\bin\$(Configuration)\netcoreapp3.1\Rewrite.exe -a ./src/OpenTK.Graphics/bin/$(Configuration)/$(TargetFramework)/OpenTK.Graphics.dll" WorkingDirectory="../../" StandardOutputImportance="high" StandardErrorImportance="high" Condition="'$(OS)' == 'Windows_NT'" />
-    <Exec Command=".\src\Generator.Rewrite\bin\$(Configuration)\netcoreapp3.1\Rewrite -a ./src/OpenTK.Graphics/bin/$(Configuration)/$(TargetFramework)/OpenTK.Graphics.dll" WorkingDirectory="../../" StandardOutputImportance="high" StandardErrorImportance="high" Condition="'$(OS)' != 'Windows_NT'" />
-    <Exec Command="&quot;$(TargetFrameworkSDKToolsDirectory)SN.exe&quot; -R ./src/OpenTK.Graphics/bin/$(Configuration)/$(TargetFramework)/OpenTK.Graphics.dll ./openTK.snk" WorkingDirectory="../../" StandardOutputImportance="high" StandardErrorImportance="high" />
+    <Exec Command=".\src\Generator.Rewrite\bin\$(Configuration)\netcoreapp3.1\Rewrite.exe -a ./src/OpenTK.Graphics/bin/$(Configuration)/$(TargetFramework)/OpenTK.Graphics.dll -k ./openTK.snk" WorkingDirectory="../../" StandardOutputImportance="high" StandardErrorImportance="high" Condition="'$(OS)' == 'Windows_NT'" />
+    <Exec Command=".\src\Generator.Rewrite\bin\$(Configuration)\netcoreapp3.1\Rewrite -a ./src/OpenTK.Graphics/bin/$(Configuration)/$(TargetFramework)/OpenTK.Graphics.dll -k ./openTK.snk" WorkingDirectory="../../" StandardOutputImportance="high" StandardErrorImportance="high" Condition="'$(OS)' != 'Windows_NT'" />
     <Message Text="Rewrote src/OpenTK.Graphics/bin/$(Configuration)/$(TargetFramework)" Importance="high" />
   </Target>
 
