@@ -189,23 +189,29 @@ namespace OpenTK.Platform.Native.EGL
 
             IntPtr selectedConfig = (IntPtr)possibleContextValues[selectedFormatIndex].ID;
 
-            List<int> surface_attribs = new List<int>();
-            surface_attribs.Add(Egl.RENDER_BUFFER);
-            surface_attribs.Add(settings.DoubleBuffer ? Egl.BACK_BUFFER : Egl.SINGLE_BUFFER);
+            List<int> surface_attribs_list = new List<int>();
+            surface_attribs_list.Add(Egl.RENDER_BUFFER);
+            surface_attribs_list.Add(settings.DoubleBuffer ? Egl.BACK_BUFFER : Egl.SINGLE_BUFFER);
 
             // ANGLE doesn't support COLORSPACE option.
             if (!settings.IsAngle)
             {
-                surface_attribs.Add(Egl.COLORSPACE);
-                surface_attribs.Add(settings.sRGBFramebuffer ? Egl.COLORSPACE_sRGB : Egl.COLORSPACE_LINEAR);
+                surface_attribs_list.Add(Egl.COLORSPACE);
+                surface_attribs_list.Add(settings.sRGBFramebuffer ? Egl.COLORSPACE_sRGB : Egl.COLORSPACE_LINEAR);
             }
 
-            surface_attribs.Add(Egl.NONE);
+            surface_attribs_list.Add(Egl.NONE);
 
-            IntPtr eglSurface = Egl.CreatePlatformWindowSurfaceEXT(eglDisplay, selectedConfig, windowHandle, surface_attribs.ToArray());
-            if (eglSurface == IntPtr.Zero)
+            int[] structure_attribs = surface_attribs_list.ToArray();
+
+            IntPtr eglSurface;
+            fixed (int* structure_attribs_ptr = structure_attribs)
             {
-                throw new PalException(this, $"Was not able to create egl surface. {Egl.GetError()}");
+                eglSurface = Egl.CreateWindowSurface(eglDisplay, selectedConfig, windowHandle, (IntPtr)structure_attribs_ptr);
+                if (eglSurface == IntPtr.Zero)
+                {
+                    throw new PalException(this, $"Was not able to create egl surface. {Egl.GetError()}");
+                }
             }
 
             // FIXME: Share context
