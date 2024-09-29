@@ -24,13 +24,9 @@ namespace OpenTK.Platform.Native
     public static class PlatformComponents
     {
         /// <summary>
-        /// Set this to true to prefer loading the SDL backend on all platforms.
-        /// We will fall back to platform specifc backends if SDL cannot be loaded.
+        /// Gets or sets the preferred backend to use.
         /// </summary>
-        public static bool PreferSDL2 { get; set; } = false;
-
-        // FIXME:
-        public static bool PreferANGLE { get; set; } = false;
+        public static PreferredBackend PreferredBackend { get; set; } = PreferredBackend.None;
 
         private delegate IPalComponent ComponentCtor();
 
@@ -139,7 +135,7 @@ namespace OpenTK.Platform.Native
         private static Dictionary<PalComponents, ComponentCtor> GetPlatformComponents()
         {
             // FIXME: Make SDL a fallback.
-            if (PreferSDL2)
+            if (PreferredBackend == PreferredBackend.SDL2)
             {
                 // We use the DllResolver to get the same loading logic as DllImport.
                 IntPtr handle = DllResolver.DllImportResolver("SDL2", Assembly.GetExecutingAssembly(), null);
@@ -198,11 +194,9 @@ namespace OpenTK.Platform.Native
         /// <inheritdoc cref="GetPlatformComponent{TComp}(PalComponents)"/>
         public static IOpenGLComponent CreateOpenGLComponent()
         {
-            // FIXME: Should we do this here?
-            // FIXME: Check so that we can actually load angle binaries too!
-            if (PreferANGLE)
+            if (PreferredBackend == PreferredBackend.EGL)
             {
-                return new ANGLE.ANGLEOpenGLComponent();
+                return new EGL.EGLOpenGLComponent();
             }
             else
             {
