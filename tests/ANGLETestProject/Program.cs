@@ -1,11 +1,10 @@
 ﻿using OpenTK.Platform;
 using OpenTK.Core.Utility;
 using OpenTK.Graphics;
-using OpenTK.Graphics.Egl;
 using OpenTK.Graphics.OpenGLES2;
 using OpenTK.Mathematics;
 using OpenTK.Platform.Native;
-using OpenTK.Platform.Native.ANGLE;
+using OpenTK.Platform.Native.EGL;
 
 namespace ANGLETestProject
 {
@@ -19,17 +18,21 @@ namespace ANGLETestProject
             EventQueue.EventRaised += EventQueue_EventRaised;
 
             WindowComp = PlatformComponents.CreateWindowComponent();
-            OpenGLComp = new ANGLEOpenGLComponent();
+            OpenGLComp = new EGLOpenGLComponent();
 
             ToolkitOptions options = new ToolkitOptions() { Logger = new ConsoleLogger() };
-            
+
             WindowComp.Logger = options.Logger;
             OpenGLComp.Logger = options.Logger;
 
             WindowComp.Initialize(options);
             OpenGLComp.Initialize(options);
 
-            var window = WindowComp.Create(new OpenGLGraphicsApiHints());
+            var window = WindowComp.Create(new EGLGraphicsApiHints
+            {
+                IsAngle = true,
+                Version = new Version(3, 0),
+            });
             WindowComp.SetSize(window, (800, 600));
             WindowComp.SetMode(window, WindowMode.Normal);
             WindowComp.SetTitle(window, "ANGLE Window");
@@ -53,7 +56,7 @@ namespace ANGLETestProject
                 GL.Clear(ClearBufferMask.ColorBufferBit);
 
                 // FIXME: Make WindowComp able to handle this?
-                (OpenGLComp as ANGLEOpenGLComponent)?.SwapBuffers(context);
+                (OpenGLComp as EGLOpenGLComponent)?.SwapBuffers(context);
                 // WindowComp.SwapBuffers(window);
             }
         }
