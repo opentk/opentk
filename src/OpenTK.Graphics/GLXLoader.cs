@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 
 namespace OpenTK.Graphics
 {
-    // FIXME: Actually implement this properly.
     public static class GLXLoader
     {
         public static class BindingsContext
@@ -47,9 +46,32 @@ namespace OpenTK.Graphics
                 return 0;
             }
         }
+        
+        // FIXME: By default let the OS decide, if that fails use vendor. Add other vendor GLX versions.
+        static readonly string[] LibraryNames = new string[]
+            {
+                "libGLX.so",
+                "libGLX.so.0",
+                "libGLX_nvidia.so.1",
+                "libGLX_nvidia.so.0",
+                "libGLX_mesa.so.0",
+            };
 
-        // FIXME: More advanced .so resolution?
-        private static readonly IntPtr GLXHandle = NativeLibrary.Load("libGL.so");
+        // FIXME: Is it possible to make an API for users to provide additional search paths?
+        private static IntPtr LoadGLX()
+        {
+            foreach (string name in LibraryNames)
+            {
+                if (NativeLibrary.TryLoad(name, out IntPtr handle))
+                {
+                    return handle;
+                }
+            }
+
+            return 0;
+        }
+
+        private static readonly IntPtr GLXHandle;
 
         // Unfortunately we can't mark function pointers as nullable, but
         // if the function cannot be loaded it's null so we need to check before using.
@@ -57,9 +79,15 @@ namespace OpenTK.Graphics
         private static readonly unsafe delegate* unmanaged<byte*, IntPtr> glXGetProcAddress;
         private static readonly unsafe delegate* unmanaged<byte*, IntPtr> glXGetProcAddressARB;
 
-        // Try load the function pointers..
         static unsafe GLXLoader()
         {
+            GLXHandle = LoadGLX();
+            if (GLXHandle == 0)
+            {
+                throw new DllNotFoundException($"Could not find libGLX (we searched these names '{string.Join(", ", LibraryNames)}'). Either glX is not installed or this is an OpenTK library searching bug.");
+            }
+
+            // Try load the function pointers, this could return null.
             NativeLibrary.TryGetExport(GLXHandle, "glXGetProcAddress", out IntPtr ptr);
             glXGetProcAddress = (delegate* unmanaged<byte*, IntPtr>)ptr;
 
