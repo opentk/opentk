@@ -8,6 +8,7 @@ using System.Runtime.InteropServices;
 using OpenTK.Core.Native;
 using OpenTK.Mathematics;
 using System.Diagnostics;
+using System.Collections.Generic;
 
 namespace VulkanTestProject
 {
@@ -63,20 +64,37 @@ namespace VulkanTestProject
 
             ReadOnlySpan<string> requiredExtensions = Toolkit.Vulkan.GetRequiredInstanceExtensions();
 
-            string[] extensions = new string[requiredExtensions.Length + 1];
-            extensions[0] = "VK_EXT_debug_utils";
-            requiredExtensions.CopyTo(extensions.AsSpan()[1..]);
-
+            List<string> extensions = new List<string>();
+            if (OperatingSystem.IsMacOS())
+            {
+                // FIXME: For some reason VK_KHR_portability_subset doesn't work
+                // even though the validation layer complains that we don't set it.
+                // Not sure what that is about...
+                // - Noggin_bops 2024-10-07 
+                //extensions.Add("VK_KHR_portability_subset");
+                extensions.Add("VK_KHR_portability_enumeration");
+            }
+            else
+            {
+                // FIXME: Check that this extension is available, here and on macos.
+                extensions.Add("VK_EXT_debug_utils");
+            }
+            extensions.AddRange(requiredExtensions);
+            
             string[] validationLayers = [ "VK_LAYER_KHRONOS_validation" ];
-            validationLayers = [];
+            //validationLayers = [];
 
-            byte** extensionsPtr = MarshalTk.MarshalStringArrayToAnsiStringArrayPtr(extensions, out uint extensionsCount);
+            byte** extensionsPtr = MarshalTk.MarshalStringArrayToAnsiStringArrayPtr(extensions.ToArray(), out uint extensionsCount);
             byte** validationLayersPtr = MarshalTk.MarshalStringArrayToAnsiStringArrayPtr(validationLayers, out uint validationLayerCount);
 
             VkInstanceCreateInfo instanceCreateInfo;
             instanceCreateInfo.sType = VkStructureType.StructureTypeInstanceCreateInfo;
             instanceCreateInfo.pNext = null;
             instanceCreateInfo.flags = 0;
+            if (OperatingSystem.IsMacOS())
+            {
+                instanceCreateInfo.flags = VkInstanceCreateFlagBits.InstanceCreateEnumeratePortabilityBitKhr;
+            }
             instanceCreateInfo.pApplicationInfo = &applicationInfo;
             instanceCreateInfo.enabledLayerCount = validationLayerCount;
             instanceCreateInfo.ppEnabledLayerNames = validationLayersPtr;
@@ -111,7 +129,7 @@ namespace VulkanTestProject
 
             // FIXME: Do propery physical device selection that takes into account
             // presentation support and stuff like discrete gpu preference.
-            PhysicalDevice = physicalDevices[1];
+            PhysicalDevice = physicalDevices[0];
 
             uint deviceExtensionCount = 0;
             result = Vk.EnumerateDeviceExtensionProperties(PhysicalDevice, null, &deviceExtensionCount, null);
