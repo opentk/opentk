@@ -842,13 +842,10 @@ namespace VkGenerator
 
                 // Write empty ctor so our default values can apply.
                 {
-                    writer.WriteLine($"public {@struct.Name}()");
-                    using (writer.CsScope())
-                    {
-                    }
+                    writer.WriteLine($"public {@struct.Name}() {{ }}");
                 }
 
-                if (canWriteSimpleCtor)
+                if (canWriteSimpleCtor && @struct.Members.Count > 0)
                 {
                     StringBuilder signature = new StringBuilder();
                     foreach (StructMember member in @struct.Members)
