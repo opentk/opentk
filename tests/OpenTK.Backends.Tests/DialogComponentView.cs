@@ -38,6 +38,8 @@ namespace OpenTK.Backends.Tests
         string? dialogResponseString;
         System.Numerics.Vector4 responseColor;
 
+        bool reopenRetryDialogMacOS = false;
+
         static readonly System.Numerics.Vector4 GoodColor = new  System.Numerics.Vector4(0.630f, 0.980f, 0.343f, 1.0f);
         static readonly System.Numerics.Vector4 BadColor = new  System.Numerics.Vector4(1.0f, 0.184f, 0.184f, 1.0f);
 
@@ -163,6 +165,87 @@ namespace OpenTK.Backends.Tests
             if (dialogResponseString != null)
             {
                 ImGui.TextColored(responseColor, dialogResponseString);
+            }
+
+            if (Toolkit.Dialog is Platform.Native.macOS.MacOSDialogComponent macOSDialog)
+            {
+                ImGui.SeparatorText("Message dialogs (no window)");
+
+                ImGui.PushID("NoWindow");
+
+                if (ImGui.Button("Info box"))
+                {
+                    MessageBoxButton button = macOSDialog.ShowMessageBoxNoWindow("Information message box", "This is some informational message.", MessageBoxType.Information);
+                    if (button == MessageBoxButton.Ok)
+                    {
+                        dialogResponseString = "OK!";
+                        responseColor = GoodColor;
+                    }
+                }
+
+                ImGui.SameLine();
+                if (ImGui.Button("Warning box"))
+                {
+                    MessageBoxButton button = macOSDialog.ShowMessageBoxNoWindow("Warning message box!", "This is a warning message.", MessageBoxType.Warning);
+                    if (button == MessageBoxButton.Ok)
+                    {
+                        dialogResponseString = "OK!";
+                        responseColor = GoodColor;
+                    }
+                }
+
+                ImGui.SameLine();
+                if (ImGui.Button("Error box"))
+                {
+                    MessageBoxButton button = macOSDialog.ShowMessageBoxNoWindow("Error message box!", "This is an error message!", MessageBoxType.Error);
+                    if (button == MessageBoxButton.Ok)
+                    {
+                        dialogResponseString = "OK!";
+                        responseColor = GoodColor;
+                    }
+                }
+
+                ImGui.SameLine();
+                if (ImGui.Button("Confirmation box"))
+                {
+                    MessageBoxButton button = macOSDialog.ShowMessageBoxNoWindow("Confirm", "Are you sure?", MessageBoxType.Confirmation, opentkIcon);
+                    if (button == MessageBoxButton.Yes)
+                    {
+                        dialogResponseString = "Pressed Yes!";
+                        responseColor = GoodColor;
+                    }
+                    else if (button == MessageBoxButton.No)
+                    {
+                        dialogResponseString = "Pressed No!";
+                        responseColor = BadColor;
+                    }
+                    else if (button == MessageBoxButton.Cancel)
+                    {
+                        dialogResponseString = "Pressed Cancel.";
+                        responseColor = BadColor;
+                    }
+                }
+
+                ImGui.SameLine();
+                if (ImGui.Button("Retry box") || reopenRetryDialogMacOS)
+                {
+                    MessageBoxButton button = macOSDialog.ShowMessageBoxNoWindow("Retry?", "Should we retry?", MessageBoxType.Retry);
+                    if (button == MessageBoxButton.Retry)
+                    {
+                        reopenRetryDialogMacOS = true;
+                    }
+                    else
+                    {
+                        reopenRetryDialogMacOS = false;
+                    }
+                }
+
+                if (dialogResponseString != null)
+                {
+                    ImGui.TextColored(responseColor, dialogResponseString);
+                }
+
+                ImGui.PopID();
             }
         }
     }

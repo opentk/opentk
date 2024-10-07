@@ -6,7 +6,9 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using OpenTK.Platform;
 using OpenTK.Core.Utility;
+using System.Runtime.CompilerServices;
 using static OpenTK.Platform.Native.macOS.ObjC;
+using static OpenTK.Platform.Native.macOS.MacOSWindowComponent;
 
 namespace OpenTK.Platform.Native.macOS
 {
@@ -18,10 +20,15 @@ namespace OpenTK.Platform.Native.macOS
         internal static readonly ObjCClass UTTypeClass = objc_getClass("UTType"u8);
         internal static readonly ObjCClass NSMutableArrayClass = objc_getClass("NSMutableArray"u8);
         internal static readonly ObjCClass NSAlert = objc_getClass("NSAlert"u8);
+        internal static readonly ObjCClass NSObject = objc_getClass("NSObject"u8);
+
+        internal static readonly ObjCClass NSStackBlock = objc_getClass("NSStackBlock"u8);
 
         internal static readonly SEL selOpenPanel = sel_registerName("openPanel"u8);
         internal static readonly SEL selSavePanel = sel_registerName("savePanel"u8);
         internal static readonly SEL selRunModal = sel_registerName("runModal"u8);
+        internal static readonly SEL selBeginSheetModalForWindow_ModalDelegate_DidEndSelector_ContextInfo = sel_registerName("beginSheetModalForWindow:modalDelegate:didEndSelector:contextInfo:"u8);
+        internal static readonly SEL selBeginSheet_ModalForWindow_ModalDelegate_DidEndSelector_ContextInfo = sel_registerName("beginSheet:modalForWindow:modalDelegate:didEndSelector:contextInfo:"u8);
 
         internal static readonly SEL selTitle = sel_registerName("title"u8);
         internal static readonly SEL selSetTitle = sel_registerName("setTitle:"u8);
@@ -46,6 +53,11 @@ namespace OpenTK.Platform.Native.macOS
         internal static readonly SEL selAllowsOtherFileTypes = sel_registerName("allowsOtherFileTypes"u8);
         internal static readonly SEL selSetAllowsOtherFileTypes = sel_registerName("setAllowsOtherFileTypes:"u8);
         
+        internal static readonly SEL selSuperclass = sel_registerName("superclass"u8);
+        internal static readonly SEL selRun = sel_registerName("run"u8);
+        internal static readonly SEL selStopModal = sel_registerName("stopModal"u8);
+        internal static readonly SEL selStopModalWithCode = sel_registerName("stopModalWithCode:"u8);
+        internal static readonly SEL selRunModalForWindow = sel_registerName("runModalForWindow:"u8);
 
 
         internal static readonly SEL selURL = sel_registerName("URL"u8);
@@ -69,7 +81,6 @@ namespace OpenTK.Platform.Native.macOS
         internal static readonly SEL selAddButtonWithTitle = sel_registerName("addButtonWithTitle:"u8);
         internal static readonly SEL selSetAlertStyle = sel_registerName("setAlertStyle:"u8);
         internal static readonly SEL selLayout = sel_registerName("layout"u8);
-        internal static readonly SEL selBeginSheetModalForWindow_completionHandler = sel_registerName("beginSheetModalForWindow:completionHandler:"u8);
 
         /// <inheritdoc/>
         public string Name => nameof(MacOSDialogComponent);
@@ -80,9 +91,97 @@ namespace OpenTK.Platform.Native.macOS
         /// <inheritdoc/>
         public ILogger? Logger { get; set; }
 
+        internal ObjCClass NSOtkSyncModalClass;
+        internal static ReadOnlySpan<byte> ReturnCodeFieldName => "returnCode"u8;
+
         /// <inheritdoc/>
-        public void Initialize(ToolkitOptions options)
+        public unsafe void Initialize(ToolkitOptions options)
         {
+            NSOtkSyncModalClass = objc_allocateClassPair(NSObject, "NSOtkSyncModal"u8, 0);
+
+            // FIXME: ABI related to the size of the variable?
+            class_addIvar(NSOtkSyncModalClass, ReturnCodeFieldName, (nuint)nint.Size, (nuint)int.Log2(nint.Size), "q"u8);
+
+            class_addMethod(NSOtkSyncModalClass, selInitWithAlert_AsSheetForWindow, (IntPtr)NSOtkSyncModal_InitWithAlert_AsSheetForWindowInst, "@@:@@"u8);
+            class_addMethod(NSOtkSyncModalClass, selInitWithPanel_AsSheetForWindow, (IntPtr)NSOtkSyncModal_InitWithPanel_AsSheetForWindowInst, "@@:@@"u8);
+            class_addMethod(NSOtkSyncModalClass, selRun, (IntPtr)NSOtkSyncModal_RunInst, "q@:@@"u8);
+            // FIXME: This is going to be called from NSAlert with an NSInteger, but we use q here. This will break on arm.
+            class_addMethod(NSOtkSyncModalClass, selAlertDidEnd_ReturnCode, (IntPtr)NSOtkSyncModal_AlertDidEnd_ReturnCodeInst, "v@:@q@"u8);
+            class_addMethod(NSOtkSyncModalClass, selFilePanelDidEnd_ReturnCode, (IntPtr)NSOtkSyncModal_FilePanelDidEnd_ReturnCodeInst, "v@:@q@"u8);
+
+            objc_registerClassPair(NSOtkSyncModalClass);
+        }
+
+        internal static readonly SEL selInitWithAlert_AsSheetForWindow = sel_registerName("initWithAlert:asSheetForWindow:"u8);
+        private static unsafe readonly delegate* unmanaged[Cdecl]<IntPtr, SEL, IntPtr, IntPtr, IntPtr> NSOtkSyncModal_InitWithAlert_AsSheetForWindowInst = &NSOtkSyncModal_InitWithAlert_AsSheetForWindow;
+        [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
+        private static IntPtr NSOtkSyncModal_InitWithAlert_AsSheetForWindow(IntPtr syncObj, SEL selector, IntPtr alert, IntPtr window)
+        {
+            objc_super super;
+            super.receiver = syncObj;
+            super.pclass = (ObjCClass)objc_msgSend_IntPtr(syncObj, selSuperclass);
+            objc_msgSendSuper(super, selInit);
+
+            objc_msgSend(
+                alert, 
+                selBeginSheetModalForWindow_ModalDelegate_DidEndSelector_ContextInfo,
+                window,
+                syncObj,
+                selAlertDidEnd_ReturnCode,
+                IntPtr.Zero);
+
+            return syncObj;
+        }
+
+        internal static readonly SEL selInitWithPanel_AsSheetForWindow = sel_registerName("initWithPanel:asSheetForWindow:"u8);
+        private static unsafe readonly delegate* unmanaged[Cdecl]<IntPtr, SEL, IntPtr, IntPtr, IntPtr> NSOtkSyncModal_InitWithPanel_AsSheetForWindowInst = &NSOtkSyncModal_InitWithPanel_AsSheetForWindow;
+        [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
+        private static IntPtr NSOtkSyncModal_InitWithPanel_AsSheetForWindow(IntPtr syncObj, SEL selector, IntPtr panel, IntPtr window)
+        {
+            objc_super super;
+            super.receiver = syncObj;
+            super.pclass = (ObjCClass)objc_msgSend_IntPtr(syncObj, selSuperclass);
+            objc_msgSendSuper(super, selInit);
+
+            objc_msgSend(
+                objc_msgSend_IntPtr((IntPtr)NSApplicationClass, selSharedApplication), 
+                selBeginSheet_ModalForWindow_ModalDelegate_DidEndSelector_ContextInfo,
+                panel,
+                window,
+                syncObj,
+                selFilePanelDidEnd_ReturnCode,
+                IntPtr.Zero);
+
+            return syncObj;
+        }
+
+        private static unsafe readonly delegate* unmanaged[Cdecl]<IntPtr, SEL, IntPtr, long> NSOtkSyncModal_RunInst = &NSOtkSyncModal_Run;
+        [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
+        private static long NSOtkSyncModal_Run(IntPtr syncObj, SEL selector, IntPtr window)
+        {
+            nint returnCode = objc_msgSend_IntPtr(objc_msgSend_IntPtr((IntPtr)NSApplicationClass, selSharedApplication), selRunModalForWindow, window);
+            return returnCode;
+        }
+
+        internal static readonly SEL selAlertDidEnd_ReturnCode = sel_registerName("alertDidEnd:returnCode:"u8);
+        private static unsafe readonly delegate* unmanaged[Cdecl]<IntPtr, SEL, IntPtr, nint, IntPtr, void> NSOtkSyncModal_AlertDidEnd_ReturnCodeInst = &NSOtkSyncModal_AlertDidEnd_ReturnCode;
+        [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
+        private static void NSOtkSyncModal_AlertDidEnd_ReturnCode(IntPtr syncObj, SEL selector, IntPtr altert, nint returnCode, IntPtr contextInfo)
+        {
+            object_setInstanceVariable(syncObj, ReturnCodeFieldName, returnCode);
+
+            objc_msgSend(objc_msgSend_IntPtr((IntPtr)NSApplicationClass, selSharedApplication), selStopModalWithCode, returnCode);
+        }
+
+        // FIXME: This method is never called... we should remove it.
+        internal static readonly SEL selFilePanelDidEnd_ReturnCode = sel_registerName("filePanelDidEnd:returnCode:"u8);
+        private static unsafe readonly delegate* unmanaged[Cdecl]<IntPtr, SEL, IntPtr, nint, IntPtr, void> NSOtkSyncModal_FilePanelDidEnd_ReturnCodeInst = &NSOtkSyncModal_FilePanelDidEnd_ReturnCode;
+        [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
+        private static void NSOtkSyncModal_FilePanelDidEnd_ReturnCode(IntPtr syncObj, SEL selector, IntPtr panel, nint returnCode, IntPtr contextInfo)
+        {
+            object_setInstanceVariable(syncObj, ReturnCodeFieldName, returnCode);
+
+            objc_msgSend(objc_msgSend_IntPtr((IntPtr)NSApplicationClass, selSharedApplication), selStopModalWithCode, returnCode);
         }
 
         /// <inheritdoc/>
@@ -135,7 +234,111 @@ namespace OpenTK.Platform.Native.macOS
 
             objc_msgSend(alert, selLayout);
 
-            // FIXME: Run this as a sheet modal for the window...
+            IntPtr modalSync = objc_msgSend_IntPtr(objc_msgSend_IntPtr((IntPtr)NSOtkSyncModalClass, Alloc), selInitWithAlert_AsSheetForWindow, alert, nswindow.Window);
+            NSModalResponse response = (NSModalResponse)objc_msgSend_IntPtr(modalSync, selRun, nswindow.Window);
+
+            MessageBoxButton button = MessageBoxButton.None;
+            switch (messageBoxType)
+            {
+                case MessageBoxType.Information:
+                case MessageBoxType.Warning:
+                case MessageBoxType.Error:
+                    if (response == NSModalResponse.AlertFirstButtonReturn)
+                    {
+                        button = MessageBoxButton.Ok;
+                    }
+                    else
+                    {
+                        Logger?.LogDebug($"Unexpected modal response: {response}");
+                    }
+                    break;
+                case MessageBoxType.Confirmation:
+                    if (response == NSModalResponse.AlertFirstButtonReturn)
+                    {
+                        button = MessageBoxButton.Yes;
+                    }
+                    else if (response == NSModalResponse.AlertSecondButtonReturn)
+                    {
+                        button = MessageBoxButton.No;
+                    }
+                    else if (response == NSModalResponse.AlertThirdButtonReturn)
+                    {
+                        button = MessageBoxButton.Cancel;
+                    }
+                    else
+                    {
+                        Logger?.LogDebug($"Unexpected modal response: {response}");
+                    }
+                    break;
+                case MessageBoxType.Retry:
+                    if (response == NSModalResponse.AlertFirstButtonReturn)
+                    {
+                        button = MessageBoxButton.Retry;
+                    }
+                    else if (response == NSModalResponse.AlertSecondButtonReturn)
+                    {
+                        button = MessageBoxButton.Cancel;
+                    }
+                    else
+                    {
+                        Logger?.LogDebug($"Unexpected modal response: {response}");
+                    }
+                    break;
+                default:
+                    throw new InvalidEnumArgumentException(nameof(messageBoxType), (int)messageBoxType, messageBoxType.GetType());
+            }
+
+            return button;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public MessageBoxButton ShowMessageBoxNoWindow(string title, string content, MessageBoxType messageBoxType, IconHandle? customIcon = null)
+        {
+            NSIconHandle? icon = customIcon?.As<NSIconHandle>(this);
+
+            IntPtr alert = objc_msgSend_IntPtr(objc_msgSend_IntPtr((IntPtr)NSAlert, Alloc), selInit);
+
+            IntPtr titleNSString = ToNSString(title);
+            IntPtr contentNSString = ToNSString(content);
+
+            objc_msgSend(alert, selSetMessageText, titleNSString);
+            objc_msgSend(alert, selSetInformativeText, contentNSString);
+            objc_msgSend(alert, selSetIcon, icon?.Image ?? IntPtr.Zero);
+
+            switch (messageBoxType)
+            {
+                case MessageBoxType.Information:
+                    objc_msgSend(alert, selSetAlertStyle, (nuint)NSAlertStyle.NSAlertStyleInformational);
+                    objc_msgSend_IntPtr(alert, selAddButtonWithTitle, ToNSString("OK"u8));
+                    break;
+                case MessageBoxType.Warning:
+                    objc_msgSend(alert, selSetAlertStyle, (nuint)NSAlertStyle.NSAlertStyleWarning);
+                    objc_msgSend_IntPtr(alert, selAddButtonWithTitle, ToNSString("OK"u8));
+                    break;
+                case MessageBoxType.Error:
+                    objc_msgSend(alert, selSetAlertStyle, (nuint)NSAlertStyle.NSAlertStyleCritical);
+                    objc_msgSend_IntPtr(alert, selAddButtonWithTitle, ToNSString("OK"u8));
+                    break;
+                case MessageBoxType.Confirmation:
+                    objc_msgSend(alert, selSetAlertStyle, (nuint)NSAlertStyle.NSAlertStyleInformational);
+                    objc_msgSend_IntPtr(alert, selAddButtonWithTitle, ToNSString("Yes"u8));
+                    objc_msgSend_IntPtr(alert, selAddButtonWithTitle, ToNSString("No"u8));
+                    objc_msgSend_IntPtr(alert, selAddButtonWithTitle, ToNSString("Cancel"u8));
+                    break;
+                case MessageBoxType.Retry:
+                    // FIXME: Should we use NSAlertStyleCritical or NSAlertStyleInformational here?
+                    objc_msgSend(alert, selSetAlertStyle, (nuint)NSAlertStyle.NSAlertStyleCritical);
+                    objc_msgSend_IntPtr(alert, selAddButtonWithTitle, ToNSString("Retry"u8));
+                    objc_msgSend_IntPtr(alert, selAddButtonWithTitle, ToNSString("Cancel"u8));
+                    break;
+                default:
+                    throw new InvalidEnumArgumentException(nameof(messageBoxType), (int)messageBoxType, messageBoxType.GetType());
+            }
+
+            objc_msgSend(alert, selLayout);
+
             NSModalResponse response = (NSModalResponse)objc_msgSend_IntPtr(alert, selRunModal);
 
             MessageBoxButton button = MessageBoxButton.None;
@@ -192,6 +395,7 @@ namespace OpenTK.Platform.Native.macOS
             return button;
         }
 
+
         private IntPtr CreateAllowedContentsTypeArray(DialogFileFilter[]? allowedExtensions)
         {
             // If we have the "*" filter we don't need to create a filter...
@@ -222,6 +426,7 @@ namespace OpenTK.Platform.Native.macOS
         /// <inheritdoc/>
         public List<string>? ShowOpenDialog(WindowHandle parent, string title, string directory, DialogFileFilter[]? allowedExtensions, OpenDialogOptions options)
         {
+            NSWindowHandle nswindow = parent.As<NSWindowHandle>(this);
             IntPtr openPanel = objc_msgSend_IntPtr((IntPtr)NSOpenPanelClass, selOpenPanel);
 
             // FIXME: Memory leak?
@@ -251,7 +456,11 @@ namespace OpenTK.Platform.Native.macOS
             }
 
             // FIXME: Run this with beginSheetModalForWindow:completionHandler: ?
-            NSModalResponse response = (NSModalResponse)objc_msgSend_IntPtr(openPanel, selRunModal);
+            //NSModalResponse response = (NSModalResponse)objc_msgSend_IntPtr(openPanel, selRunModal);
+
+            IntPtr modalSync = objc_msgSend_IntPtr(objc_msgSend_IntPtr((IntPtr)NSOtkSyncModalClass, Alloc), selInitWithPanel_AsSheetForWindow, openPanel, nswindow.Window);
+            NSModalResponse response = (NSModalResponse)objc_msgSend_IntPtr(modalSync, selRun, openPanel);
+            
             if (response != NSModalResponse.OK)
             {
                 objc_msgSend(allowedContentTypesArray, Release);
@@ -281,6 +490,8 @@ namespace OpenTK.Platform.Native.macOS
         /// <inheritdoc/>
         public string? ShowSaveDialog(WindowHandle parent, string title, string directory, DialogFileFilter[]? allowedExtensions, SaveDialogOptions options)
         {
+            NSWindowHandle nswindow = parent.As<NSWindowHandle>(this);
+
             IntPtr savePanel = objc_msgSend_IntPtr((IntPtr)NSSavePanelClass, selSavePanel);
 
             // FIXME: Memory leak?
@@ -300,7 +511,9 @@ namespace OpenTK.Platform.Native.macOS
             objc_msgSend(savePanel, selSetCanCreateDirectories, true);
 
             // FIXME: Run with beginSheetModalForWindow:completionHandler: ?
-            NSModalResponse response = (NSModalResponse)objc_msgSend_IntPtr(savePanel, selRunModal);
+            //NSModalResponse response = (NSModalResponse)objc_msgSend_IntPtr(savePanel, selRunModal);
+            IntPtr modalSync = objc_msgSend_IntPtr(objc_msgSend_IntPtr((IntPtr)NSOtkSyncModalClass, Alloc), selInitWithPanel_AsSheetForWindow, savePanel, nswindow.Window);
+            NSModalResponse response = (NSModalResponse)objc_msgSend_IntPtr(modalSync, selRun, savePanel);
             if (response != NSModalResponse.OK)
             {
                 objc_msgSend(savePanel, Release);
