@@ -840,6 +840,14 @@ namespace VkGenerator
                     }
                 }
 
+                // Write empty ctor so our default values can apply.
+                {
+                    writer.WriteLine($"public {@struct.Name}()");
+                    using (writer.CsScope())
+                    {
+                    }
+                }
+
                 if (canWriteSimpleCtor)
                 {
                     StringBuilder signature = new StringBuilder();
@@ -862,15 +870,7 @@ namespace VkGenerator
                         }
                     }
                 }
-                else if (hasSType)
-                {
-                    // A struct with field initializers must include an explicitly declared ctor.
-                    // So we just add an empty ctor.
-                    // - Noggin_bops 2024-07-10
-                    writer.WriteLine($"public {@struct.Name}(){{ }}");
-                }
             }
         }
-
     }
 }
