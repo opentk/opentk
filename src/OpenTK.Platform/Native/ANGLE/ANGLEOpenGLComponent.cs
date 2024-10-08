@@ -1,7 +1,6 @@
 ﻿using OpenTK.Platform;
 using OpenTK.Core.Utility;
 using OpenTK.Graphics.Egl;
-using OpenTK.Platform.Native.Windows;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

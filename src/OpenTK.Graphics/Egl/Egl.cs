@@ -231,8 +231,11 @@ namespace OpenTK.Graphics.Egl
         [DllImport("libEGL", EntryPoint = "eglQuerySurfacePointerANGLE")]
         public static extern bool QuerySurfacePointerANGLE(EGLDisplay display, EGLSurface surface, int attribute, out IntPtr value);
 
-        [DllImport("libEGL", EntryPoint = "eglGetPlatformDisplayEXT")]
-        public static extern EGLDisplay GetPlatformDisplay(int platform, EGLNativeDisplayType displayId, int[] attribList);
+        [DllImport("libEGL", EntryPoint = "eglGetPlatformDisplay")]
+        public static extern EGLDisplay GetPlatformDisplay(int platform, EGLNativeDisplayType nativeDisplay, int[]? attribList);
+
+        [DllImport("libEGL", EntryPoint = "eglCreatePlatformWindowSurface")]
+        public static extern EGLSurface CreatePlatformWindowSurface(EGLDisplay dpy, EGLConfig config, EGLNativeWindowType native_window, int[]? attrib_list);
 
         // EGL_ANGLE_software_display
         public static readonly EGLNativeDisplayType SOFTWARE_DISPLAY_ANGLE = new EGLNativeDisplayType(-1);
@@ -293,6 +296,9 @@ namespace OpenTK.Graphics.Egl
 
         [DllImport("libEGL", EntryPoint = "eglCreateWindowSurface")]
         public static extern EGLSurface CreateWindowSurface(EGLDisplay dpy, EGLConfig config, IntPtr win, IntPtr attrib_list);
+
+        [DllImport("libEGL", EntryPoint = "eglCreateWindowSurface")]
+        public static extern EGLSurface CreateWindowSurface(EGLDisplay dpy, EGLConfig config, IntPtr win, int[]? attrib_list);
 
         [DllImport("libEGL", EntryPoint = "eglCreatePbufferSurface")]
         public static extern EGLSurface CreatePbufferSurface(EGLDisplay dpy, EGLConfig config, int[] attrib_list);

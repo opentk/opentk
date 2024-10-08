@@ -694,7 +694,6 @@ namespace VkGenerator
                 int bitsLeft = -1;
 
                 bool canWriteSimpleCtor = (@struct.Union == false);
-                bool hasSType = false;
                 foreach (StructMember member in @struct.Members)
                 {
                     // FIXME: What do we do with these?
@@ -775,8 +774,6 @@ namespace VkGenerator
                         }
                         else
                         {
-                            hasSType = true;
-
                             writer.WriteLine($"public {member.StrongType!.ToCSString()} {NameMangler.MangleMemberName(member.Name)} = VkStructureType.{NameMangler.MangleEnumName(member.Values)};");
                         }
                     }
