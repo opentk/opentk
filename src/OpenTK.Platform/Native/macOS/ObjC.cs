@@ -156,7 +156,10 @@ namespace OpenTK.Platform.Native.macOS
         internal static extern void objc_msgSend(IntPtr receiver, SEL selector, IntPtr value1, IntPtr value2, SEL value3, IntPtr value4);
 
         [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
-        internal static extern void objc_msgSend(IntPtr receiver, SEL selector, IntPtr value1, IntPtr value2, IntPtr value3, SEL value4, IntPtr value5);
+        internal static extern void objc_msgSend(IntPtr receiver, SEL selector, IntPtr value1, IntPtr value2, IntPtr value3, IntPtr value4, SEL value5, IntPtr value6);
+
+        [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
+        internal static extern void objc_msgSend(IntPtr receiver, SEL selector, IntPtr value1, IntPtr value2, IntPtr value3, IntPtr value4, IntPtr value5, SEL value6, IntPtr value7);
 
         [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
         internal static extern IntPtr objc_msgSend_IntPtr(IntPtr receiver, SEL selector);
@@ -181,6 +184,12 @@ namespace OpenTK.Platform.Native.macOS
 
         [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
         internal static extern IntPtr objc_msgSend_IntPtr(IntPtr receiver, SEL selector, CGRect value1, IntPtr value2, IntPtr value3, [MarshalAs(UnmanagedType.I1)] bool value4);
+
+        [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
+        internal static extern IntPtr objc_msgSend_IntPtr(IntPtr receiver, SEL selector, IntPtr value1, IntPtr value2, IntPtr value3, IntPtr value4);
+
+        [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
+        internal static extern IntPtr objc_msgSend_IntPtr(IntPtr receiver, SEL selector, IntPtr value1, IntPtr value2, IntPtr value3, IntPtr value4, IntPtr value5);
 
         [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
         internal static extern IntPtr objc_msgSend_IntPtr(IntPtr receiver, SEL selector, IntPtr planes, nint width, nint height, nint bps, nint spp, [MarshalAs(UnmanagedType.I1)] bool alpha, [MarshalAs(UnmanagedType.I1)] bool isPlanar, IntPtr colorSpaceName, nuint bitmapFormat, nint rBytes, nint pBits);
