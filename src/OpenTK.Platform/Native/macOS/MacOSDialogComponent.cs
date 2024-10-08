@@ -29,6 +29,8 @@ namespace OpenTK.Platform.Native.macOS
         internal static readonly SEL selRunModal = sel_registerName("runModal"u8);
         internal static readonly SEL selBeginSheetModalForWindow_ModalDelegate_DidEndSelector_ContextInfo = sel_registerName("beginSheetModalForWindow:modalDelegate:didEndSelector:contextInfo:"u8);
         internal static readonly SEL selBeginSheet_ModalForWindow_ModalDelegate_DidEndSelector_ContextInfo = sel_registerName("beginSheet:modalForWindow:modalDelegate:didEndSelector:contextInfo:"u8);
+        internal static readonly SEL selBeginSheetForDirectory_File_Types_ModalForWindow_ModalDelegate_DidEndSelector_ContextInfo = sel_registerName("beginSheetForDirectory:file:types:modalForWindow:modalDelegate:didEndSelector:contextInfo:"u8);
+        internal static readonly SEL selBeginSheetForDirectory_File_ModalForWindow_ModalDelegate_DidEndSelector_ContextInfo = sel_registerName("beginSheetForDirectory:file:modalForWindow:modalDelegate:didEndSelector:contextInfo:"u8);
 
         internal static readonly SEL selTitle = sel_registerName("title"u8);
         internal static readonly SEL selSetTitle = sel_registerName("setTitle:"u8);
@@ -58,6 +60,7 @@ namespace OpenTK.Platform.Native.macOS
         internal static readonly SEL selStopModal = sel_registerName("stopModal"u8);
         internal static readonly SEL selStopModalWithCode = sel_registerName("stopModalWithCode:"u8);
         internal static readonly SEL selRunModalForWindow = sel_registerName("runModalForWindow:"u8);
+        internal static readonly SEL selEndSheet = sel_registerName("endSheet:"u8);
 
 
         internal static readonly SEL selURL = sel_registerName("URL"u8);
@@ -92,18 +95,15 @@ namespace OpenTK.Platform.Native.macOS
         public ILogger? Logger { get; set; }
 
         internal ObjCClass NSOtkSyncModalClass;
-        internal static ReadOnlySpan<byte> ReturnCodeFieldName => "returnCode"u8;
 
         /// <inheritdoc/>
         public unsafe void Initialize(ToolkitOptions options)
         {
             NSOtkSyncModalClass = objc_allocateClassPair(NSObject, "NSOtkSyncModal"u8, 0);
 
-            // FIXME: ABI related to the size of the variable?
-            class_addIvar(NSOtkSyncModalClass, ReturnCodeFieldName, (nuint)nint.Size, (nuint)int.Log2(nint.Size), "q"u8);
-
             class_addMethod(NSOtkSyncModalClass, selInitWithAlert_AsSheetForWindow, (IntPtr)NSOtkSyncModal_InitWithAlert_AsSheetForWindowInst, "@@:@@"u8);
-            class_addMethod(NSOtkSyncModalClass, selInitWithPanel_AsSheetForWindow, (IntPtr)NSOtkSyncModal_InitWithPanel_AsSheetForWindowInst, "@@:@@"u8);
+            class_addMethod(NSOtkSyncModalClass, selInitWithOpenPanel_AsSheetForWindow_InDirectory_File_Types, (IntPtr)NSOtkSyncModal_InitWithOpenPanel_AsSheetForWindow_InDirectory_File_TypesInst, "@@:@@@@@"u8);
+            class_addMethod(NSOtkSyncModalClass, selInitWithSavePanel_AsSheetForWindow_InDirectory_File, (IntPtr)NSOtkSyncModal_InitWithSavePanel_AsSheetForWindow_InDirectory_FileInst, "@@:@@@@"u8);
             class_addMethod(NSOtkSyncModalClass, selRun, (IntPtr)NSOtkSyncModal_RunInst, "q@:@@"u8);
             // FIXME: This is going to be called from NSAlert with an NSInteger, but we use q here. This will break on arm.
             class_addMethod(NSOtkSyncModalClass, selAlertDidEnd_ReturnCode, (IntPtr)NSOtkSyncModal_AlertDidEnd_ReturnCodeInst, "v@:@q@"u8);
@@ -133,10 +133,10 @@ namespace OpenTK.Platform.Native.macOS
             return syncObj;
         }
 
-        internal static readonly SEL selInitWithPanel_AsSheetForWindow = sel_registerName("initWithPanel:asSheetForWindow:"u8);
-        private static unsafe readonly delegate* unmanaged[Cdecl]<IntPtr, SEL, IntPtr, IntPtr, IntPtr> NSOtkSyncModal_InitWithPanel_AsSheetForWindowInst = &NSOtkSyncModal_InitWithPanel_AsSheetForWindow;
+        internal static readonly SEL selInitWithOpenPanel_AsSheetForWindow_InDirectory_File_Types = sel_registerName("initWithOpenPanel:asSheetForWindow:inDirectory:file:types:"u8);
+        private static unsafe readonly delegate* unmanaged[Cdecl]<IntPtr, SEL, IntPtr, IntPtr, IntPtr, IntPtr, IntPtr, IntPtr> NSOtkSyncModal_InitWithOpenPanel_AsSheetForWindow_InDirectory_File_TypesInst = &NSOtkSyncModal_InitWithOpenPanel_AsSheetForWindow_InDirectory_File_Types;
         [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
-        private static IntPtr NSOtkSyncModal_InitWithPanel_AsSheetForWindow(IntPtr syncObj, SEL selector, IntPtr panel, IntPtr window)
+        private static IntPtr NSOtkSyncModal_InitWithOpenPanel_AsSheetForWindow_InDirectory_File_Types(IntPtr syncObj, SEL selector, IntPtr panel, IntPtr window, IntPtr directory, IntPtr file, IntPtr fileTypes)
         {
             objc_super super;
             super.receiver = syncObj;
@@ -144,9 +144,34 @@ namespace OpenTK.Platform.Native.macOS
             objc_msgSendSuper(super, selInit);
 
             objc_msgSend(
-                objc_msgSend_IntPtr((IntPtr)NSApplicationClass, selSharedApplication), 
-                selBeginSheet_ModalForWindow_ModalDelegate_DidEndSelector_ContextInfo,
-                panel,
+                panel, 
+                selBeginSheetForDirectory_File_Types_ModalForWindow_ModalDelegate_DidEndSelector_ContextInfo,
+                directory,
+                file,
+                fileTypes,
+                window,
+                syncObj,
+                selFilePanelDidEnd_ReturnCode,
+                IntPtr.Zero);
+
+            return syncObj;
+        }
+
+        internal static readonly SEL selInitWithSavePanel_AsSheetForWindow_InDirectory_File = sel_registerName("initWithSavePanel:asSheetForWindow:inDirectory:file:"u8);
+        private static unsafe readonly delegate* unmanaged[Cdecl]<IntPtr, SEL, IntPtr, IntPtr, IntPtr, IntPtr, IntPtr> NSOtkSyncModal_InitWithSavePanel_AsSheetForWindow_InDirectory_FileInst = &NSOtkSyncModal_InitWithSavePanel_AsSheetForWindow_InDirectory_File;
+        [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
+        private static IntPtr NSOtkSyncModal_InitWithSavePanel_AsSheetForWindow_InDirectory_File(IntPtr syncObj, SEL selector, IntPtr panel, IntPtr window, IntPtr directory, IntPtr file)
+        {
+            objc_super super;
+            super.receiver = syncObj;
+            super.pclass = (ObjCClass)objc_msgSend_IntPtr(syncObj, selSuperclass);
+            objc_msgSendSuper(super, selInit);
+
+            objc_msgSend(
+                panel, 
+                selBeginSheetForDirectory_File_ModalForWindow_ModalDelegate_DidEndSelector_ContextInfo,
+                directory,
+                file,
                 window,
                 syncObj,
                 selFilePanelDidEnd_ReturnCode,
@@ -166,10 +191,9 @@ namespace OpenTK.Platform.Native.macOS
         internal static readonly SEL selAlertDidEnd_ReturnCode = sel_registerName("alertDidEnd:returnCode:"u8);
         private static unsafe readonly delegate* unmanaged[Cdecl]<IntPtr, SEL, IntPtr, nint, IntPtr, void> NSOtkSyncModal_AlertDidEnd_ReturnCodeInst = &NSOtkSyncModal_AlertDidEnd_ReturnCode;
         [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
-        private static void NSOtkSyncModal_AlertDidEnd_ReturnCode(IntPtr syncObj, SEL selector, IntPtr altert, nint returnCode, IntPtr contextInfo)
+        private static void NSOtkSyncModal_AlertDidEnd_ReturnCode(IntPtr syncObj, SEL selector, IntPtr alert, nint returnCode, IntPtr contextInfo)
         {
-            object_setInstanceVariable(syncObj, ReturnCodeFieldName, returnCode);
-
+            objc_msgSend(objc_msgSend_IntPtr(alert, selWindow), selOrderOut, syncObj);
             objc_msgSend(objc_msgSend_IntPtr((IntPtr)NSApplicationClass, selSharedApplication), selStopModalWithCode, returnCode);
         }
 
@@ -179,8 +203,6 @@ namespace OpenTK.Platform.Native.macOS
         [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
         private static void NSOtkSyncModal_FilePanelDidEnd_ReturnCode(IntPtr syncObj, SEL selector, IntPtr panel, nint returnCode, IntPtr contextInfo)
         {
-            object_setInstanceVariable(syncObj, ReturnCodeFieldName, returnCode);
-
             objc_msgSend(objc_msgSend_IntPtr((IntPtr)NSApplicationClass, selSharedApplication), selStopModalWithCode, returnCode);
         }
 
@@ -236,6 +258,7 @@ namespace OpenTK.Platform.Native.macOS
 
             IntPtr modalSync = objc_msgSend_IntPtr(objc_msgSend_IntPtr((IntPtr)NSOtkSyncModalClass, Alloc), selInitWithAlert_AsSheetForWindow, alert, nswindow.Window);
             NSModalResponse response = (NSModalResponse)objc_msgSend_IntPtr(modalSync, selRun, nswindow.Window);
+            objc_msgSend(modalSync, Release);
 
             MessageBoxButton button = MessageBoxButton.None;
             switch (messageBoxType)
@@ -292,8 +315,9 @@ namespace OpenTK.Platform.Native.macOS
         }
 
         /// <summary>
-        /// 
+        /// Shows a modal message box not attached to any specific window.
         /// </summary>
+        /// <inheritdoc cref="ShowMessageBox"/>
         public MessageBoxButton ShowMessageBoxNoWindow(string title, string content, MessageBoxType messageBoxType, IconHandle? customIcon = null)
         {
             NSIconHandle? icon = customIcon?.As<NSIconHandle>(this);
@@ -395,11 +419,13 @@ namespace OpenTK.Platform.Native.macOS
             return button;
         }
 
-
         private IntPtr CreateAllowedContentsTypeArray(DialogFileFilter[]? allowedExtensions)
         {
+            if (allowedExtensions == null)
+                return 0;
+
             // If we have the "*" filter we don't need to create a filter...
-            for (int i = 0; i < allowedExtensions?.Length; i++)
+            for (int i = 0; i < allowedExtensions.Length; i++)
             {
                 if (allowedExtensions[i].Filter == "*")
                 {
@@ -407,7 +433,7 @@ namespace OpenTK.Platform.Native.macOS
                 }
             }
 
-            IntPtr array = objc_msgSend_IntPtr((IntPtr)NSMutableArrayClass, selArrayWithCapacity, allowedExtensions?.Length ?? 0);
+            IntPtr array = objc_msgSend_IntPtr((IntPtr)NSMutableArrayClass, selArrayWithCapacity, allowedExtensions.Length);
 
             for (int i = 0; i < allowedExtensions?.Length; i++)
             {
@@ -442,8 +468,6 @@ namespace OpenTK.Platform.Native.macOS
             if (allowedContentTypesArray != 0)
                 objc_msgSend(openPanel, selSetAllowedContentTypes, allowedContentTypesArray);
 
-            objc_msgSend(openPanel, selSetCanCreateDirectories, true);
-
             if (options.HasFlag(OpenDialogOptions.AllowMultiSelect))
             {
                 objc_msgSend(openPanel, selSetAllowMultipleSelection, true);
@@ -455,12 +479,68 @@ namespace OpenTK.Platform.Native.macOS
                 objc_msgSend(openPanel, selSetCanChooseFiles, false);
             }
 
-            // FIXME: Run this with beginSheetModalForWindow:completionHandler: ?
-            //NSModalResponse response = (NSModalResponse)objc_msgSend_IntPtr(openPanel, selRunModal);
-
-            IntPtr modalSync = objc_msgSend_IntPtr(objc_msgSend_IntPtr((IntPtr)NSOtkSyncModalClass, Alloc), selInitWithPanel_AsSheetForWindow, openPanel, nswindow.Window);
+            IntPtr modalSync = objc_msgSend_IntPtr(objc_msgSend_IntPtr((IntPtr)NSOtkSyncModalClass, Alloc), selInitWithOpenPanel_AsSheetForWindow_InDirectory_File_Types, openPanel, nswindow.Window, ToNSString(directory), IntPtr.Zero, allowedContentTypesArray);
             NSModalResponse response = (NSModalResponse)objc_msgSend_IntPtr(modalSync, selRun, openPanel);
+            objc_msgSend(modalSync, Release);
+            if (response != NSModalResponse.OK)
+            {
+                objc_msgSend(allowedContentTypesArray, Release);
+                objc_msgSend(openPanel, Release);
+                return null;
+            }
+
+            IntPtr urlArray = objc_msgSend_IntPtr(openPanel, selURLs);
+
+            nuint count = (nuint)objc_msgSend_IntPtr(urlArray, selCount);
+            List<string> paths = new List<string>((int)count);
+            for (nuint i = 0; i < count; i++)
+            {
+                IntPtr url = objc_msgSend_IntPtr(urlArray, selObjectAtIndex, i);
+                // FIXME: Double check that this is a file?
+                // bool isFile = objc_msgSend_bool(url, selIsFileURL);
+                string str = Marshal.PtrToStringUTF8(objc_msgSend_IntPtr(url, selFileSystemRepresentation))!;
+                paths.Add(str);
+            }
+
+            objc_msgSend(allowedContentTypesArray, Release);
+            objc_msgSend(urlArray, Release);
+            objc_msgSend(openPanel, Release);
+            return paths;
+        }
+
+        /// <summary>
+        /// Shows a modal "open file/folder" dialog not attached to any specific window.
+        /// </summary>
+        /// <inheritdoc cref="ShowOpenDialog"/>
+        public List<string>? ShowOpenDialogNoWindow(string title, string directory, DialogFileFilter[]? allowedExtensions, OpenDialogOptions options)
+        {
+            IntPtr openPanel = objc_msgSend_IntPtr((IntPtr)NSOpenPanelClass, selOpenPanel);
+
+            // FIXME: Memory leak?
+            objc_msgSend(openPanel, selSetTitle, ToNSString(title));
+
+            IntPtr directoryString = ToNSString(directory);
+            IntPtr directoryURL = objc_msgSend_IntPtr((IntPtr)NSURLClass, selFileURLWithPath_isDirectory, directoryString, true);
+            objc_msgSend(openPanel, selSetDirectoryURL, directoryURL);
+            objc_msgSend(directoryURL, Release);
+            objc_msgSend(directoryString, Release);
+
+            IntPtr allowedContentTypesArray = CreateAllowedContentsTypeArray(allowedExtensions);
+            if (allowedContentTypesArray != 0)
+                objc_msgSend(openPanel, selSetAllowedContentTypes, allowedContentTypesArray);
+
+            if (options.HasFlag(OpenDialogOptions.AllowMultiSelect))
+            {
+                objc_msgSend(openPanel, selSetAllowMultipleSelection, true);
+            }
+
+            if (options.HasFlag(OpenDialogOptions.SelectDirectory))
+            {
+                objc_msgSend(openPanel, selSetCanChooseDirectories, true);
+                objc_msgSend(openPanel, selSetCanChooseFiles, false);
+            }
             
+            NSModalResponse response = (NSModalResponse)objc_msgSend_IntPtr(openPanel, selRunModal);
             if (response != NSModalResponse.OK)
             {
                 objc_msgSend(allowedContentTypesArray, Release);
@@ -508,12 +588,46 @@ namespace OpenTK.Platform.Native.macOS
                 objc_msgSend(savePanel, selSetAllowedContentTypes, allowedContentTypesArray);
             objc_msgSend(savePanel, selSetAllowsOtherFileTypes, true);
 
-            objc_msgSend(savePanel, selSetCanCreateDirectories, true);
-
-            // FIXME: Run with beginSheetModalForWindow:completionHandler: ?
-            //NSModalResponse response = (NSModalResponse)objc_msgSend_IntPtr(savePanel, selRunModal);
-            IntPtr modalSync = objc_msgSend_IntPtr(objc_msgSend_IntPtr((IntPtr)NSOtkSyncModalClass, Alloc), selInitWithPanel_AsSheetForWindow, savePanel, nswindow.Window);
+            IntPtr modalSync = objc_msgSend_IntPtr(objc_msgSend_IntPtr((IntPtr)NSOtkSyncModalClass, Alloc), selInitWithSavePanel_AsSheetForWindow_InDirectory_File, savePanel, nswindow.Window, ToNSString(directory), IntPtr.Zero);
             NSModalResponse response = (NSModalResponse)objc_msgSend_IntPtr(modalSync, selRun, savePanel);
+            objc_msgSend(modalSync, Release);
+            if (response != NSModalResponse.OK)
+            {
+                objc_msgSend(savePanel, Release);
+                return null;
+            }
+
+            IntPtr url = objc_msgSend_IntPtr(savePanel, selURL);
+            string path = Marshal.PtrToStringUTF8(objc_msgSend_IntPtr(url, selFileSystemRepresentation))!;
+
+            objc_msgSend(url, Release);
+            objc_msgSend(savePanel, Release);
+            return path;
+        }
+
+        /// <summary>
+        /// Shows a modal "save file" dialog not attached to any specific window.
+        /// </summary>
+        /// <inheritdoc cref="ShowOpenDialog"/>
+        public string? ShowSaveDialogNoWindow(string title, string directory, DialogFileFilter[]? allowedExtensions, SaveDialogOptions options)
+        {
+            IntPtr savePanel = objc_msgSend_IntPtr((IntPtr)NSSavePanelClass, selSavePanel);
+
+            // FIXME: Memory leak?
+            objc_msgSend(savePanel, selSetTitle, ToNSString(title));
+
+            IntPtr directoryString = ToNSString(directory);
+            IntPtr directoryURL = objc_msgSend_IntPtr((IntPtr)NSURLClass, selFileURLWithPath_isDirectory, directoryString, true);
+            objc_msgSend(savePanel, selSetDirectoryURL, directoryURL);
+            objc_msgSend(directoryURL, Release);
+            objc_msgSend(directoryString, Release);
+
+            IntPtr allowedContentTypesArray = CreateAllowedContentsTypeArray(allowedExtensions);
+            if (allowedContentTypesArray != 0)
+                objc_msgSend(savePanel, selSetAllowedContentTypes, allowedContentTypesArray);
+            objc_msgSend(savePanel, selSetAllowsOtherFileTypes, true);
+
+            NSModalResponse response = (NSModalResponse)objc_msgSend_IntPtr(savePanel, selRunModal);
             if (response != NSModalResponse.OK)
             {
                 objc_msgSend(savePanel, Release);
