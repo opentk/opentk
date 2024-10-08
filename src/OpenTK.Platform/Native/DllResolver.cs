@@ -30,7 +30,7 @@ namespace OpenTK.Platform.Native
                         return lib;
                 }
 
-                throw new DllNotFoundException($"Could not find any of these libraries '{string.Join(", ", names)}' (this load is intercepted, specified in DllImport as '{libraryName}').");
+                throw new DllNotFoundException($"Could not find any of these libraries '{string.Join(", ", names)}' (this load is intercepted, specified in DllImport as '{libraryName}'). Either this library is not installed or this is an OpenTK library resolution bug.");
             }
 
             return IntPtr.Zero;
@@ -48,16 +48,6 @@ namespace OpenTK.Platform.Native
                 "libGL.so",
                 "libGL.so.1",
                 "libGL.so.0",
-            },
-
-            // FIXME: By default let the OS decide, if that fails use vendor. Add other vendor GLX versions.
-            ["GLX"] = new string[]
-            {
-                "libGLX.so",
-                "libGLX.so.0",
-                "libGLX_nvidia.so.1",
-                "libGLX_nvidia.so.0",
-                "libGLX_mesa.so.0",
             },
 
             ["X11"] = new string[]
