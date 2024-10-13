@@ -32,7 +32,9 @@ namespace VulkanTestProject
         static VkPipelineLayout PipelineLayout;
         static VkPipeline Pipeline;
 
+        static bool FramebufferHasNewSize = false;
         static VkExtent2D SwapchainExtents;
+        static VkSurfaceFormatKHR SwapchainFormat;
         static VkSwapchainKHR Swapchain;
         static VkImageView[] SwapchainImageViews;
         static VkFramebuffer[] SwapchainFramebuffers;
@@ -344,67 +346,13 @@ namespace VulkanTestProject
             Vk.GetDeviceQueue(Device, (uint)presentationQueueFamily, 0, &presentQueue);
             PresentQueue = presentQueue;
 
-            VkSurfaceCapabilitiesKHR surfaceCaps;
-            result = Vk.GetPhysicalDeviceSurfaceCapabilitiesKHR(PhysicalDevice, Surface, &surfaceCaps);
-
-            uint surfaceFormatCount;
-            result = Vk.GetPhysicalDeviceSurfaceFormatsKHR(PhysicalDevice, Surface, &surfaceFormatCount, null);
-            Span<VkSurfaceFormatKHR> surfaceFormats = stackalloc VkSurfaceFormatKHR[(int)surfaceFormatCount];
-            result = Vk.GetPhysicalDeviceSurfaceFormatsKHR(PhysicalDevice, Surface, &surfaceFormatCount, (VkSurfaceFormatKHR*)Unsafe.AsPointer(ref MemoryMarshal.GetReference(surfaceFormats)));
-
-            VkSurfaceFormatKHR choosenFormat = default;
-            bool foundFormat = false;
-            for (int i = 0; i < surfaceFormats.Length; i++)
-            {
-                if (surfaceFormats[i].format == VkFormat.FormatR8g8b8a8Srgb || surfaceFormats[i].format == VkFormat.FormatB8g8r8a8Srgb)
-                {
-                    choosenFormat = surfaceFormats[i];
-                    foundFormat = true;
-                    break;
-                }
-            }
-            if (foundFormat == false)
-            {
-                choosenFormat = surfaceFormats[0];
-            }
-
-            uint presentModeCount = 0;
-            result = Vk.GetPhysicalDeviceSurfacePresentModesKHR(PhysicalDevice, Surface, &presentModeCount, null);
-            Span<VkPresentModeKHR> presentModes = stackalloc VkPresentModeKHR[(int)presentModeCount];
-            result = Vk.GetPhysicalDeviceSurfacePresentModesKHR(PhysicalDevice, Surface, &presentModeCount, (VkPresentModeKHR*)Unsafe.AsPointer(ref MemoryMarshal.GetReference(presentModes)));
-
-            VkSwapchainCreateInfoKHR swapchainCreate;
-            swapchainCreate.sType = VkStructureType.StructureTypeSwapchainCreateInfoKhr;
-            swapchainCreate.pNext = null;
-            swapchainCreate.flags = 0;
-            swapchainCreate.surface = Surface;
-            swapchainCreate.minImageCount = surfaceCaps.minImageCount;
-            swapchainCreate.imageFormat = choosenFormat.format;
-            swapchainCreate.imageColorSpace = choosenFormat.colorSpace;
-            swapchainCreate.imageExtent = surfaceCaps.currentExtent;
-            swapchainCreate.imageArrayLayers = 1;
-            swapchainCreate.imageUsage = VkImageUsageFlagBits.ImageUsageColorAttachmentBit;
-            swapchainCreate.imageSharingMode = VkSharingMode.SharingModeExclusive;
-            swapchainCreate.queueFamilyIndexCount = 0;
-            swapchainCreate.pQueueFamilyIndices = null;
-            swapchainCreate.preTransform = surfaceCaps.currentTransform;
-            swapchainCreate.compositeAlpha = VkCompositeAlphaFlagBitsKHR.CompositeAlphaOpaqueBitKhr;
-            // FIXME: Get from the possible present modes..
-            swapchainCreate.presentMode = VkPresentModeKHR.PresentModeFifoKhr;
-            swapchainCreate.clipped = 1;
-            swapchainCreate.oldSwapchain = VkSwapchainKHR.Zero;
-
-            VkSwapchainKHR swapchain;
-            result = Vk.CreateSwapchainKHR(Device, &swapchainCreate, null, &swapchain);
-            Swapchain = swapchain;
-
-            SwapchainExtents = swapchainCreate.imageExtent;
+            CreateSwapchain();
 
             uint swapchainImageCount;
-            result = Vk.GetSwapchainImagesKHR(Device, swapchain, &swapchainImageCount, null);
+            result = Vk.GetSwapchainImagesKHR(Device, Swapchain, &swapchainImageCount, null);
 
             Span<VkImage> swapchainImages = new VkImage[swapchainImageCount];
-            result = Vk.GetSwapchainImagesKHR(Device, swapchain, &swapchainImageCount, (VkImage*)Unsafe.AsPointer(ref MemoryMarshal.GetReference(swapchainImages)));
+            result = Vk.GetSwapchainImagesKHR(Device, Swapchain, &swapchainImageCount, (VkImage*)Unsafe.AsPointer(ref MemoryMarshal.GetReference(swapchainImages)));
 
             VkAttachmentReference colorAttachmentRef;
             colorAttachmentRef.attachment = 0;
@@ -424,7 +372,7 @@ namespace VulkanTestProject
 
             VkAttachmentDescription colorAttachment;
             colorAttachment.flags = 0;
-            colorAttachment.format = choosenFormat.format;
+            colorAttachment.format = SwapchainFormat.format;
             colorAttachment.samples = VkSampleCountFlagBits.SampleCount1Bit;
             colorAttachment.loadOp = VkAttachmentLoadOp.AttachmentLoadOpClear;
             colorAttachment.storeOp = VkAttachmentStoreOp.AttachmentStoreOpStore;
@@ -607,7 +555,6 @@ namespace VulkanTestProject
                 Vk.DestroyShaderModule(Device, fragmentModule, null);
             }
 
-
             SwapchainImageViews = new VkImageView[swapchainImages.Length];
             SwapchainFramebuffers = new VkFramebuffer[swapchainImages.Length];
             for (int i = 0; i < swapchainImages.Length; i++)
@@ -618,7 +565,7 @@ namespace VulkanTestProject
                 imgViewCreate.flags = 0;
                 imgViewCreate.image = swapchainImages[i];
                 imgViewCreate.viewType = VkImageViewType.ImageViewType2d;
-                imgViewCreate.format = choosenFormat.format;
+                imgViewCreate.format = SwapchainFormat.format;
                 imgViewCreate.components.r = VkComponentSwizzle.ComponentSwizzleIdentity;
                 imgViewCreate.components.g = VkComponentSwizzle.ComponentSwizzleIdentity;
                 imgViewCreate.components.b = VkComponentSwizzle.ComponentSwizzleIdentity;
@@ -640,8 +587,8 @@ namespace VulkanTestProject
                 fbCreate.renderPass = renderPass;
                 fbCreate.attachmentCount = 1;
                 fbCreate.pAttachments = &imgView;
-                fbCreate.width = swapchainCreate.imageExtent.width;
-                fbCreate.height = swapchainCreate.imageExtent.height;
+                fbCreate.width = SwapchainExtents.width;
+                fbCreate.height = SwapchainExtents.height;
                 fbCreate.layers = 1;
 
                 VkFramebuffer framebuffer;
@@ -751,12 +698,7 @@ namespace VulkanTestProject
 
             Vk.DeviceWaitIdle(Device);
 
-            for (int i = 0; i < SwapchainImageViews.Length; i++)
-            {
-                Vk.DestroyFramebuffer(Device, SwapchainFramebuffers[i], null);
-                Vk.DestroyImageView(Device, SwapchainImageViews[i], null);
-            }
-            Vk.DestroySwapchainKHR(Device, Swapchain, null);
+            CleanupSwapchain();
 
             Vk.DestroyCommandPool(Device, CommandPool, null);
 
@@ -779,6 +721,10 @@ namespace VulkanTestProject
             {
                 Toolkit.Window.Destroy(close.Window);
             }
+            else if (args is WindowFramebufferResizeEventArgs fbResize)
+            {
+                FramebufferHasNewSize = true;
+            }
         }
 
         const float CycleTime = 8.0f;
@@ -794,11 +740,21 @@ namespace VulkanTestProject
             fixed (VkFence* inFlightFencePtr = &InFlightFence)
             {
                 result = Vk.WaitForFences(Device, 1, inFlightFencePtr, 1, ulong.MaxValue);
-                result = Vk.ResetFences(Device, 1, inFlightFencePtr);
             }
 
             uint imageIndex;
             result = Vk.AcquireNextImageKHR(Device, Swapchain, ulong.MaxValue, ImageAvailableSemaphore, VkFence.Zero, &imageIndex);
+            if (result == VkResult.ErrorOutOfDateKhr )
+            {
+                RecreateSwapchain();
+                return;
+            }
+
+            // Only do this if we are submitting work!
+            fixed (VkFence* inFlightFencePtr = &InFlightFence)
+            {
+                result = Vk.ResetFences(Device, 1, inFlightFencePtr);
+            }
 
             result = Vk.ResetCommandBuffer(CommandBuffer, 0);
             RecordCommandBuffer(CommandBuffer, RenderPass, SwapchainFramebuffers[imageIndex], SwapchainExtents, Time);
@@ -833,6 +789,11 @@ namespace VulkanTestProject
                 presentInfo.pResults = null;
 
                 result = Vk.QueuePresentKHR(PresentQueue, &presentInfo);
+                if (result == VkResult.ErrorOutOfDateKhr || result == VkResult.SuboptimalKhr || FramebufferHasNewSize)
+                {
+                    FramebufferHasNewSize = false;
+                    RecreateSwapchain();
+                }
             }
         }
 
@@ -882,5 +843,141 @@ namespace VulkanTestProject
             result = Vk.EndCommandBuffer(commandBuffer);
         }
 
+        static unsafe void CreateSwapchain()
+        {
+            VkResult result;
+
+            VkSurfaceCapabilitiesKHR surfaceCaps;
+            result = Vk.GetPhysicalDeviceSurfaceCapabilitiesKHR(PhysicalDevice, Surface, &surfaceCaps);
+
+            uint surfaceFormatCount;
+            result = Vk.GetPhysicalDeviceSurfaceFormatsKHR(PhysicalDevice, Surface, &surfaceFormatCount, null);
+            Span<VkSurfaceFormatKHR> surfaceFormats = stackalloc VkSurfaceFormatKHR[(int)surfaceFormatCount];
+            result = Vk.GetPhysicalDeviceSurfaceFormatsKHR(PhysicalDevice, Surface, &surfaceFormatCount, (VkSurfaceFormatKHR*)Unsafe.AsPointer(ref MemoryMarshal.GetReference(surfaceFormats)));
+
+            VkSurfaceFormatKHR choosenFormat = default;
+            bool foundFormat = false;
+            for (int i = 0; i < surfaceFormats.Length; i++)
+            {
+                if (surfaceFormats[i].format == VkFormat.FormatR8g8b8a8Srgb || surfaceFormats[i].format == VkFormat.FormatB8g8r8a8Srgb)
+                {
+                    choosenFormat = surfaceFormats[i];
+                    foundFormat = true;
+                    break;
+                }
+            }
+            if (foundFormat == false)
+            {
+                choosenFormat = surfaceFormats[0];
+            }
+
+            uint presentModeCount = 0;
+            result = Vk.GetPhysicalDeviceSurfacePresentModesKHR(PhysicalDevice, Surface, &presentModeCount, null);
+            Span<VkPresentModeKHR> presentModes = stackalloc VkPresentModeKHR[(int)presentModeCount];
+            result = Vk.GetPhysicalDeviceSurfacePresentModesKHR(PhysicalDevice, Surface, &presentModeCount, (VkPresentModeKHR*)Unsafe.AsPointer(ref MemoryMarshal.GetReference(presentModes)));
+
+            VkSwapchainCreateInfoKHR swapchainCreate;
+            swapchainCreate.sType = VkStructureType.StructureTypeSwapchainCreateInfoKhr;
+            swapchainCreate.pNext = null;
+            swapchainCreate.flags = 0;
+            swapchainCreate.surface = Surface;
+            swapchainCreate.minImageCount = surfaceCaps.minImageCount;
+            swapchainCreate.imageFormat = choosenFormat.format;
+            swapchainCreate.imageColorSpace = choosenFormat.colorSpace;
+            swapchainCreate.imageExtent = surfaceCaps.currentExtent;
+            swapchainCreate.imageArrayLayers = 1;
+            swapchainCreate.imageUsage = VkImageUsageFlagBits.ImageUsageColorAttachmentBit;
+            swapchainCreate.imageSharingMode = VkSharingMode.SharingModeExclusive;
+            swapchainCreate.queueFamilyIndexCount = 0;
+            swapchainCreate.pQueueFamilyIndices = null;
+            swapchainCreate.preTransform = surfaceCaps.currentTransform;
+            swapchainCreate.compositeAlpha = VkCompositeAlphaFlagBitsKHR.CompositeAlphaOpaqueBitKhr;
+            // FIXME: Get from the possible present modes..
+            swapchainCreate.presentMode = VkPresentModeKHR.PresentModeFifoKhr;
+            swapchainCreate.clipped = 1;
+            swapchainCreate.oldSwapchain = VkSwapchainKHR.Zero;
+
+            VkSwapchainKHR swapchain;
+            result = Vk.CreateSwapchainKHR(Device, &swapchainCreate, null, &swapchain);
+            Swapchain = swapchain;
+
+            SwapchainExtents = swapchainCreate.imageExtent;
+
+            SwapchainFormat = choosenFormat;
+        }
+
+        static unsafe void CleanupSwapchain()
+        {
+            Vk.DeviceWaitIdle(Device);
+
+            for (int i = 0; i < SwapchainFramebuffers.Length; i++)
+            {
+                Vk.DestroyFramebuffer(Device, SwapchainFramebuffers[i], null);
+            }
+
+            for (int i = 0; i < SwapchainImageViews.Length; i++)
+            {
+                Vk.DestroyImageView(Device, SwapchainImageViews[i], null);
+            }
+
+            Vk.DestroySwapchainKHR(Device, Swapchain, null);
+        }
+
+        static unsafe void RecreateSwapchain()
+        {
+            CleanupSwapchain();
+
+            CreateSwapchain();
+
+            VkResult result;
+
+            uint swapchainImageCount;
+            result = Vk.GetSwapchainImagesKHR(Device, Swapchain, &swapchainImageCount, null);
+
+            Span<VkImage> swapchainImages = new VkImage[swapchainImageCount];
+            result = Vk.GetSwapchainImagesKHR(Device, Swapchain, &swapchainImageCount, (VkImage*)Unsafe.AsPointer(ref MemoryMarshal.GetReference(swapchainImages)));
+
+
+            SwapchainImageViews = new VkImageView[swapchainImages.Length];
+            SwapchainFramebuffers = new VkFramebuffer[swapchainImages.Length];
+            for (int i = 0; i < swapchainImages.Length; i++)
+            {
+                VkImageViewCreateInfo imgViewCreate;
+                imgViewCreate.sType = VkStructureType.StructureTypeImageViewCreateInfo;
+                imgViewCreate.pNext = null;
+                imgViewCreate.flags = 0;
+                imgViewCreate.image = swapchainImages[i];
+                imgViewCreate.viewType = VkImageViewType.ImageViewType2d;
+                imgViewCreate.format = SwapchainFormat.format;
+                imgViewCreate.components.r = VkComponentSwizzle.ComponentSwizzleIdentity;
+                imgViewCreate.components.g = VkComponentSwizzle.ComponentSwizzleIdentity;
+                imgViewCreate.components.b = VkComponentSwizzle.ComponentSwizzleIdentity;
+                imgViewCreate.components.a = VkComponentSwizzle.ComponentSwizzleIdentity;
+                imgViewCreate.subresourceRange.aspectMask = VkImageAspectFlagBits.ImageAspectColorBit;
+                imgViewCreate.subresourceRange.baseMipLevel = 0;
+                imgViewCreate.subresourceRange.levelCount = 1;
+                imgViewCreate.subresourceRange.baseArrayLayer = 0;
+                imgViewCreate.subresourceRange.layerCount = 1;
+
+                VkImageView imgView;
+                result = Vk.CreateImageView(Device, &imgViewCreate, null, &imgView);
+                SwapchainImageViews[i] = imgView;
+
+                VkFramebufferCreateInfo fbCreate;
+                fbCreate.sType = VkStructureType.StructureTypeFramebufferCreateInfo;
+                fbCreate.pNext = null;
+                fbCreate.flags = 0;
+                fbCreate.renderPass = RenderPass;
+                fbCreate.attachmentCount = 1;
+                fbCreate.pAttachments = &imgView;
+                fbCreate.width = SwapchainExtents.width;
+                fbCreate.height = SwapchainExtents.height;
+                fbCreate.layers = 1;
+
+                VkFramebuffer framebuffer;
+                result = Vk.CreateFramebuffer(Device, &fbCreate, null, &framebuffer);
+                SwapchainFramebuffers[i] = framebuffer;
+            }
+        }
     }
 }
