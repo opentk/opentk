@@ -206,7 +206,7 @@ namespace OpenTK.Platform.Native.macOS
 
             nsApplication = objc_msgSend_IntPtr((IntPtr)NSApplicationClass, selSharedApplication);
 
-            objc_msgSend_bool(nsApplication, selSetActivationPolicy, (long)NSApplicationActivationpolicy.Regular);
+            objc_msgSend_bool(nsApplication, selSetActivationPolicy, (long)NSApplicationActivationPolicy.Regular);
             objc_msgSend(nsApplication, selDiscardEventsMatchingMask_beforeEvent, (ulong)NSEventMask.Any, IntPtr.Zero);
 
             IntPtr mainMenu = objc_msgSend_IntPtr(nsApplication, selMainMenu);
@@ -328,6 +328,18 @@ namespace OpenTK.Platform.Native.macOS
             class_addMethod(NSOpenTKViewClass, sel_registerName("updateDraggingItemsForDrag:"u8), (IntPtr)NSOtkView_NSDraggingDestination_UpdateDraggingItemsForDragInst, "v@:@"u8);
 
             objc_registerClassPair(NSOpenTKViewClass);
+        }
+
+        /// <inheritdoc/>
+        public void Uninitialize()
+        {
+            objc_disposeClassPair(NSOpenTKViewClass);
+            objc_disposeClassPair(NSOpenTKWindowClass);
+
+            // FIXME: Should we delete the NSMenu if we created one?
+
+            // FIXME: Reset selSetActivationPolicy?
+            // FIXME: Reset selDiscardEventsMatchingMask_beforeEvent?
         }
 
         private static MacOSWindowComponent GetComponentFromWindow(IntPtr window)

@@ -26,6 +26,11 @@ namespace OpenTK.Platform.Native.Windows
         {
         }
 
+        /// <inheritdoc/>
+        public void Uninitialize()
+        {
+        }
+
         internal static readonly string[] Win32RequiredExtensions = ["VK_KHR_surface", "VK_KHR_win32_surface"];
 
         /// <inheritdoc/>

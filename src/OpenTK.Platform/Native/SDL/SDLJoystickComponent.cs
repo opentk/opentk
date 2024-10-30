@@ -29,6 +29,12 @@ namespace OpenTK.Platform.Native.SDL
             Console.WriteLine( $"{SDL_NumJoysticks()} joysticks connected." );
         }
 
+        /// <inheritdoc/>
+        public void Uninitialize()
+        {
+            // FIXME: Do cleanup..
+        }
+
         // FIXME: 0 is probably not a good value to have here?
         // Should we copy the XInput values from the windows backend?
         /// <inheritdoc/>

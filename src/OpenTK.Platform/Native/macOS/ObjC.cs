@@ -495,6 +495,9 @@ namespace OpenTK.Platform.Native.macOS
         [DllImport(FoundationFramework)]
         internal static extern void objc_registerClassPair(ObjCClass cls);
 
+        [DllImport(FoundationFramework)]
+        internal static extern void objc_disposeClassPair(ObjCClass cls);
+
         internal static string FromNSString(IntPtr nsString)
         {
             char* strPtr = (char*)objc_msgSend_IntPtr(nsString, selcStringUsingEncoding, (ulong)NSStringEncoding.UTF16);

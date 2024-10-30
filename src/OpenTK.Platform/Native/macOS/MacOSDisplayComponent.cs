@@ -56,6 +56,15 @@ namespace OpenTK.Platform.Native.macOS
             UpdateDisplays(Logger, false);
         }
 
+        /// <inheritdoc/>
+        public void Uninitialize()
+        {
+            // We don't need to clear this list,
+            // but it feels appropriate.
+            // - Noggin_bops 2024-10-30
+            _displays.Clear();
+        }
+
         internal static unsafe void UpdateDisplays(ILogger? logger, bool sendEvents)
         {
             List<NSScreenHandle> newDisplays = new List<NSScreenHandle>();

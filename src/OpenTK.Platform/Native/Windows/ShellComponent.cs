@@ -28,17 +28,34 @@ namespace OpenTK.Platform.Native.Windows
         /// <inheritdoc/>
         public ILogger? Logger { get; set; }
 
+        internal ExecutionState OriginalExecutionState;
+
         /// <inheritdoc/>
         public void Initialize(ToolkitOptions options)
         {
+            OriginalExecutionState = Win32.SetThreadExecutionState(0);
+
             // Set the inital theme so we can detect changes later.
             LastTheme = GetCurrentTheme();
         }
 
         /// <inheritdoc/>
-        public void AllowScreenSaver(bool allow)
+        public void Uninitialize()
+        {
+            Win32.SetThreadExecutionState(OriginalExecutionState | ExecutionState.Continuous);
+        }
+
+        /// <inheritdoc/>
+        public void AllowScreenSaver(bool allow, string? disableReason)
         {
             Win32.SetThreadExecutionState(ExecutionState.Continuous | (allow ? 0 : ExecutionState.DisplayRequired));
+        }
+
+        /// <inheritdoc/>
+        public bool IsScreenSaverAllowed()
+        {
+            ExecutionState state = Win32.SetThreadExecutionState(0);
+            return state.HasFlag(ExecutionState.DisplayRequired) == false;
         }
 
         /// <inheritdoc/>

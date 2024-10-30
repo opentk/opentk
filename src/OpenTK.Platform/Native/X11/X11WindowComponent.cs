@@ -22,13 +22,13 @@ namespace OpenTK.Platform.Native.X11
 {
     public class X11WindowComponent : IWindowComponent
     {
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public string Name => nameof(X11WindowComponent);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public PalComponents Provides => PalComponents.Window;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public ILogger? Logger { get; set; }
 
         private unsafe XErrorHandler ErrorHandler;
@@ -51,7 +51,7 @@ namespace OpenTK.Platform.Native.X11
 
         internal static string ApplicationName;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public void Initialize(ToolkitOptions options)
         {
             // Later on we can replace this with a hint.
@@ -287,16 +287,35 @@ namespace OpenTK.Platform.Native.X11
             */
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
+        public void Uninitialize()
+        {
+            // FIXME: Do something with CursorCapturingWindow?
+
+            foreach (var (_, xwindow) in XWindowDict)
+            {
+                Logger?.LogWarning($"Window {GetTitle(xwindow)} is still open when uninitializing Toolkit. Please close all windows before uninitializing.");
+                Destroy(xwindow);
+            }
+
+            XDestroyWindow(X11.Display, HelperWindow);
+
+            // FIXME: Should we reset the error handler?
+            // XSetErrorHandler(null);
+
+            XCloseDisplay(X11.Display);
+        }
+
+        /// <inheritdoc/>
         public bool CanSetIcon => true;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public bool CanGetDisplay => true;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public bool CanSetCursor => true;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public bool CanCaptureCursor => true;
 
         private static List<WindowBorderStyle> s_emptyStyleList = new List<WindowBorderStyle>();
@@ -310,13 +329,13 @@ namespace OpenTK.Platform.Native.X11
             WindowMode.ExclusiveFullscreen,
         };
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public IReadOnlyList<PlatformEventType> SupportedEvents { get => throw new NotImplementedException(); }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public IReadOnlyList<WindowBorderStyle> SupportedStyles { get; private set; } = s_emptyStyleList;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public IReadOnlyList<WindowMode> SupportedModes { get; private set; } = _SupportedModes;
 
         /// <summary>
@@ -398,7 +417,7 @@ namespace OpenTK.Platform.Native.X11
             return attributes.MapState != MapState.IsUnmapped;
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public void ProcessEvents(bool waitForEvents)
         {
             XEvent ea = new XEvent();
@@ -1306,7 +1325,7 @@ namespace OpenTK.Platform.Native.X11
             }
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public WindowHandle Create(GraphicsApiHints hints)
         {
             XWindow window;
@@ -1655,7 +1674,7 @@ namespace OpenTK.Platform.Native.X11
             return handle;
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public void Destroy(WindowHandle handle)
         {
             XWindowHandle xwindow = handle.As<XWindowHandle>(this);
@@ -1683,7 +1702,7 @@ namespace OpenTK.Platform.Native.X11
             xwindow.Destroyed = true;
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public bool IsWindowDestroyed(WindowHandle handle)
         {
             XWindowHandle xhandle = handle.As<XWindowHandle>(this);
@@ -1691,7 +1710,7 @@ namespace OpenTK.Platform.Native.X11
             return xhandle.Destroyed;
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public string GetTitle(WindowHandle handle)
         {
             XWindowHandle window = handle.As<XWindowHandle>(this);
@@ -1732,7 +1751,7 @@ namespace OpenTK.Platform.Native.X11
             }
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public void SetTitle(WindowHandle handle, string title)
         {
             XWindowHandle window = handle.As<XWindowHandle>(this);
@@ -1830,7 +1849,7 @@ namespace OpenTK.Platform.Native.X11
             }
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public IconHandle? GetIcon(WindowHandle handle)
         {
             XWindowHandle xwindow = handle.As<XWindowHandle>(this);
@@ -1838,7 +1857,7 @@ namespace OpenTK.Platform.Native.X11
             return xwindow.Icon;
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public void SetIcon(WindowHandle handle, IconHandle icon)
         {
             XWindowHandle xwindow = handle.As<XWindowHandle>(this);
@@ -1892,7 +1911,7 @@ namespace OpenTK.Platform.Native.X11
             xwindow.Icon = xicon;
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         private void GetWindowExtents(WindowHandle handle, out int left, out int right, out int top, out int bottom)
         {
             XWindowHandle window = handle.As<XWindowHandle>(this);
@@ -1932,7 +1951,7 @@ namespace OpenTK.Platform.Native.X11
             }
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public void GetPosition(WindowHandle handle, out Vector2i position)
         {
             GetClientPosition(handle, out position);
@@ -1945,7 +1964,7 @@ namespace OpenTK.Platform.Native.X11
             }
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public void SetPosition(WindowHandle handle, Vector2i newPosition)
         {
             XWindowHandle xwindow = handle.As<XWindowHandle>(this);
@@ -1960,7 +1979,7 @@ namespace OpenTK.Platform.Native.X11
             XMoveWindow(X11.Display, xwindow.Window, newPosition.X, newPosition.Y);
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public void GetSize(WindowHandle handle, out Vector2i size)
         {
             GetClientSize(handle, out size);
@@ -1973,7 +1992,7 @@ namespace OpenTK.Platform.Native.X11
             }
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public void SetSize(WindowHandle handle, Vector2i newSize)
         {
             XWindowHandle xwindow = handle.As<XWindowHandle>(this);
@@ -2034,7 +2053,7 @@ namespace OpenTK.Platform.Native.X11
             XMoveResizeWindow(X11.Display, xwindow.Window, x, y, innerWidth, innerHeight);
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public void GetClientPosition(WindowHandle handle, out Vector2i clientPosition)
         {
             XWindowHandle window = handle.As<XWindowHandle>(this);
@@ -2050,7 +2069,7 @@ namespace OpenTK.Platform.Native.X11
                 out _);
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public void SetClientPosition(WindowHandle handle, Vector2i newClientPosition)
         {
             XWindowHandle xwindow = handle.As<XWindowHandle>(this);
@@ -2058,7 +2077,7 @@ namespace OpenTK.Platform.Native.X11
             XMoveWindow(X11.Display, xwindow.Window, newClientPosition.X, newClientPosition.Y);
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public void GetClientSize(WindowHandle handle, out Vector2i clientSize)
         {
             XWindowHandle xwindow = handle.As<XWindowHandle>(this);
@@ -2068,7 +2087,7 @@ namespace OpenTK.Platform.Native.X11
             clientSize.Y = attributes.Height;
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public void SetClientSize(WindowHandle handle, Vector2i newClientSize)
         {
             XWindowHandle xwindow = handle.As<XWindowHandle>(this);
@@ -2100,7 +2119,7 @@ namespace OpenTK.Platform.Native.X11
             XMoveResizeWindow(X11.Display, xwindow.Window, x, y, (uint)width, (uint)height);
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public void GetFramebufferSize(WindowHandle handle, out Vector2i framebufferSize)
         {
             XWindowHandle xwindow = handle.As<XWindowHandle>(this);
@@ -2109,7 +2128,7 @@ namespace OpenTK.Platform.Native.X11
             GetClientSize(xwindow, out framebufferSize);
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public unsafe void GetMaxClientSize(WindowHandle handle, out int? width, out int? height)
         {
             XWindowHandle xwindow = handle.As<XWindowHandle>(this);
@@ -2146,7 +2165,7 @@ namespace OpenTK.Platform.Native.X11
             XFree(hints);
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public unsafe void SetMaxClientSize(WindowHandle handle, int? width, int? height)
         {
             XWindowHandle xwindow = handle.As<XWindowHandle>(this);
@@ -2175,7 +2194,7 @@ namespace OpenTK.Platform.Native.X11
             XFree(hints);
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public unsafe void GetMinClientSize(WindowHandle handle, out int? width, out int? height)
         {
             XWindowHandle xwindow = handle.As<XWindowHandle>(this);
@@ -2213,7 +2232,7 @@ namespace OpenTK.Platform.Native.X11
             XFree(hints);
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public unsafe void SetMinClientSize(WindowHandle handle, int? width, int? height)
         {
             XWindowHandle xwindow = handle.As<XWindowHandle>(this);
@@ -2240,7 +2259,7 @@ namespace OpenTK.Platform.Native.X11
             XFree(hints);
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public DisplayHandle GetDisplay(WindowHandle handle)
         {
             XWindowHandle xwindow = handle.As<XWindowHandle>(this);
@@ -2312,7 +2331,7 @@ namespace OpenTK.Platform.Native.X11
             }
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         /// <remarks>
         /// Calling this in rapid succession after <see cref="SetMode" /> will likely report the wrong mode as the X server hasn't updated the state of the window yet.
         /// We could add a delay where we wait for the server to change the window, but for now we leave it as it is.
@@ -2413,7 +2432,7 @@ namespace OpenTK.Platform.Native.X11
             return mode.Value;
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public void SetMode(WindowHandle handle, WindowMode mode)
         {
             XWindowHandle xwindow = handle.As<XWindowHandle>(this);
@@ -2611,7 +2630,7 @@ namespace OpenTK.Platform.Native.X11
             XSync(X11.Display, False);
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public void SetFullscreenDisplay(WindowHandle handle, DisplayHandle? display)
         {
             XWindowHandle xwindow = handle.As<XWindowHandle>(this);
@@ -2686,7 +2705,7 @@ namespace OpenTK.Platform.Native.X11
             XMoveResizeWindow(X11.Display, xwindow.Window, bounds.X, bounds.Y, (uint)bounds.Width, (uint)bounds.Height);
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public void SetFullscreenDisplay(WindowHandle handle, DisplayHandle display, VideoMode videoMode)
         {
             XWindowHandle xwindow = handle.As<XWindowHandle>(this);
@@ -2760,7 +2779,7 @@ namespace OpenTK.Platform.Native.X11
             XMoveResizeWindow(X11.Display, xwindow.Window, bounds.X, bounds.Y, (uint)bounds.Width, (uint)bounds.Height);
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public bool GetFullscreenDisplay(WindowHandle handle, [NotNullWhen(true)] out DisplayHandle? display)
         {
             XWindowHandle xwindow = handle.As<XWindowHandle>(this);
@@ -2768,7 +2787,7 @@ namespace OpenTK.Platform.Native.X11
             return display != null;
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         /// <remarks>
         /// Calling this in rapid succession after <see cref="SetBorderStyle" /> will likely report the wrong style as the X server hasn't updated the state of the window yet.
         /// We could add a delay where we wait for the server to change the window, but for now we leave it as it is.
@@ -2856,7 +2875,7 @@ namespace OpenTK.Platform.Native.X11
             return WindowBorderStyle.ResizableBorder;
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public void SetBorderStyle(WindowHandle handle, WindowBorderStyle style)
         {
             XWindowHandle xwindow = handle.As<XWindowHandle>(this);
@@ -2990,7 +3009,7 @@ namespace OpenTK.Platform.Native.X11
             }
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public void SetAlwaysOnTop(WindowHandle handle, bool floating)
         {
             XWindowHandle xwindow = handle.As<XWindowHandle>(this);
@@ -3029,7 +3048,7 @@ namespace OpenTK.Platform.Native.X11
             int status = XSendEvent(X11.Display, X11.DefaultRootWindow, 0, XEventMask.SubstructureRedirect | XEventMask.SubstructureNotify, e);
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public bool IsAlwaysOnTop(WindowHandle handle)
         {
             XWindowHandle xwindow = handle.As<XWindowHandle>(this);
@@ -3086,7 +3105,7 @@ namespace OpenTK.Platform.Native.X11
             }
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public void SetHitTestCallback(WindowHandle handle, HitTest? test)
         {
             XWindowHandle xwindow = handle.As<XWindowHandle>(this);
@@ -3094,7 +3113,7 @@ namespace OpenTK.Platform.Native.X11
             xwindow.HitTest = test;
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public void SetCursor(WindowHandle handle, CursorHandle? cursor)
         {
             XWindowHandle xwindow = handle.As<XWindowHandle>(this);
@@ -3103,7 +3122,7 @@ namespace OpenTK.Platform.Native.X11
             XDefineCursor(X11.Display, xwindow.Window, xcursor?.Cursor ?? XCursor.None);
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public CursorCaptureMode GetCursorCaptureMode(WindowHandle handle)
         {
             XWindowHandle xwindow = handle.As<XWindowHandle>(this);
@@ -3111,7 +3130,7 @@ namespace OpenTK.Platform.Native.X11
             return xwindow.CaptureMode;
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public void SetCursorCaptureMode(WindowHandle handle, CursorCaptureMode mode)
         {
             XWindowHandle xwindow = handle.As<XWindowHandle>(this);
@@ -3165,7 +3184,7 @@ namespace OpenTK.Platform.Native.X11
             }
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public bool IsFocused(WindowHandle handle)
         {
             XWindowHandle xwindow = handle.As<XWindowHandle>(this);
@@ -3175,7 +3194,7 @@ namespace OpenTK.Platform.Native.X11
             return xwindow.Window == focus;
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public void FocusWindow(WindowHandle handle)
         {
             XWindowHandle xwindow = handle.As<XWindowHandle>(this);
@@ -3185,7 +3204,7 @@ namespace OpenTK.Platform.Native.X11
             XSetInputFocus(X11.Display, xwindow.Window, RevertTo.RevertToPointerRoot, XTime.CurrentTime);
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public void RequestAttention(WindowHandle handle)
         {
             XWindowHandle xwindow = handle.As<XWindowHandle>(this);
@@ -3246,7 +3265,7 @@ namespace OpenTK.Platform.Native.X11
             int status = XSendEvent(X11.Display, X11.DefaultRootWindow, 0, XEventMask.SubstructureRedirect | XEventMask.SubstructureNotify, e);
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public void ScreenToClient(WindowHandle handle, Vector2 screen, out Vector2 client)
         {
             XWindowHandle xwindow = handle.As<XWindowHandle>(this);
@@ -3263,7 +3282,7 @@ namespace OpenTK.Platform.Native.X11
             client = (clientX, clientY);
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public void ClientToScreen(WindowHandle handle, Vector2 client, out Vector2 screen)
         {
             XWindowHandle xwindow = handle.As<XWindowHandle>(this);
@@ -3298,7 +3317,7 @@ namespace OpenTK.Platform.Native.X11
 
         private static bool hasReportedScaleFactorWarning = false;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public void GetScaleFactor(WindowHandle handle, out float scaleX, out float scaleY)
         {
             if (hasReportedScaleFactorWarning == false) {

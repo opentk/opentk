@@ -27,7 +27,12 @@ namespace OpenTK.Platform.Native.SDL
         }
 
         /// <inheritdoc/>
-        public void AllowScreenSaver(bool allow)
+        public void Uninitialize()
+        {
+        }
+
+        /// <inheritdoc/>
+        public void AllowScreenSaver(bool allow, string? disableReason)
         {
             if (allow)
             {
@@ -37,6 +42,12 @@ namespace OpenTK.Platform.Native.SDL
             {
                 SDL_DisableScreenSaver();
             }
+        }
+
+        /// <inheritdoc/>
+        public bool IsScreenSaverAllowed()
+        {
+            return SDL_IsScreenSaverEnabled() == 1;
         }
 
         /// <inheritdoc/>

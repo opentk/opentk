@@ -25,6 +25,11 @@ namespace OpenTK.Platform.Native.SDL
         {
         }
 
+        /// <inheritdoc/>
+        public void Uninitialize()
+        {
+        }
+
         private ClipboardFormat[] _supportedFormats = {
             ClipboardFormat.Text
         };

@@ -18,6 +18,12 @@ namespace OpenTK.Platform.Native
         internal static extern IntPtr /* GMainLoop* */ g_main_loop_new(IntPtr /* GMainContext* */ context, int /* gboolean */ is_running);
 
         [DllImport(Gio, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void g_main_loop_quit(IntPtr /* GMainLoop* */ loop);
+
+        [DllImport(Gio, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void g_main_loop_unref(IntPtr /* GMainLoop* */ loop);
+
+        [DllImport(Gio, CallingConvention = CallingConvention.Cdecl)]
         internal static extern int /* gboolean */ g_main_context_iteration(IntPtr /* GMainContext* */ context, int /* gboolean */ may_block); 
  
         [DllImport(Gio, CallingConvention = CallingConvention.Cdecl)]
@@ -108,9 +114,15 @@ namespace OpenTK.Platform.Native
                                 GConnectFlags connect_flags);
 
         [DllImport(Gio, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void g_signal_handler_disconnect(IntPtr /* GObject* */ instance, ulong /* gulong */ handler_id);
+
+        [DllImport(Gio, CallingConvention = CallingConvention.Cdecl)]
         internal static unsafe extern IntPtr /* GPowerProfileMonitor* */ g_power_profile_monitor_dup_default();
 
         [DllImport(Gio, CallingConvention = CallingConvention.Cdecl)]
         internal static unsafe extern int /* gboolean */ g_power_profile_monitor_get_power_saver_enabled(IntPtr /* GPowerProfileMonitor* */ monitor);
+
+        [DllImport(Gio, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void g_object_unref(IntPtr /* GObject* */ @object);
     }
 }

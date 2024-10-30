@@ -182,5 +182,52 @@ namespace OpenTK.Platform
 
             Initialized = true;
         }
+
+        /// <summary>
+        /// Uninitialize OpenTK.
+        /// This frees any native resources held.
+        /// All allocated windows, opengl contexts, etc should be closed before calling this function.
+        /// This function does not need to be called when exiting the application.
+        /// This function is only useful if the application will keep running after OpenTK has been uninitialized.
+        /// </summary>
+        /// <remarks>
+        /// There are some irreversible settings on some platforms that cannot be undone once OpenTK has been initialized.
+        /// What follows is a list of things that cannot be undone:
+        /// <list type="bullet">
+        /// <item>DPI awareness in windows is a per process setting that can only be set once.</item>
+        /// </list>
+        /// </remarks>
+        public static void Uninit()
+        {
+            _vulkanComponent?.Uninitialize();
+            _dialogComponent?.Uninitialize();
+            _joystickComponent?.Uninitialize();
+            _clipboardComponent?.Uninitialize();
+            _iconComponent?.Uninitialize();
+            _cursorComponent?.Uninitialize();
+            _keyboardComponent?.Uninitialize();
+            _mouseComponent?.Uninitialize();
+            _shellComponent?.Uninitialize();
+            _displayComponent?.Uninitialize();
+            _openGLComponent?.Uninitialize();
+            _surfaceComponent?.Uninitialize();
+            _windowComponent?.Uninitialize();
+
+            _vulkanComponent = null;
+            _dialogComponent = null;
+            _joystickComponent = null;
+            _clipboardComponent = null;
+            _iconComponent = null;
+            _cursorComponent = null;
+            _keyboardComponent = null;
+            _mouseComponent = null;
+            _shellComponent = null;
+            _displayComponent = null;
+            _openGLComponent = null;
+            _surfaceComponent = null;
+            _windowComponent = null;
+
+            Initialized = false;
+        }
     }
 }

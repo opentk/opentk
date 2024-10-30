@@ -47,6 +47,13 @@ namespace OpenTK.Platform.Native.Windows
             // https://learn.microsoft.com/en-us/windows/win32/dxtecharts/using-an-input-method-editor-in-a-game
         }
 
+        /// <inheritdoc/>
+        public void Uninitialize()
+        {
+            if (Instance == this)
+                Instance = null;
+        }
+
         private void UpdateKeymap()
         {
             // Loop through all scancodes and get their keys.

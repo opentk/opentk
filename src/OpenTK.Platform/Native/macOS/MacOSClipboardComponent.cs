@@ -73,8 +73,14 @@ namespace OpenTK.Platform.Native.macOS
         /// <inheritdoc/>
         public void Initialize(ToolkitOptions options)
         {
+            // FIXME: Are we taking a reference here so that we leak this?
             IntPtr pasteboard = objc_msgSend_IntPtr((IntPtr)NSPasteboardClass, selGeneralPasteboard);
             ChangeCount = objc_msgSend_IntPtr(pasteboard, selChangeCount);
+        }
+
+        /// <inheritdoc/>
+        public void Uninitialize()
+        {
         }
 
         // FIXME: Make this not static...

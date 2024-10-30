@@ -1,19 +1,7 @@
-﻿using OpenTK.Platform.Native.Windows;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Reflection;
-using System.Reflection.Metadata;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using System.Runtime.InteropServices.JavaScript;
 using System.Text;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
-using static OpenTK.Platform.Native.Windows.Win32;
-
-#nullable enable
 
 namespace OpenTK.Platform.Native.Windows
 {
@@ -141,6 +129,9 @@ namespace OpenTK.Platform.Native.Windows
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         internal static extern short RegisterClassEx(in WNDCLASSEX wndClass);
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        internal static extern bool UnregisterClass(string lpClassName, IntPtr /* HINSTANCE */ hInstance);
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         internal static extern IntPtr CreateWindowEx(
@@ -1221,6 +1212,9 @@ namespace OpenTK.Platform.Native.Windows
               DEV_BROADCAST_DEVICEINTERFACE NotificationFilter,
               DEVICE_NOTIFY Flags);
 
+        [DllImport("user32.dll", SetLastError = true)]
+        internal static extern bool UnregisterDeviceNotification(IntPtr /* HDEVNOTIFY */ Handle);
+
         internal struct MEMORYSTATUSEX
         {
             public uint dwLength;
@@ -1244,7 +1238,13 @@ namespace OpenTK.Platform.Native.Windows
         internal static extern IntPtr /* HPOWERNOTIFY */ RegisterSuspendResumeNotification(IntPtr /* HANDLE */ hRecipient, DEVICE_NOTIFY Flags);
 
         [DllImport("user32.dll", SetLastError = true)]
+        internal static extern bool UnregisterSuspendResumeNotification(IntPtr /* HPOWERNOTIFY */ Handle);
+
+        [DllImport("user32.dll", SetLastError = true)]
         internal static extern bool AddClipboardFormatListener(IntPtr /* HWND */ hwnd);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        internal static extern bool RemoveClipboardFormatListener(IntPtr /* HWND */ hwnd);
 
         internal struct WINDOWPLACEMENT
         {

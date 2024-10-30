@@ -108,6 +108,12 @@ namespace OpenTK.Platform.Native.Windows
         }
 
         /// <inheritdoc/>
+        public void Uninitialize()
+        {
+            // FIXME: Unititialize all of the data.
+        }
+
+        /// <inheritdoc/>
         public bool IsConnected(int deviceIndex)
         {
             uint result = XInputGetCapabilities((uint)deviceIndex, 0, out _);

@@ -55,5 +55,10 @@ namespace OpenTK.Platform
         /// </summary>
         /// <param name="options">The options to initialize the component with.</param>
         void Initialize(ToolkitOptions options);
+
+        /// <summary>
+        /// Uninitialize the component. Frees any native resources used by the component.
+        /// </summary>
+        void Uninitialize();
     }
 }

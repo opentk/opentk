@@ -28,9 +28,12 @@ namespace OpenTK.Platform.Native.Windows
         public static readonly IntPtr HInstance;
 
         /// <summary>
-        /// The helper window used to load wgl extensions.
+        /// The helper window used in part to load wgl extensions.
         /// </summary>
         public static IntPtr HelperHWnd { get; private set; }
+
+        internal static IntPtr DeviceNotificationHandle;
+        internal static IntPtr SuspendResumeNotificationHandle;
 
         // A handle to a windowproc delegate so it doesn't get GC collected.
         private Win32.WNDPROC? WindowProc;
@@ -124,10 +127,8 @@ namespace OpenTK.Platform.Native.Windows
             dbh.dbcc_devicetype = DBTDevType.DeviceInterface;
             dbh.dbcc_classguid = Win32.GUID_DEVINTERFACE_HID;
 
-            // We assume we are going to need these notification handles for the lifetime of the application, so we do not close them.
-            // - 2023-06-28 Noggin_bops
-            IntPtr devNotifHandle = Win32.RegisterDeviceNotification(HelperHWnd, dbh, DEVICE_NOTIFY.DEVICE_NOTIFY_WINDOW_HANDLE);
-            IntPtr resumeSuspendNotifHandle = Win32.RegisterSuspendResumeNotification(HelperHWnd, DEVICE_NOTIFY.DEVICE_NOTIFY_WINDOW_HANDLE);
+            DeviceNotificationHandle = Win32.RegisterDeviceNotification(HelperHWnd, dbh, DEVICE_NOTIFY.DEVICE_NOTIFY_WINDOW_HANDLE);
+            SuspendResumeNotificationHandle = Win32.RegisterSuspendResumeNotification(HelperHWnd, DEVICE_NOTIFY.DEVICE_NOTIFY_WINDOW_HANDLE);
 
             // Register for WM_CLIPBOARDUPDATE
             bool success = Win32.AddClipboardFormatListener(HelperHWnd);
@@ -135,6 +136,30 @@ namespace OpenTK.Platform.Native.Windows
             {
                 throw new Win32Exception();
             }
+        }
+
+        /// <inheritdoc/>
+        public void Uninitialize()
+        {
+            // Free all of the native resources.
+            // This means that if there are any windows still open we need to close them.
+            // - Noggin_bops 2024-10-30
+            foreach (var (_, hwnd) in HWndDict)
+            {
+                Logger?.LogWarning($"Window {GetTitle(hwnd)} is still open when uninitializing Toolkit. Please close all windows before uninitializing.");
+                Destroy(hwnd);
+            }
+
+            // Unregister the helper window from notifications.
+            Win32.UnregisterDeviceNotification(DeviceNotificationHandle);
+            Win32.UnregisterSuspendResumeNotification(SuspendResumeNotificationHandle);
+            Win32.RemoveClipboardFormatListener(HelperHWnd);
+
+            // Delete the helper window
+            Win32.DestroyWindow(HelperHWnd);
+
+            // Unregister the OpenTK window class
+            Win32.UnregisterClass(WindowComponent.CLASS_NAME, IntPtr.Zero);
         }
 
         /// <inheritdoc/>

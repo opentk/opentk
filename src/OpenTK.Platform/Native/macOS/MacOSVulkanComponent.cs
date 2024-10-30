@@ -72,6 +72,11 @@ namespace OpenTK.Platform.Native.macOS
             }
         }
 
+        /// <inheritdoc/>
+        public void Uninitialize()
+        {
+        }
+
         internal bool KHR_surface;
         internal bool EXT_metal_surface;
         internal bool MVK_macos_surface;

@@ -12,8 +12,6 @@ namespace OpenTK.Platform
     /// </summary>
     public interface IShellComponent : IPalComponent
     {
-        // FIXME: Add a way to check if the screensaver is active or not.
-
         /// <summary>
         /// Sets whether or not a screensaver is allowed to draw on top of the window.
         /// For games with long cutscenes it would be appropriate to set this to <c>false</c>,
@@ -21,7 +19,20 @@ namespace OpenTK.Platform
         /// By default this setting is untouched.
         /// </summary>
         /// <param name="allow">Whether to allow screensavers to appear while the application is running.</param>
-        void AllowScreenSaver(bool allow);
+        /// <param name="disableReason">
+        /// A reason for why the screen saver is disabled.
+        /// This string should both contain the reason why the screen saver is disabed as well as the name of the
+        /// application so the user knows which application is preventing the screen saver from running.
+        /// If <see langword="null"/> is sent the following default message will be sent:
+        /// <code>$"{ApplicationName} is is preventing screen saver."</code>
+        /// </param>
+        void AllowScreenSaver(bool allow, string? disableReason);
+
+        /// <summary>
+        /// Gets if the screen saver is allowed to run or not.
+        /// </summary>
+        /// <returns>If the screen saver is allowed to run.</returns>
+        bool IsScreenSaverAllowed();
 
         /// <summary>
         /// Gets the battery status of the computer.

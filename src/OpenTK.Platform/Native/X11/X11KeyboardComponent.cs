@@ -48,6 +48,11 @@ namespace OpenTK.Platform.Native.X11
             UpdateKeymap();
         }
 
+        /// <inheritdoc/>
+        public void Uninitialize()
+        {
+        }
+
         internal static KeyModifier ModifiersFromState(uint state)
         {
             XStateMask mask = (XStateMask)state;
@@ -388,6 +393,7 @@ namespace OpenTK.Platform.Native.X11
             if (status != Success)
             {
                 Logger?.LogError($"XkbGetNames failed with status: {status}");
+                XkbFreeKeyboard(desc, 0, true);
                 return;
             }
 
@@ -403,6 +409,8 @@ namespace OpenTK.Platform.Native.X11
                 KeycodeToScancode[scancode] = value;
                 ScancodeToKeycode[(int)KeycodeToScancode[scancode]] = scancode;
             }
+
+            XkbFreeKeyboard(desc, 0, true);
         }
 
         /// <inheritdoc/>

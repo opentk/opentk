@@ -112,6 +112,12 @@ namespace OpenTK.Platform.Native.macOS
             objc_registerClassPair(NSOtkSyncModalClass);
         }
 
+        /// <inheritdoc/>
+        public void Uninitialize()
+        {
+            objc_disposeClassPair(NSOtkSyncModalClass);
+        }
+
         internal static readonly SEL selInitWithAlert_AsSheetForWindow = sel_registerName("initWithAlert:asSheetForWindow:"u8);
         private static unsafe readonly delegate* unmanaged[Cdecl]<IntPtr, SEL, IntPtr, IntPtr, IntPtr> NSOtkSyncModal_InitWithAlert_AsSheetForWindowInst = &NSOtkSyncModal_InitWithAlert_AsSheetForWindow;
         [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]

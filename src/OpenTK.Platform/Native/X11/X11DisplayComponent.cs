@@ -366,6 +366,15 @@ namespace OpenTK.Platform.Native.X11
             }
         }
 
+        /// <inheritdoc/>
+        public void Uninitialize()
+        {
+            // We don't need to clear this list,
+            // but it feels appropriate.
+            // - Noggin_bops 2024-10-30
+            _displays.Clear();
+        }
+
         internal static void HandleXRREvent(XEvent @event, ILogger? logger)
         {
             switch ((RREventType)(@event.Type - X11.XRandREventBase))

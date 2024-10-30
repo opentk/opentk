@@ -40,6 +40,12 @@ namespace OpenTK.Platform.Native.SDL
         }
 
         /// <inheritdoc/>
+        public void Uninitialize()
+        {
+            // FIXME: Do cleanup..
+        }
+
+        /// <inheritdoc/>
         public bool CanSetIcon => true;
 
         /// <inheritdoc/>

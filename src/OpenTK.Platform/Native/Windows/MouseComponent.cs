@@ -30,6 +30,11 @@ namespace OpenTK.Platform.Native.Windows
         }
 
         /// <inheritdoc/>
+        public void Uninitialize()
+        {
+        }
+
+        /// <inheritdoc/>
         public bool CanSetMousePosition => true;
 
         /// <inheritdoc/>

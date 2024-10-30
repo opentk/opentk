@@ -67,6 +67,11 @@ namespace OpenTK.Platform.Native.X11
             }
         }
 
+        /// <inheritdoc/>
+        public void Uninitialize()
+        {
+        }
+
         internal bool KHR_surface;
         internal bool KHR_xcb_surface;
         internal bool KHR_xlib_surface;

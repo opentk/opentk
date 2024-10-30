@@ -65,6 +65,12 @@ namespace OpenTK.Platform.Native.ANGLE
         }
 
         /// <inheritdoc/>
+        public void Uninitialize()
+        {
+            Egl.Terminate(eglDisplay);
+        }
+
+        /// <inheritdoc/>
         public bool CanShareContexts => true;
 
         /// <inheritdoc/>
