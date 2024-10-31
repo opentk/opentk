@@ -1,4 +1,6 @@
-﻿using System;
+﻿using OpenTK.Graphics.Vulkan;
+using OpenTK.Graphics.Wgl;
+using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -1487,7 +1489,7 @@ namespace OpenTK.Platform.Native.Windows
         }
 
         [DllImport("kernel32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
-        internal extern static IntPtr /* HANDLE */ CreateActCtxW(ref ACTCTXW actctx);
+        internal static extern IntPtr /* HANDLE */ CreateActCtxW(ref ACTCTXW actctx);
 
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
         internal struct ACTCTXW
@@ -1504,11 +1506,35 @@ namespace OpenTK.Platform.Native.Windows
         }
 
         [DllImport("kernel32.dll", SetLastError = true)]
-        internal extern static bool ActivateActCtx(IntPtr /* HANDLE */ hActCtx, out uint lpCookie);
+        internal static extern bool ActivateActCtx(IntPtr /* HANDLE */ hActCtx, out uint lpCookie);
 
         [DllImport("kernel32.dll", SetLastError = true)]
-        internal extern static bool DeactivateActCtx(uint dwFlags, uint lpCookie);
+        internal static extern bool DeactivateActCtx(uint dwFlags, uint lpCookie);
 
+        internal struct DWM_BLURBEHIND
+        {
+            public DWMBB dwFlags;
+            public int fEnable;
+            public IntPtr /* HRGN */ hRgnBlur;
+            public int fTransitionOnMaximized;
+        }
+
+        [DllImport("dwmapi.dll")]
+        internal static extern int /* HRESULT */ DwmEnableBlurBehindWindow(IntPtr /* HWND */ hWnd, in DWM_BLURBEHIND pBlurBehind);
+
+        [DllImport("dwmapi.dll")]
+        internal static extern int /* HRESULT */ DwmGetColorizationColor(out uint pcrColorization, [MarshalAs(UnmanagedType.Bool)] out bool pfOpaqueBlend);
+
+        [DllImport("gdi32.dll")]
+        internal static extern IntPtr /* HRGN */ CreateRectRgn(int x1, int y1, int x2, int y2);
+
+        [DllImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static extern bool SetLayeredWindowAttributes(IntPtr /* HWND */ hwnd, uint /* COLORREF */ crKey, byte bAlpha, LWA dwFlags);
+
+        [DllImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static extern bool GetLayeredWindowAttributes(IntPtr /* HWND */ hwnd, out uint /* COLORREF* */ pcrKey, out byte /* BYTE* */ pbAlpha, out LWA /* DWORD* */ pdwFlags);
     }
 
 #pragma warning restore CS0649 // Field 'field' is never assigned to, and will always have its default value 'value'

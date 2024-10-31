@@ -153,6 +153,11 @@ namespace Bejeweled
             (Toolkit.Shell as OpenTK.Platform.Native.Windows.ShellComponent)?.SetImmersiveDarkMode(Window, true);
             Toolkit.Window.SetBorderStyle(Window, WindowBorderStyle.FixedBorder);
 
+            if (Toolkit.Window is OpenTK.Platform.Native.Windows.WindowComponent win32)
+            {
+                win32.SetTransparencyMode(Window, WindowTransparencyMode.TransparentFramebuffer);
+            }
+
             if (OperatingSystem.IsWindows())
             {
                 // We don't set the icon as we use "icons.res" to automatically set the icon for us.
@@ -182,7 +187,9 @@ namespace Bejeweled
 
             Toolkit.Window.SetMode(Window, WindowMode.Normal);
 
-            //ApplicationWindow bejeweled = new ApplicationWindow(handle);
+            // FIXME: Use the transparent framebuffer feature to display a splash screen.
+            // Put the Bejeweled OpenGL context on another thread and call Initialize there?
+
             Context = Toolkit.OpenGL.CreateFromWindow(Window);
             Toolkit.OpenGL.SetCurrentContext(Context);
             Toolkit.OpenGL.SetSwapInterval(1);

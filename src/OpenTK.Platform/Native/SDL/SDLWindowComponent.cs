@@ -1027,6 +1027,18 @@ namespace OpenTK.Platform.Native.SDL
         }
 
         /// <inheritdoc/>
+        public void SetTransparencyMode(WindowHandle handle, WindowTransparencyMode transparencyMode, float opacity = 0.1f)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        public WindowTransparencyMode GetTransparencyMode(WindowHandle handle, out float opacity)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
         public void SetAlwaysOnTop(WindowHandle handle, bool floating)
         {
             SDLWindow window = handle.As<SDLWindow>(this);

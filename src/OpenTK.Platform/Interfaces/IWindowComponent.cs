@@ -374,6 +374,23 @@ namespace OpenTK.Platform
         void SetBorderStyle(WindowHandle handle, WindowBorderStyle style);
 
         /// <summary>
+        /// Sets the transparency mode of the specified window.
+        /// </summary>
+        /// <param name="handle">The window to set the transparency mode of.</param>
+        /// <param name="transparencyMode">The transparency mode to apply to the window.</param>
+        /// <param name="opacity">The whole window opacity. Ignored if <paramref name="transparencyMode"/> is not <see cref="WindowTransparencyMode.TransparentWindow"/>.</param>
+        /// <seealso cref="WindowTransparencyMode"/>
+        public void SetTransparencyMode(WindowHandle handle, WindowTransparencyMode transparencyMode, float opacity = 0.1f);
+
+        /// <summary>
+        /// Gets the transparency mode of the specified window.
+        /// </summary>
+        /// <param name="handle">The window to query the transparency mode of.</param>
+        /// <param name="opacity">The window opacity if the transparency mode was <see cref="WindowTransparencyMode.TransparentWindow"/>, 0 otherwise.</param>
+        /// <returns>The transparency mode of the specified window.</returns>
+        public WindowTransparencyMode GetTransparencyMode(WindowHandle handle, out float opacity);
+
+        /// <summary>
         /// Set if the window is an always on top window or not.
         /// </summary>
         /// <param name="handle">A handle to the window to make always on top.</param>
