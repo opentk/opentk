@@ -11,12 +11,14 @@ using OpenTK.Mathematics;
 using System.Text;
 using Hardware.Info;
 using OpenTK.Platform.Native.macOS;
+using BejeweledStandalone;
+using System.Threading.Tasks;
 
 namespace Bejeweled
 {
     internal class Program
     {
-        private static ILogger Logger;
+        internal static ILogger Logger;
 
 #if !LIBRARY
 
@@ -144,12 +146,12 @@ namespace Bejeweled
             }
 
             DisplayHandle mainDisplay = Toolkit.Display.OpenPrimary();
-            Toolkit.Display.GetWorkArea(mainDisplay, out Box2i area);
-            int minWorkDimention = Math.Max(400, (int)(Math.Min(area.Height, area.Width) * 0.9f));
+            Toolkit.Display.GetWorkArea(mainDisplay, out Box2i workArea);
+            int minWorkDimention = Math.Max(400, (int)(Math.Min(workArea.Height, workArea.Width) * 0.9f));
 
             Window = Toolkit.Window.Create(openglSettings);
             Toolkit.Window.SetTitle(Window, $"Bejeweled");
-            Toolkit.Window.SetSize(Window, (minWorkDimention, minWorkDimention));
+            Toolkit.Window.SetClientBounds(Window, (workArea.Width - minWorkDimention) / 2, (workArea.Height - minWorkDimention) / 2, minWorkDimention, minWorkDimention);
             (Toolkit.Shell as OpenTK.Platform.Native.Windows.ShellComponent)?.SetImmersiveDarkMode(Window, true);
             Toolkit.Window.SetBorderStyle(Window, WindowBorderStyle.FixedBorder);
 
@@ -185,17 +187,30 @@ namespace Bejeweled
             }
             Toolkit.Window.SetCursor(Window, cursor);
 
-            Toolkit.Window.SetMode(Window, WindowMode.Normal);
-
-            // FIXME: Use the transparent framebuffer feature to display a splash screen.
-            // Put the Bejeweled OpenGL context on another thread and call Initialize there?
-
             Context = Toolkit.OpenGL.CreateFromWindow(Window);
-            Toolkit.OpenGL.SetCurrentContext(Context);
-            Toolkit.OpenGL.SetSwapInterval(1);
+            // FIXME: Document if CreateFromWindow should make the context current or not!
+            Toolkit.OpenGL.SetCurrentContext(null);
             GLLoader.LoadBindings(Toolkit.OpenGL.GetBindingsContext(Context));
-            Bejeweled = new Bejeweled();
-            Bejeweled.Initialize(Window, Context, false, Logger);
+            Task loadTask = Task.Run(() => {
+                Toolkit.OpenGL.SetCurrentContext(Context);
+                Toolkit.OpenGL.SetSwapInterval(1);
+                Bejeweled = new Bejeweled();
+                Bejeweled.Initialize(Window, Context, false, Logger);
+                Toolkit.OpenGL.SetCurrentContext(null);
+            });
+
+            SplashWindow.DisplaySplashWindow(0.4f, 0.5f, 0.6f);
+
+            while(loadTask.IsCompleted == false)
+            {
+                Toolkit.Window.ProcessEvents(false);
+            }
+            loadTask.Wait();
+            Toolkit.OpenGL.SetCurrentContext(Context);
+
+            Bejeweled.TransitionToGame();
+
+            Toolkit.Window.SetMode(Window, WindowMode.Normal);
 
             Stopwatch watch = Stopwatch.StartNew();
             while (true)

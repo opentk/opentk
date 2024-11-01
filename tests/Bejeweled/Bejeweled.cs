@@ -1148,8 +1148,6 @@ namespace Bejeweled
 
             watch.Stop();
             Logger.LogInfo($"Loading assets took: {watch.Elapsed.TotalMilliseconds}ms");
-
-            TransitionToGame();
         }
 
         public void TransitionToGame()
