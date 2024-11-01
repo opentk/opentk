@@ -139,6 +139,8 @@ namespace BejeweledStandalone
             Toolkit.Window.SetAlwaysOnTop(splashWindow, true);
             Toolkit.Window.SetTransparencyMode(splashWindow, WindowTransparencyMode.TransparentFramebuffer);
 
+            Toolkit.Window.SetHitTestCallback(splashWindow, SplashWindowHitTest);
+
             OpenGLContextHandle splashContext = Toolkit.OpenGL.CreateFromWindow(splashWindow);
             Toolkit.OpenGL.SetCurrentContext(splashContext);
             Toolkit.OpenGL.SetSwapInterval(1);
@@ -199,6 +201,11 @@ namespace BejeweledStandalone
 
             Toolkit.OpenGL.DestroyContext(splashContext);
             Toolkit.Window.Destroy(splashWindow);
+        }
+
+        public static HitType SplashWindowHitTest(WindowHandle window, Vector2 pos)
+        {
+            return HitType.Draggable;
         }
     }
 }

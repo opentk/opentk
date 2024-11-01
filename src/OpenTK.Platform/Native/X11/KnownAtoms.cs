@@ -138,6 +138,11 @@ namespace OpenTK.Platform.Native.X11
 
         EDID,
 
+        // This Atom is apparently non-standard so there is no documentation to reference.
+        // But it seems that if _NET_SUPPORTED lists this atom we could probably use it.
+        // - Noggin_bops 2024-11-01
+        _NET_WM_WINDOW_OPACITY,
+
         /// <summary>
         /// This is not a valid known atom name, however it is used for internal verification.
         /// </summary>

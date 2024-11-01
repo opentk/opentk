@@ -2117,6 +2117,8 @@ namespace OpenTK.Platform.Native.X11
             XWindowHandle xwindow = handle.As<XWindowHandle>(this);
 
             XMoveResizeWindow(X11.Display, xwindow.Window, x, y, (uint)width, (uint)height);
+
+            XSync(X11.Display, False);
         }
 
         /// <inheritdoc/>
@@ -3010,15 +3012,92 @@ namespace OpenTK.Platform.Native.X11
         }
 
         /// <inheritdoc/>
-        public void SetTransparencyMode(WindowHandle handle, WindowTransparencyMode transparencyMode, float opacity = 0.1f)
+        public unsafe void SetTransparencyMode(WindowHandle handle, WindowTransparencyMode transparencyMode, float opacity = 0.1f)
         {
-            throw new NotImplementedException();
+            XWindowHandle xwindow = handle.As<XWindowHandle>(this);
+
+            if (transparencyMode != WindowTransparencyMode.TransparentWindow)
+            {
+                XDeleteProperty(X11.Display, xwindow.Window, X11.Atoms[KnownAtoms._NET_WM_WINDOW_OPACITY]);
+            }
+
+            switch (transparencyMode)
+            {
+                case WindowTransparencyMode.Opaque:
+                {
+                    break;
+                }
+                case WindowTransparencyMode.TransparentFramebuffer:
+                {
+                    // There doesn't seem like there is an easy way for us to change visual type after we've
+                    // created the window. So to support this we need to make sure we create the window with
+                    // a visual that supports transparency.
+                    // This has to be part of the FBConfig selection process, it's unclear if we should expose this to the user.
+                    // - Noggin_bops
+                    break;
+                }
+                case WindowTransparencyMode.TransparentWindow:
+                {
+                    opacity = float.Clamp(opacity, 0, 1);
+                    // We cast to double here as double can exactly represent
+                    // all integers in the uint range.
+                    // (uint)(0xffffffffu * 1.0f) becomes zero.
+                    // - Noggin_bops 2024-11-01
+                    uint transparency = (uint)(0xffffffffu * (double)opacity);
+                    XChangeProperty(
+                        X11.Display, 
+                        xwindow.Window, 
+                        X11.Atoms[KnownAtoms._NET_WM_WINDOW_OPACITY], 
+                        X11.Atoms[KnownAtoms.CARDINAL],
+                        32,
+                        XPropertyMode.Replace,
+                        (IntPtr)(&transparency),
+                        1);
+                    break;
+                }
+            }
         }
 
         /// <inheritdoc/>
-        public WindowTransparencyMode GetTransparencyMode(WindowHandle handle, out float opacity)
+        public unsafe WindowTransparencyMode GetTransparencyMode(WindowHandle handle, out float opacity)
         {
-            throw new NotImplementedException();
+            XWindowHandle xwindow = handle.As<XWindowHandle>(this);
+
+            bool hasOpacity = false;
+            int result = XGetWindowProperty(
+                X11.Display,
+                xwindow.Window,
+                X11.Atoms[KnownAtoms._NET_WM_WINDOW_OPACITY],
+                0, long.MaxValue, false,
+                X11.Atoms[KnownAtoms.CARDINAL],
+                out XAtom actualType,
+                out int actualFormat,
+                out long numberOfItems,
+                out long remainingBytes,
+                out IntPtr contents);
+            if (result != Success || numberOfItems == 0)
+            {
+                if (result != Success)
+                {
+                    Logger?.LogDebug("Couldn't get _NET_WM_WINDOW_OPACITY. Assuming no transparency.");
+                }
+            }
+            else
+            {
+                opacity = (float)(*(uint*)contents / (double)0xffffffffu);
+                XFree(contents);
+                return WindowTransparencyMode.TransparentWindow;
+            }
+
+            if (contents != IntPtr.Zero)
+            {
+                XFree(contents);
+            }
+
+            opacity = 0;
+
+            // FIXME: Transpareny framebuffer mode!
+            return WindowTransparencyMode.Opaque;
         }
 
         /// <inheritdoc/>

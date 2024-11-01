@@ -59,6 +59,8 @@ namespace OpenTK.Backends.Tests
         string iconTitleString = "";
         int modeIndex = 0;
         int borderStyleIndex = 0;
+        int transparencyModeIndex = 0;
+        float windowOpacity = 1.0f;
         int captureModeIndex = 0;
         Vector2i windowPosition;
         Vector2i clientPosition;
@@ -68,6 +70,9 @@ namespace OpenTK.Backends.Tests
 
         readonly static WindowBorderStyle[] WindowBorderStyles = Enum.GetValues<WindowBorderStyle>();
         readonly static string[] WindowBorderStyleNames = Enum.GetNames<WindowBorderStyle>();
+
+        readonly static WindowTransparencyMode[] TransparencyModes = Enum.GetValues<WindowTransparencyMode>();
+        readonly static string[] TransparencyModeNames = Enum.GetNames<WindowTransparencyMode>();
 
         readonly static CursorCaptureMode[] CaptureModes = Enum.GetValues<CursorCaptureMode>();
         readonly static string[] CaptureModeNames = Enum.GetNames<CursorCaptureMode>();
@@ -244,6 +249,19 @@ namespace OpenTK.Backends.Tests
                     var style = Toolkit.Window.GetBorderStyle(window);
                     Program.Logger.LogInfo($"Border style: {style}");
                 }
+
+                ImGui.AlignTextToFramePadding();
+                ImGui.TextUnformatted("Transparency mode"); ImGui.SameLine();
+                ImGui.Combo("##transparency_mode", ref transparencyModeIndex, TransparencyModeNames, TransparencyModeNames.Length); ImGui.SameLine();
+                if (ImGui.Button("Apply##transparency_mode"))
+                {
+                    Toolkit.Window.SetTransparencyMode(window, TransparencyModes[transparencyModeIndex], windowOpacity);
+                    Program.Logger.LogInfo($"WindowComponent.SetTransparencyMode({TransparencyModeNames[transparencyModeIndex]})");
+
+                    var mode = Toolkit.Window.GetTransparencyMode(window, out float opacity);
+                    Program.Logger.LogInfo($"Transparency mode: {mode}");
+                }
+                ImGui.DragFloat("Opacity", ref windowOpacity, 0.01f, 0.0f, 1.0f);
 
                 ImGui.AlignTextToFramePadding();
                 ImGui.TextUnformatted("Always on top:"); ImGui.SameLine();

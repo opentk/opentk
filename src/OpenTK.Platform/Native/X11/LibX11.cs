@@ -329,6 +329,9 @@ namespace OpenTK.Platform.Native.X11
         );
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void XDeleteProperty(XDisplayPtr display, XWindow w, XAtom property);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         internal static extern void XGetInputFocus(XDisplayPtr display, out XWindow focus_return, out RevertTo revert_to_return);
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
