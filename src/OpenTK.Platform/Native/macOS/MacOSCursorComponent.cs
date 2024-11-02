@@ -427,12 +427,33 @@ namespace OpenTK.Platform.Native.macOS
 
         public struct Frame
         {
+            /// <summary>
+            /// X resolution of <see cref="Image"/>.
+            /// </summary>
             public int ResX;
+            /// <summary>
+            /// Y resolution of <see cref="Image"/>.
+            /// </summary>
             public int ResY;
+            /// <summary>
+            /// Width of the cursor in window coordinates.
+            /// </summary>
             public float Width;
+            /// <summary>
+            /// Height of the cursor in window coordinates.
+            /// </summary>
             public float Height;
+            /// <summary>
+            /// The x axis pixel of the image to be the hotspot.
+            /// </summary>
             public int HotspotX;
+            /// <summary>
+            /// The y axis pixel of the image to be the hotspot.
+            /// </summary>
             public int HotspotY;
+            /// <summary>
+            /// The frame image data in RGBA format.
+            /// </summary>
             public byte[] Image;
 
             public Frame(int width, int height, byte[] image, int hotspotX, int hotspotY)

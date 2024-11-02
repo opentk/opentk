@@ -179,6 +179,31 @@ namespace Bejeweled
             {
                 cursor = win32Cursor.CreateFromCurResorce("gold_orb_pointer");
             }
+            else if (Toolkit.Cursor is OpenTK.Platform.Native.macOS.MacOSCursorComponent macOSCursor)
+            {
+                MacOSCursorComponent.Frame[] frames = new MacOSCursorComponent.Frame[15];
+                for (int i = 0; i < 5; i++)
+                {
+                    // FIXME: Should we support per frame delays?
+                    using Stream fileStream = File.Open($"./Assets/Cursor/Frames/Gold Orb_pointer frame_{i}.png", FileMode.Open);
+                    StbImageSharp.ImageResult result = StbImageSharp.ImageResult.FromStream(fileStream, StbImageSharp.ColorComponents.RedGreenBlueAlpha);
+
+                    frames[i].Image = result.Data;
+                    frames[i].ResX = result.Width;
+                    frames[i].ResY = result.Height;
+                    frames[i].Width = result.Width;
+                    frames[i].Height = result.Height;
+                    frames[i].HotspotX = 0;
+                    frames[i].HotspotY = 0;
+                }
+                // FIXME: This is a small hack to make the animation better while
+                // we don't have per frame delays.
+                for (int i = 5; i < frames.Length; i++)
+                {
+                    frames[i] = frames[0];
+                }
+                cursor = macOSCursor.Create(frames, 0.1f);
+            }
             else
             {
                 // FIXME: On mac we can animate this cursor by loading all of the GIF frames and putting them in an animated cursor...
@@ -223,6 +248,17 @@ namespace Bejeweled
                 if (Toolkit.Window.IsWindowDestroyed(Window))
                 {
                     break;
+                }
+
+                if (Toolkit.Cursor is MacOSCursorComponent macOS)
+                {
+                    // FIXME: It's a little bit weird that we have to
+                    // set the cursor again after updating its animation?
+                    // - Noggin_bops 2024-11-02
+                    if (macOS.UpdateAnimation(cursor, dt))
+                    {
+                        Toolkit.Window.SetCursor(Window, cursor);
+                    }
                 }
 
                 Bejeweled.Update(dt);
