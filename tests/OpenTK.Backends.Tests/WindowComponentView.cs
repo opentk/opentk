@@ -284,20 +284,20 @@ namespace OpenTK.Backends.Tests
                 ImGui.DragInt2("Position", ref windowPosition.X); ImGui.SameLine();
                 if (ImGui.Button("Set##Position"))
                 {
-                    Toolkit.Window.SetPosition(Program.Window, windowPosition);
+                    Toolkit.Window.SetPosition(window, windowPosition);
                     Program.Logger.LogInfo($"WindowComponent.SetPosition({windowPosition})");
 
-                    Toolkit.Window.GetPosition(Program.Window, out Vector2i position);
+                    Toolkit.Window.GetPosition(window, out Vector2i position);
                     Program.Logger.LogInfo($"Window position: ({position.X}, {position.Y})");
                 }
 
                 ImGui.DragInt2("Client position", ref clientPosition.X); ImGui.SameLine();
                 if (ImGui.Button("Set##ClientPosition"))
                 {
-                    Toolkit.Window.SetClientPosition(Program.Window, clientPosition);
+                    Toolkit.Window.SetClientPosition(window, clientPosition);
                     Program.Logger.LogInfo($"WindowComponent.SetClientPosition({clientPosition})");
 
-                    Toolkit.Window.GetClientPosition(Program.Window, out Vector2i cPos);
+                    Toolkit.Window.GetClientPosition(window, out Vector2i cPos);
                     Program.Logger.LogInfo($"Client position: ({cPos.X}, {cPos.Y})");
                 }
             }

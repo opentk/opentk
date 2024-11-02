@@ -70,6 +70,13 @@ namespace OpenTK.Platform
         /// </summary>
         public sealed class MacOSOptions
         {
+            /// <summary>
+            /// Makes this app active when calling <see cref="Toolkit.Init(ToolkitOptions)"/>.
+            /// This removes focus from other applications which might be what you want for games
+            /// but for applications with only hidden windows, or tools this is not the expected behaviour.
+            /// Defaults to <see langword="true"/>.
+            /// </summary> 
+            public bool ActiveAppOnStart { get; set; } = true;
         }
     }
 }

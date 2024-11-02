@@ -112,7 +112,7 @@ namespace BejeweledStandalone
             return tex;
         }
 
-        public static void DisplaySplashWindow(float fadeInTime, float holdTime, float fadeOutTime)
+        public static void DisplaySplashWindow(float fadeInTime, Task waitTask, float fadeOutTime)
         {
             OpenGLGraphicsApiHints openglHints = new OpenGLGraphicsApiHints()
             {
@@ -138,6 +138,7 @@ namespace BejeweledStandalone
             Toolkit.Window.SetBorderStyle(splashWindow, WindowBorderStyle.Borderless);
             Toolkit.Window.SetAlwaysOnTop(splashWindow, true);
             Toolkit.Window.SetTransparencyMode(splashWindow, WindowTransparencyMode.TransparentFramebuffer);
+            Toolkit.Window.SetCursor(splashWindow, Toolkit.Cursor.Create(SystemCursorType.Default));
 
             Toolkit.Window.SetHitTestCallback(splashWindow, SplashWindowHitTest);
 
@@ -168,9 +169,10 @@ namespace BejeweledStandalone
 
             Toolkit.Window.SetMode(splashWindow, WindowMode.Normal);
 
-            float totalTime = fadeInTime + holdTime + fadeOutTime;
+            float startFadeOutTime = 0;
+
             Stopwatch watch = Stopwatch.StartNew();
-            while (watch.Elapsed.TotalSeconds < totalTime)
+            while (true)
             {
                 Toolkit.Window.ProcessEvents(false);
 
@@ -184,14 +186,24 @@ namespace BejeweledStandalone
                     float fadeTime = currentTime / fadeInTime;
                     GL.Uniform1f(alphaFactorLocation, fadeTime);
                 }
-                else if (currentTime < fadeInTime + holdTime)
+                else if (waitTask.Status == TaskStatus.Running)
                 {
                     GL.Uniform1f(alphaFactorLocation, 1);
                 }
-                else // if (currentTime < fadeInTime + holdTime + fadeOutTime)
+                else
                 {
-                    float fadeTime = (currentTime - (fadeInTime + holdTime)) / fadeOutTime;
-                    GL.Uniform1f(alphaFactorLocation, 1 - fadeTime);
+                    if (startFadeOutTime == 0)
+                        startFadeOutTime = currentTime;
+
+                    if (currentTime < startFadeOutTime + fadeOutTime)
+                    {
+                        float fadeTime = (currentTime - startFadeOutTime) / fadeOutTime;
+                        GL.Uniform1f(alphaFactorLocation, 1 - fadeTime);
+                    }
+                    else
+                    {
+                        break;
+                    }
                 }
 
                 GL.DrawArrays(PrimitiveType.Triangles, 0, 3);

@@ -199,7 +199,7 @@ namespace Bejeweled
                 Toolkit.OpenGL.SetCurrentContext(null);
             });
 
-            SplashWindow.DisplaySplashWindow(0.4f, 0.5f, 0.6f);
+            SplashWindow.DisplaySplashWindow(0.4f, loadTask, 0.6f);
 
             while(loadTask.IsCompleted == false)
             {
@@ -211,6 +211,7 @@ namespace Bejeweled
             Bejeweled.TransitionToGame();
 
             Toolkit.Window.SetMode(Window, WindowMode.Normal);
+            Toolkit.Window.FocusWindow(Window);
 
             Stopwatch watch = Stopwatch.StartNew();
             while (true)

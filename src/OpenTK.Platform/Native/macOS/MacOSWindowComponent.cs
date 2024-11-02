@@ -162,6 +162,18 @@ namespace OpenTK.Platform.Native.macOS
         internal static readonly SEL selInitWithData_encoding = sel_registerName("initWithData:encoding:"u8);
         internal static readonly SEL selFileSystemRepresentation = sel_registerName("fileSystemRepresentation"u8);
 
+        internal static readonly SEL selSetAlphaValue = sel_registerName("setAlphaValue:"u8);
+        internal static readonly SEL selAlphaValue = sel_registerName("alphaValue"u8);
+        internal static readonly SEL selSetOpaque = sel_registerName("setOpaque:"u8);
+        internal static readonly SEL selIsOpaque = sel_registerName("isOpaque"u8);
+        internal static readonly SEL selSetHasShadow = sel_registerName("setHasShadow:"u8);
+        internal static readonly SEL selHasShadow = sel_registerName("hasShadow"u8);
+        internal static readonly SEL selSetBackgroundColor = sel_registerName("setBackgroundColor:"u8);
+        internal static readonly SEL selBackgroundColor = sel_registerName("backgroundColor"u8);
+        internal static readonly SEL selClearColor = sel_registerName("clearColor"u8);
+        internal static readonly SEL selWindowBackgroundColor = sel_registerName("windowBackgroundColor"u8);
+        internal static readonly SEL selActivateIgnoringOtherApps = sel_registerName("activateIgnoringOtherApps:"u8);
+
 
         internal static readonly IntPtr NSPasteboardTypeFileURL = GetStringConstant(AppKitLibrary, "NSPasteboardTypeFileURL"u8);
 
@@ -181,6 +193,7 @@ namespace OpenTK.Platform.Native.macOS
         internal static readonly ObjCClass NSCursorClass = objc_getClass("NSCursor"u8);
         internal static readonly ObjCClass NSStringClass = objc_getClass("NSString"u8);
         internal static readonly ObjCClass NSURLClass = objc_getClass("NSURL"u8);
+        internal static readonly ObjCClass NSColorClass = objc_getClass("NSColor"u8);
 
         internal static ObjCClass NSOpenTKWindowClass;
         internal static ObjCClass NSOpenTKViewClass;
@@ -328,6 +341,12 @@ namespace OpenTK.Platform.Native.macOS
             class_addMethod(NSOpenTKViewClass, sel_registerName("updateDraggingItemsForDrag:"u8), (IntPtr)NSOtkView_NSDraggingDestination_UpdateDraggingItemsForDragInst, "v@:@"u8);
 
             objc_registerClassPair(NSOpenTKViewClass);
+
+            if (options.MacOS.ActiveAppOnStart)
+            {
+                // FIXME: BOOL
+                objc_msgSend(nsApplication, selActivateIgnoringOtherApps, true);
+            }
         }
 
         /// <inheritdoc/>
@@ -1377,9 +1396,6 @@ namespace OpenTK.Platform.Native.macOS
             objc_msgSend(windowPtr, selSetDelegate, windowPtr);
             // Makes the view able to get text input?
             objc_msgSend(windowPtr, selMakeFirstResponder, viewPtr);
-            objc_msgSend(windowPtr, selMakeKeyWindow);
-            objc_msgSend(windowPtr, selCenter);
-            objc_msgSend(windowPtr, selMakeKeyAndOrderFront, windowPtr);
 
             // FIXME: Store the Ivars somewhere so we can use it later?
             GCHandle gchandle = GCHandle.Alloc(this, GCHandleType.Normal);
@@ -2103,15 +2119,79 @@ namespace OpenTK.Platform.Native.macOS
         }
 
         /// <inheritdoc/>
-        public void SetTransparencyMode(WindowHandle handle, WindowTransparencyMode transparencyMode, float opacity = 0.1f)
+        public unsafe void SetTransparencyMode(WindowHandle handle, WindowTransparencyMode transparencyMode, float opacity = 0.1f)
         {
-            throw new NotImplementedException();
+            NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
+
+            if (transparencyMode != WindowTransparencyMode.TransparentWindow)
+            {
+                objc_msgSend(nswindow.Window, selSetAlphaValue, (NFloat)1.0);
+            }
+
+            if (transparencyMode != WindowTransparencyMode.TransparentFramebuffer)
+            {
+                objc_msgSend(nswindow.Window, selSetOpaque, true);
+                objc_msgSend(nswindow.Window, selSetHasShadow, true);
+                IntPtr backgroundColor = objc_msgSend_IntPtr((IntPtr)NSColorClass, selWindowBackgroundColor);
+                objc_msgSend(nswindow.Window, selSetBackgroundColor, backgroundColor);
+                objc_msgSend(backgroundColor, Release);
+
+                // If we have a context set its transparency now.
+                // If we don't have a context yet we use TransparentFramebuffer
+                // so set the context transparent when we create it.
+                if (nswindow.Context != null)
+                {
+                    int opaque = 1;
+                    objc_msgSend(nswindow.Context.Context, MacOSOpenGLComponent.selSetValues_ForParameter, (IntPtr)(&opaque), (long)NSOpenGLContextParameter.SurfaceOpacity);
+                }
+            }
+
+            nswindow.TransparencyMode = transparencyMode;
+
+            switch (transparencyMode)
+            {
+                case WindowTransparencyMode.Opaque:
+                {
+                    break;
+                }
+                case WindowTransparencyMode.TransparentFramebuffer:
+                {
+                    // FIXME: BOOL
+                    objc_msgSend(nswindow.Window, selSetOpaque, false);
+                    objc_msgSend(nswindow.Window, selSetHasShadow, false);
+                    IntPtr clearColor = objc_msgSend_IntPtr((IntPtr)NSColorClass, selClearColor);
+                    objc_msgSend(nswindow.Window, selSetBackgroundColor, clearColor);
+                    objc_msgSend(clearColor, Release);
+
+                    // If we have a context set its transparency now.
+                    // If we don't have a context yet we use TransparentFramebuffer
+                    // so set the context transparent when we create it.
+                    if (nswindow.Context != null)
+                    {
+                        int opaque = 0;
+                        objc_msgSend(nswindow.Context.Context, MacOSOpenGLComponent.selSetValues_ForParameter, (IntPtr)(&opaque), (long)NSOpenGLContextParameter.SurfaceOpacity);
+                    }
+                    break;
+                }
+                case WindowTransparencyMode.TransparentWindow:
+                {
+                    objc_msgSend(nswindow.Window, selSetAlphaValue, (NFloat)opacity);
+                    break;
+                }
+            }
         }
 
         /// <inheritdoc/>
         public WindowTransparencyMode GetTransparencyMode(WindowHandle handle, out float opacity)
         {
-            throw new NotImplementedException();
+            NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
+
+            if (nswindow.TransparencyMode == WindowTransparencyMode.TransparentWindow)
+                opacity = (float)objc_msgSend_nfloat(nswindow.Window, selAlphaValue);
+            else
+                opacity = 0;
+            
+            return nswindow.TransparencyMode;
         }
 
         /// <inheritdoc/>
