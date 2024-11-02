@@ -173,7 +173,7 @@ namespace OpenTK.Platform.Native.macOS
         internal static readonly SEL selClearColor = sel_registerName("clearColor"u8);
         internal static readonly SEL selWindowBackgroundColor = sel_registerName("windowBackgroundColor"u8);
         internal static readonly SEL selActivateIgnoringOtherApps = sel_registerName("activateIgnoringOtherApps:"u8);
-
+        internal static readonly SEL selSetRestorable = sel_registerName("setRestorable:"u8);
 
         internal static readonly IntPtr NSPasteboardTypeFileURL = GetStringConstant(AppKitLibrary, "NSPasteboardTypeFileURL"u8);
 
@@ -1396,6 +1396,8 @@ namespace OpenTK.Platform.Native.macOS
             objc_msgSend(windowPtr, selSetDelegate, windowPtr);
             // Makes the view able to get text input?
             objc_msgSend(windowPtr, selMakeFirstResponder, viewPtr);
+            // FIXME: BOOL
+            objc_msgSend(windowPtr, selSetRestorable, false);
 
             // FIXME: Store the Ivars somewhere so we can use it later?
             GCHandle gchandle = GCHandle.Alloc(this, GCHandleType.Normal);
