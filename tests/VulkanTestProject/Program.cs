@@ -268,11 +268,15 @@ namespace VulkanTestProject
             Span<VkExtensionProperties> deviceExtensions = new VkExtensionProperties[deviceExtensionCount];
             result = Vk.EnumerateDeviceExtensionProperties(PhysicalDevice, null, &deviceExtensionCount, (VkExtensionProperties*)Unsafe.AsPointer(ref MemoryMarshal.GetReference(deviceExtensions)));
 
+
+            HashSet<string> deviceExtensionsSet = new HashSet<string>();
             bool foundSwapchain = false;
             for (int i = 0; i < deviceExtensions.Length; i++)
             {
                 ReadOnlySpan<byte> name = deviceExtensions[i].extensionName;
                 name = name.Slice(0, name.IndexOf((byte)0));
+
+                deviceExtensionsSet.Add(Encoding.UTF8.GetString(name));
 
                 if (name.SequenceEqual("VK_KHR_swapchain"u8))
                 {
@@ -313,6 +317,13 @@ namespace VulkanTestProject
 
             VkPhysicalDeviceFeatures deviceFeatures = default;
 
+            List<string> enabledDeviceExtensions = ["VK_KHR_swapchain"];
+            if (OperatingSystem.IsMacOS())
+            {
+                enabledDeviceExtensions.Add("VK_KHR_portability_subset");
+            }
+            byte** enabledExtensionsPtr = MarshalTk.MarshalStringArrayToAnsiStringArrayPtr(CollectionsMarshal.AsSpan(enabledDeviceExtensions), out uint enabledDeviceExtensionsCount);
+
             VkDeviceCreateInfo deviceCreateInfo;
             deviceCreateInfo.sType = VkStructureType.StructureTypeDeviceCreateInfo;
             deviceCreateInfo.pNext = null;
@@ -321,17 +332,13 @@ namespace VulkanTestProject
             deviceCreateInfo.pQueueCreateInfos = queueCreateInfos;
             deviceCreateInfo.enabledLayerCount = validationLayerCount;
             deviceCreateInfo.ppEnabledLayerNames = validationLayersPtr;
-            deviceCreateInfo.enabledExtensionCount = 1;
-            ReadOnlySpan<byte> extensionNames = "VK_KHR_swapchain"u8;
-            fixed (byte* extptr = extensionNames)
-            {
-                deviceCreateInfo.ppEnabledExtensionNames = &extptr;
-                deviceCreateInfo.pEnabledFeatures = &deviceFeatures;
+            deviceCreateInfo.enabledExtensionCount = enabledDeviceExtensionsCount;
+            deviceCreateInfo.ppEnabledExtensionNames = enabledExtensionsPtr;
+            deviceCreateInfo.pEnabledFeatures = &deviceFeatures;
 
-                VkDevice device;
-                result = Vk.CreateDevice(PhysicalDevice, &deviceCreateInfo, null, &device);
-                Device = device;
-            }
+            VkDevice device;
+            result = Vk.CreateDevice(PhysicalDevice, &deviceCreateInfo, null, &device);
+            Device = device;
             if (result != VkResult.Success)
             {
                 throw new Exception($"Was not able to create logical device: {result}");
