@@ -161,7 +161,7 @@ namespace OpenTK.Platform
         /// <seealso cref="IWindowComponent.SupportsFramebufferTransparency(WindowHandle)"/>
         /// <seealso cref="IWindowComponent.SetTransparencyMode(WindowHandle, WindowTransparencyMode, float)"/>
         /// <seealso cref="IWindowComponent.GetTransparencyMode(WindowHandle, out float)"/>
-        public bool SupportTransparentFramebufferX11 { get; set; }
+        public bool SupportTransparentFramebufferX11 { get; set; } = true;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="OpenGLGraphicsApiHints"/> class.

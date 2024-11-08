@@ -155,11 +155,6 @@ namespace Bejeweled
             (Toolkit.Shell as OpenTK.Platform.Native.Windows.ShellComponent)?.SetImmersiveDarkMode(Window, true);
             Toolkit.Window.SetBorderStyle(Window, WindowBorderStyle.FixedBorder);
 
-            if (Toolkit.Window is OpenTK.Platform.Native.Windows.WindowComponent win32)
-            {
-                win32.SetTransparencyMode(Window, WindowTransparencyMode.TransparentFramebuffer);
-            }
-
             if (OperatingSystem.IsWindows())
             {
                 // We don't set the icon as we use "icons.res" to automatically set the icon for us.
