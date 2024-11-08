@@ -326,6 +326,7 @@ namespace OpenTK.Platform.Native.X11
             WindowMode.Normal,
             WindowMode.Minimized,
             WindowMode.Maximized,
+            WindowMode.WindowedFullscreen,
             WindowMode.ExclusiveFullscreen,
         };
 
@@ -1253,7 +1254,8 @@ namespace OpenTK.Platform.Native.X11
                             else
                             {
                                 if (property.atom != X11.Atoms[KnownAtoms.WM_NAME] &&
-                                    property.atom != X11.Atoms[KnownAtoms._NET_WM_NAME])
+                                    property.atom != X11.Atoms[KnownAtoms._NET_WM_NAME] &&
+                                    property.atom != X11.Atoms[KnownAtoms._GTK_EDGE_CONSTRAINTS])
                                 {
                                     Logger?.LogInfo($"PropertyNotify: {XGetAtomName(X11.Display, property.atom)}");
                                 }
@@ -1333,6 +1335,8 @@ namespace OpenTK.Platform.Native.X11
             ContextPixelFormat chosenPixelFormat = ContextPixelFormat.RGBA;
             XColorMap? map = null;
 
+            bool visualSupportsFramebufferTransparency = false;
+
             if (hints.Api == GraphicsApi.OpenGL || hints.Api == GraphicsApi.OpenGLES)
             {
                 // Ignoring ES for now.
@@ -1357,7 +1361,8 @@ namespace OpenTK.Platform.Native.X11
                     default: throw new InvalidEnumArgumentException(nameof(glhints.StencilBits), (int)glhints.StencilBits, glhints.StencilBits.GetType());
                 }
 
-                ContextValues requested = new ContextValues();
+                ContextValues requested;
+                requested.ID = 0;
                 requested.RedBits = glhints.RedColorBits;
                 requested.GreenBits = glhints.GreenColorBits;
                 requested.BlueBits = glhints.BlueColorBits;
@@ -1369,6 +1374,7 @@ namespace OpenTK.Platform.Native.X11
                 requested.PixelFormat = glhints.PixelFormat;
                 requested.SwapMethod = glhints.SwapMethod;
                 requested.Samples = glhints.Multisamples;
+                requested.SupportsFramebufferTransparency = glhints.SupportTransparentFramebufferX11;
 
                 unsafe
                 {
@@ -1429,6 +1435,16 @@ namespace OpenTK.Platform.Native.X11
                         glXGetFBConfigAttrib(X11.Display, configs[i], GLX_DEPTH_SIZE, out int depthSize);
                         glXGetFBConfigAttrib(X11.Display, configs[i], GLX_STENCIL_SIZE, out int stencilSize);
 
+                        bool supportsFramebufferTransparency = false;
+                        if (X11.Extensions.Contains("RENDER"))
+                        {
+                            // FIXME: Do we need to initialize the extension?
+
+                            // FIXME: What if the renderformat is null?
+                            XRenderPictFormat* xrenderFormat = LibXRender.XRenderFindVisualFormat(X11.Display, visual->VisualPtr);
+                            supportsFramebufferTransparency = xrenderFormat->direct.alphaMask != 0;
+                        }
+
                         int srgbCapable = 0;
                         if ((ARB_framebuffer_sRGB || EXT_framebuffer_sRGB))
                         {
@@ -1479,6 +1495,7 @@ namespace OpenTK.Platform.Native.X11
                         option.SRGBFramebuffer = srgbCapable == 1;
                         option.Samples = samples;
                         option.SwapMethod = swapMethod;
+                        option.SupportsFramebufferTransparency = supportsFramebufferTransparency;
 
                         if ((renderType & GLX_RGBA_UNSIGNED_FLOAT_BIT_EXT) != 0)
                         {
@@ -1511,6 +1528,7 @@ namespace OpenTK.Platform.Native.X11
                     }
 
                     chosenPixelFormat = options[selectedIndex].PixelFormat;
+                    visualSupportsFramebufferTransparency = options[selectedIndex].SupportsFramebufferTransparency;
                     chosenConfig = configs[(int)options[selectedIndex].ID];
                     XFree(configsPtr);
                 }
@@ -1539,7 +1557,7 @@ namespace OpenTK.Platform.Native.X11
                         ref *vi->VisualPtr,
                         XWindowAttributeValueMask.BackPixmap | XWindowAttributeValueMask.Colormap | XWindowAttributeValueMask.BorderPixel | XWindowAttributeValueMask.EventMask,
                         ref windowAttributes);
-
+                    
                     XFree((IntPtr)vi);
                 }
             }
@@ -1667,7 +1685,27 @@ namespace OpenTK.Platform.Native.X11
                 dndVersion,
                 1);
 
-            XWindowHandle handle = new XWindowHandle(X11.Display, window, hints, chosenConfig, chosenPixelFormat, map);
+            // If we have a Visual that supports alpha blending we want make the window
+            // opaque by default. This atom lets us tell the compositor that we don't want
+            // to be alpha blended.
+            // - Noggin_bops 2024-11-08
+            // Values that are too big e.g. long.MaxValue and int.MaxValue don't seem to work
+            // to define the opaque region. Windows larger than 1 million pixels in either
+            // dimention is highly unlikely for a *long* time, and this is something that is
+            // easy to fix if such a time comes.
+            // - Noggin_bops 2024-11-08
+            Span<long> region = [0, 0, 1_000_000, 1_000_000];
+            XChangeProperty<long>(
+                X11.Display,
+                window,
+                X11.Atoms[KnownAtoms._NET_WM_OPAQUE_REGION],
+                X11.Atoms[KnownAtoms.CARDINAL],
+                32,
+                XPropertyMode.Replace,
+                region,
+                4);
+
+            XWindowHandle handle = new XWindowHandle(X11.Display, window, hints, chosenConfig, chosenPixelFormat, visualSupportsFramebufferTransparency, map);
 
             XWindowDict.Add(handle.Window, handle);
 
@@ -3012,9 +3050,35 @@ namespace OpenTK.Platform.Native.X11
         }
 
         /// <inheritdoc/>
-        public unsafe void SetTransparencyMode(WindowHandle handle, WindowTransparencyMode transparencyMode, float opacity = 0.1f)
+        public bool SupportsFramebufferTransparency(WindowHandle handle)
         {
             XWindowHandle xwindow = handle.As<XWindowHandle>(this);
+            return xwindow.VisualSupportsFramebufferTransparency;
+        }
+
+        /// <inheritdoc/>
+        public unsafe void SetTransparencyMode(WindowHandle handle, WindowTransparencyMode transparencyMode, float opacity = 0.5f)
+        {
+            XWindowHandle xwindow = handle.As<XWindowHandle>(this);
+
+            if (transparencyMode != WindowTransparencyMode.TransparentFramebuffer)
+            {
+                // Values that are too big e.g. long.MaxValue and int.MaxValue don't seem to work
+                // to define the opaque region. Windows larger than 1 million pixels in either
+                // dimention is highly unlikely for a *long* time, and this is something that is
+                // easy to fix if such a time comes.
+                // - Noggin_bops 2024-11-08
+                Span<long> region = [0, 0, 1_000_000, 1_000_000];
+                XChangeProperty<long>(
+                    X11.Display,
+                    xwindow.Window,
+                    X11.Atoms[KnownAtoms._NET_WM_OPAQUE_REGION],
+                    X11.Atoms[KnownAtoms.CARDINAL],
+                    32,
+                    XPropertyMode.Replace,
+                    region,
+                    4);
+            }
 
             if (transparencyMode != WindowTransparencyMode.TransparentWindow)
             {
@@ -3029,11 +3093,22 @@ namespace OpenTK.Platform.Native.X11
                 }
                 case WindowTransparencyMode.TransparentFramebuffer:
                 {
-                    // There doesn't seem like there is an easy way for us to change visual type after we've
-                    // created the window. So to support this we need to make sure we create the window with
-                    // a visual that supports transparency.
-                    // This has to be part of the FBConfig selection process, it's unclear if we should expose this to the user.
-                    // - Noggin_bops
+                    // FIXME: Log a warning if the visual doesn't have alpha blending support!
+                    if (SupportsFramebufferTransparency(xwindow) == false)
+                    {
+                        Logger?.LogWarning("Trying to enable framebuffer transparency for a window with a Visual that doesn't support transparency.");
+                    }
+
+                    Span<long> region = [0, 0, 0, 0];
+                    XChangeProperty<long>(
+                        X11.Display,
+                        xwindow.Window,
+                        X11.Atoms[KnownAtoms._NET_WM_OPAQUE_REGION],
+                        X11.Atoms[KnownAtoms.CARDINAL],
+                        32,
+                        XPropertyMode.Replace,
+                        region,
+                        4);
                     break;
                 }
                 case WindowTransparencyMode.TransparentWindow:
@@ -3063,7 +3138,6 @@ namespace OpenTK.Platform.Native.X11
         {
             XWindowHandle xwindow = handle.As<XWindowHandle>(this);
 
-            bool hasOpacity = false;
             int result = XGetWindowProperty(
                 X11.Display,
                 xwindow.Window,
@@ -3096,8 +3170,38 @@ namespace OpenTK.Platform.Native.X11
 
             opacity = 0;
 
-            // FIXME: Transpareny framebuffer mode!
-            return WindowTransparencyMode.Opaque;
+            result = XGetWindowProperty(
+                X11.Display,
+                xwindow.Window,
+                X11.Atoms[KnownAtoms._NET_WM_OPAQUE_REGION],
+                0, long.MaxValue, false,
+                X11.Atoms[KnownAtoms.CARDINAL],
+                out actualType,
+                out actualFormat,
+                out numberOfItems,
+                out remainingBytes,
+                out contents);
+            if (result != Success || numberOfItems == 0)
+            {
+                return WindowTransparencyMode.Opaque;
+            }
+            else
+            {
+                Debug.Assert(actualFormat == 32);
+                Debug.Assert(actualType == X11.Atoms[KnownAtoms.CARDINAL]);
+
+                long* region = (long*)contents;
+                long x = region[0];
+                long y = region[1];
+                long w = region[2];
+                long h = region[3];
+
+                bool isOpaque = (x == 0 && y == 0 && w == 1_000_000 && h == 1_000_000);
+
+                XFree(contents);
+
+                return isOpaque ? WindowTransparencyMode.Opaque : WindowTransparencyMode.TransparentFramebuffer;
+            }
         }
 
         /// <inheritdoc/>

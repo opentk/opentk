@@ -374,13 +374,40 @@ namespace OpenTK.Platform
         void SetBorderStyle(WindowHandle handle, WindowBorderStyle style);
 
         /// <summary>
+        /// Returns true if <see cref="WindowTransparencyMode.TransparentFramebuffer"/> is supported for this window.
+        /// <list type="table">
+        /// <item>
+        ///     <term>Win32</term>
+        ///     <description>Always returns <see langword="true"/>.</description>
+        /// </item>
+        /// <item>
+        ///     <term>macOS</term>
+        ///     <description>Always returns <see langword="true"/>.</description>
+        /// </item>
+        /// <item>
+        ///     <term>Linux/X11</term>
+        ///     <description>Returns <see langword="true"/> if the selected <see cref="ContextValues"/> had <see cref="ContextValues.SupportsFramebufferTransparency"/> <see langword="true"/>.</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="handle">The window to query framebuffer transparency support for.</param>
+        /// <returns>If <see cref="SetTransparencyMode(WindowHandle, WindowTransparencyMode, float)"/> with <see cref="WindowTransparencyMode.TransparentFramebuffer"/> would work.</returns>
+        /// <seealso cref="SetTransparencyMode(WindowHandle, WindowTransparencyMode, float)"/>
+        /// <seealso cref="OpenGLGraphicsApiHints.SupportTransparentFramebufferX11"/>
+        /// <seealso cref="ContextValues.SupportsFramebufferTransparency"/>
+        /// <seealso cref="WindowTransparencyMode"/>
+        bool SupportsFramebufferTransparency(WindowHandle handle);
+
+        /// <summary>
         /// Sets the transparency mode of the specified window.
         /// </summary>
         /// <param name="handle">The window to set the transparency mode of.</param>
         /// <param name="transparencyMode">The transparency mode to apply to the window.</param>
         /// <param name="opacity">The whole window opacity. Ignored if <paramref name="transparencyMode"/> is not <see cref="WindowTransparencyMode.TransparentWindow"/>.</param>
         /// <seealso cref="WindowTransparencyMode"/>
-        public void SetTransparencyMode(WindowHandle handle, WindowTransparencyMode transparencyMode, float opacity = 0.1f);
+        /// <seealso cref="SupportsFramebufferTransparency(WindowHandle)"/>
+        /// <seealso cref="GetTransparencyMode(WindowHandle, out float)"/>
+        public void SetTransparencyMode(WindowHandle handle, WindowTransparencyMode transparencyMode, float opacity = 0.5f);
 
         /// <summary>
         /// Gets the transparency mode of the specified window.
@@ -388,6 +415,9 @@ namespace OpenTK.Platform
         /// <param name="handle">The window to query the transparency mode of.</param>
         /// <param name="opacity">The window opacity if the transparency mode was <see cref="WindowTransparencyMode.TransparentWindow"/>, 0 otherwise.</param>
         /// <returns>The transparency mode of the specified window.</returns>
+        /// <seealso cref="WindowTransparencyMode"/>
+        /// <seealso cref="SetTransparencyMode(WindowHandle, WindowTransparencyMode, float)"/>
+        /// <seealso cref="SupportsFramebufferTransparency(WindowHandle)"/>
         public WindowTransparencyMode GetTransparencyMode(WindowHandle handle, out float opacity);
 
         /// <summary>

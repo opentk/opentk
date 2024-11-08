@@ -92,6 +92,7 @@ namespace OpenTK.Platform.Native.macOS
             values.SwapMethod = (hasBackingStore == 1) ? ContextSwapMethod.Copy : ContextSwapMethod.Undefined;
             // FIXME: Maybe querying samples is not enough...
             values.Samples = samples;
+            values.SupportsFramebufferTransparency = true;
         }
 
         internal void EnumerateContextValues(List<ContextValues> options, CGLOpenGLProfile profile)
@@ -302,6 +303,7 @@ namespace OpenTK.Platform.Native.macOS
                 requested.PixelFormat = settings.PixelFormat;
                 requested.SwapMethod = settings.SwapMethod;
                 requested.Samples = settings.Multisamples;
+                requested.SupportsFramebufferTransparency = true;
 
                 List<ContextValues> options = new List<ContextValues>();
                 Stopwatch watch = Stopwatch.StartNew();

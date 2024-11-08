@@ -2121,7 +2121,14 @@ namespace OpenTK.Platform.Native.macOS
         }
 
         /// <inheritdoc/>
-        public unsafe void SetTransparencyMode(WindowHandle handle, WindowTransparencyMode transparencyMode, float opacity = 0.1f)
+        public bool SupportsFramebufferTransparency(WindowHandle handle)
+        {
+            NSWindowHandle hwnd = handle.As<NSWindowHandle>(this);
+            return true;
+        }
+
+        /// <inheritdoc/>
+        public void SetTransparencyMode(WindowHandle handle, WindowTransparencyMode transparencyMode, float opacity = 0.5f)
         {
             NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
 

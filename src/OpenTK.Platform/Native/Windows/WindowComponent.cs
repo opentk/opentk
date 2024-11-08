@@ -1925,7 +1925,14 @@ namespace OpenTK.Platform.Native.Windows
         }
 
         /// <inheritdoc/>
-        public void SetTransparencyMode(WindowHandle handle, WindowTransparencyMode transparencyMode, float opacity = 0.1f)
+        public bool SupportsFramebufferTransparency(WindowHandle handle)
+        {
+            HWND hwnd = handle.As<HWND>(this);
+            return true;
+        }
+
+        /// <inheritdoc/>
+        public void SetTransparencyMode(WindowHandle handle, WindowTransparencyMode transparencyMode, float opacity = 0.5f)
         {
             HWND hwnd = handle.As<HWND>(this);
 

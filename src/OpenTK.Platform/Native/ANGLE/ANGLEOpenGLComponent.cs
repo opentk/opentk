@@ -168,6 +168,7 @@ namespace OpenTK.Platform.Native.ANGLE
                 // - Noggin_bops 2024-07-22
                 values.SwapMethod = ContextSwapMethod.Undefined;
                 values.Samples = configSamples;
+                values.SupportsFramebufferTransparency = false;
 
                 possibleContextValues.Add(values);
             }

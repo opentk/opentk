@@ -1027,7 +1027,13 @@ namespace OpenTK.Platform.Native.SDL
         }
 
         /// <inheritdoc/>
-        public void SetTransparencyMode(WindowHandle handle, WindowTransparencyMode transparencyMode, float opacity = 0.1f)
+        public bool SupportsFramebufferTransparency(WindowHandle handle)
+        {
+            return false;
+        }
+
+        /// <inheritdoc/>
+        public void SetTransparencyMode(WindowHandle handle, WindowTransparencyMode transparencyMode, float opacity = 0.5f)
         {
             throw new NotImplementedException();
         }

@@ -464,7 +464,7 @@ namespace OpenTK.Platform.Native.Windows
                     //Logger?.LogDebug($"Swap method: {(WGLSwapMethod)FindAttribute(contextValueAttrib, contextValues, WGLPixelFormatAttribute.SWAP_METHOD_ARB)}");
 
                     // FIXME: Add stereo to this?
-                    ContextValues option = default;
+                    ContextValues option;
                     option.ID = (ulong)i;
                     option.RedBits = FindAttribute(contextValueAttrib, contextValues, PixelFormatAttribute.RedBitsArb);
                     option.GreenBits = FindAttribute(contextValueAttrib, contextValues, PixelFormatAttribute.GreenBitsArb);
@@ -488,6 +488,7 @@ namespace OpenTK.Platform.Native.Windows
                     option.PixelFormat = pixelFormat;
                     option.SwapMethod = swapMethod;
                     option.Samples = ARB_multisample ? FindAttribute(contextValueAttrib, contextValues, PixelFormatAttribute.SamplesArb) : 0;
+                    option.SupportsFramebufferTransparency = true;
                     possibleContextValues.Add(option);
                 }
 
@@ -583,6 +584,7 @@ namespace OpenTK.Platform.Native.Windows
                 chosenValues.PixelFormat = chosenPixelFormat;
                 chosenValues.SwapMethod = chosenSwapMethod;
                 chosenValues.Samples = ARB_multisample ? FindAttribute(contextValueAttrib, contextValues, PixelFormatAttribute.SamplesArb) : 0;
+                chosenValues.SupportsFramebufferTransparency = true;
 
                 StringBuilder sb = new StringBuilder();
                 for (int j = 0; j < contextValueAttrib.Length; j++)
@@ -681,6 +683,7 @@ namespace OpenTK.Platform.Native.Windows
                     option.PixelFormat = ContextPixelFormat.RGBA;
                     option.SwapMethod = ContextSwapMethod.Undefined;
                     option.Samples = 0;
+                    option.SupportsFramebufferTransparency = true;
                     possibleContextValues.Add(option);
                 }
 

@@ -107,6 +107,7 @@ namespace OpenTK.Platform.Native.X11
         _NET_WM_USER_TIME,
         _NET_WM_USER_TIME_WINDOW,
         _NET_FRAME_EXTENTS,
+        _NET_WM_OPAQUE_REGION,
         _NET_WM_PING,
         _NET_WM_SYNC_REQUEST,
         _NET_WM_FULLSCREEN_MONITORS,
@@ -142,6 +143,11 @@ namespace OpenTK.Platform.Native.X11
         // But it seems that if _NET_SUPPORTED lists this atom we could probably use it.
         // - Noggin_bops 2024-11-01
         _NET_WM_WINDOW_OPACITY,
+
+        // We use this atom so we can ignore debug prints
+        // when we get PropertyNotify events updating this property.
+        // - Noggin_bops 2024-11-03
+        _GTK_EDGE_CONSTRAINTS,
 
         /// <summary>
         /// This is not a valid known atom name, however it is used for internal verification.

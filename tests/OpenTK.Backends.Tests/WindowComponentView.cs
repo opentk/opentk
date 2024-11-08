@@ -252,7 +252,35 @@ namespace OpenTK.Backends.Tests
 
                 ImGui.AlignTextToFramePadding();
                 ImGui.TextUnformatted("Transparency mode"); ImGui.SameLine();
-                ImGui.Combo("##transparency_mode", ref transparencyModeIndex, TransparencyModeNames, TransparencyModeNames.Length); ImGui.SameLine();
+                if (ImGui.BeginCombo("##transparency_mode",  TransparencyModeNames[transparencyModeIndex]))
+                {
+                    for (int i = 0; i < TransparencyModeNames.Length; i++)
+                    {
+                        bool isSelected = i == transparencyModeIndex;
+
+                        bool disable = false;
+                        if (TransparencyModes[i] == WindowTransparencyMode.TransparentFramebuffer &&
+                            Toolkit.Window.SupportsFramebufferTransparency(window) == false)
+                        {
+                            disable = true;
+                        }
+
+                        ImGui.BeginDisabled(disable);
+
+                        if (ImGui.Selectable(TransparencyModeNames[i], isSelected))
+                        {
+                            transparencyModeIndex = i;
+                        }
+
+                        ImGui.EndDisabled();
+
+                        if (isSelected)
+                            ImGui.SetItemDefaultFocus();
+                    }
+                    ImGui.EndCombo();
+                }
+                ImGui.SameLine();
+                //ImGui.Combo("##transparency_mode", ref transparencyModeIndex, TransparencyModeNames, TransparencyModeNames.Length); ImGui.SameLine();
                 if (ImGui.Button("Apply##transparency_mode"))
                 {
                     Toolkit.Window.SetTransparencyMode(window, TransparencyModes[transparencyModeIndex], windowOpacity);
