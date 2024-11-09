@@ -44,6 +44,7 @@ namespace OpenTK
             this.bounds = new Rectangle(x, y, width, height);
             this.BitsPerPixel = bitsPerPixel;
             this.RefreshRate = refreshRate;
+            this.ScaleFactor = new Vector2(1, 1);
         }
 
         // Creates a new DisplayResolution object for the primary DisplayDevice.
