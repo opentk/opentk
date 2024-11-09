@@ -2146,8 +2146,9 @@ namespace OpenTK.Platform.Native.macOS
                 objc_msgSend(backgroundColor, Release);
 
                 // If we have a context set its transparency now.
-                // If we don't have a context yet we use TransparentFramebuffer
-                // so set the context transparent when we create it.
+                // If we don't have a context yet we store the transparency mode
+                // so we set the context to be transparent when we create it.
+                // - Noggin_bops 2024-11-09
                 if (nswindow.Context != null)
                 {
                     int opaque = 1;

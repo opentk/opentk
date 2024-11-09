@@ -46,19 +46,24 @@ namespace OpenTK.Platform
         PalComponents Provides { get; }
 
         /// <summary>
-        /// Provides a logger for this component.
+        /// The logger that this component uses to log diagnostic messages.
         /// </summary>
+        /// <seealso cref="ILogger"/>
+        /// <seealso cref="ToolkitOptions.Logger"/>
         ILogger? Logger { get; set; }
 
         /// <summary>
         /// Initialize the component.
         /// </summary>
         /// <param name="options">The options to initialize the component with.</param>
+        /// <seealso cref="ToolkitOptions"/>
+        /// <seealso cref="Toolkit.Init(ToolkitOptions)"/>
         void Initialize(ToolkitOptions options);
 
         /// <summary>
         /// Uninitialize the component. Frees any native resources used by the component.
         /// </summary>
+        /// <seealso cref="Toolkit.Uninit"/>
         void Uninitialize();
     }
 }

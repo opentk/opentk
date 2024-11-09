@@ -119,10 +119,15 @@ namespace OpenTK.Platform.Native.Windows
         {
             HCursor hcursor = new HCursor();
 
-            if (width < 0) throw new ArgumentOutOfRangeException($"Width cannot be negative. Value: {width}");
-            if (height < 0) throw new ArgumentOutOfRangeException($"Height cannot be negative. Value: {height}");
+            if (width < 0) throw new ArgumentOutOfRangeException(nameof(width), width, "Width cannot be negative");
+            if (height < 0) throw new ArgumentOutOfRangeException(nameof(height), height, "Height cannot be negative");
 
             if (image.Length < width * height * 4) throw new ArgumentException($"The given span is too small. It must be at least {width * height * 4} long. Was: {image.Length}");
+
+            if (hotspotX < 0) throw new ArgumentOutOfRangeException(nameof(hotspotX), hotspotX, "Hotspot X cannot be negative");
+            if (hotspotY < 0) throw new ArgumentOutOfRangeException(nameof(hotspotY), hotspotY, "Hotspot Y cannot be negative");
+            if (hotspotX > width) throw new ArgumentOutOfRangeException(nameof(hotspotX), hotspotX, $"Hotspot X cannot be larger than the width of the image {width}");
+            if (hotspotY > height) throw new ArgumentOutOfRangeException(nameof(hotspotY), hotspotY, $"Hotspot Y cannot be larger than the height of the image {height}");
 
             // See https://web.archive.org/web/20080205042408/http://support.microsoft.com/kb/318876
             Win32.BITMAPV5HEADER header = default;
@@ -198,11 +203,16 @@ namespace OpenTK.Platform.Native.Windows
         {
             HCursor hcursor = new HCursor();
 
-            if (width < 0) throw new ArgumentOutOfRangeException(nameof(width), $"Width cannot be negative. Value: {width}");
-            if (height < 0) throw new ArgumentOutOfRangeException(nameof(height), $"Height cannot be negative. Value: {height}");
+            if (width < 0) throw new ArgumentOutOfRangeException(nameof(width), width, "Width cannot be negative");
+            if (height < 0) throw new ArgumentOutOfRangeException(nameof(height), height, "Height cannot be negative");
 
             if (colorData.Length < width * height * 3) throw new ArgumentException($"The given color data span is too small. It must be at least {width * height * 3} long. Was: {colorData.Length}");
             if (maskData.Length < width * height * 1) throw new ArgumentException($"The given mask data span is too small. It must be at least {width * height * 1} long. Was: {maskData.Length}");
+
+            if (hotspotX < 0) throw new ArgumentOutOfRangeException(nameof(hotspotX), hotspotX, "Hotspot X cannot be negative");
+            if (hotspotY < 0) throw new ArgumentOutOfRangeException(nameof(hotspotY), hotspotY, "Hotspot Y cannot be negative");
+            if (hotspotX > width) throw new ArgumentOutOfRangeException(nameof(hotspotX), hotspotX, $"Hotspot X cannot be larger than the width of the image {width}");
+            if (hotspotY > height) throw new ArgumentOutOfRangeException(nameof(hotspotY), hotspotY, $"Hotspot Y cannot be larger than the height of the image {height}");
 
             // See https://www.codeguru.com/windows/creating-a-color-cursor-from-a-bitmap
             IntPtr hDC = Win32.GetDC(IntPtr.Zero);

@@ -159,6 +159,16 @@ namespace OpenTK.Platform.Native.X11
         {
             XCursorHandle xcursor = new XCursorHandle();
 
+            if (width < 0) throw new ArgumentOutOfRangeException(nameof(width), width, "Width cannot be negative");
+            if (height < 0) throw new ArgumentOutOfRangeException(nameof(height), height, "Height cannot be negative");
+
+            if (image.Length < width * height * 4) throw new ArgumentException($"The given span is too small. It must be at least {width * height * 4} long. Was: {image.Length}");
+
+            if (hotspotX < 0) throw new ArgumentOutOfRangeException(nameof(hotspotX), hotspotX, "Hotspot X cannot be negative");
+            if (hotspotY < 0) throw new ArgumentOutOfRangeException(nameof(hotspotY), hotspotY, "Hotspot Y cannot be negative");
+            if (hotspotX > width) throw new ArgumentOutOfRangeException(nameof(hotspotX), hotspotX, $"Hotspot X cannot be larger than the width of the image {width}");
+            if (hotspotY > height) throw new ArgumentOutOfRangeException(nameof(hotspotY), hotspotY, $"Hotspot Y cannot be larger than the height of the image {height}");
+
             XcursorImage* ximage = XcursorImageCreate(width, height);
 
             ximage->xhot = (uint)hotspotX;
@@ -190,6 +200,17 @@ namespace OpenTK.Platform.Native.X11
         public unsafe CursorHandle Create(int width, int height, ReadOnlySpan<byte> colorData, ReadOnlySpan<byte> maskData, int hotspotX, int hotspotY)
         {
             XCursorHandle xcursor = new XCursorHandle();
+
+            if (width < 0) throw new ArgumentOutOfRangeException(nameof(width), width, "Width cannot be negative");
+            if (height < 0) throw new ArgumentOutOfRangeException(nameof(height), height, "Height cannot be negative");
+
+            if (colorData.Length < width * height * 3) throw new ArgumentException($"The given color data span is too small. It must be at least {width * height * 3} long. Was: {colorData.Length}");
+            if (maskData.Length < width * height * 1) throw new ArgumentException($"The given mask data span is too small. It must be at least {width * height * 1} long. Was: {maskData.Length}");
+
+            if (hotspotX < 0) throw new ArgumentOutOfRangeException(nameof(hotspotX), hotspotX, "Hotspot X cannot be negative");
+            if (hotspotY < 0) throw new ArgumentOutOfRangeException(nameof(hotspotY), hotspotY, "Hotspot Y cannot be negative");
+            if (hotspotX > width) throw new ArgumentOutOfRangeException(nameof(hotspotX), hotspotX, $"Hotspot X cannot be larger than the width of the image {width}");
+            if (hotspotY > height) throw new ArgumentOutOfRangeException(nameof(hotspotY), hotspotY, $"Hotspot Y cannot be larger than the height of the image {height}");
 
             byte[] mask = new byte[maskData.Length / 8];
             for (int i = 0; i < maskData.Length; i++)

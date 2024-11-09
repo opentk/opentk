@@ -10,12 +10,13 @@ namespace OpenTK.Platform
     /// <summary>
     /// Interface for interacting with operating system features.
     /// </summary>
+    /// <seealso cref="Toolkit.Shell"/>
     public interface IShellComponent : IPalComponent
     {
         /// <summary>
         /// Sets whether or not a screensaver is allowed to draw on top of the window.
-        /// For games with long cutscenes it would be appropriate to set this to <c>false</c>,
-        /// while tools that act like normal applications should set this to <c>true</c>.
+        /// For games with long cutscenes it would be appropriate to set this to <see langword="false"/>,
+        /// while tools that act like normal applications should set this to <see langword="true"/>.
         /// By default this setting is untouched.
         /// </summary>
         /// <param name="allow">Whether to allow screensavers to appear while the application is running.</param>
@@ -26,12 +27,14 @@ namespace OpenTK.Platform
         /// If <see langword="null"/> is sent the following default message will be sent:
         /// <code>$"{ApplicationName} is is preventing screen saver."</code>
         /// </param>
+        /// <seealso cref="IsScreenSaverAllowed"/>
         void AllowScreenSaver(bool allow, string? disableReason);
 
         /// <summary>
         /// Gets if the screen saver is allowed to run or not.
         /// </summary>
         /// <returns>If the screen saver is allowed to run.</returns>
+        /// <seealso cref="AllowScreenSaver(bool, string?)"/>
         bool IsScreenSaverAllowed();
 
         /// <summary>
@@ -46,6 +49,7 @@ namespace OpenTK.Platform
         /// Gets the user preference for application theme.
         /// </summary>
         /// <returns>The user set preferred theme.</returns>
+        /// <seealso cref="ThemeChangeEventArgs"/>
         // FIXME: Should we report a theme name?
         // or another function for that?
         ThemeInfo GetPreferredTheme();

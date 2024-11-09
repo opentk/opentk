@@ -15,6 +15,7 @@ namespace OpenTK.Platform
     /// Provides static access to all OpenTK platform abstraction interfaces.
     /// This is the main way to access the OpenTK PAL2 api.
     /// </summary>
+    /// <seealso cref="ToolkitOptions"/>
     public static class Toolkit
     {
         private static bool Initialized = false;
@@ -116,6 +117,7 @@ namespace OpenTK.Platform
         /// This function must be called before trying to use the OpenTK API.
         /// </summary>
         /// <param name="options">The options to initialize with.</param>
+        /// <seealso cref="ToolkitOptions"/>
         public static void Init(ToolkitOptions options)
         {
             // FIXME: Figure out options...
