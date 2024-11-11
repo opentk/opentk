@@ -26,17 +26,15 @@ namespace OpenTK.Platform.Native.ANGLE
 
         internal string[] Extensions;
 
-        internal IntPtr eglDisplay;
+        internal EGLDisplay eglDisplay;
         internal Version eglVersion;
 
-        internal static readonly Dictionary<IntPtr, ANGLEOpenGLContextHandle> ContextDict = new Dictionary<IntPtr, ANGLEOpenGLContextHandle>();
+        internal static readonly Dictionary<EGLContext, ANGLEOpenGLContextHandle> ContextDict = new Dictionary<EGLContext, ANGLEOpenGLContextHandle>();
 
         /// <inheritdoc/>
         public void Initialize(ToolkitOptions options)
         {
-            const IntPtr EGL_NO_DISPLAY = 0;
-            IntPtr extensionsPtr = Egl.QueryString(EGL_NO_DISPLAY, Egl.EXTENSIONS);
-            string extensionsStr = Marshal.PtrToStringAnsi(extensionsPtr)!;
+            string extensionsStr = Egl.QueryString(EGLDisplay.NoDisplay, StringName.Extensions)!;
             Extensions = extensionsStr.Split(" ", StringSplitOptions.RemoveEmptyEntries);
             Logger?.LogDebug($"EGL extensions: {string.Join(", ", Extensions)}");
 
@@ -48,9 +46,8 @@ namespace OpenTK.Platform.Native.ANGLE
             }
 
             // FIXME: What should we really set here?
-            int[] attribs = new int[] { Egl.RENDERABLE_TYPE, Egl.OPENGL_ES3_BIT, Egl.NONE };
-
-            eglDisplay = Egl.GetPlatformDisplayEXT(Egl.PLATFORM_ANGLE_ANGLE, Egl.DEFAULT_DISPLAY, attribs);
+            int[] attribs = new int[] { (int)ConfigAttribute.RenderableType, (int)RenderableTypeMask.OpenglEs3Bit, (int)ConfigAttribute.None };
+            eglDisplay = Egl.EXT.GetPlatformDisplayEXT(Graphics.Egl.Platform.PlatformAngleAngle, (nint)All.DefaultDisplay, attribs);
 
             bool success = Egl.Initialize(eglDisplay, out int major, out int minor);
             if (success == false)
@@ -61,8 +58,9 @@ namespace OpenTK.Platform.Native.ANGLE
 
             eglVersion = new Version(major, minor);
 
-            // FIXME
-            Egl.BindAPI(RenderApi.ES);
+            // FIXME: This is a per-thread setting, so if the user swtiches threads this is not going to work...
+            // - Noggin_bops 2024-11-11
+            Egl.BindAPI(RenderApi.OpenglEsApi);
         }
 
         /// <inheritdoc/>
@@ -106,38 +104,39 @@ namespace OpenTK.Platform.Native.ANGLE
                 throw new PalException(this, "Window has no graphics settings.");
             }
 
-            bool success = Egl.GetConfigs(eglDisplay, null, 0, out int numConfigs);
-            IntPtr[] availableConfigs = new IntPtr[numConfigs];
-            success = Egl.GetConfigs(eglDisplay, availableConfigs, numConfigs, out numConfigs);
+            bool success = Egl.GetConfig(eglDisplay, null, 0, out int numConfigs);
+            EGLConfig[] availableConfigs = new EGLConfig[numConfigs];
+            // FIXME: Fix the generator so that it doesn't remove the s...
+            success = Egl.GetConfig(eglDisplay, availableConfigs, numConfigs, out numConfigs);
 
             List<ContextValues> possibleContextValues = new List<ContextValues>();
             for (int i = 0; i < numConfigs; i++)
             {
-                IntPtr config = availableConfigs[i];
+                EGLConfig config = availableConfigs[i];
 
                 // We only want configs that can render to a window.
-                Egl.GetConfigAttrib(eglDisplay, config, Egl.SURFACE_TYPE, out int configSupportedSurfaceTypes);
-                if ((configSupportedSurfaceTypes & Egl.WINDOW_BIT) == 0)
+                Egl.GetConfigAttrib(eglDisplay, config, ConfigAttribute.SurfaceType, out int configSupportedSurfaceTypes);
+                if (((SurfaceTypeMask)configSupportedSurfaceTypes & SurfaceTypeMask.WindowBit) == 0)
                     continue;
 
-                Egl.GetConfigAttrib(eglDisplay, config, Egl.RENDERABLE_TYPE, out int renderableType);
-                if ((renderableType & Egl.OPENGL_ES_BIT) == 0 &&
-                    (renderableType & Egl.OPENGL_ES2_BIT) == 0 &&
-                    (renderableType & Egl.OPENGL_ES3_BIT) == 0)
+                Egl.GetConfigAttrib(eglDisplay, config, ConfigAttribute.RenderableType, out int renderableType);
+                if (((RenderableTypeMask)renderableType & RenderableTypeMask.OpenglEsBit) == 0 &&
+                    ((RenderableTypeMask)renderableType & RenderableTypeMask.OpenglEs2Bit) == 0 &&
+                    ((RenderableTypeMask)renderableType & RenderableTypeMask.OpenglEs3Bit) == 0)
                 {
                     continue;
                 }
 
-                Egl.GetConfigAttrib(eglDisplay, config, Egl.RED_SIZE, out int configRedBits);
-                Egl.GetConfigAttrib(eglDisplay, config, Egl.GREEN_SIZE, out int configGreenBits);
-                Egl.GetConfigAttrib(eglDisplay, config, Egl.BLUE_SIZE, out int configBlueBits);
-                Egl.GetConfigAttrib(eglDisplay, config, Egl.ALPHA_SIZE, out int configAlphaBits);
-                Egl.GetConfigAttrib(eglDisplay, config, Egl.DEPTH_SIZE, out int configDepthBits);
-                Egl.GetConfigAttrib(eglDisplay, config, Egl.STENCIL_SIZE, out int configStencilBits);
-                Egl.GetConfigAttrib(eglDisplay, config, Egl.SAMPLES, out int configSamples);
+                Egl.GetConfigAttrib(eglDisplay, config, ConfigAttribute.RedSize, out int configRedBits);
+                Egl.GetConfigAttrib(eglDisplay, config, ConfigAttribute.GreenSize, out int configGreenBits);
+                Egl.GetConfigAttrib(eglDisplay, config, ConfigAttribute.BlueSize, out int configBlueBits);
+                Egl.GetConfigAttrib(eglDisplay, config, ConfigAttribute.AlphaSize, out int configAlphaBits);
+                Egl.GetConfigAttrib(eglDisplay, config, ConfigAttribute.DepthSize, out int configDepthBits);
+                Egl.GetConfigAttrib(eglDisplay, config, ConfigAttribute.StencilSize, out int configStencilBits);
+                Egl.GetConfigAttrib(eglDisplay, config, ConfigAttribute.Samples, out int configSamples);
 
                 ContextValues values;
-                values.ID = (ulong)config;
+                values.ID = (ulong)(nint)config;
                 values.RedBits = configRedBits;
                 values.GreenBits = configGreenBits;
                 values.BlueBits = configBlueBits;
@@ -166,7 +165,6 @@ namespace OpenTK.Platform.Native.ANGLE
 
                 possibleContextValues.Add(values);
             }
-
 
             int depthBits;
             switch (settings.DepthBits)
@@ -203,37 +201,37 @@ namespace OpenTK.Platform.Native.ANGLE
                 throw new IndexOutOfRangeException($"The selected format index ({selectedFormatIndex}) is outside the range of valid indices. This is either an OpenTK bug or an issue with your custom ContextValueSelector.");
             }
 
-            IntPtr selectedConfig = (IntPtr)possibleContextValues[selectedFormatIndex].ID;
+            EGLConfig selectedConfig = new EGLConfig((nint)possibleContextValues[selectedFormatIndex].ID);
 
             List<int> surface_attribs = new List<int>();
-            surface_attribs.Add(Egl.RENDER_BUFFER);
-            surface_attribs.Add(settings.DoubleBuffer ? Egl.BACK_BUFFER : Egl.SINGLE_BUFFER);
+            surface_attribs.Add((int)SurfaceCreateAttribute.RenderBuffer);
+            surface_attribs.Add(settings.DoubleBuffer ? (int)RenderBuffer.BackBuffer : (int)RenderBuffer.SingleBuffer);
             // FIXME: We'd like to set this, but it's not supported by angle...
             // - Noggin_bops 2024-07-22
             //surface_attribs.Add(Egl.COLORSPACE);
             //surface_attribs.Add(settings.sRGBFramebuffer ? Egl.COLORSPACE_sRGB : Egl.COLORSPACE_LINEAR);
-            surface_attribs.Add(Egl.NONE);
+            surface_attribs.Add((int)SurfaceAttribute.None);
 
-            IntPtr eglSurface = Egl.CreatePlatformWindowSurfaceEXT(eglDisplay, selectedConfig, windowHandle, surface_attribs.ToArray());
-            if (eglSurface == IntPtr.Zero)
+            EGLSurface eglSurface = Egl.EXT.CreatePlatformWindowSurfaceEXT(eglDisplay, selectedConfig, windowHandle, surface_attribs.ToArray());
+            if (eglSurface == EGLSurface.NoSurface)
             {
                 throw new PalException(this, $"Was not able to create egl surface. {Egl.GetError()}");
             }
 
             // FIXME: Share context
-            List<int> context_attribs = new List<int>() { Egl.CONTEXT_MAJOR_VERSION, settings.Version.Major, Egl.CONTEXT_MINOR_VERSION, settings.Version.Minor };
+            List<int> context_attribs = new List<int>() { (int)ContextAttribute.ContextMajorVersion, settings.Version.Major, (int)ContextAttribute.ContextMinorVersion, settings.Version.Minor };
             if (settings.DebugFlag)
             {
-                context_attribs.Add(Egl.CONTEXT_OPENGL_DEBUG);
+                context_attribs.Add((int)ContextAttribute.ContextOpenglDebug);
                 context_attribs.Add(1);
             }
             
-            context_attribs.Add(Egl.NONE);
+            context_attribs.Add((int)ContextAttribute.None);
 
             ANGLEOpenGLContextHandle? shared = settings.SharedContext?.As<ANGLEOpenGLContextHandle>(this);
-            IntPtr shareContext = shared?.EglContext ?? IntPtr.Zero;
+            EGLContext shareContext = shared?.EglContext ?? EGLContext.NoContext;
 
-            IntPtr contextPtr = Egl.CreateContext(eglDisplay, selectedConfig, shareContext, context_attribs.ToArray());
+            EGLContext contextPtr = Egl.CreateContext(eglDisplay, selectedConfig, shareContext, context_attribs.ToArray());
 
             ANGLEOpenGLContextHandle context = new ANGLEOpenGLContextHandle(eglSurface, contextPtr, shared);
 
@@ -278,8 +276,8 @@ namespace OpenTK.Platform.Native.ANGLE
         /// <inheritdoc/>
         public OpenGLContextHandle? GetCurrentContext()
         {
-            IntPtr ptr = Egl.GetCurrentContext();
-            if (ptr == IntPtr.Zero)
+            EGLContext ptr = Egl.GetCurrentContext();
+            if (ptr == EGLContext.NoContext)
             {
                 return null;
             }
@@ -299,7 +297,7 @@ namespace OpenTK.Platform.Native.ANGLE
             }
             else
             {
-                return Egl.MakeCurrent(eglDisplay, Egl.NO_SURFACE, Egl.NO_SURFACE, Egl.NO_CONTEXT);
+                return Egl.MakeCurrent(eglDisplay, EGLSurface.NoSurface, EGLSurface.NoSurface, EGLContext.NoContext);
             }
         }
 
@@ -310,33 +308,44 @@ namespace OpenTK.Platform.Native.ANGLE
             return context.SharedContext;
         }
 
-        private int swapInterval = 1;
-
         /// <inheritdoc/>
         public void SetSwapInterval(int interval)
         {
-            Egl.SwapInterval(eglDisplay, interval);
-            swapInterval = interval;
+            ANGLEOpenGLContextHandle? context = GetCurrentContext()?.As<ANGLEOpenGLContextHandle>(this);
+            if (context != null)
+            {
+                Egl.SwapInterval(eglDisplay, interval);
+                context.SwapInterval = interval;
+            }
+            else
+            {
+                Logger?.LogWarning("No context current on the calling thread, can't set swap interval.");
+            }
         }
 
         /// <inheritdoc/>
         public int GetSwapInterval()
         {
-            return swapInterval;
+            ANGLEOpenGLContextHandle? context = GetCurrentContext()?.As<ANGLEOpenGLContextHandle>(this);
+            return context?.SwapInterval ?? -1;
         }
 
         /// <inheritdoc/>
         public void SwapBuffers(OpenGLContextHandle handle)
         {
             ANGLEOpenGLContextHandle context = handle.As<ANGLEOpenGLContextHandle>(this);
-            Egl.SwapBuffers(eglDisplay, context.EglSurface);
+            bool success = Egl.SwapBuffers(eglDisplay, context.EglSurface);
+            if (success == false)
+            {
+                Logger?.LogWarning($"Unable to swap buffers: {Egl.GetError()}");
+            }
         }
 
         /// <summary>
         /// Returns the <c>EGLDisplay</c> used by OpenTK.
         /// </summary>
         /// <returns>The <c>EGLDisplay</c> used by OpenTK.</returns>
-        public IntPtr GetEglDisplay()
+        public EGLDisplay GetEglDisplay()
         {
             return eglDisplay;
         }
@@ -346,7 +355,7 @@ namespace OpenTK.Platform.Native.ANGLE
         /// </summary>
         /// <param name="handle">A handle to an OpenGL context to get the associated <c>EGLContext</c> from.</param>
         /// <returns>The <c>EGLContext</c> associated with the context handle.</returns>
-        public IntPtr GetEglContext(OpenGLContextHandle handle)
+        public EGLContext GetEglContext(OpenGLContextHandle handle)
         {
             ANGLEOpenGLContextHandle context = handle.As<ANGLEOpenGLContextHandle>(this);
 
@@ -358,7 +367,7 @@ namespace OpenTK.Platform.Native.ANGLE
         /// </summary>
         /// <param name="handle">A handle to an OpenGL context to get the associated <c>EGLSurface</c> from.</param>
         /// <returns>The <c>EGLSurface</c> associated with the context handle.</returns>
-        public IntPtr GetEglSurface(OpenGLContextHandle handle)
+        public EGLSurface GetEglSurface(OpenGLContextHandle handle)
         {
             ANGLEOpenGLContextHandle context = handle.As<ANGLEOpenGLContextHandle>(this);
 

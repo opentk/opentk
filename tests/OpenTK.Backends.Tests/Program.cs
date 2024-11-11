@@ -2,7 +2,6 @@
 using OpenTK.Platform;
 using OpenTK.Core.Utility;
 using OpenTK.Graphics;
-using OpenTK.Graphics.Egl;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Mathematics;
 using OpenTK.Platform.Native;
@@ -86,7 +85,7 @@ namespace OpenTK.Backends.Tests
             // when we use Toolkit.Init to actually create the components...
             // - Noggin_bops 2024-03-02
             PlatformComponents.PreferSDL2 = false;
-            PlatformComponents.PreferANGLE = false;
+            PlatformComponents.PreferANGLE = true;
 
             if (PlatformComponents.PreferANGLE)
             {
@@ -107,7 +106,7 @@ namespace OpenTK.Backends.Tests
                 // If we are loading angle we want to hook into the DllImport resolver and
                 // make sure we load the correct binaries for each platform.
                 // - Noggin_bops 2024-03-07
-                NativeLibrary.SetDllImportResolver(typeof(Egl).Assembly, (name, assembly, path) => {
+                NativeLibrary.SetDllImportResolver(typeof(OpenTK.Graphics.Egl.Egl).Assembly, (name, assembly, path) => {
                     if (name == "libEGL" && OperatingSystem.IsWindows())
                     {
                         name = Path.Combine(Path.GetDirectoryName(typeof(Program).Assembly.Location)!, "win32-x64", "libEGL.dll");

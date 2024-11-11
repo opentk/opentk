@@ -1,7 +1,6 @@
 ﻿using OpenTK.Platform;
 using OpenTK.Core.Utility;
 using OpenTK.Graphics;
-using OpenTK.Graphics.Egl;
 using OpenTK.Graphics.OpenGLES2;
 using OpenTK.Mathematics;
 using OpenTK.Platform.Native;
@@ -29,7 +28,7 @@ namespace ANGLETestProject
             WindowComp.Initialize(options);
             OpenGLComp.Initialize(options);
 
-            var window = WindowComp.Create(new OpenGLGraphicsApiHints());
+            var window = WindowComp.Create(new OpenGLGraphicsApiHints() { Version = new Version(3, 1) });
             WindowComp.SetSize(window, (800, 600));
             WindowComp.SetMode(window, WindowMode.Normal);
             WindowComp.SetTitle(window, "ANGLE Window");
@@ -52,9 +51,7 @@ namespace ANGLETestProject
                 GL.ClearColor(Color4.Coral);
                 GL.Clear(ClearBufferMask.ColorBufferBit);
 
-                // FIXME: Make WindowComp able to handle this?
-                (OpenGLComp as ANGLEOpenGLComponent)?.SwapBuffers(context);
-                // WindowComp.SwapBuffers(window);
+                OpenGLComp.SwapBuffers(context);
             }
         }
 

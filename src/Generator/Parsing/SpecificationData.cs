@@ -14,6 +14,7 @@ namespace Generator.Parsing
         GLES2,
         WGL,
         GLX,
+        EGL,
     }
 
     [Flags]
@@ -26,6 +27,7 @@ namespace Generator.Parsing
         GLES2 = 1 << 3,
         WGL = 1 << 4,
         GLX = 1 << 5,
+        EGL = 1 << 6,
     }
 
     internal record GLFileData(
@@ -147,6 +149,7 @@ namespace Generator.Parsing
         GL,
         WGL,
         GLX,
+        EGL,
     }
 
     /// <param name="OriginalName">The name of the referenced enum group (as seen in the xml files).</param>
@@ -271,6 +274,7 @@ namespace Generator.Parsing
 
         WGL,
         GLX,
+        EGL,
     }
 
     internal enum GLProfile

@@ -1,4 +1,4 @@
-// This file is auto generated, do not edit. Generated: 2024-09-24 18:01:57 GMT+02:00
+// This file is auto generated, do not edit. Generated: 2024-11-11 15:15:34 GMT+01:00
 using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -787,7 +787,7 @@ namespace OpenTK.Graphics.OpenGLES1
         {
             GetPointerv(pname, parameters);
         }
-        /// <inheritdoc cref="GetString(StringName)"/>
+        /// <inheritdoc cref="GetString_(StringName)"/>
         public static unsafe string? GetString(StringName name)
         {
             string? returnValue_str;
