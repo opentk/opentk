@@ -377,6 +377,7 @@ namespace OpenTK.Backends.Tests
 
                         ImGui.BeginDisabled(enableMultisample == false);
 
+                        // FIXME: Get the max supported samples from the selected window context...?
                         int samples = openglSettings.Multisamples;
                         if (ImGui.DragInt("Samples", ref samples, IntDragSpeed, 1, 128))
                             openglSettings.Multisamples = samples;
@@ -392,6 +393,13 @@ namespace OpenTK.Backends.Tests
                     if (ImGui.Checkbox("sRGB Framebuffer", ref srgb))
                         openglSettings.sRGBFramebuffer = srgb;
 
+                    if (Toolkit.Window is Platform.Native.X11.X11WindowComponent)
+                    {
+                        bool supportTransparentFramebuffer = openglSettings.SupportTransparentFramebufferX11;
+                        if (ImGui.Checkbox("Supports framebuffer transparency", ref supportTransparentFramebuffer))
+                            openglSettings.SupportTransparentFramebufferX11 = supportTransparentFramebuffer;
+                    }
+                    
                     ImGui.SeparatorText("Context settings");
 
                     OpenGLProfile profile = openglSettings.Profile;

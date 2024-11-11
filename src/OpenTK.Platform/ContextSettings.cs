@@ -41,15 +41,23 @@ namespace OpenTK.Platform
         ///     </item>
         ///     <item>
         ///         <term>X11</term>
-        ///         <description>All formats do not support transparent framebuffers.</description>
+        ///         <description>Support for transparent framebuffers is not always available.</description>
         ///     </item>
         ///     <item>
         ///         <term>macOS</term>
         ///         <description>Always <see langword="true"/>.</description>
         ///     </item>
         ///     <item>
-        ///         <term>ANGLE</term>
-        ///         <description>Always <see langword="false"/>. FIXME: Some platforms might support transparency with ANGLE...</description>
+        ///         <term>ANGLE on win32</term>
+        ///         <description>Always <see langword="true"/>.</description>
+        ///     </item>
+        ///     <item>
+        ///         <term>ANGLE on X11</term>
+        ///         <description>TODO: Does this work?</description>
+        ///     </item>
+        ///     <item>
+        ///         <term>ANGLE on macOS</term>
+        ///         <description>TODO: Does this work?</description>
         ///     </item>
         /// </list>
         /// </summary>

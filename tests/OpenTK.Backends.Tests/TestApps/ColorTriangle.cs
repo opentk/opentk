@@ -60,7 +60,7 @@ out vec4 color;
 
 void main()
 {
-    color = vec4(f_Color, 1.0);
+    color = vec4(f_Color, 0.5);
 }
 ";
 
@@ -89,7 +89,7 @@ out vec4 color;
 
 void main()
 {
-    color = vec4(f_Color, 1.0);
+    color = vec4(f_Color, 0.5);
 }
 ";
 
