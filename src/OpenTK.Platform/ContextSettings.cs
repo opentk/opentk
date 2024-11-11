@@ -32,16 +32,52 @@ namespace OpenTK.Platform
         public ContextSwapMethod SwapMethod;
         public int Samples;
 
+        /// <summary>
+        /// If this context configuration supports <see cref="WindowTransparencyMode.TransparentFramebuffer"/>.
+        /// <list type="bullet|number|table">
+        ///     <item>
+        ///         <term>Win32</term>
+        ///         <description>Always <see langword="true"/>.</description>
+        ///     </item>
+        ///     <item>
+        ///         <term>X11</term>
+        ///         <description>Support for transparent framebuffers is not always available.</description>
+        ///     </item>
+        ///     <item>
+        ///         <term>macOS</term>
+        ///         <description>Always <see langword="true"/>.</description>
+        ///     </item>
+        ///     <item>
+        ///         <term>ANGLE on win32</term>
+        ///         <description>Always <see langword="true"/>.</description>
+        ///     </item>
+        ///     <item>
+        ///         <term>ANGLE on X11</term>
+        ///         <description>TODO: Does this work?</description>
+        ///     </item>
+        ///     <item>
+        ///         <term>ANGLE on macOS</term>
+        ///         <description>TODO: Does this work?</description>
+        ///     </item>
+        /// </list>
+        /// </summary>
+        /// <seealso cref="WindowTransparencyMode.TransparentFramebuffer"/>
+        /// <see cref="IWindowComponent.SupportsFramebufferTransparency(WindowHandle)"/>
+        /// <seealso cref="IWindowComponent.SetTransparencyMode(WindowHandle, WindowTransparencyMode, float)"/>
+        /// <seealso cref="IWindowComponent.GetTransparencyMode(WindowHandle, out float)"/>
+        public bool SupportsFramebufferTransparency;
+
         // FIXME: Add stereo?
-        // FIXME: Add transparency?
 
         /// <summary>
         /// Default context values selector. Prioritizes the requested values with a series of "relaxations" to find a close match.<br/>
         /// The relaxations are done in the following order:
         /// <list type="number">
         /// <item><description>If no exact match is found try find a format with a larger number of color, depth, or stencil bits.</description></item>
+        /// <item><description>If <see cref="SupportsFramebufferTransparency"/> == false is requested, <see cref="SupportsFramebufferTransparency"/> == true formats will be accepted.</description></item>
         /// <item><description>If <see cref="SRGBFramebuffer"/> == false is requested, <see cref="SRGBFramebuffer"/> == true formats will be accepted.</description></item>
         /// <item><description>If <see cref="SwapMethod"/> == <see cref="ContextSwapMethod.Undefined"/>, any swap method will be accepted.</description></item>
+        /// <item><description>If <see cref="SupportsFramebufferTransparency"/> == true, accept <see cref="SupportsFramebufferTransparency"/> == false formats.</description></item>
         /// <item><description>If <see cref="SRGBFramebuffer"/> == true, accept <see cref="SRGBFramebuffer"/> == false formats.</description></item>
         /// <item><description>Accept any <see cref="PixelFormat"/>.</description></item>
         /// <item><description>Decrement <see cref="Samples"/> by one at a time until 0 and see if any alternative sample counts are possible.</description></item>
@@ -88,10 +124,31 @@ namespace OpenTK.Platform
                     HasEqualDoubleBuffer(options[i], requested) &&
                     HasEqualSRGB(options[i], requested) &&
                     HasEqualPixelFormat(options[i], requested) &&
-                    HasEqualSwapMethod(options[i], requested))
+                    HasEqualSwapMethod(options[i], requested) &&
+                    HasEqualFramebufferTransparencySupport(options[i], requested))
                 {
                     logger?.LogDebug("Found matching format with greater color depth!");
                     return i;
+                }
+            }
+
+            if (requested.SupportsFramebufferTransparency == false)
+            {
+                logger?.LogDebug("No exact match, relaxing SupportsFramebufferTransparency == false to match with SupportsFramebufferTransparency == true.");
+                for (int i = 0; i < options.Count; i++)
+                {
+                    if (HasGreaterOrEqualColorBits(options[i], requested) &&
+                        HasGreaterOrEqualDepthBits(options[i], requested) &&
+                        HasGreaterOrEqualStencilBits(options[i], requested) &&
+                        HasEqualMSAA(options[i], requested) &&
+                        HasEqualDoubleBuffer(options[i], requested) &&
+                        HasEqualSRGB(options[i], requested) &&
+                        HasEqualPixelFormat(options[i], requested) &&
+                        HasEqualSwapMethod(options[i], requested))
+                    {
+                        logger?.LogDebug("Found matching format with relaxed framebuffer transparency support!");
+                        return i;
+                    }
                 }
             }
 
@@ -107,7 +164,9 @@ namespace OpenTK.Platform
                         HasEqualMSAA(options[i], requested) &&
                         HasEqualDoubleBuffer(options[i], requested) &&
                         (HasEqualSRGB(options[i], requested) || requested.SRGBFramebuffer == false) &&
-                        HasEqualPixelFormat(options[i], requested))
+                        HasEqualPixelFormat(options[i], requested) &&
+                        HasEqualSwapMethod(options[i], requested) &&
+                        (requested.SupportsFramebufferTransparency == false || HasEqualFramebufferTransparencySupport(options[i], requested)))
                     {
                         logger?.LogDebug("Found matching format with SRGBFramebuffer == true!");
                         return i;
@@ -127,11 +186,30 @@ namespace OpenTK.Platform
                         HasEqualMSAA(options[i], requested) &&
                         HasEqualDoubleBuffer(options[i], requested) &&
                         (HasEqualSRGB(options[i], requested) || requested.SRGBFramebuffer == false) &&
-                        HasEqualPixelFormat(options[i], requested))
+                        HasEqualPixelFormat(options[i], requested) &&
+                        (requested.SupportsFramebufferTransparency == false || HasEqualFramebufferTransparencySupport(options[i], requested)))
                     {
                         logger?.LogDebug("Found matching format with any swap format!");
                         return i;
                     }
+                }
+            }
+
+            // Relax framebuffer transparency support
+            logger?.LogDebug("No match found, relaxing framebuffer transparency support requirement.");
+            for (int i = 0; i < options.Count; i++)
+            {
+                if (HasGreaterOrEqualColorBits(options[i], requested) &&
+                    HasGreaterOrEqualDepthBits(options[i], requested) &&
+                    HasGreaterOrEqualStencilBits(options[i], requested) &&
+                    HasEqualMSAA(options[i], requested) &&
+                    HasEqualDoubleBuffer(options[i], requested) &&
+                    (HasEqualSRGB(options[i], requested) || requested.SRGBFramebuffer == false) &&
+                    HasEqualPixelFormat(options[i], requested) &&
+                    (requested.SwapMethod == ContextSwapMethod.Undefined || HasEqualSwapMethod(options[i], requested)))
+                {
+                    logger?.LogDebug("Found matching format with relaxed framebuffer transparency support!");
+                    return i;
                 }
             }
 
@@ -299,7 +377,8 @@ namespace OpenTK.Platform
                 option.SRGBFramebuffer == requested.SRGBFramebuffer &&
                 option.PixelFormat == requested.PixelFormat &&
                 option.SwapMethod == requested.SwapMethod &&
-                option.Samples == requested.Samples;
+                option.Samples == requested.Samples &&
+                option.SupportsFramebufferTransparency == requested.SupportsFramebufferTransparency;
         }
 
         public static bool HasEqualColorBits(ContextValues option, ContextValues requested)
@@ -379,6 +458,11 @@ namespace OpenTK.Platform
         public static bool HasEqualSwapMethod(ContextValues option, ContextValues requested)
         {
             return option.SwapMethod == requested.SwapMethod;
+        }
+
+        public static bool HasEqualFramebufferTransparencySupport(ContextValues option, ContextValues requested)
+        {
+            return option.SupportsFramebufferTransparency == requested.SupportsFramebufferTransparency;
         }
 
         public ContextValues(ulong id, int redBits, int greenBits, int blueBits, int alphaBits, int depthBits, int stencilBits, bool doubleBuffered, bool sRGBFramebuffer, ContextPixelFormat pixelFormat, ContextSwapMethod swapMethod, int samples)

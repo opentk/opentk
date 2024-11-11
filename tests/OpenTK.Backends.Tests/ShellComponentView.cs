@@ -32,18 +32,26 @@ namespace OpenTK.Backends.Tests
 
         readonly static Platform.Native.Windows.ShellComponent.CornerPreference[] CornerPreferences = Enum.GetValues<Platform.Native.Windows.ShellComponent.CornerPreference>();
         readonly static string[] CornerPreferenceNames = Enum.GetNames<Platform.Native.Windows.ShellComponent.CornerPreference>();
-        
+
+        bool UseCustomReason = false;
+        string SSDisableReason = "";
+
         public override void Paint(double deltaTime)
         {
             base.Paint(deltaTime);
 
             ImGui.SeparatorText("Screen saver");
 
-            if (ImGui.Button("Disable"))
-                Toolkit.Shell.AllowScreenSaver(false);
-            ImGui.SameLine();
-            if (ImGui.Button("Enable"))
-                Toolkit.Shell.AllowScreenSaver(true);
+            bool ssAllowed = Toolkit.Shell.IsScreenSaverAllowed();
+            if (ImGui.Checkbox("Screen saver allowed", ref ssAllowed))
+            {
+                Toolkit.Shell.AllowScreenSaver(ssAllowed, UseCustomReason ? SSDisableReason : null);
+            }
+
+            ImGui.Checkbox("Custom disable reason", ref UseCustomReason);
+            ImGui.BeginDisabled(UseCustomReason == false);
+            ImGui.InputText("Screen saver disable reason", ref SSDisableReason, 128);
+            ImGui.EndDisabled();
 
             BatteryStatus status = Toolkit.Shell.GetBatteryInfo(out BatteryInfo batteryInfo);
             string statusStr = status switch

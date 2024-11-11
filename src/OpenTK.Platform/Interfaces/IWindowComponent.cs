@@ -17,25 +17,28 @@ namespace OpenTK.Platform
     /// <param name="handle">A handle to the window that hit testing is being done on.</param>
     /// <param name="position">The position of where the hit test is being done, not always the position of the mouse. In client relative coordinates.</param>
     /// <returns>The result of the hit test.</returns>
+    /// <seealso cref="IWindowComponent.SetHitTestCallback(WindowHandle, HitTest?)"/>
     public delegate HitType HitTest(WindowHandle handle, Vector2 position);
 
     /// <summary>
     /// Interface for abstraction layer drivers which implement the window component.
     /// </summary>
+    /// <seealso cref="Toolkit.Window"/>
     public interface IWindowComponent : IPalComponent
     {
         // FIXME: Make most Get* functions return their value instead of going through out parameters.
 
         /// <summary>
-        /// True when the driver supports setting the window icon using <see cref="SetIcon(WindowHandle, IconHandle)"/>.
+        /// <see langword="true"/> when the driver supports setting and getting the window icon using <see cref="SetIcon(WindowHandle, IconHandle)"/> and <see cref="GetIcon(WindowHandle)"/>.
         /// </summary>
         /// <seealso cref="SetIcon(WindowHandle, IconHandle)"/>
+        /// <seealso cref="GetIcon(WindowHandle)"/>
         // FIXME: Maybe we can remove this as all backends currently return true.
         // - Noggin_bops 2024-08-01
         bool CanSetIcon { get; }
 
         /// <summary>
-        /// True when the driver can provide the display the window is in using <see cref="GetDisplay(WindowHandle)"/>.
+        /// <see langword="true"/> when the driver can provide the display the window is in using <see cref="GetDisplay(WindowHandle)"/>.
         /// </summary>
         /// <seealso cref="GetDisplay(WindowHandle)"/>
         // FIXME: Maybe we can remove this as this is currently possible on all our supported backends.
@@ -43,7 +46,7 @@ namespace OpenTK.Platform
         bool CanGetDisplay { get; }
 
         /// <summary>
-        /// True when the driver supports setting the cursor of the window using <see cref="SetCursor(WindowHandle, CursorHandle?)"/>.
+        /// <see langword="true"/> when the driver supports setting the cursor of the window using <see cref="SetCursor(WindowHandle, CursorHandle?)"/>.
         /// </summary>
         /// <seealso cref="SetCursor(WindowHandle, CursorHandle?)"/>
         // FIXME: Maybe we can remove this as all backends currently return true.
@@ -51,7 +54,7 @@ namespace OpenTK.Platform
         bool CanSetCursor { get; }
 
         /// <summary>
-        /// True when the driver supports capturing the cursor in a window using <see cref="SetCursorCaptureMode(WindowHandle, CursorCaptureMode)"/>.
+        /// <see langword="true"/> when the driver supports capturing the cursor in a window using <see cref="SetCursorCaptureMode(WindowHandle, CursorCaptureMode)"/>.
         /// </summary>
         /// <seealso cref="SetCursorCaptureMode(WindowHandle, CursorCaptureMode)"/>
         // FIXME: This returns true on all currently supported platforms, maybe we can remove this.
@@ -84,6 +87,7 @@ namespace OpenTK.Platform
         /// </summary>
         /// <param name="hints">Graphics API hints to be passed to the operating system.</param>
         /// <returns>Handle to the new window object.</returns>
+        /// <seealso cref="Destroy(WindowHandle)"/>
         // FIXME: Possibly rethink how to do GraphicsApiHints.
         // FIXME: API for getting the GraphicsApiHints
         WindowHandle Create(GraphicsApiHints hints);
@@ -92,7 +96,8 @@ namespace OpenTK.Platform
         /// Destroy a window object. After a window has been destroyed the handle should no longer be used in any function other than <see cref="IsWindowDestroyed(WindowHandle)"/>.
         /// </summary>
         /// <param name="handle">Handle to a window object.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="handle"/> is null.</exception>
+        /// <seealso cref="Create(GraphicsApiHints)"/>
+        /// <seealso cref="IsWindowDestroyed(WindowHandle)"/>
         void Destroy(WindowHandle handle);
 
         /// <summary>
@@ -100,6 +105,8 @@ namespace OpenTK.Platform
         /// </summary>
         /// <param name="handle">The window handle to check if it's destroyed or not.</param>
         /// <returns>If <see cref="Destroy(WindowHandle)"/> was called with the window handle.</returns>
+        /// <seealso cref="Create(GraphicsApiHints)"/>
+        /// <seealso cref="Destroy(WindowHandle)"/>
         public bool IsWindowDestroyed(WindowHandle handle);
 
         /// <summary>
@@ -107,7 +114,7 @@ namespace OpenTK.Platform
         /// </summary>
         /// <param name="handle">Handle to a window.</param>
         /// <returns>The title of the window.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="handle"/> is null.</exception>
+        /// <seealso cref="SetTitle(WindowHandle, string)"/>
         string GetTitle(WindowHandle handle);
 
         /// <summary>
@@ -115,9 +122,7 @@ namespace OpenTK.Platform
         /// </summary>
         /// <param name="handle">Handle to a window.</param>
         /// <param name="title">New window title string.</param>
-        /// <exception cref="ArgumentNullException">
-        ///     <paramref name="handle"/> or <paramref name="title"/> is null.
-        /// </exception>
+        /// <seealso cref="GetTitle(WindowHandle)"/>
         void SetTitle(WindowHandle handle, string title);
 
         /// <summary>
@@ -125,20 +130,19 @@ namespace OpenTK.Platform
         /// </summary>
         /// <param name="handle">Handle to a window.</param>
         /// <returns>Handle to the windows icon object, or null if none is set.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="handle"/> is null.</exception>
-        /// <exception cref="PalNotImplementedException">
-        ///     Driver does not support getting the window icon. See <see cref="CanSetIcon"/>.
-        /// </exception>
+        /// <exception cref="PlatformNotSupportedException">Backend does not support getting the window icon. See <see cref="CanSetIcon"/>.</exception>
+        /// <seealso cref="CanSetIcon"/>
+        /// <seealso cref="SetIcon(WindowHandle, IconHandle)"/>
         IconHandle? GetIcon(WindowHandle handle);
 
         /// <summary>
         /// Set window icon object handle.
         /// </summary>
         /// <param name="handle">Handle to a window.</param>
-        /// <param name="icon">Handle to an icon object, or null to revert to default.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="handle"/> or <paramref name="icon"/> is null.</exception>
-        /// <exception cref="PalNotImplementedException">Backend does not support setting the window icon. See <see cref="CanSetIcon"/>.</exception>
+        /// <param name="icon">Handle to an icon object.</param>
+        /// <exception cref="PlatformNotSupportedException">Backend does not support setting the window icon. See <see cref="CanSetIcon"/>.</exception>
         /// <seealso cref="CanSetIcon"/>
+        /// <seealso cref="GetIcon(WindowHandle)"/>
         void SetIcon(WindowHandle handle, IconHandle icon);
 
         /// <summary>
@@ -146,7 +150,7 @@ namespace OpenTK.Platform
         /// </summary>
         /// <param name="handle">Handle to a window.</param>
         /// <param name="position">Coordinate of the window in screen coordinates.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="handle"/> is null.</exception>
+        /// <seealso cref="SetPosition(WindowHandle, Vector2i)"/>
         void GetPosition(WindowHandle handle, out Vector2i position);
 
         /// <summary>
@@ -154,7 +158,6 @@ namespace OpenTK.Platform
         /// </summary>
         /// <param name="handle">Handle to a window.</param>
         /// <param name="newPosition">New position of the window in screen coordinates.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="handle"/> is null.</exception>
         void SetPosition(WindowHandle handle, Vector2i newPosition);
 
         /// <summary>
@@ -162,7 +165,6 @@ namespace OpenTK.Platform
         /// </summary>
         /// <param name="handle">Handle to a window.</param>
         /// <param name="size">Size of the window in screen coordinates.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="handle"/> is null.</exception>
         void GetSize(WindowHandle handle, out Vector2i size);
 
         /// <summary>
@@ -170,7 +172,6 @@ namespace OpenTK.Platform
         /// </summary>
         /// <param name="handle">Handle to a window.</param>
         /// <param name="newSize">New size of the window in screen coordinates.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="handle"/> is null.</exception>
         void SetSize(WindowHandle handle, Vector2i newSize);
 
         /// <summary>
@@ -198,7 +199,6 @@ namespace OpenTK.Platform
         /// </summary>
         /// <param name="handle">Handle to a window.</param>
         /// <param name="clientPosition">The coordinate of the client area in screen coordinates.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="handle"/> is null.</exception>
         void GetClientPosition(WindowHandle handle, out Vector2i clientPosition);
 
         /// <summary>
@@ -206,7 +206,6 @@ namespace OpenTK.Platform
         /// </summary>
         /// <param name="handle">Handle to a window.</param>
         /// <param name="newClientPosition">New coordinate of the client area in screen coordinates.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="handle"/> is null.</exception>
         void SetClientPosition(WindowHandle handle, Vector2i newClientPosition);
 
         /// <summary>
@@ -214,7 +213,6 @@ namespace OpenTK.Platform
         /// </summary>
         /// <param name="handle">Handle to a window.</param>
         /// <param name="clientSize">Size of the client area in screen coordinates.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="handle"/> is null.</exception>
         void GetClientSize(WindowHandle handle, out Vector2i clientSize);
 
         /// <summary>
@@ -222,7 +220,6 @@ namespace OpenTK.Platform
         /// </summary>
         /// <param name="handle">Handle to a window.</param>
         /// <param name="newClientSize">New size of the client area in screen coordinates.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="handle"/> is null.</exception>
         void SetClientSize(WindowHandle handle, Vector2i newClientSize);
 
         /// <summary>
@@ -290,7 +287,6 @@ namespace OpenTK.Platform
         /// </summary>
         /// <param name="handle">Handle to a window.</param>
         /// <returns>The display handle the window is in.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="handle"/> is null.</exception>
         /// <exception cref="PalNotImplementedException">Backend does not support finding the window display. <see cref="CanGetDisplay"/>.</exception>
         /// <seealso cref="CanGetDisplay"/>
         DisplayHandle GetDisplay(WindowHandle handle);
@@ -300,36 +296,35 @@ namespace OpenTK.Platform
         /// </summary>
         /// <param name="handle">Handle to a window.</param>
         /// <returns>The mode of the window.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="handle"/> is null.</exception>
         WindowMode GetMode(WindowHandle handle);
 
         /// <summary>
         /// Set the mode of a window.
         /// </summary>
-        /// <param name="handle">Handle to a window.</param>
-        /// <param name="mode">The new mode of the window.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="handle"/> is null.</exception>
-        /// <exception cref="ArgumentOutOfRangeException"><paramref name="mode"/> is an invalid value.</exception>
-        /// <exception cref="PalNotImplementedException">
-        ///     Driver does not support the value set by <paramref name="mode"/>. See <see cref="SupportedModes"/>.
-        /// </exception>
         /// <remarks>
         /// Setting <see cref="WindowMode.WindowedFullscreen"/> or <see cref="WindowMode.ExclusiveFullscreen"/>
         /// will make the window fullscreen in the nearest monitor to the window location.
         /// Use <see cref="SetFullscreenDisplay(WindowHandle, DisplayHandle?)"/> or
         /// <see cref="SetFullscreenDisplay(WindowHandle, DisplayHandle, VideoMode)"/> to explicitly set the monitor.
         /// </remarks>
+        /// <param name="handle">Handle to a window.</param>
+        /// <param name="mode">The new mode of the window.</param>
+        /// <exception cref="System.ComponentModel.InvalidEnumArgumentException"><paramref name="mode"/> is an invalid value.</exception>
+        /// <exception cref="PlatformNotSupportedException">Backend does not support the value set by <paramref name="mode"/>. See <see cref="SupportedModes"/>. </exception>
+        /// <seealso cref="SetFullscreenDisplay(WindowHandle, DisplayHandle?)"/>
+        /// <seealso cref="SetFullscreenDisplay(WindowHandle, DisplayHandle, VideoMode)"/>
         void SetMode(WindowHandle handle, WindowMode mode);
 
         /// <summary>
         /// Put a window into 'windowed fullscreen' on a specified display or the display the window is displayed on.
         /// If <paramref name="display"/> is <c>null</c> then the window will be made fullscreen on the 'nearest' display.
         /// </summary>
-        /// <param name="handle">The window to make fullscreen.</param>
-        /// <param name="display">The display to make the window fullscreen on.</param>
         /// <remarks>
         /// To make an 'exclusive fullscreen' window see <see cref="SetFullscreenDisplay(WindowHandle, DisplayHandle, VideoMode)"/>.
         /// </remarks>
+        /// <param name="handle">The window to make fullscreen.</param>
+        /// <param name="display">The display to make the window fullscreen on.</param>
+        /// <seealso cref="SetMode(WindowHandle, WindowMode)"/>
         void SetFullscreenDisplay(WindowHandle handle, DisplayHandle? display);
 
         /// <summary>
@@ -337,12 +332,14 @@ namespace OpenTK.Platform
         /// Only video modes accuired using <see cref="IDisplayComponent.GetSupportedVideoModes(DisplayHandle)"/>
         /// are expected to work.
         /// </summary>
+        /// <remarks>
+        /// To make a 'windowed fullscreen' window see <see cref="SetFullscreenDisplay(WindowHandle, DisplayHandle?)"/>.
+        /// </remarks>
         /// <param name="handle">The window to make fullscreen.</param>
         /// <param name="display">The display to make the window fullscreen on.</param>
         /// <param name="videoMode">The video mode to use when making the window fullscreen.</param>
-        /// <remarks>
-        /// To make an 'windowed fullscreen' window see <see cref="SetFullscreenDisplay(WindowHandle, DisplayHandle?)"/>.
-        /// </remarks>
+        /// <seealso cref="SetFullscreenDisplay(WindowHandle, DisplayHandle?)"/>
+        /// <seealso cref="SetMode(WindowHandle, WindowMode)"/>
         void SetFullscreenDisplay(WindowHandle handle, DisplayHandle display, VideoMode videoMode);
 
         /// <summary>
@@ -350,7 +347,10 @@ namespace OpenTK.Platform
         /// </summary>
         /// <param name="handle">The window handle.</param>
         /// <param name="display">The display where the window is fullscreen or null if the window is not fullscreen.</param>
-        /// <returns><c>true</c> if the window was fullscreen, <c>false</c> otherwise.</returns>
+        /// <returns><see langword="true"/> if the window was fullscreen, <see langword="false"/> otherwise.</returns>
+        /// <seealso cref="SetMode(WindowHandle, WindowMode)"/>
+        /// <seealso cref="SetFullscreenDisplay(WindowHandle, DisplayHandle?)"/>
+        /// <seealso cref="SetFullscreenDisplay(WindowHandle, DisplayHandle, VideoMode)"/>
         bool GetFullscreenDisplay(WindowHandle handle, [NotNullWhen(true)] out DisplayHandle? display);
 
         /// <summary>
@@ -358,7 +358,7 @@ namespace OpenTK.Platform
         /// </summary>
         /// <param name="handle">Handle to window.</param>
         /// <returns>The border style of the window.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="handle"/> is null.</exception>
+        /// <seealso cref="SetBorderStyle(WindowHandle, WindowBorderStyle)"/>
         WindowBorderStyle GetBorderStyle(WindowHandle handle);
 
         /// <summary>
@@ -366,18 +366,63 @@ namespace OpenTK.Platform
         /// </summary>
         /// <param name="handle">Handle to a window.</param>
         /// <param name="style">The new border style of the window.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="handle"/> is null.</exception>
-        /// <exception cref="ArgumentOutOfRangeException"><paramref name="style"/> is an invalid value.</exception>
-        /// <exception cref="PalNotImplementedException">
-        ///     Driver does not support the value set by <paramref name="style"/>. See <see cref="SupportedStyles"/>.
-        /// </exception>
+        /// <exception cref="System.ComponentModel.InvalidEnumArgumentException"><paramref name="style"/> is an invalid value.</exception>
+        /// <exception cref="PlatformNotSupportedException">Backend does not support the value set by <paramref name="style"/>. See <see cref="SupportedStyles"/>.</exception>
         void SetBorderStyle(WindowHandle handle, WindowBorderStyle style);
+
+        /// <summary>
+        /// Returns true if <see cref="WindowTransparencyMode.TransparentFramebuffer"/> is supported for this window.
+        /// <list type="table">
+        /// <item>
+        ///     <term>Win32</term>
+        ///     <description>Always returns <see langword="true"/>.</description>
+        /// </item>
+        /// <item>
+        ///     <term>macOS</term>
+        ///     <description>Always returns <see langword="true"/>.</description>
+        /// </item>
+        /// <item>
+        ///     <term>Linux/X11</term>
+        ///     <description>Returns <see langword="true"/> if the selected <see cref="ContextValues"/> had <see cref="ContextValues.SupportsFramebufferTransparency"/> <see langword="true"/>.</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="handle">The window to query framebuffer transparency support for.</param>
+        /// <returns>If <see cref="SetTransparencyMode(WindowHandle, WindowTransparencyMode, float)"/> with <see cref="WindowTransparencyMode.TransparentFramebuffer"/> would work.</returns>
+        /// <seealso cref="SetTransparencyMode(WindowHandle, WindowTransparencyMode, float)"/>
+        /// <seealso cref="OpenGLGraphicsApiHints.SupportTransparentFramebufferX11"/>
+        /// <seealso cref="ContextValues.SupportsFramebufferTransparency"/>
+        /// <seealso cref="WindowTransparencyMode"/>
+        bool SupportsFramebufferTransparency(WindowHandle handle);
+
+        /// <summary>
+        /// Sets the transparency mode of the specified window.
+        /// </summary>
+        /// <param name="handle">The window to set the transparency mode of.</param>
+        /// <param name="transparencyMode">The transparency mode to apply to the window.</param>
+        /// <param name="opacity">The whole window opacity. Ignored if <paramref name="transparencyMode"/> is not <see cref="WindowTransparencyMode.TransparentWindow"/>.</param>
+        /// <seealso cref="WindowTransparencyMode"/>
+        /// <seealso cref="SupportsFramebufferTransparency(WindowHandle)"/>
+        /// <seealso cref="GetTransparencyMode(WindowHandle, out float)"/>
+        public void SetTransparencyMode(WindowHandle handle, WindowTransparencyMode transparencyMode, float opacity = 0.5f);
+
+        /// <summary>
+        /// Gets the transparency mode of the specified window.
+        /// </summary>
+        /// <param name="handle">The window to query the transparency mode of.</param>
+        /// <param name="opacity">The window opacity if the transparency mode was <see cref="WindowTransparencyMode.TransparentWindow"/>, 0 otherwise.</param>
+        /// <returns>The transparency mode of the specified window.</returns>
+        /// <seealso cref="WindowTransparencyMode"/>
+        /// <seealso cref="SetTransparencyMode(WindowHandle, WindowTransparencyMode, float)"/>
+        /// <seealso cref="SupportsFramebufferTransparency(WindowHandle)"/>
+        public WindowTransparencyMode GetTransparencyMode(WindowHandle handle, out float opacity);
 
         /// <summary>
         /// Set if the window is an always on top window or not.
         /// </summary>
         /// <param name="handle">A handle to the window to make always on top.</param>
         /// <param name="floating">Whether the window should be always on top or not.</param>
+        /// <seealso cref="IsAlwaysOnTop(WindowHandle)"/>
         public void SetAlwaysOnTop(WindowHandle handle, bool floating);
 
         /// <summary>
@@ -385,6 +430,7 @@ namespace OpenTK.Platform
         /// </summary>
         /// <param name="handle">A handle to the window to get whether or not is always on top.</param>
         /// <returns>Whether the window is always on top or not.</returns>
+        /// <seealso cref="SetAlwaysOnTop(WindowHandle, bool)"/>
         public bool IsAlwaysOnTop(WindowHandle handle);
 
         /// <summary>
@@ -397,6 +443,8 @@ namespace OpenTK.Platform
         /// </summary>
         /// <param name="handle">The window for which this hit test delegate should be used for.</param>
         /// <param name="test">The hit test delegate.</param>
+        /// <seealso cref="HitTest"/>
+        /// <seealso cref="HitType"/>
         public void SetHitTestCallback(WindowHandle handle, HitTest? test);
 
         /// <summary>
@@ -404,8 +452,7 @@ namespace OpenTK.Platform
         /// </summary>
         /// <param name="handle">Handle to a window.</param>
         /// <param name="cursor">Handle to a cursor object, or null for hidden cursor.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="handle"/> is null.</exception>
-        /// <exception cref="PalNotImplementedException">Backend does not support setting the window mouse cursor. See <see cref="CanSetCursor"/>.</exception>
+        /// <exception cref="PlatformNotSupportedException">Backend does not support setting the window mouse cursor. See <see cref="CanSetCursor"/>.</exception>
         /// <seealso cref="CanSetCursor"/>
         void SetCursor(WindowHandle handle, CursorHandle? cursor);
 
@@ -414,6 +461,8 @@ namespace OpenTK.Platform
         /// </summary>
         /// <param name="handle">Handle to a window.</param>
         /// <returns>The current cursor capture mode.</returns>
+        /// <seealso cref="CanCaptureCursor"/>
+        /// <seealso cref="SetCursorCaptureMode(WindowHandle, CursorCaptureMode)"/>
         CursorCaptureMode GetCursorCaptureMode(WindowHandle handle);
 
         /// <summary>
@@ -423,6 +472,7 @@ namespace OpenTK.Platform
         /// <param name="handle">Handle to a window.</param>
         /// <param name="mode">The cursor capture mode.</param>
         /// <seealso cref="CanCaptureCursor"/>
+        /// <seealso cref="SetCursorCaptureMode(WindowHandle, CursorCaptureMode)"/>
         void SetCursorCaptureMode(WindowHandle handle, CursorCaptureMode mode);
 
         /// <summary>
@@ -430,18 +480,24 @@ namespace OpenTK.Platform
         /// </summary>
         /// <param name="handle">Handle to a window.</param>
         /// <returns>If the window has input focus.</returns>
+        /// <seealso cref="FocusWindow(WindowHandle)"/>
+        /// <seealso cref="RequestAttention(WindowHandle)"/>
         bool IsFocused(WindowHandle handle);
 
         /// <summary>
         /// Gives the window input focus.
         /// </summary>
         /// <param name="handle">Handle to the window to focus.</param>
+        /// <seealso cref="IsFocused(WindowHandle)"/>
+        /// <seealso cref="RequestAttention(WindowHandle)"/>
         void FocusWindow(WindowHandle handle);
 
         /// <summary>
         /// Requests that the user pay attention to the window.
+        /// Usually by flashing the window icon.
         /// </summary>
         /// <param name="handle">A handle to the window that requests attention.</param>
+        /// <seealso cref="FocusWindow(WindowHandle)"/>
         void RequestAttention(WindowHandle handle);
 
         /// <summary>
@@ -454,6 +510,8 @@ namespace OpenTK.Platform
         /// <param name="handle">The window handle.</param>
         /// <param name="screen">The screen coordinate.</param>
         /// <param name="client">The client coordinate.</param>
+        /// <seealso cref="ClientToScreen(WindowHandle, Vector2, out Vector2)"/>
+        /// <seealso cref="ClientToFramebuffer(WindowHandle, Vector2, out Vector2)"/>
         void ScreenToClient(WindowHandle handle, Vector2 screen, out Vector2 client);
 
         /// <summary>
@@ -466,6 +524,8 @@ namespace OpenTK.Platform
         /// <param name="handle">The window handle.</param>
         /// <param name="client">The client coordinate.</param>
         /// <param name="screen">The screen coordinate.</param>
+        /// <seealso cref="ScreenToClient(WindowHandle, Vector2, out Vector2)"/>
+        /// <seealso cref="ClientToFramebuffer(WindowHandle, Vector2, out Vector2)"/>
         void ClientToScreen(WindowHandle handle, Vector2 client, out Vector2 screen);
 
         /// <summary>
@@ -478,6 +538,8 @@ namespace OpenTK.Platform
         /// <param name="handle">Handle of the window whose coordinate system to use.</param>
         /// <param name="client">The client coordinate.</param>
         /// <param name="framebuffer">The framebuffer coordinate.</param>
+        /// <seealso cref="FramebufferToClient(WindowHandle, Vector2, out Vector2)"/>
+        /// <seealso cref="ClientToScreen(WindowHandle, Vector2, out Vector2)"/>
         void ClientToFramebuffer(WindowHandle handle, Vector2 client, out Vector2 framebuffer);
 
         /// <summary>
@@ -490,6 +552,8 @@ namespace OpenTK.Platform
         /// <param name="handle">Handle of the window whose coordinate system to use.</param>
         /// <param name="framebuffer">The framebuffer coordinate.</param>
         /// <param name="client">The client coordinate.</param>
+        /// <seealso cref="ClientToFramebuffer(WindowHandle, Vector2, out Vector2)"/>
+        /// <seealso cref="ClientToScreen(WindowHandle, Vector2, out Vector2)"/>
         void FramebufferToClient(WindowHandle handle, Vector2 framebuffer, out Vector2 client);
 
         /// <summary>

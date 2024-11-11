@@ -3,21 +3,24 @@ using OpenTK.Mathematics;
 namespace OpenTK.Platform
 {
     // FIXME: Better define the coordinate system for the mouse position.
-    // Do we want to start using floats instead of ints for coordinates?
 
     /// <summary>
     /// A struct to contain information about the current mouse state.
     /// </summary>
+    /// <seealso cref="IMouseComponent.GetGlobalMouseState(out MouseState)"/>
+    /// <seealso cref="IMouseComponent.GetMouseState(WindowHandle, out MouseState)"/>
     public struct MouseState
     {
         /// <summary>
-        /// The mouse position in either screen coordinates (if received from <see cref="IMouseComponent.GetGlobalMouseState(out MouseState)"/>) 
+        /// The mouse position in either screen coordinates (if received from <see cref="IMouseComponent.GetGlobalMouseState(out MouseState)"/>),<br/>
         /// or window relative coordinates (if received from <see cref="IMouseComponent.GetMouseState(WindowHandle, out MouseState)"/>).
         /// </summary>
         public Vector2 Position;
 
         /// <summary>
         /// Virtual position of the scroll wheel.
+        /// The absolute value of this variable has no intrinsic value,
+        /// it is differences in this value over time that indicate scroll wheel movement.
         /// </summary>
         public Vector2 Scroll; // FIXME: Define this better
 
@@ -28,14 +31,15 @@ namespace OpenTK.Platform
     }
 
     /// <summary>
-    /// Base interface for drivers which implement the mouse component.
+    /// Interace for getting mouse input and setting mouse position.
     /// </summary>
+    /// <seealso cref="Toolkit.Mouse"/>
     public interface IMouseComponent : IPalComponent
     {
         /// <summary>
-        /// If it's possible to set the position of the mouse using <see cref="SetPosition(int, int)"/>.
+        /// If it's possible to set the position of the mouse using <see cref="SetGlobalPosition(Vector2)"/>.
         /// </summary>
-        /// <seealso cref="SetPosition(int, int)"/>.
+        /// <seealso cref="SetGlobalPosition(Vector2)"/>.
         bool CanSetMousePosition { get; }
 
         /// <summary>
@@ -48,15 +52,13 @@ namespace OpenTK.Platform
         // - Noggin_bops 2024-07-31
         bool SupportsRawMouseMotion { get; }
 
-        // FIXME: Should we report mouse positions using float?
-
         /// <summary>
         /// Get the global mouse cursor position.
         /// This function may query the mouse position outside of event processing to get the position of the mouse at the time this function is called.
         /// The mouse position returned is the mouse position as it is on screen, it will not return virtual coordinates when using <see cref="CursorCaptureMode.Locked"/>.
         /// </summary>
         /// <param name="globalPosition">Coordinate of the mouse in screen coordinates.</param>
-        /// <seealso cref="GetPosition(WindowHandle, out Vector2i)"/>
+        /// <seealso cref="GetPosition(WindowHandle, out Vector2)"/>
         /// <seealso cref="SetGlobalPosition(Vector2)"/>
         void GetGlobalPosition(out Vector2 globalPosition);
 
@@ -67,6 +69,7 @@ namespace OpenTK.Platform
         /// </summary>
         /// <param name="window">The window to get the mouse position for.</param>
         /// <param name="position">Coordinate of the mouse in client coordinates.</param>
+        /// <seealso cref="GetGlobalPosition(out Vector2)"/>
         void GetPosition(WindowHandle window, out Vector2 position);
 
         /// <summary>

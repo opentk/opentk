@@ -13,10 +13,10 @@ namespace OpenTK.Platform
         public string Name;
 
         /// <summary>
-        /// The file extension filter. The format of this string is "ext1;ext2". Use <c>*</c> to match any files.
+        /// The file extension filter. The format of this string is "ext1;ext2;ext3". Use <c>*</c> to match any files.
         /// </summary>
         /// <example>
-        /// new DialogFileFilter(){ Name="Images", Filter="png;jpg;jpeg" };
+        /// <code>new DialogFileFilter(){ Name="Images", Filter="png;jpg;jpeg" };</code>
         /// This creates a file filter that will match any files ending in png, jpg, or jpeg.
         /// </example>
         // FIXME: Should we just make this an array?
@@ -28,6 +28,14 @@ namespace OpenTK.Platform
         /// </summary>
         /// <param name="name">The display name of the filter.</param>
         /// <param name="filter">The filter string. <see cref="Filter"/> for format details.</param>
+        /// <example>
+        /// <code>new DialogFileFilter(){ Name="Images", Filter="png;jpg;jpeg" };</code>
+        /// This creates a file filter that will match any files ending in png, jpg, or jpeg.
+        /// </example>
+        /// <seealso cref="Name"/>
+        /// <seealso cref="Filter"/>
+        /// <seealso cref="IDialogComponent.ShowOpenDialog(WindowHandle, string, string, DialogFileFilter[], OpenDialogOptions)"/>
+        /// <seealso cref="IDialogComponent.ShowSaveDialog(WindowHandle, string, string, DialogFileFilter[], SaveDialogOptions)"/>
         public DialogFileFilter(string name, string filter)
         {
             Name = name;

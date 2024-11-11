@@ -6,6 +6,7 @@ namespace OpenTK.Platform
     /// <summary>
     /// Interface for drivers which provide the display component.
     /// </summary>
+    /// <seealso cref="Toolkit.Display"/>
     public interface IDisplayComponent : IPalComponent
     {
         // FIXME: Add API for getting the display orientation!

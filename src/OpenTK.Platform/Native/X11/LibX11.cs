@@ -292,6 +292,22 @@ namespace OpenTK.Platform.Native.X11
             out IntPtr contents
         );
 
+        internal static unsafe int XChangeProperty<T>(
+            XDisplayPtr display,
+            XWindow window,
+            XAtom property,
+            XAtom propertyType,
+            int format,
+            XPropertyMode mode,
+            ReadOnlySpan<T> data,
+            int elements) where T : unmanaged
+        {
+            fixed(T* dataPtr = data)
+            {
+                return XChangeProperty(display, window, property, propertyType, format, mode, (IntPtr)dataPtr, elements);
+            }
+        }
+
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         internal static extern int XChangeProperty(
             XDisplayPtr display,
@@ -327,6 +343,9 @@ namespace OpenTK.Platform.Native.X11
             byte[] data,
             int elements
         );
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void XDeleteProperty(XDisplayPtr display, XWindow w, XAtom property);
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         internal static extern void XGetInputFocus(XDisplayPtr display, out XWindow focus_return, out RevertTo revert_to_return);

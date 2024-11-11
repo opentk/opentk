@@ -40,6 +40,11 @@ namespace OpenTK.Platform.Native.macOS
         {
         }
 
+        /// <inheritdoc/>
+        public void Uninitialize()
+        {
+        }
+
         internal static void GetPosition(out double x, out double y)
         {
             CGPoint p = objc_msgSend_CGPoint((IntPtr)NSEventClass, selMouseLocation);

@@ -7,6 +7,7 @@ namespace OpenTK.Platform
     /// <summary>
     /// Options used to initialize OpenTK with.
     /// </summary>
+    /// <see cref="Toolkit.Init(ToolkitOptions)"/>
     public sealed class ToolkitOptions
     {
         /// <summary>
@@ -15,11 +16,11 @@ namespace OpenTK.Platform
         public string ApplicationName { get; set; } = "OpenTK Application";
 
         /// <summary>
-        /// The logger to send logging to.
+        /// The logger to send diagnostic messages (including warnings and errors) to.
         /// Log info can be useful to understand what might be going wrong if something isn't working.
         /// It's also useful to debug OpenTK.
         /// </summary>
-        public ILogger? Logger { get; set; } = null;
+        public ILogger? Logger { get; set; } = new ConsoleLogger();
 
         // FIXME: Add additional settings such as PreferSDL and PreferANGLE here...
 
@@ -70,6 +71,13 @@ namespace OpenTK.Platform
         /// </summary>
         public sealed class MacOSOptions
         {
+            /// <summary>
+            /// Makes this app active when calling <see cref="Toolkit.Init(ToolkitOptions)"/>.
+            /// This removes focus from other applications which might be what you want for games
+            /// but for applications with only hidden windows, or tools this is not the expected behaviour.
+            /// Defaults to <see langword="true"/>.
+            /// </summary> 
+            public bool ActiveAppOnStart { get; set; } = true;
         }
     }
 }

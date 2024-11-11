@@ -9,6 +9,7 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
+using OpenTK.Graphics.Vulkan;
 
 namespace OpenTK.Platform.Native.Windows
 {
@@ -28,9 +29,12 @@ namespace OpenTK.Platform.Native.Windows
         public static readonly IntPtr HInstance;
 
         /// <summary>
-        /// The helper window used to load wgl extensions.
+        /// The helper window used in part to load wgl extensions.
         /// </summary>
         public static IntPtr HelperHWnd { get; private set; }
+
+        internal static IntPtr DeviceNotificationHandle;
+        internal static IntPtr SuspendResumeNotificationHandle;
 
         // A handle to a windowproc delegate so it doesn't get GC collected.
         private Win32.WNDPROC? WindowProc;
@@ -124,10 +128,8 @@ namespace OpenTK.Platform.Native.Windows
             dbh.dbcc_devicetype = DBTDevType.DeviceInterface;
             dbh.dbcc_classguid = Win32.GUID_DEVINTERFACE_HID;
 
-            // We assume we are going to need these notification handles for the lifetime of the application, so we do not close them.
-            // - 2023-06-28 Noggin_bops
-            IntPtr devNotifHandle = Win32.RegisterDeviceNotification(HelperHWnd, dbh, DEVICE_NOTIFY.DEVICE_NOTIFY_WINDOW_HANDLE);
-            IntPtr resumeSuspendNotifHandle = Win32.RegisterSuspendResumeNotification(HelperHWnd, DEVICE_NOTIFY.DEVICE_NOTIFY_WINDOW_HANDLE);
+            DeviceNotificationHandle = Win32.RegisterDeviceNotification(HelperHWnd, dbh, DEVICE_NOTIFY.DEVICE_NOTIFY_WINDOW_HANDLE);
+            SuspendResumeNotificationHandle = Win32.RegisterSuspendResumeNotification(HelperHWnd, DEVICE_NOTIFY.DEVICE_NOTIFY_WINDOW_HANDLE);
 
             // Register for WM_CLIPBOARDUPDATE
             bool success = Win32.AddClipboardFormatListener(HelperHWnd);
@@ -135,6 +137,30 @@ namespace OpenTK.Platform.Native.Windows
             {
                 throw new Win32Exception();
             }
+        }
+
+        /// <inheritdoc/>
+        public void Uninitialize()
+        {
+            // Free all of the native resources.
+            // This means that if there are any windows still open we need to close them.
+            // - Noggin_bops 2024-10-30
+            foreach (var (_, hwnd) in HWndDict)
+            {
+                Logger?.LogWarning($"Window {GetTitle(hwnd)} is still open when uninitializing Toolkit. Please close all windows before uninitializing.");
+                Destroy(hwnd);
+            }
+
+            // Unregister the helper window from notifications.
+            Win32.UnregisterDeviceNotification(DeviceNotificationHandle);
+            Win32.UnregisterSuspendResumeNotification(SuspendResumeNotificationHandle);
+            Win32.RemoveClipboardFormatListener(HelperHWnd);
+
+            // Delete the helper window
+            Win32.DestroyWindow(HelperHWnd);
+
+            // Unregister the OpenTK window class
+            Win32.UnregisterClass(WindowComponent.CLASS_NAME, IntPtr.Zero);
         }
 
         /// <inheritdoc/>
@@ -1896,6 +1922,116 @@ namespace OpenTK.Platform.Native.Windows
             }
 
             Win32.SetWindowPos(hwnd.HWnd, IntPtr.Zero, 0, 0, 0, 0, SetWindowPosFlags.NoMove | SetWindowPosFlags.NoSize | SetWindowPosFlags.NoZOrder | SetWindowPosFlags.FrameChanged);
+        }
+
+        /// <inheritdoc/>
+        public bool SupportsFramebufferTransparency(WindowHandle handle)
+        {
+            HWND hwnd = handle.As<HWND>(this);
+            return true;
+        }
+
+        /// <inheritdoc/>
+        public void SetTransparencyMode(WindowHandle handle, WindowTransparencyMode transparencyMode, float opacity = 0.5f)
+        {
+            HWND hwnd = handle.As<HWND>(this);
+
+            WindowStylesEx exStyle = (WindowStylesEx)Win32.GetWindowLongPtr(hwnd.HWnd, GetGWLPIndex.ExStyle).ToInt64();
+            if (transparencyMode != WindowTransparencyMode.TransparentWindow && exStyle.HasFlag(WindowStylesEx.Layered))
+            {
+                // Disable opacity
+                Win32.SetLayeredWindowAttributes(hwnd.HWnd, 0, 0, 0);
+                exStyle &= ~WindowStylesEx.Layered;
+                Win32.SetWindowLongPtr(hwnd.HWnd, SetGWLPIndex.ExStyle, new IntPtr((int)exStyle));
+            }
+
+            switch (transparencyMode)
+            {
+                case WindowTransparencyMode.Opaque:
+                    {
+                        if (Win32.DwmIsCompositionEnabled(out bool dwmEnabled) != Win32.S_OK || dwmEnabled == false)
+                        {
+                            return;
+                        }
+
+                        Win32.DWM_BLURBEHIND bb = default;
+                        bb.dwFlags = DWMBB.Enable;
+                        bb.fEnable = 0;
+                        Win32.DwmEnableBlurBehindWindow(hwnd.HWnd, in bb);
+                        hwnd.FramebufferTransparencyEnabled = false;
+                        break;
+                    }
+                case WindowTransparencyMode.TransparentFramebuffer:
+                    {
+                        if (Win32.DwmIsCompositionEnabled(out bool dwmEnabled) != Win32.S_OK || dwmEnabled == false)
+                        {
+                            return;
+                        }
+
+                        if (Win32.DwmGetColorizationColor(out uint color, out bool opaqueBlend) == Win32.S_OK && opaqueBlend == false)
+                        {
+                            Logger?.LogWarning("DwmGetColorizationColor: Opaque blend active. Transparent framebuffer might not work. Please report this as an OpenTK bug if you see this.");
+                        }
+
+                        // Since windows 8 there is no blur effect any more.
+                        // Instead the blur darkens the blur area.
+                        // So we want to create an empty blur area so we
+                        // can get a completely transparent window.
+                        // - Noggin_bops 2024-10-31
+                        IntPtr region = Win32.CreateRectRgn(0, 0, -1, -1);
+                        Win32.DWM_BLURBEHIND bb = default;
+                        bb.dwFlags = DWMBB.Enable | DWMBB.BlurRegion;
+                        bb.fEnable = 1;
+                        bb.hRgnBlur = region;
+                        Win32.DwmEnableBlurBehindWindow(hwnd.HWnd, in bb);
+                        Win32.DeleteObject(region);
+                        hwnd.FramebufferTransparencyEnabled = true;
+                        break;
+                    }
+                case WindowTransparencyMode.TransparentWindow:
+                    {
+                        opacity = float.Clamp(opacity, 0, 1);
+
+                        // The documentation for WS_EX_LAYERED says it can't be combined with
+                        // CS_OWNDC but there are plenty of examples online where people are
+                        // using that combination so I think we'll be fine.
+                        // - Noggin_bops 2024-10-31
+                        exStyle |= WindowStylesEx.Layered;
+                        Win32.SetWindowLongPtr(hwnd.HWnd, SetGWLPIndex.ExStyle, new IntPtr((int)exStyle));
+                        Win32.SetLayeredWindowAttributes(hwnd.HWnd, 0, (byte)(opacity * 255), LWA.Alpha);
+                        hwnd.FramebufferTransparencyEnabled = false;
+                        break;
+                    }
+                default:
+                    throw new InvalidEnumArgumentException(nameof(transparencyMode), (int)transparencyMode, transparencyMode.GetType());
+            }
+        }
+
+        /// <inheritdoc/>
+        public WindowTransparencyMode GetTransparencyMode(WindowHandle handle, out float opacity)
+        {
+            HWND hwnd = handle.As<HWND>(this);
+
+            WindowStylesEx exStyle = (WindowStylesEx)Win32.GetWindowLongPtr(hwnd.HWnd, GetGWLPIndex.ExStyle).ToInt64();
+            if (exStyle.HasFlag(WindowStylesEx.Layered))
+            {
+                // FIXME: Maybe check the LWA to see if we are actually applying alpha?
+                Win32.GetLayeredWindowAttributes(hwnd.HWnd, out _, out byte alpha, out LWA flags);
+                opacity = alpha / 255.0f;
+                return WindowTransparencyMode.TransparentWindow;
+            }
+
+            opacity = 0.0f;
+
+            // FIXME: Because there seems to be no way to detect if blur behind is enabled or not
+            // we resort to storing a bool on the window handle itself.
+            // - Noggin_bops 2024-10-31
+            if (hwnd.FramebufferTransparencyEnabled)
+            {
+                return WindowTransparencyMode.TransparentFramebuffer;
+            }
+
+            return WindowTransparencyMode.Opaque;
         }
 
         /// <inheritdoc/>

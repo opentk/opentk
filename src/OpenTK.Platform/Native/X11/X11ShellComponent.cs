@@ -11,6 +11,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using static OpenTK.Platform.Native.X11.XScreenSaver;
+using static OpenTK.Platform.Native.X11.LibX11;
 
 namespace OpenTK.Platform.Native.X11
 {
@@ -38,6 +39,8 @@ namespace OpenTK.Platform.Native.X11
         }
 
         internal IntPtr PortalDesktop;
+
+        internal ulong PortalDesktopGSignal;
 
         // FIXME: Make this non-static while still exposing it to X11WindowComponent.
         internal static IntPtr GlibMainLoop;
@@ -82,7 +85,7 @@ namespace OpenTK.Platform.Native.X11
                 LibGio.g_clear_error(&error);
             }
 
-            ulong signal = LibGio.g_signal_connect(PortalDesktop, AsPtr("g-signal"u8), &settings_portal_changed_cb, IntPtr.Zero);
+            PortalDesktopGSignal = LibGio.g_signal_connect(PortalDesktop, AsPtr("g-signal"u8), &settings_portal_changed_cb, IntPtr.Zero);
 
             if (TryReadColorScheme(out int scheme))
             {
@@ -113,6 +116,22 @@ namespace OpenTK.Platform.Native.X11
             {
                 CurrentTheme.HighContrast = false;
             }
+        }
+
+        /// <inheritdoc/>
+        public void Uninitialize()
+        {
+            LibGio.g_signal_handler_disconnect(PortalDesktop, PortalDesktopGSignal);
+
+            LibGio.g_object_unref(PortalDesktop);
+
+            LibGio.g_variant_unref(GVariant_org_gnome_desktop_a11y_interface_high_contrast);
+            LibGio.g_variant_unref(GVariant_org_freedesktop_appearance_color_scheme);
+
+            LibGio.g_object_unref(GPowerProfileMoniforInstance);
+
+            LibGio.g_main_loop_quit(GlibMainLoop);
+            LibGio.g_main_loop_unref(GlibMainLoop);
         }
 
         private unsafe struct SettingsChangedParameters {
@@ -180,7 +199,7 @@ namespace OpenTK.Platform.Native.X11
 
 
         /// <inheritdoc/>
-        public void AllowScreenSaver(bool allow)
+        public void AllowScreenSaver(bool allow, string? disableReason)
         {
             if (X11.Extensions.Contains("MIT-SCREEN-SAVER"))
             {
@@ -209,6 +228,18 @@ namespace OpenTK.Platform.Native.X11
             {
                 Logger?.LogWarning("Cannot enable/disable screen saver because XScreenSaver() can't be found.");
             }
+        }
+
+        /// <inheritdoc/>
+        public unsafe bool IsScreenSaverAllowed()
+        {
+            XScreenSaverInfo* ssInfo = XScreenSaverAllocInfo();
+            XStatus status = XScreenSaverQueryInfo(X11.Display, (XDrawable)X11.DefaultRootWindow, ssInfo);
+
+            bool ssIsAllowed = ssInfo->state != ScreenSaverState.Disabled;
+            XFree(ssInfo);
+
+            return ssIsAllowed;
         }
 
         /// <inheritdoc/>

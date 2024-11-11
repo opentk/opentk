@@ -7,6 +7,7 @@ using OpenTK.Mathematics;
 using OpenTK.Platform.Native;
 using OpenTK.Platform.Native.ANGLE;
 using OpenTK.Platform.Native.macOS;
+using OpenTK.Platform.Native.X11;
 using StbImageSharp;
 using System;
 using System.Collections.Generic;
@@ -16,7 +17,6 @@ using System.IO.Compression;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Threading;
-using OpenTK.Platform.Native.X11;
 
 namespace OpenTK.Backends.Tests
 {
@@ -310,7 +310,21 @@ namespace OpenTK.Backends.Tests
             {
                 ImGuiViewportPtr viewport = ImGui.GetMainViewport();
                 GCHandle gchandle = GCHandle.Alloc(Window);
-                viewport.PlatformHandleRaw = (nint)gchandle;
+                viewport.PlatformHandle = (nint)gchandle;
+                switch (Toolkit.Window)
+                {
+                    case Platform.Native.Windows.WindowComponent win32:
+                        viewport.PlatformHandleRaw = win32.GetHWND(Window);
+                        break;
+                    case X11WindowComponent x11:
+                        viewport.PlatformHandleRaw = x11.GetX11Window(Window);
+                        break;
+                    case MacOSWindowComponent macOS:
+                        viewport.PlatformHandleRaw = macOS.GetNSWindow(Window);
+                        break;
+                    default:
+                        break;
+                }
             }
             // Make it so ImGui can set IME rect.
             ImGui.GetIO().PlatformSetImeDataFn = Marshal.GetFunctionPointerForDelegate(ImGui_SetPlatformImeDataInst);
@@ -401,6 +415,8 @@ namespace OpenTK.Backends.Tests
                     CloseApplicationWindow(window);
                 }
             }
+
+            Toolkit.Uninit();
         }
 
         static void Update(float dt)
@@ -817,8 +833,7 @@ namespace OpenTK.Backends.Tests
                 {
                     try
                     {
-                        GCHandle handle = GCHandle.FromIntPtr(viewport.PlatformHandleRaw);
-                        WindowHandle window = (WindowHandle)handle.Target!;
+                        WindowHandle window = Program.Window;
 
                         int x = (int)data.InputPos.X;
                         int y = (int)data.InputPos.Y;

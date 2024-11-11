@@ -19,6 +19,8 @@ namespace OpenTK.Platform.Native.X11
         public GLXFBConfig? FBConfig { get; }
         public ContextPixelFormat PixelFormat { get; }
 
+        public bool VisualSupportsFramebufferTransparency { get; set; }
+
         public int X { get; set; }
 
         public int Y { get; set; }
@@ -66,12 +68,14 @@ namespace OpenTK.Platform.Native.X11
             GraphicsApiHints hints,
             GLXFBConfig? fbConfig,
             ContextPixelFormat pixelFormat,
+            bool visualSupportsFramebufferTransparency,
             XColorMap? colorMap) : base(hints)
         {
             Display = display;
             Window = window;
             FBConfig = fbConfig;
             PixelFormat = pixelFormat;
+            VisualSupportsFramebufferTransparency = visualSupportsFramebufferTransparency;
             ColorMap = colorMap;
         }
     }

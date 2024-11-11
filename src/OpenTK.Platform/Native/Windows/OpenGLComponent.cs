@@ -36,6 +36,48 @@ namespace OpenTK.Platform.Native.Windows
         /// <inheritdoc/>
         public ILogger? Logger { get; set; }
 
+        internal static readonly Dictionary<IntPtr, HGLRC> HGLRCDict = new Dictionary<IntPtr, HGLRC>();
+
+        #region Extension bools
+
+        internal static bool ARB_multisample { get; set; }
+
+        internal static bool ARB_framebuffer_sRGB { get; set; }
+
+        internal static bool EXT_framebuffer_sRGB { get; set; }
+
+        internal static bool ARB_color_buffer_float { get; set; }
+
+        internal static bool ATI_pixel_format_float { get; set; }
+
+        internal static bool EXT_pixel_format_packed_float { get; set; }
+
+        internal static bool ARB_create_context { get; set; }
+
+        internal static bool ARB_create_context_profile { get; set; }
+
+        internal static bool ARB_create_context_es2_profile { get; set; }
+
+        internal static bool ARB_create_context_robustness { get; set; }
+
+        internal static bool ARB_robustness_application_isolation { get; set; }
+
+        internal static bool ARB_robustness_share_group_isolation { get; set; }
+
+        internal static bool ARB_create_context_no_error { get; set; }
+
+        internal static bool EXT_swap_control { get; set; }
+
+        internal static bool EXT_colorspace { get; set; }
+
+        internal static bool EXT_depth_float { get; set; }
+
+        internal static bool ARB_pixel_format { get; set; }
+
+        internal static bool ARB_context_flush_control { get; set; }
+
+        #endregion
+
         /// <inheritdoc/>
         public void Initialize(ToolkitOptions options)
         {
@@ -184,48 +226,20 @@ namespace OpenTK.Platform.Native.Windows
             }
         }
 
-        internal static readonly Dictionary<IntPtr, HGLRC> HGLRCDict = new Dictionary<IntPtr, HGLRC>();
+        /// <inheritdoc/>
+        public void Uninitialize()
+        {
+            // Delete all of the OpenGL contexts if there are any left.
 
-        #region Extension bools
-
-        internal static bool ARB_multisample { get; set; }
-
-        internal static bool ARB_framebuffer_sRGB { get; set; }
-
-        internal static bool EXT_framebuffer_sRGB { get; set; }
-
-        internal static bool ARB_color_buffer_float { get; set; }
-
-        internal static bool ATI_pixel_format_float { get; set; }
-
-        internal static bool EXT_pixel_format_packed_float { get; set; }
-
-        internal static bool ARB_create_context { get; set; }
-
-        internal static bool ARB_create_context_profile { get; set; }
-
-        internal static bool ARB_create_context_es2_profile { get; set; }
-
-        internal static bool ARB_create_context_robustness { get; set; }
-
-        internal static bool ARB_robustness_application_isolation { get; set; }
-
-        internal static bool ARB_robustness_share_group_isolation { get; set; }
-
-        internal static bool ARB_create_context_no_error { get; set; }
-
-        internal static bool EXT_swap_control { get; set; }
-
-        internal static bool EXT_colorspace { get; set; }
-
-        internal static bool EXT_depth_float { get; set; }
-
-        internal static bool ARB_pixel_format { get; set; }
-
-        internal static bool ARB_context_flush_control { get; set; }
-
-
-        #endregion
+            if (HGLRCDict.Count > 0)
+            {
+                Logger?.LogWarning($"OpenGL contexts still active when uninitializing. Please destroy all contexts before uninitializing.");
+            }
+            foreach (var (_, hglrc) in HGLRCDict)
+            {
+                DestroyContext(hglrc);
+            }
+        }
 
         /// <inheritdoc/>
         public bool CanShareContexts => true;
@@ -450,7 +464,7 @@ namespace OpenTK.Platform.Native.Windows
                     //Logger?.LogDebug($"Swap method: {(WGLSwapMethod)FindAttribute(contextValueAttrib, contextValues, WGLPixelFormatAttribute.SWAP_METHOD_ARB)}");
 
                     // FIXME: Add stereo to this?
-                    ContextValues option = default;
+                    ContextValues option;
                     option.ID = (ulong)i;
                     option.RedBits = FindAttribute(contextValueAttrib, contextValues, PixelFormatAttribute.RedBitsArb);
                     option.GreenBits = FindAttribute(contextValueAttrib, contextValues, PixelFormatAttribute.GreenBitsArb);
@@ -474,6 +488,7 @@ namespace OpenTK.Platform.Native.Windows
                     option.PixelFormat = pixelFormat;
                     option.SwapMethod = swapMethod;
                     option.Samples = ARB_multisample ? FindAttribute(contextValueAttrib, contextValues, PixelFormatAttribute.SamplesArb) : 0;
+                    option.SupportsFramebufferTransparency = true;
                     possibleContextValues.Add(option);
                 }
 
@@ -569,6 +584,7 @@ namespace OpenTK.Platform.Native.Windows
                 chosenValues.PixelFormat = chosenPixelFormat;
                 chosenValues.SwapMethod = chosenSwapMethod;
                 chosenValues.Samples = ARB_multisample ? FindAttribute(contextValueAttrib, contextValues, PixelFormatAttribute.SamplesArb) : 0;
+                chosenValues.SupportsFramebufferTransparency = true;
 
                 StringBuilder sb = new StringBuilder();
                 for (int j = 0; j < contextValueAttrib.Length; j++)
@@ -667,6 +683,7 @@ namespace OpenTK.Platform.Native.Windows
                     option.PixelFormat = ContextPixelFormat.RGBA;
                     option.SwapMethod = ContextSwapMethod.Undefined;
                     option.Samples = 0;
+                    option.SupportsFramebufferTransparency = true;
                     possibleContextValues.Add(option);
                 }
 

@@ -28,6 +28,11 @@ namespace OpenTK.Platform.Native.SDL
         }
 
         /// <inheritdoc/>
+        public void Uninitialize()
+        {
+        }
+
+        /// <inheritdoc/>
         public bool CanLoadSystemCursors => true;
 
         /// <inheritdoc/>
@@ -116,6 +121,16 @@ namespace OpenTK.Platform.Native.SDL
         {
             SDLCursor cursor = new SDLCursor();
 
+            if (width < 0) throw new ArgumentOutOfRangeException(nameof(width), width, "Width cannot be negative");
+            if (height < 0) throw new ArgumentOutOfRangeException(nameof(height), height, "Height cannot be negative");
+
+            if (image.Length < width * height * 4) throw new ArgumentException($"The given span is too small. It must be at least {width * height * 4} long. Was: {image.Length}");
+
+            if (hotspotX < 0) throw new ArgumentOutOfRangeException(nameof(hotspotX), hotspotX, "Hotspot X cannot be negative");
+            if (hotspotY < 0) throw new ArgumentOutOfRangeException(nameof(hotspotY), hotspotY, "Hotspot Y cannot be negative");
+            if (hotspotX > width) throw new ArgumentOutOfRangeException(nameof(hotspotX), hotspotX, $"Hotspot X cannot be larger than the width of the image {width}");
+            if (hotspotY > height) throw new ArgumentOutOfRangeException(nameof(hotspotY), hotspotY, $"Hotspot Y cannot be larger than the height of the image {height}");
+
             SDL_Surface* surface = SDL_CreateRGBSurfaceWithFormat(0, width, height, 32, SDL_PixelFormatEnum.SDL_PIXELFORMAT_ABGR8888);
 
             SDL_LockSurface(surface);
@@ -141,6 +156,17 @@ namespace OpenTK.Platform.Native.SDL
         public unsafe CursorHandle Create(int width, int height, ReadOnlySpan<byte> colorData, ReadOnlySpan<byte> maskData, int hotspotX, int hotspotY)
         {
             SDLCursor cursor = new SDLCursor();
+
+            if (width < 0) throw new ArgumentOutOfRangeException(nameof(width), width, "Width cannot be negative");
+            if (height < 0) throw new ArgumentOutOfRangeException(nameof(height), height, "Height cannot be negative");
+
+            if (colorData.Length < width * height * 3) throw new ArgumentException($"The given color data span is too small. It must be at least {width * height * 3} long. Was: {colorData.Length}");
+            if (maskData.Length < width * height * 1) throw new ArgumentException($"The given mask data span is too small. It must be at least {width * height * 1} long. Was: {maskData.Length}");
+
+            if (hotspotX < 0) throw new ArgumentOutOfRangeException(nameof(hotspotX), hotspotX, "Hotspot X cannot be negative");
+            if (hotspotY < 0) throw new ArgumentOutOfRangeException(nameof(hotspotY), hotspotY, "Hotspot Y cannot be negative");
+            if (hotspotX > width) throw new ArgumentOutOfRangeException(nameof(hotspotX), hotspotX, $"Hotspot X cannot be larger than the width of the image {width}");
+            if (hotspotY > height) throw new ArgumentOutOfRangeException(nameof(hotspotY), hotspotY, $"Hotspot Y cannot be larger than the height of the image {height}");
 
             if (width % 8 != 0)
             {

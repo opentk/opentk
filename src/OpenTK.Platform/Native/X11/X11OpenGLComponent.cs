@@ -13,16 +13,36 @@ namespace OpenTK.Platform.Native.X11
 {
     public class X11OpenGLComponent : IOpenGLComponent
     {
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public string Name => "X11OpenGLComponent";
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public PalComponents Provides => PalComponents.OpenGL;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public ILogger? Logger { get; set; }
 
-        /// <inheritdoc />
+        public Version GLXVersion { get; private set; }
+        public HashSet<string> GLXExtensions { get; } = new HashSet<string>();
+        public HashSet<string> GLXServerExtensions { get; } = new HashSet<string>();
+        public HashSet<string> GLXClientExtensions { get; } = new HashSet<string>();
+        public string GLXServerVendor { get; private set; } = "Unknown Server";
+        public string GLXClientVendor { get; private set; } = "Unknown Client";
+        public Version? GLXServerVersion { get; private set; }
+        public Version? GLXClientVersion { get; private set; }
+
+        internal bool ARB_robustness_isolation { get; set; }
+        internal bool ARB_create_context_robustness { get; set; }
+        internal bool ARB_create_context_no_error { get; set; }
+        internal bool ARB_context_flush_control { get; set; }
+
+        private static Dictionary<GLXContext, XOpenGLContextHandle> contextDict = new Dictionary<GLXContext, XOpenGLContextHandle>();
+
+        private delegate IntPtr glXGetProcAddressProc(string procName);
+
+        private glXGetProcAddressProc s_glXGetProcAddress = null!;
+
+        /// <inheritdoc/>
         public void Initialize(ToolkitOptions options)
         {
             if (!Glx.QueryExtension(X11.Display, out int errorBase, out int eventBase))
@@ -110,42 +130,27 @@ namespace OpenTK.Platform.Native.X11
             );
         }
 
-        /// <inheritdoc />
-        public bool CanShareContexts => false;
+        /// <inheritdoc/>
+        public void Uninitialize()
+        {
+        }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
+        public bool CanShareContexts => true;
+
+        /// <inheritdoc/>
         public bool CanCreateFromWindow => true;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public bool CanCreateFromSurface => false;
 
-        public Version GLXVersion { get; private set; }
-        public HashSet<string> GLXExtensions { get; } = new HashSet<string>();
-        public HashSet<string> GLXServerExtensions { get; } = new HashSet<string>();
-        public HashSet<string> GLXClientExtensions { get; } = new HashSet<string>();
-        public string GLXServerVendor { get; private set; } = "Unknown Server";
-        public string GLXClientVendor { get; private set; } = "Unknown Client";
-        public Version? GLXServerVersion { get; private set; }
-        public Version? GLXClientVersion { get; private set; }
-
-        internal bool ARB_robustness_isolation { get; set; }
-        internal bool ARB_create_context_robustness { get; set; }
-        internal bool ARB_create_context_no_error { get; set; }
-        internal bool ARB_context_flush_control { get; set; }
-
-        private static Dictionary<GLXContext, XOpenGLContextHandle> contextDict = new Dictionary<GLXContext, XOpenGLContextHandle>();
-
-        private delegate IntPtr glXGetProcAddressProc(string procName);
-
-        private glXGetProcAddressProc s_glXGetProcAddress = null!;
-
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public OpenGLContextHandle CreateFromSurface()
         {
             throw new PalNotImplementedException(this);
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public OpenGLContextHandle CreateFromWindow(WindowHandle handle)
         {
             XWindowHandle window = handle.As<XWindowHandle>(this);
@@ -288,7 +293,7 @@ namespace OpenTK.Platform.Native.X11
             return contextHandle;
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public void DestroyContext(OpenGLContextHandle handle)
         {
             var xhandle = handle.As<XOpenGLContextHandle>(this);
@@ -297,20 +302,20 @@ namespace OpenTK.Platform.Native.X11
             Glx.DestroyContext(X11.Display, xhandle.Context);
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public IBindingsContext GetBindingsContext(OpenGLContextHandle handle)
         {
             return new Pal2BindingsContext(this, handle);
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public IntPtr GetProcedureAddress(OpenGLContextHandle handle, string procedureName)
         {
             XOpenGLContextHandle xhandle = handle.As<XOpenGLContextHandle>(this);
             return s_glXGetProcAddress(procedureName);
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public OpenGLContextHandle? GetCurrentContext()
         {
             GLXContext context = Glx.GetCurrentContext();
@@ -318,7 +323,7 @@ namespace OpenTK.Platform.Native.X11
             return context.Value != IntPtr.Zero ? contextDict[context] : null;
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public bool SetCurrentContext(OpenGLContextHandle? handle)
         {
             XOpenGLContextHandle? xhandle = handle?.As<XOpenGLContextHandle>(this);
@@ -333,7 +338,7 @@ namespace OpenTK.Platform.Native.X11
             }
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public OpenGLContextHandle? GetSharedContext(OpenGLContextHandle handle)
         {
             return handle.As<XOpenGLContextHandle>(this).SharedContext;
@@ -363,7 +368,7 @@ namespace OpenTK.Platform.Native.X11
             }
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public void SetSwapInterval(int interval)
         {
             XOpenGLContextHandle? context = GetCurrentContext() as XOpenGLContextHandle;
@@ -409,7 +414,7 @@ namespace OpenTK.Platform.Native.X11
             }
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public int GetSwapInterval()
         {
             XOpenGLContextHandle? context = GetCurrentContext() as XOpenGLContextHandle;
@@ -439,7 +444,7 @@ namespace OpenTK.Platform.Native.X11
             }
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public void SwapBuffers(OpenGLContextHandle handle)
         {
             XOpenGLContextHandle context = handle.As<XOpenGLContextHandle>(this);

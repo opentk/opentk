@@ -11,12 +11,14 @@ using OpenTK.Mathematics;
 using System.Text;
 using Hardware.Info;
 using OpenTK.Platform.Native.macOS;
+using BejeweledStandalone;
+using System.Threading.Tasks;
 
 namespace Bejeweled
 {
     internal class Program
     {
-        private static ILogger Logger;
+        internal static ILogger Logger;
 
 #if !LIBRARY
 
@@ -144,12 +146,12 @@ namespace Bejeweled
             }
 
             DisplayHandle mainDisplay = Toolkit.Display.OpenPrimary();
-            Toolkit.Display.GetWorkArea(mainDisplay, out Box2i area);
-            int minWorkDimention = Math.Max(400, (int)(Math.Min(area.Height, area.Width) * 0.9f));
+            Toolkit.Display.GetWorkArea(mainDisplay, out Box2i workArea);
+            int minWorkDimention = Math.Max(400, (int)(Math.Min(workArea.Height, workArea.Width) * 0.9f));
 
             Window = Toolkit.Window.Create(openglSettings);
             Toolkit.Window.SetTitle(Window, $"Bejeweled");
-            Toolkit.Window.SetSize(Window, (minWorkDimention, minWorkDimention));
+            Toolkit.Window.SetClientBounds(Window, (workArea.Width - minWorkDimention) / 2, (workArea.Height - minWorkDimention) / 2, minWorkDimention, minWorkDimention);
             (Toolkit.Shell as OpenTK.Platform.Native.Windows.ShellComponent)?.SetImmersiveDarkMode(Window, true);
             Toolkit.Window.SetBorderStyle(Window, WindowBorderStyle.FixedBorder);
 
@@ -172,6 +174,31 @@ namespace Bejeweled
             {
                 cursor = win32Cursor.CreateFromCurResorce("gold_orb_pointer");
             }
+            else if (Toolkit.Cursor is OpenTK.Platform.Native.macOS.MacOSCursorComponent macOSCursor)
+            {
+                MacOSCursorComponent.Frame[] frames = new MacOSCursorComponent.Frame[15];
+                for (int i = 0; i < 5; i++)
+                {
+                    // FIXME: Should we support per frame delays?
+                    using Stream fileStream = File.Open($"./Assets/Cursor/Frames/Gold Orb_pointer frame_{i}.png", FileMode.Open);
+                    StbImageSharp.ImageResult result = StbImageSharp.ImageResult.FromStream(fileStream, StbImageSharp.ColorComponents.RedGreenBlueAlpha);
+
+                    frames[i].Image = result.Data;
+                    frames[i].ResX = result.Width;
+                    frames[i].ResY = result.Height;
+                    frames[i].Width = result.Width;
+                    frames[i].Height = result.Height;
+                    frames[i].HotspotX = 0;
+                    frames[i].HotspotY = 0;
+                }
+                // FIXME: This is a small hack to make the animation better while
+                // we don't have per frame delays.
+                for (int i = 5; i < frames.Length; i++)
+                {
+                    frames[i] = frames[0];
+                }
+                cursor = macOSCursor.Create(frames, 0.1f);
+            }
             else
             {
                 // FIXME: On mac we can animate this cursor by loading all of the GIF frames and putting them in an animated cursor...
@@ -180,15 +207,31 @@ namespace Bejeweled
             }
             Toolkit.Window.SetCursor(Window, cursor);
 
-            Toolkit.Window.SetMode(Window, WindowMode.Normal);
-
-            //ApplicationWindow bejeweled = new ApplicationWindow(handle);
             Context = Toolkit.OpenGL.CreateFromWindow(Window);
-            Toolkit.OpenGL.SetCurrentContext(Context);
-            Toolkit.OpenGL.SetSwapInterval(1);
+            // FIXME: Document if CreateFromWindow should make the context current or not!
+            Toolkit.OpenGL.SetCurrentContext(null);
             GLLoader.LoadBindings(Toolkit.OpenGL.GetBindingsContext(Context));
-            Bejeweled = new Bejeweled();
-            Bejeweled.Initialize(Window, Context, false, Logger);
+            Task loadTask = Task.Run(() => {
+                Toolkit.OpenGL.SetCurrentContext(Context);
+                Toolkit.OpenGL.SetSwapInterval(1);
+                Bejeweled = new Bejeweled();
+                Bejeweled.Initialize(Window, Context, false, Logger);
+                Toolkit.OpenGL.SetCurrentContext(null);
+            });
+
+            SplashWindow.DisplaySplashWindow(0.4f, loadTask, 0.6f);
+
+            while(loadTask.IsCompleted == false)
+            {
+                Toolkit.Window.ProcessEvents(false);
+            }
+            loadTask.Wait();
+            Toolkit.OpenGL.SetCurrentContext(Context);
+
+            Bejeweled.TransitionToGame();
+
+            Toolkit.Window.SetMode(Window, WindowMode.Normal);
+            Toolkit.Window.FocusWindow(Window);
 
             Stopwatch watch = Stopwatch.StartNew();
             while (true)
@@ -200,6 +243,17 @@ namespace Bejeweled
                 if (Toolkit.Window.IsWindowDestroyed(Window))
                 {
                     break;
+                }
+
+                if (Toolkit.Cursor is MacOSCursorComponent macOS)
+                {
+                    // FIXME: It's a little bit weird that we have to
+                    // set the cursor again after updating its animation?
+                    // - Noggin_bops 2024-11-02
+                    if (macOS.UpdateAnimation(cursor, dt))
+                    {
+                        Toolkit.Window.SetCursor(Window, cursor);
+                    }
                 }
 
                 Bejeweled.Update(dt);

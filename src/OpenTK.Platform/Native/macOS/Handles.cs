@@ -41,6 +41,11 @@ namespace OpenTK.Platform.Native.macOS
         public MouseButtonFlags PressedMouseButtons { get; set; }
         public Vector2 ScrollPosition { get; set; }
 
+        // Is the framebuffer transparent? We need to keep track of this
+        // so that if the framebuffer is set to transparent before we
+        // create the opengl context we can make the opengl context transparent.
+        public WindowTransparencyMode TransparencyMode { get; set; }
+
         public NSWindowHandle(IntPtr window, IntPtr view, GraphicsApiHints graphicsApiHints) : base(graphicsApiHints)
         {
             Window = window;

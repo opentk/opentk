@@ -24,6 +24,11 @@ namespace OpenTK.Platform.Native.macOS
         }
 
         /// <inheritdoc/>
+        public void Uninitialize()
+        {
+        }
+
+        /// <inheritdoc/>
         public bool SupportsLayouts => false;
 
         /// <inheritdoc/>

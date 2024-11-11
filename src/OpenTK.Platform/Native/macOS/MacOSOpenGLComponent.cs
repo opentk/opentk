@@ -26,6 +26,7 @@ namespace OpenTK.Platform.Native.macOS
         internal static readonly SEL selMakeCurrentContext = sel_registerName("makeCurrentContext"u8);
         internal static readonly SEL selClearDrawable = sel_registerName("clearDrawable"u8);
         internal static readonly SEL selFlushBuffer = sel_registerName("flushBuffer"u8);
+        internal static readonly SEL selSetValues_ForParameter = sel_registerName("setValues:forParameter:"u8);
 
         internal static readonly IntPtr opengl = LoadLibrary("/System/Library/Frameworks/OpenGl.framework/OpenGL"u8, true);
 
@@ -44,6 +45,11 @@ namespace OpenTK.Platform.Native.macOS
         public void Initialize(ToolkitOptions options)
         {
             // FIXME: Do something?
+        }
+
+        /// <inheritdoc/>
+        public void Uninitialize()
+        {
         }
 
         /// <inheritdoc/>
@@ -86,6 +92,7 @@ namespace OpenTK.Platform.Native.macOS
             values.SwapMethod = (hasBackingStore == 1) ? ContextSwapMethod.Copy : ContextSwapMethod.Undefined;
             // FIXME: Maybe querying samples is not enough...
             values.Samples = samples;
+            values.SupportsFramebufferTransparency = true;
         }
 
         internal void EnumerateContextValues(List<ContextValues> options, CGLOpenGLProfile profile)
@@ -296,6 +303,7 @@ namespace OpenTK.Platform.Native.macOS
                 requested.PixelFormat = settings.PixelFormat;
                 requested.SwapMethod = settings.SwapMethod;
                 requested.Samples = settings.Multisamples;
+                requested.SupportsFramebufferTransparency = true;
 
                 List<ContextValues> options = new List<ContextValues>();
                 Stopwatch watch = Stopwatch.StartNew();
@@ -392,6 +400,15 @@ namespace OpenTK.Platform.Native.macOS
 
             NSOpenGLContextDict.Add(nscontext.Context, nscontext);
 
+            // If we've set the framebuffer to be transparent before we 
+            // created the context we need to make the context transparent.
+            // - Noggin_bops 2024-11-02
+            if (nswindow.TransparencyMode == WindowTransparencyMode.TransparentFramebuffer)
+            {
+                int opaque = 0;
+                objc_msgSend(nswindow.Context.Context, selSetValues_ForParameter, (IntPtr)(&opaque), (long)NSOpenGLContextParameter.SurfaceOpacity);
+            }
+
             // Release the pixelFormat
             objc_msgSend(pixelFormat, Release);
 
@@ -476,7 +493,7 @@ namespace OpenTK.Platform.Native.macOS
 
             if (nscontext != null)
             {
-                objc_msgSend(nscontext.Context, sel_registerName("setValues:forParameter:"u8), (IntPtr)(&interval), (long)NSOpenGLContextParameter.SwapInterval);
+                objc_msgSend(nscontext.Context, selSetValues_ForParameter, (IntPtr)(&interval), (long)NSOpenGLContextParameter.SwapInterval);
             }
         }
 
@@ -488,7 +505,7 @@ namespace OpenTK.Platform.Native.macOS
             int interval = default;
             if (nscontext != null)
             {
-                objc_msgSend(nscontext.Context, sel_registerName("getValues:forParameter:"u8), (IntPtr)(&interval), (long)NSOpenGLContextParameter.SwapInterval);
+                objc_msgSend(nscontext.Context, selSetValues_ForParameter, (IntPtr)(&interval), (long)NSOpenGLContextParameter.SwapInterval);
             }
 
             return interval;

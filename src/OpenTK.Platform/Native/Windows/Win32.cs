@@ -1,19 +1,9 @@
-﻿using OpenTK.Platform.Native.Windows;
+﻿using OpenTK.Graphics.Vulkan;
+using OpenTK.Graphics.Wgl;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Reflection;
-using System.Reflection.Metadata;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using System.Runtime.InteropServices.JavaScript;
 using System.Text;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
-using static OpenTK.Platform.Native.Windows.Win32;
-
-#nullable enable
 
 namespace OpenTK.Platform.Native.Windows
 {
@@ -141,6 +131,9 @@ namespace OpenTK.Platform.Native.Windows
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         internal static extern short RegisterClassEx(in WNDCLASSEX wndClass);
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        internal static extern bool UnregisterClass(string lpClassName, IntPtr /* HINSTANCE */ hInstance);
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         internal static extern IntPtr CreateWindowEx(
@@ -1221,6 +1214,9 @@ namespace OpenTK.Platform.Native.Windows
               DEV_BROADCAST_DEVICEINTERFACE NotificationFilter,
               DEVICE_NOTIFY Flags);
 
+        [DllImport("user32.dll", SetLastError = true)]
+        internal static extern bool UnregisterDeviceNotification(IntPtr /* HDEVNOTIFY */ Handle);
+
         internal struct MEMORYSTATUSEX
         {
             public uint dwLength;
@@ -1244,7 +1240,13 @@ namespace OpenTK.Platform.Native.Windows
         internal static extern IntPtr /* HPOWERNOTIFY */ RegisterSuspendResumeNotification(IntPtr /* HANDLE */ hRecipient, DEVICE_NOTIFY Flags);
 
         [DllImport("user32.dll", SetLastError = true)]
+        internal static extern bool UnregisterSuspendResumeNotification(IntPtr /* HPOWERNOTIFY */ Handle);
+
+        [DllImport("user32.dll", SetLastError = true)]
         internal static extern bool AddClipboardFormatListener(IntPtr /* HWND */ hwnd);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        internal static extern bool RemoveClipboardFormatListener(IntPtr /* HWND */ hwnd);
 
         internal struct WINDOWPLACEMENT
         {
@@ -1487,7 +1489,7 @@ namespace OpenTK.Platform.Native.Windows
         }
 
         [DllImport("kernel32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
-        internal extern static IntPtr /* HANDLE */ CreateActCtxW(ref ACTCTXW actctx);
+        internal static extern IntPtr /* HANDLE */ CreateActCtxW(ref ACTCTXW actctx);
 
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
         internal struct ACTCTXW
@@ -1504,11 +1506,35 @@ namespace OpenTK.Platform.Native.Windows
         }
 
         [DllImport("kernel32.dll", SetLastError = true)]
-        internal extern static bool ActivateActCtx(IntPtr /* HANDLE */ hActCtx, out uint lpCookie);
+        internal static extern bool ActivateActCtx(IntPtr /* HANDLE */ hActCtx, out uint lpCookie);
 
         [DllImport("kernel32.dll", SetLastError = true)]
-        internal extern static bool DeactivateActCtx(uint dwFlags, uint lpCookie);
+        internal static extern bool DeactivateActCtx(uint dwFlags, uint lpCookie);
 
+        internal struct DWM_BLURBEHIND
+        {
+            public DWMBB dwFlags;
+            public int fEnable;
+            public IntPtr /* HRGN */ hRgnBlur;
+            public int fTransitionOnMaximized;
+        }
+
+        [DllImport("dwmapi.dll")]
+        internal static extern int /* HRESULT */ DwmEnableBlurBehindWindow(IntPtr /* HWND */ hWnd, in DWM_BLURBEHIND pBlurBehind);
+
+        [DllImport("dwmapi.dll")]
+        internal static extern int /* HRESULT */ DwmGetColorizationColor(out uint pcrColorization, [MarshalAs(UnmanagedType.Bool)] out bool pfOpaqueBlend);
+
+        [DllImport("gdi32.dll")]
+        internal static extern IntPtr /* HRGN */ CreateRectRgn(int x1, int y1, int x2, int y2);
+
+        [DllImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static extern bool SetLayeredWindowAttributes(IntPtr /* HWND */ hwnd, uint /* COLORREF */ crKey, byte bAlpha, LWA dwFlags);
+
+        [DllImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static extern bool GetLayeredWindowAttributes(IntPtr /* HWND */ hwnd, out uint /* COLORREF* */ pcrKey, out byte /* BYTE* */ pbAlpha, out LWA /* DWORD* */ pdwFlags);
     }
 
 #pragma warning restore CS0649 // Field 'field' is never assigned to, and will always have its default value 'value'

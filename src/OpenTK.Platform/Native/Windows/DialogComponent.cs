@@ -116,6 +116,24 @@ namespace OpenTK.Platform.Native.Windows
         }
 
         /// <inheritdoc/>
+        public void Uninitialize()
+        {
+            if (ActivationContext != Win32.INVALID_HANDLE_VALUE)
+            {
+                // FIXME: This doesn't seem to work for some reason..
+                // We get an exception, not even a false return value.
+                // - Noggin_bops 2024-10-30
+                /*
+                bool success = Win32.DeactivateActCtx(0, ActivationContextCookie);
+                if (success == false)
+                {
+                    throw new Win32Exception();
+                }
+                */
+            }
+        }
+
+        /// <inheritdoc/>
         public bool CanTargetFolders => false;
 
         /// <inheritdoc/>

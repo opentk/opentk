@@ -56,14 +56,19 @@ namespace OpenTK.Platform.Native.X11
             HasZenity = true;
             if (Version.TryParse(version, out ZenityVersion) == false)
             {
-            
-
                 Logger?.LogWarning($"Unable to parse zenity version: '{version}'");
             }
             else
             {
                 Logger?.LogInfo($"Detected Zenity version {ZenityVersion}.");
             }
+        }
+
+        /// <inheritdoc/>
+        public void Uninitialize()
+        {
+            HasZenity = false;
+            ZenityVersion = null;
         }
 
         /// <inheritdoc/>

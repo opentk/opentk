@@ -1086,21 +1086,33 @@ namespace Generator.Process
             nameTable.Rename(pointerParameter, $"{pointerParameter.Name}_handle");
             nameTable.MarkFixed(overload.InputParameters[lengthParameterIndex]);
 
-            CSRef.Type refType = nativeName.StartsWith("Delete") ? CSRef.Type.RefReadonly : CSRef.Type.Out;
-            parameters[^1] = pointerParameter with
+            IOverloadLayer layer;
+            if (nativeName.StartsWith("Delete"))
             {
-                // Remove ending 's' in parameter name.
-                // This works for Queries/Query because the parameter names in these functions is "ids
-                // - 2022-06-27
-                Name = newPointerParameterName,
-                Type = new CSRef(refType, pointerParameterType.BaseType),
-                Length = null
-            };
-            IOverloadLayer layer = refType == CSRef.Type.RefReadonly
-                ? new DeleteOverloadLayer(overload.InputParameters[lengthParameterIndex], parameters[^1],
-                    pointerParameter)
-                : new GenAndCreateOverloadLayer(overload.InputParameters[lengthParameterIndex], parameters[^1],
-                    pointerParameter);
+                parameters[^1] = pointerParameter with
+                {
+                    // Remove ending 's' in parameter name.
+                    // This works for Queries/Query because the parameter names in these functions is "ids
+                    // - 2022-06-27
+                    Name = newPointerParameterName,
+                    Type = pointerParameterType.BaseType,
+                    Length = null
+                };
+                layer = new DeleteOverloadLayer(overload.InputParameters[lengthParameterIndex], parameters[^1], pointerParameter);
+            }
+            else
+            {
+                parameters[^1] = pointerParameter with
+                {
+                    // Remove ending 's' in parameter name.
+                    // This works for Queries/Query because the parameter names in these functions is "ids
+                    // - 2022-06-27
+                    Name = newPointerParameterName,
+                    Type = new CSRef(CSRef.Type.Out, pointerParameterType.BaseType),
+                    Length = null
+                };
+                layer = new GenAndCreateOverloadLayer(overload.InputParameters[lengthParameterIndex], parameters[^1], pointerParameter);
+            }
 
             newOverloads = new List<Overload>()
             {
@@ -1119,17 +1131,14 @@ namespace Generator.Process
             Parameter InParameter,
             Parameter PointerParameter) : IOverloadLayer
         {
-            private CsScope _csScope;
             public void WritePrologue(IndentedTextWriter writer, NameTable nameTable)
             {
                 writer.WriteLine($"{LengthParameter.Type.ToCSString()} {nameTable[LengthParameter]} = 1;");
-                writer.WriteLine($"fixed({PointerParameter.Type.ToCSString()} {nameTable[PointerParameter]} = &{nameTable[InParameter]})");
-                _csScope = writer.CsScope();
+                writer.WriteLine($"{PointerParameter.Type.ToCSString()} {nameTable[PointerParameter]} = &{nameTable[InParameter]};");
             }
 
             public string? WriteEpilogue(IndentedTextWriter writer, NameTable nameTable, string? returnName)
             {
-                _csScope.Dispose();
                 return returnName;
             }
         }

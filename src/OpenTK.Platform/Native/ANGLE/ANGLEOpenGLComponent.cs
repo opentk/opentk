@@ -1,7 +1,6 @@
 ﻿using OpenTK.Platform;
 using OpenTK.Core.Utility;
 using OpenTK.Graphics.Egl;
-using OpenTK.Platform.Native.Windows;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -61,6 +60,12 @@ namespace OpenTK.Platform.Native.ANGLE
             // FIXME: This is a per-thread setting, so if the user swtiches threads this is not going to work...
             // - Noggin_bops 2024-11-11
             Egl.BindAPI(RenderApi.OpenglEsApi);
+        }
+
+        /// <inheritdoc/>
+        public void Uninitialize()
+        {
+            Egl.Terminate(eglDisplay);
         }
 
         /// <inheritdoc/>
@@ -162,6 +167,7 @@ namespace OpenTK.Platform.Native.ANGLE
                 // - Noggin_bops 2024-07-22
                 values.SwapMethod = ContextSwapMethod.Undefined;
                 values.Samples = configSamples;
+                values.SupportsFramebufferTransparency = false;
 
                 possibleContextValues.Add(values);
             }

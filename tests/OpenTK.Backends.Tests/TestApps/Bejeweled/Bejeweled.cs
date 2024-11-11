@@ -13,6 +13,7 @@ namespace OpenTK.Backends.Tests.Bejeweled
         public void Initialize(WindowHandle window, OpenGLContextHandle context, bool useGLES)
         {
             BejeweledGame.Initialize(window, context, useGLES, Program.Logger);
+            BejeweledGame.TransitionToGame();
         }
 
         public void HandleEvent(EventArgs args)

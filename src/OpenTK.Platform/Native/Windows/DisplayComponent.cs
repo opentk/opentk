@@ -198,6 +198,13 @@ namespace OpenTK.Platform.Native.Windows
 
             // FIXME: Maybe we should just send all of the data at once to the user.
 
+            // FIXME: Maybe make sure that the primary display is always at the beginning of the list?
+            // Right now the primary display is not guaranteed to be first in the DisplayConnectionChanged events...
+            // - Noggin_bops 2024-02-28
+            // FIXME: Maybe we want to order the removed and connected events so that changes to the primary monitor
+            // are handled in a good way. But maybe it also doesn't matter that much...
+            // - Noggin_bops 2024-10-30
+
             foreach (HMonitor removed in removedDisplays)
             {
                 _displays.Remove(removed);
@@ -219,10 +226,6 @@ namespace OpenTK.Platform.Native.Windows
                     logger?.LogDebug($"Connected: {connected.DeviceName} (IsPrimary: {connected.IsPrimary}, Refresh: {connected.RefreshRate}, Res: {connected.Resolution})");
                 }
             }
-
-            // FIXME: Maybe make sure that the primary display is always at the beginning of the list?
-            // Right now the primary display is not guaranteed to be first in the DisplayConnectionChanged events...
-            // - Noggin_bops 2024-02-28
 
             HMonitor? primary = null;
             foreach (HMonitor display in _displays)
@@ -256,7 +259,7 @@ namespace OpenTK.Platform.Native.Windows
         /// <inheritdoc/>
         public void Initialize(ToolkitOptions options)
         {
-            // FIXME: Should the user have any way to control the DPI awareness?
+            // FIXME: Add a ToolkitOptions option for setting DPI awareness on windows.
             if (OperatingSystem.IsWindowsVersionAtLeast(10, 0))
             {
                 bool success = Win32.SetProcessDpiAwarenessContext(new IntPtr((int)DpiAwarenessContext.PerMonitorAwareV2));
@@ -294,6 +297,15 @@ namespace OpenTK.Platform.Native.Windows
             }
 
             UpdateMonitors(false, Logger);
+        }
+
+        /// <inheritdoc/>
+        public void Uninitialize()
+        {
+            // We don't need to clear this list,
+            // but it feels appropriate.
+            // - Noggin_bops 2024-10-30
+            _displays.Clear();
         }
 
         /// <inheritdoc/>

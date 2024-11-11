@@ -1,8 +1,9 @@
 namespace OpenTK.Platform
 {
     /// <summary>
-    /// Interface for drivers which provide the surface component of the platform abstraction layer.
+    /// Interface for creating and interacting with surfaces.
     /// </summary>
+    /// <seealso cref="Toolkit.Surface"/>
     public interface ISurfaceComponent : IPalComponent
     {
         /// <summary>

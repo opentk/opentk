@@ -45,28 +45,45 @@ namespace OpenTK.Platform.Native.macOS
 
         private int ScreenSaverAssertion = 0;
 
+        private IntPtr DefaultScreenSaverReason;
+
         /// <inheritdocs/>
         public void Initialize(ToolkitOptions options)
         {
+            string? appName = options.ApplicationName;
+            if (string.IsNullOrEmpty(appName))
+                appName = null;
+            DefaultScreenSaverReason = ToNSString($"'{appName ?? "OpenTK app"}' is preventing screen saver.");
+
             // Set the initial theme so we can detect changes later
             LastTheme = GetCurrentTheme();
         }
 
+        /// <inheritdoc/>
+        public void Uninitialize()
+        {
+            objc_msgSend(DefaultScreenSaverReason, Release);
+        }
+
         /// <inheritdocs/>
-        public void AllowScreenSaver(bool allow)
+        public void AllowScreenSaver(bool allow, string? disableReason)
         {
             if (allow == false)
             {
                 // Only create an assertion if we don't have one already.
                 if (ScreenSaverAssertion == 0)
                 {
-                    // FIXME: Make the reason changable!
-                    IntPtr reason = ToNSString("Preventing screen saver."u8);
+                    IntPtr reason = disableReason == null ? DefaultScreenSaverReason : ToNSString(disableReason);
                     int result = IOPMAssertionCreateWithName(kIOPMAssertionTypeNoDisplaySleep, IOPMAssertionLevel.On, reason, out ScreenSaverAssertion);
                     if (result != 0)
                     {
                         // FIXME: Better error message?
-                        throw new Exception($"Failed to create assertion: {result}");
+                        throw new PalException(this, $"Failed to create screen saver assertion: {result}");
+                    }
+
+                    if (disableReason != null)
+                    {
+                        objc_msgSend(reason, Release);
                     }
                 }
             }
@@ -78,6 +95,12 @@ namespace OpenTK.Platform.Native.macOS
                     ScreenSaverAssertion = 0;
                 }
             }
+        }
+
+        /// <inheritdocs/>
+        public bool IsScreenSaverAllowed()
+        {
+            return ScreenSaverAssertion == 0;
         }
 
         /// <inheritdocs/>

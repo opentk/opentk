@@ -169,7 +169,7 @@ namespace OpenTK.Core.Native
         /// <param name="stringArray">The span of strings to marshal.</param>
         /// <param name="count">The number of strings in the unmanged array. The same as the length of the array.</param>
         /// <returns>The unmanaged ansi string array.</returns>
-        public static unsafe byte** MarshalStringArrayToAnsiStringArrayPtr(Span<string> stringArray, out uint count)
+        public static unsafe byte** MarshalStringArrayToAnsiStringArrayPtr(ReadOnlySpan<string> stringArray, out uint count)
         {
             byte** stringArrayPtr = (byte**)NativeMemory.Alloc((nuint)stringArray.Length, (nuint)sizeof(byte*));
             for (int i = 0; i < stringArray.Length; i++)
@@ -181,7 +181,7 @@ namespace OpenTK.Core.Native
         }
 
         /// <summary>
-        /// Frees unmanaged ansi string arrays allocated by <see cref="MarshalStringArrayToAnsiStringArrayPtr(Span{string}, out uint)"/>.
+        /// Frees unmanaged ansi string arrays allocated by <see cref="MarshalStringArrayToAnsiStringArrayPtr(ReadOnlySpan{string}, out uint)"/>.
         /// </summary>
         /// <param name="strArrayPtr">The unmanaged ansi string array.</param>
         /// <param name="count">The number of strings in the array.</param>

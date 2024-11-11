@@ -694,7 +694,6 @@ namespace VkGenerator
                 int bitsLeft = -1;
 
                 bool canWriteSimpleCtor = (@struct.Union == false);
-                bool hasSType = false;
                 foreach (StructMember member in @struct.Members)
                 {
                     // FIXME: What do we do with these?
@@ -775,8 +774,6 @@ namespace VkGenerator
                         }
                         else
                         {
-                            hasSType = true;
-
                             writer.WriteLine($"public {member.StrongType!.ToCSString()} {NameMangler.MangleMemberName(member.Name)} = VkStructureType.{NameMangler.MangleEnumName(member.Values)};");
                         }
                     }
@@ -840,7 +837,12 @@ namespace VkGenerator
                     }
                 }
 
-                if (canWriteSimpleCtor)
+                // Write empty ctor so our default values can apply.
+                {
+                    writer.WriteLine($"public {@struct.Name}() {{ }}");
+                }
+
+                if (canWriteSimpleCtor && @struct.Members.Count > 0)
                 {
                     StringBuilder signature = new StringBuilder();
                     foreach (StructMember member in @struct.Members)
@@ -862,15 +864,7 @@ namespace VkGenerator
                         }
                     }
                 }
-                else if (hasSType)
-                {
-                    // A struct with field initializers must include an explicitly declared ctor.
-                    // So we just add an empty ctor.
-                    // - Noggin_bops 2024-07-10
-                    writer.WriteLine($"public {@struct.Name}(){{ }}");
-                }
             }
         }
-
     }
 }

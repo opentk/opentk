@@ -404,14 +404,14 @@ namespace OpenTK.Platform
     {
         /// <summary>
         /// The new position of the mouse cursor in client coordinates.
-        /// Use <see cref="IWindowComponent.ClientToScreen(WindowHandle, int, int, out int, out int)"/> and
-        /// <see cref="IWindowComponent.ClientToFramebuffer(WindowHandle, int, int, out int, out int)"/> to
+        /// Use <see cref="IWindowComponent.ClientToScreen(WindowHandle, Vector2, out Vector2)"/> and
+        /// <see cref="IWindowComponent.ClientToFramebuffer(WindowHandle, Vector2, out Vector2)"/> to
         /// convert to the respective coordinate spaces.
         /// When using <see cref="CursorCaptureMode.Locked"/> this property will contain a virtual mouse position
         /// and will not correspond an actual location in client coordinates.
         /// </summary>
-        /// <seealso cref="IWindowComponent.ClientToScreen(WindowHandle, int, int, out int, out int)"/>
-        /// <seealso cref="IWindowComponent.ClientToFramebuffer(WindowHandle, int, int, out int, out int)"/>
+        /// <seealso cref="IWindowComponent.ClientToScreen(WindowHandle, Vector2, out Vector2)"/>
+        /// <seealso cref="IWindowComponent.ClientToFramebuffer(WindowHandle, Vector2, out Vector2)"/>
         /// <seealso cref="CursorCaptureMode.Locked"/>
         public Vector2 ClientPosition { get; private set; }
 
@@ -613,6 +613,8 @@ namespace OpenTK.Platform
     /// <summary>
     /// This event is triggered when a user changes the preferred theme.
     /// </summary>
+    /// <seealso cref="IShellComponent.GetPreferredTheme"/>
+    /// <seealso cref="ThemeInfo"/>
     public class ThemeChangeEventArgs : EventArgs
     {
         /// <summary>

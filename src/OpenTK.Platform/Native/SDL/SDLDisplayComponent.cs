@@ -30,6 +30,11 @@ namespace OpenTK.Platform.Native.SDL
         }
 
         /// <inheritdoc/>
+        public void Uninitialize()
+        {
+        }
+
+        /// <inheritdoc/>
         public bool CanSetVideoMode => throw new NotImplementedException();
 
         /// <inheritdoc/>

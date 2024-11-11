@@ -40,6 +40,12 @@ namespace OpenTK.Platform.Native.SDL
         }
 
         /// <inheritdoc/>
+        public void Uninitialize()
+        {
+            // FIXME: Do cleanup..
+        }
+
+        /// <inheritdoc/>
         public bool CanSetIcon => true;
 
         /// <inheritdoc/>
@@ -1018,6 +1024,24 @@ namespace OpenTK.Platform.Native.SDL
                 default:
                     throw new InvalidEnumArgumentException(nameof(style), (int)style, typeof(WindowBorderStyle));
             }
+        }
+
+        /// <inheritdoc/>
+        public bool SupportsFramebufferTransparency(WindowHandle handle)
+        {
+            return false;
+        }
+
+        /// <inheritdoc/>
+        public void SetTransparencyMode(WindowHandle handle, WindowTransparencyMode transparencyMode, float opacity = 0.5f)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        public WindowTransparencyMode GetTransparencyMode(WindowHandle handle, out float opacity)
+        {
+            throw new NotImplementedException();
         }
 
         /// <inheritdoc/>

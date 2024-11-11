@@ -56,11 +56,11 @@ void main()
 
 in vec3 f_Color;
 
-out vec3 color;
+out vec4 color;
 
 void main()
 {
-    color = f_Color;
+    color = vec4(f_Color, 0.5);
 }
 ";
 
@@ -85,11 +85,11 @@ precision highp float;
 
 in vec3 f_Color;
 
-out vec3 color;
+out vec4 color;
 
 void main()
 {
-    color = f_Color;
+    color = vec4(f_Color, 0.5);
 }
 ";
 
@@ -202,12 +202,12 @@ void main()
 
         public void HandleEvent(EventArgs args)
         {
-            if (args is WindowResizeEventArgs resize)
+            if (args is WindowFramebufferResizeEventArgs framebufferResize)
             {
                 var prevContext = Toolkit.OpenGL.GetCurrentContext();
                 Toolkit.OpenGL.SetCurrentContext(Context);
 
-                GL.Viewport(0, 0, resize.NewSize.X, resize.NewSize.Y);
+                GL.Viewport(0, 0, framebufferResize.NewFramebufferSize.X, framebufferResize.NewFramebufferSize.Y);
 
                 // Re-render the window to make resize live.
                 Render();

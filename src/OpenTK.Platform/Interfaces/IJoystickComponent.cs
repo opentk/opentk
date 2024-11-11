@@ -10,6 +10,7 @@ namespace OpenTK.Platform
     /// <summary>
     /// Interface for interacting with joysticks.
     /// </summary>
+    /// <seealso cref="Toolkit.Joystick"/>
     public interface IJoystickComponent : IPalComponent
     {
         // FIXME: Should we have separate gamepad and joystick components?

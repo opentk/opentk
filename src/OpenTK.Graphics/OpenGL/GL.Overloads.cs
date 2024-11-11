@@ -1,4 +1,4 @@
-// This file is auto generated, do not edit. Generated: 2024-11-11 15:15:34 GMT+01:00
+// This file is auto generated, do not edit. Generated: 2024-11-11 18:27:29 GMT+01:00
 using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -1424,13 +1424,11 @@ namespace OpenTK.Graphics.OpenGL
             Marshal.FreeCoTaskMem((IntPtr)buf_ptr);
         }
         /// <inheritdoc cref="DeleteBuffers(int, int*)"/>
-        public static unsafe void DeleteBuffer(ref readonly int buffer)
+        public static unsafe void DeleteBuffer(int buffer)
         {
             int n = 1;
-            fixed(int* buffers_handle = &buffer)
-            {
-                DeleteBuffers(n, buffers_handle);
-            }
+            int* buffers_handle = &buffer;
+            DeleteBuffers(n, buffers_handle);
         }
         /// <inheritdoc cref="DeleteBuffers(int, int*)"/>
         public static unsafe void DeleteBuffers(int n, ReadOnlySpan<int> buffers)
@@ -1457,13 +1455,11 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
         /// <inheritdoc cref="DeleteFramebuffers(int, int*)"/>
-        public static unsafe void DeleteFramebuffer(ref readonly int framebuffer)
+        public static unsafe void DeleteFramebuffer(int framebuffer)
         {
             int n = 1;
-            fixed(int* framebuffers_handle = &framebuffer)
-            {
-                DeleteFramebuffers(n, framebuffers_handle);
-            }
+            int* framebuffers_handle = &framebuffer;
+            DeleteFramebuffers(n, framebuffers_handle);
         }
         /// <inheritdoc cref="DeleteFramebuffers(int, int*)"/>
         public static unsafe void DeleteFramebuffers(int n, ReadOnlySpan<int> framebuffers)
@@ -1490,13 +1486,11 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
         /// <inheritdoc cref="DeleteProgramPipelines(int, int*)"/>
-        public static unsafe void DeleteProgramPipeline(ref readonly int pipeline)
+        public static unsafe void DeleteProgramPipeline(int pipeline)
         {
             int n = 1;
-            fixed(int* pipelines_handle = &pipeline)
-            {
-                DeleteProgramPipelines(n, pipelines_handle);
-            }
+            int* pipelines_handle = &pipeline;
+            DeleteProgramPipelines(n, pipelines_handle);
         }
         /// <inheritdoc cref="DeleteProgramPipelines(int, int*)"/>
         public static unsafe void DeleteProgramPipelines(int n, ReadOnlySpan<int> pipelines)
@@ -1523,13 +1517,11 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
         /// <inheritdoc cref="DeleteQueries(int, int*)"/>
-        public static unsafe void DeleteQuery(ref readonly int id)
+        public static unsafe void DeleteQuery(int id)
         {
             int n = 1;
-            fixed(int* ids_handle = &id)
-            {
-                DeleteQueries(n, ids_handle);
-            }
+            int* ids_handle = &id;
+            DeleteQueries(n, ids_handle);
         }
         /// <inheritdoc cref="DeleteQueries(int, int*)"/>
         public static unsafe void DeleteQueries(int n, ReadOnlySpan<int> ids)
@@ -1556,13 +1548,11 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
         /// <inheritdoc cref="DeleteRenderbuffers(int, int*)"/>
-        public static unsafe void DeleteRenderbuffer(ref readonly int renderbuffer)
+        public static unsafe void DeleteRenderbuffer(int renderbuffer)
         {
             int n = 1;
-            fixed(int* renderbuffers_handle = &renderbuffer)
-            {
-                DeleteRenderbuffers(n, renderbuffers_handle);
-            }
+            int* renderbuffers_handle = &renderbuffer;
+            DeleteRenderbuffers(n, renderbuffers_handle);
         }
         /// <inheritdoc cref="DeleteRenderbuffers(int, int*)"/>
         public static unsafe void DeleteRenderbuffers(int n, ReadOnlySpan<int> renderbuffers)
@@ -1589,13 +1579,11 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
         /// <inheritdoc cref="DeleteSamplers(int, int*)"/>
-        public static unsafe void DeleteSampler(ref readonly int sampler)
+        public static unsafe void DeleteSampler(int sampler)
         {
             int count = 1;
-            fixed(int* samplers_handle = &sampler)
-            {
-                DeleteSamplers(count, samplers_handle);
-            }
+            int* samplers_handle = &sampler;
+            DeleteSamplers(count, samplers_handle);
         }
         /// <inheritdoc cref="DeleteSamplers(int, int*)"/>
         public static unsafe void DeleteSamplers(int count, ReadOnlySpan<int> samplers)
@@ -1622,13 +1610,11 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
         /// <inheritdoc cref="DeleteTextures(int, int*)"/>
-        public static unsafe void DeleteTexture(ref readonly int texture)
+        public static unsafe void DeleteTexture(int texture)
         {
             int n = 1;
-            fixed(int* textures_handle = &texture)
-            {
-                DeleteTextures(n, textures_handle);
-            }
+            int* textures_handle = &texture;
+            DeleteTextures(n, textures_handle);
         }
         /// <inheritdoc cref="DeleteTextures(int, int*)"/>
         public static unsafe void DeleteTextures(int n, ReadOnlySpan<int> textures)
@@ -1655,13 +1641,11 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
         /// <inheritdoc cref="DeleteTransformFeedbacks(int, int*)"/>
-        public static unsafe void DeleteTransformFeedback(ref readonly int id)
+        public static unsafe void DeleteTransformFeedback(int id)
         {
             int n = 1;
-            fixed(int* ids_handle = &id)
-            {
-                DeleteTransformFeedbacks(n, ids_handle);
-            }
+            int* ids_handle = &id;
+            DeleteTransformFeedbacks(n, ids_handle);
         }
         /// <inheritdoc cref="DeleteTransformFeedbacks(int, int*)"/>
         public static unsafe void DeleteTransformFeedbacks(int n, ReadOnlySpan<int> ids)
@@ -1688,13 +1672,11 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
         /// <inheritdoc cref="DeleteVertexArrays(int, int*)"/>
-        public static unsafe void DeleteVertexArray(ref readonly int array)
+        public static unsafe void DeleteVertexArray(int array)
         {
             int n = 1;
-            fixed(int* arrays_handle = &array)
-            {
-                DeleteVertexArrays(n, arrays_handle);
-            }
+            int* arrays_handle = &array;
+            DeleteVertexArrays(n, arrays_handle);
         }
         /// <inheritdoc cref="DeleteVertexArrays(int, int*)"/>
         public static unsafe void DeleteVertexArrays(int n, ReadOnlySpan<int> arrays)
@@ -13653,13 +13635,11 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="DeleteFramebuffers(int, int*)"/>
-            public static unsafe void DeleteFramebuffer(ref readonly int framebuffer)
+            public static unsafe void DeleteFramebuffer(int framebuffer)
             {
                 int n = 1;
-                fixed(int* framebuffers_handle = &framebuffer)
-                {
-                    DeleteFramebuffers(n, framebuffers_handle);
-                }
+                int* framebuffers_handle = &framebuffer;
+                DeleteFramebuffers(n, framebuffers_handle);
             }
             /// <inheritdoc cref="DeleteFramebuffers(int, int*)"/>
             public static unsafe void DeleteFramebuffers(int n, ReadOnlySpan<int> framebuffers)
@@ -13693,13 +13673,11 @@ namespace OpenTK.Graphics.OpenGL
                 Marshal.FreeCoTaskMem((IntPtr)name_ptr);
             }
             /// <inheritdoc cref="DeleteProgramPipelines(int, int*)"/>
-            public static unsafe void DeleteProgramPipeline(ref readonly int pipeline)
+            public static unsafe void DeleteProgramPipeline(int pipeline)
             {
                 int n = 1;
-                fixed(int* pipelines_handle = &pipeline)
-                {
-                    DeleteProgramPipelines(n, pipelines_handle);
-                }
+                int* pipelines_handle = &pipeline;
+                DeleteProgramPipelines(n, pipelines_handle);
             }
             /// <inheritdoc cref="DeleteProgramPipelines(int, int*)"/>
             public static unsafe void DeleteProgramPipelines(int n, ReadOnlySpan<int> pipelines)
@@ -13774,13 +13752,11 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="DeleteRenderbuffers(int, int*)"/>
-            public static unsafe void DeleteRenderbuffer(ref readonly int renderbuffer)
+            public static unsafe void DeleteRenderbuffer(int renderbuffer)
             {
                 int n = 1;
-                fixed(int* renderbuffers_handle = &renderbuffer)
-                {
-                    DeleteRenderbuffers(n, renderbuffers_handle);
-                }
+                int* renderbuffers_handle = &renderbuffer;
+                DeleteRenderbuffers(n, renderbuffers_handle);
             }
             /// <inheritdoc cref="DeleteRenderbuffers(int, int*)"/>
             public static unsafe void DeleteRenderbuffers(int n, ReadOnlySpan<int> renderbuffers)
@@ -13807,13 +13783,11 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="DeleteSamplers(int, int*)"/>
-            public static unsafe void DeleteSampler(ref readonly int sampler)
+            public static unsafe void DeleteSampler(int sampler)
             {
                 int count = 1;
-                fixed(int* samplers_handle = &sampler)
-                {
-                    DeleteSamplers(count, samplers_handle);
-                }
+                int* samplers_handle = &sampler;
+                DeleteSamplers(count, samplers_handle);
             }
             /// <inheritdoc cref="DeleteSamplers(int, int*)"/>
             public static unsafe void DeleteSamplers(int count, ReadOnlySpan<int> samplers)
@@ -13840,13 +13814,11 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="DeleteTransformFeedbacks(int, int*)"/>
-            public static unsafe void DeleteTransformFeedback(ref readonly int id)
+            public static unsafe void DeleteTransformFeedback(int id)
             {
                 int n = 1;
-                fixed(int* ids_handle = &id)
-                {
-                    DeleteTransformFeedbacks(n, ids_handle);
-                }
+                int* ids_handle = &id;
+                DeleteTransformFeedbacks(n, ids_handle);
             }
             /// <inheritdoc cref="DeleteTransformFeedbacks(int, int*)"/>
             public static unsafe void DeleteTransformFeedbacks(int n, ReadOnlySpan<int> ids)
@@ -13873,13 +13845,11 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="DeleteVertexArrays(int, int*)"/>
-            public static unsafe void DeleteVertexArray(ref readonly int array)
+            public static unsafe void DeleteVertexArray(int array)
             {
                 int n = 1;
-                fixed(int* arrays_handle = &array)
-                {
-                    DeleteVertexArrays(n, arrays_handle);
-                }
+                int* arrays_handle = &array;
+                DeleteVertexArrays(n, arrays_handle);
             }
             /// <inheritdoc cref="DeleteVertexArrays(int, int*)"/>
             public static unsafe void DeleteVertexArrays(int n, ReadOnlySpan<int> arrays)

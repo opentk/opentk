@@ -713,6 +713,22 @@ namespace OpenTK.Platform.Native.Windows
         VerticalRedraw = 0x1
     }
 
+    internal enum DWMBB : uint
+    {
+        /// <summary>
+        /// A value for the fEnable member has been specified.
+        /// </summary>
+        Enable = 0x00000001,
+        /// <summary>
+        /// A value for the hRgnBlur member has been specified.
+        /// </summary>
+        BlurRegion = 0x00000002,
+        /// <summary>
+        /// A value for the fTransitionOnMaximized member has been specified.
+        /// </summary>
+        TransitionMaximized = 0x00000004,
+    }
+
     internal enum DWMWindowAttribute : uint
     {
         /// <summary>
@@ -3316,6 +3332,18 @@ namespace OpenTK.Platform.Native.Windows
         /// Since this name is based on the localization of the product, it changes for each localized version.
         /// </summary>
         SLocalizedLanguageName = 0x0000006f,
+    }
+
+    internal enum LWA : uint
+    {
+        /// <summary>
+        /// Use bAlpha to determine the opacity of the layered window.
+        /// </summary>
+        Alpha = 0x00000002,
+        /// <summary>
+        /// Use crKey as the transparency color.
+        /// </summary>
+        ColorKey = 0x00000001
     }
 
     internal enum DIB

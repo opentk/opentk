@@ -53,6 +53,8 @@ namespace OpenTK.Platform.Native.Windows
 
         public bool RawMouseMotionEnabled { get; set; } = false;
 
+        public bool FramebufferTransparencyEnabled { get; set; } = false;
+
         public HWND(IntPtr hWnd, GraphicsApiHints hints) : base(hints)
         {
             HWnd = hWnd;

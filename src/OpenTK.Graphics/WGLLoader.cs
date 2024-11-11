@@ -13,9 +13,6 @@ namespace OpenTK.Graphics
     {
         public static class BindingsContext
         {
-            // FIXME: Extend this to be able to use wglGetProcAddress?
-            // Alternatively allow for user provided bindings contexts to be used...
-            // - Noggin_bops 2024-03-06
             public static IntPtr GetProcAddress(string procName)
             {
                 if (NativeLibrary.TryGetExport(WGLHandle, procName, out IntPtr ret) == false)
@@ -23,7 +20,7 @@ namespace OpenTK.Graphics
                     ret = wglGetProcAddress(procName);
                 }
                 return ret;
-            } 
+            }
         }
 
         private static readonly IntPtr WGLHandle = NativeLibrary.Load("opengl32.dll");
