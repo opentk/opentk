@@ -1,4 +1,4 @@
-// This file is auto generated, do not edit. Generated: 2024-11-11 15:15:34 GMT+01:00
+// This file is auto generated, do not edit. Generated: 2024-11-11 18:27:30 GMT+01:00
 using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -231,13 +231,11 @@ namespace OpenTK.Graphics.OpenGLES1
             }
         }
         /// <inheritdoc cref="DeleteBuffers(int, int*)"/>
-        public static unsafe void DeleteBuffer(ref readonly int buffer)
+        public static unsafe void DeleteBuffer(int buffer)
         {
             int n = 1;
-            fixed(int* buffers_handle = &buffer)
-            {
-                DeleteBuffers(n, buffers_handle);
-            }
+            int* buffers_handle = &buffer;
+            DeleteBuffers(n, buffers_handle);
         }
         /// <inheritdoc cref="DeleteBuffers(int, int*)"/>
         public static unsafe void DeleteBuffers(int n, ReadOnlySpan<int> buffers)
@@ -264,13 +262,11 @@ namespace OpenTK.Graphics.OpenGLES1
             }
         }
         /// <inheritdoc cref="DeleteTextures(int, int*)"/>
-        public static unsafe void DeleteTexture(ref readonly int texture)
+        public static unsafe void DeleteTexture(int texture)
         {
             int n = 1;
-            fixed(int* textures_handle = &texture)
-            {
-                DeleteTextures(n, textures_handle);
-            }
+            int* textures_handle = &texture;
+            DeleteTextures(n, textures_handle);
         }
         /// <inheritdoc cref="DeleteTextures(int, int*)"/>
         public static unsafe void DeleteTextures(int n, ReadOnlySpan<int> textures)
