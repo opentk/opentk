@@ -1,3 +1,48 @@
+## 5.0-pre.13
+
+* Changed `MarshalTk.MarshalStringArrayToAnsiStringArrayPtr` to take `ReadOnlySpan<string>` instead of `Span<string>`. (@NogginBops)
+
+**Vulkan bindings changes**:
+
+* Add default parameterless constructor to all Vulkan structs so that default member values can be applied (mostly to automatically set `sType`). (@NogginBops)
+
+* Made the Vulkan example project render a triangle. (@NogginBops)
+
+**OpenGL bindings changes**:
+
+* Skip `ref readonly` for singular `Delete*()` functions. (@NogginBops)
+* Added generated EGL bindings containing all EGL and ANGLE extensions. (@NogginBops)
+* Fixed missing documentation on some OpenGL functions. (@NogginBops)
+
+**PAL2 changes**:
+
+* A lot of documentation improvements. (@NogginBops)
+* Added `Toolkit.Window.Get/SetTransparencyMode` to support different modes for window transparency. (@NogginBops)
+* Add `reason` parameter to `Toolkit.Shell.AllowScreenSaver`. (@NogginBops)
+* Add `Toolkit.Shell.IsScreenSaverAllowed` to be able to check if the screen saver is disabled. (@NogginBops)
+* Added `OpenGLGraphicsApiHints.SupportsTransparentFramebufferX11` to mark if the context values selector should look for formats that support framebuffer transparency when on X11 (framebuffer transparency is always supported on Windows and macOS). (@NogginBops)
+* Added `ContextValues.SupportsFramebufferTransparency` to check if a particular format supports framebuffer transparency (only relevant on X11). (@NogginBops)
+* Updated `ContextValues.DefaultValuesSelector` to handle `SupportsFramebufferTransparency`. (@NogginBops)
+* Added `Toolkit.Uninit()` for usecases where unloading OpenTK is useful (don't call this function on application exit). (@NogginBops)
+* Added `IPalComponent.Uninitialize()` and implemented it for every component on every platform to make `Toolkit.Uninit()` possible. (@NogginBops)
+
+win32:
+
+macOS:
+
+* Implement `MacOSVulkanComponent` using MoltenVK. (@NogginBops)
+* Made dialogs proper window sheets by default. (@NogginBops)
+* Added `MacOSDialogComponent.Show*NoWindow` functions for showing dialogs not attached to any window. (@NogginBops)
+
+x11:
+
+* Fixed glX dll resolution to be the same as before 5.0-pre.12 (@NogginBops)
+* Fixed memory leak in `X11KeyboardComponent`. (@NogginBops)
+
+ANGLE:
+
+* Switched implementation to use the generated EGL bindings. (@NogginBops)
+
 ## 5.0-pre.12
 
 **Vulkan bindings changes:**
