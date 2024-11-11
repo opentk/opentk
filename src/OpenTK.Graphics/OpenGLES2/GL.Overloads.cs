@@ -1,4 +1,4 @@
-// This file is auto generated, do not edit. Generated: 2024-09-24 18:01:57 GMT+02:00
+// This file is auto generated, do not edit. Generated: 2024-11-11 15:15:34 GMT+01:00
 using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -2781,7 +2781,7 @@ namespace OpenTK.Graphics.OpenGLES2
                 Marshal.FreeCoTaskMem((IntPtr)source_ptr);
             }
         }
-        /// <inheritdoc cref="GetString(StringName)"/>
+        /// <inheritdoc cref="GetString_(StringName)"/>
         public static unsafe string? GetString(StringName name)
         {
             string? returnValue_str;
@@ -2790,7 +2790,7 @@ namespace OpenTK.Graphics.OpenGLES2
             returnValue_str = Marshal.PtrToStringAnsi((IntPtr)returnValue);
             return returnValue_str;
         }
-        /// <inheritdoc cref="GetStringi(StringName, uint)"/>
+        /// <inheritdoc cref="GetStringi_(StringName, uint)"/>
         public static unsafe string? GetStringi(StringName name, uint index)
         {
             string? returnValue_str;

@@ -36,6 +36,7 @@ namespace Generator.Writing
                     GLFile.GL => new FileStrings("GL", "GL", "OpenGL", "GLLoader", "GLLoader.BindingsContext"),
                     GLFile.WGL => new FileStrings("WGL", "Wgl", "Wgl", "WGLLoader", "WGLLoader.BindingsContext"),
                     GLFile.GLX => new FileStrings("GLX", "Glx", "Glx", "GLXLoader", "GLXLoader.BindingsContext"),
+                    GLFile.EGL => new FileStrings("EGL", "Egl", "Egl", "EGLLoader", "EGLLoader.BindingsContext"),
                     _ => throw new Exception(),
                 };
 
@@ -60,6 +61,7 @@ namespace Generator.Writing
                 OutputApi.GLES2 => new FileStrings("GL", "GL", "OpenGLES2", "GLLoader", "GLLoader.BindingsContext"),
                 OutputApi.WGL => new FileStrings("WGL", "Wgl", "Wgl", "WGLLoader", "WGLLoader.BindingsContext"),
                 OutputApi.GLX => new FileStrings("GLX", "Glx", "Glx", "GLXLoader", "GLXLoader.BindingsContext"),
+                OutputApi.EGL => new FileStrings("EGL", "Egl", "Egl", "EGLLoader", "EGLLoader.BindingsContext"),
                 _ => throw new Exception($"This is not a valid output API ({@namespace.Name})"),
             };
 
@@ -242,6 +244,7 @@ namespace Generator.Writing
             if (strings.Namespace != "OpenGL") writer.WriteLine("using OpenTK.Graphics.OpenGL;");
             if (strings.Namespace != "Wgl") writer.WriteLine("using OpenTK.Graphics.Wgl;");
             if (strings.Namespace != "Glx") writer.WriteLine("using OpenTK.Graphics.Glx;");
+            if (strings.Namespace != "Egl") writer.WriteLine("using OpenTK.Graphics.Egl;");
 
             writer.WriteLine();
             writer.WriteLine($"namespace {GraphicsNamespace}.{strings.Namespace}");
@@ -373,6 +376,10 @@ namespace Generator.Writing
             string parameterTypes = string.Join(", ", overload.NativeFunction.Parameters.Select(p => p.Type.ToCSString()));
 
             string nativeFunctionName = overload.NativeFunction.FunctionName;
+            if (postfixNativeCall)
+            {
+                nativeFunctionName += "_";
+            }
 
             writer.WriteLine($"/// <inheritdoc cref=\"{nativeFunctionName}({parameterTypes})\"/>");
 
@@ -511,7 +518,19 @@ namespace Generator.Writing
                 {
                     foreach (var member in group.Members)
                     {
-                        writer.WriteLine($"{member.MangledName} = {member.Value},");
+                        // HACK: Some enums have a value of -1, and because
+                        // we don't know the bitwidth of the enum here we can't cast
+                        // the value correctly. This hack fixes this for -1 but doesn't
+                        // work for any other negative numbers...
+                        // - Noggin_bops 2024-11-11
+                        if (member.Value == ulong.MaxValue)
+                        {
+                            writer.WriteLine($"{member.MangledName} = unchecked((uint)-1),");
+                        }
+                        else
+                        {
+                            writer.WriteLine($"{member.MangledName} = {member.Value},");
+                        }
                     }
                 }
             }
