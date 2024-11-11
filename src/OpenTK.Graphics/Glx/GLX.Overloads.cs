@@ -1,4 +1,4 @@
-// This file is auto generated, do not edit. Generated: 2024-09-24 18:01:57 GMT+02:00
+// This file is auto generated, do not edit. Generated: 2024-11-11 15:15:34 GMT+01:00
 using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -168,7 +168,7 @@ namespace OpenTK.Graphics.Glx
             }
             return returnValue;
         }
-        /// <inheritdoc cref="GetClientString(DisplayPtr, StringName)"/>
+        /// <inheritdoc cref="GetClientString_(DisplayPtr, StringName)"/>
         public static unsafe string? GetClientString(DisplayPtr dpy, StringName name)
         {
             string? returnValue_str;
@@ -359,7 +359,7 @@ namespace OpenTK.Graphics.Glx
             }
             return returnValue;
         }
-        /// <inheritdoc cref="QueryExtensionsString(DisplayPtr, int)"/>
+        /// <inheritdoc cref="QueryExtensionsString_(DisplayPtr, int)"/>
         public static unsafe string? QueryExtensionsString(DisplayPtr dpy, int screen)
         {
             string? returnValue_str;
@@ -368,7 +368,7 @@ namespace OpenTK.Graphics.Glx
             returnValue_str = Marshal.PtrToStringAnsi((IntPtr)returnValue);
             return returnValue_str;
         }
-        /// <inheritdoc cref="QueryServerString(DisplayPtr, int, StringName)"/>
+        /// <inheritdoc cref="QueryServerString_(DisplayPtr, int, StringName)"/>
         public static unsafe string? QueryServerString(DisplayPtr dpy, int screen, StringName name)
         {
             string? returnValue_str;
@@ -664,7 +664,7 @@ namespace OpenTK.Graphics.Glx
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="QueryCurrentRendererStringMESA(int)"/>
+            /// <inheritdoc cref="QueryCurrentRendererStringMESA_(int)"/>
             public static unsafe string? QueryCurrentRendererStringMESA(int attribute)
             {
                 string? returnValue_str;
@@ -703,7 +703,7 @@ namespace OpenTK.Graphics.Glx
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="QueryRendererStringMESA(DisplayPtr, int, int, int)"/>
+            /// <inheritdoc cref="QueryRendererStringMESA_(DisplayPtr, int, int, int)"/>
             public static unsafe string? QueryRendererStringMESA(DisplayPtr dpy, int screen, int renderer, int attribute)
             {
                 string? returnValue_str;

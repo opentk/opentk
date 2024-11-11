@@ -102,6 +102,10 @@ namespace Generator.Process
                     {
                         AddToGroup(allEnumGroups, OutputApi.GLX, originalName, translatedName, isFlag);
                     }
+                    else if (@namespace == GLFile.EGL)
+                    {
+                        AddToGroup(allEnumGroups, OutputApi.EGL, originalName, translatedName, isFlag);
+                    }
 
                     static void AddToGroup(Dictionary<OutputApi, HashSet<EnumGroupInfo>> allEnumGroups, OutputApi api, string originalName, string translatedName, bool isFlag)
                     {
@@ -160,6 +164,11 @@ namespace Generator.Process
                 {
                     allEnumsPerAPI.AddToNestedDict(OutputApi.GLX, @enum.Name, data);
                 }
+
+                if (@enum.Apis.HasFlag(OutputApiFlags.EGL))
+                {
+                    allEnumsPerAPI.AddToNestedDict(OutputApi.EGL, @enum.Name, data);
+                }
             }
 
             foreach (var (api, _, enums) in spec.APIs)
@@ -173,6 +182,7 @@ namespace Generator.Process
                     InputAPI.GLES2 => OutputApi.GLES2,
                     InputAPI.WGL => OutputApi.WGL,
                     InputAPI.GLX => OutputApi.GLX,
+                    InputAPI.EGL => OutputApi.EGL,
 
                     _ => throw new Exception(),
                 };
@@ -185,6 +195,7 @@ namespace Generator.Process
                     InputAPI.GLES2 => GLFile.GL,
                     InputAPI.WGL => GLFile.WGL,
                     InputAPI.GLX => GLFile.GLX,
+                    InputAPI.EGL => GLFile.EGL,
 
                     _ => throw new Exception(),
                 };
@@ -285,6 +296,7 @@ namespace Generator.Process
                                                 case InputAPI.GLES2: return output == OutputApi.GLES2;
                                                 case InputAPI.WGL: return output == OutputApi.WGL;
                                                 case InputAPI.GLX: return output == OutputApi.GLX;
+                                                case InputAPI.EGL: return output == OutputApi.EGL;
                                                 default: throw new Exception();
                                             }
                                         }
@@ -337,6 +349,7 @@ namespace Generator.Process
                     InputAPI.GLES2 => OutputApi.GLES2,
                     InputAPI.WGL => OutputApi.WGL,
                     InputAPI.GLX => OutputApi.GLX,
+                    InputAPI.EGL => OutputApi.EGL,
 
                     _ => throw new Exception(),
                 };
@@ -349,6 +362,7 @@ namespace Generator.Process
                     InputAPI.GLES2 => GLFile.GL,
                     InputAPI.WGL => GLFile.WGL,
                     InputAPI.GLX => GLFile.GLX,
+                    InputAPI.EGL => GLFile.EGL,
 
                     _ => throw new Exception(),
                 };
@@ -710,6 +724,7 @@ namespace Generator.Process
             pointers.Add(CreatePointersList(GLFile.GL, outputNamespaces));
             pointers.Add(CreatePointersList(GLFile.WGL, outputNamespaces));
             pointers.Add(CreatePointersList(GLFile.GLX, outputNamespaces));
+            pointers.Add(CreatePointersList(GLFile.EGL, outputNamespaces));
 
             return new OutputData(pointers, outputNamespaces);
 
@@ -738,6 +753,12 @@ namespace Generator.Process
                             break;
                         case GLFile.GLX:
                             if (@namespace.Name == OutputApi.GLX)
+                            {
+                                addFunctions = true;
+                            }
+                            break;
+                        case GLFile.EGL:
+                            if (@namespace.Name == OutputApi.EGL)
                             {
                                 addFunctions = true;
                             }

@@ -64,9 +64,12 @@ namespace Generator.Parsing
                     api == GLAPI.GLCore)
                     continue;
 
-                List<FunctionReference> functions = MakeFunctionReferences(FeaturesPerAPI[api], ExtensionsPerAPI[api], api);
+                // We use GetValueOrDefault in case we have zero features or extensions,
+                // this happens in egl_angle_ext.xml which doesn't define any features.
+                // - Noggin_bops 2024-11-11
+                List<FunctionReference> functions = MakeFunctionReferences(FeaturesPerAPI.GetValueOrDefault(api, new List<Feature>()), ExtensionsPerAPI.GetValueOrDefault(api, new List<Extension>()), api);
                 // FIXME: Here we miss the enums that where not defined in this file. for example wgl::ObjectTypeDX
-                List<EnumReference> enums = MakeEnumReferences(FeaturesPerAPI[api], ExtensionsPerAPI[api], api);
+                List<EnumReference> enums = MakeEnumReferences(FeaturesPerAPI.GetValueOrDefault(api, new List<Feature>()), ExtensionsPerAPI.GetValueOrDefault(api, new List<Extension>()), api);
 
                 InputAPI inAPI = api switch
                 {
@@ -75,6 +78,7 @@ namespace Generator.Parsing
                     GLAPI.GLES2 => InputAPI.GLES2,
                     GLAPI.WGL => InputAPI.WGL,
                     GLAPI.GLX => InputAPI.GLX,
+                    GLAPI.EGL => InputAPI.EGL,
 
                     _ => throw new Exception(),
                 };
@@ -423,7 +427,7 @@ namespace Generator.Parsing
             else if (char.IsLetter(expression[0]))
             {
                 int i = 1;
-                while (i < expression.Length && char.IsLetterOrDigit(expression[i]))
+                while (i < expression.Length && (char.IsLetterOrDigit(expression[i]) || expression[i] == '_'))
                 {
                     i++;
                 }
@@ -508,6 +512,8 @@ namespace Generator.Parsing
                             return new CSStructPrimitive("ScreenPtr", opaque.Constant, CSPrimitive.IntPtr(true));
                         case "XVisualInfo":
                             return new CSStructPrimitive("XVisualInfoPtr", opaque.Constant, CSPrimitive.IntPtr(true));
+                        case "AHardwareBuffer":
+                            return new CSStructPrimitive("AHardwareBuffer", opaque.Constant, CSPrimitive.IntPtr(true));
                         default:
                             throw new Exception($"Unknown opaque struct type {opaque.TypeName}.");
                     }
@@ -544,7 +550,16 @@ namespace Generator.Parsing
                 // - 2022-08-09
                 // FIXME: We might want to make sure that the underlying type for the enumName groupName is the same as the parameter groupName.
                 //   Right now we blindly substituting the type for the enumName.
-                if (group != null && (type == "GLuint" || type == "GLint" || type == "INT" || type == "UINT" || type == "INT32" || type == "int" || type == "int32_t"))
+                if (group != null &&
+                        (type == "GLuint" ||
+                        type == "GLint" ||
+                        type == "INT" ||
+                        type == "UINT" ||
+                        type == "INT32" ||
+                        type == "int" ||
+                        type == "int32_t" ||
+                        type == "EGLint" ||
+                        type == "EGLuint"))
                 {
                     Logger.Info($"Making {type} into group {group.TranslatedName}");
                     CSPrimitive baseType = type switch
@@ -556,6 +571,8 @@ namespace Generator.Parsing
                         "INT32" => new CSPrimitive("int", @const),
                         "int" => new CSPrimitive("int", @const),
                         "int32_t" => new CSPrimitive("int", @const),
+                        "EGLint" => CSPrimitive.Int(@const),
+                        "EGLuint" => CSPrimitive.Uint(@const),
                         _ => throw new Exception("This should not happen!"),
                     };
 
@@ -717,6 +734,59 @@ namespace Generator.Parsing
                         "int32_t" => CSPrimitive.Int(@const),
                         "int64_t" => CSPrimitive.Long(@const),
 
+                        "EGLNativeDisplayType" => CSPrimitive.IntPtr(@const),
+                        "EGLNativePixmapType" => CSPrimitive.IntPtr(@const),
+                        "EGLNativeWindowType" => CSPrimitive.IntPtr(@const),
+
+                        "EGLint" => CSPrimitive.Int(@const),
+                        "EGLenum" => new CSEnum(group?.TranslatedName ?? "All", group, CSPrimitive.Uint(@const), @const),
+                        "EGLBoolean" => new CSBool32(@const),
+                        "EGLAttribKHR" => CSPrimitive.IntPtr(@const),
+                        "EGLAttrib" => CSPrimitive.IntPtr(@const),
+
+                        "EGLClientBuffer" => new CSStructPrimitive("EGLClientBuffer", @const, CSPrimitive.IntPtr(@const)),
+                        "EGLConfig" => new CSStructPrimitive("EGLConfig", @const, CSPrimitive.IntPtr(@const)),
+                        "EGLContext" => new CSStructPrimitive("EGLContext", @const, CSPrimitive.IntPtr(@const)),
+                        "EGLDeviceEXT" => new CSStructPrimitive("EGLDeviceEXT", @const, CSPrimitive.IntPtr(@const)),
+                        "EGLDisplay" => new CSStructPrimitive("EGLDisplay", @const, CSPrimitive.IntPtr(@const)),
+                        "EGLImage" => new CSStructPrimitive("EGLImage", @const, CSPrimitive.IntPtr(@const)),
+                        "EGLImageKHR" => new CSStructPrimitive("EGLImageKHR", @const, CSPrimitive.IntPtr(@const)),
+                        "EGLLabelKHR" => new CSStructPrimitive("EGLLabelKHR", @const, CSPrimitive.IntPtr(@const)),
+                        "EGLObjectKHR" => new CSStructPrimitive("EGLObjectKHR", @const, CSPrimitive.IntPtr(@const)),
+                        "EGLOutputLayerEXT" => new CSStructPrimitive("EGLOutputLayerEXT", @const, CSPrimitive.IntPtr(@const)),
+                        "EGLOutputPortEXT" => new CSStructPrimitive("EGLOutputPortEXT", @const, CSPrimitive.IntPtr(@const)),
+                        "EGLStreamKHR" => new CSStructPrimitive("EGLStreamKHR", @const, CSPrimitive.IntPtr(@const)),
+                        "EGLSurface" => new CSStructPrimitive("EGLSurface", @const, CSPrimitive.IntPtr(@const)),
+                        "EGLSync" => new CSStructPrimitive("EGLSync", @const, CSPrimitive.IntPtr(@const)),
+                        "EGLSyncKHR" => new CSStructPrimitive("EGLSyncKHR", @const, CSPrimitive.IntPtr(@const)),
+                        "EGLSyncNV" => new CSStructPrimitive("EGLSyncNV", @const, CSPrimitive.IntPtr(@const)),
+
+                        "EGLTimeKHR" => CSPrimitive.Ulong(@const),
+                        "EGLTime" => CSPrimitive.Ulong(@const),
+                        "EGLTimeNV" => CSPrimitive.Ulong(@const),
+                        "EGLuint64NV" => CSPrimitive.Ulong(@const),
+                        "EGLuint64KHR" => CSPrimitive.Ulong(@const),
+                        "EGLnsecsANDROID" => CSPrimitive.Long(@const),
+
+                        "EGLNativeFileDescriptorKHR" => CSPrimitive.Int(@const),
+
+                        "EGLClientPixmapHI" => new CSStruct("EGLClientPixmapHI", @const),
+
+                        "EGLFrameTokenANGLE" => CSPrimitive.Ulong(@const),
+
+                        "EGLDEBUGPROCKHR" => new CSFunctionPointer("EGLDebugProcKHR", @const),
+                        "EGLSetBlobFuncANDROID" => new CSFunctionPointer("EGLSetBlobFuncANDROID", @const),
+                        "EGLGetBlobFuncANDROID" => new CSFunctionPointer("EGLGetBlobFuncANDROID", @const),
+
+                        "AHardwareBuffer" => new CSOpaqueStruct("AHardwareBuffer", @const),
+
+                        "__eglMustCastToProperFunctionPointerType" => CSPrimitive.IntPtr(@const),
+
+                        // FIXME: What are the actual wayland types?
+                        "wl_buffer" => CSPrimitive.IntPtr(@const),
+                        "wl_display" => CSPrimitive.IntPtr(@const),
+                        "wl_resource" => CSPrimitive.IntPtr(@const),
+
                         _ => throw new Exception($"Type conversion has not been created for type {type}"),
                     };
                 }
@@ -779,6 +849,7 @@ namespace Generator.Parsing
                             GLFile.GL => OutputApiFlags.GL | OutputApiFlags.GLCompat | OutputApiFlags.GLES1 | OutputApiFlags.GLES2,
                             GLFile.WGL => OutputApiFlags.WGL,
                             GLFile.GLX => OutputApiFlags.GLX,
+                            GLFile.EGL => OutputApiFlags.EGL,
 
                             _ => throw new Exception(),
                         };
@@ -792,6 +863,7 @@ namespace Generator.Parsing
                             GLAPI.GLES2 => OutputApiFlags.GLES2,
                             GLAPI.WGL => OutputApiFlags.WGL,
                             GLAPI.GLX => OutputApiFlags.GLX,
+                            GLAPI.EGL => OutputApiFlags.EGL,
 
                             GLAPI.GLCore => throw new Exception(),
                             GLAPI.GLSC2 => throw new Exception(),
@@ -837,13 +909,22 @@ namespace Generator.Parsing
                 _ => TypeSuffix.Invalid,
             };
 
-            static ulong ConvertToUInt64(string val, TypeSuffix type) => type switch
+            static ulong ConvertToUInt64(string val, TypeSuffix type)
             {
-                TypeSuffix.None => (uint)(int)new Int32Converter().ConvertFromString(val)!,
-                TypeSuffix.Ull => (ulong)(long)new Int64Converter().ConvertFromString(val)!,
-                TypeSuffix.U => (uint)new UInt32Converter().ConvertFromString(val)!,
-                TypeSuffix.Invalid or _ => throw new Exception($"Invalid suffix '{type}'!"),
-            };
+                if (val.StartsWith("EGL_CAST("))
+                {
+                    // FIXME: We could try to verify the type we are casting to here...
+                    return (ulong)(long)new Int64Converter().ConvertFromString(val[(val.IndexOf(',')+1)..val.IndexOf(')')])!;
+                }
+
+                return type switch
+                {
+                    TypeSuffix.None => (uint)(int)new Int32Converter().ConvertFromString(val)!,
+                    TypeSuffix.Ull => (ulong)new UInt64Converter().ConvertFromString(val)!,
+                    TypeSuffix.U => (uint)new UInt32Converter().ConvertFromString(val)!,
+                    TypeSuffix.Invalid or _ => throw new Exception($"Invalid suffix '{type}'!"),
+                };
+            }
         }
 
         internal static GroupRef[] ParseGroups(string? groups, GLFile currentFile, NameMangler nameMangler)
@@ -1056,6 +1137,7 @@ namespace Generator.Parsing
 
             "wgl" => GLAPI.WGL,
             "glx" => GLAPI.GLX,
+            "egl" => GLAPI.EGL,
 
             _ => GLAPI.Invalid,
         };

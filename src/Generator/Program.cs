@@ -106,21 +106,62 @@ namespace Generator
                     glxSpecification = SpecificationParser.Parse(glxSpecificationStream, new NameMangler(glxSettings), GLFile.GLX, glxIgnoreFunctions);
                 }
 
-                List<NativeFunction> functions = new List<NativeFunction>(glSpecification.Functions.Count + wglSpecification.Functions.Count + glxSpecification.Functions.Count);
+                Specification2 eglSpecification;
+                {
+                    NameManglerSettings eglSettings = new NameManglerSettings()
+                    {
+                        FunctionPrefix = "egl",
+                        EnumPrefixes = new List<string> { "EGL_" },
+                        ExtensionPrefix = "EGL_",
+                        FunctionsWithoutPrefix = new HashSet<string>()
+                        {
+                        },
+                        EnumsWithoutPrefix = new HashSet<string>()
+                        {
+                        },
+                    };
+
+                    List<string> eglIgnoreFunctions = new List<string>()
+                    {
+                    };
+
+                    // Reading the gl.xml file and parsing it into data structures.
+                    using FileStream eglSpecificationStream = Reader.ReadEGLSpecFromGithub();
+                    eglSpecification = SpecificationParser.Parse(eglSpecificationStream, new NameMangler(eglSettings), GLFile.EGL, eglIgnoreFunctions);
+
+                    using FileStream eglANGLESpecificationStream = Reader.ReadEGLANGLESpecFromFile();
+                    Specification2 eglANGLESpecification = SpecificationParser.Parse(eglANGLESpecificationStream, new NameMangler(eglSettings), GLFile.EGL, eglIgnoreFunctions);
+
+                    eglSpecification.Functions.AddRange(eglANGLESpecification.Functions);
+                    eglSpecification.Enums.AddRange(eglANGLESpecification.Enums);
+
+                    // FIXME: Merge the API...
+                    Debug.Assert(eglSpecification.APIs.Count == 1);
+                    Debug.Assert(eglSpecification.APIs[0].Name == InputAPI.EGL);
+                    Debug.Assert(eglANGLESpecification.APIs.Count == 1);
+                    Debug.Assert(eglANGLESpecification.APIs[0].Name == InputAPI.EGL);
+                    eglSpecification.APIs[0].Functions.AddRange(eglANGLESpecification.APIs[0].Functions);
+                    eglSpecification.APIs[0].Enums.AddRange(eglANGLESpecification.APIs[0].Enums);
+                }
+
+
+                List<NativeFunction> functions = new List<NativeFunction>(glSpecification.Functions.Count + wglSpecification.Functions.Count + glxSpecification.Functions.Count + eglSpecification.Functions.Count);
                 functions.AddRange(glSpecification.Functions);
                 functions.AddRange(wglSpecification.Functions);
                 functions.AddRange(glxSpecification.Functions);
+                functions.AddRange(eglSpecification.Functions);
 
-                List<EnumEntry> enums = new List<EnumEntry>(glSpecification.Enums.Count + wglSpecification.Enums.Count + glxSpecification.Enums.Count);
+                List<EnumEntry> enums = new List<EnumEntry>(glSpecification.Enums.Count + wglSpecification.Enums.Count + glxSpecification.Enums.Count + eglSpecification.Enums.Count);
                 enums.AddRange(glSpecification.Enums);
                 enums.AddRange(wglSpecification.Enums);
                 enums.AddRange(glxSpecification.Enums);
+                enums.AddRange(eglSpecification.Enums);
 
                 // FIXME: This is one point where we could do some processing to move things from one namespace to another.
                 // Alternatively we can try and do this later in processing. See comment with the same date.
                 // - Noggin_bops 2023-08-26
                 List<API> apis = new List<API>(Enum.GetValues<InputAPI>().Length);
-                foreach (API api in glSpecification.APIs.Concat(wglSpecification.APIs).Concat(glxSpecification.APIs))
+                foreach (API api in glSpecification.APIs.Concat(wglSpecification.APIs).Concat(glxSpecification.APIs).Concat(eglSpecification.APIs))
                 {
                     if (apis.Find(x => x.Name == api.Name) != null)
                     {
@@ -169,6 +210,7 @@ namespace Generator
                                     case InputAPI.GLES2: return flags.HasFlag(OutputApiFlags.GLES2);
                                     case InputAPI.WGL: return flags.HasFlag(OutputApiFlags.WGL);
                                     case InputAPI.GLX: return flags.HasFlag(OutputApiFlags.GLX);
+                                    case InputAPI.EGL: return flags.HasFlag(OutputApiFlags.EGL);
                                     default: throw new Exception();
                                 }
                             }

@@ -93,9 +93,9 @@ namespace OpenTK.Platform
         void SetSwapInterval(int interval);
 
         /// <summary>
-        /// Gets the swap interval of the current OpenGL context.
+        /// Gets the swap interval of the current OpenGL context, or <c>-1</c> if no context is current.
         /// </summary>
-        /// <returns>The current swap interval.</returns>
+        /// <returns>The current swap interval, or <c>-1</c> if no context is current.</returns>
         // FIXME: Better documentation.
         int GetSwapInterval();
 

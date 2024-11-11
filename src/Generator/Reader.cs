@@ -87,6 +87,20 @@ namespace Generator
             return ReadFileFromGithub(url, filePath);
         }
 
+        internal static FileStream ReadEGLSpecFromGithub()
+        {
+            string url = "https://raw.githubusercontent.com/KhronosGroup/EGL-Registry/refs/heads/main/api/egl.xml";
+            string filePath = Path.Combine(TempDirectory, "egl.xml");
+
+            return ReadFileFromGithub(url, filePath);
+        }
+
+        internal static FileStream ReadEGLANGLESpecFromFile()
+        {
+            string filePath = Path.Combine(TempDirectory, "egl_angle_ext.xml");
+            return File.OpenRead(filePath);
+        }
+
         internal static DocumentationSource ReadDocumentationFromGithub()
         {
             Path.GetFullPath(TempDirectory);

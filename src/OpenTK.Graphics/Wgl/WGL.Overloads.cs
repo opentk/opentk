@@ -1,4 +1,4 @@
-// This file is auto generated, do not edit. Generated: 2024-09-24 18:01:57 GMT+02:00
+// This file is auto generated, do not edit. Generated: 2024-11-11 15:15:34 GMT+01:00
 using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -21,7 +21,7 @@ namespace OpenTK.Graphics.Wgl
             }
             return returnValue;
         }
-        /// <inheritdoc cref="CopyContext(IntPtr, IntPtr, AttribMask)"/>
+        /// <inheritdoc cref="CopyContext_(IntPtr, IntPtr, AttribMask)"/>
         public static unsafe bool CopyContext(IntPtr hglrcSrc, IntPtr hglrcDst, AttribMask mask)
         {
             bool returnValue_bool;
@@ -30,7 +30,7 @@ namespace OpenTK.Graphics.Wgl
             returnValue_bool = returnValue != 0;
             return returnValue_bool;
         }
-        /// <inheritdoc cref="DeleteContext(IntPtr)"/>
+        /// <inheritdoc cref="DeleteContext_(IntPtr)"/>
         public static unsafe bool DeleteContext(IntPtr oldContext)
         {
             bool returnValue_bool;
@@ -110,7 +110,7 @@ namespace OpenTK.Graphics.Wgl
             Marshal.FreeCoTaskMem((IntPtr)lpszProc_ptr);
             return returnValue;
         }
-        /// <inheritdoc cref="MakeCurrent(IntPtr, IntPtr)"/>
+        /// <inheritdoc cref="MakeCurrent_(IntPtr, IntPtr)"/>
         public static unsafe bool MakeCurrent(IntPtr hDc, IntPtr newContext)
         {
             bool returnValue_bool;
@@ -119,7 +119,7 @@ namespace OpenTK.Graphics.Wgl
             returnValue_bool = returnValue != 0;
             return returnValue_bool;
         }
-        /// <inheritdoc cref="RealizeLayerPalette(IntPtr, int, int)"/>
+        /// <inheritdoc cref="RealizeLayerPalette_(IntPtr, int, int)"/>
         public static unsafe bool RealizeLayerPalette(IntPtr hdc, int iLayerPlane, int bRealize)
         {
             bool returnValue_bool;
@@ -170,7 +170,7 @@ namespace OpenTK.Graphics.Wgl
             }
             return returnValue_bool;
         }
-        /// <inheritdoc cref="ShareLists(IntPtr, IntPtr)"/>
+        /// <inheritdoc cref="ShareLists_(IntPtr, IntPtr)"/>
         public static unsafe bool ShareLists(IntPtr hrcSrvShare, IntPtr hrcSrvSource)
         {
             bool returnValue_bool;
@@ -179,7 +179,7 @@ namespace OpenTK.Graphics.Wgl
             returnValue_bool = returnValue != 0;
             return returnValue_bool;
         }
-        /// <inheritdoc cref="SwapBuffers(IntPtr)"/>
+        /// <inheritdoc cref="SwapBuffers_(IntPtr)"/>
         public static unsafe bool SwapBuffers(IntPtr hdc)
         {
             bool returnValue_bool;
@@ -188,7 +188,7 @@ namespace OpenTK.Graphics.Wgl
             returnValue_bool = returnValue != 0;
             return returnValue_bool;
         }
-        /// <inheritdoc cref="SwapLayerBuffers(IntPtr, LayerPlaneMask)"/>
+        /// <inheritdoc cref="SwapLayerBuffers_(IntPtr, LayerPlaneMask)"/>
         public static unsafe bool SwapLayerBuffers(IntPtr hdc, LayerPlaneMask fuFlags)
         {
             bool returnValue_bool;
@@ -197,7 +197,7 @@ namespace OpenTK.Graphics.Wgl
             returnValue_bool = returnValue != 0;
             return returnValue_bool;
         }
-        /// <inheritdoc cref="UseFontBitmaps(IntPtr, uint, uint, uint)"/>
+        /// <inheritdoc cref="UseFontBitmaps_(IntPtr, uint, uint, uint)"/>
         public static unsafe bool UseFontBitmaps(IntPtr hDC, uint first, uint count, uint listBase)
         {
             bool returnValue_bool;
@@ -206,7 +206,7 @@ namespace OpenTK.Graphics.Wgl
             returnValue_bool = returnValue != 0;
             return returnValue_bool;
         }
-        /// <inheritdoc cref="UseFontBitmapsA(IntPtr, uint, uint, uint)"/>
+        /// <inheritdoc cref="UseFontBitmapsA_(IntPtr, uint, uint, uint)"/>
         public static unsafe bool UseFontBitmapsA(IntPtr hDC, uint first, uint count, uint listBase)
         {
             bool returnValue_bool;
@@ -215,7 +215,7 @@ namespace OpenTK.Graphics.Wgl
             returnValue_bool = returnValue != 0;
             return returnValue_bool;
         }
-        /// <inheritdoc cref="UseFontBitmapsW(IntPtr, uint, uint, uint)"/>
+        /// <inheritdoc cref="UseFontBitmapsW_(IntPtr, uint, uint, uint)"/>
         public static unsafe bool UseFontBitmapsW(IntPtr hDC, uint first, uint count, uint listBase)
         {
             bool returnValue_bool;
@@ -224,7 +224,7 @@ namespace OpenTK.Graphics.Wgl
             returnValue_bool = returnValue != 0;
             return returnValue_bool;
         }
-        /// <inheritdoc cref="UseFontOutlines(IntPtr, uint, uint, uint, float, float, FontFormat, IntPtr)"/>
+        /// <inheritdoc cref="UseFontOutlines_(IntPtr, uint, uint, uint, float, float, FontFormat, IntPtr)"/>
         public static unsafe bool UseFontOutlines(IntPtr hDC, uint first, uint count, uint listBase, float deviation, float extrusion, FontFormat format, IntPtr lpgmf)
         {
             bool returnValue_bool;
@@ -233,7 +233,7 @@ namespace OpenTK.Graphics.Wgl
             returnValue_bool = returnValue != 0;
             return returnValue_bool;
         }
-        /// <inheritdoc cref="UseFontOutlinesA(IntPtr, uint, uint, uint, float, float, FontFormat, IntPtr)"/>
+        /// <inheritdoc cref="UseFontOutlinesA_(IntPtr, uint, uint, uint, float, float, FontFormat, IntPtr)"/>
         public static unsafe bool UseFontOutlinesA(IntPtr hDC, uint first, uint count, uint listBase, float deviation, float extrusion, FontFormat format, IntPtr lpgmf)
         {
             bool returnValue_bool;
@@ -242,7 +242,7 @@ namespace OpenTK.Graphics.Wgl
             returnValue_bool = returnValue != 0;
             return returnValue_bool;
         }
-        /// <inheritdoc cref="UseFontOutlinesW(IntPtr, uint, uint, uint, float, float, FontFormat, IntPtr)"/>
+        /// <inheritdoc cref="UseFontOutlinesW_(IntPtr, uint, uint, uint, float, float, FontFormat, IntPtr)"/>
         public static unsafe bool UseFontOutlinesW(IntPtr hDC, uint first, uint count, uint listBase, float deviation, float extrusion, FontFormat format, IntPtr lpgmf)
         {
             bool returnValue_bool;
@@ -253,7 +253,7 @@ namespace OpenTK.Graphics.Wgl
         }
         public static unsafe partial class _3DL
         {
-            /// <inheritdoc cref="SetStereoEmitterState3DL(IntPtr, StereoEmitterState)"/>
+            /// <inheritdoc cref="SetStereoEmitterState3DL_(IntPtr, StereoEmitterState)"/>
             public static unsafe bool SetStereoEmitterState3DL(IntPtr hDC, StereoEmitterState uState)
             {
                 bool returnValue_bool;
@@ -295,7 +295,7 @@ namespace OpenTK.Graphics.Wgl
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="DeleteAssociatedContextAMD(IntPtr)"/>
+            /// <inheritdoc cref="DeleteAssociatedContextAMD_(IntPtr)"/>
             public static unsafe bool DeleteAssociatedContextAMD(IntPtr hglrc)
             {
                 bool returnValue_bool;
@@ -375,7 +375,7 @@ namespace OpenTK.Graphics.Wgl
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="MakeAssociatedContextCurrentAMD(IntPtr)"/>
+            /// <inheritdoc cref="MakeAssociatedContextCurrentAMD_(IntPtr)"/>
             public static unsafe bool MakeAssociatedContextCurrentAMD(IntPtr hglrc)
             {
                 bool returnValue_bool;
@@ -387,7 +387,7 @@ namespace OpenTK.Graphics.Wgl
         }
         public static unsafe partial class ARB
         {
-            /// <inheritdoc cref="BindTexImageARB(IntPtr, ColorBuffer)"/>
+            /// <inheritdoc cref="BindTexImageARB_(IntPtr, ColorBuffer)"/>
             public static unsafe bool BindTexImageARB(IntPtr hPbuffer, ColorBuffer iBuffer)
             {
                 bool returnValue_bool;
@@ -513,7 +513,7 @@ namespace OpenTK.Graphics.Wgl
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="DestroyPbufferARB(IntPtr)"/>
+            /// <inheritdoc cref="DestroyPbufferARB_(IntPtr)"/>
             public static unsafe bool DestroyPbufferARB(IntPtr hPbuffer)
             {
                 bool returnValue_bool;
@@ -522,7 +522,7 @@ namespace OpenTK.Graphics.Wgl
                 returnValue_bool = returnValue != 0;
                 return returnValue_bool;
             }
-            /// <inheritdoc cref="GetExtensionsStringARB(IntPtr)"/>
+            /// <inheritdoc cref="GetExtensionsStringARB_(IntPtr)"/>
             public static unsafe string? GetExtensionsStringARB(IntPtr hdc)
             {
                 string? returnValue_str;
@@ -617,7 +617,7 @@ namespace OpenTK.Graphics.Wgl
                 }
                 return returnValue_bool;
             }
-            /// <inheritdoc cref="MakeContextCurrentARB(IntPtr, IntPtr, IntPtr)"/>
+            /// <inheritdoc cref="MakeContextCurrentARB_(IntPtr, IntPtr, IntPtr)"/>
             public static unsafe bool MakeContextCurrentARB(IntPtr hDrawDC, IntPtr hReadDC, IntPtr hglrc)
             {
                 bool returnValue_bool;
@@ -638,7 +638,7 @@ namespace OpenTK.Graphics.Wgl
                 }
                 return returnValue_bool;
             }
-            /// <inheritdoc cref="ReleaseTexImageARB(IntPtr, ColorBuffer)"/>
+            /// <inheritdoc cref="ReleaseTexImageARB_(IntPtr, ColorBuffer)"/>
             public static unsafe bool ReleaseTexImageARB(IntPtr hPbuffer, ColorBuffer iBuffer)
             {
                 bool returnValue_bool;
@@ -647,7 +647,7 @@ namespace OpenTK.Graphics.Wgl
                 returnValue_bool = returnValue != 0;
                 return returnValue_bool;
             }
-            /// <inheritdoc cref="RestoreBufferRegionARB(IntPtr, int, int, int, int, int, int)"/>
+            /// <inheritdoc cref="RestoreBufferRegionARB_(IntPtr, int, int, int, int, int, int)"/>
             public static unsafe bool RestoreBufferRegionARB(IntPtr hRegion, int x, int y, int width, int height, int xSrc, int ySrc)
             {
                 bool returnValue_bool;
@@ -656,7 +656,7 @@ namespace OpenTK.Graphics.Wgl
                 returnValue_bool = returnValue != 0;
                 return returnValue_bool;
             }
-            /// <inheritdoc cref="SaveBufferRegionARB(IntPtr, int, int, int, int)"/>
+            /// <inheritdoc cref="SaveBufferRegionARB_(IntPtr, int, int, int, int)"/>
             public static unsafe bool SaveBufferRegionARB(IntPtr hRegion, int x, int y, int width, int height)
             {
                 bool returnValue_bool;
@@ -791,7 +791,7 @@ namespace OpenTK.Graphics.Wgl
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="DestroyPbufferEXT(IntPtr)"/>
+            /// <inheritdoc cref="DestroyPbufferEXT_(IntPtr)"/>
             public static unsafe bool DestroyPbufferEXT(IntPtr hPbuffer)
             {
                 bool returnValue_bool;
@@ -800,7 +800,7 @@ namespace OpenTK.Graphics.Wgl
                 returnValue_bool = returnValue != 0;
                 return returnValue_bool;
             }
-            /// <inheritdoc cref="GetExtensionsStringEXT()"/>
+            /// <inheritdoc cref="GetExtensionsStringEXT_()"/>
             public static unsafe string? GetExtensionsStringEXT()
             {
                 string? returnValue_str;
@@ -925,7 +925,7 @@ namespace OpenTK.Graphics.Wgl
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="MakeContextCurrentEXT(IntPtr, IntPtr, IntPtr)"/>
+            /// <inheritdoc cref="MakeContextCurrentEXT_(IntPtr, IntPtr, IntPtr)"/>
             public static unsafe bool MakeContextCurrentEXT(IntPtr hDrawDC, IntPtr hReadDC, IntPtr hglrc)
             {
                 bool returnValue_bool;
@@ -946,7 +946,7 @@ namespace OpenTK.Graphics.Wgl
                 }
                 return returnValue_bool;
             }
-            /// <inheritdoc cref="SwapIntervalEXT(int)"/>
+            /// <inheritdoc cref="SwapIntervalEXT_(int)"/>
             public static unsafe bool SwapIntervalEXT(int interval)
             {
                 bool returnValue_bool;
@@ -1008,7 +1008,7 @@ namespace OpenTK.Graphics.Wgl
                 }
                 return returnValue_bool;
             }
-            /// <inheritdoc cref="BeginFrameTrackingI3D()"/>
+            /// <inheritdoc cref="BeginFrameTrackingI3D_()"/>
             public static unsafe bool BeginFrameTrackingI3D()
             {
                 bool returnValue_bool;
@@ -1017,7 +1017,7 @@ namespace OpenTK.Graphics.Wgl
                 returnValue_bool = returnValue != 0;
                 return returnValue_bool;
             }
-            /// <inheritdoc cref="DestroyImageBufferI3D(IntPtr, IntPtr)"/>
+            /// <inheritdoc cref="DestroyImageBufferI3D_(IntPtr, IntPtr)"/>
             public static unsafe bool DestroyImageBufferI3D(IntPtr hDC, IntPtr pAddress)
             {
                 bool returnValue_bool;
@@ -1026,7 +1026,7 @@ namespace OpenTK.Graphics.Wgl
                 returnValue_bool = returnValue != 0;
                 return returnValue_bool;
             }
-            /// <inheritdoc cref="DisableFrameLockI3D()"/>
+            /// <inheritdoc cref="DisableFrameLockI3D_()"/>
             public static unsafe bool DisableFrameLockI3D()
             {
                 bool returnValue_bool;
@@ -1035,7 +1035,7 @@ namespace OpenTK.Graphics.Wgl
                 returnValue_bool = returnValue != 0;
                 return returnValue_bool;
             }
-            /// <inheritdoc cref="DisableGenlockI3D(IntPtr)"/>
+            /// <inheritdoc cref="DisableGenlockI3D_(IntPtr)"/>
             public static unsafe bool DisableGenlockI3D(IntPtr hDC)
             {
                 bool returnValue_bool;
@@ -1044,7 +1044,7 @@ namespace OpenTK.Graphics.Wgl
                 returnValue_bool = returnValue != 0;
                 return returnValue_bool;
             }
-            /// <inheritdoc cref="EnableFrameLockI3D()"/>
+            /// <inheritdoc cref="EnableFrameLockI3D_()"/>
             public static unsafe bool EnableFrameLockI3D()
             {
                 bool returnValue_bool;
@@ -1053,7 +1053,7 @@ namespace OpenTK.Graphics.Wgl
                 returnValue_bool = returnValue != 0;
                 return returnValue_bool;
             }
-            /// <inheritdoc cref="EnableGenlockI3D(IntPtr)"/>
+            /// <inheritdoc cref="EnableGenlockI3D_(IntPtr)"/>
             public static unsafe bool EnableGenlockI3D(IntPtr hDC)
             {
                 bool returnValue_bool;
@@ -1062,7 +1062,7 @@ namespace OpenTK.Graphics.Wgl
                 returnValue_bool = returnValue != 0;
                 return returnValue_bool;
             }
-            /// <inheritdoc cref="EndFrameTrackingI3D()"/>
+            /// <inheritdoc cref="EndFrameTrackingI3D_()"/>
             public static unsafe bool EndFrameTrackingI3D()
             {
                 bool returnValue_bool;
@@ -1071,7 +1071,7 @@ namespace OpenTK.Graphics.Wgl
                 returnValue_bool = returnValue != 0;
                 return returnValue_bool;
             }
-            /// <inheritdoc cref="GenlockSampleRateI3D(IntPtr, uint)"/>
+            /// <inheritdoc cref="GenlockSampleRateI3D_(IntPtr, uint)"/>
             public static unsafe bool GenlockSampleRateI3D(IntPtr hDC, uint uRate)
             {
                 bool returnValue_bool;
@@ -1080,7 +1080,7 @@ namespace OpenTK.Graphics.Wgl
                 returnValue_bool = returnValue != 0;
                 return returnValue_bool;
             }
-            /// <inheritdoc cref="GenlockSourceDelayI3D(IntPtr, uint)"/>
+            /// <inheritdoc cref="GenlockSourceDelayI3D_(IntPtr, uint)"/>
             public static unsafe bool GenlockSourceDelayI3D(IntPtr hDC, uint uDelay)
             {
                 bool returnValue_bool;
@@ -1089,7 +1089,7 @@ namespace OpenTK.Graphics.Wgl
                 returnValue_bool = returnValue != 0;
                 return returnValue_bool;
             }
-            /// <inheritdoc cref="GenlockSourceEdgeI3D(IntPtr, uint)"/>
+            /// <inheritdoc cref="GenlockSourceEdgeI3D_(IntPtr, uint)"/>
             public static unsafe bool GenlockSourceEdgeI3D(IntPtr hDC, uint uEdge)
             {
                 bool returnValue_bool;
@@ -1098,7 +1098,7 @@ namespace OpenTK.Graphics.Wgl
                 returnValue_bool = returnValue != 0;
                 return returnValue_bool;
             }
-            /// <inheritdoc cref="GenlockSourceI3D(IntPtr, uint)"/>
+            /// <inheritdoc cref="GenlockSourceI3D_(IntPtr, uint)"/>
             public static unsafe bool GenlockSourceI3D(IntPtr hDC, uint uSource)
             {
                 bool returnValue_bool;
@@ -1417,7 +1417,7 @@ namespace OpenTK.Graphics.Wgl
         }
         public static unsafe partial class NV
         {
-            /// <inheritdoc cref="BindSwapBarrierNV(uint, uint)"/>
+            /// <inheritdoc cref="BindSwapBarrierNV_(uint, uint)"/>
             public static unsafe bool BindSwapBarrierNV(uint group, uint barrier)
             {
                 bool returnValue_bool;
@@ -1426,7 +1426,7 @@ namespace OpenTK.Graphics.Wgl
                 returnValue_bool = returnValue != 0;
                 return returnValue_bool;
             }
-            /// <inheritdoc cref="BindVideoCaptureDeviceNV(uint, IntPtr)"/>
+            /// <inheritdoc cref="BindVideoCaptureDeviceNV_(uint, IntPtr)"/>
             public static unsafe bool BindVideoCaptureDeviceNV(uint uVideoSlot, IntPtr hDevice)
             {
                 bool returnValue_bool;
@@ -1471,7 +1471,7 @@ namespace OpenTK.Graphics.Wgl
                 }
                 return returnValue_bool;
             }
-            /// <inheritdoc cref="BindVideoImageNV(IntPtr, IntPtr, VideoOutputBuffer)"/>
+            /// <inheritdoc cref="BindVideoImageNV_(IntPtr, IntPtr, VideoOutputBuffer)"/>
             public static unsafe bool BindVideoImageNV(IntPtr hVideoDevice, IntPtr hPbuffer, VideoOutputBuffer iVideoBuffer)
             {
                 bool returnValue_bool;
@@ -1480,7 +1480,7 @@ namespace OpenTK.Graphics.Wgl
                 returnValue_bool = returnValue != 0;
                 return returnValue_bool;
             }
-            /// <inheritdoc cref="CopyImageSubDataNV(IntPtr, uint, TextureTarget, int, int, int, int, IntPtr, uint, TextureTarget, int, int, int, int, int, int, int)"/>
+            /// <inheritdoc cref="CopyImageSubDataNV_(IntPtr, uint, TextureTarget, int, int, int, int, IntPtr, uint, TextureTarget, int, int, int, int, int, int, int)"/>
             public static unsafe bool CopyImageSubDataNV(IntPtr hSrcRC, uint srcName, TextureTarget srcTarget, int srcLevel, int srcX, int srcY, int srcZ, IntPtr hDstRC, uint dstName, TextureTarget dstTarget, int dstLevel, int dstX, int dstY, int dstZ, int width, int height, int depth)
             {
                 bool returnValue_bool;
@@ -1519,7 +1519,7 @@ namespace OpenTK.Graphics.Wgl
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="DelayBeforeSwapNV(IntPtr, float)"/>
+            /// <inheritdoc cref="DelayBeforeSwapNV_(IntPtr, float)"/>
             public static unsafe bool DelayBeforeSwapNV(IntPtr hDC, float seconds)
             {
                 bool returnValue_bool;
@@ -1528,7 +1528,7 @@ namespace OpenTK.Graphics.Wgl
                 returnValue_bool = returnValue != 0;
                 return returnValue_bool;
             }
-            /// <inheritdoc cref="DeleteDCNV(IntPtr)"/>
+            /// <inheritdoc cref="DeleteDCNV_(IntPtr)"/>
             public static unsafe bool DeleteDCNV(IntPtr hdc)
             {
                 bool returnValue_bool;
@@ -1537,7 +1537,7 @@ namespace OpenTK.Graphics.Wgl
                 returnValue_bool = returnValue != 0;
                 return returnValue_bool;
             }
-            /// <inheritdoc cref="DXCloseDeviceNV(IntPtr)"/>
+            /// <inheritdoc cref="DXCloseDeviceNV_(IntPtr)"/>
             public static unsafe bool DXCloseDeviceNV(IntPtr hDevice)
             {
                 bool returnValue_bool;
@@ -1582,7 +1582,7 @@ namespace OpenTK.Graphics.Wgl
                 }
                 return returnValue_bool;
             }
-            /// <inheritdoc cref="DXObjectAccessNV(IntPtr, DXInteropMaskNV)"/>
+            /// <inheritdoc cref="DXObjectAccessNV_(IntPtr, DXInteropMaskNV)"/>
             public static unsafe bool DXObjectAccessNV(IntPtr hObject, DXInteropMaskNV access)
             {
                 bool returnValue_bool;
@@ -1688,7 +1688,7 @@ namespace OpenTK.Graphics.Wgl
                 }
                 return returnValue_bool;
             }
-            /// <inheritdoc cref="DXUnregisterObjectNV(IntPtr, IntPtr)"/>
+            /// <inheritdoc cref="DXUnregisterObjectNV_(IntPtr, IntPtr)"/>
             public static unsafe bool DXUnregisterObjectNV(IntPtr hDevice, IntPtr hObject)
             {
                 bool returnValue_bool;
@@ -1899,7 +1899,7 @@ namespace OpenTK.Graphics.Wgl
                 }
                 return returnValue_bool;
             }
-            /// <inheritdoc cref="JoinSwapGroupNV(IntPtr, uint)"/>
+            /// <inheritdoc cref="JoinSwapGroupNV_(IntPtr, uint)"/>
             public static unsafe bool JoinSwapGroupNV(IntPtr hDC, uint group)
             {
                 bool returnValue_bool;
@@ -1908,7 +1908,7 @@ namespace OpenTK.Graphics.Wgl
                 returnValue_bool = returnValue != 0;
                 return returnValue_bool;
             }
-            /// <inheritdoc cref="LockVideoCaptureDeviceNV(IntPtr, IntPtr)"/>
+            /// <inheritdoc cref="LockVideoCaptureDeviceNV_(IntPtr, IntPtr)"/>
             public static unsafe bool LockVideoCaptureDeviceNV(IntPtr hDc, IntPtr hDevice)
             {
                 bool returnValue_bool;
@@ -1979,7 +1979,7 @@ namespace OpenTK.Graphics.Wgl
                 }
                 return returnValue_bool;
             }
-            /// <inheritdoc cref="ReleaseVideoCaptureDeviceNV(IntPtr, IntPtr)"/>
+            /// <inheritdoc cref="ReleaseVideoCaptureDeviceNV_(IntPtr, IntPtr)"/>
             public static unsafe bool ReleaseVideoCaptureDeviceNV(IntPtr hDc, IntPtr hDevice)
             {
                 bool returnValue_bool;
@@ -1988,7 +1988,7 @@ namespace OpenTK.Graphics.Wgl
                 returnValue_bool = returnValue != 0;
                 return returnValue_bool;
             }
-            /// <inheritdoc cref="ReleaseVideoDeviceNV(IntPtr)"/>
+            /// <inheritdoc cref="ReleaseVideoDeviceNV_(IntPtr)"/>
             public static unsafe bool ReleaseVideoDeviceNV(IntPtr hVideoDevice)
             {
                 bool returnValue_bool;
@@ -1997,7 +1997,7 @@ namespace OpenTK.Graphics.Wgl
                 returnValue_bool = returnValue != 0;
                 return returnValue_bool;
             }
-            /// <inheritdoc cref="ReleaseVideoImageNV(IntPtr, VideoOutputBuffer)"/>
+            /// <inheritdoc cref="ReleaseVideoImageNV_(IntPtr, VideoOutputBuffer)"/>
             public static unsafe bool ReleaseVideoImageNV(IntPtr hPbuffer, VideoOutputBuffer iVideoBuffer)
             {
                 bool returnValue_bool;
@@ -2006,7 +2006,7 @@ namespace OpenTK.Graphics.Wgl
                 returnValue_bool = returnValue != 0;
                 return returnValue_bool;
             }
-            /// <inheritdoc cref="ResetFrameCountNV(IntPtr)"/>
+            /// <inheritdoc cref="ResetFrameCountNV_(IntPtr)"/>
             public static unsafe bool ResetFrameCountNV(IntPtr hDC)
             {
                 bool returnValue_bool;
