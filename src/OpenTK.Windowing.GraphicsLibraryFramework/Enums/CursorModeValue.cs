@@ -37,6 +37,6 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// <summary>
         /// Makes the cursor visible and confines it to the content area of the window.
         /// </summary>
-        CursorCaptured = 0x00034003,
+        CursorCaptured = 0x00034004,
     }
 }

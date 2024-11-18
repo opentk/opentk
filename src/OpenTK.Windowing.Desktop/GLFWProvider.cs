@@ -26,7 +26,16 @@ namespace OpenTK.Windowing.Desktop
         // This will throw "through" native frames, which doesn't work anywhere other than windows.
         private static void DefaultErrorCallback(ErrorCode errorCode, string description)
         {
-            throw new GLFWException(description, errorCode);
+            // FIXME: Maybe we shouldn't throw exceptions here at all?
+            // - Noggin_bops 2024-11-18
+            if (errorCode == ErrorCode.PlatformError)
+            {
+                Trace.WriteLine($"GLFW {errorCode}: {description} (this message is from the OpenTK default glfw error handler, override it with GLFWProvider.SetErrorCallback)");
+            }
+            else
+            {
+                throw new GLFWException(description, errorCode);
+            }
         }
 
         // FIXME: This will throw "through" native frames, which doesn't work anywhere other than windows.

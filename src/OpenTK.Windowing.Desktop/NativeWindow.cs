@@ -447,6 +447,40 @@ namespace OpenTK.Windowing.Desktop
         }
 
         /// <summary>
+        /// Gets or sets if the window should be transparent to mouse input.
+        /// This only works for windows with window border set to <see cref="WindowBorder.Hidden"/>,
+        /// other borders will behave differently between platforms.
+        /// </summary>
+        public unsafe bool MousePassthrough
+        {
+            get
+            {
+                return GLFW.GetWindowAttrib(WindowPtr, WindowAttributeGetBool.MousePassthrough);
+            }
+
+            set
+            {
+                GLFW.SetWindowAttrib(WindowPtr, WindowAttribute.MousePassthrough, value);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets if this window will be displayed on top of all other windows.
+        /// </summary>
+        public unsafe bool AlwaysOnTop
+        {
+            get
+            {
+                return GLFW.GetWindowAttrib(WindowPtr, WindowAttributeGetBool.Floating);
+            }
+
+            set
+            {
+                GLFW.SetWindowAttrib(WindowPtr, WindowAttribute.Floating, value);
+            }
+        }
+
+        /// <summary>
         /// Gets or sets a <see cref="OpenTK.Mathematics.Box2i" /> structure the contains the external bounds of this window,
         /// in screen coordinates.
         /// External bounds include the title bar, borders and drawing area of the window.
@@ -701,6 +735,8 @@ namespace OpenTK.Windowing.Desktop
                         return CursorState.Hidden;
                     case CursorModeValue.CursorDisabled:
                         return CursorState.Grabbed;
+                    case CursorModeValue.CursorCaptured:
+                        return CursorState.Confined;
                     default:
                         throw new ArgumentOutOfRangeException();
                 }
@@ -719,6 +755,9 @@ namespace OpenTK.Windowing.Desktop
                         break;
                     case CursorState.Grabbed:
                         inputMode = CursorModeValue.CursorDisabled;
+                        break;
+                    case CursorState.Confined:
+                        inputMode = CursorModeValue.CursorCaptured;
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();
