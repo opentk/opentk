@@ -764,6 +764,8 @@ namespace OpenTK.Windowing.Desktop
         /// Initializes a new instance of the <see cref="NativeWindow"/> class.
         /// </summary>
         /// <param name="settings">The <see cref="NativeWindow"/> related settings.</param>
+        /// <exception cref="InvalidOperationException">If GLFW fails to create a window.</exception>
+        /// <exception cref="OutOfMemoryException">If GLFW can't create a window because we're out of memory.</exception>
         public unsafe NativeWindow(NativeWindowSettings settings)
         {
             GLFWProvider.EnsureInitialized();
@@ -892,6 +894,30 @@ namespace OpenTK.Windowing.Desktop
             else
             {
                 WindowPtr = GLFW.CreateWindow(settings.ClientSize.X, settings.ClientSize.Y, _title, null, (Window*)(settings.SharedContext?.WindowPtr ?? IntPtr.Zero));
+            }
+
+            if (WindowPtr == null)
+            {
+                ErrorCode error = GLFW.GetError(out string desc);
+                switch (error)
+                {
+                    case ErrorCode.NotInitialized:
+                        throw new InvalidOperationException($"GLFW must be initialized before creating a window. This is an OpenTK bug. '{desc}'");
+                    case ErrorCode.OutOfMemory:
+                        throw new OutOfMemoryException($"GLFW couldn't create window, out of memory. {desc}");
+                    case ErrorCode.ApiUnavailable:
+                        throw new InvalidOperationException($"GLFW API unavailable: {desc}");
+                    case ErrorCode.VersionUnavailable:
+                        throw new InvalidOperationException($"GLFW Version unavailable: {desc}");
+                    case ErrorCode.FormatUnavailable:
+                        throw new InvalidOperationException($"GLFW Format unavailable: {desc}");
+                    case ErrorCode.NoWindowContext:
+                        throw new InvalidOperationException($"GLFW no window context: {desc}");
+                    case ErrorCode.PlatformError:
+                        throw new InvalidOperationException($"GLFW platform error: {desc}");
+                    default:
+                        throw new InvalidOperationException($"GLFW {error}: {desc}");
+                }
             }
 
             // For Vulkan, we need to pass ContextAPI.NoAPI, otherwise we will get an exception.
@@ -1951,15 +1977,23 @@ namespace OpenTK.Windowing.Desktop
             {
             }
 
-            if (GLFWProvider.IsOnMainThread)
+            // If glfw fails to create the window in the ctor
+            // we are going to be finalized eventually, and then
+            // we don't want to crash trying to dispose a window
+            // we never managed to create.
+            // - Noggin_bops 2024-11-18
+            if (WindowPtr != null)
             {
-                UnregisterWindowCallbacks();
-                GLFW.DestroyWindow(WindowPtr);
-                Exists = false;
-            }
-            else
-            {
-                throw new GLFWException("You can only dispose windows on the main thread. The window needs to be disposed as it cannot safely be disposed in the finalizer.");
+                if (GLFWProvider.IsOnMainThread)
+                {
+                    UnregisterWindowCallbacks();
+                    GLFW.DestroyWindow(WindowPtr);
+                    Exists = false;
+                }
+                else
+                {
+                    throw new GLFWException("You can only dispose windows on the main thread. The window needs to be disposed as it cannot safely be disposed in the finalizer.");
+                }
             }
 
             _disposedValue = true;
