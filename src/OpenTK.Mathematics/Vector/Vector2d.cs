@@ -22,6 +22,7 @@ SOFTWARE.
 
 using System;
 using System.Diagnostics.Contracts;
+using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Runtime.Intrinsics;
@@ -34,7 +35,16 @@ namespace OpenTK.Mathematics
     /// </summary>
     [Serializable]
     [StructLayout(LayoutKind.Sequential)]
-    public struct Vector2d : IEquatable<Vector2d>, IFormattable
+    public struct Vector2d : IEquatable<Vector2d>, IFormattable,
+                            IAdditionOperators<Vector2d, Vector2d, Vector2d>,
+                            ISubtractionOperators<Vector2d, Vector2d, Vector2d>,
+                            IUnaryNegationOperators<Vector2d, Vector2d>,
+                            IMultiplyOperators<Vector2d, double, Vector2d>,
+                            IMultiplyOperators<Vector2d, Vector2d, Vector2d>,
+                            IMultiplyOperators<Vector2d, Matrix2d, Vector2d>,
+                            IDivisionOperators<Vector2d, double, Vector2d>,
+                            IDivisionOperators<Vector2d, Vector2d, Vector2d>,
+                            IEqualityOperators<Vector2d, Vector2d, bool>
     {
         /// <summary>
         /// The X coordinate of this instance.
