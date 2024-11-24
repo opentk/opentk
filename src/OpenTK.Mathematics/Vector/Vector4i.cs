@@ -9,6 +9,7 @@
 
 using System;
 using System.Diagnostics.Contracts;
+using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Runtime.Intrinsics;
@@ -24,7 +25,15 @@ namespace OpenTK.Mathematics
     /// </remarks>
     [Serializable]
     [StructLayout(LayoutKind.Sequential)]
-    public struct Vector4i : IEquatable<Vector4i>, IFormattable
+    public struct Vector4i : IEquatable<Vector4i>, IFormattable,
+                            IAdditionOperators<Vector4i, Vector4i, Vector4i>,
+                            ISubtractionOperators<Vector4i, Vector4i, Vector4i>,
+                            IUnaryNegationOperators<Vector4i, Vector4i>,
+                            IMultiplyOperators<Vector4i, int, Vector4i>,
+                            IMultiplyOperators<Vector4i, Vector4i, Vector4i>,
+                            IDivisionOperators<Vector4i, int, Vector4i>,
+                            IDivisionOperators<Vector4i, Vector4i, Vector4i>,
+                            IEqualityOperators<Vector4i, Vector4i, bool>
     {
         /// <summary>
         /// The X component of the Vector4i.
