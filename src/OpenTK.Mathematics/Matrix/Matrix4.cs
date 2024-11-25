@@ -601,9 +601,10 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Returns a copy of this Matrix4 without projection.
+        /// Returns a copy of this Matrix4 without projection. (equivalent to setting <see cref="Column3"/> = (0, 0, 0, 0)).
         /// </summary>
         /// <returns>The matrix without projection.</returns>
+        [Obsolete("This function doesn't actually clear the projection of the matrix. This is equivalent of setting Column3 = (0, 0, 0, 0).")]
         public readonly Matrix4 ClearProjection()
         {
             var m = this;
@@ -701,12 +702,105 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Returns the projection component of this instance.
+        /// Returns the projection component of this instance (equivalent to <see cref="Column3"/>).
         /// </summary>
-        /// <returns>The projection.</returns>
+        /// <returns>The projection (<see cref="Column3"/>).</returns>
+        [Obsolete("Use Column3 if the old behaviour is needed, or use ExtractPerspective*() or ExtractOrthographic* instead.")]
         public readonly Vector4 ExtractProjection()
         {
             return Column3;
+        }
+
+        /// <summary>
+        /// Returns the off-center projection parameters of this instance.
+        /// This only works if the matrix was created using <see cref="CreatePerspectiveOffCenter(float, float, float, float, float, float)"/>.
+        /// </summary>
+        /// <param name="left">The left edge of the view frustum.</param>
+        /// <param name="right">The right edge of the view frustum.</param>
+        /// <param name="bottom">The bottom edge of the view frustum.</param>
+        /// <param name="top">The top edge of the view frustum.</param>
+        /// <param name="depthNear">The distance to the near clip plane.</param>
+        /// <param name="depthFar">The distance to the far clip plane.</param>
+        public readonly void ExtractPerspectiveOffCenter
+        (
+            out float left,
+            out float right,
+            out float bottom,
+            out float top,
+            out float depthNear,
+            out float depthFar
+        )
+        {
+            depthNear = Row3.Z / (Row2.Z - 1);
+            depthFar = Row3.Z / (Row2.Z + 1);
+            left = depthNear * (Row2.X - 1) / Row0.X;
+            right = depthNear * (Row2.X + 1) / Row0.X;
+            bottom = depthNear * (Row2.Y - 1) / Row1.Y;
+            top = depthNear * (Row2.Y + 1) / Row1.Y;
+        }
+
+        /// <summary>
+        /// Returns the field of view projection parameters of this instance.
+        /// This only works if the matrix was created using <see cref="CreatePerspectiveFieldOfView(float, float, float, float)"/>.
+        /// </summary>
+        /// <param name="fovy">Angle of the field of view in the y direction (in radians).</param>
+        /// <param name="aspect">Aspect ratio of the view (width / height).</param>
+        /// <param name="depthNear">The distance to the near clip plane.</param>
+        /// <param name="depthFar">The distance to the far clip plane.</param>
+        public readonly void ExtractPerspectiveFieldOfView(out float fovy, out float aspect, out float depthNear, out float depthFar)
+        {
+            fovy = 2.0f * MathF.Atan(1 / Row1.Y);
+            aspect = Row1.Y / Row0.X;
+            depthNear = Row3.Z / (Row2.Z - 1);
+            depthFar = Row3.Z / (Row2.Z + 1);
+        }
+
+        /// <summary>
+        /// Returns the off-center orthographic projection parameters of this instance.
+        /// This only works if the matrix was created using <see cref="CreateOrthographicOffCenter(float, float, float, float, float, float)"/>.
+        /// </summary>
+        /// <param name="left">The left edge of the projection volume.</param>
+        /// <param name="right">The right edge of the projection volume.</param>
+        /// <param name="bottom">The bottom edge of the projection volume.</param>
+        /// <param name="top">The top edge of the projection volume.</param>
+        /// <param name="depthNear">The distance to the near clip plane.</param>
+        /// <param name="depthFar">The distance to the far clip plane.</param>
+        public readonly void ExtractOrthographicOffCenter
+        (
+            out float left,
+            out float right,
+            out float bottom,
+            out float top,
+            out float depthNear,
+            out float depthFar
+        )
+        {
+            left = -(1 + Row3.X) / Row0.X;
+            right = (1 - Row3.X) / Row0.X;
+            bottom = -(1 + Row3.Y) / Row1.Y;
+            top = (1 - Row3.Y) / Row1.Y;
+            depthNear = (1 + Row3.Z) / Row2.Z;
+            depthFar = -(1 - Row3.Z) / Row2.Z;
+        }
+
+        /// <summary>
+        /// Returns the orthographic projection parameters of this instance.
+        /// This only works if the matrix was created using <see cref="CreateOrthographic(float, float, float, float)"/>.
+        /// </summary>
+        /// <param name="width">The width of the projection volume.</param>
+        /// <param name="height">The height of the projection volume.</param>
+        /// <param name="depthNear">The distance to the near clip plane.</param>
+        /// <param name="depthFar">The distance to the far clip plane.</param>
+        public readonly void ExtractOrthographic(out float width, out float height, out float depthNear, out float depthFar)
+        {
+            float left = -(1 + Row3.X) / Row0.X;
+            float right = (1 - Row3.X) / Row0.X;
+            width = right - left;
+            float bottom = -(1 + Row3.Y) / Row1.Y;
+            float top = (1 - Row3.Y) / Row1.Y;
+            height = top - bottom;
+            depthNear = (1 + Row3.Z) / Row2.Z;
+            depthFar = -(1 - Row3.Z) / Row2.Z;
         }
 
         /// <summary>
@@ -1214,22 +1308,22 @@ namespace OpenTK.Mathematics
         {
             if (fovy <= 0 || fovy > MathF.PI)
             {
-                throw new ArgumentOutOfRangeException(nameof(fovy));
+                throw new ArgumentOutOfRangeException(nameof(fovy), fovy, "Fovy must be in the range [0, PI].");
             }
 
             if (aspect <= 0)
             {
-                throw new ArgumentOutOfRangeException(nameof(aspect));
+                throw new ArgumentOutOfRangeException(nameof(aspect), aspect, "Aspect cannot be negative.");
             }
 
             if (depthNear <= 0)
             {
-                throw new ArgumentOutOfRangeException(nameof(depthNear));
+                throw new ArgumentOutOfRangeException(nameof(depthNear), depthNear, "depthNear cannot be negative.");
             }
 
             if (depthFar <= 0)
             {
-                throw new ArgumentOutOfRangeException(nameof(depthFar));
+                throw new ArgumentOutOfRangeException(nameof(depthFar), depthFar, "depthFar cannot be negative.");
             }
 
             float maxY = depthNear * MathF.Tan(0.5f * fovy);
