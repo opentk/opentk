@@ -5147,7 +5147,7 @@
   </add>
 
   <!-- gles2 replacements for 2.0 and 3.0 -->
-  <replace name="gles2" version="2.0|3.0">
+  <replace name="gles2" version="2.0|3.0|3.1|3.2">
     <!-- Buffer Objects [2.9] -->
     <function name="BindBuffer">
       <param name="target"><type>BufferTarget</type></param>
