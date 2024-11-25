@@ -192,6 +192,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="params">[length: pname]
         /// Specifies the value that parameter Shininess will be set to.
         /// </param>
+        [Obsolete("Use TriangleFace overload instead.")]
         public static void Material(MaterialFace face, MaterialParameter pname, Vector4 @params)
         {
             unsafe { Material(face, pname, (float*)&@params.X); }
@@ -210,6 +211,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="params">[length: pname]
         /// Specifies the value that parameter Shininess will be set to.
         /// </param>
+        [Obsolete("Use TriangleFace overload instead.")]
         public static void Material(MaterialFace face, MaterialParameter pname, Color4 @params)
         {
             unsafe { GL.Material(face, pname, (float*)&@params); }

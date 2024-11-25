@@ -21,6 +21,7 @@ namespace Bind.ES
 
             Settings.OverridesFiles.Add("GL2/overrides.xml");
             Settings.OverridesFiles.Add("GL2/ES/1.1/");
+            Settings.OverridesFiles.Add("GL2/compatibility 4.8.2.xml");
 
             // Khronos releases a combined 1.0+1.1 specification,
             // so we cannot distinguish between the two.
@@ -31,7 +32,7 @@ namespace Bind.ES
             // For compatibility with OpenTK 1.0 and Xamarin, generate
             // overloads using the "All" enum in addition to strongly-typed enums.
             // This can be disabled by passing "-o:-keep_untyped_enums" as a cmdline parameter.
-            Settings.DefaultCompatibility |= Settings.Legacy.KeepUntypedEnums;
+            //Settings.DefaultCompatibility |= Settings.Legacy.KeepUntypedEnums;
             //Settings.DefaultCompatibility |= Settings.Legacy.UseDllImports;
         }
     }

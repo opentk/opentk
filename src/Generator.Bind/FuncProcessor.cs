@@ -527,7 +527,13 @@ namespace Bind
                             switch (node.Name)
                             {
                                 case "type":
-                                    d.Parameters[i].CurrentType = (string)node.TypedValue;
+                                    string type = (string)node.TypedValue;
+                                    // If the replacement type has a pointer we replace the entire type
+                                    // if the type doesn't we just replace the underlying type of the pointer.
+                                    // - 2024-03-26 Noggin_bops
+                                    if (type.Contains("*"))
+                                        d.Parameters[i].Pointer = 0;
+                                    d.Parameters[i].CurrentType = type;
                                     break;
                                 case "name":
                                     d.Parameters[i].Name = (string)node.TypedValue;
@@ -561,7 +567,19 @@ namespace Bind
                 XPathNavigator return_override = function_override.SelectSingleNode("returns");
                 if (return_override != null)
                 {
+                    // If the replacement type has a pointer we replace the entire type
+                    // if the type doesn't we just replace the underlying type of the pointer.
+                    // - 2024-03-26 Noggin_bops
+                    if (return_override.Value.Contains("*"))
+                        d.ReturnType.Pointer = 0;
                     d.ReturnType.CurrentType = return_override.Value;
+
+                    // If we replaced something with String we want to remove the pointer from the return type.
+                    // - 2024-03-24 Noggin_bops
+                    if (return_override.Value == "String")
+                    {
+                        d.ReturnType.Pointer--;
+                    }
                 }
             }
         }
