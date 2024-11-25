@@ -248,20 +248,28 @@ namespace OpenTK.Graphics.Egl
         public const int PLATFORM_ANGLE_TYPE_ANGLE = 0x3203;
         public const int PLATFORM_ANGLE_MAX_VERSION_MAJOR_ANGLE = 0x3204;
         public const int PLATFORM_ANGLE_MAX_VERSION_MINOR_ANGLE = 0x3205;
+        public const int PLATFORM_ANGLE_DEBUG_LAYERS_ENABLED = 0x3451;
+        public const int PLATFORM_ANGLE_NATIVE_PLATFORM_TYPE_ANGLE = 0x348F;
         public const int PLATFORM_ANGLE_TYPE_DEFAULT_ANGLE = 0x3206;
+        public const int PLATFORM_ANGLE_DEVICE_TYPE_HARDWARE_ANGLE = 0x320A;
+        public const int PLATFORM_ANGLE_DEVICE_TYPE_NULL_ANGLE = 0x345E;
         // EGL_ANGLE_platform_angle_d3d
         public const int PLATFORM_ANGLE_TYPE_D3D9_ANGLE = 0x3207;
         public const int PLATFORM_ANGLE_TYPE_D3D11_ANGLE = 0x3208;
         public const int PLATFORM_ANGLE_DEVICE_TYPE_ANGLE = 0x3209;
-        public const int PLATFORM_ANGLE_DEVICE_TYPE_HARDWARE_ANGLE = 0x320A;
+        public const int PLATFORM_ANGLE_ENABLE_AUTOMATIC_TRIM_ANGLE = 0x320F;
         public const int PLATFORM_ANGLE_DEVICE_TYPE_WARP_ANGLE = 0x320B;
         public const int PLATFORM_ANGLE_DEVICE_TYPE_REFERENCE_ANGLE = 0x320C;
-        public const int PLATFORM_ANGLE_ENABLE_AUTOMATIC_TRIM_ANGLE = 0x320F;
         // EGL_ANGLE_platform_angle_opengl
         public const int PLATFORM_ANGLE_TYPE_OPENGL_ANGLE = 0x320D;
         public const int PLATFORM_ANGLE_TYPE_OPENGLES_ANGLE = 0x320E;
-        // See EGL_ANGLE_surface_d3d_texture_2d_share_handle
+        // EGL_ANGLE_surface_d3d_texture_2d_share_handle
         public const int EGL_D3D_TEXTURE_2D_SHARE_HANDLE_ANGLE = 0x3200;
+        // EGL_ANGLE_experimental_present_path
+        public const int EXPERIMENTAL_PRESENT_PATH_ANGLE = 0x33A4;
+        public const int EXPERIMENTAL_PRESENT_PATH_FAST_ANGLE = 0x33A9;
+        public const int EXPERIMENTAL_PRESENT_PATH_COPY_ANGLE = 0x33AA;
+
 
         [DllImport("libEGL", EntryPoint = "eglGetError")]
         public static extern ErrorCode GetError();
