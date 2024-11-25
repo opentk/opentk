@@ -26,7 +26,6 @@ namespace Bind
         ES11,
         ES20,
         ES30,
-        ES31,
         CL10,
     }
 
@@ -194,10 +193,6 @@ namespace Bind
                         Generators.Add(new ES3Generator(Settings));
                         break;
 
-                    case GeneratorMode.ES31:
-                        Generators.Add(new ES31Generator(Settings));
-                        break;
-
                     case GeneratorMode.CL10:
                         Generators.Add(new CLGenerator(Settings));
                         break;
@@ -271,10 +266,6 @@ namespace Bind
                 case "es3":
                 case "es30":
                     mode = GeneratorMode.ES30;
-                    break;
-
-                case "es31":
-                    mode = GeneratorMode.ES31;
                     break;
 
                 case "cl":
