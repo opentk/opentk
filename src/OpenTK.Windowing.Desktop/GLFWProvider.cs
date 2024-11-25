@@ -23,13 +23,12 @@ namespace OpenTK.Windowing.Desktop
     /// </summary>
     public static class GLFWProvider
     {
-        // This will throw "through" native frames, which doesn't work anywhere other than windows.
+        // FIXME: This will throw "through" native frames, which doesn't work anywhere other than windows.
         private static void DefaultErrorCallback(ErrorCode errorCode, string description)
         {
-            throw new GLFWException(description, errorCode);
+            throw new GLFWException($"{description} (this is thrown from OpenTKs default GLFW error handler, if you find this exception inconvenient set your own error callback using GLFWProvider.SetErrorCallback)", errorCode);
         }
 
-        // FIXME: This will throw "through" native frames, which doesn't work anywhere other than windows.
         private static GLFWCallbacks.ErrorCallback ErrorCallback = DefaultErrorCallback;
 
         /// <summary>
