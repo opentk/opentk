@@ -998,7 +998,18 @@ namespace OpenTK.Windowing.Desktop
             InitialiseJoystickStates();
 
             _isFocused = settings.StartFocused;
-            if (settings.StartFocused)
+            // Workaround for glfw issue: https://github.com/glfw/glfw/issues/1300
+            // where glfwFocusWindow makes the window visible on macOS even without calling glfwShowWindow.
+            // This is here to make sure the window actually starts hidden.
+            // - Noggin_bops 2024-11-25
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+            {
+                if (_isVisible == false)
+                {
+                    _isFocused = false;
+                }
+            }
+            if (_isFocused)
             {
                 Focus();
             }
