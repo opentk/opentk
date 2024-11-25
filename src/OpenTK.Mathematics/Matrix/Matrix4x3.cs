@@ -23,6 +23,7 @@ SOFTWARE.
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
+using System.Numerics;
 using System.Runtime.InteropServices;
 using System.Runtime.Intrinsics;
 
@@ -33,7 +34,13 @@ namespace OpenTK.Mathematics
     /// </summary>
     [Serializable]
     [StructLayout(LayoutKind.Sequential)]
-    public struct Matrix4x3 : IEquatable<Matrix4x3>, IFormattable
+    public struct Matrix4x3 : IEquatable<Matrix4x3>, IFormattable,
+                                IMultiplyOperators<Matrix4x3, Matrix3x4, Matrix4>,
+                                IMultiplyOperators<Matrix4x3, Matrix4x3, Matrix4x3>,
+                                IMultiplyOperators<Matrix4x3, float, Matrix4x3>,
+                                IAdditionOperators<Matrix4x3, Matrix4x3, Matrix4x3>,
+                                ISubtractionOperators<Matrix4x3, Matrix4x3, Matrix4x3>,
+                                IEqualityOperators<Matrix4x3, Matrix4x3, bool>
     {
         /// <summary>
         /// Top row of the matrix.
