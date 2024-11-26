@@ -1025,8 +1025,6 @@ namespace OpenTK.Windowing.Desktop
 
             GLFW.SetWindowSizeLimits(WindowPtr, _minimumClientSize?.X ?? GLFW.DontCare, _minimumClientSize?.Y ?? GLFW.DontCare, _maximumClientize?.X ?? GLFW.DontCare, _maximumClientize?.Y ?? GLFW.DontCare);
 
-            GLFW.GetWindowPos(WindowPtr, out var x, out var y);
-
             GLFW.GetCursorPos(WindowPtr, out var mousex, out var mousey);
             _lastReportedMousePos = new Vector2((float)mousex, (float)mousey);
             MouseState.Position = _lastReportedMousePos;
