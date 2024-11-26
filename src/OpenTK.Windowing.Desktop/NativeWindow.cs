@@ -9,12 +9,13 @@ using System.Reflection;
 using System.Runtime.ExceptionServices;
 using System.Runtime.InteropServices;
 using System.Threading;
-using System.Threading.Tasks;
 using OpenTK.Core;
 using OpenTK.Mathematics;
 using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Common.Input;
 using OpenTK.Windowing.GraphicsLibraryFramework;
+
+using Monitor = OpenTK.Windowing.GraphicsLibraryFramework.Monitor;
 
 namespace OpenTK.Windowing.Desktop
 {
@@ -275,31 +276,19 @@ namespace OpenTK.Windowing.Desktop
         /// </summary>
         public IGLFWGraphicsContext Context { get; }
 
-        private MonitorHandle _currentMonitor;
-
         /// <summary>
-        /// Gets or sets the current <see cref="MonitorHandle"/>.
+        /// Gets the current <see cref="MonitorInfo"/> of the monitor that the window is currently on.
+        /// To make the window fullscreen use <see cref="MakeFullscreen(MonitorHandle, int?, int?, int?)"/> or <see cref="WindowState"/>.
         /// </summary>
-        public unsafe MonitorHandle CurrentMonitor
+        /// <seealso cref="MakeFullscreen(MonitorHandle, int?, int?, int?)"/>
+        /// <seealso cref="WindowState"/>
+        public unsafe MonitorInfo CurrentMonitor
         {
-            get => _currentMonitor;
+            get => Monitors.GetMonitorFromWindow(WindowPtr);
 
+            [Obsolete("Use MakeFullscreen to set the current monitor. Setting this property does nothing anymore.")]
             set
             {
-                GraphicsLibraryFramework.Monitor* monitor = value.ToUnsafePtr<GraphicsLibraryFramework.Monitor>();
-                VideoMode* mode = GLFW.GetVideoMode(monitor);
-                Vector2i location = ClientLocation;
-                Vector2i size = ClientSize;
-                GLFW.SetWindowMonitor(
-                    WindowPtr,
-                    monitor,
-                    location.X,
-                    location.Y,
-                    size.X,
-                    size.Y,
-                    mode->RefreshRate);
-
-                _currentMonitor = value;
             }
         }
 
@@ -373,13 +362,13 @@ namespace OpenTK.Windowing.Desktop
                 // Set the new window state before any potential callback is called,
                 // so that the new state is available in for example OnResize.
                 // - Noggin_bops 2023-09-25
-                var previousWindowState = _windowState;
+                WindowState previousWindowState = _windowState;
                 _windowState = value;
 
                 if (previousWindowState == WindowState.Fullscreen && value != WindowState.Fullscreen)
                 {
                     // We are going from fullscreen to something else.
-                    GLFW.SetWindowMonitor(WindowPtr, null, _cachedWindowLocation.X, _cachedWindowLocation.Y, _cachedWindowClientSize.X, _cachedWindowClientSize.Y, 0);
+                    GLFW.SetWindowMonitor(WindowPtr, null, _cachedWindowLocation.X, _cachedWindowLocation.Y, _cachedWindowClientSize.X, _cachedWindowClientSize.Y, GLFW.DontCare);
                 }
 
                 switch (value)
@@ -397,10 +386,13 @@ namespace OpenTK.Windowing.Desktop
                         break;
 
                     case WindowState.Fullscreen:
-                        _cachedWindowClientSize = ClientSize;
-                        _cachedWindowLocation = ClientLocation;
-                        var monitor = CurrentMonitor.ToUnsafePtr<GraphicsLibraryFramework.Monitor>();
-                        var modePtr = GLFW.GetVideoMode(monitor);
+                        if (previousWindowState != WindowState.Fullscreen)
+                        {
+                            _cachedWindowClientSize = ClientSize;
+                            _cachedWindowLocation = ClientLocation;
+                        }
+                        Monitor* monitor = CurrentMonitor.Handle.ToUnsafePtr<Monitor>();
+                        VideoMode* modePtr = GLFW.GetVideoMode(monitor);
                         GLFW.SetWindowMonitor(WindowPtr, monitor, 0, 0, modePtr->Width, modePtr->Height, modePtr->RefreshRate);
                         break;
                 }
@@ -418,7 +410,7 @@ namespace OpenTK.Windowing.Desktop
 
             set
             {
-                GLFW.GetVersion(out var major, out var minor, out _);
+                GLFW.GetVersion(out int major, out int minor, out _);
 
                 // It isn't possible to implement this in versions of GLFW older than 3.3,
                 // as SetWindowAttrib didn't exist before then.
@@ -685,7 +677,7 @@ namespace OpenTK.Windowing.Desktop
 
                 unsafe
                 {
-                    var oldCursor = _glfwCursor;
+                    Cursor* oldCursor = _glfwCursor;
                     _glfwCursor = null;
 
                     // Create the new GLFW cursor
@@ -694,7 +686,7 @@ namespace OpenTK.Windowing.Desktop
                         // User provided mouse cursor.
                         fixed (byte* ptr = value.Data)
                         {
-                            var cursorImg = new GraphicsLibraryFramework.Image(value.Width, value.Height, ptr);
+                            GraphicsLibraryFramework.Image cursorImg = new GraphicsLibraryFramework.Image(value.Width, value.Height, ptr);
                             _glfwCursor = GLFW.CreateCursor(cursorImg, value.X, value.Y);
                         }
                     }
@@ -811,8 +803,6 @@ namespace OpenTK.Windowing.Desktop
 
             _title = settings.Title;
 
-            _currentMonitor = settings.CurrentMonitor;
-
             switch (settings.WindowBorder)
             {
                 case WindowBorder.Hidden:
@@ -828,7 +818,7 @@ namespace OpenTK.Windowing.Desktop
                     break;
             }
 
-            var isOpenGl = false;
+            bool isOpenGl = false;
             API = settings.API;
             switch (settings.API)
             {
@@ -2129,6 +2119,30 @@ namespace OpenTK.Windowing.Desktop
 
             // Actually move the window.
             ClientRectangle = new Box2i(x, y, x + newSize.X, y + newSize.Y);
+        }
+
+        /// <summary>
+        /// Make the window fullscreen with the specified resolution and refresh rate.
+        /// This function is meant to provide greater control than <see cref="WindowState"/> and <see cref="CurrentMonitor"/> when making the window fullscreen.
+        /// </summary>
+        /// <param name="monitor">The monitor on which to make the window fullscreen.</param>
+        /// <param name="horizontalResolution">The horizontal resolution to switch the screen to, or <see langword="null"/> to use the monitor resolution.</param>
+        /// <param name="verticalResolution">The vertical resoltion to switch the screen to, or <see langword="null"/> to use the monitor resolution.</param>
+        /// <param name="refreshRate">The refresh rate to use, or <see langword="null"/> to not change refresh rate.</param>
+        /// <seealso cref="CurrentMonitor"/>
+        /// <seealso cref="WindowState"/>
+        public unsafe void MakeFullscreen(MonitorHandle monitor, int? horizontalResolution = null, int? verticalResolution = null, int? refreshRate = null)
+        {
+            if (_windowState != WindowState.Fullscreen)
+            {
+                _cachedWindowClientSize = ClientSize;
+                _cachedWindowLocation = ClientLocation;
+            }
+            _windowState = WindowState.Fullscreen;
+            Monitor* monitorPtr = monitor.ToUnsafePtr<Monitor>();
+            GLFW.GetMonitorPos(monitorPtr, out int x, out int y);
+            VideoMode* mode = GLFW.GetVideoMode(monitorPtr);
+            GLFW.SetWindowMonitor(WindowPtr, monitorPtr, x, y, horizontalResolution ?? mode->Width, verticalResolution ?? mode->Height, refreshRate ?? -1);
         }
     }
 }
