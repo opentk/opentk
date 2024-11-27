@@ -804,6 +804,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Returns a new vector that is the spherical interpolation of the two given vectors.
         /// <paramref name="a"/> and <paramref name="b"/> need to be normalized for this function to work properly.
+        /// Results are undefined for vectors that point in opposite directions or very close to opposite directions.
         /// </summary>
         /// <param name="a">Unit vector start point.</param>
         /// <param name="b">Unit vector end point.</param>
@@ -834,6 +835,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Returns a new vector that is the spherical interpolation of the two given vectors.
         /// <paramref name="a"/> and <paramref name="b"/> need to be normalized for this function to work properly.
+        /// Results are undefined for vectors that point in opposite directions or very close to opposite directions.
         /// </summary>
         /// <param name="a">Unit vector start point.</param>
         /// <param name="b">Unit vector end point.</param>
