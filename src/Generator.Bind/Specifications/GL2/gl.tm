@@ -331,6 +331,19 @@ PathStringFormat,*,*,		    GLenum,*,*
 PathTransformType,*,*,		    GLenum,*,*
 PathHandleMissingGlyphs,*,*,	    GLenum,*,*
 
+CheckFramebufferStatusTarget,*,*,   GLenum,*,*
+ColorMaterialFace,*,*,   GLenum,*,*
+DataType,*,*,   GLenum,*,*
+FramebufferFetchNoncoherent,*,*,   GLenum,*,*
+GetConvolutionParameter,*,*,   GLenum,*,*
+GetPixelMap,*,*,   GLenum,*,*
+MapBufferUsageMask,*,*,   GLenum,*,*
+PixelTexGenMode,*,*,   GLenum,*,*
+PointParameterNameSGIS,*,*,   GLenum,*,*
+SamplerParameter,*,*,   GLenum,*,*
+SamplerParameterName,*,*,   GLenum,*,*
+TextureFilterFuncSGIS,*,*,   GLenum,*,*
+
 # No longer used in gl.spec
 # ClampedColorF,*,*,		      GLclampf,*,*
 # ControlPointNV,*,*,		      GLvoid,*,*

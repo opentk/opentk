@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <signatures version="2">
 
-	<!-- gl and glcore -->
+  <!-- gl and glcore -->
   <replace name="gl|glcore">
 
     <!-- Core and EXT_direct_state_access variants -->
@@ -22,6 +22,7 @@
       <param name="name">
         <type>StringName</type>
       </param>
+      <returns>String</returns>
     </function>
 
     <function name="TexImage1D" extension="Core">
@@ -461,6 +462,7 @@
       <param name="name">
         <type>StringNameIndexed</type>
       </param>
+      <returns>String</returns>
     </function>
 
     <!-- Version 3.1 -->
@@ -1532,9 +1534,9 @@
     </function>
 
     <function name="VertexArrayFogCoordOffset" extension="Ext">
-       <param name="type">
-         <type>FogPointerType</type>
-       </param>
+      <param name="type">
+        <type>FogPointerType</type>
+      </param>
     </function>
 
     <!-- Apple -->
@@ -1926,6 +1928,7 @@
       <param name="name" index="0">
         <type>StringName</type>
       </param>
+      <returns>String</returns>
     </function>
     <function name="GetSync" extension="Core" obsolete="Use SyncParameterName overload instead">
       <param name="pname" index="1">
@@ -2294,7 +2297,7 @@
       </param>
     </function>
     <!-- generated from apitest against svn r3127 -->
-        <function name="BlendEquation" extension="Arb" obsolete="Use BlendEquationMode overload instead">
+    <function name="BlendEquation" extension="Arb" obsolete="Use BlendEquationMode overload instead">
       <param name="mode" index="1">
         <type>ArbDrawBuffersBlend</type>
       </param>
@@ -5052,6 +5055,12 @@
   </overload>
 
   <replace name="gles1">
+    <function name="GetString" extension="Core">
+      <returns>String</returns>
+    </function>
+  </replace>
+
+  <replace name="gles1">
     <!-- AMD_performance_monitors is not const-correct -->
     <function name="DeletePerfMonitors" extension="AMD">
       <param name="monitors"><flow>in</flow></param>
@@ -5135,10 +5144,10 @@
       <token name="TEXTURE8" value="0x84C8" />
       <token name="TEXTURE9" value="0x84C9" />
     </enum>
-</add>
+  </add>
 
   <!-- gles2 replacements for 2.0 and 3.0 -->
-  <replace name="gles2" version="2.0|3.0">
+  <replace name="gles2" version="2.0|3.0|3.1|3.2">
     <!-- Buffer Objects [2.9] -->
     <function name="BindBuffer">
       <param name="target"><type>BufferTarget</type></param>
@@ -5289,7 +5298,7 @@
       <param name="bufferMode"><type>TransformFeedbackMode</type></param>
     </function>
 
-	<!-- Shader Queries [6.1.12] -->
+    <!-- Shader Queries [6.1.12] -->
     <function name="GetShader">
       <param name="pname"><type>ShaderParameter</type></param>
     </function>
@@ -5393,26 +5402,26 @@
       <param name="pname"><type>TextureParameterName</type></param>
     </function>
 
-     <!-- Manual Mipmap Generation [3.8.9] -->
-     <function name="GenerateMipmap">
-       <param name="target"><type>TextureTarget</type></param>
-     </function>
+    <!-- Manual Mipmap Generation [3.8.9] -->
+    <function name="GenerateMipmap">
+      <param name="target"><type>TextureTarget</type></param>
+    </function>
 
-      <!-- Enumerated Queries [6.1.3] -->
-     <function name="GetTexParameter">
-       <param name="target"><type>TextureTarget</type></param>
-      <param name="pname"><type>GetTextureParameterName</type></param>
-     </function>
+    <!-- Enumerated Queries [6.1.3] -->
+    <function name="GetTexParameter">
+      <param name="target"><type>TextureTarget</type></param>
+    <param name="pname"><type>GetTextureParameterName</type></param>
+    </function>
 
-     <!-- Stencil Test [4.1.4] -->
-     <function name="StencilFunc">
-       <param name="func"><type>StencilFunction</type></param>
-     </function>
-     <function name="StencilFuncSeparate">
-       <param name="face"><type>StencilFace</type></param>
-       <param name="func"><type>StencilFunction</type></param>
-     </function>
-     <function name="StencilOp">
+    <!-- Stencil Test [4.1.4] -->
+    <function name="StencilFunc">
+      <param name="func"><type>StencilFunction</type></param>
+    </function>
+    <function name="StencilFuncSeparate">
+      <param name="face"><type>StencilFace</type></param>
+      <param name="func"><type>StencilFunction</type></param>
+    </function>
+    <function name="StencilOp">
       <param name="sfail"><type>StencilOp</type></param>
       <param name="dpfail"><type>StencilOp</type></param>
       <param name="dppass"><type>StencilOp</type></param>
@@ -5585,9 +5594,11 @@
     </function>
     <function name="GetString">
       <param name="name"><type>StringName</type></param>
+      <returns>String</returns>
     </function>
     <function name="GetStringi">
       <param name="name"><type>StringNameIndexed</type></param>
+      <returns>String</returns>
     </function>
 
     <!-- AMD_performance_monitors is not const-correct -->
@@ -5632,7 +5643,7 @@
     <function name="ObjectLabel">
       <param name="identifier"><type>ObjectLabelIdentifier</type></param>
     </function>
-   </replace>
+  </replace>
 
   <!--  gles2 replacements for backwards compatibility -->
   <replace name="gles2">
@@ -6582,7 +6593,7 @@
 
     <!-- OES_compressed_ETC1_RGB8_texture -->
     <enum name="CompressedInternalFormat">
-       <use token="ETC1_RGB8_OES" />
+      <use token="ETC1_RGB8_OES" />
     </enum>
 
     <!-- For compatibility with OpenTK 1.0 -->
@@ -7167,10 +7178,10 @@
       <use token="RGB_INTEGER" />
       <use token="RG_INTEGER" />
       <use token="RED_INTEGER" />
-	  <use token="DEPTH_COMPONENT" />
-	  <use token="DEPTH_STENCIL" />
-	  <use token="LUMINANCE_ALPHA" />
-	  <use token="LUMINANCE" />
+    <use token="DEPTH_COMPONENT" />
+    <use token="DEPTH_STENCIL" />
+    <use token="LUMINANCE_ALPHA" />
+    <use token="LUMINANCE" />
     </enum>
     <enum name="PixelStoreParameter">
       <use token="PACK_ROW_LENGTH" />
@@ -7554,7 +7565,7 @@
       <use token="FIXED" />
       <use token="FLOAT" />
       <use token="HALF_FLOAT" />
-	  <use token="INT_2_10_10_10_REV" />
+    <use token="INT_2_10_10_10_REV" />
       <use token="UNSIGNED_INT_2_10_10_10_REV" />
     </enum>
     <enum name="WaitSyncFlags">

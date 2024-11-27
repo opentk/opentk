@@ -23,5 +23,10 @@ namespace OpenTK.Windowing.Common
         /// Hides the cursor and locks it to the specified window.
         /// </summary>
         Grabbed,
+
+        /// <summary>
+        /// Confines the cursor to the window content area.
+        /// </summary>
+        Confined,
     }
 }

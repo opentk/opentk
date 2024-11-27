@@ -20,6 +20,7 @@ namespace Bind.ES
                 Settings.DefaultDocPath, "ES20");
 
             Settings.OverridesFiles.Add("GL2/overrides.xml");
+            Settings.OverridesFiles.Add("GL2/compatibility 4.8.2.xml");
 
             Profile = "gles2";
             Version = "2.0";
@@ -27,7 +28,7 @@ namespace Bind.ES
             // For compatibility with OpenTK 1.0 and Xamarin, generate
             // overloads using the "All" enum in addition to strongly-typed enums.
             // This can be disabled by passing "-o:-keep_untyped_enums" as a cmdline parameter.
-            Settings.DefaultCompatibility |= Settings.Legacy.KeepUntypedEnums;
+            //Settings.DefaultCompatibility |= Settings.Legacy.KeepUntypedEnums;
             //Settings.DefaultCompatibility |= Settings.Legacy.UseDllImports;
         }
     }

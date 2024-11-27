@@ -333,11 +333,13 @@ open Fake.Core.TargetOperators
   ==> "CreateMetaPackage"
   ==> "ReleaseOnNuGet"
   ==> "ReleaseOnGithub"
-  ==> "ReleaseOnAll"
+  ==> "ReleaseOnAll" 
+  |> ignore
 
 // We build the nuget package so that appvayor can get the artifacts
 "CreateMetaPackage"
   ==> "RunCITests"
+  |> ignore
 
 //"Build"
 

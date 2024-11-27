@@ -11,6 +11,27 @@ type AcuteAngle = AcuteAngle of float32
 [<Struct>]
 type Color4LDR = Color4LDR of Color4
 
+[<Struct>]
+type Range = 
+    struct
+        val Start: float32
+        val Stop: float32
+        new(start: float32, stop: float32) = { Start = start; Stop = stop }
+        override this.ToString (): string = $"({this.Start}, {this.Stop})"
+    end
+
+[<Struct>]
+type PositiveRange = 
+    struct
+        val Start: float32
+        val Stop: float32
+        new(start: float32, stop: float32) = { Start = start; Stop = stop }
+        override this.ToString (): string = $"({this.Start}, {this.Stop})"
+    end
+
+[<Struct>]
+type PositiveFloat = PositiveFloat of float32
+
 [<AutoOpen>]
 module private Generators =
     let private isValidFloat f = not (Single.IsNaN f || Single.IsInfinity f || Single.IsInfinity (f * f) || f = Single.MinValue || f = Single.MaxValue)
@@ -104,11 +125,42 @@ module private Generators =
         |> Gen.map Color4
         |> Arb.fromGen
         
+    let positiveFloat =
+        singleArb
+        |> Gen.map (fun x -> MathF.Abs(x))
+        |> Arb.fromGen
+
+    let range =
+        singleArb
+        // FIXME: As we are using this for parameters in projection matrices,
+        // making the values too small will cause a loss of precision
+        // in the entire matrix. So we avoid this.
+        // - Noggin_bops 2024-11-25
+        |> Gen.filter (fun x -> x > 0.0000001f)
+        |> Gen.two
+        |> Gen.filter (fun (x, y) -> (x < y))
+        |> Gen.map Range
+        |> Arb.fromGen
+
+    let positiveRange =
+        singleArb
+        |> Gen.map (fun x -> MathF.Abs(x))
+        // FIXME: As we are using this for the near and far plane of projection
+        // matrices, making the near plane too close will cause a loss of precision
+        // in the entire matrix. So we avoid this.
+        // - Noggin_bops 2024-11-25
+        |> Gen.filter (fun x -> x > 0.000001f)
+        |> Gen.two
+        |> Gen.filter (fun (x, y) -> (x < y))
+        |> Gen.map PositiveRange
+        |> Arb.fromGen
+
 type OpenTKGen =
     static member Single() = single
     static member float32() = single
     static member Double() = double
     static member float() = double
+    static member PositiveFloat() = positiveFloat
     static member Vector2() = vec2
     static member Vector3() = vec3
     static member Vector4() = vec4
@@ -119,5 +171,8 @@ type OpenTKGen =
     static member Box2() = box2
     static member Box3() = box3
     static member AcuteAngle() = acuteAngle
+    static member PositiveAcuteAngle() = acuteAngle
     static member Color4LDR() = color4LDR
     static member Color4() = color4HDR
+    static member Range() = range
+    static member PositiveRange() = positiveRange
