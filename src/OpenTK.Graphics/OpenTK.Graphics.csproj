@@ -25,6 +25,10 @@
     <ProjectReference Include="..\Generator.Rewrite\Generator.Rewrite.csproj" SkipGetTargetFrameworkProperties="true" UndefineProperties="TargetFramework" ReferenceOutputAssembly="false" ExcludeAssets="all" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Build.Tasks.Core" Version="17.1.0" ExcludeAssets="runtime" />
+  </ItemGroup>
+
   <!-- Define what files we depend on and which files are generated -->
   <ItemGroup>
     <GLSpec Include="..\gl.xml" />
