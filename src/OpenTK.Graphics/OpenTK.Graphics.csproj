@@ -17,20 +17,12 @@
 
     <!-- Add a project reference here so that the Generator.Bind project is built, 
     but make sure that we don't pass framework configs to it and exlude all assets from the final build. -->
-    <ProjectReference Include="..\Generator.Bind\Generator.Bind.csproj" 
-                      SkipGetTargetFrameworkProperties="true" 
-                      UndefineProperties="TargetFramework" 
-                      ReferenceOutputAssembly="false" 
-                      ExcludeAssets="all" />
+    <ProjectReference Include="..\Generator.Bind\Generator.Bind.csproj" SkipGetTargetFrameworkProperties="true" UndefineProperties="TargetFramework" ReferenceOutputAssembly="false" ExcludeAssets="all" />
 
     <!-- FIXME: Fix error MSB4057: The target "GetTargetPath" does not exist in the project -->
     <!-- Add a project reference here so that the Generator.Rewrite project is built, 
     but make sure that we don't pass framework configs to it and exlude all assets from the final build. -->
-    <ProjectReference Include="..\Generator.Rewrite\Generator.Rewrite.csproj" 
-                      SkipGetTargetFrameworkProperties="true" 
-                      UndefineProperties="TargetFramework" 
-                      ReferenceOutputAssembly="false" 
-                      ExcludeAssets="all" />
+    <ProjectReference Include="..\Generator.Rewrite\Generator.Rewrite.csproj" SkipGetTargetFrameworkProperties="true" UndefineProperties="TargetFramework" ReferenceOutputAssembly="false" ExcludeAssets="all" />
   </ItemGroup>
 
   <!-- Define what files we depend on and which files are generated -->
@@ -83,9 +75,29 @@
   <!-- After we have compiled the dll we run the rewriter -->
   <Target Name="Rewrite" BeforeTargets="PostBuildEvent">
     <Message Text="Rewriting src/OpenTK.Graphics/bin/$(Configuration)/$(TargetFramework)" Importance="high" />
-    <Exec Command=".\src\Generator.Rewrite\bin\$(Configuration)\netcoreapp3.1\Rewrite.exe -a ./src/OpenTK.Graphics/bin/$(Configuration)/$(TargetFramework)/OpenTK.Graphics.dll -k ./openTK.snk" WorkingDirectory="../../" StandardOutputImportance="high" StandardErrorImportance="high" Condition="'$(OS)' == 'Windows_NT'" />
-    <Exec Command=".\src\Generator.Rewrite\bin\$(Configuration)\netcoreapp3.1\Rewrite -a ./src/OpenTK.Graphics/bin/$(Configuration)/$(TargetFramework)/OpenTK.Graphics.dll -k ./openTK.snk" WorkingDirectory="../../" StandardOutputImportance="high" StandardErrorImportance="high" Condition="'$(OS)' != 'Windows_NT'" />
+    <!-- Some of the APIs that Cecil uses to sign assemblies is not supported on newer .net, so we can't use the rewriter to sign assemblies. -->
+    <!-- This means we have to do it ourselves with sn.exe, but to do that we need to find where sn.exe lives, see Target GetSNPath. -->
+    <!-- - Noggin_bops 2024-11-27 -->
+    <Exec Command=".\src\Generator.Rewrite\bin\$(Configuration)\netcoreapp3.1\Rewrite.exe -a ./src/OpenTK.Graphics/bin/$(Configuration)/$(TargetFramework)/OpenTK.Graphics.dll&#xD;&#xA;&quot;$(SNPath)&quot; -Ra ./src/OpenTK.Graphics/bin/$(Configuration)/$(TargetFramework)/OpenTK.Graphics.dll .\OpenTK.snk" WorkingDirectory="../../" StandardOutputImportance="high" StandardErrorImportance="high" Condition="'$(OS)' == 'Windows_NT'" />
+    <Exec Command=".\src\Generator.Rewrite\bin\$(Configuration)\netcoreapp3.1\Rewrite -a ./src/OpenTK.Graphics/bin/$(Configuration)/$(TargetFramework)/OpenTK.Graphics.dll&#xD;&#xA;&quot;$(SNPath)&quot; -Ra ./src/OpenTK.Graphics/bin/$(Configuration)/$(TargetFramework)/OpenTK.Graphics.dll .\OpenTK.snk" WorkingDirectory="../../" StandardOutputImportance="high" StandardErrorImportance="high" Condition="'$(OS)' != 'Windows_NT'" />
     <Message Text="Rewrote src/OpenTK.Graphics/bin/$(Configuration)/$(TargetFramework)" Importance="high" />
+  </Target>
+
+  <!-- We want to use sn.exe to sign our assembly after it's been rewritten. So we need to find the path to sn.exe... -->
+  <!-- This code is based on this stack overflow answer: https://stackoverflow.com/a/17621012/9316430 -->
+  <!-- Modified to not write to a temporary file, which causes problems when this task is run in parallel for each target framework. -->
+  <!-- We do this in DispatchToInnerBuilds so we do this so the target is only run once in contrast to task that runs before 'Rewrite' which get run multiple times for each target framework. -->
+  <!-- - Noggin_bops 2024-11-27 -->
+  <Target Name="GetSNPath" BeforeTargets="Rewrite">
+    <GetFrameworkSdkPath>
+      <Output TaskParameter="Path" PropertyName="WindowsSdkPath" />
+    </GetFrameworkSdkPath>
+    <Exec Command=":; echo sn; exit $?&#xD;&#xA;WHERE /r &quot;$(WindowsSdkPath.TrimEnd('\\'))&quot; sn" ConsoleToMsBuild="true" StandardOutputImportance="low">
+      <Output TaskParameter="ConsoleOutput" PropertyName="SNPath" />
+    </Exec>
+    <PropertyGroup>
+      <SNPath>$([System.Text.RegularExpressions.Regex]::Replace('$(SNPath)', ';.*', ''))</SNPath>
+    </PropertyGroup>
   </Target>
 
   <Import Project="..\..\props\common.props" />
