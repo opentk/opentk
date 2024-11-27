@@ -4,6 +4,8 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <StartupObject>OpenTK.Audio.OpenAL.ALTest</StartupObject>
+    <SignAssembly>False</SignAssembly>
+    <AssemblyOriginatorKeyFile>../../OpenTK.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
   <ItemGroup>

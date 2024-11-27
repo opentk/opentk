@@ -8,6 +8,8 @@
 
   <PropertyGroup>
     <Description>Mathematical structures and algorithms, provided and used by OpenTK.</Description>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>../../OpenTK.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
   <ItemGroup>

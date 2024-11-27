@@ -105,7 +105,7 @@ let ciTestProjects =
 let install =
     lazy
         (if (DotNet.getVersion id).StartsWith "6" then id
-         else DotNet.install (fun options -> { options with Version = DotNet.Version "6.0.200" }))
+         else DotNet.install (fun options -> { options with Channel = DotNet.CliChannel.Version 6 0 }))
 
 // Define general properties across various commands (with arguments)
 let inline withWorkDir wd = DotNet.Options.lift install.Value >> DotNet.Options.withWorkingDirectory wd
@@ -154,6 +154,7 @@ Target.create "Clean" <| fun _ ->
     -- ("./src" </> "OpenTK.Graphics" </> "Wgl/*.*")
     -- ("./src" </> "OpenTK.Graphics" </> "Egl/*.*")
     -- ("./src" </> "OpenTK.Graphics" </> "paket")
+    -- ("./src" </> "OpenTK.Graphics" </> "README.md")
     |> Seq.iter(Shell.rm)
 
 Target.create "Restore" (fun _ -> DotNet.restore dotnetSimple "OpenTK.sln" |> ignore)

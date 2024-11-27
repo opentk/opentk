@@ -12,3 +12,7 @@ files
     bin\Release\netcoreapp3.1\OpenTK.Windowing.Desktop.dll ==> lib\netcoreapp3.1
     bin\Release\netcoreapp3.1\OpenTK.Windowing.Desktop.xml ==> lib\netcoreapp3.1
     bin\Release\netcoreapp3.1\OpenTK.Windowing.Desktop.pdb ==> lib\netcoreapp3.1
+    README.md ==> docs
+
+readme
+    docs\README.md

@@ -3,6 +3,8 @@
         <TargetFramework>netcoreapp3.1</TargetFramework>
         <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
         <LangVersion>latest</LangVersion>
+        <SignAssembly>true</SignAssembly>
+        <AssemblyOriginatorKeyFile>../../../OpenTK.snk</AssemblyOriginatorKeyFile>
     </PropertyGroup>
     
     <ItemGroup>
