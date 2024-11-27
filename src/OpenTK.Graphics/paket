@@ -16,7 +16,7 @@ files
     bin\Release\netcoreapp3.1\OpenTK.Graphics.dll ==> lib\netcoreapp3.1
     bin\Release\netcoreapp3.1\OpenTK.Graphics.xml ==> lib\netcoreapp3.1
     bin\Release\netcoreapp3.1\OpenTK.Graphics.pdb ==> lib\netcoreapp3.1
-    README.md ==> docs\README.md
+    README.md ==> docs
 
 readme
     docs\README.md

@@ -3,6 +3,10 @@
     <TargetFramework>net6.0</TargetFramework>
     <Deterministic>true</Deterministic>
     <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+    <!-- We need to sign this assembly for the InternalVisibleTo in OpenTK.Windowing.GraphicsLibraryFramework to work. -->
+    <!-- - Noggin_bops 2024-11-27 -->
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>../../OpenTK.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
   <PropertyGroup>
