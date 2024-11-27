@@ -5,7 +5,7 @@
     <RootNamespace>OpenTK.Graphics</RootNamespace>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>../../OpenTK.snk</AssemblyOriginatorKeyFile>
-    <DelaySign>True</DelaySign>
+    <DelaySign>true</DelaySign>
   </PropertyGroup>
 
   <!-- This article is useful for generating code: -->
@@ -23,10 +23,6 @@
     <!-- Add a project reference here so that the Generator.Rewrite project is built, 
     but make sure that we don't pass framework configs to it and exlude all assets from the final build. -->
     <ProjectReference Include="..\Generator.Rewrite\Generator.Rewrite.csproj" SkipGetTargetFrameworkProperties="true" UndefineProperties="TargetFramework" ReferenceOutputAssembly="false" ExcludeAssets="all" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Microsoft.Build.Tasks.Core" Version="17.1.0" ExcludeAssets="runtime" />
   </ItemGroup>
 
   <!-- Define what files we depend on and which files are generated -->
@@ -93,7 +89,18 @@
   <!-- We do this in DispatchToInnerBuilds so we do this so the target is only run once in contrast to task that runs before 'Rewrite' which get run multiple times for each target framework. -->
   <!-- - Noggin_bops 2024-11-27 -->
   <Target Name="GetSNPath" BeforeTargets="Rewrite">
-    <GetFrameworkSdkPath>
+    <!-- FIXME: This is a BAD hack, but it's the best I've got to make "dotnet build" and AppVeyor work... Ideally we'd use GetFrameworkSdkPath but that is only available in .net framework? -->
+    <!-- - Noggin_bops 2024-11-27 -->
+    <PropertyGroup Condition="'$(OS)' == 'Windows_NT'">
+      <SNPath>C:\Program Files (x86)\Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.8 Tools\sn.exe</SNPath>
+    </PropertyGroup>
+    <!-- FIXME: This is untested on both macOS and Linux, no idea if it works... -->
+    <!-- - Noggin_bops 2024-11-27 -->
+    <PropertyGroup Condition="'$(OS)' != 'Windows_NT'">
+      <SNPath>/usr/bin/sn</SNPath>
+    </PropertyGroup>
+    <Error Text="Could not find path to sn.exe (FIXME: for now this path is hardcoded). You will likely need to modify the csproj to get the build working." Condition="!Exists($(SNPath))" />
+    <!--<GetFrameworkSdkPath>
       <Output TaskParameter="Path" PropertyName="WindowsSdkPath" />
     </GetFrameworkSdkPath>
     <Exec Command=":; echo sn; exit $?&#xD;&#xA;WHERE /r &quot;$(WindowsSdkPath.TrimEnd('\\'))&quot; sn" ConsoleToMsBuild="true" StandardOutputImportance="low">
@@ -101,7 +108,7 @@
     </Exec>
     <PropertyGroup>
       <SNPath>$([System.Text.RegularExpressions.Regex]::Replace('$(SNPath)', ';.*', ''))</SNPath>
-    </PropertyGroup>
+    </PropertyGroup>-->
   </Target>
 
   <Import Project="..\..\props\common.props" />

@@ -154,6 +154,7 @@ Target.create "Clean" <| fun _ ->
     -- ("./src" </> "OpenTK.Graphics" </> "Wgl/*.*")
     -- ("./src" </> "OpenTK.Graphics" </> "Egl/*.*")
     -- ("./src" </> "OpenTK.Graphics" </> "paket")
+    -- ("./src" </> "OpenTK.Graphics" </> "README.md")
     |> Seq.iter(Shell.rm)
 
 Target.create "Restore" (fun _ -> DotNet.restore dotnetSimple "OpenTK.sln" |> ignore)
