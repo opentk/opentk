@@ -3,6 +3,7 @@ using OpenTK.Core.Native;
 using OpenTK.Core.Utility;
 using OpenTK.Graphics;
 using OpenTK.Graphics.Vulkan;
+using System.Runtime.InteropServices;
 using static OpenTK.Platform.Native.X11.LibX11;
 using static OpenTK.Platform.Native.X11.LibXcb;
 
@@ -27,7 +28,7 @@ namespace OpenTK.Platform.Native.X11
             // Or we could make it a toolkit setting...
             VKLoader.Init();
 
-            VkPointers._vkEnumerateInstanceExtensionProperties_fnptr = 
+            VkPointers._vkEnumerateInstanceExtensionProperties_fnptr =
                 (delegate* unmanaged<byte*, uint*, VkExtensionProperties*, VkResult>)VKLoader.GetInstanceProcAddress(VkInstance.Zero, "vkEnumerateInstanceExtensionProperties");
             if (VkPointers._vkEnumerateInstanceExtensionProperties_fnptr == null)
             {
@@ -53,16 +54,13 @@ namespace OpenTK.Platform.Native.X11
 
             for (int i = 0; i < count; i++)
             {
-                ReadOnlySpan<byte> name = properties[i].extensionName;
-                // FIXME: For some reason sometimes there is a stray non-zero byte
-                // at the end of inline buffers. So TrimEnd fails.
-                //name = name.TrimEnd([(byte)0]);
-                name = name.Slice(0, name.IndexOf((byte)0));
-                if (name.SequenceEqual("VK_KHR_surface"u8))
+                // NOTE: Only works for UTF-8(and most likely ASCII), do we need any other encodings?
+                string name = Marshal.PtrToStringUTF8((IntPtr)properties[i].extensionName) ?? "";
+                if (name == "VK_KHR_surface")
                     KHR_surface = true;
-                else if (name.SequenceEqual("VK_KHR_xcb_surface"u8))
+                else if (name == "VK_KHR_xcb_surface")
                     KHR_xcb_surface = true;
-                else if (name.SequenceEqual("VK_KHR_xlib_surface"u8))
+                else if (name == "VK_KHR_xlib_surface")
                     KHR_xlib_surface = true;
             }
         }

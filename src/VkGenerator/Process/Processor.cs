@@ -357,7 +357,7 @@ namespace VkGenerator.Process
             {
                 // FIXME: More robust parsing?
                 Version featureVer = Version.Parse(feature.Number);
-                
+
                 foreach (RequireTag require in feature.RequireTags)
                 {
                     foreach (RequireCommand requireCommand in require.RequiredCommands)
@@ -701,7 +701,14 @@ namespace VkGenerator.Process
                     csType = type switch
                     {
                         "void" => new CSVoid(@const),
-                        "char" => new CSChar8(@const),
+                        // This is a really dirty hack, but it ought to
+                        // give us proper name members in structs.
+                        // I take it we're only aiming to run on platforms
+                        // where "char" is one byte wide(such as any normal x86).
+                        // If this fucks something up in the future I'm sorry.
+                        // Feel free to blame me :)
+                        // - khhs167 Nov 29 2024
+                        "char" => CSPrimitive.Byte(@const), //new CSChar8(@const),
                         "uint8_t" => CSPrimitive.Byte(@const),
                         "int8_t" => CSPrimitive.Sbyte(@const),
                         "int" => CSPrimitive.Int(@const),
@@ -844,7 +851,7 @@ namespace VkGenerator.Process
 
                         "NvSciSyncAttrList" => CSPrimitive.IntPtr(@const),
                         "NvSciSyncObj" => CSPrimitive.IntPtr(@const),
-                        // uint64_t payload[6]; 
+                        // uint64_t payload[6];
                         "NvSciSyncFence" => new CSStruct("NvSciSyncFence", @const),
                         "NvSciBufAttrList" => CSPrimitive.IntPtr(@const),
                         "NvSciBufObj" => CSPrimitive.IntPtr(@const),
