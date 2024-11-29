@@ -162,12 +162,7 @@ namespace OpenTK.Graphics.Vulkan
         public uint vendorID;
         public uint deviceID;
         public VkPhysicalDeviceType deviceType;
-        [InlineArray(256)]
-        public struct deviceNameInlineArray1
-        {
-            public byte element;
-        }
-        public deviceNameInlineArray1 deviceName;
+        public fixed byte deviceName[256];
         public fixed byte pipelineCacheUUID[16];
         public VkPhysicalDeviceLimits limits;
         public VkPhysicalDeviceSparseProperties sparseProperties;
@@ -176,32 +171,17 @@ namespace OpenTK.Graphics.Vulkan
     /// <summary><b>[requires: v1.0]</b> </summary>/// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkExtensionProperties.html" /></remarks>
     public unsafe struct VkExtensionProperties
     {
-        [InlineArray(256)]
-        public struct extensionNameInlineArray1
-        {
-            public byte element;
-        }
-        public extensionNameInlineArray1 extensionName;
+        public fixed byte extensionName[256];
         public uint specVersion;
         public VkExtensionProperties() { }
     }
     /// <summary><b>[requires: v1.0]</b> </summary>/// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkLayerProperties.html" /></remarks>
     public unsafe struct VkLayerProperties
     {
-        [InlineArray(256)]
-        public struct layerNameInlineArray1
-        {
-            public byte element;
-        }
-        public layerNameInlineArray1 layerName;
+        public fixed byte layerName[256];
         public uint specVersion;
         public uint implementationVersion;
-        [InlineArray(256)]
-        public struct descriptionInlineArray1
-        {
-            public byte element;
-        }
-        public descriptionInlineArray1 description;
+        public fixed byte description[256];
         public VkLayerProperties() { }
     }
     /// <summary><b>[requires: v1.0]</b> </summary>/// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkApplicationInfo.html" /></remarks>
@@ -3991,18 +3971,8 @@ namespace OpenTK.Graphics.Vulkan
         public VkStructureType sType = VkStructureType.StructureTypePhysicalDeviceDriverProperties;
         public void* pNext;
         public VkDriverId driverID;
-        [InlineArray(256)]
-        public struct driverNameInlineArray1
-        {
-            public byte element;
-        }
-        public driverNameInlineArray1 driverName;
-        [InlineArray(256)]
-        public struct driverInfoInlineArray1
-        {
-            public byte element;
-        }
-        public driverInfoInlineArray1 driverInfo;
+        public fixed byte driverName[256];
+        public fixed byte driverInfo[256];
         public VkConformanceVersion conformanceVersion;
         public VkPhysicalDeviceDriverProperties() { }
     }
@@ -7193,12 +7163,7 @@ namespace OpenTK.Graphics.Vulkan
         public uint vendorID;
         public uint deviceID;
         public VkPhysicalDeviceLayeredApiKHR layeredAPI;
-        [InlineArray(256)]
-        public struct deviceNameInlineArray1
-        {
-            public byte element;
-        }
-        public deviceNameInlineArray1 deviceName;
+        public fixed byte deviceName[256];
         public VkPhysicalDeviceLayeredApiPropertiesKHR() { }
     }
     /// <summary><b>[requires: VK_KHR_maintenance7]</b> </summary>/// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceLayeredApiVulkanPropertiesKHR.html" /></remarks>
@@ -10798,24 +10763,9 @@ namespace OpenTK.Graphics.Vulkan
         public VkStructureType sType = VkStructureType.StructureTypePerformanceCounterDescriptionKhr;
         public void* pNext;
         public VkPerformanceCounterDescriptionFlagBitsKHR flags;
-        [InlineArray(256)]
-        public struct nameInlineArray1
-        {
-            public byte element;
-        }
-        public nameInlineArray1 name;
-        [InlineArray(256)]
-        public struct categoryInlineArray1
-        {
-            public byte element;
-        }
-        public categoryInlineArray1 category;
-        [InlineArray(256)]
-        public struct descriptionInlineArray1
-        {
-            public byte element;
-        }
-        public descriptionInlineArray1 description;
+        public fixed byte name[256];
+        public fixed byte category[256];
+        public fixed byte description[256];
         public VkPerformanceCounterDescriptionKHR() { }
     }
     /// <summary><b>[requires: VK_KHR_performance_query]</b> </summary>/// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkQueryPoolPerformanceCreateInfoKHR.html" /></remarks>
@@ -11294,18 +11244,8 @@ namespace OpenTK.Graphics.Vulkan
         public VkStructureType sType = VkStructureType.StructureTypePipelineExecutablePropertiesKhr;
         public void* pNext;
         public VkShaderStageFlagBits stages;
-        [InlineArray(256)]
-        public struct nameInlineArray1
-        {
-            public byte element;
-        }
-        public nameInlineArray1 name;
-        [InlineArray(256)]
-        public struct descriptionInlineArray1
-        {
-            public byte element;
-        }
-        public descriptionInlineArray1 description;
+        public fixed byte name[256];
+        public fixed byte description[256];
         public uint subgroupSize;
         public VkPipelineExecutablePropertiesKHR() { }
     }
@@ -11344,18 +11284,8 @@ namespace OpenTK.Graphics.Vulkan
     {
         public VkStructureType sType = VkStructureType.StructureTypePipelineExecutableStatisticKhr;
         public void* pNext;
-        [InlineArray(256)]
-        public struct nameInlineArray1
-        {
-            public byte element;
-        }
-        public nameInlineArray1 name;
-        [InlineArray(256)]
-        public struct descriptionInlineArray1
-        {
-            public byte element;
-        }
-        public descriptionInlineArray1 description;
+        public fixed byte name[256];
+        public fixed byte description[256];
         public VkPipelineExecutableStatisticFormatKHR format;
         public VkPipelineExecutableStatisticValueKHR value;
         public VkPipelineExecutableStatisticKHR() { }
@@ -11365,18 +11295,8 @@ namespace OpenTK.Graphics.Vulkan
     {
         public VkStructureType sType = VkStructureType.StructureTypePipelineExecutableInternalRepresentationKhr;
         public void* pNext;
-        [InlineArray(256)]
-        public struct nameInlineArray1
-        {
-            public byte element;
-        }
-        public nameInlineArray1 name;
-        [InlineArray(256)]
-        public struct descriptionInlineArray1
-        {
-            public byte element;
-        }
-        public descriptionInlineArray1 description;
+        public fixed byte name[256];
+        public fixed byte description[256];
         public int isText;
         public nuint dataSize;
         public void* pData;
@@ -11851,18 +11771,8 @@ namespace OpenTK.Graphics.Vulkan
         public VkStructureType sType = VkStructureType.StructureTypePhysicalDeviceVulkan12Properties;
         public void* pNext;
         public VkDriverId driverID;
-        [InlineArray(256)]
-        public struct driverNameInlineArray1
-        {
-            public byte element;
-        }
-        public driverNameInlineArray1 driverName;
-        [InlineArray(256)]
-        public struct driverInfoInlineArray1
-        {
-            public byte element;
-        }
-        public driverInfoInlineArray1 driverInfo;
+        public fixed byte driverName[256];
+        public fixed byte driverInfo[256];
         public VkConformanceVersion conformanceVersion;
         public VkShaderFloatControlsIndependence denormBehaviorIndependence;
         public VkShaderFloatControlsIndependence roundingModeIndependence;
@@ -12125,31 +12035,11 @@ namespace OpenTK.Graphics.Vulkan
     {
         public VkStructureType sType = VkStructureType.StructureTypePhysicalDeviceToolProperties;
         public void* pNext;
-        [InlineArray(256)]
-        public struct nameInlineArray1
-        {
-            public byte element;
-        }
-        public nameInlineArray1 name;
-        [InlineArray(256)]
-        public struct versionInlineArray1
-        {
-            public byte element;
-        }
-        public versionInlineArray1 version;
+        public fixed byte name[256];
+        public fixed byte version[256];
         public VkToolPurposeFlagBits purposes;
-        [InlineArray(256)]
-        public struct descriptionInlineArray1
-        {
-            public byte element;
-        }
-        public descriptionInlineArray1 description;
-        [InlineArray(256)]
-        public struct layerInlineArray1
-        {
-            public byte element;
-        }
-        public layerInlineArray1 layer;
+        public fixed byte description[256];
+        public fixed byte layer[256];
         public VkPhysicalDeviceToolProperties() { }
     }
     /// <summary><b>[requires: VK_EXT_tooling_info]</b> </summary>/// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceToolPropertiesEXT.html" /></remarks>
@@ -17969,12 +17859,7 @@ namespace OpenTK.Graphics.Vulkan
     public unsafe struct VkRenderPassSubpassFeedbackInfoEXT
     {
         public VkSubpassMergeStatusEXT subpassMergeStatus;
-        [InlineArray(256)]
-        public struct descriptionInlineArray1
-        {
-            public byte element;
-        }
-        public descriptionInlineArray1 description;
+        public fixed byte description[256];
         public uint postMergeIndex;
         public VkRenderPassSubpassFeedbackInfoEXT() { }
     }
@@ -18971,12 +18856,7 @@ namespace OpenTK.Graphics.Vulkan
     /// <summary><b>[requires: VK_EXT_device_fault]</b> </summary>/// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDeviceFaultVendorInfoEXT.html" /></remarks>
     public unsafe struct VkDeviceFaultVendorInfoEXT
     {
-        [InlineArray(256)]
-        public struct descriptionInlineArray1
-        {
-            public byte element;
-        }
-        public descriptionInlineArray1 description;
+        public fixed byte description[256];
         public ulong vendorFaultCode;
         public ulong vendorFaultData;
         public VkDeviceFaultVendorInfoEXT() { }
@@ -19004,12 +18884,7 @@ namespace OpenTK.Graphics.Vulkan
     {
         public VkStructureType sType = VkStructureType.StructureTypeDeviceFaultInfoExt;
         public void* pNext;
-        [InlineArray(256)]
-        public struct descriptionInlineArray1
-        {
-            public byte element;
-        }
-        public descriptionInlineArray1 description;
+        public fixed byte description[256];
         public VkDeviceFaultAddressInfoEXT* pAddressInfos;
         public VkDeviceFaultVendorInfoEXT* pVendorInfos;
         public void* pVendorBinaryData;

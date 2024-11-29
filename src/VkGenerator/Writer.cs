@@ -718,7 +718,7 @@ namespace VkGenerator
                             // FIXME: Reference the constant instead of just emitting a magic number!
                             if (csFixedSizeArray.BaseType is CSFixedSizeArray csFixedSizeArray2)
                             {
-                                //FIXME: Figure out the name recursion 
+                                //FIXME: Figure out the name recursion
                                 string helperTypeName = $"{member.Name}InlineArray{level++}";
                                 writer.WriteLine($"[InlineArray({csFixedSizeArray.Size})]");
                                 writer.WriteLine($"public struct {helperTypeName}");
@@ -734,7 +734,7 @@ namespace VkGenerator
                                 }
                                 writer.WriteLine($"public {helperTypeName} {member.Name};");
                             }
-                            else if (csFixedSizeArray.BaseType is not CSPrimitive csPrimitive || csPrimitive.TypeName == "IntPtr" || level > 1)
+                            else if (csFixedSizeArray.BaseType is not CSPrimitive csPrimitive || csPrimitive.TypeName == "IntPtr" || csPrimitive is CSChar8 || level > 1)
                             {
                                 string helperTypeName = $"{member.Name}InlineArray{level}";
                                 writer.WriteLine($"[InlineArray({csFixedSizeArray.Size})]");
