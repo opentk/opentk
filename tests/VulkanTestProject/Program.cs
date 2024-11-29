@@ -70,13 +70,20 @@ namespace VulkanTestProject
                 Span<VkExtensionProperties> extensionProperties = new Span<VkExtensionProperties>(extensionPropertiesPtr, (int)extensionCount);
                 for (int i = 0; i < extensionProperties.Length; i++)
                 {
-                    ReadOnlySpan<byte> extName = extensionProperties[i].extensionName;
-                    extName = extName.Slice(0, extName.IndexOf((byte)0));
-                    supportedExtensions.Add(Encoding.UTF8.GetString(extName));
+                    // This is weird, but for some reason C# requires you to do it like this.
+                    // Still preferable to whatever the hell we had before IMO.
+                    // The ideal situation would be to not have to do it(we're in an unsafe environment anyways)
+                    // But what can you do?
+                    // - khhs167 Nov 29 2024
+                    fixed (VkExtensionProperties* property = &extensionProperties[i])
+                    {
+                        string extName = Marshal.PtrToStringUTF8((IntPtr)property->extensionName) ?? "";
+                        supportedExtensions.Add(extName);
+                    }
                 }
                 NativeMemory.Free(extensionPropertiesPtr);
             }
-            
+
             VkApplicationInfo applicationInfo;
             applicationInfo.sType = VkStructureType.StructureTypeApplicationInfo;
             applicationInfo.pNext = null;
@@ -94,7 +101,7 @@ namespace VulkanTestProject
                 // FIXME: For some reason VK_KHR_portability_subset doesn't work
                 // even though the validation layer complains that we don't set it.
                 // Not sure what that is about...
-                // - Noggin_bops 2024-10-07 
+                // - Noggin_bops 2024-10-07
                 //extensions.Add("VK_KHR_portability_subset");
                 extensions.Add("VK_KHR_portability_enumeration");
             }
@@ -117,9 +124,12 @@ namespace VulkanTestProject
                 ReadOnlySpan<VkLayerProperties> layers = new ReadOnlySpan<VkLayerProperties>(layersPtr, (int)layerCount);
                 for (int i = 0; i < layers.Length; i++)
                 {
-                    ReadOnlySpan<byte> layerName = layers[i].layerName;
-                    layerName = layerName.Slice(0, layerName.IndexOf((byte)0));
-                    supportedLayers.Add(Encoding.UTF8.GetString(layerName));
+                    // See the comment at supportedExtensions. That explains it all.
+                    fixed (VkLayerProperties* property = &layers[i])
+                    {
+                        string extName = Marshal.PtrToStringUTF8((IntPtr)property->layerName) ?? "";
+                        supportedLayers.Add(extName);
+                    }
                 }
             }
 
@@ -213,11 +223,14 @@ namespace VulkanTestProject
                     bool hasKHRSwapchain = false;
                     for (int i = 0; i < deviceExtensions.Length; i++)
                     {
-                        ReadOnlySpan<byte> extName = deviceExtensions[i].extensionName;
-                        extName = extName.Slice(0, extName.IndexOf((byte)0));
-                        if (extName.SequenceEqual("VK_KHR_swapchain"u8))
+                        // See the comment at supportedExtensions. That explains it all.
+                        fixed (VkExtensionProperties* property = &deviceExtensions[i])
                         {
-                            hasKHRSwapchain = true;
+                            string extName = Marshal.PtrToStringUTF8((IntPtr)property->extensionName) ?? "";
+                            if (extName == "VK_KHR_swapchain")
+                            {
+                                hasKHRSwapchain = true;
+                            }
                         }
                     }
                     NativeMemory.Free(deviceExtensionsPtr);
@@ -273,14 +286,16 @@ namespace VulkanTestProject
             bool foundSwapchain = false;
             for (int i = 0; i < deviceExtensions.Length; i++)
             {
-                ReadOnlySpan<byte> name = deviceExtensions[i].extensionName;
-                name = name.Slice(0, name.IndexOf((byte)0));
-
-                deviceExtensionsSet.Add(Encoding.UTF8.GetString(name));
-
-                if (name.SequenceEqual("VK_KHR_swapchain"u8))
+                // See the comment at supportedExtensions. That explains it all.
+                fixed (VkExtensionProperties* property = &deviceExtensions[i])
                 {
-                    foundSwapchain = true;
+                    string name = Marshal.PtrToStringUTF8((IntPtr)property->extensionName) ?? "";
+                    deviceExtensionsSet.Add(name);
+
+                    if (name == "VK_KHR_swapchain")
+                    {
+                        foundSwapchain = true;
+                    }
                 }
             }
 
@@ -299,7 +314,7 @@ namespace VulkanTestProject
             }
 
             VkDeviceQueueCreateInfo* queueCreateInfos = stackalloc VkDeviceQueueCreateInfo[2];
-            
+
             float priority = 1.0f;
             queueCreateInfos[0].sType = VkStructureType.StructureTypeDeviceQueueCreateInfo;
             queueCreateInfos[0].pNext = null;
