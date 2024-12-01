@@ -131,11 +131,71 @@ namespace OpenTK.Rewrite
 
                         TypeBindingsBase = assembly.Modules.Select(m => m.GetType("OpenTK.Graphics.BindingsBase")).First();
 
+                        List<ModuleReference> removedModuleReferences = new List<ModuleReference>();
                         foreach (var module in assembly.Modules)
                         {
                             foreach (var type in module.Types)
                             {
                                 Rewrite(type);
+
+                                // To be able to remove module references later we need to make sure that
+                                // all of the methods have cached their PInvokeInfo property, otherwise they will
+                                // try to index the ModuleReferences collection out of bounds when they attempt
+                                // to get the DllImport info.
+                                // This isn't a great solution, but it works...
+                                // - Noggin_bops 2024-12-01
+                                foreach (var method in type.Methods)
+                                {
+                                    if (method.HasPInvokeInfo)
+                                    {
+                                        var info = method.PInvokeInfo;
+                                        GC.KeepAlive(info);
+                                    }
+                                }
+                            }
+
+                            for (int i = (module.ModuleReferences.Count) - (1); i >= 0; i--)
+                            {
+                                ModuleReference mr = module.ModuleReferences[i];
+                                switch (mr.Name)
+                                {
+                                    // To be able to compile targeting "net8.0-macos" we need to remove the "libGLESv2"
+                                    // module reference from the assembly, as this causes the compiler to try and link gles
+                                    // on macos where it's not available. At the same time I decided to remove all of the
+                                    // other "temporary" module references the binder generates.
+                                    // See: https://github.com/opentk/opentk/issues/1743
+                                    // To be able to remove this module reference we need to make sure that all MethodDefinition
+                                    // have cached their PInvokeInfo property. See above.
+                                    // FIXME: This codes does not consider the UseDllImport option, so that might break with this change...
+                                    // - Noggin_bops 2024-12-01
+                                    case "opengl32.dll":
+                                    case "libGLESv2.dll":
+                                    case "GLESv1_CM":
+                                        module.ModuleReferences.Remove(mr);
+                                        removedModuleReferences.Add(mr);
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
+                        }
+
+                        // Check that we've successfully removed all references to the removed ModuleReferences.
+                        // - Noggin_bops 2024-12-01
+                        foreach (var module in assembly.Modules)
+                        {
+                            foreach (var type in module.Types)
+                            {
+                                foreach (var method in type.Methods)
+                                {
+                                    if (method.HasPInvokeInfo)
+                                    {
+                                        if (removedModuleReferences.Contains(method.PInvokeInfo.Module))
+                                        {
+                                            Console.Error.WriteLine($"The method {method} still references a removed ModuleReference {method.PInvokeInfo.Module}");
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
