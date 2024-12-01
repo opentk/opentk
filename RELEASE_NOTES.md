@@ -1,3 +1,7 @@
+## 4.8.3
+
+* Temporary version update to be able to test this PR.
+
 ## 4.8.2
 
 * FIX: Fixed issue where setting `NativeWindow.WindowState = WindowState.Normal` while fullscreen would not exit fullscreen. (@Th3Dilli)
