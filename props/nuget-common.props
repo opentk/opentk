@@ -2,6 +2,7 @@
   <PropertyGroup>
     <Authors>The OpenTK team.</Authors>
     <PackageIconUrl>https://raw.githubusercontent.com/opentk/opentk/master/docs/files/img/logo.png</PackageIconUrl>
+    <PackageIcon>images/opentk-blue-hexagon.png</PackageIcon>
     <PackageLicenseUrl>https://opensource.org/licenses/MIT</PackageLicenseUrl>
     <PackageReleaseNotes>Initial 4.0 release.</PackageReleaseNotes>
     <PackageTags>opentk;opengl;cross-platform;openal;csharp;fsharp;vb;dotnet;mono;graphics;game;scientific;science;3d;2d;math;input;gamepad;joystick</PackageTags>
