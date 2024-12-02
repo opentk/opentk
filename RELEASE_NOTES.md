@@ -1,9 +1,5 @@
 ## 4.9.1
 
-* FIX: Fix nuget package errors. (@NogginBops)
-
-## 4.9.0
-
 * BREAKING: Made `NativeWindow` able to run on Wayland (when running on Wayland `NativeWindow` will default to Wayland, use `OPENTK_4_USE_WAYLAND=0` or set the X11 glfw hint to use X11/Xwayland). (@NogginBops)
 
 * BREAKING: Change type of `NativeWindow.CurrentMonitor` property from `MonitorHandle` to `MonitorInfo`. (@NogginBops)
@@ -69,6 +65,10 @@
 * FIX: Fix GLFW calling convention when on 32-bit windows, this was causing a StackOverflowException. (@NogginBops)
 
 * FIX: Improved a bunch of OpenAL documentation. (@NogginBops)
+
+## 4.9.0
+
+* This version had broken nuget packages, see `4.9.1` instead.
 
 ## 4.8.2
 
