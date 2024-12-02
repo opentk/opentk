@@ -20,7 +20,7 @@ files
     ..\..\.github\opentk-blue-hexagon.png ==> images
 
 readme docs\README.md
-iconUrl https://raw.githubusercontent.com/opentk/opentk/refs/heads/master/.github/opentk-blue-hexagon.png
+iconUrl https://raw.githubusercontent.com/opentk/opentk/master/.github/opentk-blue-hexagon.png
 projectUrl https://github.com/opentk/opentk
 licenseUrl https://opensource.org/licenses/MIT
 licenseExpression MIT
