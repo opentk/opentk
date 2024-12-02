@@ -1,5 +1,5 @@
 ﻿//
-// EffectSlotInteger.cs
+// EffectSlotBoolean.cs
 //
 // Copyright (C) 2019 OpenTK
 //
