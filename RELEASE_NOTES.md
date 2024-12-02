@@ -1,3 +1,7 @@
+## 4.9.1
+
+* FIX: Fix nuget package errors. (@NogginBops)
+
 ## 4.9.0
 
 * BREAKING: Made `NativeWindow` able to run on Wayland (when running on Wayland `NativeWindow` will default to Wayland, use `OPENTK_4_USE_WAYLAND=0` or set the X11 glfw hint to use X11/Xwayland). (@NogginBops)

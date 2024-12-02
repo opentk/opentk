@@ -23,7 +23,7 @@ let authors = [ "Team OpenTK" ]
 
 let summary = "A set of fast, low-level C# bindings for OpenGL, OpenGL ES and OpenAL."
 
-let license = "https://opensource.org/licenses/MIT"
+let license = "https://licenses.nuget.org/MIT"
 
 let projectUrl = "https://github.com/opentk/opentk"
 

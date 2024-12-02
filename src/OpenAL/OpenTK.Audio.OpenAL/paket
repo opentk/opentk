@@ -16,7 +16,7 @@ files
 readme docs\README.md
 iconUrl https://raw.githubusercontent.com/opentk/opentk/master/.github/opentk-blue-hexagon.png
 projectUrl https://github.com/opentk/opentk
-licenseUrl https://opensource.org/licenses/MIT
+licenseUrl https://licenses.nuget.org/MIT
 licenseExpression MIT
 tags opentk;opengl;cross-platform;openal;csharp;fsharp;vb;dotnet;mono;graphics;game;scientific;science;3d;2d;math;input;gamepad;joystick
 repositoryType git
