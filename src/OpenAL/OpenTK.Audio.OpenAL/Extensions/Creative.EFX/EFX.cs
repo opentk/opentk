@@ -228,6 +228,17 @@ namespace OpenTK.Audio.OpenAL
             /// <param name="slot">The slot.</param>
             /// <param name="param">The named property.</param>
             /// <param name="value">The value to set the property to.</param>
+            public static void AuxiliaryEffectSlot(int slot, EffectSlotBoolean param, bool value) => _AuxiliaryEffectSlotb(slot, param, value ? 1 : 0);
+            [UnmanagedFunctionPointer(AL.ALCallingConvention)]
+            private delegate void AuxiliaryEffectSlotbDelegate(int slot, EffectSlotBoolean param, int value);
+            private static readonly AuxiliaryEffectSlotbDelegate _AuxiliaryEffectSlotb = LoadDelegate<AuxiliaryEffectSlotbDelegate>("alAuxiliaryEffectSloti");
+
+            /// <summary>
+            /// Sets the value of a named property on the given effect slot.
+            /// </summary>
+            /// <param name="slot">The slot.</param>
+            /// <param name="param">The named property.</param>
+            /// <param name="value">The value to set the property to.</param>
             public static void AuxiliaryEffectSlot(int slot, EffectSlotFloat param, float value) => _AuxiliaryEffectSlotf(slot, param, value);
             [UnmanagedFunctionPointer(AL.ALCallingConvention)]
             private delegate void AuxiliaryEffectSlotfDelegate(int slot, EffectSlotFloat param, float value);
