@@ -38,6 +38,8 @@ namespace OpenTK.Compute.OpenCL
         }
 
         public static implicit operator IntPtr(CLBuffer buffer) => buffer.Handle;
+
+        public static explicit operator CLMemoryObject(CLBuffer buffer) => new CLMemoryObject(buffer.Handle);
     }
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
 }
