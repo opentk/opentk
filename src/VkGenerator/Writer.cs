@@ -104,7 +104,7 @@ namespace VkGenerator
                     writer.WriteLine("</summary>");
 
                     // FIXME: Make sure to not do name mangling?
-                    writer.WriteLine($"/// <remarks><see href=\"https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/{@enum.Name}.html\" /></remarks>");
+                    writer.WriteLine($"/// <remarks><see href=\"https://registry.khronos.org/vulkan/specs/latest/man/html/{@enum.Name}.html\" /></remarks>");
 
                     if (@enum.Bitmask)
                     {

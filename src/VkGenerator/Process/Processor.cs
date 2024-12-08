@@ -13,6 +13,30 @@ namespace VkGenerator.Process
 
     internal class Processor
     {
+        public static void SortMembers(SpecificationData data)
+        {
+            // Here we want to make it so that ordering changes in the vk.xml spec doesn't generate code diffs in OpenTK.
+            // We do this by sorting the enums, structures, enum members, etc so that they always appear in predictable order.
+            // OBS. We don't sort struct members, as that would change their layout.
+            // - Noggin_bops 2024-12-08
+
+            data.Enums.Sort((e1, e2) => string.Compare(e1.Name, e2.Name, StringComparison.InvariantCulture));
+            data.EnumNames.Sort((e1, e2) => string.Compare(e1.Name, e2.Name, StringComparison.InvariantCulture));
+            data.BitmaskNames.Sort((b1, b2) => string.Compare(b1.Name, b2.Name, StringComparison.InvariantCulture));
+            data.Structs.Sort((s1, s2) => string.Compare(s1.Name, s2.Name, StringComparison.InvariantCulture));
+            data.Bitmasks.Sort((b1, b2) => string.Compare(b1.Name, b2.Name, StringComparison.InvariantCulture));
+            data.Handles.Sort((h1, h2) => string.Compare(h1.Name, h2.Name, StringComparison.InvariantCulture));
+            data.Commands.Sort((c1, c2) => string.Compare(c1.Name, c2.Name, StringComparison.InvariantCulture));
+            // FIXME: ?
+            data.Features.Sort((f1, f2) => string.Compare(f1.Name, f2.Name, StringComparison.InvariantCulture));
+            data.Extensions.Sort((e1, e2) => string.Compare(e1.Name, e2.Name, StringComparison.InvariantCulture));
+
+            foreach (EnumType @enum in data.Enums)
+            {
+                @enum.Members.Sort((m1, m2) => string.Compare(m1.Name, m2.Name, StringComparison.InvariantCulture));
+            }
+        }
+
         public static EnumMember? FindEnumMember(List<EnumType> enums, string memberName)
         {
             foreach (EnumType @enum in enums)
