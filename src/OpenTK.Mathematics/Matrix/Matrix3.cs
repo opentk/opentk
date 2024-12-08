@@ -1274,7 +1274,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <param name="left">left-hand operand.</param>
         /// <param name="right">right-hand operand.</param>
-        /// <returns>A new Matrix3d which holds the result of the multiplication.</returns>
+        /// <returns>A new Matrix3 which holds the result of the multiplication.</returns>
         [Pure]
         public static Matrix3 operator *(Matrix3 left, Matrix3 right)
         {
@@ -1286,7 +1286,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <param name="left">left-hand operand.</param>
         /// <param name="right">right-hand operand.</param>
-        /// <returns>A new Matrix3d which holds the result of the multiplication.</returns>
+        /// <returns>A new Matrix3x2 which holds the result of the multiplication.</returns>
         [Pure]
         public static Matrix3x2 operator *(Matrix3 left, Matrix3x2 right)
         {
@@ -1298,7 +1298,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <param name="left">left-hand operand.</param>
         /// <param name="right">right-hand operand.</param>
-        /// <returns>A new Matrix3d which holds the result of the multiplication.</returns>
+        /// <returns>A new Matrix3x4 which holds the result of the multiplication.</returns>
         [Pure]
         public static Matrix3x4 operator *(Matrix3 left, Matrix3x4 right)
         {
@@ -1310,7 +1310,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <param name="left">left-hand operand.</param>
         /// <param name="right">right-hand operand.</param>
-        /// <returns>A new Matrix2 which holds the result of the addition.</returns>
+        /// <returns>A new Matrix3 which holds the result of the addition.</returns>
         [Pure]
         public static Matrix3 operator +(Matrix3 left, Matrix3 right)
         {
@@ -1322,7 +1322,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <param name="left">left-hand operand.</param>
         /// <param name="right">right-hand operand.</param>
-        /// <returns>A new Matrix2 which holds the result of the subtraction.</returns>
+        /// <returns>A new Matrix3 which holds the result of the subtraction.</returns>
         [Pure]
         public static Matrix3 operator -(Matrix3 left, Matrix3 right)
         {
