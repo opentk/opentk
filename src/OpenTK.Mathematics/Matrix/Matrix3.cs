@@ -37,6 +37,7 @@ namespace OpenTK.Mathematics
     public struct Matrix3 : IEquatable<Matrix3>, IFormattable,
                             IMultiplyOperators<Matrix3, float, Matrix3>,
                             IMultiplyOperators<Matrix3, Matrix3, Matrix3>,
+                            IMultiplyOperators<Matrix3, Matrix3x2, Matrix3x2>,
                             IMultiplyOperators<Matrix3, Matrix3x4, Matrix3x4>,
                             IAdditionOperators<Matrix3, Matrix3, Matrix3>,
                             ISubtractionOperators<Matrix3, Matrix3, Matrix3>,
@@ -967,6 +968,52 @@ namespace OpenTK.Mathematics
         /// <param name="right">The right operand of the multiplication.</param>
         /// <returns>A new instance that is the result of the multiplication.</returns>
         [Pure]
+        public static Matrix3x2 Mult(Matrix3 left, Matrix3x2 right)
+        {
+            Mult(in left, in right, out Matrix3x2 result);
+            return result;
+        }
+
+        /// <summary>
+        /// Multiplies two instances.
+        /// </summary>
+        /// <param name="left">The left operand of the multiplication.</param>
+        /// <param name="right">The right operand of the multiplication.</param>
+        /// <param name="result">A new instance that is the result of the multiplication.</param>
+        public static void Mult(in Matrix3 left, in Matrix3x2 right, out Matrix3x2 result)
+        {
+            float leftM11 = left.Row0.X;
+            float leftM12 = left.Row0.Y;
+            float leftM13 = left.Row0.Z;
+            float leftM21 = left.Row1.X;
+            float leftM22 = left.Row1.Y;
+            float leftM23 = left.Row1.Z;
+            float leftM31 = left.Row2.X;
+            float leftM32 = left.Row2.Y;
+            float leftM33 = left.Row2.Z;
+
+            float rightM11 = right.Row0.X;
+            float rightM12 = right.Row0.Y;
+            float rightM21 = right.Row1.X;
+            float rightM22 = right.Row1.Y;
+            float rightM31 = right.Row2.X;
+            float rightM32 = right.Row2.Y;
+
+            result.Row0.X = (leftM11 * rightM11) + (leftM12 * rightM21) + (leftM13 * rightM31);
+            result.Row0.Y = (leftM11 * rightM12) + (leftM12 * rightM22) + (leftM13 * rightM32);
+            result.Row1.X = (leftM21 * rightM11) + (leftM22 * rightM21) + (leftM23 * rightM31);
+            result.Row1.Y = (leftM21 * rightM12) + (leftM22 * rightM22) + (leftM23 * rightM32);
+            result.Row2.X = (leftM31 * rightM11) + (leftM32 * rightM21) + (leftM33 * rightM31);
+            result.Row2.Y = (leftM31 * rightM12) + (leftM32 * rightM22) + (leftM33 * rightM32);
+        }
+
+        /// <summary>
+        /// Multiplies two instances.
+        /// </summary>
+        /// <param name="left">The left operand of the multiplication.</param>
+        /// <param name="right">The right operand of the multiplication.</param>
+        /// <returns>A new instance that is the result of the multiplication.</returns>
+        [Pure]
         public static Matrix3x4 Mult(Matrix3 left, Matrix3x4 right)
         {
             Mult(in left, in right, out Matrix3x4 result);
@@ -1230,6 +1277,18 @@ namespace OpenTK.Mathematics
         /// <returns>A new Matrix3d which holds the result of the multiplication.</returns>
         [Pure]
         public static Matrix3 operator *(Matrix3 left, Matrix3 right)
+        {
+            return Mult(left, right);
+        }
+
+        /// <summary>
+        /// Matrix multiplication.
+        /// </summary>
+        /// <param name="left">left-hand operand.</param>
+        /// <param name="right">right-hand operand.</param>
+        /// <returns>A new Matrix3d which holds the result of the multiplication.</returns>
+        [Pure]
+        public static Matrix3x2 operator *(Matrix3 left, Matrix3x2 right)
         {
             return Mult(left, right);
         }
