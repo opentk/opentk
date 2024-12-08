@@ -438,6 +438,38 @@ namespace OpenTK.Graphics.Vulkan
         public static explicit operator ulong(VkIndirectCommandsLayoutNV handle) => handle.Handle;
         public static explicit operator VkIndirectCommandsLayoutNV(ulong handle) => new VkIndirectCommandsLayoutNV(handle);
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkIndirectCommandsLayoutEXT.html" /></remarks>
+    [DebuggerDisplay("VkIndirectCommandsLayoutEXT\\{{Handle}\\}")]
+    public unsafe struct VkIndirectCommandsLayoutEXT : IEquatable<VkIndirectCommandsLayoutEXT>
+    {
+        public static VkIndirectCommandsLayoutEXT Zero => new VkIndirectCommandsLayoutEXT(0);
+        public ulong Handle;
+        public VkIndirectCommandsLayoutEXT(ulong handle) => Handle = handle;
+        public override bool Equals(object? obj) => obj is VkIndirectCommandsLayoutEXT instance && Equals(instance);
+        public bool Equals(VkIndirectCommandsLayoutEXT other) => Handle.Equals(other.Handle);
+        public override int GetHashCode() => HashCode.Combine(Handle);
+        public override string? ToString() => Handle.ToString();
+        public static bool operator ==(VkIndirectCommandsLayoutEXT left, VkIndirectCommandsLayoutEXT right) => left.Equals(right);
+        public static bool operator !=(VkIndirectCommandsLayoutEXT left, VkIndirectCommandsLayoutEXT right) => !(left == right);
+        public static explicit operator ulong(VkIndirectCommandsLayoutEXT handle) => handle.Handle;
+        public static explicit operator VkIndirectCommandsLayoutEXT(ulong handle) => new VkIndirectCommandsLayoutEXT(handle);
+    }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkIndirectExecutionSetEXT.html" /></remarks>
+    [DebuggerDisplay("VkIndirectExecutionSetEXT\\{{Handle}\\}")]
+    public unsafe struct VkIndirectExecutionSetEXT : IEquatable<VkIndirectExecutionSetEXT>
+    {
+        public static VkIndirectExecutionSetEXT Zero => new VkIndirectExecutionSetEXT(0);
+        public ulong Handle;
+        public VkIndirectExecutionSetEXT(ulong handle) => Handle = handle;
+        public override bool Equals(object? obj) => obj is VkIndirectExecutionSetEXT instance && Equals(instance);
+        public bool Equals(VkIndirectExecutionSetEXT other) => Handle.Equals(other.Handle);
+        public override int GetHashCode() => HashCode.Combine(Handle);
+        public override string? ToString() => Handle.ToString();
+        public static bool operator ==(VkIndirectExecutionSetEXT left, VkIndirectExecutionSetEXT right) => left.Equals(right);
+        public static bool operator !=(VkIndirectExecutionSetEXT left, VkIndirectExecutionSetEXT right) => !(left == right);
+        public static explicit operator ulong(VkIndirectExecutionSetEXT handle) => handle.Handle;
+        public static explicit operator VkIndirectExecutionSetEXT(ulong handle) => new VkIndirectExecutionSetEXT(handle);
+    }
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDescriptorUpdateTemplate.html" /></remarks>
     [DebuggerDisplay("VkDescriptorUpdateTemplate\\{{Handle}\\}")]
     public unsafe struct VkDescriptorUpdateTemplate : IEquatable<VkDescriptorUpdateTemplate>

@@ -8,6 +8,7 @@ using OpenTK.Graphics.Vulkan.VulkanVideoCodecH265stdDecode;
 using OpenTK.Graphics.Vulkan.VulkanVideoCodecH265stdEncode;
 using OpenTK.Graphics.Vulkan.VulkanVideoCodecAv1std;
 using OpenTK.Graphics.Vulkan.VulkanVideoCodecAv1stdDecode;
+using OpenTK.Graphics.Vulkan.VulkanVideoCodecAv1stdEncode;
 using System;
 using System.Runtime.CompilerServices;
 
@@ -2583,6 +2584,7 @@ namespace OpenTK.Graphics.Vulkan
         public enum StdVideoAV1ColorPrimaries : uint
         {
             VideoAv1ColorPrimariesBt709 = 1,
+            VideoAv1ColorPrimariesUnspecified = 2,
             VideoAv1ColorPrimariesBtUnspecified = 2,
             VideoAv1ColorPrimariesBt470M = 4,
             VideoAv1ColorPrimariesBt470BG = 5,
@@ -3365,6 +3367,341 @@ namespace OpenTK.Graphics.Vulkan
             public byte OrderHint;
             public fixed byte SavedOrderHints[8];
             public StdVideoDecodeAV1ReferenceInfo() { }
+        }
+    }
+    namespace VulkanVideoCodecAv1stdEncode
+    {
+        public static class Constants
+        {
+            /// <summary>&quot;VK_STD_vulkan_video_codec_av1_encode&quot;</summary>
+            public static ReadOnlySpan<byte> StdVulkanVideoCodecAv1EncodeExtensionName => "VK_STD_vulkan_video_codec_av1_encode"u8;
+        }
+        public unsafe struct StdVideoEncodeAV1DecoderModelInfo
+        {
+            public byte buffer_delay_length_minus_1;
+            public byte buffer_removal_time_length_minus_1;
+            public byte frame_presentation_time_length_minus_1;
+            public byte reserved1;
+            public uint num_units_in_decoding_tick;
+            public StdVideoEncodeAV1DecoderModelInfo() { }
+            public StdVideoEncodeAV1DecoderModelInfo(byte buffer_delay_length_minus_1, byte buffer_removal_time_length_minus_1, byte frame_presentation_time_length_minus_1, byte reserved1, uint num_units_in_decoding_tick)
+            {
+                this.buffer_delay_length_minus_1 = buffer_delay_length_minus_1;
+                this.buffer_removal_time_length_minus_1 = buffer_removal_time_length_minus_1;
+                this.frame_presentation_time_length_minus_1 = frame_presentation_time_length_minus_1;
+                this.reserved1 = reserved1;
+                this.num_units_in_decoding_tick = num_units_in_decoding_tick;
+            }
+        }
+        public unsafe struct StdVideoEncodeAV1ExtensionHeader
+        {
+            public byte temporal_id;
+            public byte spatial_id;
+            public StdVideoEncodeAV1ExtensionHeader() { }
+            public StdVideoEncodeAV1ExtensionHeader(byte temporal_id, byte spatial_id)
+            {
+                this.temporal_id = temporal_id;
+                this.spatial_id = spatial_id;
+            }
+        }
+        public unsafe struct StdVideoEncodeAV1OperatingPointInfoFlags
+        {
+            private uint _bitfield0;
+             // TODO: Accessor property for decoder_model_present_for_this_op, size: 1, offset: 0
+            public uint decoder_model_present_for_this_op
+            {
+                get => (uint)((_bitfield0 >> 0) & 0x1u);
+                set => _bitfield0 = (_bitfield0 & ~(0x1u << 0)) | ((((uint)value) & 0x1u) << 0);
+            }
+             // TODO: Accessor property for low_delay_mode_flag, size: 1, offset: 1
+            public uint low_delay_mode_flag
+            {
+                get => (uint)((_bitfield0 >> 1) & 0x1u);
+                set => _bitfield0 = (_bitfield0 & ~(0x1u << 1)) | ((((uint)value) & 0x1u) << 1);
+            }
+             // TODO: Accessor property for initial_display_delay_present_for_this_op, size: 1, offset: 2
+            public uint initial_display_delay_present_for_this_op
+            {
+                get => (uint)((_bitfield0 >> 2) & 0x1u);
+                set => _bitfield0 = (_bitfield0 & ~(0x1u << 2)) | ((((uint)value) & 0x1u) << 2);
+            }
+             // TODO: Accessor property for reserved, size: 29, offset: 3
+            public uint reserved
+            {
+                get => (uint)((_bitfield0 >> 3) & 0x1FFFFFFFu);
+                set => _bitfield0 = (_bitfield0 & ~(0x1FFFFFFFu << 3)) | ((((uint)value) & 0x1FFFFFFFu) << 3);
+            }
+            public StdVideoEncodeAV1OperatingPointInfoFlags() { }
+        }
+        public unsafe struct StdVideoEncodeAV1OperatingPointInfo
+        {
+            public StdVideoEncodeAV1OperatingPointInfoFlags flags;
+            public ushort operating_point_idc;
+            public byte seq_level_idx;
+            public byte seq_tier;
+            public uint decoder_buffer_delay;
+            public uint encoder_buffer_delay;
+            public byte initial_display_delay_minus_1;
+            public StdVideoEncodeAV1OperatingPointInfo() { }
+            public StdVideoEncodeAV1OperatingPointInfo(StdVideoEncodeAV1OperatingPointInfoFlags flags, ushort operating_point_idc, byte seq_level_idx, byte seq_tier, uint decoder_buffer_delay, uint encoder_buffer_delay, byte initial_display_delay_minus_1)
+            {
+                this.flags = flags;
+                this.operating_point_idc = operating_point_idc;
+                this.seq_level_idx = seq_level_idx;
+                this.seq_tier = seq_tier;
+                this.decoder_buffer_delay = decoder_buffer_delay;
+                this.encoder_buffer_delay = encoder_buffer_delay;
+                this.initial_display_delay_minus_1 = initial_display_delay_minus_1;
+            }
+        }
+        public unsafe struct StdVideoEncodeAV1PictureInfoFlags
+        {
+            private uint _bitfield0;
+             // TODO: Accessor property for error_resilient_mode, size: 1, offset: 0
+            public uint error_resilient_mode
+            {
+                get => (uint)((_bitfield0 >> 0) & 0x1u);
+                set => _bitfield0 = (_bitfield0 & ~(0x1u << 0)) | ((((uint)value) & 0x1u) << 0);
+            }
+             // TODO: Accessor property for disable_cdf_update, size: 1, offset: 1
+            public uint disable_cdf_update
+            {
+                get => (uint)((_bitfield0 >> 1) & 0x1u);
+                set => _bitfield0 = (_bitfield0 & ~(0x1u << 1)) | ((((uint)value) & 0x1u) << 1);
+            }
+             // TODO: Accessor property for use_superres, size: 1, offset: 2
+            public uint use_superres
+            {
+                get => (uint)((_bitfield0 >> 2) & 0x1u);
+                set => _bitfield0 = (_bitfield0 & ~(0x1u << 2)) | ((((uint)value) & 0x1u) << 2);
+            }
+             // TODO: Accessor property for render_and_frame_size_different, size: 1, offset: 3
+            public uint render_and_frame_size_different
+            {
+                get => (uint)((_bitfield0 >> 3) & 0x1u);
+                set => _bitfield0 = (_bitfield0 & ~(0x1u << 3)) | ((((uint)value) & 0x1u) << 3);
+            }
+             // TODO: Accessor property for allow_screen_content_tools, size: 1, offset: 4
+            public uint allow_screen_content_tools
+            {
+                get => (uint)((_bitfield0 >> 4) & 0x1u);
+                set => _bitfield0 = (_bitfield0 & ~(0x1u << 4)) | ((((uint)value) & 0x1u) << 4);
+            }
+             // TODO: Accessor property for is_filter_switchable, size: 1, offset: 5
+            public uint is_filter_switchable
+            {
+                get => (uint)((_bitfield0 >> 5) & 0x1u);
+                set => _bitfield0 = (_bitfield0 & ~(0x1u << 5)) | ((((uint)value) & 0x1u) << 5);
+            }
+             // TODO: Accessor property for force_integer_mv, size: 1, offset: 6
+            public uint force_integer_mv
+            {
+                get => (uint)((_bitfield0 >> 6) & 0x1u);
+                set => _bitfield0 = (_bitfield0 & ~(0x1u << 6)) | ((((uint)value) & 0x1u) << 6);
+            }
+             // TODO: Accessor property for frame_size_override_flag, size: 1, offset: 7
+            public uint frame_size_override_flag
+            {
+                get => (uint)((_bitfield0 >> 7) & 0x1u);
+                set => _bitfield0 = (_bitfield0 & ~(0x1u << 7)) | ((((uint)value) & 0x1u) << 7);
+            }
+             // TODO: Accessor property for buffer_removal_time_present_flag, size: 1, offset: 8
+            public uint buffer_removal_time_present_flag
+            {
+                get => (uint)((_bitfield0 >> 8) & 0x1u);
+                set => _bitfield0 = (_bitfield0 & ~(0x1u << 8)) | ((((uint)value) & 0x1u) << 8);
+            }
+             // TODO: Accessor property for allow_intrabc, size: 1, offset: 9
+            public uint allow_intrabc
+            {
+                get => (uint)((_bitfield0 >> 9) & 0x1u);
+                set => _bitfield0 = (_bitfield0 & ~(0x1u << 9)) | ((((uint)value) & 0x1u) << 9);
+            }
+             // TODO: Accessor property for frame_refs_short_signaling, size: 1, offset: 10
+            public uint frame_refs_short_signaling
+            {
+                get => (uint)((_bitfield0 >> 10) & 0x1u);
+                set => _bitfield0 = (_bitfield0 & ~(0x1u << 10)) | ((((uint)value) & 0x1u) << 10);
+            }
+             // TODO: Accessor property for allow_high_precision_mv, size: 1, offset: 11
+            public uint allow_high_precision_mv
+            {
+                get => (uint)((_bitfield0 >> 11) & 0x1u);
+                set => _bitfield0 = (_bitfield0 & ~(0x1u << 11)) | ((((uint)value) & 0x1u) << 11);
+            }
+             // TODO: Accessor property for is_motion_mode_switchable, size: 1, offset: 12
+            public uint is_motion_mode_switchable
+            {
+                get => (uint)((_bitfield0 >> 12) & 0x1u);
+                set => _bitfield0 = (_bitfield0 & ~(0x1u << 12)) | ((((uint)value) & 0x1u) << 12);
+            }
+             // TODO: Accessor property for use_ref_frame_mvs, size: 1, offset: 13
+            public uint use_ref_frame_mvs
+            {
+                get => (uint)((_bitfield0 >> 13) & 0x1u);
+                set => _bitfield0 = (_bitfield0 & ~(0x1u << 13)) | ((((uint)value) & 0x1u) << 13);
+            }
+             // TODO: Accessor property for disable_frame_end_update_cdf, size: 1, offset: 14
+            public uint disable_frame_end_update_cdf
+            {
+                get => (uint)((_bitfield0 >> 14) & 0x1u);
+                set => _bitfield0 = (_bitfield0 & ~(0x1u << 14)) | ((((uint)value) & 0x1u) << 14);
+            }
+             // TODO: Accessor property for allow_warped_motion, size: 1, offset: 15
+            public uint allow_warped_motion
+            {
+                get => (uint)((_bitfield0 >> 15) & 0x1u);
+                set => _bitfield0 = (_bitfield0 & ~(0x1u << 15)) | ((((uint)value) & 0x1u) << 15);
+            }
+             // TODO: Accessor property for reduced_tx_set, size: 1, offset: 16
+            public uint reduced_tx_set
+            {
+                get => (uint)((_bitfield0 >> 16) & 0x1u);
+                set => _bitfield0 = (_bitfield0 & ~(0x1u << 16)) | ((((uint)value) & 0x1u) << 16);
+            }
+             // TODO: Accessor property for skip_mode_present, size: 1, offset: 17
+            public uint skip_mode_present
+            {
+                get => (uint)((_bitfield0 >> 17) & 0x1u);
+                set => _bitfield0 = (_bitfield0 & ~(0x1u << 17)) | ((((uint)value) & 0x1u) << 17);
+            }
+             // TODO: Accessor property for delta_q_present, size: 1, offset: 18
+            public uint delta_q_present
+            {
+                get => (uint)((_bitfield0 >> 18) & 0x1u);
+                set => _bitfield0 = (_bitfield0 & ~(0x1u << 18)) | ((((uint)value) & 0x1u) << 18);
+            }
+             // TODO: Accessor property for delta_lf_present, size: 1, offset: 19
+            public uint delta_lf_present
+            {
+                get => (uint)((_bitfield0 >> 19) & 0x1u);
+                set => _bitfield0 = (_bitfield0 & ~(0x1u << 19)) | ((((uint)value) & 0x1u) << 19);
+            }
+             // TODO: Accessor property for delta_lf_multi, size: 1, offset: 20
+            public uint delta_lf_multi
+            {
+                get => (uint)((_bitfield0 >> 20) & 0x1u);
+                set => _bitfield0 = (_bitfield0 & ~(0x1u << 20)) | ((((uint)value) & 0x1u) << 20);
+            }
+             // TODO: Accessor property for segmentation_enabled, size: 1, offset: 21
+            public uint segmentation_enabled
+            {
+                get => (uint)((_bitfield0 >> 21) & 0x1u);
+                set => _bitfield0 = (_bitfield0 & ~(0x1u << 21)) | ((((uint)value) & 0x1u) << 21);
+            }
+             // TODO: Accessor property for segmentation_update_map, size: 1, offset: 22
+            public uint segmentation_update_map
+            {
+                get => (uint)((_bitfield0 >> 22) & 0x1u);
+                set => _bitfield0 = (_bitfield0 & ~(0x1u << 22)) | ((((uint)value) & 0x1u) << 22);
+            }
+             // TODO: Accessor property for segmentation_temporal_update, size: 1, offset: 23
+            public uint segmentation_temporal_update
+            {
+                get => (uint)((_bitfield0 >> 23) & 0x1u);
+                set => _bitfield0 = (_bitfield0 & ~(0x1u << 23)) | ((((uint)value) & 0x1u) << 23);
+            }
+             // TODO: Accessor property for segmentation_update_data, size: 1, offset: 24
+            public uint segmentation_update_data
+            {
+                get => (uint)((_bitfield0 >> 24) & 0x1u);
+                set => _bitfield0 = (_bitfield0 & ~(0x1u << 24)) | ((((uint)value) & 0x1u) << 24);
+            }
+             // TODO: Accessor property for UsesLr, size: 1, offset: 25
+            public uint UsesLr
+            {
+                get => (uint)((_bitfield0 >> 25) & 0x1u);
+                set => _bitfield0 = (_bitfield0 & ~(0x1u << 25)) | ((((uint)value) & 0x1u) << 25);
+            }
+             // TODO: Accessor property for usesChromaLr, size: 1, offset: 26
+            public uint usesChromaLr
+            {
+                get => (uint)((_bitfield0 >> 26) & 0x1u);
+                set => _bitfield0 = (_bitfield0 & ~(0x1u << 26)) | ((((uint)value) & 0x1u) << 26);
+            }
+             // TODO: Accessor property for show_frame, size: 1, offset: 27
+            public uint show_frame
+            {
+                get => (uint)((_bitfield0 >> 27) & 0x1u);
+                set => _bitfield0 = (_bitfield0 & ~(0x1u << 27)) | ((((uint)value) & 0x1u) << 27);
+            }
+             // TODO: Accessor property for showable_frame, size: 1, offset: 28
+            public uint showable_frame
+            {
+                get => (uint)((_bitfield0 >> 28) & 0x1u);
+                set => _bitfield0 = (_bitfield0 & ~(0x1u << 28)) | ((((uint)value) & 0x1u) << 28);
+            }
+             // TODO: Accessor property for reserved, size: 3, offset: 29
+            public uint reserved
+            {
+                get => (uint)((_bitfield0 >> 29) & 0x7u);
+                set => _bitfield0 = (_bitfield0 & ~(0x7u << 29)) | ((((uint)value) & 0x7u) << 29);
+            }
+            public StdVideoEncodeAV1PictureInfoFlags() { }
+        }
+        public unsafe struct StdVideoEncodeAV1PictureInfo
+        {
+            public StdVideoEncodeAV1PictureInfoFlags flags;
+            public StdVideoAV1FrameType frame_type;
+            public uint frame_presentation_time;
+            public uint current_frame_id;
+            public byte order_hint;
+            public byte primary_ref_frame;
+            public byte refresh_frame_flags;
+            public byte coded_denom;
+            public ushort render_width_minus_1;
+            public ushort render_height_minus_1;
+            public StdVideoAV1InterpolationFilter interpolation_filter;
+            public StdVideoAV1TxMode TxMode;
+            public byte delta_q_res;
+            public byte delta_lf_res;
+            public fixed byte ref_order_hint[8];
+            public fixed sbyte ref_frame_idx[7];
+            public fixed byte reserved1[3];
+            public fixed uint delta_frame_id_minus_1[7];
+            public StdVideoAV1TileInfo* pTileInfo;
+            public StdVideoAV1Quantization* pQuantization;
+            public StdVideoAV1Segmentation* pSegmentation;
+            public StdVideoAV1LoopFilter* pLoopFilter;
+            public StdVideoAV1CDEF* pCDEF;
+            public StdVideoAV1LoopRestoration* pLoopRestoration;
+            public StdVideoAV1GlobalMotion* pGlobalMotion;
+            public StdVideoEncodeAV1ExtensionHeader* pExtensionHeader;
+            public uint* pBufferRemovalTimes;
+            public StdVideoEncodeAV1PictureInfo() { }
+        }
+        public unsafe struct StdVideoEncodeAV1ReferenceInfoFlags
+        {
+            private uint _bitfield0;
+             // TODO: Accessor property for disable_frame_end_update_cdf, size: 1, offset: 0
+            public uint disable_frame_end_update_cdf
+            {
+                get => (uint)((_bitfield0 >> 0) & 0x1u);
+                set => _bitfield0 = (_bitfield0 & ~(0x1u << 0)) | ((((uint)value) & 0x1u) << 0);
+            }
+             // TODO: Accessor property for segmentation_enabled, size: 1, offset: 1
+            public uint segmentation_enabled
+            {
+                get => (uint)((_bitfield0 >> 1) & 0x1u);
+                set => _bitfield0 = (_bitfield0 & ~(0x1u << 1)) | ((((uint)value) & 0x1u) << 1);
+            }
+             // TODO: Accessor property for reserved, size: 30, offset: 2
+            public uint reserved
+            {
+                get => (uint)((_bitfield0 >> 2) & 0x3FFFFFFFu);
+                set => _bitfield0 = (_bitfield0 & ~(0x3FFFFFFFu << 2)) | ((((uint)value) & 0x3FFFFFFFu) << 2);
+            }
+            public StdVideoEncodeAV1ReferenceInfoFlags() { }
+        }
+        public unsafe struct StdVideoEncodeAV1ReferenceInfo
+        {
+            public StdVideoEncodeAV1ReferenceInfoFlags flags;
+            public uint RefFrameId;
+            public StdVideoAV1FrameType frame_type;
+            public byte OrderHint;
+            public fixed byte reserved1[3];
+            public StdVideoEncodeAV1ExtensionHeader* pExtensionHeader;
+            public StdVideoEncodeAV1ReferenceInfo() { }
         }
     }
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member

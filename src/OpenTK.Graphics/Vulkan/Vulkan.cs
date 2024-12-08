@@ -9,6 +9,7 @@ using OpenTK.Graphics.Vulkan.VulkanVideoCodecH265stdDecode;
 using OpenTK.Graphics.Vulkan.VulkanVideoCodecH265stdEncode;
 using OpenTK.Graphics.Vulkan.VulkanVideoCodecAv1std;
 using OpenTK.Graphics.Vulkan.VulkanVideoCodecAv1stdDecode;
+using OpenTK.Graphics.Vulkan.VulkanVideoCodecAv1stdEncode;
 using System;
 using System.Runtime.CompilerServices;
 
@@ -581,9 +582,15 @@ namespace OpenTK.Graphics.Vulkan
         {
             VkPointers._vkGetRenderAreaGranularity_fnptr(device, renderPass, pGranularity);
         }
-        /// <summary><b>[requires: VK_KHR_maintenance5]</b> </summary>
+        /// <summary><b>[requires: v1.4]</b> </summary>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetRenderingAreaGranularity.html" /></remarks>
+        public static void GetRenderingAreaGranularity(VkDevice device, VkRenderingAreaInfo* pRenderingAreaInfo, VkExtent2D* pGranularity)
+        {
+            VkPointers._vkGetRenderingAreaGranularity_fnptr(device, pRenderingAreaInfo, pGranularity);
+        }
+        /// <summary><b>[requires: VK_KHR_maintenance5]</b>  Alias of <see cref="GetRenderingAreaGranularity"/></summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetRenderingAreaGranularityKHR.html" /></remarks>
-        public static void GetRenderingAreaGranularityKHR(VkDevice device, VkRenderingAreaInfoKHR* pRenderingAreaInfo, VkExtent2D* pGranularity)
+        public static void GetRenderingAreaGranularityKHR(VkDevice device, VkRenderingAreaInfo* pRenderingAreaInfo, VkExtent2D* pGranularity)
         {
             VkPointers._vkGetRenderingAreaGranularityKHR_fnptr(device, pRenderingAreaInfo, pGranularity);
         }
@@ -1265,6 +1272,60 @@ namespace OpenTK.Graphics.Vulkan
         {
             VkPointers._vkDestroyIndirectCommandsLayoutNV_fnptr(device, indirectCommandsLayout, pAllocator);
         }
+        /// <summary><b>[requires: VK_EXT_device_generated_commands]</b> </summary>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdExecuteGeneratedCommandsEXT.html" /></remarks>
+        public static void CmdExecuteGeneratedCommandsEXT(VkCommandBuffer commandBuffer, int isPreprocessed, VkGeneratedCommandsInfoEXT* pGeneratedCommandsInfo)
+        {
+            VkPointers._vkCmdExecuteGeneratedCommandsEXT_fnptr(commandBuffer, isPreprocessed, pGeneratedCommandsInfo);
+        }
+        /// <summary><b>[requires: VK_EXT_device_generated_commands]</b> </summary>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdPreprocessGeneratedCommandsEXT.html" /></remarks>
+        public static void CmdPreprocessGeneratedCommandsEXT(VkCommandBuffer commandBuffer, VkGeneratedCommandsInfoEXT* pGeneratedCommandsInfo, VkCommandBuffer stateCommandBuffer)
+        {
+            VkPointers._vkCmdPreprocessGeneratedCommandsEXT_fnptr(commandBuffer, pGeneratedCommandsInfo, stateCommandBuffer);
+        }
+        /// <summary><b>[requires: VK_EXT_device_generated_commands]</b> </summary>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetGeneratedCommandsMemoryRequirementsEXT.html" /></remarks>
+        public static void GetGeneratedCommandsMemoryRequirementsEXT(VkDevice device, VkGeneratedCommandsMemoryRequirementsInfoEXT* pInfo, VkMemoryRequirements2* pMemoryRequirements)
+        {
+            VkPointers._vkGetGeneratedCommandsMemoryRequirementsEXT_fnptr(device, pInfo, pMemoryRequirements);
+        }
+        /// <summary><b>[requires: VK_EXT_device_generated_commands]</b> </summary>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateIndirectCommandsLayoutEXT.html" /></remarks>
+        public static VkResult CreateIndirectCommandsLayoutEXT(VkDevice device, VkIndirectCommandsLayoutCreateInfoEXT* pCreateInfo, VkAllocationCallbacks* pAllocator, VkIndirectCommandsLayoutEXT* pIndirectCommandsLayout)
+        {
+            return VkPointers._vkCreateIndirectCommandsLayoutEXT_fnptr(device, pCreateInfo, pAllocator, pIndirectCommandsLayout);
+        }
+        /// <summary><b>[requires: VK_EXT_device_generated_commands]</b> </summary>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDestroyIndirectCommandsLayoutEXT.html" /></remarks>
+        public static void DestroyIndirectCommandsLayoutEXT(VkDevice device, VkIndirectCommandsLayoutEXT indirectCommandsLayout, VkAllocationCallbacks* pAllocator)
+        {
+            VkPointers._vkDestroyIndirectCommandsLayoutEXT_fnptr(device, indirectCommandsLayout, pAllocator);
+        }
+        /// <summary><b>[requires: VK_EXT_device_generated_commands]</b> </summary>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateIndirectExecutionSetEXT.html" /></remarks>
+        public static VkResult CreateIndirectExecutionSetEXT(VkDevice device, VkIndirectExecutionSetCreateInfoEXT* pCreateInfo, VkAllocationCallbacks* pAllocator, VkIndirectExecutionSetEXT* pIndirectExecutionSet)
+        {
+            return VkPointers._vkCreateIndirectExecutionSetEXT_fnptr(device, pCreateInfo, pAllocator, pIndirectExecutionSet);
+        }
+        /// <summary><b>[requires: VK_EXT_device_generated_commands]</b> </summary>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDestroyIndirectExecutionSetEXT.html" /></remarks>
+        public static void DestroyIndirectExecutionSetEXT(VkDevice device, VkIndirectExecutionSetEXT indirectExecutionSet, VkAllocationCallbacks* pAllocator)
+        {
+            VkPointers._vkDestroyIndirectExecutionSetEXT_fnptr(device, indirectExecutionSet, pAllocator);
+        }
+        /// <summary><b>[requires: VK_EXT_device_generated_commands]</b> </summary>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkUpdateIndirectExecutionSetPipelineEXT.html" /></remarks>
+        public static void UpdateIndirectExecutionSetPipelineEXT(VkDevice device, VkIndirectExecutionSetEXT indirectExecutionSet, uint executionSetWriteCount, VkWriteIndirectExecutionSetPipelineEXT* pExecutionSetWrites)
+        {
+            VkPointers._vkUpdateIndirectExecutionSetPipelineEXT_fnptr(device, indirectExecutionSet, executionSetWriteCount, pExecutionSetWrites);
+        }
+        /// <summary><b>[requires: VK_EXT_device_generated_commands]</b> </summary>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkUpdateIndirectExecutionSetShaderEXT.html" /></remarks>
+        public static void UpdateIndirectExecutionSetShaderEXT(VkDevice device, VkIndirectExecutionSetEXT indirectExecutionSet, uint executionSetWriteCount, VkWriteIndirectExecutionSetShaderEXT* pExecutionSetWrites)
+        {
+            VkPointers._vkUpdateIndirectExecutionSetShaderEXT_fnptr(device, indirectExecutionSet, executionSetWriteCount, pExecutionSetWrites);
+        }
         /// <summary><b>[requires: v1.1]</b> </summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceFeatures2.html" /></remarks>
         public static void GetPhysicalDeviceFeatures2(VkPhysicalDevice physicalDevice, VkPhysicalDeviceFeatures2* pFeatures)
@@ -1349,7 +1410,13 @@ namespace OpenTK.Graphics.Vulkan
         {
             VkPointers._vkGetPhysicalDeviceSparseImageFormatProperties2KHR_fnptr(physicalDevice, pFormatInfo, pPropertyCount, pProperties);
         }
-        /// <summary><b>[requires: VK_KHR_push_descriptor]</b> </summary>
+        /// <summary><b>[requires: v1.4]</b> </summary>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdPushDescriptorSet.html" /></remarks>
+        public static void CmdPushDescriptorSet(VkCommandBuffer commandBuffer, VkPipelineBindPoint pipelineBindPoint, VkPipelineLayout layout, uint set, uint descriptorWriteCount, VkWriteDescriptorSet* pDescriptorWrites)
+        {
+            VkPointers._vkCmdPushDescriptorSet_fnptr(commandBuffer, pipelineBindPoint, layout, set, descriptorWriteCount, pDescriptorWrites);
+        }
+        /// <summary><b>[requires: VK_KHR_push_descriptor]</b>  Alias of <see cref="CmdPushDescriptorSet"/></summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdPushDescriptorSetKHR.html" /></remarks>
         public static void CmdPushDescriptorSetKHR(VkCommandBuffer commandBuffer, VkPipelineBindPoint pipelineBindPoint, VkPipelineLayout layout, uint set, uint descriptorWriteCount, VkWriteDescriptorSet* pDescriptorWrites)
         {
@@ -1769,7 +1836,13 @@ namespace OpenTK.Graphics.Vulkan
         {
             VkPointers._vkUpdateDescriptorSetWithTemplateKHR_fnptr(device, descriptorSet, descriptorUpdateTemplate, pData);
         }
-        /// <summary><b>[requires: VK_KHR_push_descriptor | VK_KHR_descriptor_update_template]</b> </summary>
+        /// <summary><b>[requires: v1.4]</b> </summary>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdPushDescriptorSetWithTemplate.html" /></remarks>
+        public static void CmdPushDescriptorSetWithTemplate(VkCommandBuffer commandBuffer, VkDescriptorUpdateTemplate descriptorUpdateTemplate, VkPipelineLayout layout, uint set, void* pData)
+        {
+            VkPointers._vkCmdPushDescriptorSetWithTemplate_fnptr(commandBuffer, descriptorUpdateTemplate, layout, set, pData);
+        }
+        /// <summary><b>[requires: VK_KHR_push_descriptor | VK_KHR_descriptor_update_template]</b>  Alias of <see cref="CmdPushDescriptorSetWithTemplate"/></summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdPushDescriptorSetWithTemplateKHR.html" /></remarks>
         public static void CmdPushDescriptorSetWithTemplateKHR(VkCommandBuffer commandBuffer, VkDescriptorUpdateTemplate descriptorUpdateTemplate, VkPipelineLayout layout, uint set, void* pData)
         {
@@ -2610,6 +2683,12 @@ namespace OpenTK.Graphics.Vulkan
             return VkPointers._vkGetImageViewHandleNVX_fnptr(device, pInfo);
         }
         /// <summary><b>[requires: VK_NVX_image_view_handle]</b> </summary>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetImageViewHandle64NVX.html" /></remarks>
+        public static ulong GetImageViewHandle64NVX(VkDevice device, VkImageViewHandleInfoNVX* pInfo)
+        {
+            return VkPointers._vkGetImageViewHandle64NVX_fnptr(device, pInfo);
+        }
+        /// <summary><b>[requires: VK_NVX_image_view_handle]</b> </summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetImageViewAddressNVX.html" /></remarks>
         public static VkResult GetImageViewAddressNVX(VkDevice device, VkImageView imageView, VkImageViewAddressPropertiesNVX* pProperties)
         {
@@ -2795,13 +2874,19 @@ namespace OpenTK.Graphics.Vulkan
         {
             return VkPointers._vkGetPipelineExecutableInternalRepresentationsKHR_fnptr(device, pExecutableInfo, pInternalRepresentationCount, pInternalRepresentations);
         }
-        /// <summary><b>[requires: VK_KHR_line_rasterization]</b> </summary>
+        /// <summary><b>[requires: v1.4]</b> </summary>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetLineStipple.html" /></remarks>
+        public static void CmdSetLineStipple(VkCommandBuffer commandBuffer, uint lineStippleFactor, ushort lineStipplePattern)
+        {
+            VkPointers._vkCmdSetLineStipple_fnptr(commandBuffer, lineStippleFactor, lineStipplePattern);
+        }
+        /// <summary><b>[requires: VK_KHR_line_rasterization]</b>  Alias of <see cref="CmdSetLineStipple"/></summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetLineStippleKHR.html" /></remarks>
         public static void CmdSetLineStippleKHR(VkCommandBuffer commandBuffer, uint lineStippleFactor, ushort lineStipplePattern)
         {
             VkPointers._vkCmdSetLineStippleKHR_fnptr(commandBuffer, lineStippleFactor, lineStipplePattern);
         }
-        /// <summary><b>[requires: VK_EXT_line_rasterization]</b>  Alias of <see cref="CmdSetLineStippleKHR"/></summary>
+        /// <summary><b>[requires: VK_EXT_line_rasterization]</b>  Alias of <see cref="CmdSetLineStipple"/></summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetLineStippleEXT.html" /></remarks>
         public static void CmdSetLineStippleEXT(VkCommandBuffer commandBuffer, uint lineStippleFactor, ushort lineStipplePattern)
         {
@@ -2963,7 +3048,13 @@ namespace OpenTK.Graphics.Vulkan
         {
             VkPointers._vkCmdSetScissorWithCountEXT_fnptr(commandBuffer, scissorCount, pScissors);
         }
-        /// <summary><b>[requires: VK_KHR_maintenance5]</b> </summary>
+        /// <summary><b>[requires: v1.4]</b> </summary>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdBindIndexBuffer2.html" /></remarks>
+        public static void CmdBindIndexBuffer2(VkCommandBuffer commandBuffer, VkBuffer buffer, ulong offset, ulong size, VkIndexType indexType)
+        {
+            VkPointers._vkCmdBindIndexBuffer2_fnptr(commandBuffer, buffer, offset, size, indexType);
+        }
+        /// <summary><b>[requires: VK_KHR_maintenance5]</b>  Alias of <see cref="CmdBindIndexBuffer2"/></summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdBindIndexBuffer2KHR.html" /></remarks>
         public static void CmdBindIndexBuffer2KHR(VkCommandBuffer commandBuffer, VkBuffer buffer, ulong offset, ulong size, VkIndexType indexType)
         {
@@ -3211,7 +3302,7 @@ namespace OpenTK.Graphics.Vulkan
         }
         /// <summary><b>[requires: VK_EXT_extended_dynamic_state3 | VK_EXT_shader_object]</b> </summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetLineRasterizationModeEXT.html" /></remarks>
-        public static void CmdSetLineRasterizationModeEXT(VkCommandBuffer commandBuffer, VkLineRasterizationModeKHR lineRasterizationMode)
+        public static void CmdSetLineRasterizationModeEXT(VkCommandBuffer commandBuffer, VkLineRasterizationMode lineRasterizationMode)
         {
             VkPointers._vkCmdSetLineRasterizationModeEXT_fnptr(commandBuffer, lineRasterizationMode);
         }
@@ -3527,39 +3618,63 @@ namespace OpenTK.Graphics.Vulkan
         {
             VkPointers._vkCmdWriteTimestamp2KHR_fnptr(commandBuffer, stage, queryPool, query);
         }
-        /// <summary><b>[requires: VK_KHR_synchronization2]</b> </summary>
+        /// <summary><b>[requires: VK_AMD_buffer_marker]</b> </summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdWriteBufferMarker2AMD.html" /></remarks>
         public static void CmdWriteBufferMarker2AMD(VkCommandBuffer commandBuffer, VkPipelineStageFlagBits2 stage, VkBuffer dstBuffer, ulong dstOffset, uint marker)
         {
             VkPointers._vkCmdWriteBufferMarker2AMD_fnptr(commandBuffer, stage, dstBuffer, dstOffset, marker);
         }
-        /// <summary><b>[requires: VK_KHR_synchronization2]</b> </summary>
+        /// <summary><b>[requires: VK_NV_device_diagnostic_checkpoints]</b> </summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetQueueCheckpointData2NV.html" /></remarks>
         public static void GetQueueCheckpointData2NV(VkQueue queue, uint* pCheckpointDataCount, VkCheckpointData2NV* pCheckpointData)
         {
             VkPointers._vkGetQueueCheckpointData2NV_fnptr(queue, pCheckpointDataCount, pCheckpointData);
         }
-        /// <summary><b>[requires: VK_EXT_host_image_copy]</b> </summary>
+        /// <summary><b>[requires: v1.4]</b> </summary>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCopyMemoryToImage.html" /></remarks>
+        public static VkResult CopyMemoryToImage(VkDevice device, VkCopyMemoryToImageInfo* pCopyMemoryToImageInfo)
+        {
+            return VkPointers._vkCopyMemoryToImage_fnptr(device, pCopyMemoryToImageInfo);
+        }
+        /// <summary><b>[requires: VK_EXT_host_image_copy]</b>  Alias of <see cref="CopyMemoryToImage"/></summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCopyMemoryToImageEXT.html" /></remarks>
-        public static VkResult CopyMemoryToImageEXT(VkDevice device, VkCopyMemoryToImageInfoEXT* pCopyMemoryToImageInfo)
+        public static VkResult CopyMemoryToImageEXT(VkDevice device, VkCopyMemoryToImageInfo* pCopyMemoryToImageInfo)
         {
             return VkPointers._vkCopyMemoryToImageEXT_fnptr(device, pCopyMemoryToImageInfo);
         }
-        /// <summary><b>[requires: VK_EXT_host_image_copy]</b> </summary>
+        /// <summary><b>[requires: v1.4]</b> </summary>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCopyImageToMemory.html" /></remarks>
+        public static VkResult CopyImageToMemory(VkDevice device, VkCopyImageToMemoryInfo* pCopyImageToMemoryInfo)
+        {
+            return VkPointers._vkCopyImageToMemory_fnptr(device, pCopyImageToMemoryInfo);
+        }
+        /// <summary><b>[requires: VK_EXT_host_image_copy]</b>  Alias of <see cref="CopyImageToMemory"/></summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCopyImageToMemoryEXT.html" /></remarks>
-        public static VkResult CopyImageToMemoryEXT(VkDevice device, VkCopyImageToMemoryInfoEXT* pCopyImageToMemoryInfo)
+        public static VkResult CopyImageToMemoryEXT(VkDevice device, VkCopyImageToMemoryInfo* pCopyImageToMemoryInfo)
         {
             return VkPointers._vkCopyImageToMemoryEXT_fnptr(device, pCopyImageToMemoryInfo);
         }
-        /// <summary><b>[requires: VK_EXT_host_image_copy]</b> </summary>
+        /// <summary><b>[requires: v1.4]</b> </summary>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCopyImageToImage.html" /></remarks>
+        public static VkResult CopyImageToImage(VkDevice device, VkCopyImageToImageInfo* pCopyImageToImageInfo)
+        {
+            return VkPointers._vkCopyImageToImage_fnptr(device, pCopyImageToImageInfo);
+        }
+        /// <summary><b>[requires: VK_EXT_host_image_copy]</b>  Alias of <see cref="CopyImageToImage"/></summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCopyImageToImageEXT.html" /></remarks>
-        public static VkResult CopyImageToImageEXT(VkDevice device, VkCopyImageToImageInfoEXT* pCopyImageToImageInfo)
+        public static VkResult CopyImageToImageEXT(VkDevice device, VkCopyImageToImageInfo* pCopyImageToImageInfo)
         {
             return VkPointers._vkCopyImageToImageEXT_fnptr(device, pCopyImageToImageInfo);
         }
-        /// <summary><b>[requires: VK_EXT_host_image_copy]</b> </summary>
+        /// <summary><b>[requires: v1.4]</b> </summary>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkTransitionImageLayout.html" /></remarks>
+        public static VkResult TransitionImageLayout(VkDevice device, uint transitionCount, VkHostImageLayoutTransitionInfo* pTransitions)
+        {
+            return VkPointers._vkTransitionImageLayout_fnptr(device, transitionCount, pTransitions);
+        }
+        /// <summary><b>[requires: VK_EXT_host_image_copy]</b>  Alias of <see cref="TransitionImageLayout"/></summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkTransitionImageLayoutEXT.html" /></remarks>
-        public static VkResult TransitionImageLayoutEXT(VkDevice device, uint transitionCount, VkHostImageLayoutTransitionInfoEXT* pTransitions)
+        public static VkResult TransitionImageLayoutEXT(VkDevice device, uint transitionCount, VkHostImageLayoutTransitionInfo* pTransitions)
         {
             return VkPointers._vkTransitionImageLayoutEXT_fnptr(device, transitionCount, pTransitions);
         }
@@ -3995,15 +4110,21 @@ namespace OpenTK.Graphics.Vulkan
         {
             VkPointers._vkGetShaderModuleCreateInfoIdentifierEXT_fnptr(device, pCreateInfo, pIdentifier);
         }
-        /// <summary><b>[requires: VK_KHR_maintenance5]</b> </summary>
+        /// <summary><b>[requires: v1.4]</b> </summary>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetImageSubresourceLayout2.html" /></remarks>
+        public static void GetImageSubresourceLayout2(VkDevice device, VkImage image, VkImageSubresource2* pSubresource, VkSubresourceLayout2* pLayout)
+        {
+            VkPointers._vkGetImageSubresourceLayout2_fnptr(device, image, pSubresource, pLayout);
+        }
+        /// <summary><b>[requires: VK_KHR_maintenance5]</b>  Alias of <see cref="GetImageSubresourceLayout2"/></summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetImageSubresourceLayout2KHR.html" /></remarks>
-        public static void GetImageSubresourceLayout2KHR(VkDevice device, VkImage image, VkImageSubresource2KHR* pSubresource, VkSubresourceLayout2KHR* pLayout)
+        public static void GetImageSubresourceLayout2KHR(VkDevice device, VkImage image, VkImageSubresource2* pSubresource, VkSubresourceLayout2* pLayout)
         {
             VkPointers._vkGetImageSubresourceLayout2KHR_fnptr(device, image, pSubresource, pLayout);
         }
-        /// <summary><b>[requires: VK_EXT_host_image_copy | VK_EXT_image_compression_control]</b>  Alias of <see cref="GetImageSubresourceLayout2KHR"/></summary>
+        /// <summary><b>[requires: VK_EXT_host_image_copy | VK_EXT_image_compression_control]</b>  Alias of <see cref="GetImageSubresourceLayout2"/></summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetImageSubresourceLayout2EXT.html" /></remarks>
-        public static void GetImageSubresourceLayout2EXT(VkDevice device, VkImage image, VkImageSubresource2KHR* pSubresource, VkSubresourceLayout2KHR* pLayout)
+        public static void GetImageSubresourceLayout2EXT(VkDevice device, VkImage image, VkImageSubresource2* pSubresource, VkSubresourceLayout2* pLayout)
         {
             VkPointers._vkGetImageSubresourceLayout2EXT_fnptr(device, image, pSubresource, pLayout);
         }
@@ -4079,21 +4200,39 @@ namespace OpenTK.Graphics.Vulkan
         {
             return VkPointers._vkReleaseSwapchainImagesEXT_fnptr(device, pReleaseInfo);
         }
-        /// <summary><b>[requires: VK_KHR_maintenance5]</b> </summary>
+        /// <summary><b>[requires: v1.4]</b> </summary>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetDeviceImageSubresourceLayout.html" /></remarks>
+        public static void GetDeviceImageSubresourceLayout(VkDevice device, VkDeviceImageSubresourceInfo* pInfo, VkSubresourceLayout2* pLayout)
+        {
+            VkPointers._vkGetDeviceImageSubresourceLayout_fnptr(device, pInfo, pLayout);
+        }
+        /// <summary><b>[requires: VK_KHR_maintenance5]</b>  Alias of <see cref="GetDeviceImageSubresourceLayout"/></summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetDeviceImageSubresourceLayoutKHR.html" /></remarks>
-        public static void GetDeviceImageSubresourceLayoutKHR(VkDevice device, VkDeviceImageSubresourceInfoKHR* pInfo, VkSubresourceLayout2KHR* pLayout)
+        public static void GetDeviceImageSubresourceLayoutKHR(VkDevice device, VkDeviceImageSubresourceInfo* pInfo, VkSubresourceLayout2* pLayout)
         {
             VkPointers._vkGetDeviceImageSubresourceLayoutKHR_fnptr(device, pInfo, pLayout);
         }
-        /// <summary><b>[requires: VK_KHR_map_memory2]</b> </summary>
+        /// <summary><b>[requires: v1.4]</b> </summary>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkMapMemory2.html" /></remarks>
+        public static VkResult MapMemory2(VkDevice device, VkMemoryMapInfo* pMemoryMapInfo, void** ppData)
+        {
+            return VkPointers._vkMapMemory2_fnptr(device, pMemoryMapInfo, ppData);
+        }
+        /// <summary><b>[requires: VK_KHR_map_memory2]</b>  Alias of <see cref="MapMemory2"/></summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkMapMemory2KHR.html" /></remarks>
-        public static VkResult MapMemory2KHR(VkDevice device, VkMemoryMapInfoKHR* pMemoryMapInfo, void** ppData)
+        public static VkResult MapMemory2KHR(VkDevice device, VkMemoryMapInfo* pMemoryMapInfo, void** ppData)
         {
             return VkPointers._vkMapMemory2KHR_fnptr(device, pMemoryMapInfo, ppData);
         }
-        /// <summary><b>[requires: VK_KHR_map_memory2]</b> </summary>
+        /// <summary><b>[requires: v1.4]</b> </summary>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkUnmapMemory2.html" /></remarks>
+        public static VkResult UnmapMemory2(VkDevice device, VkMemoryUnmapInfo* pMemoryUnmapInfo)
+        {
+            return VkPointers._vkUnmapMemory2_fnptr(device, pMemoryUnmapInfo);
+        }
+        /// <summary><b>[requires: VK_KHR_map_memory2]</b>  Alias of <see cref="UnmapMemory2"/></summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkUnmapMemory2KHR.html" /></remarks>
-        public static VkResult UnmapMemory2KHR(VkDevice device, VkMemoryUnmapInfoKHR* pMemoryUnmapInfo)
+        public static VkResult UnmapMemory2KHR(VkDevice device, VkMemoryUnmapInfo* pMemoryUnmapInfo)
         {
             return VkPointers._vkUnmapMemory2KHR_fnptr(device, pMemoryUnmapInfo);
         }
@@ -4153,49 +4292,73 @@ namespace OpenTK.Graphics.Vulkan
         }
         /// <summary><b>[requires: VK_AMDX_shader_enqueue]</b> </summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdInitializeGraphScratchMemoryAMDX.html" /></remarks>
-        public static void CmdInitializeGraphScratchMemoryAMDX(VkCommandBuffer commandBuffer, ulong scratch)
+        public static void CmdInitializeGraphScratchMemoryAMDX(VkCommandBuffer commandBuffer, VkPipeline executionGraph, ulong scratch, ulong scratchSize)
         {
-            VkPointers._vkCmdInitializeGraphScratchMemoryAMDX_fnptr(commandBuffer, scratch);
+            VkPointers._vkCmdInitializeGraphScratchMemoryAMDX_fnptr(commandBuffer, executionGraph, scratch, scratchSize);
         }
         /// <summary><b>[requires: VK_AMDX_shader_enqueue]</b> </summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdDispatchGraphAMDX.html" /></remarks>
-        public static void CmdDispatchGraphAMDX(VkCommandBuffer commandBuffer, ulong scratch, VkDispatchGraphCountInfoAMDX* pCountInfo)
+        public static void CmdDispatchGraphAMDX(VkCommandBuffer commandBuffer, ulong scratch, ulong scratchSize, VkDispatchGraphCountInfoAMDX* pCountInfo)
         {
-            VkPointers._vkCmdDispatchGraphAMDX_fnptr(commandBuffer, scratch, pCountInfo);
+            VkPointers._vkCmdDispatchGraphAMDX_fnptr(commandBuffer, scratch, scratchSize, pCountInfo);
         }
         /// <summary><b>[requires: VK_AMDX_shader_enqueue]</b> </summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdDispatchGraphIndirectAMDX.html" /></remarks>
-        public static void CmdDispatchGraphIndirectAMDX(VkCommandBuffer commandBuffer, ulong scratch, VkDispatchGraphCountInfoAMDX* pCountInfo)
+        public static void CmdDispatchGraphIndirectAMDX(VkCommandBuffer commandBuffer, ulong scratch, ulong scratchSize, VkDispatchGraphCountInfoAMDX* pCountInfo)
         {
-            VkPointers._vkCmdDispatchGraphIndirectAMDX_fnptr(commandBuffer, scratch, pCountInfo);
+            VkPointers._vkCmdDispatchGraphIndirectAMDX_fnptr(commandBuffer, scratch, scratchSize, pCountInfo);
         }
         /// <summary><b>[requires: VK_AMDX_shader_enqueue]</b> </summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdDispatchGraphIndirectCountAMDX.html" /></remarks>
-        public static void CmdDispatchGraphIndirectCountAMDX(VkCommandBuffer commandBuffer, ulong scratch, ulong countInfo)
+        public static void CmdDispatchGraphIndirectCountAMDX(VkCommandBuffer commandBuffer, ulong scratch, ulong scratchSize, ulong countInfo)
         {
-            VkPointers._vkCmdDispatchGraphIndirectCountAMDX_fnptr(commandBuffer, scratch, countInfo);
+            VkPointers._vkCmdDispatchGraphIndirectCountAMDX_fnptr(commandBuffer, scratch, scratchSize, countInfo);
         }
-        /// <summary><b>[requires: VK_KHR_maintenance6]</b> </summary>
+        /// <summary><b>[requires: v1.4]</b> </summary>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdBindDescriptorSets2.html" /></remarks>
+        public static void CmdBindDescriptorSets2(VkCommandBuffer commandBuffer, VkBindDescriptorSetsInfo* pBindDescriptorSetsInfo)
+        {
+            VkPointers._vkCmdBindDescriptorSets2_fnptr(commandBuffer, pBindDescriptorSetsInfo);
+        }
+        /// <summary><b>[requires: VK_KHR_maintenance6]</b>  Alias of <see cref="CmdBindDescriptorSets2"/></summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdBindDescriptorSets2KHR.html" /></remarks>
-        public static void CmdBindDescriptorSets2KHR(VkCommandBuffer commandBuffer, VkBindDescriptorSetsInfoKHR* pBindDescriptorSetsInfo)
+        public static void CmdBindDescriptorSets2KHR(VkCommandBuffer commandBuffer, VkBindDescriptorSetsInfo* pBindDescriptorSetsInfo)
         {
             VkPointers._vkCmdBindDescriptorSets2KHR_fnptr(commandBuffer, pBindDescriptorSetsInfo);
         }
-        /// <summary><b>[requires: VK_KHR_maintenance6]</b> </summary>
+        /// <summary><b>[requires: v1.4]</b> </summary>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdPushConstants2.html" /></remarks>
+        public static void CmdPushConstants2(VkCommandBuffer commandBuffer, VkPushConstantsInfo* pPushConstantsInfo)
+        {
+            VkPointers._vkCmdPushConstants2_fnptr(commandBuffer, pPushConstantsInfo);
+        }
+        /// <summary><b>[requires: VK_KHR_maintenance6]</b>  Alias of <see cref="CmdPushConstants2"/></summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdPushConstants2KHR.html" /></remarks>
-        public static void CmdPushConstants2KHR(VkCommandBuffer commandBuffer, VkPushConstantsInfoKHR* pPushConstantsInfo)
+        public static void CmdPushConstants2KHR(VkCommandBuffer commandBuffer, VkPushConstantsInfo* pPushConstantsInfo)
         {
             VkPointers._vkCmdPushConstants2KHR_fnptr(commandBuffer, pPushConstantsInfo);
         }
-        /// <summary><b>[requires: VK_KHR_maintenance6]</b> </summary>
+        /// <summary><b>[requires: v1.4]</b> </summary>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdPushDescriptorSet2.html" /></remarks>
+        public static void CmdPushDescriptorSet2(VkCommandBuffer commandBuffer, VkPushDescriptorSetInfo* pPushDescriptorSetInfo)
+        {
+            VkPointers._vkCmdPushDescriptorSet2_fnptr(commandBuffer, pPushDescriptorSetInfo);
+        }
+        /// <summary><b>[requires: VK_KHR_maintenance6]</b>  Alias of <see cref="CmdPushDescriptorSet2"/></summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdPushDescriptorSet2KHR.html" /></remarks>
-        public static void CmdPushDescriptorSet2KHR(VkCommandBuffer commandBuffer, VkPushDescriptorSetInfoKHR* pPushDescriptorSetInfo)
+        public static void CmdPushDescriptorSet2KHR(VkCommandBuffer commandBuffer, VkPushDescriptorSetInfo* pPushDescriptorSetInfo)
         {
             VkPointers._vkCmdPushDescriptorSet2KHR_fnptr(commandBuffer, pPushDescriptorSetInfo);
         }
-        /// <summary><b>[requires: VK_KHR_maintenance6]</b> </summary>
+        /// <summary><b>[requires: v1.4]</b> </summary>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdPushDescriptorSetWithTemplate2.html" /></remarks>
+        public static void CmdPushDescriptorSetWithTemplate2(VkCommandBuffer commandBuffer, VkPushDescriptorSetWithTemplateInfo* pPushDescriptorSetWithTemplateInfo)
+        {
+            VkPointers._vkCmdPushDescriptorSetWithTemplate2_fnptr(commandBuffer, pPushDescriptorSetWithTemplateInfo);
+        }
+        /// <summary><b>[requires: VK_KHR_maintenance6]</b>  Alias of <see cref="CmdPushDescriptorSetWithTemplate2"/></summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdPushDescriptorSetWithTemplate2KHR.html" /></remarks>
-        public static void CmdPushDescriptorSetWithTemplate2KHR(VkCommandBuffer commandBuffer, VkPushDescriptorSetWithTemplateInfoKHR* pPushDescriptorSetWithTemplateInfo)
+        public static void CmdPushDescriptorSetWithTemplate2KHR(VkCommandBuffer commandBuffer, VkPushDescriptorSetWithTemplateInfo* pPushDescriptorSetWithTemplateInfo)
         {
             VkPointers._vkCmdPushDescriptorSetWithTemplate2KHR_fnptr(commandBuffer, pPushDescriptorSetWithTemplateInfo);
         }
@@ -4241,17 +4404,41 @@ namespace OpenTK.Graphics.Vulkan
         {
             VkPointers._vkQueueNotifyOutOfBandNV_fnptr(queue, pQueueTypeInfo);
         }
-        /// <summary><b>[requires: VK_KHR_dynamic_rendering_local_read]</b> </summary>
+        /// <summary><b>[requires: v1.4]</b> </summary>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetRenderingAttachmentLocations.html" /></remarks>
+        public static void CmdSetRenderingAttachmentLocations(VkCommandBuffer commandBuffer, VkRenderingAttachmentLocationInfo* pLocationInfo)
+        {
+            VkPointers._vkCmdSetRenderingAttachmentLocations_fnptr(commandBuffer, pLocationInfo);
+        }
+        /// <summary><b>[requires: VK_KHR_dynamic_rendering_local_read]</b>  Alias of <see cref="CmdSetRenderingAttachmentLocations"/></summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetRenderingAttachmentLocationsKHR.html" /></remarks>
-        public static void CmdSetRenderingAttachmentLocationsKHR(VkCommandBuffer commandBuffer, VkRenderingAttachmentLocationInfoKHR* pLocationInfo)
+        public static void CmdSetRenderingAttachmentLocationsKHR(VkCommandBuffer commandBuffer, VkRenderingAttachmentLocationInfo* pLocationInfo)
         {
             VkPointers._vkCmdSetRenderingAttachmentLocationsKHR_fnptr(commandBuffer, pLocationInfo);
         }
-        /// <summary><b>[requires: VK_KHR_dynamic_rendering_local_read]</b> </summary>
+        /// <summary><b>[requires: v1.4]</b> </summary>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetRenderingInputAttachmentIndices.html" /></remarks>
+        public static void CmdSetRenderingInputAttachmentIndices(VkCommandBuffer commandBuffer, VkRenderingInputAttachmentIndexInfo* pInputAttachmentIndexInfo)
+        {
+            VkPointers._vkCmdSetRenderingInputAttachmentIndices_fnptr(commandBuffer, pInputAttachmentIndexInfo);
+        }
+        /// <summary><b>[requires: VK_KHR_dynamic_rendering_local_read]</b>  Alias of <see cref="CmdSetRenderingInputAttachmentIndices"/></summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetRenderingInputAttachmentIndicesKHR.html" /></remarks>
-        public static void CmdSetRenderingInputAttachmentIndicesKHR(VkCommandBuffer commandBuffer, VkRenderingInputAttachmentIndexInfoKHR* pInputAttachmentIndexInfo)
+        public static void CmdSetRenderingInputAttachmentIndicesKHR(VkCommandBuffer commandBuffer, VkRenderingInputAttachmentIndexInfo* pInputAttachmentIndexInfo)
         {
             VkPointers._vkCmdSetRenderingInputAttachmentIndicesKHR_fnptr(commandBuffer, pInputAttachmentIndexInfo);
+        }
+        /// <summary><b>[requires: VK_EXT_shader_object | VK_EXT_depth_clamp_control]</b> </summary>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetDepthClampRangeEXT.html" /></remarks>
+        public static void CmdSetDepthClampRangeEXT(VkCommandBuffer commandBuffer, VkDepthClampModeEXT depthClampMode, VkDepthClampRangeEXT* pDepthClampRange)
+        {
+            VkPointers._vkCmdSetDepthClampRangeEXT_fnptr(commandBuffer, depthClampMode, pDepthClampRange);
+        }
+        /// <summary><b>[requires: VK_NV_cooperative_matrix2]</b> </summary>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceCooperativeMatrixFlexibleDimensionsPropertiesNV.html" /></remarks>
+        public static VkResult GetPhysicalDeviceCooperativeMatrixFlexibleDimensionsPropertiesNV(VkPhysicalDevice physicalDevice, uint* pPropertyCount, VkCooperativeMatrixFlexibleDimensionsPropertiesNV* pProperties)
+        {
+            return VkPointers._vkGetPhysicalDeviceCooperativeMatrixFlexibleDimensionsPropertiesNV_fnptr(physicalDevice, pPropertyCount, pProperties);
         }
     }
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
