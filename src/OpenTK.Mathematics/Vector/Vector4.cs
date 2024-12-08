@@ -22,6 +22,7 @@ SOFTWARE.
 
 using System;
 using System.Diagnostics.Contracts;
+using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Runtime.Intrinsics;
@@ -37,7 +38,16 @@ namespace OpenTK.Mathematics
     /// </remarks>
     [Serializable]
     [StructLayout(LayoutKind.Sequential)]
-    public struct Vector4 : IEquatable<Vector4>, IFormattable
+    public struct Vector4 : IEquatable<Vector4>, IFormattable,
+                            IAdditionOperators<Vector4, Vector4, Vector4>,
+                            ISubtractionOperators<Vector4, Vector4, Vector4>,
+                            IUnaryNegationOperators<Vector4, Vector4>,
+                            IMultiplyOperators<Vector4, float, Vector4>,
+                            IMultiplyOperators<Vector4, Vector4, Vector4>,
+                            IMultiplyOperators<Vector4, Matrix4, Vector4>,
+                            IDivisionOperators<Vector4, float, Vector4>,
+                            IDivisionOperators<Vector4, Vector4, Vector4>,
+                            IEqualityOperators<Vector4, Vector4, bool>
     {
         /// <summary>
         /// The X component of the Vector4.

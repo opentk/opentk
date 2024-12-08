@@ -22,6 +22,7 @@ SOFTWARE.
 
 using System;
 using System.Diagnostics.Contracts;
+using System.Numerics;
 using System.Runtime.InteropServices;
 using System.Runtime.Intrinsics;
 using System.Xml.Serialization;
@@ -32,7 +33,12 @@ namespace OpenTK.Mathematics
     /// Represents a Quaternion.
     /// </summary>
     [Serializable, StructLayout(LayoutKind.Sequential)]
-    public struct Quaternion : IEquatable<Quaternion>, IFormattable
+    public struct Quaternion : IEquatable<Quaternion>, IFormattable,
+                                IAdditionOperators<Quaternion, Quaternion, Quaternion>,
+                                ISubtractionOperators<Quaternion, Quaternion, Quaternion>,
+                                IMultiplyOperators<Quaternion, Quaternion, Quaternion>,
+                                IMultiplyOperators<Quaternion, float, Quaternion>,
+                                IEqualityOperators<Quaternion, Quaternion, bool>
     {
         /// <summary>
         /// The X, Y and Z components of this instance.
