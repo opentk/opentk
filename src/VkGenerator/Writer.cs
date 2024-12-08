@@ -2,18 +2,12 @@
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Diagnostics.Metrics;
-using System.Linq;
 using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices.Marshalling;
 using System.Text;
-using System.Threading.Tasks;
 using VkGenerator.Parsing;
 using VkGenerator.Process;
 using VkGenerator.Utility;
 using VkGenerator.Utility.Extensions;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace VkGenerator
 {
@@ -99,6 +93,14 @@ namespace VkGenerator
                         if (exceptedNames.Contains(@enum.Name) == false)
                         {
                             Debug.Assert(false);
+                        }
+                    }
+                    if (@enum.ReferencedBy != null)
+                    {
+                        writer.Write($"Used by {string.Join(", ", @enum.ReferencedBy.Take(3).Select(c => $"<see cref=\"Vk.{NameMangler.MangleFunctionName(c.Name)}\"/>"))}");
+                        if (@enum.ReferencedBy.Count > 3)
+                        {
+                            writer.Write(", ...");
                         }
                     }
                     writer.WriteLine("</summary>");
@@ -284,7 +286,18 @@ namespace VkGenerator
                     {
                         writer.Write($"{NameMangler.MaybeRemoveStart(@struct.Comment, "// ")}");
                     }
-                    writer.Write("</summary>");
+                    if (@struct.ReferencedBy != null)
+                    {
+                        if (@struct.Comment != null)
+                            writer.Write("<br/>");
+
+                        writer.Write($"Used by {string.Join(", ", @struct.ReferencedBy.Take(3).Select(c => $"<see cref=\"Vk.{NameMangler.MangleFunctionName(c.Name)}\"/>"))}");
+                        if (@struct.ReferencedBy.Count > 3)
+                        {
+                            writer.Write(", ...");
+                        }
+                    }
+                    writer.WriteLine("</summary>");
 
                     // FIXME: Make sure to not do name mangling?
                     writer.WriteLine($"/// <remarks><see href=\"https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/{@struct.Name}.html\" /></remarks>");
@@ -312,6 +325,17 @@ namespace VkGenerator
 
                 foreach (HandleType handle in handles)
                 {
+                    writer.Write("/// <summary>");
+                    if (handle.ReferencedBy != null)
+                    {
+                        writer.Write($"Used by {string.Join(", ", handle.ReferencedBy.Take(3).Select(c => $"<see cref=\"Vk.{NameMangler.MangleFunctionName(c.Name)}\"/>"))}");
+                        if (handle.ReferencedBy.Count > 3)
+                        {
+                            writer.Write(", ...");
+                        }
+                    }
+                    writer.WriteLine("</summary>");
+
                     // FIXME: Make sure to not do name mangling?
                     writer.WriteLine($"/// <remarks><see href=\"https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/{handle.Name}.html\" /></remarks>");
 

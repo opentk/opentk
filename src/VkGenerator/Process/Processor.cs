@@ -9,7 +9,7 @@ using VkGenerator.Parsing;
 
 namespace VkGenerator.Process
 {
-    public record TypedStructType(BaseCSType Type, string Name);
+    internal record TypeEntry(BaseCSType CSType, IReferable Referable);
 
     internal class Processor
     {
@@ -34,6 +34,17 @@ namespace VkGenerator.Process
             foreach (EnumType @enum in data.Enums)
             {
                 @enum.Members.Sort((m1, m2) => string.Compare(m1.Name, m2.Name, StringComparison.InvariantCulture));
+                @enum.ReferencedBy?.Sort((r1, r2) => string.Compare(r1.Name, r2.Name, StringComparison.InvariantCulture));
+            }
+
+            foreach (StructType @struct in data.Structs)
+            {
+                @struct.ReferencedBy?.Sort((r1, r2) => string.Compare(r1.Name, r2.Name, StringComparison.InvariantCulture));
+            }
+
+            foreach (HandleType handle in data.Handles)
+            {
+                handle.ReferencedBy?.Sort((r1, r2) => string.Compare(r1.Name, r2.Name, StringComparison.InvariantCulture));
             }
         }
 
@@ -177,13 +188,13 @@ namespace VkGenerator.Process
             }
         }
 
-        public static Dictionary<string, BaseCSType> BuildTypeMap(SpecificationData data, SpecificationData video)
+        public static Dictionary<string, TypeEntry> BuildTypeMap(SpecificationData data, SpecificationData video)
         {
-            Dictionary<string, BaseCSType> typeMap = new Dictionary<string, BaseCSType>();
+            Dictionary<string, TypeEntry> typeMap = new Dictionary<string, TypeEntry>();
 
             foreach (StructType @struct in data.Structs)
             {
-                typeMap.Add(@struct.Name, new CSStruct(@struct.Name, true));
+                typeMap.Add(@struct.Name, new TypeEntry(new CSStruct(@struct.Name, true), @struct));
             }
 
             foreach (EnumType @enum in data.Enums)
@@ -198,12 +209,12 @@ namespace VkGenerator.Process
                         "VkFlags64" => CSPrimitive.Ulong(true),
                         _ => throw new Exception(),
                     };
-                    typeMap.Add(@enum.Name, new CSEnum(@enum.Name, type, true));
+                    typeMap.Add(@enum.Name, new TypeEntry(new CSEnum(@enum.Name, type, true), @enum));
                 }
                 else
                 {
                     // FIXME: Underlying enum type!
-                    typeMap.Add(@enum.Name, new CSEnum(@enum.Name, CSPrimitive.Uint(true), true));
+                    typeMap.Add(@enum.Name, new TypeEntry(new CSEnum(@enum.Name, CSPrimitive.Uint(true), true), @enum));
                 }
             }
 
@@ -211,9 +222,11 @@ namespace VkGenerator.Process
             {
                 if (enumName.Alias != null)
                 {
-                    if (typeMap.TryGetValue(enumName.Alias, out BaseCSType? enumType))
+                    if (typeMap.TryGetValue(enumName.Alias, out TypeEntry? enumType))
                     {
-                        typeMap.Add(enumName.Name, enumType);
+                        // For now we count references to an alias as references to the aliased enum.
+                        // - Noggin_bops 2024-12-08
+                        typeMap.Add(enumName.Name, new TypeEntry(enumType.CSType, enumType.Referable));
                     }
                     else
                     {
@@ -239,9 +252,10 @@ namespace VkGenerator.Process
             {
                 // FIXME: Should we use the ...Bits name or the typedef names?
                 // For now we use the ...Bits name because it's easiest that way
-                if (bitmask.Requires != null && typeMap.TryGetValue(bitmask.Requires, out BaseCSType? enumType))
+                if (bitmask.Requires != null && typeMap.TryGetValue(bitmask.Requires, out TypeEntry? enumType))
                 {
-                    typeMap.Add(bitmask.Name, enumType);
+                    // FIXME: Is this the right thing???
+                    typeMap.Add(bitmask.Name, new TypeEntry(enumType.CSType, enumType.Referable));
                 }
                 else
                 {
@@ -251,36 +265,41 @@ namespace VkGenerator.Process
                         "VkFlags64" => CSPrimitive.Ulong(true),
                         _ => throw new Exception(),
                     };
-                    typeMap.Add(bitmask.Name, new CSEnum(bitmask.Name, type, true));
+
+                    EnumType newEnumType = new EnumType(bitmask.Name, new List<EnumMember>(), true, null) { StrongUnderlyingType = type };
+
+                    typeMap.Add(bitmask.Name, new TypeEntry(new CSEnum(bitmask.Name, type, true), newEnumType));
 
                     // FIXME: This isn't the place to do this!!!!
-                    data.Enums.Add(new EnumType(bitmask.Name, new List<EnumMember>(), true, null) { StrongUnderlyingType = type });
+                    data.Enums.Add(newEnumType);
                 }
             }
 
             foreach (HandleType handle in data.Handles)
             {
-                typeMap.Add(handle.Name, new CSStruct(handle.Name, true));
+                typeMap.Add(handle.Name, new TypeEntry(new CSStruct(handle.Name, true), handle));
             }
 
             // Add video.xml types so we can reference them
             foreach (StructType @struct in video.Structs)
             {
-                typeMap.Add(@struct.Name, new CSStruct(@struct.Name, true));
+                typeMap.Add(@struct.Name, new TypeEntry(new CSStruct(@struct.Name, true), @struct));
             }
 
             foreach (EnumType @enum in video.Enums)
             {
-                typeMap.Add(@enum.Name, new CSEnum(@enum.Name, CSPrimitive.Int(true), true));
+                typeMap.Add(@enum.Name, new TypeEntry(new CSEnum(@enum.Name, CSPrimitive.Int(true), true), @enum));
             }
 
             foreach (EnumName enumName in video.EnumNames)
             {
                 if (enumName.Alias != null)
                 {
-                    if (typeMap.TryGetValue(enumName.Alias, out BaseCSType? enumType))
+                    if (typeMap.TryGetValue(enumName.Alias, out TypeEntry? enumType))
                     {
-                        typeMap.Add(enumName.Name, enumType);
+                        // For now we count references to an alias as references to the aliased enum.
+                        // - Noggin_bops 2024-12-08
+                        typeMap.Add(enumName.Name, new TypeEntry(enumType.CSType, enumType.Referable));
                     }
                     else
                     {
@@ -345,37 +364,40 @@ namespace VkGenerator.Process
             return constantsMap;
         }
 
-        public static void ResolveStructMemberTypes(SpecificationData data, Dictionary<string, BaseCSType> typeMap, Dictionary<string, Constant> constantsMap)
+        public static void ResolveStructMemberTypes(SpecificationData data, Dictionary<string, TypeEntry> typeMap, Dictionary<string, Constant> constantsMap)
         {
             foreach (StructType @struct in data.Structs)
             {
                 foreach (StructMember member in @struct.Members)
                 {
-                    member.StrongType = ParseType(member.Type, typeMap, constantsMap);
+                    member.StrongType = ParseType(member.Type, typeMap, constantsMap, out _);
                     member.StrongType = ReplaceOpaqueStructPointers(member.StrongType);
                 }
             }
         }
 
-        public static void ResolveCommandTypes(SpecificationData data, Dictionary<string, BaseCSType> typeMap)
+        public static void ResolveCommandTypes(SpecificationData data, Dictionary<string, TypeEntry> typeMap)
         {
             foreach (Command command in data.Commands)
             {
-                command.StrongReturnType = ParseType(command.ReturnType, typeMap, data.Constants);
+                command.StrongReturnType = ParseType(command.ReturnType, typeMap, data.Constants, out IReferable? reference);
                 command.StrongReturnType = ReplaceOpaqueStructPointers(command.StrongReturnType);
                 command.StrongReturnType = ReplaceFixedSizeArraysWithPointers(command.StrongReturnType);
 
+                reference?.MarkReferencedBy(command);
 
                 foreach (CommandParameter param in command.Parameters)
                 {
-                    param.StrongType = ParseType(param.Type, typeMap, data.Constants);
+                    param.StrongType = ParseType(param.Type, typeMap, data.Constants, out reference);
                     param.StrongType = ReplaceOpaqueStructPointers(param.StrongType);
                     param.StrongType = ReplaceFixedSizeArraysWithPointers(param.StrongType);
+
+                    reference?.MarkReferencedBy(command);
                 }
             }
         }
 
-        public static void ResolveVersionInfo(SpecificationData data, Dictionary<string, BaseCSType> typeMap)
+        public static void ResolveVersionInfo(SpecificationData data, Dictionary<string, TypeEntry> typeMap)
         {
             foreach (Feature feature in data.Features)
             {
@@ -547,7 +569,7 @@ namespace VkGenerator.Process
             }
         }
 
-        private static BaseCSType ParseType(string type, Dictionary<string, BaseCSType> typeMap, Dictionary<string, Constant> constantsMap)
+        private static BaseCSType ParseType(string type, Dictionary<string, TypeEntry> typeMap, Dictionary<string, Constant> constantsMap, out IReferable? reference)
         {
             type = type.Trim();
 
@@ -565,7 +587,7 @@ namespace VkGenerator.Process
                     withoutAsterisk = withoutAsterisk[0..^"const".Length];
                 }
 
-                BaseCSType? baseType = ParseType(withoutAsterisk, typeMap, constantsMap);
+                BaseCSType? baseType = ParseType(withoutAsterisk, typeMap, constantsMap, out reference);
 
                 return new CSPointer(baseType, @const);
             }
@@ -575,6 +597,7 @@ namespace VkGenerator.Process
                 if (type == "float[3][4]")
                 {
                     // FIXME: Is it Matrix4x3 or Matrix3x4??
+                    reference = null;
                     return new CSStruct("Matrix4x3", false);
                 }
 
@@ -602,7 +625,7 @@ namespace VkGenerator.Process
 
                 string typeWithoutArray = type[..startIndex];
 
-                BaseCSType baseType = ParseType(typeWithoutArray, typeMap, constantsMap);
+                BaseCSType baseType = ParseType(typeWithoutArray, typeMap, constantsMap, out reference);
 
                 return new CSFixedSizeArray(baseType, size);
             }
@@ -612,7 +635,7 @@ namespace VkGenerator.Process
                 int bitWidth = int.Parse(type[(colonIndex + 1)..]);
 
                 string typeWithoutBitfield = type[0..colonIndex].TrimEnd();
-                BaseCSType baseType = ParseType(typeWithoutBitfield, typeMap, constantsMap);
+                BaseCSType baseType = ParseType(typeWithoutBitfield, typeMap, constantsMap, out reference);
 
                 return new CSBitfield(baseType, bitWidth);
             }
@@ -632,85 +655,20 @@ namespace VkGenerator.Process
                     type = type["struct".Length..].TrimStart();
                 }
 
-                // FIXME: These are bitfield members!
-                // This makes binding work that much more complicated as struct layout is
-                // implementation defined in c.
-                // We don't have a good solution for this atm, maybe a new CSBitfield type?
-                // - Noggin_bops 2024-07-09
-                if (type.EndsWith(":24"))
+                if (typeMap.TryGetValue(type, out TypeEntry? csMapType))
                 {
-                    Console.WriteLine(type);
-                    type = type[..^":24".Length];
-                }
-                else if (type.EndsWith(":8"))
-                {
-                    Console.WriteLine(type);
-                    type = type[..^":8".Length];
-                }
-                else if (type.EndsWith(": 1"))
-                {
-                    Console.WriteLine(type);
-                    type = type[..^": 1".Length].TrimEnd();
-                }
-                else if (type.EndsWith(": 30"))
-                {
-                    Console.WriteLine(type);
-                    type = type[..^": 30".Length].TrimEnd();
-                }
-                else if (type.EndsWith(": 27"))
-                {
-                    Console.WriteLine(type);
-                    type = type[..^": 27".Length].TrimEnd();
-                }
-                else if (type.EndsWith(": 31"))
-                {
-                    Console.WriteLine(type);
-                    type = type[..^": 31".Length].TrimEnd();
-                }
-                else if (type.EndsWith(": 8"))
-                {
-                    Console.WriteLine(type);
-                    type = type[..^": 8".Length].TrimEnd();
-                }
-                else if (type.EndsWith(": 20"))
-                {
-                    Console.WriteLine(type);
-                    type = type[..^": 20".Length].TrimEnd();
-                }
-                else if (type.EndsWith(": 23"))
-                {
-                    Console.WriteLine(type);
-                    type = type[..^": 23".Length].TrimEnd();
-                }
-                else if (type.EndsWith(": 28"))
-                {
-                    Console.WriteLine(type);
-                    type = type[..^": 28".Length].TrimEnd();
-                }
-                else if (type.EndsWith(": 13"))
-                {
-                    Console.WriteLine(type);
-                    type = type[..^": 13".Length].TrimEnd();
-                }
-                else if (type.EndsWith(": 3"))
-                {
-                    Console.WriteLine(type);
-                    type = type[..^": 3".Length].TrimEnd();
-                }
-
-                if (typeMap.TryGetValue(type, out BaseCSType? csMapType))
-                {
-                    if (csMapType is CSStruct csStruct)
+                    reference = csMapType.Referable;
+                    if (csMapType.CSType is CSStruct csStruct)
                     {
                         // FIXME: @const!
                         return csStruct;
                     }
-                    else if (csMapType is CSEnum csEnum)
+                    else if (csMapType.CSType is CSEnum csEnum)
                     {
                         // FIXME: @const!
                         return csEnum;
                     }
-                    else if (csMapType is CSPrimitive csPrimitive && csPrimitive.TypeName == "IntPtr")
+                    else if (csMapType.CSType is CSPrimitive csPrimitive && csPrimitive.TypeName == "IntPtr")
                     {
                         return csPrimitive;
                     }
@@ -969,6 +927,7 @@ namespace VkGenerator.Process
                     };
                 }
 
+                reference = null;
                 return csType;
             }
         }
