@@ -160,6 +160,76 @@ module Matrix4 =
             Assert.Equal(R44, AB.M44)
 
         [<Property>]
+        let ``Matrix multiplication between a 4-dimensional and a 4-by-2-dimensional matrices is done by row/column multiplication and summation`` (a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p) =
+            let A = Matrix4(a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p)
+            let B = Matrix4x2(a, b, c, d, e, f, g, h)
+
+            let R11 = a*a + b*c + c*e + d*g
+            let R12 = a*b + b*d + c*f + d*h
+
+            let R21 = e*a + f*c + g*e + h*g
+            let R22 = e*b + f*d + g*f + h*h
+
+            let R31 = i*a + j*c + k*e + l*g
+            let R32 = i*b + j*d + k*f + l*h
+
+            let R41 = m*a + n*c + o*e + p*g
+            let R42 = m*b + n*d + o*f + p*h
+
+            let AB = A * B
+
+            Assert.Equal(R11, AB.M11)
+            Assert.Equal(R12, AB.M12)
+
+            Assert.Equal(R21, AB.M21)
+            Assert.Equal(R22, AB.M22)
+
+            Assert.Equal(R31, AB.M31)
+            Assert.Equal(R32, AB.M32)
+
+            Assert.Equal(R41, AB.M41)
+            Assert.Equal(R42, AB.M42)
+
+        [<Property>]
+        let ``Matrix multiplication between a 4-dimensional and a 4-by-3-dimensional matrices is done by row/column multiplication and summation`` (a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p) =
+            let A = Matrix4(a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p)
+            let B = Matrix4x3(a, b, c, d, e, f, g, h, i, j, k, l)
+
+            let R11 = a*a + b*d + c*g + d*j
+            let R12 = a*b + b*e + c*h + d*k
+            let R13 = a*c + b*f + c*i + d*l
+
+            let R21 = e*a + f*d + g*g + h*j
+            let R22 = e*b + f*e + g*h + h*k
+            let R23 = e*c + f*f + g*i + h*l
+
+            let R31 = i*a + j*d + k*g + l*j
+            let R32 = i*b + j*e + k*h + l*k
+            let R33 = i*c + j*f + k*i + l*l
+
+            let R41 = m*a + n*d + o*g + p*j
+            let R42 = m*b + n*e + o*h + p*k
+            let R43 = m*c + n*f + o*i + p*l
+
+            let AB = A * B
+
+            Assert.Equal(R11, AB.M11)
+            Assert.Equal(R12, AB.M12)
+            Assert.Equal(R13, AB.M13)
+
+            Assert.Equal(R21, AB.M21)
+            Assert.Equal(R22, AB.M22)
+            Assert.Equal(R23, AB.M23)
+
+            Assert.Equal(R31, AB.M31)
+            Assert.Equal(R32, AB.M32)
+            Assert.Equal(R33, AB.M33)
+
+            Assert.Equal(R41, AB.M41)
+            Assert.Equal(R42, AB.M42)
+            Assert.Equal(R43, AB.M43)
+
+        [<Property>]
         let ``Matrix multiplication by scalar is the same as row multiplication by scalar`` (a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, scalar : float32) =
             let A = Matrix4(a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p)
 
