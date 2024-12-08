@@ -2131,7 +2131,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Matrix-scalar multiplication.
+        /// Matrix multiplication.
         /// </summary>
         /// <param name="left">left-hand operand.</param>
         /// <param name="right">right-hand operand.</param>
@@ -2143,7 +2143,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Matrix-scalar multiplication.
+        /// Matrix multiplication.
         /// </summary>
         /// <param name="left">left-hand operand.</param>
         /// <param name="right">right-hand operand.</param>
