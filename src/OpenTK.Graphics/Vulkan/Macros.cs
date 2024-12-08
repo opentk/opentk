@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace OpenTK.Graphics.Vulkan
 {
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
     public static unsafe partial class Vk
     {
         [Obsolete("This define is deprecated. VK_MAKE_API_VERSION should be used instead.")]
@@ -33,15 +34,26 @@ namespace OpenTK.Graphics.Vulkan
         public static readonly uint VK_API_VERSION_1_1 = MAKE_API_VERSION(0, 1, 1, 0);
         public static readonly uint VK_API_VERSION_1_2 = MAKE_API_VERSION(0, 1, 2, 0);
         public static readonly uint VK_API_VERSION_1_3 = MAKE_API_VERSION(0, 1, 3, 0);
+        public static readonly uint VK_API_VERSION_1_4 = MAKE_API_VERSION(0, 1, 4, 0);
+
         public static readonly uint VKSC_API_VERSION_1_0 = MAKE_API_VERSION(VKSC_API_VARIANT, 1, 0, 0);
 
         // FIXME: Auto generate this? if not all of the defines??
         // We want to keep this up to date...
-        public const uint VK_HEADER_VERSION = 295;
-        public static readonly uint VK_HEADER_VERSION_COMPLETE = MAKE_API_VERSION(0, 1, 3, VK_HEADER_VERSION);
+        public const uint VK_HEADER_VERSION = 303;
+        public static readonly uint VK_HEADER_VERSION_COMPLETE = MAKE_API_VERSION(0, 1, 4, VK_HEADER_VERSION);
 
         // For vulkansc that we don't support atm.
-        //public const uint VK_HEADER_VERSION = 15;
+        //public const uint VK_HEADER_VERSION = 16;
         //public static readonly uint VK_HEADER_VERSION_COMPLETE = MAKE_API_VERSION(VKSC_API_VARIANT, 1, 0, VK_HEADER_VERSION);
+
+
+
+        //  Vulkan video macros
+
+        public static uint VK_MAKE_VIDEO_STD_VERSION(uint major, uint minor, uint patch) => ((major) << 22) | ((minor) << 12) | (patch);
+
+        public static readonly uint VK_STD_VULKAN_VIDEO_CODEC_AV1_ENCODE_API_VERSION_1_0_0 = VK_MAKE_VIDEO_STD_VERSION(1, 0, 0);
     }
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
 }

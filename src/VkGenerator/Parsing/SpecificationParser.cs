@@ -10,6 +10,11 @@ using VkGenerator.Utility.Extensions;
 
 namespace VkGenerator.Parsing
 {
+    public interface IReferable
+    {
+        void MarkReferencedBy(Command command);
+    }
+
     public record SpecificationData(
             List<EnumType> Enums,
             // FIXME: These are all the enums that are typedef't.
@@ -38,24 +43,56 @@ namespace VkGenerator.Parsing
 
     public record BaseType(string Name, string? Type);
 
-    public record HandleType(string Name, string? Parent, string Type, string TypeEnum, string? Alias);
+    public record HandleType(string Name, string? Parent, string Type, string TypeEnum, string? Alias) : IReferable
+    {
+        public List<Command>? ReferencedBy;
+        public void MarkReferencedBy(Command command)
+        {
+            if (ReferencedBy == null)
+            {
+                ReferencedBy = new List<Command>();
+            }
+            ReferencedBy.Add(command);
+        }
+    }
 
     public record ExternalType(string Name, string? HeaderFile);
 
-    public record StructType(string Name, List<StructMember> Members, bool Union, string? Comment)
+    public record StructType(string Name, List<StructMember> Members, bool Union, string? Comment) : IReferable
     {
         public VersionInfo? VersionInfo;
+        public List<Command>? ReferencedBy;
+
+        public void MarkReferencedBy(Command command)
+        {
+            if (ReferencedBy == null)
+            {
+                ReferencedBy = new List<Command>();
+            }
+            ReferencedBy.Add(command);
+        }
     }
     public record StructMember(string Type, string Name, string? Values)
     {
         public BaseCSType? StrongType { get; set; }
     };
 
-    public record EnumType(string Name, List<EnumMember> Members, bool Bitmask, string? Extension)
+    public record EnumType(string Name, List<EnumMember> Members, bool Bitmask, string? Extension) : IReferable
     {
         public BaseCSType? StrongUnderlyingType { get; set; }
 
         public VersionInfo? VersionInfo;
+        public List<Command>? ReferencedBy;
+
+        public void MarkReferencedBy(Command command)
+        {
+            if (ReferencedBy == null)
+            {
+                ReferencedBy = new List<Command>();
+            }
+            ReferencedBy.Add(command);
+        }
+
     }
     public record EnumMember(string Name, ulong Value, string? Comment, string? Alias, string? Extension)
     {
