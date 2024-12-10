@@ -167,7 +167,7 @@ Target.create "AssemblyInfo" (fun _ ->
 
 Target.create "Build"( fun _ ->
     let setOptions a =
-        let customParams = sprintf "/p:DontGenBindings=true/p:PackageVersion=%s/p:ProductVersion=%s" release.AssemblyVersion release.NugetVersion
+        let customParams = sprintf "/p:ContinuousIntegrationBuild=true /p:DontGenBindings=true /p:PackageVersion=%s /p:ProductVersion=%s /p:Version=%s" release.AssemblyVersion release.NugetVersion release.AssemblyVersion
         DotNet.Options.withCustomParams (Some customParams) (dotnetSimple a)
 
     for proj in releaseProjects do
