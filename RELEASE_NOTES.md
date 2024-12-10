@@ -1,3 +1,7 @@
+## 4.9.3
+
+* Fix issue where the `OpenTK.Mathematics` nuget package referenced `System.Runtime.CompilerServices.Unsafe` version `5.0.0` but the compiled `OpenTK.Mathematics.dll` assembly referenced version `6.0.0`. Causing runtime crashes in some circumstances. The `OpenTK.Mathematics` nuget package now correctly requires version `6.0.0`. (@NogginBops)
+
 ## 4.9.2
 
 * Made nuget package builds "deterministic". (@NogginBops)

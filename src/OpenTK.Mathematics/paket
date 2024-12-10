@@ -4,9 +4,9 @@ description
     A basic mathematics library developed primarily for rendering in 3d and 2d.
 dependencies
     framework: netstandard2.1
-        System.Runtime.CompilerServices.Unsafe >= 5.0.0
+        System.Runtime.CompilerServices.Unsafe >= 6.0.0
     framework: netcoreapp3.1
-        System.Runtime.CompilerServices.Unsafe >= 5.0.0
+        System.Runtime.CompilerServices.Unsafe >= 6.0.0
 
 files
     bin\Release\netstandard2.1\OpenTK.Mathematics.dll ==> lib\netstandard2.1
