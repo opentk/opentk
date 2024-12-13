@@ -36,6 +36,7 @@ namespace OpenTK.Mathematics
     [StructLayout(LayoutKind.Sequential)]
     public struct Matrix3d : IEquatable<Matrix3d>, IFormattable,
                             IMultiplyOperators<Matrix3d, double, Matrix3d>,
+                            IMultiplyOperators<Matrix3d, Vector3d, Vector3d>,
                             IMultiplyOperators<Matrix3d, Matrix3d, Matrix3d>,
                             IMultiplyOperators<Matrix3d, Matrix3x2d, Matrix3x2d>,
                             IMultiplyOperators<Matrix3d, Matrix3x4d, Matrix3x4d>,
@@ -1259,6 +1260,19 @@ namespace OpenTK.Mathematics
         public static Matrix3d operator *(Matrix3d left, double right)
         {
             return Mult(left, right);
+        }
+
+        /// <summary>
+        /// Transform a Vector by the given Matrix using right-handed notation.
+        /// </summary>
+        /// <param name="mat">The desired transformation.</param>
+        /// <param name="vec">The vector to transform.</param>
+        /// <returns>The transformed vector.</returns>
+        [Pure]
+        public static Vector3d operator *(Matrix3d mat, Vector3d vec)
+        {
+            Vector3d.TransformColumn(in mat, in vec, out Vector3d result);
+            return result;
         }
 
         /// <summary>

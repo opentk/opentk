@@ -1081,19 +1081,6 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Transform a Vector by the given Matrix using right-handed notation.
-        /// </summary>
-        /// <param name="mat">The desired transformation.</param>
-        /// <param name="vec">The vector to transform.</param>
-        /// <returns>The transformed vector.</returns>
-        [Pure]
-        public static Vector2 operator *(Matrix2 mat, Vector2 vec)
-        {
-            TransformColumn(in mat, in vec, out Vector2 result);
-            return result;
-        }
-
-        /// <summary>
         /// Divides the specified instance by a scalar.
         /// </summary>
         /// <param name="vec">Left operand.</param>

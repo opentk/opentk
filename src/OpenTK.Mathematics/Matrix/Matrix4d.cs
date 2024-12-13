@@ -36,6 +36,7 @@ namespace OpenTK.Mathematics
     [Serializable]
     [StructLayout(LayoutKind.Sequential)]
     public struct Matrix4d : IEquatable<Matrix4d>, IFormattable,
+                            IMultiplyOperators<Matrix4d, Vector4d, Vector4d>,
                             IMultiplyOperators<Matrix4d, Matrix4d, Matrix4d>,
                             IMultiplyOperators<Matrix4d, double, Matrix4d>,
                             IAdditionOperators<Matrix4d, Matrix4d, Matrix4d>,
@@ -2067,6 +2068,19 @@ namespace OpenTK.Mathematics
                 3 => mat.Row3,
                 _ => throw new IndexOutOfRangeException($"{nameof(rowForRow3)} must be a number between 0 and 2. Got {rowForRow3}."),
             };
+        }
+
+        /// <summary>
+        /// Transform a Vector by the given Matrix using right-handed notation.
+        /// </summary>
+        /// <param name="mat">The desired transformation.</param>
+        /// <param name="vec">The vector to transform.</param>
+        /// <returns>The transformed vector.</returns>
+        [Pure]
+        public static Vector4d operator *(Matrix4d mat, Vector4d vec)
+        {
+            Vector4d.TransformColumn(in mat, in vec, out Vector4d result);
+            return result;
         }
 
         /// <summary>

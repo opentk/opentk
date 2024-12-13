@@ -36,6 +36,7 @@ namespace OpenTK.Mathematics
     [StructLayout(LayoutKind.Sequential)]
     public struct Matrix2d : IEquatable<Matrix2d>, IFormattable,
                             IMultiplyOperators<Matrix2d, double, Matrix2d>,
+                            IMultiplyOperators<Matrix2d, Vector2d, Vector2d>,
                             IMultiplyOperators<Matrix2d, Matrix2d, Matrix2d>,
                             IMultiplyOperators<Matrix2d, Matrix2x3d, Matrix2x3d>,
                             IMultiplyOperators<Matrix2d, Matrix2x4d, Matrix2x4d>,
@@ -765,6 +766,19 @@ namespace OpenTK.Mathematics
         public static Matrix2d operator *(Matrix2d left, double right)
         {
             return Mult(left, right);
+        }
+
+        /// <summary>
+        /// Transform a Vector by the given Matrix using right-handed notation.
+        /// </summary>
+        /// <param name="mat">The desired transformation.</param>
+        /// <param name="vec">The vector to transform.</param>
+        /// <returns>The transformed vector.</returns>
+        [Pure]
+        public static Vector2d operator *(Matrix2d mat, Vector2d vec)
+        {
+            Vector2d.TransformColumn(in mat, in vec, out Vector2d result);
+            return result;
         }
 
         /// <summary>
