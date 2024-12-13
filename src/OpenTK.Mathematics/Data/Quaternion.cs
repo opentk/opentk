@@ -38,6 +38,9 @@ namespace OpenTK.Mathematics
                                 ISubtractionOperators<Quaternion, Quaternion, Quaternion>,
                                 IMultiplyOperators<Quaternion, Quaternion, Quaternion>,
                                 IMultiplyOperators<Quaternion, float, Quaternion>,
+                                IMultiplyOperators<Quaternion, Vector2, Vector2>,
+                                IMultiplyOperators<Quaternion, Vector3, Vector3>,
+                                IMultiplyOperators<Quaternion, Vector4, Vector4>,
                                 IEqualityOperators<Quaternion, Quaternion, bool>
     {
         /// <summary>
@@ -786,6 +789,45 @@ namespace OpenTK.Mathematics
                 quaternion.Z * scale,
                 quaternion.W * scale
             );
+        }
+
+        /// <summary>
+        /// Transforms a vector by a quaternion rotation.
+        /// </summary>
+        /// <param name="quat">The quaternion to rotate the vector by.</param>
+        /// <param name="vec">The vector to transform.</param>
+        /// <returns>The multiplied vector.</returns>
+        [Pure]
+        public static Vector2 operator *(Quaternion quat, Vector2 vec)
+        {
+            Vector2.Transform(in vec, in quat, out Vector2 result);
+            return result;
+        }
+
+        /// <summary>
+        /// Transforms a vector by a quaternion rotation.
+        /// </summary>
+        /// <param name="quat">The quaternion to rotate the vector by.</param>
+        /// <param name="vec">The vector to transform.</param>
+        /// <returns>The multiplied vector.</returns>
+        [Pure]
+        public static Vector3 operator *(Quaternion quat, Vector3 vec)
+        {
+            Vector3.Transform(in vec, in quat, out Vector3 result);
+            return result;
+        }
+
+        /// <summary>
+        /// Transforms a vector by a quaternion rotation.
+        /// </summary>
+        /// <param name="quat">The quaternion to rotate the vector by.</param>
+        /// <param name="vec">The vector to transform.</param>
+        /// <returns>The transformed vector.</returns>
+        [Pure]
+        public static Vector4 operator *(Quaternion quat, Vector4 vec)
+        {
+            Vector4.Transform(in vec, in quat, out Vector4 result);
+            return result;
         }
 
         /// <summary>

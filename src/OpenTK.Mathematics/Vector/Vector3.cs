@@ -1636,19 +1636,6 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Transforms a vector by a quaternion rotation.
-        /// </summary>
-        /// <param name="vec">The vector to transform.</param>
-        /// <param name="quat">The quaternion to rotate the vector by.</param>
-        /// <returns>The multiplied vector.</returns>
-        [Pure]
-        public static Vector3 operator *(Quaternion quat, Vector3 vec)
-        {
-            Transform(in vec, in quat, out Vector3 result);
-            return result;
-        }
-
-        /// <summary>
         /// Divides an instance by a scalar.
         /// </summary>
         /// <param name="vec">The instance.</param>
