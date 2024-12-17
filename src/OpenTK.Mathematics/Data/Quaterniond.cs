@@ -184,6 +184,15 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
+        /// Convert the current quaternion to Euler angle representation.
+        /// </summary>
+        /// <param name="angles">The Euler angles in degrees.</param>
+        public readonly void ToEulerAnglesDegrees(out Vector3d angles)
+        {
+            angles = ToEulerAnglesDegrees();
+        }
+
+        /// <summary>
         /// Convert this instance to an Euler angle representation.
         /// </summary>
         /// <returns>The Euler angles in radians.</returns>
@@ -229,6 +238,17 @@ namespace OpenTK.Mathematics
             }
 
             return eulerAngles;
+        }
+
+        /// <summary>
+        /// Convert this instance to an Euler angle representation.
+        /// </summary>
+        /// <returns>The Euler angles in degrees.</returns>
+        public readonly Vector3d ToEulerAnglesDegrees()
+        {
+            // Create the radToDeg here so that were not calling MathHelper.RadiansToDegrees for every component.
+            const double radToDeg = 180.0d / Math.PI;
+            return ToEulerAngles() * radToDeg;
         }
 
         /// <summary>
@@ -534,6 +554,36 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
+        /// Builds a Quaternion from the given euler angles in degrees
+        /// The rotations will get applied in the following order:
+        /// 1. pitch (X axis), 2. yaw (Y axis), 3. roll (Z axis).
+        /// </summary>
+        /// <param name="pitch">The pitch (attitude), counterclockwise rotation around X axis.</param>
+        /// <param name="yaw">The yaw (heading), counterclockwise rotation around Y axis.</param>
+        /// <param name="roll">The roll (bank), counterclockwise rotation around Z axis.</param>
+        /// <returns>The quaternion.</returns>
+        [Pure]
+        public static Quaterniond FromEulerAnglesDegrees(double pitch, double yaw, double roll)
+        {
+            return new Quaterniond(MathHelper.DegreesToRadians(pitch), MathHelper.DegreesToRadians(roll), MathHelper.DegreesToRadians(roll));
+        }
+
+        /// <summary>
+        /// Builds a Quaternion from the given euler angles in degrees.
+        /// The rotations will get applied in following order:
+        /// 1. X axis, 2. Y axis, 3. Z axis.
+        /// </summary>
+        /// <param name="eulerAngles">The counterclockwise euler angles as a vector.</param>
+        /// <returns>The equivalent Quaternion.</returns>
+        [Pure]
+        public static Quaterniond FromEulerAnglesDegrees(Vector3d eulerAngles)
+        {
+            // Create the degToRad here so that were not calling MathHelper.DegreesToRadians for every component.
+            const double degToRad = Math.PI / 180.0d;
+            return new Quaterniond(eulerAngles * degToRad);
+        }
+
+        /// <summary>
         /// Builds a Quaterniond from the given euler angles.
         /// </summary>
         /// <param name="eulerAngles">The euler angles as a vector.</param>
@@ -551,6 +601,20 @@ namespace OpenTK.Mathematics
             result.Xyz.X = (s1 * s2 * c3) + (c1 * c2 * s3);
             result.Xyz.Y = (s1 * c2 * c3) + (c1 * s2 * s3);
             result.Xyz.Z = (c1 * s2 * c3) - (s1 * c2 * s3);
+        }
+
+        /// <summary>
+        /// Builds a Quaternion from the given euler angles in degrees.
+        /// The rotations will get applied in following order:
+        /// 1. Around X, 2. Around Y, 3. Around Z.
+        /// </summary>
+        /// <param name="eulerAngles">The counterclockwise euler angles a vector.</param>
+        /// <param name="result">The equivalent Quaternion.</param>
+        public static void FromEulerAnglesDegrees(in Vector3d eulerAngles, out Quaterniond result)
+        {
+            // Create the degToRad here so that were not calling MathHelper.DegreesToRadians for every component.
+            const double degToRad = Math.PI / 180.0d;
+            FromEulerAngles(eulerAngles * degToRad, out result);
         }
 
         /// <summary>
