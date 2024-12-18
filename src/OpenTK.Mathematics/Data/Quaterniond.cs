@@ -22,6 +22,7 @@ SOFTWARE.
 
 using System;
 using System.Diagnostics.Contracts;
+using System.Numerics;
 using System.Runtime.InteropServices;
 using System.Runtime.Intrinsics;
 using System.Xml.Serialization;
@@ -32,7 +33,15 @@ namespace OpenTK.Mathematics
     /// Represents a double-precision Quaternion.
     /// </summary>
     [Serializable, StructLayout(LayoutKind.Sequential)]
-    public struct Quaterniond : IEquatable<Quaterniond>, IFormattable
+    public struct Quaterniond : IEquatable<Quaterniond>, IFormattable,
+                                IAdditionOperators<Quaterniond, Quaterniond, Quaterniond>,
+                                ISubtractionOperators<Quaterniond, Quaterniond, Quaterniond>,
+                                IMultiplyOperators<Quaterniond, Quaterniond, Quaterniond>,
+                                IMultiplyOperators<Quaterniond, double, Quaterniond>,
+                                IMultiplyOperators<Quaterniond, Vector2d, Vector2d>,
+                                IMultiplyOperators<Quaterniond, Vector3d, Vector3d>,
+                                IMultiplyOperators<Quaterniond, Vector4d, Vector4d>,
+                                IEqualityOperators<Quaterniond, Quaterniond, bool>
     {
         /// <summary>
         /// The X, Y and Z components of this instance.
@@ -770,6 +779,45 @@ namespace OpenTK.Mathematics
                 quaternion.Z * scale,
                 quaternion.W * scale
             );
+        }
+
+        /// <summary>
+        /// Transforms a vector by a quaternion rotation.
+        /// </summary>
+        /// <param name="quat">The quaternion to rotate the vector by.</param>
+        /// <param name="vec">The vector to transform.</param>
+        /// <returns>The transformed vector.</returns>
+        [Pure]
+        public static Vector2d operator *(Quaterniond quat, Vector2d vec)
+        {
+            Vector2d.Transform(in vec, in quat, out Vector2d result);
+            return result;
+        }
+
+        /// <summary>
+        /// Transforms a vector by a quaternion rotation.
+        /// </summary>
+        /// <param name="quat">The quaternion to rotate the vector by.</param>
+        /// <param name="vec">The vector to transform.</param>
+        /// <returns>The transformed vector.</returns>
+        [Pure]
+        public static Vector3d operator *(Quaterniond quat, Vector3d vec)
+        {
+            Vector3d.Transform(in vec, in quat, out Vector3d result);
+            return result;
+        }
+
+        /// <summary>
+        /// Transforms a vector by a quaternion rotation.
+        /// </summary>
+        /// <param name="quat">The quaternion to rotate the vector by.</param>
+        /// <param name="vec">The vector to transform.</param>
+        /// <returns>The transformed vector.</returns>
+        [Pure]
+        public static Vector4d operator *(Quaterniond quat, Vector4d vec)
+        {
+            Vector4d.Transform(in vec, in quat, out Vector4d result);
+            return result;
         }
 
         /// <summary>

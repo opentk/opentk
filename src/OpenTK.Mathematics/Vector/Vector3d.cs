@@ -22,6 +22,7 @@ SOFTWARE.
 
 using System;
 using System.Diagnostics.Contracts;
+using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Runtime.Intrinsics;
@@ -34,7 +35,16 @@ namespace OpenTK.Mathematics
     /// </summary>
     [Serializable]
     [StructLayout(LayoutKind.Sequential)]
-    public struct Vector3d : IEquatable<Vector3d>, IFormattable
+    public struct Vector3d : IEquatable<Vector3d>, IFormattable,
+                            IAdditionOperators<Vector3d, Vector3d, Vector3d>,
+                            ISubtractionOperators<Vector3d, Vector3d, Vector3d>,
+                            IUnaryNegationOperators<Vector3d, Vector3d>,
+                            IMultiplyOperators<Vector3d, double, Vector3d>,
+                            IMultiplyOperators<Vector3d, Vector3d, Vector3d>,
+                            IMultiplyOperators<Vector3d, Matrix3d, Vector3d>,
+                            IDivisionOperators<Vector3d, double, Vector3d>,
+                            IDivisionOperators<Vector3d, Vector3d, Vector3d>,
+                            IEqualityOperators<Vector3d, Vector3d, bool>
     {
         /// <summary>
         /// The X component of the Vector3.
@@ -1475,32 +1485,6 @@ namespace OpenTK.Mathematics
         public static Vector3d operator *(Vector3d vec, Matrix3d mat)
         {
             TransformRow(in vec, in mat, out Vector3d result);
-            return result;
-        }
-
-        /// <summary>
-        /// Transform a Vector by the given Matrix using right-handed notation.
-        /// </summary>
-        /// <param name="mat">The desired transformation.</param>
-        /// <param name="vec">The vector to transform.</param>
-        /// <returns>The transformed vector.</returns>
-        [Pure]
-        public static Vector3d operator *(Matrix3d mat, Vector3d vec)
-        {
-            TransformColumn(in mat, in vec, out Vector3d result);
-            return result;
-        }
-
-        /// <summary>
-        /// Transforms a vector by a quaternion rotation.
-        /// </summary>
-        /// <param name="quat">The quaternion to rotate the vector by.</param>
-        /// <param name="vec">The vector to transform.</param>
-        /// <returns>The transformed vector.</returns>
-        [Pure]
-        public static Vector3d operator *(Quaterniond quat, Vector3d vec)
-        {
-            Transform(in vec, in quat, out Vector3d result);
             return result;
         }
 
