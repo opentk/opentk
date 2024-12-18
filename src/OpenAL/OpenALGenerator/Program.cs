@@ -245,7 +245,7 @@ namespace OpenALGenerator
         enum Channels { }
 
         [EntryPoint("alcLoopbackOpenDeviceSOFT", true, PrivateRefOverload = true)]
-        unsafe delegate ALDevice LoopbackOpenDeviceSOFT(ALDevice device);
+        unsafe delegate ALDevice LoopbackOpenDeviceSOFT(string device);
 
         [EntryPoint("alcIsRenderFormatSupportedSOFT", true, PrivateRefOverload = true, GenerateArrayOverload = true)]
         unsafe delegate bool IsRenderFormatSupportedSOFT(ALDevice device, int frequency, Channels channels, RenderFormat type);

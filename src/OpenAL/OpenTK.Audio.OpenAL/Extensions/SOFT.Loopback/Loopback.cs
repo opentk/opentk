@@ -37,9 +37,9 @@ namespace OpenTK.Audio.OpenAL
             }
 
 #pragma warning disable SA1516 // Elements should be separated by blank line
-            public static ALDevice LoopbackOpenDeviceSOFT(ALDevice device) => _LoopbackOpenDeviceSOFT(device);
-            [UnmanagedFunctionPointer(AL.ALCallingConvention)]
-            private delegate ALDevice LoopbackOpenDeviceSOFTDelegate(ALDevice device);
+            public static ALDevice LoopbackOpenDeviceSOFT(string device) => _LoopbackOpenDeviceSOFT(device);
+            [UnmanagedFunctionPointer(AL.ALCallingConvention, CharSet = CharSet.Ansi)]
+            private delegate ALDevice LoopbackOpenDeviceSOFTDelegate(string device);
             private static readonly LoopbackOpenDeviceSOFTDelegate _LoopbackOpenDeviceSOFT = LoadDelegate<LoopbackOpenDeviceSOFTDelegate>("alcLoopbackOpenDeviceSOFT");
 
             public static bool IsRenderFormatSupportedSOFT(ALDevice device, int frequency, Channels channels, RenderFormat type) => _IsRenderFormatSupportedSOFT(device, frequency, channels, type);
