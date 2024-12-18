@@ -628,6 +628,16 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
+        /// Converts a quaternion to it's euler angle representation.
+        /// </summary>
+        /// <param name="q">The Quaternion.</param>
+        /// <param name="result">The resulting euler angles in degrees.</param>
+        public static void ToEulerAnglesDegrees(in Quaterniond q, out Vector3d result)
+        {
+            q.ToEulerAnglesDegrees(out result);
+        }
+
+        /// <summary>
         /// Builds a quaternion from the given rotation matrix.
         /// </summary>
         /// <param name="matrix">A rotation matrix.</param>
