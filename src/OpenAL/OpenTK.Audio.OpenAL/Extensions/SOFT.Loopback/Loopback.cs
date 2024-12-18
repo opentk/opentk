@@ -9,7 +9,7 @@ namespace OpenTK.Audio.OpenAL
 {
     public partial class ALC
     {
-        internal class Loopback
+        public class Loopback
         {
             /// <summary>
             /// The name of this AL extension.
