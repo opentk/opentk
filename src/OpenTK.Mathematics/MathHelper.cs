@@ -71,12 +71,22 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Defines the constant that you should multiply by to convert Radians to Degrees.
         /// </summary>
-        public const double RadToDeg = 180.0d / Math.PI;
+        public const float RadToDeg = 180.0f / MathF.PI;
 
         /// <summary>
         /// Defines the constant that you should multiply by to convert Degrees to Radians.
         /// </summary>
-        public const double DegToRad = Math.PI / 180.0d;
+        public const float DegToRad = MathF.PI / 180.0f;
+
+        /// <summary>
+        /// Defines the constant that you should multiply by to convert Radians to Degrees.
+        /// </summary>
+        public const double RadToDegd = 180.0d / Math.PI;
+
+        /// <summary>
+        /// Defines the constant that you should multiply by to convert Degrees to Radians.
+        /// </summary>
+        public const double DegToRadd = Math.PI / 180.0d;
 
         /// <summary>
         /// Returns the absolute value of a decimal number.
@@ -854,7 +864,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static float DegreesToRadians(float degrees)
         {
-            return degrees * (float)DegToRad;
+            return degrees * DegToRad;
         }
 
         /// <summary>
@@ -865,7 +875,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static float RadiansToDegrees(float radians)
         {
-            return radians * (float)RadToDeg;
+            return radians * RadToDeg;
         }
 
         /// <summary>
@@ -876,7 +886,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static double DegreesToRadians(double degrees)
         {
-            return degrees * DegToRad;
+            return degrees * DegToRadd;
         }
 
         /// <summary>
@@ -887,7 +897,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static double RadiansToDegrees(double radians)
         {
-            return radians * RadToDeg;
+            return radians * RadToDegd;
         }
 
         /// <summary>
