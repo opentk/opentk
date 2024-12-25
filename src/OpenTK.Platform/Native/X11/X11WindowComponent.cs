@@ -49,30 +49,33 @@ namespace OpenTK.Platform.Native.X11
 
         internal static XWindow HelperWindow { get; private set; }
 
+        internal static XCursor EmptyCursor;
+
         internal static string ApplicationName;
 
         /// <inheritdoc/>
         public void Initialize(ToolkitOptions options)
         {
-            // Later on we can replace this with a hint.
-            string? displayName = null;
-            X11.Display = XOpenDisplay(displayName);
-
-            ApplicationName = options.ApplicationName;
-
-            if (X11.Display.Value == IntPtr.Zero)
-            {
-                throw new PalException(this, (displayName is null) ? "Could not open default X display." : $"Could not open X display {displayName}.");
-            }
-
             unsafe
             {
                 ErrorHandler = XErrorHandler;
                 XSetErrorHandler(ErrorHandler);
             }
 
+            // Later on we can replace this with a hint.
+            string? displayName = null;
+            X11.Display = XOpenDisplay(displayName);
+            if (X11.Display.Value == IntPtr.Zero)
+            {
+                throw new PalException(this, (displayName is null) ? "Could not open default X display." : $"Could not open X display {displayName}.");
+            }
+
             X11.DefaultScreen = XDefaultScreen(X11.Display);
             X11.DefaultRootWindow = XDefaultRootWindow(X11.Display);
+
+            ApplicationName = options.ApplicationName;
+
+            EmptyCursor = X11CursorComponent.CreateEmpty();
 
             string[] extensions = XListExtensions(X11.Display, out _);
             X11.Extensions = new HashSet<string>(extensions);
@@ -1388,7 +1391,7 @@ namespace OpenTK.Platform.Native.X11
                     // FIXME: This wasn't a great idea as ANGLEOpenGLComponent is a thing which will cause
                     // this to crash. So we need to handle ANGLEOpenGLComponent as well here.
                     // - Noggin_bops 2024-07-22
-                    X11OpenGLComponent x11OpenGL = (Toolkit.OpenGL as X11OpenGLComponent) ?? throw new PalException(this, "OpenGL component needs to be initialized.");
+                    X11OpenGLComponent x11OpenGL = (Toolkit.OpenGL as X11OpenGLComponent) ?? throw new PalException(this, "OpenGL component needs to be initialized. Or you are using ANGLE on linux, this is not supported yet.");
                     // FIXME: Make these properties of the X11OpenGLComponent.
                     bool ARB_framebuffer_sRGB = x11OpenGL.GLXExtensions.Contains("GLX_ARB_framebuffer_sRGB");
                     bool EXT_framebuffer_sRGB = x11OpenGL.GLXExtensions.Contains("GLX_EXT_framebuffer_sRGB");
@@ -3314,7 +3317,7 @@ namespace OpenTK.Platform.Native.X11
             XWindowHandle xwindow = handle.As<XWindowHandle>(this);
             XCursorHandle? xcursor = cursor?.As<XCursorHandle>(this);
 
-            XDefineCursor(X11.Display, xwindow.Window, xcursor?.Cursor ?? XCursor.None);
+            XDefineCursor(X11.Display, xwindow.Window, xcursor?.Cursor ?? EmptyCursor);
         }
 
         /// <inheritdoc/>
