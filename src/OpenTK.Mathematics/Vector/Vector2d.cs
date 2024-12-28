@@ -44,7 +44,10 @@ namespace OpenTK.Mathematics
                             IMultiplyOperators<Vector2d, Matrix2d, Vector2d>,
                             IDivisionOperators<Vector2d, double, Vector2d>,
                             IDivisionOperators<Vector2d, Vector2d, Vector2d>,
-                            IEqualityOperators<Vector2d, Vector2d, bool>
+                            IEqualityOperators<Vector2d, Vector2d, bool>,
+                            IAdditiveIdentity<Vector2d, Vector2d>,
+                            IMultiplicativeIdentity<Vector2d, Vector2d>,
+                            IMinMaxValue<Vector2d>
     {
         /// <summary>
         /// The X coordinate of this instance.
@@ -191,6 +194,26 @@ namespace OpenTK.Mathematics
         /// Gets the perpendicular vector on the left side of this vector.
         /// </summary>
         public readonly Vector2d PerpendicularLeft => new Vector2d(-Y, X);
+
+        /// <summary>
+        /// Gets the additive identity of Vector2. Equivalent to Vector2.Zero.
+        /// </summary>
+        public static Vector2d AdditiveIdentity => Zero;
+
+        /// <summary>
+        /// Gets the multiplicative identity of Vector2d. Equivalent to Vector2d.One.
+        /// </summary>
+        public static Vector2d MultiplicativeIdentity => One;
+
+        /// <summary>
+        /// Gets the max value for Vector2d. Equivalent to Vector2d.PositiveInfinity.
+        /// </summary>
+        public static Vector2d MaxValue => PositiveInfinity;
+
+        /// <summary>
+        /// Gets the min value for Vector2d. Equivalent to Vector2d.NegativeInfinity.
+        /// </summary>
+        public static Vector2d MinValue => NegativeInfinity;
 
         /// <summary>
         /// Returns a copy of the Vector2d scaled to unit length.

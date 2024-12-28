@@ -46,7 +46,10 @@ namespace OpenTK.Mathematics
                             IMultiplyOperators<Vector3, Matrix3, Vector3>,
                             IDivisionOperators<Vector3, float, Vector3>,
                             IDivisionOperators<Vector3, Vector3, Vector3>,
-                            IEqualityOperators<Vector3, Vector3, bool>
+                            IEqualityOperators<Vector3, Vector3, bool>,
+                            IAdditiveIdentity<Vector3, Vector3>,
+                            IMultiplicativeIdentity<Vector3, Vector3>,
+                            IMinMaxValue<Vector3>
     {
         /// <summary>
         /// The X component of the Vector3.
@@ -179,6 +182,26 @@ namespace OpenTK.Mathematics
         /// <see cref="Length"/>
         /// <seealso cref="LengthFast"/>
         public readonly float LengthSquared => (X * X) + (Y * Y) + (Z * Z);
+
+        /// <summary>
+        /// Gets the additive identity of Vector3. Equivalent to Vector3.Zero.
+        /// </summary>
+        public static Vector3 AdditiveIdentity => Zero;
+
+        /// <summary>
+        /// Gets the multiplicative identity of Vector3. Equivalent to Vector3.One.
+        /// </summary>
+        public static Vector3 MultiplicativeIdentity => One;
+
+        /// <summary>
+        /// Gets the max value for Vector3. Equivalent to Vector3.PositiveInfinity.
+        /// </summary>
+        public static Vector3 MaxValue => PositiveInfinity;
+
+        /// <summary>
+        /// Gets the min value for Vector3. Equivalent to Vector3.NegativeInfinity.
+        /// </summary>
+        public static Vector3 MinValue => NegativeInfinity;
 
         /// <summary>
         /// Returns a copy of the Vector3 scaled to unit length.

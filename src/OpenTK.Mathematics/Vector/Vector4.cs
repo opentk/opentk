@@ -47,7 +47,10 @@ namespace OpenTK.Mathematics
                             IMultiplyOperators<Vector4, Matrix4, Vector4>,
                             IDivisionOperators<Vector4, float, Vector4>,
                             IDivisionOperators<Vector4, Vector4, Vector4>,
-                            IEqualityOperators<Vector4, Vector4, bool>
+                            IEqualityOperators<Vector4, Vector4, bool>,
+                            IAdditiveIdentity<Vector4, Vector4>,
+                            IMultiplicativeIdentity<Vector4, Vector4>,
+                            IMinMaxValue<Vector4>
     {
         /// <summary>
         /// The X component of the Vector4.
@@ -257,6 +260,26 @@ namespace OpenTK.Mathematics
         /// <see cref="Length"/>
         /// <seealso cref="LengthFast"/>
         public readonly float LengthSquared => (X * X) + (Y * Y) + (Z * Z) + (W * W);
+
+        /// <summary>
+        /// Gets the additive identity of Vector4. Equivalent to Vector4.Zero.
+        /// </summary>
+        public static Vector4 AdditiveIdentity => Zero;
+
+        /// <summary>
+        /// Gets the multiplicative identity of Vector4. Equivalent to Vector4.One.
+        /// </summary>
+        public static Vector4 MultiplicativeIdentity => One;
+
+        /// <summary>
+        /// Gets the max value for Vector4. Equivalent to Vector4.PositiveInfinity.
+        /// </summary>
+        public static Vector4 MaxValue => PositiveInfinity;
+
+        /// <summary>
+        /// Gets the min value for Vector4. Equivalent to Vector4.NegativeInfinity.
+        /// </summary>
+        public static Vector4 MinValue => NegativeInfinity;
 
         /// <summary>
         /// Returns a copy of the Vector4 scaled to unit length.

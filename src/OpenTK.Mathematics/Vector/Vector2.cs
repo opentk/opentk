@@ -46,7 +46,10 @@ namespace OpenTK.Mathematics
                             IMultiplyOperators<Vector2, Matrix2, Vector2>,
                             IDivisionOperators<Vector2, float, Vector2>,
                             IDivisionOperators<Vector2, Vector2, Vector2>,
-                            IEqualityOperators<Vector2, Vector2, bool>
+                            IEqualityOperators<Vector2, Vector2, bool>,
+                            IAdditiveIdentity<Vector2, Vector2>,
+                            IMultiplicativeIdentity<Vector2, Vector2>,
+                            IMinMaxValue<Vector2>
     {
         /// <summary>
         /// The X component of the Vector2.
@@ -238,6 +241,26 @@ namespace OpenTK.Mathematics
         /// Defines the size of the Vector2 struct in bytes.
         /// </summary>
         public static readonly int SizeInBytes = Unsafe.SizeOf<Vector2>();
+
+        /// <summary>
+        /// Gets the additive identity of Vector2. Equivalent to Vector2.Zero.
+        /// </summary>
+        public static Vector2 AdditiveIdentity => Zero;
+
+        /// <summary>
+        /// Gets the multiplicative identity of Vector2. Equivalent to Vector2.One.
+        /// </summary>
+        public static Vector2 MultiplicativeIdentity => One;
+
+        /// <summary>
+        /// Gets the max value for Vector2. Equivalent to Vector2.PositiveInfinity.
+        /// </summary>
+        public static Vector2 MaxValue => PositiveInfinity;
+
+        /// <summary>
+        /// Gets the min value for Vector2. Equivalent to Vector2.NegativeInfinity.
+        /// </summary>
+        public static Vector2 MinValue => NegativeInfinity;
 
         /// <summary>
         /// Adds two vectors.

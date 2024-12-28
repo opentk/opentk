@@ -33,7 +33,10 @@ namespace OpenTK.Mathematics
                             IMultiplyOperators<Vector4i, Vector4i, Vector4i>,
                             IDivisionOperators<Vector4i, int, Vector4i>,
                             IDivisionOperators<Vector4i, Vector4i, Vector4i>,
-                            IEqualityOperators<Vector4i, Vector4i, bool>
+                            IEqualityOperators<Vector4i, Vector4i, bool>,
+                            IAdditiveIdentity<Vector4i, Vector4i>,
+                            IMultiplicativeIdentity<Vector4i, Vector4i>,
+                            IMinMaxValue<Vector4i>
     {
         /// <summary>
         /// The X component of the Vector4i.
@@ -229,6 +232,28 @@ namespace OpenTK.Mathematics
         /// Defines the size of the <see cref="Vector4i"/> struct in bytes.
         /// </summary>
         public static readonly int SizeInBytes = Unsafe.SizeOf<Vector4i>();
+
+        /// <summary>
+        /// Gets the additive identity of Vector3i. Equivalent to Vector3i.Zero.
+        /// </summary>
+        public static Vector4i AdditiveIdentity => Zero;
+
+        /// <summary>
+        /// Gets the multiplicative identity of Vector3i. Equivalent to Vector3i.One.
+        /// </summary>
+        public static Vector4i MultiplicativeIdentity => One;
+
+        /// <summary>
+        /// Gets the maximum value for Vector3i.
+        /// Sets X, Y, Z, and W components to the largest value for a signed 32-bit integer.
+        /// </summary>
+        public static Vector4i MaxValue => new Vector4i(int.MaxValue, int.MaxValue, int.MaxValue, int.MaxValue);
+
+        /// <summary>
+        /// Gets the minimum value for Vector3i.
+        /// Sets X, Y, Z, and W components to the smallest value for a signed 32-bit integer.
+        /// </summary>
+        public static Vector4i MinValue => new Vector4i(int.MinValue, int.MinValue, int.MinValue, int.MinValue);
 
         /// <summary>
         /// Adds two vectors.

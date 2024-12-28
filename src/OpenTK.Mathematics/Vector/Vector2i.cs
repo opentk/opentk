@@ -32,7 +32,10 @@ namespace OpenTK.Mathematics
                             IMultiplyOperators<Vector2i, Vector2i, Vector2i>,
                             IDivisionOperators<Vector2i, int, Vector2i>,
                             IDivisionOperators<Vector2i, Vector2i, Vector2i>,
-                            IEqualityOperators<Vector2i, Vector2i, bool>
+                            IEqualityOperators<Vector2i, Vector2i, bool>,
+                            IAdditiveIdentity<Vector2i, Vector2i>,
+                            IMultiplicativeIdentity<Vector2i, Vector2i>,
+                            IMinMaxValue<Vector2i>
     {
         /// <summary>
         /// The X component of the Vector2i.
@@ -165,6 +168,28 @@ namespace OpenTK.Mathematics
         /// Defines the size of the <see cref="Vector2i"/> struct in bytes.
         /// </summary>
         public static readonly int SizeInBytes = Unsafe.SizeOf<Vector2i>();
+
+        /// <summary>
+        /// Gets the additive identity of Vector2i. Equivalent to Vector2i.Zero.
+        /// </summary>
+        public static Vector2i AdditiveIdentity => Zero;
+
+        /// <summary>
+        /// Gets the multiplicative identity of Vector2i. Equivalent to Vector2i.One.
+        /// </summary>
+        public static Vector2i MultiplicativeIdentity => One;
+
+        /// <summary>
+        /// Gets the maximum value for Vector2i.
+        /// Sets both X and Y components to the largest value for a signed 32-bit integer.
+        /// </summary>
+        public static Vector2i MaxValue => new Vector2i(int.MaxValue, int.MaxValue);
+
+        /// <summary>
+        /// Gets the minimum value for Vector2i.
+        /// Sets both X and Y components to the smallest value for a signed 32-bit integer.
+        /// </summary>
+        public static Vector2i MinValue => new Vector2i(int.MinValue, int.MinValue);
 
         /// <summary>
         /// Adds two vectors.

@@ -44,7 +44,10 @@ namespace OpenTK.Mathematics
                             IMultiplyOperators<Vector3d, Matrix3d, Vector3d>,
                             IDivisionOperators<Vector3d, double, Vector3d>,
                             IDivisionOperators<Vector3d, Vector3d, Vector3d>,
-                            IEqualityOperators<Vector3d, Vector3d, bool>
+                            IEqualityOperators<Vector3d, Vector3d, bool>,
+                            IAdditiveIdentity<Vector3d, Vector3d>,
+                            IMultiplicativeIdentity<Vector3d, Vector3d>,
+                            IMinMaxValue<Vector3d>
     {
         /// <summary>
         /// The X component of the Vector3.
@@ -263,6 +266,26 @@ namespace OpenTK.Mathematics
         /// Defines the size of the Vector3d struct in bytes.
         /// </summary>
         public static readonly int SizeInBytes = Unsafe.SizeOf<Vector3d>();
+
+        /// <summary>
+        /// Gets the additive identity of Vector3d. Equivalent to Vector3d.Zero.
+        /// </summary>
+        public static Vector3d AdditiveIdentity => Zero;
+
+        /// <summary>
+        /// Gets the multiplicative identity of Vector3d. Equivalent to Vector3d.One.
+        /// </summary>
+        public static Vector3d MultiplicativeIdentity => One;
+
+        /// <summary>
+        /// Gets the max value for Vector3d. Equivalent to Vector3d.PositiveInfinity.
+        /// </summary>
+        public static Vector3d MaxValue => PositiveInfinity;
+
+        /// <summary>
+        /// Gets the min value for Vector3d. Equivalent to Vector3d.NegativeInfinity.
+        /// </summary>
+        public static Vector3d MinValue => NegativeInfinity;
 
         /// <summary>
         /// Adds two vectors.

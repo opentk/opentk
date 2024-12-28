@@ -47,7 +47,10 @@ namespace OpenTK.Mathematics
                             IMultiplyOperators<Vector4d, Matrix4d, Vector4d>,
                             IDivisionOperators<Vector4d, double, Vector4d>,
                             IDivisionOperators<Vector4d, Vector4d, Vector4d>,
-                            IEqualityOperators<Vector4d, Vector4d, bool>
+                            IEqualityOperators<Vector4d, Vector4d, bool>,
+                            IAdditiveIdentity<Vector4d, Vector4d>,
+                            IMultiplicativeIdentity<Vector4d, Vector4d>,
+                            IMinMaxValue<Vector4d>
     {
         /// <summary>
         /// The X component of the Vector4d.
@@ -113,6 +116,26 @@ namespace OpenTK.Mathematics
         /// Defines the size of the Vector4d struct in bytes.
         /// </summary>
         public static readonly int SizeInBytes = Unsafe.SizeOf<Vector4d>();
+
+        /// <summary>
+        /// Gets the additive identity of Vector4. Equivalent to Vector4.Zero.
+        /// </summary>
+        public static Vector4d AdditiveIdentity => Zero;
+
+        /// <summary>
+        /// Gets the multiplicative identity of Vector4. Equivalent to Vector4.One.
+        /// </summary>
+        public static Vector4d MultiplicativeIdentity => One;
+
+        /// <summary>
+        /// Gets the max value for Vector4. Equivalent to Vector4.PositiveInfinity.
+        /// </summary>
+        public static Vector4d MaxValue => PositiveInfinity;
+
+        /// <summary>
+        /// Gets the min value for Vector4. Equivalent to Vector4.NegativeInfinity.
+        /// </summary>
+        public static Vector4d MinValue => NegativeInfinity;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Vector4d"/> struct.
