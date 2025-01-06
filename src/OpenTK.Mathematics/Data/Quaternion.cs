@@ -41,7 +41,9 @@ namespace OpenTK.Mathematics
                                 IMultiplyOperators<Quaternion, Vector2, Vector2>,
                                 IMultiplyOperators<Quaternion, Vector3, Vector3>,
                                 IMultiplyOperators<Quaternion, Vector4, Vector4>,
-                                IEqualityOperators<Quaternion, Quaternion, bool>
+                                IEqualityOperators<Quaternion, Quaternion, bool>,
+                                IAdditiveIdentity<Quaternion, Quaternion>,
+                                IMultiplicativeIdentity<Quaternion, Quaternion>
     {
         /// <summary>
         /// The X, Y and Z components of this instance.
@@ -257,6 +259,16 @@ namespace OpenTK.Mathematics
         public readonly float LengthSquared => (W * W) + Xyz.LengthSquared;
 
         /// <summary>
+        /// Gets the additive identity of the quaternion, which is the zero quaternion.
+        /// </summary>
+        public static Quaternion AdditiveIdentity => Zero;
+
+        /// <summary>
+        /// Gets the multiplicative identity of the quaternion, which is the identity quaternion.
+        /// </summary>
+        public static Quaternion MultiplicativeIdentity => Identity;
+
+        /// <summary>
         /// Returns a copy of the Quaternion scaled to unit length.
         /// </summary>
         /// <returns>The normalized copy.</returns>
@@ -303,6 +315,11 @@ namespace OpenTK.Mathematics
         {
             Xyz = -Xyz;
         }
+
+        /// <summary>
+        /// Defines the zero quaternion.
+        /// </summary>
+        public static readonly Quaternion Zero = new Quaternion(0, 0, 0, 0);
 
         /// <summary>
         /// Defines the identity quaternion.
