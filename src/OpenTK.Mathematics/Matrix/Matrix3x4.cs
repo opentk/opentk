@@ -40,7 +40,8 @@ namespace OpenTK.Mathematics
                                 IMultiplyOperators<Matrix3x4, float, Matrix3x4>,
                                 IAdditionOperators<Matrix3x4, Matrix3x4, Matrix3x4>,
                                 ISubtractionOperators<Matrix3x4, Matrix3x4, Matrix3x4>,
-                                IEqualityOperators<Matrix3x4, Matrix3x4, bool>
+                                IEqualityOperators<Matrix3x4, Matrix3x4, bool>,
+                                IAdditiveIdentity<Matrix3x4, Matrix3x4>
     {
         /// <summary>
         /// Top row of the matrix.
@@ -285,6 +286,11 @@ namespace OpenTK.Mathematics
         /// Gets the trace of the matrix, the sum of the values along the diagonal.
         /// </summary>
         public readonly float Trace => Row0.X + Row1.Y + Row2.Z;
+
+        /// <summary>
+        /// Gets the additive identity of the matrix, which is the zero matrix.
+        /// </summary>
+        public static Matrix3x4 AdditiveIdentity => Zero;
 
         /// <summary>
         /// Gets or sets the value at a specified row and column.

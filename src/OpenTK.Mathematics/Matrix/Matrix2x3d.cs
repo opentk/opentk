@@ -41,7 +41,8 @@ namespace OpenTK.Mathematics
                                 IMultiplyOperators<Matrix2x3d, Matrix3x4, Matrix2x4d>,
                                 IAdditionOperators<Matrix2x3d, Matrix2x3d, Matrix2x3d>,
                                 ISubtractionOperators<Matrix2x3d, Matrix2x3d, Matrix2x3d>,
-                                IEqualityOperators<Matrix2x3d, Matrix2x3d, bool>
+                                IEqualityOperators<Matrix2x3d, Matrix2x3d, bool>,
+                                IAdditiveIdentity<Matrix2x3d, Matrix2x3d>
     {
         /// <summary>
         /// Top row of the matrix.
@@ -199,6 +200,11 @@ namespace OpenTK.Mathematics
         /// Gets the trace of the matrix, the sum of the values along the diagonal.
         /// </summary>
         public readonly double Trace => Row0.X + Row1.Y;
+
+        /// <summary>
+        /// Gets the additive identity of the matrix, which is the zero matrix.
+        /// </summary>
+        public static Matrix2x3d AdditiveIdentity => Zero;
 
         /// <summary>
         /// Gets or sets the value at a specified row and column.

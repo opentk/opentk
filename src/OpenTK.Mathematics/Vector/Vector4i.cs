@@ -234,12 +234,12 @@ namespace OpenTK.Mathematics
         public static readonly int SizeInBytes = Unsafe.SizeOf<Vector4i>();
 
         /// <summary>
-        /// Gets the additive identity of Vector4i. Equivalent to Vector3i.Zero.
+        /// Gets the additive identity of Vector4i. Equivalent to Vector4i.Zero.
         /// </summary>
         public static Vector4i AdditiveIdentity => Zero;
 
         /// <summary>
-        /// Gets the multiplicative identity of Vector4i. Equivalent to Vector3i.One.
+        /// Gets the multiplicative identity of Vector4i. Equivalent to Vector4i.One.
         /// </summary>
         public static Vector4i MultiplicativeIdentity => One;
 
