@@ -1223,7 +1223,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector2d Xy
         {
-            get => Unsafe.As<Vector3d, Vector2d>(ref this);
+            get => new Vector2d(X, Y);
             set
             {
                 X = value.X;

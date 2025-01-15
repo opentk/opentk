@@ -458,7 +458,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector2i Xy
         {
-            get => Unsafe.As<Vector3i, Vector2i>(ref this);
+            get => new Vector2i(X, Y);
             set
             {
                 X = value.X;
