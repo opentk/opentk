@@ -22,7 +22,6 @@ SOFTWARE.
 
 using System;
 using System.Diagnostics.Contracts;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Xml.Serialization;
 
@@ -1357,7 +1356,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector2 Xy
         {
-            get => new Vector2(X, Y);
+            readonly get => new Vector2(X, Y);
             set
             {
                 X = value.X;

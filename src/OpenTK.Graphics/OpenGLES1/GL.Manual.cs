@@ -1,5 +1,3 @@
-using System;
-using System.Runtime.InteropServices;
 using OpenTK.Mathematics;
 
 namespace OpenTK.Graphics.OpenGLES1

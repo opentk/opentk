@@ -1,9 +1,4 @@
-﻿using System;
-using System.Diagnostics.Tracing;
-using System.Reflection;
-using System.Runtime.InteropServices;
-using System.Runtime.CompilerServices;
-using System.Text;
+﻿using System.Runtime.InteropServices;
 
 namespace OpenTK.Platform.Native.X11
 {
@@ -13,7 +8,7 @@ namespace OpenTK.Platform.Native.X11
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         internal static extern bool XScreenSaverQueryExtension(XDisplayPtr dpy, out int event_base_return, out int error_base_return);
-        
+
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         internal static extern int /* Status */ XScreenSaverQueryVersion(XDisplayPtr dpy, out int major_version_return, out int minor_version_return);
 

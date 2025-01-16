@@ -1,9 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using OpenTK.Platform;
 using OpenTK.Core.Utility;
-using OpenTK.Platform.Native.X11.XI2;
 using static OpenTK.Platform.Native.X11.LibX11;
 using static OpenTK.Platform.Native.X11.LibXkb;
 
@@ -236,7 +234,7 @@ namespace OpenTK.Platform.Native.X11
             }
         }
 
-        static readonly Dictionary<string, Scancode> XkbNameToScancode = new ()
+        static readonly Dictionary<string, Scancode> XkbNameToScancode = new()
         {
             { "AE01", Scancode.D1 },
             { "AE02", Scancode.D2 },
@@ -402,7 +400,7 @@ namespace OpenTK.Platform.Native.X11
             for (int scancode = min; scancode <= max; scancode++)
             {
                 string? name = Marshal.PtrToStringUTF8((nint)desc->names->keys[scancode].name, 4);
-                if(XkbNameToScancode.TryGetValue(name, out Scancode value) == false)
+                if (XkbNameToScancode.TryGetValue(name, out Scancode value) == false)
                     value = Scancode.Unknown;
                 Logger?.LogDebug($"Scancode: {scancode}, Name: {name ?? "NULL"}, Otk Scancode: {value}");
 

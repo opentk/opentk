@@ -1706,7 +1706,7 @@ namespace OpenTK.Mathematics
 
             // __m128 X_ = _mm_sub_ps(
             var X_ = Sse.Subtract(
-                              // _mm_mul_ps(detD, A),
+                // _mm_mul_ps(detD, A),
                 Sse.Multiply(detD, A),
                 // Mat2Mul(B, D_C));
                 // _mm_add_ps(

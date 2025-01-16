@@ -1,10 +1,8 @@
-﻿using OpenTK.Platform;
-using OpenTK.Core.Utility;
+﻿using OpenTK.Core.Utility;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -175,7 +173,7 @@ namespace OpenTK.Platform.Native.Windows
             unsafe
             {
                 WglPointers._wglGetExtensionsStringARB_fnptr = (delegate* unmanaged<IntPtr, byte*>)Wgl.GetProcAddress("wglGetExtensionsStringARB");
-                
+
                 WglPointers._wglGetPixelFormatAttribivARB_fnptr = (delegate* unmanaged<IntPtr, int, int, uint, int*, int*, int>)Wgl.GetProcAddress("wglGetPixelFormatAttribivARB");
 
                 WglPointers._wglChoosePixelFormatARB_fnptr = (delegate* unmanaged<IntPtr, int*, float*, uint, int*, uint*, int>)Wgl.GetProcAddress("wglChoosePixelFormatARB");
@@ -293,7 +291,7 @@ namespace OpenTK.Platform.Native.Windows
             byte depthBits;
             switch (settings.DepthBits)
             {
-                case ContextDepthBits.None:    depthBits = 0;  break;
+                case ContextDepthBits.None: depthBits = 0; break;
                 case ContextDepthBits.Depth16: depthBits = 16; break;
                 case ContextDepthBits.Depth24: depthBits = 24; break;
                 case ContextDepthBits.Depth32: depthBits = 32; break;
@@ -303,7 +301,7 @@ namespace OpenTK.Platform.Native.Windows
             byte stencilBits;
             switch (settings.StencilBits)
             {
-                case ContextStencilBits.None:     stencilBits = 0; break;
+                case ContextStencilBits.None: stencilBits = 0; break;
                 case ContextStencilBits.Stencil1: stencilBits = 1; break;
                 case ContextStencilBits.Stencil8: stencilBits = 8; break;
                 default: throw new InvalidEnumArgumentException(nameof(settings.StencilBits), (int)settings.StencilBits, settings.StencilBits.GetType());
@@ -335,7 +333,7 @@ namespace OpenTK.Platform.Native.Windows
                         throw new Win32Exception();
                     }
                 }
-                
+
                 List<PixelFormatAttribute> attribList = new List<PixelFormatAttribute>()
                 {
                     PixelFormatAttribute.SupportOpenglArb,
@@ -806,7 +804,7 @@ namespace OpenTK.Platform.Native.Windows
                             default:
                                 throw new InvalidEnumArgumentException(nameof(settings.ReleaseBehaviour), (int)settings.ReleaseBehaviour, settings.ReleaseBehaviour.GetType());
                         }
-                        
+
                     }
 
                     IntPtr hshare = hshareContext?.HGlrc ?? IntPtr.Zero;
@@ -826,7 +824,7 @@ namespace OpenTK.Platform.Native.Windows
                     {
                         Logger?.LogError("wglCreateContextAttribsARB not available so we can't create shared contexts.");
                     }
-                    
+
                     hGLRC = Wgl.CreateContext(hDC);
                     if (hGLRC == IntPtr.Zero)
                     {

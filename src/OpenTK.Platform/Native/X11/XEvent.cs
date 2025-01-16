@@ -133,7 +133,8 @@ namespace OpenTK.Platform.Native.X11
         public ulong ValueMask;
     }
 
-    internal struct XConfigureEvent {
+    internal struct XConfigureEvent
+    {
         public XEventType type;	        /* ConfigureNotify */
         public ulong serial;	/* # of last request processed by server */
         public int send_event;	/* true if this came from a SendEvent request */
@@ -150,8 +151,8 @@ namespace OpenTK.Platform.Native.X11
     [StructLayout(LayoutKind.Explicit)]
     internal unsafe struct XClientMessageEvent
     {
-        [FieldOffset(0) ] public XEventType Type;     /* ClientMessage */
-        [FieldOffset(8) ] public ulong Serial;        /* # of last request processed by server */
+        [FieldOffset(0)] public XEventType Type;     /* ClientMessage */
+        [FieldOffset(8)] public ulong Serial;        /* # of last request processed by server */
         [FieldOffset(16)] public int SendEvent;      /* true if this came from a SendEvent request */
         [FieldOffset(24)] public XDisplayPtr Display; /* Display the event was read from */
         [FieldOffset(32)] public XWindow Window;
@@ -179,7 +180,8 @@ namespace OpenTK.Platform.Native.X11
         public byte same_screen;    /* same screen flag */
     }
 
-    internal struct XKeyEvent {
+    internal struct XKeyEvent
+    {
         public XEventType type;     /* KeyPress or KeyRelease */
         public ulong serial;        /* # of last request processed by server */
         public int send_event;      /* true if this came from a SendEvent request */
@@ -271,7 +273,7 @@ namespace OpenTK.Platform.Native.X11
         public XWindow @event;
         public XWindow window;
         public XWindow parent;
-	    public int x, y;
+        public int x, y;
         public byte override_redirect;
     }
 

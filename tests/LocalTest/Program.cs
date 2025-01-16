@@ -1,18 +1,9 @@
-﻿using OpenTK.Core.Native;
-using OpenTK.Graphics;
-using OpenTK.Graphics.OpenGL;
-using OpenTK.Graphics.Vulkan;
+﻿using OpenTK.Graphics.OpenGL;
 using OpenTK.Mathematics;
 using OpenTK.Windowing.Common;
-using OpenTK.Windowing.Common.Input;
 using OpenTK.Windowing.Desktop;
 using OpenTK.Windowing.GraphicsLibraryFramework;
 using System;
-using System.ComponentModel.Design;
-using System.Diagnostics;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
-using System.Threading;
 
 namespace LocalTest
 {
@@ -26,7 +17,7 @@ namespace LocalTest
             Vector2 d = Vector2.Slerp(a, b, 1);
 
             var res = Vector3.Elerp((1e-45f, 1, 1), (1, 1, 4), 0.3f);
-            
+
             GameWindowSettings gwSettings = new GameWindowSettings()
             {
                 UpdateFrequency = 250,

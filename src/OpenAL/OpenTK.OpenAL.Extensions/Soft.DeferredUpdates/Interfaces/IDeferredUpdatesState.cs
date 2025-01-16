@@ -7,8 +7,6 @@
 // of the MIT license. See the LICENSE file for details.
 //
 
-using OpenTK.OpenAL.Interfaces;
-
 // ReSharper disable ExplicitCallerInfoArgument
 namespace OpenTK.OpenAL.Extensions.Soft.DeferredUpdates
 {

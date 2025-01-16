@@ -1,14 +1,8 @@
 ﻿using ImGuiNET;
 using OpenTK.Platform;
 using OpenTK.Mathematics;
-using OpenTK.Platform.Native;
 using OpenTK.Platform.Native.macOS;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net.WebSockets;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OpenTK.Backends.Tests
 {
@@ -96,7 +90,7 @@ namespace OpenTK.Backends.Tests
             // FIXME: For now we just recreate the entire list of displays.
             BoundingBox = Box2i.Empty;
             Displays.Clear();
-            
+
             int displays = Toolkit.Display.GetDisplayCount();
             for (int i = 0; i < displays; i++)
             {

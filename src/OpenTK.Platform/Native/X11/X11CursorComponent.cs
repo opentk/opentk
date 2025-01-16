@@ -1,16 +1,9 @@
-﻿using OpenTK.Platform;
-using OpenTK.Core.Utility;
+﻿using OpenTK.Core.Utility;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using static OpenTK.Platform.Native.X11.LibX11;
 using static OpenTK.Platform.Native.X11.XFixes;
 using static OpenTK.Platform.Native.X11.LibXcursor;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 namespace OpenTK.Platform.Native.X11
@@ -277,9 +270,9 @@ namespace OpenTK.Platform.Native.X11
 
             if (xcursor.Mode == XCursorHandle.CursorMode.SystemCursor)
             {
-                throw new InvalidOperationException("X11 backend cannot get the size of a system cursor.");    
+                throw new InvalidOperationException("X11 backend cannot get the size of a system cursor.");
             }
-            
+
             width = xcursor.Width;
             height = xcursor.Height;
         }

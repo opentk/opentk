@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
-using OpenTK.Platform;
 using OpenTK.Core.Utility;
 using static OpenTK.Platform.Native.macOS.ObjC;
 
@@ -383,7 +382,7 @@ namespace OpenTK.Platform.Native.macOS
                     throw new PalException(this, $"Failed to create pixel format matching settings.");
                 }
             }
-            
+
             IntPtr share = nsShareContext?.Context ?? IntPtr.Zero;
 
             IntPtr context = objc_msgSend_IntPtr(

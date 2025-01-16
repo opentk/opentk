@@ -1,12 +1,8 @@
 using System;
 using System.IO;
 using System.Diagnostics;
-using System.Collections.Generic;
-using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using OpenTK.Platform;
-using OpenTK.Platform.Native;
 using OpenTK.Core.Utility;
 
 namespace OpenTK.Backends.Tests
@@ -42,7 +38,7 @@ namespace OpenTK.Backends.Tests
                 LoadSingleton();
 
                 return _singleton!;
-            } 
+            }
         }
 
         /// <summary>

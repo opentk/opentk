@@ -4,11 +4,8 @@ using OpenTK.Mathematics;
 using OpenTK.Platform;
 using StbImageSharp;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace BejeweledStandalone

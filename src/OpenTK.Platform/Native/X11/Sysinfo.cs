@@ -5,7 +5,8 @@ namespace OpenTK.Platform.Native.X11
     internal static class Sysinfo
     {
         // Only valid since Linux 2.3.48
-        internal unsafe struct sysinfo_struct {
+        internal unsafe struct sysinfo_struct
+        {
             public long uptime;             /* Seconds since boot */
             public nuint loads0;  /* 1, 5, and 15 minute load averages */
             public nuint loads1;  /* 1, 5, and 15 minute load averages */

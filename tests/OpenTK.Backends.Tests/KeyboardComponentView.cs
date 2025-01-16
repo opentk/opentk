@@ -1,12 +1,7 @@
 ﻿using ImGuiNET;
 using OpenTK.Platform;
-using OpenTK.Graphics.OpenGL;
-using OpenTK.Platform.Native;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace OpenTK.Backends.Tests
 {
@@ -27,7 +22,7 @@ namespace OpenTK.Backends.Tests
             base.Initialize();
 
             try
-            { 
+            {
                 Layouts = Toolkit.Keyboard.GetAvailableKeyboardLayouts();
             }
             catch
@@ -56,7 +51,7 @@ namespace OpenTK.Backends.Tests
                 ImGui.EndDisabled();
                 ImGui.EndListBox();
             }
-            
+
             ImGui.SeparatorText("Keyboard state");
 
             Toolkit.Keyboard.GetKeyboardState(KeyboardState);

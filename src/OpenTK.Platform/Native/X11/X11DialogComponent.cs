@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Text;
 using System.Threading;
-using OpenTK.Platform;
 using OpenTK.Core.Utility;
-using OpenTK.Graphics.Wgl;
 using OpenTK.Mathematics;
 using static OpenTK.Platform.Native.X11.LibX11;
 
@@ -106,7 +103,7 @@ namespace OpenTK.Platform.Native.X11
             while (toCheck.TryDequeue(out XWindow check))
             {
                 int status = XGetWindowProperty(
-                    X11.Display, 
+                    X11.Display,
                     check,
                     X11.Atoms[KnownAtoms._NET_WM_PID],
                     0, 1,
@@ -309,7 +306,7 @@ namespace OpenTK.Platform.Native.X11
                     else if (@event.Type == XEventType.EnterNotify ||
                              @event.Type == XEventType.LeaveNotify)
                     {
-                        
+
                     }
                     else
                     {
@@ -329,7 +326,7 @@ namespace OpenTK.Platform.Native.X11
                 }
                 else if (@event.Type == XEventType.ButtonPress ||
                          @event.Type == XEventType.ButtonRelease ||
-                         @event.Type == XEventType.KeyPress || 
+                         @event.Type == XEventType.KeyPress ||
                          @event.Type == XEventType.KeyRelease ||
                          @event.Type == XEventType.MotionNotify ||
                          @event.Type == XEventType.EnterNotify ||
@@ -429,7 +426,7 @@ namespace OpenTK.Platform.Native.X11
             {
                 Logger?.LogWarning($"Zenity exited with exit code {exitCode}. stderr: {process.StandardError.ReadToEnd()}");
             }
-            
+
             Logger?.LogInfo($"Zenity exited with exit code {exitCode}.");
 
             MessageBoxButton button;
@@ -509,7 +506,7 @@ namespace OpenTK.Platform.Native.X11
 
             if (options.HasFlag(OpenDialogOptions.SelectDirectory))
                 arguments.Append("--directory ");
-            
+
             // FIXME: Extensions...
             if (allowedExtensions != null && allowedExtensions.Length > 0)
             {
@@ -543,7 +540,7 @@ namespace OpenTK.Platform.Native.X11
             {
                 Logger?.LogWarning($"Zenity exited with exit code {exitCode}. stderr: {process.StandardError.ReadToEnd()}");
             }
-            
+
             Logger?.LogInfo($"Zenity exited with exit code {exitCode}.");
 
             List<string>? outputList;
@@ -556,7 +553,7 @@ namespace OpenTK.Platform.Native.X11
                 }
                 else
                 {
-                    outputList = new List<string>{ output };
+                    outputList = new List<string> { output };
                 }
             }
             else
@@ -564,7 +561,7 @@ namespace OpenTK.Platform.Native.X11
                 // The user pressed cancel.
                 outputList = null;
             }
-            
+
             process.Dispose();
             return outputList;
         }
@@ -588,7 +585,7 @@ namespace OpenTK.Platform.Native.X11
 
             arguments.Append($"--filename=\"{directory}\" ");
             arguments.Append($"--save ");
-            
+
             // FIXME: Extensions...
             if (allowedExtensions != null && allowedExtensions.Length > 0)
             {
@@ -622,7 +619,7 @@ namespace OpenTK.Platform.Native.X11
             {
                 Logger?.LogWarning($"Zenity exited with exit code {exitCode}. stderr: {process.StandardError.ReadToEnd()}");
             }
-            
+
             Logger?.LogInfo($"Zenity exited with exit code {exitCode}.");
 
             string? output;

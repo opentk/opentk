@@ -1,5 +1,4 @@
 using System;
-using OpenTK.Platform;
 using OpenTK.Core.Utility;
 
 namespace OpenTK.Platform.Native.X11
@@ -61,7 +60,7 @@ namespace OpenTK.Platform.Native.X11
             IconImage[] images = [image];
 
             XIconHandle xicon = new XIconHandle(width, height, images);
-            
+
             return xicon;
         }
 

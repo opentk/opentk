@@ -1,6 +1,5 @@
 using System;
 using System.Runtime.InteropServices;
-using static OpenTK.Platform.Native.X11.LibX11;
 
 namespace OpenTK.Platform.Native.X11.XRandR
 {

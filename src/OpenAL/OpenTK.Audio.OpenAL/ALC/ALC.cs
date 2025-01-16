@@ -9,13 +9,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using System.Security;
 using OpenTK.Audio.OpenAL.Native;
-using OpenTK.Core;
-using OpenTK.Core.Native;
 
 #pragma warning disable SA1515 // Single-line comment should be preceded by blank line
 

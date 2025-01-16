@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Linq;
 using System.Runtime.InteropServices;
-using OpenTK.Platform;
 using OpenTK.Core.Utility;
 using System.Runtime.CompilerServices;
 using static OpenTK.Platform.Native.macOS.ObjC;
@@ -54,7 +52,7 @@ namespace OpenTK.Platform.Native.macOS
         internal static readonly SEL selSetAllowedContentTypes = sel_registerName("setAllowedContentTypes:"u8);
         internal static readonly SEL selAllowsOtherFileTypes = sel_registerName("allowsOtherFileTypes"u8);
         internal static readonly SEL selSetAllowsOtherFileTypes = sel_registerName("setAllowsOtherFileTypes:"u8);
-        
+
         internal static readonly SEL selSuperclass = sel_registerName("superclass"u8);
         internal static readonly SEL selRun = sel_registerName("run"u8);
         internal static readonly SEL selStopModal = sel_registerName("stopModal"u8);
@@ -129,7 +127,7 @@ namespace OpenTK.Platform.Native.macOS
             objc_msgSendSuper(super, selInit);
 
             objc_msgSend(
-                alert, 
+                alert,
                 selBeginSheetModalForWindow_ModalDelegate_DidEndSelector_ContextInfo,
                 window,
                 syncObj,
@@ -150,7 +148,7 @@ namespace OpenTK.Platform.Native.macOS
             objc_msgSendSuper(super, selInit);
 
             objc_msgSend(
-                panel, 
+                panel,
                 selBeginSheetForDirectory_File_Types_ModalForWindow_ModalDelegate_DidEndSelector_ContextInfo,
                 directory,
                 file,
@@ -174,7 +172,7 @@ namespace OpenTK.Platform.Native.macOS
             objc_msgSendSuper(super, selInit);
 
             objc_msgSend(
-                panel, 
+                panel,
                 selBeginSheetForDirectory_File_ModalForWindow_ModalDelegate_DidEndSelector_ContextInfo,
                 directory,
                 file,
@@ -545,7 +543,7 @@ namespace OpenTK.Platform.Native.macOS
                 objc_msgSend(openPanel, selSetCanChooseDirectories, true);
                 objc_msgSend(openPanel, selSetCanChooseFiles, false);
             }
-            
+
             NSModalResponse response = (NSModalResponse)objc_msgSend_IntPtr(openPanel, selRunModal);
             if (response != NSModalResponse.OK)
             {

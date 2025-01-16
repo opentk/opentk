@@ -1,12 +1,7 @@
-﻿using OpenTK.Platform;
-using OpenTK.Core.Utility;
+﻿using OpenTK.Core.Utility;
 using OpenTK.Graphics;
 using OpenTK.Graphics.Vulkan;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OpenTK.Platform.Native.Windows
 {
@@ -57,7 +52,7 @@ namespace OpenTK.Platform.Native.Windows
         {
             HWND hwnd = window.As<HWND>(this);
 
-            delegate* unmanaged<VkInstance, VkWin32SurfaceCreateInfoKHR*, VkAllocationCallbacks*, VkSurfaceKHR*, VkResult>  _vkCreateWin32SurfaceKHR_fnptr =
+            delegate* unmanaged<VkInstance, VkWin32SurfaceCreateInfoKHR*, VkAllocationCallbacks*, VkSurfaceKHR*, VkResult> _vkCreateWin32SurfaceKHR_fnptr =
                 (delegate* unmanaged<VkInstance, VkWin32SurfaceCreateInfoKHR*, VkAllocationCallbacks*, VkSurfaceKHR*, VkResult>)VKLoader.GetInstanceProcAddress(instance, "vkCreateWin32SurfaceKHR");
             if (_vkCreateWin32SurfaceKHR_fnptr == null)
             {

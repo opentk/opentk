@@ -8,9 +8,6 @@
 //
 
 using System;
-using OpenTK.Core.Extensions;
-using OpenTK.Core.Loader;
-using OpenTK.OpenAL.Attributes;
 
 namespace OpenTK.OpenAL.Extensions.EXT.Capture
 {

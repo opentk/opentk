@@ -1,15 +1,7 @@
-﻿using OpenTK.Platform;
-using OpenTK.Core.Utility;
+﻿using OpenTK.Core.Utility;
 using OpenTK.Mathematics;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using static OpenTK.Platform.Native.SDL.SDL;
-using static System.Formats.Asn1.AsnWriter;
 
 namespace OpenTK.Platform.Native.SDL
 {

@@ -1,15 +1,10 @@
 ﻿using ImGuiNET;
 using OpenTK.Platform;
 using OpenTK.Mathematics;
-using OpenTK.Platform.Native;
 using OpenTK.Platform.Native.macOS;
 using StbImageSharp;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OpenTK.Backends.Tests
 {
@@ -208,7 +203,7 @@ namespace OpenTK.Backends.Tests
                 {
                     Toolkit.Icon.GetSize(CustomIcons[hoverIndex].Icon, out int width, out int height);
                     size = (width, height);
-                    
+
                 }
                 ImGui.TextUnformatted($"Size: {size}");
 

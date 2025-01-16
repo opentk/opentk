@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Xml.Linq;
@@ -316,7 +315,7 @@ namespace Generator.Parsing
 
             BaseCSType returnType = ParsePType(proto, currentFile, nameMangler, out GroupRef? returnGroup);
             if (returnGroup != null) referencedEnumGroups.Add(returnGroup);
-            
+
             string functionName = nameMangler.MangleFunctionName(entryPoint);
 
             return new NativeFunction(entryPoint, functionName, paramList, returnType, referencedEnumGroups.ToArray());
@@ -854,7 +853,7 @@ namespace Generator.Parsing
                             _ => throw new Exception(),
                         };
                     }
-                    else 
+                    else
                     {
                         enumApi = api switch
                         {
@@ -914,7 +913,7 @@ namespace Generator.Parsing
                 if (val.StartsWith("EGL_CAST("))
                 {
                     // FIXME: We could try to verify the type we are casting to here...
-                    return (ulong)(long)new Int64Converter().ConvertFromString(val[(val.IndexOf(',')+1)..val.IndexOf(')')])!;
+                    return (ulong)(long)new Int64Converter().ConvertFromString(val[(val.IndexOf(',') + 1)..val.IndexOf(')')])!;
                 }
 
                 return type switch

@@ -3,8 +3,6 @@ using System.Diagnostics;
 using OpenTK.Platform;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Mathematics;
-using OpenTK.Platform.Native;
-using OpenTK.Platform.Native.macOS;
 
 namespace OpenTK.Backends.Tests
 {
@@ -123,11 +121,11 @@ void main() {
             GL.BufferData(BufferTarget.ArrayBuffer, env_data.Length * sizeof(Vertex), env_data, BufferUsage.StaticDraw);
 
             GL.EnableVertexAttribArray(0);
-            GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, sizeof(Vertex), 0*sizeof(Vector3));
+            GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, sizeof(Vertex), 0 * sizeof(Vector3));
             GL.EnableVertexAttribArray(1);
-            GL.VertexAttribPointer(1, 3, VertexAttribPointerType.Float, false, sizeof(Vertex), 1*sizeof(Vector3));
+            GL.VertexAttribPointer(1, 3, VertexAttribPointerType.Float, false, sizeof(Vertex), 1 * sizeof(Vector3));
             GL.EnableVertexAttribArray(2);
-            GL.VertexAttribPointer(2, 3, VertexAttribPointerType.Float, false, sizeof(Vertex), 2*sizeof(Vector3));
+            GL.VertexAttribPointer(2, 3, VertexAttribPointerType.Float, false, sizeof(Vertex), 2 * sizeof(Vector3));
 
             env_ebo = GL.GenBuffer();
             GL.BindBuffer(BufferTarget.ElementArrayBuffer, env_ebo);
@@ -195,7 +193,7 @@ void main() {
 
             Toolkit.Window.GetFramebufferSize(window, out Vector2i fbSize);
             float aspect = fbSize.X / (float)fbSize.Y;
-            
+
             Matrix4 model = Matrix4.Identity;
             Matrix4 camera = Matrix4.CreateFromQuaternion(cameraRotation) * Matrix4.CreateTranslation(cameraPosition);
             Matrix4 view = camera.Inverted();

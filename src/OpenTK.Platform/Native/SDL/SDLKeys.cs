@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace OpenTK.Platform.Native.SDL
+﻿namespace OpenTK.Platform.Native.SDL
 {
     internal enum SDL_Scancode : int
     {

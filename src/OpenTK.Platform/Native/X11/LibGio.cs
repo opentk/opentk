@@ -24,8 +24,8 @@ namespace OpenTK.Platform.Native
         internal static extern void g_main_loop_unref(IntPtr /* GMainLoop* */ loop);
 
         [DllImport(Gio, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern int /* gboolean */ g_main_context_iteration(IntPtr /* GMainContext* */ context, int /* gboolean */ may_block); 
- 
+        internal static extern int /* gboolean */ g_main_context_iteration(IntPtr /* GMainContext* */ context, int /* gboolean */ may_block);
+
         [DllImport(Gio, CallingConvention = CallingConvention.Cdecl)]
         internal static unsafe extern IntPtr /* GDBusProxy* */ g_dbus_proxy_new_for_bus_sync(
                                 GBusType bus_type,
@@ -45,7 +45,7 @@ namespace OpenTK.Platform.Native
                                 GDBusCallFlags flags,
                                 int /* gint */ timeout_msec,
                                 IntPtr /* GCancellable* */ cancellable,
-                                GError **error);
+                                GError** error);
 
         [DllImport(Gio, CallingConvention = CallingConvention.Cdecl)]
         internal static unsafe extern IntPtr /* GVariant* */ g_variant_new(byte* /* const gchar* */ format_string, /* ... */ byte* str1, byte* str2);
@@ -81,7 +81,7 @@ namespace OpenTK.Platform.Native
         internal static extern nuint g_variant_type_get_string_length(IntPtr /* const GVariantType* */ type);
 
         [DllImport(Gio, CallingConvention = CallingConvention.Cdecl)]
-        internal static unsafe extern void g_clear_error(GError **err);
+        internal static unsafe extern void g_clear_error(GError** err);
 
         [DllImport(Gio, CallingConvention = CallingConvention.Cdecl)]
         internal static extern uint /* GQuark */ g_dbus_error_quark();

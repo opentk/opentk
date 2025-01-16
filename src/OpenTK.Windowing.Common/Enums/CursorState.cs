@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace OpenTK.Windowing.Common
+﻿namespace OpenTK.Windowing.Common
 {
     /// <summary>
     /// Cursor states.

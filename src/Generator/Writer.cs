@@ -7,7 +7,6 @@ using System.Reflection;
 using System.Text;
 using System.CodeDom.Compiler;
 using Generator.Parsing;
-using Generator.Utility;
 
 namespace Generator.Writing
 {
@@ -162,7 +161,7 @@ namespace Generator.Writing
                 string type = swapTypesForUnderlyingType ? SwapUnderlyingTypeForPrimitive(param.Type) : param.Type.ToCSString();
 
                 string primitiveType = SwapUnderlyingTypeForPrimitive(param.Type);
-                
+
                 if (type != primitiveType)
                 {
                     paramNames.Append($"({primitiveType})");
@@ -177,7 +176,7 @@ namespace Generator.Writing
                 {
                     paramNames.Append(param.Name);
                 }
-                
+
                 delegateTypes.Append(type);
                 signature.Append($"{type} {param.Name}");
 

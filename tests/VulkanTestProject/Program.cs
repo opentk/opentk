@@ -76,7 +76,7 @@ namespace VulkanTestProject
                 }
                 NativeMemory.Free(extensionPropertiesPtr);
             }
-            
+
             VkApplicationInfo applicationInfo;
             applicationInfo.sType = VkStructureType.StructureTypeApplicationInfo;
             applicationInfo.pNext = null;
@@ -299,7 +299,7 @@ namespace VulkanTestProject
             }
 
             VkDeviceQueueCreateInfo* queueCreateInfos = stackalloc VkDeviceQueueCreateInfo[2];
-            
+
             float priority = 1.0f;
             queueCreateInfos[0].sType = VkStructureType.StructureTypeDeviceQueueCreateInfo;
             queueCreateInfos[0].pNext = null;
@@ -751,7 +751,7 @@ namespace VulkanTestProject
 
             uint imageIndex;
             result = Vk.AcquireNextImageKHR(Device, Swapchain, ulong.MaxValue, ImageAvailableSemaphore, VkFence.Zero, &imageIndex);
-            if (result == VkResult.ErrorOutOfDateKhr )
+            if (result == VkResult.ErrorOutOfDateKhr)
             {
                 RecreateSwapchain();
                 return;

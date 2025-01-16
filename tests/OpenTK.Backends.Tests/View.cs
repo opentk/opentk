@@ -1,5 +1,3 @@
-using System;
-
 namespace OpenTK.Backends.Tests
 {
     /// <summary>

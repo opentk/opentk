@@ -10,8 +10,6 @@
 using System;
 using System.Buffers;
 using System.ComponentModel;
-using OpenTK.Core.Extensions;
-using OpenTK.Core.Loader;
 
 // ReSharper disable VirtualMemberCallInConstructor
 namespace OpenTK.OpenAL.Extensions.Creative.XRam
@@ -121,19 +119,19 @@ namespace OpenTK.OpenAL.Extensions.Creative.XRam
             switch (param)
             {
                 case XRamGetInteger.RamSize:
-                {
-                    return _ramSize;
-                }
+                    {
+                        return _ramSize;
+                    }
 
                 case XRamGetInteger.FreeRam:
-                {
-                    return _ramFree;
-                }
+                    {
+                        return _ramFree;
+                    }
 
                 default:
-                {
-                    throw new InvalidEnumArgumentException(nameof(param), (int)param, typeof(XRamGetInteger));
-                }
+                    {
+                        throw new InvalidEnumArgumentException(nameof(param), (int)param, typeof(XRamGetInteger));
+                    }
             }
         }
 
@@ -148,24 +146,24 @@ namespace OpenTK.OpenAL.Extensions.Creative.XRam
             switch (mode)
             {
                 case BufferStorageMode.Automatic:
-                {
-                    return _bufferStorageModeAutomatic;
-                }
+                    {
+                        return _bufferStorageModeAutomatic;
+                    }
 
                 case BufferStorageMode.Hardware:
-                {
-                    return _bufferStorageModeHardware;
-                }
+                    {
+                        return _bufferStorageModeHardware;
+                    }
 
                 case BufferStorageMode.Accessible:
-                {
-                    return _bufferStorageModeAccessible;
-                }
+                    {
+                        return _bufferStorageModeAccessible;
+                    }
 
                 default:
-                {
-                    throw new InvalidEnumArgumentException(nameof(mode), (int)mode, typeof(BufferStorageMode));
-                }
+                    {
+                        throw new InvalidEnumArgumentException(nameof(mode), (int)mode, typeof(BufferStorageMode));
+                    }
             }
         }
 

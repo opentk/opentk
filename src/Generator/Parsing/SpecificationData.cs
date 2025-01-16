@@ -2,8 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Dynamic;
-using System.IO.Compression;
 
 namespace Generator.Parsing
 {
@@ -72,8 +70,8 @@ namespace Generator.Parsing
     internal record ExtensionReference(
         string Name,
         string Vendor);
-        //List<string> EntryPoints,
-        //List<string> EnumValues);
+    //List<string> EntryPoints,
+    //List<string> EnumValues);
 
 
     /*internal record Specification(

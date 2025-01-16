@@ -1,5 +1,3 @@
-using System.Runtime.InteropServices;
-
 namespace OpenTK.Platform.Native.X11.XRandR
 {
     internal struct XRRScreenChangeNotifyEvent

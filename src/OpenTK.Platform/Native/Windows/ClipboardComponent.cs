@@ -1,13 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Drawing;
-using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
-using System.Threading.Tasks;
-using OpenTK.Platform;
 using OpenTK.Core.Utility;
 
 namespace OpenTK.Platform.Native.Windows
@@ -74,7 +69,7 @@ namespace OpenTK.Platform.Native.Windows
                         }
                     }
                 }
-                
+
                 IntPtr data = Win32.SetClipboardData(CF_CanIncludeInClipboardHistory, hmem);
                 if (data == IntPtr.Zero)
                 {

@@ -7,7 +7,7 @@ namespace OpenTK.Backends.Tests.Bejeweled
     internal class Bejeweled : ITestApp
     {
         public string Name => "Bejeweled";
-        
+
         private global::Bejeweled.Bejeweled BejeweledGame = new global::Bejeweled.Bejeweled();
 
         public void Initialize(WindowHandle window, OpenGLContextHandle context, bool useGLES)

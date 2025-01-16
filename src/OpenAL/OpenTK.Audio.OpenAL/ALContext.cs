@@ -23,17 +23,17 @@ namespace OpenTK.Audio.OpenAL
             Handle = handle;
         }
 
-        public override bool Equals(object obj)
+        public override readonly bool Equals(object obj)
         {
             return obj is ALContext handle && Equals(handle);
         }
 
-        public bool Equals([AllowNull] ALContext other)
+        public readonly bool Equals([AllowNull] ALContext other)
         {
             return Handle.Equals(other.Handle);
         }
 
-        public override int GetHashCode()
+        public override readonly int GetHashCode()
         {
             return HashCode.Combine(Handle);
         }

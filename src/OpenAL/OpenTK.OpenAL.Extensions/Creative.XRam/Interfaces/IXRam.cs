@@ -8,7 +8,6 @@
 //
 
 using System;
-using OpenTK.OpenAL.Interfaces;
 
 namespace OpenTK.OpenAL.Extensions.Creative.XRam
 {

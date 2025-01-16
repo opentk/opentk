@@ -1,12 +1,6 @@
-﻿using OpenTK.Platform;
-using OpenTK.Core.Utility;
-using OpenTK.Platform.Native.Windows;
+﻿using OpenTK.Core.Utility;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using static OpenTK.Platform.Native.SDL.SDL;
 
 namespace OpenTK.Platform.Native.SDL

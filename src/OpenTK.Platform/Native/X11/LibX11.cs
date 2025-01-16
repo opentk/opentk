@@ -1,6 +1,4 @@
 using System;
-using System.Diagnostics.Tracing;
-using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -34,7 +32,7 @@ namespace OpenTK.Platform.Native.X11
         internal static extern void XGetErrorText(XDisplayPtr display, int code, [Out, MarshalAs(UnmanagedType.LPUTF8Str)] StringBuilder buffer_return, int length);
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern XDisplayPtr XOpenDisplay([MarshalAs(UnmanagedType.LPStr)]string? name);
+        internal static extern XDisplayPtr XOpenDisplay([MarshalAs(UnmanagedType.LPStr)] string? name);
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         internal static extern int XDefaultScreen(XDisplayPtr display);
@@ -88,7 +86,7 @@ namespace OpenTK.Platform.Native.X11
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         internal static extern void XResizeWindow(XDisplayPtr display, XWindow w, int width, int height);
-        
+
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         internal static extern void XMoveResizeWindow(XDisplayPtr display, XWindow w, int x, int y, uint width, uint height);
 
@@ -117,7 +115,7 @@ namespace OpenTK.Platform.Native.X11
         internal static unsafe extern XSizeHints* XAllocSizeHints();
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
-        internal static unsafe extern XClassHint *XAllocClassHint();
+        internal static unsafe extern XClassHint* XAllocClassHint();
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         internal static unsafe extern void XSetClassHint(XDisplayPtr display, XWindow w, XClassHint* class_hints);
@@ -135,8 +133,8 @@ namespace OpenTK.Platform.Native.X11
         internal static extern void XSetStandardProperties(
             XDisplayPtr display,
             XWindow window,
-            [MarshalAs(UnmanagedType.LPStr)]string windowName,
-            [MarshalAs(UnmanagedType.LPStr)]string iconName,
+            [MarshalAs(UnmanagedType.LPStr)] string windowName,
+            [MarshalAs(UnmanagedType.LPStr)] string iconName,
             XPixmap iconPixmap,
             [MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.LPStr)] string[]? argv,
             int argc,
@@ -184,7 +182,7 @@ namespace OpenTK.Platform.Native.X11
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         internal static extern int XFree(IntPtr pointer);
-        
+
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         internal static unsafe extern int XFree(void* pointer);
 
@@ -241,13 +239,13 @@ namespace OpenTK.Platform.Native.X11
         internal static extern int XFetchName(XDisplayPtr display, XWindow window, out IntPtr name);
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern int XStoreName(XDisplayPtr display, XWindow window, [MarshalAs(UnmanagedType.LPStr)]string name);
+        internal static extern int XStoreName(XDisplayPtr display, XWindow window, [MarshalAs(UnmanagedType.LPStr)] string name);
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         internal static unsafe extern XStatus XGetIconName(XDisplayPtr display, XWindow w, out IntPtr icon_name_return);
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
-        internal static unsafe extern void XSetIconName(XDisplayPtr display, XWindow w, [MarshalAs(UnmanagedType.LPStr)]string name);
+        internal static unsafe extern void XSetIconName(XDisplayPtr display, XWindow w, [MarshalAs(UnmanagedType.LPStr)] string name);
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         internal static extern XAtom XInternAtom(XDisplayPtr display, string atomName, bool onlyIfExists);
@@ -260,8 +258,9 @@ namespace OpenTK.Platform.Native.X11
             bool onlyIfExists,
             ref XAtom atoms);
 
-        
-        internal static unsafe string XGetAtomName(XDisplayPtr display, XAtom atom) {
+
+        internal static unsafe string XGetAtomName(XDisplayPtr display, XAtom atom)
+        {
 
             byte* namePtr = XGetAtomName(display, atom);
             string name = Marshal.PtrToStringUTF8((IntPtr)namePtr) ?? "";
@@ -302,7 +301,7 @@ namespace OpenTK.Platform.Native.X11
             ReadOnlySpan<T> data,
             int elements) where T : unmanaged
         {
-            fixed(T* dataPtr = data)
+            fixed (T* dataPtr = data)
             {
                 return XChangeProperty(display, window, property, propertyType, format, mode, (IntPtr)dataPtr, elements);
             }
@@ -451,13 +450,13 @@ namespace OpenTK.Platform.Native.X11
             {
                 strings[i] = Marshal.PtrToStringUTF8((IntPtr)ptr[i]) ?? throw new NullReferenceException("XListExtensions() returned null string.");
             }
-            
+
             return strings;
 
             [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
             static unsafe extern byte** XListExtensions(XDisplayPtr display, out int nextensions_return);
         }
-        
+
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         internal static extern void XSync(XDisplayPtr display, int discard);
 

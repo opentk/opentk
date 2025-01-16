@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Runtime.InteropServices;
 
 namespace OpenTK.Platform.Native.Windows
 {
-    
+
     internal static unsafe class XInput
     {
         internal const int ERROR_SUCCESS = 0;
@@ -75,7 +71,7 @@ namespace OpenTK.Platform.Native.Windows
         {
             Empty = 0x00,
             Low = 0x01,
-            Medium= 0x02,
+            Medium = 0x02,
             Full = 0x03,
         }
 
@@ -146,13 +142,13 @@ namespace OpenTK.Platform.Native.Windows
         public static extern uint XInputSetState(uint dwUserIndex, in XINPUT_VIBRATION pVibration);
 
         [DllImport("xinput1_4")]
-        public static extern uint XInputGetCapabilities(uint dwUserIndex,  uint dwFlags, out XINPUT_CAPABILITIES pCapabilities);
+        public static extern uint XInputGetCapabilities(uint dwUserIndex, uint dwFlags, out XINPUT_CAPABILITIES pCapabilities);
 
         [DllImport("xinput1_4")]
         public static extern void XInputEnable(int enable);
 
         [DllImport("xinput1_4")]
-        public static extern uint XInputGetAudioDeviceIds( uint dwUserIndex, ushort* pRenderDeviceId, uint* pRenderCount, ushort* pCaptureDeviceId, uint* pCaptureCount);
+        public static extern uint XInputGetAudioDeviceIds(uint dwUserIndex, ushort* pRenderDeviceId, uint* pRenderCount, ushort* pCaptureDeviceId, uint* pCaptureCount);
 
         [DllImport("xinput1_4")]
         public static extern uint XInputGetBatteryInformation(uint dwUserIndex, DeviceType devType, out XINPUT_BATTERY_INFORMATION pBatteryInformation);

@@ -36,7 +36,7 @@ namespace Generator.Utility.Extensions
         {
             return element.Descendants().Where(e => e.Name.LocalName == name);
         }
-        
+
         internal static XElement ElementIgnoreNamespace(this XElement element, string name)
         {
             return element.Descendants().Where(e => e.Name.LocalName == name).First();

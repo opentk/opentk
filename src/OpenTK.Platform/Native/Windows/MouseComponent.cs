@@ -1,15 +1,7 @@
-﻿using OpenTK.Platform;
-using OpenTK.Core.Utility;
+﻿using OpenTK.Core.Utility;
 using OpenTK.Mathematics;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Resources;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
-using OpenTK.Platform.Native.X11;
 
 namespace OpenTK.Platform.Native.Windows
 {

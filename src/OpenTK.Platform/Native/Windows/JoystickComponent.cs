@@ -1,18 +1,9 @@
 ﻿using OpenTK.Core;
-using OpenTK.Platform;
 using OpenTK.Core.Utility;
-using OpenTK.Mathematics;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Reflection.Metadata;
-using System.Runtime.ExceptionServices;
-using System.Text;
-using System.Threading.Tasks;
 using static OpenTK.Platform.Native.Windows.DirectInput;
-using static OpenTK.Platform.Native.Windows.JoystickComponent;
 using static OpenTK.Platform.Native.Windows.XInput;
 
 namespace OpenTK.Platform.Native.Windows
@@ -249,14 +240,14 @@ namespace OpenTK.Platform.Native.Windows
                     case JoystickButton.X: xButton = XInputGamepadButton.X; break;
                     case JoystickButton.Y: xButton = XInputGamepadButton.Y; break;
                     case JoystickButton.Start: xButton = XInputGamepadButton.Start; break;
-                    case JoystickButton.Back:  xButton = XInputGamepadButton.Back; break; 
-                    case JoystickButton.LeftThumb:     xButton = XInputGamepadButton.LeftThumb; break;
-                    case JoystickButton.RightThumb:    xButton = XInputGamepadButton.RightThumb; break;
-                    case JoystickButton.LeftShoulder:  xButton = XInputGamepadButton.LeftShoulder; break;
+                    case JoystickButton.Back: xButton = XInputGamepadButton.Back; break;
+                    case JoystickButton.LeftThumb: xButton = XInputGamepadButton.LeftThumb; break;
+                    case JoystickButton.RightThumb: xButton = XInputGamepadButton.RightThumb; break;
+                    case JoystickButton.LeftShoulder: xButton = XInputGamepadButton.LeftShoulder; break;
                     case JoystickButton.RightShoulder: xButton = XInputGamepadButton.RightShoulder; break;
-                    case JoystickButton.DPadUp:    xButton = XInputGamepadButton.DPadUp; break;
-                    case JoystickButton.DPadDown:  xButton = XInputGamepadButton.DPadDown; break;
-                    case JoystickButton.DPadLeft:  xButton = XInputGamepadButton.DPadLeft; break;
+                    case JoystickButton.DPadUp: xButton = XInputGamepadButton.DPadUp; break;
+                    case JoystickButton.DPadDown: xButton = XInputGamepadButton.DPadDown; break;
+                    case JoystickButton.DPadLeft: xButton = XInputGamepadButton.DPadLeft; break;
                     case JoystickButton.DPadRight: xButton = XInputGamepadButton.DPadRight; break;
                     default: throw new InvalidEnumArgumentException(nameof(button), (int)button, typeof(JoystickButton));
                 }
@@ -313,10 +304,10 @@ namespace OpenTK.Platform.Native.Windows
                 float charge;
                 switch (batteryInformation.BatteryLevel)
                 {
-                    case BatteryLevel.Empty:  charge = 0;      break;
-                    case BatteryLevel.Low:    charge = 1/3.0f; break;
-                    case BatteryLevel.Medium: charge = 2/3.0f; break;
-                    case BatteryLevel.Full:   charge = 1;      break;
+                    case BatteryLevel.Empty: charge = 0; break;
+                    case BatteryLevel.Low: charge = 1 / 3.0f; break;
+                    case BatteryLevel.Medium: charge = 2 / 3.0f; break;
+                    case BatteryLevel.Full: charge = 1; break;
                     default: throw new InvalidEnumArgumentException(nameof(batteryInformation.BatteryLevel), (int)batteryInformation.BatteryLevel, typeof(BatteryLevel));
                 }
 

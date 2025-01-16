@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Runtime.InteropServices;
 using static OpenTK.Platform.Native.macOS.ObjC;
 

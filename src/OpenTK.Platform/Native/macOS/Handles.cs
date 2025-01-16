@@ -1,5 +1,4 @@
 ﻿using System;
-using OpenTK.Platform;
 using OpenTK.Mathematics;
 
 namespace OpenTK.Platform.Native.macOS
@@ -76,7 +75,7 @@ namespace OpenTK.Platform.Native.macOS
 
         public IntPtr Screen { get; set; }
 
-        public string Name { get; set; } 
+        public string Name { get; set; }
 
         public bool IsPrimary { get; set; }
 
@@ -103,7 +102,7 @@ namespace OpenTK.Platform.Native.macOS
         public double Time = 0;
         /// <summary>The current frame.</summary>
         public int Frame = 0;
-        
+
         public NSCursorHandle(CursorMode mode, IntPtr cursor)
         {
             Mode = mode;

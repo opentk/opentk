@@ -311,7 +311,7 @@ namespace Bejeweled
                 return dataSize;
             }
 
-            
+
         }
 
         public static int CalculateSize(int width, int height, int mipmapCount, int bytesPerPixel)

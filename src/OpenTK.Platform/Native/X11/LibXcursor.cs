@@ -12,15 +12,16 @@ namespace OpenTK.Platform.Native.X11
             DllResolver.InitLoader();
         }
 
-        
-        internal struct XcursorImage {
-            public uint  version;     /* version of the image data */
-            public uint  size;        /* nominal size for matching */
-            public uint  width;       /* actual width */
-            public uint  height;      /* actual height */
-            public uint  xhot;        /* hot spot x (must be inside image) */
-            public uint  yhot;        /* hot spot y (must be inside image) */
-            public uint  delay;       /* animation delay to next frame (ms) */
+
+        internal struct XcursorImage
+        {
+            public uint version;     /* version of the image data */
+            public uint size;        /* nominal size for matching */
+            public uint width;       /* actual width */
+            public uint height;      /* actual height */
+            public uint xhot;        /* hot spot x (must be inside image) */
+            public uint yhot;        /* hot spot y (must be inside image) */
+            public uint delay;       /* animation delay to next frame (ms) */
             public uint* pixels;      /* pointer to pixels */
         }
 

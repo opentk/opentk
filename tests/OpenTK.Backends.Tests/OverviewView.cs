@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Numerics;
-using System.Threading;
 using ImGuiNET;
 using OpenTK.Platform;
 using OpenTK.Core.Utility;

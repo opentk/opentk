@@ -10,8 +10,6 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using OpenTK.Core.Extensions;
-using OpenTK.Core.Loader;
 using OpenTK.OpenAL.Extensions.EXT.Capture.Enumeration;
 
 namespace OpenTK.OpenAL.Extensions.Enumeration

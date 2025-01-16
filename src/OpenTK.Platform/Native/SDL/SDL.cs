@@ -1,15 +1,5 @@
-﻿using OpenTK.Platform.Native.Windows;
-using OpenTK.Platform.Native.X11;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Net;
-using System.Reflection.PortableExecutable;
+﻿using System;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
-using static OpenTK.Platform.Native.SDL.SDL;
 
 namespace OpenTK.Platform.Native.SDL
 {
@@ -42,7 +32,7 @@ namespace OpenTK.Platform.Native.SDL
             [DllImport(SDLLib, CallingConvention = CallingConvention.Cdecl)]
             static extern byte* SDL_GetError();
         }
-        
+
 
         internal unsafe struct SDL_WindowPtr : IEquatable<SDL_WindowPtr>
         {
@@ -55,17 +45,17 @@ namespace OpenTK.Platform.Native.SDL
                 Window = (nuint)window;
             }
 
-            public override bool Equals(object? obj)
+            public override readonly bool Equals(object? obj)
             {
                 return obj is SDL_WindowPtr ptr && Equals(ptr);
             }
 
-            public bool Equals(SDL_WindowPtr other)
+            public readonly bool Equals(SDL_WindowPtr other)
             {
                 return Window.Equals(other.Window);
             }
 
-            public override int GetHashCode()
+            public override readonly int GetHashCode()
             {
                 return HashCode.Combine(Window);
             }
@@ -92,17 +82,17 @@ namespace OpenTK.Platform.Native.SDL
                 Ptr = (nuint)ptr;
             }
 
-            public override bool Equals(object? obj)
+            public override readonly bool Equals(object? obj)
             {
                 return obj is SDL_GLContext context && Equals(context);
             }
 
-            public bool Equals(SDL_GLContext other)
+            public readonly bool Equals(SDL_GLContext other)
             {
                 return Ptr.Equals(other.Ptr);
             }
 
-            public override int GetHashCode()
+            public override readonly int GetHashCode()
             {
                 return HashCode.Combine(Ptr);
             }
@@ -401,7 +391,7 @@ namespace OpenTK.Platform.Native.SDL
             public byte Bshift;
             public byte Ashift;
             public int refcount;
-            public SDL_PixelFormat *next;
+            public SDL_PixelFormat* next;
         }
 
         internal unsafe struct SDL_Surface
@@ -503,22 +493,22 @@ namespace OpenTK.Platform.Native.SDL
                 Cursor = cursor;
             }
 
-            public override bool Equals(object? obj)
+            public override readonly bool Equals(object? obj)
             {
                 return obj is SDL_CursorPtr ptr && Equals(ptr);
             }
 
-            public bool Equals(SDL_CursorPtr other)
+            public readonly bool Equals(SDL_CursorPtr other)
             {
                 return Cursor.Equals(other.Cursor);
             }
 
-            public override int GetHashCode()
+            public override readonly int GetHashCode()
             {
                 return HashCode.Combine(Cursor);
             }
 
-            public override string? ToString()
+            public override readonly string? ToString()
             {
                 return Cursor.ToString();
             }
@@ -600,22 +590,22 @@ namespace OpenTK.Platform.Native.SDL
         {
             public int ID;
 
-            public override bool Equals(object? obj)
+            public override readonly bool Equals(object? obj)
             {
                 return obj is SDL_JoystickID iD && Equals(iD);
             }
 
-            public bool Equals(SDL_JoystickID other)
+            public readonly bool Equals(SDL_JoystickID other)
             {
                 return ID == other.ID;
             }
 
-            public override int GetHashCode()
+            public override readonly int GetHashCode()
             {
                 return HashCode.Combine(ID);
             }
 
-            public override string? ToString()
+            public override readonly string? ToString()
             {
                 return base.ToString();
             }
@@ -643,7 +633,7 @@ namespace OpenTK.Platform.Native.SDL
         internal static unsafe extern SDL_JoystickGUID SDL_JoystickGetGUID(SDL_Joystick* joystick);
 
         [DllImport(SDLLib, CallingConvention = CallingConvention.Cdecl)]
-        internal static unsafe extern char* SDL_JoystickName(SDL_Joystick * joystick);
+        internal static unsafe extern char* SDL_JoystickName(SDL_Joystick* joystick);
 
         [DllImport(SDLLib, CallingConvention = CallingConvention.Cdecl)]
         internal static unsafe extern SDL_JoystickPowerLevel SDL_JoystickCurrentPowerLevel(SDL_Joystick* joystick);

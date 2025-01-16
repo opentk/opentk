@@ -8,8 +8,6 @@
 //
 
 using System;
-using OpenTK.Core.Extensions;
-using OpenTK.Core.Loader;
 
 namespace OpenTK.OpenAL.Extensions.Creative.EFX
 {

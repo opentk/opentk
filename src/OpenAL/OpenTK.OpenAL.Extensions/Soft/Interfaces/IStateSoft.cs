@@ -8,7 +8,6 @@
 //
 
 using System;
-using OpenTK.OpenAL.Interfaces;
 
 // ReSharper disable ExplicitCallerInfoArgument
 namespace OpenTK.OpenAL.Extensions.Soft

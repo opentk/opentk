@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OpenTK.Platform.Native.SDL
 {
@@ -64,11 +60,11 @@ namespace OpenTK.Platform.Native.SDL
 
     internal enum SDL_BUTTON : byte
     {
-        SDL_BUTTON_LEFT     = 1,
-        SDL_BUTTON_MIDDLE   = 2,
-        SDL_BUTTON_RIGHT    = 3,
-        SDL_BUTTON_X1       = 4,
-        SDL_BUTTON_X2       = 5,
+        SDL_BUTTON_LEFT = 1,
+        SDL_BUTTON_MIDDLE = 2,
+        SDL_BUTTON_RIGHT = 3,
+        SDL_BUTTON_X1 = 4,
+        SDL_BUTTON_X2 = 5,
     }
 
     internal enum SDL_FlashOperation : int

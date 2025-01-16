@@ -13,7 +13,7 @@ namespace OpenTK.Platform.Native.macOS
         Delete = 32,
         Every = ulong.MaxValue,
     }
-    
+
     internal enum CFStringEncoding : uint
     {
         // Incomplete enum...
@@ -67,7 +67,7 @@ namespace OpenTK.Platform.Native.macOS
         Retained = 0,
         [Obsolete]
         Nonretained = 1,
-        Buffered  = 2,
+        Buffered = 2,
     }
 
     internal enum NSEventType : ulong

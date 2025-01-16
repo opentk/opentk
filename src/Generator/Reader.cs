@@ -4,9 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Text.Json;
-using System.Linq;
 using System.Reflection;
-using System.Net.Http;
 
 namespace Generator
 {
@@ -145,7 +143,7 @@ namespace Generator
                     request.Headers.Add("User-Agent: Other");
                     WebResponse response = request.GetResponse();
                     JsonElement json = JsonDocument.Parse(response.GetResponseStream()).RootElement;
-                    
+
                     List<JsonElement> fileInfos = new List<JsonElement>();
                     foreach (JsonElement fileInfo in json.EnumerateArray())
                     {

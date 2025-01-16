@@ -1,5 +1,4 @@
 using System;
-using OpenTK.Core.Native;
 using OpenTK.Core.Utility;
 using OpenTK.Graphics;
 using OpenTK.Graphics.Vulkan;
@@ -27,7 +26,7 @@ namespace OpenTK.Platform.Native.X11
             // Or we could make it a toolkit setting...
             VKLoader.Init();
 
-            VkPointers._vkEnumerateInstanceExtensionProperties_fnptr = 
+            VkPointers._vkEnumerateInstanceExtensionProperties_fnptr =
                 (delegate* unmanaged<byte*, uint*, VkExtensionProperties*, VkResult>)VKLoader.GetInstanceProcAddress(VkInstance.Zero, "vkEnumerateInstanceExtensionProperties");
             if (VkPointers._vkEnumerateInstanceExtensionProperties_fnptr == null)
             {
@@ -76,8 +75,8 @@ namespace OpenTK.Platform.Native.X11
         internal bool KHR_xcb_surface;
         internal bool KHR_xlib_surface;
 
-        internal static readonly string[] XCBRequiredExtensions = [ "VK_KHR_surface", "VK_KHR_xcb_surface" ];
-        internal static readonly string[] XLibRequiredExtensions = [ "VK_KHR_surface", "VK_KHR_xlib_surface" ];
+        internal static readonly string[] XCBRequiredExtensions = ["VK_KHR_surface", "VK_KHR_xcb_surface"];
+        internal static readonly string[] XLibRequiredExtensions = ["VK_KHR_surface", "VK_KHR_xlib_surface"];
 
         /// <inheritdoc/>
         public ReadOnlySpan<string> GetRequiredInstanceExtensions()

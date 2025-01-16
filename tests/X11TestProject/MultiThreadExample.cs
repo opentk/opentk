@@ -9,7 +9,6 @@ using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Mathematics;
 using OpenTK.Platform.Native;
-using OpenTK.Platform.Native.Windows;
 
 namespace X11TestProject
 {
@@ -51,7 +50,7 @@ namespace X11TestProject
                 }
             };
 
-            while(!A.Done || !B.Done)
+            while (!A.Done || !B.Done)
             {
                 windowComp.ProcessEvents(false);
 
@@ -97,9 +96,9 @@ namespace X11TestProject
         private Color4<Rgba> GetColor()
         {
             Color4<Rgba> retval;
-            retval.X = 0.5f * MathF.Cos( (float)_watch.ElapsedMilliseconds / 1000 + _phase) + 0.5f;
-            retval.Y = 0.5f * MathF.Cos((float)_watch.ElapsedMilliseconds / 1000 + _phase + MathF.PI/3) + 0.5f;
-            retval.Z = 0.5f * MathF.Cos((float)_watch.ElapsedMilliseconds / 1000 + _phase + 2*MathF.PI/3) + 0.5f;
+            retval.X = 0.5f * MathF.Cos((float)_watch.ElapsedMilliseconds / 1000 + _phase) + 0.5f;
+            retval.Y = 0.5f * MathF.Cos((float)_watch.ElapsedMilliseconds / 1000 + _phase + MathF.PI / 3) + 0.5f;
+            retval.Z = 0.5f * MathF.Cos((float)_watch.ElapsedMilliseconds / 1000 + _phase + 2 * MathF.PI / 3) + 0.5f;
             retval.W = 1;
             return retval;
         }

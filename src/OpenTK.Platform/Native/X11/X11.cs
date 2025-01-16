@@ -1,10 +1,6 @@
 using System;
-using OpenTK.Platform;
-using System.Diagnostics;
-using OpenTK.Core.Utility;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using static OpenTK.Platform.Native.X11.LibX11;
 
 namespace OpenTK.Platform.Native.X11
 {
@@ -14,7 +10,7 @@ namespace OpenTK.Platform.Native.X11
     internal static class X11
     {
         // FIXME: Maybe merge this with LibX11?
-        
+
         public static XDisplayPtr Display { get; set; }
 
         public static int DefaultScreen { get; set; }
@@ -30,7 +26,8 @@ namespace OpenTK.Platform.Native.X11
         /// <summary>The latest time reported by the X11 server.</summary>
         public static XTime LastTime => _lastTime;
 
-        public static unsafe void SetLastTime(XWindow window, XTime time) {
+        public static unsafe void SetLastTime(XWindow window, XTime time)
+        {
             // FIXME: Support _NET_WM_USER_TIME_WINDOW..
             _lastTime = time;
             //Debug.WriteLine($"Updating latest time: {time.Value}");
@@ -70,7 +67,8 @@ namespace OpenTK.Platform.Native.X11
         /// </summary>
         public const long _NET_WM_STATE_TOGGLE = 2;
 
-        private struct pollfd {
+        private struct pollfd
+        {
             public int fd;
             public short events;
             public short revents;
@@ -107,8 +105,9 @@ namespace OpenTK.Platform.Native.X11
         internal static unsafe bool WaitForXEvents()
         {
             const short POLLIN = 0x0001;
-            
-            pollfd fd = new pollfd(){
+
+            pollfd fd = new pollfd()
+            {
                 fd = LibX11.XConnectionNumber(X11.Display),
                 events = POLLIN,
             };

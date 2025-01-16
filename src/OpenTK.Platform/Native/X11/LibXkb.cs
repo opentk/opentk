@@ -1,8 +1,6 @@
-using System;
 using System.Runtime.InteropServices;
-using static OpenTK.Platform.Native.X11.LibX11;
 
-namespace OpenTK.Platform.Native.X11 
+namespace OpenTK.Platform.Native.X11
 {
     internal static class LibXkb
     {
@@ -15,20 +13,20 @@ namespace OpenTK.Platform.Native.X11
 
         internal const uint XkbUseCoreKbd = 0x0100;
 
-        internal const uint XkbKeycodesNameMask = (1<<0);
-        internal const uint XkbGeometryNameMask = (1<<1);
-        internal const uint XkbSymbolsNameMask = (1<<2);
-        internal const uint XkbPhysSymbolsNameMask = (1<<3);
-        internal const uint XkbTypesNameMask = (1<<4);
-        internal const uint XkbCompatNameMask = (1<<5);
-        internal const uint XkbKeyTypeNamesMask = (1<<6);
-        internal const uint XkbKTLevelNamesMask = (1<<7);
-        internal const uint XkbIndicatorNamesMask = (1<<8);
-        internal const uint XkbKeyNamesMask = (1<<9);
-        internal const uint XkbKeyAliasesMask = (1<<10);
-        internal const uint XkbVirtualModNamesMask = (1<<11);
-        internal const uint XkbGroupNamesMask = (1<<12);
-        internal const uint XkbRGNamesMask = (1<<13);
+        internal const uint XkbKeycodesNameMask = (1 << 0);
+        internal const uint XkbGeometryNameMask = (1 << 1);
+        internal const uint XkbSymbolsNameMask = (1 << 2);
+        internal const uint XkbPhysSymbolsNameMask = (1 << 3);
+        internal const uint XkbTypesNameMask = (1 << 4);
+        internal const uint XkbCompatNameMask = (1 << 5);
+        internal const uint XkbKeyTypeNamesMask = (1 << 6);
+        internal const uint XkbKTLevelNamesMask = (1 << 7);
+        internal const uint XkbIndicatorNamesMask = (1 << 8);
+        internal const uint XkbKeyNamesMask = (1 << 9);
+        internal const uint XkbKeyAliasesMask = (1 << 10);
+        internal const uint XkbVirtualModNamesMask = (1 << 11);
+        internal const uint XkbGroupNamesMask = (1 << 12);
+        internal const uint XkbRGNamesMask = (1 << 13);
         internal const uint XkbComponentNamesMask = (0x3f);
         internal const uint XkbAllNamesMask = (0x3fff);
 

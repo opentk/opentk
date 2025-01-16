@@ -1,7 +1,6 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
-using System.Security.Cryptography;
 
 namespace OpenTK.Graphics
 {
@@ -185,7 +184,7 @@ namespace OpenTK.Graphics
         /// <summary>
         /// Opaque struct pointer for X11 <c>XVisualInfo*</c>.
         /// </summary>
-        public struct XVisualInfoPtr 
+        public struct XVisualInfoPtr
         {
             /// <summary>
             /// The underlying pointer value.
@@ -669,17 +668,17 @@ namespace OpenTK.Graphics
                 return !(left == right);
             }
 
-            public override bool Equals(object? obj)
+            public override readonly bool Equals(object? obj)
             {
                 return obj is EGLContext context && Equals(context);
             }
 
-            public bool Equals(EGLContext other)
+            public readonly bool Equals(EGLContext other)
             {
                 return Value.Equals(other.Value);
             }
 
-            public override int GetHashCode()
+            public override readonly int GetHashCode()
             {
                 return HashCode.Combine(Value);
             }
@@ -828,17 +827,17 @@ namespace OpenTK.Graphics
                 return !(left == right);
             }
 
-            public override bool Equals(object? obj)
+            public override readonly bool Equals(object? obj)
             {
                 return obj is EGLSurface surface && Equals(surface);
             }
 
-            public bool Equals(EGLSurface other)
+            public readonly bool Equals(EGLSurface other)
             {
                 return Value.Equals(other.Value);
             }
 
-            public override int GetHashCode()
+            public override readonly int GetHashCode()
             {
                 return HashCode.Combine(Value);
             }
@@ -895,7 +894,7 @@ namespace OpenTK.Graphics
             public static explicit operator nint(AHardwareBuffer handle) => handle.Value;
             public static explicit operator AHardwareBuffer(nint value) => new AHardwareBuffer(value);
         }
-        
+
 
         public struct EGLClientPixmapHI
         {
@@ -941,17 +940,17 @@ namespace OpenTK.Graphics
             Value = value;
         }
 
-        public override bool Equals(object? obj)
+        public override readonly bool Equals(object? obj)
         {
             return obj is CLContext context && Equals(context);
         }
 
-        public bool Equals(CLContext other)
+        public readonly bool Equals(CLContext other)
         {
             return Value.Equals(other.Value);
         }
 
-        public override int GetHashCode()
+        public override readonly int GetHashCode()
         {
             return HashCode.Combine(Value);
         }
@@ -979,17 +978,17 @@ namespace OpenTK.Graphics
             Value = value;
         }
 
-        public override bool Equals(object? obj)
+        public override readonly bool Equals(object? obj)
         {
             return obj is CLEvent @event && Equals(@event);
         }
 
-        public bool Equals(CLEvent other)
+        public readonly bool Equals(CLEvent other)
         {
             return Value.Equals(other.Value);
         }
 
-        public override int GetHashCode()
+        public override readonly int GetHashCode()
         {
             return HashCode.Combine(Value);
         }
@@ -1017,17 +1016,17 @@ namespace OpenTK.Graphics
             Value = value;
         }
 
-        public override bool Equals(object? obj)
+        public override readonly bool Equals(object? obj)
         {
             return obj is GLSync sync && Equals(sync);
         }
 
-        public bool Equals(GLSync other)
+        public readonly bool Equals(GLSync other)
         {
             return Value.Equals(other.Value);
         }
 
-        public override int GetHashCode()
+        public override readonly int GetHashCode()
         {
             return HashCode.Combine(Value);
         }
@@ -1064,17 +1063,17 @@ namespace OpenTK.Graphics
             _value2 = val;
         }
 
-        public override bool Equals(object? obj)
+        public override readonly bool Equals(object? obj)
         {
             return obj is GLHandleARB aRB && Equals(aRB);
         }
 
-        public bool Equals(GLHandleARB other)
+        public readonly bool Equals(GLHandleARB other)
         {
             return _value2.Equals(other._value2);
         }
 
-        public override int GetHashCode()
+        public override readonly int GetHashCode()
         {
             return HashCode.Combine(_value2);
         }
@@ -1106,17 +1105,17 @@ namespace OpenTK.Graphics
             Handle = handle;
         }
 
-        public override bool Equals(object? obj)
+        public override readonly bool Equals(object? obj)
         {
             return obj is ProgramHandle device && Equals(device);
         }
 
-        public bool Equals([AllowNull] ProgramHandle other)
+        public readonly bool Equals([AllowNull] ProgramHandle other)
         {
             return Handle.Equals(other.Handle);
         }
 
-        public override int GetHashCode()
+        public override readonly int GetHashCode()
         {
             return HashCode.Combine(Handle);
         }
@@ -1146,17 +1145,17 @@ namespace OpenTK.Graphics
             Handle = handle;
         }
 
-        public override bool Equals(object? obj)
+        public override readonly bool Equals(object? obj)
         {
             return obj is ProgramPipelineHandle device && Equals(device);
         }
 
-        public bool Equals([AllowNull] ProgramPipelineHandle other)
+        public readonly bool Equals([AllowNull] ProgramPipelineHandle other)
         {
             return Handle.Equals(other.Handle);
         }
 
-        public override int GetHashCode()
+        public override readonly int GetHashCode()
         {
             return HashCode.Combine(Handle);
         }
@@ -1186,17 +1185,17 @@ namespace OpenTK.Graphics
             Handle = handle;
         }
 
-        public override bool Equals(object? obj)
+        public override readonly bool Equals(object? obj)
         {
             return obj is TextureHandle device && Equals(device);
         }
 
-        public bool Equals([AllowNull] TextureHandle other)
+        public readonly bool Equals([AllowNull] TextureHandle other)
         {
             return Handle.Equals(other.Handle);
         }
 
-        public override int GetHashCode()
+        public override readonly int GetHashCode()
         {
             return HashCode.Combine(Handle);
         }
@@ -1226,17 +1225,17 @@ namespace OpenTK.Graphics
             Handle = handle;
         }
 
-        public override bool Equals(object? obj)
+        public override readonly bool Equals(object? obj)
         {
             return obj is BufferHandle device && Equals(device);
         }
 
-        public bool Equals([AllowNull] BufferHandle other)
+        public readonly bool Equals([AllowNull] BufferHandle other)
         {
             return Handle.Equals(other.Handle);
         }
 
-        public override int GetHashCode()
+        public override readonly int GetHashCode()
         {
             return HashCode.Combine(Handle);
         }
@@ -1266,17 +1265,17 @@ namespace OpenTK.Graphics
             Handle = handle;
         }
 
-        public override bool Equals(object? obj)
+        public override readonly bool Equals(object? obj)
         {
             return obj is ShaderHandle device && Equals(device);
         }
 
-        public bool Equals([AllowNull] ShaderHandle other)
+        public readonly bool Equals([AllowNull] ShaderHandle other)
         {
             return Handle.Equals(other.Handle);
         }
 
-        public override int GetHashCode()
+        public override readonly int GetHashCode()
         {
             return HashCode.Combine(Handle);
         }
@@ -1306,17 +1305,17 @@ namespace OpenTK.Graphics
             Handle = handle;
         }
 
-        public override bool Equals(object? obj)
+        public override readonly bool Equals(object? obj)
         {
             return obj is QueryHandle device && Equals(device);
         }
 
-        public bool Equals([AllowNull] QueryHandle other)
+        public readonly bool Equals([AllowNull] QueryHandle other)
         {
             return Handle.Equals(other.Handle);
         }
 
-        public override int GetHashCode()
+        public override readonly int GetHashCode()
         {
             return HashCode.Combine(Handle);
         }
@@ -1346,17 +1345,17 @@ namespace OpenTK.Graphics
             Handle = handle;
         }
 
-        public override bool Equals(object? obj)
+        public override readonly bool Equals(object? obj)
         {
             return obj is FramebufferHandle device && Equals(device);
         }
 
-        public bool Equals([AllowNull] FramebufferHandle other)
+        public readonly bool Equals([AllowNull] FramebufferHandle other)
         {
             return Handle.Equals(other.Handle);
         }
 
-        public override int GetHashCode()
+        public override readonly int GetHashCode()
         {
             return HashCode.Combine(Handle);
         }
@@ -1386,17 +1385,17 @@ namespace OpenTK.Graphics
             Handle = handle;
         }
 
-        public override bool Equals(object? obj)
+        public override readonly bool Equals(object? obj)
         {
             return obj is RenderbufferHandle device && Equals(device);
         }
 
-        public bool Equals([AllowNull] RenderbufferHandle other)
+        public readonly bool Equals([AllowNull] RenderbufferHandle other)
         {
             return Handle.Equals(other.Handle);
         }
 
-        public override int GetHashCode()
+        public override readonly int GetHashCode()
         {
             return HashCode.Combine(Handle);
         }
@@ -1426,17 +1425,17 @@ namespace OpenTK.Graphics
             Handle = handle;
         }
 
-        public override bool Equals(object? obj)
+        public override readonly bool Equals(object? obj)
         {
             return obj is SamplerHandle device && Equals(device);
         }
 
-        public bool Equals([AllowNull] SamplerHandle other)
+        public readonly bool Equals([AllowNull] SamplerHandle other)
         {
             return Handle.Equals(other.Handle);
         }
 
-        public override int GetHashCode()
+        public override readonly int GetHashCode()
         {
             return HashCode.Combine(Handle);
         }
@@ -1466,17 +1465,17 @@ namespace OpenTK.Graphics
             Handle = handle;
         }
 
-        public override bool Equals(object? obj)
+        public override readonly bool Equals(object? obj)
         {
             return obj is TransformFeedbackHandle device && Equals(device);
         }
 
-        public bool Equals([AllowNull] TransformFeedbackHandle other)
+        public readonly bool Equals([AllowNull] TransformFeedbackHandle other)
         {
             return Handle.Equals(other.Handle);
         }
 
-        public override int GetHashCode()
+        public override readonly int GetHashCode()
         {
             return HashCode.Combine(Handle);
         }
@@ -1506,17 +1505,17 @@ namespace OpenTK.Graphics
             Handle = handle;
         }
 
-        public override bool Equals(object? obj)
+        public override readonly bool Equals(object? obj)
         {
             return obj is VertexArrayHandle device && Equals(device);
         }
 
-        public bool Equals([AllowNull] VertexArrayHandle other)
+        public readonly bool Equals([AllowNull] VertexArrayHandle other)
         {
             return Handle.Equals(other.Handle);
         }
 
-        public override int GetHashCode()
+        public override readonly int GetHashCode()
         {
             return HashCode.Combine(Handle);
         }
@@ -1546,17 +1545,17 @@ namespace OpenTK.Graphics
             Handle = handle;
         }
 
-        public override bool Equals(object? obj)
+        public override readonly bool Equals(object? obj)
         {
             return obj is DisplayListHandle device && Equals(device);
         }
 
-        public bool Equals([AllowNull] DisplayListHandle other)
+        public readonly bool Equals([AllowNull] DisplayListHandle other)
         {
             return Handle.Equals(other.Handle);
         }
 
-        public override int GetHashCode()
+        public override readonly int GetHashCode()
         {
             return HashCode.Combine(Handle);
         }
@@ -1586,17 +1585,17 @@ namespace OpenTK.Graphics
             Handle = handle;
         }
 
-        public override bool Equals(object? obj)
+        public override readonly bool Equals(object? obj)
         {
             return obj is PerfQueryHandle device && Equals(device);
         }
 
-        public bool Equals([AllowNull] PerfQueryHandle other)
+        public readonly bool Equals([AllowNull] PerfQueryHandle other)
         {
             return Handle.Equals(other.Handle);
         }
 
-        public override int GetHashCode()
+        public override readonly int GetHashCode()
         {
             return HashCode.Combine(Handle);
         }

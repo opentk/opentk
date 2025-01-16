@@ -1,5 +1,4 @@
 ﻿using System;
-using OpenTK.Platform;
 using OpenTK.Core.Utility;
 using OpenTK.Mathematics;
 using static OpenTK.Platform.Native.macOS.ObjC;
@@ -7,9 +6,6 @@ using static OpenTK.Platform.Native.macOS.CG;
 using static OpenTK.Platform.Native.macOS.CV;
 
 using System.Collections.Generic;
-using System.Xml.Linq;
-using System.Net.Http.Headers;
-using System.Runtime.CompilerServices;
 
 namespace OpenTK.Platform.Native.macOS
 {
@@ -43,7 +39,7 @@ namespace OpenTK.Platform.Native.macOS
         public string Name => nameof(MacOSDisplayComponent);
 
         /// <inheritdoc/>
-        public PalComponents Provides =>  PalComponents.Display;
+        public PalComponents Provides => PalComponents.Display;
 
         /// <inheritdoc/>
         public ILogger? Logger { get; set; }
@@ -546,7 +542,7 @@ namespace OpenTK.Platform.Native.macOS
         public uint GetDirectDisplayID(DisplayHandle handle)
         {
             NSScreenHandle nsscreen = handle.As<NSScreenHandle>(this);
-            
+
             return nsscreen.DirectDisplayID;
         }
 

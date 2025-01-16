@@ -14,7 +14,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
-using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Threading;
 
@@ -106,7 +105,8 @@ namespace OpenTK.Backends.Tests
                 // If we are loading angle we want to hook into the DllImport resolver and
                 // make sure we load the correct binaries for each platform.
                 // - Noggin_bops 2024-03-07
-                NativeLibrary.SetDllImportResolver(typeof(OpenTK.Graphics.Egl.Egl).Assembly, (name, assembly, path) => {
+                NativeLibrary.SetDllImportResolver(typeof(OpenTK.Graphics.Egl.Egl).Assembly, (name, assembly, path) =>
+                {
                     if (name == "libEGL" && OperatingSystem.IsWindows())
                     {
                         name = Path.Combine(Path.GetDirectoryName(typeof(Program).Assembly.Location)!, "win32-x64", "libEGL.dll");
@@ -135,7 +135,8 @@ namespace OpenTK.Backends.Tests
                 Profile = OpenGLProfile.Core,
                 ForwardCompatibleFlag = true,
                 DebugFlag = true,
-                Selector = static (options, requested, logger) => {
+                Selector = static (options, requested, logger) =>
+                {
                     for (int i = 0; i < options.Count; i++)
                     {
                         logger?.LogInfo(options[i].ToString());
@@ -233,7 +234,7 @@ namespace OpenTK.Backends.Tests
 
             UsingGLES = Toolkit.OpenGL is ANGLEOpenGLComponent;
             ImGuiController = new ImGuiController(fbSize.X, fbSize.Y, UsingGLES);
-            
+
             float fontSize = 13f;
             try
             {
@@ -303,7 +304,7 @@ namespace OpenTK.Backends.Tests
                     io.Fonts.Build();
                 }
             }
-            
+
             ImGuiController.RecreateFontDeviceTexture();
 
             // Set the imgui platform handle so we can use it in the IME data callback.
@@ -341,7 +342,8 @@ namespace OpenTK.Backends.Tests
 
             Stopwatch watch = Stopwatch.StartNew();
 
-            if (false){
+            if (false)
+            {
                 WindowHandle handle = Toolkit.Window.Create(new OpenGLGraphicsApiHints()
                 {
                     Version = new Version(4, 1),
@@ -350,7 +352,7 @@ namespace OpenTK.Backends.Tests
                     DebugFlag = true,
                     Multisamples = 16,
                     sRGBFramebuffer = true,
-                    
+
                 });
                 Toolkit.Window.SetTitle(handle, $"Bejeweled");
                 Toolkit.Window.SetClientSize(handle, (1200, 1200));
@@ -598,7 +600,7 @@ namespace OpenTK.Backends.Tests
                     else if (args is MouseMoveEventArgs mouseMove)
                     {
                         // FIXME: Add screen, client, and framebuffer coords to mouse move events...
-                        
+
                         // Imgui works with framebuffer coordinates.
                         Toolkit.Window.ClientToFramebuffer(mouseMove.Window, mouseMove.ClientPosition, out Vector2 fbPos);
                         ImGui.GetIO().AddMousePosEvent(fbPos.X, fbPos.Y);
@@ -733,7 +735,7 @@ namespace OpenTK.Backends.Tests
             else if (args is WindowModeChangeEventArgs modeChange)
             {
                 Logger.LogInfo($"New window mode: {modeChange.NewMode}");
-            } 
+            }
             else if (args is ClipboardUpdateEventArgs clipboardUpdate)
             {
                 Logger.LogInfo($"Clipboard contents changed. New format: {clipboardUpdate.NewFormat}.");
@@ -758,22 +760,22 @@ namespace OpenTK.Backends.Tests
         {
             switch (component)
             {
-                case PalComponents.Window:        return Toolkit.Window;
-                case PalComponents.OpenGL:        return Toolkit.OpenGL;
-                case PalComponents.MouseCursor:   return Toolkit.Cursor;
-                case PalComponents.WindowIcon:    return Toolkit.Icon;
-                case PalComponents.Display:       return Toolkit.Display;
-                case PalComponents.MiceInput:     return Toolkit.Mouse;
+                case PalComponents.Window: return Toolkit.Window;
+                case PalComponents.OpenGL: return Toolkit.OpenGL;
+                case PalComponents.MouseCursor: return Toolkit.Cursor;
+                case PalComponents.WindowIcon: return Toolkit.Icon;
+                case PalComponents.Display: return Toolkit.Display;
+                case PalComponents.MiceInput: return Toolkit.Mouse;
                 case PalComponents.KeyboardInput: return Toolkit.Keyboard;
-                case PalComponents.Clipboard:     return Toolkit.Clipboard;
-                case PalComponents.Shell:         return Toolkit.Shell;
-                case PalComponents.Joystick:      return Toolkit.Joystick;
-                case PalComponents.Dialog:        return Toolkit.Dialog;
+                case PalComponents.Clipboard: return Toolkit.Clipboard;
+                case PalComponents.Shell: return Toolkit.Shell;
+                case PalComponents.Joystick: return Toolkit.Joystick;
+                case PalComponents.Dialog: return Toolkit.Dialog;
 
                 default: return null;
             }
         }
-    
+
         private static void Window_DebugProc(DebugSource source, DebugType type, uint id, DebugSeverity severity, int length, IntPtr messagePtr, IntPtr userParam)
         {
             string message = Marshal.PtrToStringAnsi(messagePtr, length);

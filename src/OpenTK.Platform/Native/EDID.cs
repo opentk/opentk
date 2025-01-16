@@ -1,15 +1,13 @@
 using System;
-using System.IO.Compression;
-using System.Runtime.InteropServices;
 using System.Text;
 using OpenTK.Mathematics;
 using OpenTK.Core.Utility;
 
-namespace OpenTK.Platform.Native 
+namespace OpenTK.Platform.Native
 {
     internal static unsafe class EDID
     {
-        public struct EDIDInfo 
+        public struct EDIDInfo
         {
             public string? DisplayName;
             public string? SerialNumberString;
@@ -39,7 +37,7 @@ namespace OpenTK.Platform.Native
             public byte Checksum;
         }
 
-        
+
         public enum VideoInterface : byte
         {
             Undefined = 0b000,
@@ -62,14 +60,14 @@ namespace OpenTK.Platform.Native
             {
                 checksum += *checksumPtr++;
             }
-            
+
             if (checksum != 0)
             {
                 logger?.LogWarning($"EDID checksum failed! Got {checksum}, should have been equal to 0.");
             }
             info.Checksum = checksum;
 
-            ReadOnlySpan<byte> header = new byte[]{ 0x00, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0x00 };
+            ReadOnlySpan<byte> header = new byte[] { 0x00, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0x00 };
             for (int i = 0; i < header.Length; i++)
             {
                 if (*data++ != header[i])
@@ -104,13 +102,13 @@ namespace OpenTK.Platform.Native
                 // Digital input
 
                 info.IsDigitalInput = true;
-                
+
                 int bitDepth;
                 switch ((videoParameters & 0b01110000) >> 4)
                 {
-                    case 0: bitDepth = 0;  break;
-                    case 1: bitDepth = 6;  break;
-                    case 2: bitDepth = 8;  break;
+                    case 0: bitDepth = 0; break;
+                    case 1: bitDepth = 6; break;
+                    case 2: bitDepth = 8; break;
                     case 3: bitDepth = 10; break;
                     case 4: bitDepth = 12; break;
                     case 5: bitDepth = 14; break;
@@ -140,17 +138,17 @@ namespace OpenTK.Platform.Native
             {
                 info.DisplayGamma = (gamma + 100) / 100f;
             }
-            else 
+            else
             {
                 // FIXME: Gamma defined in DI-EXT block.
                 info.DisplayGamma = -1;
             }
-            
+
             // Supported features bitmap, 1 byte
             byte featuresBitmap = *data++;
             if (info.IsDigitalInput)
             {
-                
+
             }
             else
             {

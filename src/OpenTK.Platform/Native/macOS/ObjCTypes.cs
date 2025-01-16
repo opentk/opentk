@@ -53,23 +53,23 @@ namespace OpenTK.Platform.Native.macOS
             this.y = y;
         }
 
-        public override bool Equals(object? obj)
+        public override readonly bool Equals(object? obj)
         {
             return obj is CGPoint point && Equals(point);
         }
 
-        public bool Equals(CGPoint other)
+        public readonly bool Equals(CGPoint other)
         {
             return x.Equals(other.x) &&
                    y.Equals(other.y);
         }
 
-        public override int GetHashCode()
+        public override readonly int GetHashCode()
         {
             return HashCode.Combine(x, y);
         }
 
-        public override string ToString()
+        public override readonly string ToString()
         {
             return $"({x}, {y})";
         }
@@ -99,14 +99,14 @@ namespace OpenTK.Platform.Native.macOS
             return new Vector2i((int)p.x, (int)p.y);
         }
     }
-    
+
     internal struct CGRect
     {
         public CGPoint origin;
         // FIXME: Change this to a CGSize struct?
         public CGPoint size;
 
-        public bool IsZeroRect => origin == CGPoint.Zero && size == CGPoint.Zero;
+        public readonly bool IsZeroRect => origin == CGPoint.Zero && size == CGPoint.Zero;
 
         public CGRect(CGPoint origin, CGPoint size)
         {
@@ -120,7 +120,7 @@ namespace OpenTK.Platform.Native.macOS
             size = new CGPoint(width, height);
         }
 
-        public bool Contains(CGPoint point)
+        public readonly bool Contains(CGPoint point)
         {
             if (point.x >= origin.x && point.x < origin.x + size.x &&
                 point.y >= origin.y && point.y < origin.y + size.y)
@@ -133,7 +133,7 @@ namespace OpenTK.Platform.Native.macOS
             }
         }
 
-        public override string ToString()
+        public override readonly string ToString()
         {
             return $"{origin} - {size}";
         }
@@ -174,7 +174,7 @@ namespace OpenTK.Platform.Native.macOS
             this.height = height;
         }
 
-        public override string ToString()
+        public override readonly string ToString()
         {
             return $"({width}, {height})";
         }

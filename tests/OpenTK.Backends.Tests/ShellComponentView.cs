@@ -1,12 +1,7 @@
 ﻿using ImGuiNET;
 using OpenTK.Platform;
 using OpenTK.Mathematics;
-using OpenTK.Platform.Native;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OpenTK.Backends.Tests
 {

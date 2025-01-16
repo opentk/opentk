@@ -105,7 +105,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         public Vector3d CenteredSize
         {
-            get => Max - Min;
+            readonly get => Max - Min;
             set
             {
                 Vector3d center = Center;
@@ -120,7 +120,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector3d HalfSize
         {
-            get => CenteredSize / 2;
+            readonly get => CenteredSize / 2;
             set => CenteredSize = value * 2;
         }
 
@@ -130,7 +130,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector3d Center
         {
-            get => HalfSize + _min;
+            readonly get => HalfSize + _min;
             set => Translate(value - Center);
         }
 
@@ -141,7 +141,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         public double Width
         {
-            get => _max.X - _min.X;
+            readonly get => _max.X - _min.X;
             set => _max.X = _min.X + value;
         }
 
@@ -150,7 +150,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         public double Height
         {
-            get => _max.Y - _min.Y;
+            readonly get => _max.Y - _min.Y;
             set => _max.Y = _min.Y + value;
         }
 
@@ -159,7 +159,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         public double Depth
         {
-            get => _max.Z - _min.Z;
+            readonly get => _max.Z - _min.Z;
             set => _max.Z = _min.Z + value;
         }
 
@@ -168,7 +168,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         public double Left
         {
-            get => _min.X;
+            readonly get => _min.X;
             set => _min.X = value;
         }
 
@@ -177,7 +177,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         public double Top
         {
-            get => _min.Y;
+            readonly get => _min.Y;
             set => _min.Y = value;
         }
 
@@ -186,7 +186,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         public double Right
         {
-            get => _max.X;
+            readonly get => _max.X;
             set => _max.X = value;
         }
 
@@ -195,7 +195,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         public double Bottom
         {
-            get => _max.Y;
+            readonly get => _max.Y;
             set => _max.Y = value;
         }
 
@@ -204,7 +204,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         public double Front
         {
-            get => _min.Z;
+            readonly get => _min.Z;
             set => _min.Z = value;
         }
 
@@ -213,7 +213,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         public double Back
         {
-            get => _max.Z;
+            readonly get => _max.Z;
             set => _max.Z = value;
         }
 
@@ -222,7 +222,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         public double X
         {
-            get => _min.X;
+            readonly get => _min.X;
             set => _min.X = value;
         }
 
@@ -231,7 +231,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         public double Y
         {
-            get => _min.Y;
+            readonly get => _min.Y;
             set => _min.Y = value;
         }
 
@@ -240,7 +240,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         public double Z
         {
-            get => _min.Z;
+            readonly get => _min.Z;
             set => _min.Z = value;
         }
 
@@ -249,7 +249,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         public double SizeX
         {
-            get => _max.X - _min.X;
+            readonly get => _max.X - _min.X;
             set => _max.X = _min.X + value;
         }
 
@@ -258,7 +258,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         public double SizeY
         {
-            get => _max.Y - _min.Y;
+            readonly get => _max.Y - _min.Y;
             set => _max.Y = _min.Y + value;
         }
 
@@ -267,7 +267,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         public double SizeZ
         {
-            get => _max.Z - _min.Z;
+            readonly get => _max.Z - _min.Z;
             set => _max.Z = _min.Z + value;
         }
 
@@ -276,7 +276,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         public Vector3d Size
         {
-            get => new Vector3d(_max.X - _min.X, _max.Y - _min.Y, _max.Z - _min.Z);
+            readonly get => new Vector3d(_max.X - _min.X, _max.Y - _min.Y, _max.Z - _min.Z);
             set
             {
                 _max.X = _min.X + value.X;
@@ -288,12 +288,12 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets the location of the box.
         /// </summary>
-        public Vector3d Location => _min;
+        public readonly Vector3d Location => _min;
 
         /// <summary>
         /// Gets a value indicating whether all values are zero.
         /// </summary>
-        public bool IsZero => _min.X == 0 && _min.Y == 0 && _min.Z == 0
+        public readonly bool IsZero => _min.X == 0 && _min.Y == 0 && _min.Z == 0
                            && _max.X == 0 && _max.Y == 0 && _max.Z == 0;
 
         /// <summary>
@@ -387,7 +387,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <param name="other">The Box with which to intersect.</param>
         /// <returns>The intersection of itself and the specified Box.</returns>
-        public Box3d Intersected(Box3d other)
+        public readonly Box3d Intersected(Box3d other)
         {
             return Intersect(other, this);
         }
@@ -397,7 +397,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <param name="other">The Box to test.</param>
         /// <returns>This method returns true if there is any intersection, otherwise false.</returns>
-        public bool IntersectsWith(Box3d other)
+        public readonly bool IntersectsWith(Box3d other)
         {
             return other._min.X < _max.X
                 && _min.X < other._max.X
@@ -412,7 +412,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <param name="other">The Box to test.</param>
         /// <returns>This method returns true if there is any intersection or touches, otherwise false.</returns>
-        public bool TouchWith(Box3d other)
+        public readonly bool TouchWith(Box3d other)
         {
             return other._min.X <= _max.X
                 && _min.X <= other._max.X
@@ -541,7 +541,7 @@ namespace OpenTK.Mathematics
         /// </param>
         /// <returns>Whether this box contains the point.</returns>
         [Pure]
-        public bool Contains(Vector3d point, bool boundaryInclusive)
+        public readonly bool Contains(Vector3d point, bool boundaryInclusive)
         {
             if (boundaryInclusive)
             {
@@ -703,13 +703,13 @@ namespace OpenTK.Mathematics
         }
 
         /// <inheritdoc/>
-        public override bool Equals(object obj)
+        public override readonly bool Equals(object obj)
         {
             return obj is Box3d && Equals((Box3d)obj);
         }
 
         /// <inheritdoc/>
-        public bool Equals(Box3d other)
+        public readonly bool Equals(Box3d other)
         {
             return _min.Equals(other._min) &&
                    _max.Equals(other._max);
@@ -722,25 +722,25 @@ namespace OpenTK.Mathematics
         }
 
         /// <inheritdoc/>
-        public override string ToString()
+        public override readonly string ToString()
         {
             return ToString(null, null);
         }
 
         /// <inheritdoc cref="ToString(string, IFormatProvider)"/>
-        public string ToString(string format)
+        public readonly string ToString(string format)
         {
             return ToString(format, null);
         }
 
         /// <inheritdoc cref="ToString(string, IFormatProvider)"/>
-        public string ToString(IFormatProvider formatProvider)
+        public readonly string ToString(IFormatProvider formatProvider)
         {
             return ToString(null, formatProvider);
         }
 
         /// <inheritdoc/>
-        public string ToString(string format, IFormatProvider formatProvider)
+        public readonly string ToString(string format, IFormatProvider formatProvider)
         {
             return $"{Min.ToString(format, formatProvider)} - {Max.ToString(format, formatProvider)}";
         }

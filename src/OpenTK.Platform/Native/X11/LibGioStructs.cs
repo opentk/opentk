@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace OpenTK.Platform.Native
+﻿namespace OpenTK.Platform.Native
 {
 #pragma warning disable CS0649
     internal unsafe struct GError

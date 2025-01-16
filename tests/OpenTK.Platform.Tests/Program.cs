@@ -1,5 +1,4 @@
-﻿using OpenTK.Platform;
-using OpenTK.Core.Utility;
+﻿using OpenTK.Core.Utility;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Mathematics;
@@ -9,7 +8,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Runtime.InteropServices;
 using System.Threading;
 
 namespace OpenTK.Platform.Tests
@@ -32,7 +30,7 @@ namespace OpenTK.Platform.Tests
         static CursorHandle cursorHandle;
 
         static readonly Color4<Rgba> LightModeColor = Color4.Whitesmoke;
-        static readonly Color4<Rgba> DarkModeColor = new Color4<Rgba>(37/255.0f, 37 / 255.0f, 38 / 255.0f, 1);
+        static readonly Color4<Rgba> DarkModeColor = new Color4<Rgba>(37 / 255.0f, 37 / 255.0f, 38 / 255.0f, 1);
 
         static readonly Color4<Rgba> ContrastLightModeColor = new Color4<Rgba>(237 / 255.0f, 81 / 255.0f, 81 / 255.0f, 1);
         static readonly Color4<Rgba> ContrastDarkModeColor = new Color4<Rgba>(148 / 255.0f, 10 / 255.0f, 10 / 255.0f, 1);
@@ -226,7 +224,7 @@ namespace OpenTK.Platform.Tests
                     //image[index + 2] = (byte)(ccx * 16);
 
                     int index = (ccy * 16 + ccx) * 4;
-                    
+
                     image[index + 0] = (byte)(ccx * 16);
                     image[index + 1] = (byte)(ccx * 16);
                     image[index + 2] = (byte)(ccx * 16);
@@ -273,10 +271,10 @@ namespace OpenTK.Platform.Tests
                     if (cursor > SystemCursorType.ArrowUp)
                         cursor = SystemCursorType.Default;
                 }
-                
+
                 //mouseComp.GetPosition(null, out int x, out int y);
                 //windowComp.SetTitle(window,  $"Mouse: ({x}, {y})");
-                
+
                 GL.ClearColor(BackgroundColor);
                 GL.Clear(ClearBufferMask.ColorBufferBit);
 
@@ -292,7 +290,7 @@ namespace OpenTK.Platform.Tests
                 for (int ccy = 0; ccy < 16; ccy++)
                 {
                     int index = (ccy * 16 + ccx) * 4;
-                    
+
                     image16[index + 0] = (byte)(ccx * 16);
                     image16[index + 1] = (byte)(ccx * 16);
                     image16[index + 2] = (byte)(ccy * 16);
@@ -306,7 +304,7 @@ namespace OpenTK.Platform.Tests
                 for (int ccy = 0; ccy < 128; ccy++)
                 {
                     int index = (ccy * 128 + ccx) * 4;
-                    
+
                     image128[index + 0] = (byte)((ccx / 128f) * 255);
                     image128[index + 1] = (byte)((ccx / 128f) * 255);
                     image128[index + 2] = (byte)((ccy / 128f) * 255);

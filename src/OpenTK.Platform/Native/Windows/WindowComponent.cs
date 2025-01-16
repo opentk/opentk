@@ -1,5 +1,4 @@
-﻿using OpenTK.Platform;
-using OpenTK.Core.Utility;
+﻿using OpenTK.Core.Utility;
 using OpenTK.Mathematics;
 using System;
 using System.Collections.Generic;
@@ -8,8 +7,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
-using System.Threading;
-using OpenTK.Graphics.Vulkan;
 
 namespace OpenTK.Platform.Native.Windows
 {
@@ -192,51 +189,51 @@ namespace OpenTK.Platform.Native.Windows
                 switch (uMsg)
                 {
                     case WM.POWERBROADCAST:
-                    {
-                        // We are only interested in the messages sent to the helper window that we registered to get notifications.
-                        // - 2023-03-29 NogginBops
-                        PBT power = (PBT)wParam;
-
-                        if (power == PBT.APMSuspend)
                         {
-                            EventQueue.Raise(null, PlatformEventType.PowerStateChange, new PowerStateChangeEventArgs(true));
-                        }
-                        else if (power == PBT.APMResumeAutomatic)
-                        {
-                            EventQueue.Raise(null, PlatformEventType.PowerStateChange, new PowerStateChangeEventArgs(false));
-                        }
+                            // We are only interested in the messages sent to the helper window that we registered to get notifications.
+                            // - 2023-03-29 NogginBops
+                            PBT power = (PBT)wParam;
 
-                        return (IntPtr)1;
-                    }
+                            if (power == PBT.APMSuspend)
+                            {
+                                EventQueue.Raise(null, PlatformEventType.PowerStateChange, new PowerStateChangeEventArgs(true));
+                            }
+                            else if (power == PBT.APMResumeAutomatic)
+                            {
+                                EventQueue.Raise(null, PlatformEventType.PowerStateChange, new PowerStateChangeEventArgs(false));
+                            }
+
+                            return (IntPtr)1;
+                        }
                     case WM.DEVICECHANGE:
-                    {
-                        DBT dbt = (DBT)wParam;
-                        switch (dbt)
                         {
-                            case DBT.DeviceArrival:
-                            case DBT.DeviceRemoveComplete:
-                                // FIXME: Implement joystick events!
-                                // JoystickComponent.UpdateJoysticks();
-                                break;
-                            default:
-                                break;
+                            DBT dbt = (DBT)wParam;
+                            switch (dbt)
+                            {
+                                case DBT.DeviceArrival:
+                                case DBT.DeviceRemoveComplete:
+                                    // FIXME: Implement joystick events!
+                                    // JoystickComponent.UpdateJoysticks();
+                                    break;
+                                default:
+                                    break;
+                            }
+
+                            Console.WriteLine($"{uMsg} {(DBT)wParam} 0x{wParam.ToUInt64():X16}");
+                            return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                         }
-
-                        Console.WriteLine($"{uMsg} {(DBT)wParam} 0x{wParam.ToUInt64():X16}");
-                        return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
-                    }
                     case WM.CLIPBOARDUPDATE:
-                    {
-                        ClipboardFormat newFormat = ClipboardComponent.GetClipboardFormatInternal(Logger);
+                        {
+                            ClipboardFormat newFormat = ClipboardComponent.GetClipboardFormatInternal(Logger);
 
-                        EventQueue.Raise(null, PlatformEventType.ClipboardUpdate, new ClipboardUpdateEventArgs(newFormat));
+                            EventQueue.Raise(null, PlatformEventType.ClipboardUpdate, new ClipboardUpdateEventArgs(newFormat));
 
-                        return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
-                    }
+                            return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
+                        }
                     default:
-                    {
-                        return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
-                    }
+                        {
+                            return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
+                        }
                 }
             }
 
@@ -386,7 +383,7 @@ namespace OpenTK.Platform.Native.Windows
                             string str;
 
                             ulong chars = wParam.ToUInt64();
-                            
+
                             switch (chars)
                             {
                                 case 0x0A: // linefeed, SHIFT + ENTER
@@ -396,9 +393,9 @@ namespace OpenTK.Platform.Native.Windows
                                 case 0x08: // backspace
                                 case 0x09: // tab
                                 case 0x1B: // escape
-                                    // FIXME: For now we just send these to the user directly,
-                                    // but maybe we want something better?
-                                    // or we just formalize this?
+                                           // FIXME: For now we just send these to the user directly,
+                                           // but maybe we want something better?
+                                           // or we just formalize this?
                                 default:
                                     {
                                         // FIXME: Do we even need to handle this??
@@ -499,7 +496,7 @@ namespace OpenTK.Platform.Native.Windows
                             {
                                 throw new Win32Exception();
                             }
-                            
+
                             EventQueue.Raise(h, PlatformEventType.MouseEnter, new MouseEnterEventArgs(h, true));
                         }
 
@@ -659,7 +656,7 @@ namespace OpenTK.Platform.Native.Windows
                 case WM.MOUSEWHEEL:
                     {
                         float delta = ((int)(wParam.ToUInt32() & Win32.HiWordMask) >> 16) / 120f;
-                        
+
                         bool success = Win32.SystemParametersInfo(SPI.GetWheelScrollLines, 0, out uint lines, SPIF.None);
                         if (success == false)
                         {
@@ -840,7 +837,7 @@ namespace OpenTK.Platform.Native.Windows
                         HWND h = HWndDict[hWnd];
 
                         Win32.GetWindowRect(hWnd, out Win32.RECT rect);
-                        
+
                         EventQueue.Raise(h, PlatformEventType.WindowMove, new WindowMoveEventArgs(h, new Vector2i(rect.left, rect.top), new Vector2i(x, y)));
 
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
@@ -993,7 +990,7 @@ namespace OpenTK.Platform.Native.Windows
                 case WM.THEMECHANGED:
                     {
                         ShellComponent.CheckPreferredThemeChange();
-                        
+
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                     }
                 case WM.IME_COMPOSITION:
@@ -1669,7 +1666,7 @@ namespace OpenTK.Platform.Native.Windows
                     SetBorderStyle(hwnd, hwnd.PreviousBorderStyle);
                 }
             }
-            
+
             // FIXME: Handle ShowWindowCommands.ShowMinimized?
             switch (mode)
             {
@@ -1787,7 +1784,7 @@ namespace OpenTK.Platform.Native.Windows
                 hwnd.FullscreenMonitor = hmonitor;
                 hwnd.ExclusiveFullscreen = true;
                 hwnd.PreviousBorderStyle = GetBorderStyle(hwnd);
-                
+
                 // FIXME: check if we need to remove the window decorations.
                 WindowStyles style = (WindowStyles)(uint)Win32.GetWindowLongPtr(hwnd.HWnd, GetGWLPIndex.Style);
                 Win32.SetWindowLongPtr(hwnd.HWnd, SetGWLPIndex.Style, new IntPtr((int)(style & ~WindowStyles.OverlappedWindow)));

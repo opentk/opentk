@@ -2,13 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
-using OpenTK.Platform;
 using OpenTK.Core.Utility;
 using static OpenTK.Platform.Native.X11.LibX11;
-using System.Runtime.CompilerServices;
 using System.Diagnostics;
-using System.Runtime.InteropServices.Marshalling;
-using System.ComponentModel;
 
 namespace OpenTK.Platform.Native.X11
 {
@@ -68,7 +64,7 @@ namespace OpenTK.Platform.Native.X11
         private static readonly ClipboardFormat[] _supportedFormatsWithBitmap = { ClipboardFormat.Text, ClipboardFormat.Bitmap, ClipboardFormat.Files };
 
         /// <inheritdoc/>
-        public IReadOnlyList<ClipboardFormat> SupportedFormats => (PngCodec != null && PngCodec.CanDecodePng) ?  _supportedFormatsWithBitmap : _supportedFormats;
+        public IReadOnlyList<ClipboardFormat> SupportedFormats => (PngCodec != null && PngCodec.CanDecodePng) ? _supportedFormatsWithBitmap : _supportedFormats;
 
         private unsafe byte[] ReadINCRData(XEvent notification)
         {
@@ -120,7 +116,8 @@ namespace OpenTK.Platform.Native.X11
             {
                 X11.WaitForXEvents();
 
-                if (watch.ElapsedMilliseconds >= 1000) {
+                if (watch.ElapsedMilliseconds >= 1000)
+                {
                     // We timed out.
                     logger?.LogWarning("We never got a SelectionNotify after waiting for 1 second.");
                     return false;
@@ -128,7 +125,8 @@ namespace OpenTK.Platform.Native.X11
 
                 // We still want to respond to SelectionRequest events when we are waiting for a
                 // SelectionNotify event, in case we are the selection owner...
-                if (XCheckIfEvent(X11.Display, out XEvent @event, IsClipboardEvent, IntPtr.Zero)) {
+                if (XCheckIfEvent(X11.Display, out XEvent @event, IsClipboardEvent, IntPtr.Zero))
+                {
                     HandleClipboardEvent(ref @event, logger);
                 }
 
@@ -141,11 +139,13 @@ namespace OpenTK.Platform.Native.X11
             }
 
             bool found;
-            fixed (XEvent* ptr = &notification) {
+            fixed (XEvent* ptr = &notification)
+            {
                 found = XCheckIfEvent(X11.Display, out _, X11.IsSelectionPropertyNewValueNotify, new IntPtr(ptr));
             }
 
-            if (found == false) {
+            if (found == false)
+            {
                 logger?.LogWarning("We got a SelectionNotify event but it wasn't PropertyNewValue...");
             }
 
@@ -181,9 +181,10 @@ namespace OpenTK.Platform.Native.X11
                 out long remainingBytes,
                 out IntPtr data);
 
-            if (result != Success) {
+            if (result != Success)
+            {
                 logger?.LogWarning($"Could not get the selection property data from the SelectionNotify event when reading clipboard format. (selection: {selection}, property: {property})");
-                if (data != IntPtr.Zero) 
+                if (data != IntPtr.Zero)
                 {
                     XFree(data);
                 }
@@ -225,7 +226,7 @@ namespace OpenTK.Platform.Native.X11
                         XFree(data);
                         return ClipboardFormat.Text;
                     }
-                    else if (atom == image_png || 
+                    else if (atom == image_png ||
                             atom == image_bmp)
                     {
                         XFree(data);
@@ -263,14 +264,14 @@ namespace OpenTK.Platform.Native.X11
                     if (request.target == X11.Atoms[KnownAtoms.TARGETS])
                     {
                         // Report supported targets.
-                        Span<XAtom> supportedFormats = stackalloc XAtom[]{ X11.Atoms[KnownAtoms.TARGETS] };
+                        Span<XAtom> supportedFormats = stackalloc XAtom[] { X11.Atoms[KnownAtoms.TARGETS] };
                         switch (CurrentClipboardFormat)
                         {
                             case ClipboardFormat.Text:
-                                supportedFormats = stackalloc XAtom[]{ X11.Atoms[KnownAtoms.TARGETS], X11.Atoms[KnownAtoms.UTF8_STRING], X11.Atoms[KnownAtoms.STRING] };
+                                supportedFormats = stackalloc XAtom[] { X11.Atoms[KnownAtoms.TARGETS], X11.Atoms[KnownAtoms.UTF8_STRING], X11.Atoms[KnownAtoms.STRING] };
                                 break;
                             case ClipboardFormat.Bitmap:
-                                supportedFormats = stackalloc XAtom[]{ X11.Atoms[KnownAtoms.TARGETS], image_png };
+                                supportedFormats = stackalloc XAtom[] { X11.Atoms[KnownAtoms.TARGETS], image_png };
                                 break;
                             case ClipboardFormat.None:
                             case ClipboardFormat.Audio:
@@ -285,7 +286,7 @@ namespace OpenTK.Platform.Native.X11
                         {
                             XChangeProperty(X11.Display, request.requestor, request.property, X11.Atoms[KnownAtoms.ATOM], 32, XPropertyMode.Replace, (IntPtr)ptr, supportedFormats.Length);
                         }
-                        
+
                         selectionNotify.target = X11.Atoms[KnownAtoms.TARGETS];
                         selectionNotify.property = request.property;
                     }
@@ -308,10 +309,10 @@ namespace OpenTK.Platform.Native.X11
                                         else if (request.target == X11.Atoms[KnownAtoms.STRING])
                                         {
                                             logger?.LogDebug($"Sending clipboard format: {request.target}");
-                                            
+
                                             // FIXME: STRING specifies ISO Latin-1 with tabs and newlines...
                                             byte[] data = Encoding.Latin1.GetBytes(ClipboardString);
-                                            
+
                                             Debug.Assert(data.Length < 262140, "The png is larger than the max supported reques size. We need to implement the INCR protocol.");
 
                                             int result = XChangeProperty(X11.Display, request.requestor, request.property, request.target, 8, XPropertyMode.Replace, data, data.Length);
@@ -342,7 +343,7 @@ namespace OpenTK.Platform.Native.X11
                                         if (request.target == image_png)
                                         {
                                             logger?.LogDebug($"Sending clipboard format: {request.target}");
-                                            
+
                                             byte[] data = ClipboardPng;
 
                                             Debug.Assert(data.Length < 262140, "The png is larger than the max supported reques size. We need to implement the INCR protocol.");
@@ -531,7 +532,7 @@ namespace OpenTK.Platform.Native.X11
             }
 
             ClipboardPng = PngCodec.EncodePng(bitmap, Logger);
-            if (ClipboardPng == null) 
+            if (ClipboardPng == null)
             {
                 Logger?.LogWarning("Could not encode png. We will not take ownership of the clipboard selection.");
                 return;
@@ -619,10 +620,10 @@ namespace OpenTK.Platform.Native.X11
                     imageBytes = new Span<byte>((byte*)data, (actualFormat / 8) * (int)numberOfItems);
 
                     Bitmap? bitmap = PngCodec.DecodePng(imageBytes, Logger);
-                    
+
                     return bitmap;
                 }
-                
+
                 if (data != IntPtr.Zero)
                 {
                     XFree(data);
@@ -733,7 +734,7 @@ namespace OpenTK.Platform.Native.X11
             /// <seealso cref="CanEncodePng"/>
             public byte[]? EncodePng(Bitmap image, ILogger? logger);
         }
-    
+
         /// <summary>
         /// Allows the clipboard component to decode and encode png images using the specified <see cref="IPngCodec"/> instance.
         /// </summary>

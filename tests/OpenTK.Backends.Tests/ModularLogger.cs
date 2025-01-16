@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using OpenTK.Core.Utility;
@@ -29,7 +28,7 @@ namespace OpenTK.Backends.Tests
         /// <param name="filePath">Logging source file.</param>
         /// <param name="lineNumber">Source line number.</param>
         /// <param name="member">Logging member name.</param>
-        public delegate void LogCallback(string str, LogLevel level, string filePath, int lineNumber, string member); 
+        public delegate void LogCallback(string str, LogLevel level, string filePath, int lineNumber, string member);
 
         /// <summary>
         /// Create a new instance of ModularLogger.

@@ -1,5 +1,4 @@
-﻿using OpenTK.Platform;
-using OpenTK.Core.Utility;
+﻿using OpenTK.Core.Utility;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -438,7 +437,7 @@ namespace OpenTK.Platform.Native.Windows
             HWND hwnd = parent.As<HWND>(this);
 
             char* extensionListPtr = CreateFilterString(allowedExtensions);
-            
+
             char* titlePtr = (char*)Marshal.StringToHGlobalUni(title);
             char* directoryPtr = (char*)Marshal.StringToHGlobalUni(directory);
             //char* defaultExt = (char*)Marshal.StringToHGlobalUni($"\0{allowedExtensions[0]}");

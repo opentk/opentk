@@ -1,11 +1,5 @@
-﻿using OpenTK.Platform;
-using OpenTK.Platform.Native;
-using OpenTK.Platform.Native.Windows;
+﻿using OpenTK.Platform.Native;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OpenTK.Platform
 {

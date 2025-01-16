@@ -21,7 +21,7 @@ namespace OpenTK.Backends.Tests
         unsafe Bitmap? X11ClipboardComponent.IPngCodec.DecodePng(Span<byte> imageData, ILogger? logger)
         {
             ImageResult result;
-            fixed(byte* ptr = imageData)
+            fixed (byte* ptr = imageData)
             {
                 UnmanagedMemoryStream imageStream = new UnmanagedMemoryStream(ptr, imageData.Length);
 

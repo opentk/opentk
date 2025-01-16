@@ -1,15 +1,11 @@
 ﻿using ImGuiNET;
 using OpenTK.Platform;
 using OpenTK.Mathematics;
-using OpenTK.Platform.Native;
 using OpenTK.Platform.Native.macOS;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OpenTK.Backends.Tests
 {
@@ -118,7 +114,7 @@ namespace OpenTK.Backends.Tests
                             image[(x + y * WIDTH) * 4 + 0] = byte.CreateSaturating(color.X * 255);
                             image[(x + y * WIDTH) * 4 + 1] = byte.CreateSaturating(color.Y * 255);
                             image[(x + y * WIDTH) * 4 + 2] = byte.CreateSaturating(color.Z * 255);
-                            image[(x + y * WIDTH) * 4 + 3] = byte.CreateSaturating(SmoothStep((WIDTH/17) * 8.5f, (WIDTH/17) * 7.5f, dist) * 255);
+                            image[(x + y * WIDTH) * 4 + 3] = byte.CreateSaturating(SmoothStep((WIDTH / 17) * 8.5f, (WIDTH / 17) * 7.5f, dist) * 255);
 
                             // FIXME: Add SmoothStep to MathHelper
                             static float SmoothStep(float edge0, float edge1, float value)

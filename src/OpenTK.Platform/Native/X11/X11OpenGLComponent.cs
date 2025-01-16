@@ -1,10 +1,7 @@
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Runtime.InteropServices;
-using OpenTK.Platform;
 using OpenTK.Core.Utility;
 //using static OpenTK.Platform.Native.X11.GLX;
 using OpenTK.Graphics.Glx;
@@ -66,7 +63,7 @@ namespace OpenTK.Platform.Native.X11
             }
 
             Version? version;
-            
+
             GLXServerVendor = Glx.QueryServerString(X11.Display, X11.DefaultScreen, StringName.Vendor)!;
             Version.TryParse(Glx.QueryServerString(X11.Display, X11.DefaultScreen, StringName.Version), out version);
             GLXServerVersion = version;

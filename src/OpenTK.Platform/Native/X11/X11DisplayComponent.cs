@@ -1,13 +1,11 @@
 using System;
 using System.Diagnostics;
-using OpenTK.Platform;
 using OpenTK.Core.Utility;
 using OpenTK.Mathematics;
 using static OpenTK.Platform.Native.X11.XRandR.XRandR;
 using static OpenTK.Platform.Native.X11.LibX11;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using System.Text;
 using OpenTK.Platform.Native.X11.XRandR;
 
 namespace OpenTK.Platform.Native.X11
@@ -21,7 +19,7 @@ namespace OpenTK.Platform.Native.X11
         public PalComponents Provides => PalComponents.Display;
 
         /// <inheritdoc />
-        public ILogger? Logger { get ; set; }
+        public ILogger? Logger { get; set; }
 
         // TODO: Write Xinerama fallback.
 
@@ -53,7 +51,7 @@ namespace OpenTK.Platform.Native.X11
                 XRRCrtcInfo* crtcInfo = XRRGetCrtcInfo(X11.Display, resources, xdisplay.Crtc);
 
                 // FIXME: Handle screen rotation!
-                
+
                 // FIXME: Should we use crtc size or output size?
 
                 int x = crtcInfo->x;
@@ -139,9 +137,9 @@ namespace OpenTK.Platform.Native.X11
 
                 // Keep everything the same except the mode.
                 RRConfigStatus status = XRRSetCrtcConfig(
-                    X11.Display, resources, 
+                    X11.Display, resources,
                     handle.Crtc,
-                    XTime.CurrentTime, 
+                    XTime.CurrentTime,
                     crtcInfo->x, crtcInfo->y,
                     bestMode->ModeId,
                     crtcInfo->rotation,
@@ -158,7 +156,7 @@ namespace OpenTK.Platform.Native.X11
                 XRRFreeScreenResources(resources);
                 return true;
             }
-            else 
+            else
             {
                 comp.Logger?.LogWarning($"No mode matched '{mode}' out of {outputInfo->nmode} modes.");
                 XRRFreeOutputInfo(outputInfo);
@@ -179,9 +177,9 @@ namespace OpenTK.Platform.Native.X11
             XRROutputInfo* outputInfo = XRRGetOutputInfo(X11.Display, resources, handle.Output);
 
             RRConfigStatus status = XRRSetCrtcConfig(
-                X11.Display, resources, 
+                X11.Display, resources,
                 handle.Crtc,
-                XTime.CurrentTime, 
+                XTime.CurrentTime,
                 crtcInfo->x, crtcInfo->y,
                 handle.OldMode,
                 crtcInfo->rotation,
@@ -266,7 +264,7 @@ namespace OpenTK.Platform.Native.X11
             }
 
             XFree(atoms);
-        
+
             return displayName ?? name;
         }
 
@@ -295,7 +293,8 @@ namespace OpenTK.Platform.Native.X11
                         return;
                     }
 
-                    unsafe {
+                    unsafe
+                    {
                         // We are initializing, so doing a hardware poll is reasonable.
                         // - Noggin_bops 2024-09-23
                         XRRScreenResources* resources = XRRGetScreenResources(X11.Display, X11.DefaultRootWindow);
@@ -350,16 +349,16 @@ namespace OpenTK.Platform.Native.X11
                         Debug.Assert(_displays.Count > 0);
 
                         // Subscribe to events relating to connecting and disconnecting monitors.
-                        XRRSelectInput(X11.Display, X11.DefaultRootWindow,  RRSelectMask.OutputChangeNotifyMask);
+                        XRRSelectInput(X11.Display, X11.DefaultRootWindow, RRSelectMask.OutputChangeNotifyMask);
                     }
-                
+
                     HasRANDR = true;
                     Logger?.LogInfo("Using XRANDR for display component.");
                 }
 
                 // FIXME: Error message for when this fails?
             }
-            else 
+            else
             {
                 HasRANDR = false;
                 Logger?.LogError("Could not find XRANDR extension. The display component will not work.");
@@ -383,82 +382,82 @@ namespace OpenTK.Platform.Native.X11
                     logger?.LogInfo("RR Screen change notify.");
                     break;
                 case RREventType.RRNotify:
-                {
-                    logger?.LogDebug($"RR Notify (subtype: {@event.RRNotify.SubType})");
-                    if (@event.RRNotify.SubType == RRNotifySubType.OutputChange)
                     {
-                        XRROutputChangeNotifyEvent outputChanged = @event.RROutputChangeNotify;
-
-                        // Find the XDisplayHandle that this event relates to...
-                        XDisplayHandle? handle = null;
-                        foreach (XDisplayHandle display in _displays)
+                        logger?.LogDebug($"RR Notify (subtype: {@event.RRNotify.SubType})");
+                        if (@event.RRNotify.SubType == RRNotifySubType.OutputChange)
                         {
-                            if (display.Output == outputChanged.Output)
-                            {
-                                handle = display;
-                                break;
-                            }
-                        }
+                            XRROutputChangeNotifyEvent outputChanged = @event.RROutputChangeNotify;
 
-                        if (outputChanged.Connection == Connection.Connected)
-                        {
-                            if (handle == null)
+                            // Find the XDisplayHandle that this event relates to...
+                            XDisplayHandle? handle = null;
+                            foreach (XDisplayHandle display in _displays)
                             {
-                                unsafe
+                                if (display.Output == outputChanged.Output)
                                 {
-                                    // FIXME: Do we want to use XRRGetScreenResources or XRRGetScreenResourcesCurrent here?
-                                    // SDL seems to do a simple check to see if the information needs to be updated.
-                                    // - Noggin_bops 2024-09-23
-                                    XRRScreenResources* resources = XRRGetScreenResources(X11.Display, X11.DefaultRootWindow);
-                                    RROutput primaryOutput = XRRGetOutputPrimary(X11.Display, X11.DefaultRootWindow);
-
-                                    if (resources != null)
-                                    {
-                                        XRROutputInfo* outputInfo = XRRGetOutputInfo(X11.Display, resources, outputChanged.Output);
-
-                                        if (outputInfo->crtc == RRCrtc.None || outputInfo->connection == Connection.Disconnected)
-                                        {
-                                            XRRFreeOutputInfo(outputInfo);
-                                            XRRFreeScreenResources(resources);
-                                            return;
-                                        }
-
-                                        string name = GetOutputName(outputChanged.Output, outputInfo, logger);
-
-                                        handle = new XDisplayHandle(outputChanged.Output, outputInfo->crtc, name);
-
-                                        if (handle.Output == primaryOutput)
-                                            _displays.Insert(0, handle);
-                                        else
-                                            _displays.Add(handle);
-
-                                        EventQueue.Raise(handle, PlatformEventType.DisplayConnectionChanged, new DisplayConnectionChangedEventArgs(handle, false));
-                                        logger?.LogDebug($"Connected display '{name}'!");
-
-                                        XRRFreeOutputInfo(outputInfo);
-                                        XRRFreeScreenResources(resources);
-                                    }
+                                    handle = display;
+                                    break;
                                 }
                             }
-                            else
+
+                            if (outputChanged.Connection == Connection.Connected)
                             {
-                                logger?.LogDebug("Connected already connected display!");
-                                // This display already existed.
-                                // FIXME: Update rotation?
+                                if (handle == null)
+                                {
+                                    unsafe
+                                    {
+                                        // FIXME: Do we want to use XRRGetScreenResources or XRRGetScreenResourcesCurrent here?
+                                        // SDL seems to do a simple check to see if the information needs to be updated.
+                                        // - Noggin_bops 2024-09-23
+                                        XRRScreenResources* resources = XRRGetScreenResources(X11.Display, X11.DefaultRootWindow);
+                                        RROutput primaryOutput = XRRGetOutputPrimary(X11.Display, X11.DefaultRootWindow);
+
+                                        if (resources != null)
+                                        {
+                                            XRROutputInfo* outputInfo = XRRGetOutputInfo(X11.Display, resources, outputChanged.Output);
+
+                                            if (outputInfo->crtc == RRCrtc.None || outputInfo->connection == Connection.Disconnected)
+                                            {
+                                                XRRFreeOutputInfo(outputInfo);
+                                                XRRFreeScreenResources(resources);
+                                                return;
+                                            }
+
+                                            string name = GetOutputName(outputChanged.Output, outputInfo, logger);
+
+                                            handle = new XDisplayHandle(outputChanged.Output, outputInfo->crtc, name);
+
+                                            if (handle.Output == primaryOutput)
+                                                _displays.Insert(0, handle);
+                                            else
+                                                _displays.Add(handle);
+
+                                            EventQueue.Raise(handle, PlatformEventType.DisplayConnectionChanged, new DisplayConnectionChangedEventArgs(handle, false));
+                                            logger?.LogDebug($"Connected display '{name}'!");
+
+                                            XRRFreeOutputInfo(outputInfo);
+                                            XRRFreeScreenResources(resources);
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    logger?.LogDebug("Connected already connected display!");
+                                    // This display already existed.
+                                    // FIXME: Update rotation?
+                                }
+                            }
+                            else if (outputChanged.Connection == Connection.Disconnected)
+                            {
+                                if (handle != null)
+                                {
+                                    logger?.LogDebug($"Disconnected display '{handle.Name}'!");
+                                    _displays.Remove(handle);
+                                    EventQueue.Raise(handle, PlatformEventType.DisplayConnectionChanged, new DisplayConnectionChangedEventArgs(handle, true));
+                                }
                             }
                         }
-                        else if (outputChanged.Connection == Connection.Disconnected)
-                        {
-                            if (handle != null)
-                            {
-                                logger?.LogDebug($"Disconnected display '{handle.Name}'!");
-                                _displays.Remove(handle);
-                                EventQueue.Raise(handle, PlatformEventType.DisplayConnectionChanged, new DisplayConnectionChangedEventArgs(handle, true));
-                            }
-                        }
+                        break;
                     }
-                    break;
-                }
                 default:
                     break;
             }
@@ -648,7 +647,7 @@ namespace OpenTK.Platform.Native.X11
         }
 
         /// <inheritdoc />
-        public void GetResolution(DisplayHandle handle, out int width, out int  height)
+        public void GetResolution(DisplayHandle handle, out int width, out int height)
         {
             // FIXME: Should we get this every time or should we cache this?
             unsafe
@@ -717,7 +716,7 @@ namespace OpenTK.Platform.Native.X11
                 X11.Atoms[KnownAtoms._NET_CURRENT_DESKTOP] != XAtom.None)
             {
                 int result = XGetWindowProperty(
-                    X11.Display, 
+                    X11.Display,
                     X11.DefaultRootWindow,
                     X11.Atoms[KnownAtoms._NET_WORKAREA],
                     0, long.MaxValue,
@@ -740,7 +739,7 @@ namespace OpenTK.Platform.Native.X11
                 }
 
                 result = XGetWindowProperty(
-                    X11.Display, 
+                    X11.Display,
                     X11.DefaultRootWindow,
                     X11.Atoms[KnownAtoms._NET_CURRENT_DESKTOP],
                     0, long.MaxValue,
@@ -761,25 +760,25 @@ namespace OpenTK.Platform.Native.X11
                     }
                     return;
                 }
-                
+
                 if (items > 0)
-                unsafe
-                {
-                    int desktop = *(int*)desktopPtr;
-
-                    if (workAreaCount >= 4 && desktop < (workAreaCount / 4))
+                    unsafe
                     {
-                        nint* workAreas = (nint*)workAreasPtr;
+                        int desktop = *(int*)desktopPtr;
 
-                        int x = (int)workAreas[desktop * 4 + 0];
-                        int y = (int)workAreas[desktop * 4 + 1];
-                        int w = (int)workAreas[desktop * 4 + 2];
-                        int h = (int)workAreas[desktop * 4 + 3];
+                        if (workAreaCount >= 4 && desktop < (workAreaCount / 4))
+                        {
+                            nint* workAreas = (nint*)workAreasPtr;
 
-                        area = Box2i.Intersect(area, new Box2i(x, y, x + w, y + h));
+                            int x = (int)workAreas[desktop * 4 + 0];
+                            int y = (int)workAreas[desktop * 4 + 1];
+                            int w = (int)workAreas[desktop * 4 + 2];
+                            int h = (int)workAreas[desktop * 4 + 3];
+
+                            area = Box2i.Intersect(area, new Box2i(x, y, x + w, y + h));
+                        }
                     }
-                }
-            
+
                 if (workAreasPtr != IntPtr.Zero)
                     XFree(workAreasPtr);
 

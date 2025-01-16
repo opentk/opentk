@@ -41,7 +41,7 @@ namespace Bejeweled
             public byte B;
 
             [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
-            public uint GetBits([ConstantExpected(Min = 0, Max = 127)] int start, [ConstantExpected(Min = 1, Max = 32)] int bits)
+            public readonly uint GetBits([ConstantExpected(Min = 0, Max = 127)] int start, [ConstantExpected(Min = 1, Max = 32)] int bits)
             {
                 Debug.Assert(start + bits <= 128);
                 Debug.Assert(bits <= 32);
@@ -89,7 +89,7 @@ namespace Bejeweled
         {
             public Half R, G, B;
 
-            public override string ToString()
+            public override readonly string ToString()
             {
                 return $"({R}, {G}, {B})";
             }
@@ -117,7 +117,7 @@ namespace Bejeweled
                 return res;
             }
 
-            public override string ToString()
+            public override readonly string ToString()
             {
                 return $"({R}, {G}, {B})";
             }
@@ -127,7 +127,7 @@ namespace Bejeweled
         {
             public ushort R, G, B;
 
-            public override string ToString()
+            public override readonly string ToString()
             {
                 return $"({R}, {G}, {B})";
             }
@@ -137,7 +137,7 @@ namespace Bejeweled
         {
             public ushort R, G, B, A;
 
-            public override string ToString()
+            public override readonly string ToString()
             {
                 return $"({R}, {G}, {B}, {A})";
             }
@@ -161,7 +161,7 @@ namespace Bejeweled
         {
             public Ushort3 Color;
 
-            public override string ToString()
+            public override readonly string ToString()
             {
                 return $"{{{string.Join(',', (MemoryMarshal.Cast<Ushort3, Half3>((ReadOnlySpan<Ushort3>)this)).ToArray())}}}";
             }
@@ -172,7 +172,7 @@ namespace Bejeweled
         {
             public Ushort3 Color;
 
-            public override string ToString()
+            public override readonly string ToString()
             {
                 return $"{{{string.Join(',', (MemoryMarshal.Cast<Ushort3, Half3>((ReadOnlySpan<Ushort3>)this)).ToArray())}}}";
             }
@@ -183,7 +183,7 @@ namespace Bejeweled
         {
             public byte Index;
 
-            public override string ToString()
+            public override readonly string ToString()
             {
                 return $"{{{string.Join(',', ((ReadOnlySpan<byte>)this).ToArray())}}}";
             }
@@ -979,7 +979,7 @@ namespace Bejeweled
             }
         }
 
-        static readonly uint[] Weights8 = new uint[8]{ 0, 9, 18, 27, 37, 46, 55, 64 };
+        static readonly uint[] Weights8 = new uint[8] { 0, 9, 18, 27, 37, 46, 55, 64 };
         static Palette8 GeneratePalette8(Uint3 c1, Uint3 c2, int bits)
         {
             Palette8 palette = new Palette8();
@@ -1001,7 +1001,7 @@ namespace Bejeweled
             return palette;
         }
 
-        static readonly uint[] Weights16 = new uint[16]{ 0, 4, 9, 13, 17, 21, 26, 30, 34, 38, 43, 47, 51, 55, 60, 64 };
+        static readonly uint[] Weights16 = new uint[16] { 0, 4, 9, 13, 17, 21, 26, 30, 34, 38, 43, 47, 51, 55, 60, 64 };
         static Palette16 GeneratePalette16(Uint3 c1, Uint3 c2, int bits)
         {
             Palette16 palette = new Palette16();

@@ -1,13 +1,10 @@
 ﻿using System;
-using OpenTK.Platform;
 using OpenTK.Core.Utility;
 using static OpenTK.Platform.Native.macOS.ObjC;
 using static OpenTK.Platform.Native.macOS.IOPM;
 using static OpenTK.Platform.Native.macOS.IOPS;
 using static OpenTK.Platform.Native.macOS.Mach;
 using static OpenTK.Platform.Native.macOS.MacOSWindowComponent;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
 
 namespace OpenTK.Platform.Native.macOS
 {
@@ -299,7 +296,7 @@ namespace OpenTK.Platform.Native.macOS
 
             return info;
         }
-    
+
         /// <summary>
         /// Calls <see href="https://developer.apple.com/documentation/foundation/1395275-nslog">NSLog</see> to log a message to the Apple System Log facility.
         /// This can be useful when running your application as a bundle as stdout and stderr can't be used.

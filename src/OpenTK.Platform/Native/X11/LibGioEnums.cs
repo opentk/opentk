@@ -1,33 +1,31 @@
-﻿using System;
-
-namespace OpenTK.Platform.Native
+﻿namespace OpenTK.Platform.Native
 {
 
     internal enum GBusType
     {
         G_BUS_TYPE_STARTER = -1,
         G_BUS_TYPE_NONE = 0,
-        G_BUS_TYPE_SYSTEM  = 1,
+        G_BUS_TYPE_SYSTEM = 1,
         G_BUS_TYPE_SESSION = 2
     }
 
     internal enum GDBusProxyFlags
     {
         G_DBUS_PROXY_FLAGS_NONE = 0,
-        G_DBUS_PROXY_FLAGS_DO_NOT_LOAD_PROPERTIES = (1<<0),
-        G_DBUS_PROXY_FLAGS_DO_NOT_CONNECT_SIGNALS = (1<<1),
-        G_DBUS_PROXY_FLAGS_DO_NOT_AUTO_START = (1<<2),
-        G_DBUS_PROXY_FLAGS_GET_INVALIDATED_PROPERTIES = (1<<3),
-        G_DBUS_PROXY_FLAGS_DO_NOT_AUTO_START_AT_CONSTRUCTION = (1<<4),
+        G_DBUS_PROXY_FLAGS_DO_NOT_LOAD_PROPERTIES = (1 << 0),
+        G_DBUS_PROXY_FLAGS_DO_NOT_CONNECT_SIGNALS = (1 << 1),
+        G_DBUS_PROXY_FLAGS_DO_NOT_AUTO_START = (1 << 2),
+        G_DBUS_PROXY_FLAGS_GET_INVALIDATED_PROPERTIES = (1 << 3),
+        G_DBUS_PROXY_FLAGS_DO_NOT_AUTO_START_AT_CONSTRUCTION = (1 << 4),
         // GIO_AVAILABLE_ENUMERATOR_IN_2_72
-        G_DBUS_PROXY_FLAGS_NO_MATCH_RULE = (1<<5)
+        G_DBUS_PROXY_FLAGS_NO_MATCH_RULE = (1 << 5)
     }
 
-     enum GDBusCallFlags
-     {
+    enum GDBusCallFlags
+    {
         G_DBUS_CALL_FLAGS_NONE = 0,
-        G_DBUS_CALL_FLAGS_NO_AUTO_START = (1<<0),
-        G_DBUS_CALL_FLAGS_ALLOW_INTERACTIVE_AUTHORIZATION = (1<<1)
+        G_DBUS_CALL_FLAGS_NO_AUTO_START = (1 << 0),
+        G_DBUS_CALL_FLAGS_ALLOW_INTERACTIVE_AUTHORIZATION = (1 << 1)
     }
 
     internal enum GDBusError
@@ -83,8 +81,8 @@ namespace OpenTK.Platform.Native
     internal enum GConnectFlags
     {
         // GOBJECT_AVAILABLE_ENUMERATOR_IN_2_74
-        G_CONNECT_DEFAULT  = 0,
-        G_CONNECT_AFTER	= 1 << 0,
-        G_CONNECT_SWAPPED	= 1 << 1
+        G_CONNECT_DEFAULT = 0,
+        G_CONNECT_AFTER = 1 << 0,
+        G_CONNECT_SWAPPED = 1 << 1
     }
 }

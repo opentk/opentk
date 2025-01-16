@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using Generator.Parsing;
 using Generator.Utility;
@@ -60,7 +59,7 @@ namespace Generator.Process
         public bool TryGenerateOverloads(Overload overload, [NotNullWhen(true)] out List<Overload>? newOverloads)
         {
             // See: https://github.com/opentk/opentk/blob/082c8d228d0def042b11424ac002776432f44f47/src/Generator.Bind/FuncProcessor.cs#L417
-            
+
             string name = overload.OverloadName;
             string trimmedName = name;
             // FIXME: Remove vendor name before we trim endings
@@ -433,7 +432,7 @@ namespace Generator.Process
     {
         // Regex to match names of vector methods.
         private static readonly Regex VectorNameMatch = new Regex("(?<!6)([1-4])([fdhi])v$", RegexOptions.Compiled);
-        
+
         private static readonly HashSet<string> _mathKinds = new HashSet<string>()
         {
             "Vector1",
@@ -660,12 +659,12 @@ namespace Generator.Process
                     newOverloads.Add(arrayOverload);
                 }
 
-                Overload? numericsRef =   GenSystemNumericsOverload(refOverload, pointerParameters);
-                Overload? numericsSpan =  GenSystemNumericsOverload(spanOverload, pointerParameters);
+                Overload? numericsRef = GenSystemNumericsOverload(refOverload, pointerParameters);
+                Overload? numericsSpan = GenSystemNumericsOverload(spanOverload, pointerParameters);
                 Overload? numericsArray = GenSystemNumericsOverload(arrayOverload, pointerParameters);
 
-                if (numericsRef != null)   newOverloads.Add(numericsRef);
-                if (numericsSpan != null)  newOverloads.Add(numericsSpan);
+                if (numericsRef != null) newOverloads.Add(numericsRef);
+                if (numericsSpan != null) newOverloads.Add(numericsSpan);
                 if (numericsArray != null) newOverloads.Add(numericsArray);
 
                 return true;
@@ -681,7 +680,7 @@ namespace Generator.Process
 
                 Parameter[] parameters = overload.InputParameters.ToArray();
                 List<Parameter> NumericsParameters = new List<Parameter>();
-                
+
                 for (int i = 0; i < overload.InputParameters.Length; i++)
                 {
                     Parameter parameter = overload.InputParameters[i];
@@ -1071,7 +1070,7 @@ namespace Generator.Process
                     parameters[lengthParameterIndex != -1 ? i + 1 : i] = parameter;
                 }
             }
-            
+
             if (lengthParameterIndex == -1)
                 throw new Exception($"Couldnt find len {handleLength.ParameterName} on method {nativeName}");
 
@@ -1349,7 +1348,7 @@ namespace Generator.Process
                     }
                     else if (primitive.TypeName == "uint")
                     {
-                        
+
                         writer.WriteLine($"var {nameTable[PointerParameter]} = (byte*)Marshal.AllocCoTaskMem((int){nameTable[StringLengthParameter]});");
                     }
                     else
@@ -1610,29 +1609,29 @@ namespace Generator.Process
                     switch (overload.NativeFunction.EntryPoint)
                     {
                         // FIXME: glImportMemoryWin32HandleEXT should take a HANDLE object, i.e. IntPtr....
-                        case "glImportMemoryWin32HandleEXT"   when parameter.Name == "handle":       refType = CSRef.Type.RefReadonly; break;
-                        case "glSelectPerfMonitorCountersAMD" when parameter.Name == "counterList":  refType = CSRef.Type.RefReadonly; break;
-                        case "glSharpenTexFuncSGIS"           when parameter.Name == "points":       refType = CSRef.Type.RefReadonly; break;
-                        case "glVertexArrayRangeAPPLE"        when parameter.Name == "pointer":      refType = CSRef.Type.RefReadonly; break;
+                        case "glImportMemoryWin32HandleEXT" when parameter.Name == "handle": refType = CSRef.Type.RefReadonly; break;
+                        case "glSelectPerfMonitorCountersAMD" when parameter.Name == "counterList": refType = CSRef.Type.RefReadonly; break;
+                        case "glSharpenTexFuncSGIS" when parameter.Name == "points": refType = CSRef.Type.RefReadonly; break;
+                        case "glVertexArrayRangeAPPLE" when parameter.Name == "pointer": refType = CSRef.Type.RefReadonly; break;
                         // FIXME: Should we have glCullParameter*vEXT here? They have len="4" and never get triggered...
-                        case "glCullParameterdvEXT"           when parameter.Name == "params":       refType = CSRef.Type.RefReadonly; break;
-                        case "glCullParameterfvEXT"           when parameter.Name == "params":       refType = CSRef.Type.RefReadonly; break;
-                        case "glDeletePerfMonitorsAMD"        when parameter.Name == "monitors":     refType = CSRef.Type.RefReadonly; break;
-                        case "glFlushVertexArrayRangeAPPLE"   when parameter.Name == "pointer":      refType = CSRef.Type.RefReadonly; break;
+                        case "glCullParameterdvEXT" when parameter.Name == "params": refType = CSRef.Type.RefReadonly; break;
+                        case "glCullParameterfvEXT" when parameter.Name == "params": refType = CSRef.Type.RefReadonly; break;
+                        case "glDeletePerfMonitorsAMD" when parameter.Name == "monitors": refType = CSRef.Type.RefReadonly; break;
+                        case "glFlushVertexArrayRangeAPPLE" when parameter.Name == "pointer": refType = CSRef.Type.RefReadonly; break;
 
-                        case "wglDXLockObjectsNV"             when parameter.Name == "hObjects":     refType = CSRef.Type.RefReadonly; break;
-                        case "wglDXOpenDeviceNV"              when parameter.Name == "dxDevice":     refType = CSRef.Type.RefReadonly; break;
-                        case "wglDXRegisterObjectNV"          when parameter.Name == "dxObject":     refType = CSRef.Type.RefReadonly; break;
-                        case "wglDXSetResourceShareHandleNV"  when parameter.Name == "dxObject":     refType = CSRef.Type.RefReadonly; break;
-                        case "wglDXUnlockObjectsNV"           when parameter.Name == "hObjects":     refType = CSRef.Type.RefReadonly; break;
-                        case "wglGetPixelFormatAttribfvEXT"   when parameter.Name == "piAttributes": refType = CSRef.Type.RefReadonly; break;
-                        case "wglGetPixelFormatAttribivEXT"   when parameter.Name == "piAttributes": refType = CSRef.Type.RefReadonly; break;
+                        case "wglDXLockObjectsNV" when parameter.Name == "hObjects": refType = CSRef.Type.RefReadonly; break;
+                        case "wglDXOpenDeviceNV" when parameter.Name == "dxDevice": refType = CSRef.Type.RefReadonly; break;
+                        case "wglDXRegisterObjectNV" when parameter.Name == "dxObject": refType = CSRef.Type.RefReadonly; break;
+                        case "wglDXSetResourceShareHandleNV" when parameter.Name == "dxObject": refType = CSRef.Type.RefReadonly; break;
+                        case "wglDXUnlockObjectsNV" when parameter.Name == "hObjects": refType = CSRef.Type.RefReadonly; break;
+                        case "wglGetPixelFormatAttribfvEXT" when parameter.Name == "piAttributes": refType = CSRef.Type.RefReadonly; break;
+                        case "wglGetPixelFormatAttribivEXT" when parameter.Name == "piAttributes": refType = CSRef.Type.RefReadonly; break;
 
                         // We do the special handling above so that we can assume that any parameter that is not marked
                         // "const" here is an out parameter.
                         // Any potential ref parameters should be handled above.
                         // - Noggin_bops 2024-03-16
-                        default: refType = constant ? CSRef.Type.RefReadonly : outParamSuitable ? CSRef.Type.Out : CSRef.Type.Ref;  break;
+                        default: refType = constant ? CSRef.Type.RefReadonly : outParamSuitable ? CSRef.Type.Out : CSRef.Type.Ref; break;
                     }
 
                     // Rename the parameter

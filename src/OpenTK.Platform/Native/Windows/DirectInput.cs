@@ -1,17 +1,8 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Metadata;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.ComTypes;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
-using static OpenTK.Platform.Native.Windows.DirectInput;
 using static OpenTK.Platform.Native.Windows.Win32;
-using static System.Formats.Asn1.AsnWriter;
 
 namespace OpenTK.Platform.Native.Windows
 {
@@ -36,7 +27,7 @@ namespace OpenTK.Platform.Native.Windows
 
             public _VTable** VTable;
 
-            public IntPtr Handle => (IntPtr)VTable;
+            public readonly IntPtr Handle => (IntPtr)VTable;
 
             // FIXME: This is only temporary while we have COM objects refered to by IntPtr
             public static explicit operator IUnknown(IntPtr ptr) => new IUnknown() { VTable = (_VTable**)ptr };
@@ -84,7 +75,7 @@ namespace OpenTK.Platform.Native.Windows
 
             public _VTable** VTable;
 
-            public IntPtr Handle => (IntPtr)VTable;
+            public readonly IntPtr Handle => (IntPtr)VTable;
 
             public static explicit operator IDirectInput8(IUnknown ptr) => new IDirectInput8() { VTable = (_VTable**)ptr.VTable };
 
@@ -188,27 +179,27 @@ namespace OpenTK.Platform.Native.Windows
 
         // FIXME: FixedAddressValueType doesn't work with AssemblyLoadContext...
         [FixedAddressValueType]
-        internal static readonly Guid GUID_XAxis = new Guid(0xA36D02E0,0xC9F3,0x11CF,0xBF,0xC7,0x44,0x45,0x53,0x54,0x00,0x00);
+        internal static readonly Guid GUID_XAxis = new Guid(0xA36D02E0, 0xC9F3, 0x11CF, 0xBF, 0xC7, 0x44, 0x45, 0x53, 0x54, 0x00, 0x00);
         [FixedAddressValueType]
-        internal static readonly Guid GUID_YAxis = new Guid(0xA36D02E1,0xC9F3,0x11CF,0xBF,0xC7,0x44,0x45,0x53,0x54,0x00,0x00);
+        internal static readonly Guid GUID_YAxis = new Guid(0xA36D02E1, 0xC9F3, 0x11CF, 0xBF, 0xC7, 0x44, 0x45, 0x53, 0x54, 0x00, 0x00);
         [FixedAddressValueType]
-        internal static readonly Guid GUID_ZAxis = new Guid(0xA36D02E2,0xC9F3,0x11CF,0xBF,0xC7,0x44,0x45,0x53,0x54,0x00,0x00);
+        internal static readonly Guid GUID_ZAxis = new Guid(0xA36D02E2, 0xC9F3, 0x11CF, 0xBF, 0xC7, 0x44, 0x45, 0x53, 0x54, 0x00, 0x00);
         [FixedAddressValueType]
-        internal static readonly Guid GUID_RxAxis = new Guid(0xA36D02F4,0xC9F3,0x11CF,0xBF,0xC7,0x44,0x45,0x53,0x54,0x00,0x00);
+        internal static readonly Guid GUID_RxAxis = new Guid(0xA36D02F4, 0xC9F3, 0x11CF, 0xBF, 0xC7, 0x44, 0x45, 0x53, 0x54, 0x00, 0x00);
         [FixedAddressValueType]
-        internal static readonly Guid GUID_RyAxis = new Guid(0xA36D02F5,0xC9F3,0x11CF,0xBF,0xC7,0x44,0x45,0x53,0x54,0x00,0x00);
+        internal static readonly Guid GUID_RyAxis = new Guid(0xA36D02F5, 0xC9F3, 0x11CF, 0xBF, 0xC7, 0x44, 0x45, 0x53, 0x54, 0x00, 0x00);
         [FixedAddressValueType]
-        internal static readonly Guid GUID_RzAxis = new Guid(0xA36D02E3,0xC9F3,0x11CF,0xBF,0xC7,0x44,0x45,0x53,0x54,0x00,0x00);
+        internal static readonly Guid GUID_RzAxis = new Guid(0xA36D02E3, 0xC9F3, 0x11CF, 0xBF, 0xC7, 0x44, 0x45, 0x53, 0x54, 0x00, 0x00);
         [FixedAddressValueType]
-        internal static readonly Guid GUID_Slider = new Guid(0xA36D02E4,0xC9F3,0x11CF,0xBF,0xC7,0x44,0x45,0x53,0x54,0x00,0x00);
+        internal static readonly Guid GUID_Slider = new Guid(0xA36D02E4, 0xC9F3, 0x11CF, 0xBF, 0xC7, 0x44, 0x45, 0x53, 0x54, 0x00, 0x00);
         [FixedAddressValueType]
-        internal static readonly Guid GUID_Button = new Guid(0xA36D02F0,0xC9F3,0x11CF,0xBF,0xC7,0x44,0x45,0x53,0x54,0x00,0x00);
+        internal static readonly Guid GUID_Button = new Guid(0xA36D02F0, 0xC9F3, 0x11CF, 0xBF, 0xC7, 0x44, 0x45, 0x53, 0x54, 0x00, 0x00);
         [FixedAddressValueType]
-        internal static readonly Guid GUID_Key = new Guid(0x55728220,0xD33C,0x11CF,0xBF,0xC7,0x44,0x45,0x53,0x54,0x00,0x00);
+        internal static readonly Guid GUID_Key = new Guid(0x55728220, 0xD33C, 0x11CF, 0xBF, 0xC7, 0x44, 0x45, 0x53, 0x54, 0x00, 0x00);
         [FixedAddressValueType]
-        internal static readonly Guid GUID_POV = new Guid(0xA36D02F2,0xC9F3,0x11CF,0xBF,0xC7,0x44,0x45,0x53,0x54,0x00,0x00);
+        internal static readonly Guid GUID_POV = new Guid(0xA36D02F2, 0xC9F3, 0x11CF, 0xBF, 0xC7, 0x44, 0x45, 0x53, 0x54, 0x00, 0x00);
         [FixedAddressValueType]
-        internal static readonly Guid GUID_Unknown = new Guid(0xA36D02F3,0xC9F3,0x11CF,0xBF,0xC7,0x44,0x45,0x53,0x54,0x00,0x00);
+        internal static readonly Guid GUID_Unknown = new Guid(0xA36D02F3, 0xC9F3, 0x11CF, 0xBF, 0xC7, 0x44, 0x45, 0x53, 0x54, 0x00, 0x00);
 
         [FixedAddressValueType]
         internal unsafe static readonly DIOBJECTDATAFORMAT[] c_dfDIJoystick_rgodf = new DIOBJECTDATAFORMAT[]
@@ -451,7 +442,7 @@ namespace OpenTK.Platform.Native.Windows
 
             public _VTable** VTable;
 
-            public IntPtr Handle => (IntPtr)VTable;
+            public readonly IntPtr Handle => (IntPtr)VTable;
 
             public void Initialize(IntPtr hinst, uint dwVersion, ref Guid rguid)
             {
@@ -482,7 +473,7 @@ namespace OpenTK.Platform.Native.Windows
                 CheckHResult(result);
             }
 
-            public void GetDeviceData(uint cbObjectData, ref DIDEVICEOBJECTDATA rgdod)
+            public readonly void GetDeviceData(uint cbObjectData, ref DIDEVICEOBJECTDATA rgdod)
             {
 
             }
@@ -528,7 +519,7 @@ namespace OpenTK.Platform.Native.Windows
 
             public _VTable** VTable;
 
-            public IntPtr Handle => (IntPtr)VTable;
+            public readonly IntPtr Handle => (IntPtr)VTable;
         }
 
         internal static readonly Guid CLSID_DirectInput = new Guid(0x25E609E4, 0xB259, 0x11CF, 0xBF, 0xC7, 0x44, 0x45, 0x53, 0x54, 0x00, 0x00);

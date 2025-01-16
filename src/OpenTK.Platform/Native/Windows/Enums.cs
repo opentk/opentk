@@ -1538,7 +1538,7 @@ namespace OpenTK.Platform.Native.Windows
         NoData = 0x00000080,
         AnyInstance = 0x00FFFF00,
         InstanceMask = AnyInstance,
-        
+
         FFActuator = 0x01000000,
         FFEffectTrigger = 0x02000000,
         Output = 0x10000000,
@@ -4776,15 +4776,15 @@ namespace OpenTK.Platform.Native.Windows
 
     internal enum TaskDialogButtonID : int
     {
-        IDOK     = 1,
+        IDOK = 1,
         IDCANCEL = 2,
-        IDABORT  = 3,
-        IDRETRY  = 4,
+        IDABORT = 3,
+        IDRETRY = 4,
         IDIGNORE = 5,
-        IDYES    = 6,
-        IDNO     = 7,
-        IDCLOSE  = 8,
-        IDHELP   = 9,
+        IDYES = 6,
+        IDNO = 7,
+        IDCLOSE = 8,
+        IDHELP = 9,
     }
 
     internal enum TDN : uint
@@ -4842,7 +4842,7 @@ namespace OpenTK.Platform.Native.Windows
         /// A file or directory that is an archive file or directory.
         /// Applications typically use this attribute to mark files for backup or removal .
         /// </summary>
-        Archive= 0x20,
+        Archive = 0x20,
 
         /// <summary>
         /// A file or directory that is compressed.
@@ -5315,7 +5315,8 @@ namespace OpenTK.Platform.Native.Windows
         KeyWrite = 0x20006,
     }
 
-    internal enum PredefinedKeys : uint {
+    internal enum PredefinedKeys : uint
+    {
         /// <summary>
         /// Registry entries subordinate to this key define types (or classes)
         /// of documents and the properties associated with those types.

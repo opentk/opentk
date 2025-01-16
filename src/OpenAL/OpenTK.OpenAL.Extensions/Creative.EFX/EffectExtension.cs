@@ -7,8 +7,6 @@
 // of the MIT license. See the LICENSE file for details.
 //
 
-using OpenTK.Core.Extensions;
-using OpenTK.Core.Loader;
 using OpenTK.Mathematics;
 
 namespace OpenTK.OpenAL.Extensions.Creative.EFX

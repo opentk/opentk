@@ -100,7 +100,7 @@ namespace OpenTK.Mathematics
         /// <param name="t">The t value, between 0.0f and 1.0f.</param>
         /// <returns>Resulting point.</returns>
         [Pure]
-        public Vector2 CalculatePoint(float t)
+        public readonly Vector2 CalculatePoint(float t)
         {
             var c = 1.0f - t;
 
@@ -159,7 +159,7 @@ namespace OpenTK.Mathematics
         /// value gets smaller.
         /// </remarks>
         [Pure]
-        public float CalculateLength(float precision)
+        public readonly float CalculateLength(float precision)
         {
             var length = 0.0f;
             var old = CalculatePoint(0.0f);

@@ -1,14 +1,7 @@
 ﻿using ImGuiNET;
 using OpenTK.Platform;
 using OpenTK.Mathematics;
-using OpenTK.Platform.Native;
-using OpenTK.Platform.Native.macOS;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OpenTK.Backends.Tests
 {
@@ -18,8 +11,8 @@ namespace OpenTK.Backends.Tests
 
         public override bool IsVisible => Toolkit.Window != null;
 
-        static readonly System.Numerics.Vector4 GoodColor = new  System.Numerics.Vector4(0.630f, 0.980f, 0.343f, 1.0f);
-        static readonly System.Numerics.Vector4 BadColor = new  System.Numerics.Vector4(1.0f, 0.184f, 0.184f, 1.0f);
+        static readonly System.Numerics.Vector4 GoodColor = new System.Numerics.Vector4(0.630f, 0.980f, 0.343f, 1.0f);
+        static readonly System.Numerics.Vector4 BadColor = new System.Numerics.Vector4(1.0f, 0.184f, 0.184f, 1.0f);
 
 
         readonly static CursorCaptureMode[] CaptureModes = Enum.GetValues<CursorCaptureMode>();
@@ -94,7 +87,7 @@ namespace OpenTK.Backends.Tests
                     System.Numerics.Vector4 positionsMatchColor = globalState.Position == globalPosition ? GoodColor : BadColor;
 
                     // FIXME: Display these in red text if they are not the same!
-                    ImGui.TextColored(positionsMatchColor, $"Global Mouse position: ({globalPosition.X}, {globalPosition.Y})");                   ImGui.SameLine(); ImGuiUtils.HelpMarker("This info comes from GetGlobalPosition(). Should be the same as mouse state position.");
+                    ImGui.TextColored(positionsMatchColor, $"Global Mouse position: ({globalPosition.X}, {globalPosition.Y})"); ImGui.SameLine(); ImGuiUtils.HelpMarker("This info comes from GetGlobalPosition(). Should be the same as mouse state position.");
                     ImGui.TextColored(positionsMatchColor, $"Global Mouse state position: ({globalState.Position.X}, {globalState.Position.Y})"); ImGui.SameLine(); ImGuiUtils.HelpMarker("This info comes from GetGlobalMouseState(). Should be the same as mouse position.");
 
                     ImGuiUtils.WindowCombobox("Window", ref mouseCoordWindow);
@@ -104,7 +97,7 @@ namespace OpenTK.Backends.Tests
 
                     System.Numerics.Vector4 windowPositionsMatchColor = state.Position == position ? GoodColor : BadColor;
 
-                    ImGui.TextColored(positionsMatchColor, $"Window Mouse position: ({position.X}, {position.Y})");                   ImGui.SameLine(); ImGuiUtils.HelpMarker("This info comes from GetPosition(). Should be the same as mouse state position.");
+                    ImGui.TextColored(positionsMatchColor, $"Window Mouse position: ({position.X}, {position.Y})"); ImGui.SameLine(); ImGuiUtils.HelpMarker("This info comes from GetPosition(). Should be the same as mouse state position.");
                     ImGui.TextColored(positionsMatchColor, $"Window Mouse state position: ({state.Position.X}, {state.Position.Y})"); ImGui.SameLine(); ImGuiUtils.HelpMarker("This info comes from GetMouseState(). Should be the same as mouse position.");
 
                     if (Toolkit.Window != null)
@@ -153,9 +146,9 @@ namespace OpenTK.Backends.Tests
 
                         ImGui.Text($"Position: ({x}, {y})");
                         // FIXME: Mark red if these do not match.
-                        ImGui.TextColored(resolutionsMatchColor, $"Resolution: {width}x{height}");                       ImGui.SameLine(); ImGuiUtils.HelpMarker("From GetResolution(). Should be the same as Video mode resolution.");
+                        ImGui.TextColored(resolutionsMatchColor, $"Resolution: {width}x{height}"); ImGui.SameLine(); ImGuiUtils.HelpMarker("From GetResolution(). Should be the same as Video mode resolution.");
                         ImGui.TextColored(resolutionsMatchColor, $"Video mode resoltion: ({mode.Width}x{mode.Height})"); ImGui.SameLine(); ImGuiUtils.HelpMarker("From GetVideoMode(). Should be the same as Resolution.");
-                        ImGui.Text($"Bounds: {new Box2i((x,y), (x+width, y+height))}");
+                        ImGui.Text($"Bounds: {new Box2i((x, y), (x + width, y + height))}");
                         ImGui.Text($"Work area: {workArea}");
 
                         ImGui.Text("");

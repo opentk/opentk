@@ -8,8 +8,6 @@ using Generator.Process;
 using System.Collections.Generic;
 using System;
 using System.Linq;
-using System.Threading;
-using System.Runtime.CompilerServices;
 
 namespace Generator
 {

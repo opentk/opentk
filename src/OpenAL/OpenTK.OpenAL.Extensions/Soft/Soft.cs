@@ -8,7 +8,6 @@
 //
 
 using System;
-using OpenTK.Core.Extensions;
 
 namespace OpenTK.OpenAL.Extensions.Soft
 {

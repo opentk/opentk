@@ -94,7 +94,7 @@ namespace OpenTK.Backends.Tests
                 }
                 ImGui.EndTabBar();
             }
-            
+
             ImGui.End();
         }
 
@@ -112,25 +112,25 @@ namespace OpenTK.Backends.Tests
         }
 
         #region IEnumerable<View>
-            /// <inheritdoc/>
-            public int Count => _views.Count;
+        /// <inheritdoc/>
+        public int Count => _views.Count;
 
-            /// <inheritdoc/>
-            public void Add(View item)
-            {
-                _views.Add(item);
-            }
+        /// <inheritdoc/>
+        public void Add(View item)
+        {
+            _views.Add(item);
+        }
 
-            /// <inheritdoc/>
-            public IEnumerator<View> GetEnumerator()
-            {
-                return _views.GetEnumerator();
-            }
+        /// <inheritdoc/>
+        public IEnumerator<View> GetEnumerator()
+        {
+            return _views.GetEnumerator();
+        }
 
-            IEnumerator IEnumerable.GetEnumerator()
-            {
-                return ((IEnumerable)_views).GetEnumerator();
-            }
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return ((IEnumerable)_views).GetEnumerator();
+        }
         #endregion
     }
 }

@@ -1,17 +1,8 @@
-﻿using OpenTK.Platform;
-using OpenTK.Core.Utility;
+﻿using OpenTK.Core.Utility;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Xml;
-using System.Xml.XPath;
 
 namespace OpenTK.Platform.Native.Windows
 {
@@ -90,13 +81,13 @@ namespace OpenTK.Platform.Native.Windows
                     // Media keys don't have scancodes, so we map them here.
                     switch (scancodes[i])
                     {
-                        case Scancode.PlayPause:         key = Key.PlayPause;     break;
-                        case Scancode.ScanNextTrack:     key = Key.NextTrack;     break;
+                        case Scancode.PlayPause: key = Key.PlayPause; break;
+                        case Scancode.ScanNextTrack: key = Key.NextTrack; break;
                         case Scancode.ScanPreviousTrack: key = Key.PreviousTrack; break;
-                        case Scancode.Stop:              key = Key.Stop;          break;
-                        case Scancode.VolumeIncrement:   key = Key.VolumeUp;      break;
-                        case Scancode.VolumeDecrement:   key = Key.VolumeDown;    break;
-                        case Scancode.Mute:              key = Key.Mute;          break;
+                        case Scancode.Stop: key = Key.Stop; break;
+                        case Scancode.VolumeIncrement: key = Key.VolumeUp; break;
+                        case Scancode.VolumeDecrement: key = Key.VolumeDown; break;
+                        case Scancode.Mute: key = Key.Mute; break;
                         default:
                             Logger?.LogDebug($"Scancode {scancodes[i]} is not mapped in the scancode lookup table!");
                             key = Key.Unknown;
@@ -598,7 +589,7 @@ namespace OpenTK.Platform.Native.Windows
             Scancode code;
             if (extended)
             {
-                code = ScancodeLookupExt[winScancode]; 
+                code = ScancodeLookupExt[winScancode];
             }
             else
             {

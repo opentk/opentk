@@ -1,13 +1,6 @@
-﻿using OpenTK.Platform;
-using OpenTK.Core.Utility;
+﻿using OpenTK.Core.Utility;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OpenTK.Platform.Native.Windows
 {
@@ -372,7 +365,7 @@ namespace OpenTK.Platform.Native.Windows
                     {
                         // FIXME: Overflow?
                         bmInfo.bmiHeader.biHeight = -bmInfo.bmiHeader.biHeight;
-                        
+
                         // A negative height means we have a top-down bitmap.
                         // For consistency we need to flip this image vertically.
                         for (int y = 0; y < bmInfo.bmiHeader.biHeight / 2; y++)

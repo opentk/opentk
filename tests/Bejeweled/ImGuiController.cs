@@ -1,12 +1,10 @@
 ﻿using ImGuiNET;
 using System;
-using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Diagnostics;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Mathematics;
 using OpenTK.Platform;
-using OpenTK.Platform.Native;
 using ErrorCode = OpenTK.Graphics.OpenGL.ErrorCode;
 using System.Linq;
 
@@ -74,7 +72,7 @@ namespace Bejeweled
             IntPtr context = ImGui.CreateContext();
             ImGui.SetCurrentContext(context);
             var io = ImGui.GetIO();
-            
+
             io.BackendFlags |= ImGuiBackendFlags.RendererHasVtxOffset;
 
             CreateDeviceResources();

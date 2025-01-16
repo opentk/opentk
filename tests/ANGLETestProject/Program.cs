@@ -21,7 +21,7 @@ namespace ANGLETestProject
             OpenGLComp = new ANGLEOpenGLComponent();
 
             ToolkitOptions options = new ToolkitOptions() { Logger = new ConsoleLogger() };
-            
+
             WindowComp.Logger = options.Logger;
             OpenGLComp.Logger = options.Logger;
 

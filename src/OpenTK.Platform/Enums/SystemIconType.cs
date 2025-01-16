@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace OpenTK.Platform
+﻿namespace OpenTK.Platform
 {
     // FIXME: Maybe extend this list to encompass more icons
     // See: https://learn.microsoft.com/en-us/windows/win32/api/shellapi/ne-shellapi-shstockiconid

@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics;
 using Generator.Parsing;
 using System.CodeDom.Compiler;
-using Generator.Utility;
 
 namespace Generator.Writing
 {

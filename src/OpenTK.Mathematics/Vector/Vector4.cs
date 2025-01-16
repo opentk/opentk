@@ -1018,7 +1018,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector2 Xy
         {
-            get => new Vector2(X, Y);
+            readonly get => new Vector2(X, Y);
             set
             {
                 X = value.X;
@@ -1186,7 +1186,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector3 Xyz
         {
-            get => new Vector3(X, Y, Z);
+            readonly get => new Vector3(X, Y, Z);
             set
             {
                 X = value.X;

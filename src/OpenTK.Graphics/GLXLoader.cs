@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OpenTK.Graphics
 {
@@ -46,7 +41,7 @@ namespace OpenTK.Graphics
                 return 0;
             }
         }
-        
+
         // FIXME: By default let the OS decide, if that fails use vendor. Add other vendor GLX versions.
         static readonly string[] LibraryNames = new string[]
             {

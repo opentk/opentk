@@ -1,5 +1,4 @@
 ﻿using System;
-using OpenTK;
 using OpenTK.Platform;
 using OpenTK.Graphics;
 using OpenTK.Platform.Native;

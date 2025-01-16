@@ -35,7 +35,7 @@ namespace OpenTK.Windowing.Common
         /// </summary>
         /// <typeparam name="T">The type of the object found at the <see cref="Pointer"/> memory address.</typeparam>
         /// <returns>A unmanaged pointer to the underlying native Monitor.</returns>
-        public unsafe T* ToUnsafePtr<T>() where T : unmanaged
+        public readonly unsafe T* ToUnsafePtr<T>() where T : unmanaged
         {
             return (T*)Pointer;
         }

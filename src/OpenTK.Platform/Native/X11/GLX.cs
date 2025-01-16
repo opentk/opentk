@@ -1,5 +1,4 @@
 using System;
-using System.Reflection;
 using System.Runtime.InteropServices;
 
 namespace OpenTK.Platform.Native.X11
@@ -202,7 +201,7 @@ namespace OpenTK.Platform.Native.X11
         internal const int GLX_PBUFFER_CLOBBER_MASK = 0x08000000;
 
         [DllImport(glx, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern unsafe GLXFBConfig *glXChooseFBConfig(
+        internal static extern unsafe GLXFBConfig* glXChooseFBConfig(
             XDisplayPtr display,
             int screen,
             ref int attribList,
@@ -239,14 +238,14 @@ namespace OpenTK.Platform.Native.X11
         internal const int GLX_SAMPLES = 0x186a1;
 
         [DllImport(glx, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern IntPtr glXGetProcAddress([MarshalAs(UnmanagedType.LPStr)]string procname);
+        internal static extern IntPtr glXGetProcAddress([MarshalAs(UnmanagedType.LPStr)] string procname);
 
         #endregion
 
         #region GLX_ARB_get_proc_address
 
         [DllImport(glx, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern IntPtr glXGetProcAddressARB([MarshalAs(UnmanagedType.LPStr)]string procname);
+        internal static extern IntPtr glXGetProcAddressARB([MarshalAs(UnmanagedType.LPStr)] string procname);
 
         #endregion
 
@@ -299,7 +298,7 @@ namespace OpenTK.Platform.Native.X11
         internal static extern int glXSwapIntervalSGI(int interval);
 
         #endregion
-    
+
         /// <summary>From GLX_ARB_framebuffer_sRGB</summary>
         internal const int GLX_FRAMEBUFFER_SRGB_CAPABLE_ARB = 0x20B2;
 

@@ -1,15 +1,10 @@
-﻿using OpenTK.Platform;
-using OpenTK.Core.Utility;
+﻿using OpenTK.Core.Utility;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Net.NetworkInformation;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using static OpenTK.Platform.Native.X11.XScreenSaver;
 using static OpenTK.Platform.Native.X11.LibX11;
 
@@ -34,7 +29,7 @@ namespace OpenTK.Platform.Native.X11
                 return ReadOnlySpan<byte>.Empty;
 
             int len = 0;
-            while (str[len++] != 0) {}
+            while (str[len++] != 0) { }
             return new ReadOnlySpan<byte>(str, len - 1);
         }
 
@@ -44,7 +39,7 @@ namespace OpenTK.Platform.Native.X11
 
         // FIXME: Make this non-static while still exposing it to X11WindowComponent.
         internal static IntPtr GlibMainLoop;
-        
+
         internal IntPtr GVariant_org_freedesktop_appearance_color_scheme;
 
         internal IntPtr GVariant_org_gnome_desktop_a11y_interface_high_contrast;
@@ -68,7 +63,7 @@ namespace OpenTK.Platform.Native.X11
             GVariant_org_freedesktop_appearance_color_scheme = LibGio.g_variant_ref(LibGio.g_variant_new(AsPtr("(ss)"u8), AsPtr("org.freedesktop.appearance"u8), AsPtr("color-scheme"u8)));
 
             GVariant_org_gnome_desktop_a11y_interface_high_contrast = LibGio.g_variant_ref(LibGio.g_variant_new(AsPtr("(ss)"u8), AsPtr("org.gnome.desktop.a11y.interface"u8), AsPtr("high-contrast"u8)));
-            
+
             GError* error = null;
             PortalDesktop = LibGio.g_dbus_proxy_new_for_bus_sync(
                                             GBusType.G_BUS_TYPE_SESSION,
@@ -134,7 +129,8 @@ namespace OpenTK.Platform.Native.X11
             LibGio.g_main_loop_unref(GlibMainLoop);
         }
 
-        private unsafe struct SettingsChangedParameters {
+        private unsafe struct SettingsChangedParameters
+        {
             public byte* Namespace;
             public byte* Key;
             public IntPtr Value;
@@ -150,7 +146,7 @@ namespace OpenTK.Platform.Native.X11
             Debug.Assert(ToSpan(signal_name).SequenceEqual("SettingChanged"u8));
 
             SettingsChangedParameters args;
-            LibGio.g_variant_get(parameters, AsPtr("(ssv)"u8), 
+            LibGio.g_variant_get(parameters, AsPtr("(ssv)"u8),
                 out Unsafe.AsRef<IntPtr>(&args.Namespace),
                 out Unsafe.AsRef<IntPtr>(&args.Key),
                 out Unsafe.AsRef<IntPtr>(&args.Value));
@@ -289,7 +285,7 @@ namespace OpenTK.Platform.Native.X11
                             break;
                         case "Full\n":
                             break;
-                        default: 
+                        default:
                             // We couldn't read the status or the status is not one that we recognize.
                             break;
                     }
@@ -320,7 +316,7 @@ namespace OpenTK.Platform.Native.X11
                     }
 
                     string? timeToEmptyNowStr = ReadPowerFile(dir, "time_to_empty_now");
-                    if (timeToEmptyNowStr != null && 
+                    if (timeToEmptyNowStr != null &&
                         int.TryParse(timeToEmptyNowStr, out int timeToEmptyNow))
                     {
                         batteryTime = timeToEmptyNow;
@@ -356,7 +352,7 @@ namespace OpenTK.Platform.Native.X11
 
             static string? ReadPowerFile(string name, string key)
             {
-                string path = Path.Combine("/sys/class/power_supply/",  name, key);
+                string path = Path.Combine("/sys/class/power_supply/", name, key);
                 // Relying on exceptions here is *really* slow, so we
                 // just check if the file exists before we try to read it.
                 // The try-catch is to prevent a crash if the file
@@ -364,7 +360,7 @@ namespace OpenTK.Platform.Native.X11
                 // - Noggin_bops 2024-02-25
                 if (File.Exists(path))
                 {
-                    try 
+                    try
                     {
                         return File.ReadAllText(path);
                     }
@@ -384,7 +380,8 @@ namespace OpenTK.Platform.Native.X11
         internal bool TryReadColorScheme(out int scheme)
         {
             scheme = -1;
-            unsafe {
+            unsafe
+            {
                 GError* error = null;
                 IntPtr ret = LibGio.g_dbus_proxy_call_sync(PortalDesktop, AsPtr("Read"u8), GVariant_org_freedesktop_appearance_color_scheme, GDBusCallFlags.G_DBUS_CALL_FLAGS_NONE, int.MaxValue, IntPtr.Zero, &error);
                 if (error != null)
@@ -427,7 +424,8 @@ namespace OpenTK.Platform.Native.X11
         internal bool TryReadHighContrast(out bool highContrast)
         {
             highContrast = false;
-            unsafe {
+            unsafe
+            {
                 GError* error = null;
                 IntPtr ret = LibGio.g_dbus_proxy_call_sync(PortalDesktop, AsPtr("Read"u8), GVariant_org_gnome_desktop_a11y_interface_high_contrast, GDBusCallFlags.G_DBUS_CALL_FLAGS_NONE, int.MaxValue, IntPtr.Zero, &error);
                 if (error != null)
@@ -472,7 +470,7 @@ namespace OpenTK.Platform.Native.X11
         {
             return CurrentTheme;
         }
-        
+
         // FIXME: Platform specific API for getting a theme name (e.g. gtk-theme).
         // FIXME: Platform specific API for getting accent color?
 

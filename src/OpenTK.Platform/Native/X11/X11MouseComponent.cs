@@ -1,11 +1,6 @@
-﻿using OpenTK.Platform;
-using OpenTK.Core.Utility;
+﻿using OpenTK.Core.Utility;
 using OpenTK.Mathematics;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using static OpenTK.Platform.Native.X11.LibX11;
 
 namespace OpenTK.Platform.Native.X11
@@ -81,13 +76,13 @@ namespace OpenTK.Platform.Native.X11
             {
                 // Record window local state
                 if (pressed) xwindow.PressedMouseButtons |= flag;
-                else         xwindow.PressedMouseButtons &= ~flag;
+                else xwindow.PressedMouseButtons &= ~flag;
             }
 
             // Record global state.
             bool wasPressed = (MouseButtonState & flag) != 0;
             if (pressed) MouseButtonState |= flag;
-            else         MouseButtonState &= ~flag;
+            else MouseButtonState &= ~flag;
             return wasPressed == pressed;
         }
 

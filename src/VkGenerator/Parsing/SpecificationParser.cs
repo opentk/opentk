@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 using System.Xml.Linq;
 using VkGenerator.Process;
 using VkGenerator.Utility.Extensions;
@@ -28,7 +23,7 @@ namespace VkGenerator.Parsing
             List<Feature> Features,
             List<Extension> Extensions);
 
-    public record TypeData (
+    public record TypeData(
         List<StructType> Structs,
         List<EnumName> EnumNames,
         List<BitmaskName> BitmaskNames,
@@ -604,7 +599,7 @@ namespace VkGenerator.Parsing
                     continue;
 
                 string name = extension.Attribute("name")?.Value ?? throw new Exception();
-                int number  = int.Parse(extension.Attribute("number")?.Value ?? throw new Exception());
+                int number = int.Parse(extension.Attribute("number")?.Value ?? throw new Exception());
 
                 if (int.TryParse(extension.Attribute("sortorder")?.Value, out int sortOrder) == false)
                     sortOrder = 0;
@@ -756,7 +751,7 @@ namespace VkGenerator.Parsing
 
                 requiredCommands.Add(new RequireCommand(commandName));
             }
-            
+
             List<RequireType> requiredTypes = new List<RequireType>();
             foreach (XElement command in require.Elements("type"))
             {

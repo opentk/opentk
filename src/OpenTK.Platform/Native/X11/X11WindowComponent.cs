@@ -7,7 +7,6 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
-using OpenTK.Platform;
 using OpenTK.Core.Utility;
 using OpenTK.Mathematics;
 using static OpenTK.Platform.Native.X11.GLX;
@@ -15,8 +14,6 @@ using static OpenTK.Platform.Native.X11.LibX11;
 using static OpenTK.Platform.Native.X11.XI2.XI2;
 using OpenTK.Platform.Native.X11.XRandR;
 using OpenTK.Platform.Native.X11.XI2;
-using System.Reflection.Metadata.Ecma335;
-using OpenTK.Platform.Native.Windows;
 
 namespace OpenTK.Platform.Native.X11
 {
@@ -93,7 +90,7 @@ namespace OpenTK.Platform.Native.X11
             // name of the Window Manager.
 
             XWindow wm_window;
-            
+
             int result = XGetWindowProperty(
                 X11.Display,
                 X11.DefaultRootWindow,
@@ -126,7 +123,7 @@ namespace OpenTK.Platform.Native.X11
                 result = XGetWindowProperty(
                     X11.Display,
                     wm_window,
-                    X11.Atoms[KnownAtoms._NET_SUPPORTING_WM_CHECK], 
+                    X11.Atoms[KnownAtoms._NET_SUPPORTING_WM_CHECK],
                     0, 8,
                     false,
                     X11.Atoms[KnownAtoms.WINDOW],
@@ -197,9 +194,9 @@ namespace OpenTK.Platform.Native.X11
                 Logger?.LogInfo($"Found Freedesktop Compliant Window Manager '{FreedesktopWindowManagerName}'.");
 
                 result = XGetWindowProperty(
-                    X11.Display, 
-                    X11.DefaultRootWindow, 
-                    X11.Atoms![KnownAtoms._NET_SUPPORTED], 
+                    X11.Display,
+                    X11.DefaultRootWindow,
+                    X11.Atoms![KnownAtoms._NET_SUPPORTED],
                     0, long.MaxValue,
                     false,
                     X11.Atoms[KnownAtoms.ATOM],
@@ -238,13 +235,13 @@ namespace OpenTK.Platform.Native.X11
 
             // Create a helper window to help with clipboard stuff.
             // FIXME: Will this only be used for clipboard stuff?
-            unsafe 
+            unsafe
             {
                 XSetWindowAttributes wa = default;
                 wa.EventMask = XEventMask.PropertyChange;
-                HelperWindow = XCreateWindow(X11.Display, X11.DefaultRootWindow, 
+                HelperWindow = XCreateWindow(X11.Display, X11.DefaultRootWindow,
                     0, 0, 1, 1, 0, 0,
-                    WindowClass.InputOnly, 
+                    WindowClass.InputOnly,
                     ref Unsafe.AsRef<XVisual>(XDefaultVisual(X11.Display, X11.DefaultScreen)),
                     XWindowAttributeValueMask.EventMask,
                     ref wa);
@@ -503,18 +500,18 @@ namespace OpenTK.Platform.Native.X11
                     }
                     else if (ea.Any.Window == HelperWindow)
                     {
-                        if (ea.Type == XEventType.PropertyNotify && 
+                        if (ea.Type == XEventType.PropertyNotify &&
                             ea.Property.atom == X11ClipboardComponent.OpenTKSelection)
                         {
                             // If some other window takes ownership of the a selection we expect this.
                         }
-                        else if (ea.Type == XEventType.SelectionClear  ||
+                        else if (ea.Type == XEventType.SelectionClear ||
                                  ea.Type == XEventType.SelectionNotify ||
                                  ea.Type == XEventType.SelectionRequest)
                         {
                             X11ClipboardComponent.HandleClipboardEvent(ref ea, Logger);
                         }
-                        else 
+                        else
                         {
                             Logger?.LogDebug($"Received unhandled event {ea.Type} for helper window.");
                         }
@@ -614,7 +611,7 @@ namespace OpenTK.Platform.Native.X11
                                     // FIXME: Global or local coordinates?
                                     //EventQueue.Raise(xwindow, PlatformEventType.DropLocation, new DropLocationEventArgs((root_x, root_y)));
 
-                                    XWindow source = new XWindow((ulong)clientMessage.l[0]); 
+                                    XWindow source = new XWindow((ulong)clientMessage.l[0]);
 
                                     XEvent @event = default;
                                     ref XClientMessageEvent status = ref @event.ClientMessage;
@@ -729,7 +726,7 @@ namespace OpenTK.Platform.Native.X11
                                     finish.Format = 32;
                                     finish.l[0] = (long)xwindow.Window.Id;
                                     finish.l[1] = (xwindow.XDnDType != XAtom.None) ? 1 : 0;
-                                    finish.l[2] = (xwindow.XDnDType != XAtom.None) ? 
+                                    finish.l[2] = (xwindow.XDnDType != XAtom.None) ?
                                                     (long)X11.Atoms[KnownAtoms.XdndActionCopy].Id :
                                                     (long)XAtom.None.Id;
                                     XSendEvent(
@@ -779,32 +776,32 @@ namespace OpenTK.Platform.Native.X11
                                     switch (type)
                                     {
                                         case HitType.Draggable:
-                                        {
-                                            const long _NET_WM_MOVERESIZE_MOVE = 8;
-
-                                            // FIXME: Do we need to regrab the pointer when the move is done?
-                                            XUngrabPointer(X11.Display, XTime.CurrentTime);
-                                            XFlush(X11.Display);
-
-                                            XEvent e = new XEvent();
-                                            ref XClientMessageEvent client = ref e.ClientMessage;
-                                            client.Type = XEventType.ClientMessage;
-                                            client.Window = xwindow.Window;
-                                            client.MessageType = X11.Atoms[KnownAtoms._NET_WM_MOVERESIZE];
-                                            client.Format = 32;
-                                            unsafe
                                             {
-                                                client.l[0] = buttonPressed.x_root;
-                                                client.l[1] = buttonPressed.y_root;
-                                                client.l[2] = _NET_WM_MOVERESIZE_MOVE;
-                                                client.l[3] = buttonPressed.button;
-                                                client.l[4] = 0;
-                                            }
+                                                const long _NET_WM_MOVERESIZE_MOVE = 8;
 
-                                            int status = XSendEvent(X11.Display, XDefaultRootWindow(X11.Display), 0, XEventMask.SubstructureRedirect | XEventMask.SubstructureNotify, in e);
-                                            XSync(X11.Display, 0);
-                                            continue;
-                                        }
+                                                // FIXME: Do we need to regrab the pointer when the move is done?
+                                                XUngrabPointer(X11.Display, XTime.CurrentTime);
+                                                XFlush(X11.Display);
+
+                                                XEvent e = new XEvent();
+                                                ref XClientMessageEvent client = ref e.ClientMessage;
+                                                client.Type = XEventType.ClientMessage;
+                                                client.Window = xwindow.Window;
+                                                client.MessageType = X11.Atoms[KnownAtoms._NET_WM_MOVERESIZE];
+                                                client.Format = 32;
+                                                unsafe
+                                                {
+                                                    client.l[0] = buttonPressed.x_root;
+                                                    client.l[1] = buttonPressed.y_root;
+                                                    client.l[2] = _NET_WM_MOVERESIZE_MOVE;
+                                                    client.l[3] = buttonPressed.button;
+                                                    client.l[4] = 0;
+                                                }
+
+                                                int status = XSendEvent(X11.Display, XDefaultRootWindow(X11.Display), 0, XEventMask.SubstructureRedirect | XEventMask.SubstructureNotify, in e);
+                                                XSync(X11.Display, 0);
+                                                continue;
+                                            }
                                         case HitType.ResizeBottom:
                                         case HitType.ResizeBottomLeft:
                                         case HitType.ResizeBottomRight:
@@ -813,57 +810,57 @@ namespace OpenTK.Platform.Native.X11
                                         case HitType.ResizeTop:
                                         case HitType.ResizeTopLeft:
                                         case HitType.ResizeTopRight:
-                                        {
-                                            const long _NET_WM_MOVERESIZE_SIZE_TOPLEFT     = 0;
-                                            const long _NET_WM_MOVERESIZE_SIZE_TOP         = 1;
-                                            const long _NET_WM_MOVERESIZE_SIZE_TOPRIGHT    = 2;
-                                            const long _NET_WM_MOVERESIZE_SIZE_RIGHT       = 3;
-                                            const long _NET_WM_MOVERESIZE_SIZE_BOTTOMRIGHT = 4;
-                                            const long _NET_WM_MOVERESIZE_SIZE_BOTTOM      = 5;
-                                            const long _NET_WM_MOVERESIZE_SIZE_BOTTOMLEFT  = 6;
-                                            const long _NET_WM_MOVERESIZE_SIZE_LEFT        = 7;
-
-                                            long direction;
-                                            switch (type)
                                             {
-                                                case HitType.ResizeBottom:      direction = _NET_WM_MOVERESIZE_SIZE_BOTTOM;      break;
-                                                case HitType.ResizeBottomLeft:  direction = _NET_WM_MOVERESIZE_SIZE_BOTTOMLEFT;  break;
-                                                case HitType.ResizeBottomRight: direction = _NET_WM_MOVERESIZE_SIZE_BOTTOMRIGHT; break;
-                                                case HitType.ResizeLeft:        direction = _NET_WM_MOVERESIZE_SIZE_LEFT;        break;
-                                                case HitType.ResizeRight:       direction = _NET_WM_MOVERESIZE_SIZE_RIGHT;       break;
-                                                case HitType.ResizeTop:         direction = _NET_WM_MOVERESIZE_SIZE_TOP;         break;
-                                                case HitType.ResizeTopLeft:     direction = _NET_WM_MOVERESIZE_SIZE_TOPLEFT;     break;
-                                                case HitType.ResizeTopRight:    direction = _NET_WM_MOVERESIZE_SIZE_TOPRIGHT;    break;
-                                                default:
-                                                    throw new UnreachableException($"Unknown resize hit type: {type}");
+                                                const long _NET_WM_MOVERESIZE_SIZE_TOPLEFT = 0;
+                                                const long _NET_WM_MOVERESIZE_SIZE_TOP = 1;
+                                                const long _NET_WM_MOVERESIZE_SIZE_TOPRIGHT = 2;
+                                                const long _NET_WM_MOVERESIZE_SIZE_RIGHT = 3;
+                                                const long _NET_WM_MOVERESIZE_SIZE_BOTTOMRIGHT = 4;
+                                                const long _NET_WM_MOVERESIZE_SIZE_BOTTOM = 5;
+                                                const long _NET_WM_MOVERESIZE_SIZE_BOTTOMLEFT = 6;
+                                                const long _NET_WM_MOVERESIZE_SIZE_LEFT = 7;
+
+                                                long direction;
+                                                switch (type)
+                                                {
+                                                    case HitType.ResizeBottom: direction = _NET_WM_MOVERESIZE_SIZE_BOTTOM; break;
+                                                    case HitType.ResizeBottomLeft: direction = _NET_WM_MOVERESIZE_SIZE_BOTTOMLEFT; break;
+                                                    case HitType.ResizeBottomRight: direction = _NET_WM_MOVERESIZE_SIZE_BOTTOMRIGHT; break;
+                                                    case HitType.ResizeLeft: direction = _NET_WM_MOVERESIZE_SIZE_LEFT; break;
+                                                    case HitType.ResizeRight: direction = _NET_WM_MOVERESIZE_SIZE_RIGHT; break;
+                                                    case HitType.ResizeTop: direction = _NET_WM_MOVERESIZE_SIZE_TOP; break;
+                                                    case HitType.ResizeTopLeft: direction = _NET_WM_MOVERESIZE_SIZE_TOPLEFT; break;
+                                                    case HitType.ResizeTopRight: direction = _NET_WM_MOVERESIZE_SIZE_TOPRIGHT; break;
+                                                    default:
+                                                        throw new UnreachableException($"Unknown resize hit type: {type}");
+                                                }
+
+                                                // FIXME: Do we need to regrab the pointer when the move is done?
+                                                XUngrabPointer(X11.Display, XTime.CurrentTime);
+                                                XFlush(X11.Display);
+
+                                                XEvent e = new XEvent();
+                                                ref XClientMessageEvent client = ref e.ClientMessage;
+                                                client.Type = XEventType.ClientMessage;
+                                                client.Window = xwindow.Window;
+                                                client.MessageType = X11.Atoms[KnownAtoms._NET_WM_MOVERESIZE];
+                                                client.Format = 32;
+                                                unsafe
+                                                {
+                                                    client.l[0] = buttonPressed.x_root;
+                                                    client.l[1] = buttonPressed.y_root;
+                                                    client.l[2] = direction;
+                                                    client.l[3] = buttonPressed.button;
+                                                    client.l[4] = 0;
+                                                }
+
+                                                int status = XSendEvent(X11.Display, XDefaultRootWindow(X11.Display), 0, XEventMask.SubstructureRedirect | XEventMask.SubstructureNotify, in e);
+                                                XSync(X11.Display, 0);
+
+                                                // FIXME: Handle the resize!
+                                                Logger?.LogWarning("Hit test resizing is not supported in x11 yet.");
+                                                continue;
                                             }
-
-                                            // FIXME: Do we need to regrab the pointer when the move is done?
-                                            XUngrabPointer(X11.Display, XTime.CurrentTime);
-                                            XFlush(X11.Display);
-
-                                            XEvent e = new XEvent();
-                                            ref XClientMessageEvent client = ref e.ClientMessage;
-                                            client.Type = XEventType.ClientMessage;
-                                            client.Window = xwindow.Window;
-                                            client.MessageType = X11.Atoms[KnownAtoms._NET_WM_MOVERESIZE];
-                                            client.Format = 32;
-                                            unsafe
-                                            {
-                                                client.l[0] = buttonPressed.x_root;
-                                                client.l[1] = buttonPressed.y_root;
-                                                client.l[2] = direction;
-                                                client.l[3] = buttonPressed.button;
-                                                client.l[4] = 0;
-                                            }
-
-                                            int status = XSendEvent(X11.Display, XDefaultRootWindow(X11.Display), 0, XEventMask.SubstructureRedirect | XEventMask.SubstructureNotify, in e);
-                                            XSync(X11.Display, 0);
-
-                                            // FIXME: Handle the resize!
-                                            Logger?.LogWarning("Hit test resizing is not supported in x11 yet.");
-                                            continue;
-                                        }
                                         case HitType.Normal:
                                         case HitType.Default:
                                         default:
@@ -922,7 +919,8 @@ namespace OpenTK.Platform.Native.X11
                         {
                             XKeyEvent keyPressed = ea.KeyPressed;
 
-                            unsafe {
+                            unsafe
+                            {
                                 XKeySym keysym = default;
                                 const int TEXT_LENGTH = 32;
                                 byte* str = stackalloc byte[TEXT_LENGTH];
@@ -930,7 +928,7 @@ namespace OpenTK.Platform.Native.X11
                                 int charsWritten = XLookupString(&keyPressed, str, TEXT_LENGTH, &keysym, null);
 
                                 Scancode scancode = X11KeyboardComponent.ToScancode(keyPressed.keycode);
-                                Key key = X11KeyboardComponent.TranslateKeySym(stackalloc XKeySym[1] {keysym});
+                                Key key = X11KeyboardComponent.TranslateKeySym(stackalloc XKeySym[1] { keysym });
 
                                 KeyModifier modifiers = X11KeyboardComponent.ModifiersFromState(keyPressed.state);
 
@@ -946,9 +944,9 @@ namespace OpenTK.Platform.Native.X11
                                     // FIXME: We could do what glfw does and look for a KeyUp event with
                                     // basically the same timestamp.
                                 }
-                                
+
                                 EventQueue.Raise(xwindow, PlatformEventType.KeyDown, new KeyDownEventArgs(xwindow, key, scancode, isRepeat, modifiers));
-                                
+
                                 bool isHighLatin1 = false;
                                 for (int i = 0; i < TEXT_LENGTH; i++)
                                 {
@@ -981,13 +979,14 @@ namespace OpenTK.Platform.Native.X11
                         {
                             XKeyEvent keyPressed = ea.KeyPressed;
 
-                            unsafe {
+                            unsafe
+                            {
                                 XKeySym keysym = default;
                                 byte* str = stackalloc byte[0];
                                 int charsWritten = XLookupString(&keyPressed, str, 0, &keysym, null);
 
                                 Scancode scancode = X11KeyboardComponent.ToScancode(keyPressed.keycode);
-                                Key key = X11KeyboardComponent.TranslateKeySym(stackalloc XKeySym[1] {keysym});
+                                Key key = X11KeyboardComponent.TranslateKeySym(stackalloc XKeySym[1] { keysym });
 
                                 KeyModifier modifiers = X11KeyboardComponent.ModifiersFromState(keyPressed.state);
 
@@ -1345,7 +1344,7 @@ namespace OpenTK.Platform.Native.X11
                 byte depthBits;
                 switch (glhints.DepthBits)
                 {
-                    case ContextDepthBits.None:    depthBits = 0;  break;
+                    case ContextDepthBits.None: depthBits = 0; break;
                     case ContextDepthBits.Depth16: depthBits = 16; break;
                     case ContextDepthBits.Depth24: depthBits = 24; break;
                     case ContextDepthBits.Depth32: depthBits = 32; break;
@@ -1355,7 +1354,7 @@ namespace OpenTK.Platform.Native.X11
                 byte stencilBits;
                 switch (glhints.StencilBits)
                 {
-                    case ContextStencilBits.None:     stencilBits = 0; break;
+                    case ContextStencilBits.None: stencilBits = 0; break;
                     case ContextStencilBits.Stencil1: stencilBits = 1; break;
                     case ContextStencilBits.Stencil8: stencilBits = 8; break;
                     default: throw new InvalidEnumArgumentException(nameof(glhints.StencilBits), (int)glhints.StencilBits, glhints.StencilBits.GetType());
@@ -1453,7 +1452,7 @@ namespace OpenTK.Platform.Native.X11
 
                         int sampleBuffers = 0;
                         int samples = 0;
-                        
+
                         // GLX 1.4 or GLX_ARB_multisample
                         if ((glxVersion.Major > 1 || (glxVersion.Major == 1 && glxVersion.Minor >= 4)) || ARB_multisample)
                         {
@@ -1520,9 +1519,9 @@ namespace OpenTK.Platform.Native.X11
                             Logger?.LogWarning($"Unknown RenderType bits set for fbconfig {i}. RenderType: {renderType}.");
                         }
                     }
-                
+
                     int selectedIndex = glhints.Selector(options, requested, Logger);
-                    if (selectedIndex < 0 || selectedIndex >= options.Count) 
+                    if (selectedIndex < 0 || selectedIndex >= options.Count)
                     {
                         throw new IndexOutOfRangeException($"The selected format index ({selectedIndex}) is outside the range of valid indeces. This is either an OpenTK bug or an issue with your custom ContextValueSelector.");
                     }
@@ -1557,7 +1556,7 @@ namespace OpenTK.Platform.Native.X11
                         ref *vi->VisualPtr,
                         XWindowAttributeValueMask.BackPixmap | XWindowAttributeValueMask.Colormap | XWindowAttributeValueMask.BorderPixel | XWindowAttributeValueMask.EventMask,
                         ref windowAttributes);
-                    
+
                     XFree((IntPtr)vi);
                 }
             }
@@ -1574,13 +1573,13 @@ namespace OpenTK.Platform.Native.X11
                 {
                     XVisual* visual = XDefaultVisual(X11.Display, X11.DefaultScreen);
 
-                    window = XCreateWindow(X11.Display, X11.DefaultRootWindow, 
-                        0, 0, 600, 800, 0, 0, 
+                    window = XCreateWindow(X11.Display, X11.DefaultRootWindow,
+                        0, 0, 600, 800, 0, 0,
                         WindowClass.InputOutput,
                         // FIXME: Do we want a visual here?
                         ref Unsafe.AsRef<XVisual>(visual),
                         XWindowAttributeValueMask.BackPixel | XWindowAttributeValueMask.Colormap |
-                        XWindowAttributeValueMask.BorderPixel | XWindowAttributeValueMask.EventMask, 
+                        XWindowAttributeValueMask.BorderPixel | XWindowAttributeValueMask.EventMask,
                         ref attributes);
                 }
             }
@@ -1593,12 +1592,12 @@ namespace OpenTK.Platform.Native.X11
                 attributes.ColorMap = XDefaultColormap(X11.Display, X11.DefaultScreen);
                 attributes.EventMask = XEventMask.StructureNotify | XEventMask.SubstructureNotify | XEventMask.Exposure | XEventMask.VisibilityChanged;
 
-                window = XCreateWindow(X11.Display, X11.DefaultRootWindow, 
-                    0, 0, 600, 800, 0, 0, 
-                    WindowClass.InputOutput, 
+                window = XCreateWindow(X11.Display, X11.DefaultRootWindow,
+                    0, 0, 600, 800, 0, 0,
+                    WindowClass.InputOutput,
                     ref Unsafe.NullRef<XVisual>(),
                     XWindowAttributeValueMask.BackPixel | XWindowAttributeValueMask.Colormap |
-                    XWindowAttributeValueMask.BorderPixel | XWindowAttributeValueMask.EventMask, 
+                    XWindowAttributeValueMask.BorderPixel | XWindowAttributeValueMask.EventMask,
                     ref attributes);
 
                 // FIXME: How do we handle vulkan windows?
@@ -1635,7 +1634,8 @@ namespace OpenTK.Platform.Native.X11
                     XEventMask.FocusChange |
                     XEventMask.PropertyChange);
 
-            unsafe {
+            unsafe
+            {
                 XWMHints* wmHints = XAllocWMHints();
                 wmHints->flags |= XWMHintsMask.InputHint;
                 wmHints->input = 1;
@@ -1643,7 +1643,8 @@ namespace OpenTK.Platform.Native.X11
                 XSetWMHints(X11.Display, window, wmHints);
             }
 
-            unsafe {
+            unsafe
+            {
                 XClassHint* classHints = XAllocClassHint();
                 // FIXME: Add a way to select two separate strings for these.
                 classHints->res_name = (byte*)Marshal.StringToCoTaskMemUTF8(ApplicationName);
@@ -1655,7 +1656,8 @@ namespace OpenTK.Platform.Native.X11
 
             if (X11.XI2Available)
             {
-                unsafe {
+                unsafe
+                {
                     XIEventMask eventmask;
                     eventmask.deviceid = (int)DeviceID.XIAllMasterDevices;
                     eventmask.mask_len = XIMaskLen(XI2EventType.LASTEVENT);
@@ -1798,7 +1800,7 @@ namespace OpenTK.Platform.Native.X11
             XStoreName(window.Display, window.Window, title);   // Set classic name,
             unsafe
             {
-                fixed(byte *titlePtr = titleBytes)
+                fixed (byte* titlePtr = titleBytes)
                 {
                     // Set freedesktop name.
                     XChangeProperty(
@@ -1849,7 +1851,7 @@ namespace OpenTK.Platform.Native.X11
                 XGetIconName(xwindow.Display, xwindow.Window, out iconName);
                 string str = Marshal.PtrToStringUTF8(iconName) ?? string.Empty;
                 XFree(iconName);
-                return str;    
+                return str;
             }
             else
             {
@@ -1870,7 +1872,8 @@ namespace OpenTK.Platform.Native.X11
 
             XSetIconName(xwindow.Display, xwindow.Window, iconTitle);
 
-            unsafe {
+            unsafe
+            {
                 byte[] titleBytes = Encoding.UTF8.GetBytes(iconTitle);
                 fixed (byte* titleBytesPtr = titleBytes)
                 {
@@ -1916,7 +1919,8 @@ namespace OpenTK.Platform.Native.X11
 
             // FIXME: Fill this array without unsafe?
             long[] data = new long[longCount];
-            unsafe {
+            unsafe
+            {
                 fixed (long* dataPtr = data)
                 {
                     long* target = dataPtr;
@@ -1929,9 +1933,9 @@ namespace OpenTK.Platform.Native.X11
                         {
                             // FIXME: Is this the correct color format?
                             *target++ = ((long)images[i].Data[j * 4 + 0] << 16) |
-                                        ((long)images[i].Data[j * 4 + 1] <<  8) |
-                                        ((long)images[i].Data[j * 4 + 2] <<  0) |
-                                        ((long)images[i].Data[j * 4 + 3] <<  24);
+                                        ((long)images[i].Data[j * 4 + 1] << 8) |
+                                        ((long)images[i].Data[j * 4 + 2] << 0) |
+                                        ((long)images[i].Data[j * 4 + 3] << 24);
                         }
                     }
                 }
@@ -1977,9 +1981,9 @@ namespace OpenTK.Platform.Native.X11
             }
             else
             {
-                left   = (int)Marshal.PtrToStructure<long>(array);
-                right  = (int)Marshal.PtrToStructure<long>(array + 8);
-                top    = (int)Marshal.PtrToStructure<long>(array + 16);
+                left = (int)Marshal.PtrToStructure<long>(array);
+                right = (int)Marshal.PtrToStructure<long>(array + 8);
+                top = (int)Marshal.PtrToStructure<long>(array + 16);
                 bottom = (int)Marshal.PtrToStructure<long>(array + 24);
             }
 
@@ -2363,10 +2367,10 @@ namespace OpenTK.Platform.Native.X11
             {
                 return Math.Min(
                     Math.Min(
-                        a.DistanceToNearestEdge(b.Min), 
+                        a.DistanceToNearestEdge(b.Min),
                         a.DistanceToNearestEdge(b.Max)),
                     Math.Min(
-                        a.DistanceToNearestEdge((b.Min.X, b.Max.Y)), 
+                        a.DistanceToNearestEdge((b.Min.X, b.Max.Y)),
                         a.DistanceToNearestEdge((b.Min.Y, b.Max.X))));
             }
         }
@@ -2462,7 +2466,7 @@ namespace OpenTK.Platform.Native.X11
                 {
                     mode = WindowMode.Maximized;
                 }
-                
+
                 if (wmState.HasFlag(WMState.Hidden))
                 {
                     mode = WindowMode.Hidden;
@@ -2675,7 +2679,7 @@ namespace OpenTK.Platform.Native.X11
         {
             XWindowHandle xwindow = handle.As<XWindowHandle>(this);
             XDisplayHandle? xdisplay = display?.As<XDisplayHandle>(this);
-            
+
             // FIXME: Save window position and size so we can restore later.
 
             if (xdisplay == null)
@@ -2839,11 +2843,11 @@ namespace OpenTK.Platform.Native.X11
             // Check for ToolBox
             {
                 int result = XGetWindowProperty(
-                    X11.Display, 
-                    xwindow.Window, 
-                    X11.Atoms[KnownAtoms._NET_WM_WINDOW_TYPE], 
-                    0, 1, false, 
-                    X11.Atoms[KnownAtoms.ATOM], 
+                    X11.Display,
+                    xwindow.Window,
+                    X11.Atoms[KnownAtoms._NET_WM_WINDOW_TYPE],
+                    0, 1, false,
+                    X11.Atoms[KnownAtoms.ATOM],
                     out _,
                     out _,
                     out _,
@@ -2860,7 +2864,8 @@ namespace OpenTK.Platform.Native.X11
                 else
                 {
                     // If window type is UTILITY, assume toolbox.
-                    unsafe {
+                    unsafe
+                    {
                         XAtom windowType = *(XAtom*)content;
                         XFree(content);
                         if (windowType == X11.Atoms[KnownAtoms._NET_WM_WINDOW_TYPE_UTILITY])
@@ -2874,11 +2879,11 @@ namespace OpenTK.Platform.Native.X11
             // Check for borderless
             {
                 int result = XGetWindowProperty(
-                    X11.Display, 
-                    xwindow.Window, 
-                    X11.Atoms[KnownAtoms._MOTIF_WM_HINTS], 
-                    0, long.MaxValue, false, 
-                    X11.Atoms[KnownAtoms._MOTIF_WM_HINTS], 
+                    X11.Display,
+                    xwindow.Window,
+                    X11.Atoms[KnownAtoms._MOTIF_WM_HINTS],
+                    0, long.MaxValue, false,
+                    X11.Atoms[KnownAtoms._MOTIF_WM_HINTS],
                     out _,
                     out _,
                     out _,
@@ -2895,7 +2900,8 @@ namespace OpenTK.Platform.Native.X11
                 else
                 {
                     // If decorations are turned off, assume borderless.
-                    unsafe {
+                    unsafe
+                    {
                         MotifWmHints* motifWmHints = (MotifWmHints*)content;
                         XFree(content);
                         if (motifWmHints->decorations == 0)
@@ -2907,7 +2913,7 @@ namespace OpenTK.Platform.Native.X11
             }
 
             // If FixedSize is set, assume FixedBorder.
-            if (xwindow.FixedSize != (-1, -1)) 
+            if (xwindow.FixedSize != (-1, -1))
             {
                 return WindowBorderStyle.FixedBorder;
             }
@@ -2923,50 +2929,53 @@ namespace OpenTK.Platform.Native.X11
             switch (style)
             {
                 case WindowBorderStyle.ResizableBorder:
-                unsafe {
-                    SetNetWMWindowType(xwindow.Window, X11.Atoms[KnownAtoms._NET_WM_WINDOW_TYPE_NORMAL]);
+                    unsafe
+                    {
+                        SetNetWMWindowType(xwindow.Window, X11.Atoms[KnownAtoms._NET_WM_WINDOW_TYPE_NORMAL]);
 
-                    SetDecorations(xwindow, true);
+                        SetDecorations(xwindow, true);
 
-                    SetFixedSize(xwindow, false, -1, -1);
-                    xwindow.FixedSize = (-1, -1);
-                    break;
-                }
+                        SetFixedSize(xwindow, false, -1, -1);
+                        xwindow.FixedSize = (-1, -1);
+                        break;
+                    }
                 case WindowBorderStyle.Borderless:
-                unsafe {
-                    // FIXME: Should the client size and location be retained when going borderless?
-                    SetNetWMWindowType(xwindow.Window, X11.Atoms[KnownAtoms._NET_WM_WINDOW_TYPE_NORMAL]);
+                    unsafe
+                    {
+                        // FIXME: Should the client size and location be retained when going borderless?
+                        SetNetWMWindowType(xwindow.Window, X11.Atoms[KnownAtoms._NET_WM_WINDOW_TYPE_NORMAL]);
 
-                    SetDecorations(xwindow, false);
-                    
-                    SetFixedSize(xwindow, false, -1, -1);
-                    xwindow.FixedSize = (-1, -1);
-                    break;
-                }
+                        SetDecorations(xwindow, false);
+
+                        SetFixedSize(xwindow, false, -1, -1);
+                        xwindow.FixedSize = (-1, -1);
+                        break;
+                    }
                 case WindowBorderStyle.FixedBorder:
-                unsafe {
-                    SetNetWMWindowType(xwindow.Window, X11.Atoms[KnownAtoms._NET_WM_WINDOW_TYPE_NORMAL]);
-                    // FIXME: Figure out if you can still resize the window programatically.
-                    SetDecorations(xwindow, true);
+                    unsafe
+                    {
+                        SetNetWMWindowType(xwindow.Window, X11.Atoms[KnownAtoms._NET_WM_WINDOW_TYPE_NORMAL]);
+                        // FIXME: Figure out if you can still resize the window programatically.
+                        SetDecorations(xwindow, true);
 
-                    // Set the max and min height to the same.
-                    GetClientSize(xwindow, out Vector2i clientSize);
-                    SetFixedSize(xwindow, true, clientSize.X, clientSize.Y);
-                    xwindow.FixedSize = clientSize;
+                        // Set the max and min height to the same.
+                        GetClientSize(xwindow, out Vector2i clientSize);
+                        SetFixedSize(xwindow, true, clientSize.X, clientSize.Y);
+                        xwindow.FixedSize = clientSize;
 
-                    break;
-                }
+                        break;
+                    }
                 case WindowBorderStyle.ToolBox:
-                {
-                    // FIXME: Check that the window type atoms are available?
-                    SetNetWMWindowType(xwindow.Window, X11.Atoms[KnownAtoms._NET_WM_WINDOW_TYPE_UTILITY]);
+                    {
+                        // FIXME: Check that the window type atoms are available?
+                        SetNetWMWindowType(xwindow.Window, X11.Atoms[KnownAtoms._NET_WM_WINDOW_TYPE_UTILITY]);
 
-                    SetDecorations(xwindow, true);
+                        SetDecorations(xwindow, true);
 
-                    SetFixedSize(xwindow, false, -1, -1);
-                    xwindow.FixedSize = (-1, -1);
-                    break;
-                }
+                        SetFixedSize(xwindow, false, -1, -1);
+                        xwindow.FixedSize = (-1, -1);
+                        break;
+                    }
                 default:
                     throw new InvalidEnumArgumentException(nameof(style), (int)style, typeof(WindowBorderStyle));
             }
@@ -2999,7 +3008,7 @@ namespace OpenTK.Platform.Native.X11
                     else
                         hints->Flags &= ~XSizeHintFlags.MinSize;
                 }
-                else 
+                else
                 {
                     hints->MinWidth = fixedWidth;
                     hints->MaxWidth = fixedWidth;
@@ -3025,24 +3034,24 @@ namespace OpenTK.Platform.Native.X11
                 MotifWmHints hints = default;
                 hints.flags = MWM_HINTS_DECORATIONS;
                 hints.decorations = enable ? MWM_DECOR_ALL : 0;
-                
-                XChangeProperty(X11.Display, 
-                        xwindow.Window, 
-                        X11.Atoms[KnownAtoms._MOTIF_WM_HINTS], 
-                        X11.Atoms[KnownAtoms._MOTIF_WM_HINTS], 
-                        32, 
-                        XPropertyMode.Replace, 
-                        (IntPtr)(void*)&hints, 
+
+                XChangeProperty(X11.Display,
+                        xwindow.Window,
+                        X11.Atoms[KnownAtoms._MOTIF_WM_HINTS],
+                        X11.Atoms[KnownAtoms._MOTIF_WM_HINTS],
+                        32,
+                        XPropertyMode.Replace,
+                        (IntPtr)(void*)&hints,
                         sizeof(MotifWmHints) / sizeof(long));
             }
-        
+
             static unsafe int SetNetWMWindowType(XWindow window, XAtom type)
             {
                 return XChangeProperty(
-                        X11.Display, 
-                        window, 
+                        X11.Display,
+                        window,
                         X11.Atoms[KnownAtoms._NET_WM_WINDOW_TYPE],
-                        X11.Atoms[KnownAtoms.ATOM], 32, 
+                        X11.Atoms[KnownAtoms.ATOM], 32,
                         XPropertyMode.Replace,
                         (IntPtr)(void*)&type,
                         1);
@@ -3088,48 +3097,48 @@ namespace OpenTK.Platform.Native.X11
             switch (transparencyMode)
             {
                 case WindowTransparencyMode.Opaque:
-                {
-                    break;
-                }
-                case WindowTransparencyMode.TransparentFramebuffer:
-                {
-                    // FIXME: Log a warning if the visual doesn't have alpha blending support!
-                    if (SupportsFramebufferTransparency(xwindow) == false)
                     {
-                        Logger?.LogWarning("Trying to enable framebuffer transparency for a window with a Visual that doesn't support transparency.");
+                        break;
                     }
+                case WindowTransparencyMode.TransparentFramebuffer:
+                    {
+                        // FIXME: Log a warning if the visual doesn't have alpha blending support!
+                        if (SupportsFramebufferTransparency(xwindow) == false)
+                        {
+                            Logger?.LogWarning("Trying to enable framebuffer transparency for a window with a Visual that doesn't support transparency.");
+                        }
 
-                    Span<long> region = [0, 0, 0, 0];
-                    XChangeProperty<long>(
-                        X11.Display,
-                        xwindow.Window,
-                        X11.Atoms[KnownAtoms._NET_WM_OPAQUE_REGION],
-                        X11.Atoms[KnownAtoms.CARDINAL],
-                        32,
-                        XPropertyMode.Replace,
-                        region,
-                        4);
-                    break;
-                }
+                        Span<long> region = [0, 0, 0, 0];
+                        XChangeProperty<long>(
+                            X11.Display,
+                            xwindow.Window,
+                            X11.Atoms[KnownAtoms._NET_WM_OPAQUE_REGION],
+                            X11.Atoms[KnownAtoms.CARDINAL],
+                            32,
+                            XPropertyMode.Replace,
+                            region,
+                            4);
+                        break;
+                    }
                 case WindowTransparencyMode.TransparentWindow:
-                {
-                    opacity = float.Clamp(opacity, 0, 1);
-                    // We cast to double here as double can exactly represent
-                    // all integers in the uint range.
-                    // (uint)(0xffffffffu * 1.0f) becomes zero.
-                    // - Noggin_bops 2024-11-01
-                    uint transparency = (uint)(0xffffffffu * (double)opacity);
-                    XChangeProperty(
-                        X11.Display, 
-                        xwindow.Window, 
-                        X11.Atoms[KnownAtoms._NET_WM_WINDOW_OPACITY], 
-                        X11.Atoms[KnownAtoms.CARDINAL],
-                        32,
-                        XPropertyMode.Replace,
-                        (IntPtr)(&transparency),
-                        1);
-                    break;
-                }
+                    {
+                        opacity = float.Clamp(opacity, 0, 1);
+                        // We cast to double here as double can exactly represent
+                        // all integers in the uint range.
+                        // (uint)(0xffffffffu * 1.0f) becomes zero.
+                        // - Noggin_bops 2024-11-01
+                        uint transparency = (uint)(0xffffffffu * (double)opacity);
+                        XChangeProperty(
+                            X11.Display,
+                            xwindow.Window,
+                            X11.Atoms[KnownAtoms._NET_WM_WINDOW_OPACITY],
+                            X11.Atoms[KnownAtoms.CARDINAL],
+                            32,
+                            XPropertyMode.Replace,
+                            (IntPtr)(&transparency),
+                            1);
+                        break;
+                    }
             }
         }
 
@@ -3285,7 +3294,8 @@ namespace OpenTK.Platform.Native.X11
             else
             {
                 bool above = false;
-                unsafe {
+                unsafe
+                {
                     XAtom* atoms = (XAtom*)contents;
                     for (int i = 0; i < numberOfItems; i++)
                     {
@@ -3515,7 +3525,8 @@ namespace OpenTK.Platform.Native.X11
         /// <inheritdoc/>
         public void GetScaleFactor(WindowHandle handle, out float scaleX, out float scaleY)
         {
-            if (hasReportedScaleFactorWarning == false) {
+            if (hasReportedScaleFactorWarning == false)
+            {
                 Logger?.LogWarning("Scale factor is always 1 on X11 atm.");
                 hasReportedScaleFactorWarning = true;
             }

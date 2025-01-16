@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 
 namespace OpenTK.Audio.OpenAL
@@ -156,7 +154,8 @@ namespace OpenTK.Audio.OpenAL
             AL.SourceStop(alSource);
 
             // Test float32 format extension
-            if (AL.EXTFloat32.IsExtensionPresent()) {
+            if (AL.EXTFloat32.IsExtensionPresent())
+            {
                 Console.WriteLine("Testing float32 format extension with a sine wave...");
 
                 float[] sine = new float[44100 * 2];

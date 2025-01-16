@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace OpenTK.Platform
+﻿namespace OpenTK.Platform
 {
 #pragma warning disable SA1514 // Element documentation header should be preceded by blank line
     public enum Key

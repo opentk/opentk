@@ -1,5 +1,4 @@
-﻿using OpenTK.Platform;
-using OpenTK.Core.Utility;
+﻿using OpenTK.Core.Utility;
 using OpenTK.Mathematics;
 using System;
 using System.Collections.Generic;
@@ -347,7 +346,7 @@ namespace OpenTK.Platform.Native.SDL
                             ReadOnlySpan<byte> span = new ReadOnlySpan<byte>(textInputEvent.text, SDL_TextInputEvent.SDL_TEXTINPUTEVENT_TEXT_SIZE);
                             int last = span.IndexOf((byte)0);
                             span = span.Slice(0, last);
-                            
+
                             string input = Encoding.UTF8.GetString(span);
 
                             EventQueue.Raise(sdlWindow, PlatformEventType.TextInput, new TextInputEventArgs(sdlWindow, input));
@@ -888,7 +887,7 @@ namespace OpenTK.Platform.Native.SDL
                 int result = SDL_GetDisplayBounds(sdlDisplay.Index, out SDL_Rect rect);
                 if (result == 0) SDL_SetWindowPosition(sdlWindow.Window, rect.x, rect.y);
                 else Logger?.LogWarning("Could not get display bounds when making window fullscreen. This may cause the window to get fullscreened on the wrong display.");
-                
+
                 result = SDL_SetWindowFullscreen(sdlWindow.Window, SDL_FullscreenMode.SDL_WINDOW_FULLSCREEN_DESKTOP);
                 if (result != 0)
                 {
@@ -1076,7 +1075,7 @@ namespace OpenTK.Platform.Native.SDL
             {
                 SDL_SetWindowHitTest(window.Window, SDL_HitTest, IntPtr.Zero);
             }
-            
+
             static SDL_HitTestResult SDL_HitTest(SDL_WindowPtr win, in SDL_Point pt, IntPtr data)
             {
                 SDLWindow window = WindowDict[SDL_GetWindowID(win)];

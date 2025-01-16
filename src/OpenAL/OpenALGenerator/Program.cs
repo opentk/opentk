@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
 
 namespace OpenALGenerator
 {
@@ -255,7 +253,7 @@ namespace OpenALGenerator
             public bool GenerateArrayOverload;
             public bool PrivateRefOverload;
 
-            public bool ContainsPointer()
+            public readonly bool ContainsPointer()
             {
                 foreach (var @param in Params)
                 {
@@ -454,7 +452,7 @@ namespace OpenALGenerator
             return Signatures.ToArray();
         }
 
-        public static string GenerateProcs (Type containgType)
+        public static string GenerateProcs(Type containgType)
         {
             StringBuilder sb = new StringBuilder();
             foreach (var sig in GetSignaturesFromType(containgType))

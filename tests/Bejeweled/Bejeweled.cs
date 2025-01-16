@@ -2,14 +2,12 @@
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Audio.OpenAL;
 using OpenTK.Mathematics;
-using OpenTK.Platform.Native;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
 using StbVorbisSharp;
-using System.Text;
 using System.Runtime.CompilerServices;
 using OpenTK.Core.Utility;
 using ImGuiNET;
@@ -70,10 +68,10 @@ namespace Bejeweled
             Debug.Assert(primitive.VertexAccessors.ContainsKey("TEXCOORD_0"));
             Debug.Assert(primitive.VertexAccessors.ContainsKey("_THICKNESS"));
 
-            ReadOnlySpan<Vector3> positionData  = ReadGLTFBuffer<Vector3>(primitive.VertexAccessors["POSITION"],   SharpGLTF.Schema2.DimensionType.VEC3,   SharpGLTF.Schema2.EncodingType.FLOAT);
-            ReadOnlySpan<Vector3> normalData    = ReadGLTFBuffer<Vector3>(primitive.VertexAccessors["NORMAL"],     SharpGLTF.Schema2.DimensionType.VEC3,   SharpGLTF.Schema2.EncodingType.FLOAT);
-            ReadOnlySpan<Vector2> UVData        = ReadGLTFBuffer<Vector2>(primitive.VertexAccessors["TEXCOORD_0"], SharpGLTF.Schema2.DimensionType.VEC2,   SharpGLTF.Schema2.EncodingType.FLOAT);
-            ReadOnlySpan<float>   thicknessData = ReadGLTFBuffer<float>  (primitive.VertexAccessors["_THICKNESS"], SharpGLTF.Schema2.DimensionType.SCALAR, SharpGLTF.Schema2.EncodingType.FLOAT);
+            ReadOnlySpan<Vector3> positionData = ReadGLTFBuffer<Vector3>(primitive.VertexAccessors["POSITION"], SharpGLTF.Schema2.DimensionType.VEC3, SharpGLTF.Schema2.EncodingType.FLOAT);
+            ReadOnlySpan<Vector3> normalData = ReadGLTFBuffer<Vector3>(primitive.VertexAccessors["NORMAL"], SharpGLTF.Schema2.DimensionType.VEC3, SharpGLTF.Schema2.EncodingType.FLOAT);
+            ReadOnlySpan<Vector2> UVData = ReadGLTFBuffer<Vector2>(primitive.VertexAccessors["TEXCOORD_0"], SharpGLTF.Schema2.DimensionType.VEC2, SharpGLTF.Schema2.EncodingType.FLOAT);
+            ReadOnlySpan<float> thicknessData = ReadGLTFBuffer<float>(primitive.VertexAccessors["_THICKNESS"], SharpGLTF.Schema2.DimensionType.SCALAR, SharpGLTF.Schema2.EncodingType.FLOAT);
 
             Debug.Assert(positionData.Length == normalData.Length && normalData.Length == UVData.Length && UVData.Length == thicknessData.Length);
 
@@ -1050,7 +1048,7 @@ namespace Bejeweled
             }
             ImGuiController.RecreateFontDeviceTexture();
             EventQueue.EventRaised += EventQueue_EventRaised;
-            
+
             CustomDrawlist = new ImDrawListPtr((ImDrawList*)NativeMemory.AllocZeroed((nuint)sizeof(ImDrawList)));
             CustomDrawlist._Data = ImGui.GetDrawListSharedData();
 
@@ -1091,7 +1089,7 @@ namespace Bejeweled
             {
                 OpenALLibraryNameContainer.OverridePath = "win32-x64/soft_oal.dll";
             }
-            
+
             IEnumerable<string> devices = ALC.GetStringList(GetEnumerationStringList.DeviceSpecifier);
             Logger.LogDebug($"Devices: {string.Join(", ", devices)}");
 
@@ -1186,9 +1184,9 @@ namespace Bejeweled
         /// <summary>Checks if a moved get will cause gems to break.</summary>
         bool WillBreakGems(Vector2i newPosition)
         {
-            int upCount    = CountMatchesInDirection(Board[newPosition.X, newPosition.Y], newPosition, (0, -1));
-            int downCount  = CountMatchesInDirection(Board[newPosition.X, newPosition.Y], newPosition, (0, +1));
-            int leftCount  = CountMatchesInDirection(Board[newPosition.X, newPosition.Y], newPosition, (-1, 0));
+            int upCount = CountMatchesInDirection(Board[newPosition.X, newPosition.Y], newPosition, (0, -1));
+            int downCount = CountMatchesInDirection(Board[newPosition.X, newPosition.Y], newPosition, (0, +1));
+            int leftCount = CountMatchesInDirection(Board[newPosition.X, newPosition.Y], newPosition, (-1, 0));
             int rightCount = CountMatchesInDirection(Board[newPosition.X, newPosition.Y], newPosition, (+1, 0));
 
             bool brokeGems = false;
@@ -1279,7 +1277,7 @@ namespace Bejeweled
             int rightCount = CountMatchesInDirection(Board[newPosition.X, newPosition.Y], newPosition, (+1, 0));
 
             int brokeCount = 0;
-            
+
             int verticalCount = upCount + downCount - 1;
             int horizontalCount = leftCount + rightCount - 1;
             if (verticalCount >= 3)
@@ -1458,7 +1456,8 @@ namespace Bejeweled
                 }
 
                 HintJiggleTimer += deltaTime;
-                if (HintJiggleTimer > HintTime) {
+                if (HintJiggleTimer > HintTime)
+                {
                     // We want to select a random valid move and jiggle the pieces
                     if (JigglePair == null)
                     {
@@ -1657,7 +1656,7 @@ namespace Bejeweled
                                 for (; y > 0; y--)
                                 {
                                     (Board[x, y], Board[x, y - 1]) = (Board[x, y - 1], Board[x, y]);
-                                    
+
                                     BoardPositions[x, y] = GetTileLocation(x, y);
                                 }
 

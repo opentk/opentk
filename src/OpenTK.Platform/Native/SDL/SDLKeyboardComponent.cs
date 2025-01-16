@@ -1,12 +1,5 @@
-﻿using OpenTK.Platform;
-using OpenTK.Core.Utility;
+﻿using OpenTK.Core.Utility;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel.Design;
-using System.Linq;
-using System.Net.Http.Headers;
-using System.Text;
-using System.Threading.Tasks;
 using static OpenTK.Platform.Native.SDL.SDL;
 
 namespace OpenTK.Platform.Native.SDL
@@ -379,7 +372,7 @@ namespace OpenTK.Platform.Native.SDL
 
             return Scancode.Unknown;
         }
-    
+
         internal static KeyModifier FromSDL(SDL_Keymod mods)
         {
             KeyModifier modifiers = KeyModifier.None;

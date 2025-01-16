@@ -28,7 +28,7 @@ namespace OpenTK.Backends.Tests
         }
 
         // FIXME: Maybe make this allocate less?
-        public static bool EnumCombo<T>(string label, ref T selected) where T : struct,Enum
+        public static bool EnumCombo<T>(string label, ref T selected) where T : struct, Enum
         {
             bool selectionChanged = false;
             if (ImGui.BeginCombo(label, selected.ToString()))
@@ -61,7 +61,7 @@ namespace OpenTK.Backends.Tests
             ImGui.TextDisabled("(?)");
             if (ImGui.BeginItemTooltip())
             {
-                ImGui.PushTextWrapPos(ImGui.GetFontSize()* 35.0f);
+                ImGui.PushTextWrapPos(ImGui.GetFontSize() * 35.0f);
                 ImGui.TextUnformatted(desc);
                 ImGui.PopTextWrapPos();
                 ImGui.EndTooltip();
@@ -86,11 +86,12 @@ namespace OpenTK.Backends.Tests
             }
             ImGui.EndDisabled();
         }
-    
+
         public static bool WindowCombobox(string title, [NotNull] ref WindowHandle? selected)
         {
             bool changed = false;
-            if (selected == null) {
+            if (selected == null)
+            {
                 selected = Program.Window;
                 changed = true;
             }
@@ -125,7 +126,7 @@ namespace OpenTK.Backends.Tests
 
             return changed;
 
-            static bool ListWindow(WindowHandle window, int i, ref WindowHandle selected) 
+            static bool ListWindow(WindowHandle window, int i, ref WindowHandle selected)
             {
                 string name = GetWindowName(window, i);
 
@@ -143,7 +144,7 @@ namespace OpenTK.Backends.Tests
                 return wasSelected;
             }
 
-            static string GetWindowName(WindowHandle window, int i) 
+            static string GetWindowName(WindowHandle window, int i)
             {
                 string name;
                 string displayName;

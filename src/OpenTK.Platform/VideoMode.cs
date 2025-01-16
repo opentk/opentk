@@ -1,5 +1,3 @@
-using System;
-
 namespace OpenTK.Platform
 {
     /// <summary>
@@ -52,7 +50,7 @@ namespace OpenTK.Platform
         /// Returns the video mode as a string with the format "{Width}x{Height}@{RefreshRate} ({RedBits}:{GreenBits}:{BlueBits})".
         /// </summary>
         /// <returns>The string representation of the video mode.</returns>
-        public override string ToString()
+        public override readonly string ToString()
         {
             return $"{Width}x{Height}@{RefreshRate} ({BitsPerPixel}bpp)";
         }

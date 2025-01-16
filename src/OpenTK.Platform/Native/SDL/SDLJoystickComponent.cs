@@ -1,12 +1,7 @@
-﻿using OpenTK.Platform;
-using OpenTK.Core.Utility;
+﻿using OpenTK.Core.Utility;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using static OpenTK.Platform.Native.SDL.SDL;
 
 namespace OpenTK.Platform.Native.SDL
@@ -26,7 +21,7 @@ namespace OpenTK.Platform.Native.SDL
         public void Initialize(ToolkitOptions options)
         {
             SDL_JoystickUpdate();
-            Console.WriteLine( $"{SDL_NumJoysticks()} joysticks connected." );
+            Console.WriteLine($"{SDL_NumJoysticks()} joysticks connected.");
         }
 
         /// <inheritdoc/>

@@ -1,14 +1,8 @@
 ﻿using ImGuiNET;
 using OpenTK.Platform;
 using OpenTK.Mathematics;
-using OpenTK.Platform.Native;
 using OpenTK.Platform.Native.macOS;
-using OpenTK.Platform.Native.Windows;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OpenTK.Backends.Tests
 {
@@ -43,7 +37,8 @@ namespace OpenTK.Backends.Tests
         {
             Profile = OpenGLProfile.Core,
             DebugFlag = true,
-            Selector = static (options, requested, logger) => {
+            Selector = static (options, requested, logger) =>
+            {
                 for (int i = 0; i < options.Count; i++)
                 {
                     logger?.LogInfo(options[i].ToString());
@@ -162,7 +157,7 @@ namespace OpenTK.Backends.Tests
                     }
                 }
             }
-            
+
             if (selectedWindow != -1)
             {
                 WindowHandle window = (selectedWindow == 0)
@@ -252,7 +247,7 @@ namespace OpenTK.Backends.Tests
 
                 ImGui.AlignTextToFramePadding();
                 ImGui.TextUnformatted("Transparency mode"); ImGui.SameLine();
-                if (ImGui.BeginCombo("##transparency_mode",  TransparencyModeNames[transparencyModeIndex]))
+                if (ImGui.BeginCombo("##transparency_mode", TransparencyModeNames[transparencyModeIndex]))
                 {
                     for (int i = 0; i < TransparencyModeNames.Length; i++)
                     {
@@ -399,7 +394,7 @@ namespace OpenTK.Backends.Tests
                         if (ImGui.Checkbox("Supports framebuffer transparency", ref supportTransparentFramebuffer))
                             openglSettings.SupportTransparentFramebufferX11 = supportTransparentFramebuffer;
                     }
-                    
+
                     ImGui.SeparatorText("Context settings");
 
                     OpenGLProfile profile = openglSettings.Profile;

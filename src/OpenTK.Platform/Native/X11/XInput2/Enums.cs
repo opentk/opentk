@@ -59,7 +59,7 @@ namespace OpenTK.Platform.Native.X11.XI2
     }
 
     /* Grab owner events values */
-    internal enum GrabOwner 
+    internal enum GrabOwner
     {
         XIOwnerEvents = 1,
         XINoOwnerEvents = 0,

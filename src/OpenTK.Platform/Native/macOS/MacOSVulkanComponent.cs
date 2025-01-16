@@ -32,7 +32,7 @@ namespace OpenTK.Platform.Native.macOS
         {
             VKLoader.Init();
 
-            VkPointers._vkEnumerateInstanceExtensionProperties_fnptr = 
+            VkPointers._vkEnumerateInstanceExtensionProperties_fnptr =
                 (delegate* unmanaged<byte*, uint*, VkExtensionProperties*, VkResult>)VKLoader.GetInstanceProcAddress(VkInstance.Zero, "vkEnumerateInstanceExtensionProperties");
             if (VkPointers._vkEnumerateInstanceExtensionProperties_fnptr == null)
             {
@@ -81,8 +81,8 @@ namespace OpenTK.Platform.Native.macOS
         internal bool EXT_metal_surface;
         internal bool MVK_macos_surface;
 
-        internal static readonly string[] MVKRequiredExtensions = [ "VK_KHR_surface", "VK_MVK_macos_surface" ];
-        internal static readonly string[] MTLRequiredExtensions = [ "VK_KHR_surface", "VK_EXT_metal_surface" ];
+        internal static readonly string[] MVKRequiredExtensions = ["VK_KHR_surface", "VK_MVK_macos_surface"];
+        internal static readonly string[] MTLRequiredExtensions = ["VK_KHR_surface", "VK_EXT_metal_surface"];
 
         /// <inheritdoc/>
         public ReadOnlySpan<string> GetRequiredInstanceExtensions()
@@ -124,7 +124,7 @@ namespace OpenTK.Platform.Native.macOS
             {
                 Logger?.LogError("[CAMetalLayer layer] returned null. Can't create vulkan surface.");
                 surface = VkSurfaceKHR.Zero;
-                return VkResult.ErrorExtensionNotPresent;    
+                return VkResult.ErrorExtensionNotPresent;
             }
 
             objc_msgSend(nswindow.View, selSetLayer, mtlLayer);

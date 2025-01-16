@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using OpenTK.Platform;
 using OpenTK.Core.Utility;
 using static OpenTK.Platform.Native.macOS.ObjC;
 using static OpenTK.Platform.Native.macOS.CG;
@@ -209,13 +208,13 @@ namespace OpenTK.Platform.Native.macOS
             // FIXME: What is the proper colorspace...
             IntPtr space = CGColorSpaceCreateWithName(kCGColorSpaceSRGB);
             void* data = NativeMemory.Alloc((nuint)bitmap.Data.Length);
-            fixed(byte* ptr = bitmap.Data)
+            fixed (byte* ptr = bitmap.Data)
             {
                 NativeMemory.Copy(ptr, data, (nuint)bitmap.Data.Length);
             }
 
             // Inline UnmanagedCallerOnly function for freeing the data.
-            [UnmanagedCallersOnly(CallConvs = new [] { typeof(CallConvCdecl) })]
+            [UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvCdecl) })]
             static void FreeImage(void* info, void* data, nuint size)
             {
                 // FIXME: Do ever get here? I wasn't able to trigger this...
@@ -251,7 +250,7 @@ namespace OpenTK.Platform.Native.macOS
             objc_msgSend(image, Release);
             CGImageRelease(cgimage);
             CGDataProviderRelease(provider);
-          
+
             // FIXME: Do we need to free any other resources?
         }
 
@@ -274,7 +273,7 @@ namespace OpenTK.Platform.Native.macOS
             // - Noggin_bops 2024-05-20
             IntPtr sRGBColorSpace = CGColorSpaceCreateWithName(kCGColorSpaceSRGB);
             byte[] data = new byte[width * height * 4];
-            fixed(byte* dataPtr = data)
+            fixed (byte* dataPtr = data)
             {
                 // FIXME: Render the image into a alpha only version too so we can
                 // work around the limitation that CGBitmapContexts only support

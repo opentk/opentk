@@ -4,10 +4,7 @@ using Generator.Writing;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
 
@@ -105,7 +102,7 @@ namespace Generator.Parsing
 
             Dictionary<string, string> parametersDescriptions = new Dictionary<string, string>();
 
-            XElement ? refparameters = root.ElementIgnoreNamespace(e => e.AttributeIgnoreNamespace("id")?.Value == "parameters");
+            XElement? refparameters = root.ElementIgnoreNamespace(e => e.AttributeIgnoreNamespace("id")?.Value == "parameters");
             if (refparameters != null)
             {
                 XElement variableList = refparameters.ElementIgnoreNamespace("variablelist");

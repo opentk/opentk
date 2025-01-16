@@ -1,12 +1,7 @@
 ﻿using ImGuiNET;
 using OpenTK.Platform;
 using OpenTK.Mathematics;
-using OpenTK.Platform.Native;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OpenTK.Backends.Tests
 {
@@ -35,9 +30,9 @@ namespace OpenTK.Backends.Tests
             Toolkit.Window.SetHitTestCallback(Program.Window, HitTest);
         }
 
-        static readonly HitType[] HitTypeValues = 
+        static readonly HitType[] HitTypeValues =
         [
-            HitType.Draggable, 
+            HitType.Draggable,
             HitType.ResizeTopLeft,
             HitType.ResizeTop,
             HitType.ResizeTopRight,
@@ -45,9 +40,9 @@ namespace OpenTK.Backends.Tests
             HitType.ResizeBottomRight,
             HitType.ResizeBottom,
             HitType.ResizeBottomLeft,
-            HitType.ResizeLeft 
+            HitType.ResizeLeft
         ];
-        
+
         Vector2[] HitTypeAreaPosition = new Vector2[HitTypeValues.Length];
         Vector2[] HitTypeAreaSize = new Vector2[HitTypeValues.Length];
 

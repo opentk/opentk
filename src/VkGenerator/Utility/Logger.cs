@@ -1,6 +1,4 @@
-﻿using System;
-using System.Diagnostics.Contracts;
-using System.IO;
+﻿using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
 using System.Text;
 
@@ -34,13 +32,13 @@ namespace VkGenerator.Utility
             }
 
             [Pure]
-            public override string ToString()
+            public override readonly string ToString()
             {
                 return $"[{_severity} {_time.ToString("yyyy-MM-dd hh:mm:ss:fffff")} {_filePath}#{_lineNumber}] {_message}\n";
             }
 
             [Pure]
-            public ConsoleColor GetColor()
+            public readonly ConsoleColor GetColor()
             {
                 return _severity switch
                 {

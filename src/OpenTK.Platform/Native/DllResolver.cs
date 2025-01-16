@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OpenTK.Platform.Native
 {
@@ -24,7 +21,7 @@ namespace OpenTK.Platform.Native
         {
             if (OperatingSystem.IsLinux() && LinuxLibraryList.TryGetValue(libraryName, out string[]? names))
             {
-                foreach(string name in names)
+                foreach (string name in names)
                 {
                     if (NativeLibrary.TryLoad(name, assembly, searchPath, out IntPtr lib))
                         return lib;

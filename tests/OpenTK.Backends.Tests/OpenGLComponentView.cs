@@ -8,7 +8,6 @@ using System.Linq;
 using System.Numerics;
 using System.Text.RegularExpressions;
 using System.Diagnostics;
-using OpenTK.Platform.Native;
 
 namespace OpenTK.Backends.Tests
 {
@@ -47,9 +46,9 @@ namespace OpenTK.Backends.Tests
 
         public override void Initialize()
         {
-            try { canCreateFromWindow =  Toolkit.OpenGL.CanCreateFromWindow; }  catch { canCreateFromWindow = false; }
+            try { canCreateFromWindow = Toolkit.OpenGL.CanCreateFromWindow; } catch { canCreateFromWindow = false; }
             try { canCreateFromSurface = Toolkit.OpenGL.CanCreateFromSurface; } catch { canCreateFromSurface = false; }
-            try { canCanShareContexts =  Toolkit.OpenGL.CanShareContexts; }     catch { canCanShareContexts = false; }
+            try { canCanShareContexts = Toolkit.OpenGL.CanShareContexts; } catch { canCanShareContexts = false; }
 
             glVersion = GL.GetString(StringName.Version) ?? "";
             glslVersion = GL.GetString(StringName.ShadingLanguageVersion) ?? "";
@@ -60,7 +59,7 @@ namespace OpenTK.Backends.Tests
             numExtensions = GL.GetInteger(GetPName.NumExtensions);
             extensionHeader = $"Extensions ({numExtensions})" + extensionHeader;
 
-            for(int i = 0; i < numExtensions; i++)
+            for (int i = 0; i < numExtensions; i++)
             {
                 // FIXME: odd c# binding?
                 string? extension = GL.GetStringi(StringName.Extensions, (uint)i);
@@ -80,7 +79,7 @@ namespace OpenTK.Backends.Tests
                 list.Add(extension);
             }
 
-            foreach (var(key, value) in extensions)
+            foreach (var (key, value) in extensions)
             {
                 extensionGroups.Add((key, value));
             }
@@ -138,7 +137,7 @@ namespace OpenTK.Backends.Tests
                     string title = Toolkit.Window.GetTitle(appWindow.Window);
                     windowTitle = $"{title} ({(appWindow.Context == null ? "no context" : "opengl")})";
                 }
-                
+
                 if (ImGui.BeginCombo("Child Window", windowTitle))
                 {
                     for (int i = 0; i < Program.ApplicationWindows.Count; i++)
@@ -239,9 +238,9 @@ namespace OpenTK.Backends.Tests
                 const ImGuiTreeNodeFlags VENDOR_FLAGS = ImGuiTreeNodeFlags.OpenOnArrow;
                 const ImGuiTreeNodeFlags EXTENSION_FLAGS = ImGuiTreeNodeFlags.Leaf | ImGuiTreeNodeFlags.Bullet;
 
-                foreach (var(vendor, extensions) in extensionGroups)
+                foreach (var (vendor, extensions) in extensionGroups)
                 {
-                    if(!ImGui.TreeNodeEx(vendor, VENDOR_FLAGS))
+                    if (!ImGui.TreeNodeEx(vendor, VENDOR_FLAGS))
                         continue;
 
                     foreach (string extension in extensions)
@@ -296,13 +295,13 @@ namespace OpenTK.Backends.Tests
 
                 writer.WriteLine("[Extensions]");
                 writer.WriteLine("GL_NUM_EXTENSIONS={0}", numExtensions);
-                foreach (var(vendor, list) in extensionGroups)
+                foreach (var (vendor, list) in extensionGroups)
                 {
                     writer.WriteLine("{0}={1}", vendor, list.Count);
                 }
                 writer.WriteLine();
 
-                foreach (var(vendor, list) in extensionGroups)
+                foreach (var (vendor, list) in extensionGroups)
                 {
                     writer.WriteLine("[Extensions/{0}]", vendor);
 

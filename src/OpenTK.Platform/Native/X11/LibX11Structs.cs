@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OpenTK.Platform.Native.X11
 {
@@ -299,8 +295,8 @@ namespace OpenTK.Platform.Native.X11
 
     internal unsafe struct XClassHint
     {
-        public byte *res_name;
-        public byte *res_class;
+        public byte* res_name;
+        public byte* res_class;
     }
 
     internal unsafe struct XTextProperty

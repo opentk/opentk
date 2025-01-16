@@ -1,5 +1,4 @@
-﻿using System;
-using OpenTK.Windowing.GraphicsLibraryFramework;
+﻿using OpenTK.Windowing.GraphicsLibraryFramework;
 
 namespace OpenTK.Windowing.Desktop
 {

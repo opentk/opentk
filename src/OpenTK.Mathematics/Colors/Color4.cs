@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Diagnostics.Contracts;
-using OpenTK.Mathematics;
 
 #pragma warning disable SA1649
 namespace OpenTK.Mathematics
@@ -95,7 +94,7 @@ namespace OpenTK.Mathematics
         /// <param name="n">The nth element to get.</param>
         public float this[int n]
         {
-            get
+            readonly get
             {
                 // the old-style switch compiles to slightly smaller IL than the newer one,
                 // so is used here for performance.
@@ -160,7 +159,7 @@ namespace OpenTK.Mathematics
         /// <param name="z">The z component of this color, defined by the color space.</param>
         /// <param name="w">The w component of this color, defined by the color space.</param>
         [Pure]
-        public void Deconstruct(out float x, out float y, out float z, out float w)
+        public readonly void Deconstruct(out float x, out float y, out float z, out float w)
         {
             x = X;
             y = Y;
@@ -198,7 +197,7 @@ namespace OpenTK.Mathematics
         /// <param name="other">The Color4 structure to compare to.</param>
         /// <returns>True if both Color4 structures contain the same components; false otherwise.</returns>
         [Pure]
-        public bool Equals(Color4<T> other)
+        public readonly bool Equals(Color4<T> other)
         {
             return X.Equals(other.X) && Y.Equals(other.Y) && Z.Equals(other.Z) && W.Equals(other.W);
         }
@@ -208,7 +207,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <returns>A <see cref="string"/> that describes this Color4 structure.</returns>
         [Pure]
-        public override string ToString()
+        public override readonly string ToString()
         {
             return $"({X}, {Y}, {Z}, {W})";
         }
@@ -219,7 +218,7 @@ namespace OpenTK.Mathematics
         /// <param name="obj">An object to compare to.</param>
         /// <returns>True obj is a Color4 structure with the same components as this Color4; false otherwise.</returns>
         [Pure]
-        public override bool Equals(object obj)
+        public override readonly bool Equals(object obj)
         {
             return obj is Color4<T> other && Equals(other);
         }
@@ -229,7 +228,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <returns>A System.Int32 containing the hashcode of this Color4 structure.</returns>
         [Pure]
-        public override int GetHashCode()
+        public override readonly int GetHashCode()
         {
             unchecked
             {

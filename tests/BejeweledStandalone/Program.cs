@@ -1,11 +1,8 @@
 ﻿using OpenTK.Platform;
 using OpenTK.Core.Utility;
 using OpenTK.Graphics;
-using OpenTK.Graphics.OpenGL;
-using OpenTK.Platform.Native;
 using System;
 using System.Diagnostics;
-using System.Runtime.InteropServices;
 using System.IO;
 using OpenTK.Mathematics;
 using System.Text;
@@ -80,7 +77,8 @@ namespace Bejeweled
                 DebugFlag = true,
                 DepthBits = ContextDepthBits.Depth16,
                 StencilBits = ContextStencilBits.None,
-                Selector = static (options, requested, logger) => {
+                Selector = static (options, requested, logger) =>
+                {
                     for (int i = 0; i < options.Count; i++)
                     {
                         logger?.LogInfo(options[i].ToString());
@@ -211,7 +209,8 @@ namespace Bejeweled
             // FIXME: Document if CreateFromWindow should make the context current or not!
             Toolkit.OpenGL.SetCurrentContext(null);
             GLLoader.LoadBindings(Toolkit.OpenGL.GetBindingsContext(Context));
-            Task loadTask = Task.Run(() => {
+            Task loadTask = Task.Run(() =>
+            {
                 Toolkit.OpenGL.SetCurrentContext(Context);
                 Toolkit.OpenGL.SetSwapInterval(1);
                 Bejeweled = new Bejeweled();
@@ -221,7 +220,7 @@ namespace Bejeweled
 
             SplashWindow.DisplaySplashWindow(0.4f, loadTask, 0.6f);
 
-            while(loadTask.IsCompleted == false)
+            while (loadTask.IsCompleted == false)
             {
                 Toolkit.Window.ProcessEvents(false);
             }

@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
-using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
-using System.Threading;
 using OpenTK.Platform;
 using OpenTK.Core.Utility;
 using OpenTK.Graphics;
@@ -11,7 +9,6 @@ using OpenTK.Graphics.OpenGL;
 using OpenTK.Mathematics;
 using OpenTK.Platform.Native;
 using OpenTK.Platform.Native.SDL;
-using OpenTK.Platform.Native.Windows;
 
 namespace SDLTestProject
 {
@@ -72,7 +69,7 @@ void main()
             Console.WriteLine(RuntimeInformation.RuntimeIdentifier);
             Console.WriteLine($"Is OS 64 bit: {Environment.Is64BitOperatingSystem}");
             Console.WriteLine($"Is process 64 bit: {Environment.Is64BitProcess}");
-            
+
             PlatformComponents.PreferSDL2 = true;
             WindowComp = PlatformComponents.CreateWindowComponent();
             OpenGLComponent = PlatformComponents.CreateOpenGLComponent();
@@ -261,7 +258,7 @@ void main()
 
                 GL.DrawArrays(PrimitiveType.Triangles, 0, 6);
 
-                
+
                 OpenGLComponent.SwapBuffers(ContextHandle);
             }
         }
@@ -326,7 +323,7 @@ void main()
             {
                 Console.WriteLine($"Key down! {keyDown.Key} (scancode: {keyDown.Scancode}){(keyDown.IsRepeat ? " repeat!" : "")}");
 
-                if(keyDown.Key == Key.F11)
+                if (keyDown.Key == Key.F11)
                 {
                     // FIXME: What does bpp=32 compared to bpp=24?
                     VideoMode mode = new VideoMode(1920, 1080, 144, 32);

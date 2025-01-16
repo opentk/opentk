@@ -481,12 +481,12 @@ namespace OpenTK.Platform
             Samples = samples;
         }
 
-        public override bool Equals(object? obj)
+        public override readonly bool Equals(object? obj)
         {
             return obj is ContextValues values && Equals(values);
         }
 
-        public bool Equals(ContextValues other)
+        public readonly bool Equals(ContextValues other)
         {
             return // ID == other.ID &&
                    RedBits == other.RedBits &&
@@ -502,7 +502,7 @@ namespace OpenTK.Platform
                    Samples == other.Samples;
         }
 
-        public override int GetHashCode()
+        public override readonly int GetHashCode()
         {
             HashCode hash = new HashCode();
             // hash.Add(ID);

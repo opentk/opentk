@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OpenTK.Platform
 {
@@ -48,26 +44,26 @@ namespace OpenTK.Platform
         public bool HighContrast;
 
         /// <inheritdoc/>
-        public override bool Equals(object? obj)
+        public override readonly bool Equals(object? obj)
         {
             return obj is ThemeInfo info && Equals(info);
         }
 
         /// <inheritdoc/>
-        public bool Equals(ThemeInfo other)
+        public readonly bool Equals(ThemeInfo other)
         {
             return Theme == other.Theme &&
                    HighContrast == other.HighContrast;
         }
 
         /// <inheritdoc/>
-        public override int GetHashCode()
+        public override readonly int GetHashCode()
         {
             return HashCode.Combine(Theme, HighContrast);
         }
 
         /// <inheritdoc/>
-        public override string ToString()
+        public override readonly string ToString()
         {
             return $"{(HighContrast ? "High contrast " : "")}{Theme}";
         }

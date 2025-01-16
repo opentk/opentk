@@ -7,9 +7,6 @@
 // of the MIT license. See the LICENSE file for details.
 //
 
-using OpenTK.Core.Extensions;
-using OpenTK.Core.Loader;
-
 namespace OpenTK.OpenAL.Extensions.EXT.VorbisFormat
 {
     /// <summary>

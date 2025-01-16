@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Diagnostics;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using System.Runtime.InteropServices.Marshalling;
-using System.Security.Cryptography;
 
 namespace OpenTK.Platform.Native.macOS
 {
@@ -43,7 +39,7 @@ namespace OpenTK.Platform.Native.macOS
 
         internal static SEL sel_registerName(ReadOnlySpan<byte> str)
         {
-            fixed(byte* ptr = str)
+            fixed (byte* ptr = str)
             {
                 return sel_registerName(ptr);
             }
@@ -64,7 +60,7 @@ namespace OpenTK.Platform.Native.macOS
                 mode |= RTLD_FIRST;
             }
 
-            fixed(byte* ptr = path)
+            fixed (byte* ptr = path)
             {
                 return dlopen(ptr, mode);
             }
@@ -76,7 +72,7 @@ namespace OpenTK.Platform.Native.macOS
         // FIXME: Maybe rename this to GetSymbol?
         internal static IntPtr GetStringConstant(IntPtr handle, ReadOnlySpan<byte> symbol)
         {
-            fixed(byte* ptr = symbol)
+            fixed (byte* ptr = symbol)
             {
                 // Load the pointer to the constant, then dereference it.
                 return *(IntPtr*)dlsym(handle, ptr);
@@ -112,7 +108,7 @@ namespace OpenTK.Platform.Native.macOS
 
         internal static ObjCClass objc_getClass(ReadOnlySpan<byte> name)
         {
-            fixed(byte* ptr = name)
+            fixed (byte* ptr = name)
             {
                 return objc_getClass(ptr);
             }
@@ -224,7 +220,7 @@ namespace OpenTK.Platform.Native.macOS
 
         [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
         internal static extern void objc_msgSend(IntPtr receiver, SEL selector, ulong value1, IntPtr value2);
-          
+
         // FIXME: Is bool correct here?
         [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
         internal static extern IntPtr objc_msgSend_IntPtr(IntPtr receiver, SEL selector, CGRect rect, NSWindowStyleMask styleMask, NSBackingStoreType type, bool defer);
@@ -407,7 +403,7 @@ namespace OpenTK.Platform.Native.macOS
 
         internal static ObjCClass objc_allocateClassPair(ObjCClass superclass, ReadOnlySpan<byte> name, ulong extraBytes)
         {
-            fixed(byte* ptr = name)
+            fixed (byte* ptr = name)
             {
                 return objc_allocateClassPair(superclass, ptr, 0);
             }
@@ -429,8 +425,8 @@ namespace OpenTK.Platform.Native.macOS
 
         internal static bool class_addIvar(ObjCClass cls, ReadOnlySpan<byte> name, nuint size, nuint alignment, ReadOnlySpan<byte> types)
         {
-            fixed(byte* namePtr = name)
-            fixed(byte* typesPtr = types)
+            fixed (byte* namePtr = name)
+            fixed (byte* typesPtr = types)
             {
                 return class_addIvar(cls, namePtr, size, alignment, typesPtr);
             }
@@ -459,7 +455,8 @@ namespace OpenTK.Platform.Native.macOS
         [DllImport(FoundationFramework)]
         internal static extern IntPtr /* objc_property_t* */ class_copyPropertyList(ObjCClass cls, out uint outCount);
 
-        internal static string property_getName(IntPtr property) {
+        internal static string property_getName(IntPtr property)
+        {
 
             byte** name = property_getName(property);
             return Marshal.PtrToStringUTF8((IntPtr)(*name))!;
@@ -473,7 +470,7 @@ namespace OpenTK.Platform.Native.macOS
 
         internal static IntPtr /* Ivar */ object_getInstanceVariable(IntPtr /* id */ @object, ReadOnlySpan<byte> name, out IntPtr outValue)
         {
-            fixed(byte* namePtr = name)
+            fixed (byte* namePtr = name)
             {
                 return object_getInstanceVariable(@object, namePtr, out outValue);
             }

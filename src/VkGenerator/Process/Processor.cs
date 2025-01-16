@@ -1,10 +1,4 @@
-﻿using Microsoft.VisualBasic;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
 using VkGenerator.Parsing;
 
 namespace VkGenerator.Process
@@ -403,7 +397,7 @@ namespace VkGenerator.Process
             {
                 // FIXME: More robust parsing?
                 Version featureVer = Version.Parse(feature.Number);
-                
+
                 foreach (RequireTag require in feature.RequireTags)
                 {
                     foreach (RequireCommand requireCommand in require.RequiredCommands)

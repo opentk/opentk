@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.ComponentModel.Design;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using OpenTK.Platform;
 using OpenTK.Core.Utility;
 using OpenTK.Mathematics;
 using static OpenTK.Platform.Native.macOS.ObjC;
@@ -2161,33 +2159,33 @@ namespace OpenTK.Platform.Native.macOS
             switch (transparencyMode)
             {
                 case WindowTransparencyMode.Opaque:
-                {
-                    break;
-                }
-                case WindowTransparencyMode.TransparentFramebuffer:
-                {
-                    // FIXME: BOOL
-                    objc_msgSend(nswindow.Window, selSetOpaque, false);
-                    objc_msgSend(nswindow.Window, selSetHasShadow, false);
-                    IntPtr clearColor = objc_msgSend_IntPtr((IntPtr)NSColorClass, selClearColor);
-                    objc_msgSend(nswindow.Window, selSetBackgroundColor, clearColor);
-                    objc_msgSend(clearColor, Release);
-
-                    // If we have a context set its transparency now.
-                    // If we don't have a context yet we use TransparentFramebuffer
-                    // so set the context transparent when we create it.
-                    if (nswindow.Context != null)
                     {
-                        int opaque = 0;
-                        objc_msgSend(nswindow.Context.Context, MacOSOpenGLComponent.selSetValues_ForParameter, (IntPtr)(&opaque), (long)NSOpenGLContextParameter.SurfaceOpacity);
+                        break;
                     }
-                    break;
-                }
+                case WindowTransparencyMode.TransparentFramebuffer:
+                    {
+                        // FIXME: BOOL
+                        objc_msgSend(nswindow.Window, selSetOpaque, false);
+                        objc_msgSend(nswindow.Window, selSetHasShadow, false);
+                        IntPtr clearColor = objc_msgSend_IntPtr((IntPtr)NSColorClass, selClearColor);
+                        objc_msgSend(nswindow.Window, selSetBackgroundColor, clearColor);
+                        objc_msgSend(clearColor, Release);
+
+                        // If we have a context set its transparency now.
+                        // If we don't have a context yet we use TransparentFramebuffer
+                        // so set the context transparent when we create it.
+                        if (nswindow.Context != null)
+                        {
+                            int opaque = 0;
+                            objc_msgSend(nswindow.Context.Context, MacOSOpenGLComponent.selSetValues_ForParameter, (IntPtr)(&opaque), (long)NSOpenGLContextParameter.SurfaceOpacity);
+                        }
+                        break;
+                    }
                 case WindowTransparencyMode.TransparentWindow:
-                {
-                    objc_msgSend(nswindow.Window, selSetAlphaValue, (NFloat)opacity);
-                    break;
-                }
+                    {
+                        objc_msgSend(nswindow.Window, selSetAlphaValue, (NFloat)opacity);
+                        break;
+                    }
             }
         }
 
@@ -2200,7 +2198,7 @@ namespace OpenTK.Platform.Native.macOS
                 opacity = (float)objc_msgSend_nfloat(nswindow.Window, selAlphaValue);
             else
                 opacity = 0;
-            
+
             return nswindow.TransparencyMode;
         }
 

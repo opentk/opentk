@@ -1,15 +1,11 @@
-﻿using OpenTK.Platform;
-using OpenTK.Core.Utility;
+﻿using OpenTK.Core.Utility;
 using OpenTK.Mathematics;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OpenTK.Platform.Native.Windows
 {
@@ -246,7 +242,7 @@ namespace OpenTK.Platform.Native.Windows
 
                 if (primary != oldPrimary)
                 {
-                    
+
                     logger?.LogDebug("New primary monitor!");
                 }
             }
@@ -453,7 +449,7 @@ namespace OpenTK.Platform.Native.Windows
         }
 
         /// <inheritdoc/>
-        public void GetDisplayScale(DisplayHandle handle, out float  scaleX, out float scaleY)
+        public void GetDisplayScale(DisplayHandle handle, out float scaleX, out float scaleY)
         {
             HMonitor hmonitor = handle.As<HMonitor>(this);
 

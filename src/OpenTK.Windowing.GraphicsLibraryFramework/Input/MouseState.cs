@@ -7,12 +7,9 @@
 // of the MIT license. See the LICENSE file for details.
 //
 
-using System;
 using System.Collections;
 using System.Text;
-using OpenTK.Core;
 using OpenTK.Mathematics;
-using OpenTK.Windowing.Common;
 
 namespace OpenTK.Windowing.GraphicsLibraryFramework
 {

@@ -1,8 +1,5 @@
-using System;
 using System.Text;
-using System.Linq;
 using System.Xml.Linq;
-using System.Collections.Generic;
 
 namespace VkGenerator.Utility.Extensions
 {
@@ -36,7 +33,7 @@ namespace VkGenerator.Utility.Extensions
         {
             return element.Descendants().Where(e => e.Name.LocalName == name);
         }
-        
+
         public static XElement ElementIgnoreNamespace(this XElement element, string name)
         {
             return element.Descendants().Where(e => e.Name.LocalName == name).First();

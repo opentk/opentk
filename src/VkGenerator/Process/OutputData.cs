@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics;
-using System.CodeDom.Compiler;
-using System.Text;
-using System.Numerics;
-using System.Runtime.InteropServices.Marshalling;
+﻿using System.Text;
 
 namespace VkGenerator.Process
 {

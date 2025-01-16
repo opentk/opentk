@@ -1,9 +1,5 @@
 using System;
-using System.Diagnostics.Tracing;
-using System.Reflection;
 using System.Runtime.InteropServices;
-using System.Runtime.CompilerServices;
-using System.Text;
 
 namespace OpenTK.Platform.Native.X11
 {
@@ -21,7 +17,7 @@ namespace OpenTK.Platform.Native.X11
         internal static extern bool XFixesQueryExtension(XDisplayPtr dpy, out int event_base_return, out int error_base_return);
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern int /* Status */ XFixesQueryVersion (XDisplayPtr dpy, ref int major_version_return, ref int minor_version_return);
+        internal static extern int /* Status */ XFixesQueryVersion(XDisplayPtr dpy, ref int major_version_return, ref int minor_version_return);
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         internal static extern int XFixesVersion();
@@ -63,7 +59,8 @@ namespace OpenTK.Platform.Native.X11
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         internal static extern void XFixesSelectCursorInput(XDisplayPtr dpy, XWindow win, ulong eventMask);
 
-        internal unsafe struct XFixesCursorImage {
+        internal unsafe struct XFixesCursorImage
+        {
 
             public short x, y;
             public ushort width, height;
@@ -71,23 +68,23 @@ namespace OpenTK.Platform.Native.X11
             public ulong cursor_serial;
             public ulong* pixels;
             // FIXME: Special struct for v2+?
-//#if XFIXES_MAJOR >= 2
+            //#if XFIXES_MAJOR >= 2
             public XAtom atom;		    /* Version >= 2 only */
-            public char* name;		    /* Version >= 2 only */
-//#endif
+            public char* name;          /* Version >= 2 only */
+            //#endif
         }
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern XFixesCursorImage* XFixesGetCursorImage (XDisplayPtr dpy);
+        internal static extern XFixesCursorImage* XFixesGetCursorImage(XDisplayPtr dpy);
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         internal static extern XPointerBarrier XFixesCreatePointerBarrier(
-            XDisplayPtr dpy, 
-            XWindow w, 
+            XDisplayPtr dpy,
+            XWindow w,
             int x1, int y1,
-            int x2, int y2, 
+            int x2, int y2,
             BarrierDirection directions,
-            int num_devices, 
+            int num_devices,
             IntPtr devices);
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]

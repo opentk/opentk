@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace OpenTK.Platform
+﻿namespace OpenTK.Platform
 {
     /// <summary>
     /// A struct containing information about the battery status of the computer.
@@ -41,7 +35,7 @@ namespace OpenTK.Platform
         public float? BatteryTime;
 
         /// <inheritdoc/>
-        public override string ToString()
+        public override readonly string ToString()
         {
             return $"Percentage: {BatteryPercent}%, Time left: {BatteryTime ?? -1}s, OnAC: {OnAC}, Charging: {Charging}, PowerSaver: {PowerSaver}";
         }

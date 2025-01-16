@@ -5,8 +5,6 @@ using Generator.Utility.Extensions;
 using Generator.Utility;
 using Generator.Writing;
 using Generator.Parsing;
-using System.Net.Http.Headers;
-using System.Collections.Immutable;
 
 namespace Generator.Process
 {
@@ -323,7 +321,7 @@ namespace Generator.Process
                                         }
                                     }
 
-                                    
+
                                 }
                             }
                         }
@@ -390,7 +388,7 @@ namespace Generator.Process
                     // FIXME: Make api an OutputAPI
 
                     Dictionary<string, HashSet<OverloadedFunction>> functionsByVendor = new Dictionary<string, HashSet<OverloadedFunction>>();
-                    
+
                     HashSet<EnumGroupMember> theAllEnumGroup = new HashSet<EnumGroupMember>();
 
                     foreach (var functionRef in functions)
@@ -408,7 +406,7 @@ namespace Generator.Process
                                 else
                                 {
                                     functionsByVendor.AddToNestedHashSet("", overloadedFunction);
-                                    
+
                                     referenced = true;
                                 }
                             }
@@ -542,7 +540,8 @@ namespace Generator.Process
 
                         // If there is a list, sort it by name
                         if (functionsUsingEnumGroup != null)
-                            functionsUsingEnumGroup.Sort((f1, f2) => {
+                            functionsUsingEnumGroup.Sort((f1, f2) =>
+                            {
                                 // We want to prioritize "core" vendorFunctions before extensions.
                                 if (f1.Vendor == "" && f2.Vendor != "") return -1;
                                 if (f1.Vendor != "" && f2.Vendor == "") return 1;

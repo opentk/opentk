@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using ImGuiNET;
 using OpenTK.Platform;
-using OpenTK.Platform.Native;
 using OpenTK.Platform.Native.macOS;
 using StbImageSharp;
 
@@ -43,8 +41,8 @@ namespace OpenTK.Backends.Tests
         string? dialogResponseStringMacOS;
         System.Numerics.Vector4 responseColorMacOS;
 
-        static readonly System.Numerics.Vector4 GoodColor = new  System.Numerics.Vector4(0.630f, 0.980f, 0.343f, 1.0f);
-        static readonly System.Numerics.Vector4 BadColor = new  System.Numerics.Vector4(1.0f, 0.184f, 0.184f, 1.0f);
+        static readonly System.Numerics.Vector4 GoodColor = new System.Numerics.Vector4(0.630f, 0.980f, 0.343f, 1.0f);
+        static readonly System.Numerics.Vector4 BadColor = new System.Numerics.Vector4(1.0f, 0.184f, 0.184f, 1.0f);
 
         public override void Paint(double deltaTime)
         {

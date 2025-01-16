@@ -1,6 +1,4 @@
-﻿using OpenTK.Graphics.Vulkan;
-using OpenTK.Graphics.Wgl;
-using System;
+﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -48,10 +46,10 @@ namespace OpenTK.Platform.Native.Windows
         internal const int E_OUTOFMEMORY = unchecked((int)0x8007000E);
         internal const int E_FAIL = unchecked((int)0x80004005);
 
-        internal const IntPtr TD_WARNING_ICON         = unchecked((ushort)-1);
-        internal const IntPtr TD_ERROR_ICON           = unchecked((ushort)-2);
-        internal const IntPtr TD_INFORMATION_ICON     = unchecked((ushort)-3);
-        internal const IntPtr TD_SHIELD_ICON          = unchecked((ushort)-4);
+        internal const IntPtr TD_WARNING_ICON = unchecked((ushort)-1);
+        internal const IntPtr TD_ERROR_ICON = unchecked((ushort)-2);
+        internal const IntPtr TD_INFORMATION_ICON = unchecked((ushort)-3);
+        internal const IntPtr TD_SHIELD_ICON = unchecked((ushort)-4);
 
         internal const IntPtr INVALID_HANDLE_VALUE = -1;
 
@@ -169,7 +167,7 @@ namespace OpenTK.Platform.Native.Windows
                 this.Y = y;
             }
 
-            public override string ToString()
+            public override readonly string ToString()
             {
                 return $"({X}, {Y})";
             }
@@ -294,14 +292,15 @@ namespace OpenTK.Platform.Native.Windows
         [DllImport("user32.dll")]
         internal static extern bool FlashWindowEx(in FLASHWINFO pfwi);
 
-        public struct FLASHWINFO {
+        public struct FLASHWINFO
+        {
             public uint cbSize;
             public IntPtr /* HWND */ hwnd;
             public FLASHW dwFlags;
             public uint uCount;
             public uint dwTimeout;
         }
-    
+
         [DllImport("user32.dll", SetLastError = true)]
         internal static extern bool AdjustWindowRect(ref RECT lpRect, WindowStyles dwStyle, bool bMenu);
 
@@ -378,7 +377,7 @@ namespace OpenTK.Platform.Native.Windows
             static extern IntPtr SetWindowLongPtr(IntPtr hWnd, SetGWLPIndex nIndex, IntPtr dwNewLong);
         }
 
-        
+
 
         [DllImport("user32.dll", SetLastError = true)]
         internal static extern IntPtr BeginPaint(IntPtr hWnd, out PAINTSTRUCT lpPaint);
@@ -396,7 +395,7 @@ namespace OpenTK.Platform.Native.Windows
         internal static extern bool DragQueryPoint(IntPtr /* HDROP */ hDrop, out POINT ppt);
 
         [DllImport("shell32.dll", CharSet = CharSet.Auto)]
-        internal static extern uint DragQueryFile(IntPtr /* HDROP */ hDrop, uint iFile, [Out]StringBuilder? lpszFile, uint cch);
+        internal static extern uint DragQueryFile(IntPtr /* HDROP */ hDrop, uint iFile, [Out] StringBuilder? lpszFile, uint cch);
 
         [DllImport("shell32.dll")]
         internal static extern void DragFinish(IntPtr /* HDROP */ hDrop);
@@ -408,9 +407,9 @@ namespace OpenTK.Platform.Native.Windows
             public int right;
             public int bottom;
 
-            public int Width => right - left;
+            public readonly int Width => right - left;
 
-            public int Height => bottom - top;
+            public readonly int Height => bottom - top;
 
             public RECT(int left, int top, int right, int bottom)
             {
@@ -814,7 +813,7 @@ namespace OpenTK.Platform.Native.Windows
             public int X;
             public int Y;
 
-            public override string ToString()
+            public override readonly string ToString()
             {
                 return $"({X}, {Y})";
             }
@@ -919,7 +918,7 @@ namespace OpenTK.Platform.Native.Windows
                   [Out] StringBuilder? lpBuf,
                   uint dwBufLen);
 
-        
+
         internal static unsafe long ImmGetCompositionString(
                   IntPtr /* HIMC */ context /* unnamedParam1 */,
                   GCS @string /* unnamedParam2 */,
