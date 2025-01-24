@@ -75,6 +75,7 @@ namespace OpenTK.Platform.Native.macOS
         internal static readonly SEL selMakeKeyWindow = sel_registerName("makeKeyWindow"u8);
         internal static readonly SEL selCenter = sel_registerName("center"u8);
         internal static readonly SEL selInputContext = sel_registerName("inputContext"u8);
+        internal static readonly SEL selContentRectForFrameRect = sel_registerName("contentRectForFrameRect:"u8);
 
         internal static readonly SEL selMakeKeyAndOrderFront = sel_registerName("makeKeyAndOrderFront:"u8);
         internal static readonly SEL selIsKeyWindow = sel_registerName("isKeyWindow"u8);
@@ -300,6 +301,8 @@ namespace OpenTK.Platform.Native.macOS
 
             // Add an IVar for the markedText, so we can use it without finding the managed window object.
             class_addIvar(NSOpenTKViewClass, "markedText"u8, (nuint)nuint.Size, (nuint)int.Log2(nuint.Size), "@"u8);
+
+            class_addIvar(NSOpenTKViewClass, "inputRect"u8, (nuint)sizeof(CGRect), (nuint)int.Log2(sizeof(CGRect)), "{CGRect={CGPoint=dd}{CGSize=dd}}"u8);
 
             class_addMethod(NSOpenTKViewClass, sel_registerName("resetCursorRects"u8), (IntPtr)NSOtkView_ResetCursorRectsInst, "v@:"u8);
             class_addMethod(NSOpenTKViewClass, sel_registerName("mouseEntered:"u8), (IntPtr)NSOtkView_MouseEnteredInst, "v@:@"u8);
@@ -751,7 +754,7 @@ namespace OpenTK.Platform.Native.macOS
         private static NSRange NSOtkView_NSTextInputClient_MarkedRange(IntPtr view, SEL selector)
         {
             // FIXME: Store the Ivar somewhere to be able to use object_getIvar?
-            object_getInstanceVariable(view, "markedText"u8, out IntPtr markedText);
+            IntPtr test = object_getInstanceVariable(view, "markedText"u8, out IntPtr markedText);
             ulong length = (ulong)objc_msgSend_IntPtr(markedText, selLength);
             if (length > 0)
             {
@@ -846,13 +849,21 @@ namespace OpenTK.Platform.Native.macOS
             return 0;
         }
 
-        private static unsafe readonly delegate* unmanaged[Cdecl]<IntPtr, SEL, CGPoint, CGRect> NSOtkView_NSTextInputClient_FirstRectForCharacterRange_ActualRangeInst = &NSOtkView_NSTextInputClient_FirstRectForCharacterRange_ActualRange;
+        private static unsafe readonly delegate* unmanaged[Cdecl]<IntPtr, SEL, NSRange, NSRange*, CGRect> NSOtkView_NSTextInputClient_FirstRectForCharacterRange_ActualRangeInst = &NSOtkView_NSTextInputClient_FirstRectForCharacterRange_ActualRange;
         [UnmanagedCallersOnly(CallConvs = new Type[] { typeof(CallConvCdecl) })]
-        private static CGRect NSOtkView_NSTextInputClient_FirstRectForCharacterRange_ActualRange(IntPtr view, SEL selector, CGPoint point)
+        private unsafe static CGRect NSOtkView_NSTextInputClient_FirstRectForCharacterRange_ActualRange(IntPtr view, SEL selector, NSRange range, NSRange* actualRange)
         {
-            // FIXME: Why do we do this?
-            CGRect frame = objc_msgSend_CGRect(view, selFrame);
-            return new CGRect(frame.origin, CGPoint.Zero);
+            if (actualRange != null)
+                *actualRange = range;
+            
+            IntPtr window = objc_msgSend_IntPtr(view, selWindow);
+            CGRect contentRect = objc_msgSend_CGRect(window, selContentRectForFrameRect, objc_msgSend_CGRect(window, selFrame));
+            NFloat windowHeight = contentRect.size.y;
+            CGRect inputRect = *(CGRect*)getIvarPointer(view, "inputRect"u8);
+            
+            CGRect rect = new CGRect(inputRect.origin.x, windowHeight - inputRect.origin.y - inputRect.size.y, inputRect.size.x, inputRect.size.y);
+            rect = objc_msgSend_CGRect(window, selConvertRectToScreen, rect);
+            return rect;
         }
 
         private static unsafe readonly delegate* unmanaged[Cdecl]<IntPtr, SEL, SEL, void> NSOtkView_NSTextInputClient_DoCommandBySelectorInst = &NSOtkView_NSTextInputClient_DoCommandBySelector;
@@ -1211,34 +1222,9 @@ namespace OpenTK.Platform.Native.macOS
 
                             MacOSKeyboardComponent.KeyStateChanged(scancode, true);
 
-                            // FIXME: Figure out what we want to do with the Keys enum...
-                            switch (keyCode)
-                            {
-                                case 0x24: // kVK_Return
-                                    EventQueue.Raise(nswindow, PlatformEventType.KeyDown, new KeyDownEventArgs(nswindow, Key.Return, scancode, isRepeat, modifiers));
-                                    break;
-                                case 0x33: // kVK_Delete
-                                    EventQueue.Raise(nswindow, PlatformEventType.KeyDown, new KeyDownEventArgs(nswindow, Key.Backspace, scancode, isRepeat, modifiers));
-                                    break;
-                                case 0x35: // kVK_Escape
-                                    EventQueue.Raise(nswindow, PlatformEventType.KeyDown, new KeyDownEventArgs(nswindow, Key.Escape, scancode, isRepeat, modifiers));
-                                    break;
-                                case 0x7B: // kVK_LeftArrow
-                                    EventQueue.Raise(nswindow, PlatformEventType.KeyDown, new KeyDownEventArgs(nswindow, Key.LeftArrow, scancode, isRepeat, modifiers));
-                                    break;
-                                case 0x7C: // kVK_RightArrow
-                                    EventQueue.Raise(nswindow, PlatformEventType.KeyDown, new KeyDownEventArgs(nswindow, Key.RightArrow, scancode, isRepeat, modifiers));
-                                    break;
-                                case 0x7D: // kVK_DownArrow
-                                    EventQueue.Raise(nswindow, PlatformEventType.KeyDown, new KeyDownEventArgs(nswindow, Key.DownArrow, scancode, isRepeat, modifiers));
-                                    break;
-                                case 0x7E: // kVK_UpArrow
-                                    EventQueue.Raise(nswindow, PlatformEventType.KeyDown, new KeyDownEventArgs(nswindow, Key.UpArrow, scancode, isRepeat, modifiers));
-                                    break;
-                                default:
-                                    EventQueue.Raise(nswindow, PlatformEventType.KeyDown, new KeyDownEventArgs(nswindow, Key.Unknown, scancode, isRepeat, modifiers));
-                                    break;
-                            }
+                            // FIXME: This conversion is temporary.
+                            Key key = MacOSKeyboardComponent.GetKeyFromScancodeInternal(scancode);
+                            EventQueue.Raise(nswindow, PlatformEventType.KeyDown, new KeyDownEventArgs(nswindow, key, scancode, isRepeat, modifiers));
 
                             objc_msgSend(nsApplication, selSendEvent, @event);
                             break;
@@ -1255,34 +1241,9 @@ namespace OpenTK.Platform.Native.macOS
 
                             MacOSKeyboardComponent.KeyStateChanged(scancode, false);
 
-                            // FIXME: Figure out what we want to do with the Keys enum...
-                            switch (keyCode)
-                            {
-                                case 0x24: // kVK_Return
-                                    EventQueue.Raise(nswindow, PlatformEventType.KeyUp, new KeyUpEventArgs(nswindow, Key.Return, scancode, modifiers));
-                                    break;
-                                case 0x33: // kVK_Delete
-                                    EventQueue.Raise(nswindow, PlatformEventType.KeyUp, new KeyUpEventArgs(nswindow, Key.Backspace, scancode, modifiers));
-                                    break;
-                                case 0x35: // kVK_Escape
-                                    EventQueue.Raise(nswindow, PlatformEventType.KeyUp, new KeyUpEventArgs(nswindow, Key.Escape, scancode, modifiers));
-                                    break;
-                                case 0x7B: // kVK_LeftArrow
-                                    EventQueue.Raise(nswindow, PlatformEventType.KeyUp, new KeyUpEventArgs(nswindow, Key.LeftArrow, scancode, modifiers));
-                                    break;
-                                case 0x7C: // kVK_RightArrow
-                                    EventQueue.Raise(nswindow, PlatformEventType.KeyUp, new KeyUpEventArgs(nswindow, Key.RightArrow, scancode, modifiers));
-                                    break;
-                                case 0x7D: // kVK_DownArrow
-                                    EventQueue.Raise(nswindow, PlatformEventType.KeyUp, new KeyUpEventArgs(nswindow, Key.DownArrow, scancode, modifiers));
-                                    break;
-                                case 0x7E: // kVK_UpArrow
-                                    EventQueue.Raise(nswindow, PlatformEventType.KeyUp, new KeyUpEventArgs(nswindow, Key.UpArrow, scancode, modifiers));
-                                    break;
-                                default:
-                                    EventQueue.Raise(nswindow, PlatformEventType.KeyUp, new KeyUpEventArgs(nswindow, Key.Unknown, scancode, modifiers));
-                                    break;
-                            }
+                            // FIXME: This conversion is temporary.
+                            Key key = MacOSKeyboardComponent.GetKeyFromScancodeInternal(scancode);
+                            EventQueue.Raise(nswindow, PlatformEventType.KeyUp, new KeyUpEventArgs(nswindow, key, scancode, modifiers));
 
                             objc_msgSend(nsApplication, selSendEvent, @event);
                             break;

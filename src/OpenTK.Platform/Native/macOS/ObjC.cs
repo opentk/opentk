@@ -496,6 +496,16 @@ namespace OpenTK.Platform.Native.macOS
         }
 
         [DllImport(FoundationFramework)]
+        internal static extern nint ivar_getOffset(IntPtr /* Ivar */ v);
+
+        internal static void* getIvarPointer(IntPtr /* id */ @object, ReadOnlySpan<byte> /* char const* */ name) {
+            IntPtr ivar = object_getInstanceVariable(@object, name, out _);
+            if (ivar == 0) return null;
+            return (void*)(@object + ivar_getOffset(ivar));
+        }
+
+
+        [DllImport(FoundationFramework)]
         internal static extern void objc_registerClassPair(ObjCClass cls);
 
         [DllImport(FoundationFramework)]

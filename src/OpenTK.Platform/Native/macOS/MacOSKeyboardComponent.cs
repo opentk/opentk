@@ -206,7 +206,7 @@ namespace OpenTK.Platform.Native.macOS
                 case VK.kVK_Return: return Scancode.Return;
                 case VK.kVK_Tab: return Scancode.Tab;
                 case VK.kVK_Space: return Scancode.Spacebar;
-                case VK.kVK_Delete: return Scancode.Delete;
+                case VK.kVK_Delete: return Scancode.Backspace;
                 case VK.kVK_Escape: return Scancode.Escape;
                 // FIXME: kVK_Command gets sent for both Left and Right command...
                 case VK.kVK_Command: return Scancode.LeftGUI;
@@ -253,7 +253,60 @@ namespace OpenTK.Platform.Native.macOS
         /// <inheritdoc/>
         public Key GetKeyFromScancode(Scancode scancode)
         {
-            return Key.Unknown;
+            return GetKeyFromScancodeInternal(scancode);
+        }
+
+        internal static Key GetKeyFromScancodeInternal(Scancode scancode)
+        {
+            // FIXME: For now we do a quick and dirty mapping to make something work
+            // but this implementation is not correct.
+            if (scancode == Scancode.D0)
+                return Key.D0;
+            if (scancode >= Scancode.D1 && scancode <= Scancode.D9)
+                return scancode - Scancode.D1 + Key.D1;
+
+            if (scancode >= Scancode.A && scancode <= Scancode.Z)
+                return scancode - Scancode.A + Key.A;
+
+            switch (scancode)
+            {
+                case Scancode.Return: // kVK_Return
+                    return Key.Return;
+                case Scancode.Backspace: // kVK_Delete
+                    return Key.Backspace;
+                case Scancode.Escape: // kVK_Escape
+                    return Key.Escape;
+                case Scancode.LeftArrow: // kVK_LeftArrow
+                    return Key.LeftArrow;
+                case Scancode.RightArrow: // kVK_RightArrow
+                    return Key.RightArrow;
+                case Scancode.DownArrow: // kVK_DownArrow
+                    return Key.DownArrow;
+                case Scancode.UpArrow: // kVK_UpArrow
+                    return Key.UpArrow;
+                case Scancode.LeftControl:
+                    return Key.LeftControl;
+                case Scancode.RightControl:
+                    return Key.RightControl;
+                case Scancode.LeftShift:
+                    return Key.LeftShift;
+                case Scancode.RightShift:
+                    return Key.RightShift;
+                case Scancode.LeftAlt:
+                    return Key.LeftAlt;
+                case Scancode.RightAlt:
+                    return Key.RightAlt;
+                case Scancode.LeftGUI:
+                    return Key.LeftGUI;
+                case Scancode.RightGUI:
+                    return Key.RightGUI;
+                case Scancode.Tab:
+                    return Key.Tab;
+                case Scancode.Delete:
+                    return Key.Delete;
+                default:
+                    return Key.Unknown;
+            }
         }
 
         /// <inheritdoc/>
@@ -311,9 +364,14 @@ namespace OpenTK.Platform.Native.macOS
         }
 
         /// <inheritdoc/>
-        public void SetImeRectangle(WindowHandle window, int x, int y, int width, int height)
+        public unsafe void SetImeRectangle(WindowHandle window, int x, int y, int width, int height)
         {
-            // FIXME:
+            NSWindowHandle nswindow = window.As<NSWindowHandle>(this);
+            
+            // FIXME: Convert rect into the correct coordinate system.
+
+            // For now we just set the ivar directly.
+            *(CGRect*)getIvarPointer(nswindow.View, "inputRect"u8) = new CGRect(x, y, width, height);
         }
 
         /// <inheritdoc/>
