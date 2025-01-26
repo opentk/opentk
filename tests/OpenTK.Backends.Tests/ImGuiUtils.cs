@@ -91,6 +91,22 @@ namespace OpenTK.Backends.Tests
             ImGui.EndDisabled();
         }
     
+        public static unsafe bool ToggleButton(string label, ref bool pressed)
+        {
+            ImGui.PushStyleColor(ImGuiCol.Button, pressed ? *ImGui.GetStyleColorVec4(ImGuiCol.ButtonActive) : *ImGui.GetStyleColorVec4(ImGuiCol.Button));
+
+            bool changed = false;
+            if (ImGui.Button(label))
+            {
+                changed = true;
+                pressed = !pressed;
+            }
+
+            ImGui.PopStyleColor(1);
+
+            return changed;
+        } 
+
         public static bool WindowCombobox(string title, [NotNull] ref WindowHandle? selected)
         {
             bool changed = false;

@@ -176,6 +176,10 @@ namespace OpenTK.Platform.Native.macOS
         internal static readonly SEL selActivateIgnoringOtherApps = sel_registerName("activateIgnoringOtherApps:"u8);
         internal static readonly SEL selSetRestorable = sel_registerName("setRestorable:"u8);
 
+        internal static readonly SEL selSetPendingKey_scancode_isRepeat_modifiers = sel_registerName("setPendingKey:scancode:isRepeat:modifiers:"u8);
+        internal static readonly SEL selSendPendingKey = sel_registerName("sendPendingKey"u8);
+        internal static readonly SEL selClearPendingKey = sel_registerName("clearPendingKey"u8);
+
         internal static readonly IntPtr NSPasteboardTypeFileURL = GetStringConstant(AppKitLibrary, "NSPasteboardTypeFileURL"u8);
 
         internal static readonly IntPtr NSDefaultRunLoop = GetStringConstant(FoundationLibrary, "NSDefaultRunLoopMode"u8);
@@ -304,6 +308,15 @@ namespace OpenTK.Platform.Native.macOS
 
             class_addIvar(NSOpenTKViewClass, "inputRect"u8, (nuint)sizeof(CGRect), (nuint)int.Log2(sizeof(CGRect)), "{CGRect={CGPoint=dd}{CGSize=dd}}"u8);
 
+            class_addIvar(NSOpenTKViewClass, "pendingScancode"u8, (nuint)sizeof(Scancode), (nuint)int.Log2(sizeof(Scancode)), "i"u8);
+            class_addIvar(NSOpenTKViewClass, "pendingKey"u8, (nuint)sizeof(Scancode), (nuint)int.Log2(sizeof(Scancode)), "i"u8);
+            class_addIvar(NSOpenTKViewClass, "pendingIsRepeat"u8, (nuint)sizeof(Scancode), (nuint)int.Log2(sizeof(Scancode)), "i"u8);
+            class_addIvar(NSOpenTKViewClass, "pendingKeyModifiers"u8, (nuint)sizeof(Scancode), (nuint)int.Log2(sizeof(Scancode)), "i"u8);
+
+            class_addMethod(NSOpenTKViewClass, selSetPendingKey_scancode_isRepeat_modifiers, (IntPtr)NSOtkView_SetPendingKey_Scancode_IsRepeat_ModifiersInst, "v@:iiii"u8);
+            class_addMethod(NSOpenTKViewClass, selSendPendingKey, (IntPtr)NSOtkView_SendPendingKeyInst, "v@:"u8);
+            class_addMethod(NSOpenTKViewClass, selClearPendingKey, (IntPtr)NSOtkView_ClearPendingKeyInst, "v@:"u8);
+
             class_addMethod(NSOpenTKViewClass, sel_registerName("resetCursorRects"u8), (IntPtr)NSOtkView_ResetCursorRectsInst, "v@:"u8);
             class_addMethod(NSOpenTKViewClass, sel_registerName("mouseEntered:"u8), (IntPtr)NSOtkView_MouseEnteredInst, "v@:@"u8);
             class_addMethod(NSOpenTKViewClass, sel_registerName("mouseExited:"u8), (IntPtr)NSOtkView_MouseExitedInst, "v@:@"u8);
@@ -312,6 +325,11 @@ namespace OpenTK.Platform.Native.macOS
             // TODO: canBecomeKeyView, 
             class_addMethod(NSOpenTKViewClass, sel_registerName("acceptsFirstResponder"u8), (IntPtr)NSOtkView_AcceptsFirstResponderInst, "c@:"u8);
             class_addMethod(NSOpenTKViewClass, sel_registerName("viewDidChangeEffectiveAppearance"u8), (IntPtr)NSOtkView_ViewDidChangeEffectiveAppearanceInst, "v@:"u8);
+
+            // FIXME: We want to decouple the NSTextInputClient from the View
+            // so that we can enable and disable text input whenever we want.
+            // Unless there is a way to tell cocoa that we won't be accepting input...
+            // - Noggin_bops 2024-01-26
 
             // NSTextInputClientProtocol functions
             IntPtr NSTextInputClientProtocol = objc_getProtocol("NSTextInputClient"u8);
@@ -650,6 +668,57 @@ namespace OpenTK.Platform.Native.macOS
             }
         }
 
+        private static unsafe readonly delegate* unmanaged[Cdecl]<IntPtr, SEL, int, int, int, int, void> NSOtkView_SetPendingKey_Scancode_IsRepeat_ModifiersInst = &NSOtkView_SetPendingKey_Scancode_IsRepeat_Modifiers;
+        [UnmanagedCallersOnly(CallConvs = new Type[] { typeof(CallConvCdecl) })]
+        private static void NSOtkView_SetPendingKey_Scancode_IsRepeat_Modifiers(IntPtr view, SEL selector, int key, int scancode, int isRepeat, int modifiers)
+        {
+            object_setInstanceVariable(view, "pendingScancode"u8, scancode);
+            object_setInstanceVariable(view, "pendingKey"u8, key);
+            object_setInstanceVariable(view, "pendingIsRepeat"u8, isRepeat);
+            object_setInstanceVariable(view, "pendingKeyModifiers"u8, modifiers);
+
+            GetComponentFromView(view).Logger?.LogDebug("setPendingKey");
+        }
+
+        private static unsafe readonly delegate* unmanaged[Cdecl]<IntPtr, SEL, void> NSOtkView_SendPendingKeyInst = &NSOtkView_SendPendingKey;
+        [UnmanagedCallersOnly(CallConvs = new Type[] { typeof(CallConvCdecl) })]
+        private static void NSOtkView_SendPendingKey(IntPtr view, SEL selector)
+        {
+            object_getInstanceVariable(view, "pendingKey"u8, out nint pendingKey);
+            if (pendingKey == 0)
+                return;
+
+            object_getInstanceVariable(view, "pendingScancode"u8, out nint pendingScancode);
+            object_getInstanceVariable(view, "pendingIsRepeat"u8, out nint pendingIsRepeat);
+            object_getInstanceVariable(view, "pendingKeyModifiers"u8, out nint pendingKeyModifiers);
+
+            IntPtr windowPtr = objc_msgSend_IntPtr(view, selWindow);
+            if (NSWindowDict.TryGetValue(windowPtr, out NSWindowHandle? nswindow) == false)
+            {
+                GetComponentFromView(view).Logger?.LogDebug($"Could not find NSWindow for NSView 0x{view}");
+                return;
+            }
+
+            Key key = (Key)pendingKey;
+            Scancode scancode = (Scancode)pendingScancode;
+            KeyModifier modifier = (KeyModifier)pendingKeyModifiers;
+            bool isRepeat = pendingIsRepeat != 0;
+
+            // FIXME: Handle repeat...
+            EventQueue.Raise(nswindow, PlatformEventType.KeyDown, new KeyDownEventArgs(nswindow, key, scancode, isRepeat, modifier));
+
+            GetComponentFromView(view).Logger?.LogDebug("sendPendingKey");
+            objc_msgSend(view, selClearPendingKey);
+        }
+
+        private static unsafe readonly delegate* unmanaged[Cdecl]<IntPtr, SEL, void> NSOtkView_ClearPendingKeyInst = &NSOtkView_ClearPendingKey;
+        [UnmanagedCallersOnly(CallConvs = new Type[] { typeof(CallConvCdecl) })]
+        private static void NSOtkView_ClearPendingKey(IntPtr view, SEL selector)
+        {
+            object_setInstanceVariable(view, "pendingKey"u8, 0);
+            GetComponentFromView(view).Logger?.LogDebug("clearPendingKey");
+        }
+
         private static unsafe readonly delegate* unmanaged[Cdecl]<IntPtr, SEL, void> NSOtkView_ResetCursorRectsInst = &NSOtkView_ResetCursorRects;
         [UnmanagedCallersOnly(CallConvs = new Type[] { typeof(CallConvCdecl) })]
         private static void NSOtkView_ResetCursorRects(IntPtr view, SEL selector)
@@ -721,8 +790,9 @@ namespace OpenTK.Platform.Native.macOS
         [UnmanagedCallersOnly(CallConvs = new Type[] { typeof(CallConvCdecl) })]
         private static void NSOtkView_KeyDown(IntPtr view, SEL selector, IntPtr @event)
         {
-            IntPtr array = objc_msgSend_IntPtr((IntPtr)NSArrayClass, selArrayWithObject, @event);
-            objc_msgSend_IntPtr(view, selInterpretKeyEvents, array);
+            // FIXME: Only call interpretKeyEvents if text input is enabled.
+            //IntPtr array = objc_msgSend_IntPtr((IntPtr)NSArrayClass, selArrayWithObject, @event);
+            //objc_msgSend_IntPtr(view, selInterpretKeyEvents, array);
         }
 
         private static unsafe readonly delegate* unmanaged[Cdecl]<IntPtr, SEL, byte> NSOtkView_AcceptsFirstResponderInst = &NSOtkView_AcceptsFirstResponder;
@@ -781,7 +851,7 @@ namespace OpenTK.Platform.Native.macOS
             object_getInstanceVariable(view, "markedText"u8, out IntPtr markedText);
             objc_msgSend(markedText, Release);
             // FIXME: BOOL
-            if (objc_msgSend_bool(@string, selIsKindOfClass, (IntPtr)objc_getClass("NSAttributedString"u8)))
+            if (objc_msgSend_bool(@string, selIsKindOfClass, (IntPtr)NSAttributedStringClass))
             {
                 markedText = objc_msgSend_IntPtr(objc_msgSend_IntPtr((IntPtr)NSMutableAttributedStringClass, Alloc), selInitWithAttributedString, @string);
 
@@ -792,6 +862,22 @@ namespace OpenTK.Platform.Native.macOS
             }
             // FIXME: Store the Ivar somewhere to be able to use object_getIvar?
             object_setInstanceVariable(view, "markedText"u8, markedText);
+
+            string str;
+            if (objc_msgSend_bool(@string, selIsKindOfClass, (IntPtr)NSAttributedStringClass))
+            {
+                str = FromNSString(objc_msgSend_IntPtr(@string, selString));
+            }
+            else
+            {
+                str = FromNSString(@string);
+            }
+
+            // An IME ate the key press.
+            // - Noggin_bops 2024-01-26
+            objc_msgSend(view, selClearPendingKey);
+
+            GetComponentFromView(view).Logger?.LogDebug($"SetMarkedText \"{str}\"");
         }
 
         private static unsafe readonly delegate* unmanaged[Cdecl]<IntPtr, SEL, void> NSOtkView_NSTextInputClient_UnmarkTextInst = &NSOtkView_NSTextInputClient_UnmarkText;
@@ -802,6 +888,12 @@ namespace OpenTK.Platform.Native.macOS
             object_getInstanceVariable(view, "markedText"u8, out IntPtr markedText);
             // FIXME: Do not create a new NSString every time!
             objc_msgSend(objc_msgSend_IntPtr(markedText, selMutableString), selSetString, ToNSString(""));
+
+            // An IME ate the key press.
+            // - Noggin_bops 2024-01-26
+            objc_msgSend(view, selClearPendingKey);
+
+            GetComponentFromView(view).Logger?.LogDebug($"Unmark text");
         }
 
         private static unsafe readonly delegate* unmanaged[Cdecl]<IntPtr, SEL, IntPtr> NSOtkView_NSTextInputClient_ValidAttributesForMarkedTextInst = &NSOtkView_NSTextInputClient_ValidAttributesForMarkedText;
@@ -830,7 +922,7 @@ namespace OpenTK.Platform.Native.macOS
             }
 
             string str;
-            if (objc_msgSend_bool(@string, selIsKindOfClass, (IntPtr)objc_getClass("NSAttributedString"u8)))
+            if (objc_msgSend_bool(@string, selIsKindOfClass, (IntPtr)NSAttributedStringClass))
             {
                 str = FromNSString(objc_msgSend_IntPtr(@string, selString));
             }
@@ -838,6 +930,14 @@ namespace OpenTK.Platform.Native.macOS
             {
                 str = FromNSString(@string);
             }
+
+            GetComponentFromView(view).Logger?.LogDebug($"InsertText: \"{str}\"");
+
+            // Here we actually send the KeyDown event that generated this text input.
+            // We do this here so that we can avoid sending KeyDown events for key presses
+            // that an IME might have interpreted as something else.
+            // - Noggin_bops 2024-01-26
+            objc_msgSend(view, selSendPendingKey);
 
             EventQueue.Raise(nswindow, PlatformEventType.TextInput, new TextInputEventArgs(nswindow, str));
         }
@@ -863,6 +963,8 @@ namespace OpenTK.Platform.Native.macOS
             
             CGRect rect = new CGRect(inputRect.origin.x, windowHeight - inputRect.origin.y - inputRect.size.y, inputRect.size.x, inputRect.size.y);
             rect = objc_msgSend_CGRect(window, selConvertRectToScreen, rect);
+
+            GetComponentFromView(view).Logger?.LogDebug(rect.ToString());
             return rect;
         }
 
@@ -876,7 +978,7 @@ namespace OpenTK.Platform.Native.macOS
         [UnmanagedCallersOnly(CallConvs = new Type[] { typeof(CallConvCdecl) })]
         private static nuint /* NSDragOperation */ NSOtkView_NSDraggingDestination_DraggingEntered(IntPtr view, SEL _selector, IntPtr sender)
         {
-            Console.WriteLine("Dragging Entered");
+            GetComponentFromView(view).Logger?.LogDebug("Dragging Entered");
             return (nuint)NSDragOperation.Copy;
         }
 
@@ -884,7 +986,7 @@ namespace OpenTK.Platform.Native.macOS
         [UnmanagedCallersOnly(CallConvs = new Type[] { typeof(CallConvCdecl) })]
         private static sbyte /* BOOL */ NSOtkView_NSDraggingDestination_WantsPeriodicDraggingUpdates(IntPtr view, SEL _selector)
         {
-            Console.WriteLine("Wants periodic drag update");
+            GetComponentFromView(view).Logger?.LogDebug("Wants periodic drag update");
             return 1;
         }
 
@@ -892,7 +994,7 @@ namespace OpenTK.Platform.Native.macOS
         [UnmanagedCallersOnly(CallConvs = new Type[] { typeof(CallConvCdecl) })]
         private static nuint /* NSDragOperation */ NSOtkView_NSDraggingDestination_DraggingUpdated(IntPtr view, SEL _selector, IntPtr sender)
         {
-            Console.WriteLine("Drag update");
+            GetComponentFromView(view).Logger?.LogDebug("Drag update");
             return (nuint)NSDragOperation.Copy;
         }
 
@@ -900,21 +1002,21 @@ namespace OpenTK.Platform.Native.macOS
         [UnmanagedCallersOnly(CallConvs = new Type[] { typeof(CallConvCdecl) })]
         private static void NSOtkView_NSDraggingDestination_DraggingExited(IntPtr view, SEL _selector, IntPtr sender)
         {
-            Console.WriteLine("Dragging exited");
+            GetComponentFromView(view).Logger?.LogDebug("Dragging exited");
         }
 
         private static unsafe readonly delegate* unmanaged[Cdecl]<IntPtr, SEL, IntPtr, void> NSOtkView_NSDraggingDestination_DraggingEndedInst = &NSOtkView_NSDraggingDestination_DraggingEnded;
         [UnmanagedCallersOnly(CallConvs = new Type[] { typeof(CallConvCdecl) })]
         private static void NSOtkView_NSDraggingDestination_DraggingEnded(IntPtr view, SEL _selector, IntPtr sender)
         {
-            Console.WriteLine("Dragging ended");
+            GetComponentFromView(view).Logger?.LogDebug("Dragging ended");
         }
 
         private static unsafe readonly delegate* unmanaged[Cdecl]<IntPtr, SEL, IntPtr, sbyte> NSOtkView_NSDraggingDestination_PrepareForDragOperationInst = &NSOtkView_NSDraggingDestination_PrepareForDragOperation;
         [UnmanagedCallersOnly(CallConvs = new Type[] { typeof(CallConvCdecl) })]
         private static sbyte /* BOOL */ NSOtkView_NSDraggingDestination_PrepareForDragOperation(IntPtr view, SEL _selector, IntPtr sender)
         {
-            Console.WriteLine("Prepare drag");
+            GetComponentFromView(view).Logger?.LogDebug("Prepare drag");
             return 1;
         }
 
@@ -961,14 +1063,14 @@ namespace OpenTK.Platform.Native.macOS
         [UnmanagedCallersOnly(CallConvs = new Type[] { typeof(CallConvCdecl) })]
         private static void NSOtkView_NSDraggingDestination_ConcludeDragOperation(IntPtr view, SEL _selector, IntPtr sender)
         {
-            Console.WriteLine("Conclude drag");
+            GetComponentFromView(view).Logger?.LogDebug("Conclude drag");
         }
 
         private static unsafe readonly delegate* unmanaged[Cdecl]<IntPtr, SEL, IntPtr, void> NSOtkView_NSDraggingDestination_UpdateDraggingItemsForDragInst = &NSOtkView_NSDraggingDestination_UpdateDraggingItemsForDrag;
         [UnmanagedCallersOnly(CallConvs = new Type[] { typeof(CallConvCdecl) })]
         private static void NSOtkView_NSDraggingDestination_UpdateDraggingItemsForDrag(IntPtr view, SEL _selector, IntPtr sender)
         {
-            Console.WriteLine("Update dragging items");
+            GetComponentFromView(view).Logger?.LogDebug("Update dragging items");
         }
 
 
@@ -1213,7 +1315,7 @@ namespace OpenTK.Platform.Native.macOS
                             ushort keyCode = objc_msgSend_ushort(@event, selKeyCode);
                             // FIXME: BOOL
                             bool isRepeat = objc_msgSend_bool(@event, selARepeat);
-                            Console.WriteLine($"Key down: 0x{keyCode:X}");
+                            //Console.WriteLine($"Key down: 0x{keyCode:X}");
 
                             Scancode scancode = MacOSKeyboardComponent.ScancodeFromVK((VK)keyCode);
 
@@ -1224,7 +1326,21 @@ namespace OpenTK.Platform.Native.macOS
 
                             // FIXME: This conversion is temporary.
                             Key key = MacOSKeyboardComponent.GetKeyFromScancodeInternal(scancode);
-                            EventQueue.Raise(nswindow, PlatformEventType.KeyDown, new KeyDownEventArgs(nswindow, key, scancode, isRepeat, modifiers));
+
+                            if (IsFocused(nswindow))
+                            {
+                                // FIXME: For some reason we still get the Return KeyDown event here
+                                // when we use Return to select the wanted string in the IME.
+                                // - Noggin_bops 2024-01-26
+                                objc_msgSend(nswindow.View, selSetPendingKey_scancode_isRepeat_modifiers, (int)key, (int)scancode, isRepeat ? 1 : 0, (int)modifiers);
+                                IntPtr array = objc_msgSend_IntPtr((IntPtr)NSArrayClass, selArrayWithObject, @event);
+                                objc_msgSend_IntPtr(nswindow.View, selInterpretKeyEvents, array);
+                                objc_msgSend(nswindow.View, selSendPendingKey);
+                            }
+                            else
+                            {
+                                EventQueue.Raise(nswindow, PlatformEventType.KeyDown, new KeyDownEventArgs(nswindow, key, scancode, isRepeat, modifiers));    
+                            }
 
                             objc_msgSend(nsApplication, selSendEvent, @event);
                             break;
@@ -1232,7 +1348,7 @@ namespace OpenTK.Platform.Native.macOS
                     case NSEventType.KeyUp:
                         {
                             ushort keyCode = objc_msgSend_ushort(@event, selKeyCode);
-                            Console.WriteLine($"Key up: 0x{keyCode:X}");
+                            //Console.WriteLine($"Key up: 0x{keyCode:X}");
 
                             Scancode scancode = MacOSKeyboardComponent.ScancodeFromVK((VK)keyCode);
 

@@ -150,6 +150,9 @@ namespace OpenTK.Platform.Native.macOS
         internal static extern void objc_msgSend(IntPtr receiver, SEL selector, CGRect value1, bool value2);
 
         [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
+        internal static extern void objc_msgSend(IntPtr receiver, SEL selector, int value1, int value2, int value3, int value4);
+
+        [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
         internal static extern void objc_msgSend(IntPtr receiver, SEL selector, NSSize size);
 
         [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]

@@ -71,6 +71,7 @@ namespace OpenTK.Backends.Tests
             new ShellComponentView(),
             new CoordinateSpacesView(),
             new DialogComponentView(),
+            new EventView(),
         };
 
         static void Main(string[] args)
@@ -564,7 +565,7 @@ namespace OpenTK.Backends.Tests
 
                 ApplicationWindows.RemoveAt(index);
             }
-
+            
             Toolkit.Window.Destroy(window);
         }
 
@@ -606,16 +607,6 @@ namespace OpenTK.Backends.Tests
                             ImGui.GetIO().AddKeyEvent(ImGuiKey.ModAlt, true);
                         if (keyDown.Modifiers.HasFlag(KeyModifier.GUI))
                             ImGui.GetIO().AddKeyEvent(ImGuiKey.ModSuper, true);
-
-                        // Implement ctrl+v
-                        // FIXME: Shouldn't imgui handle this?
-                        //KeyModifier actionMod = OperatingSystem.IsMacOS() ? KeyModifier.GUI : KeyModifier.Control;
-                        //if (keyDown.Scancode == Scancode.V && keyDown.Modifiers.HasFlag(actionMod))
-                        //{
-                        //    string? text = Toolkit.Clipboard.GetClipboardText();
-                        //    if (text != null)
-                        //        ImGui.GetIO().AddInputCharactersUTF8(text);
-                        //}
                     }
                     else if (args is KeyUpEventArgs keyUp)
                     {
