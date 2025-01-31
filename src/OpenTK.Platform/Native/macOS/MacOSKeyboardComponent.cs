@@ -364,7 +364,7 @@ namespace OpenTK.Platform.Native.macOS
         }
 
         /// <inheritdoc/>
-        public unsafe void SetImeRectangle(WindowHandle window, int x, int y, int width, int height)
+        public unsafe void SetImeRectangle(WindowHandle window, float x, float y, float width, float height)
         {
             NSWindowHandle nswindow = window.As<NSWindowHandle>(this);
             

@@ -856,9 +856,9 @@ namespace OpenTK.Backends.Tests
         }
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        private delegate void ImGui_SetPlaformImeDataFn(ImGuiViewportPtr viewport, ImGuiPlatformImeDataPtr data);
+        private delegate void ImGui_SetPlaformImeDataFn(IntPtr context, ImGuiViewportPtr viewport, ImGuiPlatformImeDataPtr data);
         private static ImGui_SetPlaformImeDataFn ImGui_SetImeDataInst = ImGui_SetImeData;
-        private static void ImGui_SetImeData(ImGuiViewportPtr viewport, ImGuiPlatformImeDataPtr data)
+        private static unsafe void ImGui_SetImeData(IntPtr context, ImGuiViewportPtr viewport, ImGuiPlatformImeDataPtr data)
         {
             if (data.WantVisible)
             {
@@ -868,17 +868,25 @@ namespace OpenTK.Backends.Tests
                     {
                         WindowHandle window = Program.Window;
 
-                        int x = (int)data.InputPos.X;
-                        int y = (int)data.InputPos.Y;
-                        int w = 1; // FIXME: What do we actually want to pass here?
-                        int h = (int)data.InputLineHeight;
+                        float w = 1; // FIXME: What do we actually want to pass here?
+                        // FIXME: Convert this to proper coordinates
+                        float h = data.InputLineHeight / 2.0f;
 
-                        Toolkit.Keyboard.SetImeRectangle(window, x, y, w, h);
+                        // FIXME: Function for scaling either a box or just a distance...
+                        Toolkit.Window.FramebufferToClient(window, new Vector2(data.InputPos.X, data.InputPos.Y), out Vector2 clientPos);
+                        
+                        Toolkit.Keyboard.SetImeRectangle(window, clientPos.X, clientPos.Y, w, h);
+                        Toolkit.Keyboard.BeginIme(window);
                     }
                     catch
                     {
                     }
                 }
+            } 
+            else
+            {
+                WindowHandle window = Program.Window;
+                Toolkit.Keyboard.EndIme(window);
             }
         }
 

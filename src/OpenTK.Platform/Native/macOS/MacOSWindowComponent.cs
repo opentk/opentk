@@ -704,10 +704,10 @@ namespace OpenTK.Platform.Native.macOS
             KeyModifier modifier = (KeyModifier)pendingKeyModifiers;
             bool isRepeat = pendingIsRepeat != 0;
 
-            // FIXME: Handle repeat...
+            GetComponentFromView(view).Logger?.LogDebug("sendPendingKey");
+
             EventQueue.Raise(nswindow, PlatformEventType.KeyDown, new KeyDownEventArgs(nswindow, key, scancode, isRepeat, modifier));
 
-            GetComponentFromView(view).Logger?.LogDebug("sendPendingKey");
             objc_msgSend(view, selClearPendingKey);
         }
 
@@ -962,10 +962,11 @@ namespace OpenTK.Platform.Native.macOS
             CGRect inputRect = *(CGRect*)getIvarPointer(view, "inputRect"u8);
             
             CGRect rect = new CGRect(inputRect.origin.x, windowHeight - inputRect.origin.y - inputRect.size.y, inputRect.size.x, inputRect.size.y);
-            rect = objc_msgSend_CGRect(window, selConvertRectToScreen, rect);
+            CGRect screenRect = objc_msgSend_CGRect(window, selConvertRectToScreen, rect);
 
-            GetComponentFromView(view).Logger?.LogDebug(rect.ToString());
-            return rect;
+            ILogger? logger = GetComponentFromView(view).Logger;
+            logger?.LogDebug($"screenRect: {screenRect}, inputRect: {inputRect}, rect: {rect}");
+            return screenRect;
         }
 
         private static unsafe readonly delegate* unmanaged[Cdecl]<IntPtr, SEL, SEL, void> NSOtkView_NSTextInputClient_DoCommandBySelectorInst = &NSOtkView_NSTextInputClient_DoCommandBySelector;
@@ -1332,6 +1333,10 @@ namespace OpenTK.Platform.Native.macOS
                                 // FIXME: For some reason we still get the Return KeyDown event here
                                 // when we use Return to select the wanted string in the IME.
                                 // - Noggin_bops 2024-01-26
+                                // We get the Return key sent because we call sendPendingKey when we get
+                                // the text input. And the last character pressed before getting here
+                                // is return, so we will send the return key.
+                                // - Noggin_bops 2025-01-31
                                 objc_msgSend(nswindow.View, selSetPendingKey_scancode_isRepeat_modifiers, (int)key, (int)scancode, isRepeat ? 1 : 0, (int)modifiers);
                                 IntPtr array = objc_msgSend_IntPtr((IntPtr)NSArrayClass, selArrayWithObject, @event);
                                 objc_msgSend_IntPtr(nswindow.View, selInterpretKeyEvents, array);
