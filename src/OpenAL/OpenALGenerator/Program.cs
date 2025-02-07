@@ -236,6 +236,24 @@ namespace OpenALGenerator
         //unsafe delegate void GetSourcedv(int source, SourceLatencyVector2d param, double* values);
     }
 
+    class SOFT_loopback
+    {
+        struct ALDevice { };
+
+        enum RenderFormat { }
+
+        enum Channels { }
+
+        [EntryPoint("alcLoopbackOpenDeviceSOFT", true, PrivateRefOverload = true)]
+        unsafe delegate ALDevice LoopbackOpenDeviceSOFT(string device);
+
+        [EntryPoint("alcIsRenderFormatSupportedSOFT", true, PrivateRefOverload = true, GenerateArrayOverload = true)]
+        unsafe delegate bool IsRenderFormatSupportedSOFT(ALDevice device, int frequency, Channels channels, RenderFormat type);
+
+        [EntryPoint("alcLoopbackOpenDeviceSOFT", false, PrivateRefOverload = true, GenerateArrayOverload = true)]
+        unsafe delegate void RenderSamplesSOFT(ALDevice device, byte* buffer, int samples);
+    }
+
     class Program
     {
         public struct Parameter
@@ -492,7 +510,8 @@ namespace OpenALGenerator
             //Console.WriteLine();
 
             //Console.WriteLine(GenerateProcs(typeof(SOFT_source_latency)));
-            Console.WriteLine(GenerateProcs(typeof(SOFT_device_clock)));
+            //Console.WriteLine(GenerateProcs(typeof(SOFT_device_clock)));
+            Console.WriteLine(GenerateProcs(typeof(SOFT_loopback)));
         }
     }
 }
