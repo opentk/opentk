@@ -10,6 +10,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using OpenTK.Graphics.Vulkan;
+using System.Runtime.InteropServices.Marshalling;
 
 namespace OpenTK.Platform.Native.Windows
 {
@@ -35,6 +36,8 @@ namespace OpenTK.Platform.Native.Windows
 
         internal static IntPtr DeviceNotificationHandle;
         internal static IntPtr SuspendResumeNotificationHandle;
+
+        internal static uint TaskbarButtonCreatedMessage;
 
         // A handle to a windowproc delegate so it doesn't get GC collected.
         private Win32.WNDPROC? WindowProc;
@@ -137,6 +140,8 @@ namespace OpenTK.Platform.Native.Windows
             {
                 throw new Win32Exception();
             }
+
+            TaskbarButtonCreatedMessage = Win32.RegisterWindowMessage("TaskbarButtonCreated");
         }
 
         /// <inheritdoc/>
@@ -237,6 +242,20 @@ namespace OpenTK.Platform.Native.Windows
                     {
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                     }
+                }
+            }
+
+            if (uMsg == (WM)TaskbarButtonCreatedMessage)
+            {
+                Guid iidITaskbarList3 = typeof(COM.ITaskbarList3).GUID;
+                COM.CoCreateInstance(in COM.CLSID_TaskbarList, IntPtr.Zero, CLSCTX.INPROC_SERVER, in iidITaskbarList3, out IntPtr tbl3);
+                if (tbl3 != IntPtr.Zero)
+                {
+                    ComWrappers wrapper = new StrategyBasedComWrappers();
+                    // FIXME: Error check!
+                    COM.ITaskbarList3 list = (COM.ITaskbarList3)wrapper.GetOrCreateObjectForComInstance(tbl3, CreateObjectFlags.None);
+                    ((ShellComponent)Toolkit.Shell).TaskbarList = list;
+                    Logger?.LogDebug("Created ITaskbarList3!");
                 }
             }
 
@@ -1167,6 +1186,13 @@ namespace OpenTK.Platform.Native.Windows
 
             // We accept drag and drop operations.
             Win32.DragAcceptFiles(hWnd, true);
+
+            // Make sure we receive the task button created message.
+            bool success = Win32.ChangeWindowMessageFilterEx(hWnd, TaskbarButtonCreatedMessage, MSGFLT.Allow, IntPtr.Zero);
+            if (success == false)
+            {
+                throw new Win32Exception();
+            }
 
             // FIXME: Set HWND.WindowState!
             HWND hwnd = new HWND(hWnd, hints);

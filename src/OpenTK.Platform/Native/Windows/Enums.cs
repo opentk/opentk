@@ -4835,6 +4835,59 @@ namespace OpenTK.Platform.Native.Windows
         VerificationClicked = 8,
     }
 
+    internal enum THUMBBUTTONFLAGS
+    {
+        THBF_ENABLED = 0,
+        THBF_DISABLED = 0x1,
+        THBF_DISMISSONCLICK = 0x2,
+        THBF_NOBACKGROUND = 0x4,
+        THBF_HIDDEN = 0x8,
+        THBF_NONINTERACTIVE = 0x10
+    }
+
+    internal enum THUMBBUTTONMASK
+    {
+        THB_BITMAP = 0x1,
+        THB_ICON = 0x2,
+        THB_TOOLTIP = 0x4,
+        THB_FLAGS = 0x8
+    }
+
+    internal enum TBPFLAG
+    {
+        /// <summary>
+        /// Stops displaying progress and returns the button to its normal state.
+        /// Call this method with this flag to dismiss the progress bar when the operation is complete or canceled.
+        /// </summary>
+        NoProgress = 0,
+        /// <summary>
+        /// The progress indicator does not grow in size, but cycles repeatedly along the length of the taskbar button.
+        /// This indicates activity without specifying what proportion of the progress is complete.
+        /// Progress is taking place, but there is no prediction as to how long the operation will take.
+        /// </summary>
+        Indeterminate = 0x1,
+        /// <summary>
+        /// The progress indicator grows in size from left to right in proportion to the estimated amount of the operation completed.
+        /// This is a determinate progress indicator; a prediction is being made as to the duration of the operation.
+        /// </summary>
+        Normal = 0x2,
+        /// <summary>
+        /// The progress indicator turns red to show that an error has occurred in one of the windows that is broadcasting progress.
+        /// This is a determinate state.
+        /// If the progress indicator is in the indeterminate state,
+        /// it switches to a red determinate display of a generic percentage not indicative of actual progress.
+        /// </summary>
+        Error = 0x4,
+        /// <summary>
+        /// The progress indicator turns yellow to show that progress is currently stopped in one of the windows but can be resumed by the user.
+        /// No error condition exists and nothing is preventing the progress from continuing.
+        /// This is a determinate state.
+        /// If the progress indicator is in the indeterminate state,
+        /// it switches to a yellow determinate display of a generic percentage not indicative of actual progress.
+        /// </summary>
+        Paused = 0x8,
+    }
+
     [Flags]
     internal enum FileAttribute : uint
     {
@@ -5000,6 +5053,29 @@ namespace OpenTK.Platform.Native.Windows
         /// Returns a handle to the display monitor that is nearest to the window.
         /// </summary>
         Nearest = 2,
+    }
+
+    internal enum MSGFLT : uint
+    {
+        /// <summary>
+        /// Allows the message through the filter.
+        /// This enables the message to be received by hWnd, regardless of the source of the message, even it comes from a lower privileged process.
+        /// </summary>
+        Allow = 1,
+
+        /// <summary>
+        /// Blocks the message to be delivered to hWnd if it comes from a lower privileged process,
+        /// unless the message is allowed process-wide by using the ChangeWindowMessageFilter function or globally.
+        /// </summary>
+        Disallow = 2,
+
+        /// <summary>
+        /// Resets the window message filter for hWnd to the default.
+        /// Any message allowed globally or process-wide will get through,
+        /// but any message not included in those two categories,
+        /// and which comes from a lower privileged process, will be blocked.
+        /// </summary>
+        Reset = 0,
     }
 
     internal enum ProcessDPIAwareness : int

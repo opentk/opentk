@@ -29,6 +29,8 @@ namespace OpenTK.Backends.Tests
         bool useImmersiveDarkMode = false;
 
         int cornerPreferenceIndex = 0;
+        Platform.Native.Windows.ShellComponent.ProgressMode progressMode = Platform.Native.Windows.ShellComponent.ProgressMode.NoProgress;
+        float progressCompletion = 0;
 
         readonly static Platform.Native.Windows.ShellComponent.CornerPreference[] CornerPreferences = Enum.GetValues<Platform.Native.Windows.ShellComponent.CornerPreference>();
         readonly static string[] CornerPreferenceNames = Enum.GetNames<Platform.Native.Windows.ShellComponent.CornerPreference>();
@@ -152,6 +154,14 @@ namespace OpenTK.Backends.Tests
                         {
                             winShell.SetWindowCornerPreference(Program.Window, CornerPreferences[cornerPreferenceIndex]);
                             Program.Logger.LogInfo($"ShellComponent.SetWindowCornerPreference({CornerPreferenceNames[cornerPreferenceIndex]})");
+                        }
+
+                        bool updateProgress = false;
+                        updateProgress |= ImGuiUtils.EnumCombo("Progress mode", ref progressMode);
+                        updateProgress |= ImGui.SliderFloat("Progess completion", ref progressCompletion, 0, 1);
+                        if (updateProgress)
+                        {
+                            winShell.SetProgressStatus(Program.Window, progressMode, progressCompletion);
                         }
 
                         ImGui.EndTabItem();
