@@ -18,13 +18,17 @@ namespace OpenTK.Backends.Tests
 
         public static System.Numerics.Vector2 ToNumerics(this Vector2 vec) => Unsafe.As<Vector2, System.Numerics.Vector2>(ref vec);
 
-        public static void ReadonlyCheckbox(string label, bool value)
+        public static void ReadonlyCheckbox(string label, bool value, [CallerFilePath] string file = "", [CallerLineNumber] int line = 0)
         {
+            ImGui.PushID(file);
+            ImGui.PushID(line);
             ImGui.BeginDisabled();
             ImGui.Checkbox("", ref value);
             ImGui.EndDisabled();
             ImGui.SameLine();
             ImGui.TextUnformatted(label);
+            ImGui.PopID();
+            ImGui.PopID();
         }
 
         // FIXME: Maybe make this allocate less?
@@ -87,6 +91,22 @@ namespace OpenTK.Backends.Tests
             ImGui.EndDisabled();
         }
     
+        public static unsafe bool ToggleButton(string label, ref bool pressed)
+        {
+            ImGui.PushStyleColor(ImGuiCol.Button, pressed ? *ImGui.GetStyleColorVec4(ImGuiCol.ButtonActive) : *ImGui.GetStyleColorVec4(ImGuiCol.Button));
+
+            bool changed = false;
+            if (ImGui.Button(label))
+            {
+                changed = true;
+                pressed = !pressed;
+            }
+
+            ImGui.PopStyleColor(1);
+
+            return changed;
+        } 
+
         public static bool WindowCombobox(string title, [NotNull] ref WindowHandle? selected)
         {
             bool changed = false;

@@ -484,7 +484,7 @@ namespace OpenTK.Platform.Native.X11
         }
 
         /// <inheritdoc/>
-        public void SetImeRectangle(WindowHandle window, int x, int y, int width, int height)
+        public void SetImeRectangle(WindowHandle window, float x, float y, float width, float height)
         {
             throw new NotImplementedException();
         }

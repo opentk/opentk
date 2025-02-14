@@ -71,6 +71,7 @@ namespace OpenTK.Backends.Tests
             new ShellComponentView(),
             new CoordinateSpacesView(),
             new DialogComponentView(),
+            new EventView(),
         };
 
         static void Main(string[] args)
@@ -85,7 +86,7 @@ namespace OpenTK.Backends.Tests
             // when we use Toolkit.Init to actually create the components...
             // - Noggin_bops 2024-03-02
             PlatformComponents.PreferSDL2 = false;
-            PlatformComponents.PreferANGLE = true;
+            PlatformComponents.PreferANGLE = false;
 
             if (PlatformComponents.PreferANGLE)
             {
@@ -266,6 +267,8 @@ namespace OpenTK.Backends.Tests
                         {
                             ImFontConfigPtr configPtr = new ImFontConfigPtr(&config);
                             CurrentImGuiFont = ImGui.GetIO().Fonts.AddFontFromFileTTF("Resources/ProggyVector/ProggyVectorDotted.ttf", float.Floor(fontSize), configPtr);
+
+                            //ImGui.GetIO().Fonts.AddFontFromFileTTF("Resources/NotoSans/NotoSansJP-Regular.ttf", float.Floor(fontSize), configPtr, ImGui.GetIO().Fonts.GetGlyphRangesJapanese());
                             ImGui.GetStyle().ScaleAllSizes(scale);
                             CurrentImGuiScale = scale;
                         }
@@ -292,6 +295,7 @@ namespace OpenTK.Backends.Tests
                 config.PixelSnapH = 1;
                 config.GlyphMaxAdvanceX = float.PositiveInfinity;
                 config.RasterizerMultiply = 1;
+                config.RasterizerDensity = 1;
 
                 config.MergeMode = 1;
                 unsafe
@@ -327,7 +331,11 @@ namespace OpenTK.Backends.Tests
                 }
             }
             // Make it so ImGui can set IME rect.
-            ImGui.GetIO().PlatformSetImeDataFn = Marshal.GetFunctionPointerForDelegate(ImGui_SetPlatformImeDataInst);
+            ImGuiPlatformIOPtr platformIO = ImGui.GetPlatformIO();
+            platformIO.Platform_SetClipboardTextFn = Marshal.GetFunctionPointerForDelegate(ImGui_SetClipboardTextInst);
+            platformIO.Platform_GetClipboardTextFn = Marshal.GetFunctionPointerForDelegate(ImGui_GetClipboardTextInst);
+            platformIO.Platform_SetImeDataFn = Marshal.GetFunctionPointerForDelegate(ImGui_SetImeDataInst);
+
 
             if (Toolkit.Cursor != null && Toolkit.Cursor.CanLoadSystemCursors)
             {
@@ -499,6 +507,11 @@ namespace OpenTK.Backends.Tests
 
         static ImGuiKey ToImgui(Key key)
         {
+            if (key >= Key.A && key <= Key.Z)
+                return key - Key.A + ImGuiKey.A;
+            if (key >= Key.D0 && key <= Key.D9)
+                return key - Key.D0 + ImGuiKey._0;
+
             // FIXME: Rest of the keycodes.
             switch (key)
             {
@@ -552,7 +565,7 @@ namespace OpenTK.Backends.Tests
 
                 ApplicationWindows.RemoveAt(index);
             }
-
+            
             Toolkit.Window.Destroy(window);
         }
 
@@ -585,11 +598,29 @@ namespace OpenTK.Backends.Tests
                     {
                         ImGuiKey ikey = ToImgui(keyDown.Key);
                         ImGui.GetIO().AddKeyEvent(ikey, true);
+
+                        if (keyDown.Modifiers.HasFlag(KeyModifier.Control))
+                            ImGui.GetIO().AddKeyEvent(ImGuiKey.ModCtrl, true);
+                        if (keyDown.Modifiers.HasFlag(KeyModifier.Shift))
+                            ImGui.GetIO().AddKeyEvent(ImGuiKey.ModShift, true);
+                        if (keyDown.Modifiers.HasFlag(KeyModifier.Alt))
+                            ImGui.GetIO().AddKeyEvent(ImGuiKey.ModAlt, true);
+                        if (keyDown.Modifiers.HasFlag(KeyModifier.GUI))
+                            ImGui.GetIO().AddKeyEvent(ImGuiKey.ModSuper, true);
                     }
                     else if (args is KeyUpEventArgs keyUp)
                     {
                         ImGuiKey ikey = ToImgui(keyUp.Key);
                         ImGui.GetIO().AddKeyEvent(ikey, false);
+
+                        if (!keyUp.Modifiers.HasFlag(KeyModifier.Control))
+                            ImGui.GetIO().AddKeyEvent(ImGuiKey.ModCtrl, false);
+                        if (!keyUp.Modifiers.HasFlag(KeyModifier.Shift))
+                            ImGui.GetIO().AddKeyEvent(ImGuiKey.ModShift, false);
+                        if (!keyUp.Modifiers.HasFlag(KeyModifier.Alt))
+                            ImGui.GetIO().AddKeyEvent(ImGuiKey.ModAlt, false);
+                        if (!keyUp.Modifiers.HasFlag(KeyModifier.GUI))
+                            ImGui.GetIO().AddKeyEvent(ImGuiKey.ModSuper, false);
                     }
                     else if (args is TextInputEventArgs textInput)
                     {
@@ -722,9 +753,10 @@ namespace OpenTK.Backends.Tests
                 {
                     //Logger.LogDebug($"Window moved: Window pos: {move.WindowPosition}, client pos {move.ClientAreaPosition}");
 
-                    if (ImGuiController != null && IsProcessingEvents)
+                    if (OperatingSystem.IsWindows() && ImGuiController != null && IsProcessingEvents)
                     {
-                        Update(0f);
+                        // FIXME: Real delta time?
+                        Update(0.01f);
                         Toolkit.OpenGL.SetCurrentContext(WindowContext);
                         Render();
                     }
@@ -769,6 +801,7 @@ namespace OpenTK.Backends.Tests
                 case PalComponents.Shell:         return Toolkit.Shell;
                 case PalComponents.Joystick:      return Toolkit.Joystick;
                 case PalComponents.Dialog:        return Toolkit.Dialog;
+                case PalComponents.Vulkan:        return Toolkit.Vulkan;
 
                 default: return null;
             }
@@ -823,9 +856,9 @@ namespace OpenTK.Backends.Tests
         }
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        private delegate void ImGui_SetPlaformImeDataFn(ImGuiViewportPtr viewport, ImGuiPlatformImeDataPtr data);
-        private static ImGui_SetPlaformImeDataFn ImGui_SetPlatformImeDataInst = ImGui_SetPlatformImeData;
-        private static void ImGui_SetPlatformImeData(ImGuiViewportPtr viewport, ImGuiPlatformImeDataPtr data)
+        private delegate void ImGui_SetPlaformImeDataFn(IntPtr context, ImGuiViewportPtr viewport, ImGuiPlatformImeDataPtr data);
+        private static ImGui_SetPlaformImeDataFn ImGui_SetImeDataInst = ImGui_SetImeData;
+        private static unsafe void ImGui_SetImeData(IntPtr context, ImGuiViewportPtr viewport, ImGuiPlatformImeDataPtr data)
         {
             if (data.WantVisible)
             {
@@ -835,18 +868,50 @@ namespace OpenTK.Backends.Tests
                     {
                         WindowHandle window = Program.Window;
 
-                        int x = (int)data.InputPos.X;
-                        int y = (int)data.InputPos.Y;
-                        int w = 1; // FIXME: What do we actually want to pass here?
-                        int h = (int)data.InputLineHeight;
+                        float w = 1; // FIXME: What do we actually want to pass here?
+                        // FIXME: Convert this to proper coordinates
+                        float h = data.InputLineHeight / 2.0f;
 
-                        Toolkit.Keyboard.SetImeRectangle(window, x, y, w, h);
+                        // FIXME: Function for scaling either a box or just a distance...
+                        Toolkit.Window.FramebufferToClient(window, new Vector2(data.InputPos.X, data.InputPos.Y), out Vector2 clientPos);
+                        
+                        Toolkit.Keyboard.SetImeRectangle(window, clientPos.X, clientPos.Y, w, h);
+                        Toolkit.Keyboard.BeginIme(window);
                     }
                     catch
                     {
                     }
                 }
+            } 
+            else
+            {
+                WindowHandle window = Program.Window;
+                Toolkit.Keyboard.EndIme(window);
             }
+        }
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        private unsafe delegate void ImGui_SetClipboardTextFn(IntPtr ctx, byte* text);
+        private static unsafe ImGui_SetClipboardTextFn ImGui_SetClipboardTextInst = ImGui_SetClipboardText;
+        private static unsafe void ImGui_SetClipboardText(IntPtr ctx, byte* text)
+        {
+            string? str = Marshal.PtrToStringUTF8((IntPtr)text);
+            if (str != null)
+                Toolkit.Clipboard.SetClipboardText(str);
+        }
+
+        private static unsafe byte* currentClipboardString;
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        private unsafe delegate byte* ImGui_GetClipboardTextFn(IntPtr ctx);
+        private static unsafe ImGui_GetClipboardTextFn ImGui_GetClipboardTextInst = ImGui_GetClipboardText;
+        private static unsafe byte* ImGui_GetClipboardText(IntPtr ctx)
+        {
+            if (currentClipboardString != null)
+                Marshal.FreeCoTaskMem((IntPtr)currentClipboardString);
+
+            string? str = Toolkit.Clipboard.GetClipboardText();
+            currentClipboardString = (byte*)Marshal.StringToCoTaskMemUTF8(str);
+            return currentClipboardString;
         }
     }
 }

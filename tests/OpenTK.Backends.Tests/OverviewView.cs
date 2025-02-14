@@ -51,6 +51,8 @@ namespace OpenTK.Backends.Tests
             ImGui.BulletText("Use the command line argument to specify which drivers to load manually.");
             ImGui.BulletText("Alternatively, drag the config file on the application.");
 
+            ImGui.Text("ÅÄÖ åäö あいうえお。");
+
             bool preferSDL2 = PlatformComponents.PreferSDL2;
             ImGuiUtils.ReadonlyCheckbox("Default Prefers SDL2", preferSDL2);
 
@@ -187,7 +189,7 @@ namespace OpenTK.Backends.Tests
                 //                      ImGui::TextWrappped("%s", line);
 
                 ImGui.SetNextWindowSizeConstraints(new Vector2(0, ImGui.GetTextLineHeightWithSpacing() * 4), new Vector2(float.PositiveInfinity, float.PositiveInfinity));
-                if (ImGui.BeginChild("overview_log_table", new Vector2(0, 0 /* ImGui.GetTextLineHeightWithSpacing() * 4 */), ImGuiChildFlags.Border, ImGuiWindowFlags.AlwaysVerticalScrollbar))
+                if (ImGui.BeginChild("overview_log_table", new Vector2(0, 0 /* ImGui.GetTextLineHeightWithSpacing() * 4 */), ImGuiChildFlags.Borders, ImGuiWindowFlags.AlwaysVerticalScrollbar))
                 {
                     if (log.Count == 0)
                     {

@@ -109,15 +109,15 @@ namespace OpenTK.Platform.Native.SDL
         }
 
         /// <inheritdoc/>
-        public void SetImeRectangle(WindowHandle window, int x, int y, int width, int height)
+        public void SetImeRectangle(WindowHandle window, float x, float y, float width, float height)
         {
             SDLWindow sdlWindow = window.As<SDLWindow>(this);
 
             SDL_Rect rect;
-            rect.x = x;
-            rect.y = y;
-            rect.w = width;
-            rect.h = height;
+            rect.x = (int)x;
+            rect.y = (int)y;
+            rect.w = (int)width;
+            rect.h = (int)height;
 
             SDL_SetTextInputRect(rect);
         }

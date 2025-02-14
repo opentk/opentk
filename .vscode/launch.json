@@ -1,6 +1,13 @@
 {
     "version": "0.2.0",
     "configurations": [
+        {
+            "name": "C#: OpenTK.Backends.Tests Debug",
+            "type": "dotnet",
+            "request": "launch",
+            "projectPath": "${workspaceFolder}/tests/OpenTK.Backends.Tests/OpenTK.Backends.Tests.csproj"
+        },
+
 
         {
             "name": "C#: OpenTK.Platform.Tests",
