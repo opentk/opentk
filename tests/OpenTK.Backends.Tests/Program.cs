@@ -741,7 +741,7 @@ namespace OpenTK.Backends.Tests
                     // So we need to check so that we are in ordinary event processing.
                     if (ImGuiController != null && IsProcessingEvents)
                     {
-                        Update(0f);
+                        Update(0.1f);
                         Toolkit.OpenGL.SetCurrentContext(WindowContext);
                         Render();
                     }
