@@ -177,6 +177,9 @@ namespace OpenTK.Platform.Native.macOS
         internal static extern IntPtr objc_msgSend_IntPtr(IntPtr receiver, SEL selector, IntPtr value0, CGPoint value1);
 
         [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
+        internal static extern IntPtr objc_msgSend_IntPtr(IntPtr receiver, SEL selector, CGRect value0, NFloat value1, NFloat value2);
+
+        [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
         internal static extern IntPtr objc_msgSend_IntPtr(IntPtr receiver, SEL selector, IntPtr value0, NSSize value1);
 
         [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
@@ -184,6 +187,9 @@ namespace OpenTK.Platform.Native.macOS
 
         [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
         internal static extern IntPtr objc_msgSend_IntPtr(IntPtr receiver, SEL selector, SEL value);
+        
+        [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
+        internal static extern IntPtr objc_msgSend_IntPtr(IntPtr receiver, SEL selector, NFloat value1);
 
         [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
         internal static extern IntPtr objc_msgSend_IntPtr(IntPtr receiver, SEL selector, IntPtr value1, IntPtr value2);

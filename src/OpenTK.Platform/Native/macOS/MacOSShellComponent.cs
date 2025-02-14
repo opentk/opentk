@@ -14,7 +14,11 @@ namespace OpenTK.Platform.Native.macOS
     public class MacOSShellComponent : IShellComponent
     {
         internal static readonly ObjCClass NSWorkspaceClass = objc_getClass("NSWorkspace"u8);
-        internal static readonly ObjCClass NSProcessInfo = objc_getClass("NSProcessInfo"u8);
+        internal static readonly ObjCClass NSProcessInfoClass = objc_getClass("NSProcessInfo"u8);
+        internal static readonly ObjCClass NSViewClass = objc_getClass("NSView"u8);
+        internal static readonly ObjCClass NSGraphicsContextClass = objc_getClass("NSGraphicsContext"u8);
+        internal static readonly ObjCClass NSBezierPathClass = objc_getClass("NSBezierPath"u8);
+        internal static readonly ObjCClass NSColor = objc_getClass("NSColor"u8);
 
         internal static readonly SEL selProcessInfo = sel_registerName("processInfo"u8);
         internal static readonly SEL selIsLowPowerModeEnabled = sel_registerName("isLowPowerModeEnabled"u8);
@@ -25,6 +29,17 @@ namespace OpenTK.Platform.Native.macOS
         internal static readonly SEL selSharedWorkspace = sel_registerName("sharedWorkspace"u8);
         internal static readonly SEL selAccessibilityDisplayShouldIncreaseContrast = sel_registerName("accessibilityDisplayShouldIncreaseContrast"u8);
 
+        internal static readonly SEL selDrawRect = sel_registerName("drawRect:"u8);
+        internal static readonly SEL selCurrentContext = sel_registerName("currentContext"u8);
+        internal static readonly SEL selWhite = sel_registerName("whiteColor"u8);
+        internal static readonly SEL selBlack = sel_registerName("blackColor"u8);
+        internal static readonly SEL selSet= sel_registerName("set"u8);
+        internal static readonly SEL selFill = sel_registerName("fill"u8);
+        internal static readonly SEL selBezierPathWithRoundedRect_XRadius_YRadius = sel_registerName("bezierPathWithRoundedRect:xRadius:yRadius:"u8);
+        internal static readonly SEL selSetNeedsDisplay = sel_registerName("setNeedsDisplay:"u8);
+        internal static readonly SEL selDrawInRect = sel_registerName("drawInRect:"u8);
+        internal static readonly SEL selColorWithAlphaComponent = sel_registerName("colorWithAlphaComponent:"u8);
+
         internal static readonly IntPtr NSAppearanceNameAqua = GetStringConstant(AppKitLibrary, "NSAppearanceNameAqua"u8);
         internal static readonly IntPtr NSAppearanceNameDarkAqua = GetStringConstant(AppKitLibrary, "NSAppearanceNameDarkAqua"u8);
         internal static readonly IntPtr NSAppearanceNameVibrantLight = GetStringConstant(AppKitLibrary, "NSAppearanceNameVibrantLight"u8);
@@ -33,6 +48,16 @@ namespace OpenTK.Platform.Native.macOS
         internal static readonly IntPtr NSAppearanceNameAccessibilityHighContrastDarkAqua = GetStringConstant(AppKitLibrary, "NSAppearanceNameAccessibilityHighContrastDarkAqua"u8);
         internal static readonly IntPtr NSAppearanceNameAccessibilityHighContrastVibrantLight = GetStringConstant(AppKitLibrary, "NSAppearanceNameAccessibilityHighContrastVibrantLight"u8);
         internal static readonly IntPtr NSAppearanceNameAccessibilityHighContrastVibrantDark = GetStringConstant(AppKitLibrary, "NSAppearanceNameAccessibilityHighContrastVibrantDark"u8);
+
+        internal static ObjCClass NSOpenTKProgressViewClass;
+
+        internal static ReadOnlySpan<byte> OtkCompoenntFieldName => "otkPALWindowComponent"u8;
+
+        private static MacOSShellComponent GetComponentFromProgressView(IntPtr progressView)
+        {
+            object_getInstanceVariable(progressView, OtkCompoenntFieldName, out IntPtr shellCompPtr);
+            return (MacOSShellComponent)((GCHandle)shellCompPtr).Target!;
+        }
 
         /// <inheritdocs/>
         public string Name => nameof(MacOSShellComponent);
@@ -47,8 +72,10 @@ namespace OpenTK.Platform.Native.macOS
 
         private IntPtr DefaultScreenSaverReason;
 
+        private IntPtr ProgressView;
+
         /// <inheritdocs/>
-        public void Initialize(ToolkitOptions options)
+        public unsafe void Initialize(ToolkitOptions options)
         {
             string? appName = options.ApplicationName;
             if (string.IsNullOrEmpty(appName))
@@ -57,6 +84,69 @@ namespace OpenTK.Platform.Native.macOS
 
             // Set the initial theme so we can detect changes later
             LastTheme = GetCurrentTheme();
+
+            NSOpenTKProgressViewClass = objc_allocateClassPair(NSViewClass, "NsOpenTKProgressView"u8, 0);
+
+            // Define a Ivar where we can pass a GCHandle so we can retreive it in callbacks.
+            class_addIvar(NSOpenTKProgressViewClass, OtkCompoenntFieldName, (nuint)nuint.Size, (nuint)int.Log2(nuint.Size), "^v"u8);
+
+            class_addMethod(NSOpenTKProgressViewClass, selDrawRect, (IntPtr)NSOtkProgressView_DrawRectInst, "v@{CGRect={CGPoint=dd}{CGSize=dd}}"u8);
+
+            objc_registerClassPair(NSOpenTKProgressViewClass);
+
+            ProgressView = objc_msgSend_IntPtr(objc_msgSend_IntPtr((IntPtr)NSOpenTKProgressViewClass, Alloc), Init);
+
+            // FIXME: Store the Ivars somewhere so we can use it later?
+            GCHandle gchandle = GCHandle.Alloc(this, GCHandleType.Normal);
+            object_setInstanceVariable(ProgressView, OtkCompoenntFieldName, (IntPtr)gchandle);
+
+
+            IntPtr dockTile = objc_msgSend_IntPtr(nsApplication, selDockTile);
+            objc_msgSend(dockTile, selSetContentView, ProgressView);
+            objc_msgSend(dockTile, selDisplay);
+        }
+
+        internal void UpdateDockTile() {
+            // FIXME: BOOL
+            objc_msgSend(ProgressView, selSetNeedsDisplay, true);
+            IntPtr dockTile = objc_msgSend_IntPtr(nsApplication, selDockTile);
+            objc_msgSend(dockTile, selSetContentView, ProgressView);
+            objc_msgSend(dockTile, selDisplay);
+        }
+
+        private static unsafe readonly delegate* unmanaged[Cdecl]<IntPtr, SEL, CGRect, void> NSOtkProgressView_DrawRectInst = &NSOtkProgressView_DrawRect;
+        [UnmanagedCallersOnly(CallConvs = new Type[] { typeof(CallConvCdecl) })]
+        private static void NSOtkProgressView_DrawRect(IntPtr view, SEL selector, CGRect dirtyRect)
+        {
+            GetComponentFromProgressView(view).Logger?.LogInfo("DrawRect!");
+
+            CGRect bounds = objc_msgSend_CGRect(view, selBounds);
+
+            IntPtr icon = objc_msgSend_IntPtr(nsApplication, selApplicationIconImage);
+            if (icon != IntPtr.Zero) {
+                objc_msgSend(icon, selDrawInRect, bounds);
+            }
+
+            static void DrawRoundedRect(CGRect rect) {
+                IntPtr bezier = objc_msgSend_IntPtr((IntPtr)NSBezierPathClass, selBezierPathWithRoundedRect_XRadius_YRadius, rect, rect.size.y / 2, rect.size.y / 2);
+                objc_msgSend(bezier, selFill);
+            }
+
+            CGRect rect = new CGRect(0, 20, dirtyRect.size.x, 10);
+            IntPtr white = objc_msgSend_IntPtr((IntPtr)NSColor, selWhite);
+            objc_msgSend(objc_msgSend_IntPtr(white, selColorWithAlphaComponent, 0.7f), selSet);
+            DrawRoundedRect(rect);
+
+            CGRect rectInnerBg = rect.InsetBy(0.5f, 0.5f);
+            IntPtr black = objc_msgSend_IntPtr((IntPtr)NSColor, selBlack);
+            objc_msgSend(objc_msgSend_IntPtr(black, selColorWithAlphaComponent, 0.7f), selSet);
+            DrawRoundedRect(rectInnerBg);
+
+            CGRect rectProgress = rect.InsetBy(1, 1);
+            rectProgress.size.x = rectProgress.size.x * 0.5f;
+            //IntPtr black = objc_msgSend_IntPtr((IntPtr)NSColor, selBlack);
+            objc_msgSend(white, selSet);
+            DrawRoundedRect(rectProgress);
         }
 
         /// <inheritdoc/>
@@ -109,7 +199,7 @@ namespace OpenTK.Platform.Native.macOS
             BatteryStatus status;
             batteryInfo = default;
 
-            IntPtr processInfo = objc_msgSend_IntPtr((IntPtr)NSProcessInfo, selProcessInfo);
+            IntPtr processInfo = objc_msgSend_IntPtr((IntPtr)NSProcessInfoClass, selProcessInfo);
             // FIXME: BOOL
             batteryInfo.PowerSaver = objc_msgSend_bool(processInfo, selIsLowPowerModeEnabled);
 

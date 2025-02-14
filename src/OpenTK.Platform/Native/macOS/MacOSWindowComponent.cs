@@ -1592,6 +1592,8 @@ namespace OpenTK.Platform.Native.macOS
 
             objc_msgSend(nsApplication, selSetApplicationIconImage, image);
 
+            ((MacOSShellComponent)Toolkit.Shell).UpdateDockTile();
+
             // FIXME: Maybe make a function for setting the minimized icon...
             /*
             IntPtr dockTile = objc_msgSend_IntPtr(nswindow.Window, selDockTile);
