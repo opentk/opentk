@@ -183,6 +183,7 @@ namespace OpenTK.Platform.Native.macOS
         internal static readonly IntPtr NSPasteboardTypeFileURL = GetStringConstant(AppKitLibrary, "NSPasteboardTypeFileURL"u8);
 
         internal static readonly IntPtr NSDefaultRunLoop = GetStringConstant(FoundationLibrary, "NSDefaultRunLoopMode"u8);
+        internal static readonly IntPtr NSRunLoopCommonModes = GetStringConstant(FoundationLibrary, "NSRunLoopCommonModes"u8);
 
         internal static readonly ObjCClass NSWindowClass = objc_getClass("NSWindow"u8);
         internal static readonly ObjCClass NSApplicationClass = objc_getClass("NSApplication"u8);
@@ -1416,6 +1417,8 @@ namespace OpenTK.Platform.Native.macOS
                         break;
                 }
             }
+
+            (Toolkit.Shell as MacOSShellComponent)?.UpdateProgressViewIfNecessary();
 
             {
                 // Clipboard updates on macos seem to take some time.

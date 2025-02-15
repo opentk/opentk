@@ -173,6 +173,9 @@ namespace OpenTK.Platform.Native.macOS
         [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
         internal static extern IntPtr objc_msgSend_IntPtr(IntPtr receiver, SEL selector, IntPtr value);
 
+        [DllImport(FoundationFramework, EntryPoint = "objc_msgSend", CallingConvention = CallingConvention.Cdecl)]
+        internal static extern IntPtr objc_msgSend_IntPtr(IntPtr receiver, SEL selector, IntPtr value1, SEL value2);
+
         [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
         internal static extern IntPtr objc_msgSend_IntPtr(IntPtr receiver, SEL selector, IntPtr value0, CGPoint value1);
 
@@ -513,6 +516,9 @@ namespace OpenTK.Platform.Native.macOS
             return (void*)(@object + ivar_getOffset(ivar));
         }
 
+        internal static T* getIvarPointer<T>(IntPtr /* id */ @object, ReadOnlySpan<byte> /* char const* */ name) where T :unmanaged {
+            return (T*)getIvarPointer(@object, name);
+        }
 
         [DllImport(FoundationFramework)]
         internal static extern void objc_registerClassPair(ObjCClass cls);

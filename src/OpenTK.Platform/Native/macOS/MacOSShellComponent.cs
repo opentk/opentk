@@ -8,6 +8,8 @@ using static OpenTK.Platform.Native.macOS.Mach;
 using static OpenTK.Platform.Native.macOS.MacOSWindowComponent;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using System.ComponentModel;
+using System.Diagnostics;
 
 namespace OpenTK.Platform.Native.macOS
 {
@@ -19,6 +21,8 @@ namespace OpenTK.Platform.Native.macOS
         internal static readonly ObjCClass NSGraphicsContextClass = objc_getClass("NSGraphicsContext"u8);
         internal static readonly ObjCClass NSBezierPathClass = objc_getClass("NSBezierPath"u8);
         internal static readonly ObjCClass NSColor = objc_getClass("NSColor"u8);
+        internal static readonly ObjCClass CADisplayLinkClass = objc_getClass("CADisplayLink"u8);
+        internal static readonly ObjCClass NSRunLoopClass = objc_getClass("NSRunLoop"u8);
 
         internal static readonly SEL selProcessInfo = sel_registerName("processInfo"u8);
         internal static readonly SEL selIsLowPowerModeEnabled = sel_registerName("isLowPowerModeEnabled"u8);
@@ -31,14 +35,23 @@ namespace OpenTK.Platform.Native.macOS
 
         internal static readonly SEL selDrawRect = sel_registerName("drawRect:"u8);
         internal static readonly SEL selCurrentContext = sel_registerName("currentContext"u8);
-        internal static readonly SEL selWhite = sel_registerName("whiteColor"u8);
-        internal static readonly SEL selBlack = sel_registerName("blackColor"u8);
+        internal static readonly SEL selWhiteColor = sel_registerName("whiteColor"u8);
+        internal static readonly SEL selBlackColor = sel_registerName("blackColor"u8);
+        internal static readonly SEL selRedColor = sel_registerName("redColor"u8);
+        internal static readonly SEL selSystemBlueColor = sel_registerName("systemBlueColor"u8);
+        internal static readonly SEL selSystemGrayColor = sel_registerName("systemGrayColor"u8);
+        internal static readonly SEL selSystemFillColor = sel_registerName("systemFillColor"u8);
+        internal static readonly SEL selControlAccentColor = sel_registerName("controlAccentColor"u8);
         internal static readonly SEL selSet= sel_registerName("set"u8);
         internal static readonly SEL selFill = sel_registerName("fill"u8);
         internal static readonly SEL selBezierPathWithRoundedRect_XRadius_YRadius = sel_registerName("bezierPathWithRoundedRect:xRadius:yRadius:"u8);
         internal static readonly SEL selSetNeedsDisplay = sel_registerName("setNeedsDisplay:"u8);
         internal static readonly SEL selDrawInRect = sel_registerName("drawInRect:"u8);
         internal static readonly SEL selColorWithAlphaComponent = sel_registerName("colorWithAlphaComponent:"u8);
+        internal static readonly SEL selDisplayLinkWithTarget_Selector = sel_registerName("displayLinkWithTarget:selector:"u8);
+        internal static readonly SEL selUpdateAnimation = sel_registerName("updateAnimation:"u8);
+        internal static readonly SEL selAddToRunLoop_ForMode = sel_registerName("addToRunLoop:forMode:"u8);
+        internal static readonly SEL selCurrentRunLoop = sel_registerName("currentRunLoop"u8);
 
         internal static readonly IntPtr NSAppearanceNameAqua = GetStringConstant(AppKitLibrary, "NSAppearanceNameAqua"u8);
         internal static readonly IntPtr NSAppearanceNameDarkAqua = GetStringConstant(AppKitLibrary, "NSAppearanceNameDarkAqua"u8);
@@ -52,6 +65,12 @@ namespace OpenTK.Platform.Native.macOS
         internal static ObjCClass NSOpenTKProgressViewClass;
 
         internal static ReadOnlySpan<byte> OtkCompoenntFieldName => "otkPALWindowComponent"u8;
+
+        internal static ReadOnlySpan<byte> ProgressFieldName => "progress"u8;
+
+        internal static ReadOnlySpan<byte> ProgressModeFieldName => "progressMode"u8;
+
+        internal static ReadOnlySpan<byte> ProgressAnimationTimeFieldName => "animationTime"u8;
 
         private static MacOSShellComponent GetComponentFromProgressView(IntPtr progressView)
         {
@@ -72,7 +91,11 @@ namespace OpenTK.Platform.Native.macOS
 
         private IntPtr DefaultScreenSaverReason;
 
+        private GCHandle ComponentHandle;
+
         private IntPtr ProgressView;
+        private CVDisplayLinkRef DisplayLink;
+        internal bool ProgressViewUpdateAnimation;
 
         /// <inheritdocs/>
         public unsafe void Initialize(ToolkitOptions options)
@@ -85,21 +108,26 @@ namespace OpenTK.Platform.Native.macOS
             // Set the initial theme so we can detect changes later
             LastTheme = GetCurrentTheme();
 
+            // FIXME: Maybe we should move to NSProgressIndicator?
+            // That way we could get the "native" styling...
             NSOpenTKProgressViewClass = objc_allocateClassPair(NSViewClass, "NsOpenTKProgressView"u8, 0);
 
             // Define a Ivar where we can pass a GCHandle so we can retreive it in callbacks.
             class_addIvar(NSOpenTKProgressViewClass, OtkCompoenntFieldName, (nuint)nuint.Size, (nuint)int.Log2(nuint.Size), "^v"u8);
+            class_addIvar(NSOpenTKProgressViewClass, ProgressFieldName, (nuint)NFloat.Size, (nuint)int.Log2(NFloat.Size), sizeof(NFloat) == 4 ? "f"u8 : "d"u8);
+            class_addIvar(NSOpenTKProgressViewClass, ProgressModeFieldName, (nuint)sizeof(int), (nuint)int.Log2(sizeof(int)), "i"u8);
+            class_addIvar(NSOpenTKProgressViewClass, ProgressAnimationTimeFieldName, (nuint)sizeof(int), (nuint)int.Log2(sizeof(int)), "q"u8);
 
-            class_addMethod(NSOpenTKProgressViewClass, selDrawRect, (IntPtr)NSOtkProgressView_DrawRectInst, "v@{CGRect={CGPoint=dd}{CGSize=dd}}"u8);
+            class_addMethod(NSOpenTKProgressViewClass, selUpdateAnimation, (IntPtr)NSOtkProgressView_UpdateAnimationInst, "v@:@"u8);
+            class_addMethod(NSOpenTKProgressViewClass, selDrawRect, (IntPtr)NSOtkProgressView_DrawRectInst, "v@:{CGRect={CGPoint=dd}{CGSize=dd}}"u8);
 
             objc_registerClassPair(NSOpenTKProgressViewClass);
 
             ProgressView = objc_msgSend_IntPtr(objc_msgSend_IntPtr((IntPtr)NSOpenTKProgressViewClass, Alloc), Init);
 
             // FIXME: Store the Ivars somewhere so we can use it later?
-            GCHandle gchandle = GCHandle.Alloc(this, GCHandleType.Normal);
-            object_setInstanceVariable(ProgressView, OtkCompoenntFieldName, (IntPtr)gchandle);
-
+            ComponentHandle = GCHandle.Alloc(this, GCHandleType.Normal);
+            object_setInstanceVariable(ProgressView, OtkCompoenntFieldName, (IntPtr)ComponentHandle);
 
             IntPtr dockTile = objc_msgSend_IntPtr(nsApplication, selDockTile);
             objc_msgSend(dockTile, selSetContentView, ProgressView);
@@ -114,11 +142,49 @@ namespace OpenTK.Platform.Native.macOS
             objc_msgSend(dockTile, selDisplay);
         }
 
+        // FIXME: Remove as we no longer need it.
+        private static unsafe readonly delegate* unmanaged[Cdecl]<IntPtr, SEL, IntPtr, void> NSOtkProgressView_UpdateAnimationInst = &NSOtkProgressView_UpdateAnimation;
+        [UnmanagedCallersOnly(CallConvs = new Type[] { typeof(CallConvCdecl) })]
+        private static unsafe void NSOtkProgressView_UpdateAnimation(IntPtr view, SEL selector, IntPtr displayLink)
+        {
+            GetComponentFromProgressView(view).Logger?.LogInfo("UpdateAnimation!");
+        }
+
+        private static unsafe int DisplayLinkRefresh(CVDisplayLinkRef displayLink, IntPtr inNow, IntPtr inOutputTime, ulong flagsIn, out ulong flagsOut, IntPtr displayLinkContext)
+        {
+            Unsafe.SkipInit(out flagsOut);
+
+            MacOSShellComponent comp = (MacOSShellComponent)((GCHandle)displayLinkContext).Target!;
+
+            // This is not running on the main thread so we need to make the main thread update the drawing.
+            // To do this we mark that we need to update and the main thread will check that variable and 
+            // update the animation if necessary.
+            // - Noggin_bops 2025-02-15
+            comp.ProgressViewUpdateAnimation = true;
+
+            // FIXME: We need to handle the main thread waiting on events
+            // which would cause this to not smoothly animate.
+
+            return 0;
+        }
+
+        internal void UpdateProgressViewIfNecessary()
+        {
+            if (ProgressViewUpdateAnimation)
+            {
+                UpdateDockTile();
+                ProgressViewUpdateAnimation = false;
+            }
+        }
+
         private static unsafe readonly delegate* unmanaged[Cdecl]<IntPtr, SEL, CGRect, void> NSOtkProgressView_DrawRectInst = &NSOtkProgressView_DrawRect;
         [UnmanagedCallersOnly(CallConvs = new Type[] { typeof(CallConvCdecl) })]
-        private static void NSOtkProgressView_DrawRect(IntPtr view, SEL selector, CGRect dirtyRect)
+        private static unsafe void NSOtkProgressView_DrawRect(IntPtr view, SEL selector, CGRect dirtyRect)
         {
             GetComponentFromProgressView(view).Logger?.LogInfo("DrawRect!");
+
+            NFloat completion = *getIvarPointer<NFloat>(view, ProgressFieldName);
+            ProgressMode mode = (ProgressMode)(*getIvarPointer<int>(view, ProgressModeFieldName));
 
             CGRect bounds = objc_msgSend_CGRect(view, selBounds);
 
@@ -127,25 +193,61 @@ namespace OpenTK.Platform.Native.macOS
                 objc_msgSend(icon, selDrawInRect, bounds);
             }
 
+            if (mode == ProgressMode.NoProgress)
+                return;
+
             static void DrawRoundedRect(CGRect rect) {
                 IntPtr bezier = objc_msgSend_IntPtr((IntPtr)NSBezierPathClass, selBezierPathWithRoundedRect_XRadius_YRadius, rect, rect.size.y / 2, rect.size.y / 2);
                 objc_msgSend(bezier, selFill);
             }
 
+            IntPtr progressColor;
+            switch (mode) 
+            {
+                case ProgressMode.NoProgress:
+                case ProgressMode.Indeterminate:
+                case ProgressMode.Normal:
+                    progressColor = objc_msgSend_IntPtr((IntPtr)NSColor, selControlAccentColor);
+                    break;
+                case ProgressMode.Error:
+                    progressColor = objc_msgSend_IntPtr((IntPtr)NSColor, selRedColor);
+                    break;
+                case ProgressMode.Paused:
+                    progressColor = objc_msgSend_IntPtr((IntPtr)NSColor, selSystemGrayColor);
+                    break;
+                default: 
+                    throw new InvalidEnumArgumentException("mode", (int)mode, mode.GetType());
+            }
+
             CGRect rect = new CGRect(0, 20, dirtyRect.size.x, 10);
-            IntPtr white = objc_msgSend_IntPtr((IntPtr)NSColor, selWhite);
+            IntPtr white = objc_msgSend_IntPtr((IntPtr)NSColor, selWhiteColor);
             objc_msgSend(objc_msgSend_IntPtr(white, selColorWithAlphaComponent, 0.7f), selSet);
             DrawRoundedRect(rect);
 
             CGRect rectInnerBg = rect.InsetBy(0.5f, 0.5f);
-            IntPtr black = objc_msgSend_IntPtr((IntPtr)NSColor, selBlack);
+            IntPtr black = objc_msgSend_IntPtr((IntPtr)NSColor, selBlackColor);
             objc_msgSend(objc_msgSend_IntPtr(black, selColorWithAlphaComponent, 0.7f), selSet);
             DrawRoundedRect(rectInnerBg);
 
-            CGRect rectProgress = rect.InsetBy(1, 1);
-            rectProgress.size.x = rectProgress.size.x * 0.5f;
-            //IntPtr black = objc_msgSend_IntPtr((IntPtr)NSColor, selBlack);
-            objc_msgSend(white, selSet);
+            if (mode == ProgressMode.Indeterminate)
+            {
+                long startTime = *getIvarPointer<long>(view, ProgressAnimationTimeFieldName);
+                long currTime = Stopwatch.GetTimestamp();
+
+                const float ANIMATION_TIME = 1.8f;
+
+                float time = ((currTime - startTime) / (float)Stopwatch.Frequency) % ANIMATION_TIME;
+
+                completion = 1.0f;
+                float alpha = MathF.Sin(time * MathF.PI) * 0.5f + 0.5f;
+                progressColor = objc_msgSend_IntPtr(progressColor, selColorWithAlphaComponent, alpha);
+
+                //*getIvarPointer<long>(view, ProgressAnimationTimeFieldName) = currTime;
+            }
+
+            CGRect rectProgress = rect.InsetBy(1.0f, 1.0f);
+            rectProgress.size.x = rectProgress.size.x * completion;
+            objc_msgSend(progressColor, selSet);
             DrawRoundedRect(rectProgress);
         }
 
@@ -390,6 +492,47 @@ namespace OpenTK.Platform.Native.macOS
             return info;
         }
     
+        public enum ProgressMode {
+            NoProgress,
+            Indeterminate,
+            Normal,
+            Error,
+            Paused,
+        }
+
+        public unsafe void SetProgressStatus(WindowHandle handle, ProgressMode mode, float completion) {
+            NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
+            *getIvarPointer<NFloat>(ProgressView, ProgressFieldName) = completion;
+            *getIvarPointer<int>(ProgressView, ProgressModeFieldName) = (int)mode;
+
+            if (mode == ProgressMode.Indeterminate)
+            {
+                if (DisplayLink.Handle == 0)
+                {
+                    // FIXME: Do not recreate if we only have one, alt. dispose of the old link...
+                    CV.CVDisplayLinkCreateWithActiveCGDisplays(out DisplayLink);
+
+                    CV.CVDisplayLinkSetOutputCallback(DisplayLink, DisplayLinkRefresh, (IntPtr)ComponentHandle);
+
+                    CV.CVDisplayLinkStart(DisplayLink);
+
+                    *getIvarPointer<long>(ProgressView, ProgressAnimationTimeFieldName) = Stopwatch.GetTimestamp();
+
+                }
+            }
+            else
+            {
+                if (DisplayLink.Handle != 0)
+                {
+                    CV.CVDisplayLinkStop(DisplayLink);
+                    // FIXME: How do we properly dispose of the displat link?
+                    DisplayLink = default;
+                }
+            }
+
+            UpdateDockTile();
+        }
+
         /// <summary>
         /// Calls <see href="https://developer.apple.com/documentation/foundation/1395275-nslog">NSLog</see> to log a message to the Apple System Log facility.
         /// This can be useful when running your application as a bundle as stdout and stderr can't be used.
