@@ -719,7 +719,7 @@ namespace OpenTK.Platform.Native.Windows
 
                             if (mouse.usFlags == RawMouseFlags.MoveRelative)
                             {
-                                if (mouse.lLastX != 0 && mouse.lLastY != 0)
+                                if (mouse.lLastX != 0 || mouse.lLastY != 0)
                                 {
                                     HWND h = HWndDict[hWnd];
                                     EventQueue.Raise(h, PlatformEventType.RawMouseMove, new RawMouseMoveEventArgs(h, (mouse.lLastX, mouse.lLastY)));
