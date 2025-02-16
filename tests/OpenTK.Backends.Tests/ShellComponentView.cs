@@ -29,7 +29,9 @@ namespace OpenTK.Backends.Tests
         bool useImmersiveDarkMode = false;
 
         int cornerPreferenceIndex = 0;
-        Platform.Native.Windows.ShellComponent.ProgressMode progressMode = Platform.Native.Windows.ShellComponent.ProgressMode.NoProgress;
+        Platform.Native.Windows.ShellComponent.ProgressMode win32ProgressMode = Platform.Native.Windows.ShellComponent.ProgressMode.NoProgress;
+        Platform.Native.macOS.MacOSShellComponent.ProgressMode macOSProgressMode = Platform.Native.macOS.MacOSShellComponent.ProgressMode.NoProgress;
+        
         float progressCompletion = 0;
 
         readonly static Platform.Native.Windows.ShellComponent.CornerPreference[] CornerPreferences = Enum.GetValues<Platform.Native.Windows.ShellComponent.CornerPreference>();
@@ -157,11 +159,26 @@ namespace OpenTK.Backends.Tests
                         }
 
                         bool updateProgress = false;
-                        updateProgress |= ImGuiUtils.EnumCombo("Progress mode", ref progressMode);
+                        updateProgress |= ImGuiUtils.EnumCombo("Progress mode", ref win32ProgressMode);
                         updateProgress |= ImGui.SliderFloat("Progess completion", ref progressCompletion, 0, 1);
                         if (updateProgress)
                         {
-                            winShell.SetProgressStatus(Program.Window, progressMode, progressCompletion);
+                            winShell.SetProgressStatus(Program.Window, win32ProgressMode, progressCompletion);
+                        }
+
+                        ImGui.EndTabItem();
+                    }
+                }
+                else if (Toolkit.Shell is Platform.Native.macOS.MacOSShellComponent macosShell)
+                {
+                    if (ImGui.BeginTabItem("macOS"))
+                    {
+                        bool updateProgress = false;
+                        updateProgress |= ImGuiUtils.EnumCombo("Progress mode", ref macOSProgressMode);
+                        updateProgress |= ImGui.SliderFloat("Progess completion", ref progressCompletion, 0, 1);
+                        if (updateProgress)
+                        {
+                            macosShell.SetProgressStatus(Program.Window, macOSProgressMode, progressCompletion);
                         }
 
                         ImGui.EndTabItem();
