@@ -17,7 +17,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         {
             // Register DllImport resolver so that the correct dynamic library is loaded on all platforms.
             // On net472, we rely on Mono's DllMap for this. See the .dll.config file.
-            NativeLibrary.SetDllImportResolver(typeof(GLFWNative).Assembly, (name, assembly, path) =>
+            NativeLibrary.SetDllImportResolver(Assembly.GetExecutingAssembly(), (name, assembly, path) =>
             {
                 if (name != LibraryName)
                 {
