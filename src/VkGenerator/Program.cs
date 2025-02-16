@@ -45,6 +45,9 @@ namespace VkGenerator
 
             Processor.ResolveStructMemberTypes(videoSpecData, typeMap, constMap);
 
+            Processor.SortMembers(specData);
+            Processor.SortMembers(videoSpecData);
+
             Writer.Write(specData, videoSpecData);
             Writer.WriteVideo(videoSpecData);
 

@@ -1445,19 +1445,19 @@ namespace OpenTK.Platform.Native.Windows
         {
             [FieldOffset(0)]
             public RawMouseFlags usFlags;
-            [FieldOffset(2)]
-            public uint ulButtons;
-            [FieldOffset(2)]
-            public ushort usButtonFlags;
             [FieldOffset(4)]
-            public ushort usButtonData;
+            public uint ulButtons;
+            [FieldOffset(4)]
+            public ushort usButtonFlags;
             [FieldOffset(6)]
+            public ushort usButtonData;
+            [FieldOffset(8)]
             public uint ulRawButtons;
-            [FieldOffset(10)]
+            [FieldOffset(12)]
             public int lLastX;
-            [FieldOffset(14)]
+            [FieldOffset(16)]
             public int lLastY;
-            [FieldOffset(18)]
+            [FieldOffset(20)]
             public uint ulExtraInformation;
         }
 

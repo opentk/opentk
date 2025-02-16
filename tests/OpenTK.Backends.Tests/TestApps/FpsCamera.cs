@@ -81,7 +81,7 @@ void main() {
 ";
 
         bool rawMouseMotionEnabled = false;
-        float rawMouseMotionScale = 1.0f / 65536.0f;
+        float rawMouseMotionScale = 1.0f;
 
         int env_program;
         int env_program_mvp_location;
@@ -224,8 +224,8 @@ void main() {
                 //Vector2 delta = prevPos - state.Position;
                 //prevPos = state.Position;
 
-                cameraRotationY += delta.X * cameraRotationSpeed.X * deltaTime;
-                cameraRotationX += delta.Y * cameraRotationSpeed.Y * deltaTime;
+                cameraRotationY -= delta.X * cameraRotationSpeed.X * deltaTime;
+                cameraRotationX -= delta.Y * cameraRotationSpeed.Y * deltaTime;
                 cameraRotationX = Math.Clamp(cameraRotationX, -80 * D2R, 80 * D2R);
 
                 cameraRotation = Quaternion.FromAxisAngle(Vector3.UnitY, cameraRotationY) *
@@ -277,7 +277,7 @@ void main() {
             {
                 if (rawMouseMotionEnabled == false)
                 {
-                    delta += prevPos - mouseMove.ClientPosition;
+                    delta += mouseMove.ClientPosition - prevPos;
 
                     Console.WriteLine($"Mouse move: {mouseMove.ClientPosition}");
                 }
