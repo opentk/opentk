@@ -1695,7 +1695,19 @@ namespace OpenTK.Platform.Native.Windows
                     SetBorderStyle(hwnd, hwnd.PreviousBorderStyle);
                 }
             }
-            
+
+            // Going from a hidden state to fullscreen directly does not work unless we first
+            // make the window visible. See: https://github.com/opentk/opentk/issues/1799
+            // - Noggin_bops 2025-02-18
+            if (mode == WindowMode.WindowedFullscreen || mode == WindowMode.ExclusiveFullscreen)
+            {
+                WindowStyles style = (WindowStyles)Win32.GetWindowLongPtr(hwnd.HWnd, GetGWLPIndex.Style).ToInt64();
+                if (style.HasFlag(WindowStyles.Visible) == false)
+                {
+                    Win32.ShowWindow(hwnd.HWnd, ShowWindowCommands.ShowNA);
+                }
+            }
+
             // FIXME: Handle ShowWindowCommands.ShowMinimized?
             switch (mode)
             {
