@@ -8,13 +8,23 @@ namespace OpenTK.Backends.Tests
 {
     public class EventView : View
     {
+        public class CustomEventArgs : EventArgs
+        {
+            public int Value;
+            public CustomEventArgs(int value)
+            {
+                Value = value;
+            }
+        }
+
         public override string Title => "Events";
 
         public override bool IsVisible => true;
 
         private List<EventArgs> Events = new List<EventArgs>();
 
-        private bool ShowMouseEvents = true;
+        private bool ShowMouseEvents = false;
+        private int CustomDataInt = 0;
 
         public override void Initialize()
         {
@@ -55,11 +65,21 @@ namespace OpenTK.Backends.Tests
 
                 ImGui.EndListBox();
             }
+
+            ImGui.DragInt("Custom data", ref CustomDataInt);
+            if (ImGui.Button("Post custom user event"))
+            {
+                Toolkit.Window.PostUserEvent(new CustomEventArgs(CustomDataInt));
+            }
         }
 
         private void PaintEvent(EventArgs @event)
         {
-            if (@event is WindowEventArgs windowEvent)
+            if (@event is CustomEventArgs customEvent)
+            {
+                ImGui.TextUnformatted($"CustomEvent - {customEvent.Value}");
+            }
+            else if (@event is WindowEventArgs windowEvent)
             {
                 if (@event is TextInputEventArgs textInput)
                 {
@@ -77,7 +97,6 @@ namespace OpenTK.Backends.Tests
                 {
                     ImGui.TextUnformatted($"{@event.GetType().Name} - {Toolkit.Window.GetTitle(windowEvent.Window)}");
                 }
-
             }
             else
             {

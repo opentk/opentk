@@ -59,5 +59,10 @@ namespace OpenTK.Platform
         DisplayConnectionChanged,
 
         PowerStateChange,
+
+        /// <summary>
+        /// This event was caused by a call to <see cref="IWindowComponent.PostUserEvent(System.EventArgs?)"/>.
+        /// </summary>
+        UserMessage,
     }
 }

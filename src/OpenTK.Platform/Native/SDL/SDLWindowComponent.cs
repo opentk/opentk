@@ -26,6 +26,8 @@ namespace OpenTK.Platform.Native.SDL
         /// <inheritdoc/>
         public ILogger? Logger { get; set; }
 
+        private uint OpenTKUserEventID;
+
         /// <inheritdoc/>
         public void Initialize(ToolkitOptions options)
         {
@@ -37,6 +39,8 @@ namespace OpenTK.Platform.Native.SDL
                 string error = SDL_GetError();
                 throw new PalException(this, $"SDL Error: {error}");
             }
+
+            OpenTKUserEventID = SDL_RegisterEvents(1);
         }
 
         /// <inheritdoc/>
@@ -80,6 +84,22 @@ namespace OpenTK.Platform.Native.SDL
             SDLEvent @event;
             while (SDL_PollEvent(&@event) != 0)
             {
+                if (@event.Type == (SDL_EventType)OpenTKUserEventID)
+                {
+                    GCHandle handle = GCHandle.FromIntPtr(@event.UserEvent.data1);
+                    EventArgs args = (EventArgs)handle.Target!;
+                    if (args is WindowEventArgs windowArgs)
+                    {
+                        EventQueue.Raise(windowArgs.Window, PlatformEventType.UserMessage, windowArgs);
+                    }
+                    else
+                    {
+                        EventQueue.Raise(null, PlatformEventType.UserMessage, args);
+                    }
+                    handle.Free();
+                    continue;
+                }
+
                 switch (@event.Type)
                 {
                     case SDL_EventType.SDL_QUIT:
@@ -428,6 +448,17 @@ namespace OpenTK.Platform.Native.SDL
                         break;
                 }
             }
+        }
+
+        /// <inheritdoc/>
+        public unsafe void PostUserEvent(EventArgs @event)
+        {
+            GCHandle handle = GCHandle.Alloc(@event, GCHandleType.Normal);
+            SDLEvent sdl_event = default;
+            sdl_event.Type = (SDL_EventType)OpenTKUserEventID;
+            //@event.UserEvent.timestamp = SDL_GetTicksNS();
+            sdl_event.UserEvent.data1 = (IntPtr)handle;
+            SDL_PushEvent(&sdl_event);
         }
 
         /// <inheritdoc/>
@@ -1086,7 +1117,7 @@ namespace OpenTK.Platform.Native.SDL
                     HitType result = window.HitTest(window, new Vector2(pt.x, pt.y));
                     return result switch
                     {
-                        HitType.Default => throw new NotSupportedException("SDL2 doesn't support HitType.Default. Consider removing the hit test callback to get default behaviour."),
+                        HitType.Default => SDL_HitTestResult.SDL_HITTEST_NORMAL, // throw new NotSupportedException("SDL2 doesn't support HitType.Default. Consider removing the hit test callback to get default behaviour."),
                         HitType.Normal => SDL_HitTestResult.SDL_HITTEST_NORMAL,
                         HitType.Draggable => SDL_HitTestResult.SDL_HITTEST_DRAGGABLE,
                         HitType.ResizeTopLeft => SDL_HitTestResult.SDL_HITTEST_RESIZE_TOPLEFT,
@@ -1220,13 +1251,19 @@ namespace OpenTK.Platform.Native.SDL
         /// <inheritdoc/>
         public void ClientToFramebuffer(WindowHandle handle, Vector2 client, out Vector2 framebuffer)
         {
-            throw new NotImplementedException();
+            SDLWindow window = handle.As<SDLWindow>(this);
+
+            // FIXME: This is not true generally...
+            framebuffer = client;
         }
 
         /// <inheritdoc/>
         public void FramebufferToClient(WindowHandle handle, Vector2 framebuffer, out Vector2 client)
         {
-            throw new NotImplementedException();
+            SDLWindow window = handle.As<SDLWindow>(this);
+
+            // FIXME: This is not true generally...
+            client = framebuffer;
         }
 
         /// <inheritdoc/>

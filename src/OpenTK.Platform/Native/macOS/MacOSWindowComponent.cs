@@ -1467,6 +1467,12 @@ namespace OpenTK.Platform.Native.macOS
         }
 
         /// <inheritdoc/>
+        public void PostUserEvent(EventArgs @event)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
         public WindowHandle Create(GraphicsApiHints hints)
         {
             // FIXME: Better default placement of window?

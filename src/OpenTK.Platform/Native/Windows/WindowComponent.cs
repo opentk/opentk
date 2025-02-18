@@ -39,6 +39,8 @@ namespace OpenTK.Platform.Native.Windows
 
         internal static uint TaskbarButtonCreatedMessage;
 
+        internal static uint OpenTKUserEventMessage;
+
         // A handle to a windowproc delegate so it doesn't get GC collected.
         private Win32.WNDPROC? WindowProc;
 
@@ -142,6 +144,8 @@ namespace OpenTK.Platform.Native.Windows
             }
 
             TaskbarButtonCreatedMessage = Win32.RegisterWindowMessage("TaskbarButtonCreated");
+
+            OpenTKUserEventMessage = Win32.RegisterWindowMessage("OpenTKUserEvent");
         }
 
         /// <inheritdoc/>
@@ -194,6 +198,21 @@ namespace OpenTK.Platform.Native.Windows
             // Filter out helper window messages early.
             if (hWnd == HelperHWnd)
             {
+                if (uMsg == (WM)OpenTKUserEventMessage)
+                {
+                    GCHandle handle = GCHandle.FromIntPtr(lParam);
+                    EventArgs args = (EventArgs)handle.Target!;
+                    if (args is WindowEventArgs windowArgs)
+                    {
+                        EventQueue.Raise(windowArgs.Window, PlatformEventType.UserMessage, windowArgs);
+                    }
+                    else
+                    {
+                        EventQueue.Raise(null, PlatformEventType.UserMessage, args);
+                    }
+                    handle.Free();
+                }
+
                 switch (uMsg)
                 {
                     case WM.POWERBROADCAST:
@@ -1159,6 +1178,17 @@ namespace OpenTK.Platform.Native.Windows
                     // to avoid generating a mouse move event.
                     CursorCapturingWindow.LastMousePosition = (size.X / 2, size.Y / 2);
                 }
+            }
+        }
+
+        /// <inheritdoc/>
+        public void PostUserEvent(EventArgs @event)
+        {
+            GCHandle handle = GCHandle.Alloc(@event, GCHandleType.Normal);
+            bool success = Win32.PostMessage(HelperHWnd, (WM)OpenTKUserEventMessage, 0, (IntPtr)handle);
+            if (success == false)
+            {
+                throw new Win32Exception();
             }
         }
 
