@@ -159,6 +159,7 @@ namespace OpenTK.Platform.Native.X11
         [FieldOffset(48)] public int Format;
         [FieldOffset(56)] public fixed byte b[20];
         [FieldOffset(56)] public fixed short s[10];
+        // FIXME: This does not work on 32 bit...
         [FieldOffset(56)] public fixed long l[5];
     }
 

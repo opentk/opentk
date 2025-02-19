@@ -637,6 +637,19 @@ namespace OpenTK.Platform.Native.X11
         BarrierNegativeY = 1 << 3,
     }
 
+    [Flags]
+    internal enum XIMFlags : ulong {
+        PreeditArea      = 0x0001L,
+        PreeditCallbacks = 0x0002L,
+        PreeditPosition  = 0x0004L,
+        PreeditNothing   = 0x0008L,
+        PreeditNone      = 0x0010L,
+        StatusArea       = 0x0100L,
+        StatusCallbacks  = 0x0200L,
+        StatusNothing    = 0x0400L,
+        StatusNone       = 0x0800L,
+    }
+
     // See: https://www.cl.cam.ac.uk/~mgk25/ucs/keysymdef.h
     internal enum XK : ulong
     {

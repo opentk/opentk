@@ -56,6 +56,11 @@ namespace OpenTK.Backends.Tests
                 ImGui.EndDisabled();
                 ImGui.EndListBox();
             }
+
+            if (ImGui.Button("Refresh layouts"))
+            {
+                Layouts = Toolkit.Keyboard.GetAvailableKeyboardLayouts();
+            }
             
             ImGui.SeparatorText("Keyboard state");
 

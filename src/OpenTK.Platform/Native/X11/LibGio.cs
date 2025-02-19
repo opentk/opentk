@@ -48,7 +48,19 @@ namespace OpenTK.Platform.Native
                                 GError **error);
 
         [DllImport(Gio, CallingConvention = CallingConvention.Cdecl)]
+        internal static unsafe extern IntPtr /* GVariant* */ g_variant_new(byte* /* const gchar* */ format_string, /* ... */ byte* str1);
+
+        [DllImport(Gio, CallingConvention = CallingConvention.Cdecl)]
         internal static unsafe extern IntPtr /* GVariant* */ g_variant_new(byte* /* const gchar* */ format_string, /* ... */ byte* str1, byte* str2);
+
+        [DllImport(Gio, CallingConvention = CallingConvention.Cdecl)]
+        internal static unsafe extern IntPtr /* GVariant* */ g_variant_new(byte* /* const gchar* */ format_string, /* ... */ int x, int y, int h, int w);
+
+        [DllImport(Gio, CallingConvention = CallingConvention.Cdecl)]
+        internal static unsafe extern IntPtr /* GVariant* */ g_variant_new(byte* /* const gchar* */ format_string, /* ... */ uint v0);
+
+        [DllImport(Gio, CallingConvention = CallingConvention.Cdecl)]
+        internal static unsafe extern IntPtr /* GVariant* */ g_variant_new(byte* /* const gchar* */ format_string, /* ... */ uint v0, uint v1, uint v2);
 
         [DllImport(Gio, CallingConvention = CallingConvention.Cdecl)]
         internal static unsafe extern IntPtr /* GVariant* */ g_variant_ref(IntPtr /* GVariant* */ value);
@@ -124,5 +136,6 @@ namespace OpenTK.Platform.Native
 
         [DllImport(Gio, CallingConvention = CallingConvention.Cdecl)]
         internal static extern void g_object_unref(IntPtr /* GObject* */ @object);
+
     }
 }

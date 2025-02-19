@@ -302,7 +302,7 @@ namespace OpenTK.Backends.Tests
                 {
                     ImFontConfigPtr configPtr = new ImFontConfigPtr(&config);
                     var io = ImGui.GetIO();
-                    io.Fonts.AddFontFromFileTTF("Resources/NotoSans/NotoSansJP-Regular.ttf", float.Floor(fontSize) + 3, configPtr, io.Fonts.GetGlyphRangesJapanese());
+                    io.Fonts.AddFontFromFileTTF(Path.Combine("Resources", "NotoSans", "NotoSansJP-Regular.ttf"), float.Floor(fontSize) + 3, configPtr, io.Fonts.GetGlyphRangesJapanese());
                     // FIXME: When should we call this?
                     io.Fonts.Build();
                 }
