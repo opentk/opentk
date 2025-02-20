@@ -32,6 +32,28 @@ namespace OpenTK.Platform.Native.X11
         internal const uint XkbComponentNamesMask = (0x3f);
         internal const uint XkbAllNamesMask = (0x3fff);
 
+        internal const ulong XkbRepeatKeysMask = (1L<<0);
+        internal const ulong XkbSlowKeysMask = (1L<<1);
+        internal const ulong XkbBounceKeysMask = (1L<<2);
+        internal const ulong XkbStickyKeysMask = (1L<<3);
+        internal const ulong XkbMouseKeysMask = (1L<<4);
+        internal const ulong XkbMouseKeysAccelMask = (1L<<5);
+        internal const ulong XkbAccessXKeysMask = (1L<<6);
+        internal const ulong XkbAccessXTimeoutMask = (1L<<7);
+        internal const ulong XkbAccessXFeedbackMask = (1L<<8);
+        internal const ulong XkbAudibleBellMask =  (1L<<9);
+        internal const ulong XkbOverlay1Mask =  (1L<<10);
+        internal const ulong XkbOverlay2Mask =  (1L<<11);
+        internal const ulong XkbIgnoreGroupLockMask =  (1L<<12);
+        internal const ulong XkbGroupsWrapMask =  (1L<<27);
+        internal const ulong XkbInternalModsMask =  (1L<<28);
+        internal const ulong XkbIgnoreLockModsMask =  (1L<<29);
+        internal const ulong XkbPerKeyRepeatMask =  (1L<<30);
+        internal const ulong XkbControlsEnabledMask =  (1L<<31);
+        internal const ulong XkbAccessXOptionsMask = (XkbStickyKeysMask | XkbAccessXFeedbackMask);
+        internal const ulong XkbAllBooleanCtrlsMask =  (0x00001FFF);
+        internal const ulong XkbAllControlsMask =  (0xF8001FFF);
+
         [DllImport(Xkb, CallingConvention = CallingConvention.Cdecl)]
         internal static extern bool XkbLibraryVersion(ref int lib_major_in_out, ref int lib_minor_in_out);
 
@@ -46,7 +68,10 @@ namespace OpenTK.Platform.Native.X11
 
         [DllImport(Xkb, CallingConvention = CallingConvention.Cdecl)]
         // FIXME: Double check that int is the correct type for status
-        internal static unsafe extern int /* Status */ XkbGetNames(XDisplayPtr display, uint which, XkbDescRec* xkb);
+        internal static unsafe extern XStatus XkbGetNames(XDisplayPtr display, uint which, XkbDescRec* xkb);
+
+        [DllImport(Xkb, CallingConvention = CallingConvention.Cdecl)]
+        internal static unsafe extern XStatus XkbGetControls(XDisplayPtr display, ulong which, XkbDescRec* xkb);
 
         [DllImport(Xkb, CallingConvention = CallingConvention.Cdecl)]
         internal static extern bool XkbGetDetectableAutoRepeat(XDisplayPtr display, out bool supported_rtrn);
@@ -56,5 +81,11 @@ namespace OpenTK.Platform.Native.X11
 
         [DllImport(Xkb, CallingConvention = CallingConvention.Cdecl)]
         internal static unsafe extern void XkbFreeKeyboard(XkbDescRec* xkb, uint which, bool free_all);
+
+        [DllImport(Xkb, CallingConvention = CallingConvention.Cdecl)]
+        internal static unsafe extern XStatus XkbGetState(XDisplayPtr display, uint device_spec, out XkbStateRec state_return);
+
+        [DllImport(Xkb, CallingConvention = CallingConvention.Cdecl)]
+        internal static unsafe extern XKeySym XkbKeycodeToKeysym(XDisplayPtr dpy, byte /* KeyCode */ kc, uint group, uint level);
     }
 }

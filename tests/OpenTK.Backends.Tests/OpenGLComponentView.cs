@@ -228,13 +228,13 @@ namespace OpenTK.Backends.Tests
             ImGuiUtils.ReadonlyText("OpenGL Renderer", renderer);
 
             ImGui.SeparatorText(extensionHeader);
-            ImGui.InputText(string.Empty, ref savePath, 4096); ImGui.SameLine();
+            ImGui.InputText("##file-path", ref savePath, 4096); ImGui.SameLine();
             if (ImGui.Button("Save"))
             {
                 SaveOpenGLDetails(savePath);
             }
 
-            if (ImGui.BeginChild("opengl_view_extensions_child_frame", Vector2.Zero, ImGuiChildFlags.Border, ImGuiWindowFlags.AlwaysVerticalScrollbar))
+            if (ImGui.BeginChild("opengl_view_extensions_child_frame", Vector2.Zero, ImGuiChildFlags.Borders, ImGuiWindowFlags.AlwaysVerticalScrollbar))
             {
                 const ImGuiTreeNodeFlags VENDOR_FLAGS = ImGuiTreeNodeFlags.OpenOnArrow;
                 const ImGuiTreeNodeFlags EXTENSION_FLAGS = ImGuiTreeNodeFlags.Leaf | ImGuiTreeNodeFlags.Bullet;

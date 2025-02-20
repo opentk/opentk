@@ -10,6 +10,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using OpenTK.Graphics.Vulkan;
+using System.Runtime.InteropServices.Marshalling;
 
 namespace OpenTK.Platform.Native.Windows
 {
@@ -35,6 +36,10 @@ namespace OpenTK.Platform.Native.Windows
 
         internal static IntPtr DeviceNotificationHandle;
         internal static IntPtr SuspendResumeNotificationHandle;
+
+        internal static uint TaskbarButtonCreatedMessage;
+
+        internal static uint OpenTKUserEventMessage;
 
         // A handle to a windowproc delegate so it doesn't get GC collected.
         private Win32.WNDPROC? WindowProc;
@@ -137,6 +142,10 @@ namespace OpenTK.Platform.Native.Windows
             {
                 throw new Win32Exception();
             }
+
+            TaskbarButtonCreatedMessage = Win32.RegisterWindowMessage("TaskbarButtonCreated");
+
+            OpenTKUserEventMessage = Win32.RegisterWindowMessage("OpenTKUserEvent");
         }
 
         /// <inheritdoc/>
@@ -189,6 +198,21 @@ namespace OpenTK.Platform.Native.Windows
             // Filter out helper window messages early.
             if (hWnd == HelperHWnd)
             {
+                if (uMsg == (WM)OpenTKUserEventMessage)
+                {
+                    GCHandle handle = GCHandle.FromIntPtr(lParam);
+                    EventArgs args = (EventArgs)handle.Target!;
+                    if (args is WindowEventArgs windowArgs)
+                    {
+                        EventQueue.Raise(windowArgs.Window, PlatformEventType.UserMessage, windowArgs);
+                    }
+                    else
+                    {
+                        EventQueue.Raise(null, PlatformEventType.UserMessage, args);
+                    }
+                    handle.Free();
+                }
+
                 switch (uMsg)
                 {
                     case WM.POWERBROADCAST:
@@ -237,6 +261,20 @@ namespace OpenTK.Platform.Native.Windows
                     {
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                     }
+                }
+            }
+
+            if (uMsg == (WM)TaskbarButtonCreatedMessage)
+            {
+                Guid iidITaskbarList3 = typeof(COM.ITaskbarList3).GUID;
+                COM.CoCreateInstance(in COM.CLSID_TaskbarList, IntPtr.Zero, CLSCTX.INPROC_SERVER, in iidITaskbarList3, out IntPtr tbl3);
+                if (tbl3 != IntPtr.Zero)
+                {
+                    ComWrappers wrapper = new StrategyBasedComWrappers();
+                    // FIXME: Error check!
+                    COM.ITaskbarList3 list = (COM.ITaskbarList3)wrapper.GetOrCreateObjectForComInstance(tbl3, CreateObjectFlags.None);
+                    ((ShellComponent)Toolkit.Shell).TaskbarList = list;
+                    Logger?.LogDebug("Created ITaskbarList3!");
                 }
             }
 
@@ -1144,6 +1182,17 @@ namespace OpenTK.Platform.Native.Windows
         }
 
         /// <inheritdoc/>
+        public void PostUserEvent(EventArgs @event)
+        {
+            GCHandle handle = GCHandle.Alloc(@event, GCHandleType.Normal);
+            bool success = Win32.PostMessage(HelperHWnd, (WM)OpenTKUserEventMessage, 0, (IntPtr)handle);
+            if (success == false)
+            {
+                throw new Win32Exception();
+            }
+        }
+
+        /// <inheritdoc/>
         public WindowHandle Create(GraphicsApiHints hints)
         {
             IntPtr hWnd = Win32.CreateWindowEx(
@@ -1167,6 +1216,13 @@ namespace OpenTK.Platform.Native.Windows
 
             // We accept drag and drop operations.
             Win32.DragAcceptFiles(hWnd, true);
+
+            // Make sure we receive the task button created message.
+            bool success = Win32.ChangeWindowMessageFilterEx(hWnd, TaskbarButtonCreatedMessage, MSGFLT.Allow, IntPtr.Zero);
+            if (success == false)
+            {
+                throw new Win32Exception();
+            }
 
             // FIXME: Set HWND.WindowState!
             HWND hwnd = new HWND(hWnd, hints);
@@ -1669,7 +1725,19 @@ namespace OpenTK.Platform.Native.Windows
                     SetBorderStyle(hwnd, hwnd.PreviousBorderStyle);
                 }
             }
-            
+
+            // Going from a hidden state to fullscreen directly does not work unless we first
+            // make the window visible. See: https://github.com/opentk/opentk/issues/1799
+            // - Noggin_bops 2025-02-18
+            if (mode == WindowMode.WindowedFullscreen || mode == WindowMode.ExclusiveFullscreen)
+            {
+                WindowStyles style = (WindowStyles)Win32.GetWindowLongPtr(hwnd.HWnd, GetGWLPIndex.Style).ToInt64();
+                if (style.HasFlag(WindowStyles.Visible) == false)
+                {
+                    Win32.ShowWindow(hwnd.HWnd, ShowWindowCommands.ShowNA);
+                }
+            }
+
             // FIXME: Handle ShowWindowCommands.ShowMinimized?
             switch (mode)
             {

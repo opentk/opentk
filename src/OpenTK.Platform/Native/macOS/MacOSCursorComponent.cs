@@ -648,6 +648,8 @@ namespace OpenTK.Platform.Native.macOS
             }
         }
 
+        // FIXME: Use a CVDisplayLink and custom user messages to do this in a way where the user
+        // doesn't need to worry about updating animated cursors.
         /// <summary>
         /// Updates the animation of an animated cursor.
         /// When animated cursors change frame <see cref="IWindowComponent.SetCursor(WindowHandle, CursorHandle?)"/> needs to be called to properly animate.

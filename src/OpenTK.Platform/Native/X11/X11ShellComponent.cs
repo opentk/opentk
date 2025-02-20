@@ -42,7 +42,7 @@ namespace OpenTK.Platform.Native.X11
 
         internal ulong PortalDesktopGSignal;
 
-        // FIXME: Make this non-static while still exposing it to X11WindowComponent.
+        // FIXME: Move this to X11WindowComponent. - Noggin_bops 2024-12-13
         internal static IntPtr GlibMainLoop;
         
         internal IntPtr GVariant_org_freedesktop_appearance_color_scheme;

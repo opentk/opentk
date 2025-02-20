@@ -69,7 +69,7 @@ namespace OpenTK.Platform.Native.X11
         }
     }
 
-    [DebuggerDisplay("XID={(System.IntPtr)Id}")]
+    //[DebuggerDisplay("XID={(System.IntPtr)Id}")]
     internal readonly struct XAtom : IEquatable<XAtom>
     {
         public readonly ulong Id { get; }
@@ -113,7 +113,7 @@ namespace OpenTK.Platform.Native.X11
 
         public override string ToString()
         {
-            return LibX11.XGetAtomName(X11.Display, this);
+            return Id == 0 ? "0" : LibX11.XGetAtomName(X11.Display, this);
         }
     }
 
