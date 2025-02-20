@@ -210,6 +210,9 @@ namespace OpenTK.Platform.Native.macOS
         internal static extern IntPtr objc_msgSend_IntPtr(IntPtr receiver, SEL selector, IntPtr planes, nint width, nint height, nint bps, nint spp, [MarshalAs(UnmanagedType.I1)] bool alpha, [MarshalAs(UnmanagedType.I1)] bool isPlanar, IntPtr colorSpaceName, nuint bitmapFormat, nint rBytes, nint pBits);
 
         [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
+        internal static extern IntPtr objc_msgSend_IntPtr(IntPtr receiver, SEL selector, IntPtr value1, CGPoint value2, IntPtr value3, double value4, IntPtr value5, IntPtr value6, short value7, IntPtr value8, IntPtr value9);
+
+        [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
         internal static extern IntPtr objc_msgSend_IntPtr(IntPtr receiver, SEL selector, ulong value);
 
         [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]

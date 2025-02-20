@@ -182,6 +182,10 @@ namespace OpenTK.Platform.Native.macOS
         internal static readonly SEL selSendPendingKey = sel_registerName("sendPendingKey"u8);
         internal static readonly SEL selClearPendingKey = sel_registerName("clearPendingKey"u8);
 
+        internal static readonly SEL selOtherEventWithType_Location_ModifierFlags_Timestamp_WindowNumber_Context_Subtype_Data1_Data2 = sel_registerName("otherEventWithType:location:modifierFlags:timestamp:windowNumber:context:subtype:data1:data2:"u8);
+        internal static readonly SEL selPostEvent_AtStart = sel_registerName("postEvent:atStart:"u8);
+        internal static readonly SEL selData1 = sel_registerName("data1"u8);
+
         internal static readonly IntPtr NSPasteboardTypeFileURL = GetStringConstant(AppKitLibrary, "NSPasteboardTypeFileURL"u8);
 
         internal static readonly IntPtr NSDefaultRunLoop = GetStringConstant(FoundationLibrary, "NSDefaultRunLoopMode"u8);
@@ -1145,12 +1149,15 @@ namespace OpenTK.Platform.Native.macOS
         public void ProcessEvents(bool waitForEvents)
         {
             IntPtr @event;
-            if (waitForEvents)
+            bool keepWaiting = true;
+            while (waitForEvents && keepWaiting)
             {
                 IntPtr distantFuture = objc_msgSend_IntPtr((IntPtr)NSDateClass, selDistantFuture);
                 if ((@event = objc_msgSend_IntPtr(nsApplication, selNextEventMatchingMask_untilDate_inMode_dequeue, NSEventMask.Any, distantFuture, NSDefaultRunLoop, true)) != IntPtr.Zero)
                 {
-                    DispatchEvent(@event);
+                    bool userEvent = DispatchEvent(@event);
+                    if (userEvent)
+                        keepWaiting = false;
                 }
             }
 
@@ -1160,18 +1167,44 @@ namespace OpenTK.Platform.Native.macOS
             }
         }
 
-        private void DispatchEvent(IntPtr @event)
+        /// <returns>True if this generated a user-facing event or false if no event was sent to use user.</returns>
+        private bool DispatchEvent(IntPtr @event)
         {
             NSEventType type = (NSEventType)objc_msgSend_ulong(@event, selType);
 
             IntPtr windowPtr = objc_msgSend_IntPtr(@event, selWindow);
             if (NSWindowDict.TryGetValue(windowPtr, out NSWindowHandle? nswindow) == false)
             {
+                bool raisedEvent = false;
+
                 if (type == NSEventType.MouseMoved ||
                     type == NSEventType.SystemDefined ||
                     type == NSEventType.AppKitDefined)
                 {
                     // Do not log the more spammy events..
+                }
+                else if (type == NSEventType.ApplicationDefined)
+                {
+                    // FIXME: A better way to know this a custom user event and not an application event someone else posted?
+                    IntPtr data = objc_msgSend_IntPtr(@event, selData1);
+                    GCHandle handle = GCHandle.FromIntPtr(data);
+                    EventArgs args = (EventArgs)handle.Target!;
+                    if (args is MacOSShellComponent.DockIconUpdateEventArgs dockIconUpdate)
+                    {
+                        raisedEvent = false;
+                        (Toolkit.Shell as MacOSShellComponent)?.UpdateDockTile();
+                    }
+                    else if (args is WindowEventArgs windowArgs)
+                    {
+                        raisedEvent = true;
+                        EventQueue.Raise(windowArgs.Window, PlatformEventType.UserMessage, windowArgs);
+                    }
+                    else
+                    {
+                        raisedEvent = true;
+                        EventQueue.Raise(null, PlatformEventType.UserMessage, args);
+                    }
+                    handle.Free();
                 }
                 else
                 {
@@ -1180,7 +1213,7 @@ namespace OpenTK.Platform.Native.macOS
 
                 objc_msgSend(nsApplication, selSendEvent, @event);
 
-                return;
+                return raisedEvent;
             }
 
             switch (type)
@@ -1194,13 +1227,13 @@ namespace OpenTK.Platform.Native.macOS
                         if (frame.Contains(location) == false)
                         {
                             objc_msgSend(nsApplication, selSendEvent, @event);
-                            return;
+                            return false;
                         }
 
                         // We don't want to process this event further.
                         if (ProcessHitTest(@event))
                         {
-                            return;
+                            return false;
                         }
 
                         // FIXME: This should be a long, not ulong
@@ -1235,7 +1268,7 @@ namespace OpenTK.Platform.Native.macOS
                         if (ProcessHitTest(@event))
                         {
                             objc_msgSend(nsApplication, selSendEvent, @event);
-                            return;
+                            return false;
                         }
 
                         // FIXME: This should be a long, not ulong
@@ -1273,7 +1306,7 @@ namespace OpenTK.Platform.Native.macOS
                         if (ProcessHitTest(@event))
                         {
                             objc_msgSend(nsApplication, selSendEvent, @event);
-                            return;
+                            return false;
                         }
 
                         CGPoint point = objc_msgSend_CGPoint(@event, selLocationInWindow);
@@ -1434,8 +1467,6 @@ namespace OpenTK.Platform.Native.macOS
                     break;
             }
 
-            (Toolkit.Shell as MacOSShellComponent)?.UpdateProgressViewIfNecessary();
-
             {
                 // Clipboard updates on macos seem to take some time.
                 // If we try to read the clipboard formats the moment the
@@ -1464,12 +1495,32 @@ namespace OpenTK.Platform.Native.macOS
                     clipboardUpdateTime = long.MaxValue;
                 }
             }
+
+            // FIXME: Getting here doesn't guarantee we generated a user-facing event.
+            return true;
         }
 
         /// <inheritdoc/>
         public void PostUserEvent(EventArgs @event)
         {
-            throw new NotImplementedException();
+            GCHandle handle = GCHandle.Alloc(@event, GCHandleType.Normal);
+
+            IntPtr nsevent = objc_msgSend_IntPtr((IntPtr)NSEventClass, selOtherEventWithType_Location_ModifierFlags_Timestamp_WindowNumber_Context_Subtype_Data1_Data2,
+                (nint)NSEventType.ApplicationDefined,
+                new CGPoint(),
+                (nint)0,
+                0.0,
+                // For now I'm leaving this as 0 as it doesn't seem to be causing any issues.
+                // But we might want to have a helper window of sorts in the future.
+                // - Noggin_bops 2025-02-20
+                0,
+                IntPtr.Zero,
+                (short)0,
+                (IntPtr)handle,
+                IntPtr.Zero);
+
+            // FIXME: BOOL
+            objc_msgSend_IntPtr(nsApplication, selPostEvent_AtStart, nsevent, false);
         }
 
         /// <inheritdoc/>
@@ -1545,6 +1596,16 @@ namespace OpenTK.Platform.Native.macOS
             }
 
             NSWindowDict.Remove(nswindow.Window);
+
+            // FIXME: This is a temporary hack to make sure we don't leave the indeterminate
+            // progress state when destroying the last window. This will cause the CVDisplayLink 
+            // thread to be alive and cause the dock icon to keep being visible even when no windows
+            // are present.
+            // - Noggin_bops 2025-02-20
+            if (NSWindowDict.Count == 0)
+            {
+                (Toolkit.Shell as MacOSShellComponent)?.SetProgressStatus(nswindow, MacOSShellComponent.ProgressMode.NoProgress, 0);
+            }
 
             // This also releases the window if the releaseWhenClosed property is true
             // This is the default.

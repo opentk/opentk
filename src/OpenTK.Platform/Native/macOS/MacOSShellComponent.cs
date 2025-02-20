@@ -95,7 +95,6 @@ namespace OpenTK.Platform.Native.macOS
 
         private IntPtr ProgressView;
         private CVDisplayLinkRef DisplayLink;
-        internal bool ProgressViewUpdateAnimation;
 
         /// <inheritdocs/>
         public unsafe void Initialize(ToolkitOptions options)
@@ -150,6 +149,13 @@ namespace OpenTK.Platform.Native.macOS
             GetComponentFromProgressView(view).Logger?.LogInfo("UpdateAnimation!");
         }
 
+        // Custom event used to notify the main thread that the dock icon needs to be updated.
+        internal class DockIconUpdateEventArgs : EventArgs
+        {
+        }
+
+        static readonly DockIconUpdateEventArgs DockIconUpdateEvent = new DockIconUpdateEventArgs();
+
         private static unsafe int DisplayLinkRefresh(CVDisplayLinkRef displayLink, IntPtr inNow, IntPtr inOutputTime, ulong flagsIn, out ulong flagsOut, IntPtr displayLinkContext)
         {
             Unsafe.SkipInit(out flagsOut);
@@ -157,32 +163,18 @@ namespace OpenTK.Platform.Native.macOS
             MacOSShellComponent comp = (MacOSShellComponent)((GCHandle)displayLinkContext).Target!;
 
             // This is not running on the main thread so we need to make the main thread update the drawing.
-            // To do this we mark that we need to update and the main thread will check that variable and 
-            // update the animation if necessary.
+            // To do this we send a user event to the main thread and handle that case in a special case.
+            // We also use a single instance of the event to avoid unecessary allocations.
             // - Noggin_bops 2025-02-15
-            comp.ProgressViewUpdateAnimation = true;
-
-            // FIXME: We need to handle the main thread waiting on events
-            // which would cause this to not smoothly animate.
+            Toolkit.Window.PostUserEvent(DockIconUpdateEvent);
 
             return 0;
-        }
-
-        internal void UpdateProgressViewIfNecessary()
-        {
-            if (ProgressViewUpdateAnimation)
-            {
-                UpdateDockTile();
-                ProgressViewUpdateAnimation = false;
-            }
         }
 
         private static unsafe readonly delegate* unmanaged[Cdecl]<IntPtr, SEL, CGRect, void> NSOtkProgressView_DrawRectInst = &NSOtkProgressView_DrawRect;
         [UnmanagedCallersOnly(CallConvs = new Type[] { typeof(CallConvCdecl) })]
         private static unsafe void NSOtkProgressView_DrawRect(IntPtr view, SEL selector, CGRect dirtyRect)
         {
-            GetComponentFromProgressView(view).Logger?.LogInfo("DrawRect!");
-
             NFloat completion = *getIvarPointer<NFloat>(view, ProgressFieldName);
             ProgressMode mode = (ProgressMode)(*getIvarPointer<int>(view, ProgressModeFieldName));
 
@@ -241,8 +233,6 @@ namespace OpenTK.Platform.Native.macOS
                 completion = 1.0f;
                 float alpha = MathF.Sin(time * MathF.PI) * 0.5f + 0.5f;
                 progressColor = objc_msgSend_IntPtr(progressColor, selColorWithAlphaComponent, alpha);
-
-                //*getIvarPointer<long>(view, ProgressAnimationTimeFieldName) = currTime;
             }
 
             CGRect rectProgress = rect.InsetBy(1.0f, 1.0f);
@@ -502,6 +492,12 @@ namespace OpenTK.Platform.Native.macOS
 
         public unsafe void SetProgressStatus(WindowHandle handle, ProgressMode mode, float completion) {
             NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
+
+            // Deal with multiple windows having different progress statuses.
+            // WE could take a book from the windows documentation about the priority
+            // of progress states.
+            // - Noggin_bops 2025-02-20
+
             *getIvarPointer<NFloat>(ProgressView, ProgressFieldName) = completion;
             *getIvarPointer<int>(ProgressView, ProgressModeFieldName) = (int)mode;
 
