@@ -22,6 +22,7 @@ SOFTWARE.
 
 using System;
 using System.Diagnostics.Contracts;
+using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Xml.Serialization;
@@ -36,7 +37,19 @@ namespace OpenTK.Mathematics
     /// </remarks>
     [Serializable]
     [StructLayout(LayoutKind.Sequential)]
-    public struct Vector2 : IEquatable<Vector2>, IFormattable
+    public struct Vector2 : IEquatable<Vector2>, IFormattable,
+                            IAdditionOperators<Vector2, Vector2, Vector2>,
+                            ISubtractionOperators<Vector2, Vector2, Vector2>,
+                            IUnaryNegationOperators<Vector2, Vector2>,
+                            IMultiplyOperators<Vector2, float, Vector2>,
+                            IMultiplyOperators<Vector2, Vector2, Vector2>,
+                            IMultiplyOperators<Vector2, Matrix2, Vector2>,
+                            IDivisionOperators<Vector2, float, Vector2>,
+                            IDivisionOperators<Vector2, Vector2, Vector2>,
+                            IEqualityOperators<Vector2, Vector2, bool>,
+                            IAdditiveIdentity<Vector2, Vector2>,
+                            IMultiplicativeIdentity<Vector2, Vector2>,
+                            IMinMaxValue<Vector2>
     {
         /// <summary>
         /// The X component of the Vector2.
@@ -228,6 +241,26 @@ namespace OpenTK.Mathematics
         /// Defines the size of the Vector2 struct in bytes.
         /// </summary>
         public static readonly int SizeInBytes = Unsafe.SizeOf<Vector2>();
+
+        /// <summary>
+        /// Gets the additive identity of Vector2. Equivalent to Vector2.Zero.
+        /// </summary>
+        public static Vector2 AdditiveIdentity => Zero;
+
+        /// <summary>
+        /// Gets the multiplicative identity of Vector2. Equivalent to Vector2.One.
+        /// </summary>
+        public static Vector2 MultiplicativeIdentity => One;
+
+        /// <summary>
+        /// Gets the max value for Vector2. Equivalent to Vector2.PositiveInfinity.
+        /// </summary>
+        public static Vector2 MaxValue => PositiveInfinity;
+
+        /// <summary>
+        /// Gets the min value for Vector2. Equivalent to Vector2.NegativeInfinity.
+        /// </summary>
+        public static Vector2 MinValue => NegativeInfinity;
 
         /// <summary>
         /// Adds two vectors.
@@ -1067,32 +1100,6 @@ namespace OpenTK.Mathematics
         public static Vector2 operator *(Vector2 vec, Matrix2 mat)
         {
             TransformRow(in vec, in mat, out Vector2 result);
-            return result;
-        }
-
-        /// <summary>
-        /// Transform a Vector by the given Matrix using right-handed notation.
-        /// </summary>
-        /// <param name="mat">The desired transformation.</param>
-        /// <param name="vec">The vector to transform.</param>
-        /// <returns>The transformed vector.</returns>
-        [Pure]
-        public static Vector2 operator *(Matrix2 mat, Vector2 vec)
-        {
-            TransformColumn(in mat, in vec, out Vector2 result);
-            return result;
-        }
-
-        /// <summary>
-        /// Transforms a vector by a quaternion rotation.
-        /// </summary>
-        /// <param name="vec">The vector to transform.</param>
-        /// <param name="quat">The quaternion to rotate the vector by.</param>
-        /// <returns>The multiplied vector.</returns>
-        [Pure]
-        public static Vector2 operator *(Quaternion quat, Vector2 vec)
-        {
-            Transform(in vec, in quat, out Vector2 result);
             return result;
         }
 

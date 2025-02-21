@@ -23,6 +23,7 @@ SOFTWARE.
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
+using System.Numerics;
 using System.Runtime.InteropServices;
 using System.Runtime.Intrinsics;
 
@@ -33,7 +34,15 @@ namespace OpenTK.Mathematics
     /// </summary>
     [Serializable]
     [StructLayout(LayoutKind.Sequential)]
-    public struct Matrix2x3 : IEquatable<Matrix2x3>, IFormattable
+    public struct Matrix2x3 : IEquatable<Matrix2x3>, IFormattable,
+                                IMultiplyOperators<Matrix2x3, float, Matrix2x3>,
+                                IMultiplyOperators<Matrix2x3, Matrix3x2, Matrix2>,
+                                IMultiplyOperators<Matrix2x3, Matrix3, Matrix2x3>,
+                                IMultiplyOperators<Matrix2x3, Matrix3x4, Matrix2x4>,
+                                IAdditionOperators<Matrix2x3, Matrix2x3, Matrix2x3>,
+                                ISubtractionOperators<Matrix2x3, Matrix2x3, Matrix2x3>,
+                                IEqualityOperators<Matrix2x3, Matrix2x3, bool>,
+                                IAdditiveIdentity<Matrix2x3, Matrix2x3>
     {
         /// <summary>
         /// Top row of the matrix.
@@ -191,6 +200,11 @@ namespace OpenTK.Mathematics
         /// Gets the trace of the matrix, the sum of the values along the diagonal.
         /// </summary>
         public readonly float Trace => Row0.X + Row1.Y;
+
+        /// <summary>
+        /// Gets the additive identity of the matrix, which is the zero matrix.
+        /// </summary>
+        public static Matrix2x3 AdditiveIdentity => Zero;
 
         /// <summary>
         /// Gets or sets the value at a specified row and column.
