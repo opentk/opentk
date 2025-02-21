@@ -1334,9 +1334,10 @@ namespace OpenTK.Platform.Native.X11
                             {
                                 if (property.atom != X11.Atoms[KnownAtoms.WM_NAME] &&
                                     property.atom != X11.Atoms[KnownAtoms._NET_WM_NAME] &&
-                                    property.atom != X11.Atoms[KnownAtoms._GTK_EDGE_CONSTRAINTS])
+                                    property.atom != X11.Atoms[KnownAtoms._GTK_EDGE_CONSTRAINTS] &&
+                                    property.atom != X11.Atoms[KnownAtoms._NET_WM_OPAQUE_REGION])
                                 {
-                                    Logger?.LogInfo($"PropertyNotify: {XGetAtomName(X11.Display, property.atom)}");
+                                    Logger?.LogDebug($"PropertyNotify: {XGetAtomName(X11.Display, property.atom)}");
                                 }
                             }
                             break;
@@ -1376,6 +1377,22 @@ namespace OpenTK.Platform.Native.X11
                                 // FIXME: Calculate the proper window location, the coordinates reported are for the client area of the window.
                                 EventQueue.Raise(xwindow, PlatformEventType.WindowMove, new WindowMoveEventArgs(xwindow, (xwindow.X, xwindow.Y), (xwindow.X, xwindow.Y)));
                             }
+
+                            // On Ubuntu 24.04 specifying opaque region values outside of the client
+                            // area will cause weird artifacts where the window shadow will not be propertly
+                            // transparent. So we are unfortunately forced to keep the opaque region up to
+                            // date with the window size in order fix this issue.
+                            // - Noggin_bops 2025-02-19
+                            Span<long> region = [0, 0, xwindow.Width, xwindow.Height];
+                            XChangeProperty<long>(
+                                X11.Display,
+                                xwindow.Window,
+                                X11.Atoms[KnownAtoms._NET_WM_OPAQUE_REGION],
+                                X11.Atoms[KnownAtoms.CARDINAL],
+                                32,
+                                XPropertyMode.Replace,
+                                region,
+                                4);
 
                             break;
                         }
@@ -1794,17 +1811,12 @@ namespace OpenTK.Platform.Native.X11
             // opaque by default. This atom lets us tell the compositor that we don't want
             // to be alpha blended.
             // - Noggin_bops 2024-11-08
-            // Values that are too big e.g. long.MaxValue and int.MaxValue don't seem to work
-            // to define the opaque region. Windows larger than 1 million pixels in either
-            // dimention is highly unlikely for a *long* time, and this is something that is
-            // easy to fix if such a time comes.
-            // - Noggin_bops 2024-11-08
-            // FIXME: On Ubuntu 24.04 specifying opaque region values outside of the client
+            // On Ubuntu 24.04 specifying opaque region values outside of the client
             // area will cause weird artifacts where the window shadow will not be propertly
             // transparent. So we are unfortunately forced to keep the opaque region up to
             // date with the window size in order fix this issue.
             // - Noggin_bops 2025-02-19
-            Span<long> region = [0, 0, 1_000_000, 1_000_000];
+            Span<long> region = [0, 0, 800, 600];
             XChangeProperty<long>(
                 X11.Display,
                 window,
@@ -3187,12 +3199,12 @@ namespace OpenTK.Platform.Native.X11
 
             if (transparencyMode != WindowTransparencyMode.TransparentFramebuffer)
             {
-                // Values that are too big e.g. long.MaxValue and int.MaxValue don't seem to work
-                // to define the opaque region. Windows larger than 1 million pixels in either
-                // dimention is highly unlikely for a *long* time, and this is something that is
-                // easy to fix if such a time comes.
-                // - Noggin_bops 2024-11-08
-                Span<long> region = [0, 0, 1_000_000, 1_000_000];
+                // Unfortunately we need to match the opaque region size to the
+                // actual client area of the window and not just a large area
+                // because the Ubuntu 24.04 compositor messes up the drop shadow
+                // of the window in that case.
+                // - Noggin_bops 2025-02-21
+                Span<long> region = [0, 0, xwindow.Width, xwindow.Height];
                 XChangeProperty<long>(
                     X11.Display,
                     xwindow.Window,
@@ -3320,7 +3332,7 @@ namespace OpenTK.Platform.Native.X11
                 long w = region[2];
                 long h = region[3];
 
-                bool isOpaque = (x == 0 && y == 0 && w == 1_000_000 && h == 1_000_000);
+                bool isOpaque = (x == 0 && y == 0 && w > 0 && h > 0);
 
                 XFree(contents);
 
