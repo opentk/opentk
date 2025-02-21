@@ -98,6 +98,12 @@ namespace OpenTK.Platform.Native
                 "libXcursor.so.1",
             },
 
+            ["Xrender"] = new string[]
+            {
+                "libXrender.so",
+                "libXrender.so.1",
+            },
+
             ["Xkb"] = new string[]
             {
                 "libX11.so",

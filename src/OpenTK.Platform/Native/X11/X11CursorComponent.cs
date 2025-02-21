@@ -60,6 +60,21 @@ namespace OpenTK.Platform.Native.X11
         /// <inheritdoc />
         public bool CanInspectSystemCursors => false;
 
+        internal static unsafe XCursor CreateEmpty()
+        {
+            XColor color = default;
+
+            byte data = 0;
+            XPixmap pixmap = XCreateBitmapFromData(X11.Display, (XDrawable)X11.DefaultRootWindow, &data, 1, 1);
+            XCursor cursor = default;
+            if (pixmap.Id != XPixmap.None.Id) {
+                cursor = XCreatePixmapCursor(X11.Display, pixmap, pixmap, &color, &color, 0, 0);
+                XFreePixmap(X11.Display, pixmap);
+            }
+
+            return cursor;
+        }
+
         /// <inheritdoc />
         public CursorHandle Create(SystemCursorType systemCursor)
         {

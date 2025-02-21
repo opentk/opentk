@@ -17,6 +17,7 @@ using OpenTK.Platform.Native.X11.XRandR;
 using OpenTK.Platform.Native.X11.XI2;
 using System.Reflection.Metadata.Ecma335;
 using OpenTK.Platform.Native.Windows;
+using System.Buffers.Binary;
 
 namespace OpenTK.Platform.Native.X11
 {
@@ -49,30 +50,37 @@ namespace OpenTK.Platform.Native.X11
 
         internal static XWindow HelperWindow { get; private set; }
 
+        internal static XCursor EmptyCursor;
+        
+        internal static XIM IM { get; set; }
+
         internal static string ApplicationName;
+
+        internal XAtom OpenTKUserMessageType;
 
         /// <inheritdoc/>
         public void Initialize(ToolkitOptions options)
         {
-            // Later on we can replace this with a hint.
-            string? displayName = null;
-            X11.Display = XOpenDisplay(displayName);
-
-            ApplicationName = options.ApplicationName;
-
-            if (X11.Display.Value == IntPtr.Zero)
-            {
-                throw new PalException(this, (displayName is null) ? "Could not open default X display." : $"Could not open X display {displayName}.");
-            }
-
             unsafe
             {
                 ErrorHandler = XErrorHandler;
                 XSetErrorHandler(ErrorHandler);
             }
 
+            // Later on we can replace this with a hint.
+            string? displayName = null;
+            X11.Display = XOpenDisplay(displayName);
+            if (X11.Display.Value == IntPtr.Zero)
+            {
+                throw new PalException(this, (displayName is null) ? "Could not open default X display." : $"Could not open X display {displayName}.");
+            }
+
             X11.DefaultScreen = XDefaultScreen(X11.Display);
             X11.DefaultRootWindow = XDefaultRootWindow(X11.Display);
+
+            ApplicationName = options.ApplicationName;
+
+            EmptyCursor = X11CursorComponent.CreateEmpty();
 
             string[] extensions = XListExtensions(X11.Display, out _);
             X11.Extensions = new HashSet<string>(extensions);
@@ -264,6 +272,25 @@ namespace OpenTK.Platform.Native.X11
                 Logger?.LogWarning("XFIXES extension not supported. Clipboard update events will not be supported.");
             }
 
+            // FIXME: Maybe we have to call setlocale?
+            // or the XSuuportsLocale stuff?
+            //Libc.setlocale(Libc.LC.LC_ALL, ""u8);
+            IM = XOpenIM(X11.Display, new XrmDatabase(0), null, null);
+
+            unsafe 
+            {
+                // It's unclear if this actually works?
+                // It could be that no styles are supported or it could be that this function doesn't work...
+                XIMStyles styles = default;
+                //byte* test = XGetIMValues2(IM, &styles);
+                XGetIMValues(IM, XNQueryInputStyle, out styles);
+
+                for (int i = 0; i < styles.count_styles; i++)
+                {
+                    Logger?.LogDebug($"{i}: {styles.supported_styles[i]}");
+                }
+            }
+
             // FIXME: Don't throw?
             /*
             if (XQueryExtension(X11.Display, "XInputExtension", out int opcode, out int @event, out int error) == false)
@@ -285,6 +312,8 @@ namespace OpenTK.Platform.Native.X11
                 }
             }
             */
+
+            OpenTKUserMessageType = XInternAtom(X11.Display, "OPENTK_USER_MESSAGE", false);
         }
 
         /// <inheritdoc/>
@@ -433,6 +462,10 @@ namespace OpenTK.Platform.Native.X11
             {
                 XNextEvent(X11.Display, out ea);
 
+                // FIXME: Use this to do something related to duplicate events...
+                // - Noggin_bops 2024-12-13
+                bool filtered = XFilterEvent(ref ea, XWindow.None);
+
                 // Update the current timestamp.
                 switch (ea.Type)
                 {
@@ -503,7 +536,25 @@ namespace OpenTK.Platform.Native.X11
                     }
                     else if (ea.Any.Window == HelperWindow)
                     {
-                        if (ea.Type == XEventType.PropertyNotify && 
+                        if (ea.Type == XEventType.ClientMessage &&
+                            ea.ClientMessage.MessageType == OpenTKUserMessageType)
+                        {
+                            unsafe {
+                                IntPtr ptr = (IntPtr)(ea.ClientMessage.l[1] << 32 | (ea.ClientMessage.l[0] & 0xFFFFFFFF));
+                                GCHandle handle = GCHandle.FromIntPtr(ptr);
+                                EventArgs args = (EventArgs)handle.Target!;
+                                if (args is WindowEventArgs windowArgs)
+                                {
+                                    EventQueue.Raise(windowArgs.Window, PlatformEventType.UserMessage, windowArgs);
+                                }
+                                else
+                                {
+                                    EventQueue.Raise(null, PlatformEventType.UserMessage, args);
+                                }
+                                handle.Free();
+                            }
+                        }
+                        else if (ea.Type == XEventType.PropertyNotify && 
                             ea.Property.atom == X11ClipboardComponent.OpenTKSelection)
                         {
                             // If some other window takes ownership of the a selection we expect this.
@@ -801,7 +852,7 @@ namespace OpenTK.Platform.Native.X11
                                                 client.l[4] = 0;
                                             }
 
-                                            int status = XSendEvent(X11.Display, XDefaultRootWindow(X11.Display), 0, XEventMask.SubstructureRedirect | XEventMask.SubstructureNotify, in e);
+                                            bool success = XSendEvent(X11.Display, XDefaultRootWindow(X11.Display), 0, XEventMask.SubstructureRedirect | XEventMask.SubstructureNotify, in e);
                                             XSync(X11.Display, 0);
                                             continue;
                                         }
@@ -857,7 +908,7 @@ namespace OpenTK.Platform.Native.X11
                                                 client.l[4] = 0;
                                             }
 
-                                            int status = XSendEvent(X11.Display, XDefaultRootWindow(X11.Display), 0, XEventMask.SubstructureRedirect | XEventMask.SubstructureNotify, in e);
+                                            bool success = XSendEvent(X11.Display, XDefaultRootWindow(X11.Display), 0, XEventMask.SubstructureRedirect | XEventMask.SubstructureNotify, in e);
                                             XSync(X11.Display, 0);
 
                                             // FIXME: Handle the resize!
@@ -926,8 +977,20 @@ namespace OpenTK.Platform.Native.X11
                                 XKeySym keysym = default;
                                 const int TEXT_LENGTH = 32;
                                 byte* str = stackalloc byte[TEXT_LENGTH];
-                                // FIXME: Use Xutf8LookupString?
-                                int charsWritten = XLookupString(&keyPressed, str, TEXT_LENGTH, &keysym, null);
+                                XStatus status = XStatus.Success;
+
+                                int charsWritten;
+                                if (xwindow.IC.Value == IntPtr.Zero)
+                                {
+                                    charsWritten = XLookupString(&keyPressed, str, TEXT_LENGTH, &keysym, null);
+                                }
+                                else
+                                {
+                                    charsWritten = Xutf8LookupString(xwindow.IC, &keyPressed, str, TEXT_LENGTH, &keysym, &status);
+                                }
+
+                                // Check if the input context wants to handle the key press.
+
 
                                 Scancode scancode = X11KeyboardComponent.ToScancode(keyPressed.keycode);
                                 Key key = X11KeyboardComponent.TranslateKeySym(stackalloc XKeySym[1] {keysym});
@@ -946,34 +1009,46 @@ namespace OpenTK.Platform.Native.X11
                                     // FIXME: We could do what glfw does and look for a KeyUp event with
                                     // basically the same timestamp.
                                 }
+
+                                X11KeyboardComponent.HandleKeyEvent(keysym, keyPressed.keycode);
                                 
                                 EventQueue.Raise(xwindow, PlatformEventType.KeyDown, new KeyDownEventArgs(xwindow, key, scancode, isRepeat, modifiers));
                                 
-                                bool isHighLatin1 = false;
-                                for (int i = 0; i < TEXT_LENGTH; i++)
-                                {
-                                    if (str[i] >= 0x80)
+                                if (filtered == false) {
+
+                                    string? result = null;
+                                    if (xwindow.IC.Value == IntPtr.Zero)
                                     {
-                                        isHighLatin1 = true;
-                                        break;
+                                        bool isHighLatin1 = false;
+                                        for (int i = 0; i < TEXT_LENGTH; i++)
+                                        {
+                                            if (str[i] >= 0x80)
+                                            {
+                                                isHighLatin1 = true;
+                                                break;
+                                            }
+                                        }
+
+                                        // FIXME: Figure out when this Latin1 stuff is needed.
+                                        // On Ubuntu 22.04 we can just do the "new string()" method
+                                        // in all cases, even for characters like åäö.
+                                        // - Noggin_bops 2023-08-26
+                                        if (isHighLatin1)
+                                        {
+                                            result = Encoding.Latin1.GetString(str, charsWritten);
+                                        }
+                                        else
+                                        {
+                                            result = new string((sbyte*)str, 0, charsWritten);
+                                        }
                                     }
-                                }
+                                    else
+                                    {
+                                        result = new string((sbyte*)str, 0, charsWritten, Encoding.UTF8);
+                                    }
 
-                                // FIXME: Figure out when this Latin1 stuff is needed.
-                                // On Ubuntu 22.04 we can just do the "new string()" method
-                                // in all cases, even for characters like åäö.
-                                // - Noggin_bops 2023-08-26
-                                string? result = null;
-                                if (isHighLatin1)
-                                {
-                                    result = Encoding.Latin1.GetString(str, charsWritten);
+                                    EventQueue.Raise(xwindow, PlatformEventType.TextInput, new TextInputEventArgs(xwindow, result));
                                 }
-                                else
-                                {
-                                    result = new string((sbyte*)str, 0, charsWritten);
-                                }
-
-                                EventQueue.Raise(xwindow, PlatformEventType.TextInput, new TextInputEventArgs(xwindow, result));
                             }
                             break;
                         }
@@ -1078,6 +1153,8 @@ namespace OpenTK.Platform.Native.X11
                                 break;
                             }
 
+                            X11KeyboardComponent.SetFocus(true, Logger);
+
                             EventQueue.Raise(xwindow, PlatformEventType.Focus, new FocusEventArgs(xwindow, true));
 
                             break;
@@ -1106,6 +1183,8 @@ namespace OpenTK.Platform.Native.X11
                                 Logger?.LogDebug($"FocusOut detail={focusOut.detail}. Ignoring.");
                                 break;
                             }
+
+                            X11KeyboardComponent.SetFocus(false, Logger);
 
                             EventQueue.Raise(xwindow, PlatformEventType.Focus, new FocusEventArgs(xwindow, false));
 
@@ -1255,9 +1334,10 @@ namespace OpenTK.Platform.Native.X11
                             {
                                 if (property.atom != X11.Atoms[KnownAtoms.WM_NAME] &&
                                     property.atom != X11.Atoms[KnownAtoms._NET_WM_NAME] &&
-                                    property.atom != X11.Atoms[KnownAtoms._GTK_EDGE_CONSTRAINTS])
+                                    property.atom != X11.Atoms[KnownAtoms._GTK_EDGE_CONSTRAINTS] &&
+                                    property.atom != X11.Atoms[KnownAtoms._NET_WM_OPAQUE_REGION])
                                 {
-                                    Logger?.LogInfo($"PropertyNotify: {XGetAtomName(X11.Display, property.atom)}");
+                                    Logger?.LogDebug($"PropertyNotify: {XGetAtomName(X11.Display, property.atom)}");
                                 }
                             }
                             break;
@@ -1298,6 +1378,22 @@ namespace OpenTK.Platform.Native.X11
                                 EventQueue.Raise(xwindow, PlatformEventType.WindowMove, new WindowMoveEventArgs(xwindow, (xwindow.X, xwindow.Y), (xwindow.X, xwindow.Y)));
                             }
 
+                            // On Ubuntu 24.04 specifying opaque region values outside of the client
+                            // area will cause weird artifacts where the window shadow will not be propertly
+                            // transparent. So we are unfortunately forced to keep the opaque region up to
+                            // date with the window size in order fix this issue.
+                            // - Noggin_bops 2025-02-19
+                            Span<long> region = [0, 0, xwindow.Width, xwindow.Height];
+                            XChangeProperty<long>(
+                                X11.Display,
+                                xwindow.Window,
+                                X11.Atoms[KnownAtoms._NET_WM_OPAQUE_REGION],
+                                X11.Atoms[KnownAtoms.CARDINAL],
+                                32,
+                                XPropertyMode.Replace,
+                                region,
+                                4);
+
                             break;
                         }
                     default:
@@ -1324,6 +1420,32 @@ namespace OpenTK.Platform.Native.X11
             if (X11ShellComponent.GlibMainLoop != IntPtr.Zero)
             {
                 int wasEventsDispatched = LibGio.g_main_context_iteration(LibGio.g_main_context_default(), 0);
+            }
+        }
+
+        /// <inheritdoc/>
+        public unsafe void PostUserEvent(EventArgs @event)
+        {
+            GCHandle handle = GCHandle.Alloc(@event, GCHandleType.Normal);
+
+            XEvent xevent = default;
+            xevent.Type = XEventType.ClientMessage;
+            xevent.ClientMessage.Serial = 0;
+            xevent.ClientMessage.SendEvent = 1;
+            xevent.ClientMessage.Display = X11.Display;
+            xevent.ClientMessage.Window = HelperWindow;
+            xevent.ClientMessage.MessageType = OpenTKUserMessageType;
+            xevent.ClientMessage.Format = 32;
+            IntPtr ptr = (nint)handle;
+            xevent.ClientMessage.l[0] = (ptr) & 0xFFFFFFFF;
+            xevent.ClientMessage.l[1] = (ptr >> 32) & 0xFFFFFFFF;
+            xevent.ClientMessage.l[2] = 2;
+            xevent.ClientMessage.l[3] = 3;
+
+            bool success = XSendEvent(X11.Display, HelperWindow, 0, XEventMask.None, xevent);
+            if (success == false)
+            {
+                Logger?.LogError($"Unable to post user event of type {@event.GetType()}.");
             }
         }
 
@@ -1388,7 +1510,7 @@ namespace OpenTK.Platform.Native.X11
                     // FIXME: This wasn't a great idea as ANGLEOpenGLComponent is a thing which will cause
                     // this to crash. So we need to handle ANGLEOpenGLComponent as well here.
                     // - Noggin_bops 2024-07-22
-                    X11OpenGLComponent x11OpenGL = (Toolkit.OpenGL as X11OpenGLComponent) ?? throw new PalException(this, "OpenGL component needs to be initialized.");
+                    X11OpenGLComponent x11OpenGL = (Toolkit.OpenGL as X11OpenGLComponent) ?? throw new PalException(this, "OpenGL component needs to be initialized. Or you are using ANGLE on linux, this is not supported yet.");
                     // FIXME: Make these properties of the X11OpenGLComponent.
                     bool ARB_framebuffer_sRGB = x11OpenGL.GLXExtensions.Contains("GLX_ARB_framebuffer_sRGB");
                     bool EXT_framebuffer_sRGB = x11OpenGL.GLXExtensions.Contains("GLX_EXT_framebuffer_sRGB");
@@ -1689,12 +1811,12 @@ namespace OpenTK.Platform.Native.X11
             // opaque by default. This atom lets us tell the compositor that we don't want
             // to be alpha blended.
             // - Noggin_bops 2024-11-08
-            // Values that are too big e.g. long.MaxValue and int.MaxValue don't seem to work
-            // to define the opaque region. Windows larger than 1 million pixels in either
-            // dimention is highly unlikely for a *long* time, and this is something that is
-            // easy to fix if such a time comes.
-            // - Noggin_bops 2024-11-08
-            Span<long> region = [0, 0, 1_000_000, 1_000_000];
+            // On Ubuntu 24.04 specifying opaque region values outside of the client
+            // area will cause weird artifacts where the window shadow will not be propertly
+            // transparent. So we are unfortunately forced to keep the opaque region up to
+            // date with the window size in order fix this issue.
+            // - Noggin_bops 2025-02-19
+            Span<long> region = [0, 0, 800, 600];
             XChangeProperty<long>(
                 X11.Display,
                 window,
@@ -1705,7 +1827,21 @@ namespace OpenTK.Platform.Native.X11
                 region,
                 4);
 
-            XWindowHandle handle = new XWindowHandle(X11.Display, window, hints, chosenConfig, chosenPixelFormat, visualSupportsFramebufferTransparency, map);
+            XIC ic;
+            unsafe {
+                fixed(byte* xnInputStyle = XNInputStyle)
+                fixed(byte* xnClientWindow = XNClientWindow)
+                fixed(byte* xnFocusWindow = XNFocusWindow)
+                {
+                    ic = XCreateIC(IM,
+                        xnInputStyle, (ulong)(XIMFlags.PreeditNothing | XIMFlags.StatusNothing), 
+                        xnClientWindow, window.Id,
+                        xnFocusWindow, window.Id,
+                        null);
+                }
+            }
+
+            XWindowHandle handle = new XWindowHandle(X11.Display, window, hints, chosenConfig, chosenPixelFormat, visualSupportsFramebufferTransparency, map, ic);
 
             XWindowDict.Add(handle.Window, handle);
 
@@ -2518,7 +2654,7 @@ namespace OpenTK.Platform.Native.X11
                     client.l[4] = 0;
                 }
 
-                int status = XSendEvent(X11.Display, X11.DefaultRootWindow, 0, XEventMask.SubstructureRedirect | XEventMask.SubstructureNotify, e);
+                bool success = XSendEvent(X11.Display, X11.DefaultRootWindow, 0, XEventMask.SubstructureRedirect | XEventMask.SubstructureNotify, e);
 
                 // Re-set the min and max limits that we removed when we went fullscreen.
                 unsafe
@@ -2636,7 +2772,7 @@ namespace OpenTK.Platform.Native.X11
                             client.l[4] = 0;
                         }
 
-                        int status = XSendEvent(X11.Display, X11.DefaultRootWindow, 0, XEventMask.SubstructureRedirect | XEventMask.SubstructureNotify, e);
+                        bool success = XSendEvent(X11.Display, X11.DefaultRootWindow, 0, XEventMask.SubstructureRedirect | XEventMask.SubstructureNotify, e);
 
                         break;
                     }
@@ -2719,7 +2855,7 @@ namespace OpenTK.Platform.Native.X11
                 client.l[4] = 0;
             }
 
-            int status = XSendEvent(X11.Display, X11.DefaultRootWindow, 0, XEventMask.SubstructureRedirect | XEventMask.SubstructureNotify, e);
+            bool success = XSendEvent(X11.Display, X11.DefaultRootWindow, 0, XEventMask.SubstructureRedirect | XEventMask.SubstructureNotify, e);
 
             // FIXME: Disable compositor for this window?
 
@@ -2793,7 +2929,7 @@ namespace OpenTK.Platform.Native.X11
                 client.l[4] = 0;
             }
 
-            int status = XSendEvent(X11.Display, X11.DefaultRootWindow, 0, XEventMask.SubstructureRedirect | XEventMask.SubstructureNotify, e);
+            bool success = XSendEvent(X11.Display, X11.DefaultRootWindow, 0, XEventMask.SubstructureRedirect | XEventMask.SubstructureNotify, e);
 
             // FIXME: Disable compositor for this window?
 
@@ -3063,12 +3199,12 @@ namespace OpenTK.Platform.Native.X11
 
             if (transparencyMode != WindowTransparencyMode.TransparentFramebuffer)
             {
-                // Values that are too big e.g. long.MaxValue and int.MaxValue don't seem to work
-                // to define the opaque region. Windows larger than 1 million pixels in either
-                // dimention is highly unlikely for a *long* time, and this is something that is
-                // easy to fix if such a time comes.
-                // - Noggin_bops 2024-11-08
-                Span<long> region = [0, 0, 1_000_000, 1_000_000];
+                // Unfortunately we need to match the opaque region size to the
+                // actual client area of the window and not just a large area
+                // because the Ubuntu 24.04 compositor messes up the drop shadow
+                // of the window in that case.
+                // - Noggin_bops 2025-02-21
+                Span<long> region = [0, 0, xwindow.Width, xwindow.Height];
                 XChangeProperty<long>(
                     X11.Display,
                     xwindow.Window,
@@ -3196,7 +3332,7 @@ namespace OpenTK.Platform.Native.X11
                 long w = region[2];
                 long h = region[3];
 
-                bool isOpaque = (x == 0 && y == 0 && w == 1_000_000 && h == 1_000_000);
+                bool isOpaque = (x == 0 && y == 0 && w > 0 && h > 0);
 
                 XFree(contents);
 
@@ -3240,7 +3376,7 @@ namespace OpenTK.Platform.Native.X11
                 client.l[4] = 0;
             }
 
-            int status = XSendEvent(X11.Display, X11.DefaultRootWindow, 0, XEventMask.SubstructureRedirect | XEventMask.SubstructureNotify, e);
+            bool success = XSendEvent(X11.Display, X11.DefaultRootWindow, 0, XEventMask.SubstructureRedirect | XEventMask.SubstructureNotify, e);
         }
 
         /// <inheritdoc/>
@@ -3314,7 +3450,7 @@ namespace OpenTK.Platform.Native.X11
             XWindowHandle xwindow = handle.As<XWindowHandle>(this);
             XCursorHandle? xcursor = cursor?.As<XCursorHandle>(this);
 
-            XDefineCursor(X11.Display, xwindow.Window, xcursor?.Cursor ?? XCursor.None);
+            XDefineCursor(X11.Display, xwindow.Window, xcursor?.Cursor ?? EmptyCursor);
         }
 
         /// <inheritdoc/>
@@ -3457,7 +3593,7 @@ namespace OpenTK.Platform.Native.X11
                 client.l[4] = 0;
             }
 
-            int status = XSendEvent(X11.Display, X11.DefaultRootWindow, 0, XEventMask.SubstructureRedirect | XEventMask.SubstructureNotify, e);
+            bool success = XSendEvent(X11.Display, X11.DefaultRootWindow, 0, XEventMask.SubstructureRedirect | XEventMask.SubstructureNotify, e);
         }
 
         /// <inheritdoc/>

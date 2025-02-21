@@ -62,6 +62,11 @@ namespace OpenTK.Platform.Native.X11
         internal XAtom XDnDType { get; set; }
         internal XAtom XDnDSource { get; set; }
 
+        /// <summary>
+        /// Can be null.
+        /// </summary>
+        internal XIC IC { get; set; }
+
         public XWindowHandle(
             XDisplayPtr display,
             XWindow window,
@@ -69,7 +74,8 @@ namespace OpenTK.Platform.Native.X11
             GLXFBConfig? fbConfig,
             ContextPixelFormat pixelFormat,
             bool visualSupportsFramebufferTransparency,
-            XColorMap? colorMap) : base(hints)
+            XColorMap? colorMap,
+            XIC ic) : base(hints)
         {
             Display = display;
             Window = window;
@@ -77,6 +83,7 @@ namespace OpenTK.Platform.Native.X11
             PixelFormat = pixelFormat;
             VisualSupportsFramebufferTransparency = visualSupportsFramebufferTransparency;
             ColorMap = colorMap;
+            IC = ic;
         }
     }
 
