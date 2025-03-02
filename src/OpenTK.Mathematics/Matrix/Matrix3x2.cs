@@ -796,6 +796,26 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
+        /// Converts <see cref="System.Numerics.Matrix3x2"/> to <see cref="Matrix3x2"/>.
+        /// </summary>
+        /// <param name="mat">The <see cref="System.Numerics.Matrix3x2"/> to cast.</param>
+        [Pure]
+        public static explicit operator Matrix3x2(System.Numerics.Matrix3x2 mat)
+        {
+            return new Matrix3x2(mat.M11, mat.M12, mat.M21, mat.M22, mat.M31, mat.M32);
+        }
+
+        /// <summary>
+        /// Converts <see cref="Matrix3x2"/> to <see cref="System.Numerics.Matrix3x2"/>.
+        /// </summary>
+        /// <param name="mat">The <see cref="Matrix3x2"/> to cast.</param>
+        [Pure]
+        public static explicit operator System.Numerics.Matrix3x2(Matrix3x2 mat)
+        {
+            return new System.Numerics.Matrix3x2(mat.M11, mat.M12, mat.M21, mat.M22, mat.M31, mat.M32);
+        }
+
+        /// <summary>
         /// Returns a System.String that represents the current Matrix3d.
         /// </summary>
         /// <returns>The string representation of the matrix.</returns>
