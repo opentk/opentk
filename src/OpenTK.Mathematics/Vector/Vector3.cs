@@ -1760,6 +1760,26 @@ namespace OpenTK.Mathematics
             return new Vector3(values.X, values.Y, values.Z);
         }
 
+        /// <summary>
+        /// Converts <see cref="System.Numerics.Vector3"/> to <see cref="Vector3"/>.
+        /// </summary>
+        /// <param name="vec">The <see cref="System.Numerics.Vector3"/> to cast.</param>
+        [Pure]
+        public static explicit operator Vector3(System.Numerics.Vector3 vec)
+        {
+            return new Vector3(vec.X, vec.Y, vec.Z);
+        }
+
+        /// <summary>
+        /// Converts <see cref="Vector3"/> to <see cref="System.Numerics.Vector3"/>.
+        /// </summary>
+        /// <param name="vec">The <see cref="Vector3"/> to cast.</param>
+        [Pure]
+        public static explicit operator System.Numerics.Vector3(Vector3 vec)
+        {
+            return new System.Numerics.Vector3(vec.X, vec.Y, vec.Z);
+        }
+
         /// <inheritdoc/>
         public override readonly string ToString()
         {

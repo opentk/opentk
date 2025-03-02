@@ -2170,6 +2170,46 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
+        /// Converts <see cref="System.Numerics.Matrix4x4"/> to <see cref="Matrix4"/>.
+        /// </summary>
+        /// <param name="mat">The <see cref="Matrix4"/> to cast.</param>
+        [Pure]
+        [SuppressMessage(
+            "StyleCop.CSharp.ReadabilityRules",
+            "SA1117:ParametersMustBeOnSameLineOrSeparateLines",
+            Justification = "A single line for all 16 parameters is a bit hard to read and 16 seperate lines takes up too much space, so 1 line for each row in the matrix helps visibility.")]
+        public static explicit operator Matrix4(System.Numerics.Matrix4x4 mat)
+        {
+            return new Matrix4
+                (
+                mat.M11, mat.M12, mat.M13, mat.M14,
+                mat.M21, mat.M22, mat.M23, mat.M24,
+                mat.M31, mat.M32, mat.M33, mat.M34,
+                mat.M41, mat.M42, mat.M43, mat.M44
+                );
+        }
+
+        /// <summary>
+        /// Converts <see cref="Matrix4"/> to <see cref="System.Numerics.Matrix4x4"/>.
+        /// </summary>
+        /// <param name="mat">The <see cref="Matrix4"/> to cast.</param>
+        [Pure]
+        [SuppressMessage(
+            "StyleCop.CSharp.ReadabilityRules",
+            "SA1117:ParametersMustBeOnSameLineOrSeparateLines",
+            Justification = "A single line for all 16 parameters is a bit hard to read and 16 seperate lines takes up too much space, so 1 line for each row in the matrix helps visibility.")]
+        public static explicit operator System.Numerics.Matrix4x4(Matrix4 mat)
+        {
+            return new System.Numerics.Matrix4x4
+                (
+                mat.M11, mat.M12, mat.M13, mat.M14,
+                mat.M21, mat.M22, mat.M23, mat.M24,
+                mat.M31, mat.M32, mat.M33, mat.M34,
+                mat.M41, mat.M42, mat.M43, mat.M44
+                );
+        }
+
+        /// <summary>
         /// Returns a System.String that represents the current Matrix4.
         /// </summary>
         /// <returns>The string representation of the matrix.</returns>

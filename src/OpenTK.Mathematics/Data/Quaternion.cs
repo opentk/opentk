@@ -803,6 +803,26 @@ namespace OpenTK.Mathematics
             return !(left == right);
         }
 
+        /// <summary>
+        /// Converts <see cref="System.Numerics.Quaternion"/> to <see cref="Quaternion"/>.
+        /// </summary>
+        /// <param name="quat">The <see cref="System.Numerics.Quaternion"/> to cast.</param>
+        [Pure]
+        public static explicit operator Quaternion(System.Numerics.Quaternion quat)
+        {
+            return new Quaternion(quat.X, quat.Y, quat.Z, quat.W);
+        }
+
+        /// <summary>
+        /// Converts <see cref="Quaternion"/> to <see cref="System.Numerics.Quaternion"/>.
+        /// </summary>
+        /// <param name="quat">The <see cref="Quaternion"/> to cast.</param>
+        [Pure]
+        public static explicit operator System.Numerics.Quaternion(Quaternion quat)
+        {
+            return new System.Numerics.Quaternion(quat.X, quat.Y, quat.Z, quat.W);
+        }
+
         /// <inheritdoc />
         public override readonly bool Equals(object obj)
         {
