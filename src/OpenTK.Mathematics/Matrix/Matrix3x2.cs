@@ -23,7 +23,6 @@ SOFTWARE.
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
-using System.Numerics;
 using System.Runtime.InteropServices;
 
 namespace OpenTK.Mathematics
