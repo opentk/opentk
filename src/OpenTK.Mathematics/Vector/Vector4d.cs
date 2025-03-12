@@ -297,6 +297,57 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
+        /// Returns a new vector were component-wise rounding has been applied.
+        /// Equivalent to calling <see cref="Math.Round(double)"/> on each component.
+        /// </summary>
+        /// <returns>The rounded vector.</returns>
+        public readonly Vector4d Round()
+        {
+            return Round(this);
+        }
+
+        /// <summary>
+        /// Returns a new vector were component-wise rounding has been applied with the specified midpoint rounding rule.
+        /// Equivalent to calling <see cref="Math.Round(double,MidpointRounding)"/> on each component.
+        /// </summary>
+        /// <param name="rounding">The midpoint rounding rule to use.</param>
+        /// <returns>The rounded vector.</returns>
+        public readonly Vector4d Round(MidpointRounding rounding)
+        {
+            return Round(this, rounding);
+        }
+
+        /// <summary>
+        /// Returns a new vector were a component-wise ceiling operation has been applied.
+        /// Equivalent to calling <see cref="Math.Ceiling(double)"/> on each component.
+        /// </summary>
+        /// <returns>The ceiled vector.</returns>
+        public readonly Vector4d Ceiling()
+        {
+            return Ceiling(this);
+        }
+
+        /// <summary>
+        /// Returns a new vector were a component-wise floor operation has been applied.
+        /// Equivalent to calling <see cref="Math.Floor(double)"/> on each component.
+        /// </summary>
+        /// <returns>The floored vector.</returns>
+        public readonly Vector4d Floor()
+        {
+            return Floor(this);
+        }
+
+        /// <summary>
+        /// Returns a new vector were component-wise truncation has been applied.
+        /// Equivalent to calling <see cref="Math.Truncate(double)"/> on each component.
+        /// </summary>
+        /// <returns>The truncated vector.</returns>
+        public readonly Vector4d Truncate()
+        {
+            return Truncate(this);
+        }
+
+        /// <summary>
         /// Adds two vectors.
         /// </summary>
         /// <param name="a">Left operand.</param>
@@ -621,6 +672,204 @@ namespace OpenTK.Mathematics
             result.Y = Math.Abs(vec.Y);
             result.Z = Math.Abs(vec.Z);
             result.W = Math.Abs(vec.W);
+        }
+
+        /// <summary>
+        /// Component-wise rounding. Equivalent to calling <see cref="Math.Round(double)"/> on each component.
+        /// </summary>
+        /// <param name="vec">The vector to round.</param>
+        /// <returns>The component-wise rounded vector.</returns>
+        [Pure]
+        public static Vector4d Round(Vector4d vec)
+        {
+            vec.X = Math.Round(vec.X);
+            vec.Y = Math.Round(vec.Y);
+            vec.Z = Math.Round(vec.Z);
+            vec.W = Math.Round(vec.W);
+            return vec;
+        }
+
+        /// <summary>
+        /// Component-wise rounding. Equivalent to calling <see cref="Math.Round(double)"/> on each component.
+        /// </summary>
+        /// <param name="vec">The vector to round.</param>
+        /// <param name="result">The component-wise rounded vector.</param>
+        public static void Round(in Vector4d vec, out Vector4d result)
+        {
+            result.X = Math.Round(vec.X);
+            result.Y = Math.Round(vec.Y);
+            result.Z = Math.Round(vec.Z);
+            result.W = Math.Round(vec.W);
+        }
+
+        /// <summary>
+        /// Component-wise rounding with specified midpoint rounding rule.
+        /// Equivalent to calling <see cref="Math.Round(double,MidpointRounding)"/> on each component.
+        /// </summary>
+        /// <param name="vec">The vector to round.</param>
+        /// <param name="rounding">The midpoint rounding rule to use.</param>
+        /// <returns>The component-wise rounded vector.</returns>
+        [Pure]
+        public static Vector4d Round(Vector4d vec, MidpointRounding rounding)
+        {
+            vec.X = Math.Round(vec.X, rounding);
+            vec.Y = Math.Round(vec.Y, rounding);
+            vec.Z = Math.Round(vec.Z, rounding);
+            vec.W = Math.Round(vec.W, rounding);
+            return vec;
+        }
+
+        /// <summary>
+        /// Component-wise rounding with specified midpoint rounding rule.
+        /// Equivalent to calling <see cref="Math.Round(double,MidpointRounding)"/> on each component.
+        /// </summary>
+        /// <param name="vec">The vector to round.</param>
+        /// <param name="rounding">The midpoint rounding rule to use.</param>
+        /// <param name="result">The component-wise rounded vector.</param>
+        public static void Round(in Vector4d vec, MidpointRounding rounding, out Vector4d result)
+        {
+            result.X = Math.Round(vec.X, rounding);
+            result.Y = Math.Round(vec.Y, rounding);
+            result.Z = Math.Round(vec.Z, rounding);
+            result.W = Math.Round(vec.W, rounding);
+        }
+
+        /// <summary>
+        /// Component-wise ceiling operation.
+        /// Equivalent to calling <see cref="Math.Ceiling(double)"/> on each component.
+        /// </summary>
+        /// <param name="vec">The vector to take the ceiling of.</param>
+        /// <returns>The component-wise ceiling vector.</returns>
+        [Pure]
+        public static Vector4d Ceiling(Vector4d vec)
+        {
+            vec.X = Math.Ceiling(vec.X);
+            vec.Y = Math.Ceiling(vec.Y);
+            vec.Z = Math.Ceiling(vec.Z);
+            vec.W = Math.Ceiling(vec.W);
+            return vec;
+        }
+
+        /// <summary>
+        /// Component-wise ceiling operation.
+        /// Equivalent to calling <see cref="Math.Ceiling(double)"/> on each component.
+        /// </summary>
+        /// <param name="vec">The vector to take the ceiling of.</param>
+        /// <param name="result">The component-wise ceiling vector.</param>
+        public static void Ceiling(in Vector4d vec, out Vector4d result)
+        {
+            result.X = Math.Ceiling(vec.X);
+            result.Y = Math.Ceiling(vec.Y);
+            result.Z = Math.Ceiling(vec.Z);
+            result.W = Math.Ceiling(vec.W);
+        }
+
+        /// <summary>
+        /// Component-wise floor operation.
+        /// Equivalent to calling <see cref="Math.Floor(double)"/> on each component.
+        /// </summary>
+        /// <param name="vec">The vector to take the floor of.</param>
+        /// <returns>The component-wise floored vector.</returns>
+        [Pure]
+        public static Vector4d Floor(Vector4d vec)
+        {
+            vec.X = Math.Floor(vec.X);
+            vec.Y = Math.Floor(vec.Y);
+            vec.Z = Math.Floor(vec.Z);
+            vec.W = Math.Floor(vec.W);
+            return vec;
+        }
+
+        /// <summary>
+        /// Component-wise floor operation.
+        /// Equivalent to calling <see cref="Math.Floor(double)"/> on each component.
+        /// </summary>
+        /// <param name="vec">The vector to take the floor of.</param>
+        /// <param name="result">The component-wise floored vector.</param>
+        public static void Floor(in Vector4d vec, out Vector4d result)
+        {
+            result.X = Math.Floor(vec.X);
+            result.Y = Math.Floor(vec.Y);
+            result.Z = Math.Floor(vec.Z);
+            result.W = Math.Floor(vec.W);
+        }
+
+        /// <summary>
+        /// Component-wise truncation.
+        /// Equivalent to calling <see cref="Math.Truncate(double)"/> on each component.
+        /// </summary>
+        /// <param name="vec">The vector to truncate.</param>
+        /// <returns>The component-wise truncated vector.</returns>
+        [Pure]
+        public static Vector4d Truncate(Vector4d vec)
+        {
+            vec.X = Math.Truncate(vec.X);
+            vec.Y = Math.Truncate(vec.Y);
+            vec.Z = Math.Truncate(vec.Z);
+            vec.W = Math.Truncate(vec.W);
+            return vec;
+        }
+
+        /// <summary>
+        /// Component-wise truncation.
+        /// Equivalent to calling <see cref="Math.Truncate(double)"/> on each component.
+        /// </summary>
+        /// <param name="vec">The vector to truncate.</param>
+        /// <param name="result">The component-wise truncated vector.</param>
+        public static void Truncate(in Vector4d vec, out Vector4d result)
+        {
+            result.X = Math.Truncate(vec.X);
+            result.Y = Math.Truncate(vec.Y);
+            result.Z = Math.Truncate(vec.Z);
+            result.W = Math.Truncate(vec.W);
+        }
+
+        /// <summary>
+        /// Compute the euclidean distance between two vectors.
+        /// </summary>
+        /// <param name="vec1">The first vector.</param>
+        /// <param name="vec2">The second vector.</param>
+        /// <returns>The distance.</returns>
+        [Pure]
+        public static double Distance(Vector4d vec1, Vector4d vec2)
+        {
+            Distance(in vec1, in vec2, out double result);
+            return result;
+        }
+
+        /// <summary>
+        /// Compute the euclidean distance between two vectors.
+        /// </summary>
+        /// <param name="vec1">The first vector.</param>
+        /// <param name="vec2">The second vector.</param>
+        /// <param name="result">The distance.</param>
+        public static void Distance(in Vector4d vec1, in Vector4d vec2, out double result)
+        {
+            result = Math.Sqrt(((vec2.X - vec1.X) * (vec2.X - vec1.X)) + ((vec2.Y - vec1.Y) * (vec2.Y - vec1.Y)) + ((vec2.Z - vec1.Z) * (vec2.Z - vec1.Z)) + ((vec2.W - vec1.W) * (vec2.W - vec1.W)));
+        }
+
+        /// <summary>
+        /// Compute the squared euclidean distance between two vectors.
+        /// </summary>
+        /// <param name="vec1">The first vector.</param>
+        /// <param name="vec2">The second vector.</param>
+        /// <returns>The squared distance.</returns>
+        [Pure]
+        public static double DistanceSquared(Vector4d vec1, Vector4d vec2)
+        {
+            DistanceSquared(in vec1, in vec2, out double result);
+            return result;
+        }
+
+        /// <summary>
+        /// Compute the squared euclidean distance between two vectors.
+        /// </summary>
+        /// <param name="vec1">The first vector.</param>
+        /// <param name="vec2">The second vector.</param>
+        /// <param name="result">The squared distance.</param>
+        public static void DistanceSquared(in Vector4d vec1, in Vector4d vec2, out double result)
+        {
+            result = ((vec2.X - vec1.X) * (vec2.X - vec1.X)) + ((vec2.Y - vec1.Y) * (vec2.Y - vec1.Y)) + ((vec2.Z - vec1.Z) * (vec2.Z - vec1.Z)) + ((vec2.W - vec1.W) * (vec2.W - vec1.W));
         }
 
         /// <summary>

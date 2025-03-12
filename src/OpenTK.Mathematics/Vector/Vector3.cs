@@ -217,6 +217,57 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
+        /// Returns a new vector were component-wise rounding has been applied.
+        /// Equivalent to calling <see cref="MathF.Round(float)"/> on each component.
+        /// </summary>
+        /// <returns>The rounded vector.</returns>
+        public readonly Vector3 Round()
+        {
+            return Round(this);
+        }
+
+        /// <summary>
+        /// Returns a new vector were component-wise rounding has been applied with the specified midpoint rounding rule.
+        /// Equivalent to calling <see cref="MathF.Round(float,MidpointRounding)"/> on each component.
+        /// </summary>
+        /// <param name="rounding">The midpoint rounding rule to use.</param>
+        /// <returns>The rounded vector.</returns>
+        public readonly Vector3 Round(MidpointRounding rounding)
+        {
+            return Round(this, rounding);
+        }
+
+        /// <summary>
+        /// Returns a new vector were a component-wise ceiling operation has been applied.
+        /// Equivalent to calling <see cref="MathF.Ceiling(float)"/> on each component.
+        /// </summary>
+        /// <returns>The ceiled vector.</returns>
+        public readonly Vector3 Ceiling()
+        {
+            return Ceiling(this);
+        }
+
+        /// <summary>
+        /// Returns a new vector were a component-wise floor operation has been applied.
+        /// Equivalent to calling <see cref="MathF.Floor(float)"/> on each component.
+        /// </summary>
+        /// <returns>The floored vector.</returns>
+        public readonly Vector3 Floor()
+        {
+            return Floor(this);
+        }
+
+        /// <summary>
+        /// Returns a new vector were component-wise truncation has been applied.
+        /// Equivalent to calling <see cref="MathF.Truncate(float)"/> on each component.
+        /// </summary>
+        /// <returns>The truncated vector.</returns>
+        public readonly Vector3 Truncate()
+        {
+            return Truncate(this);
+        }
+
+        /// <summary>
         /// Defines a unit-length Vector3 that points towards the X-axis.
         /// </summary>
         public static readonly Vector3 UnitX = new Vector3(1, 0, 0);
@@ -553,6 +604,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <param name="vec">The vector to apply component-wise absolute value to.</param>
         /// <returns>The component-wise absolute value vector.</returns>
+        [Pure]
         public static Vector3 Abs(Vector3 vec)
         {
             vec.X = MathF.Abs(vec.X);
@@ -571,6 +623,146 @@ namespace OpenTK.Mathematics
             result.X = MathF.Abs(vec.X);
             result.Y = MathF.Abs(vec.Y);
             result.Z = MathF.Abs(vec.Z);
+        }
+
+        /// <summary>
+        /// Component-wise rounding. Equivalent to calling <see cref="MathF.Round(float)"/> on each component.
+        /// </summary>
+        /// <param name="vec">The vector to round.</param>
+        /// <returns>The component-wise rounded vector.</returns>
+        [Pure]
+        public static Vector3 Round(Vector3 vec)
+        {
+            vec.X = MathF.Round(vec.X);
+            vec.Y = MathF.Round(vec.Y);
+            vec.Z = MathF.Round(vec.Z);
+            return vec;
+        }
+
+        /// <summary>
+        /// Component-wise rounding. Equivalent to calling <see cref="MathF.Round(float)"/> on each component.
+        /// </summary>
+        /// <param name="vec">The vector to round.</param>
+        /// <param name="result">The component-wise rounded vector.</param>
+        public static void Round(in Vector3 vec, out Vector3 result)
+        {
+            result.X = MathF.Round(vec.X);
+            result.Y = MathF.Round(vec.Y);
+            result.Z = MathF.Round(vec.Z);
+        }
+
+        /// <summary>
+        /// Component-wise rounding with specified midpoint rounding rule.
+        /// Equivalent to calling <see cref="MathF.Round(float,MidpointRounding)"/> on each component.
+        /// </summary>
+        /// <param name="vec">The vector to round.</param>
+        /// <param name="rounding">The midpoint rounding rule to use.</param>
+        /// <returns>The component-wise rounded vector.</returns>
+        [Pure]
+        public static Vector3 Round(Vector3 vec, MidpointRounding rounding)
+        {
+            vec.X = MathF.Round(vec.X, rounding);
+            vec.Y = MathF.Round(vec.Y, rounding);
+            vec.Z = MathF.Round(vec.Z, rounding);
+            return vec;
+        }
+
+        /// <summary>
+        /// Component-wise rounding with specified midpoint rounding rule.
+        /// Equivalent to calling <see cref="MathF.Round(float,MidpointRounding)"/> on each component.
+        /// </summary>
+        /// <param name="vec">The vector to round.</param>
+        /// <param name="rounding">The midpoint rounding rule to use.</param>
+        /// <param name="result">The component-wise rounded vector.</param>
+        public static void Round(in Vector3 vec, MidpointRounding rounding, out Vector3 result)
+        {
+            result.X = MathF.Round(vec.X, rounding);
+            result.Y = MathF.Round(vec.Y, rounding);
+            result.Z = MathF.Round(vec.Z, rounding);
+        }
+
+        /// <summary>
+        /// Component-wise ceiling operation.
+        /// Equivalent to calling <see cref="MathF.Ceiling(float)"/> on each component.
+        /// </summary>
+        /// <param name="vec">The vector to take the ceiling of.</param>
+        /// <returns>The component-wise ceiling vector.</returns>
+        [Pure]
+        public static Vector3 Ceiling(Vector3 vec)
+        {
+            vec.X = MathF.Ceiling(vec.X);
+            vec.Y = MathF.Ceiling(vec.Y);
+            vec.Z = MathF.Ceiling(vec.Z);
+            return vec;
+        }
+
+        /// <summary>
+        /// Component-wise ceiling operation.
+        /// Equivalent to calling <see cref="MathF.Ceiling(float)"/> on each component.
+        /// </summary>
+        /// <param name="vec">The vector to take the ceiling of.</param>
+        /// <param name="result">The component-wise ceiling vector.</param>
+        public static void Ceiling(in Vector3 vec, out Vector3 result)
+        {
+            result.X = MathF.Ceiling(vec.X);
+            result.Y = MathF.Ceiling(vec.Y);
+            result.Z = MathF.Ceiling(vec.Z);
+        }
+
+        /// <summary>
+        /// Component-wise floor operation.
+        /// Equivalent to calling <see cref="MathF.Floor(float)"/> on each component.
+        /// </summary>
+        /// <param name="vec">The vector to take the floor of.</param>
+        /// <returns>The component-wise floored vector.</returns>
+        [Pure]
+        public static Vector3 Floor(Vector3 vec)
+        {
+            vec.X = MathF.Floor(vec.X);
+            vec.Y = MathF.Floor(vec.Y);
+            vec.Z = MathF.Floor(vec.Z);
+            return vec;
+        }
+
+        /// <summary>
+        /// Component-wise floor operation.
+        /// Equivalent to calling <see cref="MathF.Floor(float)"/> on each component.
+        /// </summary>
+        /// <param name="vec">The vector to take the floor of.</param>
+        /// <param name="result">The component-wise floored vector.</param>
+        public static void Floor(in Vector3 vec, out Vector3 result)
+        {
+            result.X = MathF.Floor(vec.X);
+            result.Y = MathF.Floor(vec.Y);
+            result.Z = MathF.Floor(vec.Z);
+        }
+
+        /// <summary>
+        /// Component-wise truncation.
+        /// Equivalent to calling <see cref="MathF.Truncate(float)"/> on each component.
+        /// </summary>
+        /// <param name="vec">The vector to truncate.</param>
+        /// <returns>The component-wise truncated vector.</returns>
+        [Pure]
+        public static Vector3 Truncate(Vector3 vec)
+        {
+            vec.X = MathF.Truncate(vec.X);
+            vec.Y = MathF.Truncate(vec.Y);
+            vec.Z = MathF.Truncate(vec.Z);
+            return vec;
+        }
+
+        /// <summary>
+        /// Component-wise truncation.
+        /// Equivalent to calling <see cref="MathF.Truncate(float)"/> on each component.
+        /// </summary>
+        /// <param name="vec">The vector to truncate.</param>
+        /// <param name="result">The component-wise truncated vector.</param>
+        public static void Truncate(in Vector3 vec, out Vector3 result)
+        {
+            result.X = MathF.Truncate(vec.X);
+            result.Y = MathF.Truncate(vec.Y);
+            result.Z = MathF.Truncate(vec.Z);
         }
 
         /// <summary>
@@ -594,8 +786,7 @@ namespace OpenTK.Mathematics
         /// <param name="result">The distance.</param>
         public static void Distance(in Vector3 vec1, in Vector3 vec2, out float result)
         {
-            result = MathF.Sqrt(((vec2.X - vec1.X) * (vec2.X - vec1.X)) + ((vec2.Y - vec1.Y) * (vec2.Y - vec1.Y)) +
-                                      ((vec2.Z - vec1.Z) * (vec2.Z - vec1.Z)));
+            result = MathF.Sqrt(((vec2.X - vec1.X) * (vec2.X - vec1.X)) + ((vec2.Y - vec1.Y) * (vec2.Y - vec1.Y)) + ((vec2.Z - vec1.Z) * (vec2.Z - vec1.Z)));
         }
 
         /// <summary>
@@ -619,8 +810,7 @@ namespace OpenTK.Mathematics
         /// <param name="result">The squared distance.</param>
         public static void DistanceSquared(in Vector3 vec1, in Vector3 vec2, out float result)
         {
-            result = ((vec2.X - vec1.X) * (vec2.X - vec1.X)) + ((vec2.Y - vec1.Y) * (vec2.Y - vec1.Y)) +
-                     ((vec2.Z - vec1.Z) * (vec2.Z - vec1.Z));
+            result = ((vec2.X - vec1.X) * (vec2.X - vec1.X)) + ((vec2.Y - vec1.Y) * (vec2.Y - vec1.Y)) + ((vec2.Z - vec1.Z) * (vec2.Z - vec1.Z));
         }
 
         /// <summary>
@@ -864,6 +1054,7 @@ namespace OpenTK.Mathematics
         /// <param name="t">The blend factor.</param>
         /// <returns>The exponential interpolation between <paramref name="a"/> and <paramref name="b"/>.</returns>
         /// <seealso cref="MathHelper.Elerp(float, float, float)"/>
+        [Pure]
         public static Vector3 Elerp(Vector3 a, Vector3 b, float t)
         {
             a.X = MathF.Pow(a.X, 1 - t) * MathF.Pow(b.X, t);
