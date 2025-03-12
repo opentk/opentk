@@ -18,7 +18,7 @@ uniform samplerCube uPrefilteredEnvironmentMap;
 
 uniform sampler2D uBRDF_LUT;
 
-uniform vec2 uScreenSize;
+uniform vec4 uViewport;
 uniform float uDepthScale;
 
 uniform sampler2D uBackfaceNormalTexture;
@@ -122,7 +122,7 @@ void main() {
 	vec3 P2 = fWorldPosition + thickness * Rf;
 	vec4 P2proj = vec4(P2, 1.0) * uViewProjection;
 	vec2 P2ndc = (P2proj.xy / P2proj.w) * 0.5 + 0.5;
-	ivec2 P2screen = ivec2(P2ndc * uScreenSize);
+	ivec2 P2screen = ivec2(uViewport.xy + P2ndc * uViewport.zw);
 
 	vec3 backfaceNormal = sample_backface_normal(P2screen);
 	if (length(backfaceNormal) < 0.0001)
