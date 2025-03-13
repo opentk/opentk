@@ -58,6 +58,36 @@ namespace OpenTK.Platform.Native.X11
         }
     }
 
+    internal unsafe struct XIMCallback
+    {
+        public IntPtr ClientData;
+        public IntPtr Callback;
+        
+        public XIMCallback(IntPtr clientData, delegate* unmanaged[Cdecl]<XIM, IntPtr, IntPtr, void> callback)
+        {
+            ClientData = clientData;
+            Callback = (IntPtr)callback;
+        }
+
+        public XIMCallback(IntPtr clientData, delegate* unmanaged[Cdecl]<XIC, IntPtr, IntPtr, void> callback)
+        {
+            ClientData = clientData;
+            Callback = (IntPtr)callback;
+        }
+
+        public XIMCallback(IntPtr clientData, delegate* unmanaged[Cdecl]<XIC, IntPtr, IntPtr, int> callback)
+        {
+            ClientData = clientData;
+            Callback = (IntPtr)callback;
+        }
+
+        public override string ToString()
+        {
+            return $"0x{(nint)Callback:X8} - 0x{ClientData:X8}";
+        }
+
+    }
+
     [DebuggerDisplay("{Value}")]
     internal readonly struct XrmDatabase
     {
@@ -500,7 +530,7 @@ namespace OpenTK.Platform.Native.X11
 
         public override string ToString()
         {
-            return $"{Id}";
+            return $"0x{Id:X}";
         }
     }
 
@@ -524,6 +554,23 @@ namespace OpenTK.Platform.Native.X11
         {
             Id = id;
         }
+    }
+
+    internal unsafe struct XIMText
+    {
+        public ushort length;
+        public XIMFeedback* feedback;
+        public int encoding_is_wchar; 
+        // NOTE! This is either a byte* or char* depending on encoding_is_wchar
+        public byte* @string; 
+    }
+
+    internal unsafe struct XIMPreeditDrawCallbackStruct
+    {
+        public int caret;      /* Cursor offset within preedit string */
+        public int chg_first;  /* Starting change position */
+        public int chg_length; /* Length of the change in character count */
+        public XIMText* text;
     }
 
 #pragma warning disable CS0649 // Field '' is never assigned to, and will always have its default value 0

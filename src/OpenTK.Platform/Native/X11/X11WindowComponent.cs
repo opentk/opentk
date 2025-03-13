@@ -18,6 +18,8 @@ using OpenTK.Platform.Native.X11.XI2;
 using System.Reflection.Metadata.Ecma335;
 using OpenTK.Platform.Native.Windows;
 using System.Buffers.Binary;
+using System.Reflection.Metadata;
+using OpenTK.Core;
 
 namespace OpenTK.Platform.Native.X11
 {
@@ -58,14 +60,18 @@ namespace OpenTK.Platform.Native.X11
 
         internal XAtom OpenTKUserMessageType;
 
+        internal GCHandle ComponentGCHandle;
+
+        internal bool IsOnXWayland = false;
+
+
         /// <inheritdoc/>
-        public void Initialize(ToolkitOptions options)
+        public unsafe void Initialize(ToolkitOptions options)
         {
-            unsafe
-            {
-                ErrorHandler = XErrorHandler;
-                XSetErrorHandler(ErrorHandler);
-            }
+            ComponentGCHandle = GCHandle.Alloc(this, GCHandleType.Normal);
+
+            ErrorHandler = XErrorHandler;
+            XSetErrorHandler(ErrorHandler);
 
             // Later on we can replace this with a hint.
             string? displayName = null;
@@ -246,7 +252,6 @@ namespace OpenTK.Platform.Native.X11
 
             // Create a helper window to help with clipboard stuff.
             // FIXME: Will this only be used for clipboard stuff?
-            unsafe 
             {
                 XSetWindowAttributes wa = default;
                 wa.EventMask = XEventMask.PropertyChange;
@@ -272,26 +277,76 @@ namespace OpenTK.Platform.Native.X11
                 Logger?.LogWarning("XFIXES extension not supported. Clipboard update events will not be supported.");
             }
 
-            // FIXME: Maybe we have to call setlocale?
-            // or the XSuuportsLocale stuff?
-            //Libc.setlocale(Libc.LC.LC_ALL, ""u8);
-            IM = XOpenIM(X11.Display, new XrmDatabase(0), null, null);
-
-            unsafe 
+            // See: https://cgit.freedesktop.org/xorg/proto/xorgproto/tree/xwaylandproto.txt?id=ad6412624ef6dc4d7548fe16c254c4166ffa7198
+            if (XQueryExtension(X11.Display, "XWAYLAND", out _, out _, out _))
             {
-                // It's unclear if this actually works?
-                // It could be that no styles are supported or it could be that this function doesn't work...
-                XIMStyles styles = default;
-                //byte* test = XGetIMValues2(IM, &styles);
-                XGetIMValues(IM, XNQueryInputStyle, out styles);
+                IsOnXWayland = true;
+            }
 
-                for (int i = 0; i < styles.count_styles; i++)
-                {
-                    Logger?.LogDebug($"{i}: {styles.supported_styles[i]}");
+            {
+                // FIXME: Maybe specify res_name and res_class?
+                bool success = XRegisterIMInstantiateCallback(X11.Display, new XrmDatabase(0), null, null, IMInstantiatedCallbackInst, (IntPtr)ComponentGCHandle);
+                if (success == false) {
+                    Logger?.LogWarning("Was not able to register to IM (input method) instatiate callbacks. This means we will not be able to detect a late start of IM servers or dynamically switch IM.");
                 }
             }
 
-            // FIXME: Don't throw?
+            string? prevLocale = Libc.setlocale(Libc.LC.LC_ALL, null);
+            byte* prevModifiers = XSetLocaleModifiers(null);
+
+            string? test = Libc.setlocale(Libc.LC.LC_CTYPE, ""u8);
+            byte* test2 = XSetLocaleModifiers(Utils.AsPtr(""u8));
+            IM = XOpenIM(X11.Display, new XrmDatabase(0), null, null);
+            if (IM.Value == 0)
+            {
+                Logger?.LogDebug("XOpenIM failed, trying with '@im=none'.");
+                XSetLocaleModifiers(Utils.AsPtr("@im=none"u8));
+                IM = XOpenIM(X11.Display, new XrmDatabase(0), null, null);
+            }
+
+            // FIXME: Memory leak!
+            Libc.setlocale(Libc.LC.LC_ALL, Encoding.UTF8.GetBytes(prevLocale!));
+            XSetLocaleModifiers(prevModifiers);
+
+ 
+            {
+                XIMStyles* styles = default;
+                ReadOnlySpan<byte> str = Utils.ToSpan(XGetIMValues(IM, Utils.AsPtr(XNQueryInputStyle), (IntPtr)(&styles), 0));
+                for (int i = 0; i < styles->count_styles; i++)
+                {
+                    Logger?.LogDebug($"{i}: {styles->supported_styles[i]}");
+                }
+                XFree(styles);
+
+                XIMValuesList* values = default;
+                XGetIMValues(IM, Utils.AsPtr(XNQueryIMValuesList), (IntPtr)(&values), 0);
+                Logger?.LogDebug("IM values:");
+                for (int i = 0; i < values->count_values; i++)
+                {
+                    var span = Utils.ToSpan(values->supported_values[i]);
+                    Logger?.LogDebug($"{i}: {Encoding.UTF8.GetString(span)}");
+                }
+                XFree(values);
+
+                Logger?.LogDebug("");
+
+                values = default;
+                XGetIMValues(IM, Utils.AsPtr(XNQueryICValuesList), (IntPtr)(&values), 0);
+                Logger?.LogDebug("IC values:");
+                for (int i = 0; i < values->count_values; i++)
+                {
+                    var span = Utils.ToSpan(values->supported_values[i]);
+                    Logger?.LogDebug($"{i}: {Encoding.UTF8.GetString(span)}");
+                }
+                XFree(values);
+
+                XIMCallback destroyCallback = new XIMCallback((IntPtr)ComponentGCHandle, &IMDestroyCallback);
+                if (XSetIMValues(IM, Utils.AsPtr(XNDestroyCallback), (IntPtr)(&destroyCallback), 0) != null)
+                {
+                    Logger?.LogWarning("Failed to set the IM (input method) destroy callback. Will not be able to detect IM destruction.");
+                }
+            }
+
             /*
             if (XQueryExtension(X11.Display, "XInputExtension", out int opcode, out int @event, out int error) == false)
             {
@@ -316,8 +371,24 @@ namespace OpenTK.Platform.Native.X11
             OpenTKUserMessageType = XInternAtom(X11.Display, "OPENTK_USER_MESSAGE", false);
         }
 
+        internal IMInstantiateCallback IMInstantiatedCallbackInst = IMInstantiatedCallback;
+        static void IMInstantiatedCallback(XDisplayPtr display, IntPtr client_data, IntPtr call_data)
+        {
+            X11WindowComponent? comp = GCHandle.FromIntPtr(client_data).Target as X11WindowComponent;
+
+            comp?.Logger?.LogInfo("IM instantiate callback!");
+        }
+
+        [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
+        static void IMDestroyCallback(XIM im, IntPtr client_data, IntPtr call_data)
+        {
+            X11WindowComponent? comp = GCHandle.FromIntPtr(client_data).Target as X11WindowComponent;
+
+            comp?.Logger?.LogInfo("IM destroyed.");
+        }
+
         /// <inheritdoc/>
-        public void Uninitialize()
+        public unsafe void Uninitialize()
         {
             // FIXME: Do something with CursorCapturingWindow?
 
@@ -329,10 +400,18 @@ namespace OpenTK.Platform.Native.X11
 
             XDestroyWindow(X11.Display, HelperWindow);
 
+            bool success = XUnregisterIMInstantiateCallback(X11.Display, new XrmDatabase(0), null, null, IMInstantiatedCallbackInst, (IntPtr)ComponentGCHandle);
+            if (success == false)
+            {
+                Logger?.LogInfo("Was not able to unregister IM instantiate callback.");
+            }
+
             // FIXME: Should we reset the error handler?
             // XSetErrorHandler(null);
 
             XCloseDisplay(X11.Display);
+
+            ComponentGCHandle.Free();
         }
 
         /// <inheritdoc/>
@@ -447,6 +526,45 @@ namespace OpenTK.Platform.Native.X11
             return attributes.MapState != MapState.IsUnmapped;
         }
 
+        internal unsafe bool PrintKeyEvent(ref XEvent e, XIC ic)
+        {
+            bool filtered = XFilterEvent(ref e, e.Any.Window);
+            XKeyEvent kev = e.KeyPressed;
+            byte* str = stackalloc byte[32];
+            XKeySym sym, xmbsym = default, usym = default;
+            XComposeStatus status;
+            XLookupStatus xmbstatus, ustatus;
+
+            byte* buf = stackalloc byte[32];
+            byte* ubuf = stackalloc byte[32];
+
+            int nbytes = XLookupString(&kev, str, 32, &sym, &status);
+
+            string? xmbsymStr = null;
+            string xmbString = "";
+            string uString = "";
+            if (kev.type == XEventType.KeyPress)
+            {
+                int nmbbytes = XmbLookupString(ic, &kev, buf, 32, &xmbsym, &xmbstatus);
+                int nubytes = Xutf8LookupString(ic, &kev, ubuf, 32, &usym, &ustatus);
+                xmbsymStr = XKeysymToString(xmbsym);
+
+                xmbString = Encoding.Latin1.GetString(buf, nmbbytes);
+                uString = Encoding.UTF8.GetString(ubuf, nubytes);
+            }
+
+            Logger?.LogDebug(e.Type == XEventType.KeyPress ? "KeyPress" : "KeyRelease");
+            Logger?.LogDebug($"w: {kev.window}, root {kev.root}, subw: {kev.subwindow} time: {kev.time} root:({kev.x_root},{kev.y_root})");
+            Logger?.LogDebug($"state {kev.state} keycode: {kev.keycode} (sym: {sym} {XKeysymToString(sym)}) (xmb keysym: {xmbsym} '{XKeysymToString(xmbsym)}') (utf8 keysym: {usym} '{XKeysymToString(usym)}') same_screen: {kev.same_screen}");
+            Logger?.LogDebug($"XLookupString: \"{Encoding.Latin1.GetString(str, nbytes)}\", XmbLookupString: \"{xmbString}\", Xutf8LookupString: \"{uString}\"");
+            Logger?.LogDebug($"KeysymToKeycode: {XKeysymToKeycode(X11.Display, sym)} {XKeysymToKeycode(X11.Display, xmbsym)} {XKeysymToKeycode(X11.Display, usym)}");
+
+
+            Logger?.LogDebug($"FilterEvent: {filtered}");
+
+            return filtered;
+        }
+
         /// <inheritdoc/>
         public void ProcessEvents(bool waitForEvents)
         {
@@ -462,9 +580,31 @@ namespace OpenTK.Platform.Native.X11
             {
                 XNextEvent(X11.Display, out ea);
 
+                bool filtered = false;
+                if (ea.Type == XEventType.KeyPress || ea.Type == XEventType.KeyRelease)
+                {
+                    filtered = PrintKeyEvent(ref ea, TEST_XIC);
+                }else
+                {
+                    filtered = XFilterEvent(ref ea, ea.Any.Window);
+                }
+                if (filtered) continue;
+
                 // FIXME: Use this to do something related to duplicate events...
                 // - Noggin_bops 2024-12-13
-                bool filtered = XFilterEvent(ref ea, XWindow.None);
+                //bool filtered = XFilterEvent(ref ea, XWindow.None);
+
+                if (filtered) {
+                    if (ea.Type == XEventType.ClientMessage)
+                    {
+                        Logger?.LogDebug($"Filtered! {ea.Type} {ea.ClientMessage.MessageType}");
+                    }
+                    else
+                    {
+                        Logger?.LogDebug($"Filtered! {ea.Type}");
+                    }
+                    continue;
+                }
 
                 // Update the current timestamp.
                 switch (ea.Type)
@@ -510,6 +650,10 @@ namespace OpenTK.Platform.Native.X11
 
                 if (XWindowDict.TryGetValue(ea.Any.Window, out XWindowHandle? xwindow) == false)
                 {
+                    // If this was not for one our windows and it was filtered by XIM
+                    // we don't process it.
+                    if (filtered) continue;
+
                     if (ea.Any.Window == X11.DefaultRootWindow)
                     {
                         if (ea.Type == (XEventType)(X11.XFixesEventBase + XFixes.SelectionEvent.SetSelectionOwner))
@@ -531,7 +675,15 @@ namespace OpenTK.Platform.Native.X11
                         }
                         else
                         {
-                            Logger?.LogDebug($"Received unhandled event {ea.Type} for root window.");
+                            
+                            if (ea.Type == XEventType.PropertyNotify) {
+                                
+                                Logger?.LogDebug($"Received unhandled PropertyNotify ({ea.Property.atom} {ea.Property.state}) for root window");
+                            }
+                            else
+                            {
+                                Logger?.LogDebug($"Received unhandled event {ea.Type} for root window.");
+                            }
                         }
                     }
                     else if (ea.Any.Window == HelperWindow)
@@ -975,22 +1127,34 @@ namespace OpenTK.Platform.Native.X11
 
                             unsafe {
                                 XKeySym keysym = default;
-                                const int TEXT_LENGTH = 32;
+                                const int TEXT_LENGTH = 64;
                                 byte* str = stackalloc byte[TEXT_LENGTH];
-                                XStatus status = XStatus.Success;
+                                int charsWritten = 0;
 
-                                int charsWritten;
-                                if (xwindow.IC.Value == IntPtr.Zero)
-                                {
-                                    charsWritten = XLookupString(&keyPressed, str, TEXT_LENGTH, &keysym, null);
+                                if (filtered == false) {
+                                    if (xwindow.IC.Value == IntPtr.Zero)
+                                    {
+                                        charsWritten = XLookupString(&keyPressed, str, TEXT_LENGTH, &keysym, null);
+                                    }
+                                    else
+                                    {
+                                        XLookupStatus lookupStatus;
+                                        //charsWritten = XmbLookupString(xwindow.IC, &keyPressed, str, TEXT_LENGTH, &keysym, &lookupStatus);
+                                        charsWritten = Xutf8LookupString(xwindow.IC, &keyPressed, str, TEXT_LENGTH, &keysym, &lookupStatus);
+                                        if (lookupStatus == XLookupStatus.XBufferOverflow)
+                                        {
+                                            Logger?.LogError($"Xutf8LookupString wanted to write more than 32 bytes of text input. If this happens to you please open a issue at https://github.com/opentk/opentk/issues/new.");
+                                        }
+
+                                        Logger?.LogDebug($"LookupString: {new string((sbyte*)str, 0, charsWritten)}, {keysym} {lookupStatus}");
+                                    }
                                 }
                                 else
                                 {
-                                    charsWritten = Xutf8LookupString(xwindow.IC, &keyPressed, str, TEXT_LENGTH, &keysym, &status);
+                                    charsWritten = XLookupString(&keyPressed, str, 0, &keysym, null);
                                 }
 
                                 // Check if the input context wants to handle the key press.
-
 
                                 Scancode scancode = X11KeyboardComponent.ToScancode(keyPressed.keycode);
                                 Key key = X11KeyboardComponent.TranslateKeySym(stackalloc XKeySym[1] {keysym});
@@ -1010,44 +1174,50 @@ namespace OpenTK.Platform.Native.X11
                                     // basically the same timestamp.
                                 }
 
-                                X11KeyboardComponent.HandleKeyEvent(keysym, keyPressed.keycode);
-                                
-                                EventQueue.Raise(xwindow, PlatformEventType.KeyDown, new KeyDownEventArgs(xwindow, key, scancode, isRepeat, modifiers));
-                                
-                                if (filtered == false) {
+                                //if (X11KeyboardComponent.HandleKeyEvent(keysym, keyPressed.keycode, Logger))
+                                //{
+                                //    // FIXME: Make sure to actually receive the IME CommitText and preedit text signals!!
+                                //    // - Noggin_bops 2025-02-21
+                                //}
+                                //else
+                                {
 
-                                    string? result = null;
-                                    if (xwindow.IC.Value == IntPtr.Zero)
-                                    {
-                                        bool isHighLatin1 = false;
-                                        for (int i = 0; i < TEXT_LENGTH; i++)
+                                    if (filtered == false) {
+                                        EventQueue.Raise(xwindow, PlatformEventType.KeyDown, new KeyDownEventArgs(xwindow, key, scancode, isRepeat, modifiers));
+
+                                        string? result = null;
+                                        if (xwindow.IC.Value == IntPtr.Zero)
                                         {
-                                            if (str[i] >= 0x80)
+                                            bool isHighLatin1 = false;
+                                            for (int i = 0; i < TEXT_LENGTH; i++)
                                             {
-                                                isHighLatin1 = true;
-                                                break;
+                                                if (str[i] >= 0x80)
+                                                {
+                                                    isHighLatin1 = true;
+                                                    break;
+                                                }
                                             }
-                                        }
 
-                                        // FIXME: Figure out when this Latin1 stuff is needed.
-                                        // On Ubuntu 22.04 we can just do the "new string()" method
-                                        // in all cases, even for characters like åäö.
-                                        // - Noggin_bops 2023-08-26
-                                        if (isHighLatin1)
-                                        {
-                                            result = Encoding.Latin1.GetString(str, charsWritten);
+                                            // FIXME: Figure out when this Latin1 stuff is needed.
+                                            // On Ubuntu 22.04 we can just do the "new string()" method
+                                            // in all cases, even for characters like åäö.
+                                            // - Noggin_bops 2023-08-26
+                                            if (isHighLatin1)
+                                            {
+                                                result = Encoding.Latin1.GetString(str, charsWritten);
+                                            }
+                                            else
+                                            {
+                                                result = new string((sbyte*)str, 0, charsWritten);
+                                            }
                                         }
                                         else
                                         {
-                                            result = new string((sbyte*)str, 0, charsWritten);
+                                            result = new string((sbyte*)str, 0, charsWritten, Encoding.UTF8);
                                         }
-                                    }
-                                    else
-                                    {
-                                        result = new string((sbyte*)str, 0, charsWritten, Encoding.UTF8);
-                                    }
 
-                                    EventQueue.Raise(xwindow, PlatformEventType.TextInput, new TextInputEventArgs(xwindow, result));
+                                        EventQueue.Raise(xwindow, PlatformEventType.TextInput, new TextInputEventArgs(xwindow, result));
+                                    }
                                 }
                             }
                             break;
@@ -1055,6 +1225,8 @@ namespace OpenTK.Platform.Native.X11
                     case XEventType.KeyRelease:
                         {
                             XKeyEvent keyPressed = ea.KeyPressed;
+
+                            if (filtered) continue;
 
                             unsafe {
                                 XKeySym keysym = default;
@@ -1397,6 +1569,7 @@ namespace OpenTK.Platform.Native.X11
                             break;
                         }
                     default:
+                        Logger?.LogDebug($"Unknown event: {ea.Type}");
                         break;
                 }
             }
@@ -1406,7 +1579,21 @@ namespace OpenTK.Platform.Native.X11
                 GetClientSize(CursorCapturingWindow, out Vector2i clientSize);
                 if (CursorCapturingWindow.LastMousePosition != (clientSize / 2))
                 {
+                    // On XWayland we can only warp the cursor if it's hidden. 
+                    // So we just temporarily hide the cursor if we are on XWayland.
+                    // See this SDL issue: https://github.com/libsdl-org/SDL/issues/9539
+                    // - Noggin_bops 2025-03-13
+                    if (IsOnXWayland && CursorCapturingWindow.Cursor != null)
+                    {
+                        XDefineCursor(X11.Display, CursorCapturingWindow.Window, EmptyCursor);
+                    }
+
                     XWarpPointer(X11.Display, XWindow.None, CursorCapturingWindow.Window, 0, 0, 0, 0, clientSize.X / 2, clientSize.Y / 2);
+
+                    if (IsOnXWayland && CursorCapturingWindow.Cursor != null)
+                    {
+                        XDefineCursor(X11.Display, CursorCapturingWindow.Window, CursorCapturingWindow.Cursor.Cursor);
+                    }
 
                     // Set the last mouse position to the position we are moving to
                     // to avoid generating a mouse move event.
@@ -1449,6 +1636,8 @@ namespace OpenTK.Platform.Native.X11
             }
         }
 
+
+        static XIC TEST_XIC;
         /// <inheritdoc/>
         public WindowHandle Create(GraphicsApiHints hints)
         {
@@ -1740,23 +1929,6 @@ namespace OpenTK.Platform.Native.X11
             // Register to deletion and ping events
             XSetWMProtocols(X11.Display, window, new XAtom[] { X11.Atoms[KnownAtoms.WM_DELETE_WINDOW], X11.Atoms[KnownAtoms._NET_WM_PING] }, 2);
 
-            // FIXME: Find a place for this:
-            XSelectInput(
-                    X11.Display, window,
-                    XEventMask.StructureNotify |
-                    XEventMask.SubstructureNotify |
-                    XEventMask.VisibilityChanged |
-                    XEventMask.Exposure |
-                    XEventMask.ButtonPress |
-                    XEventMask.ButtonRelease |
-                    XEventMask.PointerMotion |
-                    XEventMask.EnterWindow |
-                    XEventMask.LeaveWindow |
-                    XEventMask.KeyPress |
-                    XEventMask.KeyRelease |
-                    XEventMask.FocusChange |
-                    XEventMask.PropertyChange);
-
             unsafe {
                 XWMHints* wmHints = XAllocWMHints();
                 wmHints->flags |= XWMHintsMask.InputHint;
@@ -1795,9 +1967,8 @@ namespace OpenTK.Platform.Native.X11
             // FIXME: Maybe a way to toggle if we 
             // accept drag and drop operations.
             // Set the supported XDnD version.
-            // FIXME: Avoid allocation
-            long[] dndVersion = { 5 };
-            XChangeProperty(
+            Span<long> dndVersion = [ 5 ];
+            XChangeProperty<long>(
                 X11.Display,
                 window,
                 X11.Atoms[KnownAtoms.XdndAware],
@@ -1827,25 +1998,115 @@ namespace OpenTK.Platform.Native.X11
                 region,
                 4);
 
+            XEventMask filterMask = default;
             XIC ic;
             unsafe {
-                fixed(byte* xnInputStyle = XNInputStyle)
-                fixed(byte* xnClientWindow = XNClientWindow)
-                fixed(byte* xnFocusWindow = XNFocusWindow)
+                XIMCallback start = new XIMCallback((IntPtr)ComponentGCHandle, &PreeditStartCallback);
+                XIMCallback done  = new XIMCallback((IntPtr)ComponentGCHandle, &PreeditDoneCallback);
+                XIMCallback draw  = new XIMCallback((IntPtr)ComponentGCHandle, &PreeditDrawCallback);
+                XIMCallback caret = new XIMCallback((IntPtr)ComponentGCHandle, &PreeditCaretCallback);
+
+                IntPtr callbacks = XVaCreateNestedList(0,
+                    (IntPtr)Utils.AsPtr(XNPreeditStartCallback), (IntPtr)(&start),
+                    (IntPtr)Utils.AsPtr(XNPreeditDoneCallback),  (IntPtr)(&done),
+                    (IntPtr)Utils.AsPtr(XNPreeditDrawCallback),  (IntPtr)(&draw),
+                    (IntPtr)Utils.AsPtr(XNPreeditCaretCallback), (IntPtr)(&caret),
+                    IntPtr.Zero);
+
+                /*ic = XCreateIC(IM,
+                    //Utils.AsPtr(XNInputStyle), (ulong)(XIMFlags.PreeditNone | XIMFlags.StatusNone),
+                    Utils.AsPtr(XNInputStyle), (ulong)(XIMFlags.PreeditCallbacks | XIMFlags.StatusNone),
+                    Utils.AsPtr(XNClientWindow), window.Id,
+                    Utils.AsPtr(XNFocusWindow), window.Id,
+                    Utils.AsPtr(XNPreeditAttributes), callbacks,
+                    null);
+                */
+
+                ic = XCreateIC(IM,
+                    Utils.AsPtr(XNInputStyle), (ulong)(XIMFlags.PreeditNothing | XIMFlags.StatusNothing),
+                    Utils.AsPtr(XNClientWindow), window.Id,
+                    Utils.AsPtr(XNFocusWindow), window.Id,
+                    null);
+                TEST_XIC = ic;
+
+                if (ic.Value != 0)
                 {
-                    ic = XCreateIC(IM,
-                        xnInputStyle, (ulong)(XIMFlags.PreeditNothing | XIMFlags.StatusNothing), 
-                        xnClientWindow, window.Id,
-                        xnFocusWindow, window.Id,
-                        null);
+                    XSetICFocus(ic);
+
+                    // Get the event mask the IC needs.
+                    XGetICValues(ic, Utils.AsPtr(XNFilterEvents), (IntPtr)(&filterMask), 0);
                 }
+
+                XFree(callbacks);
             }
+
+            // FIXME: Find a place for this:
+            XSelectInput(
+                    X11.Display, window,
+                    XEventMask.StructureNotify |
+                    XEventMask.SubstructureNotify |
+                    XEventMask.VisibilityChanged |
+                    XEventMask.Exposure |
+                    XEventMask.ButtonPress |
+                    XEventMask.ButtonRelease |
+                    XEventMask.PointerMotion |
+                    XEventMask.EnterWindow |
+                    XEventMask.LeaveWindow |
+                    XEventMask.KeyPress |
+                    XEventMask.KeyRelease |
+                    XEventMask.KeymapState |
+                    XEventMask.FocusChange |
+                    XEventMask.PropertyChange |
+                    filterMask);
 
             XWindowHandle handle = new XWindowHandle(X11.Display, window, hints, chosenConfig, chosenPixelFormat, visualSupportsFramebufferTransparency, map, ic);
 
             XWindowDict.Add(handle.Window, handle);
 
             return handle;
+        }
+
+        [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
+        internal static unsafe int PreeditStartCallback(XIC xic, IntPtr clientData, IntPtr callData)
+        {
+            X11WindowComponent @this = (X11WindowComponent)GCHandle.FromIntPtr(clientData).Target!;
+            @this.Logger?.LogDebug("Start callback!");
+            return -1;
+        }
+
+        [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
+        internal static unsafe void PreeditDoneCallback(XIC xic, IntPtr clientData, IntPtr callData)
+        {
+            X11WindowComponent @this = (X11WindowComponent)GCHandle.FromIntPtr(clientData).Target!;
+            @this.Logger?.LogDebug("Done callback!");
+        }
+
+        [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
+        internal static unsafe void PreeditDrawCallback(XIC xic, IntPtr clientData, IntPtr callData)
+        {
+            X11WindowComponent @this = (X11WindowComponent)GCHandle.FromIntPtr(clientData).Target!;
+            XIMPreeditDrawCallbackStruct* data = (XIMPreeditDrawCallbackStruct*)callData;
+
+            XWindow* window;
+            XGetICValues(xic, Utils.AsPtr(XNClientWindow), (IntPtr)(&window), 0);
+            if (window != null)
+            {
+                bool success = XWindowDict.TryGetValue(*window, out XWindowHandle? xwindow);
+            }
+
+            @this.Logger?.LogDebug($"Draw callback! {data->caret} {data->chg_first} {data->chg_length} {(IntPtr)data->text}");
+            if (data->text != null)
+            {
+                Span<XIMFeedback> feedbacks = data->text->feedback != null ? new Span<XIMFeedback>(data->text->feedback, data->text->length) : default;
+                @this.Logger?.LogDebug($"Draw text len: {data->text->length}, {string.Join(", ", feedbacks.ToArray())} {(IntPtr)data->text->@string} {data->text->encoding_is_wchar}");
+            }
+        }
+
+        [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
+        internal static unsafe void PreeditCaretCallback(XIC xic, IntPtr clientData, IntPtr callData)
+        {
+            X11WindowComponent @this = (X11WindowComponent)GCHandle.FromIntPtr(clientData).Target!;
+            @this.Logger?.LogDebug("Caret callback!");
         }
 
         /// <inheritdoc/>
@@ -3451,6 +3712,7 @@ namespace OpenTK.Platform.Native.X11
             XCursorHandle? xcursor = cursor?.As<XCursorHandle>(this);
 
             XDefineCursor(X11.Display, xwindow.Window, xcursor?.Cursor ?? EmptyCursor);
+            xwindow.Cursor = xcursor;
         }
 
         /// <inheritdoc/>

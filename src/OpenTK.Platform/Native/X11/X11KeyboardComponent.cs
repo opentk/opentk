@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using OpenTK.Platform;
 using OpenTK.Core.Utility;
-using OpenTK.Platform.Native.X11.XI2;
 using static OpenTK.Platform.Native.X11.LibX11;
 using static OpenTK.Platform.Native.X11.LibXkb;
-using System.Diagnostics;
-using System.Net.Sockets;
 using System.Runtime.CompilerServices;
+using OpenTK.Mathematics;
+using System.Text;
+using OpenTK.Core;
 
 namespace OpenTK.Platform.Native.X11
 {
@@ -27,17 +27,19 @@ namespace OpenTK.Platform.Native.X11
 
         private static bool[] KeyboardState = new bool[256];
 
-        internal static unsafe byte* AsPtr(ReadOnlySpan<byte> span) => (byte*)Unsafe.AsPointer(ref MemoryMarshal.GetReference(span));
-
         internal IntPtr PortalIBus;
 
         internal static IntPtr InputContext;
 
         internal IntPtr GVariant_client_name;
 
+        internal GCHandle ComponentGCHandle;
+
         /// <inheritdoc/>
         public unsafe void Initialize(ToolkitOptions options)
         {
+            ComponentGCHandle = GCHandle.Alloc(this, GCHandleType.Weak);
+
             int major = 1;
             int minor = 0;
             if (XkbQueryExtension(X11.Display, out int opcode, out int @event, out int error, ref major, ref minor) == false)
@@ -48,17 +50,22 @@ namespace OpenTK.Platform.Native.X11
 
             if (XkbSetDetectableAutoRepeat(X11.Display, true, out bool supported) && supported)
             {
-                // detectable repeat is enabled and supported!
+                // Detectable auto repeat allows X11 to send multiple KeyPress events
+                // without sending KeyRelease events between them.
+                // If detectable auto repeat is not supported a KeyRelease event is going 
+                // to be synthesized between every repeated KeyPress event.
+                // - Noggin_bops 2025-02-27
                 XkbDetectableRepeatEnabled = true;
             }
 
+            /*
             GError* gerror = null;
             PortalIBus = LibGio.g_dbus_proxy_new_for_bus_sync(GBusType.G_BUS_TYPE_SESSION, 
                                 GDBusProxyFlags.G_DBUS_PROXY_FLAGS_NONE,
                                 IntPtr.Zero,
-                                AsPtr("org.freedesktop.portal.IBus"u8),
-                                AsPtr("/org/freedesktop/IBus"u8),
-                                AsPtr("org.freedesktop.IBus.Portal"u8),
+                                Utils.AsPtr("org.freedesktop.portal.IBus"u8),
+                                Utils.AsPtr("/org/freedesktop/IBus"u8),
+                                Utils.AsPtr("org.freedesktop.IBus.Portal"u8),
                                 IntPtr.Zero,
                                 &gerror);
 
@@ -69,9 +76,9 @@ namespace OpenTK.Platform.Native.X11
             }
 
             // FIXME: Use the actual application name.
-            IntPtr gvar_client_name = LibGio.g_variant_ref(LibGio.g_variant_new(AsPtr("(s)"u8), AsPtr("OpenTK application"u8)));
+            IntPtr gvar_client_name = LibGio.g_variant_ref(LibGio.g_variant_new(Utils.AsPtr("(s)"u8), Utils.AsPtr("OpenTK application"u8)));
 
-            IntPtr ret = LibGio.g_dbus_proxy_call_sync(PortalIBus, AsPtr("CreateInputContext"u8), gvar_client_name, GDBusCallFlags.G_DBUS_CALL_FLAGS_NONE, int.MaxValue, IntPtr.Zero, &gerror);
+            IntPtr ret = LibGio.g_dbus_proxy_call_sync(PortalIBus, Utils.AsPtr("CreateInputContext"u8), gvar_client_name, GDBusCallFlags.G_DBUS_CALL_FLAGS_NONE, int.MaxValue, IntPtr.Zero, &gerror);
 
             LibGio.g_variant_unref(gvar_client_name);
 
@@ -81,14 +88,14 @@ namespace OpenTK.Platform.Native.X11
                 LibGio.g_clear_error(&gerror);
             }
 
-            LibGio.g_variant_get(ret, AsPtr("(o)"u8), out IntPtr objPath);
+            LibGio.g_variant_get(ret, Utils.AsPtr("(o)"u8), out IntPtr objPath);
             InputContext = LibGio.g_dbus_proxy_new_for_bus_sync(GBusType.G_BUS_TYPE_SESSION, 
                 GDBusProxyFlags.G_DBUS_PROXY_FLAGS_NONE,
                 IntPtr.Zero,
-                AsPtr("org.freedesktop.portal.IBus"u8),
+                Utils.AsPtr("org.freedesktop.portal.IBus"u8),
                 (byte*)objPath,
-                AsPtr("org.freedesktop.IBus.InputContext"u8),
-                IntPtr.Zero, 
+                Utils.AsPtr("org.freedesktop.IBus.InputContext"u8),
+                IntPtr.Zero,
                 &gerror);
 
             if (gerror != null)
@@ -97,11 +104,10 @@ namespace OpenTK.Platform.Native.X11
                 LibGio.g_clear_error(&gerror);
             }
 
-            
             ret = LibGio.g_dbus_proxy_call_sync(
                 InputContext,
-                AsPtr("SetCapabilities"u8), 
-                LibGio.g_variant_new(AsPtr("(u)"u8), (uint)(IBusCapabilite.Focus | IBusCapabilite.PreeditText)),
+                Utils.AsPtr("SetCapabilities"u8), 
+                LibGio.g_variant_new(Utils.AsPtr("(u)"u8), (uint)(IBusCapabilite.Focus | IBusCapabilite.PreeditText)),
                 GDBusCallFlags.G_DBUS_CALL_FLAGS_NONE, 
                 int.MaxValue, 
                 IntPtr.Zero, 
@@ -113,6 +119,9 @@ namespace OpenTK.Platform.Native.X11
                 LibGio.g_clear_error(&gerror);
             }
 
+            var test = LibGio.g_signal_connect(PortalIBus, Utils.AsPtr("g-signal"u8), &ibus_portal_signal_cb, (IntPtr)ComponentGCHandle);
+            */
+
             UpdateKeymap();
         }
 
@@ -121,6 +130,29 @@ namespace OpenTK.Platform.Native.X11
         {
             LibGio.g_object_unref(InputContext);
             LibGio.g_object_unref(PortalIBus);
+        }
+
+        internal static unsafe ReadOnlySpan<byte> ToSpan(byte* str)
+        {
+            if (str == null)
+                return ReadOnlySpan<byte>.Empty;
+
+            int len = 0;
+            while (str[len++] != 0) {}
+            return new ReadOnlySpan<byte>(str, len - 1);
+        }
+
+
+        [UnmanagedCallersOnly]
+        private static unsafe void ibus_portal_signal_cb(IntPtr /* GDBusProxy* */ proxy,
+                                    byte* /* const char* */ sender_name,
+                                    byte* /* const char* */ signal_name,
+                                    IntPtr /* GVariant* */ parameters,
+                                    IntPtr userData)
+        {
+            GCHandle handle = GCHandle.FromIntPtr(userData);
+            ILogger? logger = (handle.Target as X11KeyboardComponent)?.Logger;
+            logger?.LogDebug(Encoding.UTF8.GetString(ToSpan(signal_name)));
         }
 
         internal static KeyModifier ModifiersFromState(uint state)
@@ -604,50 +636,78 @@ namespace OpenTK.Platform.Native.X11
 
         internal unsafe static void SetFocus(bool @in, ILogger? logger)
         {
-            GError* gerror = null;
-            LibGio.g_dbus_proxy_call_sync(InputContext, AsPtr(@in ? "FocusIn"u8 : "FocusOut"u8), 0, GDBusCallFlags.G_DBUS_CALL_FLAGS_NONE, int.MaxValue, IntPtr.Zero, &gerror);
+            /*GError* gerror = null;
+            LibGio.g_dbus_proxy_call_sync(InputContext, Utils.AsPtr(@in ? "FocusIn"u8 : "FocusOut"u8), 0, GDBusCallFlags.G_DBUS_CALL_FLAGS_NONE, int.MaxValue, IntPtr.Zero, &gerror);
             if (gerror != null)
             {
                 logger?.LogWarning($"libgio error when trying to set ime rectangle: {Marshal.PtrToStringUTF8((IntPtr)gerror->message)}");
                 LibGio.g_clear_error(&gerror);
-            }
+            }*/
         }
 
-        internal unsafe static bool HandleKeyEvent(XKeySym keysym, uint keycode)
+        internal unsafe static bool HandleKeyEvent(XKeySym keysym, uint keycode, ILogger? logger)
         {
-            GError* gerror = null;
-            IntPtr key_event = LibGio.g_variant_new(AsPtr("(uuu)"u8), (uint)keysym.Id, keycode, 0);
-            IntPtr processed_variant = LibGio.g_dbus_proxy_call_sync(InputContext, AsPtr("ProcessKeyEvent"u8), key_event, GDBusCallFlags.G_DBUS_CALL_FLAGS_NONE, int.MaxValue, IntPtr.Zero, &gerror);
+            return false;
 
-            LibGio.g_variant_get(processed_variant, AsPtr("(b)"u8), out IntPtr child);
+            GError* gerror = null;
+            IntPtr key_event = LibGio.g_variant_new(Utils.AsPtr("(uuu)"u8), (uint)keysym.Id, keycode, 0);
+            IntPtr processed_variant = LibGio.g_dbus_proxy_call_sync(InputContext, Utils.AsPtr("ProcessKeyEvent"u8), key_event, GDBusCallFlags.G_DBUS_CALL_FLAGS_NONE, int.MaxValue, IntPtr.Zero, &gerror);
+            if (gerror != null) {
+                logger?.LogWarning($"libgio error when calling ProcessKeyEvent: {Marshal.PtrToStringUTF8((IntPtr)gerror->message)}");
+                LibGio.g_clear_error(&gerror);
+            }
+
+            LibGio.g_variant_get(processed_variant, Utils.AsPtr("(b)"u8), out IntPtr child);
             //bool processed = LibGio.g_variant_get_boolean(processed_variant) != 0;
             //return processed;
-            return false;
+            bool processed = child != 0;
+            logger?.LogDebug($"Processed: {processed}");
+
+            return processed;
         }
 
         /// <inheritdoc/>
         public unsafe void BeginIme(WindowHandle window)
         {
+            /*
             //throw new NotImplementedException();
+            GError* gerror = null;
+            IntPtr ret = LibGio.g_dbus_proxy_call_sync(InputContext, Utils.AsPtr("FocusIn"u8), 0, GDBusCallFlags.G_DBUS_CALL_FLAGS_NONE, int.MaxValue, IntPtr.Zero, &gerror);
+            if (gerror != null) {
+                Logger?.LogWarning($"libgio error when trying to set focus: {Marshal.PtrToStringUTF8((IntPtr)gerror->message)}");
+                LibGio.g_clear_error(&gerror);
+            }
+            */
         }
 
         /// <inheritdoc/>
         public unsafe void SetImeRectangle(WindowHandle window, float x, float y, float width, float height)
         {
+            /*
             GError* gerror = null;
+            Toolkit.Window.ClientToScreen(window, (x, y), out Vector2 screenPos);
             // FIXME: Rounding?
-            IntPtr rect = LibGio.g_variant_new(AsPtr("(iiii)"u8), (int)x, (int)y, (int)width, (int)height);
-            IntPtr ret = LibGio.g_dbus_proxy_call_sync(InputContext, AsPtr("SetCursorLocation"u8), rect, GDBusCallFlags.G_DBUS_CALL_FLAGS_NONE, int.MaxValue, IntPtr.Zero, &gerror);
+            IntPtr rect = LibGio.g_variant_new(Utils.AsPtr("(iiii)"u8), (int)screenPos.X, (int)screenPos.Y, (int)width, (int)height);
+            IntPtr ret = LibGio.g_dbus_proxy_call_sync(InputContext, Utils.AsPtr("SetCursorLocation"u8), rect, GDBusCallFlags.G_DBUS_CALL_FLAGS_NONE, int.MaxValue, IntPtr.Zero, &gerror);
             if (gerror != null) {
                 Logger?.LogWarning($"libgio error when trying to set ime rectangle: {Marshal.PtrToStringUTF8((IntPtr)gerror->message)}");
                 LibGio.g_clear_error(&gerror);
             }
+            */
         }
 
         /// <inheritdoc/>
-        public void EndIme(WindowHandle window)
+        public unsafe void EndIme(WindowHandle window)
         {
+            /*
             //throw new NotImplementedException();
+            GError* gerror = null;
+            IntPtr ret = LibGio.g_dbus_proxy_call_sync(InputContext, Utils.AsPtr("FocusOut"u8), 0, GDBusCallFlags.G_DBUS_CALL_FLAGS_NONE, int.MaxValue, IntPtr.Zero, &gerror);
+            if (gerror != null) {
+                Logger?.LogWarning($"libgio error when trying to set focus: {Marshal.PtrToStringUTF8((IntPtr)gerror->message)}");
+                LibGio.g_clear_error(&gerror);
+            }
+            */
         }
     }
 }
