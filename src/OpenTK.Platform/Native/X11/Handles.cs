@@ -67,6 +67,8 @@ namespace OpenTK.Platform.Native.X11
         /// </summary>
         internal XIC IC { get; set; }
 
+        internal XCursorHandle? Cursor { get; set; }
+
         public XWindowHandle(
             XDisplayPtr display,
             XWindow window,

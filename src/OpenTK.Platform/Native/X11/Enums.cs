@@ -42,6 +42,15 @@ namespace OpenTK.Platform.Native.X11
         BadMatch = 8,
         BadDrawable = 9,
     }
+    
+    internal enum XLookupStatus : int 
+    {
+        XBufferOverflow = -1,
+        XLookupNone = 1,
+        XLookupChars = 2,
+        XLookupKeySym = 3,
+        XLookupBoth = 4,
+    }
 
     internal enum WindowClass : uint
     {
@@ -648,6 +657,19 @@ namespace OpenTK.Platform.Native.X11
         StatusCallbacks  = 0x0200L,
         StatusNothing    = 0x0400L,
         StatusNone       = 0x0800L,
+    }
+
+    internal enum XIMFeedback : ulong
+    {
+        XIMReverse =           (1L<<0),
+        XIMUnderline =         (1L<<1),
+        XIMHighlight =         (1L<<2),
+        XIMPrimary =           (1L<<5),
+        XIMSecondary =         (1L<<6),
+        XIMTertiary =          (1L<<7),
+        XIMVisibleToForward =  (1L<<8),
+        XIMVisibleToBackward = (1L<<9),
+        XIMVisibleToCenter =   (1L<<10),
     }
 
     // See: https://www.cl.cam.ac.uk/~mgk25/ucs/keysymdef.h

@@ -62,5 +62,22 @@ namespace OpenTK.Core
                 return new string(ptr, 0, index);
             }
         }
+
+        public static unsafe byte* AsPtr(ReadOnlySpan<byte> span) => (byte*)Unsafe.AsPointer(ref MemoryMarshal.GetReference(span));
+
+        public static unsafe ReadOnlySpan<byte> ToSpan(byte* str)
+        {
+            if (str == null)
+            {
+                return ReadOnlySpan<byte>.Empty;
+            }
+
+            int len = 0;
+            while (str[len++] != 0)
+            {
+            }
+
+            return new ReadOnlySpan<byte>(str, len - 1);
+        }
     }
 }
