@@ -238,7 +238,7 @@ namespace Bejeweled
         public int UniformLocationPrefilteredEnvironmentMap;
         public int UniformLocationBRDFLUT;
 
-        public int UniformLocationScreenSize;
+        public int UniformLocationViewport;
         public int UniformLocationBackfaceNormals;
         public int UniformLocationBackfaceDepth;
         public int UniformLocationDepthScale;
@@ -261,7 +261,7 @@ namespace Bejeweled
             shader.UniformLocationPrefilteredEnvironmentMap = GL.GetUniformLocation(shader.Program.Handle, "uPrefilteredEnvironmentMap");
             shader.UniformLocationBRDFLUT = GL.GetUniformLocation(shader.Program.Handle, "uBRDF_LUT");
 
-            shader.UniformLocationScreenSize = GL.GetUniformLocation(shader.Program.Handle, "uScreenSize");
+            shader.UniformLocationViewport = GL.GetUniformLocation(shader.Program.Handle, "uViewport");
             shader.UniformLocationBackfaceNormals = GL.GetUniformLocation(shader.Program.Handle, "uBackfaceNormalTexture");
             shader.UniformLocationBackfaceDepth = GL.GetUniformLocation(shader.Program.Handle, "uBackfaceDepthTexture");
             shader.UniformLocationDepthScale = GL.GetUniformLocation(shader.Program.Handle, "uDepthScale");
@@ -330,21 +330,62 @@ namespace Bejeweled
 
     internal class SoundEffect
     {
-        public SoundClip Clip;
-        List<int> Sources = new List<int>();
+        // Hacky stuff to be able to set the gain of all sound effects at the same time.
+        // - Noggin_bops 2025-03-12
+        static float SoundEffectGain = 1.0f;
+        static List<WeakReference<SoundEffect>> AllSoundEffects = new List<WeakReference<SoundEffect>>();
+        public static void SetGain(float gain)
+        {
+            SoundEffectGain = gain;
+            for (int i = AllSoundEffects.Count - 1; i >= 0; i--)
+            {
+                WeakReference<SoundEffect> reference = AllSoundEffects[i];
+                if (reference.TryGetTarget(out SoundEffect? effect))
+                {
+                    foreach (Source source in effect.Sources)
+                    {
+                        AL.Source(source.ALSource, ALSourcef.Gain, source.Gain * gain);
+                    }
+                }
+                else
+                {
+                    AllSoundEffects.RemoveAt(i);
+                }
+            }
+        }
 
-        public SoundEffect(SoundClip clip)
+        struct Source
+        {
+            public int ALSource;
+            public float Gain;
+
+            public Source(int alSource, float gain)
+            {
+                ALSource = alSource;
+                Gain = gain;
+            }
+        }
+
+        public SoundClip Clip;
+        public int EffectSlot;
+        List<Source> Sources = new List<Source>();
+
+        public SoundEffect(SoundClip clip, int effectSlot)
         {
             Clip = clip;
+            EffectSlot = effectSlot;
+
+            AllSoundEffects.Add(new WeakReference<SoundEffect>(this));
         }
 
         public void Update()
         {
             for (int i = Sources.Count - 1; i >= 0; i--)
             {
-                if ((ALSourceState)AL.GetSource(Sources[i], ALGetSourcei.SourceState) == ALSourceState.Stopped)
+                int source = Sources[i].ALSource;
+                if ((ALSourceState)AL.GetSource(source, ALGetSourcei.SourceState) == ALSourceState.Stopped)
                 {
-                    AL.DeleteSource(Sources[i]);
+                    AL.DeleteSource(source);
                     Sources.RemoveAt(i);
                 }
             }
@@ -356,7 +397,7 @@ namespace Bejeweled
             AL.Source(source, ALSourcei.Buffer, Clip.Buffer);
             AL.Source(source, ALSourceb.Looping, false);
 
-            AL.Source(source, ALSourcef.Gain, gain);
+            AL.Source(source, ALSourcef.Gain, gain * SoundEffectGain);
             AL.Source(source, ALSourcef.Pitch, pitch);
 
             AL.SourcePlay(source);
@@ -367,7 +408,7 @@ namespace Bejeweled
                 Debug.Assert(false, $"ALError: {error}");
             }
 
-            Sources.Add(source);
+            Sources.Add(new Source(source, gain));
         }
     }
 
@@ -376,7 +417,7 @@ namespace Bejeweled
         public SoundClip Clip;
         public int Source;
 
-        public Music(SoundClip clip)
+        public Music(SoundClip clip, int slot)
         {
             Clip = clip;
             Source = AL.GenSource();
@@ -744,7 +785,7 @@ namespace Bejeweled
 
             int normalTexture = GL.GenTexture();
             GL.BindTexture(TextureTarget.Texture2d, normalTexture);
-            GL.TexImage2D(TextureTarget.Texture2d, 0, InternalFormat.Rgba16Snorm, width, height, 0, PixelFormat.Rgba, PixelType.Float, IntPtr.Zero);
+            GL.TexImage2D(TextureTarget.Texture2d, 0, InternalFormat.Rgba16, width, height, 0, PixelFormat.Rgba, PixelType.Float, IntPtr.Zero);
 
             GL.TexParameteri(TextureTarget.Texture2d, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Linear);
 
@@ -867,6 +908,17 @@ namespace Bejeweled
 
     }
 
+    static class VectorExtensions
+    {
+        public static ref System.Numerics.Vector2 AsNumerics(this ref Vector2 v) => ref Unsafe.As<Vector2, System.Numerics.Vector2>(ref v);
+        public static ref System.Numerics.Vector3 AsNumerics(this ref Vector3 v) => ref Unsafe.As<Vector3, System.Numerics.Vector3>(ref v);
+        public static ref System.Numerics.Vector4 AsNumerics(this ref Vector4 v) => ref Unsafe.As<Vector4, System.Numerics.Vector4>(ref v);
+
+        public static System.Numerics.Vector2 ToNumerics(this Vector2 v) => Unsafe.As<Vector2, System.Numerics.Vector2>(ref v);
+        public static System.Numerics.Vector3 ToNumerics(this Vector3 v) => Unsafe.As<Vector3, System.Numerics.Vector3>(ref v);
+        public static System.Numerics.Vector4 ToNumerics(this Vector4 v) => Unsafe.As<Vector4, System.Numerics.Vector4>(ref v);
+    }
+
     public class Bejeweled
     {
         public string Name => "Bejeweled";
@@ -906,7 +958,8 @@ namespace Bejeweled
         };
 
         ImGuiController ImGuiController;
-        ImDrawListPtr CustomDrawlist;
+        ImDrawListPtr UIOverlayDrawlist;
+        ImDrawListPtr UIBaseDrawlist;
         ImDrawDataPtr CustomDrawData;
         ImFontPtr CurrentImGuiFont;
 
@@ -914,8 +967,14 @@ namespace Bejeweled
 
         Framebuffer DebugFramebuffer;
 
-        Texture UnmutedTexture;
-        Texture MutedTexture;
+        Texture SfxUnmutedTexture;
+        Texture SfxMutedTexture;
+
+        Texture MusicUnmutedTexture;
+        Texture MusicMutedTexture;
+
+        bool SfxMuted = false;
+        bool MusicMuted = false;
 
         Texture BrdfLUT;
         Cubemap EnvironmentMap;
@@ -936,6 +995,8 @@ namespace Bejeweled
         GemVisual ZirconVisual;
 
         internal const float MusicVolume = 0.8f;
+        internal const float SfxVolume = 1.0f;
+
         internal const float BreakSFXVolume = 0.5f;
         internal const float SwapSFXVolume = 0.25f;
 
@@ -945,6 +1006,10 @@ namespace Bejeweled
         SoundEffect SwapSoundEffect;
 
         SoundEffect ButtonPressEffect;
+
+        // OpenAL effect slots for mixing purposes.
+        int SfxEffectSlot;
+        int MusicEffectSlot;
 
         internal Gem[,] Board = new Gem[8, 8];
         internal Vector2[,] BoardPositions = new Vector2[8, 8];
@@ -1051,8 +1116,11 @@ namespace Bejeweled
             ImGuiController.RecreateFontDeviceTexture();
             EventQueue.EventRaised += EventQueue_EventRaised;
             
-            CustomDrawlist = new ImDrawListPtr((ImDrawList*)NativeMemory.AllocZeroed((nuint)sizeof(ImDrawList)));
-            CustomDrawlist._Data = ImGui.GetDrawListSharedData();
+            UIBaseDrawlist = new ImDrawListPtr((ImDrawList*)NativeMemory.AllocZeroed((nuint)sizeof(ImDrawList)));
+            UIBaseDrawlist._Data = ImGui.GetDrawListSharedData();
+
+            UIOverlayDrawlist = new ImDrawListPtr((ImDrawList*)NativeMemory.AllocZeroed((nuint)sizeof(ImDrawList)));
+            UIOverlayDrawlist._Data = ImGui.GetDrawListSharedData();
 
             CustomDrawData = new ImDrawDataPtr((ImDrawData*)NativeMemory.AllocZeroed((nuint)sizeof(ImDrawData)));
             CustomDrawData.Clear();
@@ -1073,8 +1141,11 @@ namespace Bejeweled
             AmethystVisual = GemVisual.Create(Gem.Amethyst, "./Assets/Models/Amethyst.glb");
             ZirconVisual = GemVisual.Create(Gem.Zircon, "./Assets/Models/Zircon.glb");
 
-            UnmutedTexture = Texture.LoadTexture("./Assets/Textures/unmute.dds");
-            MutedTexture = Texture.LoadTexture("./Assets/Textures/mute.dds");
+            SfxUnmutedTexture = Texture.LoadTexture("./Assets/Textures/sfx_unmute.dds");
+            SfxMutedTexture = Texture.LoadTexture("./Assets/Textures/sfx_mute.dds");
+
+            MusicUnmutedTexture = Texture.LoadTexture("./Assets/Textures/music_unmute.dds");
+            MusicMutedTexture = Texture.LoadTexture("./Assets/Textures/music_mute.dds");
 
             BrdfLUT = Texture.LoadTexture("./Assets/Textures/dancing_hall_4kBrdf.dds");
 
@@ -1139,12 +1210,12 @@ namespace Bejeweled
                 Debug.Assert(false, $"ALError: {error}");
             }
 
-            AmbientMusic = new Music(SoundClip.LoadSound("./Assets/Sounds/Ambience.ogg"));
+            AmbientMusic = new Music(SoundClip.LoadSound("./Assets/Sounds/Ambience.ogg"), MusicEffectSlot);
 
-            BreakSoundEffect = new SoundEffect(SoundClip.LoadSound("./Assets/Sounds/Rise01.ogg"));
-            SwapSoundEffect = new SoundEffect(SoundClip.LoadSound("./Assets/Sounds/Swap.ogg"));
+            BreakSoundEffect = new SoundEffect(SoundClip.LoadSound("./Assets/Sounds/Rise01.ogg"), SfxEffectSlot);
+            SwapSoundEffect = new SoundEffect(SoundClip.LoadSound("./Assets/Sounds/Swap.ogg"), SfxEffectSlot);
 
-            ButtonPressEffect = new SoundEffect(SoundClip.LoadSound("./Assets/Sounds/switch8.ogg"));
+            ButtonPressEffect = new SoundEffect(SoundClip.LoadSound("./Assets/Sounds/switch8.ogg"), SfxEffectSlot);
 
             watch.Stop();
             Logger.LogInfo($"Loading assets took: {watch.Elapsed.TotalMilliseconds}ms");
@@ -1171,6 +1242,48 @@ namespace Bejeweled
             // FIXME: Maybe put a fade-in envelope on this?
             AmbientMusic.SetGain(MusicVolume);
             AmbientMusic.Play();
+        }
+
+        // FIXME: Better place..
+        const float UI_LEFT_PAD = 0.1f;
+        const float UI_BOTTOM_PAD = 0.1f;
+
+        public Box2i GetGemBoardBox()
+        {
+            Toolkit.Window.GetFramebufferSize(Window, out Vector2i fbSize);
+            int leftPadPx = (int)(fbSize.X * UI_LEFT_PAD);
+            int bottomPadPx = (int)(fbSize.Y * UI_BOTTOM_PAD);
+            return new Box2i(leftPadPx, 0, fbSize.X, fbSize.Y - bottomPadPx);
+        }
+
+        public Vector4i GetGemBoardViewport()
+        {
+            Box2i board = GetGemBoardBox();
+            Toolkit.Window.GetFramebufferSize(Window, out Vector2i fbSize);
+            int y = (fbSize.Y - (board.Y + board.Height));
+            return new Vector4i(board.X, y, board.Width, board.Height);
+        }
+
+        public bool TryClientPosToTile(Vector2 clientPos, out Vector2i tile)
+        {
+            Toolkit.Window.ClientToFramebuffer(Window, clientPos, out Vector2 fbPos);
+            return TryFramebufferPosToTile(fbPos, out tile);
+        }
+
+        public bool TryFramebufferPosToTile(Vector2 fbPos, out Vector2i tile)
+        {
+            Box2i board = GetGemBoardBox();
+            // FIXME: Contains functions for Box2i that take Vector2?
+            if (board.ContainsInclusive((Vector2i)fbPos))
+            {
+                tile = (Vector2i)Vector2.Floor(((fbPos - board.Min) / board.Size) * 8);
+                return true;
+            }
+            else
+            {
+                tile = (Vector2i)Vector2.Floor(((fbPos - board.Min) / board.Size) * 8);
+                return false;
+            }
         }
 
         Vector2 GetTileLocation(int x, int y)
@@ -1355,9 +1468,13 @@ namespace Bejeweled
             ImGuiController.Update(deltaTime);
             ImGui.PushFont(CurrentImGuiFont);
 
-            CustomDrawlist._ResetForNewFrame();
-            CustomDrawlist.PushClipRectFullScreen();
-            CustomDrawlist.PushTextureID(ImGui.GetIO().Fonts.TexID);
+            UIBaseDrawlist._ResetForNewFrame();
+            UIBaseDrawlist.PushClipRectFullScreen();
+            UIBaseDrawlist.PushTextureID(ImGui.GetIO().Fonts.TexID);
+
+            UIOverlayDrawlist._ResetForNewFrame();
+            UIOverlayDrawlist.PushClipRectFullScreen();
+            UIOverlayDrawlist.PushTextureID(ImGui.GetIO().Fonts.TexID);
 
             var UV00 = new System.Numerics.Vector2(0, 0);
             var UV11 = new System.Numerics.Vector2(1, 1);
@@ -1415,7 +1532,7 @@ namespace Bejeweled
 
                     position.Y -= EaseOutQuad(t) * RiseAmount;
 
-                    CustomDrawlist.AddText(CurrentImGuiFont, fontSize, new System.Numerics.Vector2(position.X, position.Y), col, text);
+                    UIOverlayDrawlist.AddText(CurrentImGuiFont, fontSize, new System.Numerics.Vector2(position.X, position.Y), col, text);
                 }
 
                 // Remove all break effects that have died.
@@ -1428,6 +1545,47 @@ namespace Bejeweled
             Vector2i clientPosition = (Vector2i)mouseState.Position;
 
             Toolkit.Window.GetClientSize(Window, out Vector2i clientSize);
+
+            {
+                float leftArea = fbSize.X * UI_LEFT_PAD;
+                float leftIconPad = leftArea * 0.05f;
+                float iconSize = leftArea * 0.9f;
+
+                Box2i board = GetGemBoardBox();
+                
+                UIBaseDrawlist.AddRectFilled(board.Min.ToVector2().ToNumerics(), board.Max.ToVector2().ToNumerics(), ImGui.ColorConvertFloat4ToU32(new System.Numerics.Vector4(0.1f, 0.1f, 0.1f, 1.0f)));
+
+                // FIXME: Sliders for both music and SFX.
+                Box2 sfxMuteButtonBox = new Box2(leftIconPad, 0, leftIconPad + iconSize, iconSize);
+                UIBaseDrawlist.AddImage(SfxMuted ? SfxMutedTexture.Handle : SfxUnmutedTexture.Handle, sfxMuteButtonBox.Min.ToNumerics(), sfxMuteButtonBox.Max.ToNumerics());
+                if (sfxMuteButtonBox.ContainsInclusive(clientPosition) && mouseState.PressedButtons.HasFlag(MouseButtonFlags.Button1) && PrevMouseState.PressedButtons.HasFlag(MouseButtonFlags.Button1) == false)
+                {
+                    SfxMuted = !SfxMuted;
+                    if (SfxMuted)
+                    {
+                        SoundEffect.SetGain(0.0f);
+                    }
+                    else
+                    {
+                        SoundEffect.SetGain(SfxVolume);
+                    }
+                }
+
+                Box2 musicMuteButtonBox = new Box2(leftIconPad, leftArea, leftIconPad + iconSize, leftArea + iconSize);
+                UIBaseDrawlist.AddImage(MusicMuted ? MusicMutedTexture.Handle : MusicUnmutedTexture.Handle, musicMuteButtonBox.Min.ToNumerics(), musicMuteButtonBox.Max.ToNumerics());
+                if (musicMuteButtonBox.ContainsInclusive(clientPosition) && mouseState.PressedButtons.HasFlag(MouseButtonFlags.Button1) && PrevMouseState.PressedButtons.HasFlag(MouseButtonFlags.Button1) == false)
+                {
+                    MusicMuted = !MusicMuted;
+                    if (MusicMuted)
+                    {
+                        AmbientMusic.SetGain(0.0f);
+                    }
+                    else
+                    {
+                        AmbientMusic.SetGain(MusicVolume);
+                    }
+                }
+            }
 
             switch (CurrentState)
             {
@@ -1490,7 +1648,9 @@ namespace Bejeweled
                     }
                 }
 
-                HoveredGem = (clientPosition * 8) / clientSize;
+                if (TryClientPosToTile(clientPosition, out HoveredGem) == false)
+                    inWindow = false;
+                //HoveredGem = (clientPosition * 8) / clientSize;
 
                 if (inWindow && mouseState.PressedButtons.HasFlag(MouseButtonFlags.Button1) && PrevMouseState.PressedButtons.HasFlag(MouseButtonFlags.Button1) == false)
                 {
@@ -1764,6 +1924,13 @@ namespace Bejeweled
 
         public void Render()
         {
+            GL.BindFramebuffer(FramebufferTarget.Framebuffer, 0);
+            GL.ClearDepth(1);
+            GL.ClearColor(Color4.Black);
+            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+
+            RenderDrawList(UIBaseDrawlist);
+
             switch (CurrentState)
             {
                 case State.Idle:
@@ -1775,18 +1942,23 @@ namespace Bejeweled
 
             ImGuiController.Render();
 
-            CustomDrawData.Clear();
-            CustomDrawData.Valid = true;
-            CustomDrawData.DisplayPos = ImGui.GetMainViewport().Pos;
-            CustomDrawData.DisplaySize = ImGui.GetMainViewport().Size;
-            // FIXME: Get the actual framebuffer scale?
-            CustomDrawData.FramebufferScale = new System.Numerics.Vector2(1, 1);
-            CustomDrawData.AddDrawList(CustomDrawlist);
-            ImGuiController.RenderImDrawData(CustomDrawData);
+            Toolkit.Window.GetFramebufferSize(Window, out Vector2i fbSize);
+            GL.Viewport(0, 0, fbSize.X, fbSize.Y);
+
+            // FIXME: Set the viewport?
+            // The scores are displayed at the wrong positions.
+            RenderDrawList(UIOverlayDrawlist);
 
             Toolkit.OpenGL.SwapBuffers(Context);
 
             void RenderGame()
+            {
+                Vector4i viewport = GetGemBoardViewport();
+                GL.Viewport(viewport.X, viewport.Y, viewport.Z, viewport.W);
+                RenderGemBoard(viewport);
+            }
+
+            void RenderGemBoard(Vector4i viewport)
             {
                 const float NearPlane = 0.1f;
                 const float FarPlane = 10.0f;
@@ -1847,11 +2019,12 @@ namespace Bejeweled
                 GL.BindFramebuffer(FramebufferTarget.Framebuffer, 0);
                 //GL.BindFramebuffer(FramebufferTarget.Framebuffer, DebugFramebuffer.Handle);
 
-                GL.ClearDepth(1);
-                GL.DepthFunc(DepthFunction.Less);
+                // Don't clear here as we've already begun drawing the UI to the default frame buffer.
+                //GL.ClearDepth(1);
+                //GL.ClearColor(Color4.Black);
+                //GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
-                GL.ClearColor(Color4.Black);
-                GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+                GL.DepthFunc(DepthFunction.Less);
 
                 GL.UseProgram(GemShader.Program.Handle);
 
@@ -1917,21 +2090,34 @@ namespace Bejeweled
                         Matrix4.CreateTranslation(new Vector3(position, -2));
                     Matrix4 mvp = model * viewProjection;
                     Matrix3 normalMat = Matrix3.Invert(Matrix3.Transpose(new Matrix3(model)));
-                    GL.UniformMatrix4f(GemShader.UniformLocationMVP, 1, true, mvp);
-                    GL.UniformMatrix4f(GemShader.UniformLocationModel, 1, true, model);
-                    GL.UniformMatrix4f(GemShader.UniformLocationViewProjection, 1, true, viewProjection);
-                    GL.UniformMatrix3f(GemShader.UniformLocationNormalMat, 1, true, normalMat);
+                    GL.UniformMatrix4f(GemShader.UniformLocationMVP, 1, true, in mvp);
+                    GL.UniformMatrix4f(GemShader.UniformLocationModel, 1, true, in model);
+                    GL.UniformMatrix4f(GemShader.UniformLocationViewProjection, 1, true, in viewProjection);
+                    GL.UniformMatrix3f(GemShader.UniformLocationNormalMat, 1, true, in normalMat);
 
-                    GL.Uniform2f(GemShader.UniformLocationScreenSize, fbSize.X, fbSize.Y);
+                    Vector4 viewportF = viewport;
+                    GL.Uniform4f(GemShader.UniformLocationViewport, 1, in viewportF);
 
-                    GL.Uniform3f(GemShader.UniformLocationTint, 1, tint);
-                    GL.Uniform3f(GemShader.UniformLocationF0, 1, GemF0s[(int)gem]);
+                    GL.Uniform3f(GemShader.UniformLocationTint, 1, in tint);
+                    GL.Uniform3f(GemShader.UniformLocationF0, 1, in GemF0s[(int)gem]);
 
                     GL.DrawElements(PrimitiveType.Triangles, visual.Elements, DrawElementsType.UnsignedShort, 0);
                 }
 
                 //GL.BindFramebuffer(FramebufferTarget.DrawFramebuffer, 0);
                 //GL.BlitFramebuffer(0,0,fbWidth,fbHeight,0,0,fbWidth,fbHeight,ClearBufferMask.ColorBufferBit,BlitFramebufferFilter.Nearest);
+            }
+
+            void RenderDrawList(ImDrawListPtr drawlist)
+            {
+                CustomDrawData.Clear();
+                CustomDrawData.Valid = true;
+                CustomDrawData.DisplayPos = ImGui.GetMainViewport().Pos;
+                CustomDrawData.DisplaySize = ImGui.GetMainViewport().Size;
+                // FIXME: Get the actual framebuffer scale?
+                CustomDrawData.FramebufferScale = new System.Numerics.Vector2(1, 1);
+                CustomDrawData.AddDrawList(drawlist);
+                ImGuiController.RenderImDrawData(CustomDrawData);
             }
         }
 

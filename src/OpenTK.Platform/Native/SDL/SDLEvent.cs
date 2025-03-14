@@ -44,6 +44,9 @@ namespace OpenTK.Platform.Native.SDL
 
         [FieldOffset(0)]
         public SDL_ControllerDeviceEvent ControllerDeviceEvent;
+
+        [FieldOffset(0)]
+        public SDL_UserEvent UserEvent;
     }
 
     internal struct SDL_DisplayEvent
@@ -157,17 +160,28 @@ namespace OpenTK.Platform.Native.SDL
 
     internal unsafe struct SDL_DropEvent
     {
-        public SDL_EventType type;        /* ::SDL_DROPBEGIN or ::SDL_DROPFILE or ::SDL_DROPTEXT or ::SDL_DROPCOMPLETE */
-        public uint timestamp;   /* In milliseconds, populated using SDL_GetTicks() */
+        public SDL_EventType type; /* ::SDL_DROPBEGIN or ::SDL_DROPFILE or ::SDL_DROPTEXT or ::SDL_DROPCOMPLETE */
+        public uint timestamp;     /* In milliseconds, populated using SDL_GetTicks() */
         public char* file;         /* The file name, which should be freed with SDL_free(), is NULL on begin/complete */
-        public uint windowID;    /* The window that was dropped on, if any */
+        public uint windowID;      /* The window that was dropped on, if any */
     }
 
     internal struct SDL_ControllerDeviceEvent
     {
-        public SDL_EventType type;        /* ::SDL_CONTROLLERDEVICEADDED, ::SDL_CONTROLLERDEVICEREMOVED, or ::SDL_CONTROLLERDEVICEREMAPPED */
-        public uint timestamp;   /* In milliseconds, populated using SDL_GetTicks() */
-        public int which;       /* The joystick device index for the ADDED event, instance id for the REMOVED or REMAPPED event */
+        public SDL_EventType type; /* ::SDL_CONTROLLERDEVICEADDED, ::SDL_CONTROLLERDEVICEREMOVED, or ::SDL_CONTROLLERDEVICEREMAPPED */
+        public uint timestamp;     /* In milliseconds, populated using SDL_GetTicks() */
+        public int which;          /* The joystick device index for the ADDED event, instance id for the REMOVED or REMAPPED event */
+    }
+
+    internal struct SDL_UserEvent
+    {
+        public SDL_EventType type; /*< SDL_EVENT_USER through SDL_EVENT_LAST-1, Uint32 because these are not in the SDL_EventType enumeration */
+        public uint reserved;
+        public ulong timestamp;    /*< In nanoseconds, populated using SDL_GetTicksNS() */
+        public uint windowID;      /*< The associated window if any */
+        public int code;           /*< User defined event code */
+        public IntPtr data1;       /*< User defined data pointer */
+        public IntPtr data2;       /*< User defined data pointer */
     }
 
     internal enum SDL_EventType

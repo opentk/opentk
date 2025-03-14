@@ -344,7 +344,7 @@ namespace OpenTK.Platform.Native.Windows
 
         // FIXME: Make width and height optional.
         /// <inheritdoc/>
-        public void SetImeRectangle(WindowHandle window, int x, int y, int width, int height)
+        public void SetImeRectangle(WindowHandle window, float x, float y, float width, float height)
         {
             HWND hwnd = window.As<HWND>(this);
 
@@ -355,7 +355,7 @@ namespace OpenTK.Platform.Native.Windows
                 Win32.COMPOSITIONFORM compForm = new Win32.COMPOSITIONFORM()
                 {
                     dwStyle = CFS.ForcePosition,
-                    ptCurrentPos = new Win32.POINT(x, y),
+                    ptCurrentPos = new Win32.POINT((int)x, (int)y),
                     rcArea = default
                 };
 
