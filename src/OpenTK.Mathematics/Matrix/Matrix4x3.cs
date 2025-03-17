@@ -451,35 +451,38 @@ namespace OpenTK.Mathematics
         /// <param name="result">A matrix instance.</param>
         public static void CreateFromQuaternion(in Quaternion q, out Matrix4x3 result)
         {
-            float x = q.X;
-            float y = q.Y;
-            float z = q.Z;
-            float w = q.W;
-            float tx = 2 * x;
-            float ty = 2 * y;
-            float tz = 2 * z;
-            float txx = tx * x;
-            float tyy = ty * y;
-            float tzz = tz * z;
-            float txy = tx * y;
-            float txz = tx * z;
-            float tyz = ty * z;
-            float twx = w * tx;
-            float twy = w * ty;
-            float twz = w * tz;
+            // Adapted from https://en.wikipedia.org/wiki/Quaternions_and_spatial_rotation#Quaternion-derived_rotation_matrix
+            // with the caviat that opentk uses row-major matrices so the matrix we create is transposed
+            float sqx = q.X * q.X;
+            float sqy = q.Y * q.Y;
+            float sqz = q.Z * q.Z;
+            float sqw = q.W * q.W;
 
-            result.Row0.X = 1f - tyy - tzz;
-            result.Row0.Y = txy - twz;
-            result.Row0.Z = txz + twy;
-            result.Row1.X = txy + twz;
-            result.Row1.Y = 1f - txx - tzz;
-            result.Row1.Z = tyz - twx;
-            result.Row2.X = txz - twy;
-            result.Row2.Y = tyz + twx;
-            result.Row2.Z = 1f - txx - tyy;
-            result.Row3.X = 0;
-            result.Row3.Y = 0;
-            result.Row3.Z = 0;
+            float xy = q.X * q.Y;
+            float xz = q.X * q.Z;
+            float xw = q.X * q.W;
+
+            float yz = q.Y * q.Z;
+            float yw = q.Y * q.W;
+
+            float zw = q.Z * q.W;
+
+            float s2 = 2f / (sqx + sqy + sqz + sqw);
+
+            result.Row0.X = 1f - (s2 * (sqy + sqz));
+            result.Row1.Y = 1f - (s2 * (sqx + sqz));
+            result.Row2.Z = 1f - (s2 * (sqx + sqy));
+
+            result.Row0.Y = s2 * (xy + zw);
+            result.Row1.X = s2 * (xy - zw);
+
+            result.Row2.X = s2 * (xz + yw);
+            result.Row0.Z = s2 * (xz - yw);
+
+            result.Row2.Y = s2 * (yz - xw);
+            result.Row1.Z = s2 * (yz + xw);
+
+            result.Row3 = new Vector3(0, 0, 0);
         }
 
         /// <summary>
