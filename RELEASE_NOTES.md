@@ -1,3 +1,27 @@
+## 4.9.4
+
+* BREAKING: Made `Matrix3/4.CreateFromQuaternion` and `Matrix3x4/4x3.CreateFromQuaternion` produce idential results for non-normalized quaternions. (@NogginBops)
+
+* API: Add explicit casts to and from `System.Numerics` types. (@DamienIsPoggers, @NogginBops)
+
+* API: Added `VectorN.Round/Ceiling/Floor/Truncate` element-wise functions. (@NogginBops)
+
+* API: Add `ShaderStorageBufferBinding`, `ShaderStorageBufferStart`, and `ShaderStorageBufferSize` to `GetIndexedPName`. (@NogginBops)
+
+* API: Add `MathHelper.RadToDeg(d)` and `MathHelper.DegToRad(d)` constants for conversion between radians and degrees. (@DamienIsPoggers)
+
+* API: Add support for the `ALC_SOFT_loopback` OpenAL extension through `OpenTK.Audio.OpenAL.ALC.Loopback`. (@NogginBops)
+
+* FIX: Update `OpenTK.redist.glfw` to GLFW 3.4 so that the GLFW 3.4 apis work properly. (@NogginBops)
+
+* FIX: Optimized `VectorN.this[int i]` and `MatrixN.this[int row, int col]` indexers. (@NogginBops)
+
+* FIX: Made `Color4.FromHsv` and `Color4.FromHsl` work correctly when hue is `1`. (@NogginBops)
+
+* FIX: Updated OpenAL `DllNotFoundException` exception message to mention having to install OpenAL. (@NogginBops)
+
+* FIX: The documentation for `NativeWindowSettings.RenderFrequency` now correctly refers to `UpdateFrequency` instead of `UpdateFrame`. (@NogginBops)
+
 ## 4.9.3
 
 * Fix issue where the `OpenTK.Mathematics` nuget package referenced `System.Runtime.CompilerServices.Unsafe` version `5.0.0` but the compiled `OpenTK.Mathematics.dll` assembly referenced version `6.0.0`. Causing runtime crashes in some circumstances. The `OpenTK.Mathematics` nuget package now correctly requires version `6.0.0`. (@NogginBops)
