@@ -22,6 +22,7 @@ SOFTWARE.
 
 using System;
 using System.Diagnostics.Contracts;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Xml.Serialization;
 
@@ -801,6 +802,26 @@ namespace OpenTK.Mathematics
         public static bool operator !=(Quaternion left, Quaternion right)
         {
             return !(left == right);
+        }
+
+        /// <summary>
+        /// Converts <see cref="System.Numerics.Quaternion"/> to <see cref="Quaternion"/>.
+        /// </summary>
+        /// <param name="quat">The <see cref="System.Numerics.Quaternion"/> to cast.</param>
+        [Pure]
+        public static explicit operator Quaternion(System.Numerics.Quaternion quat)
+        {
+            return Unsafe.As<System.Numerics.Quaternion, Quaternion>(ref quat);
+        }
+
+        /// <summary>
+        /// Converts <see cref="Quaternion"/> to <see cref="System.Numerics.Quaternion"/>.
+        /// </summary>
+        /// <param name="quat">The <see cref="Quaternion"/> to cast.</param>
+        [Pure]
+        public static explicit operator System.Numerics.Quaternion(Quaternion quat)
+        {
+            return Unsafe.As<Quaternion, System.Numerics.Quaternion>(ref quat);
         }
 
         /// <inheritdoc />

@@ -2254,6 +2254,26 @@ namespace OpenTK.Mathematics
             return new Vector4(values.X, values.Y, values.Z, values.W);
         }
 
+        /// <summary>
+        /// Converts <see cref="System.Numerics.Vector4"/> to <see cref="Vector4"/>.
+        /// </summary>
+        /// <param name="vec">The <see cref="System.Numerics.Vector4"/> to cast.</param>
+        [Pure]
+        public static explicit operator Vector4(System.Numerics.Vector4 vec)
+        {
+            return Unsafe.As<System.Numerics.Vector4, Vector4>(ref vec);
+        }
+
+        /// <summary>
+        /// Converts <see cref="Vector4"/> to <see cref="System.Numerics.Vector4"/>.
+        /// </summary>
+        /// <param name="vec">The <see cref="Vector4"/> to cast.</param>
+        [Pure]
+        public static explicit operator System.Numerics.Vector4(Vector4 vec)
+        {
+            return Unsafe.As<Vector4, System.Numerics.Vector4>(ref vec);
+        }
+
         /// <inheritdoc/>
         public override readonly string ToString()
         {

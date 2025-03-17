@@ -2151,6 +2151,26 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
+        /// Converts <see cref="System.Numerics.Matrix4x4"/> to <see cref="Matrix4"/>.
+        /// </summary>
+        /// <param name="mat">The <see cref="Matrix4"/> to cast.</param>
+        [Pure]
+        public static explicit operator Matrix4(System.Numerics.Matrix4x4 mat)
+        {
+            return Unsafe.As<System.Numerics.Matrix4x4, Matrix4>(ref mat);
+        }
+
+        /// <summary>
+        /// Converts <see cref="Matrix4"/> to <see cref="System.Numerics.Matrix4x4"/>.
+        /// </summary>
+        /// <param name="mat">The <see cref="Matrix4"/> to cast.</param>
+        [Pure]
+        public static explicit operator System.Numerics.Matrix4x4(Matrix4 mat)
+        {
+            return Unsafe.As<Matrix4, System.Numerics.Matrix4x4>(ref mat);
+        }
+
+        /// <summary>
         /// Returns a System.String that represents the current Matrix4.
         /// </summary>
         /// <returns>The string representation of the matrix.</returns>

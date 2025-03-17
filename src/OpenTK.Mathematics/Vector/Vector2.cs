@@ -1215,6 +1215,26 @@ namespace OpenTK.Mathematics
             return new System.Drawing.SizeF(vec.X, vec.Y);
         }
 
+        /// <summary>
+        /// Converts <see cref="System.Numerics.Vector2"/> to <see cref="Vector2"/>.
+        /// </summary>
+        /// <param name="vec">The <see cref="System.Numerics.Vector2"/> to cast.</param>
+        [Pure]
+        public static explicit operator Vector2(System.Numerics.Vector2 vec)
+        {
+            return Unsafe.As<System.Numerics.Vector2, Vector2>(ref vec);
+        }
+
+        /// <summary>
+        /// Converts <see cref="Vector2"/> to <see cref="System.Numerics.Vector2"/>.
+        /// </summary>
+        /// <param name="vec">The <see cref="Vector2"/> to cast.</param>
+        [Pure]
+        public static explicit operator System.Numerics.Vector2(Vector2 vec)
+        {
+            return Unsafe.As<Vector2, System.Numerics.Vector2>(ref vec);
+        }
+
         /// <inheritdoc/>
         public override string ToString()
         {
