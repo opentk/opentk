@@ -1068,7 +1068,7 @@ namespace OpenTK.Mathematics
                 g = 0.0f;
                 b = c;
             }
-            else if (h >= 5.0f && h < 6.0f)
+            else if (h >= 5.0f && h <= 6.0f)
             {
                 r = c;
                 g = 0.0f;
@@ -1200,7 +1200,7 @@ namespace OpenTK.Mathematics
                 g = 0.0f;
                 b = c;
             }
-            else if (h >= 5.0f && h < 6.0f)
+            else if (h >= 5.0f && h <= 6.0f)
             {
                 r = c;
                 g = 0.0f;
