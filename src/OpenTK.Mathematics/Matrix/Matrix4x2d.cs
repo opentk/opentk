@@ -23,6 +23,7 @@ SOFTWARE.
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 namespace OpenTK.Mathematics
@@ -228,56 +229,37 @@ namespace OpenTK.Mathematics
         /// <returns>The element at the given row and column index.</returns>
         public double this[int rowIndex, int columnIndex]
         {
-            get
+            readonly get
             {
-                if (rowIndex == 0)
+                if (((uint)rowIndex) < 4 && ((uint)columnIndex) < 2)
                 {
-                    return Row0[columnIndex];
+                    return GetRowUnsafe(in this, rowIndex)[columnIndex];
                 }
-
-                if (rowIndex == 1)
+                else
                 {
-                    return Row1[columnIndex];
+                    MathHelper.ThrowOutOfRangeException($"You tried to access this matrix at: ({rowIndex}, {columnIndex})");
+                    return default;
                 }
-
-                if (rowIndex == 2)
-                {
-                    return Row2[columnIndex];
-                }
-
-                if (rowIndex == 3)
-                {
-                    return Row3[columnIndex];
-                }
-
-                throw new IndexOutOfRangeException("You tried to access this matrix at: (" + rowIndex + ", " +
-                                                   columnIndex + ")");
             }
 
             set
             {
-                if (rowIndex == 0)
+                if (((uint)rowIndex) < 4 && ((uint)columnIndex) < 2)
                 {
-                    Row0[columnIndex] = value;
-                }
-                else if (rowIndex == 1)
-                {
-                    Row1[columnIndex] = value;
-                }
-                else if (rowIndex == 2)
-                {
-                    Row2[columnIndex] = value;
-                }
-                else if (rowIndex == 3)
-                {
-                    Row3[columnIndex] = value;
+                    GetRowUnsafe(in this, rowIndex)[columnIndex] = value;
                 }
                 else
                 {
-                    throw new IndexOutOfRangeException("You tried to set this matrix at: (" + rowIndex + ", " +
-                                                       columnIndex + ")");
+                    MathHelper.ThrowOutOfRangeException($"You tried to set this matrix at: ({rowIndex}, {columnIndex})");
                 }
             }
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private readonly ref Vector2d GetRowUnsafe(in Matrix4x2d m, int index)
+        {
+            ref Vector2d address = ref Unsafe.AsRef(in m.Row0);
+            return ref Unsafe.Add(ref address, index);
         }
 
         /// <summary>
