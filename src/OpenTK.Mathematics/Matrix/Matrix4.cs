@@ -417,54 +417,35 @@ namespace OpenTK.Mathematics
         {
             readonly get
             {
-                if (rowIndex == 0)
+                if (((uint)rowIndex) < 4 && ((uint)columnIndex) < 4)
                 {
-                    return Row0[columnIndex];
+                    return GetRowUnsafe(in this, rowIndex)[columnIndex];
                 }
-
-                if (rowIndex == 1)
+                else
                 {
-                    return Row1[columnIndex];
+                    MathHelper.ThrowOutOfRangeException($"You tried to access this matrix at: ({rowIndex}, {columnIndex})");
+                    return default;
                 }
-
-                if (rowIndex == 2)
-                {
-                    return Row2[columnIndex];
-                }
-
-                if (rowIndex == 3)
-                {
-                    return Row3[columnIndex];
-                }
-
-                throw new IndexOutOfRangeException("You tried to access this matrix at: (" + rowIndex + ", " +
-                                                   columnIndex + ")");
             }
 
             set
             {
-                if (rowIndex == 0)
+                if (((uint)rowIndex) < 4 && ((uint)columnIndex) < 4)
                 {
-                    Row0[columnIndex] = value;
-                }
-                else if (rowIndex == 1)
-                {
-                    Row1[columnIndex] = value;
-                }
-                else if (rowIndex == 2)
-                {
-                    Row2[columnIndex] = value;
-                }
-                else if (rowIndex == 3)
-                {
-                    Row3[columnIndex] = value;
+                    GetRowUnsafe(in this, rowIndex)[columnIndex] = value;
                 }
                 else
                 {
-                    throw new IndexOutOfRangeException("You tried to set this matrix at: (" + rowIndex + ", " +
-                                                       columnIndex + ")");
+                    MathHelper.ThrowOutOfRangeException($"You tried to set this matrix at: ({rowIndex}, {columnIndex})");
                 }
             }
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private readonly ref Vector4 GetRowUnsafe(in Matrix4 m, int index)
+        {
+            ref Vector4 address = ref Unsafe.AsRef(in m.Row0);
+            return ref Unsafe.Add(ref address, index);
         }
 
         /// <summary>

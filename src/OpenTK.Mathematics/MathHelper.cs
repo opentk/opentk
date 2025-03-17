@@ -1374,5 +1374,11 @@ namespace OpenTK.Mathematics
 
             return CultureInfo.CurrentCulture.TextInfo.ListSeparator;
         }
+
+        [DoesNotReturn]
+        internal static void ThrowOutOfRangeException(string message)
+        {
+            throw new IndexOutOfRangeException(message);
+        }
     }
 }
