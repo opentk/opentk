@@ -3393,6 +3393,10 @@
       <use enum="VERSION_4_1" token="SCISSOR_BOX" />
       <use enum="VERSION_4_1" token="VIEWPORT" />
       <use enum="VERSION_4_1" token="DEPTH_RANGE" />
+      <use enum="VERSION_4_3" token="SHADER_STORAGE_BUFFER_BINDING" />
+      <use enum="VERSION_4_3" token="SHADER_STORAGE_BUFFER_START" />
+      <use enum="VERSION_4_3" token="SHADER_STORAGE_BUFFER_SIZE" />
+
     </enum>
     <enum name="GetMinmaxParameterPName">
       <token name="MINMAX_FORMAT" value="0x802F" />
