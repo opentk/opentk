@@ -2174,19 +2174,9 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <param name="mat">The <see cref="Matrix4"/> to cast.</param>
         [Pure]
-        [SuppressMessage(
-            "StyleCop.CSharp.ReadabilityRules",
-            "SA1117:ParametersMustBeOnSameLineOrSeparateLines",
-            Justification = "A single line for all 16 parameters is a bit hard to read and 16 seperate lines takes up too much space, so 1 line for each row in the matrix helps visibility.")]
         public static explicit operator Matrix4(System.Numerics.Matrix4x4 mat)
         {
-            return new Matrix4
-                (
-                mat.M11, mat.M12, mat.M13, mat.M14,
-                mat.M21, mat.M22, mat.M23, mat.M24,
-                mat.M31, mat.M32, mat.M33, mat.M34,
-                mat.M41, mat.M42, mat.M43, mat.M44
-                );
+            return Unsafe.As<System.Numerics.Matrix4x4, Matrix4>(ref mat);
         }
 
         /// <summary>
@@ -2194,19 +2184,9 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <param name="mat">The <see cref="Matrix4"/> to cast.</param>
         [Pure]
-        [SuppressMessage(
-            "StyleCop.CSharp.ReadabilityRules",
-            "SA1117:ParametersMustBeOnSameLineOrSeparateLines",
-            Justification = "A single line for all 16 parameters is a bit hard to read and 16 seperate lines takes up too much space, so 1 line for each row in the matrix helps visibility.")]
         public static explicit operator System.Numerics.Matrix4x4(Matrix4 mat)
         {
-            return new System.Numerics.Matrix4x4
-                (
-                mat.M11, mat.M12, mat.M13, mat.M14,
-                mat.M21, mat.M22, mat.M23, mat.M24,
-                mat.M31, mat.M32, mat.M33, mat.M34,
-                mat.M41, mat.M42, mat.M43, mat.M44
-                );
+            return Unsafe.As<Matrix4, System.Numerics.Matrix4x4>(ref mat);
         }
 
         /// <summary>

@@ -1222,7 +1222,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static explicit operator Vector2(System.Numerics.Vector2 vec)
         {
-            return new Vector2(vec.X, vec.Y);
+            return Unsafe.As<System.Numerics.Vector2, Vector2>(ref vec);
         }
 
         /// <summary>
@@ -1232,7 +1232,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static explicit operator System.Numerics.Vector2(Vector2 vec)
         {
-            return new System.Numerics.Vector2(vec.X, vec.Y);
+            return Unsafe.As<Vector2, System.Numerics.Vector2>(ref vec);
         }
 
         /// <inheritdoc/>

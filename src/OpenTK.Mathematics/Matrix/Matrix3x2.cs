@@ -23,6 +23,7 @@ SOFTWARE.
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 namespace OpenTK.Mathematics
@@ -802,7 +803,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static explicit operator Matrix3x2(System.Numerics.Matrix3x2 mat)
         {
-            return new Matrix3x2(mat.M11, mat.M12, mat.M21, mat.M22, mat.M31, mat.M32);
+            return Unsafe.As<System.Numerics.Matrix3x2, Matrix3x2>(ref mat);
         }
 
         /// <summary>
@@ -812,7 +813,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static explicit operator System.Numerics.Matrix3x2(Matrix3x2 mat)
         {
-            return new System.Numerics.Matrix3x2(mat.M11, mat.M12, mat.M21, mat.M22, mat.M31, mat.M32);
+            return Unsafe.As<Matrix3x2, System.Numerics.Matrix3x2>(ref mat);
         }
 
         /// <summary>

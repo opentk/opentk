@@ -22,6 +22,7 @@ SOFTWARE.
 
 using System;
 using System.Diagnostics.Contracts;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Xml.Serialization;
 
@@ -810,7 +811,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static explicit operator Quaternion(System.Numerics.Quaternion quat)
         {
-            return new Quaternion(quat.X, quat.Y, quat.Z, quat.W);
+            return Unsafe.As<System.Numerics.Quaternion, Quaternion>(ref quat);
         }
 
         /// <summary>
@@ -820,7 +821,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static explicit operator System.Numerics.Quaternion(Quaternion quat)
         {
-            return new System.Numerics.Quaternion(quat.X, quat.Y, quat.Z, quat.W);
+            return Unsafe.As<Quaternion, System.Numerics.Quaternion>(ref quat);
         }
 
         /// <inheritdoc />
