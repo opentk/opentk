@@ -192,9 +192,36 @@ namespace VkGenerator.Process
         {
             Dictionary<string, TypeEntry> typeMap = new Dictionary<string, TypeEntry>();
 
+            // First we add add all non-aliased struct types so that we can resolve
+            // the aliases in a second pass.
+            // - Noggin_bops 2025-03-22
             foreach (StructType @struct in data.Structs)
             {
-                typeMap.Add(@struct.Name, new TypeEntry(new CSStruct(@struct.Name, true), @struct));
+                if (@struct.Alias == null)
+                {
+                    typeMap.Add(@struct.Name, new TypeEntry(new CSStruct(@struct.Name, true), @struct));
+                }
+            }
+
+            foreach (StructType @struct in data.Structs)
+            {
+                if (@struct.Alias != null)
+                {
+                    if (typeMap.TryGetValue(@struct.Alias, out TypeEntry? aliasStruct))
+                    {
+                        // For now we count references to an alias as references to the aliased struct.
+                        // - Noggin_bops 2025-03-22
+                        typeMap.Add(@struct.Name, new TypeEntry(aliasStruct.CSType, aliasStruct.Referable));
+
+                        // FIXME: Maybe make this a separate step..
+                        // Here we also take the oppurtunity to copy over the struct members from the aliased type.
+                        @struct.Members.AddRange(((StructType)aliasStruct.Referable).Members);
+                    }
+                    else
+                    {
+                        Debug.Assert(false);
+                    }
+                }
             }
 
             foreach (EnumType @enum in data.Enums)
@@ -817,8 +844,8 @@ namespace VkGenerator.Process
 
                         // Google Games Platform aka. Stadia which is dead
                         // and we can't get any headers or anything from it.
-                        "GgpStreamDescriptor" => new CSNotSupportedType(),
-                        "GgpFrameToken" => new CSNotSupportedType(),
+                        "GgpStreamDescriptor" => new CSNotSupportedType("GgpStreamDescriptor"),
+                        "GgpFrameToken" => new CSNotSupportedType("GgpFrameToken"),
 
                         "_screen_context" => CSPrimitive.IntPtr(@const),
                         "_screen_window" => CSPrimitive.IntPtr(@const),

@@ -58,7 +58,7 @@ namespace VkGenerator.Parsing
 
     public record ExternalType(string Name, string? HeaderFile);
 
-    public record StructType(string Name, List<StructMember> Members, bool Union, string? Comment) : IReferable
+    public record StructType(string Name, List<StructMember> Members, bool Union, string? Comment, string? Alias) : IReferable
     {
         public VersionInfo? VersionInfo;
         public List<Command>? ReferencedBy;
@@ -267,11 +267,13 @@ namespace VkGenerator.Parsing
                 }
                 else if (category == "union")
                 {
-                    structs.Add(new StructType(name!, ParseStructMembers(type), true, comment));
+                    if (alias != null)
+                        Console.WriteLine($"Union '{name}' has unexpected alias '{alias}'. We don't deal with this yet in the generator.");
+                    structs.Add(new StructType(name!, ParseStructMembers(type), true, comment, null));
                 }
                 else if (category == "struct")
                 {
-                    structs.Add(new StructType(name!, ParseStructMembers(type), false, comment));
+                    structs.Add(new StructType(name!, ParseStructMembers(type), false, comment, alias));
                 }
                 else if (category == "enum")
                 {
