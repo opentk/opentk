@@ -36,6 +36,21 @@ namespace OpenTK.Platform.Native.macOS
         internal static extern int /* CVReturn */ CVDisplayLinkCreateWithCGDisplay(uint /* CGDirectDisplayID */ displayID, out CVDisplayLinkRef link);
 
         [DllImport(Lib, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int /* CVReturn */ CVDisplayLinkCreateWithActiveCGDisplays(out CVDisplayLinkRef displayLinkOut);
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        internal delegate int CVDisplayLinkOutputCallback(CVDisplayLinkRef displayLink, IntPtr inNow, IntPtr inOutputTime, ulong flagsIn, out ulong flagsOut, IntPtr displayLinkContext);
+
+        [DllImport(Lib, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int /* CVReturn */ CVDisplayLinkSetOutputCallback(CVDisplayLinkRef displayLink, CVDisplayLinkOutputCallback callback, IntPtr userInfo);
+
+        [DllImport(Lib, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int /* CVReturn */ CVDisplayLinkStart(CVDisplayLinkRef displayLink);
+
+        [DllImport(Lib, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int /* CVReturn */ CVDisplayLinkStop(CVDisplayLinkRef displayLink);
+
+        [DllImport(Lib, CallingConvention = CallingConvention.Cdecl)]
         internal static extern void CVDisplayLinkRelease(CVDisplayLinkRef displayLink);
 
         [DllImport(Lib, CallingConvention = CallingConvention.Cdecl)]
