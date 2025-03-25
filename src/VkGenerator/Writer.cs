@@ -1,6 +1,7 @@
 ﻿using System;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Reflection;
 using System.Text;
@@ -36,6 +37,7 @@ namespace VkGenerator
 
             WriteFunctionPointers(directoryPath, data.Commands, video);
             WriteCommands(directoryPath, data.Commands, video);
+            WriteDispatchTables(directoryPath, data.Commands, video);
 
             WriteConstants(directoryPath, data.Constants);
         }
@@ -437,6 +439,22 @@ namespace VkGenerator
                                 }
                             }
 
+                            switch (command.CommandType)
+                            {
+                                case CommandType.Global:
+                                    writer.Write("[global command] ");
+                                    break;
+                                case CommandType.Instance:
+                                    writer.Write("[instance command] ");
+                                    break;
+                                case CommandType.Device:
+                                    writer.Write("[device command] ");
+                                    break;
+                                case CommandType.Invalid:
+                                default:
+                                    throw new InvalidEnumArgumentException($"Invalid command type: {command.CommandType}");
+                            }
+
                             if (command.Alias != null)
                             {
                                 writer.Write($" Alias of <see cref=\"{NameMangler.MangleFunctionName(command.Alias)}\"/>");
@@ -529,6 +547,360 @@ namespace VkGenerator
                 }
 
                 writer.WriteLineNoTabs("#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member");
+            }
+        }
+
+        public static void WriteDispatchTables(string directoryPath, List<Command> commands, SpecificationData video)
+        {
+            using StreamWriter stream = File.CreateText(Path.Combine(directoryPath, "DispatchTables.cs"));
+            using IndentedTextWriter writer = new IndentedTextWriter(stream);
+            writer.WriteLine("// This file is auto generated, do not edit.");
+            writer.WriteLine("using OpenTK.Mathematics;");
+            foreach (Extension extension in video.Extensions)
+            {
+                writer.WriteLine($"using {GraphicsNamespace}.Vulkan.{NameMangler.MangleExtensionName(extension.Name)};");
+            }
+            writer.WriteLine("using System;");
+            writer.WriteLine("using System.Runtime.CompilerServices;");
+            writer.WriteLine("using System.Runtime.InteropServices;");
+            writer.WriteLine();
+            writer.WriteLine($"namespace {GraphicsNamespace}.Vulkan");
+            using (writer.CsScope())
+            {
+                writer.WriteLineNoTabs("#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member");
+
+                WriteInstanceDispatchTable(writer, commands);
+                WriteDeviceDispatchTable(writer, commands);
+
+                writer.WriteLineNoTabs("#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member");
+            }
+
+            static void WriteInstanceDispatchTable(IndentedTextWriter writer, List<Command> commands)
+            {
+                writer.WriteLine($"public unsafe partial struct InstanceDispatchTable");
+                using (writer.CsScope())
+                {
+                    writer.WriteLine("public VkInstance Instance;");
+                    // Generate ctor
+                    writer.WriteLine($"public InstanceDispatchTable(VkInstance instance)");
+                    using (writer.CsScope())
+                    {
+                        writer.WriteLine("Instance = instance;");
+                        foreach (Command command in commands)
+                        {
+                            if (command.CommandType != CommandType.Instance)
+                                continue;
+
+                            string entryPoint = command.Name;
+                            string functionName = NameMangler.MangleFunctionName(command.Name);
+
+                            StringBuilder signature = new StringBuilder();
+                            StringBuilder delegateTypes = new StringBuilder();
+                            StringBuilder paramNames = new StringBuilder();
+                            foreach (CommandParameter parameter in command.Parameters)
+                            {
+                                string name = NameMangler.MangleParameterName(parameter.Name);
+                                string type = parameter.StrongType!.ToCSString();
+                                signature.Append($"{type} {name}, ");
+                                delegateTypes.Append($"{type}, ");
+                                paramNames.Append($"{name}, ");
+                            }
+                            signature.Length -= 2;
+                            paramNames.Length -= 2;
+
+                            delegateTypes.Append($"{command.StrongReturnType!.ToCSString()}");
+
+                            writer.WriteLine($"_{entryPoint}_fnptr = (delegate* unmanaged<{delegateTypes}>){LoaderClass}.GetInstanceProcAddress(instance, \"{entryPoint}\");");
+                        }
+                    }
+
+                    foreach (Command command in commands)
+                    {
+                        if (command.CommandType != CommandType.Instance)
+                            continue;
+
+                        string entryPoint = command.Name;
+                        string functionName = NameMangler.MangleFunctionName(command.Name);
+
+                        StringBuilder signature = new StringBuilder();
+                        StringBuilder paramNames = new StringBuilder();
+                        foreach (CommandParameter parameter in command.Parameters)
+                        {
+                            string name = NameMangler.MangleParameterName(parameter.Name);
+                            string type = parameter.StrongType!.ToCSString();
+                            signature.Append($"{type} {name}, ");
+                            paramNames.Append($"{name}, ");
+                        }
+                        signature.Length -= 2;
+                        paramNames.Length -= 2;
+
+                        // Write documentation string.
+                        {
+                            writer.Write("/// <summary>");
+                            if (command.VersionInfo != null)
+                            {
+                                List<string> strs = [.. command.VersionInfo.Extensions];
+                                if (command.VersionInfo.Version != null)
+                                {
+                                    strs.Insert(0, $"v{command.VersionInfo.Version.Major}.{command.VersionInfo.Version.Minor}");
+                                }
+                                writer.Write($"<b>[requires: {string.Join(" | ", strs)}]</b> ");
+                            }
+                            else
+                            {
+                                // There are two "valid" reasons why a command would be missing version data.
+                                // 1. The only reference to the command is in a disabled extension.
+                                //    Currently such functions still get emitted even if no-one references them.
+                                // 2. The command is part of vulkansc or a vulkansc extension. We don't deal with vulkancs atm.
+                                //
+                                // This is a list of the known commands that fullfill either of these criteria.
+                                // - Noggin_bops 2024-09-24
+                                ReadOnlySpan<string> exceptedNames = [
+                                    "vkGetSwapchainGrallocUsageANDROID",
+                                    "vkGetSwapchainGrallocUsage2ANDROID",
+                                    "vkAcquireImageANDROID",
+                                    "vkQueueSignalReleaseImageANDROID",
+                                    "vkGetFaultData",
+                                    "vkGetCommandPoolMemoryConsumption",
+                                ];
+
+                                if (exceptedNames.Contains(command.Name) == false)
+                                {
+                                    // See comment above.
+                                    Debug.Assert(false);
+                                }
+                            }
+
+                            switch (command.CommandType)
+                            {
+                                case CommandType.Global:
+                                    writer.Write("[global command] ");
+                                    break;
+                                case CommandType.Instance:
+                                    writer.Write("[instance command] ");
+                                    break;
+                                case CommandType.Device:
+                                    writer.Write("[device command] ");
+                                    break;
+                                case CommandType.Invalid:
+                                default:
+                                    throw new InvalidEnumArgumentException($"Invalid command type: {command.CommandType}");
+                            }
+
+                            if (command.Alias != null)
+                            {
+                                writer.Write($" Alias of <see cref=\"{NameMangler.MangleFunctionName(command.Alias)}\"/>");
+                            }
+                            writer.WriteLine("</summary>");
+                        }
+
+                        writer.WriteLine($"/// <remarks><see href=\"https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/{entryPoint}.html\" /></remarks>");
+
+                        writer.WriteLine($"public {command.StrongReturnType!.ToCSString()} {functionName}({signature})");
+                        using (writer.CsScope())
+                        {
+                            if (command.StrongReturnType is not CSVoid)
+                            {
+                                writer.WriteLine($"return _{entryPoint}_fnptr({paramNames});");
+                            }
+                            else
+                            {
+                                writer.WriteLine($"_{entryPoint}_fnptr({paramNames});");
+                            }
+                        }
+                    }
+
+                    foreach (Command command in commands)
+                    {
+                        if (command.CommandType != CommandType.Instance)
+                            continue;
+
+                        string entryPoint = command.Name;
+                        string functionName = NameMangler.MangleFunctionName(command.Name);
+
+                        StringBuilder signature = new StringBuilder();
+                        StringBuilder delegateTypes = new StringBuilder();
+                        StringBuilder paramNames = new StringBuilder();
+                        foreach (CommandParameter parameter in command.Parameters)
+                        {
+                            string name = NameMangler.MangleParameterName(parameter.Name);
+                            string type = parameter.StrongType!.ToCSString();
+                            signature.Append($"{type} {name}, ");
+                            delegateTypes.Append($"{type}, ");
+                            paramNames.Append($"{name}, ");
+                        }
+                        signature.Length -= 2;
+                        paramNames.Length -= 2;
+
+                        delegateTypes.Append($"{command.StrongReturnType!.ToCSString()}");
+
+                        writer.WriteLine($"public delegate* unmanaged<{delegateTypes}> _{entryPoint}_fnptr;");
+                    }
+                }
+            }
+
+            static void WriteDeviceDispatchTable(IndentedTextWriter writer, List<Command> commands)
+            {
+                writer.WriteLine($"public unsafe partial struct DeviceDispatchTable");
+                using (writer.CsScope())
+                {
+                    writer.WriteLine("public VkDevice Device;");
+                    // Generate ctor
+                    writer.WriteLine($"public DeviceDispatchTable(VkDevice device)");
+                    using (writer.CsScope())
+                    {
+                        writer.WriteLine("Device = device;");
+                        foreach (Command command in commands)
+                        {
+                            if (command.CommandType != CommandType.Device)
+                                continue;
+
+                            string entryPoint = command.Name;
+                            string functionName = NameMangler.MangleFunctionName(command.Name);
+
+                            StringBuilder signature = new StringBuilder();
+                            StringBuilder delegateTypes = new StringBuilder();
+                            StringBuilder paramNames = new StringBuilder();
+                            foreach (CommandParameter parameter in command.Parameters)
+                            {
+                                string name = NameMangler.MangleParameterName(parameter.Name);
+                                string type = parameter.StrongType!.ToCSString();
+                                signature.Append($"{type} {name}, ");
+                                delegateTypes.Append($"{type}, ");
+                                paramNames.Append($"{name}, ");
+                            }
+                            signature.Length -= 2;
+                            paramNames.Length -= 2;
+
+                            delegateTypes.Append($"{command.StrongReturnType!.ToCSString()}");
+
+                            writer.WriteLine($"_{entryPoint}_fnptr = (delegate* unmanaged<{delegateTypes}>){LoaderClass}.GetDeviceProcAddr(device, \"{entryPoint}\");");
+                        }
+                    }
+
+                    foreach (Command command in commands)
+                    {
+                        if (command.CommandType != CommandType.Device)
+                            continue;
+
+                        string entryPoint = command.Name;
+                        string functionName = NameMangler.MangleFunctionName(command.Name);
+
+                        StringBuilder signature = new StringBuilder();
+                        StringBuilder paramNames = new StringBuilder();
+                        foreach (CommandParameter parameter in command.Parameters)
+                        {
+                            string name = NameMangler.MangleParameterName(parameter.Name);
+                            string type = parameter.StrongType!.ToCSString();
+                            signature.Append($"{type} {name}, ");
+                            paramNames.Append($"{name}, ");
+                        }
+                        signature.Length -= 2;
+                        paramNames.Length -= 2;
+
+                        // Write documentation string.
+                        {
+                            writer.Write("/// <summary>");
+                            if (command.VersionInfo != null)
+                            {
+                                List<string> strs = [.. command.VersionInfo.Extensions];
+                                if (command.VersionInfo.Version != null)
+                                {
+                                    strs.Insert(0, $"v{command.VersionInfo.Version.Major}.{command.VersionInfo.Version.Minor}");
+                                }
+                                writer.Write($"<b>[requires: {string.Join(" | ", strs)}]</b> ");
+                            }
+                            else
+                            {
+                                // There are two "valid" reasons why a command would be missing version data.
+                                // 1. The only reference to the command is in a disabled extension.
+                                //    Currently such functions still get emitted even if no-one references them.
+                                // 2. The command is part of vulkansc or a vulkansc extension. We don't deal with vulkancs atm.
+                                //
+                                // This is a list of the known commands that fullfill either of these criteria.
+                                // - Noggin_bops 2024-09-24
+                                ReadOnlySpan<string> exceptedNames = [
+                                    "vkGetSwapchainGrallocUsageANDROID",
+                                    "vkGetSwapchainGrallocUsage2ANDROID",
+                                    "vkAcquireImageANDROID",
+                                    "vkQueueSignalReleaseImageANDROID",
+                                    "vkGetFaultData",
+                                    "vkGetCommandPoolMemoryConsumption",
+                                ];
+
+                                if (exceptedNames.Contains(command.Name) == false)
+                                {
+                                    // See comment above.
+                                    Debug.Assert(false);
+                                }
+                            }
+
+                            switch (command.CommandType)
+                            {
+                                case CommandType.Global:
+                                    writer.Write("[global command] ");
+                                    break;
+                                case CommandType.Instance:
+                                    writer.Write("[instance command] ");
+                                    break;
+                                case CommandType.Device:
+                                    writer.Write("[device command] ");
+                                    break;
+                                case CommandType.Invalid:
+                                default:
+                                    throw new InvalidEnumArgumentException($"Invalid command type: {command.CommandType}");
+                            }
+
+                            if (command.Alias != null)
+                            {
+                                writer.Write($" Alias of <see cref=\"{NameMangler.MangleFunctionName(command.Alias)}\"/>");
+                            }
+                            writer.WriteLine("</summary>");
+                        }
+
+                        writer.WriteLine($"/// <remarks><see href=\"https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/{entryPoint}.html\" /></remarks>");
+
+                        writer.WriteLine($"public {command.StrongReturnType!.ToCSString()} {functionName}({signature})");
+                        using (writer.CsScope())
+                        {
+                            if (command.StrongReturnType is not CSVoid)
+                            {
+                                writer.WriteLine($"return _{entryPoint}_fnptr({paramNames});");
+                            }
+                            else
+                            {
+                                writer.WriteLine($"_{entryPoint}_fnptr({paramNames});");
+                            }
+                        }
+                    }
+
+                    foreach (Command command in commands)
+                    {
+                        if (command.CommandType != CommandType.Device)
+                            continue;
+
+                        string entryPoint = command.Name;
+                        string functionName = NameMangler.MangleFunctionName(command.Name);
+
+                        StringBuilder signature = new StringBuilder();
+                        StringBuilder delegateTypes = new StringBuilder();
+                        StringBuilder paramNames = new StringBuilder();
+                        foreach (CommandParameter parameter in command.Parameters)
+                        {
+                            string name = NameMangler.MangleParameterName(parameter.Name);
+                            string type = parameter.StrongType!.ToCSString();
+                            signature.Append($"{type} {name}, ");
+                            delegateTypes.Append($"{type}, ");
+                            paramNames.Append($"{name}, ");
+                        }
+                        signature.Length -= 2;
+                        paramNames.Length -= 2;
+
+                        delegateTypes.Append($"{command.StrongReturnType!.ToCSString()}");
+
+                        writer.WriteLine($"public delegate* unmanaged<{delegateTypes}> _{entryPoint}_fnptr;");
+                    }
+                }
             }
         }
 

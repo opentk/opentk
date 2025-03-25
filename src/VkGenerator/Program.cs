@@ -40,6 +40,7 @@ namespace VkGenerator
             var constMap = Processor.BuildConstantsMap(specData, videoSpecData);
 
             Processor.ResolveStructMemberTypes(specData, typeMap, constMap);
+            Processor.ResolveHandleParent(specData);
             Processor.ResolveCommandTypes(specData, typeMap);
             Processor.ResolveVersionInfo(specData, typeMap);
 
