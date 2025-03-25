@@ -1119,6 +1119,7 @@ namespace Bejeweled
             GL.Enable(EnableCap.TextureCubeMapSeamless);
 
             Toolkit.Window.GetFramebufferSize(Window, out Vector2i fbSize);
+            nint oldImguiContext = ImGui.GetCurrentContext();
             ImGuiController = new ImGuiController(fbSize.X, fbSize.Y, useGLES);
             {
                 float scale = 6;
@@ -1247,6 +1248,8 @@ namespace Bejeweled
 
             watch.Stop();
             Logger.LogInfo($"Loading assets took: {watch.Elapsed.TotalMilliseconds}ms");
+
+            ImGui.SetCurrentContext(oldImguiContext);
         }
 
         public void TransitionToGame()
@@ -1529,6 +1532,9 @@ namespace Bejeweled
         bool[] KeyboardState = new bool[256];
         public bool Update(float deltaTime)
         {
+            nint oldImguiContext = ImGui.GetCurrentContext();
+            ImGui.SetCurrentContext(ImGuiController.Context);
+
             Time += deltaTime;
 
             // FIXME: A nicer way to automatically update all sfx...
@@ -1763,6 +1769,9 @@ namespace Bejeweled
 
             Array.Copy(KeyboardState, PrevKeyboardState, KeyboardState.Length);
             PrevMouseState = mouseState;
+
+            ImGui.PopFont();
+            ImGui.SetCurrentContext(oldImguiContext);
             return false;
 
             void DoIdle(float deltaTime)
@@ -2084,6 +2093,9 @@ namespace Bejeweled
 
         public void Render()
         {
+            nint oldImguiContext = ImGui.GetCurrentContext();
+            ImGui.SetCurrentContext(ImGuiController.Context);
+
             GL.BindFramebuffer(FramebufferTarget.Framebuffer, 0);
             GL.ClearDepth(1);
             GL.ClearColor(Color4.Black);
@@ -2110,6 +2122,8 @@ namespace Bejeweled
             RenderDrawList(UIOverlayDrawlist);
 
             Toolkit.OpenGL.SwapBuffers(Context);
+
+            ImGui.SetCurrentContext(oldImguiContext);
 
             void RenderGame()
             {
@@ -2357,6 +2371,9 @@ namespace Bejeweled
 
         private void EventQueue_EventRaised(PalHandle? handle, PlatformEventType type, EventArgs args)
         {
+            nint oldImguiContext = ImGui.GetCurrentContext();
+            ImGui.SetCurrentContext(ImGuiController.Context);
+
             // Only update imgui stuff for the main window
             if (args is KeyDownEventArgs keyDown)
             {
@@ -2404,6 +2421,8 @@ namespace Bejeweled
                 // FIXME: scale the ImGui text!
                 // ImGuiController.RecreateFontDeviceTexture();
             }
+
+            ImGui.SetCurrentContext(oldImguiContext);
         }
 
         public readonly static GLDebugProc DebugProcCallback = Window_DebugProc;
