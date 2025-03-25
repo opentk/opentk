@@ -9,6 +9,7 @@ using OpenTK.Platform;
 using OpenTK.Platform.Native;
 using ErrorCode = OpenTK.Graphics.OpenGL.ErrorCode;
 using System.Linq;
+using System.Runtime.InteropServices;
 
 namespace Bejeweled
 {
@@ -28,6 +29,8 @@ namespace Bejeweled
             KeysPressed = new bool[values.Max() + 1];
         }
     }
+
+    internal delegate void ImDrawCallback(ImDrawListPtr parentList, ImDrawCmdPtr cmd);
 
     internal class ImGuiController : IDisposable
     {
@@ -420,7 +423,9 @@ void main()
                     ImDrawCmdPtr pcmd = cmd_list.CmdBuffer[cmd_i];
                     if (pcmd.UserCallback != IntPtr.Zero)
                     {
-                        throw new NotImplementedException();
+                        GCHandle handle = GCHandle.FromIntPtr(pcmd.UserCallback);
+                        ImDrawCallback callback = (ImDrawCallback)handle.Target!;
+                        callback(cmd_list, pcmd);
                     }
                     else
                     {

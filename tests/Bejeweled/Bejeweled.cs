@@ -367,13 +367,11 @@ namespace Bejeweled
         }
 
         public SoundClip Clip;
-        public int EffectSlot;
         List<Source> Sources = new List<Source>();
 
-        public SoundEffect(SoundClip clip, int effectSlot)
+        public SoundEffect(SoundClip clip)
         {
             Clip = clip;
-            EffectSlot = effectSlot;
 
             AllSoundEffects.Add(new WeakReference<SoundEffect>(this));
         }
@@ -417,7 +415,7 @@ namespace Bejeweled
         public SoundClip Clip;
         public int Source;
 
-        public Music(SoundClip clip, int slot)
+        public Music(SoundClip clip)
         {
             Clip = clip;
             Source = AL.GenSource();
@@ -908,6 +906,26 @@ namespace Bejeweled
 
     }
 
+    internal struct BreakParticle
+    {
+        public Vector2 Position;
+        public Vector2 Velocity;
+        public Vector3 Color;
+        public float Timer = 0;
+        public float Delay = 0;
+        public int Score;
+        public bool Done = false;
+
+        public BreakParticle(Vector2 position, Vector2 velocity, Vector3 color, float delay, int score)
+        {
+            Position = position;
+            Velocity = velocity;
+            Color = color;
+            Delay = delay;
+            Score = score;
+        }
+    }
+
     static class VectorExtensions
     {
         public static ref System.Numerics.Vector2 AsNumerics(this ref Vector2 v) => ref Unsafe.As<Vector2, System.Numerics.Vector2>(ref v);
@@ -982,6 +1000,9 @@ namespace Bejeweled
         Cubemap PrefilteredEnvironmentMap;
 
         List<BreakEffect> BreakEffects = new List<BreakEffect>();
+        List<BreakParticle> BreakParticles = new List<BreakParticle>();
+
+        Texture ParticleTexture;
 
         GemShader GemShader;
         GemNormalShader GemNormalShader;
@@ -1004,12 +1025,9 @@ namespace Bejeweled
 
         SoundEffect BreakSoundEffect;
         SoundEffect SwapSoundEffect;
+        SoundEffect PointSoundEffect;
 
         SoundEffect ButtonPressEffect;
-
-        // OpenAL effect slots for mixing purposes.
-        int SfxEffectSlot;
-        int MusicEffectSlot;
 
         internal Gem[,] Board = new Gem[8, 8];
         internal Vector2[,] BoardPositions = new Vector2[8, 8];
@@ -1018,6 +1036,7 @@ namespace Bejeweled
 
 
         State CurrentState;
+        int Score = 0;
 
         // Idle state
         internal Vector2i HoveredGem = (-1, -1);
@@ -1043,6 +1062,11 @@ namespace Bejeweled
         internal const float FallAnimationTime = 0.2f;
         internal float FallingTime = 0.0f;
         internal int BrokenGemsComboCount = 0;
+
+        internal const float ParticleDelayTime = 0.18f;
+        internal float ParticlePitchResetTimer = 0.0f;
+        internal const float ParticlePitchResetTime = 1.5f;
+        internal int ParticlePitchCounter = 0;
 
         public unsafe void Initialize(WindowHandle window, OpenGLContextHandle context, bool useGLES, ILogger logger)
         {
@@ -1153,6 +1177,8 @@ namespace Bejeweled
             IrradianceMap = Cubemap.LoadCubemap("./Assets/Textures/dancing_hall_4kDiffuseHDR.dds");
             PrefilteredEnvironmentMap = Cubemap.LoadCubemap("./Assets/Textures/dancing_hall_4kSpecularHDR.dds");
 
+            ParticleTexture = Texture.LoadTexture("./Assets/Textures/particle.dds");
+
             Toolkit.Window.SetTitle(Window, $"Bejeweled");
 
             // ### OpenAL ###
@@ -1210,12 +1236,14 @@ namespace Bejeweled
                 Debug.Assert(false, $"ALError: {error}");
             }
 
-            AmbientMusic = new Music(SoundClip.LoadSound("./Assets/Sounds/Ambience.ogg"), MusicEffectSlot);
+            AmbientMusic = new Music(SoundClip.LoadSound("./Assets/Sounds/Ambience.ogg"));
 
-            BreakSoundEffect = new SoundEffect(SoundClip.LoadSound("./Assets/Sounds/Rise01.ogg"), SfxEffectSlot);
-            SwapSoundEffect = new SoundEffect(SoundClip.LoadSound("./Assets/Sounds/Swap.ogg"), SfxEffectSlot);
+            BreakSoundEffect = new SoundEffect(SoundClip.LoadSound("./Assets/Sounds/Rise01.ogg"));
+            SwapSoundEffect = new SoundEffect(SoundClip.LoadSound("./Assets/Sounds/Swap.ogg"));
 
-            ButtonPressEffect = new SoundEffect(SoundClip.LoadSound("./Assets/Sounds/switch8.ogg"), SfxEffectSlot);
+            ButtonPressEffect = new SoundEffect(SoundClip.LoadSound("./Assets/Sounds/switch8.ogg"));
+
+            PointSoundEffect = new SoundEffect(SoundClip.LoadSound("./Assets/Sounds/Coin01.ogg"));
 
             watch.Stop();
             Logger.LogInfo($"Loading assets took: {watch.Elapsed.TotalMilliseconds}ms");
@@ -1375,6 +1403,12 @@ namespace Bejeweled
             return legalMoves;
         }
 
+        Vector2 RandomDirection(Random rand)
+        {
+            float theta = rand.NextSingle() * MathHelper.TwoPi;
+            return (MathF.Cos(theta), MathF.Sin(theta));
+        }
+
         /// <returns>How many gems where broken, if any.</returns>
         int HandleMovedGem(Vector2i newPosition)
         {
@@ -1392,6 +1426,8 @@ namespace Bejeweled
             int rightCount = CountMatchesInDirection(Board[newPosition.X, newPosition.Y], newPosition, (+1, 0));
 
             int brokeCount = 0;
+
+            int particle = 0;
             
             int verticalCount = upCount + downCount - 1;
             int horizontalCount = leftCount + rightCount - 1;
@@ -1399,12 +1435,15 @@ namespace Bejeweled
             {
                 brokeCount += verticalCount;
 
+                int gemScore = (verticalCount - 2) * 5;
+                int score = verticalCount * gemScore;
+
                 for (int y = newPosition.Y - upCount + 1; y < newPosition.Y + downCount; y++)
                 {
                     Board[newPosition.X, y] = Gem.Empty;
-                }
 
-                int score = (verticalCount - 2) * 10;
+                    BreakParticles.Add(new BreakParticle(GetTileLocation(newPosition.X, y), RandomDirection(Random.Shared), GemColors[(int)gemType], particle++ * ParticleDelayTime, gemScore));
+                }
 
                 float horizontalLocation = GetTileLocation(newPosition.X, newPosition.Y).X;
                 float verticalCenter = GetTileLocation(newPosition.X, newPosition.Y + ((downCount - upCount) / 2)).Y;
@@ -1416,12 +1455,16 @@ namespace Bejeweled
             {
                 brokeCount += horizontalCount;
 
+                int gemScore = (horizontalCount - 2) * 5;
+                int score = horizontalCount * gemScore;
+
                 for (int x = newPosition.X - leftCount + 1; x < newPosition.X + rightCount; x++)
                 {
                     Board[x, newPosition.Y] = Gem.Empty;
-                }
 
-                int score = (horizontalCount - 2) * 10;
+                    if (verticalCount < 3 || x != newPosition.X)
+                        BreakParticles.Add(new BreakParticle(GetTileLocation(x, newPosition.Y), RandomDirection(Random.Shared), GemColors[(int)gemType], particle++ * ParticleDelayTime, gemScore));
+                }
 
                 float verticalLocation = GetTileLocation(newPosition.X, newPosition.Y).Y;
                 float verticalCenter = GetTileLocation(newPosition.X, newPosition.Y + ((downCount - upCount) / 2)).Y;
@@ -1434,6 +1477,16 @@ namespace Bejeweled
             {
                 // Remove the double counted gem.
                 brokeCount -= 1;
+            }
+
+            for (int i = 0; i < brokeCount; i++)
+            {
+                float verticalCenter = GetTileLocation(newPosition.X, newPosition.Y + ((downCount - upCount) / 2)).Y;
+                float horizontalCenter = GetTileLocation(newPosition.X + ((rightCount - leftCount) / 2), newPosition.Y).X;
+
+                // FIXME: If we break multiple rows at once we get particles that sync up.
+                // We'd ideally want like a global delay counter or something, so we could delay stuff.
+                //BreakParticles.Add(new BreakParticle((horizontalCenter, verticalCenter) + RandomDirection(Random.Shared) * 0.1f, RandomDirection(Random.Shared), GemColors[(int)gemType], i * ParticleDelayTime));
             }
 
             return brokeCount;
@@ -1454,6 +1507,22 @@ namespace Bejeweled
             return count;
         }
 
+        static ImDrawCallback SetBlendModeAdditiveCallback = SetBlendModeAdditive;
+        static GCHandle SetBlendModeAdditiveCallbackHandle = GCHandle.Alloc(SetBlendModeAdditiveCallback);
+        static void SetBlendModeAdditive(ImDrawListPtr parentList, ImDrawCmdPtr cmd)
+        {
+            GL.BlendEquation(BlendEquationMode.FuncAdd);
+            GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.One);
+        }
+
+        static ImDrawCallback SetBlendModeAlphaBlendingCallback = SetBlendModeAlphaBlending;
+        static GCHandle SetBlendModeAlphaBlendingCallbackHandle = GCHandle.Alloc(SetBlendModeAlphaBlendingCallback);
+        static void SetBlendModeAlphaBlending(ImDrawListPtr parentList, ImDrawCmdPtr cmd)
+        {
+            GL.BlendEquation(BlendEquationMode.FuncAdd);
+            GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
+        }
+
         float Time = 0;
         MouseState PrevMouseState;
         bool[] PrevKeyboardState = new bool[256];
@@ -1462,8 +1531,11 @@ namespace Bejeweled
         {
             Time += deltaTime;
 
+            // FIXME: A nicer way to automatically update all sfx...
             SwapSoundEffect.Update();
             BreakSoundEffect.Update();
+            PointSoundEffect.Update();
+            ButtonPressEffect.Update();
 
             ImGuiController.Update(deltaTime);
             ImGui.PushFont(CurrentImGuiFont);
@@ -1518,7 +1590,9 @@ namespace Bejeweled
                     position += (1, 1);
                     position *= 0.5f;
                     position.Y = 1 - position.Y;
-                    position *= fbSize;
+                    Vector4 board = GetGemBoardViewport();
+                    position *= board.Wz;
+                    position.X += board.X;
 
                     string text = $"+{effect.Score}";
 
@@ -1537,6 +1611,88 @@ namespace Bejeweled
 
                 // Remove all break effects that have died.
                 BreakEffects.RemoveAll(be => be.Timer > Lifetime);
+
+                UIOverlayDrawlist.AddCallback((nint)SetBlendModeAdditiveCallbackHandle, 0);
+
+                ParticlePitchResetTimer -= deltaTime;
+                if (ParticlePitchResetTimer <= 0)
+                {
+                    ParticlePitchResetTimer = 0;
+                    ParticlePitchCounter = 0;
+                }
+
+                Span<BreakParticle> particles = CollectionsMarshal.AsSpan(BreakParticles);
+                for (int i = 0; i < particles.Length; i++)
+                {
+                    ref BreakParticle particle = ref particles[i];
+                    particle.Timer += deltaTime;
+
+
+
+                    Vector2 goal = (-4.5f, -4.5f);
+                    Vector2 acceleration = (-4.5f, -4.5f) - particle.Position;
+
+                    static float EaseOutExpo(float x)
+                    {
+                        return x == 1 ? 1 : 1 - MathF.Pow(2, -10 * x);
+                    }
+
+                    static float EaseInOutCirc(float x)
+                    {
+                       return x < 0.5
+                          ? (1 - MathF.Sqrt(1 - MathF.Pow(2 * x, 2))) / 2
+                          : (MathF.Sqrt(1 - MathF.Pow(-2 * x + 2, 2)) + 1) / 2;
+                    }
+
+                    const float ExplodeAnimationTime = 0.5f;
+                    float explodeTime = float.Clamp(particle.Timer / (ExplodeAnimationTime + particle.Delay), 0.0f, 1.0f);
+
+                    Vector2 position = particle.Position + particle.Velocity * EaseOutExpo(explodeTime) * 1.2f;
+
+                    const float GatherStartTime = 0.2f;
+                    const float GatherAnimationTime = 1f;
+                    float gatherTime = float.Clamp((particle.Timer - GatherStartTime) / (GatherAnimationTime + particle.Delay), 0.0f, 1.0f);
+
+                    position = Vector2.Lerp(position, goal, EaseInOutCirc(gatherTime));
+
+                    static float EaseInExpo(float x)
+                    {
+                        return x == 0 ? 0 : MathF.Pow(2, 10 * x - 10);
+                    }
+
+                    const float FadeOutTime = 1f;
+                    float alphaT = float.Clamp((particle.Timer - (GatherStartTime + GatherAnimationTime - FadeOutTime + particle.Delay)) / FadeOutTime, 0.0f, 1.0f);
+                    float alpha = float.Lerp(1.0f, 0.0f, EaseInExpo(alphaT));
+
+                    if (particle.Timer > GatherStartTime + GatherAnimationTime + particle.Delay)
+                    {
+                        ParticlePitchCounter++;
+                        ParticlePitchResetTimer = ParticlePitchResetTime;
+                        PointSoundEffect.PlayOneShot(0.5f, MathHelper.MapRange(int.Clamp(ParticlePitchCounter - 3, 1, 15), 1.0f, 15.0f, 1.0f, 2.0f) + (Random.Shared.NextSingle() - 0.5f) * 0.01f);
+                        particle.Done = true;
+
+                        Score += particle.Score;
+                    }
+
+                    position = position / 4;
+                    position += (1, 1);
+                    position *= 0.5f;
+                    position.Y = 1 - position.Y;
+                    Vector4 board = GetGemBoardViewport();
+                    position *= board.Wz;
+                    position.X += board.X;
+
+                    const float ParticleSize = 45.0f;
+
+                    //UIOverlayDrawlist.AddCircleFilled(position.ToNumerics(), 10f, ImGui.ColorConvertFloat4ToU32(new System.Numerics.Vector4(particle.Color.X, particle.Color.Y, particle.Color.Z, 1.0f)));
+                    uint col = ImGui.ColorConvertFloat4ToU32(new System.Numerics.Vector4(particle.Color.X, particle.Color.Y, particle.Color.Z, alpha));
+                    UIOverlayDrawlist.AddImage(ParticleTexture.Handle, (position - (ParticleSize/2, ParticleSize/2)).ToNumerics(), (position + (ParticleSize/2, ParticleSize/2)).ToNumerics(), System.Numerics.Vector2.Zero, System.Numerics.Vector2.One, col);
+                }
+
+                UIOverlayDrawlist.AddCallback((nint)SetBlendModeAlphaBlendingCallbackHandle, 0);
+
+                // Remove all break effects that have died.
+                BreakParticles.RemoveAll(be => be.Done);
             }
 
             Toolkit.Mouse.GetMouseState(Window, out MouseState mouseState);
@@ -1554,6 +1710,9 @@ namespace Bejeweled
                 Box2i board = GetGemBoardBox();
                 
                 UIBaseDrawlist.AddRectFilled(board.Min.ToVector2().ToNumerics(), board.Max.ToVector2().ToNumerics(), ImGui.ColorConvertFloat4ToU32(new System.Numerics.Vector4(0.1f, 0.1f, 0.1f, 1.0f)));
+                
+                UIBaseDrawlist.AddRectFilled(new System.Numerics.Vector2(0, fbSize.Y - fbSize.Y * UI_BOTTOM_PAD), new System.Numerics.Vector2(fbSize.X, fbSize.Y), ImGui.ColorConvertFloat4ToU32(new System.Numerics.Vector4(0.5f, 0.5f, 0.5f, 1.0f)), (fbSize.Y * UI_BOTTOM_PAD) * 0.5f);
+                UIBaseDrawlist.AddText(new System.Numerics.Vector2(leftIconPad * 4, fbSize.Y - fbSize.Y * UI_BOTTOM_PAD + ImGui.GetTextLineHeight() * 0.3f), ImGui.ColorConvertFloat4ToU32(new System.Numerics.Vector4(0.8f, 0.8f, 0.8f, 1.0f)), $"{Score}");
 
                 // FIXME: Sliders for both music and SFX.
                 Box2 sfxMuteButtonBox = new Box2(leftIconPad, 0, leftIconPad + iconSize, iconSize);
@@ -1731,6 +1890,7 @@ namespace Bejeweled
                     // FIXME: Play nice sound effect.
 
                     CurrentState = State.Falling;
+                    Score = 0;
 
                     // If there was a selected gem, deselect and reset position.
                     if (SelectedGem != (-1, -1))
