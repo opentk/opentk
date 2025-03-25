@@ -121,7 +121,6 @@ namespace VkGenerator
                     {
                         foreach (EnumMember member in @enum.Members)
                         {
-                            string? comment = NameMangler.MaybeRemoveStart(member.Comment, "// ");
                             if (member.Extension != null && member.VersionInfo != null)
                             {
                                 if (member.Extension.StartsWith("VK_VERSION") == false)
@@ -188,9 +187,10 @@ namespace VkGenerator
                                 }
                             }
 
+                            string? comment = NameMangler.MaybeRemoveStart(member.Comment, "// ");
                             if (comment != null)
                             {
-                                writer.Write($"{comment}");
+                                writer.Write($"{NameMangler.XmlEscapeCharacters(comment)}");
                             }
                             writer.WriteLine("</summary>");
 
@@ -286,7 +286,7 @@ namespace VkGenerator
                     }
                     if (@struct.Comment != null)
                     {
-                        writer.Write($"{NameMangler.MaybeRemoveStart(@struct.Comment, "// ")}");
+                        writer.Write($"{NameMangler.XmlEscapeCharacters(NameMangler.MaybeRemoveStart(@struct.Comment, "// "))}");
                     }
                     if (@struct.ReferencedBy != null)
                     {
@@ -926,11 +926,11 @@ namespace VkGenerator
                     {
                         if (constant.Extension != null)
                         {
-                            writer.WriteLine($"/// <summary>[from: <b>{constant.Extension}</b>]{constant.Comment}</summary>");
+                            writer.WriteLine($"/// <summary>[from: <b>{constant.Extension}</b>]{NameMangler.XmlEscapeCharacters(constant.Comment)}</summary>");
                         }
                         else if (constant.Comment != null)
                         {
-                            writer.WriteLine($"/// <summary>{constant.Comment}</summary>");
+                            writer.WriteLine($"/// <summary>{NameMangler.XmlEscapeCharacters(constant.Comment)}</summary>");
                         }
 
                         writer.WriteLine($"/// <remarks><see href=\"https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/{name}.html\" /></remarks>");
@@ -1050,7 +1050,7 @@ namespace VkGenerator
                                             string? comment = NameMangler.MaybeRemoveStart(member.Comment, "// ");
                                             if (comment != null)
                                             {
-                                                writer.WriteLine($"/// <summary>{comment}</summary>");
+                                                writer.WriteLine($"/// <summary>{NameMangler.XmlEscapeCharacters(comment)}</summary>");
                                             }
                                             writer.WriteLine($"{NameMangler.MangleEnumName(member.Name)} = {member.Value},");
                                         }
@@ -1062,7 +1062,7 @@ namespace VkGenerator
                                 }
                                 else
                                 {
-                                    Console.WriteLine($"Could not find {requiredType.Name}");
+                                    Console.WriteLine($"Could not find {requiredType.Name} in {extension.Name} extension.");
                                 }
                             }
                         }
@@ -1093,12 +1093,12 @@ namespace VkGenerator
                 foreach (StructMember member in @struct.Members)
                 {
                     // FIXME: What do we do with these?
-                    if (member.StrongType is CSNotSupportedType)
+                    if (member.StrongType is CSNotSupportedType notSupported)
                     {
                         // We can't have unsupported types in our ctor
                         canWriteSimpleCtor &= false;
 
-                        Console.WriteLine("Unsupported type in struct!!");
+                        Console.WriteLine($"Unsupported type '{notSupported.UnsupportedType}' in struct {@struct.Name}!");
                         writer.WriteLine($"// Unsupported type for field {member.Name}");
                         continue;
                     }
@@ -1165,7 +1165,7 @@ namespace VkGenerator
                         EnumMember? enumMember = Processor.FindEnumMember(enums, member.Values);
                         if (enumMember == null)
                         {
-                            Console.WriteLine($"Could't find sType '{member.Values}'");
+                            Console.WriteLine($"Could't find sType '{member.Values}' for {@struct.Name}");
                             writer.WriteLine($"public {member.StrongType!.ToCSString()} {NameMangler.MangleMemberName(member.Name)};");
                         }
                         else
@@ -1201,7 +1201,6 @@ namespace VkGenerator
 
                                 int size = actualWidth;
                                 int offset = underlyingBitwidth - bitsLeft;
-                                writer.WriteLine($" // TODO: Accessor property for {member.Name}, size: {actualWidth}, offset: {underlyingBitwidth - bitsLeft}");
                                 writer.WriteLine($"public {csBitfield.UnderlyingType.ToCSString()} {NameMangler.MangleMemberName(member.Name)}");
                                 using (writer.CsScope())
                                 {

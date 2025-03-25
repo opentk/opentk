@@ -85,7 +85,7 @@ namespace OpenTK.Backends.Tests
             // when we use Toolkit.Init to actually create the components...
             // - Noggin_bops 2024-03-02
             PlatformComponents.PreferSDL2 = false;
-            PlatformComponents.PreferANGLE = true;
+            PlatformComponents.PreferANGLE = false;
 
             if (PlatformComponents.PreferANGLE)
             {

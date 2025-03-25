@@ -68,6 +68,7 @@ namespace OpenTK.Graphics.Vulkan
             _vkGetPhysicalDeviceCooperativeMatrixFlexibleDimensionsPropertiesNV_fnptr = (delegate* unmanaged<VkPhysicalDevice, uint*, VkCooperativeMatrixFlexibleDimensionsPropertiesNV*, VkResult>)VKLoader.GetInstanceProcAddress(instance, "vkGetPhysicalDeviceCooperativeMatrixFlexibleDimensionsPropertiesNV");
             _vkGetPhysicalDeviceCooperativeMatrixPropertiesKHR_fnptr = (delegate* unmanaged<VkPhysicalDevice, uint*, VkCooperativeMatrixPropertiesKHR*, VkResult>)VKLoader.GetInstanceProcAddress(instance, "vkGetPhysicalDeviceCooperativeMatrixPropertiesKHR");
             _vkGetPhysicalDeviceCooperativeMatrixPropertiesNV_fnptr = (delegate* unmanaged<VkPhysicalDevice, uint*, VkCooperativeMatrixPropertiesNV*, VkResult>)VKLoader.GetInstanceProcAddress(instance, "vkGetPhysicalDeviceCooperativeMatrixPropertiesNV");
+            _vkGetPhysicalDeviceCooperativeVectorPropertiesNV_fnptr = (delegate* unmanaged<VkPhysicalDevice, uint*, VkCooperativeVectorPropertiesNV*, VkResult>)VKLoader.GetInstanceProcAddress(instance, "vkGetPhysicalDeviceCooperativeVectorPropertiesNV");
             _vkGetPhysicalDeviceDirectFBPresentationSupportEXT_fnptr = (delegate* unmanaged<VkPhysicalDevice, uint, IntPtr, int>)VKLoader.GetInstanceProcAddress(instance, "vkGetPhysicalDeviceDirectFBPresentationSupportEXT");
             _vkGetPhysicalDeviceDisplayPlaneProperties2KHR_fnptr = (delegate* unmanaged<VkPhysicalDevice, uint*, VkDisplayPlaneProperties2KHR*, VkResult>)VKLoader.GetInstanceProcAddress(instance, "vkGetPhysicalDeviceDisplayPlaneProperties2KHR");
             _vkGetPhysicalDeviceDisplayPlanePropertiesKHR_fnptr = (delegate* unmanaged<VkPhysicalDevice, uint*, VkDisplayPlanePropertiesKHR*, VkResult>)VKLoader.GetInstanceProcAddress(instance, "vkGetPhysicalDeviceDisplayPlanePropertiesKHR");
@@ -403,6 +404,12 @@ namespace OpenTK.Graphics.Vulkan
         public VkResult GetPhysicalDeviceCooperativeMatrixPropertiesNV(VkPhysicalDevice physicalDevice, uint* pPropertyCount, VkCooperativeMatrixPropertiesNV* pProperties)
         {
             return _vkGetPhysicalDeviceCooperativeMatrixPropertiesNV_fnptr(physicalDevice, pPropertyCount, pProperties);
+        }
+        /// <summary><b>[requires: VK_NV_cooperative_vector]</b> [instance command] </summary>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceCooperativeVectorPropertiesNV.html" /></remarks>
+        public VkResult GetPhysicalDeviceCooperativeVectorPropertiesNV(VkPhysicalDevice physicalDevice, uint* pPropertyCount, VkCooperativeVectorPropertiesNV* pProperties)
+        {
+            return _vkGetPhysicalDeviceCooperativeVectorPropertiesNV_fnptr(physicalDevice, pPropertyCount, pProperties);
         }
         /// <summary><b>[requires: VK_EXT_directfb_surface]</b> [instance command] </summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceDirectFBPresentationSupportEXT.html" /></remarks>
@@ -839,6 +846,7 @@ namespace OpenTK.Graphics.Vulkan
         public delegate* unmanaged<VkPhysicalDevice, uint*, VkCooperativeMatrixFlexibleDimensionsPropertiesNV*, VkResult> _vkGetPhysicalDeviceCooperativeMatrixFlexibleDimensionsPropertiesNV_fnptr;
         public delegate* unmanaged<VkPhysicalDevice, uint*, VkCooperativeMatrixPropertiesKHR*, VkResult> _vkGetPhysicalDeviceCooperativeMatrixPropertiesKHR_fnptr;
         public delegate* unmanaged<VkPhysicalDevice, uint*, VkCooperativeMatrixPropertiesNV*, VkResult> _vkGetPhysicalDeviceCooperativeMatrixPropertiesNV_fnptr;
+        public delegate* unmanaged<VkPhysicalDevice, uint*, VkCooperativeVectorPropertiesNV*, VkResult> _vkGetPhysicalDeviceCooperativeVectorPropertiesNV_fnptr;
         public delegate* unmanaged<VkPhysicalDevice, uint, IntPtr, int> _vkGetPhysicalDeviceDirectFBPresentationSupportEXT_fnptr;
         public delegate* unmanaged<VkPhysicalDevice, uint*, VkDisplayPlaneProperties2KHR*, VkResult> _vkGetPhysicalDeviceDisplayPlaneProperties2KHR_fnptr;
         public delegate* unmanaged<VkPhysicalDevice, uint*, VkDisplayPlanePropertiesKHR*, VkResult> _vkGetPhysicalDeviceDisplayPlanePropertiesKHR_fnptr;
@@ -968,11 +976,14 @@ namespace OpenTK.Graphics.Vulkan
             _vkCmdBuildAccelerationStructureNV_fnptr = (delegate* unmanaged<VkCommandBuffer, VkAccelerationStructureInfoNV*, VkBuffer, ulong, int, VkAccelerationStructureNV, VkAccelerationStructureNV, VkBuffer, ulong, void>)VKLoader.GetDeviceProcAddr(device, "vkCmdBuildAccelerationStructureNV");
             _vkCmdBuildAccelerationStructuresIndirectKHR_fnptr = (delegate* unmanaged<VkCommandBuffer, uint, VkAccelerationStructureBuildGeometryInfoKHR*, ulong*, uint*, uint**, void>)VKLoader.GetDeviceProcAddr(device, "vkCmdBuildAccelerationStructuresIndirectKHR");
             _vkCmdBuildAccelerationStructuresKHR_fnptr = (delegate* unmanaged<VkCommandBuffer, uint, VkAccelerationStructureBuildGeometryInfoKHR*, VkAccelerationStructureBuildRangeInfoKHR**, void>)VKLoader.GetDeviceProcAddr(device, "vkCmdBuildAccelerationStructuresKHR");
+            _vkCmdBuildClusterAccelerationStructureIndirectNV_fnptr = (delegate* unmanaged<VkCommandBuffer, VkClusterAccelerationStructureCommandsInfoNV*, void>)VKLoader.GetDeviceProcAddr(device, "vkCmdBuildClusterAccelerationStructureIndirectNV");
             _vkCmdBuildMicromapsEXT_fnptr = (delegate* unmanaged<VkCommandBuffer, uint, VkMicromapBuildInfoEXT*, void>)VKLoader.GetDeviceProcAddr(device, "vkCmdBuildMicromapsEXT");
+            _vkCmdBuildPartitionedAccelerationStructuresNV_fnptr = (delegate* unmanaged<VkCommandBuffer, VkBuildPartitionedAccelerationStructureInfoNV*, void>)VKLoader.GetDeviceProcAddr(device, "vkCmdBuildPartitionedAccelerationStructuresNV");
             _vkCmdClearAttachments_fnptr = (delegate* unmanaged<VkCommandBuffer, uint, VkClearAttachment*, uint, VkClearRect*, void>)VKLoader.GetDeviceProcAddr(device, "vkCmdClearAttachments");
             _vkCmdClearColorImage_fnptr = (delegate* unmanaged<VkCommandBuffer, VkImage, VkImageLayout, VkClearColorValue*, uint, VkImageSubresourceRange*, void>)VKLoader.GetDeviceProcAddr(device, "vkCmdClearColorImage");
             _vkCmdClearDepthStencilImage_fnptr = (delegate* unmanaged<VkCommandBuffer, VkImage, VkImageLayout, VkClearDepthStencilValue*, uint, VkImageSubresourceRange*, void>)VKLoader.GetDeviceProcAddr(device, "vkCmdClearDepthStencilImage");
             _vkCmdControlVideoCodingKHR_fnptr = (delegate* unmanaged<VkCommandBuffer, VkVideoCodingControlInfoKHR*, void>)VKLoader.GetDeviceProcAddr(device, "vkCmdControlVideoCodingKHR");
+            _vkCmdConvertCooperativeVectorMatrixNV_fnptr = (delegate* unmanaged<VkCommandBuffer, uint, VkConvertCooperativeVectorMatrixInfoNV*, void>)VKLoader.GetDeviceProcAddr(device, "vkCmdConvertCooperativeVectorMatrixNV");
             _vkCmdCopyAccelerationStructureKHR_fnptr = (delegate* unmanaged<VkCommandBuffer, VkCopyAccelerationStructureInfoKHR*, void>)VKLoader.GetDeviceProcAddr(device, "vkCmdCopyAccelerationStructureKHR");
             _vkCmdCopyAccelerationStructureNV_fnptr = (delegate* unmanaged<VkCommandBuffer, VkAccelerationStructureNV, VkAccelerationStructureNV, VkCopyAccelerationStructureModeKHR, void>)VKLoader.GetDeviceProcAddr(device, "vkCmdCopyAccelerationStructureNV");
             _vkCmdCopyAccelerationStructureToMemoryKHR_fnptr = (delegate* unmanaged<VkCommandBuffer, VkCopyAccelerationStructureToMemoryInfoKHR*, void>)VKLoader.GetDeviceProcAddr(device, "vkCmdCopyAccelerationStructureToMemoryKHR");
@@ -1037,6 +1048,7 @@ namespace OpenTK.Graphics.Vulkan
             _vkCmdEndQuery_fnptr = (delegate* unmanaged<VkCommandBuffer, VkQueryPool, uint, void>)VKLoader.GetDeviceProcAddr(device, "vkCmdEndQuery");
             _vkCmdEndQueryIndexedEXT_fnptr = (delegate* unmanaged<VkCommandBuffer, VkQueryPool, uint, uint, void>)VKLoader.GetDeviceProcAddr(device, "vkCmdEndQueryIndexedEXT");
             _vkCmdEndRendering_fnptr = (delegate* unmanaged<VkCommandBuffer, void>)VKLoader.GetDeviceProcAddr(device, "vkCmdEndRendering");
+            _vkCmdEndRendering2EXT_fnptr = (delegate* unmanaged<VkCommandBuffer, VkRenderingEndInfoEXT*, void>)VKLoader.GetDeviceProcAddr(device, "vkCmdEndRendering2EXT");
             _vkCmdEndRenderingKHR_fnptr = (delegate* unmanaged<VkCommandBuffer, void>)VKLoader.GetDeviceProcAddr(device, "vkCmdEndRenderingKHR");
             _vkCmdEndRenderPass_fnptr = (delegate* unmanaged<VkCommandBuffer, void>)VKLoader.GetDeviceProcAddr(device, "vkCmdEndRenderPass");
             _vkCmdEndRenderPass2_fnptr = (delegate* unmanaged<VkCommandBuffer, VkSubpassEndInfo*, void>)VKLoader.GetDeviceProcAddr(device, "vkCmdEndRenderPass2");
@@ -1201,6 +1213,7 @@ namespace OpenTK.Graphics.Vulkan
             _vkCmdWriteTimestamp2_fnptr = (delegate* unmanaged<VkCommandBuffer, VkPipelineStageFlagBits2, VkQueryPool, uint, void>)VKLoader.GetDeviceProcAddr(device, "vkCmdWriteTimestamp2");
             _vkCmdWriteTimestamp2KHR_fnptr = (delegate* unmanaged<VkCommandBuffer, VkPipelineStageFlagBits2, VkQueryPool, uint, void>)VKLoader.GetDeviceProcAddr(device, "vkCmdWriteTimestamp2KHR");
             _vkCompileDeferredNV_fnptr = (delegate* unmanaged<VkDevice, VkPipeline, uint, VkResult>)VKLoader.GetDeviceProcAddr(device, "vkCompileDeferredNV");
+            _vkConvertCooperativeVectorMatrixNV_fnptr = (delegate* unmanaged<VkDevice, VkConvertCooperativeVectorMatrixInfoNV*, VkResult>)VKLoader.GetDeviceProcAddr(device, "vkConvertCooperativeVectorMatrixNV");
             _vkCopyAccelerationStructureKHR_fnptr = (delegate* unmanaged<VkDevice, VkDeferredOperationKHR, VkCopyAccelerationStructureInfoKHR*, VkResult>)VKLoader.GetDeviceProcAddr(device, "vkCopyAccelerationStructureKHR");
             _vkCopyAccelerationStructureToMemoryKHR_fnptr = (delegate* unmanaged<VkDevice, VkDeferredOperationKHR, VkCopyAccelerationStructureToMemoryInfoKHR*, VkResult>)VKLoader.GetDeviceProcAddr(device, "vkCopyAccelerationStructureToMemoryKHR");
             _vkCopyImageToImage_fnptr = (delegate* unmanaged<VkDevice, VkCopyImageToImageInfo*, VkResult>)VKLoader.GetDeviceProcAddr(device, "vkCopyImageToImage");
@@ -1323,7 +1336,7 @@ namespace OpenTK.Graphics.Vulkan
             _vkGetAccelerationStructureBuildSizesKHR_fnptr = (delegate* unmanaged<VkDevice, VkAccelerationStructureBuildTypeKHR, VkAccelerationStructureBuildGeometryInfoKHR*, uint*, VkAccelerationStructureBuildSizesInfoKHR*, void>)VKLoader.GetDeviceProcAddr(device, "vkGetAccelerationStructureBuildSizesKHR");
             _vkGetAccelerationStructureDeviceAddressKHR_fnptr = (delegate* unmanaged<VkDevice, VkAccelerationStructureDeviceAddressInfoKHR*, ulong>)VKLoader.GetDeviceProcAddr(device, "vkGetAccelerationStructureDeviceAddressKHR");
             _vkGetAccelerationStructureHandleNV_fnptr = (delegate* unmanaged<VkDevice, VkAccelerationStructureNV, nuint, void*, VkResult>)VKLoader.GetDeviceProcAddr(device, "vkGetAccelerationStructureHandleNV");
-            _vkGetAccelerationStructureMemoryRequirementsNV_fnptr = (delegate* unmanaged<VkDevice, VkAccelerationStructureMemoryRequirementsInfoNV*, VkMemoryRequirements2KHR*, void>)VKLoader.GetDeviceProcAddr(device, "vkGetAccelerationStructureMemoryRequirementsNV");
+            _vkGetAccelerationStructureMemoryRequirementsNV_fnptr = (delegate* unmanaged<VkDevice, VkAccelerationStructureMemoryRequirementsInfoNV*, VkMemoryRequirements2*, void>)VKLoader.GetDeviceProcAddr(device, "vkGetAccelerationStructureMemoryRequirementsNV");
             _vkGetAccelerationStructureOpaqueCaptureDescriptorDataEXT_fnptr = (delegate* unmanaged<VkDevice, VkAccelerationStructureCaptureDescriptorDataInfoEXT*, void*, VkResult>)VKLoader.GetDeviceProcAddr(device, "vkGetAccelerationStructureOpaqueCaptureDescriptorDataEXT");
             _vkGetAndroidHardwareBufferPropertiesANDROID_fnptr = (delegate* unmanaged<VkDevice, IntPtr, VkAndroidHardwareBufferPropertiesANDROID*, VkResult>)VKLoader.GetDeviceProcAddr(device, "vkGetAndroidHardwareBufferPropertiesANDROID");
             _vkGetBufferCollectionPropertiesFUCHSIA_fnptr = (delegate* unmanaged<VkDevice, VkBufferCollectionFUCHSIA, VkBufferCollectionPropertiesFUCHSIA*, VkResult>)VKLoader.GetDeviceProcAddr(device, "vkGetBufferCollectionPropertiesFUCHSIA");
@@ -1338,6 +1351,7 @@ namespace OpenTK.Graphics.Vulkan
             _vkGetBufferOpaqueCaptureDescriptorDataEXT_fnptr = (delegate* unmanaged<VkDevice, VkBufferCaptureDescriptorDataInfoEXT*, void*, VkResult>)VKLoader.GetDeviceProcAddr(device, "vkGetBufferOpaqueCaptureDescriptorDataEXT");
             _vkGetCalibratedTimestampsEXT_fnptr = (delegate* unmanaged<VkDevice, uint, VkCalibratedTimestampInfoKHR*, ulong*, ulong*, VkResult>)VKLoader.GetDeviceProcAddr(device, "vkGetCalibratedTimestampsEXT");
             _vkGetCalibratedTimestampsKHR_fnptr = (delegate* unmanaged<VkDevice, uint, VkCalibratedTimestampInfoKHR*, ulong*, ulong*, VkResult>)VKLoader.GetDeviceProcAddr(device, "vkGetCalibratedTimestampsKHR");
+            _vkGetClusterAccelerationStructureBuildSizesNV_fnptr = (delegate* unmanaged<VkDevice, VkClusterAccelerationStructureInputInfoNV*, VkAccelerationStructureBuildSizesInfoKHR*, void>)VKLoader.GetDeviceProcAddr(device, "vkGetClusterAccelerationStructureBuildSizesNV");
             _vkGetCommandPoolMemoryConsumption_fnptr = (delegate* unmanaged<VkDevice, VkCommandPool, VkCommandBuffer, VkCommandPoolMemoryConsumption*, void>)VKLoader.GetDeviceProcAddr(device, "vkGetCommandPoolMemoryConsumption");
             _vkGetCudaModuleCacheNV_fnptr = (delegate* unmanaged<VkDevice, VkCudaModuleNV, nuint*, void*, VkResult>)VKLoader.GetDeviceProcAddr(device, "vkGetCudaModuleCacheNV");
             _vkGetDeferredOperationMaxConcurrencyKHR_fnptr = (delegate* unmanaged<VkDevice, VkDeferredOperationKHR, uint>)VKLoader.GetDeviceProcAddr(device, "vkGetDeferredOperationMaxConcurrencyKHR");
@@ -1407,6 +1421,8 @@ namespace OpenTK.Graphics.Vulkan
             _vkGetMemoryFdKHR_fnptr = (delegate* unmanaged<VkDevice, VkMemoryGetFdInfoKHR*, int*, VkResult>)VKLoader.GetDeviceProcAddr(device, "vkGetMemoryFdKHR");
             _vkGetMemoryFdPropertiesKHR_fnptr = (delegate* unmanaged<VkDevice, VkExternalMemoryHandleTypeFlagBits, int, VkMemoryFdPropertiesKHR*, VkResult>)VKLoader.GetDeviceProcAddr(device, "vkGetMemoryFdPropertiesKHR");
             _vkGetMemoryHostPointerPropertiesEXT_fnptr = (delegate* unmanaged<VkDevice, VkExternalMemoryHandleTypeFlagBits, void*, VkMemoryHostPointerPropertiesEXT*, VkResult>)VKLoader.GetDeviceProcAddr(device, "vkGetMemoryHostPointerPropertiesEXT");
+            _vkGetMemoryMetalHandleEXT_fnptr = (delegate* unmanaged<VkDevice, VkMemoryGetMetalHandleInfoEXT*, void**, VkResult>)VKLoader.GetDeviceProcAddr(device, "vkGetMemoryMetalHandleEXT");
+            _vkGetMemoryMetalHandlePropertiesEXT_fnptr = (delegate* unmanaged<VkDevice, VkExternalMemoryHandleTypeFlagBits, void*, VkMemoryMetalHandlePropertiesEXT*, VkResult>)VKLoader.GetDeviceProcAddr(device, "vkGetMemoryMetalHandlePropertiesEXT");
             _vkGetMemoryRemoteAddressNV_fnptr = (delegate* unmanaged<VkDevice, VkMemoryGetRemoteAddressInfoNV*, void**, VkResult>)VKLoader.GetDeviceProcAddr(device, "vkGetMemoryRemoteAddressNV");
             _vkGetMemorySciBufNV_fnptr = (delegate* unmanaged<VkDevice, VkMemoryGetSciBufInfoNV*, IntPtr*, VkResult>)VKLoader.GetDeviceProcAddr(device, "vkGetMemorySciBufNV");
             _vkGetMemoryWin32HandleKHR_fnptr = (delegate* unmanaged<VkDevice, VkMemoryGetWin32HandleInfoKHR*, IntPtr*, VkResult>)VKLoader.GetDeviceProcAddr(device, "vkGetMemoryWin32HandleKHR");
@@ -1415,6 +1431,7 @@ namespace OpenTK.Graphics.Vulkan
             _vkGetMemoryZirconHandleFUCHSIA_fnptr = (delegate* unmanaged<VkDevice, VkMemoryGetZirconHandleInfoFUCHSIA*, int*, VkResult>)VKLoader.GetDeviceProcAddr(device, "vkGetMemoryZirconHandleFUCHSIA");
             _vkGetMemoryZirconHandlePropertiesFUCHSIA_fnptr = (delegate* unmanaged<VkDevice, VkExternalMemoryHandleTypeFlagBits, int, VkMemoryZirconHandlePropertiesFUCHSIA*, VkResult>)VKLoader.GetDeviceProcAddr(device, "vkGetMemoryZirconHandlePropertiesFUCHSIA");
             _vkGetMicromapBuildSizesEXT_fnptr = (delegate* unmanaged<VkDevice, VkAccelerationStructureBuildTypeKHR, VkMicromapBuildInfoEXT*, VkMicromapBuildSizesInfoEXT*, void>)VKLoader.GetDeviceProcAddr(device, "vkGetMicromapBuildSizesEXT");
+            _vkGetPartitionedAccelerationStructuresBuildSizesNV_fnptr = (delegate* unmanaged<VkDevice, VkPartitionedAccelerationStructureInstancesInputNV*, VkAccelerationStructureBuildSizesInfoKHR*, void>)VKLoader.GetDeviceProcAddr(device, "vkGetPartitionedAccelerationStructuresBuildSizesNV");
             _vkGetPastPresentationTimingGOOGLE_fnptr = (delegate* unmanaged<VkDevice, VkSwapchainKHR, uint*, VkPastPresentationTimingGOOGLE*, VkResult>)VKLoader.GetDeviceProcAddr(device, "vkGetPastPresentationTimingGOOGLE");
             _vkGetPerformanceParameterINTEL_fnptr = (delegate* unmanaged<VkDevice, VkPerformanceParameterTypeINTEL, VkPerformanceValueINTEL*, VkResult>)VKLoader.GetDeviceProcAddr(device, "vkGetPerformanceParameterINTEL");
             _vkGetPipelineBinaryDataKHR_fnptr = (delegate* unmanaged<VkDevice, VkPipelineBinaryDataInfoKHR*, VkPipelineBinaryKeyKHR*, nuint*, void*, VkResult>)VKLoader.GetDeviceProcAddr(device, "vkGetPipelineBinaryDataKHR");
@@ -1425,7 +1442,7 @@ namespace OpenTK.Graphics.Vulkan
             _vkGetPipelineIndirectDeviceAddressNV_fnptr = (delegate* unmanaged<VkDevice, VkPipelineIndirectDeviceAddressInfoNV*, ulong>)VKLoader.GetDeviceProcAddr(device, "vkGetPipelineIndirectDeviceAddressNV");
             _vkGetPipelineIndirectMemoryRequirementsNV_fnptr = (delegate* unmanaged<VkDevice, VkComputePipelineCreateInfo*, VkMemoryRequirements2*, void>)VKLoader.GetDeviceProcAddr(device, "vkGetPipelineIndirectMemoryRequirementsNV");
             _vkGetPipelineKeyKHR_fnptr = (delegate* unmanaged<VkDevice, VkPipelineCreateInfoKHR*, VkPipelineBinaryKeyKHR*, VkResult>)VKLoader.GetDeviceProcAddr(device, "vkGetPipelineKeyKHR");
-            _vkGetPipelinePropertiesEXT_fnptr = (delegate* unmanaged<VkDevice, VkPipelineInfoEXT*, VkBaseOutStructure*, VkResult>)VKLoader.GetDeviceProcAddr(device, "vkGetPipelinePropertiesEXT");
+            _vkGetPipelinePropertiesEXT_fnptr = (delegate* unmanaged<VkDevice, VkPipelineInfoKHR*, VkBaseOutStructure*, VkResult>)VKLoader.GetDeviceProcAddr(device, "vkGetPipelinePropertiesEXT");
             _vkGetPrivateData_fnptr = (delegate* unmanaged<VkDevice, VkObjectType, ulong, VkPrivateDataSlot, ulong*, void>)VKLoader.GetDeviceProcAddr(device, "vkGetPrivateData");
             _vkGetPrivateDataEXT_fnptr = (delegate* unmanaged<VkDevice, VkObjectType, ulong, VkPrivateDataSlot, ulong*, void>)VKLoader.GetDeviceProcAddr(device, "vkGetPrivateDataEXT");
             _vkGetQueryPoolResults_fnptr = (delegate* unmanaged<VkDevice, VkQueryPool, uint, uint, nuint, void*, ulong, VkQueryResultFlagBits, VkResult>)VKLoader.GetDeviceProcAddr(device, "vkGetQueryPoolResults");
@@ -1877,11 +1894,23 @@ namespace OpenTK.Graphics.Vulkan
         {
             _vkCmdBuildAccelerationStructuresKHR_fnptr(commandBuffer, infoCount, pInfos, ppBuildRangeInfos);
         }
+        /// <summary><b>[requires: VK_NV_cluster_acceleration_structure]</b> [device command] </summary>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdBuildClusterAccelerationStructureIndirectNV.html" /></remarks>
+        public void CmdBuildClusterAccelerationStructureIndirectNV(VkCommandBuffer commandBuffer, VkClusterAccelerationStructureCommandsInfoNV* pCommandInfos)
+        {
+            _vkCmdBuildClusterAccelerationStructureIndirectNV_fnptr(commandBuffer, pCommandInfos);
+        }
         /// <summary><b>[requires: VK_EXT_opacity_micromap]</b> [device command] </summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdBuildMicromapsEXT.html" /></remarks>
         public void CmdBuildMicromapsEXT(VkCommandBuffer commandBuffer, uint infoCount, VkMicromapBuildInfoEXT* pInfos)
         {
             _vkCmdBuildMicromapsEXT_fnptr(commandBuffer, infoCount, pInfos);
+        }
+        /// <summary><b>[requires: VK_NV_partitioned_acceleration_structure]</b> [device command] </summary>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdBuildPartitionedAccelerationStructuresNV.html" /></remarks>
+        public void CmdBuildPartitionedAccelerationStructuresNV(VkCommandBuffer commandBuffer, VkBuildPartitionedAccelerationStructureInfoNV* pBuildInfo)
+        {
+            _vkCmdBuildPartitionedAccelerationStructuresNV_fnptr(commandBuffer, pBuildInfo);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdClearAttachments.html" /></remarks>
@@ -1906,6 +1935,12 @@ namespace OpenTK.Graphics.Vulkan
         public void CmdControlVideoCodingKHR(VkCommandBuffer commandBuffer, VkVideoCodingControlInfoKHR* pCodingControlInfo)
         {
             _vkCmdControlVideoCodingKHR_fnptr(commandBuffer, pCodingControlInfo);
+        }
+        /// <summary><b>[requires: VK_NV_cooperative_vector]</b> [device command] </summary>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdConvertCooperativeVectorMatrixNV.html" /></remarks>
+        public void CmdConvertCooperativeVectorMatrixNV(VkCommandBuffer commandBuffer, uint infoCount, VkConvertCooperativeVectorMatrixInfoNV* pInfos)
+        {
+            _vkCmdConvertCooperativeVectorMatrixNV_fnptr(commandBuffer, infoCount, pInfos);
         }
         /// <summary><b>[requires: VK_KHR_acceleration_structure]</b> [device command] </summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdCopyAccelerationStructureKHR.html" /></remarks>
@@ -2290,6 +2325,12 @@ namespace OpenTK.Graphics.Vulkan
         public void CmdEndRendering(VkCommandBuffer commandBuffer)
         {
             _vkCmdEndRendering_fnptr(commandBuffer);
+        }
+        /// <summary><b>[requires: VK_EXT_fragment_density_map_offset]</b> [device command] </summary>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdEndRendering2EXT.html" /></remarks>
+        public void CmdEndRendering2EXT(VkCommandBuffer commandBuffer, VkRenderingEndInfoEXT* pRenderingEndInfo)
+        {
+            _vkCmdEndRendering2EXT_fnptr(commandBuffer, pRenderingEndInfo);
         }
         /// <summary><b>[requires: VK_KHR_dynamic_rendering]</b> [device command]  Alias of <see cref="CmdEndRendering"/></summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdEndRenderingKHR.html" /></remarks>
@@ -3275,6 +3316,12 @@ namespace OpenTK.Graphics.Vulkan
         {
             return _vkCompileDeferredNV_fnptr(device, pipeline, shader);
         }
+        /// <summary><b>[requires: VK_NV_cooperative_vector]</b> [device command] </summary>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkConvertCooperativeVectorMatrixNV.html" /></remarks>
+        public VkResult ConvertCooperativeVectorMatrixNV(VkDevice device, VkConvertCooperativeVectorMatrixInfoNV* pInfo)
+        {
+            return _vkConvertCooperativeVectorMatrixNV_fnptr(device, pInfo);
+        }
         /// <summary><b>[requires: VK_KHR_acceleration_structure]</b> [device command] </summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCopyAccelerationStructureKHR.html" /></remarks>
         public VkResult CopyAccelerationStructureKHR(VkDevice device, VkDeferredOperationKHR deferredOperation, VkCopyAccelerationStructureInfoKHR* pInfo)
@@ -4009,7 +4056,7 @@ namespace OpenTK.Graphics.Vulkan
         }
         /// <summary><b>[requires: VK_NV_ray_tracing]</b> [device command] </summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetAccelerationStructureMemoryRequirementsNV.html" /></remarks>
-        public void GetAccelerationStructureMemoryRequirementsNV(VkDevice device, VkAccelerationStructureMemoryRequirementsInfoNV* pInfo, VkMemoryRequirements2KHR* pMemoryRequirements)
+        public void GetAccelerationStructureMemoryRequirementsNV(VkDevice device, VkAccelerationStructureMemoryRequirementsInfoNV* pInfo, VkMemoryRequirements2* pMemoryRequirements)
         {
             _vkGetAccelerationStructureMemoryRequirementsNV_fnptr(device, pInfo, pMemoryRequirements);
         }
@@ -4096,6 +4143,12 @@ namespace OpenTK.Graphics.Vulkan
         public VkResult GetCalibratedTimestampsKHR(VkDevice device, uint timestampCount, VkCalibratedTimestampInfoKHR* pTimestampInfos, ulong* pTimestamps, ulong* pMaxDeviation)
         {
             return _vkGetCalibratedTimestampsKHR_fnptr(device, timestampCount, pTimestampInfos, pTimestamps, pMaxDeviation);
+        }
+        /// <summary><b>[requires: VK_NV_cluster_acceleration_structure]</b> [device command] </summary>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetClusterAccelerationStructureBuildSizesNV.html" /></remarks>
+        public void GetClusterAccelerationStructureBuildSizesNV(VkDevice device, VkClusterAccelerationStructureInputInfoNV* pInfo, VkAccelerationStructureBuildSizesInfoKHR* pSizeInfo)
+        {
+            _vkGetClusterAccelerationStructureBuildSizesNV_fnptr(device, pInfo, pSizeInfo);
         }
         /// <summary>[device command] </summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetCommandPoolMemoryConsumption.html" /></remarks>
@@ -4511,6 +4564,18 @@ namespace OpenTK.Graphics.Vulkan
         {
             return _vkGetMemoryHostPointerPropertiesEXT_fnptr(device, handleType, pHostPointer, pMemoryHostPointerProperties);
         }
+        /// <summary><b>[requires: VK_EXT_external_memory_metal]</b> [device command] </summary>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetMemoryMetalHandleEXT.html" /></remarks>
+        public VkResult GetMemoryMetalHandleEXT(VkDevice device, VkMemoryGetMetalHandleInfoEXT* pGetMetalHandleInfo, void** pHandle)
+        {
+            return _vkGetMemoryMetalHandleEXT_fnptr(device, pGetMetalHandleInfo, pHandle);
+        }
+        /// <summary><b>[requires: VK_EXT_external_memory_metal]</b> [device command] </summary>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetMemoryMetalHandlePropertiesEXT.html" /></remarks>
+        public VkResult GetMemoryMetalHandlePropertiesEXT(VkDevice device, VkExternalMemoryHandleTypeFlagBits handleType, void* pHandle, VkMemoryMetalHandlePropertiesEXT* pMemoryMetalHandleProperties)
+        {
+            return _vkGetMemoryMetalHandlePropertiesEXT_fnptr(device, handleType, pHandle, pMemoryMetalHandleProperties);
+        }
         /// <summary><b>[requires: VK_NV_external_memory_rdma]</b> [device command] </summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetMemoryRemoteAddressNV.html" /></remarks>
         public VkResult GetMemoryRemoteAddressNV(VkDevice device, VkMemoryGetRemoteAddressInfoNV* pMemoryGetRemoteAddressInfo, void** pAddress)
@@ -4558,6 +4623,12 @@ namespace OpenTK.Graphics.Vulkan
         public void GetMicromapBuildSizesEXT(VkDevice device, VkAccelerationStructureBuildTypeKHR buildType, VkMicromapBuildInfoEXT* pBuildInfo, VkMicromapBuildSizesInfoEXT* pSizeInfo)
         {
             _vkGetMicromapBuildSizesEXT_fnptr(device, buildType, pBuildInfo, pSizeInfo);
+        }
+        /// <summary><b>[requires: VK_NV_partitioned_acceleration_structure]</b> [device command] </summary>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPartitionedAccelerationStructuresBuildSizesNV.html" /></remarks>
+        public void GetPartitionedAccelerationStructuresBuildSizesNV(VkDevice device, VkPartitionedAccelerationStructureInstancesInputNV* pInfo, VkAccelerationStructureBuildSizesInfoKHR* pSizeInfo)
+        {
+            _vkGetPartitionedAccelerationStructuresBuildSizesNV_fnptr(device, pInfo, pSizeInfo);
         }
         /// <summary><b>[requires: VK_GOOGLE_display_timing]</b> [device command] </summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPastPresentationTimingGOOGLE.html" /></remarks>
@@ -4621,7 +4692,7 @@ namespace OpenTK.Graphics.Vulkan
         }
         /// <summary><b>[requires: VK_EXT_pipeline_properties]</b> [device command] </summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPipelinePropertiesEXT.html" /></remarks>
-        public VkResult GetPipelinePropertiesEXT(VkDevice device, VkPipelineInfoEXT* pPipelineInfo, VkBaseOutStructure* pPipelineProperties)
+        public VkResult GetPipelinePropertiesEXT(VkDevice device, VkPipelineInfoKHR* pPipelineInfo, VkBaseOutStructure* pPipelineProperties)
         {
             return _vkGetPipelinePropertiesEXT_fnptr(device, pPipelineInfo, pPipelineProperties);
         }
@@ -5330,11 +5401,14 @@ namespace OpenTK.Graphics.Vulkan
         public delegate* unmanaged<VkCommandBuffer, VkAccelerationStructureInfoNV*, VkBuffer, ulong, int, VkAccelerationStructureNV, VkAccelerationStructureNV, VkBuffer, ulong, void> _vkCmdBuildAccelerationStructureNV_fnptr;
         public delegate* unmanaged<VkCommandBuffer, uint, VkAccelerationStructureBuildGeometryInfoKHR*, ulong*, uint*, uint**, void> _vkCmdBuildAccelerationStructuresIndirectKHR_fnptr;
         public delegate* unmanaged<VkCommandBuffer, uint, VkAccelerationStructureBuildGeometryInfoKHR*, VkAccelerationStructureBuildRangeInfoKHR**, void> _vkCmdBuildAccelerationStructuresKHR_fnptr;
+        public delegate* unmanaged<VkCommandBuffer, VkClusterAccelerationStructureCommandsInfoNV*, void> _vkCmdBuildClusterAccelerationStructureIndirectNV_fnptr;
         public delegate* unmanaged<VkCommandBuffer, uint, VkMicromapBuildInfoEXT*, void> _vkCmdBuildMicromapsEXT_fnptr;
+        public delegate* unmanaged<VkCommandBuffer, VkBuildPartitionedAccelerationStructureInfoNV*, void> _vkCmdBuildPartitionedAccelerationStructuresNV_fnptr;
         public delegate* unmanaged<VkCommandBuffer, uint, VkClearAttachment*, uint, VkClearRect*, void> _vkCmdClearAttachments_fnptr;
         public delegate* unmanaged<VkCommandBuffer, VkImage, VkImageLayout, VkClearColorValue*, uint, VkImageSubresourceRange*, void> _vkCmdClearColorImage_fnptr;
         public delegate* unmanaged<VkCommandBuffer, VkImage, VkImageLayout, VkClearDepthStencilValue*, uint, VkImageSubresourceRange*, void> _vkCmdClearDepthStencilImage_fnptr;
         public delegate* unmanaged<VkCommandBuffer, VkVideoCodingControlInfoKHR*, void> _vkCmdControlVideoCodingKHR_fnptr;
+        public delegate* unmanaged<VkCommandBuffer, uint, VkConvertCooperativeVectorMatrixInfoNV*, void> _vkCmdConvertCooperativeVectorMatrixNV_fnptr;
         public delegate* unmanaged<VkCommandBuffer, VkCopyAccelerationStructureInfoKHR*, void> _vkCmdCopyAccelerationStructureKHR_fnptr;
         public delegate* unmanaged<VkCommandBuffer, VkAccelerationStructureNV, VkAccelerationStructureNV, VkCopyAccelerationStructureModeKHR, void> _vkCmdCopyAccelerationStructureNV_fnptr;
         public delegate* unmanaged<VkCommandBuffer, VkCopyAccelerationStructureToMemoryInfoKHR*, void> _vkCmdCopyAccelerationStructureToMemoryKHR_fnptr;
@@ -5399,6 +5473,7 @@ namespace OpenTK.Graphics.Vulkan
         public delegate* unmanaged<VkCommandBuffer, VkQueryPool, uint, void> _vkCmdEndQuery_fnptr;
         public delegate* unmanaged<VkCommandBuffer, VkQueryPool, uint, uint, void> _vkCmdEndQueryIndexedEXT_fnptr;
         public delegate* unmanaged<VkCommandBuffer, void> _vkCmdEndRendering_fnptr;
+        public delegate* unmanaged<VkCommandBuffer, VkRenderingEndInfoEXT*, void> _vkCmdEndRendering2EXT_fnptr;
         public delegate* unmanaged<VkCommandBuffer, void> _vkCmdEndRenderingKHR_fnptr;
         public delegate* unmanaged<VkCommandBuffer, void> _vkCmdEndRenderPass_fnptr;
         public delegate* unmanaged<VkCommandBuffer, VkSubpassEndInfo*, void> _vkCmdEndRenderPass2_fnptr;
@@ -5563,6 +5638,7 @@ namespace OpenTK.Graphics.Vulkan
         public delegate* unmanaged<VkCommandBuffer, VkPipelineStageFlagBits2, VkQueryPool, uint, void> _vkCmdWriteTimestamp2_fnptr;
         public delegate* unmanaged<VkCommandBuffer, VkPipelineStageFlagBits2, VkQueryPool, uint, void> _vkCmdWriteTimestamp2KHR_fnptr;
         public delegate* unmanaged<VkDevice, VkPipeline, uint, VkResult> _vkCompileDeferredNV_fnptr;
+        public delegate* unmanaged<VkDevice, VkConvertCooperativeVectorMatrixInfoNV*, VkResult> _vkConvertCooperativeVectorMatrixNV_fnptr;
         public delegate* unmanaged<VkDevice, VkDeferredOperationKHR, VkCopyAccelerationStructureInfoKHR*, VkResult> _vkCopyAccelerationStructureKHR_fnptr;
         public delegate* unmanaged<VkDevice, VkDeferredOperationKHR, VkCopyAccelerationStructureToMemoryInfoKHR*, VkResult> _vkCopyAccelerationStructureToMemoryKHR_fnptr;
         public delegate* unmanaged<VkDevice, VkCopyImageToImageInfo*, VkResult> _vkCopyImageToImage_fnptr;
@@ -5685,7 +5761,7 @@ namespace OpenTK.Graphics.Vulkan
         public delegate* unmanaged<VkDevice, VkAccelerationStructureBuildTypeKHR, VkAccelerationStructureBuildGeometryInfoKHR*, uint*, VkAccelerationStructureBuildSizesInfoKHR*, void> _vkGetAccelerationStructureBuildSizesKHR_fnptr;
         public delegate* unmanaged<VkDevice, VkAccelerationStructureDeviceAddressInfoKHR*, ulong> _vkGetAccelerationStructureDeviceAddressKHR_fnptr;
         public delegate* unmanaged<VkDevice, VkAccelerationStructureNV, nuint, void*, VkResult> _vkGetAccelerationStructureHandleNV_fnptr;
-        public delegate* unmanaged<VkDevice, VkAccelerationStructureMemoryRequirementsInfoNV*, VkMemoryRequirements2KHR*, void> _vkGetAccelerationStructureMemoryRequirementsNV_fnptr;
+        public delegate* unmanaged<VkDevice, VkAccelerationStructureMemoryRequirementsInfoNV*, VkMemoryRequirements2*, void> _vkGetAccelerationStructureMemoryRequirementsNV_fnptr;
         public delegate* unmanaged<VkDevice, VkAccelerationStructureCaptureDescriptorDataInfoEXT*, void*, VkResult> _vkGetAccelerationStructureOpaqueCaptureDescriptorDataEXT_fnptr;
         public delegate* unmanaged<VkDevice, IntPtr, VkAndroidHardwareBufferPropertiesANDROID*, VkResult> _vkGetAndroidHardwareBufferPropertiesANDROID_fnptr;
         public delegate* unmanaged<VkDevice, VkBufferCollectionFUCHSIA, VkBufferCollectionPropertiesFUCHSIA*, VkResult> _vkGetBufferCollectionPropertiesFUCHSIA_fnptr;
@@ -5700,6 +5776,7 @@ namespace OpenTK.Graphics.Vulkan
         public delegate* unmanaged<VkDevice, VkBufferCaptureDescriptorDataInfoEXT*, void*, VkResult> _vkGetBufferOpaqueCaptureDescriptorDataEXT_fnptr;
         public delegate* unmanaged<VkDevice, uint, VkCalibratedTimestampInfoKHR*, ulong*, ulong*, VkResult> _vkGetCalibratedTimestampsEXT_fnptr;
         public delegate* unmanaged<VkDevice, uint, VkCalibratedTimestampInfoKHR*, ulong*, ulong*, VkResult> _vkGetCalibratedTimestampsKHR_fnptr;
+        public delegate* unmanaged<VkDevice, VkClusterAccelerationStructureInputInfoNV*, VkAccelerationStructureBuildSizesInfoKHR*, void> _vkGetClusterAccelerationStructureBuildSizesNV_fnptr;
         public delegate* unmanaged<VkDevice, VkCommandPool, VkCommandBuffer, VkCommandPoolMemoryConsumption*, void> _vkGetCommandPoolMemoryConsumption_fnptr;
         public delegate* unmanaged<VkDevice, VkCudaModuleNV, nuint*, void*, VkResult> _vkGetCudaModuleCacheNV_fnptr;
         public delegate* unmanaged<VkDevice, VkDeferredOperationKHR, uint> _vkGetDeferredOperationMaxConcurrencyKHR_fnptr;
@@ -5769,6 +5846,8 @@ namespace OpenTK.Graphics.Vulkan
         public delegate* unmanaged<VkDevice, VkMemoryGetFdInfoKHR*, int*, VkResult> _vkGetMemoryFdKHR_fnptr;
         public delegate* unmanaged<VkDevice, VkExternalMemoryHandleTypeFlagBits, int, VkMemoryFdPropertiesKHR*, VkResult> _vkGetMemoryFdPropertiesKHR_fnptr;
         public delegate* unmanaged<VkDevice, VkExternalMemoryHandleTypeFlagBits, void*, VkMemoryHostPointerPropertiesEXT*, VkResult> _vkGetMemoryHostPointerPropertiesEXT_fnptr;
+        public delegate* unmanaged<VkDevice, VkMemoryGetMetalHandleInfoEXT*, void**, VkResult> _vkGetMemoryMetalHandleEXT_fnptr;
+        public delegate* unmanaged<VkDevice, VkExternalMemoryHandleTypeFlagBits, void*, VkMemoryMetalHandlePropertiesEXT*, VkResult> _vkGetMemoryMetalHandlePropertiesEXT_fnptr;
         public delegate* unmanaged<VkDevice, VkMemoryGetRemoteAddressInfoNV*, void**, VkResult> _vkGetMemoryRemoteAddressNV_fnptr;
         public delegate* unmanaged<VkDevice, VkMemoryGetSciBufInfoNV*, IntPtr*, VkResult> _vkGetMemorySciBufNV_fnptr;
         public delegate* unmanaged<VkDevice, VkMemoryGetWin32HandleInfoKHR*, IntPtr*, VkResult> _vkGetMemoryWin32HandleKHR_fnptr;
@@ -5777,6 +5856,7 @@ namespace OpenTK.Graphics.Vulkan
         public delegate* unmanaged<VkDevice, VkMemoryGetZirconHandleInfoFUCHSIA*, int*, VkResult> _vkGetMemoryZirconHandleFUCHSIA_fnptr;
         public delegate* unmanaged<VkDevice, VkExternalMemoryHandleTypeFlagBits, int, VkMemoryZirconHandlePropertiesFUCHSIA*, VkResult> _vkGetMemoryZirconHandlePropertiesFUCHSIA_fnptr;
         public delegate* unmanaged<VkDevice, VkAccelerationStructureBuildTypeKHR, VkMicromapBuildInfoEXT*, VkMicromapBuildSizesInfoEXT*, void> _vkGetMicromapBuildSizesEXT_fnptr;
+        public delegate* unmanaged<VkDevice, VkPartitionedAccelerationStructureInstancesInputNV*, VkAccelerationStructureBuildSizesInfoKHR*, void> _vkGetPartitionedAccelerationStructuresBuildSizesNV_fnptr;
         public delegate* unmanaged<VkDevice, VkSwapchainKHR, uint*, VkPastPresentationTimingGOOGLE*, VkResult> _vkGetPastPresentationTimingGOOGLE_fnptr;
         public delegate* unmanaged<VkDevice, VkPerformanceParameterTypeINTEL, VkPerformanceValueINTEL*, VkResult> _vkGetPerformanceParameterINTEL_fnptr;
         public delegate* unmanaged<VkDevice, VkPipelineBinaryDataInfoKHR*, VkPipelineBinaryKeyKHR*, nuint*, void*, VkResult> _vkGetPipelineBinaryDataKHR_fnptr;
@@ -5787,7 +5867,7 @@ namespace OpenTK.Graphics.Vulkan
         public delegate* unmanaged<VkDevice, VkPipelineIndirectDeviceAddressInfoNV*, ulong> _vkGetPipelineIndirectDeviceAddressNV_fnptr;
         public delegate* unmanaged<VkDevice, VkComputePipelineCreateInfo*, VkMemoryRequirements2*, void> _vkGetPipelineIndirectMemoryRequirementsNV_fnptr;
         public delegate* unmanaged<VkDevice, VkPipelineCreateInfoKHR*, VkPipelineBinaryKeyKHR*, VkResult> _vkGetPipelineKeyKHR_fnptr;
-        public delegate* unmanaged<VkDevice, VkPipelineInfoEXT*, VkBaseOutStructure*, VkResult> _vkGetPipelinePropertiesEXT_fnptr;
+        public delegate* unmanaged<VkDevice, VkPipelineInfoKHR*, VkBaseOutStructure*, VkResult> _vkGetPipelinePropertiesEXT_fnptr;
         public delegate* unmanaged<VkDevice, VkObjectType, ulong, VkPrivateDataSlot, ulong*, void> _vkGetPrivateData_fnptr;
         public delegate* unmanaged<VkDevice, VkObjectType, ulong, VkPrivateDataSlot, ulong*, void> _vkGetPrivateDataEXT_fnptr;
         public delegate* unmanaged<VkDevice, VkQueryPool, uint, uint, nuint, void*, ulong, VkQueryResultFlagBits, VkResult> _vkGetQueryPoolResults_fnptr;

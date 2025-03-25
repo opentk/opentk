@@ -378,11 +378,23 @@ namespace OpenTK.Graphics.Vulkan
         {
             VkPointers._vkCmdBuildAccelerationStructuresKHR_fnptr(commandBuffer, infoCount, pInfos, ppBuildRangeInfos);
         }
+        /// <summary><b>[requires: VK_NV_cluster_acceleration_structure]</b> [device command] </summary>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdBuildClusterAccelerationStructureIndirectNV.html" /></remarks>
+        public static void CmdBuildClusterAccelerationStructureIndirectNV(VkCommandBuffer commandBuffer, VkClusterAccelerationStructureCommandsInfoNV* pCommandInfos)
+        {
+            VkPointers._vkCmdBuildClusterAccelerationStructureIndirectNV_fnptr(commandBuffer, pCommandInfos);
+        }
         /// <summary><b>[requires: VK_EXT_opacity_micromap]</b> [device command] </summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdBuildMicromapsEXT.html" /></remarks>
         public static void CmdBuildMicromapsEXT(VkCommandBuffer commandBuffer, uint infoCount, VkMicromapBuildInfoEXT* pInfos)
         {
             VkPointers._vkCmdBuildMicromapsEXT_fnptr(commandBuffer, infoCount, pInfos);
+        }
+        /// <summary><b>[requires: VK_NV_partitioned_acceleration_structure]</b> [device command] </summary>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdBuildPartitionedAccelerationStructuresNV.html" /></remarks>
+        public static void CmdBuildPartitionedAccelerationStructuresNV(VkCommandBuffer commandBuffer, VkBuildPartitionedAccelerationStructureInfoNV* pBuildInfo)
+        {
+            VkPointers._vkCmdBuildPartitionedAccelerationStructuresNV_fnptr(commandBuffer, pBuildInfo);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdClearAttachments.html" /></remarks>
@@ -407,6 +419,12 @@ namespace OpenTK.Graphics.Vulkan
         public static void CmdControlVideoCodingKHR(VkCommandBuffer commandBuffer, VkVideoCodingControlInfoKHR* pCodingControlInfo)
         {
             VkPointers._vkCmdControlVideoCodingKHR_fnptr(commandBuffer, pCodingControlInfo);
+        }
+        /// <summary><b>[requires: VK_NV_cooperative_vector]</b> [device command] </summary>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdConvertCooperativeVectorMatrixNV.html" /></remarks>
+        public static void CmdConvertCooperativeVectorMatrixNV(VkCommandBuffer commandBuffer, uint infoCount, VkConvertCooperativeVectorMatrixInfoNV* pInfos)
+        {
+            VkPointers._vkCmdConvertCooperativeVectorMatrixNV_fnptr(commandBuffer, infoCount, pInfos);
         }
         /// <summary><b>[requires: VK_KHR_acceleration_structure]</b> [device command] </summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdCopyAccelerationStructureKHR.html" /></remarks>
@@ -791,6 +809,12 @@ namespace OpenTK.Graphics.Vulkan
         public static void CmdEndRendering(VkCommandBuffer commandBuffer)
         {
             VkPointers._vkCmdEndRendering_fnptr(commandBuffer);
+        }
+        /// <summary><b>[requires: VK_EXT_fragment_density_map_offset]</b> [device command] </summary>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdEndRendering2EXT.html" /></remarks>
+        public static void CmdEndRendering2EXT(VkCommandBuffer commandBuffer, VkRenderingEndInfoEXT* pRenderingEndInfo)
+        {
+            VkPointers._vkCmdEndRendering2EXT_fnptr(commandBuffer, pRenderingEndInfo);
         }
         /// <summary><b>[requires: VK_KHR_dynamic_rendering]</b> [device command]  Alias of <see cref="CmdEndRendering"/></summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdEndRenderingKHR.html" /></remarks>
@@ -1776,6 +1800,12 @@ namespace OpenTK.Graphics.Vulkan
         {
             return VkPointers._vkCompileDeferredNV_fnptr(device, pipeline, shader);
         }
+        /// <summary><b>[requires: VK_NV_cooperative_vector]</b> [device command] </summary>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkConvertCooperativeVectorMatrixNV.html" /></remarks>
+        public static VkResult ConvertCooperativeVectorMatrixNV(VkDevice device, VkConvertCooperativeVectorMatrixInfoNV* pInfo)
+        {
+            return VkPointers._vkConvertCooperativeVectorMatrixNV_fnptr(device, pInfo);
+        }
         /// <summary><b>[requires: VK_KHR_acceleration_structure]</b> [device command] </summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCopyAccelerationStructureKHR.html" /></remarks>
         public static VkResult CopyAccelerationStructureKHR(VkDevice device, VkDeferredOperationKHR deferredOperation, VkCopyAccelerationStructureInfoKHR* pInfo)
@@ -2714,7 +2744,7 @@ namespace OpenTK.Graphics.Vulkan
         }
         /// <summary><b>[requires: VK_NV_ray_tracing]</b> [device command] </summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetAccelerationStructureMemoryRequirementsNV.html" /></remarks>
-        public static void GetAccelerationStructureMemoryRequirementsNV(VkDevice device, VkAccelerationStructureMemoryRequirementsInfoNV* pInfo, VkMemoryRequirements2KHR* pMemoryRequirements)
+        public static void GetAccelerationStructureMemoryRequirementsNV(VkDevice device, VkAccelerationStructureMemoryRequirementsInfoNV* pInfo, VkMemoryRequirements2* pMemoryRequirements)
         {
             VkPointers._vkGetAccelerationStructureMemoryRequirementsNV_fnptr(device, pInfo, pMemoryRequirements);
         }
@@ -2801,6 +2831,12 @@ namespace OpenTK.Graphics.Vulkan
         public static VkResult GetCalibratedTimestampsKHR(VkDevice device, uint timestampCount, VkCalibratedTimestampInfoKHR* pTimestampInfos, ulong* pTimestamps, ulong* pMaxDeviation)
         {
             return VkPointers._vkGetCalibratedTimestampsKHR_fnptr(device, timestampCount, pTimestampInfos, pTimestamps, pMaxDeviation);
+        }
+        /// <summary><b>[requires: VK_NV_cluster_acceleration_structure]</b> [device command] </summary>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetClusterAccelerationStructureBuildSizesNV.html" /></remarks>
+        public static void GetClusterAccelerationStructureBuildSizesNV(VkDevice device, VkClusterAccelerationStructureInputInfoNV* pInfo, VkAccelerationStructureBuildSizesInfoKHR* pSizeInfo)
+        {
+            VkPointers._vkGetClusterAccelerationStructureBuildSizesNV_fnptr(device, pInfo, pSizeInfo);
         }
         /// <summary>[device command] </summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetCommandPoolMemoryConsumption.html" /></remarks>
@@ -3258,6 +3294,18 @@ namespace OpenTK.Graphics.Vulkan
         {
             return VkPointers._vkGetMemoryHostPointerPropertiesEXT_fnptr(device, handleType, pHostPointer, pMemoryHostPointerProperties);
         }
+        /// <summary><b>[requires: VK_EXT_external_memory_metal]</b> [device command] </summary>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetMemoryMetalHandleEXT.html" /></remarks>
+        public static VkResult GetMemoryMetalHandleEXT(VkDevice device, VkMemoryGetMetalHandleInfoEXT* pGetMetalHandleInfo, void** pHandle)
+        {
+            return VkPointers._vkGetMemoryMetalHandleEXT_fnptr(device, pGetMetalHandleInfo, pHandle);
+        }
+        /// <summary><b>[requires: VK_EXT_external_memory_metal]</b> [device command] </summary>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetMemoryMetalHandlePropertiesEXT.html" /></remarks>
+        public static VkResult GetMemoryMetalHandlePropertiesEXT(VkDevice device, VkExternalMemoryHandleTypeFlagBits handleType, void* pHandle, VkMemoryMetalHandlePropertiesEXT* pMemoryMetalHandleProperties)
+        {
+            return VkPointers._vkGetMemoryMetalHandlePropertiesEXT_fnptr(device, handleType, pHandle, pMemoryMetalHandleProperties);
+        }
         /// <summary><b>[requires: VK_NV_external_memory_rdma]</b> [device command] </summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetMemoryRemoteAddressNV.html" /></remarks>
         public static VkResult GetMemoryRemoteAddressNV(VkDevice device, VkMemoryGetRemoteAddressInfoNV* pMemoryGetRemoteAddressInfo, void** pAddress)
@@ -3306,6 +3354,12 @@ namespace OpenTK.Graphics.Vulkan
         {
             VkPointers._vkGetMicromapBuildSizesEXT_fnptr(device, buildType, pBuildInfo, pSizeInfo);
         }
+        /// <summary><b>[requires: VK_NV_partitioned_acceleration_structure]</b> [device command] </summary>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPartitionedAccelerationStructuresBuildSizesNV.html" /></remarks>
+        public static void GetPartitionedAccelerationStructuresBuildSizesNV(VkDevice device, VkPartitionedAccelerationStructureInstancesInputNV* pInfo, VkAccelerationStructureBuildSizesInfoKHR* pSizeInfo)
+        {
+            VkPointers._vkGetPartitionedAccelerationStructuresBuildSizesNV_fnptr(device, pInfo, pSizeInfo);
+        }
         /// <summary><b>[requires: VK_GOOGLE_display_timing]</b> [device command] </summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPastPresentationTimingGOOGLE.html" /></remarks>
         public static VkResult GetPastPresentationTimingGOOGLE(VkDevice device, VkSwapchainKHR swapchain, uint* pPresentationTimingCount, VkPastPresentationTimingGOOGLE* pPresentationTimings)
@@ -3347,6 +3401,12 @@ namespace OpenTK.Graphics.Vulkan
         public static VkResult GetPhysicalDeviceCooperativeMatrixPropertiesNV(VkPhysicalDevice physicalDevice, uint* pPropertyCount, VkCooperativeMatrixPropertiesNV* pProperties)
         {
             return VkPointers._vkGetPhysicalDeviceCooperativeMatrixPropertiesNV_fnptr(physicalDevice, pPropertyCount, pProperties);
+        }
+        /// <summary><b>[requires: VK_NV_cooperative_vector]</b> [instance command] </summary>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceCooperativeVectorPropertiesNV.html" /></remarks>
+        public static VkResult GetPhysicalDeviceCooperativeVectorPropertiesNV(VkPhysicalDevice physicalDevice, uint* pPropertyCount, VkCooperativeVectorPropertiesNV* pProperties)
+        {
+            return VkPointers._vkGetPhysicalDeviceCooperativeVectorPropertiesNV_fnptr(physicalDevice, pPropertyCount, pProperties);
         }
         /// <summary><b>[requires: VK_EXT_directfb_surface]</b> [instance command] </summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceDirectFBPresentationSupportEXT.html" /></remarks>
@@ -3764,7 +3824,7 @@ namespace OpenTK.Graphics.Vulkan
         }
         /// <summary><b>[requires: VK_EXT_pipeline_properties]</b> [device command] </summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPipelinePropertiesEXT.html" /></remarks>
-        public static VkResult GetPipelinePropertiesEXT(VkDevice device, VkPipelineInfoEXT* pPipelineInfo, VkBaseOutStructure* pPipelineProperties)
+        public static VkResult GetPipelinePropertiesEXT(VkDevice device, VkPipelineInfoKHR* pPipelineInfo, VkBaseOutStructure* pPipelineProperties)
         {
             return VkPointers._vkGetPipelinePropertiesEXT_fnptr(device, pPipelineInfo, pPipelineProperties);
         }
