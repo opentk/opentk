@@ -42,6 +42,7 @@ namespace OpenTK.Mathematics
                             IAdditionOperators<Vector4d, Vector4d, Vector4d>,
                             ISubtractionOperators<Vector4d, Vector4d, Vector4d>,
                             IUnaryNegationOperators<Vector4d, Vector4d>,
+                            IUnaryPlusOperators<Vector4d, Vector4d>,
                             IMultiplyOperators<Vector4d, double, Vector4d>,
                             IMultiplyOperators<Vector4d, Vector4d, Vector4d>,
                             IMultiplyOperators<Vector4d, Matrix4d, Vector4d>,
@@ -2044,6 +2045,21 @@ namespace OpenTK.Mathematics
             vec.Y = -vec.Y;
             vec.Z = -vec.Z;
             vec.W = -vec.W;
+            return vec;
+        }
+
+        /// <summary>
+        /// Computes the unary plus of the vector.
+        /// </summary>
+        /// <param name="vec">The instance.</param>
+        /// <returns>The result of the calculation.</returns>
+        [Pure]
+        public static Vector4d operator +(Vector4d vec)
+        {
+            vec.X = +vec.X;
+            vec.Y = +vec.Y;
+            vec.Z = +vec.Z;
+            vec.W = +vec.W;
             return vec;
         }
 

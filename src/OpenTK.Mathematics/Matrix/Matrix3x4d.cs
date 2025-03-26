@@ -35,13 +35,14 @@ namespace OpenTK.Mathematics
     [Serializable]
     [StructLayout(LayoutKind.Sequential)]
     public struct Matrix3x4d : IEquatable<Matrix3x4d>, IFormattable,
+                                IMultiplyOperators<Matrix3x4d, double, Matrix3x4d>,
                                 IMultiplyOperators<Matrix3x4d, Matrix4x3d, Matrix3d>,
                                 IMultiplyOperators<Matrix3x4d, Matrix3x4d, Matrix3x4d>,
-                                IMultiplyOperators<Matrix3x4d, double, Matrix3x4d>,
                                 IAdditionOperators<Matrix3x4d, Matrix3x4d, Matrix3x4d>,
                                 ISubtractionOperators<Matrix3x4d, Matrix3x4d, Matrix3x4d>,
                                 IEqualityOperators<Matrix3x4d, Matrix3x4d, bool>,
-                                IAdditiveIdentity<Matrix3x4d, Matrix3x4d>
+                                IAdditiveIdentity<Matrix3x4d, Matrix3x4d>,
+                                IMultiplicativeIdentity<Matrix3x4d, Matrix3x4d>
     {
         /// <summary>
         /// Top row of the matrix.
@@ -62,6 +63,11 @@ namespace OpenTK.Mathematics
         /// The zero matrix.
         /// </summary>
         public static readonly Matrix3x4d Zero = new Matrix3x4d(Vector4d.Zero, Vector4d.Zero, Vector4d.Zero);
+
+        /// <summary>
+        /// The identity matrix.
+        /// </summary>
+        public static readonly Matrix3x4d Identity = new Matrix3x4d((1.0, 0, 0, 0), (0, 1, 0, 0), (0, 0, 0, 0));
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Matrix3x4d"/> struct.
@@ -291,6 +297,11 @@ namespace OpenTK.Mathematics
         /// Gets the additive identity of the matrix, which is the zero matrix.
         /// </summary>
         public static Matrix3x4d AdditiveIdentity => Zero;
+
+        /// <summary>
+        /// Gets the multiplicative identity of the matrix, which is the identity matrix.
+        /// </summary>
+        public static Matrix3x4d MultiplicativeIdentity => Identity;
 
         /// <summary>
         /// Gets or sets the value at a specified row and column.

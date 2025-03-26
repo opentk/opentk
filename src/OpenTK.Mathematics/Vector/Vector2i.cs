@@ -28,6 +28,7 @@ namespace OpenTK.Mathematics
                             IAdditionOperators<Vector2i, Vector2i, Vector2i>,
                             ISubtractionOperators<Vector2i, Vector2i, Vector2i>,
                             IUnaryNegationOperators<Vector2i, Vector2i>,
+                            IUnaryPlusOperators<Vector2i, Vector2i>,
                             IMultiplyOperators<Vector2i, int, Vector2i>,
                             IMultiplyOperators<Vector2i, Vector2i, Vector2i>,
                             IDivisionOperators<Vector2i, int, Vector2i>,
@@ -516,6 +517,19 @@ namespace OpenTK.Mathematics
         {
             vec.X = -vec.X;
             vec.Y = -vec.Y;
+            return vec;
+        }
+
+        /// <summary>
+        /// Computes the unary plus of the vector.
+        /// </summary>
+        /// <param name="vec">The instance.</param>
+        /// <returns>The result of the calculation.</returns>
+        [Pure]
+        public static Vector2i operator +(Vector2i vec)
+        {
+            vec.X = +vec.X;
+            vec.Y = +vec.Y;
             return vec;
         }
 

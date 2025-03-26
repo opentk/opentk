@@ -42,7 +42,8 @@ namespace OpenTK.Mathematics
                                 IAdditionOperators<Matrix2x4d, Matrix2x4d, Matrix2x4d>,
                                 ISubtractionOperators<Matrix2x4d, Matrix2x4d, Matrix2x4d>,
                                 IEqualityOperators<Matrix2x4d, Matrix2x4d, bool>,
-                                IAdditiveIdentity<Matrix2x4d, Matrix2x4d>
+                                IAdditiveIdentity<Matrix2x4d, Matrix2x4d>,
+                                IMultiplicativeIdentity<Matrix2x4d, Matrix2x4d>
     {
         /// <summary>
         /// Top row of the matrix.
@@ -58,6 +59,11 @@ namespace OpenTK.Mathematics
         /// The zero matrix.
         /// </summary>
         public static readonly Matrix2x4d Zero = new Matrix2x4d(Vector4d.Zero, Vector4d.Zero);
+
+        /// <summary>
+        /// The identity matrix.
+        /// </summary>
+        public static readonly Matrix2x4d Identity = new Matrix2x4d((1, 0, 0, 0), (0, 1, 0, 0));
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Matrix2x4d"/> struct.
@@ -238,6 +244,11 @@ namespace OpenTK.Mathematics
         /// Gets the additive identity of the matrix, which is the zero matrix.
         /// </summary>
         public static Matrix2x4d AdditiveIdentity => Zero;
+
+        /// <summary>
+        /// Gets the additive identity of the matrix, which is the identity matrix.
+        /// </summary>
+        public static Matrix2x4d MultiplicativeIdentity => Identity;
 
         /// <summary>
         /// Gets or sets the value at a specified row and column.

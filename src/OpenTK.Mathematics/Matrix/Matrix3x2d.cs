@@ -42,7 +42,8 @@ namespace OpenTK.Mathematics
                                 IAdditionOperators<Matrix3x2d, Matrix3x2d, Matrix3x2d>,
                                 ISubtractionOperators<Matrix3x2d, Matrix3x2d, Matrix3x2d>,
                                 IEqualityOperators<Matrix3x2d, Matrix3x2d, bool>,
-                                IAdditiveIdentity<Matrix3x2d, Matrix3x2d>
+                                IAdditiveIdentity<Matrix3x2d, Matrix3x2d>,
+                                IMultiplicativeIdentity<Matrix3x2d, Matrix3x2d>
     {
         /// <summary>
         /// Top row of the matrix.
@@ -63,6 +64,11 @@ namespace OpenTK.Mathematics
         /// The zero matrix.
         /// </summary>
         public static readonly Matrix3x2d Zero = new Matrix3x2d(Vector2d.Zero, Vector2d.Zero, Vector2d.Zero);
+
+        /// <summary>
+        /// The identity matrix.
+        /// </summary>
+        public static readonly Matrix3x2d Identity = new Matrix3x2d((1, 0), (0, 1), (0, 0));
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Matrix3x2d"/> struct.
@@ -203,6 +209,11 @@ namespace OpenTK.Mathematics
         /// Gets the additive identity of the matrix, which is the zero matrix.
         /// </summary>
         public static Matrix3x2d AdditiveIdentity => Zero;
+
+        /// <summary>
+        /// Gets the additive identity of the matrix, which is the identity matrix.
+        /// </summary>
+        public static Matrix3x2d MultiplicativeIdentity => Identity;
 
         /// <summary>
         /// Gets or sets the value at a specified row and column.

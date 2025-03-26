@@ -41,7 +41,8 @@ namespace OpenTK.Mathematics
                                 IAdditionOperators<Matrix3x4, Matrix3x4, Matrix3x4>,
                                 ISubtractionOperators<Matrix3x4, Matrix3x4, Matrix3x4>,
                                 IEqualityOperators<Matrix3x4, Matrix3x4, bool>,
-                                IAdditiveIdentity<Matrix3x4, Matrix3x4>
+                                IAdditiveIdentity<Matrix3x4, Matrix3x4>,
+                                IMultiplicativeIdentity<Matrix3x4, Matrix3x4>
     {
         /// <summary>
         /// Top row of the matrix.
@@ -62,6 +63,11 @@ namespace OpenTK.Mathematics
         /// The zero matrix.
         /// </summary>
         public static readonly Matrix3x4 Zero = new Matrix3x4(Vector4.Zero, Vector4.Zero, Vector4.Zero);
+
+        /// <summary>
+        /// The identity matrix.
+        /// </summary>
+        public static readonly Matrix3x4 Identity = new Matrix3x4((1, 0, 0, 0), (0, 1, 0, 0), (0, 0, 1, 0));
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Matrix3x4"/> struct.
@@ -291,6 +297,11 @@ namespace OpenTK.Mathematics
         /// Gets the additive identity of the matrix, which is the zero matrix.
         /// </summary>
         public static Matrix3x4 AdditiveIdentity => Zero;
+
+        /// <summary>
+        /// Gets the additive identity of the matrix, which is the identity matrix.
+        /// </summary>
+        public static Matrix3x4 MultiplicativeIdentity => Identity;
 
         /// <summary>
         /// Gets or sets the value at a specified row and column.

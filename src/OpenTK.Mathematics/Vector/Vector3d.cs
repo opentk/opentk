@@ -39,6 +39,7 @@ namespace OpenTK.Mathematics
                             IAdditionOperators<Vector3d, Vector3d, Vector3d>,
                             ISubtractionOperators<Vector3d, Vector3d, Vector3d>,
                             IUnaryNegationOperators<Vector3d, Vector3d>,
+                            IUnaryPlusOperators<Vector3d, Vector3d>,
                             IMultiplyOperators<Vector3d, double, Vector3d>,
                             IMultiplyOperators<Vector3d, Vector3d, Vector3d>,
                             IMultiplyOperators<Vector3d, Matrix3d, Vector3d>,
@@ -1450,6 +1451,20 @@ namespace OpenTK.Mathematics
             vec.X = -vec.X;
             vec.Y = -vec.Y;
             vec.Z = -vec.Z;
+            return vec;
+        }
+
+        /// <summary>
+        /// Computes the unary plus of the vector.
+        /// </summary>
+        /// <param name="vec">The instance.</param>
+        /// <returns>The result of the calculation.</returns>
+        [Pure]
+        public static Vector3d operator +(Vector3d vec)
+        {
+            vec.X = +vec.X;
+            vec.Y = +vec.Y;
+            vec.Z = +vec.Z;
             return vec;
         }
 
