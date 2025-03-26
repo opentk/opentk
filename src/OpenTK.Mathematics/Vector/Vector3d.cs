@@ -22,6 +22,7 @@ SOFTWARE.
 
 using System;
 using System.Diagnostics.Contracts;
+using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Runtime.Intrinsics;
@@ -34,7 +35,20 @@ namespace OpenTK.Mathematics
     /// </summary>
     [Serializable]
     [StructLayout(LayoutKind.Sequential)]
-    public struct Vector3d : IEquatable<Vector3d>, IFormattable
+    public struct Vector3d : IEquatable<Vector3d>, IFormattable,
+                            IAdditionOperators<Vector3d, Vector3d, Vector3d>,
+                            ISubtractionOperators<Vector3d, Vector3d, Vector3d>,
+                            IUnaryNegationOperators<Vector3d, Vector3d>,
+                            IUnaryPlusOperators<Vector3d, Vector3d>,
+                            IMultiplyOperators<Vector3d, double, Vector3d>,
+                            IMultiplyOperators<Vector3d, Vector3d, Vector3d>,
+                            IMultiplyOperators<Vector3d, Matrix3d, Vector3d>,
+                            IDivisionOperators<Vector3d, double, Vector3d>,
+                            IDivisionOperators<Vector3d, Vector3d, Vector3d>,
+                            IEqualityOperators<Vector3d, Vector3d, bool>,
+                            IAdditiveIdentity<Vector3d, Vector3d>,
+                            IMultiplicativeIdentity<Vector3d, Vector3d>,
+                            IMinMaxValue<Vector3d>
     {
         /// <summary>
         /// The X component of the Vector3.
@@ -253,6 +267,26 @@ namespace OpenTK.Mathematics
         /// Defines the size of the Vector3d struct in bytes.
         /// </summary>
         public static readonly int SizeInBytes = Unsafe.SizeOf<Vector3d>();
+
+        /// <summary>
+        /// Gets the additive identity of Vector3d. Equivalent to Vector3d.Zero.
+        /// </summary>
+        public static Vector3d AdditiveIdentity => Zero;
+
+        /// <summary>
+        /// Gets the multiplicative identity of Vector3d. Equivalent to Vector3d.One.
+        /// </summary>
+        public static Vector3d MultiplicativeIdentity => One;
+
+        /// <summary>
+        /// Gets the max value for Vector3d. Equivalent to Vector3d.PositiveInfinity.
+        /// </summary>
+        public static Vector3d MaxValue => PositiveInfinity;
+
+        /// <summary>
+        /// Gets the min value for Vector3d. Equivalent to Vector3d.NegativeInfinity.
+        /// </summary>
+        public static Vector3d MinValue => NegativeInfinity;
 
         /// <summary>
         /// Adds two vectors.
@@ -1421,6 +1455,20 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
+        /// Computes the unary plus of the vector.
+        /// </summary>
+        /// <param name="vec">The instance.</param>
+        /// <returns>The result of the calculation.</returns>
+        [Pure]
+        public static Vector3d operator +(Vector3d vec)
+        {
+            vec.X = +vec.X;
+            vec.Y = +vec.Y;
+            vec.Z = +vec.Z;
+            return vec;
+        }
+
+        /// <summary>
         /// Multiplies an instance by a scalar.
         /// </summary>
         /// <param name="vec">The instance.</param>
@@ -1475,32 +1523,6 @@ namespace OpenTK.Mathematics
         public static Vector3d operator *(Vector3d vec, Matrix3d mat)
         {
             TransformRow(in vec, in mat, out Vector3d result);
-            return result;
-        }
-
-        /// <summary>
-        /// Transform a Vector by the given Matrix using right-handed notation.
-        /// </summary>
-        /// <param name="mat">The desired transformation.</param>
-        /// <param name="vec">The vector to transform.</param>
-        /// <returns>The transformed vector.</returns>
-        [Pure]
-        public static Vector3d operator *(Matrix3d mat, Vector3d vec)
-        {
-            TransformColumn(in mat, in vec, out Vector3d result);
-            return result;
-        }
-
-        /// <summary>
-        /// Transforms a vector by a quaternion rotation.
-        /// </summary>
-        /// <param name="quat">The quaternion to rotate the vector by.</param>
-        /// <param name="vec">The vector to transform.</param>
-        /// <returns>The transformed vector.</returns>
-        [Pure]
-        public static Vector3d operator *(Quaterniond quat, Vector3d vec)
-        {
-            Transform(in vec, in quat, out Vector3d result);
             return result;
         }
 

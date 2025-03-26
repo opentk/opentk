@@ -9,6 +9,7 @@
 
 using System;
 using System.Diagnostics.Contracts;
+using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Runtime.Intrinsics;
@@ -24,7 +25,19 @@ namespace OpenTK.Mathematics
     /// </remarks>
     [Serializable]
     [StructLayout(LayoutKind.Sequential)]
-    public struct Vector4i : IEquatable<Vector4i>, IFormattable
+    public struct Vector4i : IEquatable<Vector4i>, IFormattable,
+                            IAdditionOperators<Vector4i, Vector4i, Vector4i>,
+                            ISubtractionOperators<Vector4i, Vector4i, Vector4i>,
+                            IUnaryNegationOperators<Vector4i, Vector4i>,
+                            IUnaryPlusOperators<Vector4i, Vector4i>,
+                            IMultiplyOperators<Vector4i, int, Vector4i>,
+                            IMultiplyOperators<Vector4i, Vector4i, Vector4i>,
+                            IDivisionOperators<Vector4i, int, Vector4i>,
+                            IDivisionOperators<Vector4i, Vector4i, Vector4i>,
+                            IEqualityOperators<Vector4i, Vector4i, bool>,
+                            IAdditiveIdentity<Vector4i, Vector4i>,
+                            IMultiplicativeIdentity<Vector4i, Vector4i>,
+                            IMinMaxValue<Vector4i>
     {
         /// <summary>
         /// The X component of the Vector4i.
@@ -220,6 +233,28 @@ namespace OpenTK.Mathematics
         /// Defines the size of the <see cref="Vector4i"/> struct in bytes.
         /// </summary>
         public static readonly int SizeInBytes = Unsafe.SizeOf<Vector4i>();
+
+        /// <summary>
+        /// Gets the additive identity of Vector4i. Equivalent to Vector4i.Zero.
+        /// </summary>
+        public static Vector4i AdditiveIdentity => Zero;
+
+        /// <summary>
+        /// Gets the multiplicative identity of Vector4i. Equivalent to Vector4i.One.
+        /// </summary>
+        public static Vector4i MultiplicativeIdentity => One;
+
+        /// <summary>
+        /// Gets the maximum value for Vector4i.
+        /// Sets X, Y, Z, and W components to the largest value for a signed 32-bit integer.
+        /// </summary>
+        public static Vector4i MaxValue => new Vector4i(int.MaxValue, int.MaxValue, int.MaxValue, int.MaxValue);
+
+        /// <summary>
+        /// Gets the minimum value for Vector4i.
+        /// Sets X, Y, Z, and W components to the smallest value for a signed 32-bit integer.
+        /// </summary>
+        public static Vector4i MinValue => new Vector4i(int.MinValue, int.MinValue, int.MinValue, int.MinValue);
 
         /// <summary>
         /// Adds two vectors.
@@ -1531,6 +1566,21 @@ namespace OpenTK.Mathematics
             vec.Y = -vec.Y;
             vec.Z = -vec.Z;
             vec.W = -vec.W;
+            return vec;
+        }
+
+        /// <summary>
+        /// Computes the unary plus of the vector.
+        /// </summary>
+        /// <param name="vec">The instance.</param>
+        /// <returns>The result of the calculation.</returns>
+        [Pure]
+        public static Vector4i operator +(Vector4i vec)
+        {
+            vec.X = +vec.X;
+            vec.Y = +vec.Y;
+            vec.Z = +vec.Z;
+            vec.W = +vec.W;
             return vec;
         }
 

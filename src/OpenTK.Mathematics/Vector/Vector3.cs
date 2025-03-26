@@ -22,6 +22,7 @@ SOFTWARE.
 
 using System;
 using System.Diagnostics.Contracts;
+using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Xml.Serialization;
@@ -36,7 +37,20 @@ namespace OpenTK.Mathematics
     /// </remarks>
     [Serializable]
     [StructLayout(LayoutKind.Sequential)]
-    public struct Vector3 : IEquatable<Vector3>, IFormattable
+    public struct Vector3 : IEquatable<Vector3>, IFormattable,
+                            IAdditionOperators<Vector3, Vector3, Vector3>,
+                            ISubtractionOperators<Vector3, Vector3, Vector3>,
+                            IUnaryNegationOperators<Vector3, Vector3>,
+                            IUnaryPlusOperators<Vector3, Vector3>,
+                            IMultiplyOperators<Vector3, float, Vector3>,
+                            IMultiplyOperators<Vector3, Vector3, Vector3>,
+                            IMultiplyOperators<Vector3, Matrix3, Vector3>,
+                            IDivisionOperators<Vector3, float, Vector3>,
+                            IDivisionOperators<Vector3, Vector3, Vector3>,
+                            IEqualityOperators<Vector3, Vector3, bool>,
+                            IAdditiveIdentity<Vector3, Vector3>,
+                            IMultiplicativeIdentity<Vector3, Vector3>,
+                            IMinMaxValue<Vector3>
     {
         /// <summary>
         /// The X component of the Vector3.
@@ -169,6 +183,26 @@ namespace OpenTK.Mathematics
         /// <see cref="Length"/>
         /// <seealso cref="LengthFast"/>
         public readonly float LengthSquared => (X * X) + (Y * Y) + (Z * Z);
+
+        /// <summary>
+        /// Gets the additive identity of Vector3. Equivalent to Vector3.Zero.
+        /// </summary>
+        public static Vector3 AdditiveIdentity => Zero;
+
+        /// <summary>
+        /// Gets the multiplicative identity of Vector3. Equivalent to Vector3.One.
+        /// </summary>
+        public static Vector3 MultiplicativeIdentity => One;
+
+        /// <summary>
+        /// Gets the max value for Vector3. Equivalent to Vector3.PositiveInfinity.
+        /// </summary>
+        public static Vector3 MaxValue => PositiveInfinity;
+
+        /// <summary>
+        /// Gets the min value for Vector3. Equivalent to Vector3.NegativeInfinity.
+        /// </summary>
+        public static Vector3 MinValue => NegativeInfinity;
 
         /// <summary>
         /// Returns a copy of the Vector3 scaled to unit length.
@@ -1555,6 +1589,20 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
+        /// Computes the unary plus of the vector.
+        /// </summary>
+        /// <param name="vec">The instance.</param>
+        /// <returns>The result of the calculation.</returns>
+        [Pure]
+        public static Vector3 operator +(Vector3 vec)
+        {
+            vec.X = +vec.X;
+            vec.Y = +vec.Y;
+            vec.Z = +vec.Z;
+            return vec;
+        }
+
+        /// <summary>
         /// Multiplies an instance by a scalar.
         /// </summary>
         /// <param name="vec">The instance.</param>
@@ -1609,32 +1657,6 @@ namespace OpenTK.Mathematics
         public static Vector3 operator *(Vector3 vec, Matrix3 mat)
         {
             TransformRow(in vec, in mat, out Vector3 result);
-            return result;
-        }
-
-        /// <summary>
-        /// Transform a Vector by the given Matrix using right-handed notation.
-        /// </summary>
-        /// <param name="mat">The desired transformation.</param>
-        /// <param name="vec">The vector to transform.</param>
-        /// <returns>The transformed vector.</returns>
-        [Pure]
-        public static Vector3 operator *(Matrix3 mat, Vector3 vec)
-        {
-            TransformColumn(in mat, in vec, out Vector3 result);
-            return result;
-        }
-
-        /// <summary>
-        /// Transforms a vector by a quaternion rotation.
-        /// </summary>
-        /// <param name="vec">The vector to transform.</param>
-        /// <param name="quat">The quaternion to rotate the vector by.</param>
-        /// <returns>The multiplied vector.</returns>
-        [Pure]
-        public static Vector3 operator *(Quaternion quat, Vector3 vec)
-        {
-            Transform(in vec, in quat, out Vector3 result);
             return result;
         }
 

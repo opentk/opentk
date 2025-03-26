@@ -22,6 +22,7 @@ SOFTWARE.
 
 using System;
 using System.Diagnostics.Contracts;
+using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Runtime.Intrinsics;
@@ -37,7 +38,20 @@ namespace OpenTK.Mathematics
     /// </remarks>
     [Serializable]
     [StructLayout(LayoutKind.Sequential)]
-    public struct Vector4 : IEquatable<Vector4>, IFormattable
+    public struct Vector4 : IEquatable<Vector4>, IFormattable,
+                            IAdditionOperators<Vector4, Vector4, Vector4>,
+                            ISubtractionOperators<Vector4, Vector4, Vector4>,
+                            IUnaryNegationOperators<Vector4, Vector4>,
+                            IUnaryPlusOperators<Vector4, Vector4>,
+                            IMultiplyOperators<Vector4, float, Vector4>,
+                            IMultiplyOperators<Vector4, Vector4, Vector4>,
+                            IMultiplyOperators<Vector4, Matrix4, Vector4>,
+                            IDivisionOperators<Vector4, float, Vector4>,
+                            IDivisionOperators<Vector4, Vector4, Vector4>,
+                            IEqualityOperators<Vector4, Vector4, bool>,
+                            IAdditiveIdentity<Vector4, Vector4>,
+                            IMultiplicativeIdentity<Vector4, Vector4>,
+                            IMinMaxValue<Vector4>
     {
         /// <summary>
         /// The X component of the Vector4.
@@ -247,6 +261,26 @@ namespace OpenTK.Mathematics
         /// <see cref="Length"/>
         /// <seealso cref="LengthFast"/>
         public readonly float LengthSquared => (X * X) + (Y * Y) + (Z * Z) + (W * W);
+
+        /// <summary>
+        /// Gets the additive identity of Vector4. Equivalent to Vector4.Zero.
+        /// </summary>
+        public static Vector4 AdditiveIdentity => Zero;
+
+        /// <summary>
+        /// Gets the multiplicative identity of Vector4. Equivalent to Vector4.One.
+        /// </summary>
+        public static Vector4 MultiplicativeIdentity => One;
+
+        /// <summary>
+        /// Gets the max value for Vector4. Equivalent to Vector4.PositiveInfinity.
+        /// </summary>
+        public static Vector4 MaxValue => PositiveInfinity;
+
+        /// <summary>
+        /// Gets the min value for Vector4. Equivalent to Vector4.NegativeInfinity.
+        /// </summary>
+        public static Vector4 MinValue => NegativeInfinity;
 
         /// <summary>
         /// Returns a copy of the Vector4 scaled to unit length.
@@ -2020,6 +2054,21 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
+        /// Computes the unary plus of the vector.
+        /// </summary>
+        /// <param name="vec">The instance.</param>
+        /// <returns>The result of the calculation.</returns>
+        [Pure]
+        public static Vector4 operator +(Vector4 vec)
+        {
+            vec.X = +vec.X;
+            vec.Y = +vec.Y;
+            vec.Z = +vec.Z;
+            vec.W = +vec.W;
+            return vec;
+        }
+
+        /// <summary>
         /// Multiplies an instance by a scalar.
         /// </summary>
         /// <param name="vec">The instance.</param>
@@ -2077,32 +2126,6 @@ namespace OpenTK.Mathematics
         public static Vector4 operator *(Vector4 vec, Matrix4 mat)
         {
             TransformRow(in vec, in mat, out Vector4 result);
-            return result;
-        }
-
-        /// <summary>
-        /// Transform a Vector by the given Matrix using right-handed notation.
-        /// </summary>
-        /// <param name="mat">The desired transformation.</param>
-        /// <param name="vec">The vector to transform.</param>
-        /// <returns>The transformed vector.</returns>
-        [Pure]
-        public static Vector4 operator *(Matrix4 mat, Vector4 vec)
-        {
-            TransformColumn(in mat, in vec, out Vector4 result);
-            return result;
-        }
-
-        /// <summary>
-        /// Transforms a vector by a quaternion rotation.
-        /// </summary>
-        /// <param name="quat">The quaternion to rotate the vector by.</param>
-        /// <param name="vec">The vector to transform.</param>
-        /// <returns>The transformed vector.</returns>
-        [Pure]
-        public static Vector4 operator *(Quaternion quat, Vector4 vec)
-        {
-            Transform(in vec, in quat, out Vector4 result);
             return result;
         }
 

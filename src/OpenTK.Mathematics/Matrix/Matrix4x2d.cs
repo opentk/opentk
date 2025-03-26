@@ -23,6 +23,7 @@ SOFTWARE.
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
+using System.Numerics;
 using System.Runtime.InteropServices;
 using System.Runtime.Intrinsics;
 
@@ -33,7 +34,16 @@ namespace OpenTK.Mathematics
     /// </summary>
     [Serializable]
     [StructLayout(LayoutKind.Sequential)]
-    public struct Matrix4x2d : IEquatable<Matrix4x2d>, IFormattable
+    public struct Matrix4x2d : IEquatable<Matrix4x2d>, IFormattable,
+                                IMultiplyOperators<Matrix4x2d, double, Matrix4x2d>,
+                                IMultiplyOperators<Matrix4x2d, Matrix2d, Matrix4x2d>,
+                                IMultiplyOperators<Matrix4x2d, Matrix2x3d, Matrix4x3d>,
+                                IMultiplyOperators<Matrix4x2d, Matrix2x4d, Matrix4d>,
+                                IAdditionOperators<Matrix4x2d, Matrix4x2d, Matrix4x2d>,
+                                ISubtractionOperators<Matrix4x2d, Matrix4x2d, Matrix4x2d>,
+                                IEqualityOperators<Matrix4x2d, Matrix4x2d, bool>,
+                                IAdditiveIdentity<Matrix4x2d, Matrix4x2d>,
+                                IMultiplicativeIdentity<Matrix4x2d, Matrix4x2d>
     {
         /// <summary>
         /// Top row of the matrix.
@@ -59,6 +69,11 @@ namespace OpenTK.Mathematics
         /// The zero matrix.
         /// </summary>
         public static readonly Matrix4x2d Zero = new Matrix4x2d(Vector2d.Zero, Vector2d.Zero, Vector2d.Zero, Vector2d.Zero);
+
+        /// <summary>
+        /// The identity matrix.
+        /// </summary>
+        public static readonly Matrix4x2d Identity = new Matrix4x2d((1, 0), (0, 1), (0, 0), (0, 0));
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Matrix4x2d"/> struct.
@@ -220,6 +235,16 @@ namespace OpenTK.Mathematics
         /// Gets the trace of the matrix, the sum of the values along the diagonal.
         /// </summary>
         public readonly double Trace => Row0.X + Row1.Y;
+
+        /// <summary>
+        /// Gets the additive identity of the matrix, which is the zero matrix.
+        /// </summary>
+        public static Matrix4x2d AdditiveIdentity => Zero;
+
+        /// <summary>
+        /// Gets the additive identity of the matrix, which is the identity matrix.
+        /// </summary>
+        public static Matrix4x2d MultiplicativeIdentity => Identity;
 
         /// <summary>
         /// Gets or sets the value at a specified row and column.

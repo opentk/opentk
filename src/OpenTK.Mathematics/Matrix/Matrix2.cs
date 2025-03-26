@@ -23,6 +23,7 @@ SOFTWARE.
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
+using System.Numerics;
 using System.Runtime.InteropServices;
 using System.Runtime.Intrinsics;
 
@@ -33,7 +34,17 @@ namespace OpenTK.Mathematics
     /// </summary>
     [Serializable]
     [StructLayout(LayoutKind.Sequential)]
-    public struct Matrix2 : IEquatable<Matrix2>, IFormattable
+    public struct Matrix2 : IEquatable<Matrix2>, IFormattable,
+                            IMultiplyOperators<Matrix2, float, Matrix2>,
+                            IMultiplyOperators<Matrix2, Vector2, Vector2>,
+                            IMultiplyOperators<Matrix2, Matrix2, Matrix2>,
+                            IMultiplyOperators<Matrix2, Matrix2x3, Matrix2x3>,
+                            IMultiplyOperators<Matrix2, Matrix2x4, Matrix2x4>,
+                            IAdditionOperators<Matrix2, Matrix2, Matrix2>,
+                            ISubtractionOperators<Matrix2, Matrix2, Matrix2>,
+                            IEqualityOperators<Matrix2, Matrix2, bool>,
+                            IAdditiveIdentity<Matrix2, Matrix2>,
+                            IMultiplicativeIdentity<Matrix2, Matrix2>
     {
         /// <summary>
         /// Top row of the matrix.
@@ -179,6 +190,16 @@ namespace OpenTK.Mathematics
         /// Gets the trace of the matrix, the sum of the values along the diagonal.
         /// </summary>
         public readonly float Trace => Row0.X + Row1.Y;
+
+        /// <summary>
+        /// Gets the additive identity of the matrix, which is the zero matrix.
+        /// </summary>
+        public static Matrix2 AdditiveIdentity => Zero;
+
+        /// <summary>
+        /// Gets the multiplicative identity of the matrix, which is the identity matrix.
+        /// </summary>
+        public static Matrix2 MultiplicativeIdentity => Identity;
 
         /// <summary>
         /// Gets or sets the value at a specified row and column.
@@ -757,6 +778,19 @@ namespace OpenTK.Mathematics
         public static Matrix2 operator *(Matrix2 left, float right)
         {
             return Mult(left, right);
+        }
+
+        /// <summary>
+        /// Transform a Vector by the given Matrix using right-handed notation.
+        /// </summary>
+        /// <param name="mat">The desired transformation.</param>
+        /// <param name="vec">The vector to transform.</param>
+        /// <returns>The transformed vector.</returns>
+        [Pure]
+        public static Vector2 operator *(Matrix2 mat, Vector2 vec)
+        {
+            Vector2.TransformColumn(in mat, in vec, out Vector2 result);
+            return result;
         }
 
         /// <summary>

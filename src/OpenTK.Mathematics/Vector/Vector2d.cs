@@ -22,6 +22,7 @@ SOFTWARE.
 
 using System;
 using System.Diagnostics.Contracts;
+using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Runtime.Intrinsics;
@@ -34,7 +35,20 @@ namespace OpenTK.Mathematics
     /// </summary>
     [Serializable]
     [StructLayout(LayoutKind.Sequential)]
-    public struct Vector2d : IEquatable<Vector2d>, IFormattable
+    public struct Vector2d : IEquatable<Vector2d>, IFormattable,
+                            IAdditionOperators<Vector2d, Vector2d, Vector2d>,
+                            ISubtractionOperators<Vector2d, Vector2d, Vector2d>,
+                            IUnaryNegationOperators<Vector2d, Vector2d>,
+                            IUnaryPlusOperators<Vector2d, Vector2d>,
+                            IMultiplyOperators<Vector2d, double, Vector2d>,
+                            IMultiplyOperators<Vector2d, Vector2d, Vector2d>,
+                            IMultiplyOperators<Vector2d, Matrix2d, Vector2d>,
+                            IDivisionOperators<Vector2d, double, Vector2d>,
+                            IDivisionOperators<Vector2d, Vector2d, Vector2d>,
+                            IEqualityOperators<Vector2d, Vector2d, bool>,
+                            IAdditiveIdentity<Vector2d, Vector2d>,
+                            IMultiplicativeIdentity<Vector2d, Vector2d>,
+                            IMinMaxValue<Vector2d>
     {
         /// <summary>
         /// The X coordinate of this instance.
@@ -181,6 +195,26 @@ namespace OpenTK.Mathematics
         /// Gets the perpendicular vector on the left side of this vector.
         /// </summary>
         public readonly Vector2d PerpendicularLeft => new Vector2d(-Y, X);
+
+        /// <summary>
+        /// Gets the additive identity of Vector2. Equivalent to Vector2.Zero.
+        /// </summary>
+        public static Vector2d AdditiveIdentity => Zero;
+
+        /// <summary>
+        /// Gets the multiplicative identity of Vector2d. Equivalent to Vector2d.One.
+        /// </summary>
+        public static Vector2d MultiplicativeIdentity => One;
+
+        /// <summary>
+        /// Gets the max value for Vector2d. Equivalent to Vector2d.PositiveInfinity.
+        /// </summary>
+        public static Vector2d MaxValue => PositiveInfinity;
+
+        /// <summary>
+        /// Gets the min value for Vector2d. Equivalent to Vector2d.NegativeInfinity.
+        /// </summary>
+        public static Vector2d MinValue => NegativeInfinity;
 
         /// <summary>
         /// Returns a copy of the Vector2d scaled to unit length.
@@ -989,6 +1023,19 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
+        /// Computes the unary plus of the vector.
+        /// </summary>
+        /// <param name="vec">The instance.</param>
+        /// <returns>The result of the calculation.</returns>
+        [Pure]
+        public static Vector2d operator +(Vector2d vec)
+        {
+            vec.X = +vec.X;
+            vec.Y = +vec.Y;
+            return vec;
+        }
+
+        /// <summary>
         /// Multiplies an instance by a scalar.
         /// </summary>
         /// <param name="vec">The instance.</param>
@@ -1040,32 +1087,6 @@ namespace OpenTK.Mathematics
         public static Vector2d operator *(Vector2d vec, Matrix2d mat)
         {
             TransformRow(in vec, in mat, out Vector2d result);
-            return result;
-        }
-
-        /// <summary>
-        /// Transform a Vector by the given Matrix using right-handed notation.
-        /// </summary>
-        /// <param name="mat">The desired transformation.</param>
-        /// <param name="vec">The vector to transform.</param>
-        /// <returns>The transformed vector.</returns>
-        [Pure]
-        public static Vector2d operator *(Matrix2d mat, Vector2d vec)
-        {
-            TransformColumn(in mat, in vec, out Vector2d result);
-            return result;
-        }
-
-        /// <summary>
-        /// Transforms a vector by a quaternion rotation.
-        /// </summary>
-        /// <param name="quat">The quaternion to rotate the vector by.</param>
-        /// <param name="vec">The vector to transform.</param>
-        /// <returns>The transformed vector.</returns>
-        [Pure]
-        public static Vector2d operator *(Quaterniond quat, Vector2d vec)
-        {
-            Transform(in vec, in quat, out Vector2d result);
             return result;
         }
 

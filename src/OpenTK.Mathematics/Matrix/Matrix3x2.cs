@@ -23,6 +23,7 @@ SOFTWARE.
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
+using System.Numerics;
 using System.Runtime.InteropServices;
 using System.Runtime.Intrinsics;
 
@@ -33,7 +34,16 @@ namespace OpenTK.Mathematics
     /// </summary>
     [Serializable]
     [StructLayout(LayoutKind.Sequential)]
-    public struct Matrix3x2 : IEquatable<Matrix3x2>, IFormattable
+    public struct Matrix3x2 : IEquatable<Matrix3x2>, IFormattable,
+                                IMultiplyOperators<Matrix3x2, float, Matrix3x2>,
+                                IMultiplyOperators<Matrix3x2, Matrix2, Matrix3x2>,
+                                IMultiplyOperators<Matrix3x2, Matrix2x3, Matrix3>,
+                                IMultiplyOperators<Matrix3x2, Matrix2x4, Matrix3x4>,
+                                IAdditionOperators<Matrix3x2, Matrix3x2, Matrix3x2>,
+                                ISubtractionOperators<Matrix3x2, Matrix3x2, Matrix3x2>,
+                                IEqualityOperators<Matrix3x2, Matrix3x2, bool>,
+                                IAdditiveIdentity<Matrix3x2, Matrix3x2>,
+                                IMultiplicativeIdentity<Matrix3x2, Matrix3x2>
     {
         /// <summary>
         /// Top row of the matrix.
@@ -54,6 +64,11 @@ namespace OpenTK.Mathematics
         /// The zero matrix.
         /// </summary>
         public static readonly Matrix3x2 Zero = new Matrix3x2(Vector2.Zero, Vector2.Zero, Vector2.Zero);
+
+        /// <summary>
+        /// The identity matrix.
+        /// </summary>
+        public static readonly Matrix3x2 Identity = new Matrix3x2((1, 0), (0, 1), (0, 0));
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Matrix3x2"/> struct.
@@ -189,6 +204,16 @@ namespace OpenTK.Mathematics
         /// Gets the trace of the matrix, the sum of the values along the diagonal.
         /// </summary>
         public readonly float Trace => Row0.X + Row1.Y;
+
+        /// <summary>
+        /// Gets the additive identity of the matrix, which is the zero matrix.
+        /// </summary>
+        public static Matrix3x2 AdditiveIdentity => Zero;
+
+        /// <summary>
+        /// Gets the additive identity of the matrix, which is the identity matrix.
+        /// </summary>
+        public static Matrix3x2 MultiplicativeIdentity => Identity;
 
         /// <summary>
         /// Gets or sets the value at a specified row and column.
