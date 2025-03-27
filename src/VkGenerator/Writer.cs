@@ -1,6 +1,7 @@
 ﻿using System;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Reflection;
 using System.Text;
@@ -36,6 +37,7 @@ namespace VkGenerator
 
             WriteFunctionPointers(directoryPath, data.Commands, video);
             WriteCommands(directoryPath, data.Commands, video);
+            WriteDispatchTables(directoryPath, data.Commands, video);
 
             WriteConstants(directoryPath, data.Constants);
         }
@@ -119,7 +121,6 @@ namespace VkGenerator
                     {
                         foreach (EnumMember member in @enum.Members)
                         {
-                            string? comment = NameMangler.MaybeRemoveStart(member.Comment, "// ");
                             if (member.Extension != null && member.VersionInfo != null)
                             {
                                 if (member.Extension.StartsWith("VK_VERSION") == false)
@@ -186,9 +187,10 @@ namespace VkGenerator
                                 }
                             }
 
+                            string? comment = NameMangler.MaybeRemoveStart(member.Comment, "// ");
                             if (comment != null)
                             {
-                                writer.Write($"{comment}");
+                                writer.Write($"{NameMangler.XmlEscapeCharacters(comment)}");
                             }
                             writer.WriteLine("</summary>");
 
@@ -284,7 +286,7 @@ namespace VkGenerator
                     }
                     if (@struct.Comment != null)
                     {
-                        writer.Write($"{NameMangler.MaybeRemoveStart(@struct.Comment, "// ")}");
+                        writer.Write($"{NameMangler.XmlEscapeCharacters(NameMangler.MaybeRemoveStart(@struct.Comment, "// "))}");
                     }
                     if (@struct.ReferencedBy != null)
                     {
@@ -385,44 +387,54 @@ namespace VkGenerator
                 {
                     foreach (Command command in commands)
                     {
-                        string entryPoint = command.Name;
-                        string functionName = NameMangler.MangleFunctionName(command.Name);
+                        WriteCommand(writer, command, "static ", "VkPointers.");
+                    }
+                }
 
-                        StringBuilder signature = new StringBuilder();
-                        StringBuilder paramNames = new StringBuilder();
-                        foreach (CommandParameter parameter in command.Parameters)
-                        {
-                            string name = NameMangler.MangleParameterName(parameter.Name);
-                            string type = parameter.StrongType!.ToCSString();
-                            signature.Append($"{type} {name}, ");
-                            paramNames.Append($"{name}, ");
-                        }
-                        signature.Length -= 2;
-                        paramNames.Length -= 2;
+                writer.WriteLineNoTabs("#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member");
+            }
+        }
 
-                        // Write documentation string.
-                        {
-                            writer.Write("/// <summary>");
-                            if (command.VersionInfo != null)
-                            {
-                                List<string> strs = [.. command.VersionInfo.Extensions];
-                                if (command.VersionInfo.Version != null)
-                                {
-                                    strs.Insert(0, $"v{command.VersionInfo.Version.Major}.{command.VersionInfo.Version.Minor}");
-                                }
-                                writer.Write($"<b>[requires: {string.Join(" | ", strs)}]</b> ");
-                            }
-                            else
-                            {
-                                // There are two "valid" reasons why a command would be missing version data.
-                                // 1. The only reference to the command is in a disabled extension.
-                                //    Currently such functions still get emitted even if no-one references them.
-                                // 2. The command is part of vulkansc or a vulkansc extension. We don't deal with vulkancs atm.
-                                //
-                                // This is a list of the known commands that fullfill either of these criteria.
-                                // - Noggin_bops 2024-09-24
-                                ReadOnlySpan<string> exceptedNames = [
-                                    "vkGetSwapchainGrallocUsageANDROID",
+        public static void WriteCommand(IndentedTextWriter writer, Command command, string functionModifiers, string fnpointerPrefix)
+        {
+            string entryPoint = command.Name;
+            string functionName = NameMangler.MangleFunctionName(command.Name);
+
+            StringBuilder signature = new StringBuilder();
+            StringBuilder paramNames = new StringBuilder();
+            foreach (CommandParameter parameter in command.Parameters)
+            {
+                string name = NameMangler.MangleParameterName(parameter.Name);
+                string type = parameter.StrongType!.ToCSString();
+                signature.Append($"{type} {name}, ");
+                paramNames.Append($"{name}, ");
+            }
+            signature.Length -= 2;
+            paramNames.Length -= 2;
+
+            // Write documentation string.
+            {
+                writer.Write("/// <summary>");
+                if (command.VersionInfo != null)
+                {
+                    List<string> strs = [.. command.VersionInfo.Extensions];
+                    if (command.VersionInfo.Version != null)
+                    {
+                        strs.Insert(0, $"v{command.VersionInfo.Version.Major}.{command.VersionInfo.Version.Minor}");
+                    }
+                    writer.Write($"<b>[requires: {string.Join(" | ", strs)}]</b> ");
+                }
+                else
+                {
+                    // There are two "valid" reasons why a command would be missing version data.
+                    // 1. The only reference to the command is in a disabled extension.
+                    //    Currently such functions still get emitted even if no-one references them.
+                    // 2. The command is part of vulkansc or a vulkansc extension. We don't deal with vulkancs atm.
+                    //
+                    // This is a list of the known commands that fullfill either of these criteria.
+                    // - Noggin_bops 2024-09-24
+                    ReadOnlySpan<string> exceptedNames = [
+                        "vkGetSwapchainGrallocUsageANDROID",
                                     "vkGetSwapchainGrallocUsage2ANDROID",
                                     "vkAcquireImageANDROID",
                                     "vkQueueSignalReleaseImageANDROID",
@@ -430,38 +442,49 @@ namespace VkGenerator
                                     "vkGetCommandPoolMemoryConsumption",
                                 ];
 
-                                if (exceptedNames.Contains(command.Name) == false)
-                                {
-                                    // See comment above.
-                                    Debug.Assert(false);
-                                }
-                            }
-
-                            if (command.Alias != null)
-                            {
-                                writer.Write($" Alias of <see cref=\"{NameMangler.MangleFunctionName(command.Alias)}\"/>");
-                            }
-                            writer.WriteLine("</summary>");
-                        }
-
-                        writer.WriteLine($"/// <remarks><see href=\"https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/{entryPoint}.html\" /></remarks>");
-
-                        writer.WriteLine($"public static {command.StrongReturnType!.ToCSString()} {functionName}({signature})");
-                        using (writer.CsScope())
-                        {
-                            if (command.StrongReturnType is not CSVoid)
-                            {
-                                writer.WriteLine($"return VkPointers._{entryPoint}_fnptr({paramNames});");
-                            }
-                            else
-                            {
-                                writer.WriteLine($"VkPointers._{entryPoint}_fnptr({paramNames});");
-                            }
-                        }
+                    if (exceptedNames.Contains(command.Name) == false)
+                    {
+                        // See comment above.
+                        Debug.Assert(false);
                     }
                 }
 
-                writer.WriteLineNoTabs("#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member");
+                switch (command.CommandType)
+                {
+                    case CommandType.Global:
+                        writer.Write("[global command] ");
+                        break;
+                    case CommandType.Instance:
+                        writer.Write("[instance command] ");
+                        break;
+                    case CommandType.Device:
+                        writer.Write("[device command] ");
+                        break;
+                    case CommandType.Invalid:
+                    default:
+                        throw new InvalidEnumArgumentException($"Invalid command type: {command.CommandType}");
+                }
+
+                if (command.Alias != null)
+                {
+                    writer.Write($" Alias of <see cref=\"{NameMangler.MangleFunctionName(command.Alias)}\"/>");
+                }
+                writer.WriteLine("</summary>");
+            }
+
+            writer.WriteLine($"/// <remarks><see href=\"https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/{entryPoint}.html\" /></remarks>");
+
+            writer.WriteLine($"public {functionModifiers}{command.StrongReturnType!.ToCSString()} {functionName}({signature})");
+            using (writer.CsScope())
+            {
+                if (command.StrongReturnType is not CSVoid)
+                {
+                    writer.WriteLine($"return {fnpointerPrefix}_{entryPoint}_fnptr({paramNames});");
+                }
+                else
+                {
+                    writer.WriteLine($"{fnpointerPrefix}_{entryPoint}_fnptr({paramNames});");
+                }
             }
         }
 
@@ -489,46 +512,209 @@ namespace VkGenerator
                 {
                     foreach (Command command in commands)
                     {
-                        string entryPoint = command.Name;
-
-                        StringBuilder signature = new StringBuilder();
-                        StringBuilder delegateTypes = new StringBuilder();
-                        StringBuilder paramNames = new StringBuilder();
-                        foreach (CommandParameter parameter in command.Parameters)
-                        {
-                            string name = NameMangler.MangleParameterName(parameter.Name);
-                            string type = parameter.StrongType!.ToCSString();
-                            signature.Append($"{type} {name}, ");
-                            delegateTypes.Append($"{type}, ");
-                            paramNames.Append($"{name}, ");
-                        }
-                        signature.Length -= 2;
-                        paramNames.Length -= 2;
-
-                        delegateTypes.Append($"{command.StrongReturnType!.ToCSString()}");
-
-                        writer.WriteLine($"public static delegate* unmanaged<{delegateTypes}> _{entryPoint}_fnptr = &{entryPoint}_Lazy;");
-
-                        writer.WriteLine($"[UnmanagedCallersOnly]");
-                        writer.WriteLine($"private static {command.StrongReturnType!.ToCSString()} {entryPoint}_Lazy({signature})");
-                        using (writer.CsScope())
-                        {
-                            // Dotnet gurantees you can't get torn values when assigning functionpointers, assuming proper allignment which is default.
-                            writer.WriteLine($"_{entryPoint}_fnptr = (delegate* unmanaged<{delegateTypes}>){LoaderClass}.GetInstanceProcAddress(\"{entryPoint}\");");
-
-                            if (command.StrongReturnType is not CSVoid)
-                            {
-                                writer.WriteLine($"return _{entryPoint}_fnptr({paramNames});");
-                            }
-                            else
-                            {
-                                writer.WriteLine($"_{entryPoint}_fnptr({paramNames});");
-                            }
-                        }
+                        WriteFunctionPointer(writer, command, "static ", true);
                     }
                 }
 
                 writer.WriteLineNoTabs("#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member");
+            }
+        }
+
+        public static void WriteFunctionPointer(IndentedTextWriter writer, Command command, string memberModifiers, bool lazyLoader)
+        {
+            string entryPoint = command.Name;
+
+            StringBuilder signature = new StringBuilder();
+            StringBuilder delegateTypes = new StringBuilder();
+            StringBuilder paramNames = new StringBuilder();
+            foreach (CommandParameter parameter in command.Parameters)
+            {
+                string name = NameMangler.MangleParameterName(parameter.Name);
+                string type = parameter.StrongType!.ToCSString();
+                signature.Append($"{type} {name}, ");
+                delegateTypes.Append($"{type}, ");
+                paramNames.Append($"{name}, ");
+            }
+            signature.Length -= 2;
+            paramNames.Length -= 2;
+
+            delegateTypes.Append($"{command.StrongReturnType!.ToCSString()}");
+
+            if (lazyLoader)
+            {
+                writer.WriteLine($"public {memberModifiers}delegate* unmanaged<{delegateTypes}> _{entryPoint}_fnptr = &{entryPoint}_Lazy;");
+
+                writer.WriteLine($"[UnmanagedCallersOnly]");
+                writer.WriteLine($"private {memberModifiers}{command.StrongReturnType!.ToCSString()} {entryPoint}_Lazy({signature})");
+                using (writer.CsScope())
+                {
+                    // Dotnet gurantees you can't get torn values when assigning functionpointers, assuming proper allignment which is default.
+                    writer.WriteLine($"_{entryPoint}_fnptr = (delegate* unmanaged<{delegateTypes}>){LoaderClass}.GetInstanceProcAddress(\"{entryPoint}\");");
+
+                    if (command.StrongReturnType is not CSVoid)
+                    {
+                        writer.WriteLine($"return _{entryPoint}_fnptr({paramNames});");
+                    }
+                    else
+                    {
+                        writer.WriteLine($"_{entryPoint}_fnptr({paramNames});");
+                    }
+                }
+            }
+            else
+            {
+                writer.WriteLine($"public {memberModifiers}delegate* unmanaged<{delegateTypes}> _{entryPoint}_fnptr;");
+            }
+        }
+
+
+        public static void WriteDispatchTables(string directoryPath, List<Command> commands, SpecificationData video)
+        {
+            using StreamWriter stream = File.CreateText(Path.Combine(directoryPath, "DispatchTables.cs"));
+            using IndentedTextWriter writer = new IndentedTextWriter(stream);
+            writer.WriteLine("// This file is auto generated, do not edit.");
+            writer.WriteLine("using OpenTK.Mathematics;");
+            foreach (Extension extension in video.Extensions)
+            {
+                writer.WriteLine($"using {GraphicsNamespace}.Vulkan.{NameMangler.MangleExtensionName(extension.Name)};");
+            }
+            writer.WriteLine("using System;");
+            writer.WriteLine("using System.Runtime.CompilerServices;");
+            writer.WriteLine("using System.Runtime.InteropServices;");
+            writer.WriteLine();
+            writer.WriteLine($"namespace {GraphicsNamespace}.Vulkan");
+            using (writer.CsScope())
+            {
+                writer.WriteLineNoTabs("#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member");
+
+                WriteInstanceDispatchTable(writer, commands);
+                WriteDeviceDispatchTable(writer, commands);
+
+                writer.WriteLineNoTabs("#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member");
+            }
+
+            static void WriteInstanceDispatchTable(IndentedTextWriter writer, List<Command> commands)
+            {
+                writer.WriteLine($"public unsafe partial struct InstanceDispatchTable");
+                using (writer.CsScope())
+                {
+                    writer.WriteLine("///<summary>The <see cref=\"VkInstance\"/> used to load this dispatch table.</summary>");
+                    writer.WriteLine("public readonly VkInstance Instance;");
+                    
+                    writer.WriteLine($"public InstanceDispatchTable(VkInstance instance)");
+                    using (writer.CsScope())
+                    {
+                        writer.WriteLine("Instance = instance;");
+                        foreach (Command command in commands)
+                        {
+                            if (command.CommandType != CommandType.Instance)
+                                continue;
+
+                            string entryPoint = command.Name;
+                            string functionName = NameMangler.MangleFunctionName(command.Name);
+
+                            StringBuilder signature = new StringBuilder();
+                            StringBuilder delegateTypes = new StringBuilder();
+                            StringBuilder paramNames = new StringBuilder();
+                            foreach (CommandParameter parameter in command.Parameters)
+                            {
+                                string name = NameMangler.MangleParameterName(parameter.Name);
+                                string type = parameter.StrongType!.ToCSString();
+                                signature.Append($"{type} {name}, ");
+                                delegateTypes.Append($"{type}, ");
+                                paramNames.Append($"{name}, ");
+                            }
+                            signature.Length -= 2;
+                            paramNames.Length -= 2;
+
+                            delegateTypes.Append($"{command.StrongReturnType!.ToCSString()}");
+
+                            writer.WriteLine($"_{entryPoint}_fnptr = (delegate* unmanaged<{delegateTypes}>){LoaderClass}.GetInstanceProcAddress(instance, \"{entryPoint}\");");
+                        }
+                    }
+
+                    // FIXME: If the first argument is the instance itself
+                    // we might want to do like VkBootstrap does as implicitly
+                    // fill it in.
+                    // - Noggin_bops 2025-03-27
+                    foreach (Command command in commands)
+                    {
+                        if (command.CommandType != CommandType.Instance)
+                            continue;
+
+                        WriteCommand(writer, command, "", "");
+                    }
+
+                    foreach (Command command in commands)
+                    {
+                        if (command.CommandType != CommandType.Instance)
+                            continue;
+
+                        WriteFunctionPointer(writer, command, "", false);
+                    }
+                }
+            }
+
+            static void WriteDeviceDispatchTable(IndentedTextWriter writer, List<Command> commands)
+            {
+                writer.WriteLine($"public unsafe partial struct DeviceDispatchTable");
+                using (writer.CsScope())
+                {
+                    writer.WriteLine("///<summary>The <see cref=\"VkDevice\"/> used to load this dispatch table.</summary>");
+                    writer.WriteLine("public readonly VkDevice Device;");
+                    
+                    writer.WriteLine($"public DeviceDispatchTable(VkDevice device)");
+                    using (writer.CsScope())
+                    {
+                        writer.WriteLine("Device = device;");
+                        foreach (Command command in commands)
+                        {
+                            if (command.CommandType != CommandType.Device)
+                                continue;
+
+                            string entryPoint = command.Name;
+                            string functionName = NameMangler.MangleFunctionName(command.Name);
+
+                            StringBuilder signature = new StringBuilder();
+                            StringBuilder delegateTypes = new StringBuilder();
+                            StringBuilder paramNames = new StringBuilder();
+                            foreach (CommandParameter parameter in command.Parameters)
+                            {
+                                string name = NameMangler.MangleParameterName(parameter.Name);
+                                string type = parameter.StrongType!.ToCSString();
+                                signature.Append($"{type} {name}, ");
+                                delegateTypes.Append($"{type}, ");
+                                paramNames.Append($"{name}, ");
+                            }
+                            signature.Length -= 2;
+                            paramNames.Length -= 2;
+
+                            delegateTypes.Append($"{command.StrongReturnType!.ToCSString()}");
+
+                            writer.WriteLine($"_{entryPoint}_fnptr = (delegate* unmanaged<{delegateTypes}>){LoaderClass}.GetDeviceProcAddr(device, \"{entryPoint}\");");
+                        }
+                    }
+
+                    // FIXME: If the first argument is the device itself
+                    // we might want to do like VkBootstrap does as implicitly
+                    // fill it in.
+                    // - Noggin_bops 2025-03-27
+                    foreach (Command command in commands)
+                    {
+                        if (command.CommandType != CommandType.Device)
+                            continue;
+
+                        WriteCommand(writer, command, "", "");
+                    }
+
+                    foreach (Command command in commands)
+                    {
+                        if (command.CommandType != CommandType.Device)
+                            continue;
+
+                        WriteFunctionPointer(writer, command, "", false);
+                    }
+                }
             }
         }
 
@@ -554,11 +740,11 @@ namespace VkGenerator
                     {
                         if (constant.Extension != null)
                         {
-                            writer.WriteLine($"/// <summary>[from: <b>{constant.Extension}</b>]{constant.Comment}</summary>");
+                            writer.WriteLine($"/// <summary>[from: <b>{constant.Extension}</b>]{NameMangler.XmlEscapeCharacters(constant.Comment)}</summary>");
                         }
                         else if (constant.Comment != null)
                         {
-                            writer.WriteLine($"/// <summary>{constant.Comment}</summary>");
+                            writer.WriteLine($"/// <summary>{NameMangler.XmlEscapeCharacters(constant.Comment)}</summary>");
                         }
 
                         writer.WriteLine($"/// <remarks><see href=\"https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/{name}.html\" /></remarks>");
@@ -678,7 +864,7 @@ namespace VkGenerator
                                             string? comment = NameMangler.MaybeRemoveStart(member.Comment, "// ");
                                             if (comment != null)
                                             {
-                                                writer.WriteLine($"/// <summary>{comment}</summary>");
+                                                writer.WriteLine($"/// <summary>{NameMangler.XmlEscapeCharacters(comment)}</summary>");
                                             }
                                             writer.WriteLine($"{NameMangler.MangleEnumName(member.Name)} = {member.Value},");
                                         }
@@ -690,7 +876,7 @@ namespace VkGenerator
                                 }
                                 else
                                 {
-                                    Console.WriteLine($"Could not find {requiredType.Name}");
+                                    Console.WriteLine($"Could not find {requiredType.Name} in {extension.Name} extension.");
                                 }
                             }
                         }
@@ -721,12 +907,12 @@ namespace VkGenerator
                 foreach (StructMember member in @struct.Members)
                 {
                     // FIXME: What do we do with these?
-                    if (member.StrongType is CSNotSupportedType)
+                    if (member.StrongType is CSNotSupportedType notSupported)
                     {
                         // We can't have unsupported types in our ctor
                         canWriteSimpleCtor &= false;
 
-                        Console.WriteLine("Unsupported type in struct!!");
+                        Console.WriteLine($"Unsupported type '{notSupported.UnsupportedType}' in struct {@struct.Name}!");
                         writer.WriteLine($"// Unsupported type for field {member.Name}");
                         continue;
                     }
@@ -793,7 +979,7 @@ namespace VkGenerator
                         EnumMember? enumMember = Processor.FindEnumMember(enums, member.Values);
                         if (enumMember == null)
                         {
-                            Console.WriteLine($"Could't find sType '{member.Values}'");
+                            Console.WriteLine($"Could't find sType '{member.Values}' for {@struct.Name}");
                             writer.WriteLine($"public {member.StrongType!.ToCSString()} {NameMangler.MangleMemberName(member.Name)};");
                         }
                         else
@@ -829,7 +1015,6 @@ namespace VkGenerator
 
                                 int size = actualWidth;
                                 int offset = underlyingBitwidth - bitsLeft;
-                                writer.WriteLine($" // TODO: Accessor property for {member.Name}, size: {actualWidth}, offset: {underlyingBitwidth - bitsLeft}");
                                 writer.WriteLine($"public {csBitfield.UnderlyingType.ToCSString()} {NameMangler.MangleMemberName(member.Name)}");
                                 using (writer.CsScope())
                                 {

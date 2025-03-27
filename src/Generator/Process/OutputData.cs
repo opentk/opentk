@@ -377,6 +377,7 @@ namespace Generator.Writing
 
         internal void Rename(Parameter param, string name) => Table[param] = name;
 
+        /// <summary>Mark this parameter as fixed, so generators don't try to use <see langword="fixed"/> on this parameter.</summary>
         internal void MarkFixed(Parameter param) => FixedTable.Add(param);
 
         internal bool IsFixed(Parameter param) => FixedTable.Contains(param);

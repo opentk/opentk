@@ -6,6 +6,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
+using System.Threading;
 using Generator.Parsing;
 using Generator.Utility;
 using Generator.Utility.Extensions;
@@ -36,6 +37,7 @@ namespace Generator.Process
             new VoidPtrToIntPtrOverloader(),
             new GenCreateAndDeleteOverloader(),
             new StringOverloader(),
+            new StringArrayOverloader(),
             new SpanAndArrayOverloader(),
             new RefInsteadOfPointerOverloader(),
             new OutToReturnOverloader(),
@@ -1383,6 +1385,94 @@ namespace Generator.Process
                 return returnName;
             }
         }
+    }
+
+    internal class StringArrayOverloader : IOverloader
+    {
+        public bool TryGenerateOverloads(Overload overload, [NotNullWhen(true)] out List<Overload>? newOverloads)
+        {
+            int stringArrayParameterIndex = -1;
+            for (int i = 0; i < overload.InputParameters.Length; i++)
+            {
+                var param = overload.InputParameters[i];
+
+                if (param.Type is CSPointer pointer && pointer.BaseType is CSPointer pointer2 && pointer2.BaseType is ICSCharType bt)
+                {
+                    Debug.Assert(stringArrayParameterIndex == -1, "We only expect one string array argument per function.");
+                    Debug.Assert(bt is CSChar8);
+                    stringArrayParameterIndex = i;
+                }
+            }
+
+            if (stringArrayParameterIndex != -1)
+            {
+                List<Parameter> newParams = new List<Parameter>(overload.InputParameters);
+
+                var nameTable = overload.NameTable.New();
+
+                var arrayParam = newParams[stringArrayParameterIndex];
+                nameTable.Rename(arrayParam, $"{arrayParam.Name}_ptr");
+                newParams[stringArrayParameterIndex] = arrayParam with { Type = new CSArray(new CSString(false)) };
+
+                StringArrayLayer.StringType stringType = ((arrayParam.Type as CSPointer)!.BaseType as CSPointer)!.BaseType switch
+                {
+                    CSChar8 => StringArrayLayer.StringType.Char8,
+                    CSChar16 => StringArrayLayer.StringType.Char16,
+                    _ => throw new Exception("Unknown string type!"),
+                };
+
+                // FIXME: Can we know if the string is nullable or not?
+                newParams[stringArrayParameterIndex] = newParams[stringArrayParameterIndex] with { Type = new CSArray(new CSString(Nullable: false)) };
+                var stringParams = newParams.ToArray();
+                var stringArrayLayer = new StringArrayLayer(arrayParam, newParams[stringArrayParameterIndex], stringType);
+
+                newOverloads = [overload with
+                {
+                    NestedOverload = overload,
+                    MarshalLayerToNested = stringArrayLayer,
+                    InputParameters = newParams.ToArray(),
+                    NameTable = nameTable
+                }];
+                return true;
+            }
+            else
+            {
+                newOverloads = null;
+                return false;
+            }
+        }
+
+
+        private record StringArrayLayer(Parameter PointerParameter, Parameter StringArrayParameter, StringArrayLayer.StringType Type) : IOverloadLayer
+        {
+            internal enum StringType
+            {
+                Char8,
+                Char16,
+            }
+
+            public void WritePrologue(IndentedTextWriter writer, NameTable nameTable)
+            {
+                switch (Type)
+                {
+                    case StringType.Char8:
+                        writer.WriteLine($"byte** {nameTable[PointerParameter]} = (byte**)MarshalTk.StringArrayToCoTaskMemUTF8({nameTable[StringArrayParameter]});");
+                        break;
+                    case StringType.Char16:
+                        writer.WriteLine($"char** {nameTable[PointerParameter]} = (char**)MarshalTk.StringArrayToCoTaskMemUni({nameTable[StringArrayParameter]});");
+                        break;
+                    default:
+                        throw new Exception($"Unknown string type '{Type}'.");
+                }
+            }
+
+            public string? WriteEpilogue(IndentedTextWriter writer, NameTable nameTable, string? returnName)
+            {
+                writer.WriteLine($"MarshalTk.FreeStringArrayCoTaskMem((IntPtr){nameTable[PointerParameter]}, {nameTable[StringArrayParameter]}.Length);");
+                return returnName;
+            }
+        }
+
     }
 
     internal class SpanAndArrayOverloader : IOverloader

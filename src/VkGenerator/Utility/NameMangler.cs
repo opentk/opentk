@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Net.Http.Headers;
 using System.Text;
 
@@ -26,6 +27,7 @@ namespace VkGenerator.Utility
     {
         public static NameManglerSettings Settings = new NameManglerSettings();
 
+        [return: NotNullIfNotNull(nameof(str))]
         public static string? MaybeRemoveStart(string? str, string start)
         {
             if (str == null)
@@ -239,10 +241,10 @@ namespace VkGenerator.Utility
         }
 
         /// <summary>
-        /// Escapes all "'<>& characters.
+        /// Escapes all "'&lt;&gt;&amp; characters.
         /// This extension will not detect already escaped strings.
         /// </summary>
-        public static string XmlEscapeCharacters(string str)
+        public static string XmlEscapeCharacters(string? str)
         {
             StringBuilder sb = new StringBuilder(str);
 

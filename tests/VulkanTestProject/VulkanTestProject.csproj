@@ -13,4 +13,12 @@
     <ProjectReference Include="..\..\src\OpenTK.Platform\OpenTK.Platform.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Include="Assets/triangle.vert.spv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets/triangle.frag.spv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
 </Project>

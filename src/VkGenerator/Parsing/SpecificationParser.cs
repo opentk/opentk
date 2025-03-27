@@ -45,6 +45,8 @@ namespace VkGenerator.Parsing
 
     public record HandleType(string Name, string? Parent, string Type, string TypeEnum, string? Alias) : IReferable
     {
+        public HandleType? ResolvedParent;
+
         public List<Command>? ReferencedBy;
         public void MarkReferencedBy(Command command)
         {
@@ -58,7 +60,7 @@ namespace VkGenerator.Parsing
 
     public record ExternalType(string Name, string? HeaderFile);
 
-    public record StructType(string Name, List<StructMember> Members, bool Union, string? Comment) : IReferable
+    public record StructType(string Name, List<StructMember> Members, bool Union, string? Comment, string? Alias) : IReferable
     {
         public VersionInfo? VersionInfo;
         public List<Command>? ReferencedBy;
@@ -99,12 +101,26 @@ namespace VkGenerator.Parsing
         public VersionInfo? VersionInfo;
     }
 
+    public enum CommandType
+    {
+        /// <summary>This command does not have a resolved command type yet.</summary>
+        Invalid,
+        /// <summary>This command is one of the global vulkan commands.</summary>
+        Global,
+        /// <summary>This command is an instance command.</summary>
+        Instance,
+        /// <summary>This command is a device command.</summary>
+        Device,
+    }
+
     public record Command(string Name, string ReturnType, List<CommandParameter> Parameters, string? Alias)
     {
         public BaseCSType? StrongReturnType;
+        public CommandType CommandType = CommandType.Invalid;
 
         public VersionInfo? VersionInfo;
     }
+
     public record CommandParameter(string Name, string Type, bool Optional, bool ExternSync, string? Length)
     {
         public BaseCSType? StrongType;
@@ -267,11 +283,13 @@ namespace VkGenerator.Parsing
                 }
                 else if (category == "union")
                 {
-                    structs.Add(new StructType(name!, ParseStructMembers(type), true, comment));
+                    if (alias != null)
+                        Console.WriteLine($"Union '{name}' has unexpected alias '{alias}'. We don't deal with this yet in the generator.");
+                    structs.Add(new StructType(name!, ParseStructMembers(type), true, comment, null));
                 }
                 else if (category == "struct")
                 {
-                    structs.Add(new StructType(name!, ParseStructMembers(type), false, comment));
+                    structs.Add(new StructType(name!, ParseStructMembers(type), false, comment, alias));
                 }
                 else if (category == "enum")
                 {
@@ -548,6 +566,8 @@ namespace VkGenerator.Parsing
 
                         parameters.Add(new CommandParameter(paramName, paramTypeStr, optional, externsync, len));
                     }
+
+
 
                     commands.Add(new Command(entryPoint, returnTypeStr, parameters, null));
                 }

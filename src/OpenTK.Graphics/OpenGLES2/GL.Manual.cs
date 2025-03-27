@@ -20,12 +20,12 @@ namespace OpenTK.Graphics.OpenGLES2
             GL.ClearColor(clearColor.X, clearColor.Y, clearColor.Z, clearColor.W);
         }
 
-        /// <inheritdoc cref="ShaderSource(int, int, byte**, in int)"/>
+        /// <inheritdoc cref="ShaderSource(int, int, byte**, int*)"/>
         public static void ShaderSource(int shader, string shaderText)
         {
             var shaderTextPtr = Marshal.StringToCoTaskMemAnsi(shaderText);
             var length = shaderText.Length;
-            GL.ShaderSource(shader, 1, (byte**)&shaderTextPtr, length);
+            GL.ShaderSource(shader, 1, (byte**)&shaderTextPtr, &length);
             Marshal.FreeCoTaskMem(shaderTextPtr);
         }
 
@@ -68,14 +68,6 @@ namespace OpenTK.Graphics.OpenGLES2
             int program = GL.CreateShaderProgramv(shaderType, 1, (byte**)&shaderTextPtr);
             Marshal.FreeCoTaskMem(shaderTextPtr);
             return program;
-        }
-
-        /// <inheritdoc cref="TransformFeedbackVaryings(int, int, byte**, TransformFeedbackBufferMode)"/>
-        public static unsafe void TransformFeedbackVaryings(int program, int count, string[] varyings, TransformFeedbackBufferMode bufferMode)
-        {
-            IntPtr varyingsPtr = MarshalTk.MarshalStringArrayToPtr(varyings);
-            GL.TransformFeedbackVaryings(program, count, (byte**)varyingsPtr, bufferMode);
-            MarshalTk.FreeStringArrayPtr(varyingsPtr, varyings.Length);
         }
     }
 }

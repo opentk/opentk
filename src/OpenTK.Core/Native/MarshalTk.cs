@@ -10,139 +10,82 @@ namespace OpenTK.Core.Native
     public static class MarshalTk
     {
         /// <summary>
-        /// Marshals a pointer to a null-terminated byte array to a new <c>System.String</c>.
-        /// This method supports OpenTK and is not intended to be called by user code.
+        /// Copies the contents of a managed <see cref="T:string[]"/> to a block of memory allocated from the unmanaged COM task allocator.
+        /// This function allocates multiple pieces of memory and needs to be freed with <see cref="FreeStringArrayCoTaskMem(nint, int)"/>.
         /// </summary>
-        /// <param name="ptr">A pointer to a null-terminated byte array.</param>
-        /// <returns>
-        /// A <c>System.String</c> with the data from <paramref name="ptr" />.
-        /// </returns>
-        public static string MarshalPtrToString(IntPtr ptr)
+        /// <param name="stringArray">The string array to marshal.</param>
+        /// <returns>An integer representing a pointer to the block of memory allocated for the string array.</returns>
+        public static unsafe IntPtr StringArrayToCoTaskMemAnsi(ReadOnlySpan<string> stringArray)
         {
-            if (ptr == IntPtr.Zero)
+            IntPtr* ptrs = (IntPtr*)Marshal.AllocCoTaskMem(stringArray.Length * sizeof(IntPtr));
+            for (int i = 0; i < stringArray.Length; i++)
             {
-                throw new ArgumentException("ptr");
+                ptrs[i] = Marshal.StringToCoTaskMemAnsi(stringArray[i]);
             }
-
-            unsafe
-            {
-                var str = (sbyte*)ptr;
-                var len = 0;
-                while (*str != 0)
-                {
-                    ++len;
-                    ++str;
-                }
-
-                return new string((sbyte*)ptr, 0, len, Encoding.UTF8);
-            }
+            return (IntPtr)ptrs;
         }
 
         /// <summary>
-        /// Marshal a <c>System.String</c> to unmanaged memory.
-        /// The resulting string is encoded in UTF8 and must be freed
-        /// with <c>FreeStringPtr</c>.
+        /// Copies the contents of a managed <see cref="T:string[]"/> to a block of memory allocated from the unmanaged COM task allocator.
+        /// This function allocates multiple pieces of memory and needs to be freed with <see cref="FreeStringArrayCoTaskMem(nint, int)"/>.
         /// </summary>
-        /// <param name="str">The <c>System.String</c> to marshal.</param>
-        /// <returns>
-        /// An unmanaged pointer containing the marshaled string.
-        /// This pointer must be freed with <c>FreeStringPtr</c>.
-        /// </returns>
-        public static IntPtr MarshalStringToPtr(string str)
+        /// <param name="stringArray">The string array to marshal.</param>
+        /// <returns>An integer representing a pointer to the block of memory allocated for the string array.</returns>
+        public static unsafe IntPtr StringArrayToCoTaskMemAuto(ReadOnlySpan<string> stringArray)
         {
-            if (string.IsNullOrEmpty(str))
+            IntPtr* ptrs = (IntPtr*)Marshal.AllocCoTaskMem(stringArray.Length * sizeof(IntPtr));
+            for (int i = 0; i < stringArray.Length; i++)
             {
-                return IntPtr.Zero;
+                ptrs[i] = Marshal.StringToCoTaskMemAuto(stringArray[i]);
             }
-
-            // Allocate a buffer big enough to hold the marshaled string.
-            // GetMaxByteCount() appears to allocate space for the final NUL
-            // character, but allocate an extra one just in case (who knows
-            // what old Mono version would do here.)
-            var maxCount = Encoding.UTF8.GetMaxByteCount(str.Length) + 1;
-            var ptr = Marshal.AllocHGlobal(maxCount);
-            if (ptr == IntPtr.Zero)
-            {
-                throw new OutOfMemoryException();
-            }
-
-            // Pin the managed string and convert it to UTF8 using
-            // the pointer overload of System.Encoding.UTF8.GetBytes().
-            unsafe
-            {
-                fixed (char* pstr = str)
-                {
-                    var actualCount = Encoding.UTF8.GetBytes(pstr, str.Length, (byte*)ptr, maxCount);
-                    Marshal.WriteByte(ptr, actualCount, 0); // Append '\0' at the end of the string
-                    return ptr;
-                }
-            }
+            return (IntPtr)ptrs;
         }
 
         /// <summary>
-        /// Frees a marshaled string that allocated by <c>MarshalStringToPtr</c>.
+        /// Copies the contents of a managed <see cref="T:string[]"/> to a block of memory allocated from the unmanaged COM task allocator.
+        /// This function allocates multiple pieces of memory and needs to be freed with <see cref="FreeStringArrayCoTaskMem(nint, int)"/>.
         /// </summary>
-        /// <param name="ptr">An unmanaged pointer allocated with <c>MarshalStringToPtr</c>.</param>
-        public static void FreeStringPtr(IntPtr ptr)
+        /// <param name="stringArray">The string array to marshal.</param>
+        /// <returns>An integer representing a pointer to the block of memory allocated for the string array.</returns>
+        public static unsafe IntPtr StringArrayToCoTaskMemUni(ReadOnlySpan<string> stringArray)
         {
-            Marshal.FreeHGlobal(ptr);
+            IntPtr* ptrs = (IntPtr*)Marshal.AllocCoTaskMem(stringArray.Length * sizeof(IntPtr));
+            for (int i = 0; i < stringArray.Length; i++)
+            {
+                ptrs[i] = Marshal.StringToCoTaskMemUni(stringArray[i]);
+            }
+            return (IntPtr)ptrs;
         }
 
         /// <summary>
-        /// Marshals a <c>System.String</c> array to unmanaged memory by calling
-        /// Marshal.AllocHGlobal for each element.
+        /// Copies the contents of a managed <see cref="T:string[]"/> to a block of memory allocated from the unmanaged COM task allocator.
+        /// This function allocates multiple pieces of memory and needs to be freed with <see cref="FreeStringArrayCoTaskMem(nint, int)"/>.
         /// </summary>
-        /// <returns>An unmanaged pointer to an array of null-terminated strings.</returns>
-        /// <param name="strArray">The string array to marshal.</param>
-        public static IntPtr MarshalStringArrayToPtr(string[] strArray)
+        /// <param name="stringArray">The string array to marshal.</param>
+        /// <returns>An integer representing a pointer to the block of memory allocated for the string array.</returns>
+        public static unsafe IntPtr StringArrayToCoTaskMemUTF8(ReadOnlySpan<string> stringArray)
         {
-            var ptr = IntPtr.Zero;
-            if (strArray != null && strArray.Length != 0)
+            IntPtr* ptrs = (IntPtr*)Marshal.AllocCoTaskMem(stringArray.Length * sizeof(IntPtr));
+            for (int i = 0; i < stringArray.Length; i++)
             {
-                ptr = Marshal.AllocHGlobal(strArray.Length * IntPtr.Size);
-                if (ptr == IntPtr.Zero)
-                {
-                    throw new OutOfMemoryException();
-                }
-
-                var i = 0;
-                try
-                {
-                    for (i = 0; i < strArray.Length; i++)
-                    {
-                        var str = MarshalStringToPtr(strArray[i]);
-                        Marshal.WriteIntPtr(ptr, i * IntPtr.Size, str);
-                    }
-                }
-                catch (OutOfMemoryException)
-                {
-                    for (i = i - 1; i >= 0; --i)
-                    {
-                        Marshal.FreeHGlobal(Marshal.ReadIntPtr(ptr, i * IntPtr.Size));
-                    }
-
-                    Marshal.FreeHGlobal(ptr);
-
-                    throw;
-                }
+                ptrs[i] = Marshal.StringToCoTaskMemUTF8(stringArray[i]);
             }
-
-            return ptr;
+            return (IntPtr)ptrs;
         }
 
         /// <summary>
-        /// Frees a marshaled string that allocated by <c>MarshalStringArrayToPtr</c>.
+        /// Frees an allocated string array using the StringArrayToCoTaskMem* functions.
         /// </summary>
-        /// <param name="ptr">An unmanaged pointer allocated with <c>MarshalStringArrayToPtr</c>.</param>
-        /// <param name="length">The length of the string array.</param>
-        public static void FreeStringArrayPtr(IntPtr ptr, int length)
+        /// <param name="stringArray">The address of the string array to free.</param>
+        /// <param name="length">The number of strings in the array.</param>
+        public static unsafe void FreeStringArrayCoTaskMem(IntPtr stringArray, int length)
         {
-            for (var i = 0; i < length; i++)
+            IntPtr* ptrs = (IntPtr*)stringArray;
+            for (int i = 0; i < length; i++)
             {
-                Marshal.FreeHGlobal(Marshal.ReadIntPtr(ptr, i * IntPtr.Size));
+                Marshal.FreeCoTaskMem(ptrs[i]);
             }
-
-            Marshal.FreeHGlobal(ptr);
+            Marshal.FreeCoTaskMem(stringArray);
         }
 
         /// <summary>
@@ -151,47 +94,62 @@ namespace OpenTK.Core.Native
         /// <param name="strArrayPtr">The ansi string array pointer.</param>
         /// <param name="length">The number of strings in the array.</param>
         /// <returns>The managed string array.</returns>
-        public static unsafe string[] MarshalAnsiStringArrayPtrToStringArray(byte** strArrayPtr, uint length)
+        public static unsafe string[] StringArrayPtrToStringArrayAnsi(IntPtr strArrayPtr, uint length)
         {
             string[] arr = new string[length];
             for (int i = 0; i < length; i++)
             {
-                byte* strPtr = strArrayPtr[i];
-                arr[i] = Marshal.PtrToStringAnsi((IntPtr)strPtr);
+                arr[i] = Marshal.PtrToStringAnsi(((IntPtr*)strArrayPtr)[i]);
             }
             return arr;
         }
 
         /// <summary>
-        /// Converts a span of strings into an unmanged ansi string array.
-        /// Use <see cref="FreeAnsiStringArrayPtr(byte**, uint)"/> to free the array.
+        /// Marshals a <see cref="IntPtr"/> ansi string array into a <see cref="T:string[]"/>.
         /// </summary>
-        /// <param name="stringArray">The span of strings to marshal.</param>
-        /// <param name="count">The number of strings in the unmanged array. The same as the length of the array.</param>
-        /// <returns>The unmanaged ansi string array.</returns>
-        public static unsafe byte** MarshalStringArrayToAnsiStringArrayPtr(ReadOnlySpan<string> stringArray, out uint count)
+        /// <param name="strArrayPtr">The string array pointer.</param>
+        /// <param name="length">The number of strings in the array.</param>
+        /// <returns>The managed string array.</returns>
+        public static unsafe string[] StringArrayPtrToStringArrayAuto(IntPtr strArrayPtr, uint length)
         {
-            byte** stringArrayPtr = (byte**)NativeMemory.Alloc((nuint)stringArray.Length, (nuint)sizeof(byte*));
-            for (int i = 0; i < stringArray.Length; i++)
+            string[] arr = new string[length];
+            for (int i = 0; i < length; i++)
             {
-                stringArrayPtr[i] = (byte*)Marshal.StringToCoTaskMemAnsi(stringArray[i]);
+                arr[i] = Marshal.PtrToStringAuto(((IntPtr*)strArrayPtr)[i]);
             }
-            count = (uint)stringArray.Length;
-            return stringArrayPtr;
+            return arr;
         }
 
         /// <summary>
-        /// Frees unmanaged ansi string arrays allocated by <see cref="MarshalStringArrayToAnsiStringArrayPtr(ReadOnlySpan{string}, out uint)"/>.
+        /// Marshals a <see cref="IntPtr"/> ansi string array into a <see cref="T:string[]"/>.
         /// </summary>
-        /// <param name="strArrayPtr">The unmanaged ansi string array.</param>
-        /// <param name="count">The number of strings in the array.</param>
-        public static unsafe void FreeAnsiStringArrayPtr(byte** strArrayPtr, uint count)
+        /// <param name="strArrayPtr">The string array pointer.</param>
+        /// <param name="length">The number of strings in the array.</param>
+        /// <returns>The managed string array.</returns>
+        public static unsafe string[] StringArrayPtrToStringArrayUni(IntPtr strArrayPtr, uint length)
         {
-            for (int i = 0; i < count; i++)
+            string[] arr = new string[length];
+            for (int i = 0; i < length; i++)
             {
-                Marshal.FreeCoTaskMem((IntPtr)strArrayPtr[i]);
+                arr[i] = Marshal.PtrToStringUni(((IntPtr*)strArrayPtr)[i]);
             }
-            Marshal.FreeCoTaskMem((IntPtr)strArrayPtr);
+            return arr;
+        }
+
+        /// <summary>
+        /// Marshals a <see cref="IntPtr"/> ansi string array into a <see cref="T:string[]"/>.
+        /// </summary>
+        /// <param name="strArrayPtr">The string array pointer.</param>
+        /// <param name="length">The number of strings in the array.</param>
+        /// <returns>The managed string array.</returns>
+        public static unsafe string[] StringArrayPtrToStringArrayUTF8(IntPtr strArrayPtr, uint length)
+        {
+            string[] arr = new string[length];
+            for (int i = 0; i < length; i++)
+            {
+                arr[i] = Marshal.PtrToStringUTF8(((IntPtr*)strArrayPtr)[i]);
+            }
+            return arr;
         }
     }
 }

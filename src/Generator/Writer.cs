@@ -331,6 +331,7 @@ namespace Generator.Writing
             writer.WriteLine("using System;");
             writer.WriteLine("using System.Runtime.CompilerServices;");
             writer.WriteLine("using System.Runtime.InteropServices;");
+            writer.WriteLine("using OpenTK.Core.Native;");
             writer.WriteLine("using OpenTK.Mathematics;");
             writer.WriteLine("using OpenTK.Graphics;");
 

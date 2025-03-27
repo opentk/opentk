@@ -35,7 +35,7 @@ namespace VkGenerator.Process
         public int? BitWidth { get; }
     }
 
-    public record CSNotSupportedType : BaseCSType
+    public record CSNotSupportedType(string UnsupportedType) : BaseCSType
     {
         public override string ToCSString()
         {

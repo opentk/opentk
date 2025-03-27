@@ -20,17 +20,17 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             GL.ClearColor(clearColor.X, clearColor.Y, clearColor.Z, clearColor.W);
         }
 
-        /// <inheritdoc cref="ShaderSource(int, int, byte**, in int)"/>
-        public static void ShaderSource(int shader, string str)
+        /// <inheritdoc cref="ShaderSource(int, int, byte**, int*)"/>
+        public static void ShaderSource(int shader, string shaderText)
         {
-            IntPtr str_iptr = Marshal.StringToCoTaskMemAnsi(str);
-            int length = str.Length;
-            GL.ShaderSource(shader, 1, (byte**)&str_iptr, length);
+            IntPtr str_iptr = Marshal.StringToCoTaskMemAnsi(shaderText);
+            int length = shaderText.Length;
+            GL.ShaderSource(shader, 1, (byte**)&str_iptr, &length);
             Marshal.FreeCoTaskMem(str_iptr);
         }
 
         /// <summary>
-        /// This is a convenience function that calls <see cref="GL.GetProgrami(int, ProgramProperty, out int)"/> followed by <see cref="GL.GetProgramInfoLog(int, int, out int, out string)"/>.
+        /// This is a convenience function that calls <see cref="GL.GetShaderi(int, ShaderParameterName, out int)"/> followed by <see cref="GL.GetShaderInfoLog(int, int, out int, out string)"/>.
         /// </summary>
         public static void GetShaderInfoLog(int shader, out string info)
         {
@@ -68,14 +68,6 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             int program = GL.CreateShaderProgramv(shaderType, 1, (byte**)&shaderTextPtr);
             Marshal.FreeCoTaskMem(shaderTextPtr);
             return program;
-        }
-
-        /// <inheritdoc cref="TransformFeedbackVaryings(int, int, byte**, TransformFeedbackBufferMode)"/>
-        public static unsafe void TransformFeedbackVaryings(int program, int count, string[] varyings, TransformFeedbackBufferMode bufferMode)
-        {
-            IntPtr varyingsPtr = MarshalTk.MarshalStringArrayToPtr(varyings);
-            GL.TransformFeedbackVaryings(program, count, (byte**)varyingsPtr, bufferMode);
-            MarshalTk.FreeStringArrayPtr(varyingsPtr, varyings.Length);
         }
     }
 }
