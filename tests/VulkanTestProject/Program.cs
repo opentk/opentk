@@ -134,8 +134,8 @@ namespace VulkanTestProject
                 validationLayers = [];
             }
 
-            byte** extensionsPtr = MarshalTk.MarshalStringArrayToAnsiStringArrayPtr(CollectionsMarshal.AsSpan(extensions), out uint extensionsCount);
-            byte** validationLayersPtr = MarshalTk.MarshalStringArrayToAnsiStringArrayPtr(validationLayers, out uint validationLayerCount);
+            byte** extensionsPtr = (byte**)MarshalTk.StringArrayToCoTaskMemAnsi(CollectionsMarshal.AsSpan(extensions));
+            byte** validationLayersPtr = (byte**)MarshalTk.StringArrayToCoTaskMemAnsi(validationLayers);
 
             VkInstanceCreateInfo instanceCreateInfo;
             instanceCreateInfo.sType = VkStructureType.StructureTypeInstanceCreateInfo;
@@ -146,9 +146,9 @@ namespace VulkanTestProject
                 instanceCreateInfo.flags = VkInstanceCreateFlagBits.InstanceCreateEnumeratePortabilityBitKhr;
             }
             instanceCreateInfo.pApplicationInfo = &applicationInfo;
-            instanceCreateInfo.enabledLayerCount = validationLayerCount;
+            instanceCreateInfo.enabledLayerCount = (uint)validationLayers.Length;
             instanceCreateInfo.ppEnabledLayerNames = validationLayersPtr;
-            instanceCreateInfo.enabledExtensionCount = extensionsCount;
+            instanceCreateInfo.enabledExtensionCount = (uint)extensions.Count;
             instanceCreateInfo.ppEnabledExtensionNames = extensionsPtr;
 
             VkInstance instance;
@@ -159,8 +159,8 @@ namespace VulkanTestProject
             }
             VulkanInstance = instance;
 
-            MarshalTk.FreeAnsiStringArrayPtr(extensionsPtr, extensionsCount);
-            MarshalTk.FreeAnsiStringArrayPtr(validationLayersPtr, validationLayerCount);
+            MarshalTk.FreeStringArrayCoTaskMem((IntPtr)extensionsPtr, extensions.Count);
+            MarshalTk.FreeStringArrayCoTaskMem((IntPtr)validationLayersPtr, validationLayers.Length);
 
             VKLoader.SetInstance(instance);
 
@@ -323,7 +323,7 @@ namespace VulkanTestProject
             {
                 enabledDeviceExtensions.Add("VK_KHR_portability_subset");
             }
-            byte** enabledExtensionsPtr = MarshalTk.MarshalStringArrayToAnsiStringArrayPtr(CollectionsMarshal.AsSpan(enabledDeviceExtensions), out uint enabledDeviceExtensionsCount);
+            byte** enabledExtensionsPtr = (byte**)MarshalTk.StringArrayToCoTaskMemAnsi(CollectionsMarshal.AsSpan(enabledDeviceExtensions));
 
             VkDeviceCreateInfo deviceCreateInfo;
             deviceCreateInfo.sType = VkStructureType.StructureTypeDeviceCreateInfo;
@@ -331,9 +331,9 @@ namespace VulkanTestProject
             deviceCreateInfo.flags = 0;
             deviceCreateInfo.queueCreateInfoCount = graphicsQueueFamily == presentationQueueFamily ? 1u : 2u;
             deviceCreateInfo.pQueueCreateInfos = queueCreateInfos;
-            deviceCreateInfo.enabledLayerCount = validationLayerCount;
+            deviceCreateInfo.enabledLayerCount = (uint)validationLayers.Length;
             deviceCreateInfo.ppEnabledLayerNames = validationLayersPtr;
-            deviceCreateInfo.enabledExtensionCount = enabledDeviceExtensionsCount;
+            deviceCreateInfo.enabledExtensionCount = (uint)enabledDeviceExtensions.Count;
             deviceCreateInfo.ppEnabledExtensionNames = enabledExtensionsPtr;
             deviceCreateInfo.pEnabledFeatures = &deviceFeatures;
 
