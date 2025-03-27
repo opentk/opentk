@@ -19,7 +19,8 @@ namespace OpenTK.Graphics.Vulkan
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
     public unsafe partial struct InstanceDispatchTable
     {
-        public VkInstance Instance;
+        ///<summary>The <see cref="VkInstance"/> used to load this dispatch table.</summary>
+        public readonly VkInstance Instance;
         public InstanceDispatchTable(VkInstance instance)
         {
             Instance = instance;
@@ -915,7 +916,8 @@ namespace OpenTK.Graphics.Vulkan
     }
     public unsafe partial struct DeviceDispatchTable
     {
-        public VkDevice Device;
+        ///<summary>The <see cref="VkDevice"/> used to load this dispatch table.</summary>
+        public readonly VkDevice Device;
         public DeviceDispatchTable(VkDevice device)
         {
             Device = device;
