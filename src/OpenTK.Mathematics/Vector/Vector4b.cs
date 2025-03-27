@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 
-namespace OpenTK.Mathematics.Vector
+namespace OpenTK.Mathematics
 {
     /// <summary>
     /// Represents a 2D boolean vector.

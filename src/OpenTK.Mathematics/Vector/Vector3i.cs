@@ -456,6 +456,72 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
+        /// Component wise less than comparision of two vectors.
+        /// </summary>
+        /// <param name="left">The left vector.</param>
+        /// <param name="right">The right vector.</param>
+        /// <returns>A component wise boolean vector whose compoennts are true when the corresponding left component is less than the right component.</returns>
+        public static Vector3b LessThan(in Vector3i left, in Vector3i right)
+        {
+            return new Vector3b(left.X < right.X, left.Y < right.Y, left.Z < right.Z);
+        }
+
+        /// <summary>
+        /// Component wise less than or equal comparision of two vectors.
+        /// </summary>
+        /// <param name="left">The left vector.</param>
+        /// <param name="right">The right vector.</param>
+        /// <returns>A component wise boolean vector whose compoennts are true when the corresponding left component is less than or equal to the right component.</returns>
+        public static Vector3b LessThanOrEqual(in Vector3i left, in Vector3i right)
+        {
+            return new Vector3b(left.X <= right.X, left.Y <= right.Y, left.Z <= right.Z);
+        }
+
+        /// <summary>
+        /// Component wise greater than comparision of two vectors.
+        /// </summary>
+        /// <param name="left">The left vector.</param>
+        /// <param name="right">The right vector.</param>
+        /// <returns>A component wise boolean vector whose compoennts are true when the corresponding left component is greater than the right component.</returns>
+        public static Vector3b GreaterThan(in Vector3i left, in Vector3i right)
+        {
+            return new Vector3b(left.X > right.X, left.Y > right.Y, left.Z > right.Z);
+        }
+
+        /// <summary>
+        /// Component wise greater than or equal comparision of two vectors.
+        /// </summary>
+        /// <param name="left">The left vector.</param>
+        /// <param name="right">The right vector.</param>
+        /// <returns>A component wise boolean vector whose compoennts are true when the corresponding left component is greater than or equal to the right component.</returns>
+        public static Vector3b GreaterThanOrEqual(in Vector3i left, in Vector3i right)
+        {
+            return new Vector3b(left.X >= right.X, left.Y >= right.Y, left.Z >= right.Z);
+        }
+
+        /// <summary>
+        /// Component wise equal comparision of two vectors.
+        /// </summary>
+        /// <param name="left">The left vector.</param>
+        /// <param name="right">The right vector.</param>
+        /// <returns>A component wise boolean vector whose compoennts are true when the corresponding left component is equal to the right component.</returns>
+        public static Vector3b ComponentEqual(in Vector3i left, in Vector3i right)
+        {
+            return new Vector3b(left.X == right.X, left.Y == right.Y, left.Z == right.Z);
+        }
+
+        /// <summary>
+        /// Component wise not equal comparision of two vectors.
+        /// </summary>
+        /// <param name="left">The left vector.</param>
+        /// <param name="right">The right vector.</param>
+        /// <returns>A component wise boolean vector whose compoennts are true when the corresponding left component is not equal to the right component.</returns>
+        public static Vector3b ComponentNotEqual(in Vector3i left, in Vector3i right)
+        {
+            return new Vector3b(left.X != right.X, left.Y != right.Y, left.Z != right.Z);
+        }
+
+        /// <summary>
         /// Gets or sets a <see cref="Vector2i"/> with the X and Y components of this instance.
         /// </summary>
         [XmlIgnore]
@@ -752,6 +818,54 @@ namespace OpenTK.Mathematics
             vec.Y /= scale.Y;
             vec.Z /= scale.Z;
             return vec;
+        }
+
+        /// <summary>
+        /// Component wise less than comparision between the specified instances.
+        /// </summary>
+        /// <param name="left">The left instance.</param>
+        /// <param name="right">The right instance.</param>
+        /// <returns>A component wise boolean vector whose compoennts are true when the corresponding left component is less than the right component.</returns>
+        [Pure]
+        public static Vector3b operator <(Vector3i left, Vector3i right)
+        {
+            return LessThan(left, right);
+        }
+
+        /// <summary>
+        /// Component wise less than or equal comparision between the specified instances.
+        /// </summary>
+        /// <param name="left">The left instance.</param>
+        /// <param name="right">The right instance.</param>
+        /// <returns>A component wise boolean vector whose compoennts are true when the corresponding left component is less than or equal the right component.</returns>
+        [Pure]
+        public static Vector3b operator <=(Vector3i left, Vector3i right)
+        {
+            return LessThanOrEqual(left, right);
+        }
+
+        /// <summary>
+        /// Component wise greater than comparision between the specified instances.
+        /// </summary>
+        /// <param name="left">The left instance.</param>
+        /// <param name="right">The right instance.</param>
+        /// <returns>A component wise boolean vector whose compoennts are true when the corresponding greater component is greater than the right component.</returns>
+        [Pure]
+        public static Vector3b operator >(Vector3i left, Vector3i right)
+        {
+            return GreaterThan(left, right);
+        }
+
+        /// <summary>
+        /// Component wise greater than or equal comparision between the specified instances.
+        /// </summary>
+        /// <param name="left">The left instance.</param>
+        /// <param name="right">The right instance.</param>
+        /// <returns>A component wise boolean vector whose compoennts are true when the corresponding left component is greater than or equal the right component.</returns>
+        [Pure]
+        public static Vector3b operator >=(Vector3i left, Vector3i right)
+        {
+            return GreaterThanOrEqual(left, right);
         }
 
         /// <summary>
