@@ -190,31 +190,26 @@ namespace OpenTK.Graphics.Vulkan
         public unsafe struct StdVideoAV1ColorConfigFlags
         {
             private uint _bitfield0;
-             // TODO: Accessor property for mono_chrome, size: 1, offset: 0
             public uint mono_chrome
             {
                 get => (uint)((_bitfield0 >> 0) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 0)) | ((((uint)value) & 0x1u) << 0);
             }
-             // TODO: Accessor property for color_range, size: 1, offset: 1
             public uint color_range
             {
                 get => (uint)((_bitfield0 >> 1) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 1)) | ((((uint)value) & 0x1u) << 1);
             }
-             // TODO: Accessor property for separate_uv_delta_q, size: 1, offset: 2
             public uint separate_uv_delta_q
             {
                 get => (uint)((_bitfield0 >> 2) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 2)) | ((((uint)value) & 0x1u) << 2);
             }
-             // TODO: Accessor property for color_description_present_flag, size: 1, offset: 3
             public uint color_description_present_flag
             {
                 get => (uint)((_bitfield0 >> 3) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 3)) | ((((uint)value) & 0x1u) << 3);
             }
-             // TODO: Accessor property for reserved, size: 28, offset: 4
             public uint reserved
             {
                 get => (uint)((_bitfield0 >> 4) & 0xFFFFFFFu);
@@ -250,13 +245,11 @@ namespace OpenTK.Graphics.Vulkan
         public unsafe struct StdVideoAV1TimingInfoFlags
         {
             private uint _bitfield0;
-             // TODO: Accessor property for equal_picture_interval, size: 1, offset: 0
             public uint equal_picture_interval
             {
                 get => (uint)((_bitfield0 >> 0) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 0)) | ((((uint)value) & 0x1u) << 0);
             }
-             // TODO: Accessor property for reserved, size: 31, offset: 1
             public uint reserved
             {
                 get => (uint)((_bitfield0 >> 1) & 0x7FFFFFFFu);
@@ -282,19 +275,16 @@ namespace OpenTK.Graphics.Vulkan
         public unsafe struct StdVideoAV1LoopFilterFlags
         {
             private uint _bitfield0;
-             // TODO: Accessor property for loop_filter_delta_enabled, size: 1, offset: 0
             public uint loop_filter_delta_enabled
             {
                 get => (uint)((_bitfield0 >> 0) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 0)) | ((((uint)value) & 0x1u) << 0);
             }
-             // TODO: Accessor property for loop_filter_delta_update, size: 1, offset: 1
             public uint loop_filter_delta_update
             {
                 get => (uint)((_bitfield0 >> 1) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 1)) | ((((uint)value) & 0x1u) << 1);
             }
-             // TODO: Accessor property for reserved, size: 30, offset: 2
             public uint reserved
             {
                 get => (uint)((_bitfield0 >> 2) & 0x3FFFFFFFu);
@@ -316,19 +306,16 @@ namespace OpenTK.Graphics.Vulkan
         public unsafe struct StdVideoAV1QuantizationFlags
         {
             private uint _bitfield0;
-             // TODO: Accessor property for using_qmatrix, size: 1, offset: 0
             public uint using_qmatrix
             {
                 get => (uint)((_bitfield0 >> 0) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 0)) | ((((uint)value) & 0x1u) << 0);
             }
-             // TODO: Accessor property for diff_uv_delta, size: 1, offset: 1
             public uint diff_uv_delta
             {
                 get => (uint)((_bitfield0 >> 1) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 1)) | ((((uint)value) & 0x1u) << 1);
             }
-             // TODO: Accessor property for reserved, size: 30, offset: 2
             public uint reserved
             {
                 get => (uint)((_bitfield0 >> 2) & 0x3FFFFFFFu);
@@ -382,13 +369,11 @@ namespace OpenTK.Graphics.Vulkan
         public unsafe struct StdVideoAV1TileInfoFlags
         {
             private uint _bitfield0;
-             // TODO: Accessor property for uniform_tile_spacing_flag, size: 1, offset: 0
             public uint uniform_tile_spacing_flag
             {
                 get => (uint)((_bitfield0 >> 0) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 0)) | ((((uint)value) & 0x1u) << 0);
             }
-             // TODO: Accessor property for reserved, size: 31, offset: 1
             public uint reserved
             {
                 get => (uint)((_bitfield0 >> 1) & 0x7FFFFFFFu);
@@ -450,31 +435,26 @@ namespace OpenTK.Graphics.Vulkan
         public unsafe struct StdVideoAV1FilmGrainFlags
         {
             private uint _bitfield0;
-             // TODO: Accessor property for chroma_scaling_from_luma, size: 1, offset: 0
             public uint chroma_scaling_from_luma
             {
                 get => (uint)((_bitfield0 >> 0) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 0)) | ((((uint)value) & 0x1u) << 0);
             }
-             // TODO: Accessor property for overlap_flag, size: 1, offset: 1
             public uint overlap_flag
             {
                 get => (uint)((_bitfield0 >> 1) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 1)) | ((((uint)value) & 0x1u) << 1);
             }
-             // TODO: Accessor property for clip_to_restricted_range, size: 1, offset: 2
             public uint clip_to_restricted_range
             {
                 get => (uint)((_bitfield0 >> 2) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 2)) | ((((uint)value) & 0x1u) << 2);
             }
-             // TODO: Accessor property for update_grain, size: 1, offset: 3
             public uint update_grain
             {
                 get => (uint)((_bitfield0 >> 3) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 3)) | ((((uint)value) & 0x1u) << 3);
             }
-             // TODO: Accessor property for reserved, size: 28, offset: 4
             public uint reserved
             {
                 get => (uint)((_bitfield0 >> 4) & 0xFFFFFFFu);
@@ -514,121 +494,101 @@ namespace OpenTK.Graphics.Vulkan
         public unsafe struct StdVideoAV1SequenceHeaderFlags
         {
             private uint _bitfield0;
-             // TODO: Accessor property for still_picture, size: 1, offset: 0
             public uint still_picture
             {
                 get => (uint)((_bitfield0 >> 0) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 0)) | ((((uint)value) & 0x1u) << 0);
             }
-             // TODO: Accessor property for reduced_still_picture_header, size: 1, offset: 1
             public uint reduced_still_picture_header
             {
                 get => (uint)((_bitfield0 >> 1) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 1)) | ((((uint)value) & 0x1u) << 1);
             }
-             // TODO: Accessor property for use_128x128_superblock, size: 1, offset: 2
             public uint use_128x128_superblock
             {
                 get => (uint)((_bitfield0 >> 2) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 2)) | ((((uint)value) & 0x1u) << 2);
             }
-             // TODO: Accessor property for enable_filter_intra, size: 1, offset: 3
             public uint enable_filter_intra
             {
                 get => (uint)((_bitfield0 >> 3) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 3)) | ((((uint)value) & 0x1u) << 3);
             }
-             // TODO: Accessor property for enable_intra_edge_filter, size: 1, offset: 4
             public uint enable_intra_edge_filter
             {
                 get => (uint)((_bitfield0 >> 4) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 4)) | ((((uint)value) & 0x1u) << 4);
             }
-             // TODO: Accessor property for enable_interintra_compound, size: 1, offset: 5
             public uint enable_interintra_compound
             {
                 get => (uint)((_bitfield0 >> 5) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 5)) | ((((uint)value) & 0x1u) << 5);
             }
-             // TODO: Accessor property for enable_masked_compound, size: 1, offset: 6
             public uint enable_masked_compound
             {
                 get => (uint)((_bitfield0 >> 6) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 6)) | ((((uint)value) & 0x1u) << 6);
             }
-             // TODO: Accessor property for enable_warped_motion, size: 1, offset: 7
             public uint enable_warped_motion
             {
                 get => (uint)((_bitfield0 >> 7) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 7)) | ((((uint)value) & 0x1u) << 7);
             }
-             // TODO: Accessor property for enable_dual_filter, size: 1, offset: 8
             public uint enable_dual_filter
             {
                 get => (uint)((_bitfield0 >> 8) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 8)) | ((((uint)value) & 0x1u) << 8);
             }
-             // TODO: Accessor property for enable_order_hint, size: 1, offset: 9
             public uint enable_order_hint
             {
                 get => (uint)((_bitfield0 >> 9) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 9)) | ((((uint)value) & 0x1u) << 9);
             }
-             // TODO: Accessor property for enable_jnt_comp, size: 1, offset: 10
             public uint enable_jnt_comp
             {
                 get => (uint)((_bitfield0 >> 10) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 10)) | ((((uint)value) & 0x1u) << 10);
             }
-             // TODO: Accessor property for enable_ref_frame_mvs, size: 1, offset: 11
             public uint enable_ref_frame_mvs
             {
                 get => (uint)((_bitfield0 >> 11) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 11)) | ((((uint)value) & 0x1u) << 11);
             }
-             // TODO: Accessor property for frame_id_numbers_present_flag, size: 1, offset: 12
             public uint frame_id_numbers_present_flag
             {
                 get => (uint)((_bitfield0 >> 12) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 12)) | ((((uint)value) & 0x1u) << 12);
             }
-             // TODO: Accessor property for enable_superres, size: 1, offset: 13
             public uint enable_superres
             {
                 get => (uint)((_bitfield0 >> 13) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 13)) | ((((uint)value) & 0x1u) << 13);
             }
-             // TODO: Accessor property for enable_cdef, size: 1, offset: 14
             public uint enable_cdef
             {
                 get => (uint)((_bitfield0 >> 14) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 14)) | ((((uint)value) & 0x1u) << 14);
             }
-             // TODO: Accessor property for enable_restoration, size: 1, offset: 15
             public uint enable_restoration
             {
                 get => (uint)((_bitfield0 >> 15) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 15)) | ((((uint)value) & 0x1u) << 15);
             }
-             // TODO: Accessor property for film_grain_params_present, size: 1, offset: 16
             public uint film_grain_params_present
             {
                 get => (uint)((_bitfield0 >> 16) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 16)) | ((((uint)value) & 0x1u) << 16);
             }
-             // TODO: Accessor property for timing_info_present_flag, size: 1, offset: 17
             public uint timing_info_present_flag
             {
                 get => (uint)((_bitfield0 >> 17) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 17)) | ((((uint)value) & 0x1u) << 17);
             }
-             // TODO: Accessor property for initial_display_delay_present_flag, size: 1, offset: 18
             public uint initial_display_delay_present_flag
             {
                 get => (uint)((_bitfield0 >> 18) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 18)) | ((((uint)value) & 0x1u) << 18);
             }
-             // TODO: Accessor property for reserved, size: 13, offset: 19
             public uint reserved
             {
                 get => (uint)((_bitfield0 >> 19) & 0x1FFFu);
@@ -665,181 +625,151 @@ namespace OpenTK.Graphics.Vulkan
         public unsafe struct StdVideoDecodeAV1PictureInfoFlags
         {
             private uint _bitfield0;
-             // TODO: Accessor property for error_resilient_mode, size: 1, offset: 0
             public uint error_resilient_mode
             {
                 get => (uint)((_bitfield0 >> 0) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 0)) | ((((uint)value) & 0x1u) << 0);
             }
-             // TODO: Accessor property for disable_cdf_update, size: 1, offset: 1
             public uint disable_cdf_update
             {
                 get => (uint)((_bitfield0 >> 1) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 1)) | ((((uint)value) & 0x1u) << 1);
             }
-             // TODO: Accessor property for use_superres, size: 1, offset: 2
             public uint use_superres
             {
                 get => (uint)((_bitfield0 >> 2) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 2)) | ((((uint)value) & 0x1u) << 2);
             }
-             // TODO: Accessor property for render_and_frame_size_different, size: 1, offset: 3
             public uint render_and_frame_size_different
             {
                 get => (uint)((_bitfield0 >> 3) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 3)) | ((((uint)value) & 0x1u) << 3);
             }
-             // TODO: Accessor property for allow_screen_content_tools, size: 1, offset: 4
             public uint allow_screen_content_tools
             {
                 get => (uint)((_bitfield0 >> 4) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 4)) | ((((uint)value) & 0x1u) << 4);
             }
-             // TODO: Accessor property for is_filter_switchable, size: 1, offset: 5
             public uint is_filter_switchable
             {
                 get => (uint)((_bitfield0 >> 5) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 5)) | ((((uint)value) & 0x1u) << 5);
             }
-             // TODO: Accessor property for force_integer_mv, size: 1, offset: 6
             public uint force_integer_mv
             {
                 get => (uint)((_bitfield0 >> 6) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 6)) | ((((uint)value) & 0x1u) << 6);
             }
-             // TODO: Accessor property for frame_size_override_flag, size: 1, offset: 7
             public uint frame_size_override_flag
             {
                 get => (uint)((_bitfield0 >> 7) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 7)) | ((((uint)value) & 0x1u) << 7);
             }
-             // TODO: Accessor property for buffer_removal_time_present_flag, size: 1, offset: 8
             public uint buffer_removal_time_present_flag
             {
                 get => (uint)((_bitfield0 >> 8) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 8)) | ((((uint)value) & 0x1u) << 8);
             }
-             // TODO: Accessor property for allow_intrabc, size: 1, offset: 9
             public uint allow_intrabc
             {
                 get => (uint)((_bitfield0 >> 9) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 9)) | ((((uint)value) & 0x1u) << 9);
             }
-             // TODO: Accessor property for frame_refs_short_signaling, size: 1, offset: 10
             public uint frame_refs_short_signaling
             {
                 get => (uint)((_bitfield0 >> 10) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 10)) | ((((uint)value) & 0x1u) << 10);
             }
-             // TODO: Accessor property for allow_high_precision_mv, size: 1, offset: 11
             public uint allow_high_precision_mv
             {
                 get => (uint)((_bitfield0 >> 11) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 11)) | ((((uint)value) & 0x1u) << 11);
             }
-             // TODO: Accessor property for is_motion_mode_switchable, size: 1, offset: 12
             public uint is_motion_mode_switchable
             {
                 get => (uint)((_bitfield0 >> 12) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 12)) | ((((uint)value) & 0x1u) << 12);
             }
-             // TODO: Accessor property for use_ref_frame_mvs, size: 1, offset: 13
             public uint use_ref_frame_mvs
             {
                 get => (uint)((_bitfield0 >> 13) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 13)) | ((((uint)value) & 0x1u) << 13);
             }
-             // TODO: Accessor property for disable_frame_end_update_cdf, size: 1, offset: 14
             public uint disable_frame_end_update_cdf
             {
                 get => (uint)((_bitfield0 >> 14) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 14)) | ((((uint)value) & 0x1u) << 14);
             }
-             // TODO: Accessor property for allow_warped_motion, size: 1, offset: 15
             public uint allow_warped_motion
             {
                 get => (uint)((_bitfield0 >> 15) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 15)) | ((((uint)value) & 0x1u) << 15);
             }
-             // TODO: Accessor property for reduced_tx_set, size: 1, offset: 16
             public uint reduced_tx_set
             {
                 get => (uint)((_bitfield0 >> 16) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 16)) | ((((uint)value) & 0x1u) << 16);
             }
-             // TODO: Accessor property for reference_select, size: 1, offset: 17
             public uint reference_select
             {
                 get => (uint)((_bitfield0 >> 17) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 17)) | ((((uint)value) & 0x1u) << 17);
             }
-             // TODO: Accessor property for skip_mode_present, size: 1, offset: 18
             public uint skip_mode_present
             {
                 get => (uint)((_bitfield0 >> 18) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 18)) | ((((uint)value) & 0x1u) << 18);
             }
-             // TODO: Accessor property for delta_q_present, size: 1, offset: 19
             public uint delta_q_present
             {
                 get => (uint)((_bitfield0 >> 19) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 19)) | ((((uint)value) & 0x1u) << 19);
             }
-             // TODO: Accessor property for delta_lf_present, size: 1, offset: 20
             public uint delta_lf_present
             {
                 get => (uint)((_bitfield0 >> 20) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 20)) | ((((uint)value) & 0x1u) << 20);
             }
-             // TODO: Accessor property for delta_lf_multi, size: 1, offset: 21
             public uint delta_lf_multi
             {
                 get => (uint)((_bitfield0 >> 21) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 21)) | ((((uint)value) & 0x1u) << 21);
             }
-             // TODO: Accessor property for segmentation_enabled, size: 1, offset: 22
             public uint segmentation_enabled
             {
                 get => (uint)((_bitfield0 >> 22) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 22)) | ((((uint)value) & 0x1u) << 22);
             }
-             // TODO: Accessor property for segmentation_update_map, size: 1, offset: 23
             public uint segmentation_update_map
             {
                 get => (uint)((_bitfield0 >> 23) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 23)) | ((((uint)value) & 0x1u) << 23);
             }
-             // TODO: Accessor property for segmentation_temporal_update, size: 1, offset: 24
             public uint segmentation_temporal_update
             {
                 get => (uint)((_bitfield0 >> 24) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 24)) | ((((uint)value) & 0x1u) << 24);
             }
-             // TODO: Accessor property for segmentation_update_data, size: 1, offset: 25
             public uint segmentation_update_data
             {
                 get => (uint)((_bitfield0 >> 25) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 25)) | ((((uint)value) & 0x1u) << 25);
             }
-             // TODO: Accessor property for UsesLr, size: 1, offset: 26
             public uint UsesLr
             {
                 get => (uint)((_bitfield0 >> 26) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 26)) | ((((uint)value) & 0x1u) << 26);
             }
-             // TODO: Accessor property for usesChromaLr, size: 1, offset: 27
             public uint usesChromaLr
             {
                 get => (uint)((_bitfield0 >> 27) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 27)) | ((((uint)value) & 0x1u) << 27);
             }
-             // TODO: Accessor property for apply_grain, size: 1, offset: 28
             public uint apply_grain
             {
                 get => (uint)((_bitfield0 >> 28) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 28)) | ((((uint)value) & 0x1u) << 28);
             }
-             // TODO: Accessor property for reserved, size: 3, offset: 29
             public uint reserved
             {
                 get => (uint)((_bitfield0 >> 29) & 0x7u);
@@ -878,19 +808,16 @@ namespace OpenTK.Graphics.Vulkan
         public unsafe struct StdVideoDecodeAV1ReferenceInfoFlags
         {
             private uint _bitfield0;
-             // TODO: Accessor property for disable_frame_end_update_cdf, size: 1, offset: 0
             public uint disable_frame_end_update_cdf
             {
                 get => (uint)((_bitfield0 >> 0) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 0)) | ((((uint)value) & 0x1u) << 0);
             }
-             // TODO: Accessor property for segmentation_enabled, size: 1, offset: 1
             public uint segmentation_enabled
             {
                 get => (uint)((_bitfield0 >> 1) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 1)) | ((((uint)value) & 0x1u) << 1);
             }
-             // TODO: Accessor property for reserved, size: 30, offset: 2
             public uint reserved
             {
                 get => (uint)((_bitfield0 >> 2) & 0x3FFFFFFFu);
@@ -946,25 +873,21 @@ namespace OpenTK.Graphics.Vulkan
         public unsafe struct StdVideoEncodeAV1OperatingPointInfoFlags
         {
             private uint _bitfield0;
-             // TODO: Accessor property for decoder_model_present_for_this_op, size: 1, offset: 0
             public uint decoder_model_present_for_this_op
             {
                 get => (uint)((_bitfield0 >> 0) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 0)) | ((((uint)value) & 0x1u) << 0);
             }
-             // TODO: Accessor property for low_delay_mode_flag, size: 1, offset: 1
             public uint low_delay_mode_flag
             {
                 get => (uint)((_bitfield0 >> 1) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 1)) | ((((uint)value) & 0x1u) << 1);
             }
-             // TODO: Accessor property for initial_display_delay_present_for_this_op, size: 1, offset: 2
             public uint initial_display_delay_present_for_this_op
             {
                 get => (uint)((_bitfield0 >> 2) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 2)) | ((((uint)value) & 0x1u) << 2);
             }
-             // TODO: Accessor property for reserved, size: 29, offset: 3
             public uint reserved
             {
                 get => (uint)((_bitfield0 >> 3) & 0x1FFFFFFFu);
@@ -996,181 +919,151 @@ namespace OpenTK.Graphics.Vulkan
         public unsafe struct StdVideoEncodeAV1PictureInfoFlags
         {
             private uint _bitfield0;
-             // TODO: Accessor property for error_resilient_mode, size: 1, offset: 0
             public uint error_resilient_mode
             {
                 get => (uint)((_bitfield0 >> 0) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 0)) | ((((uint)value) & 0x1u) << 0);
             }
-             // TODO: Accessor property for disable_cdf_update, size: 1, offset: 1
             public uint disable_cdf_update
             {
                 get => (uint)((_bitfield0 >> 1) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 1)) | ((((uint)value) & 0x1u) << 1);
             }
-             // TODO: Accessor property for use_superres, size: 1, offset: 2
             public uint use_superres
             {
                 get => (uint)((_bitfield0 >> 2) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 2)) | ((((uint)value) & 0x1u) << 2);
             }
-             // TODO: Accessor property for render_and_frame_size_different, size: 1, offset: 3
             public uint render_and_frame_size_different
             {
                 get => (uint)((_bitfield0 >> 3) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 3)) | ((((uint)value) & 0x1u) << 3);
             }
-             // TODO: Accessor property for allow_screen_content_tools, size: 1, offset: 4
             public uint allow_screen_content_tools
             {
                 get => (uint)((_bitfield0 >> 4) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 4)) | ((((uint)value) & 0x1u) << 4);
             }
-             // TODO: Accessor property for is_filter_switchable, size: 1, offset: 5
             public uint is_filter_switchable
             {
                 get => (uint)((_bitfield0 >> 5) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 5)) | ((((uint)value) & 0x1u) << 5);
             }
-             // TODO: Accessor property for force_integer_mv, size: 1, offset: 6
             public uint force_integer_mv
             {
                 get => (uint)((_bitfield0 >> 6) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 6)) | ((((uint)value) & 0x1u) << 6);
             }
-             // TODO: Accessor property for frame_size_override_flag, size: 1, offset: 7
             public uint frame_size_override_flag
             {
                 get => (uint)((_bitfield0 >> 7) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 7)) | ((((uint)value) & 0x1u) << 7);
             }
-             // TODO: Accessor property for buffer_removal_time_present_flag, size: 1, offset: 8
             public uint buffer_removal_time_present_flag
             {
                 get => (uint)((_bitfield0 >> 8) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 8)) | ((((uint)value) & 0x1u) << 8);
             }
-             // TODO: Accessor property for allow_intrabc, size: 1, offset: 9
             public uint allow_intrabc
             {
                 get => (uint)((_bitfield0 >> 9) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 9)) | ((((uint)value) & 0x1u) << 9);
             }
-             // TODO: Accessor property for frame_refs_short_signaling, size: 1, offset: 10
             public uint frame_refs_short_signaling
             {
                 get => (uint)((_bitfield0 >> 10) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 10)) | ((((uint)value) & 0x1u) << 10);
             }
-             // TODO: Accessor property for allow_high_precision_mv, size: 1, offset: 11
             public uint allow_high_precision_mv
             {
                 get => (uint)((_bitfield0 >> 11) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 11)) | ((((uint)value) & 0x1u) << 11);
             }
-             // TODO: Accessor property for is_motion_mode_switchable, size: 1, offset: 12
             public uint is_motion_mode_switchable
             {
                 get => (uint)((_bitfield0 >> 12) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 12)) | ((((uint)value) & 0x1u) << 12);
             }
-             // TODO: Accessor property for use_ref_frame_mvs, size: 1, offset: 13
             public uint use_ref_frame_mvs
             {
                 get => (uint)((_bitfield0 >> 13) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 13)) | ((((uint)value) & 0x1u) << 13);
             }
-             // TODO: Accessor property for disable_frame_end_update_cdf, size: 1, offset: 14
             public uint disable_frame_end_update_cdf
             {
                 get => (uint)((_bitfield0 >> 14) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 14)) | ((((uint)value) & 0x1u) << 14);
             }
-             // TODO: Accessor property for allow_warped_motion, size: 1, offset: 15
             public uint allow_warped_motion
             {
                 get => (uint)((_bitfield0 >> 15) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 15)) | ((((uint)value) & 0x1u) << 15);
             }
-             // TODO: Accessor property for reduced_tx_set, size: 1, offset: 16
             public uint reduced_tx_set
             {
                 get => (uint)((_bitfield0 >> 16) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 16)) | ((((uint)value) & 0x1u) << 16);
             }
-             // TODO: Accessor property for skip_mode_present, size: 1, offset: 17
             public uint skip_mode_present
             {
                 get => (uint)((_bitfield0 >> 17) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 17)) | ((((uint)value) & 0x1u) << 17);
             }
-             // TODO: Accessor property for delta_q_present, size: 1, offset: 18
             public uint delta_q_present
             {
                 get => (uint)((_bitfield0 >> 18) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 18)) | ((((uint)value) & 0x1u) << 18);
             }
-             // TODO: Accessor property for delta_lf_present, size: 1, offset: 19
             public uint delta_lf_present
             {
                 get => (uint)((_bitfield0 >> 19) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 19)) | ((((uint)value) & 0x1u) << 19);
             }
-             // TODO: Accessor property for delta_lf_multi, size: 1, offset: 20
             public uint delta_lf_multi
             {
                 get => (uint)((_bitfield0 >> 20) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 20)) | ((((uint)value) & 0x1u) << 20);
             }
-             // TODO: Accessor property for segmentation_enabled, size: 1, offset: 21
             public uint segmentation_enabled
             {
                 get => (uint)((_bitfield0 >> 21) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 21)) | ((((uint)value) & 0x1u) << 21);
             }
-             // TODO: Accessor property for segmentation_update_map, size: 1, offset: 22
             public uint segmentation_update_map
             {
                 get => (uint)((_bitfield0 >> 22) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 22)) | ((((uint)value) & 0x1u) << 22);
             }
-             // TODO: Accessor property for segmentation_temporal_update, size: 1, offset: 23
             public uint segmentation_temporal_update
             {
                 get => (uint)((_bitfield0 >> 23) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 23)) | ((((uint)value) & 0x1u) << 23);
             }
-             // TODO: Accessor property for segmentation_update_data, size: 1, offset: 24
             public uint segmentation_update_data
             {
                 get => (uint)((_bitfield0 >> 24) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 24)) | ((((uint)value) & 0x1u) << 24);
             }
-             // TODO: Accessor property for UsesLr, size: 1, offset: 25
             public uint UsesLr
             {
                 get => (uint)((_bitfield0 >> 25) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 25)) | ((((uint)value) & 0x1u) << 25);
             }
-             // TODO: Accessor property for usesChromaLr, size: 1, offset: 26
             public uint usesChromaLr
             {
                 get => (uint)((_bitfield0 >> 26) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 26)) | ((((uint)value) & 0x1u) << 26);
             }
-             // TODO: Accessor property for show_frame, size: 1, offset: 27
             public uint show_frame
             {
                 get => (uint)((_bitfield0 >> 27) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 27)) | ((((uint)value) & 0x1u) << 27);
             }
-             // TODO: Accessor property for showable_frame, size: 1, offset: 28
             public uint showable_frame
             {
                 get => (uint)((_bitfield0 >> 28) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 28)) | ((((uint)value) & 0x1u) << 28);
             }
-             // TODO: Accessor property for reserved, size: 3, offset: 29
             public uint reserved
             {
                 get => (uint)((_bitfield0 >> 29) & 0x7u);
@@ -1212,19 +1105,16 @@ namespace OpenTK.Graphics.Vulkan
         public unsafe struct StdVideoEncodeAV1ReferenceInfoFlags
         {
             private uint _bitfield0;
-             // TODO: Accessor property for disable_frame_end_update_cdf, size: 1, offset: 0
             public uint disable_frame_end_update_cdf
             {
                 get => (uint)((_bitfield0 >> 0) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 0)) | ((((uint)value) & 0x1u) << 0);
             }
-             // TODO: Accessor property for segmentation_enabled, size: 1, offset: 1
             public uint segmentation_enabled
             {
                 get => (uint)((_bitfield0 >> 1) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 1)) | ((((uint)value) & 0x1u) << 1);
             }
-             // TODO: Accessor property for reserved, size: 30, offset: 2
             public uint reserved
             {
                 get => (uint)((_bitfield0 >> 2) & 0x3FFFFFFFu);
@@ -1394,73 +1284,61 @@ namespace OpenTK.Graphics.Vulkan
         public unsafe struct StdVideoH264SpsVuiFlags
         {
             private uint _bitfield0;
-             // TODO: Accessor property for aspect_ratio_info_present_flag, size: 1, offset: 0
             public uint aspect_ratio_info_present_flag
             {
                 get => (uint)((_bitfield0 >> 0) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 0)) | ((((uint)value) & 0x1u) << 0);
             }
-             // TODO: Accessor property for overscan_info_present_flag, size: 1, offset: 1
             public uint overscan_info_present_flag
             {
                 get => (uint)((_bitfield0 >> 1) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 1)) | ((((uint)value) & 0x1u) << 1);
             }
-             // TODO: Accessor property for overscan_appropriate_flag, size: 1, offset: 2
             public uint overscan_appropriate_flag
             {
                 get => (uint)((_bitfield0 >> 2) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 2)) | ((((uint)value) & 0x1u) << 2);
             }
-             // TODO: Accessor property for video_signal_type_present_flag, size: 1, offset: 3
             public uint video_signal_type_present_flag
             {
                 get => (uint)((_bitfield0 >> 3) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 3)) | ((((uint)value) & 0x1u) << 3);
             }
-             // TODO: Accessor property for video_full_range_flag, size: 1, offset: 4
             public uint video_full_range_flag
             {
                 get => (uint)((_bitfield0 >> 4) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 4)) | ((((uint)value) & 0x1u) << 4);
             }
-             // TODO: Accessor property for color_description_present_flag, size: 1, offset: 5
             public uint color_description_present_flag
             {
                 get => (uint)((_bitfield0 >> 5) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 5)) | ((((uint)value) & 0x1u) << 5);
             }
-             // TODO: Accessor property for chroma_loc_info_present_flag, size: 1, offset: 6
             public uint chroma_loc_info_present_flag
             {
                 get => (uint)((_bitfield0 >> 6) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 6)) | ((((uint)value) & 0x1u) << 6);
             }
-             // TODO: Accessor property for timing_info_present_flag, size: 1, offset: 7
             public uint timing_info_present_flag
             {
                 get => (uint)((_bitfield0 >> 7) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 7)) | ((((uint)value) & 0x1u) << 7);
             }
-             // TODO: Accessor property for fixed_frame_rate_flag, size: 1, offset: 8
             public uint fixed_frame_rate_flag
             {
                 get => (uint)((_bitfield0 >> 8) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 8)) | ((((uint)value) & 0x1u) << 8);
             }
-             // TODO: Accessor property for bitstream_restriction_flag, size: 1, offset: 9
             public uint bitstream_restriction_flag
             {
                 get => (uint)((_bitfield0 >> 9) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 9)) | ((((uint)value) & 0x1u) << 9);
             }
-             // TODO: Accessor property for nal_hrd_parameters_present_flag, size: 1, offset: 10
             public uint nal_hrd_parameters_present_flag
             {
                 get => (uint)((_bitfield0 >> 10) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 10)) | ((((uint)value) & 0x1u) << 10);
             }
-             // TODO: Accessor property for vcl_hrd_parameters_present_flag, size: 1, offset: 11
             public uint vcl_hrd_parameters_present_flag
             {
                 get => (uint)((_bitfield0 >> 11) & 0x1u);
@@ -1525,97 +1403,81 @@ namespace OpenTK.Graphics.Vulkan
         public unsafe struct StdVideoH264SpsFlags
         {
             private uint _bitfield0;
-             // TODO: Accessor property for constraint_set0_flag, size: 1, offset: 0
             public uint constraint_set0_flag
             {
                 get => (uint)((_bitfield0 >> 0) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 0)) | ((((uint)value) & 0x1u) << 0);
             }
-             // TODO: Accessor property for constraint_set1_flag, size: 1, offset: 1
             public uint constraint_set1_flag
             {
                 get => (uint)((_bitfield0 >> 1) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 1)) | ((((uint)value) & 0x1u) << 1);
             }
-             // TODO: Accessor property for constraint_set2_flag, size: 1, offset: 2
             public uint constraint_set2_flag
             {
                 get => (uint)((_bitfield0 >> 2) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 2)) | ((((uint)value) & 0x1u) << 2);
             }
-             // TODO: Accessor property for constraint_set3_flag, size: 1, offset: 3
             public uint constraint_set3_flag
             {
                 get => (uint)((_bitfield0 >> 3) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 3)) | ((((uint)value) & 0x1u) << 3);
             }
-             // TODO: Accessor property for constraint_set4_flag, size: 1, offset: 4
             public uint constraint_set4_flag
             {
                 get => (uint)((_bitfield0 >> 4) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 4)) | ((((uint)value) & 0x1u) << 4);
             }
-             // TODO: Accessor property for constraint_set5_flag, size: 1, offset: 5
             public uint constraint_set5_flag
             {
                 get => (uint)((_bitfield0 >> 5) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 5)) | ((((uint)value) & 0x1u) << 5);
             }
-             // TODO: Accessor property for direct_8x8_inference_flag, size: 1, offset: 6
             public uint direct_8x8_inference_flag
             {
                 get => (uint)((_bitfield0 >> 6) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 6)) | ((((uint)value) & 0x1u) << 6);
             }
-             // TODO: Accessor property for mb_adaptive_frame_field_flag, size: 1, offset: 7
             public uint mb_adaptive_frame_field_flag
             {
                 get => (uint)((_bitfield0 >> 7) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 7)) | ((((uint)value) & 0x1u) << 7);
             }
-             // TODO: Accessor property for frame_mbs_only_flag, size: 1, offset: 8
             public uint frame_mbs_only_flag
             {
                 get => (uint)((_bitfield0 >> 8) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 8)) | ((((uint)value) & 0x1u) << 8);
             }
-             // TODO: Accessor property for delta_pic_order_always_zero_flag, size: 1, offset: 9
             public uint delta_pic_order_always_zero_flag
             {
                 get => (uint)((_bitfield0 >> 9) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 9)) | ((((uint)value) & 0x1u) << 9);
             }
-             // TODO: Accessor property for separate_colour_plane_flag, size: 1, offset: 10
             public uint separate_colour_plane_flag
             {
                 get => (uint)((_bitfield0 >> 10) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 10)) | ((((uint)value) & 0x1u) << 10);
             }
-             // TODO: Accessor property for gaps_in_frame_num_value_allowed_flag, size: 1, offset: 11
             public uint gaps_in_frame_num_value_allowed_flag
             {
                 get => (uint)((_bitfield0 >> 11) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 11)) | ((((uint)value) & 0x1u) << 11);
             }
-             // TODO: Accessor property for qpprime_y_zero_transform_bypass_flag, size: 1, offset: 12
             public uint qpprime_y_zero_transform_bypass_flag
             {
                 get => (uint)((_bitfield0 >> 12) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 12)) | ((((uint)value) & 0x1u) << 12);
             }
-             // TODO: Accessor property for frame_cropping_flag, size: 1, offset: 13
             public uint frame_cropping_flag
             {
                 get => (uint)((_bitfield0 >> 13) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 13)) | ((((uint)value) & 0x1u) << 13);
             }
-             // TODO: Accessor property for seq_scaling_matrix_present_flag, size: 1, offset: 14
             public uint seq_scaling_matrix_present_flag
             {
                 get => (uint)((_bitfield0 >> 14) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 14)) | ((((uint)value) & 0x1u) << 14);
             }
-             // TODO: Accessor property for vui_parameters_present_flag, size: 1, offset: 15
             public uint vui_parameters_present_flag
             {
                 get => (uint)((_bitfield0 >> 15) & 0x1u);
@@ -1711,49 +1573,41 @@ namespace OpenTK.Graphics.Vulkan
         public unsafe struct StdVideoH264PpsFlags
         {
             private uint _bitfield0;
-             // TODO: Accessor property for transform_8x8_mode_flag, size: 1, offset: 0
             public uint transform_8x8_mode_flag
             {
                 get => (uint)((_bitfield0 >> 0) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 0)) | ((((uint)value) & 0x1u) << 0);
             }
-             // TODO: Accessor property for redundant_pic_cnt_present_flag, size: 1, offset: 1
             public uint redundant_pic_cnt_present_flag
             {
                 get => (uint)((_bitfield0 >> 1) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 1)) | ((((uint)value) & 0x1u) << 1);
             }
-             // TODO: Accessor property for constrained_intra_pred_flag, size: 1, offset: 2
             public uint constrained_intra_pred_flag
             {
                 get => (uint)((_bitfield0 >> 2) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 2)) | ((((uint)value) & 0x1u) << 2);
             }
-             // TODO: Accessor property for deblocking_filter_control_present_flag, size: 1, offset: 3
             public uint deblocking_filter_control_present_flag
             {
                 get => (uint)((_bitfield0 >> 3) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 3)) | ((((uint)value) & 0x1u) << 3);
             }
-             // TODO: Accessor property for weighted_pred_flag, size: 1, offset: 4
             public uint weighted_pred_flag
             {
                 get => (uint)((_bitfield0 >> 4) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 4)) | ((((uint)value) & 0x1u) << 4);
             }
-             // TODO: Accessor property for bottom_field_pic_order_in_frame_present_flag, size: 1, offset: 5
             public uint bottom_field_pic_order_in_frame_present_flag
             {
                 get => (uint)((_bitfield0 >> 5) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 5)) | ((((uint)value) & 0x1u) << 5);
             }
-             // TODO: Accessor property for entropy_coding_mode_flag, size: 1, offset: 6
             public uint entropy_coding_mode_flag
             {
                 get => (uint)((_bitfield0 >> 6) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 6)) | ((((uint)value) & 0x1u) << 6);
             }
-             // TODO: Accessor property for pic_scaling_matrix_present_flag, size: 1, offset: 7
             public uint pic_scaling_matrix_present_flag
             {
                 get => (uint)((_bitfield0 >> 7) & 0x1u);
@@ -1808,37 +1662,31 @@ namespace OpenTK.Graphics.Vulkan
         public unsafe struct StdVideoDecodeH264PictureInfoFlags
         {
             private uint _bitfield0;
-             // TODO: Accessor property for field_pic_flag, size: 1, offset: 0
             public uint field_pic_flag
             {
                 get => (uint)((_bitfield0 >> 0) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 0)) | ((((uint)value) & 0x1u) << 0);
             }
-             // TODO: Accessor property for is_intra, size: 1, offset: 1
             public uint is_intra
             {
                 get => (uint)((_bitfield0 >> 1) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 1)) | ((((uint)value) & 0x1u) << 1);
             }
-             // TODO: Accessor property for IdrPicFlag, size: 1, offset: 2
             public uint IdrPicFlag
             {
                 get => (uint)((_bitfield0 >> 2) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 2)) | ((((uint)value) & 0x1u) << 2);
             }
-             // TODO: Accessor property for bottom_field_flag, size: 1, offset: 3
             public uint bottom_field_flag
             {
                 get => (uint)((_bitfield0 >> 3) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 3)) | ((((uint)value) & 0x1u) << 3);
             }
-             // TODO: Accessor property for is_reference, size: 1, offset: 4
             public uint is_reference
             {
                 get => (uint)((_bitfield0 >> 4) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 4)) | ((((uint)value) & 0x1u) << 4);
             }
-             // TODO: Accessor property for complementary_field_pair, size: 1, offset: 5
             public uint complementary_field_pair
             {
                 get => (uint)((_bitfield0 >> 5) & 0x1u);
@@ -1861,25 +1709,21 @@ namespace OpenTK.Graphics.Vulkan
         public unsafe struct StdVideoDecodeH264ReferenceInfoFlags
         {
             private uint _bitfield0;
-             // TODO: Accessor property for top_field_flag, size: 1, offset: 0
             public uint top_field_flag
             {
                 get => (uint)((_bitfield0 >> 0) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 0)) | ((((uint)value) & 0x1u) << 0);
             }
-             // TODO: Accessor property for bottom_field_flag, size: 1, offset: 1
             public uint bottom_field_flag
             {
                 get => (uint)((_bitfield0 >> 1) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 1)) | ((((uint)value) & 0x1u) << 1);
             }
-             // TODO: Accessor property for used_for_long_term_reference, size: 1, offset: 2
             public uint used_for_long_term_reference
             {
                 get => (uint)((_bitfield0 >> 2) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 2)) | ((((uint)value) & 0x1u) << 2);
             }
-             // TODO: Accessor property for is_non_existing, size: 1, offset: 3
             public uint is_non_existing
             {
                 get => (uint)((_bitfield0 >> 3) & 0x1u);
@@ -1976,19 +1820,16 @@ namespace OpenTK.Graphics.Vulkan
         public unsafe struct StdVideoEncodeH264SliceHeaderFlags
         {
             private uint _bitfield0;
-             // TODO: Accessor property for direct_spatial_mv_pred_flag, size: 1, offset: 0
             public uint direct_spatial_mv_pred_flag
             {
                 get => (uint)((_bitfield0 >> 0) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 0)) | ((((uint)value) & 0x1u) << 0);
             }
-             // TODO: Accessor property for num_ref_idx_active_override_flag, size: 1, offset: 1
             public uint num_ref_idx_active_override_flag
             {
                 get => (uint)((_bitfield0 >> 1) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 1)) | ((((uint)value) & 0x1u) << 1);
             }
-             // TODO: Accessor property for reserved, size: 30, offset: 2
             public uint reserved
             {
                 get => (uint)((_bitfield0 >> 2) & 0x3FFFFFFFu);
@@ -1999,37 +1840,31 @@ namespace OpenTK.Graphics.Vulkan
         public unsafe struct StdVideoEncodeH264PictureInfoFlags
         {
             private uint _bitfield0;
-             // TODO: Accessor property for IdrPicFlag, size: 1, offset: 0
             public uint IdrPicFlag
             {
                 get => (uint)((_bitfield0 >> 0) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 0)) | ((((uint)value) & 0x1u) << 0);
             }
-             // TODO: Accessor property for is_reference, size: 1, offset: 1
             public uint is_reference
             {
                 get => (uint)((_bitfield0 >> 1) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 1)) | ((((uint)value) & 0x1u) << 1);
             }
-             // TODO: Accessor property for no_output_of_prior_pics_flag, size: 1, offset: 2
             public uint no_output_of_prior_pics_flag
             {
                 get => (uint)((_bitfield0 >> 2) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 2)) | ((((uint)value) & 0x1u) << 2);
             }
-             // TODO: Accessor property for long_term_reference_flag, size: 1, offset: 3
             public uint long_term_reference_flag
             {
                 get => (uint)((_bitfield0 >> 3) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 3)) | ((((uint)value) & 0x1u) << 3);
             }
-             // TODO: Accessor property for adaptive_ref_pic_marking_mode_flag, size: 1, offset: 4
             public uint adaptive_ref_pic_marking_mode_flag
             {
                 get => (uint)((_bitfield0 >> 4) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 4)) | ((((uint)value) & 0x1u) << 4);
             }
-             // TODO: Accessor property for reserved, size: 27, offset: 5
             public uint reserved
             {
                 get => (uint)((_bitfield0 >> 5) & 0x7FFFFFFu);
@@ -2040,13 +1875,11 @@ namespace OpenTK.Graphics.Vulkan
         public unsafe struct StdVideoEncodeH264ReferenceInfoFlags
         {
             private uint _bitfield0;
-             // TODO: Accessor property for used_for_long_term_reference, size: 1, offset: 0
             public uint used_for_long_term_reference
             {
                 get => (uint)((_bitfield0 >> 0) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 0)) | ((((uint)value) & 0x1u) << 0);
             }
-             // TODO: Accessor property for reserved, size: 31, offset: 1
             public uint reserved
             {
                 get => (uint)((_bitfield0 >> 1) & 0x7FFFFFFFu);
@@ -2057,19 +1890,16 @@ namespace OpenTK.Graphics.Vulkan
         public unsafe struct StdVideoEncodeH264ReferenceListsInfoFlags
         {
             private uint _bitfield0;
-             // TODO: Accessor property for ref_pic_list_modification_flag_l0, size: 1, offset: 0
             public uint ref_pic_list_modification_flag_l0
             {
                 get => (uint)((_bitfield0 >> 0) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 0)) | ((((uint)value) & 0x1u) << 0);
             }
-             // TODO: Accessor property for ref_pic_list_modification_flag_l1, size: 1, offset: 1
             public uint ref_pic_list_modification_flag_l1
             {
                 get => (uint)((_bitfield0 >> 1) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 1)) | ((((uint)value) & 0x1u) << 1);
             }
-             // TODO: Accessor property for reserved, size: 30, offset: 2
             public uint reserved
             {
                 get => (uint)((_bitfield0 >> 2) & 0x3FFFFFFFu);
@@ -2304,43 +2134,36 @@ namespace OpenTK.Graphics.Vulkan
         public unsafe struct StdVideoH265HrdFlags
         {
             private uint _bitfield0;
-             // TODO: Accessor property for nal_hrd_parameters_present_flag, size: 1, offset: 0
             public uint nal_hrd_parameters_present_flag
             {
                 get => (uint)((_bitfield0 >> 0) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 0)) | ((((uint)value) & 0x1u) << 0);
             }
-             // TODO: Accessor property for vcl_hrd_parameters_present_flag, size: 1, offset: 1
             public uint vcl_hrd_parameters_present_flag
             {
                 get => (uint)((_bitfield0 >> 1) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 1)) | ((((uint)value) & 0x1u) << 1);
             }
-             // TODO: Accessor property for sub_pic_hrd_params_present_flag, size: 1, offset: 2
             public uint sub_pic_hrd_params_present_flag
             {
                 get => (uint)((_bitfield0 >> 2) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 2)) | ((((uint)value) & 0x1u) << 2);
             }
-             // TODO: Accessor property for sub_pic_cpb_params_in_pic_timing_sei_flag, size: 1, offset: 3
             public uint sub_pic_cpb_params_in_pic_timing_sei_flag
             {
                 get => (uint)((_bitfield0 >> 3) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 3)) | ((((uint)value) & 0x1u) << 3);
             }
-             // TODO: Accessor property for fixed_pic_rate_general_flag, size: 8, offset: 4
             public uint fixed_pic_rate_general_flag
             {
                 get => (uint)((_bitfield0 >> 4) & 0xFFu);
                 set => _bitfield0 = (_bitfield0 & ~(0xFFu << 4)) | ((((uint)value) & 0xFFu) << 4);
             }
-             // TODO: Accessor property for fixed_pic_rate_within_cvs_flag, size: 8, offset: 12
             public uint fixed_pic_rate_within_cvs_flag
             {
                 get => (uint)((_bitfield0 >> 12) & 0xFFu);
                 set => _bitfield0 = (_bitfield0 & ~(0xFFu << 12)) | ((((uint)value) & 0xFFu) << 12);
             }
-             // TODO: Accessor property for low_delay_hrd_flag, size: 8, offset: 20
             public uint low_delay_hrd_flag
             {
                 get => (uint)((_bitfield0 >> 20) & 0xFFu);
@@ -2370,25 +2193,21 @@ namespace OpenTK.Graphics.Vulkan
         public unsafe struct StdVideoH265VpsFlags
         {
             private uint _bitfield0;
-             // TODO: Accessor property for vps_temporal_id_nesting_flag, size: 1, offset: 0
             public uint vps_temporal_id_nesting_flag
             {
                 get => (uint)((_bitfield0 >> 0) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 0)) | ((((uint)value) & 0x1u) << 0);
             }
-             // TODO: Accessor property for vps_sub_layer_ordering_info_present_flag, size: 1, offset: 1
             public uint vps_sub_layer_ordering_info_present_flag
             {
                 get => (uint)((_bitfield0 >> 1) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 1)) | ((((uint)value) & 0x1u) << 1);
             }
-             // TODO: Accessor property for vps_timing_info_present_flag, size: 1, offset: 2
             public uint vps_timing_info_present_flag
             {
                 get => (uint)((_bitfield0 >> 2) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 2)) | ((((uint)value) & 0x1u) << 2);
             }
-             // TODO: Accessor property for vps_poc_proportional_to_timing_flag, size: 1, offset: 3
             public uint vps_poc_proportional_to_timing_flag
             {
                 get => (uint)((_bitfield0 >> 3) & 0x1u);
@@ -2399,31 +2218,26 @@ namespace OpenTK.Graphics.Vulkan
         public unsafe struct StdVideoH265ProfileTierLevelFlags
         {
             private uint _bitfield0;
-             // TODO: Accessor property for general_tier_flag, size: 1, offset: 0
             public uint general_tier_flag
             {
                 get => (uint)((_bitfield0 >> 0) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 0)) | ((((uint)value) & 0x1u) << 0);
             }
-             // TODO: Accessor property for general_progressive_source_flag, size: 1, offset: 1
             public uint general_progressive_source_flag
             {
                 get => (uint)((_bitfield0 >> 1) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 1)) | ((((uint)value) & 0x1u) << 1);
             }
-             // TODO: Accessor property for general_interlaced_source_flag, size: 1, offset: 2
             public uint general_interlaced_source_flag
             {
                 get => (uint)((_bitfield0 >> 2) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 2)) | ((((uint)value) & 0x1u) << 2);
             }
-             // TODO: Accessor property for general_non_packed_constraint_flag, size: 1, offset: 3
             public uint general_non_packed_constraint_flag
             {
                 get => (uint)((_bitfield0 >> 3) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 3)) | ((((uint)value) & 0x1u) << 3);
             }
-             // TODO: Accessor property for general_frame_only_constraint_flag, size: 1, offset: 4
             public uint general_frame_only_constraint_flag
             {
                 get => (uint)((_bitfield0 >> 4) & 0x1u);
@@ -2528,109 +2342,91 @@ namespace OpenTK.Graphics.Vulkan
         public unsafe struct StdVideoH265SpsVuiFlags
         {
             private uint _bitfield0;
-             // TODO: Accessor property for aspect_ratio_info_present_flag, size: 1, offset: 0
             public uint aspect_ratio_info_present_flag
             {
                 get => (uint)((_bitfield0 >> 0) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 0)) | ((((uint)value) & 0x1u) << 0);
             }
-             // TODO: Accessor property for overscan_info_present_flag, size: 1, offset: 1
             public uint overscan_info_present_flag
             {
                 get => (uint)((_bitfield0 >> 1) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 1)) | ((((uint)value) & 0x1u) << 1);
             }
-             // TODO: Accessor property for overscan_appropriate_flag, size: 1, offset: 2
             public uint overscan_appropriate_flag
             {
                 get => (uint)((_bitfield0 >> 2) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 2)) | ((((uint)value) & 0x1u) << 2);
             }
-             // TODO: Accessor property for video_signal_type_present_flag, size: 1, offset: 3
             public uint video_signal_type_present_flag
             {
                 get => (uint)((_bitfield0 >> 3) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 3)) | ((((uint)value) & 0x1u) << 3);
             }
-             // TODO: Accessor property for video_full_range_flag, size: 1, offset: 4
             public uint video_full_range_flag
             {
                 get => (uint)((_bitfield0 >> 4) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 4)) | ((((uint)value) & 0x1u) << 4);
             }
-             // TODO: Accessor property for colour_description_present_flag, size: 1, offset: 5
             public uint colour_description_present_flag
             {
                 get => (uint)((_bitfield0 >> 5) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 5)) | ((((uint)value) & 0x1u) << 5);
             }
-             // TODO: Accessor property for chroma_loc_info_present_flag, size: 1, offset: 6
             public uint chroma_loc_info_present_flag
             {
                 get => (uint)((_bitfield0 >> 6) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 6)) | ((((uint)value) & 0x1u) << 6);
             }
-             // TODO: Accessor property for neutral_chroma_indication_flag, size: 1, offset: 7
             public uint neutral_chroma_indication_flag
             {
                 get => (uint)((_bitfield0 >> 7) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 7)) | ((((uint)value) & 0x1u) << 7);
             }
-             // TODO: Accessor property for field_seq_flag, size: 1, offset: 8
             public uint field_seq_flag
             {
                 get => (uint)((_bitfield0 >> 8) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 8)) | ((((uint)value) & 0x1u) << 8);
             }
-             // TODO: Accessor property for frame_field_info_present_flag, size: 1, offset: 9
             public uint frame_field_info_present_flag
             {
                 get => (uint)((_bitfield0 >> 9) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 9)) | ((((uint)value) & 0x1u) << 9);
             }
-             // TODO: Accessor property for default_display_window_flag, size: 1, offset: 10
             public uint default_display_window_flag
             {
                 get => (uint)((_bitfield0 >> 10) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 10)) | ((((uint)value) & 0x1u) << 10);
             }
-             // TODO: Accessor property for vui_timing_info_present_flag, size: 1, offset: 11
             public uint vui_timing_info_present_flag
             {
                 get => (uint)((_bitfield0 >> 11) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 11)) | ((((uint)value) & 0x1u) << 11);
             }
-             // TODO: Accessor property for vui_poc_proportional_to_timing_flag, size: 1, offset: 12
             public uint vui_poc_proportional_to_timing_flag
             {
                 get => (uint)((_bitfield0 >> 12) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 12)) | ((((uint)value) & 0x1u) << 12);
             }
-             // TODO: Accessor property for vui_hrd_parameters_present_flag, size: 1, offset: 13
             public uint vui_hrd_parameters_present_flag
             {
                 get => (uint)((_bitfield0 >> 13) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 13)) | ((((uint)value) & 0x1u) << 13);
             }
-             // TODO: Accessor property for bitstream_restriction_flag, size: 1, offset: 14
             public uint bitstream_restriction_flag
             {
                 get => (uint)((_bitfield0 >> 14) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 14)) | ((((uint)value) & 0x1u) << 14);
             }
-             // TODO: Accessor property for tiles_fixed_structure_flag, size: 1, offset: 15
             public uint tiles_fixed_structure_flag
             {
                 get => (uint)((_bitfield0 >> 15) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 15)) | ((((uint)value) & 0x1u) << 15);
             }
-             // TODO: Accessor property for motion_vectors_over_pic_boundaries_flag, size: 1, offset: 16
             public uint motion_vectors_over_pic_boundaries_flag
             {
                 get => (uint)((_bitfield0 >> 16) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 16)) | ((((uint)value) & 0x1u) << 16);
             }
-             // TODO: Accessor property for restricted_ref_pic_lists_flag, size: 1, offset: 17
             public uint restricted_ref_pic_lists_flag
             {
                 get => (uint)((_bitfield0 >> 17) & 0x1u);
@@ -2715,181 +2511,151 @@ namespace OpenTK.Graphics.Vulkan
         public unsafe struct StdVideoH265SpsFlags
         {
             private uint _bitfield0;
-             // TODO: Accessor property for sps_temporal_id_nesting_flag, size: 1, offset: 0
             public uint sps_temporal_id_nesting_flag
             {
                 get => (uint)((_bitfield0 >> 0) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 0)) | ((((uint)value) & 0x1u) << 0);
             }
-             // TODO: Accessor property for separate_colour_plane_flag, size: 1, offset: 1
             public uint separate_colour_plane_flag
             {
                 get => (uint)((_bitfield0 >> 1) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 1)) | ((((uint)value) & 0x1u) << 1);
             }
-             // TODO: Accessor property for conformance_window_flag, size: 1, offset: 2
             public uint conformance_window_flag
             {
                 get => (uint)((_bitfield0 >> 2) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 2)) | ((((uint)value) & 0x1u) << 2);
             }
-             // TODO: Accessor property for sps_sub_layer_ordering_info_present_flag, size: 1, offset: 3
             public uint sps_sub_layer_ordering_info_present_flag
             {
                 get => (uint)((_bitfield0 >> 3) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 3)) | ((((uint)value) & 0x1u) << 3);
             }
-             // TODO: Accessor property for scaling_list_enabled_flag, size: 1, offset: 4
             public uint scaling_list_enabled_flag
             {
                 get => (uint)((_bitfield0 >> 4) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 4)) | ((((uint)value) & 0x1u) << 4);
             }
-             // TODO: Accessor property for sps_scaling_list_data_present_flag, size: 1, offset: 5
             public uint sps_scaling_list_data_present_flag
             {
                 get => (uint)((_bitfield0 >> 5) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 5)) | ((((uint)value) & 0x1u) << 5);
             }
-             // TODO: Accessor property for amp_enabled_flag, size: 1, offset: 6
             public uint amp_enabled_flag
             {
                 get => (uint)((_bitfield0 >> 6) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 6)) | ((((uint)value) & 0x1u) << 6);
             }
-             // TODO: Accessor property for sample_adaptive_offset_enabled_flag, size: 1, offset: 7
             public uint sample_adaptive_offset_enabled_flag
             {
                 get => (uint)((_bitfield0 >> 7) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 7)) | ((((uint)value) & 0x1u) << 7);
             }
-             // TODO: Accessor property for pcm_enabled_flag, size: 1, offset: 8
             public uint pcm_enabled_flag
             {
                 get => (uint)((_bitfield0 >> 8) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 8)) | ((((uint)value) & 0x1u) << 8);
             }
-             // TODO: Accessor property for pcm_loop_filter_disabled_flag, size: 1, offset: 9
             public uint pcm_loop_filter_disabled_flag
             {
                 get => (uint)((_bitfield0 >> 9) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 9)) | ((((uint)value) & 0x1u) << 9);
             }
-             // TODO: Accessor property for long_term_ref_pics_present_flag, size: 1, offset: 10
             public uint long_term_ref_pics_present_flag
             {
                 get => (uint)((_bitfield0 >> 10) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 10)) | ((((uint)value) & 0x1u) << 10);
             }
-             // TODO: Accessor property for sps_temporal_mvp_enabled_flag, size: 1, offset: 11
             public uint sps_temporal_mvp_enabled_flag
             {
                 get => (uint)((_bitfield0 >> 11) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 11)) | ((((uint)value) & 0x1u) << 11);
             }
-             // TODO: Accessor property for strong_intra_smoothing_enabled_flag, size: 1, offset: 12
             public uint strong_intra_smoothing_enabled_flag
             {
                 get => (uint)((_bitfield0 >> 12) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 12)) | ((((uint)value) & 0x1u) << 12);
             }
-             // TODO: Accessor property for vui_parameters_present_flag, size: 1, offset: 13
             public uint vui_parameters_present_flag
             {
                 get => (uint)((_bitfield0 >> 13) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 13)) | ((((uint)value) & 0x1u) << 13);
             }
-             // TODO: Accessor property for sps_extension_present_flag, size: 1, offset: 14
             public uint sps_extension_present_flag
             {
                 get => (uint)((_bitfield0 >> 14) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 14)) | ((((uint)value) & 0x1u) << 14);
             }
-             // TODO: Accessor property for sps_range_extension_flag, size: 1, offset: 15
             public uint sps_range_extension_flag
             {
                 get => (uint)((_bitfield0 >> 15) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 15)) | ((((uint)value) & 0x1u) << 15);
             }
-             // TODO: Accessor property for transform_skip_rotation_enabled_flag, size: 1, offset: 16
             public uint transform_skip_rotation_enabled_flag
             {
                 get => (uint)((_bitfield0 >> 16) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 16)) | ((((uint)value) & 0x1u) << 16);
             }
-             // TODO: Accessor property for transform_skip_context_enabled_flag, size: 1, offset: 17
             public uint transform_skip_context_enabled_flag
             {
                 get => (uint)((_bitfield0 >> 17) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 17)) | ((((uint)value) & 0x1u) << 17);
             }
-             // TODO: Accessor property for implicit_rdpcm_enabled_flag, size: 1, offset: 18
             public uint implicit_rdpcm_enabled_flag
             {
                 get => (uint)((_bitfield0 >> 18) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 18)) | ((((uint)value) & 0x1u) << 18);
             }
-             // TODO: Accessor property for explicit_rdpcm_enabled_flag, size: 1, offset: 19
             public uint explicit_rdpcm_enabled_flag
             {
                 get => (uint)((_bitfield0 >> 19) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 19)) | ((((uint)value) & 0x1u) << 19);
             }
-             // TODO: Accessor property for extended_precision_processing_flag, size: 1, offset: 20
             public uint extended_precision_processing_flag
             {
                 get => (uint)((_bitfield0 >> 20) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 20)) | ((((uint)value) & 0x1u) << 20);
             }
-             // TODO: Accessor property for intra_smoothing_disabled_flag, size: 1, offset: 21
             public uint intra_smoothing_disabled_flag
             {
                 get => (uint)((_bitfield0 >> 21) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 21)) | ((((uint)value) & 0x1u) << 21);
             }
-             // TODO: Accessor property for high_precision_offsets_enabled_flag, size: 1, offset: 22
             public uint high_precision_offsets_enabled_flag
             {
                 get => (uint)((_bitfield0 >> 22) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 22)) | ((((uint)value) & 0x1u) << 22);
             }
-             // TODO: Accessor property for persistent_rice_adaptation_enabled_flag, size: 1, offset: 23
             public uint persistent_rice_adaptation_enabled_flag
             {
                 get => (uint)((_bitfield0 >> 23) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 23)) | ((((uint)value) & 0x1u) << 23);
             }
-             // TODO: Accessor property for cabac_bypass_alignment_enabled_flag, size: 1, offset: 24
             public uint cabac_bypass_alignment_enabled_flag
             {
                 get => (uint)((_bitfield0 >> 24) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 24)) | ((((uint)value) & 0x1u) << 24);
             }
-             // TODO: Accessor property for sps_scc_extension_flag, size: 1, offset: 25
             public uint sps_scc_extension_flag
             {
                 get => (uint)((_bitfield0 >> 25) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 25)) | ((((uint)value) & 0x1u) << 25);
             }
-             // TODO: Accessor property for sps_curr_pic_ref_enabled_flag, size: 1, offset: 26
             public uint sps_curr_pic_ref_enabled_flag
             {
                 get => (uint)((_bitfield0 >> 26) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 26)) | ((((uint)value) & 0x1u) << 26);
             }
-             // TODO: Accessor property for palette_mode_enabled_flag, size: 1, offset: 27
             public uint palette_mode_enabled_flag
             {
                 get => (uint)((_bitfield0 >> 27) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 27)) | ((((uint)value) & 0x1u) << 27);
             }
-             // TODO: Accessor property for sps_palette_predictor_initializers_present_flag, size: 1, offset: 28
             public uint sps_palette_predictor_initializers_present_flag
             {
                 get => (uint)((_bitfield0 >> 28) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 28)) | ((((uint)value) & 0x1u) << 28);
             }
-             // TODO: Accessor property for intra_boundary_filtering_disabled_flag, size: 1, offset: 29
             public uint intra_boundary_filtering_disabled_flag
             {
                 get => (uint)((_bitfield0 >> 29) & 0x1u);
@@ -2900,13 +2666,11 @@ namespace OpenTK.Graphics.Vulkan
         public unsafe struct StdVideoH265ShortTermRefPicSetFlags
         {
             private uint _bitfield0;
-             // TODO: Accessor property for inter_ref_pic_set_prediction_flag, size: 1, offset: 0
             public uint inter_ref_pic_set_prediction_flag
             {
                 get => (uint)((_bitfield0 >> 0) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 0)) | ((((uint)value) & 0x1u) << 0);
             }
-             // TODO: Accessor property for delta_rps_sign, size: 1, offset: 1
             public uint delta_rps_sign
             {
                 get => (uint)((_bitfield0 >> 1) & 0x1u);
@@ -3026,187 +2790,156 @@ namespace OpenTK.Graphics.Vulkan
         public unsafe struct StdVideoH265PpsFlags
         {
             private uint _bitfield0;
-             // TODO: Accessor property for dependent_slice_segments_enabled_flag, size: 1, offset: 0
             public uint dependent_slice_segments_enabled_flag
             {
                 get => (uint)((_bitfield0 >> 0) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 0)) | ((((uint)value) & 0x1u) << 0);
             }
-             // TODO: Accessor property for output_flag_present_flag, size: 1, offset: 1
             public uint output_flag_present_flag
             {
                 get => (uint)((_bitfield0 >> 1) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 1)) | ((((uint)value) & 0x1u) << 1);
             }
-             // TODO: Accessor property for sign_data_hiding_enabled_flag, size: 1, offset: 2
             public uint sign_data_hiding_enabled_flag
             {
                 get => (uint)((_bitfield0 >> 2) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 2)) | ((((uint)value) & 0x1u) << 2);
             }
-             // TODO: Accessor property for cabac_init_present_flag, size: 1, offset: 3
             public uint cabac_init_present_flag
             {
                 get => (uint)((_bitfield0 >> 3) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 3)) | ((((uint)value) & 0x1u) << 3);
             }
-             // TODO: Accessor property for constrained_intra_pred_flag, size: 1, offset: 4
             public uint constrained_intra_pred_flag
             {
                 get => (uint)((_bitfield0 >> 4) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 4)) | ((((uint)value) & 0x1u) << 4);
             }
-             // TODO: Accessor property for transform_skip_enabled_flag, size: 1, offset: 5
             public uint transform_skip_enabled_flag
             {
                 get => (uint)((_bitfield0 >> 5) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 5)) | ((((uint)value) & 0x1u) << 5);
             }
-             // TODO: Accessor property for cu_qp_delta_enabled_flag, size: 1, offset: 6
             public uint cu_qp_delta_enabled_flag
             {
                 get => (uint)((_bitfield0 >> 6) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 6)) | ((((uint)value) & 0x1u) << 6);
             }
-             // TODO: Accessor property for pps_slice_chroma_qp_offsets_present_flag, size: 1, offset: 7
             public uint pps_slice_chroma_qp_offsets_present_flag
             {
                 get => (uint)((_bitfield0 >> 7) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 7)) | ((((uint)value) & 0x1u) << 7);
             }
-             // TODO: Accessor property for weighted_pred_flag, size: 1, offset: 8
             public uint weighted_pred_flag
             {
                 get => (uint)((_bitfield0 >> 8) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 8)) | ((((uint)value) & 0x1u) << 8);
             }
-             // TODO: Accessor property for weighted_bipred_flag, size: 1, offset: 9
             public uint weighted_bipred_flag
             {
                 get => (uint)((_bitfield0 >> 9) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 9)) | ((((uint)value) & 0x1u) << 9);
             }
-             // TODO: Accessor property for transquant_bypass_enabled_flag, size: 1, offset: 10
             public uint transquant_bypass_enabled_flag
             {
                 get => (uint)((_bitfield0 >> 10) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 10)) | ((((uint)value) & 0x1u) << 10);
             }
-             // TODO: Accessor property for tiles_enabled_flag, size: 1, offset: 11
             public uint tiles_enabled_flag
             {
                 get => (uint)((_bitfield0 >> 11) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 11)) | ((((uint)value) & 0x1u) << 11);
             }
-             // TODO: Accessor property for entropy_coding_sync_enabled_flag, size: 1, offset: 12
             public uint entropy_coding_sync_enabled_flag
             {
                 get => (uint)((_bitfield0 >> 12) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 12)) | ((((uint)value) & 0x1u) << 12);
             }
-             // TODO: Accessor property for uniform_spacing_flag, size: 1, offset: 13
             public uint uniform_spacing_flag
             {
                 get => (uint)((_bitfield0 >> 13) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 13)) | ((((uint)value) & 0x1u) << 13);
             }
-             // TODO: Accessor property for loop_filter_across_tiles_enabled_flag, size: 1, offset: 14
             public uint loop_filter_across_tiles_enabled_flag
             {
                 get => (uint)((_bitfield0 >> 14) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 14)) | ((((uint)value) & 0x1u) << 14);
             }
-             // TODO: Accessor property for pps_loop_filter_across_slices_enabled_flag, size: 1, offset: 15
             public uint pps_loop_filter_across_slices_enabled_flag
             {
                 get => (uint)((_bitfield0 >> 15) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 15)) | ((((uint)value) & 0x1u) << 15);
             }
-             // TODO: Accessor property for deblocking_filter_control_present_flag, size: 1, offset: 16
             public uint deblocking_filter_control_present_flag
             {
                 get => (uint)((_bitfield0 >> 16) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 16)) | ((((uint)value) & 0x1u) << 16);
             }
-             // TODO: Accessor property for deblocking_filter_override_enabled_flag, size: 1, offset: 17
             public uint deblocking_filter_override_enabled_flag
             {
                 get => (uint)((_bitfield0 >> 17) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 17)) | ((((uint)value) & 0x1u) << 17);
             }
-             // TODO: Accessor property for pps_deblocking_filter_disabled_flag, size: 1, offset: 18
             public uint pps_deblocking_filter_disabled_flag
             {
                 get => (uint)((_bitfield0 >> 18) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 18)) | ((((uint)value) & 0x1u) << 18);
             }
-             // TODO: Accessor property for pps_scaling_list_data_present_flag, size: 1, offset: 19
             public uint pps_scaling_list_data_present_flag
             {
                 get => (uint)((_bitfield0 >> 19) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 19)) | ((((uint)value) & 0x1u) << 19);
             }
-             // TODO: Accessor property for lists_modification_present_flag, size: 1, offset: 20
             public uint lists_modification_present_flag
             {
                 get => (uint)((_bitfield0 >> 20) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 20)) | ((((uint)value) & 0x1u) << 20);
             }
-             // TODO: Accessor property for slice_segment_header_extension_present_flag, size: 1, offset: 21
             public uint slice_segment_header_extension_present_flag
             {
                 get => (uint)((_bitfield0 >> 21) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 21)) | ((((uint)value) & 0x1u) << 21);
             }
-             // TODO: Accessor property for pps_extension_present_flag, size: 1, offset: 22
             public uint pps_extension_present_flag
             {
                 get => (uint)((_bitfield0 >> 22) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 22)) | ((((uint)value) & 0x1u) << 22);
             }
-             // TODO: Accessor property for cross_component_prediction_enabled_flag, size: 1, offset: 23
             public uint cross_component_prediction_enabled_flag
             {
                 get => (uint)((_bitfield0 >> 23) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 23)) | ((((uint)value) & 0x1u) << 23);
             }
-             // TODO: Accessor property for chroma_qp_offset_list_enabled_flag, size: 1, offset: 24
             public uint chroma_qp_offset_list_enabled_flag
             {
                 get => (uint)((_bitfield0 >> 24) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 24)) | ((((uint)value) & 0x1u) << 24);
             }
-             // TODO: Accessor property for pps_curr_pic_ref_enabled_flag, size: 1, offset: 25
             public uint pps_curr_pic_ref_enabled_flag
             {
                 get => (uint)((_bitfield0 >> 25) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 25)) | ((((uint)value) & 0x1u) << 25);
             }
-             // TODO: Accessor property for residual_adaptive_colour_transform_enabled_flag, size: 1, offset: 26
             public uint residual_adaptive_colour_transform_enabled_flag
             {
                 get => (uint)((_bitfield0 >> 26) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 26)) | ((((uint)value) & 0x1u) << 26);
             }
-             // TODO: Accessor property for pps_slice_act_qp_offsets_present_flag, size: 1, offset: 27
             public uint pps_slice_act_qp_offsets_present_flag
             {
                 get => (uint)((_bitfield0 >> 27) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 27)) | ((((uint)value) & 0x1u) << 27);
             }
-             // TODO: Accessor property for pps_palette_predictor_initializers_present_flag, size: 1, offset: 28
             public uint pps_palette_predictor_initializers_present_flag
             {
                 get => (uint)((_bitfield0 >> 28) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 28)) | ((((uint)value) & 0x1u) << 28);
             }
-             // TODO: Accessor property for monochrome_palette_flag, size: 1, offset: 29
             public uint monochrome_palette_flag
             {
                 get => (uint)((_bitfield0 >> 29) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 29)) | ((((uint)value) & 0x1u) << 29);
             }
-             // TODO: Accessor property for pps_range_extension_flag, size: 1, offset: 30
             public uint pps_range_extension_flag
             {
                 get => (uint)((_bitfield0 >> 30) & 0x1u);
@@ -3266,25 +2999,21 @@ namespace OpenTK.Graphics.Vulkan
         public unsafe struct StdVideoDecodeH265PictureInfoFlags
         {
             private uint _bitfield0;
-             // TODO: Accessor property for IrapPicFlag, size: 1, offset: 0
             public uint IrapPicFlag
             {
                 get => (uint)((_bitfield0 >> 0) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 0)) | ((((uint)value) & 0x1u) << 0);
             }
-             // TODO: Accessor property for IdrPicFlag, size: 1, offset: 1
             public uint IdrPicFlag
             {
                 get => (uint)((_bitfield0 >> 1) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 1)) | ((((uint)value) & 0x1u) << 1);
             }
-             // TODO: Accessor property for IsReference, size: 1, offset: 2
             public uint IsReference
             {
                 get => (uint)((_bitfield0 >> 2) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 2)) | ((((uint)value) & 0x1u) << 2);
             }
-             // TODO: Accessor property for short_term_ref_pic_set_sps_flag, size: 1, offset: 3
             public uint short_term_ref_pic_set_sps_flag
             {
                 get => (uint)((_bitfield0 >> 3) & 0x1u);
@@ -3310,13 +3039,11 @@ namespace OpenTK.Graphics.Vulkan
         public unsafe struct StdVideoDecodeH265ReferenceInfoFlags
         {
             private uint _bitfield0;
-             // TODO: Accessor property for used_for_long_term_reference, size: 1, offset: 0
             public uint used_for_long_term_reference
             {
                 get => (uint)((_bitfield0 >> 0) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 0)) | ((((uint)value) & 0x1u) << 0);
             }
-             // TODO: Accessor property for unused_for_reference, size: 1, offset: 1
             public uint unused_for_reference
             {
                 get => (uint)((_bitfield0 >> 1) & 0x1u);
@@ -3416,79 +3143,66 @@ namespace OpenTK.Graphics.Vulkan
         public unsafe struct StdVideoEncodeH265SliceSegmentHeaderFlags
         {
             private uint _bitfield0;
-             // TODO: Accessor property for first_slice_segment_in_pic_flag, size: 1, offset: 0
             public uint first_slice_segment_in_pic_flag
             {
                 get => (uint)((_bitfield0 >> 0) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 0)) | ((((uint)value) & 0x1u) << 0);
             }
-             // TODO: Accessor property for dependent_slice_segment_flag, size: 1, offset: 1
             public uint dependent_slice_segment_flag
             {
                 get => (uint)((_bitfield0 >> 1) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 1)) | ((((uint)value) & 0x1u) << 1);
             }
-             // TODO: Accessor property for slice_sao_luma_flag, size: 1, offset: 2
             public uint slice_sao_luma_flag
             {
                 get => (uint)((_bitfield0 >> 2) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 2)) | ((((uint)value) & 0x1u) << 2);
             }
-             // TODO: Accessor property for slice_sao_chroma_flag, size: 1, offset: 3
             public uint slice_sao_chroma_flag
             {
                 get => (uint)((_bitfield0 >> 3) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 3)) | ((((uint)value) & 0x1u) << 3);
             }
-             // TODO: Accessor property for num_ref_idx_active_override_flag, size: 1, offset: 4
             public uint num_ref_idx_active_override_flag
             {
                 get => (uint)((_bitfield0 >> 4) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 4)) | ((((uint)value) & 0x1u) << 4);
             }
-             // TODO: Accessor property for mvd_l1_zero_flag, size: 1, offset: 5
             public uint mvd_l1_zero_flag
             {
                 get => (uint)((_bitfield0 >> 5) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 5)) | ((((uint)value) & 0x1u) << 5);
             }
-             // TODO: Accessor property for cabac_init_flag, size: 1, offset: 6
             public uint cabac_init_flag
             {
                 get => (uint)((_bitfield0 >> 6) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 6)) | ((((uint)value) & 0x1u) << 6);
             }
-             // TODO: Accessor property for cu_chroma_qp_offset_enabled_flag, size: 1, offset: 7
             public uint cu_chroma_qp_offset_enabled_flag
             {
                 get => (uint)((_bitfield0 >> 7) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 7)) | ((((uint)value) & 0x1u) << 7);
             }
-             // TODO: Accessor property for deblocking_filter_override_flag, size: 1, offset: 8
             public uint deblocking_filter_override_flag
             {
                 get => (uint)((_bitfield0 >> 8) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 8)) | ((((uint)value) & 0x1u) << 8);
             }
-             // TODO: Accessor property for slice_deblocking_filter_disabled_flag, size: 1, offset: 9
             public uint slice_deblocking_filter_disabled_flag
             {
                 get => (uint)((_bitfield0 >> 9) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 9)) | ((((uint)value) & 0x1u) << 9);
             }
-             // TODO: Accessor property for collocated_from_l0_flag, size: 1, offset: 10
             public uint collocated_from_l0_flag
             {
                 get => (uint)((_bitfield0 >> 10) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 10)) | ((((uint)value) & 0x1u) << 10);
             }
-             // TODO: Accessor property for slice_loop_filter_across_slices_enabled_flag, size: 1, offset: 11
             public uint slice_loop_filter_across_slices_enabled_flag
             {
                 get => (uint)((_bitfield0 >> 11) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 11)) | ((((uint)value) & 0x1u) << 11);
             }
-             // TODO: Accessor property for reserved, size: 20, offset: 12
             public uint reserved
             {
                 get => (uint)((_bitfield0 >> 12) & 0xFFFFFu);
@@ -3536,19 +3250,16 @@ namespace OpenTK.Graphics.Vulkan
         public unsafe struct StdVideoEncodeH265ReferenceListsInfoFlags
         {
             private uint _bitfield0;
-             // TODO: Accessor property for ref_pic_list_modification_flag_l0, size: 1, offset: 0
             public uint ref_pic_list_modification_flag_l0
             {
                 get => (uint)((_bitfield0 >> 0) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 0)) | ((((uint)value) & 0x1u) << 0);
             }
-             // TODO: Accessor property for ref_pic_list_modification_flag_l1, size: 1, offset: 1
             public uint ref_pic_list_modification_flag_l1
             {
                 get => (uint)((_bitfield0 >> 1) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 1)) | ((((uint)value) & 0x1u) << 1);
             }
-             // TODO: Accessor property for reserved, size: 30, offset: 2
             public uint reserved
             {
                 get => (uint)((_bitfield0 >> 2) & 0x3FFFFFFFu);
@@ -3570,61 +3281,51 @@ namespace OpenTK.Graphics.Vulkan
         public unsafe struct StdVideoEncodeH265PictureInfoFlags
         {
             private uint _bitfield0;
-             // TODO: Accessor property for is_reference, size: 1, offset: 0
             public uint is_reference
             {
                 get => (uint)((_bitfield0 >> 0) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 0)) | ((((uint)value) & 0x1u) << 0);
             }
-             // TODO: Accessor property for IrapPicFlag, size: 1, offset: 1
             public uint IrapPicFlag
             {
                 get => (uint)((_bitfield0 >> 1) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 1)) | ((((uint)value) & 0x1u) << 1);
             }
-             // TODO: Accessor property for used_for_long_term_reference, size: 1, offset: 2
             public uint used_for_long_term_reference
             {
                 get => (uint)((_bitfield0 >> 2) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 2)) | ((((uint)value) & 0x1u) << 2);
             }
-             // TODO: Accessor property for discardable_flag, size: 1, offset: 3
             public uint discardable_flag
             {
                 get => (uint)((_bitfield0 >> 3) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 3)) | ((((uint)value) & 0x1u) << 3);
             }
-             // TODO: Accessor property for cross_layer_bla_flag, size: 1, offset: 4
             public uint cross_layer_bla_flag
             {
                 get => (uint)((_bitfield0 >> 4) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 4)) | ((((uint)value) & 0x1u) << 4);
             }
-             // TODO: Accessor property for pic_output_flag, size: 1, offset: 5
             public uint pic_output_flag
             {
                 get => (uint)((_bitfield0 >> 5) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 5)) | ((((uint)value) & 0x1u) << 5);
             }
-             // TODO: Accessor property for no_output_of_prior_pics_flag, size: 1, offset: 6
             public uint no_output_of_prior_pics_flag
             {
                 get => (uint)((_bitfield0 >> 6) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 6)) | ((((uint)value) & 0x1u) << 6);
             }
-             // TODO: Accessor property for short_term_ref_pic_set_sps_flag, size: 1, offset: 7
             public uint short_term_ref_pic_set_sps_flag
             {
                 get => (uint)((_bitfield0 >> 7) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 7)) | ((((uint)value) & 0x1u) << 7);
             }
-             // TODO: Accessor property for slice_temporal_mvp_enabled_flag, size: 1, offset: 8
             public uint slice_temporal_mvp_enabled_flag
             {
                 get => (uint)((_bitfield0 >> 8) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 8)) | ((((uint)value) & 0x1u) << 8);
             }
-             // TODO: Accessor property for reserved, size: 23, offset: 9
             public uint reserved
             {
                 get => (uint)((_bitfield0 >> 9) & 0x7FFFFFu);
@@ -3662,19 +3363,16 @@ namespace OpenTK.Graphics.Vulkan
         public unsafe struct StdVideoEncodeH265ReferenceInfoFlags
         {
             private uint _bitfield0;
-             // TODO: Accessor property for used_for_long_term_reference, size: 1, offset: 0
             public uint used_for_long_term_reference
             {
                 get => (uint)((_bitfield0 >> 0) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 0)) | ((((uint)value) & 0x1u) << 0);
             }
-             // TODO: Accessor property for unused_for_reference, size: 1, offset: 1
             public uint unused_for_reference
             {
                 get => (uint)((_bitfield0 >> 1) & 0x1u);
                 set => _bitfield0 = (_bitfield0 & ~(0x1u << 1)) | ((((uint)value) & 0x1u) << 1);
             }
-             // TODO: Accessor property for reserved, size: 30, offset: 2
             public uint reserved
             {
                 get => (uint)((_bitfield0 >> 2) & 0x3FFFFFFFu);

@@ -21,6 +21,7 @@ namespace VulkanTestProject
         static VkInstance VulkanInstance;
         static VkPhysicalDevice PhysicalDevice;
         static VkDevice Device;
+        static DeviceDispatchTable DeviceFunctions;
         static VkSurfaceKHR Surface;
 
         static VkQueue GraphicsQueue;
@@ -133,8 +134,8 @@ namespace VulkanTestProject
                 validationLayers = [];
             }
 
-            byte** extensionsPtr = MarshalTk.MarshalStringArrayToAnsiStringArrayPtr(CollectionsMarshal.AsSpan(extensions), out uint extensionsCount);
-            byte** validationLayersPtr = MarshalTk.MarshalStringArrayToAnsiStringArrayPtr(validationLayers, out uint validationLayerCount);
+            byte** extensionsPtr = (byte**)MarshalTk.StringArrayToCoTaskMemAnsi(CollectionsMarshal.AsSpan(extensions));
+            byte** validationLayersPtr = (byte**)MarshalTk.StringArrayToCoTaskMemAnsi(validationLayers);
 
             VkInstanceCreateInfo instanceCreateInfo;
             instanceCreateInfo.sType = VkStructureType.StructureTypeInstanceCreateInfo;
@@ -145,9 +146,9 @@ namespace VulkanTestProject
                 instanceCreateInfo.flags = VkInstanceCreateFlagBits.InstanceCreateEnumeratePortabilityBitKhr;
             }
             instanceCreateInfo.pApplicationInfo = &applicationInfo;
-            instanceCreateInfo.enabledLayerCount = validationLayerCount;
+            instanceCreateInfo.enabledLayerCount = (uint)validationLayers.Length;
             instanceCreateInfo.ppEnabledLayerNames = validationLayersPtr;
-            instanceCreateInfo.enabledExtensionCount = extensionsCount;
+            instanceCreateInfo.enabledExtensionCount = (uint)extensions.Count;
             instanceCreateInfo.ppEnabledExtensionNames = extensionsPtr;
 
             VkInstance instance;
@@ -158,8 +159,8 @@ namespace VulkanTestProject
             }
             VulkanInstance = instance;
 
-            MarshalTk.FreeAnsiStringArrayPtr(extensionsPtr, extensionsCount);
-            MarshalTk.FreeAnsiStringArrayPtr(validationLayersPtr, validationLayerCount);
+            MarshalTk.FreeStringArrayCoTaskMem((IntPtr)extensionsPtr, extensions.Count);
+            MarshalTk.FreeStringArrayCoTaskMem((IntPtr)validationLayersPtr, validationLayers.Length);
 
             VKLoader.SetInstance(instance);
 
@@ -322,7 +323,7 @@ namespace VulkanTestProject
             {
                 enabledDeviceExtensions.Add("VK_KHR_portability_subset");
             }
-            byte** enabledExtensionsPtr = MarshalTk.MarshalStringArrayToAnsiStringArrayPtr(CollectionsMarshal.AsSpan(enabledDeviceExtensions), out uint enabledDeviceExtensionsCount);
+            byte** enabledExtensionsPtr = (byte**)MarshalTk.StringArrayToCoTaskMemAnsi(CollectionsMarshal.AsSpan(enabledDeviceExtensions));
 
             VkDeviceCreateInfo deviceCreateInfo;
             deviceCreateInfo.sType = VkStructureType.StructureTypeDeviceCreateInfo;
@@ -330,9 +331,9 @@ namespace VulkanTestProject
             deviceCreateInfo.flags = 0;
             deviceCreateInfo.queueCreateInfoCount = graphicsQueueFamily == presentationQueueFamily ? 1u : 2u;
             deviceCreateInfo.pQueueCreateInfos = queueCreateInfos;
-            deviceCreateInfo.enabledLayerCount = validationLayerCount;
+            deviceCreateInfo.enabledLayerCount = (uint)validationLayers.Length;
             deviceCreateInfo.ppEnabledLayerNames = validationLayersPtr;
-            deviceCreateInfo.enabledExtensionCount = enabledDeviceExtensionsCount;
+            deviceCreateInfo.enabledExtensionCount = (uint)enabledDeviceExtensions.Count;
             deviceCreateInfo.ppEnabledExtensionNames = enabledExtensionsPtr;
             deviceCreateInfo.pEnabledFeatures = &deviceFeatures;
 
@@ -344,22 +345,23 @@ namespace VulkanTestProject
                 throw new Exception($"Was not able to create logical device: {result}");
             }
 
+            DeviceFunctions = new DeviceDispatchTable(device);
 
             VkQueue graphicsQueue;
-            Vk.GetDeviceQueue(Device, (uint)graphicsQueueFamily, 0, &graphicsQueue);
+            DeviceFunctions.GetDeviceQueue(Device, (uint)graphicsQueueFamily, 0, &graphicsQueue);
             GraphicsQueue = graphicsQueue;
 
             VkQueue presentQueue;
-            Vk.GetDeviceQueue(Device, (uint)presentationQueueFamily, 0, &presentQueue);
+            DeviceFunctions.GetDeviceQueue(Device, (uint)presentationQueueFamily, 0, &presentQueue);
             PresentQueue = presentQueue;
 
             CreateSwapchain();
 
             uint swapchainImageCount;
-            result = Vk.GetSwapchainImagesKHR(Device, Swapchain, &swapchainImageCount, null);
+            result = DeviceFunctions.GetSwapchainImagesKHR(Device, Swapchain, &swapchainImageCount, null);
 
             Span<VkImage> swapchainImages = new VkImage[swapchainImageCount];
-            result = Vk.GetSwapchainImagesKHR(Device, Swapchain, &swapchainImageCount, (VkImage*)Unsafe.AsPointer(ref MemoryMarshal.GetReference(swapchainImages)));
+            result = DeviceFunctions.GetSwapchainImagesKHR(Device, Swapchain, &swapchainImageCount, (VkImage*)Unsafe.AsPointer(ref MemoryMarshal.GetReference(swapchainImages)));
 
             VkAttachmentReference colorAttachmentRef;
             colorAttachmentRef.attachment = 0;
@@ -400,7 +402,7 @@ namespace VulkanTestProject
             renderPassCreateInfo.pDependencies = null;
 
             VkRenderPass renderPass;
-            result = Vk.CreateRenderPass(Device, &renderPassCreateInfo, null, &renderPass);
+            result = DeviceFunctions.CreateRenderPass(Device, &renderPassCreateInfo, null, &renderPass);
             RenderPass = renderPass;
 
             // Create the graphics pipeline
@@ -413,7 +415,7 @@ namespace VulkanTestProject
                         VkShaderModuleCreateInfo shaderModuleCreateInfo = new VkShaderModuleCreateInfo();
                         shaderModuleCreateInfo.codeSize = (uint)vert.Length;
                         shaderModuleCreateInfo.pCode = (uint*)vertPtr;
-                        result = Vk.CreateShaderModule(Device, &shaderModuleCreateInfo, null, &vertexModule);
+                        result = DeviceFunctions.CreateShaderModule(Device, &shaderModuleCreateInfo, null, &vertexModule);
                     }
                 }
 
@@ -425,7 +427,7 @@ namespace VulkanTestProject
                         VkShaderModuleCreateInfo shaderModuleCreateInfo = new VkShaderModuleCreateInfo();
                         shaderModuleCreateInfo.codeSize = (uint)frag.Length;
                         shaderModuleCreateInfo.pCode = (uint*)vertPtr;
-                        result = Vk.CreateShaderModule(Device, &shaderModuleCreateInfo, null, &fragmentModule);
+                        result = DeviceFunctions.CreateShaderModule(Device, &shaderModuleCreateInfo, null, &fragmentModule);
                     }
                 }
 
@@ -527,7 +529,7 @@ namespace VulkanTestProject
                 pipelineLayoutInfo.pPushConstantRanges = null;
 
                 VkPipelineLayout layout;
-                result = Vk.CreatePipelineLayout(Device, &pipelineLayoutInfo, null, &layout);
+                result = DeviceFunctions.CreatePipelineLayout(Device, &pipelineLayoutInfo, null, &layout);
                 if (result != VkResult.Success)
                 {
                     throw new Exception($"Could not create pipeline layout: {result}");
@@ -550,7 +552,7 @@ namespace VulkanTestProject
                 pipelineInfo.subpass = 0;
 
                 VkPipeline pipeline;
-                result = Vk.CreateGraphicsPipelines(Device, VkPipelineCache.Zero, 1, &pipelineInfo, null, &pipeline);
+                result = DeviceFunctions.CreateGraphicsPipelines(Device, VkPipelineCache.Zero, 1, &pipelineInfo, null, &pipeline);
                 if (result != VkResult.Success)
                 {
                     throw new Exception($"Failed to create graphics pipeline: {result}");
@@ -558,8 +560,8 @@ namespace VulkanTestProject
                 Pipeline = pipeline;
 
                 NativeMemory.Free(name);
-                Vk.DestroyShaderModule(Device, vertexModule, null);
-                Vk.DestroyShaderModule(Device, fragmentModule, null);
+                DeviceFunctions.DestroyShaderModule(Device, vertexModule, null);
+                DeviceFunctions.DestroyShaderModule(Device, fragmentModule, null);
             }
 
             SwapchainImageViews = new VkImageView[swapchainImages.Length];
@@ -584,7 +586,7 @@ namespace VulkanTestProject
                 imgViewCreate.subresourceRange.layerCount = 1;
 
                 VkImageView imgView;
-                result = Vk.CreateImageView(Device, &imgViewCreate, null, &imgView);
+                result = DeviceFunctions.CreateImageView(Device, &imgViewCreate, null, &imgView);
                 SwapchainImageViews[i] = imgView;
 
                 VkFramebufferCreateInfo fbCreate;
@@ -599,7 +601,7 @@ namespace VulkanTestProject
                 fbCreate.layers = 1;
 
                 VkFramebuffer framebuffer;
-                result = Vk.CreateFramebuffer(Device, &fbCreate, null, &framebuffer);
+                result = DeviceFunctions.CreateFramebuffer(Device, &fbCreate, null, &framebuffer);
                 SwapchainFramebuffers[i] = framebuffer;
             }
 
@@ -610,7 +612,7 @@ namespace VulkanTestProject
             commandPoolCreate.queueFamilyIndex = (uint)graphicsQueueFamily;
 
             VkCommandPool commandPool;
-            result = Vk.CreateCommandPool(Device, &commandPoolCreate, null, &commandPool);
+            result = DeviceFunctions.CreateCommandPool(Device, &commandPoolCreate, null, &commandPool);
             CommandPool = commandPool;
 
             VkCommandBufferAllocateInfo cmdBufferAlloc;
@@ -621,7 +623,7 @@ namespace VulkanTestProject
             cmdBufferAlloc.commandBufferCount = 1;
 
             VkCommandBuffer commandBuffer;
-            result = Vk.AllocateCommandBuffers(Device, &cmdBufferAlloc, &commandBuffer);
+            result = DeviceFunctions.AllocateCommandBuffers(Device, &cmdBufferAlloc, &commandBuffer);
             CommandBuffer = commandBuffer;
 
             {
@@ -631,11 +633,11 @@ namespace VulkanTestProject
                 semaphoreCreate.flags = 0;
 
                 VkSemaphore imageAvail;
-                result = Vk.CreateSemaphore(Device, &semaphoreCreate, null, &imageAvail);
+                result = DeviceFunctions.CreateSemaphore(Device, &semaphoreCreate, null, &imageAvail);
                 ImageAvailableSemaphore = imageAvail;
 
                 VkSemaphore renderFinished;
-                result = Vk.CreateSemaphore(Device, &semaphoreCreate, null, &renderFinished);
+                result = DeviceFunctions.CreateSemaphore(Device, &semaphoreCreate, null, &renderFinished);
                 RenderFinishedSemaphore = renderFinished;
 
                 VkFenceCreateInfo fenceCreate;
@@ -644,7 +646,7 @@ namespace VulkanTestProject
                 fenceCreate.flags = VkFenceCreateFlagBits.FenceCreateSignaledBit;
 
                 VkFence inFlight;
-                result = Vk.CreateFence(Device, &fenceCreate, null, &inFlight);
+                result = DeviceFunctions.CreateFence(Device, &fenceCreate, null, &inFlight);
                 InFlightFence = inFlight;
             }
 
@@ -703,19 +705,19 @@ namespace VulkanTestProject
                 OnUpdateFrame(deltaTime);
             }
 
-            Vk.DeviceWaitIdle(Device);
+            DeviceFunctions.DeviceWaitIdle(Device);
 
             CleanupSwapchain();
 
-            Vk.DestroyCommandPool(Device, CommandPool, null);
+            DeviceFunctions.DestroyCommandPool(Device, CommandPool, null);
 
-            Vk.DestroyPipeline(Device, Pipeline, null);
-            Vk.DestroyPipelineLayout(Device, PipelineLayout, null);
-            Vk.DestroyRenderPass(Device, RenderPass, null);
+            DeviceFunctions.DestroyPipeline(Device, Pipeline, null);
+            DeviceFunctions.DestroyPipelineLayout(Device, PipelineLayout, null);
+            DeviceFunctions.DestroyRenderPass(Device, RenderPass, null);
 
-            Vk.DestroySemaphore(Device, ImageAvailableSemaphore, null);
-            Vk.DestroySemaphore(Device, RenderFinishedSemaphore, null);
-            Vk.DestroyFence(Device, InFlightFence, null);
+            DeviceFunctions.DestroySemaphore(Device, ImageAvailableSemaphore, null);
+            DeviceFunctions.DestroySemaphore(Device, RenderFinishedSemaphore, null);
+            DeviceFunctions.DestroyFence(Device, InFlightFence, null);
 
             Vk.DestroySurfaceKHR(VulkanInstance, Surface, null);
             Vk.DestroyDevice(Device, null);
@@ -746,11 +748,11 @@ namespace VulkanTestProject
 
             fixed (VkFence* inFlightFencePtr = &InFlightFence)
             {
-                result = Vk.WaitForFences(Device, 1, inFlightFencePtr, 1, ulong.MaxValue);
+                result = DeviceFunctions.WaitForFences(Device, 1, inFlightFencePtr, 1, ulong.MaxValue);
             }
 
             uint imageIndex;
-            result = Vk.AcquireNextImageKHR(Device, Swapchain, ulong.MaxValue, ImageAvailableSemaphore, VkFence.Zero, &imageIndex);
+            result = DeviceFunctions.AcquireNextImageKHR(Device, Swapchain, ulong.MaxValue, ImageAvailableSemaphore, VkFence.Zero, &imageIndex);
             if (result == VkResult.ErrorOutOfDateKhr )
             {
                 RecreateSwapchain();
@@ -760,10 +762,10 @@ namespace VulkanTestProject
             // Only do this if we are submitting work!
             fixed (VkFence* inFlightFencePtr = &InFlightFence)
             {
-                result = Vk.ResetFences(Device, 1, inFlightFencePtr);
+                result = DeviceFunctions.ResetFences(Device, 1, inFlightFencePtr);
             }
 
-            result = Vk.ResetCommandBuffer(CommandBuffer, 0);
+            result = DeviceFunctions.ResetCommandBuffer(CommandBuffer, 0);
             RecordCommandBuffer(CommandBuffer, RenderPass, SwapchainFramebuffers[imageIndex], SwapchainExtents, Time);
 
             fixed (VkSemaphore* imageAvailableSemaphorePtr = &ImageAvailableSemaphore)
@@ -783,7 +785,7 @@ namespace VulkanTestProject
                 submitInfo.signalSemaphoreCount = 1;
                 submitInfo.pSignalSemaphores = renderFinishedSemaphorePtr;
 
-                result = Vk.QueueSubmit(GraphicsQueue, 1, &submitInfo, InFlightFence);
+                result = DeviceFunctions.QueueSubmit(GraphicsQueue, 1, &submitInfo, InFlightFence);
 
                 VkPresentInfoKHR presentInfo;
                 presentInfo.sType = VkStructureType.StructureTypePresentInfoKhr;
@@ -795,7 +797,7 @@ namespace VulkanTestProject
                 presentInfo.pImageIndices = &imageIndex;
                 presentInfo.pResults = null;
 
-                result = Vk.QueuePresentKHR(PresentQueue, &presentInfo);
+                result = DeviceFunctions.QueuePresentKHR(PresentQueue, &presentInfo);
                 if (result == VkResult.ErrorOutOfDateKhr || result == VkResult.SuboptimalKhr || FramebufferHasNewSize)
                 {
                     FramebufferHasNewSize = false;
@@ -812,7 +814,7 @@ namespace VulkanTestProject
             beginInfo.flags = 0;
             beginInfo.pInheritanceInfo = null;
 
-            VkResult result = Vk.BeginCommandBuffer(commandBuffer, &beginInfo);
+            VkResult result = DeviceFunctions.BeginCommandBuffer(commandBuffer, &beginInfo);
 
             VkRenderPassBeginInfo renderPassInfo;
             renderPassInfo.sType = VkStructureType.StructureTypeRenderPassBeginInfo;
@@ -833,21 +835,21 @@ namespace VulkanTestProject
             clearValue.color.float32[3] = color.W;
             renderPassInfo.pClearValues = &clearValue;
 
-            Vk.CmdBeginRenderPass(commandBuffer, &renderPassInfo, VkSubpassContents.SubpassContentsInline);
+            DeviceFunctions.CmdBeginRenderPass(commandBuffer, &renderPassInfo, VkSubpassContents.SubpassContentsInline);
 
-            Vk.CmdBindPipeline(commandBuffer, VkPipelineBindPoint.PipelineBindPointGraphics, Pipeline);
+            DeviceFunctions.CmdBindPipeline(commandBuffer, VkPipelineBindPoint.PipelineBindPointGraphics, Pipeline);
 
             VkViewport viewport = new VkViewport(0.0f, 0.0f, SwapchainExtents.width, SwapchainExtents.height, 0.0f, 1.0f);
-            Vk.CmdSetViewport(commandBuffer, 0, 1, &viewport);
+            DeviceFunctions.CmdSetViewport(commandBuffer, 0, 1, &viewport);
 
             VkRect2D scissor = new VkRect2D(new VkOffset2D(0, 0), SwapchainExtents);
-            Vk.CmdSetScissor(commandBuffer, 0, 1, &scissor);
+            DeviceFunctions.CmdSetScissor(commandBuffer, 0, 1, &scissor);
 
-            Vk.CmdDraw(commandBuffer, 3, 1, 0, 0);
+            DeviceFunctions.CmdDraw(commandBuffer, 3, 1, 0, 0);
 
-            Vk.CmdEndRenderPass(commandBuffer);
+            DeviceFunctions.CmdEndRenderPass(commandBuffer);
 
-            result = Vk.EndCommandBuffer(commandBuffer);
+            result = DeviceFunctions.EndCommandBuffer(commandBuffer);
         }
 
         static unsafe void CreateSwapchain()
@@ -905,7 +907,7 @@ namespace VulkanTestProject
             swapchainCreate.oldSwapchain = VkSwapchainKHR.Zero;
 
             VkSwapchainKHR swapchain;
-            result = Vk.CreateSwapchainKHR(Device, &swapchainCreate, null, &swapchain);
+            result = DeviceFunctions.CreateSwapchainKHR(Device, &swapchainCreate, null, &swapchain);
             Swapchain = swapchain;
 
             SwapchainExtents = swapchainCreate.imageExtent;
@@ -915,19 +917,19 @@ namespace VulkanTestProject
 
         static unsafe void CleanupSwapchain()
         {
-            Vk.DeviceWaitIdle(Device);
+            DeviceFunctions.DeviceWaitIdle(Device);
 
             for (int i = 0; i < SwapchainFramebuffers.Length; i++)
             {
-                Vk.DestroyFramebuffer(Device, SwapchainFramebuffers[i], null);
+                DeviceFunctions.DestroyFramebuffer(Device, SwapchainFramebuffers[i], null);
             }
 
             for (int i = 0; i < SwapchainImageViews.Length; i++)
             {
-                Vk.DestroyImageView(Device, SwapchainImageViews[i], null);
+                DeviceFunctions.DestroyImageView(Device, SwapchainImageViews[i], null);
             }
 
-            Vk.DestroySwapchainKHR(Device, Swapchain, null);
+            DeviceFunctions.DestroySwapchainKHR(Device, Swapchain, null);
         }
 
         static unsafe void RecreateSwapchain()
@@ -939,10 +941,10 @@ namespace VulkanTestProject
             VkResult result;
 
             uint swapchainImageCount;
-            result = Vk.GetSwapchainImagesKHR(Device, Swapchain, &swapchainImageCount, null);
+            result = DeviceFunctions.GetSwapchainImagesKHR(Device, Swapchain, &swapchainImageCount, null);
 
             Span<VkImage> swapchainImages = new VkImage[swapchainImageCount];
-            result = Vk.GetSwapchainImagesKHR(Device, Swapchain, &swapchainImageCount, (VkImage*)Unsafe.AsPointer(ref MemoryMarshal.GetReference(swapchainImages)));
+            result = DeviceFunctions.GetSwapchainImagesKHR(Device, Swapchain, &swapchainImageCount, (VkImage*)Unsafe.AsPointer(ref MemoryMarshal.GetReference(swapchainImages)));
 
 
             SwapchainImageViews = new VkImageView[swapchainImages.Length];
@@ -967,7 +969,7 @@ namespace VulkanTestProject
                 imgViewCreate.subresourceRange.layerCount = 1;
 
                 VkImageView imgView;
-                result = Vk.CreateImageView(Device, &imgViewCreate, null, &imgView);
+                result = DeviceFunctions.CreateImageView(Device, &imgViewCreate, null, &imgView);
                 SwapchainImageViews[i] = imgView;
 
                 VkFramebufferCreateInfo fbCreate;
@@ -982,7 +984,7 @@ namespace VulkanTestProject
                 fbCreate.layers = 1;
 
                 VkFramebuffer framebuffer;
-                result = Vk.CreateFramebuffer(Device, &fbCreate, null, &framebuffer);
+                result = DeviceFunctions.CreateFramebuffer(Device, &fbCreate, null, &framebuffer);
                 SwapchainFramebuffers[i] = framebuffer;
             }
         }
