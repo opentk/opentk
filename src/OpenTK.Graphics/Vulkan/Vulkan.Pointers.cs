@@ -17,6 +17,8 @@ using System.Runtime.InteropServices;
 namespace OpenTK.Graphics.Vulkan
 {
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+#pragma warning disable IDE1006 // Naming Styles
+#pragma warning disable CA2211 // Non-constant fields should not be visible
     public static unsafe partial class VkPointers
     {
         public static delegate* unmanaged<VkPhysicalDevice, int, VkDisplayKHR, VkResult> _vkAcquireDrmDisplayEXT_fnptr = &vkAcquireDrmDisplayEXT_Lazy;
@@ -5249,5 +5251,7 @@ namespace OpenTK.Graphics.Vulkan
             return _vkWriteMicromapsPropertiesEXT_fnptr(device, micromapCount, pMicromaps, queryType, dataSize, pData, stride);
         }
     }
+#pragma warning restore CA2211 // Non-constant fields should not be visible
+#pragma warning restore IDE1006 // Naming Styles
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
 }
