@@ -43,7 +43,7 @@ namespace OpenTK.Mathematics
                                 ISubtractionOperators<Matrix2x3, Matrix2x3, Matrix2x3>,
                                 IEqualityOperators<Matrix2x3, Matrix2x3, bool>,
                                 IAdditiveIdentity<Matrix2x3, Matrix2x3>,
-                                IMultiplicativeIdentity<Matrix2x3, Matrix2x3>
+                                IMultiplicativeIdentity<Matrix2x3, Matrix3>
     {
         /// <summary>
         /// Top row of the matrix.
@@ -215,7 +215,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets the additive identity of the matrix, which is the identity matrix.
         /// </summary>
-        public static Matrix2x3 MultiplicativeIdentity => Identity;
+        public static Matrix3 MultiplicativeIdentity => Matrix3.Identity;
 
         /// <summary>
         /// Gets or sets the value at a specified row and column.
