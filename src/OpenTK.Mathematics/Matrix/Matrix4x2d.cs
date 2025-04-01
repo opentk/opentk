@@ -71,11 +71,6 @@ namespace OpenTK.Mathematics
         public static readonly Matrix4x2d Zero = new Matrix4x2d(Vector2d.Zero, Vector2d.Zero, Vector2d.Zero, Vector2d.Zero);
 
         /// <summary>
-        /// The identity matrix.
-        /// </summary>
-        public static readonly Matrix4x2d Identity = new Matrix4x2d((1, 0), (0, 1), (0, 0), (0, 0));
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="Matrix4x2d"/> struct.
         /// </summary>
         /// <param name="row0">Top row of the matrix.</param>

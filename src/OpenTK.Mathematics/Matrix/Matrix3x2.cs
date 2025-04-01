@@ -66,11 +66,6 @@ namespace OpenTK.Mathematics
         public static readonly Matrix3x2 Zero = new Matrix3x2(Vector2.Zero, Vector2.Zero, Vector2.Zero);
 
         /// <summary>
-        /// The identity matrix.
-        /// </summary>
-        public static readonly Matrix3x2 Identity = new Matrix3x2((1, 0), (0, 1), (0, 0));
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="Matrix3x2"/> struct.
         /// </summary>
         /// <param name="row0">Top row of the matrix.</param>
