@@ -43,7 +43,7 @@ namespace OpenTK.Mathematics
                                 ISubtractionOperators<Matrix4x2, Matrix4x2, Matrix4x2>,
                                 IEqualityOperators<Matrix4x2, Matrix4x2, bool>,
                                 IAdditiveIdentity<Matrix4x2, Matrix4x2>,
-                                IMultiplicativeIdentity<Matrix4x2, Matrix2>
+                                IMultiplicativeIdentity<Matrix4x2, Matrix4>
     {
         /// <summary>
         /// Top row of the matrix.
@@ -237,9 +237,9 @@ namespace OpenTK.Mathematics
         public static Matrix4x2 AdditiveIdentity => Zero;
 
         /// <summary>
-        /// Gets the additive identity of the matrix, which is the identity matrix.
+        /// Gets the multiplicative identity of the matrix, which is the identity matrix.
         /// </summary>
-        public static Matrix2 MultiplicativeIdentity => Matrix2.Identity;
+        public static Matrix4 MultiplicativeIdentity => Matrix4.Identity;
 
         /// <summary>
         /// Gets or sets the value at a specified row and column.
