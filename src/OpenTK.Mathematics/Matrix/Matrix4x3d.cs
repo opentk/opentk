@@ -41,8 +41,7 @@ namespace OpenTK.Mathematics
                                 IAdditionOperators<Matrix4x3d, Matrix4x3d, Matrix4x3d>,
                                 ISubtractionOperators<Matrix4x3d, Matrix4x3d, Matrix4x3d>,
                                 IEqualityOperators<Matrix4x3d, Matrix4x3d, bool>,
-                                IAdditiveIdentity<Matrix4x3d, Matrix4x3d>,
-                                IMultiplicativeIdentity<Matrix4x3d, Matrix4d>
+                                IAdditiveIdentity<Matrix4x3d, Matrix4x3d>
     {
         /// <summary>
         /// Top row of the matrix.
@@ -295,11 +294,6 @@ namespace OpenTK.Mathematics
         /// Gets the additive identity of the matrix, which is the zero matrix.
         /// </summary>
         public static Matrix4x3d AdditiveIdentity => Zero;
-
-        /// <summary>
-        /// Gets the multiplicative identity of the matrix, which is the identity matrix.
-        /// </summary>
-        public static Matrix4d MultiplicativeIdentity => Matrix4d.Identity;
 
         /// <summary>
         /// Gets or sets the value at a specified row and column.
