@@ -18,6 +18,7 @@ module private Generators =
     let singleArb = Arb.Default.Float32() |> Arb.toGen |> Gen.filter isValidFloat
     let single = singleArb |> Arb.fromGen
 
+    let doubleArb = Arb.Default.Float() |> Arb.toGen |> Gen.filter isValidDouble
     let double =
         Arb.Default.Float() |> Arb.toGen
         |> Gen.filter isValidDouble
@@ -30,11 +31,25 @@ module private Generators =
         |> Gen.filter (fun v -> not <| (Single.IsNaN v.Length || Single.IsInfinity v.Length ))
         |> Arb.fromGen
 
+    let vec2d =
+        doubleArb
+        |> Gen.two
+        |> Gen.map Vector2d
+        |> Gen.filter (fun v -> not <| (Double.IsNaN v.Length || Double.IsInfinity v.Length ))
+        |> Arb.fromGen
+
     let vec3 =
         singleArb
         |> Gen.three
         |> Gen.map Vector3
         |> Gen.filter (fun v -> not <| (Single.IsNaN v.Length || Single.IsInfinity v.Length ))
+        |> Arb.fromGen
+
+    let vec3d =
+        doubleArb
+        |> Gen.three
+        |> Gen.map Vector3d
+        |> Gen.filter (fun v -> not <| (Double.IsNaN v.Length || Double.IsInfinity v.Length))
         |> Arb.fromGen
 
     let vec4 =
@@ -44,6 +59,12 @@ module private Generators =
         |> Gen.filter (fun v -> not <| (Single.IsNaN v.Length || Single.IsInfinity v.Length ))
         |> Arb.fromGen
 
+    let vec4d =
+        doubleArb
+        |> Gen.four
+        |> Gen.map Vector4d
+        |> Gen.filter (fun v -> not <| (Double.IsNaN v.Length || Double.IsInfinity v.Length ))
+        |> Arb.fromGen
     let quat =
         singleArb
         |> Gen.four
@@ -57,6 +78,31 @@ module private Generators =
         |> Gen.map Matrix2
         |> Arb.fromGen
 
+    let mat2x3 =
+        vec3
+        |> Arb.toGen
+        |> Gen.two
+        |> Gen.map Matrix2x3
+        |> Arb.fromGen
+
+    let mat2x3d =
+        vec3d
+        |> Arb.toGen
+        |> Gen.two
+        |> Gen.map Matrix2x3d
+        |> Arb.fromGen
+    let mat2x4 =
+        vec4
+        |> Arb.toGen
+        |> Gen.two
+        |> Gen.map Matrix2x4
+        |> Arb.fromGen
+    let mat2x4d =
+        vec4d
+        |> Arb.toGen
+        |> Gen.two
+        |> Gen.map Matrix2x4d
+        |> Arb.fromGen
     let mat3 =
         vec3
         |> Arb.toGen
@@ -111,10 +157,15 @@ type OpenTKGen =
     static member Double() = double
     static member float() = double
     static member Vector2() = vec2
+    static member Vector2d() = vec2d
     static member Vector3() = vec3
     static member Vector4() = vec4
     static member Quaternion() = quat
     static member Matrix2() = mat2
+    static member Matrix2x3() = mat2x3
+    static member Matrix2x3d() = mat2x3d
+    static member Matrix2x4() = mat2x4
+    static member Matrix2x4d() = mat2x4d
     static member Matrix3() = mat3
     static member Matrix4() = mat4
     static member Box2() = box2

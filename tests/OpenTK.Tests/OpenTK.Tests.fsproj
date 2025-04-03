@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <Deterministic>true</Deterministic>
@@ -15,7 +15,7 @@
     <Compile Include="KeyboardStateTest.fs" />
     <Compile Include="MathHelperTests.fs" />
     <Compile Include="Matrix4Tests.fs" />
-    <Compile Include="Vector2Tests.fs" />
+    <Compile Include="Vector2Tests.fs" /><Compile Include="Vector2dTests.fs" />
     <Compile Include="Vector3Tests.fs" />
     <Compile Include="Vector4Tests.fs" />
     <Compile Include="QuaternionTests.fs" />

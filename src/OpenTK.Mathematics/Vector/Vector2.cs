@@ -45,6 +45,8 @@ namespace OpenTK.Mathematics
                             IMultiplyOperators<Vector2, float, Vector2>,
                             IMultiplyOperators<Vector2, Vector2, Vector2>,
                             IMultiplyOperators<Vector2, Matrix2, Vector2>,
+                            IMultiplyOperators<Vector2, Matrix2x3, Vector3>,
+                            IMultiplyOperators<Vector2, Matrix2x4, Vector4>,
                             IDivisionOperators<Vector2, float, Vector2>,
                             IDivisionOperators<Vector2, Vector2, Vector2>,
                             IEqualityOperators<Vector2, Vector2, bool>,
@@ -940,6 +942,63 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
+        /// Transform a 2-dimensional vector into a 3-dimensional vector using the given 2x3 Matrix.
+        /// </summary>
+        /// <param name="vec">The vector to transform.</param>
+        /// <param name="mat">The desired transformation.</param>
+        /// <returns>The transformed vector in 3 dimensions.</returns>
+        [Pure]
+        public static Vector3 TransformToThreeDimensions(Vector2 vec, Matrix2x3 mat)
+        {
+            TransformToThreeDimensions(in vec, in mat, out Vector3 result);
+            return result;
+        }
+
+        /// <summary>
+        /// Transform a 2-dimensional vector into a 3-dimensional vector using the given 2x3 Matrix.
+        /// </summary>
+        /// <param name="vec">The vector to transform.</param>
+        /// <param name="mat">The desired transformation.</param>
+        /// <param name="result">The transformed, 3-dimensional vector.</param>
+        public static void TransformToThreeDimensions(in Vector2 vec, in Matrix2x3 mat, out Vector3 result)
+        {
+            result = new Vector3(
+                (vec.X * mat.Row0.X) + (vec.Y * mat.Row1.X),
+                (vec.X * mat.Row0.Y) + (vec.Y * mat.Row1.Y),
+                (vec.X * mat.Row0.Z) + (vec.Y * mat.Row1.Z)
+            );
+        }
+
+        /// <summary>
+        /// Transform a 2-dimensional vector into a 3-dimensional vector using the given 2x3 Matrix.
+        /// </summary>
+        /// <param name="vec">The vector to transform.</param>
+        /// <param name="mat">The desired transformation.</param>
+        /// <returns>The transformed vector in 3 dimensions.</returns>
+        [Pure]
+        public static Vector4 TransformToFourDimensions(Vector2 vec, Matrix2x4 mat)
+        {
+            TransformToFourDimensions(in vec, in mat, out Vector4 result);
+            return result;
+        }
+
+        /// <summary>
+        /// Transform a Vector by the given Matrix.
+        /// </summary>
+        /// <param name="vec">The vector to transform.</param>
+        /// <param name="mat">The desired transformation.</param>
+        /// <param name="result">The transformed vector.</param>
+        public static void TransformToFourDimensions(in Vector2 vec, in Matrix2x4 mat, out Vector4 result)
+        {
+            result = new Vector4(
+                (vec.X * mat.Row0.X) + (vec.Y * mat.Row1.X),
+                (vec.X * mat.Row0.Y) + (vec.Y * mat.Row1.Y),
+                (vec.X * mat.Row0.Z) + (vec.Y * mat.Row1.Z),
+                (vec.X * mat.Row0.W) + (vec.Y * mat.Row1.W)
+            );
+        }
+
+        /// <summary>
         /// Transforms a vector by a quaternion rotation.
         /// </summary>
         /// <param name="vec">The vector to transform.</param>
@@ -1114,6 +1173,32 @@ namespace OpenTK.Mathematics
         public static Vector2 operator *(Vector2 vec, Matrix2 mat)
         {
             TransformRow(in vec, in mat, out Vector2 result);
+            return result;
+        }
+
+        /// <summary>
+        /// Transform a 2-dimensional vector into a 3-dimensional vector using the given 2x3 Matrix.
+        /// </summary>
+        /// <param name="vec">The vector to transform.</param>
+        /// <param name="mat">The desired transformation.</param>
+        /// <returns>The transformed vector.</returns>
+        [Pure]
+        public static Vector3 operator *(Vector2 vec, Matrix2x3 mat)
+        {
+            TransformToThreeDimensions(in vec, in mat, out Vector3 result);
+            return result;
+        }
+
+        /// <summary>
+        /// Transform a 2-dimensional vector into a 4-dimensional vector using the given 2x4 Matrix.
+        /// </summary>
+        /// <param name="vec">The vector to transform.</param>
+        /// <param name="mat">The desired transformation.</param>
+        /// <returns>The transformed vector.</returns>
+        [Pure]
+        public static Vector4 operator *(Vector2 vec, Matrix2x4 mat)
+        {
+            TransformToFourDimensions(in vec, in mat, out Vector4 result);
             return result;
         }
 
