@@ -921,7 +921,7 @@ namespace OpenTK.Mathematics
         /// <param name="mat">The desired transformation.</param>
         /// <returns>The transformed vector in 3 dimensions.</returns>
         [Pure]
-        public static Vector3d TransformTo3d(Vector2d vec, Matrix2x3d mat)
+        public static Vector3d TransformToThreeDimensions(Vector2d vec, Matrix2x3d mat)
         {
             TransformToThreeDimensions(in vec, in mat, out Vector3d result);
             return result;

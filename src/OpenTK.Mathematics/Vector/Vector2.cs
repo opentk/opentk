@@ -983,7 +983,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Transform a Vector by the given Matrix.
+        /// Transform a 2-dimensional vector into a 4-dimensional vector using the given 2x4 Matrix.
         /// </summary>
         /// <param name="vec">The vector to transform.</param>
         /// <param name="mat">The desired transformation.</param>

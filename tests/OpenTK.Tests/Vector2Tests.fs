@@ -270,8 +270,8 @@ module Vector2 =
         [<Property>]
         let ``Vector2-Matrix2x3 multiplication is consistent across overloads`` (a : Matrix2x3, b : Vector2) =
             let r1 = b * a;
-            let r2 = Vector2.TransformTo3d(b, a);
-            let r3 = Vector2.TransformTo3d(&b, &a);
+            let r2 = Vector2.TransformToThreeDimensions(b, a);
+            let r3 = Vector2.TransformToThreeDimensions(&b, &a);
 
             Assert.Equal(r1, r2)
             Assert.Equal(r2, r3)
@@ -292,8 +292,8 @@ module Vector2 =
         [<Property>]
         let ``Vector2-Matrix2x4 multiplication is consistent across overloads`` (a : Matrix2x4, b : Vector2) =
             let r1 = b * a;
-            let r2 = Vector2.TransformTo4d(b, a);
-            let r3 = Vector2.TransformTo4d(&b, &a);
+            let r2 = Vector2.TransformToFourDimensions(b, a);
+            let r3 = Vector2.TransformToFourDimensions(&b, &a);
 
             Assert.Equal(r1, r2)
             Assert.Equal(r2, r3)
