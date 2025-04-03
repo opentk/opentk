@@ -1179,7 +1179,7 @@ namespace OpenTK.Mathematics
         /// <param name="mat">The desired transformation.</param>
         /// <returns>The transformed vector.</returns>
         [Pure]
-        public static Vector4 Transform2FourDimensions(Vector3 vec, Matrix3x4 mat)
+        public static Vector4 TransformFourDimensions(Vector3 vec, Matrix3x4 mat)
         {
             TransformFourDimensions(in vec, in mat, out Vector4 result);
             return result;
