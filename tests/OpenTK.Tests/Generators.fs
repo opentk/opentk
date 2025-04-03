@@ -91,23 +91,54 @@ module private Generators =
         |> Gen.two
         |> Gen.map Matrix2x3d
         |> Arb.fromGen
+
     let mat2x4 =
         vec4
         |> Arb.toGen
         |> Gen.two
         |> Gen.map Matrix2x4
         |> Arb.fromGen
+
     let mat2x4d =
         vec4d
         |> Arb.toGen
         |> Gen.two
         |> Gen.map Matrix2x4d
         |> Arb.fromGen
+
+    let mat3x2 =
+        vec2
+        |> Arb.toGen
+        |> Gen.three
+        |> Gen.map Matrix3x2
+        |> Arb.fromGen
+
+    let mat3x2d =
+        vec2d
+        |> Arb.toGen
+        |> Gen.three
+        |> Gen.map Matrix3x2d
+        |> Arb.fromGen
+
     let mat3 =
         vec3
         |> Arb.toGen
         |> Gen.three
         |> Gen.map Matrix3
+        |> Arb.fromGen
+
+    let mat3x4 =
+        vec4
+        |> Arb.toGen
+        |> Gen.three
+        |> Gen.map Matrix3x4
+        |> Arb.fromGen
+
+    let mat3x4d =
+        vec4d
+        |> Arb.toGen
+        |> Gen.three
+        |> Gen.map Matrix3x4d
         |> Arb.fromGen
 
     let mat4 =
@@ -159,6 +190,7 @@ type OpenTKGen =
     static member Vector2() = vec2
     static member Vector2d() = vec2d
     static member Vector3() = vec3
+    static member Vector3d() = vec3d
     static member Vector4() = vec4
     static member Quaternion() = quat
     static member Matrix2() = mat2
@@ -166,7 +198,11 @@ type OpenTKGen =
     static member Matrix2x3d() = mat2x3d
     static member Matrix2x4() = mat2x4
     static member Matrix2x4d() = mat2x4d
+    static member Matrix3x2() = mat3x2
+    static member Matrix3x2d() = mat3x2d
     static member Matrix3() = mat3
+    static member Matrix3x4() = mat3x4
+    static member Matrix3x4d() = mat3x4d
     static member Matrix4() = mat4
     static member Box2() = box2
     static member Box3() = box3

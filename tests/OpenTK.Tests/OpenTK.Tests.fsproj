@@ -16,7 +16,7 @@
     <Compile Include="MathHelperTests.fs" />
     <Compile Include="Matrix4Tests.fs" />
     <Compile Include="Vector2Tests.fs" /><Compile Include="Vector2dTests.fs" />
-    <Compile Include="Vector3Tests.fs" />
+    <Compile Include="Vector3Tests.fs" /><Compile Include="Vector3dTests.fs" />
     <Compile Include="Vector4Tests.fs" />
     <Compile Include="QuaternionTests.fs" />
     <Compile Include="BezierCurveTest.fs" />
