@@ -921,9 +921,9 @@ namespace OpenTK.Mathematics
         /// <param name="mat">The desired transformation.</param>
         /// <returns>The transformed vector in 3 dimensions.</returns>
         [Pure]
-        public static Vector3d TransformToThreeDimensions(Vector2d vec, Matrix2x3d mat)
+        public static Vector3d TransformThreeDimensions(Vector2d vec, Matrix2x3d mat)
         {
-            TransformToThreeDimensions(in vec, in mat, out Vector3d result);
+            TransformThreeDimensions(in vec, in mat, out Vector3d result);
             return result;
         }
 
@@ -933,7 +933,7 @@ namespace OpenTK.Mathematics
         /// <param name="vec">The vector to transform.</param>
         /// <param name="mat">The desired transformation.</param>
         /// <param name="result">The transformed, 3-dimensional vector.</param>
-        public static void TransformToThreeDimensions(in Vector2d vec, in Matrix2x3d mat, out Vector3d result)
+        public static void TransformThreeDimensions(in Vector2d vec, in Matrix2x3d mat, out Vector3d result)
         {
             result = new Vector3d(
                 (vec.X * mat.Row0.X) + (vec.Y * mat.Row1.X),
@@ -949,9 +949,9 @@ namespace OpenTK.Mathematics
         /// <param name="mat">The desired transformation.</param>
         /// <returns>The transformed vector in 4 dimensions.</returns>
         [Pure]
-        public static Vector4d TransformToFourDimensions(Vector2d vec, Matrix2x4d mat)
+        public static Vector4d TransformFourDimensions(Vector2d vec, Matrix2x4d mat)
         {
-            TransformToFourDimensions(in vec, in mat, out Vector4d result);
+            TransformFourDimensions(in vec, in mat, out Vector4d result);
             return result;
         }
 
@@ -961,7 +961,7 @@ namespace OpenTK.Mathematics
         /// <param name="vec">The vector to transform.</param>
         /// <param name="mat">The desired transformation.</param>
         /// <param name="result">The transformed, 4-dimensional vector.</param>
-        public static void TransformToFourDimensions(in Vector2d vec, in Matrix2x4d mat, out Vector4d result)
+        public static void TransformFourDimensions(in Vector2d vec, in Matrix2x4d mat, out Vector4d result)
         {
             result = new Vector4d(
                 (vec.X * mat.Row0.X) + (vec.Y * mat.Row1.X),
@@ -1158,7 +1158,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector3d operator *(Vector2d vec, Matrix2x3d mat)
         {
-            TransformToThreeDimensions(in vec, in mat, out Vector3d result);
+            TransformThreeDimensions(in vec, in mat, out Vector3d result);
             return result;
         }
 
@@ -1171,7 +1171,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector4d operator *(Vector2d vec, Matrix2x4d mat)
         {
-            TransformToFourDimensions(in vec, in mat, out Vector4d result);
+            TransformFourDimensions(in vec, in mat, out Vector4d result);
             return result;
         }
 
