@@ -65,6 +65,7 @@ module private Generators =
         |> Gen.map Vector4d
         |> Gen.filter (fun v -> not <| (Double.IsNaN v.Length || Double.IsInfinity v.Length ))
         |> Arb.fromGen
+
     let quat =
         singleArb
         |> Gen.four
@@ -141,11 +142,46 @@ module private Generators =
         |> Gen.map Matrix3x4d
         |> Arb.fromGen
 
+    let mat4x2 =
+        vec2
+        |> Arb.toGen
+        |> Gen.four
+        |> Gen.map Matrix4x2
+        |> Arb.fromGen
+
+    let mat4x2d =
+        vec2d
+        |> Arb.toGen
+        |> Gen.four
+        |> Gen.map Matrix4x2d
+        |> Arb.fromGen
+
+    let mat4x3 =
+        vec3
+        |> Arb.toGen
+        |> Gen.four
+        |> Gen.map Matrix4x3
+        |> Arb.fromGen
+
+    let mat4x3d =
+        vec3d
+        |> Arb.toGen
+        |> Gen.four
+        |> Gen.map Matrix4x3d
+        |> Arb.fromGen
+
     let mat4 =
         vec4
         |> Arb.toGen
         |> Gen.four
         |> Gen.map Matrix4
+        |> Arb.fromGen
+
+    let mat4d =
+        vec4d
+        |> Arb.toGen
+        |> Gen.four
+        |> Gen.map Matrix4d
         |> Arb.fromGen
 
     let box2 =
@@ -192,6 +228,7 @@ type OpenTKGen =
     static member Vector3() = vec3
     static member Vector3d() = vec3d
     static member Vector4() = vec4
+    static member Vector4d() = vec4d
     static member Quaternion() = quat
     static member Matrix2() = mat2
     static member Matrix2x3() = mat2x3
@@ -203,7 +240,12 @@ type OpenTKGen =
     static member Matrix3() = mat3
     static member Matrix3x4() = mat3x4
     static member Matrix3x4d() = mat3x4d
+    static member Matrix4x2() = mat4x2
+    static member Matrix4x2d() = mat4x2d
+    static member Matrix4x3() = mat4x3
+    static member Matrix4x3d() = mat4x3d
     static member Matrix4() = mat4
+    static member Matrix4d() = mat4d
     static member Box2() = box2
     static member Box3() = box3
     static member AcuteAngle() = acuteAngle

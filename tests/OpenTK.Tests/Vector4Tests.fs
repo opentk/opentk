@@ -352,6 +352,47 @@ module Vector4 =
             Assert.Equal(exp, res)
 
         [<Property>]
+        let ``Vector4-Matrix4x2 multiplication is the same as vector/column multiplication and summation`` (a : Matrix4x2, b : Vector4) =
+            let res = b * a
+
+            let c1 = b.X * a.M11 + b.Y * a.M21 + b.Z * a.M31 + b.W * a.M41
+            let c2 = b.X * a.M12 + b.Y * a.M22 + b.Z * a.M32 + b.W * a.M42
+
+            let exp = Vector2(c1, c2)
+
+            Assert.Equal(exp, res)
+
+        [<Property>]
+        let ``Vector4-Matrix4x2 multiplication is consistent across overloads`` (a : Matrix4x2, b : Vector4) =
+            let r1 = b * a;
+            let r2 = Vector4.TransformTwoDimensions(b, a);
+            let r3 = Vector4.TransformTwoDimensions(&b, &a);
+
+            Assert.Equal(r1, r2)
+            Assert.Equal(r2, r3)
+
+        [<Property>]
+        let ``Vector4-Matrix4x3 multiplication is the same as vector/column multiplication and summation`` (a : Matrix4x3, b : Vector4) =
+            let res = b * a
+
+            let c1 = b.X * a.M11 + b.Y * a.M21 + b.Z * a.M31 + b.W * a.M41
+            let c2 = b.X * a.M12 + b.Y * a.M22 + b.Z * a.M32 + b.W * a.M42
+            let c3 = b.X * a.M13 + b.Y * a.M23 + b.Z * a.M33 + b.W * a.M43
+
+            let exp = Vector3(c1, c2, c3)
+
+            Assert.Equal(exp, res)
+
+        [<Property>]
+        let ``Vector4-Matrix4x3 multiplication is consistent across overloads`` (a : Matrix4x3, b : Vector4) =
+            let r1 = b * a;
+            let r2 = Vector4.TransformThreeDimensions(b, a);
+            let r3 = Vector4.TransformThreeDimensions(&b, &a);
+
+            Assert.Equal(r1, r2)
+            Assert.Equal(r2, r3)
+
+        [<Property>]
         let ``Static Vector4 multiplication method is the same as component multiplication`` (a : Vector4, b : Vector4) =
 
             let v1 = Vector4(a.X * b.X, a.Y * b.Y, a.Z * b.Z, a.W * b.W)
