@@ -180,6 +180,12 @@ namespace OpenTK.Graphics.Vulkan
         {
             VkPointers._vkCmdBeginDebugUtilsLabelEXT_fnptr(commandBuffer, pLabelInfo);
         }
+        /// <summary><b>[requires: VK_QCOM_tile_shading]</b> [device command] </summary>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdBeginPerTileExecutionQCOM.html" /></remarks>
+        public static void CmdBeginPerTileExecutionQCOM(VkCommandBuffer commandBuffer, VkPerTileBeginInfoQCOM* pPerTileBeginInfo)
+        {
+            VkPointers._vkCmdBeginPerTileExecutionQCOM_fnptr(commandBuffer, pPerTileBeginInfo);
+        }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdBeginQuery.html" /></remarks>
         public static void CmdBeginQuery(VkCommandBuffer commandBuffer, VkQueryPool queryPool, uint query, VkQueryControlFlagBits flags)
@@ -648,6 +654,12 @@ namespace OpenTK.Graphics.Vulkan
         {
             VkPointers._vkCmdDispatchIndirect_fnptr(commandBuffer, buffer, offset);
         }
+        /// <summary><b>[requires: VK_QCOM_tile_shading]</b> [device command] </summary>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdDispatchTileQCOM.html" /></remarks>
+        public static void CmdDispatchTileQCOM(VkCommandBuffer commandBuffer)
+        {
+            VkPointers._vkCmdDispatchTileQCOM_fnptr(commandBuffer);
+        }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdDraw.html" /></remarks>
         public static void CmdDraw(VkCommandBuffer commandBuffer, uint vertexCount, uint instanceCount, uint firstVertex, uint firstInstance)
@@ -791,6 +803,12 @@ namespace OpenTK.Graphics.Vulkan
         public static void CmdEndDebugUtilsLabelEXT(VkCommandBuffer commandBuffer)
         {
             VkPointers._vkCmdEndDebugUtilsLabelEXT_fnptr(commandBuffer);
+        }
+        /// <summary><b>[requires: VK_QCOM_tile_shading]</b> [device command] </summary>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdEndPerTileExecutionQCOM.html" /></remarks>
+        public static void CmdEndPerTileExecutionQCOM(VkCommandBuffer commandBuffer, VkPerTileEndInfoQCOM* pPerTileEndInfo)
+        {
+            VkPointers._vkCmdEndPerTileExecutionQCOM_fnptr(commandBuffer, pPerTileEndInfo);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdEndQuery.html" /></remarks>
@@ -2028,6 +2046,12 @@ namespace OpenTK.Graphics.Vulkan
         {
             return VkPointers._vkCreateExecutionGraphPipelinesAMDX_fnptr(device, pipelineCache, createInfoCount, pCreateInfos, pAllocator, pPipelines);
         }
+        /// <summary><b>[requires: VK_NV_external_compute_queue]</b> [device command] </summary>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateExternalComputeQueueNV.html" /></remarks>
+        public static VkResult CreateExternalComputeQueueNV(VkDevice device, VkExternalComputeQueueCreateInfoNV* pCreateInfo, VkAllocationCallbacks* pAllocator, VkExternalComputeQueueNV* pExternalQueue)
+        {
+            return VkPointers._vkCreateExternalComputeQueueNV_fnptr(device, pCreateInfo, pAllocator, pExternalQueue);
+        }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateFence.html" /></remarks>
         public static VkResult CreateFence(VkDevice device, VkFenceCreateInfo* pCreateInfo, VkAllocationCallbacks* pAllocator, VkFence* pFence)
@@ -2441,6 +2465,12 @@ namespace OpenTK.Graphics.Vulkan
         public static void DestroyEvent(VkDevice device, VkEvent @event, VkAllocationCallbacks* pAllocator)
         {
             VkPointers._vkDestroyEvent_fnptr(device, @event, pAllocator);
+        }
+        /// <summary><b>[requires: VK_NV_external_compute_queue]</b> [device command] </summary>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDestroyExternalComputeQueueNV.html" /></remarks>
+        public static void DestroyExternalComputeQueueNV(VkDevice device, VkExternalComputeQueueNV externalQueue, VkAllocationCallbacks* pAllocator)
+        {
+            VkPointers._vkDestroyExternalComputeQueueNV_fnptr(device, externalQueue, pAllocator);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDestroyFence.html" /></remarks>
@@ -3107,6 +3137,12 @@ namespace OpenTK.Graphics.Vulkan
         public static VkResult GetExecutionGraphPipelineScratchSizeAMDX(VkDevice device, VkPipeline executionGraph, VkExecutionGraphPipelineScratchSizeAMDX* pSizeInfo)
         {
             return VkPointers._vkGetExecutionGraphPipelineScratchSizeAMDX_fnptr(device, executionGraph, pSizeInfo);
+        }
+        /// <summary><b>[requires: VK_NV_external_compute_queue]</b> [device command] </summary>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetExternalComputeQueueDataNV.html" /></remarks>
+        public static void GetExternalComputeQueueDataNV(VkExternalComputeQueueNV externalQueue, VkExternalComputeQueueDataParamsNV* parameters, void* pData)
+        {
+            VkPointers._vkGetExternalComputeQueueDataNV_fnptr(externalQueue, parameters, pData);
         }
         /// <summary>[device command] </summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetFaultData.html" /></remarks>

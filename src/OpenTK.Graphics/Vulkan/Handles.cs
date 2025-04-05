@@ -414,6 +414,23 @@ namespace OpenTK.Graphics.Vulkan
         public static explicit operator ulong(VkEvent handle) => handle.Handle;
         public static explicit operator VkEvent(ulong handle) => new VkEvent(handle);
     }
+    /// <summary>Used by <see cref="Vk.CreateExternalComputeQueueNV"/>, <see cref="Vk.DestroyExternalComputeQueueNV"/>, <see cref="Vk.GetExternalComputeQueueDataNV"/></summary>
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkExternalComputeQueueNV.html" /></remarks>
+    [DebuggerDisplay("VkExternalComputeQueueNV\\{{Handle}\\}")]
+    public unsafe struct VkExternalComputeQueueNV : IEquatable<VkExternalComputeQueueNV>
+    {
+        public static VkExternalComputeQueueNV Zero => new VkExternalComputeQueueNV(0);
+        public ulong Handle;
+        public VkExternalComputeQueueNV(ulong handle) => Handle = handle;
+        public override bool Equals(object? obj) => obj is VkExternalComputeQueueNV instance && Equals(instance);
+        public bool Equals(VkExternalComputeQueueNV other) => Handle.Equals(other.Handle);
+        public override int GetHashCode() => HashCode.Combine(Handle);
+        public override string? ToString() => Handle.ToString();
+        public static bool operator ==(VkExternalComputeQueueNV left, VkExternalComputeQueueNV right) => left.Equals(right);
+        public static bool operator !=(VkExternalComputeQueueNV left, VkExternalComputeQueueNV right) => !(left == right);
+        public static explicit operator ulong(VkExternalComputeQueueNV handle) => handle.Handle;
+        public static explicit operator VkExternalComputeQueueNV(ulong handle) => new VkExternalComputeQueueNV(handle);
+    }
     /// <summary>Used by <see cref="Vk.AcquireImageANDROID"/>, <see cref="Vk.AcquireNextImageKHR"/>, <see cref="Vk.CreateFence"/>, ...</summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkFence.html" /></remarks>
     [DebuggerDisplay("VkFence\\{{Handle}\\}")]

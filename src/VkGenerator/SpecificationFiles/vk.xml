@@ -179,11 +179,11 @@ branch of the member gitlab server.
 #define <name>VKSC_API_VERSION_1_0</name> <type>VK_MAKE_API_VERSION</type>(VKSC_API_VARIANT, 1, 0, 0)// Patch version should always be set to 0</type>
 
         <type api="vulkan" category="define">// Version of this file
-#define <name>VK_HEADER_VERSION</name> 311</type>
+#define <name>VK_HEADER_VERSION</name> 312</type>
         <type api="vulkan" category="define" requires="VK_HEADER_VERSION">// Complete version of this file
 #define <name>VK_HEADER_VERSION_COMPLETE</name> <type>VK_MAKE_API_VERSION</type>(0, 1, 4, VK_HEADER_VERSION)</type>
         <type api="vulkansc" category="define">// Version of this file
-#define <name>VK_HEADER_VERSION</name> 17</type>
+#define <name>VK_HEADER_VERSION</name> 18</type>
         <type api="vulkansc" category="define" requires="VKSC_API_VARIANT">// Complete version of this file
 #define <name>VK_HEADER_VERSION_COMPLETE</name> <type>VK_MAKE_API_VERSION</type>(VKSC_API_VARIANT, 1, 0, VK_HEADER_VERSION)</type>
 
@@ -497,6 +497,7 @@ typedef void* <name>MTLSharedEvent_id</name>;
         <type requires="VkPresentScalingFlagBitsEXT" category="bitmask">typedef <type>VkFlags</type> <name>VkPresentScalingFlagsEXT</name>;</type>
         <type requires="VkPresentGravityFlagBitsEXT" category="bitmask">typedef <type>VkFlags</type> <name>VkPresentGravityFlagsEXT</name>;</type>
         <type requires="VkShaderCreateFlagBitsEXT"        category="bitmask">typedef <type>VkFlags</type> <name>VkShaderCreateFlagsEXT</name>;</type>
+        <type requires="VkTileShadingRenderPassFlagBitsQCOM"   category="bitmask">typedef <type>VkFlags</type> <name>VkTileShadingRenderPassFlagsQCOM</name>;</type>
         <type bitvalues="VkPhysicalDeviceSchedulingControlsFlagBitsARM" category="bitmask">typedef <type>VkFlags64</type> <name>VkPhysicalDeviceSchedulingControlsFlagsARM</name>;</type>
 
             <comment>Video Core extension</comment>
@@ -849,6 +850,7 @@ typedef void* <name>MTLSharedEvent_id</name>;
         <type name="VkLayeredDriverUnderlyingApiMSFT" category="enum"/>
         <type name="VkPhysicalDeviceLayeredApiKHR" category="enum"/>
         <type name="VkDepthClampModeEXT" category="enum"/>
+        <type name="VkTileShadingRenderPassFlagBitsQCOM" category="enum"/>
         <type name="VkCooperativeVectorMatrixLayoutNV" category="enum"/>
 
             <comment>WSI extensions</comment>
@@ -5197,7 +5199,7 @@ typedef void* <name>MTLSharedEvent_id</name>;
             <member optional="true"><type>void</type>*            <name>pNext</name></member>
             <member><type>VkBool32</type>                         <name>fragmentDensityMapOffset</name></member>
         </type>
-	<type category="struct" name="VkPhysicalDeviceFragmentDensityMapOffsetFeaturesQCOM" alias="VkPhysicalDeviceFragmentDensityMapOffsetFeaturesEXT"/>
+        <type category="struct" name="VkPhysicalDeviceFragmentDensityMapOffsetFeaturesQCOM" alias="VkPhysicalDeviceFragmentDensityMapOffsetFeaturesEXT"/>
         <type category="struct" name="VkPhysicalDeviceFragmentDensityMapPropertiesEXT" returnedonly="true" structextends="VkPhysicalDeviceProperties2">
             <member values="VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_FRAGMENT_DENSITY_MAP_PROPERTIES_EXT"><type>VkStructureType</type> <name>sType</name></member>
             <member optional="true"><type>void</type>*                            <name>pNext</name></member>
@@ -5218,7 +5220,7 @@ typedef void* <name>MTLSharedEvent_id</name>;
             <member optional="true"><type>void</type>*                            <name>pNext</name></member>
             <member limittype="min,mul"><type>VkExtent2D</type>                       <name>fragmentDensityOffsetGranularity</name></member>
         </type>
-	<type category="struct" name="VkPhysicalDeviceFragmentDensityMapOffsetPropertiesQCOM" alias="VkPhysicalDeviceFragmentDensityMapOffsetPropertiesEXT"/>
+        <type category="struct" name="VkPhysicalDeviceFragmentDensityMapOffsetPropertiesQCOM" alias="VkPhysicalDeviceFragmentDensityMapOffsetPropertiesEXT"/>
         <type category="struct" name="VkRenderPassFragmentDensityMapCreateInfoEXT" structextends="VkRenderPassCreateInfo,VkRenderPassCreateInfo2">
             <member values="VK_STRUCTURE_TYPE_RENDER_PASS_FRAGMENT_DENSITY_MAP_CREATE_INFO_EXT"><type>VkStructureType</type> <name>sType</name></member>
             <member optional="true">const <type>void</type>*                      <name>pNext</name></member>
@@ -5230,7 +5232,7 @@ typedef void* <name>MTLSharedEvent_id</name>;
             <member optional="true"><type>uint32_t</type>                           <name>fragmentDensityOffsetCount</name></member>
             <member len="fragmentDensityOffsetCount">const <type>VkOffset2D</type>* <name>pFragmentDensityOffsets</name></member>
         </type>
-	<type category="struct" name="VkSubpassFragmentDensityMapOffsetEndInfoQCOM" alias="VkRenderPassFragmentDensityMapOffsetEndInfoEXT"/>
+        <type category="struct" name="VkSubpassFragmentDensityMapOffsetEndInfoQCOM" alias="VkRenderPassFragmentDensityMapOffsetEndInfoEXT"/>
         <type category="struct" name="VkPhysicalDeviceScalarBlockLayoutFeatures" structextends="VkPhysicalDeviceFeatures2,VkDeviceCreateInfo">
             <member values="VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SCALAR_BLOCK_LAYOUT_FEATURES"><type>VkStructureType</type> <name>sType</name></member>
             <member optional="true"><type>void</type>*                               <name>pNext</name></member>
@@ -10178,6 +10180,50 @@ typedef void* <name>MTLSharedEvent_id</name>;
             <member><type>VkCooperativeVectorMatrixLayoutNV</type>                   <name>dstLayout</name></member>
             <member><type>size_t</type>                                              <name>dstStride</name></member>
         </type>
+        <type category="struct" name="VkPhysicalDeviceTileShadingFeaturesQCOM" structextends="VkPhysicalDeviceFeatures2,VkDeviceCreateInfo">
+            <member values="VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_TILE_SHADING_FEATURES_QCOM"><type>VkStructureType</type> <name>sType</name></member>
+            <member optional="true" noautovalidity="true"><type>void</type>*        <name>pNext</name></member>
+            <member><type>VkBool32</type>                           <name>tileShading</name></member>
+            <member><type>VkBool32</type>                           <name>tileShadingFragmentStage</name></member>
+            <member><type>VkBool32</type>                           <name>tileShadingColorAttachments</name></member>
+            <member><type>VkBool32</type>                           <name>tileShadingDepthAttachments</name></member>
+            <member><type>VkBool32</type>                           <name>tileShadingStencilAttachments</name></member>
+            <member><type>VkBool32</type>                           <name>tileShadingInputAttachments</name></member>
+            <member><type>VkBool32</type>                           <name>tileShadingSampledAttachments</name></member>
+            <member><type>VkBool32</type>                           <name>tileShadingPerTileDraw</name></member>
+            <member><type>VkBool32</type>                           <name>tileShadingPerTileDispatch</name></member>
+            <member><type>VkBool32</type>                           <name>tileShadingDispatchTile</name></member>
+            <member><type>VkBool32</type>                           <name>tileShadingApron</name></member>
+            <member><type>VkBool32</type>                           <name>tileShadingAnisotropicApron</name></member>
+            <member><type>VkBool32</type>                           <name>tileShadingAtomicOps</name></member>
+            <member><type>VkBool32</type>                           <name>tileShadingImageProcessing</name></member>
+        </type>
+        <type category="struct" name="VkPhysicalDeviceTileShadingPropertiesQCOM" returnedonly="true" structextends="VkPhysicalDeviceProperties2">
+            <member values="VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_TILE_SHADING_PROPERTIES_QCOM"><type>VkStructureType</type> <name>sType</name></member>
+            <member optional="true"><type>void</type>*                    <name>pNext</name></member>
+            <member limittype="max"><type>uint32_t</type>                 <name>maxApronSize</name></member>
+            <member limittype="bitmask"><type>VkBool32</type>             <name>preferNonCoherent</name></member>
+            <member limittype="max,mul"><type>VkExtent2D</type>           <name>tileGranularity</name></member>
+            <member limittype="max"><type>VkExtent2D</type>               <name>maxTileShadingRate</name></member>
+        </type>
+        <type category="struct" name="VkRenderPassTileShadingCreateInfoQCOM" structextends="VkRenderPassCreateInfo,VkRenderPassCreateInfo2,VkRenderingInfo,VkCommandBufferInheritanceInfo">
+            <member values="VK_STRUCTURE_TYPE_RENDER_PASS_TILE_SHADING_CREATE_INFO_QCOM"><type>VkStructureType</type> <name>sType</name></member>
+            <member optional="true">const <type>void</type>*                      <name>pNext</name></member>
+            <member optional="true"><type>VkTileShadingRenderPassFlagsQCOM</type> <name>flags</name></member>
+            <member optional="true"><type>VkExtent2D</type>                       <name>tileApronSize</name></member>
+        </type>
+        <type category="struct" name="VkPerTileBeginInfoQCOM">
+            <member values="VK_STRUCTURE_TYPE_PER_TILE_BEGIN_INFO_QCOM"><type>VkStructureType</type> <name>sType</name></member>
+            <member optional="true">const <type>void</type>*     <name>pNext</name></member>
+        </type>
+        <type category="struct" name="VkPerTileEndInfoQCOM">
+            <member values="VK_STRUCTURE_TYPE_PER_TILE_END_INFO_QCOM"><type>VkStructureType</type> <name>sType</name></member>
+            <member optional="true">const <type>void</type>*     <name>pNext</name></member>
+        </type>
+        <type category="struct" name="VkDispatchTileInfoQCOM">
+            <member values="VK_STRUCTURE_TYPE_DISPATCH_TILE_INFO_QCOM"><type>VkStructureType</type> <name>sType</name></member>
+            <member optional="true">const <type>void</type>*     <name>pNext</name></member>
+        </type>
         <type category="struct" name="VkSetPresentConfigNV" structextends="VkPresentInfoKHR">
             <member values="VK_STRUCTURE_TYPE_SET_PRESENT_CONFIG_NV"><type>VkStructureType</type> <name>sType</name></member>
             <member optional="true">const <type>void</type>*      <name>pNext</name></member>
@@ -10189,6 +10235,28 @@ typedef void* <name>MTLSharedEvent_id</name>;
             <member optional="true"><type>void</type>*                           <name>pNext</name></member>
             <member><type>VkBool32</type>                                        <name>presentMetering</name></member>
         </type>
+        <type category="struct" name="VkExternalComputeQueueDeviceCreateInfoNV" structextends="VkDeviceCreateInfo">
+            <member values="VK_STRUCTURE_TYPE_EXTERNAL_COMPUTE_QUEUE_DEVICE_CREATE_INFO_NV"><type>VkStructureType</type> <name>sType</name></member>
+            <member optional="true">const <type>void</type>* <name>pNext</name></member>
+            <member><type>uint32_t</type> <name>reservedExternalQueues</name></member>
+        </type>
+        <type category="struct" name="VkExternalComputeQueueCreateInfoNV">
+            <member values="VK_STRUCTURE_TYPE_EXTERNAL_COMPUTE_QUEUE_CREATE_INFO_NV"><type>VkStructureType</type> <name>sType</name></member>
+            <member optional="true">const <type>void</type>* <name>pNext</name></member>
+            <member><type>VkQueue</type> <name>preferredQueue</name></member>
+        </type>
+        <type category="struct" name="VkExternalComputeQueueDataParamsNV">
+            <member values="VK_STRUCTURE_TYPE_EXTERNAL_COMPUTE_QUEUE_DATA_PARAMS_NV"><type>VkStructureType</type> <name>sType</name></member>
+            <member optional="true">const <type>void</type>* <name>pNext</name></member>
+            <member><type>uint32_t</type> <name>deviceIndex</name></member>
+        </type>
+        <type category="struct" name="VkPhysicalDeviceExternalComputeQueuePropertiesNV" returnedonly="true" structextends="VkPhysicalDeviceProperties2">
+            <member values="VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_EXTERNAL_COMPUTE_QUEUE_PROPERTIES_NV"><type>VkStructureType</type> <name>sType</name></member>
+            <member optional="true"><type>void</type>* <name>pNext</name></member>
+            <member limittype="noauto"><type>uint32_t</type> <name>externalDataSize</name></member>
+            <member limittype="noauto"><type>uint32_t</type> <name>maxExternalQueues</name></member>
+        </type>
+        <type category="handle" parent="VkDevice" objtypeenum="VK_OBJECT_TYPE_EXTERNAL_COMPUTE_QUEUE_NV"><type>VK_DEFINE_HANDLE</type>(<name>VkExternalComputeQueueNV</name>)</type>
     </types>
 
 
@@ -12384,6 +12452,10 @@ typedef void* <name>MTLSharedEvent_id</name>;
     <enums name="VkAccessFlagBits3KHR" type="bitmask" bitwidth="64">
         <enum value="0"     name="VK_ACCESS_3_NONE_KHR"/>
     </enums>
+    <enums name="VkTileShadingRenderPassFlagBitsQCOM" type="bitmask">
+        <enum bitpos="0"    name="VK_TILE_SHADING_RENDER_PASS_ENABLE_BIT_QCOM"/>
+        <enum bitpos="1"    name="VK_TILE_SHADING_RENDER_PASS_PER_TILE_EXECUTION_BIT_QCOM"/>
+    </enums>
     <enums name="VkCooperativeVectorMatrixLayoutNV" type="enum">
         <enum value="0"     name="VK_COOPERATIVE_VECTOR_MATRIX_LAYOUT_ROW_MAJOR_NV"/>
         <enum value="1"     name="VK_COOPERATIVE_VECTOR_MATRIX_LAYOUT_COLUMN_MAJOR_NV"/>
@@ -13249,14 +13321,14 @@ typedef void* <name>MTLSharedEvent_id</name>;
             <param><type>uint32_t</type> <name>drawCount</name></param>
             <param><type>uint32_t</type> <name>stride</name></param>
         </command>
-        <command queues="compute" renderpass="outside" cmdbufferlevel="primary,secondary" tasks="action">
+        <command queues="compute" renderpass="both" cmdbufferlevel="primary,secondary" tasks="action">
             <proto><type>void</type> <name>vkCmdDispatch</name></proto>
             <param externsync="true"><type>VkCommandBuffer</type> <name>commandBuffer</name></param>
             <param><type>uint32_t</type> <name>groupCountX</name></param>
             <param><type>uint32_t</type> <name>groupCountY</name></param>
             <param><type>uint32_t</type> <name>groupCountZ</name></param>
         </command>
-        <command queues="compute" renderpass="outside" cmdbufferlevel="primary,secondary" tasks="action">
+        <command queues="compute" renderpass="both" cmdbufferlevel="primary,secondary" tasks="action">
             <proto><type>void</type> <name>vkCmdDispatchIndirect</name></proto>
             <param externsync="true"><type>VkCommandBuffer</type> <name>commandBuffer</name></param>
             <param><type>VkBuffer</type> <name>buffer</name></param>
@@ -14283,7 +14355,7 @@ typedef void* <name>MTLSharedEvent_id</name>;
             <param>const <type>VkAcquireNextImageInfoKHR</type>* <name>pAcquireInfo</name></param>
             <param><type>uint32_t</type>* <name>pImageIndex</name></param>
         </command>
-        <command queues="compute" renderpass="outside" cmdbufferlevel="primary,secondary" tasks="action">
+        <command queues="compute" renderpass="both" cmdbufferlevel="primary,secondary" tasks="action">
             <proto><type>void</type> <name>vkCmdDispatchBase</name></proto>
             <param externsync="true"><type>VkCommandBuffer</type> <name>commandBuffer</name></param>
             <param><type>uint32_t</type> <name>baseGroupX</name></param>
@@ -16709,6 +16781,39 @@ typedef void* <name>MTLSharedEvent_id</name>;
             <param externsync="true"><type>VkCommandBuffer</type> <name>commandBuffer</name></param>
             <param><type>uint32_t</type> <name>infoCount</name></param>
             <param len="infoCount">const <type>VkConvertCooperativeVectorMatrixInfoNV</type>* <name>pInfos</name></param>
+        </command>
+        <command queues="compute" renderpass="inside" cmdbufferlevel="primary,secondary" tasks="action">
+            <proto><type>void</type> <name>vkCmdDispatchTileQCOM</name></proto>
+            <param><type>VkCommandBuffer</type> <name>commandBuffer</name></param>
+        </command>
+        <command queues="graphics,compute" renderpass="inside" cmdbufferlevel="primary,secondary" tasks="state">
+            <proto><type>void</type> <name>vkCmdBeginPerTileExecutionQCOM</name></proto>
+            <param><type>VkCommandBuffer</type> <name>commandBuffer</name></param>
+            <param>const <type>VkPerTileBeginInfoQCOM</type>* <name>pPerTileBeginInfo</name></param>
+        </command>
+        <command queues="graphics,compute" renderpass="inside" cmdbufferlevel="primary,secondary" tasks="state">
+            <proto><type>void</type> <name>vkCmdEndPerTileExecutionQCOM</name></proto>
+            <param><type>VkCommandBuffer</type> <name>commandBuffer</name></param>
+            <param>const <type>VkPerTileEndInfoQCOM</type>* <name>pPerTileEndInfo</name></param>
+        </command>
+        <command successcodes="VK_SUCCESS" errorcodes="VK_ERROR_OUT_OF_HOST_MEMORY,VK_ERROR_TOO_MANY_OBJECTS">
+            <proto><type>VkResult</type> <name>vkCreateExternalComputeQueueNV</name></proto>
+            <param><type>VkDevice</type> <name>device</name></param>
+            <param>const <type>VkExternalComputeQueueCreateInfoNV</type>* <name>pCreateInfo</name></param>
+            <param optional="true">const <type>VkAllocationCallbacks</type>* <name>pAllocator</name></param>
+            <param><type>VkExternalComputeQueueNV</type>* <name>pExternalQueue</name></param>
+        </command>
+        <command>
+            <proto><type>void</type> <name>vkDestroyExternalComputeQueueNV</name></proto>
+            <param><type>VkDevice</type> <name>device</name></param>
+            <param><type>VkExternalComputeQueueNV</type> <name>externalQueue</name></param>
+            <param optional="true">const <type>VkAllocationCallbacks</type>* <name>pAllocator</name></param>
+        </command>
+        <command>
+            <proto><type>void</type> <name>vkGetExternalComputeQueueDataNV</name></proto>
+            <param><type>VkExternalComputeQueueNV</type> <name>externalQueue</name></param>
+            <param><type>VkExternalComputeQueueDataParamsNV</type>* <name>params</name></param>
+            <param><type>void</type>* <name>pData</name></param>
         </command>
     </commands>
 
@@ -23102,14 +23207,41 @@ typedef void* <name>MTLSharedEvent_id</name>;
                 <command name="vkGetPhysicalDeviceRefreshableObjectTypesKHR"/>
             </require>
         </extension>
-        <extension name="VK_QCOM_extension_310" number="310" author="QCOM" contact="Matthew Netsch @mnetsch" supported="disabled">
+        <extension name="VK_QCOM_tile_shading" number="310" type="device" depends="VK_QCOM_tile_properties,VK_KHR_get_physical_device_properties2" author="QCOM" contact="Matthew Netsch @mnetsch" supported="vulkan">
             <require>
-                <enum value="0"                                             name="VK_QCOM_EXTENSION_310_SPEC_VERSION"/>
-                <enum value="&quot;VK_QCOM_extension_310&quot;"             name="VK_QCOM_EXTENSION_310_EXTENSION_NAME"/>
-                <enum bitpos="51" extends="VkAccessFlagBits2"               name="VK_ACCESS_2_RESERVED_51_BIT_QCOM"/>
-                <enum bitpos="52" extends="VkAccessFlagBits2"               name="VK_ACCESS_2_RESERVED_52_BIT_QCOM"/>
-                <enum bitpos="53" extends="VkAccessFlagBits2"               name="VK_ACCESS_2_RESERVED_53_BIT_QCOM"/>
-                <enum bitpos="54" extends="VkAccessFlagBits2"               name="VK_ACCESS_2_RESERVED_54_BIT_QCOM"/>
+                <enum value="1"                                            name="VK_QCOM_TILE_SHADING_SPEC_VERSION"/>
+                <enum value="&quot;VK_QCOM_tile_shading&quot;"             name="VK_QCOM_TILE_SHADING_EXTENSION_NAME"/>
+                <enum offset="0"  extends="VkStructureType"                name="VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_TILE_SHADING_FEATURES_QCOM"/>
+                <enum offset="1"  extends="VkStructureType"                name="VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_TILE_SHADING_PROPERTIES_QCOM"/>
+                <enum offset="2"  extends="VkStructureType"                name="VK_STRUCTURE_TYPE_RENDER_PASS_TILE_SHADING_CREATE_INFO_QCOM"/>
+                <enum offset="3"  extends="VkStructureType"                name="VK_STRUCTURE_TYPE_PER_TILE_BEGIN_INFO_QCOM"/>
+                <enum offset="4"  extends="VkStructureType"                name="VK_STRUCTURE_TYPE_PER_TILE_END_INFO_QCOM"/>
+                <enum offset="5"  extends="VkStructureType"                name="VK_STRUCTURE_TYPE_DISPATCH_TILE_INFO_QCOM"/>
+                <enum bitpos="51" extends="VkAccessFlagBits2"              name="VK_ACCESS_2_SHADER_TILE_ATTACHMENT_READ_BIT_QCOM"/>
+                <enum bitpos="52" extends="VkAccessFlagBits2"              name="VK_ACCESS_2_SHADER_TILE_ATTACHMENT_WRITE_BIT_QCOM"/>
+                <enum bitpos="8"  extends="VkSubpassDescriptionFlagBits"   name="VK_SUBPASS_DESCRIPTION_TILE_SHADING_APRON_BIT_QCOM"/>
+                <type name="VkPhysicalDeviceTileShadingFeaturesQCOM"/>
+                <type name="VkPhysicalDeviceTileShadingPropertiesQCOM"/>
+                <type name="VkRenderPassTileShadingCreateInfoQCOM"/>
+                <type name="VkPerTileBeginInfoQCOM"/>
+                <type name="VkPerTileEndInfoQCOM"/>
+                <type name="VkDispatchTileInfoQCOM"/>
+                <type name="VkTileShadingRenderPassFlagsQCOM"/>
+                <type name="VkTileShadingRenderPassFlagBitsQCOM"/>
+                <command name="vkCmdDispatchTileQCOM"/>
+                <command name="vkCmdBeginPerTileExecutionQCOM"/>
+                <command name="vkCmdEndPerTileExecutionQCOM"/>
+                <feature name="tileShading"                   struct="VkPhysicalDeviceTileShadingFeaturesQCOM"/>
+                <feature name="tileShadingFragmentStage"      struct="VkPhysicalDeviceTileShadingFeaturesQCOM"/>
+                <feature name="tileShadingPerTileDispatch"    struct="VkPhysicalDeviceTileShadingFeaturesQCOM"/>
+                <feature name="tileShadingAtomicOps"          struct="VkPhysicalDeviceTileShadingFeaturesQCOM"/>
+                <feature name="tileShadingColorAttachments"   struct="VkPhysicalDeviceTileShadingFeaturesQCOM"/>
+                <feature name="tileShadingPerTileDraw"        struct="VkPhysicalDeviceTileShadingFeaturesQCOM"/>
+                <feature name="tileShadingApron"              struct="VkPhysicalDeviceTileShadingFeaturesQCOM"/>
+                <feature name="tileShadingDepthAttachments"   struct="VkPhysicalDeviceTileShadingFeaturesQCOM"/>
+                <feature name="tileShadingStencilAttachments" struct="VkPhysicalDeviceTileShadingFeaturesQCOM"/>
+                <feature name="tileShadingInputAttachments"   struct="VkPhysicalDeviceTileShadingFeaturesQCOM"/>
+                <feature name="tileShadingSampledAttachments" struct="VkPhysicalDeviceTileShadingFeaturesQCOM"/>
             </require>
         </extension>
         <extension name="VK_NV_low_latency" number="311" author="NV" type="device" supported="vulkan" contact="Charles Hansen @cshansen" nofeatures="true">
@@ -26525,10 +26657,25 @@ typedef void* <name>MTLSharedEvent_id</name>;
                 <feature name="shaderRawAccessChains" struct="VkPhysicalDeviceRawAccessChainsFeaturesNV"/>
             </require>
         </extension>
-        <extension name="VK_NV_extension_557" number="557" type="device" author="NV" contact="Chris Lentini @clentini" supported="disabled">
+        <extension name="VK_NV_external_compute_queue" number="557" type="device" author="NV" contact="Chris Lentini @clentini" supported="vulkan" nofeatures="true">
             <require>
-                <enum value="1"                                             name="VK_NV_EXTENSION_557_SPEC_VERSION"/>
-                <enum value="&quot;VK_NV_extension_557&quot;"               name="VK_NV_EXTENSION_557_EXTENSION_NAME"/>
+                <enum value="1"                                         name="VK_NV_EXTERNAL_COMPUTE_QUEUE_SPEC_VERSION"/>
+                <enum value="&quot;VK_NV_external_compute_queue&quot;"  name="VK_NV_EXTERNAL_COMPUTE_QUEUE_EXTENSION_NAME"/>
+                <enum offset="0" extends="VkStructureType"              name="VK_STRUCTURE_TYPE_EXTERNAL_COMPUTE_QUEUE_DEVICE_CREATE_INFO_NV"/>
+                <enum offset="1" extends="VkStructureType"              name="VK_STRUCTURE_TYPE_EXTERNAL_COMPUTE_QUEUE_CREATE_INFO_NV"/>
+                <enum offset="2" extends="VkStructureType"              name="VK_STRUCTURE_TYPE_EXTERNAL_COMPUTE_QUEUE_DATA_PARAMS_NV"/>
+                <enum offset="3" extends="VkStructureType"              name="VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_EXTERNAL_COMPUTE_QUEUE_PROPERTIES_NV"/>
+                <enum offset="0" extends="VkObjectType"                 name="VK_OBJECT_TYPE_EXTERNAL_COMPUTE_QUEUE_NV"/>
+
+                <type name="VkExternalComputeQueueNV"/>
+                <type name="VkExternalComputeQueueDeviceCreateInfoNV"/>
+                <type name="VkExternalComputeQueueCreateInfoNV"/>
+                <type name="VkExternalComputeQueueDataParamsNV"/>
+                <type name="VkPhysicalDeviceExternalComputeQueuePropertiesNV"/>
+
+                <command name="vkCreateExternalComputeQueueNV"/>
+                <command name="vkDestroyExternalComputeQueueNV"/>
+                <command name="vkGetExternalComputeQueueDataNV"/>
             </require>
         </extension>
         <extension name="VK_KHR_extension_558" number="558" type="device" author="KHR" contact="Ahmed Abdelkhalek @aabdelkh" supported="disabled">
@@ -27187,6 +27334,39 @@ typedef void* <name>MTLSharedEvent_id</name>;
                 <enum value="&quot;VK_EXT_extension_622&quot;"              name="VK_EXT_EXTENSION_622_EXTENSION_NAME"/>
             </require>
         </extension>
+        <extension name="VK_EXT_extension_623" number="623" author="EXT" contact="Mark Young @marky_lunarg" supported="disabled">
+            <require>
+                <enum value="0"                                             name="VK_EXT_EXTENSION_623_SPEC_VERSION"/>
+                <enum value="&quot;VK_EXT_extension_623&quot;"              name="VK_EXT_EXTENSION_623_EXTENSION_NAME"/>
+            </require>
+        </extension>
+        <extension name="VK_KHR_extension_624" number="624" author="KHR" contact="Matthew Netsch @mnetsch" supported="disabled">
+            <require>
+                <enum value="0"                                             name="VK_KHR_EXTENSION_624_SPEC_VERSION"/>
+                <enum value="&quot;VK_KHR_extension_624&quot;"              name="VK_KHR_EXTENSION_624_EXTENSION_NAME"/>
+            </require>
+            <require depends="VK_KHR_maintenance5,VK_VERSION_1_4">
+                <enum bitpos="41" extends="VkPipelineCreateFlagBits2"       name="VK_PIPELINE_CREATE_2_RESERVED_41_BIT_KHR"/>
+                <enum bitpos="42" extends="VkPipelineCreateFlagBits2"       name="VK_PIPELINE_CREATE_2_RESERVED_42_BIT_KHR"/>
+            </require>
+            <require depends="VK_EXT_shader_object">
+                <enum bitpos="12" extends="VkShaderCreateFlagBitsEXT"       name="VK_SHADER_CREATE_RESERVED_12_BIT_EXT"/>
+                <enum bitpos="13" extends="VkShaderCreateFlagBitsEXT"       name="VK_SHADER_CREATE_RESERVED_13_BIT_EXT"/>
+                <enum bitpos="14" extends="VkShaderCreateFlagBitsEXT"       name="VK_SHADER_CREATE_RESERVED_14_BIT_EXT"/>
+            </require>
+        </extension>
+        <extension name="VK_KHR_extension_625" number="625" author="KHR" contact="James Jones @cubanismo" supported="disabled">
+            <require>
+                <enum value="0"                                             name="VK_KHR_EXTENSION_625_SPEC_VERSION"/>
+                <enum value="&quot;VK_KHR_extension_625&quot;"              name="VK_KHR_EXTENSION_625_EXTENSION_NAME"/>
+            </require>
+        </extension>
+        <extension name="VK_EXT_extension_626" number="626" author="EXT" contact="Robert Mader @rmader" supported="disabled">
+            <require>
+                <enum value="0"                                             name="VK_EXT_EXTENSION_626_SPEC_VERSION"/>
+                <enum value="&quot;VK_EXT_extension_626&quot;"              name="VK_EXT_EXTENSION_626_EXTENSION_NAME"/>
+            </require>
+        </extension>
     </extensions>
     <formats>
         <format name="VK_FORMAT_R4G4_UNORM_PACK8" class="8-bit" blockSize="1" texelsPerBlock="1" packed="8">
@@ -27413,7 +27593,7 @@ typedef void* <name>MTLSharedEvent_id</name>;
             <component name="R" bits="8" numericFormat="SRGB"/>
             <component name="G" bits="8" numericFormat="SRGB"/>
             <component name="B" bits="8" numericFormat="SRGB"/>
-            <component name="A" bits="8" numericFormat="SRGB"/>
+            <component name="A" bits="8" numericFormat="UNORM"/>
         </format>
         <format name="VK_FORMAT_B8G8R8A8_UNORM" class="32-bit" blockSize="4" texelsPerBlock="1">
             <component name="B" bits="8" numericFormat="UNORM"/>
@@ -27455,7 +27635,7 @@ typedef void* <name>MTLSharedEvent_id</name>;
             <component name="B" bits="8" numericFormat="SRGB"/>
             <component name="G" bits="8" numericFormat="SRGB"/>
             <component name="R" bits="8" numericFormat="SRGB"/>
-            <component name="A" bits="8" numericFormat="SRGB"/>
+            <component name="A" bits="8" numericFormat="UNORM"/>
         </format>
         <format name="VK_FORMAT_A8B8G8R8_UNORM_PACK32" class="32-bit" blockSize="4" texelsPerBlock="1" packed="32">
             <component name="A" bits="8" numericFormat="UNORM"/>
@@ -27494,7 +27674,7 @@ typedef void* <name>MTLSharedEvent_id</name>;
             <component name="R" bits="8" numericFormat="SINT"/>
         </format>
         <format name="VK_FORMAT_A8B8G8R8_SRGB_PACK32" class="32-bit" blockSize="4" texelsPerBlock="1" packed="32">
-            <component name="A" bits="8" numericFormat="SRGB"/>
+            <component name="A" bits="8" numericFormat="UNORM"/>
             <component name="B" bits="8" numericFormat="SRGB"/>
             <component name="G" bits="8" numericFormat="SRGB"/>
             <component name="R" bits="8" numericFormat="SRGB"/>
@@ -27888,7 +28068,7 @@ typedef void* <name>MTLSharedEvent_id</name>;
             <component name="R" bits="compressed" numericFormat="SRGB"/>
             <component name="G" bits="compressed" numericFormat="SRGB"/>
             <component name="B" bits="compressed" numericFormat="SRGB"/>
-            <component name="A" bits="compressed" numericFormat="SRGB"/>
+            <component name="A" bits="compressed" numericFormat="UNORM"/>
         </format>
         <format name="VK_FORMAT_BC2_UNORM_BLOCK" class="BC2" blockSize="16" texelsPerBlock="16" blockExtent="4,4,1" compressed="BC">
             <component name="R" bits="compressed" numericFormat="UNORM"/>
@@ -27900,7 +28080,7 @@ typedef void* <name>MTLSharedEvent_id</name>;
             <component name="R" bits="compressed" numericFormat="SRGB"/>
             <component name="G" bits="compressed" numericFormat="SRGB"/>
             <component name="B" bits="compressed" numericFormat="SRGB"/>
-            <component name="A" bits="compressed" numericFormat="SRGB"/>
+            <component name="A" bits="compressed" numericFormat="UNORM"/>
         </format>
         <format name="VK_FORMAT_BC3_UNORM_BLOCK" class="BC3" blockSize="16" texelsPerBlock="16" blockExtent="4,4,1" compressed="BC">
             <component name="R" bits="compressed" numericFormat="UNORM"/>
@@ -27912,7 +28092,7 @@ typedef void* <name>MTLSharedEvent_id</name>;
             <component name="R" bits="compressed" numericFormat="SRGB"/>
             <component name="G" bits="compressed" numericFormat="SRGB"/>
             <component name="B" bits="compressed" numericFormat="SRGB"/>
-            <component name="A" bits="compressed" numericFormat="SRGB"/>
+            <component name="A" bits="compressed" numericFormat="UNORM"/>
         </format>
         <format name="VK_FORMAT_BC4_UNORM_BLOCK" class="BC4" blockSize="8" texelsPerBlock="16" blockExtent="4,4,1" compressed="BC">
             <component name="R" bits="compressed" numericFormat="UNORM"/>
@@ -27948,7 +28128,7 @@ typedef void* <name>MTLSharedEvent_id</name>;
             <component name="R" bits="compressed" numericFormat="SRGB"/>
             <component name="G" bits="compressed" numericFormat="SRGB"/>
             <component name="B" bits="compressed" numericFormat="SRGB"/>
-            <component name="A" bits="compressed" numericFormat="SRGB"/>
+            <component name="A" bits="compressed" numericFormat="UNORM"/>
         </format>
         <format name="VK_FORMAT_ETC2_R8G8B8_UNORM_BLOCK" class="ETC2_RGB" blockSize="8" texelsPerBlock="16" blockExtent="4,4,1" compressed="ETC2">
             <component name="R" bits="compressed" numericFormat="UNORM"/>
@@ -27970,7 +28150,7 @@ typedef void* <name>MTLSharedEvent_id</name>;
             <component name="R" bits="compressed" numericFormat="SRGB"/>
             <component name="G" bits="compressed" numericFormat="SRGB"/>
             <component name="B" bits="compressed" numericFormat="SRGB"/>
-            <component name="A" bits="compressed" numericFormat="SRGB"/>
+            <component name="A" bits="compressed" numericFormat="UNORM"/>
         </format>
         <format name="VK_FORMAT_ETC2_R8G8B8A8_UNORM_BLOCK" class="ETC2_EAC_RGBA" blockSize="16" texelsPerBlock="16" blockExtent="4,4,1" compressed="ETC2">
             <component name="R" bits="compressed" numericFormat="UNORM"/>
@@ -27982,7 +28162,7 @@ typedef void* <name>MTLSharedEvent_id</name>;
             <component name="R" bits="compressed" numericFormat="SRGB"/>
             <component name="G" bits="compressed" numericFormat="SRGB"/>
             <component name="B" bits="compressed" numericFormat="SRGB"/>
-            <component name="A" bits="compressed" numericFormat="SRGB"/>
+            <component name="A" bits="compressed" numericFormat="UNORM"/>
         </format>
         <format name="VK_FORMAT_EAC_R11_UNORM_BLOCK" class="EAC_R" blockSize="8" texelsPerBlock="16" blockExtent="4,4,1" compressed="EAC">
             <component name="R" bits="11" numericFormat="UNORM"/>
@@ -28008,7 +28188,7 @@ typedef void* <name>MTLSharedEvent_id</name>;
             <component name="R" bits="compressed" numericFormat="SRGB"/>
             <component name="G" bits="compressed" numericFormat="SRGB"/>
             <component name="B" bits="compressed" numericFormat="SRGB"/>
-            <component name="A" bits="compressed" numericFormat="SRGB"/>
+            <component name="A" bits="compressed" numericFormat="UNORM"/>
         </format>
         <format name="VK_FORMAT_ASTC_5x4_UNORM_BLOCK" class="ASTC_5x4" blockSize="16" texelsPerBlock="20" blockExtent="5,4,1" compressed="ASTC LDR">
             <component name="R" bits="compressed" numericFormat="UNORM"/>
@@ -28020,7 +28200,7 @@ typedef void* <name>MTLSharedEvent_id</name>;
             <component name="R" bits="compressed" numericFormat="SRGB"/>
             <component name="G" bits="compressed" numericFormat="SRGB"/>
             <component name="B" bits="compressed" numericFormat="SRGB"/>
-            <component name="A" bits="compressed" numericFormat="SRGB"/>
+            <component name="A" bits="compressed" numericFormat="UNORM"/>
         </format>
         <format name="VK_FORMAT_ASTC_5x5_UNORM_BLOCK" class="ASTC_5x5" blockSize="16" texelsPerBlock="25" blockExtent="5,5,1" compressed="ASTC LDR">
             <component name="R" bits="compressed" numericFormat="UNORM"/>
@@ -28032,7 +28212,7 @@ typedef void* <name>MTLSharedEvent_id</name>;
             <component name="R" bits="compressed" numericFormat="SRGB"/>
             <component name="G" bits="compressed" numericFormat="SRGB"/>
             <component name="B" bits="compressed" numericFormat="SRGB"/>
-            <component name="A" bits="compressed" numericFormat="SRGB"/>
+            <component name="A" bits="compressed" numericFormat="UNORM"/>
         </format>
         <format name="VK_FORMAT_ASTC_6x5_UNORM_BLOCK" class="ASTC_6x5" blockSize="16" texelsPerBlock="30" blockExtent="6,5,1" compressed="ASTC LDR">
             <component name="R" bits="compressed" numericFormat="UNORM"/>
@@ -28044,7 +28224,7 @@ typedef void* <name>MTLSharedEvent_id</name>;
             <component name="R" bits="compressed" numericFormat="SRGB"/>
             <component name="G" bits="compressed" numericFormat="SRGB"/>
             <component name="B" bits="compressed" numericFormat="SRGB"/>
-            <component name="A" bits="compressed" numericFormat="SRGB"/>
+            <component name="A" bits="compressed" numericFormat="UNORM"/>
         </format>
         <format name="VK_FORMAT_ASTC_6x6_UNORM_BLOCK" class="ASTC_6x6" blockSize="16" texelsPerBlock="36" blockExtent="6,6,1" compressed="ASTC LDR">
             <component name="R" bits="compressed" numericFormat="UNORM"/>
@@ -28056,7 +28236,7 @@ typedef void* <name>MTLSharedEvent_id</name>;
             <component name="R" bits="compressed" numericFormat="SRGB"/>
             <component name="G" bits="compressed" numericFormat="SRGB"/>
             <component name="B" bits="compressed" numericFormat="SRGB"/>
-            <component name="A" bits="compressed" numericFormat="SRGB"/>
+            <component name="A" bits="compressed" numericFormat="UNORM"/>
         </format>
         <format name="VK_FORMAT_ASTC_8x5_UNORM_BLOCK" class="ASTC_8x5" blockSize="16" texelsPerBlock="40" blockExtent="8,5,1" compressed="ASTC LDR">
             <component name="R" bits="compressed" numericFormat="UNORM"/>
@@ -28068,7 +28248,7 @@ typedef void* <name>MTLSharedEvent_id</name>;
             <component name="R" bits="compressed" numericFormat="SRGB"/>
             <component name="G" bits="compressed" numericFormat="SRGB"/>
             <component name="B" bits="compressed" numericFormat="SRGB"/>
-            <component name="A" bits="compressed" numericFormat="SRGB"/>
+            <component name="A" bits="compressed" numericFormat="UNORM"/>
         </format>
         <format name="VK_FORMAT_ASTC_8x6_UNORM_BLOCK" class="ASTC_8x6" blockSize="16" texelsPerBlock="48" blockExtent="8,6,1" compressed="ASTC LDR">
             <component name="R" bits="compressed" numericFormat="UNORM"/>
@@ -28080,7 +28260,7 @@ typedef void* <name>MTLSharedEvent_id</name>;
             <component name="R" bits="compressed" numericFormat="SRGB"/>
             <component name="G" bits="compressed" numericFormat="SRGB"/>
             <component name="B" bits="compressed" numericFormat="SRGB"/>
-            <component name="A" bits="compressed" numericFormat="SRGB"/>
+            <component name="A" bits="compressed" numericFormat="UNORM"/>
         </format>
         <format name="VK_FORMAT_ASTC_8x8_UNORM_BLOCK" class="ASTC_8x8" blockSize="16" texelsPerBlock="64" blockExtent="8,8,1" compressed="ASTC LDR">
             <component name="R" bits="compressed" numericFormat="UNORM"/>
@@ -28092,7 +28272,7 @@ typedef void* <name>MTLSharedEvent_id</name>;
             <component name="R" bits="compressed" numericFormat="SRGB"/>
             <component name="G" bits="compressed" numericFormat="SRGB"/>
             <component name="B" bits="compressed" numericFormat="SRGB"/>
-            <component name="A" bits="compressed" numericFormat="SRGB"/>
+            <component name="A" bits="compressed" numericFormat="UNORM"/>
         </format>
         <format name="VK_FORMAT_ASTC_10x5_UNORM_BLOCK" class="ASTC_10x5" blockSize="16" texelsPerBlock="50" blockExtent="10,5,1" compressed="ASTC LDR">
             <component name="R" bits="compressed" numericFormat="UNORM"/>
@@ -28104,7 +28284,7 @@ typedef void* <name>MTLSharedEvent_id</name>;
             <component name="R" bits="compressed" numericFormat="SRGB"/>
             <component name="G" bits="compressed" numericFormat="SRGB"/>
             <component name="B" bits="compressed" numericFormat="SRGB"/>
-            <component name="A" bits="compressed" numericFormat="SRGB"/>
+            <component name="A" bits="compressed" numericFormat="UNORM"/>
         </format>
         <format name="VK_FORMAT_ASTC_10x6_UNORM_BLOCK" class="ASTC_10x6" blockSize="16" texelsPerBlock="60" blockExtent="10,6,1" compressed="ASTC LDR">
             <component name="R" bits="compressed" numericFormat="UNORM"/>
@@ -28116,7 +28296,7 @@ typedef void* <name>MTLSharedEvent_id</name>;
             <component name="R" bits="compressed" numericFormat="SRGB"/>
             <component name="G" bits="compressed" numericFormat="SRGB"/>
             <component name="B" bits="compressed" numericFormat="SRGB"/>
-            <component name="A" bits="compressed" numericFormat="SRGB"/>
+            <component name="A" bits="compressed" numericFormat="UNORM"/>
         </format>
         <format name="VK_FORMAT_ASTC_10x8_UNORM_BLOCK" class="ASTC_10x8" blockSize="16" texelsPerBlock="80" blockExtent="10,8,1" compressed="ASTC LDR">
             <component name="R" bits="compressed" numericFormat="UNORM"/>
@@ -28128,7 +28308,7 @@ typedef void* <name>MTLSharedEvent_id</name>;
             <component name="R" bits="compressed" numericFormat="SRGB"/>
             <component name="G" bits="compressed" numericFormat="SRGB"/>
             <component name="B" bits="compressed" numericFormat="SRGB"/>
-            <component name="A" bits="compressed" numericFormat="SRGB"/>
+            <component name="A" bits="compressed" numericFormat="UNORM"/>
         </format>
         <format name="VK_FORMAT_ASTC_10x10_UNORM_BLOCK" class="ASTC_10x10" blockSize="16" texelsPerBlock="100" blockExtent="10,10,1" compressed="ASTC LDR">
             <component name="R" bits="compressed" numericFormat="UNORM"/>
@@ -28140,7 +28320,7 @@ typedef void* <name>MTLSharedEvent_id</name>;
             <component name="R" bits="compressed" numericFormat="SRGB"/>
             <component name="G" bits="compressed" numericFormat="SRGB"/>
             <component name="B" bits="compressed" numericFormat="SRGB"/>
-            <component name="A" bits="compressed" numericFormat="SRGB"/>
+            <component name="A" bits="compressed" numericFormat="UNORM"/>
         </format>
         <format name="VK_FORMAT_ASTC_12x10_UNORM_BLOCK" class="ASTC_12x10" blockSize="16" texelsPerBlock="120" blockExtent="12,10,1" compressed="ASTC LDR">
             <component name="R" bits="compressed" numericFormat="UNORM"/>
@@ -28152,7 +28332,7 @@ typedef void* <name>MTLSharedEvent_id</name>;
             <component name="R" bits="compressed" numericFormat="SRGB"/>
             <component name="G" bits="compressed" numericFormat="SRGB"/>
             <component name="B" bits="compressed" numericFormat="SRGB"/>
-            <component name="A" bits="compressed" numericFormat="SRGB"/>
+            <component name="A" bits="compressed" numericFormat="UNORM"/>
         </format>
         <format name="VK_FORMAT_ASTC_12x12_UNORM_BLOCK" class="ASTC_12x12" blockSize="16" texelsPerBlock="144" blockExtent="12,12,1" compressed="ASTC LDR">
             <component name="R" bits="compressed" numericFormat="UNORM"/>
@@ -28164,7 +28344,7 @@ typedef void* <name>MTLSharedEvent_id</name>;
             <component name="R" bits="compressed" numericFormat="SRGB"/>
             <component name="G" bits="compressed" numericFormat="SRGB"/>
             <component name="B" bits="compressed" numericFormat="SRGB"/>
-            <component name="A" bits="compressed" numericFormat="SRGB"/>
+            <component name="A" bits="compressed" numericFormat="UNORM"/>
         </format>
         <format name="VK_FORMAT_G8B8G8R8_422_UNORM" class="32-bit G8B8G8R8" blockSize="4" texelsPerBlock="1" blockExtent="2,1,1" chroma="422">
             <component name="G" bits="8" numericFormat="UNORM"/>
@@ -28420,25 +28600,25 @@ typedef void* <name>MTLSharedEvent_id</name>;
             <component name="R" bits="compressed" numericFormat="SRGB"/>
             <component name="G" bits="compressed" numericFormat="SRGB"/>
             <component name="B" bits="compressed" numericFormat="SRGB"/>
-            <component name="A" bits="compressed" numericFormat="SRGB"/>
+            <component name="A" bits="compressed" numericFormat="UNORM"/>
         </format>
         <format name="VK_FORMAT_PVRTC1_4BPP_SRGB_BLOCK_IMG" class="PVRTC1_4BPP" blockSize="8" texelsPerBlock="1" blockExtent="4,4,1" compressed="PVRTC">
             <component name="R" bits="compressed" numericFormat="SRGB"/>
             <component name="G" bits="compressed" numericFormat="SRGB"/>
             <component name="B" bits="compressed" numericFormat="SRGB"/>
-            <component name="A" bits="compressed" numericFormat="SRGB"/>
+            <component name="A" bits="compressed" numericFormat="UNORM"/>
         </format>
         <format name="VK_FORMAT_PVRTC2_2BPP_SRGB_BLOCK_IMG" class="PVRTC2_2BPP" blockSize="8" texelsPerBlock="1" blockExtent="8,4,1" compressed="PVRTC">
             <component name="R" bits="compressed" numericFormat="SRGB"/>
             <component name="G" bits="compressed" numericFormat="SRGB"/>
             <component name="B" bits="compressed" numericFormat="SRGB"/>
-            <component name="A" bits="compressed" numericFormat="SRGB"/>
+            <component name="A" bits="compressed" numericFormat="UNORM"/>
         </format>
         <format name="VK_FORMAT_PVRTC2_4BPP_SRGB_BLOCK_IMG" class="PVRTC2_4BPP" blockSize="8" texelsPerBlock="1" blockExtent="4,4,1" compressed="PVRTC">
             <component name="R" bits="compressed" numericFormat="SRGB"/>
             <component name="G" bits="compressed" numericFormat="SRGB"/>
             <component name="B" bits="compressed" numericFormat="SRGB"/>
-            <component name="A" bits="compressed" numericFormat="SRGB"/>
+            <component name="A" bits="compressed" numericFormat="UNORM"/>
         </format>
         <format name="VK_FORMAT_ASTC_4x4_SFLOAT_BLOCK" class="ASTC_4x4" blockSize="16" texelsPerBlock="16" blockExtent="4,4,1" compressed="ASTC HDR">
             <component name="R" bits="compressed" numericFormat="SFLOAT"/>
@@ -28864,6 +29044,9 @@ typedef void* <name>MTLSharedEvent_id</name>;
         </spirvextension>
         <spirvextension name="SPV_NV_cooperative_vector">
             <enable extension="VK_NV_cooperative_vector"/>
+        </spirvextension>
+        <spirvextension name="SPV_QCOM_tile_shading">
+            <enable extension="VK_QCOM_tile_shading"/>
         </spirvextension>
     </spirvextensions>
     <spirvcapabilities comment="SPIR-V Capabilities allowed in Vulkan and what is required to use it">
@@ -29425,6 +29608,9 @@ typedef void* <name>MTLSharedEvent_id</name>;
         <spirvcapability name="CooperativeVectorTrainingNV">
             <enable struct="VkPhysicalDeviceCooperativeVectorFeaturesNV" feature="cooperativeVectorTraining" requires="VK_NV_cooperative_vector"/>
         </spirvcapability>
+        <spirvcapability name="TileShadingQCOM">
+            <enable struct="VkPhysicalDeviceTileShadingFeaturesQCOM" feature="tileShading" requires="VK_QCOM_tile_shading"/>
+        </spirvcapability>
     </spirvcapabilities>
     <sync comment="Machine readable representation of the synchronization objects and their mappings">
         <syncstage name="VK_PIPELINE_STAGE_2_NONE" alias="VK_PIPELINE_STAGE_NONE">
@@ -29574,11 +29760,11 @@ typedef void* <name>MTLSharedEvent_id</name>;
         </syncaccess>
         <syncaccess name="VK_ACCESS_2_SHADER_READ_BIT" alias="VK_ACCESS_SHADER_READ_BIT">
             <syncsupport stage="VK_PIPELINE_STAGE_2_ACCELERATION_STRUCTURE_BUILD_BIT_KHR,VK_PIPELINE_STAGE_2_MICROMAP_BUILD_BIT_EXT,VK_PIPELINE_STAGE_2_VERTEX_SHADER_BIT,VK_PIPELINE_STAGE_2_TESSELLATION_CONTROL_SHADER_BIT,VK_PIPELINE_STAGE_2_TESSELLATION_EVALUATION_SHADER_BIT,VK_PIPELINE_STAGE_2_GEOMETRY_SHADER_BIT,VK_PIPELINE_STAGE_2_FRAGMENT_SHADER_BIT,VK_PIPELINE_STAGE_2_COMPUTE_SHADER_BIT,VK_PIPELINE_STAGE_2_RAY_TRACING_SHADER_BIT_KHR,VK_PIPELINE_STAGE_2_TASK_SHADER_BIT_EXT,VK_PIPELINE_STAGE_2_MESH_SHADER_BIT_EXT,VK_PIPELINE_STAGE_2_SUBPASS_SHADER_BIT_HUAWEI,VK_PIPELINE_STAGE_2_CLUSTER_CULLING_SHADER_BIT_HUAWEI"/>
-            <syncequivalent access="VK_ACCESS_2_SHADER_SAMPLED_READ_BIT,VK_ACCESS_2_SHADER_STORAGE_READ_BIT,VK_ACCESS_2_SHADER_BINDING_TABLE_READ_BIT_KHR"/>
+            <syncequivalent access="VK_ACCESS_2_SHADER_SAMPLED_READ_BIT,VK_ACCESS_2_SHADER_STORAGE_READ_BIT,VK_ACCESS_2_SHADER_BINDING_TABLE_READ_BIT_KHR,VK_ACCESS_2_SHADER_TILE_ATTACHMENT_READ_BIT_QCOM"/>
         </syncaccess>
         <syncaccess name="VK_ACCESS_2_SHADER_WRITE_BIT" alias="VK_ACCESS_SHADER_WRITE_BIT">
             <syncsupport stage="VK_PIPELINE_STAGE_2_VERTEX_SHADER_BIT,VK_PIPELINE_STAGE_2_TESSELLATION_CONTROL_SHADER_BIT,VK_PIPELINE_STAGE_2_TESSELLATION_EVALUATION_SHADER_BIT,VK_PIPELINE_STAGE_2_GEOMETRY_SHADER_BIT,VK_PIPELINE_STAGE_2_FRAGMENT_SHADER_BIT,VK_PIPELINE_STAGE_2_COMPUTE_SHADER_BIT,VK_PIPELINE_STAGE_2_RAY_TRACING_SHADER_BIT_KHR,VK_PIPELINE_STAGE_2_TASK_SHADER_BIT_EXT,VK_PIPELINE_STAGE_2_MESH_SHADER_BIT_EXT,VK_PIPELINE_STAGE_2_SUBPASS_SHADER_BIT_HUAWEI,VK_PIPELINE_STAGE_2_CLUSTER_CULLING_SHADER_BIT_HUAWEI"/>
-            <syncequivalent access="VK_ACCESS_2_SHADER_STORAGE_WRITE_BIT"/>
+            <syncequivalent access="VK_ACCESS_2_SHADER_STORAGE_WRITE_BIT,VK_ACCESS_2_SHADER_TILE_ATTACHMENT_WRITE_BIT_QCOM"/>
         </syncaccess>
         <syncaccess name="VK_ACCESS_2_COLOR_ATTACHMENT_READ_BIT" alias="VK_ACCESS_COLOR_ATTACHMENT_READ_BIT">
             <comment>Fragment shader stage is added by the VK_EXT_shader_tile_image extension</comment>
@@ -29694,6 +29880,12 @@ typedef void* <name>MTLSharedEvent_id</name>;
         </syncaccess>
         <syncaccess name="VK_ACCESS_2_OPTICAL_FLOW_WRITE_BIT_NV">
             <syncsupport stage="VK_PIPELINE_STAGE_2_OPTICAL_FLOW_BIT_NV"/>
+        </syncaccess>
+        <syncaccess name="VK_ACCESS_2_SHADER_TILE_ATTACHMENT_READ_BIT_QCOM">
+            <syncsupport stage="VK_PIPELINE_STAGE_2_FRAGMENT_SHADER_BIT,VK_PIPELINE_STAGE_2_COMPUTE_SHADER_BIT"/>
+        </syncaccess>
+        <syncaccess name="VK_ACCESS_2_SHADER_TILE_ATTACHMENT_WRITE_BIT_QCOM">
+            <syncsupport stage="VK_PIPELINE_STAGE_2_FRAGMENT_SHADER_BIT,VK_PIPELINE_STAGE_2_COMPUTE_SHADER_BIT"/>
         </syncaccess>
         <syncpipeline name="graphics primitive">
             <syncpipelinestage>VK_PIPELINE_STAGE_2_DRAW_INDIRECT_BIT</syncpipelinestage>
