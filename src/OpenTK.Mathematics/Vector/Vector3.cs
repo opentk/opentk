@@ -1173,6 +1173,31 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
+        /// Transform a 3-dimensional vector into a 2-dimensional vector using the given 2x3 Matrix.
+        /// </summary>
+        /// <param name="mat">The desired transformation.</param>
+        /// <param name="vec">The vector to transform.</param>
+        /// <returns>The transformed vector.</returns>
+        [Pure]
+        public static Vector2 TransformTwoDimensionsColumn(Matrix2x3 mat, Vector3 vec)
+        {
+            TransformTwoDimensionsColumn(in mat, in vec, out Vector2 result);
+            return result;
+        }
+
+        /// <summary>
+        /// Transform a 3-dimensional vector into a 2-dimensional vector using the given 2x3 Matrix.
+        /// </summary>
+        /// <param name="mat">The desired transformation.</param>
+        /// <param name="vec">The vector to transform.</param>
+        /// <param name="result">The transformed vector.</param>
+        public static void TransformTwoDimensionsColumn(in Matrix2x3 mat, in Vector3 vec, out Vector2 result)
+        {
+            result.X = (mat.Row0.X * vec.X) + (mat.Row0.Y * vec.Y) + (mat.Row0.Z * vec.Z);
+            result.Y = (mat.Row1.X * vec.X) + (mat.Row1.Y * vec.Y) + (mat.Row1.Z * vec.Z);
+        }
+
+        /// <summary>
         /// Transform a 3-dimensional vector into a 4-dimensional vector using the given 3x4 Matrix.
         /// </summary>
         /// <param name="vec">The vector to transform.</param>

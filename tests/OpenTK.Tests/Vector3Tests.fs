@@ -358,6 +358,25 @@ module Vector3 =
             Assert.Equal(r2, r3)
 
         [<Property>]
+        let ``Matrix2x3-Vector3 multiplication is the same as vector/column multiplication and summation`` (a : Matrix2x3, b : Vector3) =
+            let res = a * b
+            let c1 = b.X * a.M11 + b.Y * a.M12 + b.Z * a.M13
+            let c2 = b.X * a.M21 + b.Y * a.M22 + b.Z * a.M23
+
+            let exp = Vector2(c1, c2)
+
+            Assert.Equal(exp, res)
+
+        [<Property>]
+        let ``Matrix2x3-Vector3 multiplication is consistent across overloads`` (a : Matrix2x3, b : Vector3) =
+            let r1 = a * b;
+            let r2 = Vector3.TransformTwoDimensionsColumn(a, b);
+            let r3 = Vector3.TransformTwoDimensionsColumn(&a, &b);
+
+            Assert.Equal(r1, r2)
+            Assert.Equal(r2, r3)
+
+        [<Property>]
         let ``Vector3-Matrix3x4 multiplication is the same as vector/column multiplication and summation`` (a : Matrix3x4, b : Vector3) =
             let res = b * a
 
