@@ -36,6 +36,7 @@ namespace OpenTK.Mathematics
     [StructLayout(LayoutKind.Sequential)]
     public struct Matrix2x4d : IEquatable<Matrix2x4d>, IFormattable,
                                 IMultiplyOperators<Matrix2x4d, double, Matrix2x4d>,
+                                IMultiplyOperators<Matrix2x4d, Vector4d, Vector2d>,
                                 IMultiplyOperators<Matrix2x4d, Matrix4x2, Matrix2d>,
                                 IMultiplyOperators<Matrix2x4d, Matrix4x3, Matrix2x3d>,
                                 IMultiplyOperators<Matrix2x4d, Matrix4, Matrix2x4d>,
@@ -767,6 +768,18 @@ namespace OpenTK.Mathematics
         public static Matrix2x4d operator *(Matrix2x4d left, double right)
         {
             return Mult(left, right);
+        }
+
+        /// <summary>
+        /// Transform a 4-dimensional vector into a 2-dimensional vector using the given 2x4 Matrix.
+        /// </summary>
+        /// <param name="mat">The desired transformation.</param>
+        /// <param name="vec">The vector to transform.</param>
+        /// <returns>The transformed vector.</returns>
+        public static Vector2d operator *(Matrix2x4d mat, Vector4d vec)
+        {
+            Vector4d.TransformTwoDimensionsColumn(in mat, in vec, out Vector2d result);
+            return result;
         }
 
         /// <summary>

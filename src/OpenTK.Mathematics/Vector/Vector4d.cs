@@ -1099,6 +1099,33 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
+        /// Transform a 4-dimensional vector into a 2-dimensional vector using the given 2x4 Matrix.
+        /// </summary>
+        /// <param name="mat">The desired transformation.</param>
+        /// <param name="vec">The vector to transform.</param>
+        /// <returns>The transformed vector.</returns>
+        [Pure]
+        public static Vector2d TransformTwoDimensionsColumn(Matrix2x4d mat, Vector4d vec)
+        {
+            TransformTwoDimensionsColumn(in mat, in vec, out Vector2d result);
+            return result;
+        }
+
+        /// <summary>
+        /// Transform a 4-dimensional vector into a 2-dimensional vector using the given 2x4 Matrix.
+        /// </summary>
+        /// <param name="mat">The desired transformation.</param>
+        /// <param name="vec">The vector to transform.</param>
+        /// <param name="result">The transformed vector.</param>
+        public static void TransformTwoDimensionsColumn(in Matrix2x4d mat, in Vector4d vec, out Vector2d result)
+        {
+            result = new Vector2d(
+                (mat.Row0.X * vec.X) + (mat.Row0.Y * vec.Y) + (mat.Row0.Z * vec.Z) + (mat.Row0.W * vec.W),
+                (mat.Row1.X * vec.X) + (mat.Row1.Y * vec.Y) + (mat.Row1.Z * vec.Z) + (mat.Row1.W * vec.W)
+            );
+        }
+
+        /// <summary>
         /// Gets or sets an OpenTK.Vector2d with the X and Y components of this instance.
         /// </summary>
         [XmlIgnore]
