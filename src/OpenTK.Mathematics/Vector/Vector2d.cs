@@ -1053,6 +1053,33 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
+        /// Transform a 2-dimensional vector into a 3-dimensional vector using the given 3x2 Matrix.
+        /// </summary>
+        /// <param name="mat">The desired transformation.</param>
+        /// <param name="vec">The vector to transform.</param>
+        /// <returns>The transformed vector in 3 dimensions.</returns>
+        [Pure]
+        public static Vector4d TransformFourDimensionsColumn(Matrix4x2d mat, Vector2d vec)
+        {
+            TransformFourDimensionsColumn(in mat, in vec, out Vector4d result);
+            return result;
+        }
+
+        /// <summary>
+        /// Transform a 2-dimensional vector into a 3-dimensional vector using the given 3x2 Matrix.
+        /// </summary>
+        /// <param name="mat">The desired transformation.</param>
+        /// <param name="vec">The vector to transform.</param>
+        /// <param name="result">The transformed, 3-dimensional vector.</param>
+        public static void TransformFourDimensionsColumn(in Matrix4x2d mat, in Vector2d vec, out Vector4d result)
+        {
+            result.X = (mat.Row0.X * vec.X) + (mat.Row0.Y * vec.Y);
+            result.Y = (mat.Row1.X * vec.X) + (mat.Row1.Y * vec.Y);
+            result.Z = (mat.Row2.X * vec.X) + (mat.Row2.Y * vec.Y);
+            result.W = (mat.Row3.X * vec.X) + (mat.Row3.Y * vec.Y);
+        }
+
+        /// <summary>
         /// Gets or sets an OpenTK.Vector2d with the Y and X components of this instance.
         /// </summary>
         [XmlIgnore]
