@@ -68,3 +68,24 @@ module Vector4d =
 
             Assert.Equal(r1, r2)
             Assert.Equal(r2, r3)
+
+        [<Property>]
+        let ``Matrix3x4d-Vector4d multiplication is the same as vector/column multiplication and summation`` (a : Matrix3x4d, b : Vector4d) =
+            let res = a * b
+
+            let c1 = b.X * a.M11 + b.Y * a.M12 + b.Z * a.M13 + b.W * a.M14
+            let c2 = b.X * a.M21 + b.Y * a.M22 + b.Z * a.M23 + b.W * a.M24
+            let c3 = b.X * a.M31 + b.Y * a.M32 + b.Z * a.M33 + b.W * a.M34
+
+            let exp = Vector3d(c1, c2, c3)
+
+            Assert.Equal(exp, res)
+
+        [<Property>]
+        let ``Matrix3x4d-Vector4d multiplication is consistent across overloads`` (a : Matrix3x4d, b : Vector4d) =
+            let r1 = a * b;
+            let r2 = Vector4d.TransformThreeDimensionsColumn(a, b);
+            let r3 = Vector4d.TransformThreeDimensionsColumn(&a, &b);
+
+            Assert.Equal(r1, r2)
+            Assert.Equal(r2, r3)
