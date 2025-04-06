@@ -9,6 +9,7 @@
 
 using System;
 using System.Diagnostics.Contracts;
+using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Xml.Serialization;
@@ -23,7 +24,19 @@ namespace OpenTK.Mathematics
     /// </remarks>
     [Serializable]
     [StructLayout(LayoutKind.Sequential)]
-    public struct Vector3i : IEquatable<Vector3i>, IFormattable
+    public struct Vector3i : IEquatable<Vector3i>, IFormattable,
+                            IAdditionOperators<Vector3i, Vector3i, Vector3i>,
+                            ISubtractionOperators<Vector3i, Vector3i, Vector3i>,
+                            IUnaryNegationOperators<Vector3i, Vector3i>,
+                            IUnaryPlusOperators<Vector3i, Vector3i>,
+                            IMultiplyOperators<Vector3i, int, Vector3i>,
+                            IMultiplyOperators<Vector3i, Vector3i, Vector3i>,
+                            IDivisionOperators<Vector3i, int, Vector3i>,
+                            IDivisionOperators<Vector3i, Vector3i, Vector3i>,
+                            IEqualityOperators<Vector3i, Vector3i, bool>,
+                            IAdditiveIdentity<Vector3i, Vector3i>,
+                            IMultiplicativeIdentity<Vector3i, Vector3i>,
+                            IMinMaxValue<Vector3i>
     {
         /// <summary>
         /// The X component of the Vector3i.
@@ -181,6 +194,28 @@ namespace OpenTK.Mathematics
         /// Defines the size of the Vector3i struct in bytes.
         /// </summary>
         public static readonly int SizeInBytes = Unsafe.SizeOf<Vector3i>();
+
+        /// <summary>
+        /// Gets the additive identity of Vector3i. Equivalent to Vector3i.Zero.
+        /// </summary>
+        public static Vector3i AdditiveIdentity => Zero;
+
+        /// <summary>
+        /// Gets the multiplicative identity of Vector3i. Equivalent to Vector3i.One.
+        /// </summary>
+        public static Vector3i MultiplicativeIdentity => One;
+
+        /// <summary>
+        /// Gets the maximum value for Vector3i.
+        /// Sets X, Y, and Z components to the largest value for a signed 32-bit integer.
+        /// </summary>
+        public static Vector3i MaxValue => new Vector3i(int.MaxValue, int.MaxValue, int.MaxValue);
+
+        /// <summary>
+        /// Gets the minimum value for Vector3i.
+        /// Sets X, Y, and Z components to the smallest value for a signed 32-bit integer.
+        /// </summary>
+        public static Vector3i MinValue => new Vector3i(int.MinValue, int.MinValue, int.MinValue);
 
         /// <summary>
         /// Adds two vectors.
@@ -673,6 +708,20 @@ namespace OpenTK.Mathematics
             vec.X = -vec.X;
             vec.Y = -vec.Y;
             vec.Z = -vec.Z;
+            return vec;
+        }
+
+        /// <summary>
+        /// Computes the unary plus of the vector.
+        /// </summary>
+        /// <param name="vec">The instance.</param>
+        /// <returns>The result of the calculation.</returns>
+        [Pure]
+        public static Vector3i operator +(Vector3i vec)
+        {
+            vec.X = +vec.X;
+            vec.Y = +vec.Y;
+            vec.Z = +vec.Z;
             return vec;
         }
 
