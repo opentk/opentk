@@ -14,6 +14,8 @@
     <Compile Include="MathHelperTests.fs" />
     <Compile Include="Matrix3x4Tests.fs" />
     <Compile Include="Matrix3x4dTests.fs" />
+    <Compile Include="Matrix4x3Tests.fs" />
+    <Compile Include="Matrix4x3dTests.fs" />
     <Compile Include="Matrix4Tests.fs" />
     <Compile Include="Vector2Tests.fs" />
     <Compile Include="Vector2dTests.fs" />

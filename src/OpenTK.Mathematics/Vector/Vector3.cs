@@ -1225,6 +1225,33 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
+        /// Transform a 3-dimensional vector into a 4-dimensional vector using the given 4x3 Matrix.
+        /// </summary>
+        /// <param name="mat">The desired transformation.</param>
+        /// <param name="vec">The vector to transform.</param>
+        /// <returns>The transformed vector.</returns>
+        [Pure]
+        public static Vector4 TransformFourDimensionsColumn(Matrix4x3 mat, Vector3 vec)
+        {
+            TransformFourDimensionsColumn(in mat, in vec, out Vector4 result);
+            return result;
+        }
+
+        /// <summary>
+        /// Transform a 3-dimensional vector into a 4-dimensional vector using the given 4x3 Matrix.
+        /// </summary>
+        /// <param name="mat">The desired transformation.</param>
+        /// <param name="vec">The vector to transform.</param>
+        /// <param name="result">The transformed vector.</param>
+        public static void TransformFourDimensionsColumn(in Matrix4x3 mat, in Vector3 vec, out Vector4 result)
+        {
+            result.X = (mat.Row0.X * vec.X) + (mat.Row0.Y * vec.Y) + (mat.Row0.Z * vec.Z);
+            result.Y = (mat.Row1.X * vec.X) + (mat.Row1.Y * vec.Y) + (mat.Row1.Z * vec.Z);
+            result.Z = (mat.Row2.X * vec.X) + (mat.Row2.Y * vec.Y) + (mat.Row2.Z * vec.Z);
+            result.W = (mat.Row3.X * vec.X) + (mat.Row3.Y * vec.Y) + (mat.Row3.Z * vec.Z);
+        }
+
+        /// <summary>
         /// Transforms a vector by a quaternion rotation.
         /// </summary>
         /// <param name="vec">The vector to transform.</param>
