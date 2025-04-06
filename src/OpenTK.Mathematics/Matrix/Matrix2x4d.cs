@@ -37,8 +37,8 @@ namespace OpenTK.Mathematics
     public struct Matrix2x4d : IEquatable<Matrix2x4d>, IFormattable,
                                 IMultiplyOperators<Matrix2x4d, double, Matrix2x4d>,
                                 IMultiplyOperators<Matrix2x4d, Vector4d, Vector2d>,
-                                IMultiplyOperators<Matrix2x4d, Matrix4x2, Matrix2d>,
-                                IMultiplyOperators<Matrix2x4d, Matrix4x3, Matrix2x3d>,
+                                IMultiplyOperators<Matrix2x4d, Matrix4x2d, Matrix2d>,
+                                IMultiplyOperators<Matrix2x4d, Matrix4x3d, Matrix2x3d>,
                                 IMultiplyOperators<Matrix2x4d, Matrix4, Matrix2x4d>,
                                 IAdditionOperators<Matrix2x4d, Matrix2x4d, Matrix2x4d>,
                                 ISubtractionOperators<Matrix2x4d, Matrix2x4d, Matrix2x4d>,
@@ -472,7 +472,7 @@ namespace OpenTK.Mathematics
         /// <param name="left">The left operand of the multiplication.</param>
         /// <param name="right">The right operand of the multiplication.</param>
         /// <param name="result">A new instance that is the result of the multiplication.</param>
-        public static void Mult(in Matrix2x4d left, in Matrix4x2 right, out Matrix2d result)
+        public static void Mult(in Matrix2x4d left, in Matrix4x2d right, out Matrix2d result)
         {
             double leftM11 = left.Row0.X;
             double leftM12 = left.Row0.Y;
@@ -504,7 +504,7 @@ namespace OpenTK.Mathematics
         /// <param name="right">The right operand of the multiplication.</param>
         /// <returns>A new instance that is the result of the multiplication.</returns>
         [Pure]
-        public static Matrix2d Mult(Matrix2x4d left, Matrix4x2 right)
+        public static Matrix2d Mult(Matrix2x4d left, Matrix4x2d right)
         {
             Mult(in left, in right, out Matrix2d result);
             return result;
@@ -516,7 +516,7 @@ namespace OpenTK.Mathematics
         /// <param name="left">The left operand of the multiplication.</param>
         /// <param name="right">The right operand of the multiplication.</param>
         /// <param name="result">A new instance that is the result of the multiplication.</param>
-        public static void Mult(in Matrix2x4d left, in Matrix4x3 right, out Matrix2x3d result)
+        public static void Mult(in Matrix2x4d left, in Matrix4x3d right, out Matrix2x3d result)
         {
             double leftM11 = left.Row0.X;
             double leftM12 = left.Row0.Y;
@@ -554,7 +554,7 @@ namespace OpenTK.Mathematics
         /// <param name="right">The right operand of the multiplication.</param>
         /// <returns>A new instance that is the result of the multiplication.</returns>
         [Pure]
-        public static Matrix2x3d Mult(Matrix2x4d left, Matrix4x3 right)
+        public static Matrix2x3d Mult(Matrix2x4d left, Matrix4x3d right)
         {
             Mult(in left, in right, out Matrix2x3d result);
             return result;
@@ -789,7 +789,7 @@ namespace OpenTK.Mathematics
         /// <param name="right">right-hand operand.</param>
         /// <returns>A new Matrix2d which holds the result of the multiplication.</returns>
         [Pure]
-        public static Matrix2d operator *(Matrix2x4d left, Matrix4x2 right)
+        public static Matrix2d operator *(Matrix2x4d left, Matrix4x2d right)
         {
             return Mult(left, right);
         }
@@ -801,7 +801,7 @@ namespace OpenTK.Mathematics
         /// <param name="right">right-hand operand.</param>
         /// <returns>A new Matrix2x3d which holds the result of the multiplication.</returns>
         [Pure]
-        public static Matrix2x3d operator *(Matrix2x4d left, Matrix4x3 right)
+        public static Matrix2x3d operator *(Matrix2x4d left, Matrix4x3d right)
         {
             return Mult(left, right);
         }
