@@ -268,6 +268,10 @@ namespace OpenTK.Graphics.Vulkan
         Access2ShaderStorageWriteBit = 17179869184,
         /// <summary>[requires: <b>VK_KHR_synchronization2</b>] </summary>
         Access2ShaderStorageWriteBitKhr = 17179869184,
+        /// <summary>[requires: <b>VK_QCOM_tile_shading</b>] </summary>
+        Access2ShaderTileAttachmentReadBitQcom = 524288,
+        /// <summary>[requires: <b>VK_QCOM_tile_shading</b>] </summary>
+        Access2ShaderTileAttachmentWriteBitQcom = 1048576,
         /// <summary>[requires: <b>v1.3</b>] </summary>
         Access2ShaderWriteBit = 64,
         /// <summary>[requires: <b>VK_KHR_synchronization2</b>] </summary>
@@ -4362,6 +4366,8 @@ namespace OpenTK.Graphics.Vulkan
         ObjectTypeDisplayModeKhr = 1000002001,
         /// <summary>[requires: <b>v1.0</b>] </summary>
         ObjectTypeEvent = 11,
+        /// <summary>[requires: <b>VK_NV_external_compute_queue</b>] </summary>
+        ObjectTypeExternalComputeQueueNv = 1000556000,
         /// <summary>[requires: <b>v1.0</b>] </summary>
         ObjectTypeFence = 7,
         /// <summary>[requires: <b>v1.0</b>] </summary>
@@ -6952,6 +6958,8 @@ namespace OpenTK.Graphics.Vulkan
         StructureTypeDirectDriverLoadingListLunarg = 1000459001,
         /// <summary>[requires: <b>VK_EXT_directfb_surface</b>] </summary>
         StructureTypeDirectfbSurfaceCreateInfoExt = 1000346000,
+        /// <summary>[requires: <b>VK_QCOM_tile_shading</b>] </summary>
+        StructureTypeDispatchTileInfoQcom = 1000309005,
         /// <summary>[requires: <b>VK_EXT_display_control</b>] </summary>
         StructureTypeDisplayEventInfoExt = 1000091002,
         /// <summary>[requires: <b>VK_KHR_display</b>] </summary>
@@ -7036,6 +7044,12 @@ namespace OpenTK.Graphics.Vulkan
         StructureTypeExternalBufferProperties = 1000071003,
         /// <summary>[requires: <b>VK_KHR_external_memory_capabilities</b>] </summary>
         StructureTypeExternalBufferPropertiesKhr = 1000071003,
+        /// <summary>[requires: <b>VK_NV_external_compute_queue</b>] </summary>
+        StructureTypeExternalComputeQueueCreateInfoNv = 1000556001,
+        /// <summary>[requires: <b>VK_NV_external_compute_queue</b>] </summary>
+        StructureTypeExternalComputeQueueDataParamsNv = 1000556002,
+        /// <summary>[requires: <b>VK_NV_external_compute_queue</b>] </summary>
+        StructureTypeExternalComputeQueueDeviceCreateInfoNv = 1000556000,
         /// <summary>[requires: <b>v1.1</b>] </summary>
         StructureTypeExternalFenceProperties = 1000112001,
         /// <summary>[requires: <b>VK_KHR_external_fence_capabilities</b>] </summary>
@@ -7432,6 +7446,10 @@ namespace OpenTK.Graphics.Vulkan
         StructureTypePartitionedAccelerationStructureFlagsNv = 1000570005,
         /// <summary>[requires: <b>VK_NV_partitioned_acceleration_structure</b>] </summary>
         StructureTypePartitionedAccelerationStructureInstancesInputNv = 1000570003,
+        /// <summary>[requires: <b>VK_QCOM_tile_shading</b>] </summary>
+        StructureTypePerTileBeginInfoQcom = 1000309003,
+        /// <summary>[requires: <b>VK_QCOM_tile_shading</b>] </summary>
+        StructureTypePerTileEndInfoQcom = 1000309004,
         /// <summary>[requires: <b>VK_INTEL_performance_query</b>] </summary>
         StructureTypePerformanceConfigurationAcquireInfoIntel = 1000210005,
         /// <summary>[requires: <b>VK_KHR_performance_query</b>] </summary>
@@ -7638,6 +7656,8 @@ namespace OpenTK.Graphics.Vulkan
         StructureTypePhysicalDeviceExternalBufferInfo = 1000071002,
         /// <summary>[requires: <b>VK_KHR_external_memory_capabilities</b>] </summary>
         StructureTypePhysicalDeviceExternalBufferInfoKhr = 1000071002,
+        /// <summary>[requires: <b>VK_NV_external_compute_queue</b>] </summary>
+        StructureTypePhysicalDeviceExternalComputeQueuePropertiesNv = 1000556003,
         /// <summary>[requires: <b>v1.1</b>] </summary>
         StructureTypePhysicalDeviceExternalFenceInfo = 1000112000,
         /// <summary>[requires: <b>VK_KHR_external_fence_capabilities</b>] </summary>
@@ -8222,6 +8242,10 @@ namespace OpenTK.Graphics.Vulkan
         StructureTypePhysicalDeviceTextureCompressionAstcHdrFeaturesExt = 1000066000,
         /// <summary>[requires: <b>VK_QCOM_tile_properties</b>] </summary>
         StructureTypePhysicalDeviceTilePropertiesFeaturesQcom = 1000484000,
+        /// <summary>[requires: <b>VK_QCOM_tile_shading</b>] </summary>
+        StructureTypePhysicalDeviceTileShadingFeaturesQcom = 1000309000,
+        /// <summary>[requires: <b>VK_QCOM_tile_shading</b>] </summary>
+        StructureTypePhysicalDeviceTileShadingPropertiesQcom = 1000309001,
         /// <summary>[requires: <b>v1.2</b>] </summary>
         StructureTypePhysicalDeviceTimelineSemaphoreFeatures = 1000207000,
         /// <summary>[requires: <b>VK_KHR_timeline_semaphore</b>] </summary>
@@ -8566,6 +8590,8 @@ namespace OpenTK.Graphics.Vulkan
         StructureTypeRenderPassStripeSubmitInfoArm = 1000424004,
         /// <summary>[requires: <b>VK_EXT_subpass_merge_feedback</b>] </summary>
         StructureTypeRenderPassSubpassFeedbackCreateInfoExt = 1000458003,
+        /// <summary>[requires: <b>VK_QCOM_tile_shading</b>] </summary>
+        StructureTypeRenderPassTileShadingCreateInfoQcom = 1000309002,
         /// <summary>[requires: <b>VK_QCOM_render_pass_transform</b>] </summary>
         StructureTypeRenderPassTransformBeginInfoQcom = 1000282001,
         /// <summary>[requires: <b>v1.4</b>] </summary>
@@ -9103,6 +9129,8 @@ namespace OpenTK.Graphics.Vulkan
         SubpassDescriptionRasterizationOrderAttachmentStencilAccessBitExt = 64,
         /// <summary>[requires: <b>VK_QCOM_render_pass_shader_resolve</b>] </summary>
         SubpassDescriptionShaderResolveBitQcom = 8,
+        /// <summary>[requires: <b>VK_QCOM_tile_shading</b>] </summary>
+        SubpassDescriptionTileShadingApronBitQcom = 256,
     }
     /// <summary><b>[requires: VK_EXT_subpass_merge_feedback]</b> </summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/latest/man/html/VkSubpassMergeStatusEXT.html" /></remarks>
@@ -9220,6 +9248,16 @@ namespace OpenTK.Graphics.Vulkan
         TessellationDomainOriginUpperLeft = 0,
         /// <summary>[requires: <b>VK_KHR_maintenance2</b>] </summary>
         TessellationDomainOriginUpperLeftKhr = 0,
+    }
+    /// <summary><b>[requires: VK_QCOM_tile_shading]</b> </summary>
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/latest/man/html/VkTileShadingRenderPassFlagBitsQCOM.html" /></remarks>
+    [Flags]
+    public enum VkTileShadingRenderPassFlagBitsQCOM : uint
+    {
+        /// <summary>[requires: <b>VK_QCOM_tile_shading</b>] </summary>
+        TileShadingRenderPassEnableBitQcom = 1,
+        /// <summary>[requires: <b>VK_QCOM_tile_shading</b>] </summary>
+        TileShadingRenderPassPerTileExecutionBitQcom = 2,
     }
     /// <summary><b>[requires: VK_KHR_calibrated_timestamps]</b> Used by <see cref="Vk.GetPhysicalDeviceCalibrateableTimeDomainsEXT"/>, <see cref="Vk.GetPhysicalDeviceCalibrateableTimeDomainsKHR"/></summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/latest/man/html/VkTimeDomainKHR.html" /></remarks>

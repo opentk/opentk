@@ -5890,6 +5890,19 @@ namespace OpenTK.Graphics.Vulkan
             this.z = z;
         }
     }
+    /// <summary><b>[requires: VK_QCOM_tile_shading]</b> </summary>
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDispatchTileInfoQCOM.html" /></remarks>
+    public unsafe struct VkDispatchTileInfoQCOM
+    {
+        public VkStructureType sType = VkStructureType.StructureTypeDispatchTileInfoQcom;
+        public void* pNext;
+        public VkDispatchTileInfoQCOM() { }
+        public VkDispatchTileInfoQCOM(VkStructureType sType, void* pNext)
+        {
+            this.sType = sType;
+            this.pNext = pNext;
+        }
+    }
     /// <summary><b>[requires: VK_EXT_display_control]</b> Used by <see cref="Vk.RegisterDisplayEventEXT"/></summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDisplayEventInfoEXT.html" /></remarks>
     public unsafe struct VkDisplayEventInfoEXT
@@ -6829,6 +6842,51 @@ namespace OpenTK.Graphics.Vulkan
             this.sType = sType;
             this.pNext = pNext;
             this.externalMemoryProperties = externalMemoryProperties;
+        }
+    }
+    /// <summary><b>[requires: VK_NV_external_compute_queue]</b> Used by <see cref="Vk.CreateExternalComputeQueueNV"/></summary>
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkExternalComputeQueueCreateInfoNV.html" /></remarks>
+    public unsafe struct VkExternalComputeQueueCreateInfoNV
+    {
+        public VkStructureType sType = VkStructureType.StructureTypeExternalComputeQueueCreateInfoNv;
+        public void* pNext;
+        public VkQueue preferredQueue;
+        public VkExternalComputeQueueCreateInfoNV() { }
+        public VkExternalComputeQueueCreateInfoNV(VkStructureType sType, void* pNext, VkQueue preferredQueue)
+        {
+            this.sType = sType;
+            this.pNext = pNext;
+            this.preferredQueue = preferredQueue;
+        }
+    }
+    /// <summary><b>[requires: VK_NV_external_compute_queue]</b> Used by <see cref="Vk.GetExternalComputeQueueDataNV"/></summary>
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkExternalComputeQueueDataParamsNV.html" /></remarks>
+    public unsafe struct VkExternalComputeQueueDataParamsNV
+    {
+        public VkStructureType sType = VkStructureType.StructureTypeExternalComputeQueueDataParamsNv;
+        public void* pNext;
+        public uint deviceIndex;
+        public VkExternalComputeQueueDataParamsNV() { }
+        public VkExternalComputeQueueDataParamsNV(VkStructureType sType, void* pNext, uint deviceIndex)
+        {
+            this.sType = sType;
+            this.pNext = pNext;
+            this.deviceIndex = deviceIndex;
+        }
+    }
+    /// <summary><b>[requires: VK_NV_external_compute_queue]</b> </summary>
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkExternalComputeQueueDeviceCreateInfoNV.html" /></remarks>
+    public unsafe struct VkExternalComputeQueueDeviceCreateInfoNV
+    {
+        public VkStructureType sType = VkStructureType.StructureTypeExternalComputeQueueDeviceCreateInfoNv;
+        public void* pNext;
+        public uint reservedExternalQueues;
+        public VkExternalComputeQueueDeviceCreateInfoNV() { }
+        public VkExternalComputeQueueDeviceCreateInfoNV(VkStructureType sType, void* pNext, uint reservedExternalQueues)
+        {
+            this.sType = sType;
+            this.pNext = pNext;
+            this.reservedExternalQueues = reservedExternalQueues;
         }
     }
     /// <summary><b>[requires: v1.1]</b> Used by <see cref="Vk.GetPhysicalDeviceExternalFenceProperties"/>, <see cref="Vk.GetPhysicalDeviceExternalFencePropertiesKHR"/></summary>
@@ -11384,6 +11442,32 @@ namespace OpenTK.Graphics.Vulkan
             this.data = data;
         }
     }
+    /// <summary><b>[requires: VK_QCOM_tile_shading]</b> Used by <see cref="Vk.CmdBeginPerTileExecutionQCOM"/></summary>
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPerTileBeginInfoQCOM.html" /></remarks>
+    public unsafe struct VkPerTileBeginInfoQCOM
+    {
+        public VkStructureType sType = VkStructureType.StructureTypePerTileBeginInfoQcom;
+        public void* pNext;
+        public VkPerTileBeginInfoQCOM() { }
+        public VkPerTileBeginInfoQCOM(VkStructureType sType, void* pNext)
+        {
+            this.sType = sType;
+            this.pNext = pNext;
+        }
+    }
+    /// <summary><b>[requires: VK_QCOM_tile_shading]</b> Used by <see cref="Vk.CmdEndPerTileExecutionQCOM"/></summary>
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPerTileEndInfoQCOM.html" /></remarks>
+    public unsafe struct VkPerTileEndInfoQCOM
+    {
+        public VkStructureType sType = VkStructureType.StructureTypePerTileEndInfoQcom;
+        public void* pNext;
+        public VkPerTileEndInfoQCOM() { }
+        public VkPerTileEndInfoQCOM(VkStructureType sType, void* pNext)
+        {
+            this.sType = sType;
+            this.pNext = pNext;
+        }
+    }
     /// <summary><b>[requires: v1.1]</b> </summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPhysicalDevice16BitStorageFeatures.html" /></remarks>
     public unsafe struct VkPhysicalDevice16BitStorageFeatures
@@ -13357,6 +13441,23 @@ namespace OpenTK.Graphics.Vulkan
             this.flags = flags;
             this.usage = usage;
             this.handleType = handleType;
+        }
+    }
+    /// <summary><b>[requires: VK_NV_external_compute_queue]</b> </summary>
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceExternalComputeQueuePropertiesNV.html" /></remarks>
+    public unsafe struct VkPhysicalDeviceExternalComputeQueuePropertiesNV
+    {
+        public VkStructureType sType = VkStructureType.StructureTypePhysicalDeviceExternalComputeQueuePropertiesNv;
+        public void* pNext;
+        public uint externalDataSize;
+        public uint maxExternalQueues;
+        public VkPhysicalDeviceExternalComputeQueuePropertiesNV() { }
+        public VkPhysicalDeviceExternalComputeQueuePropertiesNV(VkStructureType sType, void* pNext, uint externalDataSize, uint maxExternalQueues)
+        {
+            this.sType = sType;
+            this.pNext = pNext;
+            this.externalDataSize = externalDataSize;
+            this.maxExternalQueues = maxExternalQueues;
         }
     }
     /// <summary><b>[requires: v1.1]</b> Used by <see cref="Vk.GetPhysicalDeviceExternalFenceProperties"/>, <see cref="Vk.GetPhysicalDeviceExternalFencePropertiesKHR"/></summary>
@@ -18805,6 +18906,68 @@ namespace OpenTK.Graphics.Vulkan
             this.tileProperties = tileProperties;
         }
     }
+    /// <summary><b>[requires: VK_QCOM_tile_shading]</b> </summary>
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceTileShadingFeaturesQCOM.html" /></remarks>
+    public unsafe struct VkPhysicalDeviceTileShadingFeaturesQCOM
+    {
+        public VkStructureType sType = VkStructureType.StructureTypePhysicalDeviceTileShadingFeaturesQcom;
+        public void* pNext;
+        public int tileShading;
+        public int tileShadingFragmentStage;
+        public int tileShadingColorAttachments;
+        public int tileShadingDepthAttachments;
+        public int tileShadingStencilAttachments;
+        public int tileShadingInputAttachments;
+        public int tileShadingSampledAttachments;
+        public int tileShadingPerTileDraw;
+        public int tileShadingPerTileDispatch;
+        public int tileShadingDispatchTile;
+        public int tileShadingApron;
+        public int tileShadingAnisotropicApron;
+        public int tileShadingAtomicOps;
+        public int tileShadingImageProcessing;
+        public VkPhysicalDeviceTileShadingFeaturesQCOM() { }
+        public VkPhysicalDeviceTileShadingFeaturesQCOM(VkStructureType sType, void* pNext, int tileShading, int tileShadingFragmentStage, int tileShadingColorAttachments, int tileShadingDepthAttachments, int tileShadingStencilAttachments, int tileShadingInputAttachments, int tileShadingSampledAttachments, int tileShadingPerTileDraw, int tileShadingPerTileDispatch, int tileShadingDispatchTile, int tileShadingApron, int tileShadingAnisotropicApron, int tileShadingAtomicOps, int tileShadingImageProcessing)
+        {
+            this.sType = sType;
+            this.pNext = pNext;
+            this.tileShading = tileShading;
+            this.tileShadingFragmentStage = tileShadingFragmentStage;
+            this.tileShadingColorAttachments = tileShadingColorAttachments;
+            this.tileShadingDepthAttachments = tileShadingDepthAttachments;
+            this.tileShadingStencilAttachments = tileShadingStencilAttachments;
+            this.tileShadingInputAttachments = tileShadingInputAttachments;
+            this.tileShadingSampledAttachments = tileShadingSampledAttachments;
+            this.tileShadingPerTileDraw = tileShadingPerTileDraw;
+            this.tileShadingPerTileDispatch = tileShadingPerTileDispatch;
+            this.tileShadingDispatchTile = tileShadingDispatchTile;
+            this.tileShadingApron = tileShadingApron;
+            this.tileShadingAnisotropicApron = tileShadingAnisotropicApron;
+            this.tileShadingAtomicOps = tileShadingAtomicOps;
+            this.tileShadingImageProcessing = tileShadingImageProcessing;
+        }
+    }
+    /// <summary><b>[requires: VK_QCOM_tile_shading]</b> </summary>
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceTileShadingPropertiesQCOM.html" /></remarks>
+    public unsafe struct VkPhysicalDeviceTileShadingPropertiesQCOM
+    {
+        public VkStructureType sType = VkStructureType.StructureTypePhysicalDeviceTileShadingPropertiesQcom;
+        public void* pNext;
+        public uint maxApronSize;
+        public int preferNonCoherent;
+        public VkExtent2D tileGranularity;
+        public VkExtent2D maxTileShadingRate;
+        public VkPhysicalDeviceTileShadingPropertiesQCOM() { }
+        public VkPhysicalDeviceTileShadingPropertiesQCOM(VkStructureType sType, void* pNext, uint maxApronSize, int preferNonCoherent, VkExtent2D tileGranularity, VkExtent2D maxTileShadingRate)
+        {
+            this.sType = sType;
+            this.pNext = pNext;
+            this.maxApronSize = maxApronSize;
+            this.preferNonCoherent = preferNonCoherent;
+            this.tileGranularity = tileGranularity;
+            this.maxTileShadingRate = maxTileShadingRate;
+        }
+    }
     /// <summary><b>[requires: v1.2]</b> </summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceTimelineSemaphoreFeatures.html" /></remarks>
     public unsafe struct VkPhysicalDeviceTimelineSemaphoreFeatures
@@ -22937,6 +23100,23 @@ namespace OpenTK.Graphics.Vulkan
         public descriptionInlineArray1 description;
         public uint postMergeIndex;
         public VkRenderPassSubpassFeedbackInfoEXT() { }
+    }
+    /// <summary><b>[requires: VK_QCOM_tile_shading]</b> </summary>
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkRenderPassTileShadingCreateInfoQCOM.html" /></remarks>
+    public unsafe struct VkRenderPassTileShadingCreateInfoQCOM
+    {
+        public VkStructureType sType = VkStructureType.StructureTypeRenderPassTileShadingCreateInfoQcom;
+        public void* pNext;
+        public VkTileShadingRenderPassFlagBitsQCOM flags;
+        public VkExtent2D tileApronSize;
+        public VkRenderPassTileShadingCreateInfoQCOM() { }
+        public VkRenderPassTileShadingCreateInfoQCOM(VkStructureType sType, void* pNext, VkTileShadingRenderPassFlagBitsQCOM flags, VkExtent2D tileApronSize)
+        {
+            this.sType = sType;
+            this.pNext = pNext;
+            this.flags = flags;
+            this.tileApronSize = tileApronSize;
+        }
     }
     /// <summary><b>[requires: VK_QCOM_render_pass_transform]</b> </summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkRenderPassTransformBeginInfoQCOM.html" /></remarks>

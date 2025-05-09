@@ -1550,6 +1550,12 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[from: <b>VK_KHR_object_refresh</b>]</summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_OBJECT_REFRESH_EXTENSION_NAME.html" /></remarks>
         public const string KhrObjectRefreshExtensionName = "VK_KHR_object_refresh";
+        /// <summary>[from: <b>VK_QCOM_tile_shading</b>]</summary>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_QCOM_TILE_SHADING_SPEC_VERSION.html" /></remarks>
+        public const uint QcomTileShadingSpecVersion = 1;
+        /// <summary>[from: <b>VK_QCOM_tile_shading</b>]</summary>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_QCOM_TILE_SHADING_EXTENSION_NAME.html" /></remarks>
+        public const string QcomTileShadingExtensionName = "VK_QCOM_tile_shading";
         /// <summary>[from: <b>VK_NV_low_latency</b>]</summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_NV_LOW_LATENCY_SPEC_VERSION.html" /></remarks>
         public const uint NvLowLatencySpecVersion = 1;
@@ -2378,6 +2384,12 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[from: <b>VK_NV_raw_access_chains</b>]</summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_NV_RAW_ACCESS_CHAINS_EXTENSION_NAME.html" /></remarks>
         public const string NvRawAccessChainsExtensionName = "VK_NV_raw_access_chains";
+        /// <summary>[from: <b>VK_NV_external_compute_queue</b>]</summary>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_NV_EXTERNAL_COMPUTE_QUEUE_SPEC_VERSION.html" /></remarks>
+        public const uint NvExternalComputeQueueSpecVersion = 1;
+        /// <summary>[from: <b>VK_NV_external_compute_queue</b>]</summary>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_NV_EXTERNAL_COMPUTE_QUEUE_EXTENSION_NAME.html" /></remarks>
+        public const string NvExternalComputeQueueExtensionName = "VK_NV_external_compute_queue";
         /// <summary>[from: <b>VK_KHR_shader_relaxed_extended_instruction</b>]</summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_SHADER_RELAXED_EXTENDED_INSTRUCTION_SPEC_VERSION.html" /></remarks>
         public const uint KhrShaderRelaxedExtendedInstructionSpecVersion = 1;

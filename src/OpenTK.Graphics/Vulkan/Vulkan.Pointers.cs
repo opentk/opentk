@@ -208,6 +208,13 @@ namespace OpenTK.Graphics.Vulkan
             _vkCmdBeginDebugUtilsLabelEXT_fnptr = (delegate* unmanaged<VkCommandBuffer, VkDebugUtilsLabelEXT*, void>)VKLoader.GetInstanceProcAddress("vkCmdBeginDebugUtilsLabelEXT");
             _vkCmdBeginDebugUtilsLabelEXT_fnptr(commandBuffer, pLabelInfo);
         }
+        public static delegate* unmanaged<VkCommandBuffer, VkPerTileBeginInfoQCOM*, void> _vkCmdBeginPerTileExecutionQCOM_fnptr = &vkCmdBeginPerTileExecutionQCOM_Lazy;
+        [UnmanagedCallersOnly]
+        private static void vkCmdBeginPerTileExecutionQCOM_Lazy(VkCommandBuffer commandBuffer, VkPerTileBeginInfoQCOM* pPerTileBeginInfo)
+        {
+            _vkCmdBeginPerTileExecutionQCOM_fnptr = (delegate* unmanaged<VkCommandBuffer, VkPerTileBeginInfoQCOM*, void>)VKLoader.GetInstanceProcAddress("vkCmdBeginPerTileExecutionQCOM");
+            _vkCmdBeginPerTileExecutionQCOM_fnptr(commandBuffer, pPerTileBeginInfo);
+        }
         public static delegate* unmanaged<VkCommandBuffer, VkQueryPool, uint, VkQueryControlFlagBits, void> _vkCmdBeginQuery_fnptr = &vkCmdBeginQuery_Lazy;
         [UnmanagedCallersOnly]
         private static void vkCmdBeginQuery_Lazy(VkCommandBuffer commandBuffer, VkQueryPool queryPool, uint query, VkQueryControlFlagBits flags)
@@ -754,6 +761,13 @@ namespace OpenTK.Graphics.Vulkan
             _vkCmdDispatchIndirect_fnptr = (delegate* unmanaged<VkCommandBuffer, VkBuffer, ulong, void>)VKLoader.GetInstanceProcAddress("vkCmdDispatchIndirect");
             _vkCmdDispatchIndirect_fnptr(commandBuffer, buffer, offset);
         }
+        public static delegate* unmanaged<VkCommandBuffer, void> _vkCmdDispatchTileQCOM_fnptr = &vkCmdDispatchTileQCOM_Lazy;
+        [UnmanagedCallersOnly]
+        private static void vkCmdDispatchTileQCOM_Lazy(VkCommandBuffer commandBuffer)
+        {
+            _vkCmdDispatchTileQCOM_fnptr = (delegate* unmanaged<VkCommandBuffer, void>)VKLoader.GetInstanceProcAddress("vkCmdDispatchTileQCOM");
+            _vkCmdDispatchTileQCOM_fnptr(commandBuffer);
+        }
         public static delegate* unmanaged<VkCommandBuffer, uint, uint, uint, uint, void> _vkCmdDraw_fnptr = &vkCmdDraw_Lazy;
         [UnmanagedCallersOnly]
         private static void vkCmdDraw_Lazy(VkCommandBuffer commandBuffer, uint vertexCount, uint instanceCount, uint firstVertex, uint firstInstance)
@@ -921,6 +935,13 @@ namespace OpenTK.Graphics.Vulkan
         {
             _vkCmdEndDebugUtilsLabelEXT_fnptr = (delegate* unmanaged<VkCommandBuffer, void>)VKLoader.GetInstanceProcAddress("vkCmdEndDebugUtilsLabelEXT");
             _vkCmdEndDebugUtilsLabelEXT_fnptr(commandBuffer);
+        }
+        public static delegate* unmanaged<VkCommandBuffer, VkPerTileEndInfoQCOM*, void> _vkCmdEndPerTileExecutionQCOM_fnptr = &vkCmdEndPerTileExecutionQCOM_Lazy;
+        [UnmanagedCallersOnly]
+        private static void vkCmdEndPerTileExecutionQCOM_Lazy(VkCommandBuffer commandBuffer, VkPerTileEndInfoQCOM* pPerTileEndInfo)
+        {
+            _vkCmdEndPerTileExecutionQCOM_fnptr = (delegate* unmanaged<VkCommandBuffer, VkPerTileEndInfoQCOM*, void>)VKLoader.GetInstanceProcAddress("vkCmdEndPerTileExecutionQCOM");
+            _vkCmdEndPerTileExecutionQCOM_fnptr(commandBuffer, pPerTileEndInfo);
         }
         public static delegate* unmanaged<VkCommandBuffer, VkQueryPool, uint, void> _vkCmdEndQuery_fnptr = &vkCmdEndQuery_Lazy;
         [UnmanagedCallersOnly]
@@ -2364,6 +2385,13 @@ namespace OpenTK.Graphics.Vulkan
             _vkCreateExecutionGraphPipelinesAMDX_fnptr = (delegate* unmanaged<VkDevice, VkPipelineCache, uint, VkExecutionGraphPipelineCreateInfoAMDX*, VkAllocationCallbacks*, VkPipeline*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateExecutionGraphPipelinesAMDX");
             return _vkCreateExecutionGraphPipelinesAMDX_fnptr(device, pipelineCache, createInfoCount, pCreateInfos, pAllocator, pPipelines);
         }
+        public static delegate* unmanaged<VkDevice, VkExternalComputeQueueCreateInfoNV*, VkAllocationCallbacks*, VkExternalComputeQueueNV*, VkResult> _vkCreateExternalComputeQueueNV_fnptr = &vkCreateExternalComputeQueueNV_Lazy;
+        [UnmanagedCallersOnly]
+        private static VkResult vkCreateExternalComputeQueueNV_Lazy(VkDevice device, VkExternalComputeQueueCreateInfoNV* pCreateInfo, VkAllocationCallbacks* pAllocator, VkExternalComputeQueueNV* pExternalQueue)
+        {
+            _vkCreateExternalComputeQueueNV_fnptr = (delegate* unmanaged<VkDevice, VkExternalComputeQueueCreateInfoNV*, VkAllocationCallbacks*, VkExternalComputeQueueNV*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateExternalComputeQueueNV");
+            return _vkCreateExternalComputeQueueNV_fnptr(device, pCreateInfo, pAllocator, pExternalQueue);
+        }
         public static delegate* unmanaged<VkDevice, VkFenceCreateInfo*, VkAllocationCallbacks*, VkFence*, VkResult> _vkCreateFence_fnptr = &vkCreateFence_Lazy;
         [UnmanagedCallersOnly]
         private static VkResult vkCreateFence_Lazy(VkDevice device, VkFenceCreateInfo* pCreateInfo, VkAllocationCallbacks* pAllocator, VkFence* pFence)
@@ -2846,6 +2874,13 @@ namespace OpenTK.Graphics.Vulkan
         {
             _vkDestroyEvent_fnptr = (delegate* unmanaged<VkDevice, VkEvent, VkAllocationCallbacks*, void>)VKLoader.GetInstanceProcAddress("vkDestroyEvent");
             _vkDestroyEvent_fnptr(device, @event, pAllocator);
+        }
+        public static delegate* unmanaged<VkDevice, VkExternalComputeQueueNV, VkAllocationCallbacks*, void> _vkDestroyExternalComputeQueueNV_fnptr = &vkDestroyExternalComputeQueueNV_Lazy;
+        [UnmanagedCallersOnly]
+        private static void vkDestroyExternalComputeQueueNV_Lazy(VkDevice device, VkExternalComputeQueueNV externalQueue, VkAllocationCallbacks* pAllocator)
+        {
+            _vkDestroyExternalComputeQueueNV_fnptr = (delegate* unmanaged<VkDevice, VkExternalComputeQueueNV, VkAllocationCallbacks*, void>)VKLoader.GetInstanceProcAddress("vkDestroyExternalComputeQueueNV");
+            _vkDestroyExternalComputeQueueNV_fnptr(device, externalQueue, pAllocator);
         }
         public static delegate* unmanaged<VkDevice, VkFence, VkAllocationCallbacks*, void> _vkDestroyFence_fnptr = &vkDestroyFence_Lazy;
         [UnmanagedCallersOnly]
@@ -3623,6 +3658,13 @@ namespace OpenTK.Graphics.Vulkan
         {
             _vkGetExecutionGraphPipelineScratchSizeAMDX_fnptr = (delegate* unmanaged<VkDevice, VkPipeline, VkExecutionGraphPipelineScratchSizeAMDX*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetExecutionGraphPipelineScratchSizeAMDX");
             return _vkGetExecutionGraphPipelineScratchSizeAMDX_fnptr(device, executionGraph, pSizeInfo);
+        }
+        public static delegate* unmanaged<VkExternalComputeQueueNV, VkExternalComputeQueueDataParamsNV*, void*, void> _vkGetExternalComputeQueueDataNV_fnptr = &vkGetExternalComputeQueueDataNV_Lazy;
+        [UnmanagedCallersOnly]
+        private static void vkGetExternalComputeQueueDataNV_Lazy(VkExternalComputeQueueNV externalQueue, VkExternalComputeQueueDataParamsNV* parameters, void* pData)
+        {
+            _vkGetExternalComputeQueueDataNV_fnptr = (delegate* unmanaged<VkExternalComputeQueueNV, VkExternalComputeQueueDataParamsNV*, void*, void>)VKLoader.GetInstanceProcAddress("vkGetExternalComputeQueueDataNV");
+            _vkGetExternalComputeQueueDataNV_fnptr(externalQueue, parameters, pData);
         }
         public static delegate* unmanaged<VkDevice, VkFaultQueryBehavior, int*, uint*, VkFaultData*, VkResult> _vkGetFaultData_fnptr = &vkGetFaultData_Lazy;
         [UnmanagedCallersOnly]

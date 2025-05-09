@@ -945,6 +945,7 @@ namespace OpenTK.Graphics.Vulkan
             _vkBuildMicromapsEXT_fnptr = (delegate* unmanaged<VkDevice, VkDeferredOperationKHR, uint, VkMicromapBuildInfoEXT*, VkResult>)VKLoader.GetDeviceProcAddr(device, "vkBuildMicromapsEXT");
             _vkCmdBeginConditionalRenderingEXT_fnptr = (delegate* unmanaged<VkCommandBuffer, VkConditionalRenderingBeginInfoEXT*, void>)VKLoader.GetDeviceProcAddr(device, "vkCmdBeginConditionalRenderingEXT");
             _vkCmdBeginDebugUtilsLabelEXT_fnptr = (delegate* unmanaged<VkCommandBuffer, VkDebugUtilsLabelEXT*, void>)VKLoader.GetDeviceProcAddr(device, "vkCmdBeginDebugUtilsLabelEXT");
+            _vkCmdBeginPerTileExecutionQCOM_fnptr = (delegate* unmanaged<VkCommandBuffer, VkPerTileBeginInfoQCOM*, void>)VKLoader.GetDeviceProcAddr(device, "vkCmdBeginPerTileExecutionQCOM");
             _vkCmdBeginQuery_fnptr = (delegate* unmanaged<VkCommandBuffer, VkQueryPool, uint, VkQueryControlFlagBits, void>)VKLoader.GetDeviceProcAddr(device, "vkCmdBeginQuery");
             _vkCmdBeginQueryIndexedEXT_fnptr = (delegate* unmanaged<VkCommandBuffer, VkQueryPool, uint, VkQueryControlFlagBits, uint, void>)VKLoader.GetDeviceProcAddr(device, "vkCmdBeginQueryIndexedEXT");
             _vkCmdBeginRendering_fnptr = (delegate* unmanaged<VkCommandBuffer, VkRenderingInfo*, void>)VKLoader.GetDeviceProcAddr(device, "vkCmdBeginRendering");
@@ -1023,6 +1024,7 @@ namespace OpenTK.Graphics.Vulkan
             _vkCmdDispatchGraphIndirectAMDX_fnptr = (delegate* unmanaged<VkCommandBuffer, ulong, ulong, VkDispatchGraphCountInfoAMDX*, void>)VKLoader.GetDeviceProcAddr(device, "vkCmdDispatchGraphIndirectAMDX");
             _vkCmdDispatchGraphIndirectCountAMDX_fnptr = (delegate* unmanaged<VkCommandBuffer, ulong, ulong, ulong, void>)VKLoader.GetDeviceProcAddr(device, "vkCmdDispatchGraphIndirectCountAMDX");
             _vkCmdDispatchIndirect_fnptr = (delegate* unmanaged<VkCommandBuffer, VkBuffer, ulong, void>)VKLoader.GetDeviceProcAddr(device, "vkCmdDispatchIndirect");
+            _vkCmdDispatchTileQCOM_fnptr = (delegate* unmanaged<VkCommandBuffer, void>)VKLoader.GetDeviceProcAddr(device, "vkCmdDispatchTileQCOM");
             _vkCmdDraw_fnptr = (delegate* unmanaged<VkCommandBuffer, uint, uint, uint, uint, void>)VKLoader.GetDeviceProcAddr(device, "vkCmdDraw");
             _vkCmdDrawClusterHUAWEI_fnptr = (delegate* unmanaged<VkCommandBuffer, uint, uint, uint, void>)VKLoader.GetDeviceProcAddr(device, "vkCmdDrawClusterHUAWEI");
             _vkCmdDrawClusterIndirectHUAWEI_fnptr = (delegate* unmanaged<VkCommandBuffer, VkBuffer, ulong, void>)VKLoader.GetDeviceProcAddr(device, "vkCmdDrawClusterIndirectHUAWEI");
@@ -1047,6 +1049,7 @@ namespace OpenTK.Graphics.Vulkan
             _vkCmdEncodeVideoKHR_fnptr = (delegate* unmanaged<VkCommandBuffer, VkVideoEncodeInfoKHR*, void>)VKLoader.GetDeviceProcAddr(device, "vkCmdEncodeVideoKHR");
             _vkCmdEndConditionalRenderingEXT_fnptr = (delegate* unmanaged<VkCommandBuffer, void>)VKLoader.GetDeviceProcAddr(device, "vkCmdEndConditionalRenderingEXT");
             _vkCmdEndDebugUtilsLabelEXT_fnptr = (delegate* unmanaged<VkCommandBuffer, void>)VKLoader.GetDeviceProcAddr(device, "vkCmdEndDebugUtilsLabelEXT");
+            _vkCmdEndPerTileExecutionQCOM_fnptr = (delegate* unmanaged<VkCommandBuffer, VkPerTileEndInfoQCOM*, void>)VKLoader.GetDeviceProcAddr(device, "vkCmdEndPerTileExecutionQCOM");
             _vkCmdEndQuery_fnptr = (delegate* unmanaged<VkCommandBuffer, VkQueryPool, uint, void>)VKLoader.GetDeviceProcAddr(device, "vkCmdEndQuery");
             _vkCmdEndQueryIndexedEXT_fnptr = (delegate* unmanaged<VkCommandBuffer, VkQueryPool, uint, uint, void>)VKLoader.GetDeviceProcAddr(device, "vkCmdEndQueryIndexedEXT");
             _vkCmdEndRendering_fnptr = (delegate* unmanaged<VkCommandBuffer, void>)VKLoader.GetDeviceProcAddr(device, "vkCmdEndRendering");
@@ -1246,6 +1249,7 @@ namespace OpenTK.Graphics.Vulkan
             _vkCreateDescriptorUpdateTemplateKHR_fnptr = (delegate* unmanaged<VkDevice, VkDescriptorUpdateTemplateCreateInfo*, VkAllocationCallbacks*, VkDescriptorUpdateTemplate*, VkResult>)VKLoader.GetDeviceProcAddr(device, "vkCreateDescriptorUpdateTemplateKHR");
             _vkCreateEvent_fnptr = (delegate* unmanaged<VkDevice, VkEventCreateInfo*, VkAllocationCallbacks*, VkEvent*, VkResult>)VKLoader.GetDeviceProcAddr(device, "vkCreateEvent");
             _vkCreateExecutionGraphPipelinesAMDX_fnptr = (delegate* unmanaged<VkDevice, VkPipelineCache, uint, VkExecutionGraphPipelineCreateInfoAMDX*, VkAllocationCallbacks*, VkPipeline*, VkResult>)VKLoader.GetDeviceProcAddr(device, "vkCreateExecutionGraphPipelinesAMDX");
+            _vkCreateExternalComputeQueueNV_fnptr = (delegate* unmanaged<VkDevice, VkExternalComputeQueueCreateInfoNV*, VkAllocationCallbacks*, VkExternalComputeQueueNV*, VkResult>)VKLoader.GetDeviceProcAddr(device, "vkCreateExternalComputeQueueNV");
             _vkCreateFence_fnptr = (delegate* unmanaged<VkDevice, VkFenceCreateInfo*, VkAllocationCallbacks*, VkFence*, VkResult>)VKLoader.GetDeviceProcAddr(device, "vkCreateFence");
             _vkCreateFramebuffer_fnptr = (delegate* unmanaged<VkDevice, VkFramebufferCreateInfo*, VkAllocationCallbacks*, VkFramebuffer*, VkResult>)VKLoader.GetDeviceProcAddr(device, "vkCreateFramebuffer");
             _vkCreateGraphicsPipelines_fnptr = (delegate* unmanaged<VkDevice, VkPipelineCache, uint, VkGraphicsPipelineCreateInfo*, VkAllocationCallbacks*, VkPipeline*, VkResult>)VKLoader.GetDeviceProcAddr(device, "vkCreateGraphicsPipelines");
@@ -1299,6 +1303,7 @@ namespace OpenTK.Graphics.Vulkan
             _vkDestroyDescriptorUpdateTemplateKHR_fnptr = (delegate* unmanaged<VkDevice, VkDescriptorUpdateTemplate, VkAllocationCallbacks*, void>)VKLoader.GetDeviceProcAddr(device, "vkDestroyDescriptorUpdateTemplateKHR");
             _vkDestroyDevice_fnptr = (delegate* unmanaged<VkDevice, VkAllocationCallbacks*, void>)VKLoader.GetDeviceProcAddr(device, "vkDestroyDevice");
             _vkDestroyEvent_fnptr = (delegate* unmanaged<VkDevice, VkEvent, VkAllocationCallbacks*, void>)VKLoader.GetDeviceProcAddr(device, "vkDestroyEvent");
+            _vkDestroyExternalComputeQueueNV_fnptr = (delegate* unmanaged<VkDevice, VkExternalComputeQueueNV, VkAllocationCallbacks*, void>)VKLoader.GetDeviceProcAddr(device, "vkDestroyExternalComputeQueueNV");
             _vkDestroyFence_fnptr = (delegate* unmanaged<VkDevice, VkFence, VkAllocationCallbacks*, void>)VKLoader.GetDeviceProcAddr(device, "vkDestroyFence");
             _vkDestroyFramebuffer_fnptr = (delegate* unmanaged<VkDevice, VkFramebuffer, VkAllocationCallbacks*, void>)VKLoader.GetDeviceProcAddr(device, "vkDestroyFramebuffer");
             _vkDestroyImage_fnptr = (delegate* unmanaged<VkDevice, VkImage, VkAllocationCallbacks*, void>)VKLoader.GetDeviceProcAddr(device, "vkDestroyImage");
@@ -1393,6 +1398,7 @@ namespace OpenTK.Graphics.Vulkan
             _vkGetEventStatus_fnptr = (delegate* unmanaged<VkDevice, VkEvent, VkResult>)VKLoader.GetDeviceProcAddr(device, "vkGetEventStatus");
             _vkGetExecutionGraphPipelineNodeIndexAMDX_fnptr = (delegate* unmanaged<VkDevice, VkPipeline, VkPipelineShaderStageNodeCreateInfoAMDX*, uint*, VkResult>)VKLoader.GetDeviceProcAddr(device, "vkGetExecutionGraphPipelineNodeIndexAMDX");
             _vkGetExecutionGraphPipelineScratchSizeAMDX_fnptr = (delegate* unmanaged<VkDevice, VkPipeline, VkExecutionGraphPipelineScratchSizeAMDX*, VkResult>)VKLoader.GetDeviceProcAddr(device, "vkGetExecutionGraphPipelineScratchSizeAMDX");
+            _vkGetExternalComputeQueueDataNV_fnptr = (delegate* unmanaged<VkExternalComputeQueueNV, VkExternalComputeQueueDataParamsNV*, void*, void>)VKLoader.GetDeviceProcAddr(device, "vkGetExternalComputeQueueDataNV");
             _vkGetFaultData_fnptr = (delegate* unmanaged<VkDevice, VkFaultQueryBehavior, int*, uint*, VkFaultData*, VkResult>)VKLoader.GetDeviceProcAddr(device, "vkGetFaultData");
             _vkGetFenceFdKHR_fnptr = (delegate* unmanaged<VkDevice, VkFenceGetFdInfoKHR*, int*, VkResult>)VKLoader.GetDeviceProcAddr(device, "vkGetFenceFdKHR");
             _vkGetFenceSciSyncFenceNV_fnptr = (delegate* unmanaged<VkDevice, VkFenceGetSciSyncInfoNV*, void*, VkResult>)VKLoader.GetDeviceProcAddr(device, "vkGetFenceSciSyncFenceNV");
@@ -1697,6 +1703,12 @@ namespace OpenTK.Graphics.Vulkan
         public void CmdBeginDebugUtilsLabelEXT(VkCommandBuffer commandBuffer, VkDebugUtilsLabelEXT* pLabelInfo)
         {
             _vkCmdBeginDebugUtilsLabelEXT_fnptr(commandBuffer, pLabelInfo);
+        }
+        /// <summary><b>[requires: VK_QCOM_tile_shading]</b> [device command] </summary>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdBeginPerTileExecutionQCOM.html" /></remarks>
+        public void CmdBeginPerTileExecutionQCOM(VkCommandBuffer commandBuffer, VkPerTileBeginInfoQCOM* pPerTileBeginInfo)
+        {
+            _vkCmdBeginPerTileExecutionQCOM_fnptr(commandBuffer, pPerTileBeginInfo);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdBeginQuery.html" /></remarks>
@@ -2166,6 +2178,12 @@ namespace OpenTK.Graphics.Vulkan
         {
             _vkCmdDispatchIndirect_fnptr(commandBuffer, buffer, offset);
         }
+        /// <summary><b>[requires: VK_QCOM_tile_shading]</b> [device command] </summary>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdDispatchTileQCOM.html" /></remarks>
+        public void CmdDispatchTileQCOM(VkCommandBuffer commandBuffer)
+        {
+            _vkCmdDispatchTileQCOM_fnptr(commandBuffer);
+        }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdDraw.html" /></remarks>
         public void CmdDraw(VkCommandBuffer commandBuffer, uint vertexCount, uint instanceCount, uint firstVertex, uint firstInstance)
@@ -2309,6 +2327,12 @@ namespace OpenTK.Graphics.Vulkan
         public void CmdEndDebugUtilsLabelEXT(VkCommandBuffer commandBuffer)
         {
             _vkCmdEndDebugUtilsLabelEXT_fnptr(commandBuffer);
+        }
+        /// <summary><b>[requires: VK_QCOM_tile_shading]</b> [device command] </summary>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdEndPerTileExecutionQCOM.html" /></remarks>
+        public void CmdEndPerTileExecutionQCOM(VkCommandBuffer commandBuffer, VkPerTileEndInfoQCOM* pPerTileEndInfo)
+        {
+            _vkCmdEndPerTileExecutionQCOM_fnptr(commandBuffer, pPerTileEndInfo);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdEndQuery.html" /></remarks>
@@ -3504,6 +3528,12 @@ namespace OpenTK.Graphics.Vulkan
         {
             return _vkCreateExecutionGraphPipelinesAMDX_fnptr(device, pipelineCache, createInfoCount, pCreateInfos, pAllocator, pPipelines);
         }
+        /// <summary><b>[requires: VK_NV_external_compute_queue]</b> [device command] </summary>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateExternalComputeQueueNV.html" /></remarks>
+        public VkResult CreateExternalComputeQueueNV(VkDevice device, VkExternalComputeQueueCreateInfoNV* pCreateInfo, VkAllocationCallbacks* pAllocator, VkExternalComputeQueueNV* pExternalQueue)
+        {
+            return _vkCreateExternalComputeQueueNV_fnptr(device, pCreateInfo, pAllocator, pExternalQueue);
+        }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateFence.html" /></remarks>
         public VkResult CreateFence(VkDevice device, VkFenceCreateInfo* pCreateInfo, VkAllocationCallbacks* pAllocator, VkFence* pFence)
@@ -3821,6 +3851,12 @@ namespace OpenTK.Graphics.Vulkan
         public void DestroyEvent(VkDevice device, VkEvent @event, VkAllocationCallbacks* pAllocator)
         {
             _vkDestroyEvent_fnptr(device, @event, pAllocator);
+        }
+        /// <summary><b>[requires: VK_NV_external_compute_queue]</b> [device command] </summary>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDestroyExternalComputeQueueNV.html" /></remarks>
+        public void DestroyExternalComputeQueueNV(VkDevice device, VkExternalComputeQueueNV externalQueue, VkAllocationCallbacks* pAllocator)
+        {
+            _vkDestroyExternalComputeQueueNV_fnptr(device, externalQueue, pAllocator);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDestroyFence.html" /></remarks>
@@ -4385,6 +4421,12 @@ namespace OpenTK.Graphics.Vulkan
         public VkResult GetExecutionGraphPipelineScratchSizeAMDX(VkDevice device, VkPipeline executionGraph, VkExecutionGraphPipelineScratchSizeAMDX* pSizeInfo)
         {
             return _vkGetExecutionGraphPipelineScratchSizeAMDX_fnptr(device, executionGraph, pSizeInfo);
+        }
+        /// <summary><b>[requires: VK_NV_external_compute_queue]</b> [device command] </summary>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetExternalComputeQueueDataNV.html" /></remarks>
+        public void GetExternalComputeQueueDataNV(VkExternalComputeQueueNV externalQueue, VkExternalComputeQueueDataParamsNV* parameters, void* pData)
+        {
+            _vkGetExternalComputeQueueDataNV_fnptr(externalQueue, parameters, pData);
         }
         /// <summary>[device command] </summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetFaultData.html" /></remarks>
@@ -5370,6 +5412,7 @@ namespace OpenTK.Graphics.Vulkan
         public delegate* unmanaged<VkDevice, VkDeferredOperationKHR, uint, VkMicromapBuildInfoEXT*, VkResult> _vkBuildMicromapsEXT_fnptr;
         public delegate* unmanaged<VkCommandBuffer, VkConditionalRenderingBeginInfoEXT*, void> _vkCmdBeginConditionalRenderingEXT_fnptr;
         public delegate* unmanaged<VkCommandBuffer, VkDebugUtilsLabelEXT*, void> _vkCmdBeginDebugUtilsLabelEXT_fnptr;
+        public delegate* unmanaged<VkCommandBuffer, VkPerTileBeginInfoQCOM*, void> _vkCmdBeginPerTileExecutionQCOM_fnptr;
         public delegate* unmanaged<VkCommandBuffer, VkQueryPool, uint, VkQueryControlFlagBits, void> _vkCmdBeginQuery_fnptr;
         public delegate* unmanaged<VkCommandBuffer, VkQueryPool, uint, VkQueryControlFlagBits, uint, void> _vkCmdBeginQueryIndexedEXT_fnptr;
         public delegate* unmanaged<VkCommandBuffer, VkRenderingInfo*, void> _vkCmdBeginRendering_fnptr;
@@ -5448,6 +5491,7 @@ namespace OpenTK.Graphics.Vulkan
         public delegate* unmanaged<VkCommandBuffer, ulong, ulong, VkDispatchGraphCountInfoAMDX*, void> _vkCmdDispatchGraphIndirectAMDX_fnptr;
         public delegate* unmanaged<VkCommandBuffer, ulong, ulong, ulong, void> _vkCmdDispatchGraphIndirectCountAMDX_fnptr;
         public delegate* unmanaged<VkCommandBuffer, VkBuffer, ulong, void> _vkCmdDispatchIndirect_fnptr;
+        public delegate* unmanaged<VkCommandBuffer, void> _vkCmdDispatchTileQCOM_fnptr;
         public delegate* unmanaged<VkCommandBuffer, uint, uint, uint, uint, void> _vkCmdDraw_fnptr;
         public delegate* unmanaged<VkCommandBuffer, uint, uint, uint, void> _vkCmdDrawClusterHUAWEI_fnptr;
         public delegate* unmanaged<VkCommandBuffer, VkBuffer, ulong, void> _vkCmdDrawClusterIndirectHUAWEI_fnptr;
@@ -5472,6 +5516,7 @@ namespace OpenTK.Graphics.Vulkan
         public delegate* unmanaged<VkCommandBuffer, VkVideoEncodeInfoKHR*, void> _vkCmdEncodeVideoKHR_fnptr;
         public delegate* unmanaged<VkCommandBuffer, void> _vkCmdEndConditionalRenderingEXT_fnptr;
         public delegate* unmanaged<VkCommandBuffer, void> _vkCmdEndDebugUtilsLabelEXT_fnptr;
+        public delegate* unmanaged<VkCommandBuffer, VkPerTileEndInfoQCOM*, void> _vkCmdEndPerTileExecutionQCOM_fnptr;
         public delegate* unmanaged<VkCommandBuffer, VkQueryPool, uint, void> _vkCmdEndQuery_fnptr;
         public delegate* unmanaged<VkCommandBuffer, VkQueryPool, uint, uint, void> _vkCmdEndQueryIndexedEXT_fnptr;
         public delegate* unmanaged<VkCommandBuffer, void> _vkCmdEndRendering_fnptr;
@@ -5671,6 +5716,7 @@ namespace OpenTK.Graphics.Vulkan
         public delegate* unmanaged<VkDevice, VkDescriptorUpdateTemplateCreateInfo*, VkAllocationCallbacks*, VkDescriptorUpdateTemplate*, VkResult> _vkCreateDescriptorUpdateTemplateKHR_fnptr;
         public delegate* unmanaged<VkDevice, VkEventCreateInfo*, VkAllocationCallbacks*, VkEvent*, VkResult> _vkCreateEvent_fnptr;
         public delegate* unmanaged<VkDevice, VkPipelineCache, uint, VkExecutionGraphPipelineCreateInfoAMDX*, VkAllocationCallbacks*, VkPipeline*, VkResult> _vkCreateExecutionGraphPipelinesAMDX_fnptr;
+        public delegate* unmanaged<VkDevice, VkExternalComputeQueueCreateInfoNV*, VkAllocationCallbacks*, VkExternalComputeQueueNV*, VkResult> _vkCreateExternalComputeQueueNV_fnptr;
         public delegate* unmanaged<VkDevice, VkFenceCreateInfo*, VkAllocationCallbacks*, VkFence*, VkResult> _vkCreateFence_fnptr;
         public delegate* unmanaged<VkDevice, VkFramebufferCreateInfo*, VkAllocationCallbacks*, VkFramebuffer*, VkResult> _vkCreateFramebuffer_fnptr;
         public delegate* unmanaged<VkDevice, VkPipelineCache, uint, VkGraphicsPipelineCreateInfo*, VkAllocationCallbacks*, VkPipeline*, VkResult> _vkCreateGraphicsPipelines_fnptr;
@@ -5724,6 +5770,7 @@ namespace OpenTK.Graphics.Vulkan
         public delegate* unmanaged<VkDevice, VkDescriptorUpdateTemplate, VkAllocationCallbacks*, void> _vkDestroyDescriptorUpdateTemplateKHR_fnptr;
         public delegate* unmanaged<VkDevice, VkAllocationCallbacks*, void> _vkDestroyDevice_fnptr;
         public delegate* unmanaged<VkDevice, VkEvent, VkAllocationCallbacks*, void> _vkDestroyEvent_fnptr;
+        public delegate* unmanaged<VkDevice, VkExternalComputeQueueNV, VkAllocationCallbacks*, void> _vkDestroyExternalComputeQueueNV_fnptr;
         public delegate* unmanaged<VkDevice, VkFence, VkAllocationCallbacks*, void> _vkDestroyFence_fnptr;
         public delegate* unmanaged<VkDevice, VkFramebuffer, VkAllocationCallbacks*, void> _vkDestroyFramebuffer_fnptr;
         public delegate* unmanaged<VkDevice, VkImage, VkAllocationCallbacks*, void> _vkDestroyImage_fnptr;
@@ -5818,6 +5865,7 @@ namespace OpenTK.Graphics.Vulkan
         public delegate* unmanaged<VkDevice, VkEvent, VkResult> _vkGetEventStatus_fnptr;
         public delegate* unmanaged<VkDevice, VkPipeline, VkPipelineShaderStageNodeCreateInfoAMDX*, uint*, VkResult> _vkGetExecutionGraphPipelineNodeIndexAMDX_fnptr;
         public delegate* unmanaged<VkDevice, VkPipeline, VkExecutionGraphPipelineScratchSizeAMDX*, VkResult> _vkGetExecutionGraphPipelineScratchSizeAMDX_fnptr;
+        public delegate* unmanaged<VkExternalComputeQueueNV, VkExternalComputeQueueDataParamsNV*, void*, void> _vkGetExternalComputeQueueDataNV_fnptr;
         public delegate* unmanaged<VkDevice, VkFaultQueryBehavior, int*, uint*, VkFaultData*, VkResult> _vkGetFaultData_fnptr;
         public delegate* unmanaged<VkDevice, VkFenceGetFdInfoKHR*, int*, VkResult> _vkGetFenceFdKHR_fnptr;
         public delegate* unmanaged<VkDevice, VkFenceGetSciSyncInfoNV*, void*, VkResult> _vkGetFenceSciSyncFenceNV_fnptr;
