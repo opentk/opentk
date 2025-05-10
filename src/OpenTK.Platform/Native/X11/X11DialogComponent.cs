@@ -125,8 +125,14 @@ namespace OpenTK.Platform.Native.X11
                     {
                         // Zenity creates a hidden InputOnly XWindow which is not the window we want.
                         // So we need to also filter so we only get the relevant InputOutput window that is the dialog.
+                        
+                        // In later versions of Zenity the hidden window is a InputOutput window so we can't rely only
+                        // on that, the second best alternative to filter out the hidden window is now to see if the
+                        // window size is larger than 1x1.
+                        // - Noggin_bops 2025-02-25
                         XStatus status3 = (XStatus)XGetWindowAttributes(X11.Display, check, out XWindowAttributes attribs);
-                        if (attribs.Class == WindowClass.InputOutput)
+                        
+                        if (attribs.Class == WindowClass.InputOutput && attribs.Width != 1 && attribs.Height != 1)
                         {
                             return check;
                         }
@@ -153,8 +159,11 @@ namespace OpenTK.Platform.Native.X11
 
         private unsafe void RunModalLoop(Process process, XWindowHandle transientFor)
         {
-            int tries = 0;
-            const int MaxTries = 10;
+            const float MaxInterval = 5;
+            float currentInterval = 0.05f;
+            float totalWait = 0;
+
+            long targetTime = Stopwatch.GetTimestamp() + (long)(currentInterval * Stopwatch.Frequency);
 
             XWindow? dialogWindow = null;
             // FIXME: If dialogWindow is null it's likely because the dialog
@@ -164,52 +173,57 @@ namespace OpenTK.Platform.Native.X11
             while (process.HasExited == false)
             {
                 Thread.Sleep(10);
-                if (dialogWindow == null && tries < MaxTries)
+                if (dialogWindow == null)
                 {
-                    dialogWindow = FindProcessWindow(process);
-                    if (dialogWindow != null)
+                    long currTime = Stopwatch.GetTimestamp();
+                    if (currTime > targetTime)
                     {
-                        // Make the dialog modal.
+                        dialogWindow = FindProcessWindow(process);
+                        if (dialogWindow == null)
                         {
-                            XEvent e = new XEvent();
-                            ref XClientMessageEvent client = ref e.ClientMessage;
-
-                            client.Type = XEventType.ClientMessage;
-                            client.Serial = 0;
-                            client.SendEvent = 1;
-                            client.Display = X11.Display;
-                            client.Window = dialogWindow.Value;
-                            client.MessageType = X11.Atoms[KnownAtoms._NET_WM_STATE];
-                            client.Format = 32;
-                            unsafe
+                            totalWait += currentInterval;
+                            float newInterval = Math.Min(currentInterval * 1.5f, MaxInterval);
+                            Logger?.LogDebug($"Could not find Zenity window XID after waiting {totalWait:0.00} seconds. Waiting {newInterval:0.00} seconds before trying again.");
+                            targetTime = currTime + (long)(currentInterval * Stopwatch.Frequency);
+                            currentInterval = newInterval;
+                        }
+                        else
+                        {
+                            // Make the dialog modal.
                             {
-                                client.l[0] = X11._NET_WM_STATE_ADD;
-                                client.l[1] = (long)X11.Atoms[KnownAtoms._NET_WM_STATE_MODAL].Id;
-                                client.l[2] = 0;
-                                client.l[3] = 1;
-                                client.l[4] = 0;
+                                XEvent e = new XEvent();
+                                ref XClientMessageEvent client = ref e.ClientMessage;
+
+                                client.Type = XEventType.ClientMessage;
+                                client.Serial = 0;
+                                client.SendEvent = 1;
+                                client.Display = X11.Display;
+                                client.Window = dialogWindow.Value;
+                                client.MessageType = X11.Atoms[KnownAtoms._NET_WM_STATE];
+                                client.Format = 32;
+                                unsafe
+                                {
+                                    client.l[0] = X11._NET_WM_STATE_ADD;
+                                    client.l[1] = (long)X11.Atoms[KnownAtoms._NET_WM_STATE_MODAL].Id;
+                                    client.l[2] = 0;
+                                    client.l[3] = 1;
+                                    client.l[4] = 0;
+                                }
+
+                                XSendEvent(X11.Display, X11.DefaultRootWindow, 0, XEventMask.SubstructureRedirect | XEventMask.SubstructureNotify | XEventMask.PropertyChange, e);
+
+                                XSetTransientForHint(X11.Display, dialogWindow.Value, transientFor.Window);
                             }
 
-                            XSendEvent(X11.Display, X11.DefaultRootWindow, 0, XEventMask.SubstructureRedirect | XEventMask.SubstructureNotify | XEventMask.PropertyChange, e);
+                            Logger?.LogDebug($"Found Zenity window XID: 0x{dialogWindow.Value:X}");
                         }
-
-                        Logger?.LogInfo($"Found Zenity window XID: 0x{dialogWindow.Value:X}");
                     }
-                    else
-                    {
-                        Logger?.LogDebug($"Was not able to find Zenity window XID. Try: {tries + 1}");
-                    }
-                }
-                else if (dialogWindow == null && tries == MaxTries)
-                {
-                    Logger?.LogWarning($"Could not find Zenity window after {MaxTries} tries.");
-                    tries = int.MaxValue;
                 }
 
                 // Loop through all events we care about before continuing.
                 while (XCheckIfEvent(X11.Display, out XEvent @event, IsModalEventLoopEvent, IntPtr.Zero))
                 {
-                    Logger?.LogDebug($"{@event.Type}");
+                    //Logger?.LogDebug($"{@event.Type}");
                     if (@event.Type == XEventType.ClientMessage)
                     {
                         if (@event.ClientMessage.Format == 32 &&
@@ -272,7 +286,7 @@ namespace OpenTK.Platform.Native.X11
                                 if (type != HitType.Default)
                                 {
                                     // FIXME: Handle the hit type!
-                                    Logger?.LogWarning("Hit testing is not supported in x11 yet.");
+                                    Logger?.LogWarning("Hit testing while running a modal dialog is not supported in x11 yet.");
                                     continue;
                                 }
                             }
@@ -311,6 +325,33 @@ namespace OpenTK.Platform.Native.X11
                     {
                         
                     }
+                    else if (@event.Type == XEventType.FocusIn ||
+                             @event.Type == XEventType.FocusOut)
+                    {
+                        if (@event.Type == XEventType.FocusIn && dialogWindow != null)
+                        {
+                            XEvent e = new XEvent();
+                            ref XClientMessageEvent client = ref e.ClientMessage;
+
+                            client.Type = XEventType.ClientMessage;
+                            client.Serial = 0;
+                            client.SendEvent = 1;
+                            client.Display = X11.Display;
+                            client.Window = dialogWindow.Value;
+                            client.MessageType = X11.Atoms[KnownAtoms._NET_ACTIVE_WINDOW];
+                            client.Format = 32;
+                            unsafe
+                            {
+                                client.l[0] = 1;
+                                client.l[1] = 0;
+                                client.l[2] = (long)transientFor.Window.Id;
+                                client.l[3] = 1;
+                                client.l[4] = 0;
+                            }
+
+                            XSendEvent(X11.Display, X11.DefaultRootWindow, 0, XEventMask.SubstructureRedirect | XEventMask.SubstructureNotify | XEventMask.PropertyChange, e);
+                        }
+                    }
                     else
                     {
                         Logger?.LogWarning($"Unhandled event {@event.Type}. This is an OpenTK bug, please report an issue.");
@@ -333,7 +374,9 @@ namespace OpenTK.Platform.Native.X11
                          @event.Type == XEventType.KeyRelease ||
                          @event.Type == XEventType.MotionNotify ||
                          @event.Type == XEventType.EnterNotify ||
-                         @event.Type == XEventType.LeaveNotify)
+                         @event.Type == XEventType.LeaveNotify ||
+                         @event.Type == XEventType.FocusIn ||
+                         @event.Type == XEventType.FocusOut)
                 {
                     return true;
                 }
@@ -406,7 +449,18 @@ namespace OpenTK.Platform.Native.X11
                     throw new InvalidEnumArgumentException(nameof(messageBoxType), (int)messageBoxType, messageBoxType.GetType());
             }
 
-            arguments.Append($"--attach={xwindow.Window.Id} ");
+            // In Zenity 3.99 and forward the attach flag is deprecated...
+            // See: https://gitlab.gnome.org/GNOME/zenity/-/issues/105
+            // - Noggin_bops 2025-02-28
+            if (ZenityVersion < new Version(3, 99))
+            {
+                arguments.Append($"--attach={xwindow.Window.Id} ");
+            }
+
+            if (ZenityVersion > new Version(3, 6))
+            {
+                arguments.Append("--modal ");
+            }
 
             Logger?.LogDebug($"Running: zenity {arguments}");
             ProcessStartInfo startInfo = new ProcessStartInfo("zenity", arguments.ToString());
@@ -423,14 +477,15 @@ namespace OpenTK.Platform.Native.X11
             RunModalLoop(process, xwindow);
 
             int exitCode = process.ExitCode;
-            Logger?.LogInfo($"Zenity exit code: {exitCode}");
             string stderr = process.StandardError.ReadToEnd();
-            if (exitCode > 5 || string.IsNullOrWhiteSpace(stderr) == false)
+            if (string.IsNullOrWhiteSpace(stderr) == false)
             {
-                Logger?.LogWarning($"Zenity exited with exit code {exitCode}. stderr: {process.StandardError.ReadToEnd()}");
+                Logger?.LogWarning($"Zenity exited with exit code {exitCode}. stderr: {stderr}");
             }
-            
-            Logger?.LogInfo($"Zenity exited with exit code {exitCode}.");
+            else
+            {
+                Logger?.LogDebug($"Zenity exited with exit code {exitCode}.");
+            }
 
             MessageBoxButton button;
             switch (messageBoxType)
@@ -499,7 +554,18 @@ namespace OpenTK.Platform.Native.X11
 
             StringBuilder arguments = new StringBuilder();
             arguments.Append("--file-selection ");
-            arguments.Append($"--attach={xwindow.Window.Id} ");
+            // In Zenity 3.99 and forward the attach flag is deprecated...
+            // See: https://gitlab.gnome.org/GNOME/zenity/-/issues/105
+            // - Noggin_bops 2025-02-28
+            if (ZenityVersion < new Version(3, 99))
+            {
+                arguments.Append($"--attach={xwindow.Window.Id} ");
+            }
+
+            if (ZenityVersion > new Version(3, 6))
+            {
+                arguments.Append("--modal ");
+            }
 
             arguments.Append($"--title \"{title}\" ");
 
@@ -541,7 +607,7 @@ namespace OpenTK.Platform.Native.X11
             string stderr = process.StandardError.ReadToEnd();
             if (exitCode > 5 || string.IsNullOrWhiteSpace(stderr) == false)
             {
-                Logger?.LogWarning($"Zenity exited with exit code {exitCode}. stderr: {process.StandardError.ReadToEnd()}");
+                Logger?.LogWarning($"Zenity exited with exit code {exitCode}. stderr: {stderr}");
             }
             
             Logger?.LogInfo($"Zenity exited with exit code {exitCode}.");
@@ -582,7 +648,18 @@ namespace OpenTK.Platform.Native.X11
 
             StringBuilder arguments = new StringBuilder();
             arguments.Append("--file-selection ");
-            arguments.Append($"--attach={xwindow.Window.Id} ");
+            // In Zenity 3.99 and forward the attach flag is deprecated...
+            // See: https://gitlab.gnome.org/GNOME/zenity/-/issues/105
+            // - Noggin_bops 2025-02-28
+            if (ZenityVersion < new Version(3, 99))
+            {
+                arguments.Append($"--attach={xwindow.Window.Id} ");
+            }
+
+            if (ZenityVersion > new Version(3, 6))
+            {
+                arguments.Append("--modal ");
+            }
 
             arguments.Append($"--title \"{title}\" ");
 
@@ -620,7 +697,7 @@ namespace OpenTK.Platform.Native.X11
             string stderr = process.StandardError.ReadToEnd();
             if (exitCode > 5 || string.IsNullOrWhiteSpace(stderr) == false)
             {
-                Logger?.LogWarning($"Zenity exited with exit code {exitCode}. stderr: {process.StandardError.ReadToEnd()}");
+                Logger?.LogWarning($"Zenity exited with exit code {exitCode}. stderr: {stderr}");
             }
             
             Logger?.LogInfo($"Zenity exited with exit code {exitCode}.");

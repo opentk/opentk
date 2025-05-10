@@ -22,7 +22,9 @@ namespace OpenTK.Backends.Tests
         private bool canLoadSystemCursors;
         private bool canInspectSystemCursors;
 
-        public SortedDictionary<SystemCursorType, CursorHandle> SystemCursors = new SortedDictionary<SystemCursorType, CursorHandle>();
+        public List<(string Name, CursorHandle? Handle)> Cursors = new List<(string Name, CursorHandle? Handle)>();
+
+        public CursorHandle? DefaultCursorHandle;
 
         public override void Initialize()
         {
@@ -31,12 +33,16 @@ namespace OpenTK.Backends.Tests
             try { canLoadSystemCursors = Toolkit.Cursor.CanLoadSystemCursors; } catch { canLoadSystemCursors = false; }
             try { canInspectSystemCursors = Toolkit.Cursor.CanInspectSystemCursors; } catch { canInspectSystemCursors = false; }
 
+            Cursors.Add(("Hidden", null));
+
             if (canLoadSystemCursors)
             {
+                DefaultCursorHandle = Toolkit.Cursor.Create(SystemCursorType.Default);
+
                 foreach (SystemCursorType cursorType in Enum.GetValues<SystemCursorType>())
                 {
                     CursorHandle handle = Toolkit.Cursor.Create(cursorType);
-                    SystemCursors.Add(cursorType, handle);
+                    Cursors.Add((cursorType.ToString(), handle));
                 }
             }
 
@@ -201,18 +207,20 @@ namespace OpenTK.Backends.Tests
                 ImGui.PushStyleVar(ImGuiStyleVar.FrameRounding, 5);
                 int i = 0;
                 int hoveredIndex = -1;
-                foreach (var (cursorType, handle) in SystemCursors)
+                foreach (var (name, handle) in Cursors)
                 {
                     if (i++ % buttonsPerLine != 0) ImGui.SameLine();
 
-                    ImGui.Button(cursorType.ToString(), new System.Numerics.Vector2(targetSize, targetSize));
+                    ImGui.Button(name, new System.Numerics.Vector2(targetSize, targetSize));
 
                     if (ImGui.IsItemHovered())
                     {
                         // FIXME: Should we even show the cursors if they can't be set?
                         if (Toolkit.Window.CanSetIcon)
                         {
-                            (Toolkit.Cursor as MacOSCursorComponent)?.UpdateAnimation(handle, deltaTime);
+                            if (handle != null)
+                                (Toolkit.Cursor as MacOSCursorComponent)?.UpdateAnimation(handle, deltaTime);
+                                
                             // FIXME: We are potentially leaking a cursor? or does the window hold it's own copy?
                             Toolkit.Window.SetCursor(Program.Window, handle);
                             setCursor = true;
@@ -232,14 +240,17 @@ namespace OpenTK.Backends.Tests
                     if (hoveredIndex != -1)
                     {
                         // FIXME: linq
-                        var (type, handle) = SystemCursors.ElementAt(hoveredIndex);
-                        name = type.ToString();
+                        var (cursorName, handle) = Cursors.ElementAt(hoveredIndex);
+                        name = cursorName;
 
-                        Toolkit.Cursor.GetSize(handle, out int width, out int height);
-                        size = (width, height);
+                        if (handle != null)
+                        {
+                            Toolkit.Cursor.GetSize(handle, out int width, out int height);
+                            size = (width, height);
 
-                        Toolkit.Cursor.GetHotspot(handle, out int hx, out int hy);
-                        hotspot = (hx, hy);
+                            Toolkit.Cursor.GetHotspot(handle, out int hx, out int hy);
+                            hotspot = (hx, hy);
+                        }
                     }
 
                     ImGui.Text($"Name: {name}");
@@ -381,7 +392,8 @@ namespace OpenTK.Backends.Tests
             // Will ImGui set the mouse cursor change flag correctly?
             if (setCursor == false && hasSetCursor == true)
             {
-                Toolkit.Window.SetCursor(Program.Window, SystemCursors[SystemCursorType.Default]);
+                // FIXME: This indexing isn't great, but it will probaby work for now.
+                Toolkit.Window.SetCursor(Program.Window, DefaultCursorHandle);
             }
             hasSetCursor = setCursor;
 
@@ -399,9 +411,10 @@ namespace OpenTK.Backends.Tests
                 bool hovered = ImGui.IsItemHovered();
                 if (hovered)
                 {
-                    if (Toolkit.Window.CanSetCursor && handle != null)
+                    if (Toolkit.Window.CanSetCursor)
                     {
-                        (Toolkit.Cursor as MacOSCursorComponent)?.UpdateAnimation(handle, deltaTime);
+                        if (handle != null)
+                            (Toolkit.Cursor as MacOSCursorComponent)?.UpdateAnimation(handle, deltaTime);
 
                         Toolkit.Window.SetCursor(Program.Window, handle);
                         setCursor = true;
