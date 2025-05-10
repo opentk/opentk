@@ -5,41 +5,85 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Reflection;
 using System.Text;
-using VkGenerator.Parsing;
-using VkGenerator.Process;
-using VkGenerator.Utility;
-using VkGenerator.Utility.Extensions;
+using XrGenerator.Parsing;
+using XrGenerator.Process;
+using XrGenerator.Utility;
+using XrGenerator.Utility.Extensions;
 
-namespace VkGenerator
+namespace XrGenerator
 {
     internal static class Writer
     {
         private const string BaseNamespace = "OpenTK";
         private const string GraphicsNamespace = BaseNamespace + ".Graphics";
-        private const string VulkanNamespace = GraphicsNamespace + ".Vulkan";
+        private const string OpenXRNamespace = GraphicsNamespace + ".OpenXR";
 
-        private const string LoaderClass = "VKLoader";
+        private const string LoaderClass = "XRLoader";
 
-        public static void Write(SpecificationData data, SpecificationData video)
+        public static void Write(SpecificationData data)
         {
             // This is quite fragile, no idea if there is an easy way that is "better".
             string outputProjectPath = Path.Combine(
                 Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? throw new NullReferenceException(),
                 "..", "..", "..", "..", GraphicsNamespace);
 
-            string directoryPath = Path.Combine(outputProjectPath, "Vulkan");
+            string directoryPath = Path.Combine(outputProjectPath, "OpenXR");
             if (Directory.Exists(directoryPath) == false) Directory.CreateDirectory(directoryPath);
+
+            WriteDefines(directoryPath, data.Defines);
 
             WriteEnums(directoryPath, data.Enums);
 
-            WriteStructs(directoryPath, data.Structs, data.Enums, video);
+            WriteStructs(directoryPath, data.Structs, data.Enums);
             WriteHandles(directoryPath, data.Handles);
 
-            WriteFunctionPointers(directoryPath, data.Commands, video);
-            WriteCommands(directoryPath, data.Commands, video);
-            WriteDispatchTables(directoryPath, data.Commands, video);
+            WriteFunctionPointers(directoryPath, data.Commands);
+            WriteCommands(directoryPath, data.Commands);
 
             WriteConstants(directoryPath, data.Constants);
+        }
+
+        private static void WriteDefines(string directoryPath, List<Define> defines)
+        {
+            using StreamWriter stream = File.CreateText(Path.Combine(directoryPath, "Defines.cs"));
+            using IndentedTextWriter writer = new IndentedTextWriter(stream);
+            writer.WriteLine("// This file is auto generated, do not edit.");
+            writer.WriteLine("using System;");
+            writer.WriteLine("using System.Diagnostics;");
+            writer.WriteLine("using System.Runtime.CompilerServices;");
+            writer.WriteLine();
+            writer.WriteLine($"namespace {GraphicsNamespace}.OpenXR");
+            using (writer.CsScope())
+            {
+                writer.WriteLineNoTabs("#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member");
+
+                writer.WriteLine("public static unsafe partial class Xr");
+                using (writer.CsScope())
+                {
+                    foreach (Define define in defines)
+                    {
+                        if (define.IsConstant)
+                        {
+                            // FIXME: Proper types!
+                            writer.WriteLine($"public const {define.Type.ToCSString()} {NameMangler.MangleEnumName(define.Name)} = unchecked(({define.Type.ToCSString()}){define.ConstValue});");
+                        }
+                        else if (define.Implementation != null)
+                        {
+                            StringBuilder arguments = new StringBuilder();
+                            foreach (var arg in define.Arguments)
+                            {
+                                arguments.Append($"{arg.Type.ToCSString()} {arg.Name}, ");
+                            }
+                            if (arguments.Length > 0)
+                                arguments.Length -= 2;
+
+                            writer.WriteLine($"public static {define.Type.ToCSString()} {NameMangler.MangleEnumName(define.Name)}({arguments}) {{ {define.Implementation} }}");
+                        }
+                    }
+                }
+
+                writer.WriteLineNoTabs("#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member");
+            }
         }
 
         private static void WriteEnums(string directoryPath, List<EnumType> enums)
@@ -49,7 +93,7 @@ namespace VkGenerator
             writer.WriteLine("// This file is auto generated, do not edit.");
             writer.WriteLine("using System;");
             writer.WriteLine();
-            writer.WriteLine($"namespace {GraphicsNamespace}.Vulkan");
+            writer.WriteLine($"namespace {GraphicsNamespace}.OpenXR");
             using (writer.CsScope())
             {
                 writer.WriteLineNoTabs("#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member");
@@ -71,35 +115,25 @@ namespace VkGenerator
                         // There are three "valid" reasons why a enum type would be missing version data.
                         // 1. The only reference to the enum type is in a disabled extension.
                         //    Currently such enum types still get emitted even if no-one references them.
-                        // 2. The enum type is part of vulkansc or a vulkansc extension. We don't deal with vulkancs atm.
-                        // 3. The enum doesn't have any values associated with it, this happens with some "Bits" enum that
+                        // 2. The enum doesn't have any values associated with it, this happens with some "Bits" enum that
                         //    have no entries.
                         //
-                        // This is a list of the known enum types that fullfill any of these criteria.
-                        // - Noggin_bops 2024-09-24
+                        // FIXME: Do we need this for OpenXR?
+                        // - Noggin_bops 2025-03-30
                         ReadOnlySpan<string> exceptedNames = [
-                                "VkSemaphoreCreateFlagBits",
-                                "VkSwapchainImageUsageFlagBitsANDROID",
-                                "VkPrivateDataSlotCreateFlagBits",
-                                "VkShaderModuleCreateFlagBits",
-                                "VkFaultLevel",
-                                "VkFaultType",
-                                "VkFaultQueryBehavior",
-                                "VkPipelineMatchControl",
-                                "VkPipelineCacheValidationVersion",
-                                "VkVideoEncodeFlagBitsKHR",
-                                "VkImageFormatConstraintsFlagBitsFUCHSIA",
-                                "VkWaylandSurfaceCreateFlagBitsKHR",
+                            "XrActionType",
+                            "XrAndroidSurfaceSwapchainFlagBitsFB"
                             ];
 
                         if (exceptedNames.Contains(@enum.Name) == false)
                         {
-                            Debug.Assert(false);
+                            Console.WriteLine($"Enum missing type information: {@enum.Name}");
+                            //Debug.Assert(false);
                         }
                     }
                     if (@enum.ReferencedBy != null)
                     {
-                        writer.Write($"Used by {string.Join(", ", @enum.ReferencedBy.Take(3).Select(c => $"<see cref=\"Vk.{NameMangler.MangleFunctionName(c.Name)}\"/>"))}");
+                        writer.Write($"Used by {string.Join(", ", @enum.ReferencedBy.Take(3).Select(c => $"<see cref=\"Xr.{NameMangler.MangleFunctionName(c.Name)}\"/>"))}");
                         if (@enum.ReferencedBy.Count > 3)
                         {
                             writer.Write(", ...");
@@ -107,8 +141,8 @@ namespace VkGenerator
                     }
                     writer.WriteLine("</summary>");
 
-                    // FIXME: Make sure to not do name mangling?
-                    writer.WriteLine($"/// <remarks><see href=\"https://registry.khronos.org/vulkan/specs/latest/man/html/{@enum.Name}.html\" /></remarks>");
+                    // FIXME: What are the OpenXR documentation pages?
+                    //writer.WriteLine($"/// <remarks><see href=\"https://registry.khronos.org/vulkan/specs/latest/man/html/{@enum.Name}.html\" /></remarks>");
 
                     if (@enum.Bitmask)
                     {
@@ -123,7 +157,7 @@ namespace VkGenerator
                         {
                             if (member.Extension != null && member.VersionInfo != null)
                             {
-                                if (member.Extension.StartsWith("VK_VERSION") == false)
+                                if (member.Extension.StartsWith("XR_VERSION") == false)
                                     Debug.Assert(member.VersionInfo.Extensions.Contains(member.Extension));
                             }
 
@@ -158,31 +192,21 @@ namespace VkGenerator
                                     // There are two "valid" reasons why a enum member would be missing version data.
                                     // 1. The only reference to the enum member is in a disabled extension.
                                     //    Currently such enum members still get emitted even if no-one references them.
-                                    // 2. The enum member is part of vulkansc or a vulkansc extension. We don't deal with vulkancs atm.
                                     //
-                                    // This is a list of the known enum member that fullfill either of these criteria.
+                                    // FIXME: Do we need this for OpenXR?
                                     // - Noggin_bops 2024-09-24
                                     ReadOnlySpan<(string, string)> exceptedNames = [
-                                                ("VkFaultQueryBehavior", "VK_FAULT_QUERY_BEHAVIOR_GET_AND_CLEAR_ALL_FAULTS"),
-                                                ("VkPipelineMatchControl", "VK_PIPELINE_MATCH_CONTROL_APPLICATION_UUID_EXACT_MATCH"),
-                                                ("VkPipelineCacheValidationVersion", "VK_PIPELINE_CACHE_VALIDATION_VERSION_SAFETY_CRITICAL_ONE"),
-                                                ("VkSwapchainImageUsageFlagBitsANDROID", "VK_SWAPCHAIN_IMAGE_USAGE_SHARED_BIT_ANDROID"),
-                                                ("VkFaultLevel", "VK_FAULT_LEVEL_UNASSIGNED"),
-                                                ("VkFaultLevel", "VK_FAULT_LEVEL_CRITICAL"),
-                                                ("VkFaultLevel", "VK_FAULT_LEVEL_RECOVERABLE"),
-                                                ("VkFaultLevel", "VK_FAULT_LEVEL_WARNING"),
-                                                ("VkFaultType", "VK_FAULT_TYPE_INVALID"),
-                                                ("VkFaultType", "VK_FAULT_TYPE_UNASSIGNED"),
-                                                ("VkFaultType", "VK_FAULT_TYPE_IMPLEMENTATION"),
-                                                ("VkFaultType", "VK_FAULT_TYPE_SYSTEM"),
-                                                ("VkFaultType", "VK_FAULT_TYPE_PHYSICAL_DEVICE"),
-                                                ("VkFaultType", "VK_FAULT_TYPE_COMMAND_BUFFER_FULL"),
-                                                ("VkFaultType", "VK_FAULT_TYPE_INVALID_API_USAGE")
+                                        ("XrActionType", "XR_ACTION_TYPE_BOOLEAN_INPUT"),
+                                        ("XrActionType", "XR_ACTION_TYPE_FLOAT_INPUT"),
+                                        ("XrActionType", "XR_ACTION_TYPE_VECTOR2F_INPUT"),
+                                        ("XrActionType", "XR_ACTION_TYPE_POSE_INPUT"),
+                                        ("XrActionType", "XR_ACTION_TYPE_VIBRATION_OUTPUT"),
                                             ];
 
                                     if (exceptedNames.Contains((@enum.Name, member.Name)) == false)
                                     {
-                                        Debug.Assert(false);
+                                        Console.WriteLine($"Enum member missing version: {@enum.Name} :: {member.Name}");
+                                        //Debug.Assert(false);
                                     }
                                 }
                             }
@@ -218,21 +242,20 @@ namespace VkGenerator
             }
         }
 
-        private static void WriteStructs(string directoryPath, List<StructType> structs, List<EnumType> enums, SpecificationData video)
+        private static void WriteStructs(string directoryPath, List<StructType> structs, List<EnumType> enums)
         {
             using StreamWriter stream = File.CreateText(Path.Combine(directoryPath, "Structs.cs"));
             using IndentedTextWriter writer = new IndentedTextWriter(stream);
             writer.WriteLine("// This file is auto generated, do not edit.");
             writer.WriteLine("using OpenTK.Mathematics;");
-            foreach (Extension extension in video.Extensions)
-            {
-                writer.WriteLine($"using {GraphicsNamespace}.Vulkan.{NameMangler.MangleExtensionName(extension.Name)};");
-            }
+            writer.WriteLine("using OpenTK.Graphics.Vulkan;");
+            writer.WriteLine("using OpenTK.Graphics.Egl;");
+            writer.WriteLine("using OpenTK.Graphics.Glx;");
             writer.WriteLine("using System;");
             writer.WriteLine("using System.Runtime.CompilerServices;");
             writer.WriteLine("using System.Runtime.InteropServices;");
             writer.WriteLine();
-            writer.WriteLine($"namespace {GraphicsNamespace}.Vulkan");
+            writer.WriteLine($"namespace {GraphicsNamespace}.OpenXR");
             using (writer.CsScope())
             {
                 writer.WriteLineNoTabs("#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member");
@@ -254,34 +277,16 @@ namespace VkGenerator
                         // There are two "valid" reasons why a struct would be missing version data.
                         // 1. The only reference to the struct is in a disabled extension.
                         //    Currently such structs still get emitted even if no-one references them.
-                        // 2. The struct is part of vulkansc or a vulkansc extension. We don't deal with vulkancs atm.
                         //
-                        // This is a list of the known structs that fullfill either of these criteria.
+                        // FIXME: Do we need this for OpenXR?
                         // - Noggin_bops 2024-09-24
                         ReadOnlySpan<string> exceptedNames = [
-                                "VkPipelineCacheStageValidationIndexEntry",
-                                "VkPipelineCacheSafetyCriticalIndexEntry",
-                                "VkPipelineCacheHeaderVersionSafetyCriticalOne",
-                                "VkDeviceSemaphoreSciSyncPoolReservationCreateInfoNV",
-                                "VkNativeBufferUsage2ANDROID",
-                                "VkNativeBufferANDROID",
-                                "VkSwapchainImageCreateInfoANDROID",
-                                "VkPhysicalDevicePresentationPropertiesANDROID",
-                                "VkPerformanceQueryReservationInfoKHR",
-                                "VkFaultData",
-                                "VkFaultCallbackInfo",
-                                "VkPipelineOfflineCreateInfo",
-                                "VkPhysicalDeviceVulkanSC10Properties",
-                                "VkPipelinePoolSize",
-                                "VkDeviceObjectReservationCreateInfo",
-                                "VkCommandPoolMemoryReservationCreateInfo",
-                                "VkCommandPoolMemoryConsumption",
-                                "VkPhysicalDeviceVulkanSC10Features",
                             ];
 
                         if (exceptedNames.Contains(@struct.Name) == false)
                         {
-                            Debug.Assert(false);
+                            Console.WriteLine($"Struct missing version info: {@struct.Name}");
+                            //Debug.Assert(false);
                         }
                     }
                     if (@struct.Comment != null)
@@ -293,7 +298,7 @@ namespace VkGenerator
                         if (@struct.Comment != null)
                             writer.Write("<br/>");
 
-                        writer.Write($"Used by {string.Join(", ", @struct.ReferencedBy.Take(3).Select(c => $"<see cref=\"Vk.{NameMangler.MangleFunctionName(c.Name)}\"/>"))}");
+                        writer.Write($"Used by {string.Join(", ", @struct.ReferencedBy.Take(3).Select(c => $"<see cref=\"Xr.{NameMangler.MangleFunctionName(c.Name)}\"/>"))}");
                         if (@struct.ReferencedBy.Count > 3)
                         {
                             writer.Write(", ...");
@@ -301,8 +306,8 @@ namespace VkGenerator
                     }
                     writer.WriteLine("</summary>");
 
-                    // FIXME: Make sure to not do name mangling?
-                    writer.WriteLine($"/// <remarks><see href=\"https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/{@struct.Name}.html\" /></remarks>");
+                    // FIXME: OpenXR documentation link!
+                    //writer.WriteLine($"/// <remarks><see href=\"https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/{@struct.Name}.html\" /></remarks>");
 
                     WriteStruct(writer, @struct, enums);
                 }
@@ -320,7 +325,7 @@ namespace VkGenerator
             writer.WriteLine("using System.Diagnostics;");
             writer.WriteLine("using System.Runtime.CompilerServices;");
             writer.WriteLine();
-            writer.WriteLine($"namespace {GraphicsNamespace}.Vulkan");
+            writer.WriteLine($"namespace {GraphicsNamespace}.OpenXR");
             using (writer.CsScope())
             {
                 writer.WriteLineNoTabs("#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member");
@@ -330,7 +335,7 @@ namespace VkGenerator
                     writer.Write("/// <summary>");
                     if (handle.ReferencedBy != null)
                     {
-                        writer.Write($"Used by {string.Join(", ", handle.ReferencedBy.Take(3).Select(c => $"<see cref=\"Vk.{NameMangler.MangleFunctionName(c.Name)}\"/>"))}");
+                        writer.Write($"Used by {string.Join(", ", handle.ReferencedBy.Take(3).Select(c => $"<see cref=\"Xr.{NameMangler.MangleFunctionName(c.Name)}\"/>"))}");
                         if (handle.ReferencedBy.Count > 3)
                         {
                             writer.Write(", ...");
@@ -338,8 +343,8 @@ namespace VkGenerator
                     }
                     writer.WriteLine("</summary>");
 
-                    // FIXME: Make sure to not do name mangling?
-                    writer.WriteLine($"/// <remarks><see href=\"https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/{handle.Name}.html\" /></remarks>");
+                    // FIXME: OpenXR documentation link!
+                    //writer.WriteLine($"/// <remarks><see href=\"https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/{handle.Name}.html\" /></remarks>");
 
                     // FIXME: Figure out the right underlying type!
                     writer.WriteLine($"[DebuggerDisplay(\"{handle.Name}\\\\{{{{Handle}}\\\\}}\")]");
@@ -364,30 +369,27 @@ namespace VkGenerator
             }
         }
 
-        private static void WriteCommands(string directoryPath, List<Command> commands, SpecificationData video)
+        private static void WriteCommands(string directoryPath, List<Command> commands)
         {
-            using StreamWriter stream = File.CreateText(Path.Combine(directoryPath, "Vulkan.cs"));
+            using StreamWriter stream = File.CreateText(Path.Combine(directoryPath, "OpenXR.cs"));
             using IndentedTextWriter writer = new IndentedTextWriter(stream);
             writer.WriteLine("// This file is auto generated, do not edit.");
             writer.WriteLine("using OpenTK.Mathematics;");
-            foreach (Extension extension in video.Extensions)
-            {
-                writer.WriteLine($"using {GraphicsNamespace}.Vulkan.{NameMangler.MangleExtensionName(extension.Name)};");
-            }
+            writer.WriteLine("using OpenTK.Graphics.Vulkan;");
             writer.WriteLine("using System;");
             writer.WriteLine("using System.Runtime.CompilerServices;");
             writer.WriteLine();
-            writer.WriteLine($"namespace {GraphicsNamespace}.Vulkan");
+            writer.WriteLine($"namespace {GraphicsNamespace}.OpenXR");
             using (writer.CsScope())
             {
                 writer.WriteLineNoTabs("#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member");
 
-                writer.WriteLine("public static unsafe partial class Vk");
+                writer.WriteLine("public static unsafe partial class Xr");
                 using (writer.CsScope())
                 {
                     foreach (Command command in commands)
                     {
-                        WriteCommand(writer, command, "static ", "VkPointers.");
+                        WriteCommand(writer, command, "static ", "XrPointers.");
                     }
                 }
 
@@ -429,17 +431,10 @@ namespace VkGenerator
                     // There are two "valid" reasons why a command would be missing version data.
                     // 1. The only reference to the command is in a disabled extension.
                     //    Currently such functions still get emitted even if no-one references them.
-                    // 2. The command is part of vulkansc or a vulkansc extension. We don't deal with vulkancs atm.
                     //
-                    // This is a list of the known commands that fullfill either of these criteria.
+                    // FIXME: Do we need this for OpenXR?
                     // - Noggin_bops 2024-09-24
                     ReadOnlySpan<string> exceptedNames = [
-                        "vkGetSwapchainGrallocUsageANDROID",
-                                    "vkGetSwapchainGrallocUsage2ANDROID",
-                                    "vkAcquireImageANDROID",
-                                    "vkQueueSignalReleaseImageANDROID",
-                                    "vkGetFaultData",
-                                    "vkGetCommandPoolMemoryConsumption",
                                 ];
 
                     if (exceptedNames.Contains(command.Name) == false)
@@ -449,22 +444,6 @@ namespace VkGenerator
                     }
                 }
 
-                switch (command.CommandType)
-                {
-                    case CommandType.Global:
-                        writer.Write("[global command] ");
-                        break;
-                    case CommandType.Instance:
-                        writer.Write("[instance command] ");
-                        break;
-                    case CommandType.Device:
-                        writer.Write("[device command] ");
-                        break;
-                    case CommandType.Invalid:
-                    default:
-                        throw new InvalidEnumArgumentException($"Invalid command type: {command.CommandType}");
-                }
-
                 if (command.Alias != null)
                 {
                     writer.Write($" Alias of <see cref=\"{NameMangler.MangleFunctionName(command.Alias)}\"/>");
@@ -472,7 +451,8 @@ namespace VkGenerator
                 writer.WriteLine("</summary>");
             }
 
-            writer.WriteLine($"/// <remarks><see href=\"https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/{entryPoint}.html\" /></remarks>");
+            // FIXME: OpenXR documentation link
+            //writer.WriteLine($"/// <remarks><see href=\"https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/{entryPoint}.html\" /></remarks>");
 
             writer.WriteLine($"public {functionModifiers}{command.StrongReturnType!.ToCSString()} {functionName}({signature})");
             using (writer.CsScope())
@@ -488,28 +468,25 @@ namespace VkGenerator
             }
         }
 
-        private static void WriteFunctionPointers(string directoryPath, List<Command> commands, SpecificationData video)
+        private static void WriteFunctionPointers(string directoryPath, List<Command> commands)
         {
-            using StreamWriter stream = File.CreateText(Path.Combine(directoryPath, "Vulkan.Pointers.cs"));
+            using StreamWriter stream = File.CreateText(Path.Combine(directoryPath, "OpenXR.Pointers.cs"));
             using IndentedTextWriter writer = new IndentedTextWriter(stream);
             writer.WriteLine("// This file is auto generated, do not edit.");
             writer.WriteLine("using OpenTK.Mathematics;");
-            foreach (Extension extension in video.Extensions)
-            {
-                writer.WriteLine($"using {GraphicsNamespace}.Vulkan.{NameMangler.MangleExtensionName(extension.Name)};");
-            }
+            writer.WriteLine("using OpenTK.Graphics.Vulkan;");
             writer.WriteLine("using System;");
             writer.WriteLine("using System.Runtime.CompilerServices;");
             writer.WriteLine("using System.Runtime.InteropServices;");
             writer.WriteLine();
-            writer.WriteLine($"namespace {GraphicsNamespace}.Vulkan");
+            writer.WriteLine($"namespace {GraphicsNamespace}.OpenXR");
             using (writer.CsScope())
             {
                 writer.WriteLineNoTabs("#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member");
                 writer.WriteLineNoTabs("#pragma warning disable IDE1006 // Naming Styles");
                 writer.WriteLineNoTabs("#pragma warning disable CA2211 // Non-constant fields should not be visible");
 
-                writer.WriteLine("public static unsafe partial class VkPointers");
+                writer.WriteLine("public static unsafe partial class XrPointers");
                 using (writer.CsScope())
                 {
                     foreach (Command command in commands)
@@ -552,8 +529,8 @@ namespace VkGenerator
                 writer.WriteLine($"private {memberModifiers}{command.StrongReturnType!.ToCSString()} {entryPoint}_Lazy({signature})");
                 using (writer.CsScope())
                 {
-                    // Dotnet gurantees you can't get torn values when assigning functionpointers, assuming proper allignment which is default.
-                    writer.WriteLine($"_{entryPoint}_fnptr = (delegate* unmanaged<{delegateTypes}>){LoaderClass}.GetInstanceProcAddress(\"{entryPoint}\");");
+                    writer.WriteLine($"XrResult result = {LoaderClass}.GetInstanceProcAddress(\"{entryPoint}\", out IntPtr temp);");
+                    writer.WriteLine($"_{entryPoint}_fnptr = (delegate* unmanaged<{delegateTypes}>)temp;");
 
                     if (command.StrongReturnType is not CSVoid)
                     {
@@ -571,177 +548,23 @@ namespace VkGenerator
             }
         }
 
-
-        public static void WriteDispatchTables(string directoryPath, List<Command> commands, SpecificationData video)
-        {
-            using StreamWriter stream = File.CreateText(Path.Combine(directoryPath, "DispatchTables.cs"));
-            using IndentedTextWriter writer = new IndentedTextWriter(stream);
-            writer.WriteLine("// This file is auto generated, do not edit.");
-            writer.WriteLine("using OpenTK.Mathematics;");
-            foreach (Extension extension in video.Extensions)
-            {
-                writer.WriteLine($"using {GraphicsNamespace}.Vulkan.{NameMangler.MangleExtensionName(extension.Name)};");
-            }
-            writer.WriteLine("using System;");
-            writer.WriteLine("using System.Runtime.CompilerServices;");
-            writer.WriteLine("using System.Runtime.InteropServices;");
-            writer.WriteLine();
-            writer.WriteLine($"namespace {GraphicsNamespace}.Vulkan");
-            using (writer.CsScope())
-            {
-                writer.WriteLineNoTabs("#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member");
-
-                WriteInstanceDispatchTable(writer, commands);
-                WriteDeviceDispatchTable(writer, commands);
-
-                writer.WriteLineNoTabs("#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member");
-            }
-
-            static void WriteInstanceDispatchTable(IndentedTextWriter writer, List<Command> commands)
-            {
-                writer.WriteLine($"public unsafe partial struct InstanceDispatchTable");
-                using (writer.CsScope())
-                {
-                    writer.WriteLine("///<summary>The <see cref=\"VkInstance\"/> used to load this dispatch table.</summary>");
-                    writer.WriteLine("public readonly VkInstance Instance;");
-                    
-                    writer.WriteLine($"public InstanceDispatchTable(VkInstance instance)");
-                    using (writer.CsScope())
-                    {
-                        writer.WriteLine("Instance = instance;");
-                        foreach (Command command in commands)
-                        {
-                            if (command.CommandType != CommandType.Instance)
-                                continue;
-
-                            string entryPoint = command.Name;
-                            string functionName = NameMangler.MangleFunctionName(command.Name);
-
-                            StringBuilder signature = new StringBuilder();
-                            StringBuilder delegateTypes = new StringBuilder();
-                            StringBuilder paramNames = new StringBuilder();
-                            foreach (CommandParameter parameter in command.Parameters)
-                            {
-                                string name = NameMangler.MangleParameterName(parameter.Name);
-                                string type = parameter.StrongType!.ToCSString();
-                                signature.Append($"{type} {name}, ");
-                                delegateTypes.Append($"{type}, ");
-                                paramNames.Append($"{name}, ");
-                            }
-                            signature.Length -= 2;
-                            paramNames.Length -= 2;
-
-                            delegateTypes.Append($"{command.StrongReturnType!.ToCSString()}");
-
-                            writer.WriteLine($"_{entryPoint}_fnptr = (delegate* unmanaged<{delegateTypes}>){LoaderClass}.GetInstanceProcAddress(instance, \"{entryPoint}\");");
-                        }
-                    }
-
-                    // FIXME: If the first argument is the instance itself
-                    // we might want to do like VkBootstrap does as implicitly
-                    // fill it in.
-                    // - Noggin_bops 2025-03-27
-                    foreach (Command command in commands)
-                    {
-                        if (command.CommandType != CommandType.Instance)
-                            continue;
-
-                        WriteCommand(writer, command, "", "");
-                    }
-
-                    writer.WriteLineNoTabs("#pragma warning disable IDE1006 // Naming Styles");
-
-                    foreach (Command command in commands)
-                    {
-                        if (command.CommandType != CommandType.Instance)
-                            continue;
-
-                        WriteFunctionPointer(writer, command, "", false);
-                    }
-
-                    writer.WriteLineNoTabs("#pragma warning restore IDE1006 // Naming Styles");
-                }
-            }
-
-            static void WriteDeviceDispatchTable(IndentedTextWriter writer, List<Command> commands)
-            {
-                writer.WriteLine($"public unsafe partial struct DeviceDispatchTable");
-                using (writer.CsScope())
-                {
-                    writer.WriteLine("///<summary>The <see cref=\"VkDevice\"/> used to load this dispatch table.</summary>");
-                    writer.WriteLine("public readonly VkDevice Device;");
-                    
-                    writer.WriteLine($"public DeviceDispatchTable(VkDevice device)");
-                    using (writer.CsScope())
-                    {
-                        writer.WriteLine("Device = device;");
-                        foreach (Command command in commands)
-                        {
-                            if (command.CommandType != CommandType.Device)
-                                continue;
-
-                            string entryPoint = command.Name;
-                            string functionName = NameMangler.MangleFunctionName(command.Name);
-
-                            StringBuilder signature = new StringBuilder();
-                            StringBuilder delegateTypes = new StringBuilder();
-                            StringBuilder paramNames = new StringBuilder();
-                            foreach (CommandParameter parameter in command.Parameters)
-                            {
-                                string name = NameMangler.MangleParameterName(parameter.Name);
-                                string type = parameter.StrongType!.ToCSString();
-                                signature.Append($"{type} {name}, ");
-                                delegateTypes.Append($"{type}, ");
-                                paramNames.Append($"{name}, ");
-                            }
-                            signature.Length -= 2;
-                            paramNames.Length -= 2;
-
-                            delegateTypes.Append($"{command.StrongReturnType!.ToCSString()}");
-
-                            writer.WriteLine($"_{entryPoint}_fnptr = (delegate* unmanaged<{delegateTypes}>){LoaderClass}.GetDeviceProcAddr(device, \"{entryPoint}\");");
-                        }
-                    }
-
-                    // FIXME: If the first argument is the device itself
-                    // we might want to do like VkBootstrap does as implicitly
-                    // fill it in.
-                    // - Noggin_bops 2025-03-27
-                    foreach (Command command in commands)
-                    {
-                        if (command.CommandType != CommandType.Device)
-                            continue;
-
-                        WriteCommand(writer, command, "", "");
-                    }
-
-                    foreach (Command command in commands)
-                    {
-                        if (command.CommandType != CommandType.Device)
-                            continue;
-
-                        WriteFunctionPointer(writer, command, "", false);
-                    }
-                }
-            }
-        }
-
         private static void WriteConstants(string directoryPath, Dictionary<string, Constant> constants)
         {
             using StreamWriter stream = File.CreateText(Path.Combine(directoryPath, "Constants.cs"));
             using IndentedTextWriter writer = new IndentedTextWriter(stream);
             writer.WriteLine("// This file is auto generated, do not edit.");
             writer.WriteLine("using OpenTK.Mathematics;");
+            writer.WriteLine("using OpenTK.Graphics.Vulkan;");
             writer.WriteLine("using System;");
             writer.WriteLine("using System.Runtime.CompilerServices;");
             writer.WriteLine("using System.Runtime.InteropServices;");
             writer.WriteLine();
-            writer.WriteLine($"namespace {GraphicsNamespace}.Vulkan");
+            writer.WriteLine($"namespace {GraphicsNamespace}.OpenXR");
             using (writer.CsScope())
             {
                 writer.WriteLineNoTabs("#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member");
 
-                writer.WriteLine("public static unsafe partial class Vk");
+                writer.WriteLine("public static unsafe partial class Xr");
                 using (writer.CsScope())
                 {
                     foreach ((string name, Constant constant) in constants)
@@ -755,7 +578,8 @@ namespace VkGenerator
                             writer.WriteLine($"/// <summary>{NameMangler.XmlEscapeCharacters(constant.Comment)}</summary>");
                         }
 
-                        writer.WriteLine($"/// <remarks><see href=\"https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/{name}.html\" /></remarks>");
+                        // FIXME: OpenXR documentation link!
+                        //writer.WriteLine($"/// <remarks><see href=\"https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/{name}.html\" /></remarks>");
 
                         switch (constant.Type)
                         {
@@ -777,116 +601,6 @@ namespace VkGenerator
                                 break;
                             default:
                                 throw new Exception();
-                        }
-                    }
-                }
-
-                writer.WriteLineNoTabs("#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member");
-            }
-        }
-
-
-        public static void WriteVideo(SpecificationData video)
-        {
-            // This is quite fragile, no idea if there is an easy way that is "better".
-            string outputProjectPath = Path.Combine(
-                Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? throw new NullReferenceException(),
-                "..", "..", "..", "..", GraphicsNamespace);
-
-            string directoryPath = Path.Combine(outputProjectPath, "Vulkan");
-            if (Directory.Exists(directoryPath) == false) Directory.CreateDirectory(directoryPath);
-
-
-            WriteVideoNamespace(directoryPath, video);
-        }
-
-        private static void WriteVideoNamespace(string directoryPath, SpecificationData video)
-        {
-            using StreamWriter stream = File.CreateText(Path.Combine(directoryPath, "Video.cs"));
-            using IndentedTextWriter writer = new IndentedTextWriter(stream);
-            writer.WriteLine("// This file is auto generated, do not edit.");
-            foreach (Extension extension in video.Extensions)
-            {
-                writer.WriteLine($"using {GraphicsNamespace}.Vulkan.{NameMangler.MangleExtensionName(extension.Name)};");
-            }
-            writer.WriteLine("using System;");
-            writer.WriteLine("using System.Runtime.CompilerServices;");
-            writer.WriteLine();
-            writer.WriteLine($"namespace {GraphicsNamespace}.Vulkan");
-            using (writer.CsScope())
-            {
-                writer.WriteLineNoTabs("#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member");
-
-                foreach (Extension extension in video.Extensions)
-                {
-                    writer.WriteLine($"namespace {NameMangler.MangleExtensionName(extension.Name)}");
-                    using (writer.CsScope())
-                    {
-                        // FIXME: Consolidate all require stuff into one single thing so we
-                        // don't get multiple constant classes for example.
-                        foreach (RequireTag requireTag in extension.RequireTags)
-                        {
-                            writer.WriteLine($"public static class Constants");
-                            using (writer.CsScope())
-                            {
-                                foreach (Constant constant in requireTag.Constants)
-                                {
-                                    switch (constant.Type)
-                                    {
-                                        case ConstantType.Int32:
-                                            writer.WriteLine($"public const int {NameMangler.MangleConstantName(constant.Name)} = {(int)constant.IntValue};");
-                                            break;
-                                        case ConstantType.Uint32:
-                                            writer.WriteLine($"public const uint {NameMangler.MangleConstantName(constant.Name)} = {(uint)constant.IntValue};");
-                                            break;
-                                        case ConstantType.Uint64:
-                                            writer.WriteLine($"public const ulong {NameMangler.MangleConstantName(constant.Name)} = {(ulong)constant.IntValue};");
-                                            break;
-                                        case ConstantType.Float:
-                                            writer.WriteLine($"public const float {NameMangler.MangleConstantName(constant.Name)} = {constant.FloatValue};");
-                                            break;
-                                        case ConstantType.String:
-                                            writer.WriteLine($"/// <summary>{NameMangler.XmlEscapeCharacters(constant.StringValue)}</summary>");
-                                            writer.WriteLine($"public static ReadOnlySpan<byte> {NameMangler.MangleConstantName(constant.Name)} => {constant.StringValue}u8;");
-                                            break;
-                                        default:
-                                            throw new Exception();
-                                    }
-                                }
-                            }
-
-                            foreach (RequireType requiredType in requireTag.RequiredTypes)
-                            {
-                                EnumType? @enum = video.Enums.Find(e => e.Name == requiredType.Name);
-                                StructType? @struct = video.Structs.Find(s => s.Name == requiredType.Name);
-                                if (@enum != null)
-                                {
-                                    // FIXME: Mangle the enum name?
-                                    writer.WriteLine($"public enum {@enum.Name} : uint");
-                                    using (writer.CsScope())
-                                    {
-                                        foreach (EnumMember member in @enum.Members)
-                                        {
-                                            Debug.Assert(member.Extension == null, "As of 2024-07-15 video.xml doesn't specify extends on enums.");
-
-                                            string? comment = NameMangler.MaybeRemoveStart(member.Comment, "// ");
-                                            if (comment != null)
-                                            {
-                                                writer.WriteLine($"/// <summary>{NameMangler.XmlEscapeCharacters(comment)}</summary>");
-                                            }
-                                            writer.WriteLine($"{NameMangler.MangleEnumName(member.Name)} = {member.Value},");
-                                        }
-                                    }
-                                }
-                                else if (@struct != null)
-                                {
-                                    WriteStruct(writer, @struct, video.Enums);
-                                }
-                                else
-                                {
-                                    Console.WriteLine($"Could not find {requiredType.Name} in {extension.Name} extension.");
-                                }
-                            }
                         }
                     }
                 }
@@ -978,12 +692,12 @@ namespace VkGenerator
                             }
                         }
                     }
-                    else if (member.StrongType is CSEnum csEnum && csEnum.TypeName == "VkStructureType" && member.Values != null)
+                    else if (member.StrongType is CSEnum csEnum && csEnum.TypeName == "XrStructureType" && member.Values != null)
                     {
                         Debug.Assert(@struct.Union == false);
                         Debug.Assert(member.Values.Contains(',') == false, "We assume only one valid value.");
-                        Debug.Assert(member.Name == "sType" && member.Type == "VkStructureType", "Atm we only support sType values.");
-                        // FIXME: Assert that the enum member is from the VkStructureType enum!
+                        Debug.Assert(member.Name == "type" && member.Type == "XrStructureType", "Atm we only support sType values.");
+                        // FIXME: Assert that the enum member is from the XrStructureType enum!
                         EnumMember? enumMember = Processor.FindEnumMember(enums, member.Values);
                         if (enumMember == null)
                         {
@@ -992,7 +706,7 @@ namespace VkGenerator
                         }
                         else
                         {
-                            writer.WriteLine($"public {member.StrongType!.ToCSString()} {NameMangler.MangleMemberName(member.Name)} = VkStructureType.{NameMangler.MangleEnumName(member.Values)};");
+                            writer.WriteLine($"public {member.StrongType!.ToCSString()} {NameMangler.MangleMemberName(member.Name)} = XrStructureType.{NameMangler.MangleEnumName(member.Values)};");
                         }
                     }
                     else if (member.StrongType is CSBitfield csBitfield)
