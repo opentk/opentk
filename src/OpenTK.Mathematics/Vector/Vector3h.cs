@@ -23,6 +23,7 @@ SOFTWARE.
 using System;
 using System.Diagnostics.Contracts;
 using System.IO;
+using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
@@ -35,7 +36,7 @@ namespace OpenTK.Mathematics
     /// </summary>
     [Serializable]
     [StructLayout(LayoutKind.Sequential)]
-    public struct Vector3h : ISerializable, IEquatable<Vector3h>, IFormattable
+    public struct Vector3h : ISerializable, IEquatable<Vector3h>, IFormattable, IEqualityOperators<Vector3h, Vector3h, bool>
     {
         /// <summary>
         /// The X component of the Half3.
