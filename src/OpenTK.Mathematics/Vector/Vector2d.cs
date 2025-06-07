@@ -1073,22 +1073,36 @@ namespace OpenTK.Mathematics
         /// Divides an instance by a scalar.
         /// </summary>
         /// <param name="vec">The instance.</param>
-        /// <param name="f">The scalar.</param>
-        /// <returns>The result of the operation.</returns>
+        /// <param name="scale">The scalar.</param>
+        /// <returns>Result of division.</returns>
         [Pure]
-        public static Vector2d operator /(Vector2d vec, double f)
+        public static Vector2d operator /(Vector2d vec, double scale)
         {
-            vec.X /= f;
-            vec.Y /= f;
+            vec.X /= scale;
+            vec.Y /= scale;
             return vec;
         }
 
         /// <summary>
-        /// Component-wise division between the specified instance by a scale vector.
+        /// Divides an instance by a scalar.
+        /// </summary>
+        /// <param name="scale">The scalar.</param>
+        /// <param name="vec">The instance.</param>
+        /// <returns>Result of division.</returns>
+        [Pure]
+        public static Vector2d operator /(double scale, Vector2d vec)
+        {
+            vec.X /= scale;
+            vec.Y /= scale;
+            return vec;
+        }
+
+        /// <summary>
+        /// Divides an instance by a scalar.
         /// </summary>
         /// <param name="vec">Left operand.</param>
         /// <param name="scale">Right operand.</param>
-        /// <returns>Result of the division.</returns>
+        /// <returns>Result of division.</returns>
         [Pure]
         public static Vector2d operator /(Vector2d vec, Vector2d scale)
         {

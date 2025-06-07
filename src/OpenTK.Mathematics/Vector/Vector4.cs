@@ -2111,9 +2111,25 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <param name="vec">The instance.</param>
         /// <param name="scale">The scalar.</param>
-        /// <returns>The result of the calculation.</returns>
+        /// <returns>Result of division.</returns>
         [Pure]
         public static Vector4 operator /(Vector4 vec, float scale)
+        {
+            vec.X /= scale;
+            vec.Y /= scale;
+            vec.Z /= scale;
+            vec.W /= scale;
+            return vec;
+        }
+
+        /// <summary>
+        /// Divides an instance by a scalar.
+        /// </summary>
+        /// <param name="scale">The scalar.</param>
+        /// <param name="vec">The instance.</param>
+        /// <returns>Result of division.</returns>
+        [Pure]
+        public static Vector4 operator /(float scale, Vector4 vec)
         {
             vec.X /= scale;
             vec.Y /= scale;
@@ -2127,7 +2143,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <param name="vec">Left operand.</param>
         /// <param name="scale">Right operand.</param>
-        /// <returns>Result of the division.</returns>
+        /// <returns>Result of division.</returns>
         [Pure]
         public static Vector4 operator /(Vector4 vec, Vector4 scale)
         {

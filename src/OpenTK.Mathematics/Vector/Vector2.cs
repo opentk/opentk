@@ -1097,13 +1097,27 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Divides the specified instance by a scalar.
+        /// Divides an instance by a scalar.
         /// </summary>
         /// <param name="vec">Left operand.</param>
         /// <param name="scale">Right operand.</param>
-        /// <returns>Result of the division.</returns>
+        /// <returns>Result of division.</returns>
         [Pure]
         public static Vector2 operator /(Vector2 vec, float scale)
+        {
+            vec.X /= scale;
+            vec.Y /= scale;
+            return vec;
+        }
+
+        /// <summary>
+        /// Divides an instance by a scalar.
+        /// </summary>
+        /// <param name="scale">Left operand.</param>
+        /// <param name="vec">Right operand.</param>
+        /// <returns>Result of division.</returns>
+        [Pure]
+        public static Vector2 operator /(float scale, Vector2 vec)
         {
             vec.X /= scale;
             vec.Y /= scale;
@@ -1115,7 +1129,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <param name="vec">Left operand.</param>
         /// <param name="scale">Right operand.</param>
-        /// <returns>Result of the division.</returns>
+        /// <returns>Result of division.</returns>
         [Pure]
         public static Vector2 operator /(Vector2 vec, Vector2 scale)
         {

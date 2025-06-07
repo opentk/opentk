@@ -1643,9 +1643,24 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <param name="vec">The instance.</param>
         /// <param name="scale">The scalar.</param>
-        /// <returns>The result of the calculation.</returns>
+        /// <returns>Result of division.</returns>
         [Pure]
         public static Vector3 operator /(Vector3 vec, float scale)
+        {
+            vec.X /= scale;
+            vec.Y /= scale;
+            vec.Z /= scale;
+            return vec;
+        }
+
+        /// <summary>
+        /// Divides an instance by a scalar.
+        /// </summary>
+        /// <param name="scale">The scalar.</param>
+        /// <param name="vec">The instance.</param>
+        /// <returns>Result of division.</returns>
+        [Pure]
+        public static Vector3 operator /(float scale, Vector3 vec)
         {
             vec.X /= scale;
             vec.Y /= scale;
@@ -1658,7 +1673,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <param name="vec">Left operand.</param>
         /// <param name="scale">Right operand.</param>
-        /// <returns>Result of the division.</returns>
+        /// <returns>Result of division.</returns>
         [Pure]
         public static Vector3 operator /(Vector3 vec, Vector3 scale)
         {
