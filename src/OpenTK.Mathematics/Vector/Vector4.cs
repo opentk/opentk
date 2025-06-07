@@ -1983,6 +1983,8 @@ namespace OpenTK.Mathematics
         {
             left.X += right;
             left.Y += right;
+            left.Z += right;
+            left.W += right;
             return left;
         }
 
@@ -1997,6 +1999,8 @@ namespace OpenTK.Mathematics
         {
             right.X += left;
             right.Y += left;
+            right.Z += left;
+            right.W += left;
             return right;
         }
 
@@ -2027,6 +2031,8 @@ namespace OpenTK.Mathematics
         {
             left.X -= right;
             left.Y -= right;
+            left.Z -= right;
+            left.W -= right;
             return left;
         }
 
@@ -2041,6 +2047,8 @@ namespace OpenTK.Mathematics
         {
             right.X = left - right.X;
             right.Y = left - right.Y;
+            right.Z = left - right.Z;
+            right.W = left - right.W;
             return right;
         }
 
