@@ -917,8 +917,8 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// This isn't quite a multiply, but the result may be useful in some situations.
         /// Multiplies two instances.
+        /// This is done by extending the matrices with a last row of (0, 0, 0, 1), and discarding the last row of the result.
         /// </summary>
         /// <param name="left">The left operand of the multiplication.</param>
         /// <param name="right">The right operand of the multiplication.</param>
@@ -931,8 +931,8 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// This isn't quite a multiply, but the result may be useful in some situations.
-        /// Multiplies two instances.
+        /// Multiplies two instances. 
+        /// This is done by extending the matrices with a last row of (0, 0, 0, 1), and discarding the last row of the result.
         /// </summary>
         /// <param name="left">The left operand of the multiplication.</param>
         /// <param name="right">The right operand of the multiplication.</param>
