@@ -1601,17 +1601,17 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Divides a scalar by the instance using integer division, floor(a/b).
         /// </summary>
-        /// <param name="scale">The scalar.</param>
-        /// <param name="vec">The instance.</param>
-        /// <returns>Result of division.</returns>
+        /// <param name="left">The scalar.</param>
+        /// <param name="right">The instance.</param>
+        /// <returns>Result of the division.</returns>
         [Pure]
-        public static Vector4i operator /(int scale, Vector4i vec)
+        public static Vector4i operator /(int left, Vector4i right)
         {
-            vec.X = scale / vec.X;
-            vec.Y = scale / vec.Y;
-            vec.Z = scale / vec.Z;
-            vec.W = scale / vec.W;
-            return vec;
+            right.X = left / right.X;
+            right.Y = left / right.Y;
+            right.Z = left / right.Z;
+            right.W = left / right.W;
+            return right;
         }
 
         /// <summary>
