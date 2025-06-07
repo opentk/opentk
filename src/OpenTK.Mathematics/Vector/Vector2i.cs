@@ -445,6 +445,34 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
+        /// Adds a scalar to an instance.
+        /// </summary>
+        /// <param name="left">The instance.</param>
+        /// <param name="right">The scalar.</param>
+        /// <returns>The result of the operation.</returns>
+        [Pure]
+        public static Vector2i operator +(Vector2i left, int right)
+        {
+            left.X += right;
+            left.Y += right;
+            return left;
+        }
+
+        /// <summary>
+        /// Adds a scalar to an instance.
+        /// </summary>
+        /// <param name="left">The scalar.</param>
+        /// <param name="right">The instance.</param>
+        /// <returns>The result of the operation.</returns>
+        [Pure]
+        public static Vector2i operator +(int left, Vector2i right)
+        {
+            right.X += left;
+            right.Y += left;
+            return right;
+        }
+
+        /// <summary>
         /// Adds the specified instances.
         /// </summary>
         /// <param name="left">Left operand.</param>
@@ -456,6 +484,34 @@ namespace OpenTK.Mathematics
             left.X += right.X;
             left.Y += right.Y;
             return left;
+        }
+
+        /// <summary>
+        /// Subtracts an instance by scalar.
+        /// </summary>
+        /// <param name="left">The instance.</param>
+        /// <param name="right">The scalar.</param>
+        /// <returns>The result of the operation.</returns>
+        [Pure]
+        public static Vector2i operator -(Vector2i left, int right)
+        {
+            left.X -= right;
+            left.Y -= right;
+            return left;
+        }
+
+        /// <summary>
+        /// Subtracts a scalar by an instance.
+        /// </summary>
+        /// <param name="left">The scalar.</param>
+        /// <param name="right">The instance.</param>
+        /// <returns>The result of the operation.</returns>
+        [Pure]
+        public static Vector2i operator -(int left, Vector2i right)
+        {
+            right.X = left - right.X;
+            right.Y = left - right.Y;
+            return right;
         }
 
         /// <summary>

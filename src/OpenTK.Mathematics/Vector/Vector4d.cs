@@ -1968,6 +1968,34 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
+        /// Adds a scalar to an instance.
+        /// </summary>
+        /// <param name="left">The instance.</param>
+        /// <param name="right">The scalar.</param>
+        /// <returns>The result of the operation.</returns>
+        [Pure]
+        public static Vector4d operator +(Vector4d left, double right)
+        {
+            left.X += right;
+            left.Y += right;
+            return left;
+        }
+
+        /// <summary>
+        /// Adds a scalar to an instance.
+        /// </summary>
+        /// <param name="left">The scalar.</param>
+        /// <param name="right">The instance.</param>
+        /// <returns>The result of the operation.</returns>
+        [Pure]
+        public static Vector4d operator +(double left, Vector4d right)
+        {
+            right.X += left;
+            right.Y += left;
+            return right;
+        }
+
+        /// <summary>
         /// Adds two instances.
         /// </summary>
         /// <param name="left">The first instance.</param>
@@ -1981,6 +2009,34 @@ namespace OpenTK.Mathematics
             left.Z += right.Z;
             left.W += right.W;
             return left;
+        }
+
+        /// <summary>
+        /// Subtracts an instance by scalar.
+        /// </summary>
+        /// <param name="left">The instance.</param>
+        /// <param name="right">The scalar.</param>
+        /// <returns>The result of the operation.</returns>
+        [Pure]
+        public static Vector4d operator -(Vector4d left, double right)
+        {
+            left.X -= right;
+            left.Y -= right;
+            return left;
+        }
+
+        /// <summary>
+        /// Subtracts a scalar by an instance.
+        /// </summary>
+        /// <param name="left">The scalar.</param>
+        /// <param name="right">The instance.</param>
+        /// <returns>The result of the operation.</returns>
+        [Pure]
+        public static Vector4d operator -(double left, Vector4d right)
+        {
+            right.X = left - right.X;
+            right.Y = left - right.Y;
+            return right;
         }
 
         /// <summary>
