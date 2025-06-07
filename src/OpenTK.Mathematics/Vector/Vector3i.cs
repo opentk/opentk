@@ -737,7 +737,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Divides the instance by a scalar using integer division, floor(a/b).
+        /// Divides a scalar by the instance using integer division, floor(a/b).
         /// </summary>
         /// <param name="scale">The scalar.</param>
         /// <param name="vec">The instance.</param>
@@ -745,9 +745,9 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector3i operator /(int scale, Vector3i vec)
         {
-            vec.X /= scale;
-            vec.Y /= scale;
-            vec.Z /= scale;
+            vec.X = scale / vec.X;
+            vec.Y = scale / vec.Y;
+            vec.Z = scale / vec.Z;
             return vec;
         }
 

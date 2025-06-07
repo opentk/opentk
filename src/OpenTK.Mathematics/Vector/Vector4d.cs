@@ -2118,7 +2118,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Divides an instance by a scalar.
+        /// Divides a scalar by an instance.
         /// </summary>
         /// <param name="scale">The scalar.</param>
         /// <param name="vec">The instance.</param>
@@ -2126,10 +2126,10 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector4d operator /(double scale, Vector4d vec)
         {
-            vec.X /= scale;
-            vec.Y /= scale;
-            vec.Z /= scale;
-            vec.W /= scale;
+            vec.X = scale / vec.X;
+            vec.Y = scale / vec.Y;
+            vec.Z = scale / vec.Z;
+            vec.W = scale / vec.W;
             return vec;
         }
 
