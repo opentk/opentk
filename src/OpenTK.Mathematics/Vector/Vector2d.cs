@@ -992,27 +992,27 @@ namespace OpenTK.Mathematics
         /// Multiplies an instance by a scalar.
         /// </summary>
         /// <param name="vec">The instance.</param>
-        /// <param name="f">The scalar.</param>
+        /// <param name="scale">The scalar.</param>
         /// <returns>The result of the operation.</returns>
         [Pure]
-        public static Vector2d operator *(Vector2d vec, double f)
+        public static Vector2d operator *(Vector2d vec, double scale)
         {
-            vec.X *= f;
-            vec.Y *= f;
+            vec.X *= scale;
+            vec.Y *= scale;
             return vec;
         }
 
         /// <summary>
         /// Multiply an instance by a scalar.
         /// </summary>
-        /// <param name="f">The scalar.</param>
+        /// <param name="scale">The scalar.</param>
         /// <param name="vec">The instance.</param>
         /// <returns>The result of the operation.</returns>
         [Pure]
-        public static Vector2d operator *(double f, Vector2d vec)
+        public static Vector2d operator *(double scale, Vector2d vec)
         {
-            vec.X *= f;
-            vec.Y *= f;
+            vec.X *= scale;
+            vec.Y *= scale;
             return vec;
         }
 
