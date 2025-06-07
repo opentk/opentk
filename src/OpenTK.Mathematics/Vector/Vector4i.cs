@@ -1536,7 +1536,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Subtracts an instance by scalar.
+        /// Subtracts an instance by a scalar.
         /// </summary>
         /// <param name="left">The instance.</param>
         /// <param name="right">The scalar.</param>
