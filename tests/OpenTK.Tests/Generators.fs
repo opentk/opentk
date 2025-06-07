@@ -18,6 +18,7 @@ module private Generators =
     let singleArb = Arb.Default.Float32() |> Arb.toGen |> Gen.filter isValidFloat
     let single = singleArb |> Arb.fromGen
 
+    let doubleArb = Arb.Default.Float() |> Arb.toGen |> Gen.filter isValidDouble
     let double =
         Arb.Default.Float() |> Arb.toGen
         |> Gen.filter isValidDouble
@@ -30,6 +31,13 @@ module private Generators =
         |> Gen.filter (fun v -> not <| (Single.IsNaN v.Length || Single.IsInfinity v.Length ))
         |> Arb.fromGen
 
+    let vec2d =
+        doubleArb
+        |> Gen.two
+        |> Gen.map Vector2d
+        |> Gen.filter (fun v -> not <| (Double.IsNaN v.Length || Double.IsInfinity v.Length ))
+        |> Arb.fromGen
+
     let vec3 =
         singleArb
         |> Gen.three
@@ -37,11 +45,25 @@ module private Generators =
         |> Gen.filter (fun v -> not <| (Single.IsNaN v.Length || Single.IsInfinity v.Length ))
         |> Arb.fromGen
 
+    let vec3d =
+        doubleArb
+        |> Gen.three
+        |> Gen.map Vector3d
+        |> Gen.filter (fun v -> not <| (Double.IsNaN v.Length || Double.IsInfinity v.Length))
+        |> Arb.fromGen
+
     let vec4 =
         singleArb
         |> Gen.four
         |> Gen.map Vector4
         |> Gen.filter (fun v -> not <| (Single.IsNaN v.Length || Single.IsInfinity v.Length ))
+        |> Arb.fromGen
+
+    let vec4d =
+        doubleArb
+        |> Gen.four
+        |> Gen.map Vector4d
+        |> Gen.filter (fun v -> not <| (Double.IsNaN v.Length || Double.IsInfinity v.Length ))
         |> Arb.fromGen
 
     let quat =
@@ -57,6 +79,48 @@ module private Generators =
         |> Gen.map Matrix2
         |> Arb.fromGen
 
+    let mat2x3 =
+        vec3
+        |> Arb.toGen
+        |> Gen.two
+        |> Gen.map Matrix2x3
+        |> Arb.fromGen
+
+    let mat2x3d =
+        vec3d
+        |> Arb.toGen
+        |> Gen.two
+        |> Gen.map Matrix2x3d
+        |> Arb.fromGen
+
+    let mat2x4 =
+        vec4
+        |> Arb.toGen
+        |> Gen.two
+        |> Gen.map Matrix2x4
+        |> Arb.fromGen
+
+    let mat2x4d =
+        vec4d
+        |> Arb.toGen
+        |> Gen.two
+        |> Gen.map Matrix2x4d
+        |> Arb.fromGen
+
+    let mat3x2 =
+        vec2
+        |> Arb.toGen
+        |> Gen.three
+        |> Gen.map Matrix3x2
+        |> Arb.fromGen
+
+    let mat3x2d =
+        vec2d
+        |> Arb.toGen
+        |> Gen.three
+        |> Gen.map Matrix3x2d
+        |> Arb.fromGen
+
     let mat3 =
         vec3
         |> Arb.toGen
@@ -64,11 +128,60 @@ module private Generators =
         |> Gen.map Matrix3
         |> Arb.fromGen
 
+    let mat3x4 =
+        vec4
+        |> Arb.toGen
+        |> Gen.three
+        |> Gen.map Matrix3x4
+        |> Arb.fromGen
+
+    let mat3x4d =
+        vec4d
+        |> Arb.toGen
+        |> Gen.three
+        |> Gen.map Matrix3x4d
+        |> Arb.fromGen
+
+    let mat4x2 =
+        vec2
+        |> Arb.toGen
+        |> Gen.four
+        |> Gen.map Matrix4x2
+        |> Arb.fromGen
+
+    let mat4x2d =
+        vec2d
+        |> Arb.toGen
+        |> Gen.four
+        |> Gen.map Matrix4x2d
+        |> Arb.fromGen
+
+    let mat4x3 =
+        vec3
+        |> Arb.toGen
+        |> Gen.four
+        |> Gen.map Matrix4x3
+        |> Arb.fromGen
+
+    let mat4x3d =
+        vec3d
+        |> Arb.toGen
+        |> Gen.four
+        |> Gen.map Matrix4x3d
+        |> Arb.fromGen
+
     let mat4 =
         vec4
         |> Arb.toGen
         |> Gen.four
         |> Gen.map Matrix4
+        |> Arb.fromGen
+
+    let mat4d =
+        vec4d
+        |> Arb.toGen
+        |> Gen.four
+        |> Gen.map Matrix4d
         |> Arb.fromGen
 
     let box2 =
@@ -111,12 +224,28 @@ type OpenTKGen =
     static member Double() = double
     static member float() = double
     static member Vector2() = vec2
+    static member Vector2d() = vec2d
     static member Vector3() = vec3
+    static member Vector3d() = vec3d
     static member Vector4() = vec4
+    static member Vector4d() = vec4d
     static member Quaternion() = quat
     static member Matrix2() = mat2
+    static member Matrix2x3() = mat2x3
+    static member Matrix2x3d() = mat2x3d
+    static member Matrix2x4() = mat2x4
+    static member Matrix2x4d() = mat2x4d
+    static member Matrix3x2() = mat3x2
+    static member Matrix3x2d() = mat3x2d
     static member Matrix3() = mat3
+    static member Matrix3x4() = mat3x4
+    static member Matrix3x4d() = mat3x4d
+    static member Matrix4x2() = mat4x2
+    static member Matrix4x2d() = mat4x2d
+    static member Matrix4x3() = mat4x3
+    static member Matrix4x3d() = mat4x3d
     static member Matrix4() = mat4
+    static member Matrix4d() = mat4d
     static member Box2() = box2
     static member Box3() = box3
     static member AcuteAngle() = acuteAngle

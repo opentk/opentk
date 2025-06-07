@@ -23,6 +23,7 @@ SOFTWARE.
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
+using System.Numerics;
 using System.Runtime.InteropServices;
 using System.Runtime.Intrinsics;
 
@@ -33,7 +34,16 @@ namespace OpenTK.Mathematics
     /// </summary>
     [Serializable]
     [StructLayout(LayoutKind.Sequential)]
-    public struct Matrix2x3d : IEquatable<Matrix2x3d>, IFormattable
+    public struct Matrix2x3d : IEquatable<Matrix2x3d>, IFormattable,
+                                IMultiplyOperators<Matrix2x3d, double, Matrix2x3d>,
+                                IMultiplyOperators<Matrix2x3d, Vector3d, Vector2d>,
+                                IMultiplyOperators<Matrix2x3d, Matrix3x2d, Matrix2d>,
+                                IMultiplyOperators<Matrix2x3d, Matrix3d, Matrix2x3d>,
+                                IMultiplyOperators<Matrix2x3d, Matrix3x4d, Matrix2x4d>,
+                                IAdditionOperators<Matrix2x3d, Matrix2x3d, Matrix2x3d>,
+                                ISubtractionOperators<Matrix2x3d, Matrix2x3d, Matrix2x3d>,
+                                IEqualityOperators<Matrix2x3d, Matrix2x3d, bool>,
+                                IAdditiveIdentity<Matrix2x3d, Matrix2x3d>
     {
         /// <summary>
         /// Top row of the matrix.
@@ -191,6 +201,11 @@ namespace OpenTK.Mathematics
         /// Gets the trace of the matrix, the sum of the values along the diagonal.
         /// </summary>
         public readonly double Trace => Row0.X + Row1.Y;
+
+        /// <summary>
+        /// Gets the additive identity of the matrix, which is the zero matrix.
+        /// </summary>
+        public static Matrix2x3d AdditiveIdentity => Zero;
 
         /// <summary>
         /// Gets or sets the value at a specified row and column.
@@ -413,7 +428,7 @@ namespace OpenTK.Mathematics
         /// <param name="left">The left operand of the multiplication.</param>
         /// <param name="right">The right operand of the multiplication.</param>
         /// <param name="result">A new instance that is the result of the multiplication.</param>
-        public static void Mult(in Matrix2x3d left, in Matrix3x2 right, out Matrix2d result)
+        public static void Mult(in Matrix2x3d left, in Matrix3x2d right, out Matrix2d result)
         {
             double leftM11 = left.Row0.X;
             double leftM12 = left.Row0.Y;
@@ -441,7 +456,7 @@ namespace OpenTK.Mathematics
         /// <param name="right">The right operand of the multiplication.</param>
         /// <returns>A new instance that is the result of the multiplication.</returns>
         [Pure]
-        public static Matrix2d Mult(Matrix2x3d left, Matrix3x2 right)
+        public static Matrix2d Mult(Matrix2x3d left, Matrix3x2d right)
         {
             Mult(in left, in right, out Matrix2d result);
             return result;
@@ -453,7 +468,7 @@ namespace OpenTK.Mathematics
         /// <param name="left">The left operand of the multiplication.</param>
         /// <param name="right">The right operand of the multiplication.</param>
         /// <param name="result">A new instance that is the result of the multiplication.</param>
-        public static void Mult(in Matrix2x3d left, in Matrix3 right, out Matrix2x3d result)
+        public static void Mult(in Matrix2x3d left, in Matrix3d right, out Matrix2x3d result)
         {
             double leftM11 = left.Row0.X;
             double leftM12 = left.Row0.Y;
@@ -486,7 +501,7 @@ namespace OpenTK.Mathematics
         /// <param name="right">The right operand of the multiplication.</param>
         /// <returns>A new instance that is the result of the multiplication.</returns>
         [Pure]
-        public static Matrix2x3d Mult(Matrix2x3d left, Matrix3 right)
+        public static Matrix2x3d Mult(Matrix2x3d left, Matrix3d right)
         {
             Mult(in left, in right, out Matrix2x3d result);
             return result;
@@ -498,7 +513,7 @@ namespace OpenTK.Mathematics
         /// <param name="left">The left operand of the multiplication.</param>
         /// <param name="right">The right operand of the multiplication.</param>
         /// <param name="result">A new instance that is the result of the multiplication.</param>
-        public static void Mult(in Matrix2x3d left, in Matrix3x4 right, out Matrix2x4d result)
+        public static void Mult(in Matrix2x3d left, in Matrix3x4d right, out Matrix2x4d result)
         {
             double leftM11 = left.Row0.X;
             double leftM12 = left.Row0.Y;
@@ -536,7 +551,7 @@ namespace OpenTK.Mathematics
         /// <param name="right">The right operand of the multiplication.</param>
         /// <returns>A new instance that is the result of the multiplication.</returns>
         [Pure]
-        public static Matrix2x4d Mult(Matrix2x3d left, Matrix3x4 right)
+        public static Matrix2x4d Mult(Matrix2x3d left, Matrix3x4d right)
         {
             Mult(in left, in right, out Matrix2x4d result);
             return result;
@@ -691,13 +706,26 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
+        /// Transform a 3-dimensional vector into a 2-dimensional vector using the given 2x3 Matrix.
+        /// </summary>
+        /// <param name="mat">The desired transformation.</param>
+        /// <param name="vec">The vector to transform.</param>
+        /// <returns>The transformed vector.</returns>
+        [Pure]
+        public static Vector2d operator *(Matrix2x3d mat, Vector3d vec)
+        {
+            Vector3d.TransformTwoDimensionsColumn(in mat, in vec, out Vector2d result);
+            return result;
+        }
+
+        /// <summary>
         /// Matrix multiplication.
         /// </summary>
         /// <param name="left">left-hand operand.</param>
         /// <param name="right">right-hand operand.</param>
         /// <returns>A new Matrix2d which holds the result of the multiplication.</returns>
         [Pure]
-        public static Matrix2d operator *(Matrix2x3d left, Matrix3x2 right)
+        public static Matrix2d operator *(Matrix2x3d left, Matrix3x2d right)
         {
             return Mult(left, right);
         }
@@ -709,7 +737,7 @@ namespace OpenTK.Mathematics
         /// <param name="right">right-hand operand.</param>
         /// <returns>A new Matrix2x3d which holds the result of the multiplication.</returns>
         [Pure]
-        public static Matrix2x3d operator *(Matrix2x3d left, Matrix3 right)
+        public static Matrix2x3d operator *(Matrix2x3d left, Matrix3d right)
         {
             return Mult(left, right);
         }
@@ -721,7 +749,7 @@ namespace OpenTK.Mathematics
         /// <param name="right">right-hand operand.</param>
         /// <returns>A new Matrix2x4d which holds the result of the multiplication.</returns>
         [Pure]
-        public static Matrix2x4d operator *(Matrix2x3d left, Matrix3x4 right)
+        public static Matrix2x4d operator *(Matrix2x3d left, Matrix3x4d right)
         {
             return Mult(left, right);
         }

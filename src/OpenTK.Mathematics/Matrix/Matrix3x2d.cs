@@ -23,6 +23,7 @@ SOFTWARE.
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
+using System.Numerics;
 using System.Runtime.InteropServices;
 using System.Runtime.Intrinsics;
 
@@ -33,7 +34,16 @@ namespace OpenTK.Mathematics
     /// </summary>
     [Serializable]
     [StructLayout(LayoutKind.Sequential)]
-    public struct Matrix3x2d : IEquatable<Matrix3x2d>, IFormattable
+    public struct Matrix3x2d : IEquatable<Matrix3x2d>, IFormattable,
+                                IMultiplyOperators<Matrix3x2d, double, Matrix3x2d>,
+                                IMultiplyOperators<Matrix3x2d, Vector2d, Vector3d>,
+                                IMultiplyOperators<Matrix3x2d, Matrix2d, Matrix3x2d>,
+                                IMultiplyOperators<Matrix3x2d, Matrix2x3d, Matrix3d>,
+                                IMultiplyOperators<Matrix3x2d, Matrix2x4d, Matrix3x4d>,
+                                IAdditionOperators<Matrix3x2d, Matrix3x2d, Matrix3x2d>,
+                                ISubtractionOperators<Matrix3x2d, Matrix3x2d, Matrix3x2d>,
+                                IEqualityOperators<Matrix3x2d, Matrix3x2d, bool>,
+                                IAdditiveIdentity<Matrix3x2d, Matrix3x2d>
     {
         /// <summary>
         /// Top row of the matrix.
@@ -189,6 +199,11 @@ namespace OpenTK.Mathematics
         /// Gets the trace of the matrix, the sum of the values along the diagonal.
         /// </summary>
         public readonly double Trace => Row0.X + Row1.Y;
+
+        /// <summary>
+        /// Gets the additive identity of the matrix, which is the zero matrix.
+        /// </summary>
+        public static Matrix3x2d AdditiveIdentity => Zero;
 
         /// <summary>
         /// Gets or sets the value at a specified row and column.
@@ -710,6 +725,19 @@ namespace OpenTK.Mathematics
         public static Matrix3x2d operator *(Matrix3x2d left, double right)
         {
             return Mult(left, right);
+        }
+
+        /// <summary>
+        /// Transform a 2-dimensional vector into a 3-dimensional vector using the given 3x2 Matrix.
+        /// </summary>
+        /// <param name="mat">The desired transformation.</param>
+        /// <param name="vec">The vector to transform.</param>
+        /// <returns>The transformed vector in 3 dimensions.</returns>
+        [Pure]
+        public static Vector3d operator *(Matrix3x2d mat, Vector2d vec)
+        {
+            Vector2d.TransformThreeDimensionsColumn(in mat, in vec, out Vector3d result);
+            return result;
         }
 
         /// <summary>

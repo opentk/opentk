@@ -23,6 +23,7 @@ SOFTWARE.
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
+using System.Numerics;
 using System.Runtime.InteropServices;
 using System.Runtime.Intrinsics;
 
@@ -33,7 +34,16 @@ namespace OpenTK.Mathematics
     /// </summary>
     [Serializable]
     [StructLayout(LayoutKind.Sequential)]
-    public struct Matrix4x2 : IEquatable<Matrix4x2>, IFormattable
+    public struct Matrix4x2 : IEquatable<Matrix4x2>, IFormattable,
+                                IMultiplyOperators<Matrix4x2, float, Matrix4x2>,
+                                IMultiplyOperators<Matrix4x2, Vector2, Vector4>,
+                                IMultiplyOperators<Matrix4x2, Matrix2, Matrix4x2>,
+                                IMultiplyOperators<Matrix4x2, Matrix2x3, Matrix4x3>,
+                                IMultiplyOperators<Matrix4x2, Matrix2x4, Matrix4>,
+                                IAdditionOperators<Matrix4x2, Matrix4x2, Matrix4x2>,
+                                ISubtractionOperators<Matrix4x2, Matrix4x2, Matrix4x2>,
+                                IEqualityOperators<Matrix4x2, Matrix4x2, bool>,
+                                IAdditiveIdentity<Matrix4x2, Matrix4x2>
     {
         /// <summary>
         /// Top row of the matrix.
@@ -220,6 +230,11 @@ namespace OpenTK.Mathematics
         /// Gets the trace of the matrix, the sum of the values along the diagonal.
         /// </summary>
         public readonly float Trace => Row0.X + Row1.Y;
+
+        /// <summary>
+        /// Gets the additive identity of the matrix, which is the zero matrix.
+        /// </summary>
+        public static Matrix4x2 AdditiveIdentity => Zero;
 
         /// <summary>
         /// Gets or sets the value at a specified row and column.
@@ -797,6 +812,19 @@ namespace OpenTK.Mathematics
         public static Matrix4x2 operator *(Matrix4x2 left, float right)
         {
             return Mult(left, right);
+        }
+
+        /// <summary>
+        /// Transform a 2-dimensional vector into a 4-dimensional vector using the given 4x2 Matrix.
+        /// </summary>
+        /// <param name="mat">The vector to transform.</param>
+        /// <param name="vec">The desired transformation.</param>
+        /// <returns>The transformed vector.</returns>
+        [Pure]
+        public static Vector4 operator *(Matrix4x2 mat, Vector2 vec)
+        {
+            Vector2.TransformFourDimensionsColumn(in mat, in vec, out Vector4 result);
+            return result;
         }
 
         /// <summary>
