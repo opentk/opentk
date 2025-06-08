@@ -253,7 +253,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <param name="a">First operand.</param>
         /// <param name="b">Second operand.</param>
-        /// <returns>Result of subtraction.</returns>
+        /// <returns>Result of the subtraction.</returns>
         [Pure]
         public static Vector4i Subtract(Vector4i a, Vector4i b)
         {
@@ -1571,7 +1571,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <param name="scale">Left operand.</param>
         /// <param name="vec">Right operand.</param>
-        /// <returns>Result of multiplication.</returns>
+        /// <returns>Result of the multiplication.</returns>
         [Pure]
         public static Vector4i operator *(Vector4i vec, Vector4i scale)
         {
@@ -1587,7 +1587,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <param name="vec">The instance.</param>
         /// <param name="scale">The scalar.</param>
-        /// <returns>Result of division.</returns>
+        /// <returns>Result of the division.</returns>
         [Pure]
         public static Vector4i operator /(Vector4i vec, int scale)
         {
@@ -1619,7 +1619,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <param name="vec">Left operand.</param>
         /// <param name="scale">Right operand.</param>
-        /// <returns>Result of division.</returns>
+        /// <returns>Result of the division.</returns>
         [Pure]
         public static Vector4i operator /(Vector4i vec, Vector4i scale)
         {
