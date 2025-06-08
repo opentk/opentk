@@ -493,7 +493,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector2i Xy
         {
-            get => Unsafe.As<Vector3i, Vector2i>(ref this);
+            readonly get => new Vector2i(X, Y);
             set
             {
                 X = value.X;
@@ -928,19 +928,19 @@ namespace OpenTK.Mathematics
         }
 
         /// <inheritdoc/>
-        public override string ToString()
+        public override readonly string ToString()
         {
             return ToString(null, null);
         }
 
         /// <inheritdoc cref="ToString(string, IFormatProvider)"/>
-        public string ToString(string format)
+        public readonly string ToString(string format)
         {
             return ToString(format, null);
         }
 
         /// <inheritdoc cref="ToString(string, IFormatProvider)"/>
-        public string ToString(IFormatProvider formatProvider)
+        public readonly string ToString(IFormatProvider formatProvider)
         {
             return ToString(null, formatProvider);
         }
@@ -957,7 +957,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <inheritdoc />
-        public override bool Equals(object obj)
+        public override readonly bool Equals(object obj)
         {
             return obj is Vector3i && Equals((Vector3i)obj);
         }
