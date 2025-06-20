@@ -44,6 +44,11 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         public string Name { get; }
 
         /// <summary>
+        /// Gets the GUID of the joysitck this state describes.
+        /// </summary>
+        public string GUID { get; }
+
+        /// <summary>
         /// Gets the number of buttons on the joystick this state describes.
         /// </summary>
         public int ButtonCount { get => _buttons.Length; }
@@ -58,7 +63,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// </summary>
         public int HatCount { get => _hats.Length; }
 
-        internal JoystickState(int hatCount, int axesCount, int buttonCount, int id, string name)
+        internal JoystickState(int hatCount, int axesCount, int buttonCount, int id, string name, string guid)
         {
             _hats = new Hat[hatCount];
             _axes = new float[axesCount];
@@ -70,6 +75,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
 
             Id = id;
             Name = name;
+            GUID = guid;
         }
 
         private JoystickState(JoystickState source)
@@ -78,7 +84,8 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
                    source._axes.Length,
                    source._buttons.Length,
                    source.Id,
-                   source.Name)
+                   source.Name,
+                   source.GUID)
         {
             Array.Copy(source._hats, _hats, source._hats.Length);
             Array.Copy(source._axes, _axes, source._axes.Length);
