@@ -1,9 +1,41 @@
 ﻿using OpenTK.Core.Utility;
+using System;
 
 #nullable enable
 
 namespace OpenTK.Platform
 {
+    /// <summary>
+    /// Flags for optional features.
+    /// </summary>
+    [Flags]
+    public enum ToolkitFlags
+    {
+        /// <summary>
+        /// No flags are enabled.
+        /// </summary>
+        None = 0,
+
+        /// <summary>
+        /// If <see cref="Toolkit.OpenGL"/> should be initialized.
+        /// Without this flag accessing <see cref="Toolkit.OpenGL"/> will result in an error.
+        /// </summary>
+        EnableOpenGL = 1 << 0,
+
+        /// <summary>
+        /// If <see cref="Toolkit.Vulkan"/> should be initialized.
+        /// Without this flag accessing <see cref="Toolkit.Vulkan"/> will result in an error.
+        /// </summary>
+        EnableVulkan = 1 << 1,
+
+        /// <summary>
+        /// If <see cref="Toolkit.OpenGL"/> should perfer the ANGLE EGL component implementation <see cref="Native.ANGLE.ANGLEOpenGLComponent"/>.
+        /// This allows for the creation of OpenGL ES contexts.
+        /// </summary>
+        /// <seealso cref="Native.ANGLE.ANGLEOpenGLComponent"/>
+        PreferANGLE = 1 << 2,
+    }
+
     /// <summary>
     /// Options used to initialize OpenTK with.
     /// </summary>
@@ -21,6 +53,12 @@ namespace OpenTK.Platform
         /// It's also useful to debug OpenTK.
         /// </summary>
         public ILogger? Logger { get; set; } = new ConsoleLogger();
+
+        /// <summary>
+        /// The optional features to enable.
+        /// Most notably this includes <see cref="ToolkitFlags.EnableOpenGL"/> and <see cref="ToolkitFlags.EnableVulkan"/> for enabling OpenGL and Vulkan respectively.
+        /// </summary>
+        public ToolkitFlags FeatureFlags = ToolkitFlags.EnableOpenGL | ToolkitFlags.EnableVulkan;
 
         // FIXME: Add additional settings such as PreferSDL and PreferANGLE here...
 
@@ -55,6 +93,7 @@ namespace OpenTK.Platform
 
             /// <summary>
             /// Whether OpenTK should mark the process as "DPI aware".
+            /// Defaults to <see langword="true"/>.
             /// </summary>
             public bool IsDPIAware { get; set; } = true;
         }

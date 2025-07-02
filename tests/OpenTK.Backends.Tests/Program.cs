@@ -126,7 +126,7 @@ namespace OpenTK.Backends.Tests
             }
 
             // Init all of the components.
-            Toolkit.Init(new ToolkitOptions() { ApplicationName = "OpenTK.Backends.Tests", Logger = Logger, });
+            Toolkit.Init(new ToolkitOptions() { ApplicationName = "OpenTK.Backends.Tests", Logger = Logger, FeatureFlags = ToolkitFlags.EnableOpenGL | ToolkitFlags.EnableVulkan });
 
             (Toolkit.Clipboard as X11ClipboardComponent)?.SetPngCodec(new StbPngCodec());
 
