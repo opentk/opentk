@@ -28,6 +28,9 @@
     <Compile Include="Box3Tests.fs" />
     <Compile Include="Box2Tests.fs" />
     <Compile Include="Color4Tests.fs" />
+    <Compile Include="Vector2bTests.fs" />
+    <Compile Include="Vector3bTests.fs" />
+    <Compile Include="Vector4bTests.fs" />
   </ItemGroup>
 
   <ItemGroup>
