@@ -1,4 +1,4 @@
-// This file is auto generated, do not edit. Generated: 2025-03-27 19:03:30 GMT+01:00
+// This file is auto generated, do not edit. Generated: 2025-07-05 14:56:18 GMT+02:00
 using System;
 
 namespace OpenTK.Graphics.OpenGLES2
@@ -5300,18 +5300,6 @@ namespace OpenTK.Graphics.OpenGLES2
         UnsignedInt2101010RevExt = 33640,
         UnsignedInt10f11f11fRev = 35899,
         Int2101010Rev = 36255,
-    }
-    public enum VertexBufferObjectUsage : uint
-    {
-        StreamDraw = 35040,
-        StreamRead = 35041,
-        StreamCopy = 35042,
-        StaticDraw = 35044,
-        StaticRead = 35045,
-        StaticCopy = 35046,
-        DynamicDraw = 35048,
-        DynamicRead = 35049,
-        DynamicCopy = 35050,
     }
     public enum VertexPointerType : uint
     {

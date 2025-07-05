@@ -1,4 +1,4 @@
-// This file is auto generated, do not edit. Generated: 2025-03-27 19:03:30 GMT+01:00
+// This file is auto generated, do not edit. Generated: 2025-07-05 14:56:17 GMT+02:00
 using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
