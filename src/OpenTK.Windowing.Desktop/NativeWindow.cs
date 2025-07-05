@@ -1191,8 +1191,9 @@ namespace OpenTK.Windowing.Desktop
                     GLFW.GetJoystickAxesRaw(i, out var axisCount);
                     GLFW.GetJoystickButtonsRaw(i, out var buttonCount);
                     var name = GLFW.GetJoystickName(i);
+                    var guid = GLFW.GetJoystickGUID(i);
 
-                    _joystickStates[i] = new JoystickState(hatCount, axisCount, buttonCount, i, name);
+                    _joystickStates[i] = new JoystickState(hatCount, axisCount, buttonCount, i, name, guid);
                 }
             }
         }
@@ -1449,8 +1450,9 @@ namespace OpenTK.Windowing.Desktop
                     GLFW.GetJoystickAxesRaw(joy, out var axisCount);
                     GLFW.GetJoystickButtonsRaw(joy, out var buttonCount);
                     var name = GLFW.GetJoystickName(joy);
+                    var guid = GLFW.GetJoystickGUID(joy);
 
-                    _joystickStates[joy] = new JoystickState(hatCount, axisCount, buttonCount, joy, name);
+                    _joystickStates[joy] = new JoystickState(hatCount, axisCount, buttonCount, joy, name, guid);
                 }
                 else
                 {
