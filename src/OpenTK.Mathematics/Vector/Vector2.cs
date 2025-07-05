@@ -295,7 +295,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <param name="a">First operand.</param>
         /// <param name="b">Second operand.</param>
-        /// <returns>Result of subtraction.</returns>
+        /// <returns>Result of the subtraction.</returns>
         [Pure]
         public static Vector2 Subtract(Vector2 a, Vector2 b)
         {
@@ -1153,7 +1153,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <param name="left">Left operand.</param>
         /// <param name="right">Right operand.</param>
-        /// <returns>Result of addition.</returns>
+        /// <returns>Result of the addition.</returns>
         [Pure]
         public static Vector2 operator +(Vector2 left, Vector2 right)
         {
@@ -1195,7 +1195,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <param name="left">Left operand.</param>
         /// <param name="right">Right operand.</param>
-        /// <returns>Result of subtraction.</returns>
+        /// <returns>Result of the subtraction.</returns>
         [Pure]
         public static Vector2 operator -(Vector2 left, Vector2 right)
         {
@@ -1235,7 +1235,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <param name="vec">Left operand.</param>
         /// <param name="scale">Right operand.</param>
-        /// <returns>Result of multiplication.</returns>
+        /// <returns>Result of the multiplication.</returns>
         [Pure]
         public static Vector2 operator *(Vector2 vec, float scale)
         {
@@ -1249,7 +1249,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <param name="scale">Left operand.</param>
         /// <param name="vec">Right operand.</param>
-        /// <returns>Result of multiplication.</returns>
+        /// <returns>Result of the multiplication.</returns>
         [Pure]
         public static Vector2 operator *(float scale, Vector2 vec)
         {
@@ -1263,7 +1263,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <param name="scale">Left operand.</param>
         /// <param name="vec">Right operand.</param>
-        /// <returns>Result of multiplication.</returns>
+        /// <returns>Result of the multiplication.</returns>
         [Pure]
         public static Vector2 operator *(Vector2 vec, Vector2 scale)
         {
@@ -1312,7 +1312,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Divides the specified instance by a scalar.
+        /// Divides an instance by a scalar.
         /// </summary>
         /// <param name="vec">Left operand.</param>
         /// <param name="scale">Right operand.</param>
@@ -1323,6 +1323,20 @@ namespace OpenTK.Mathematics
             vec.X /= scale;
             vec.Y /= scale;
             return vec;
+        }
+
+        /// <summary>
+        /// Divides a scalar by an instance.
+        /// </summary>
+        /// <param name="left">Left operand.</param>
+        /// <param name="right">Right operand.</param>
+        /// <returns>Result of the division.</returns>
+        [Pure]
+        public static Vector2 operator /(float left, Vector2 right)
+        {
+            right.X = left / right.X;
+            right.Y = left / right.Y;
+            return right;
         }
 
         /// <summary>
