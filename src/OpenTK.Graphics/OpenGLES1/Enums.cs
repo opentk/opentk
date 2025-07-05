@@ -1,4 +1,4 @@
-// This file is auto generated, do not edit. Generated: 2025-03-27 19:03:30 GMT+01:00
+// This file is auto generated, do not edit. Generated: 2025-07-05 14:56:17 GMT+02:00
 using System;
 
 namespace OpenTK.Graphics.OpenGLES1
@@ -2021,11 +2021,6 @@ namespace OpenTK.Graphics.OpenGLES1
         UnsignedInt = 5125,
         Float = 5126,
         Fixed = 5132,
-    }
-    public enum VertexBufferObjectUsage : uint
-    {
-        StaticDraw = 35044,
-        DynamicDraw = 35048,
     }
     ///<summary>Used in <see cref="GL.VertexPointer" /></summary>
     public enum VertexPointerType : uint

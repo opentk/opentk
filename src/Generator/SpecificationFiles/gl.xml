@@ -4091,25 +4091,25 @@ typedef unsigned int GLhandleARB;
         <enum value="0x88DD" name="GL_MATRIX29_ARB"/>
         <enum value="0x88DE" name="GL_MATRIX30_ARB"/>
         <enum value="0x88DF" name="GL_MATRIX31_ARB"/>
-        <enum value="0x88E0" name="GL_STREAM_DRAW" group="VertexBufferObjectUsage,BufferUsageARB"/>
+        <enum value="0x88E0" name="GL_STREAM_DRAW" group="BufferUsageARB"/>
         <enum value="0x88E0" name="GL_STREAM_DRAW_ARB"/>
-        <enum value="0x88E1" name="GL_STREAM_READ" group="VertexBufferObjectUsage,BufferUsageARB"/>
+        <enum value="0x88E1" name="GL_STREAM_READ" group="BufferUsageARB"/>
         <enum value="0x88E1" name="GL_STREAM_READ_ARB"/>
-        <enum value="0x88E2" name="GL_STREAM_COPY" group="VertexBufferObjectUsage,BufferUsageARB"/>
+        <enum value="0x88E2" name="GL_STREAM_COPY" group="BufferUsageARB"/>
         <enum value="0x88E2" name="GL_STREAM_COPY_ARB"/>
             <unused start="0x88E3" vendor="NV" comment="To extend ARB_vbo"/>
-        <enum value="0x88E4" name="GL_STATIC_DRAW" group="VertexBufferObjectUsage,BufferUsageARB"/>
+        <enum value="0x88E4" name="GL_STATIC_DRAW" group="BufferUsageARB"/>
         <enum value="0x88E4" name="GL_STATIC_DRAW_ARB"/>
-        <enum value="0x88E5" name="GL_STATIC_READ" group="VertexBufferObjectUsage,BufferUsageARB"/>
+        <enum value="0x88E5" name="GL_STATIC_READ" group="BufferUsageARB"/>
         <enum value="0x88E5" name="GL_STATIC_READ_ARB"/>
-        <enum value="0x88E6" name="GL_STATIC_COPY" group="VertexBufferObjectUsage,BufferUsageARB"/>
+        <enum value="0x88E6" name="GL_STATIC_COPY" group="BufferUsageARB"/>
         <enum value="0x88E6" name="GL_STATIC_COPY_ARB"/>
             <unused start="0x88E7" vendor="NV" comment="To extend ARB_vbo"/>
-        <enum value="0x88E8" name="GL_DYNAMIC_DRAW" group="VertexBufferObjectUsage,BufferUsageARB"/>
+        <enum value="0x88E8" name="GL_DYNAMIC_DRAW" group="BufferUsageARB"/>
         <enum value="0x88E8" name="GL_DYNAMIC_DRAW_ARB"/>
-        <enum value="0x88E9" name="GL_DYNAMIC_READ" group="VertexBufferObjectUsage,BufferUsageARB"/>
+        <enum value="0x88E9" name="GL_DYNAMIC_READ" group="BufferUsageARB"/>
         <enum value="0x88E9" name="GL_DYNAMIC_READ_ARB"/>
-        <enum value="0x88EA" name="GL_DYNAMIC_COPY" group="VertexBufferObjectUsage,BufferUsageARB"/>
+        <enum value="0x88EA" name="GL_DYNAMIC_COPY" group="BufferUsageARB"/>
         <enum value="0x88EA" name="GL_DYNAMIC_COPY_ARB"/>
         <enum value="0x88EB" name="GL_PIXEL_PACK_BUFFER" group="CopyBufferSubDataTarget,BufferTargetARB,BufferStorageTarget"/>
         <enum value="0x88EB" name="GL_PIXEL_PACK_BUFFER_ARB"/>
@@ -19175,14 +19175,14 @@ typedef unsigned int GLhandleARB;
             <param class="buffer"><ptype>GLuint</ptype> <name>buffer</name></param>
             <param kind="BufferSize"><ptype>GLsizeiptr</ptype> <name>size</name></param>
             <param len="size">const void *<name>data</name></param>
-            <param group="VertexBufferObjectUsage"><ptype>GLenum</ptype> <name>usage</name></param>
+            <param group="BufferUsageARB"><ptype>GLenum</ptype> <name>usage</name></param>
         </command>
         <command>
             <proto>void <name>glNamedBufferDataEXT</name></proto>
             <param class="buffer"><ptype>GLuint</ptype> <name>buffer</name></param>
             <param><ptype>GLsizeiptr</ptype> <name>size</name></param>
             <param len="COMPSIZE(size)">const void *<name>data</name></param>
-            <param group="VertexBufferObjectUsage"><ptype>GLenum</ptype> <name>usage</name></param>
+            <param group="BufferUsageARB"><ptype>GLenum</ptype> <name>usage</name></param>
         </command>
         <command>
             <proto>void <name>glNamedBufferPageCommitmentARB</name></proto>

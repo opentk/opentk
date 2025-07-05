@@ -1,4 +1,4 @@
-// This file is auto generated, do not edit. Generated: 2025-03-27 19:03:30 GMT+01:00
+// This file is auto generated, do not edit. Generated: 2025-07-05 14:56:17 GMT+02:00
 using System;
 using System.Runtime.InteropServices;
 using OpenTK.Graphics;
@@ -2609,7 +2609,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="data">Specifies a pointer to data that will be copied into the data store for initialization, or NULL if no data is to be copied.</param>
         /// <param name="usage">Specifies the expected usage pattern of the data store. The symbolic constant must be GL_STREAM_DRAW, GL_STREAM_READ, GL_STREAM_COPY, GL_STATIC_DRAW, GL_STATIC_READ, GL_STATIC_COPY, GL_DYNAMIC_DRAW, GL_DYNAMIC_READ, or GL_DYNAMIC_COPY.</param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glBufferData.xhtml" /></remarks>
-        public static void NamedBufferData(int buffer, nint size, void* data, VertexBufferObjectUsage usage) => GLPointers._glNamedBufferData_fnptr(buffer, size, data, (uint)usage);
+        public static void NamedBufferData(int buffer, nint size, void* data, BufferUsage usage) => GLPointers._glNamedBufferData_fnptr(buffer, size, data, (uint)usage);
         
         /// <summary> <b>[requires: v4.5 | GL_ARB_direct_state_access]</b> <b>[entry point: <c>glNamedBufferStorage</c>]</b><br/> Creates and initializes a buffer object&apos;s immutable data    store. </summary>
         /// <param name="buffer">Specifies the name of the buffer object for glNamedBufferStorage function.</param>
@@ -7241,7 +7241,7 @@ namespace OpenTK.Graphics.OpenGL
             /// <param name="data">Specifies a pointer to data that will be copied into the data store for initialization, or NULL if no data is to be copied.</param>
             /// <param name="usage">Specifies the expected usage pattern of the data store. The symbolic constant must be GL_STREAM_DRAW, GL_STREAM_READ, GL_STREAM_COPY, GL_STATIC_DRAW, GL_STATIC_READ, GL_STATIC_COPY, GL_DYNAMIC_DRAW, GL_DYNAMIC_READ, or GL_DYNAMIC_COPY.</param>
             /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glBufferData.xhtml" /></remarks>
-            public static void NamedBufferData(int buffer, nint size, void* data, VertexBufferObjectUsage usage) => GLPointers._glNamedBufferData_fnptr(buffer, size, data, (uint)usage);
+            public static void NamedBufferData(int buffer, nint size, void* data, BufferUsage usage) => GLPointers._glNamedBufferData_fnptr(buffer, size, data, (uint)usage);
             
             /// <summary> <b>[requires: GL_ARB_sparse_buffer]</b> <b>[entry point: <c>glNamedBufferPageCommitmentARB</c>]</b><br/>  </summary>
             public static void NamedBufferPageCommitmentARB(int buffer, IntPtr offset, nint size, bool commit) => GLPointers._glNamedBufferPageCommitmentARB_fnptr(buffer, offset, size, (byte)(commit ? 1 : 0));
@@ -10124,7 +10124,7 @@ namespace OpenTK.Graphics.OpenGL
             public static void MultiTexSubImage3DEXT(TextureUnit texunit, TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, PixelFormat format, PixelType type, void* pixels) => GLPointers._glMultiTexSubImage3DEXT_fnptr((uint)texunit, (uint)target, level, xoffset, yoffset, zoffset, width, height, depth, (uint)format, (uint)type, pixels);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access]</b> <b>[entry point: <c>glNamedBufferDataEXT</c>]</b><br/>  </summary>
-            public static void NamedBufferDataEXT(int buffer, nint size, void* data, VertexBufferObjectUsage usage) => GLPointers._glNamedBufferDataEXT_fnptr(buffer, size, data, (uint)usage);
+            public static void NamedBufferDataEXT(int buffer, nint size, void* data, BufferUsage usage) => GLPointers._glNamedBufferDataEXT_fnptr(buffer, size, data, (uint)usage);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access]</b> <b>[entry point: <c>glNamedBufferStorageEXT</c>]</b><br/>  </summary>
             public static void NamedBufferStorageEXT(int buffer, nint size, void* data, BufferStorageMask flags) => GLPointers._glNamedBufferStorageEXT_fnptr(buffer, size, data, (uint)flags);

@@ -1,4 +1,4 @@
-// This file is auto generated, do not edit. Generated: 2025-03-27 19:03:30 GMT+01:00
+// This file is auto generated, do not edit. Generated: 2025-07-05 14:56:17 GMT+02:00
 using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -6072,14 +6072,14 @@ namespace OpenTK.Graphics.OpenGL
                 MultiDrawElementsIndirectCount(mode, type, indirect_ptr, drawcount, maxdrawcount, stride);
             }
         }
-        /// <inheritdoc cref="NamedBufferData(int, nint, void*, VertexBufferObjectUsage)"/>
-        public static unsafe void NamedBufferData(int buffer, nint size, IntPtr data, VertexBufferObjectUsage usage)
+        /// <inheritdoc cref="NamedBufferData(int, nint, void*, BufferUsage)"/>
+        public static unsafe void NamedBufferData(int buffer, nint size, IntPtr data, BufferUsage usage)
         {
             void* data_vptr = (void*)data;
             NamedBufferData(buffer, size, data_vptr, usage);
         }
-        /// <inheritdoc cref="NamedBufferData(int, nint, void*, VertexBufferObjectUsage)"/>
-        public static unsafe void NamedBufferData<T1>(int buffer, nint size, ReadOnlySpan<T1> data, VertexBufferObjectUsage usage)
+        /// <inheritdoc cref="NamedBufferData(int, nint, void*, BufferUsage)"/>
+        public static unsafe void NamedBufferData<T1>(int buffer, nint size, ReadOnlySpan<T1> data, BufferUsage usage)
             where T1 : unmanaged
         {
             fixed (void* data_ptr = data)
@@ -6087,8 +6087,8 @@ namespace OpenTK.Graphics.OpenGL
                 NamedBufferData(buffer, size, data_ptr, usage);
             }
         }
-        /// <inheritdoc cref="NamedBufferData(int, nint, void*, VertexBufferObjectUsage)"/>
-        public static unsafe void NamedBufferData<T1>(int buffer, nint size, T1[] data, VertexBufferObjectUsage usage)
+        /// <inheritdoc cref="NamedBufferData(int, nint, void*, BufferUsage)"/>
+        public static unsafe void NamedBufferData<T1>(int buffer, nint size, T1[] data, BufferUsage usage)
             where T1 : unmanaged
         {
             fixed (void* data_ptr = data)
@@ -6096,8 +6096,8 @@ namespace OpenTK.Graphics.OpenGL
                 NamedBufferData(buffer, size, data_ptr, usage);
             }
         }
-        /// <inheritdoc cref="NamedBufferData(int, nint, void*, VertexBufferObjectUsage)"/>
-        public static unsafe void NamedBufferData<T1>(int buffer, nint size, ref readonly T1 data, VertexBufferObjectUsage usage)
+        /// <inheritdoc cref="NamedBufferData(int, nint, void*, BufferUsage)"/>
+        public static unsafe void NamedBufferData<T1>(int buffer, nint size, ref readonly T1 data, BufferUsage usage)
             where T1 : unmanaged
         {
             fixed (void* data_ptr = &data)
@@ -19211,14 +19211,14 @@ namespace OpenTK.Graphics.OpenGL
                     MultTransposeMatrixfARB(m_ptr);
                 }
             }
-            /// <inheritdoc cref="NamedBufferData(int, nint, void*, VertexBufferObjectUsage)"/>
-            public static unsafe void NamedBufferData(int buffer, nint size, IntPtr data, VertexBufferObjectUsage usage)
+            /// <inheritdoc cref="NamedBufferData(int, nint, void*, BufferUsage)"/>
+            public static unsafe void NamedBufferData(int buffer, nint size, IntPtr data, BufferUsage usage)
             {
                 void* data_vptr = (void*)data;
                 NamedBufferData(buffer, size, data_vptr, usage);
             }
-            /// <inheritdoc cref="NamedBufferData(int, nint, void*, VertexBufferObjectUsage)"/>
-            public static unsafe void NamedBufferData<T1>(int buffer, nint size, ReadOnlySpan<T1> data, VertexBufferObjectUsage usage)
+            /// <inheritdoc cref="NamedBufferData(int, nint, void*, BufferUsage)"/>
+            public static unsafe void NamedBufferData<T1>(int buffer, nint size, ReadOnlySpan<T1> data, BufferUsage usage)
                 where T1 : unmanaged
             {
                 fixed (void* data_ptr = data)
@@ -19226,8 +19226,8 @@ namespace OpenTK.Graphics.OpenGL
                     NamedBufferData(buffer, size, data_ptr, usage);
                 }
             }
-            /// <inheritdoc cref="NamedBufferData(int, nint, void*, VertexBufferObjectUsage)"/>
-            public static unsafe void NamedBufferData<T1>(int buffer, nint size, T1[] data, VertexBufferObjectUsage usage)
+            /// <inheritdoc cref="NamedBufferData(int, nint, void*, BufferUsage)"/>
+            public static unsafe void NamedBufferData<T1>(int buffer, nint size, T1[] data, BufferUsage usage)
                 where T1 : unmanaged
             {
                 fixed (void* data_ptr = data)
@@ -19235,8 +19235,8 @@ namespace OpenTK.Graphics.OpenGL
                     NamedBufferData(buffer, size, data_ptr, usage);
                 }
             }
-            /// <inheritdoc cref="NamedBufferData(int, nint, void*, VertexBufferObjectUsage)"/>
-            public static unsafe void NamedBufferData<T1>(int buffer, nint size, ref readonly T1 data, VertexBufferObjectUsage usage)
+            /// <inheritdoc cref="NamedBufferData(int, nint, void*, BufferUsage)"/>
+            public static unsafe void NamedBufferData<T1>(int buffer, nint size, ref readonly T1 data, BufferUsage usage)
                 where T1 : unmanaged
             {
                 fixed (void* data_ptr = &data)
@@ -29943,14 +29943,14 @@ namespace OpenTK.Graphics.OpenGL
                     MultiTexSubImage3DEXT(texunit, target, level, xoffset, yoffset, zoffset, width, height, depth, format, type, pixels_ptr);
                 }
             }
-            /// <inheritdoc cref="NamedBufferDataEXT(int, nint, void*, VertexBufferObjectUsage)"/>
-            public static unsafe void NamedBufferDataEXT(int buffer, nint size, IntPtr data, VertexBufferObjectUsage usage)
+            /// <inheritdoc cref="NamedBufferDataEXT(int, nint, void*, BufferUsage)"/>
+            public static unsafe void NamedBufferDataEXT(int buffer, nint size, IntPtr data, BufferUsage usage)
             {
                 void* data_vptr = (void*)data;
                 NamedBufferDataEXT(buffer, size, data_vptr, usage);
             }
-            /// <inheritdoc cref="NamedBufferDataEXT(int, nint, void*, VertexBufferObjectUsage)"/>
-            public static unsafe void NamedBufferDataEXT<T1>(int buffer, nint size, ReadOnlySpan<T1> data, VertexBufferObjectUsage usage)
+            /// <inheritdoc cref="NamedBufferDataEXT(int, nint, void*, BufferUsage)"/>
+            public static unsafe void NamedBufferDataEXT<T1>(int buffer, nint size, ReadOnlySpan<T1> data, BufferUsage usage)
                 where T1 : unmanaged
             {
                 fixed (void* data_ptr = data)
@@ -29958,8 +29958,8 @@ namespace OpenTK.Graphics.OpenGL
                     NamedBufferDataEXT(buffer, size, data_ptr, usage);
                 }
             }
-            /// <inheritdoc cref="NamedBufferDataEXT(int, nint, void*, VertexBufferObjectUsage)"/>
-            public static unsafe void NamedBufferDataEXT<T1>(int buffer, nint size, T1[] data, VertexBufferObjectUsage usage)
+            /// <inheritdoc cref="NamedBufferDataEXT(int, nint, void*, BufferUsage)"/>
+            public static unsafe void NamedBufferDataEXT<T1>(int buffer, nint size, T1[] data, BufferUsage usage)
                 where T1 : unmanaged
             {
                 fixed (void* data_ptr = data)
@@ -29967,8 +29967,8 @@ namespace OpenTK.Graphics.OpenGL
                     NamedBufferDataEXT(buffer, size, data_ptr, usage);
                 }
             }
-            /// <inheritdoc cref="NamedBufferDataEXT(int, nint, void*, VertexBufferObjectUsage)"/>
-            public static unsafe void NamedBufferDataEXT<T1>(int buffer, nint size, ref readonly T1 data, VertexBufferObjectUsage usage)
+            /// <inheritdoc cref="NamedBufferDataEXT(int, nint, void*, BufferUsage)"/>
+            public static unsafe void NamedBufferDataEXT<T1>(int buffer, nint size, ref readonly T1 data, BufferUsage usage)
                 where T1 : unmanaged
             {
                 fixed (void* data_ptr = &data)

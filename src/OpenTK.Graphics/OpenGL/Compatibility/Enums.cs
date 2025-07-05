@@ -1,4 +1,4 @@
-// This file is auto generated, do not edit. Generated: 2025-03-27 19:03:30 GMT+01:00
+// This file is auto generated, do not edit. Generated: 2025-07-05 14:56:17 GMT+02:00
 using System;
 
 namespace OpenTK.Graphics.OpenGL.Compatibility
@@ -5434,7 +5434,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         QueryBuffer = 37266,
         AtomicCounterBuffer = 37568,
     }
-    ///<summary>Used in <see cref="GL.BufferData" />, <see cref="GL.ARB.BufferDataARB" /></summary>
+    ///<summary>Used in <see cref="GL.BufferData" />, <see cref="GL.NamedBufferData" />, <see cref="GL.ARB.BufferDataARB" />, ...</summary>
     public enum BufferUsage : uint
     {
         StreamDraw = 35040,
@@ -10327,19 +10327,6 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         UnsignedInt2101010Rev = 33640,
         UnsignedInt10f11f11fRev = 35899,
         Int2101010Rev = 36255,
-    }
-    ///<summary>Used in <see cref="GL.NamedBufferData" />, <see cref="GL.ARB.NamedBufferData" />, <see cref="GL.EXT.NamedBufferDataEXT" /></summary>
-    public enum VertexBufferObjectUsage : uint
-    {
-        StreamDraw = 35040,
-        StreamRead = 35041,
-        StreamCopy = 35042,
-        StaticDraw = 35044,
-        StaticRead = 35045,
-        StaticCopy = 35046,
-        DynamicDraw = 35048,
-        DynamicRead = 35049,
-        DynamicCopy = 35050,
     }
     ///<summary>Used in <see cref="GL.PGI.HintPGI" /></summary>
     [Flags]
