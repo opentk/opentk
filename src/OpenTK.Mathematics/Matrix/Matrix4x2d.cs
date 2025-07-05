@@ -244,7 +244,7 @@ namespace OpenTK.Mathematics
         /// <returns>The element at the given row and column index.</returns>
         public double this[int rowIndex, int columnIndex]
         {
-            get
+            readonly get
             {
                 if (rowIndex == 0)
                 {

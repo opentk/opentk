@@ -177,7 +177,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector2h Xy
         {
-            get => Unsafe.As<Vector4h, Vector2h>(ref this);
+            readonly get => new Vector2h(X, Y);
             set
             {
                 X = value.X;
@@ -345,7 +345,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector3h Xyz
         {
-            get => Unsafe.As<Vector4h, Vector3h>(ref this);
+            readonly get => new Vector3h(X, Y, Z);
             set
             {
                 X = value.X;
@@ -1239,25 +1239,25 @@ namespace OpenTK.Mathematics
         }
 
         /// <inheritdoc/>
-        public override string ToString()
+        public override readonly string ToString()
         {
             return ToString(null, null);
         }
 
         /// <inheritdoc cref="ToString(string, IFormatProvider)"/>
-        public string ToString(string format)
+        public readonly string ToString(string format)
         {
             return ToString(format, null);
         }
 
         /// <inheritdoc cref="ToString(string, IFormatProvider)"/>
-        public string ToString(IFormatProvider formatProvider)
+        public readonly string ToString(IFormatProvider formatProvider)
         {
             return ToString(null, formatProvider);
         }
 
         /// <inheritdoc />
-        public string ToString(string format, IFormatProvider formatProvider)
+        public readonly string ToString(string format, IFormatProvider formatProvider)
         {
             return string.Format(
                 "({0}{4} {1}{4} {2}{4} {3})",
@@ -1269,13 +1269,13 @@ namespace OpenTK.Mathematics
         }
 
         /// <inheritdoc/>
-        public override bool Equals(object obj)
+        public override readonly bool Equals(object obj)
         {
             return obj is Vector4h && Equals((Vector4h)obj);
         }
 
         /// <inheritdoc/>
-        public bool Equals(Vector4h other)
+        public readonly bool Equals(Vector4h other)
         {
             return X.Equals(other.X) &&
                    Y.Equals(other.Y) &&
