@@ -76,43 +76,43 @@ namespace OpenTK.Graphics.Wgl
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Graphics.Wgl.Wgl.Library, EntryPoint = "wglCreateContext", ExactSpelling = true, SetLastError = true)]
-        internal extern static IntPtr CreateContext(IntPtr hDc);
+        public extern static IntPtr CreateContext(IntPtr hDc);
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Graphics.Wgl.Wgl.Library, EntryPoint = "wglDeleteContext", ExactSpelling = true, SetLastError = true)]
-        internal extern static Boolean DeleteContext(IntPtr oldContext);
+        public extern static Boolean DeleteContext(IntPtr oldContext);
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Graphics.Wgl.Wgl.Library, EntryPoint = "wglGetCurrentContext", ExactSpelling = true, SetLastError = true)]
-        internal extern static IntPtr GetCurrentContext();
+        public extern static IntPtr GetCurrentContext();
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Graphics.Wgl.Wgl.Library, EntryPoint = "wglMakeCurrent", ExactSpelling = true, SetLastError = true)]
-        internal extern static Boolean MakeCurrent(IntPtr hDc, IntPtr newContext);
+        public extern static Boolean MakeCurrent(IntPtr hDc, IntPtr newContext);
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Graphics.Wgl.Wgl.Library, EntryPoint = "wglChoosePixelFormat", ExactSpelling = true, SetLastError = true)]
-        internal extern static unsafe int ChoosePixelFormat(IntPtr hDc, ref PixelFormatDescriptor pPfd);
+        public extern static unsafe int ChoosePixelFormat(IntPtr hDc, ref PixelFormatDescriptor pPfd);
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Graphics.Wgl.Wgl.Library, EntryPoint = "wglDescribePixelFormat", ExactSpelling = true, SetLastError = true)]
-        internal extern static unsafe int DescribePixelFormat(IntPtr hdc, int ipfd, int cjpfd, ref PixelFormatDescriptor ppfd);
+        public extern static unsafe int DescribePixelFormat(IntPtr hdc, int ipfd, int cjpfd, ref PixelFormatDescriptor ppfd);
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Graphics.Wgl.Wgl.Library, EntryPoint = "wglGetCurrentDC", ExactSpelling = true, SetLastError = true)]
-        internal extern static IntPtr GetCurrentDC();
+        public extern static IntPtr GetCurrentDC();
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Graphics.Wgl.Wgl.Library, EntryPoint = "wglGetProcAddress", ExactSpelling = true, SetLastError = true)]
-        internal extern static IntPtr GetProcAddress(String lpszProc);
+        public extern static IntPtr GetProcAddress(String lpszProc);
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Graphics.Wgl.Wgl.Library, EntryPoint = "wglGetProcAddress", ExactSpelling = true, SetLastError = true)]
-        internal extern static IntPtr GetProcAddress(IntPtr lpszProc);
+        public extern static IntPtr GetProcAddress(IntPtr lpszProc);
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Graphics.Wgl.Wgl.Library, EntryPoint = "wglGetPixelFormat", ExactSpelling = true, SetLastError = true)]
-        internal extern static int GetPixelFormat(IntPtr hdc);
+        public extern static int GetPixelFormat(IntPtr hdc);
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Graphics.Wgl.Wgl.Library, EntryPoint = "wglSetPixelFormat", ExactSpelling = true, SetLastError = true)]
-        internal extern static Boolean SetPixelFormat(IntPtr hdc, int ipfd, ref PixelFormatDescriptor ppfd);
+        public extern static Boolean SetPixelFormat(IntPtr hdc, int ipfd, ref PixelFormatDescriptor ppfd);
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Graphics.Wgl.Wgl.Library, EntryPoint = "wglSwapBuffers", ExactSpelling = true, SetLastError = true)]
-        internal extern static Boolean SwapBuffers(IntPtr hdc);
+        public extern static Boolean SwapBuffers(IntPtr hdc);
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Graphics.Wgl.Wgl.Library, EntryPoint = "wglShareLists", ExactSpelling = true, SetLastError = true)]
-        internal extern static Boolean ShareLists(IntPtr hrcSrvShare, IntPtr hrcSrvSource);
+        public extern static Boolean ShareLists(IntPtr hrcSrvShare, IntPtr hrcSrvSource);
 
         public static partial class Arb
         {

@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 namespace OpenTK.Graphics.Wgl {
 
     [Flags]
-    internal enum PixelFormatDescriptorFlags : int
+    public enum PixelFormatDescriptorFlags : int
     {
         // PixelFormatDescriptor flags
         DOUBLEBUFFER = 0x01,
@@ -28,46 +28,46 @@ namespace OpenTK.Graphics.Wgl {
         DOUBLEBUFFER_DONTCARE = unchecked((int)0x40000000),
         STEREO_DONTCARE = unchecked((int)0x80000000)
     }
-    internal enum PixelType : byte
+
+    public enum PixelType : byte
     {
         RGBA = 0,
         INDEXED = 1
     }
 
-    /// \internal
     /// <summary>
     /// Describes a pixel format. It is used when interfacing with the WINAPI to create a new Context.
     /// Found in WinGDI.h
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
-    internal struct PixelFormatDescriptor
+    public struct PixelFormatDescriptor
     {
-        internal short Size;
-        internal short Version;
-        internal PixelFormatDescriptorFlags Flags;
-        internal PixelType PixelType;
-        internal byte ColorBits;
-        internal byte RedBits;
-        internal byte RedShift;
-        internal byte GreenBits;
-        internal byte GreenShift;
-        internal byte BlueBits;
-        internal byte BlueShift;
-        internal byte AlphaBits;
-        internal byte AlphaShift;
-        internal byte AccumBits;
-        internal byte AccumRedBits;
-        internal byte AccumGreenBits;
-        internal byte AccumBlueBits;
-        internal byte AccumAlphaBits;
-        internal byte DepthBits;
-        internal byte StencilBits;
-        internal byte AuxBuffers;
-        internal byte LayerType;
-        private byte Reserved;
-        internal int LayerMask;
-        internal int VisibleMask;
-        internal int DamageMask;
+        public short Size;
+        public short Version;
+        public PixelFormatDescriptorFlags Flags;
+        public PixelType PixelType;
+        public byte ColorBits;
+        public byte RedBits;
+        public byte RedShift;
+        public byte GreenBits;
+        public byte GreenShift;
+        public byte BlueBits;
+        public byte BlueShift;
+        public byte AlphaBits;
+        public byte AlphaShift;
+        public byte AccumBits;
+        public byte AccumRedBits;
+        public byte AccumGreenBits;
+        public byte AccumBlueBits;
+        public byte AccumAlphaBits;
+        public byte DepthBits;
+        public byte StencilBits;
+        public byte AuxBuffers;
+        public byte LayerType;
+        public byte Reserved;
+        public int LayerMask;
+        public int VisibleMask;
+        public int DamageMask;
     }
 
 }
