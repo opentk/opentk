@@ -3,6 +3,8 @@
         <TargetFramework>net8.0</TargetFramework>
         <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
         <LangVersion>latest</LangVersion>
+        <SignAssembly>true</SignAssembly>
+        <AssemblyOriginatorKeyFile>../../../OpenTK.snk</AssemblyOriginatorKeyFile>
     </PropertyGroup>
     
     <ItemGroup>
@@ -15,8 +17,4 @@
 
     <Import Project="$(OpenTKSolutionRoot)\props\nuget-common.props" />
     <Import Project="$(OpenTKSolutionRoot)\props\stylecop.props" />
-    <ItemGroup>
-      <PackageReference Update="StyleCop.Analyzers" Version="1.1.118" />
-    </ItemGroup>
-
 </Project>

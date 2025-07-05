@@ -10,6 +10,16 @@
   <ItemGroup>
     <None Include="..\..\..\documentation\icon.png" Pack="true" PackagePath=""/>
   </ItemGroup>
+  
+  <PropertyGroup>
+    <Version>4.0.0</Version>
+    <Description>OpenAL bindings, and audio utility classes.</Description>
+    <ApplicationIcon />
+    <OutputType>Library</OutputType>
+    <StartupObject />
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>../../../OpenTK.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="$(OpenTKSolutionRoot)\src\OpenTK.Core\OpenTK.Core.csproj" />

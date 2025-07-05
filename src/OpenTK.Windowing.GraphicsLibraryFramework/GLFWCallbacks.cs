@@ -276,8 +276,8 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
     /// <c>null</c> if allocation failed. Note that not all parts of GLFW handle allocation
     /// failures gracefully yet.
     ///
-    /// This function must support being called during <see cref="glfwInit"/> but before the library is
-    /// flagged as initialized, as well as during <see cref="glfwTerminate"/> after the library is no
+    /// This function must support being called during <see cref="GLFWNative.glfwInit"/> but before the library is
+    /// flagged as initialized, as well as during <see cref="GLFWNative.glfwTerminate"/> after the library is no
     /// longer flagged as initialized.
     ///
     /// Any memory allocated via this function will be deallocated via the same allocator

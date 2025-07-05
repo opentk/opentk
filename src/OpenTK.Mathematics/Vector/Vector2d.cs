@@ -127,34 +127,34 @@ namespace OpenTK.Mathematics
         {
             readonly get
             {
-                if (index == 0)
+                if (((uint)index) < 2)
                 {
-                    return X;
+                    return GetElementUnsafe(in this, index);
                 }
-
-                if (index == 1)
+                else
                 {
-                    return Y;
+                    throw new IndexOutOfRangeException("You tried to access this vector at index: " + index);
                 }
-
-                throw new IndexOutOfRangeException("You tried to access this vector at index: " + index);
             }
 
             set
             {
-                if (index == 0)
+                if (((uint)index) < 2)
                 {
-                    X = value;
-                }
-                else if (index == 1)
-                {
-                    Y = value;
+                    GetElementUnsafe(in this, index) = value;
                 }
                 else
                 {
                     throw new IndexOutOfRangeException("You tried to set this vector at index: " + index);
                 }
             }
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private readonly ref double GetElementUnsafe(in Vector2d v, int index)
+        {
+            ref double address = ref Unsafe.AsRef(in v.X);
+            return ref Unsafe.Add(ref address, index);
         }
 
         /// <summary>
@@ -259,6 +259,57 @@ namespace OpenTK.Mathematics
             result.X = Math.Abs(result.X);
             result.Y = Math.Abs(result.Y);
             return result;
+        }
+
+        /// <summary>
+        /// Returns a new vector were component-wise rounding has been applied.
+        /// Equivalent to calling <see cref="Math.Round(double)"/> on each component.
+        /// </summary>
+        /// <returns>The rounded vector.</returns>
+        public readonly Vector2d Round()
+        {
+            return Round(this);
+        }
+
+        /// <summary>
+        /// Returns a new vector were component-wise rounding has been applied with the specified midpoint rounding rule.
+        /// Equivalent to calling <see cref="Math.Round(double,MidpointRounding)"/> on each component.
+        /// </summary>
+        /// <param name="rounding">The midpoint rounding rule to use.</param>
+        /// <returns>The rounded vector.</returns>
+        public readonly Vector2d Round(MidpointRounding rounding)
+        {
+            return Round(this, rounding);
+        }
+
+        /// <summary>
+        /// Returns a new vector were a component-wise ceiling operation has been applied.
+        /// Equivalent to calling <see cref="Math.Ceiling(double)"/> on each component.
+        /// </summary>
+        /// <returns>The ceiled vector.</returns>
+        public readonly Vector2d Ceiling()
+        {
+            return Ceiling(this);
+        }
+
+        /// <summary>
+        /// Returns a new vector were a component-wise floor operation has been applied.
+        /// Equivalent to calling <see cref="Math.Floor(double)"/> on each component.
+        /// </summary>
+        /// <returns>The floored vector.</returns>
+        public readonly Vector2d Floor()
+        {
+            return Floor(this);
+        }
+
+        /// <summary>
+        /// Returns a new vector were component-wise truncation has been applied.
+        /// Equivalent to calling <see cref="Math.Truncate(double)"/> on each component.
+        /// </summary>
+        /// <returns>The truncated vector.</returns>
+        public readonly Vector2d Truncate()
+        {
+            return Truncate(this);
         }
 
         /// <summary>
@@ -565,6 +616,136 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
+        /// Component-wise rounding. Equivalent to calling <see cref="Math.Round(double)"/> on each component.
+        /// </summary>
+        /// <param name="vec">The vector to round.</param>
+        /// <returns>The component-wise rounded vector.</returns>
+        [Pure]
+        public static Vector2d Round(Vector2d vec)
+        {
+            vec.X = Math.Round(vec.X);
+            vec.Y = Math.Round(vec.Y);
+            return vec;
+        }
+
+        /// <summary>
+        /// Component-wise rounding. Equivalent to calling <see cref="Math.Round(double)"/> on each component.
+        /// </summary>
+        /// <param name="vec">The vector to round.</param>
+        /// <param name="result">The component-wise rounded vector.</param>
+        public static void Round(in Vector2d vec, out Vector2d result)
+        {
+            result.X = Math.Round(vec.X);
+            result.Y = Math.Round(vec.Y);
+        }
+
+        /// <summary>
+        /// Component-wise rounding with specified midpoint rounding rule.
+        /// Equivalent to calling <see cref="Math.Round(double,MidpointRounding)"/> on each component.
+        /// </summary>
+        /// <param name="vec">The vector to round.</param>
+        /// <param name="rounding">The midpoint rounding rule to use.</param>
+        /// <returns>The component-wise rounded vector.</returns>
+        [Pure]
+        public static Vector2d Round(Vector2d vec, MidpointRounding rounding)
+        {
+            vec.X = Math.Round(vec.X, rounding);
+            vec.Y = Math.Round(vec.Y, rounding);
+            return vec;
+        }
+
+        /// <summary>
+        /// Component-wise rounding with specified midpoint rounding rule.
+        /// Equivalent to calling <see cref="Math.Round(double,MidpointRounding)"/> on each component.
+        /// </summary>
+        /// <param name="vec">The vector to round.</param>
+        /// <param name="rounding">The midpoint rounding rule to use.</param>
+        /// <param name="result">The component-wise rounded vector.</param>
+        public static void Round(in Vector2d vec, MidpointRounding rounding, out Vector2d result)
+        {
+            result.X = Math.Round(vec.X, rounding);
+            result.Y = Math.Round(vec.Y, rounding);
+        }
+
+        /// <summary>
+        /// Component-wise ceiling operation.
+        /// Equivalent to calling <see cref="Math.Ceiling(double)"/> on each component.
+        /// </summary>
+        /// <param name="vec">The vector to take the ceiling of.</param>
+        /// <returns>The component-wise ceiling vector.</returns>
+        [Pure]
+        public static Vector2d Ceiling(Vector2d vec)
+        {
+            vec.X = Math.Ceiling(vec.X);
+            vec.Y = Math.Ceiling(vec.Y);
+            return vec;
+        }
+
+        /// <summary>
+        /// Component-wise ceiling operation.
+        /// Equivalent to calling <see cref="Math.Ceiling(double)"/> on each component.
+        /// </summary>
+        /// <param name="vec">The vector to take the ceiling of.</param>
+        /// <param name="result">The component-wise ceiling vector.</param>
+        public static void Ceiling(in Vector2d vec, out Vector2d result)
+        {
+            result.X = Math.Ceiling(vec.X);
+            result.Y = Math.Ceiling(vec.Y);
+        }
+
+        /// <summary>
+        /// Component-wise floor operation.
+        /// Equivalent to calling <see cref="Math.Floor(double)"/> on each component.
+        /// </summary>
+        /// <param name="vec">The vector to take the floor of.</param>
+        /// <returns>The component-wise floored vector.</returns>
+        [Pure]
+        public static Vector2d Floor(Vector2d vec)
+        {
+            vec.X = Math.Floor(vec.X);
+            vec.Y = Math.Floor(vec.Y);
+            return vec;
+        }
+
+        /// <summary>
+        /// Component-wise floor operation.
+        /// Equivalent to calling <see cref="Math.Floor(double)"/> on each component.
+        /// </summary>
+        /// <param name="vec">The vector to take the floor of.</param>
+        /// <param name="result">The component-wise floored vector.</param>
+        public static void Floor(in Vector2d vec, out Vector2d result)
+        {
+            result.X = Math.Floor(vec.X);
+            result.Y = Math.Floor(vec.Y);
+        }
+
+        /// <summary>
+        /// Component-wise truncation.
+        /// Equivalent to calling <see cref="Math.Truncate(double)"/> on each component.
+        /// </summary>
+        /// <param name="vec">The vector to truncate.</param>
+        /// <returns>The component-wise truncated vector.</returns>
+        [Pure]
+        public static Vector2d Truncate(Vector2d vec)
+        {
+            vec.X = Math.Truncate(vec.X);
+            vec.Y = Math.Truncate(vec.Y);
+            return vec;
+        }
+
+        /// <summary>
+        /// Component-wise truncation.
+        /// Equivalent to calling <see cref="Math.Truncate(double)"/> on each component.
+        /// </summary>
+        /// <param name="vec">The vector to truncate.</param>
+        /// <param name="result">The component-wise truncated vector.</param>
+        public static void Truncate(in Vector2d vec, out Vector2d result)
+        {
+            result.X = Math.Truncate(vec.X);
+            result.Y = Math.Truncate(vec.Y);
+        }
+
+        /// <summary>
         /// Compute the euclidean distance between two vectors.
         /// </summary>
         /// <param name="vec1">The first vector.</param>
@@ -685,6 +866,95 @@ namespace OpenTK.Mathematics
         public static void Dot(in Vector2d left, in Vector2d right, out double result)
         {
             result = (left.X * right.X) + (left.Y * right.Y);
+        }
+
+        /// <summary>
+        /// Calculate the perpendicular dot (scalar) product of two vectors.
+        /// </summary>
+        /// <param name="left">First operand.</param>
+        /// <param name="right">Second operand.</param>
+        /// <returns>The perpendicular dot product of the two inputs.</returns>
+        [Pure]
+        public static double PerpDot(Vector2d left, Vector2d right)
+        {
+            return (left.X * right.Y) - (left.Y * right.X);
+        }
+
+        /// <summary>
+        /// Calculate the perpendicular dot (scalar) product of two vectors.
+        /// </summary>
+        /// <param name="left">First operand.</param>
+        /// <param name="right">Second operand.</param>
+        /// <param name="result">The perpendicular dot product of the two inputs.</param>
+        public static void PerpDot(in Vector2d left, in Vector2d right, out double result)
+        {
+            result = (left.X * right.Y) - (left.Y * right.X);
+        }
+
+        /// <summary>
+        /// Component wise less than comparision of two vectors.
+        /// </summary>
+        /// <param name="left">The left vector.</param>
+        /// <param name="right">The right vector.</param>
+        /// <returns>A component wise boolean vector whose compoennts are true when the corresponding left component is less than the right component.</returns>
+        public static Vector2b LessThan(in Vector2d left, in Vector2d right)
+        {
+            return new Vector2b(left.X < right.X, left.Y < right.Y);
+        }
+
+        /// <summary>
+        /// Component wise less than or equal comparision of two vectors.
+        /// </summary>
+        /// <param name="left">The left vector.</param>
+        /// <param name="right">The right vector.</param>
+        /// <returns>A component wise boolean vector whose compoennts are true when the corresponding left component is less than or equal to the right component.</returns>
+        public static Vector2b LessThanOrEqual(in Vector2d left, in Vector2d right)
+        {
+            return new Vector2b(left.X <= right.X, left.Y <= right.Y);
+        }
+
+        /// <summary>
+        /// Component wise greater than comparision of two vectors.
+        /// </summary>
+        /// <param name="left">The left vector.</param>
+        /// <param name="right">The right vector.</param>
+        /// <returns>A component wise boolean vector whose compoennts are true when the corresponding left component is greater than the right component.</returns>
+        public static Vector2b GreaterThan(in Vector2d left, in Vector2d right)
+        {
+            return new Vector2b(left.X > right.X, left.Y > right.Y);
+        }
+
+        /// <summary>
+        /// Component wise greater than or equal comparision of two vectors.
+        /// </summary>
+        /// <param name="left">The left vector.</param>
+        /// <param name="right">The right vector.</param>
+        /// <returns>A component wise boolean vector whose compoennts are true when the corresponding left component is greater than or equal to the right component.</returns>
+        public static Vector2b GreaterThanOrEqual(in Vector2d left, in Vector2d right)
+        {
+            return new Vector2b(left.X >= right.X, left.Y >= right.Y);
+        }
+
+        /// <summary>
+        /// Component wise equal comparision of two vectors.
+        /// </summary>
+        /// <param name="left">The left vector.</param>
+        /// <param name="right">The right vector.</param>
+        /// <returns>A component wise boolean vector whose compoennts are true when the corresponding left component is equal to the right component.</returns>
+        public static Vector2b ComponentEqual(in Vector2d left, in Vector2d right)
+        {
+            return new Vector2b(left.X == right.X, left.Y == right.Y);
+        }
+
+        /// <summary>
+        /// Component wise not equal comparision of two vectors.
+        /// </summary>
+        /// <param name="left">The left vector.</param>
+        /// <param name="right">The right vector.</param>
+        /// <returns>A component wise boolean vector whose compoennts are true when the corresponding left component is not equal to the right component.</returns>
+        public static Vector2b ComponentNotEqual(in Vector2d left, in Vector2d right)
+        {
+            return new Vector2b(left.X != right.X, left.Y != right.Y);
         }
 
         /// <summary>
@@ -1324,6 +1594,54 @@ namespace OpenTK.Mathematics
             vec.X /= scale.X;
             vec.Y /= scale.Y;
             return vec;
+        }
+
+        /// <summary>
+        /// Component wise less than comparision between the specified instances.
+        /// </summary>
+        /// <param name="left">The left instance.</param>
+        /// <param name="right">The right instance.</param>
+        /// <returns>A component wise boolean vector whose compoennts are true when the corresponding left component is less than the right component.</returns>
+        [Pure]
+        public static Vector2b operator <(Vector2d left, Vector2d right)
+        {
+            return LessThan(left, right);
+        }
+
+        /// <summary>
+        /// Component wise less than or equal comparision between the specified instances.
+        /// </summary>
+        /// <param name="left">The left instance.</param>
+        /// <param name="right">The right instance.</param>
+        /// <returns>A component wise boolean vector whose compoennts are true when the corresponding left component is less than or equal the right component.</returns>
+        [Pure]
+        public static Vector2b operator <=(Vector2d left, Vector2d right)
+        {
+            return LessThanOrEqual(left, right);
+        }
+
+        /// <summary>
+        /// Component wise greater than comparision between the specified instances.
+        /// </summary>
+        /// <param name="left">The left instance.</param>
+        /// <param name="right">The right instance.</param>
+        /// <returns>A component wise boolean vector whose compoennts are true when the corresponding greater component is greater than the right component.</returns>
+        [Pure]
+        public static Vector2b operator >(Vector2d left, Vector2d right)
+        {
+            return GreaterThan(left, right);
+        }
+
+        /// <summary>
+        /// Component wise greater than or equal comparision between the specified instances.
+        /// </summary>
+        /// <param name="left">The left instance.</param>
+        /// <param name="right">The right instance.</param>
+        /// <returns>A component wise boolean vector whose compoennts are true when the corresponding left component is greater than or equal the right component.</returns>
+        [Pure]
+        public static Vector2b operator >=(Vector2d left, Vector2d right)
+        {
+            return GreaterThanOrEqual(left, right);
         }
 
         /// <summary>

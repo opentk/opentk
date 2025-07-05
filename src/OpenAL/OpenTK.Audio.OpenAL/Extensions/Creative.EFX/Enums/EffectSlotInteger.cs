@@ -7,6 +7,8 @@
 // of the MIT license. See the LICENSE file for details.
 //
 
+using System;
+
 namespace OpenTK.Audio.OpenAL
 {
     /// <summary>
@@ -27,6 +29,7 @@ namespace OpenTK.Audio.OpenAL
         /// sources and the listener. This property should be enabled when an application wishes to use a reverb effect
         /// to simulate the environment surrounding a listener or a collection of Sources.
         /// </summary>
+        [Obsolete("Use EffectSlotBoolean.AuxiliarySendAuto instead.")]
         AuxiliarySendAuto = 0x0003,
     }
 }

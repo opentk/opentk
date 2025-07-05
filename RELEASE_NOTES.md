@@ -350,6 +350,112 @@ Platform Abstraction Layer 2.0 (PAL2):
 
 **Note**: The generated functions currently do not have xml documentation attached to them, this will be available in the final release.
 
+## 4.9.4
+
+* BREAKING: Made `Matrix3/4.CreateFromQuaternion` and `Matrix3x4/4x3.CreateFromQuaternion` produce idential results for non-normalized quaternions. (@NogginBops)
+
+* API: Add explicit casts to and from `System.Numerics` types. (@DamienIsPoggers, @NogginBops)
+
+* API: Added `VectorN.Round/Ceiling/Floor/Truncate` element-wise functions. (@NogginBops)
+
+* API: Add `ShaderStorageBufferBinding`, `ShaderStorageBufferStart`, and `ShaderStorageBufferSize` to `GetIndexedPName`. (@NogginBops)
+
+* API: Add `MathHelper.RadToDeg(d)` and `MathHelper.DegToRad(d)` constants for conversion between radians and degrees. (@DamienIsPoggers)
+
+* API: Add support for the `ALC_SOFT_loopback` OpenAL extension through `OpenTK.Audio.OpenAL.ALC.Loopback`. (@NogginBops)
+
+* FIX: Update `OpenTK.redist.glfw` to GLFW 3.4 so that the GLFW 3.4 apis work properly. (@NogginBops)
+
+* FIX: Optimized `VectorN.this[int i]` and `MatrixN.this[int row, int col]` indexers. (@NogginBops)
+
+* FIX: Made `Color4.FromHsv` and `Color4.FromHsl` work correctly when hue is `1`. (@NogginBops)
+
+* FIX: Updated OpenAL `DllNotFoundException` exception message to mention having to install OpenAL. (@NogginBops)
+
+* FIX: The documentation for `NativeWindowSettings.RenderFrequency` now correctly refers to `UpdateFrequency` instead of `UpdateFrame`. (@NogginBops)
+
+## 4.9.3
+
+* Fix issue where the `OpenTK.Mathematics` nuget package referenced `System.Runtime.CompilerServices.Unsafe` version `5.0.0` but the compiled `OpenTK.Mathematics.dll` assembly referenced version `6.0.0`. Causing runtime crashes in some circumstances. The `OpenTK.Mathematics` nuget package now correctly requires version `6.0.0`. (@NogginBops)
+
+## 4.9.2
+
+* Made nuget package builds "deterministic". (@NogginBops)
+
+* Fix assembly versions to match OpenTK release version. (@NogginBops)
+
+## 4.9.1
+
+* BREAKING: Made `NativeWindow` able to run on Wayland (when running on Wayland `NativeWindow` will default to Wayland, use `OPENTK_4_USE_WAYLAND=0` or set the X11 glfw hint to use X11/Xwayland). (@NogginBops)
+
+* BREAKING: Change type of `NativeWindow.CurrentMonitor` property from `MonitorHandle` to `MonitorInfo`. (@NogginBops)
+
+* BREAKING: Changed EGL bindings to `DllImport` `libEGL` instead of `libEGL.dll` (shouldn't be breaking in most cases). (@NogginBops)
+
+* BREAKING: Removed leftover module references to `libGLESv2.dll` (and `opengl32.dll` and `GLESv1_CM`) in `OpenTK.Graphics.dll` which was causing build errors in `net8.0-macos` projects. (these references are never used by OpenTK so they shoudn't be there, this might break something in very specific circumstances)(@NogginBops)
+
+* BREAKING: `MathHelper.Lerp` no longer clamps `t` to `[0, 1]` range. (@NogginBops)
+
+* API: Upgrade to GLFW 3.4. (@NogginBops)
+
+* API: Updated OpenGL bindings to contain the latest definitions without breaking `4.8.2` compatibility (this includes OpenGLES 3.1 and 3.2). (@NogginBops)
+
+* API: Add `NativeWindow.MakeFullscreen` method to more seamlessly transition a window to fullscreen. (@NogginBops)
+
+* API: Deprecate `Matrix4(d).ExtractProjection`. (@NogginBops)
+
+* API: Added `Matrix4(d).ExtractPerspectiveOffCenter/ExtractPerspectiveFieldOfView` to extract projection matrix parameters from perspective projections. (@NogginBops)
+
+* API: Added `Matrix4(d).ExtractOrthographicOffCenter/ExtractOrthographic` to extract projection matrix parameters from orthographic projections. (@NogginBops)
+
+* API: Add matrix swizzle functions `Matrix2/3/4(d).Swizzle/Swizzled/CreateSwizzle`. (@NogginBops)
+
+* API: Added `MouseCursor.PointingHand/ResizeEW/ResizeNS/ResizeNWSE/ResizeNESW/ResizeAll/NotAllowed` standard mouse cursors. (@NogginBops)
+
+* API: Added `VectorN.Slerp` (spherical interpolation) and `VectorN.Elerp` (exponential interpolation) functions. (@NogginBops)
+
+* API: Added `NativeWindow.AlwaysOnTop` property to set if a window should always be visible. (@NogginBops)
+
+* API: Added `NativeWindow.MousePassthrough` property to set if the window should be transparent to mouse interactions. (@NogginBops)
+
+* API: Added `CusorState.Confined` to be able to confine the mouse cursor to the window content area. (@NogginBops)
+
+* API: Implemented `Matrix3(d).Column1/2/3`, `Matrix4x3(d).Column1/2/3` and ``Matrix3x4(d).Column1/2/3/4` property setters. (@NogginBops)
+
+* API: Make `NativeWindow` throw explicit `InvalidOperationException` or `OutOfMemoryException` if `glfwCreateWindow` fails. (@NogginBops)
+
+* API: Added a few missing constants to the EGL bindings. (@NogginBops)
+
+* API: Deprecate `NativeWindow.CurrentMonitor` property setter. (@NogginBops)
+
+* API: Implemented `Matrix2/3/4(d).Transposed/Inverted` for matrix types that where missing them. (@NogginBops)
+
+* API: Deprecate `Matrix4d.Scale/RotateX/RotateY/RotateZ/Rotate/Frustum/Perspective`use the `Create*` functions instead. (@NogginBops)
+
+* API: Deprecate `EffectSlotInteger.AuxiliarySendAuto` in favor of `EffectSlotBoolean.AuxiliarySendAuto`. (@NogginBops)
+
+* FIX: Fix wglDXCloseDeviceNV argument name, from `dxDevice` to `hDecvice`. (@NogginBops)
+
+* FIX: All assemblies are now signed. (@RFBomb, @NogginBops)
+
+* FIX: Fixed nuget package metadata. (@NogginBops)
+
+* FIX: `OpenTK.Graphics` now contains proper debug info, the code is still generated but might improve debug experience. (@NogginBops)
+
+* FIX: Fix issue where `NativeWindowSettings.StartVisible=false` with `NativeWindowSettings.StartFocused=true` would create a visible window. (@NogginBops)
+
+* FIX: Updated links in README to link to the website tutorial. (@NogginBops)
+
+* FIX: Added basic README to nuget packages. (@NogginBops)
+
+* FIX: Fix GLFW calling convention when on 32-bit windows, this was causing a StackOverflowException. (@NogginBops)
+
+* FIX: Improved a bunch of OpenAL documentation. (@NogginBops)
+
+## 4.9.0
+
+* This version had broken nuget packages, see `4.9.1` instead.
+
 ## 4.8.2
 
 * FIX: Fixed issue where setting `NativeWindow.WindowState = WindowState.Normal` while fullscreen would not exit fullscreen. (@Th3Dilli)

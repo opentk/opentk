@@ -34,6 +34,12 @@ namespace OpenTK.Audio.OpenAL
 
         /// <summary>(EFX Extension) This Context property can be passed to OpenAL during Context creation (alcCreateContext) to request a maximum number of Auxiliary Sends desired on each Source. It is not guaranteed that the desired number of sends will be available, so an application should query this property after creating the context using alcGetIntergerv. Default: 2.</summary>
         EfxMaxAuxiliarySends = 0x20003,
+
+        /// <summary>(SOFT Extension) Followed by <see cref="FormatChannelsSOFT"/>.</summary>
+        FormatChannelsSOFT = 0x1990,
+
+        /// <summary>(SOFT Extension) Followed by <see cref="FormatTypeSOFT"/>.</summary>
+        FormatTypeSOFT = 0x1991,
     }
 
     /// <summary>

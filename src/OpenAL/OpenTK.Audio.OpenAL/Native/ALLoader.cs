@@ -45,7 +45,7 @@ namespace OpenTK.Audio.OpenAL
 
                 if (NativeLibrary.TryLoad(libName, assembly, searchPath, out IntPtr libHandle) == false)
                 {
-                    throw new DllNotFoundException($"Could not load the dll '{libName}' (this load is intercepted, specified in DllImport as '{libraryName}').");
+                    throw new DllNotFoundException($"Could not load the dll '{libName}' (this load is intercepted, specified in DllImport as '{libraryName}'), this could mean that OpenAL is not installed on this system or that we can't find the dll.");
                 }
 
                 return libHandle;

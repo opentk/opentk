@@ -2,13 +2,16 @@
   <PropertyGroup>
     <Authors>The OpenTK team.</Authors>
     <PackageIconUrl>https://raw.githubusercontent.com/opentk/opentk/master/docs/files/img/logo.png</PackageIconUrl>
-    <PackageLicenseUrl>https://opensource.org/licenses/MIT</PackageLicenseUrl>
+    <PackageIcon>images/opentk-blue-hexagon.png</PackageIcon>
+    <PackageLicenseUrl>https://licenses.nuget.org/MIT</PackageLicenseUrl>
     <PackageReleaseNotes>Initial 4.0 release.</PackageReleaseNotes>
     <PackageTags>opentk;opengl;cross-platform;openal;csharp;fsharp;vb;dotnet;mono;graphics;game;scientific;science;3d;2d;math;input;gamepad;joystick</PackageTags>
     <PackageProjectUrl>https://github.com/opentk/opentk</PackageProjectUrl>
     <PackageOutputPath>$(OpenTKSolutionRoot)\nuget</PackageOutputPath>
     <IncludeSymbols>true</IncludeSymbols>
     <IncludeSource>true</IncludeSource>
+    <!-- The build system will override this version with the actual version. See build.fs. -->
+    <!-- - Noggin_bops 2024-12-10 -->
     <Version>4.0.0</Version>
   </PropertyGroup>
 </Project>

@@ -1,12 +1,9 @@
 ﻿namespace OpenTK.Tests.Integration
 
 open Xunit
-open FsCheck
-open FsCheck.Xunit
 open System
 open System.Diagnostics
 open System.Runtime.InteropServices
-open OpenTK
 open OpenTK.Mathematics
 open OpenTK.Windowing.Common
 open OpenTK.Windowing.Desktop

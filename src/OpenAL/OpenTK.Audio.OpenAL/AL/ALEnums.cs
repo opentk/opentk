@@ -166,7 +166,7 @@ namespace OpenTK.Audio.OpenAL
         /// <summary>Indicate the Buffer to provide sound samples. Type: uint Range: any valid Buffer Handle.</summary>
         Buffer = 0x1009,
 
-        /// <summary>The state of the source (Stopped, Playing, etc.) Use the enum AlSourceState for comparison.</summary>
+        /// <summary>The state of the source (Stopped, Playing, etc.) Use the enum <see cref="ALSourceState"/> for comparison.</summary>
         SourceState = 0x1010,
 
         /// <summary>The number of buffers queued on this source.</summary>
@@ -175,7 +175,7 @@ namespace OpenTK.Audio.OpenAL
         /// <summary>The number of buffers in the queue that have been processed.</summary>
         BuffersProcessed = 0x1016,
 
-        /// <summary>Source type (Static, Streaming or undetermined). Use enum AlSourceType for comparison.</summary>
+        /// <summary>Source type (Static, Streaming or undetermined). Use enum <see cref="ALSourceState"/> for comparison.</summary>
         SourceType = 0x1027,
     }
 

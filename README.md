@@ -34,7 +34,7 @@ Build Status
 Features
 ========
 
-- Create cutting-edge graphics with OpenGL 4.6 and OpenGL ES 3.0
+- Create cutting-edge graphics with OpenGL 4.6 and OpenGL ES 3.2
 - Spice up your GUI with 3d acceleration
 - Improve your code flow with strong types and inline documentation
 - Windowing systems to help get you started

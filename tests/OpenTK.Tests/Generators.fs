@@ -9,7 +9,25 @@ open OpenTK.Mathematics
 type AcuteAngle = AcuteAngle of float32
 
 [<Struct>]
-type Color4LDR = Color4LDR of Color4
+type Range = 
+    struct
+        val Start: float32
+        val Stop: float32
+        new(start: float32, stop: float32) = { Start = start; Stop = stop }
+        override this.ToString (): string = $"({this.Start}, {this.Stop})"
+    end
+
+[<Struct>]
+type PositiveRange = 
+    struct
+        val Start: float32
+        val Stop: float32
+        new(start: float32, stop: float32) = { Start = start; Stop = stop }
+        override this.ToString (): string = $"({this.Start}, {this.Stop})"
+    end
+
+[<Struct>]
+type PositiveFloat = PositiveFloat of float32
 
 [<AutoOpen>]
 module private Generators =
@@ -64,6 +82,23 @@ module private Generators =
         |> Gen.four
         |> Gen.map Vector4d
         |> Gen.filter (fun v -> not <| (Double.IsNaN v.Length || Double.IsInfinity v.Length ))
+    
+    let vec2b =
+        Arb.Default.Bool() |> Arb.toGen
+        |> Gen.two
+        |> Gen.map Vector2b
+        |> Arb.fromGen
+
+    let vec3b =
+        Arb.Default.Bool() |> Arb.toGen
+        |> Gen.three
+        |> Gen.map Vector3b
+        |> Arb.fromGen
+
+    let vec4b =
+        Arb.Default.Bool() |> Arb.toGen
+        |> Gen.four
+        |> Gen.map Vector4b
         |> Arb.fromGen
 
     let quat =
@@ -218,17 +253,51 @@ module private Generators =
         |> Gen.map Color3<'T>
         |> Arb.fromGen
         
+    let positiveFloat =
+        singleArb
+        |> Gen.map (fun x -> MathF.Abs(x))
+        |> Arb.fromGen
+
+    let range =
+        singleArb
+        // FIXME: As we are using this for parameters in projection matrices,
+        // making the values too small will cause a loss of precision
+        // in the entire matrix. So we avoid this.
+        // - Noggin_bops 2024-11-25
+        |> Gen.filter (fun x -> x > 0.0000001f)
+        |> Gen.two
+        |> Gen.filter (fun (x, y) -> (x < y))
+        |> Gen.map Range
+        |> Arb.fromGen
+
+    let positiveRange =
+        singleArb
+        |> Gen.map (fun x -> MathF.Abs(x))
+        // FIXME: As we are using this for the near and far plane of projection
+        // matrices, making the near plane too close will cause a loss of precision
+        // in the entire matrix. So we avoid this.
+        // - Noggin_bops 2024-11-25
+        |> Gen.filter (fun x -> x > 0.000001f)
+        |> Gen.two
+        |> Gen.filter (fun (x, y) -> (x < y))
+        |> Gen.map PositiveRange
+        |> Arb.fromGen
+
 type OpenTKGen =
     static member Single() = single
     static member float32() = single
     static member Double() = double
     static member float() = double
+    static member PositiveFloat() = positiveFloat
     static member Vector2() = vec2
     static member Vector2d() = vec2d
     static member Vector3() = vec3
     static member Vector3d() = vec3d
     static member Vector4() = vec4
     static member Vector4d() = vec4d
+    static member Vector2b() = vec2b
+    static member Vector3b() = vec3b
+    static member Vector4b() = vec4b
     static member Quaternion() = quat
     static member Matrix2() = mat2
     static member Matrix2x3() = mat2x3
@@ -251,3 +320,5 @@ type OpenTKGen =
     static member AcuteAngle() = acuteAngle
     static member Color4() = color4
     static member Color3() = color3
+    static member Range() = range
+    static member PositiveRange() = positiveRange
