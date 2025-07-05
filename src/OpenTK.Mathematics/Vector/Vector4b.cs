@@ -95,6 +95,18 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="Vector4b"/> struct.
+        /// </summary>
+        /// <param name="xyzw">The x, y, z, and w components of the <see cref="Vector4b"/>.</param>
+        public Vector4b(Vector4b xyzw)
+        {
+            X = xyzw.X;
+            Y = xyzw.Y;
+            Z = xyzw.Z;
+            W = xyzw.W;
+        }
+
+        /// <summary>
         /// Gets or sets the value at the index of the vector.
         /// </summary>
         /// <param name="index">The index of the component from the vector.</param>
@@ -166,6 +178,36 @@ namespace OpenTK.Mathematics
         {
             return X || Y || Z || W;
         }
+
+        /// <summary>
+        /// Defines an instance with only the X components set to <see langword="true"/>.
+        /// </summary>
+        public static readonly Vector4b UnitX = new Vector4b(true, false, false, false);
+
+        /// <summary>
+        /// Defines an instance with only the Y components set to <see langword="true"/>.
+        /// </summary>
+        public static readonly Vector4b UnitY = new Vector4b(false, true, false, false);
+
+        /// <summary>
+        /// Defines an instance with only the Z components set to <see langword="true"/>.
+        /// </summary>
+        public static readonly Vector4b UnitZ = new Vector4b(false, false, true, false);
+
+        /// <summary>
+        /// Defines an instance with only the _W components set to <see langword="true"/>.
+        /// </summary>
+        public static readonly Vector4b UnitW = new Vector4b(false, false, false, true);
+
+        /// <summary>
+        /// Defines an instance with all components set to <see langword="true"/>.
+        /// </summary>
+        public static readonly Vector4b True = new Vector4b(true, true, true, true);
+
+        /// <summary>
+        /// Defines an instance with all components set to <see langword="false"/>.
+        /// </summary>
+        public static readonly Vector4b False = new Vector4b(false, false, false, false);
 
         /// <summary>
         /// Returns <see langword="true"/> if all components of the vector are <see langword="true"/>, <see langword="false"/> otherwise.

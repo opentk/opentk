@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -49,6 +50,16 @@ namespace OpenTK.Mathematics
         {
             X = x;
             Y = y;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Vector2b"/> struct.
+        /// </summary>
+        /// <param name="xy">The x, and y component of the <see cref="Vector2b"/>.</param>
+        public Vector2b(Vector2b xy)
+        {
+            X = xy.X;
+            Y = xy.Y;
         }
 
         /// <summary>
@@ -123,6 +134,26 @@ namespace OpenTK.Mathematics
         {
             return X || Y;
         }
+
+        /// <summary>
+        /// Defines an instance with only the X components set to <see langword="true"/>.
+        /// </summary>
+        public static readonly Vector2b UnitX = new Vector2b(true, false);
+
+        /// <summary>
+        /// Defines an instance with only the Y components set to <see langword="true"/>.
+        /// </summary>
+        public static readonly Vector2b UnitY = new Vector2b(false, true);
+
+        /// <summary>
+        /// Defines an instance with all components set to <see langword="true"/>.
+        /// </summary>
+        public static readonly Vector2b True = new Vector2b(true, true);
+
+        /// <summary>
+        /// Defines an instance with all components set to <see langword="false"/>.
+        /// </summary>
+        public static readonly Vector2b False = new Vector2b(false, false);
 
         /// <summary>
         /// Returns <see langword="true"/> if all components of the vector are <see langword="true"/>, <see langword="false"/> otherwise.

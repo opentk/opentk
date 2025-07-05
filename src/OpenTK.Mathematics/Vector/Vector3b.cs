@@ -72,6 +72,28 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="Vector3b"/> struct.
+        /// </summary>
+        /// <param name="xyz">The x, y, and z components of the <see cref="Vector3b"/>.</param>
+        public Vector3b(Vector3b xyz)
+        {
+            X = xyz.X;
+            Y = xyz.Y;
+            Z = xyz.Z;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Vector3b"/> struct.
+        /// </summary>
+        /// <param name="xyz">The x, y, and z components of the <see cref="Vector3b"/>.</param>
+        public Vector3b(Vector4b xyz)
+        {
+            X = xyz.X;
+            Y = xyz.Y;
+            Z = xyz.Z;
+        }
+
+        /// <summary>
         /// Gets or sets the value at the index of the vector.
         /// </summary>
         /// <param name="index">The index of the component from the vector.</param>
@@ -143,6 +165,31 @@ namespace OpenTK.Mathematics
         {
             return X || Y || Z;
         }
+
+        /// <summary>
+        /// Defines an instance with only the X components set to <see langword="true"/>.
+        /// </summary>
+        public static readonly Vector3b UnitX = new Vector3b(true, false, false);
+
+        /// <summary>
+        /// Defines an instance with only the Y components set to <see langword="true"/>.
+        /// </summary>
+        public static readonly Vector3b UnitY = new Vector3b(false, true, false);
+
+        /// <summary>
+        /// Defines an instance with only the Z components set to <see langword="true"/>.
+        /// </summary>
+        public static readonly Vector3b UnitZ = new Vector3b(false, false, true);
+
+        /// <summary>
+        /// Defines an instance with all components set to <see langword="true"/>.
+        /// </summary>
+        public static readonly Vector3b True = new Vector3b(true, true, true);
+
+        /// <summary>
+        /// Defines an instance with all components set to <see langword="false"/>.
+        /// </summary>
+        public static readonly Vector3b False = new Vector3b(false, false, false);
 
         /// <summary>
         /// Returns <see langword="true"/> if all components of the vector are <see langword="true"/>, <see langword="false"/> otherwise.

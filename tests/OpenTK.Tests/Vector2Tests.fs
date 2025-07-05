@@ -691,3 +691,46 @@ module Vector2 =
 
             Assert.Equal(expectedSize, Vector2.SizeInBytes)
             Assert.Equal(expectedSize, Marshal.SizeOf(Vector2()))
+
+    [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
+    module Comparison = 
+        //
+        [<Property>]
+        let ``Greater than between two vectors returns the correct boolean vector`` (v1 : Vector2, v2 : Vector2) =
+            let gt = Vector2.GreaterThan(&v1, &v2)
+
+            let xgt = v1.X > v2.X;
+            let ygt = v1.Y > v2.Y;
+
+            Assert.Equal(gt.X, xgt)
+            Assert.Equal(gt.Y, ygt)
+
+        [<Property>]
+        let ``Greater than or equal between two vectors returns the correct boolean vector`` (v1 : Vector2, v2 : Vector2) =
+            let gt = Vector2.GreaterThanOrEqual(&v1, &v2)
+
+            let xgt = v1.X >= v2.X;
+            let ygt = v1.Y >= v2.Y;
+
+            Assert.Equal(gt.X, xgt)
+            Assert.Equal(gt.Y, ygt)
+
+        [<Property>]
+        let ``Less than between two vectors returns the correct boolean vector`` (v1 : Vector2, v2 : Vector2) =
+            let lt = Vector2.LessThan(&v1, &v2)
+
+            let xgt = v1.X < v2.X;
+            let ygt = v1.Y < v2.Y;
+
+            Assert.Equal(lt.X, xgt)
+            Assert.Equal(lt.Y, ygt)
+
+        [<Property>]
+        let ``Less than or equal between two vectors returns the correct boolean vector`` (v1 : Vector2, v2 : Vector2) =
+            let lt = Vector2.LessThanOrEqual(&v1, &v2)
+
+            let xgt = v1.X <= v2.X;
+            let ygt = v1.Y <= v2.Y;
+
+            Assert.Equal(lt.X, xgt)
+            Assert.Equal(lt.Y, ygt)

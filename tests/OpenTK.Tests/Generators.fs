@@ -65,6 +65,24 @@ module private Generators =
         |> Gen.filter (fun v -> not <| (Single.IsNaN v.Length || Single.IsInfinity v.Length ))
         |> Arb.fromGen
 
+    let vec2b =
+        Arb.Default.Bool() |> Arb.toGen
+        |> Gen.two
+        |> Gen.map Vector2b
+        |> Arb.fromGen
+
+    let vec3b =
+        Arb.Default.Bool() |> Arb.toGen
+        |> Gen.three
+        |> Gen.map Vector3b
+        |> Arb.fromGen
+
+    let vec4b =
+        Arb.Default.Bool() |> Arb.toGen
+        |> Gen.four
+        |> Gen.map Vector4b
+        |> Arb.fromGen
+
     let quat =
         singleArb
         |> Gen.four
@@ -164,6 +182,7 @@ type OpenTKGen =
     static member Vector2() = vec2
     static member Vector3() = vec3
     static member Vector4() = vec4
+    static member Vector4b() = vec4b
     static member Quaternion() = quat
     static member Matrix2() = mat2
     static member Matrix3() = mat3

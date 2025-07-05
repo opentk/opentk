@@ -811,3 +811,54 @@ module Vector3 =
             Assert.ApproximatelyEquivalent(v, transformedVector)
             Assert.ApproximatelyEquivalent(v, Vector3.Transform(v, q))
             Assert.ApproximatelyEquivalent(transformedVector, Vector3.Transform(v, q))
+
+    [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
+    module Comparison = 
+        //
+        [<Property>]
+        let ``Greater than between two vectors returns the correct boolean vector`` (v1 : Vector3, v2 : Vector3) =
+            let gt = Vector3.GreaterThan(&v1, &v2)
+
+            let xgt = v1.X > v2.X;
+            let ygt = v1.Y > v2.Y;
+            let zgt = v1.Z > v2.Z;
+
+            Assert.Equal(gt.X, xgt)
+            Assert.Equal(gt.Y, ygt)
+            Assert.Equal(gt.Z, zgt)
+
+        [<Property>]
+        let ``Greater than or equal between two vectors returns the correct boolean vector`` (v1 : Vector3, v2 : Vector3) =
+            let ge = Vector3.GreaterThanOrEqual(&v1, &v2)
+
+            let xge = v1.X >= v2.X;
+            let yge = v1.Y >= v2.Y;
+            let zge = v1.Z >= v2.Z;
+
+            Assert.Equal(ge.X, xge)
+            Assert.Equal(ge.Y, yge)
+            Assert.Equal(ge.Z, zge)
+
+        [<Property>]
+        let ``Less than between two vectors returns the correct boolean vector`` (v1 : Vector3, v2 : Vector3) =
+            let lt = Vector3.LessThan(&v1, &v2)
+
+            let xlt = v1.X < v2.X;
+            let ylt = v1.Y < v2.Y;
+            let zlt = v1.Z < v2.Z;
+
+            Assert.Equal(lt.X, xlt)
+            Assert.Equal(lt.Y, ylt)
+            Assert.Equal(lt.Z, zlt)
+
+        [<Property>]
+        let ``Less than or equal between two vectors returns the correct boolean vector`` (v1 : Vector3, v2 : Vector3) =
+            let le = Vector3.LessThanOrEqual(&v1, &v2)
+
+            let xle = v1.X <= v2.X;
+            let yle = v1.Y <= v2.Y;
+            let zle = v1.Z <= v2.Z;
+
+            Assert.Equal(le.X, xle)
+            Assert.Equal(le.Y, yle)
+            Assert.Equal(le.Z, zle)
