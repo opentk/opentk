@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,19 +17,20 @@ namespace VkGenerator.Parsing
     }
 
     public record SpecificationData(
+            List<Define> Defines,
             List<EnumType> Enums,
             // FIXME: These are all the enums that are typedef't.
             List<EnumName> EnumNames,
             List<BitmaskName> BitmaskNames,
             List<StructType> Structs,
             Dictionary<string, Constant> Constants,
-            List<BitmaskName> Bitmasks,
             List<HandleType> Handles,
             List<Command> Commands,
             List<Feature> Features,
             List<Extension> Extensions);
 
     public record TypeData (
+        List<Define> Defines, 
         List<StructType> Structs,
         List<EnumName> EnumNames,
         List<BitmaskName> BitmaskNames,
@@ -43,8 +45,16 @@ namespace VkGenerator.Parsing
 
     public record BaseType(string Name, string? Type);
 
+    // Define the types of the macros?
+    public record Define(string Name, BaseCSType Type, bool IsConstant, ulong ConstValue, List<DefineArgument> Arguments, string? Implementation)
+    {
+        public VersionInfo VersionInfo;
+    }
+    public record DefineArgument(string Name, BaseCSType Type);
+
     public record HandleType(string Name, string? Parent, string Type, string TypeEnum, string? Alias) : IReferable
     {
+        public VersionInfo? VersionInfo;
         public HandleType? ResolvedParent;
 
         public List<Command>? ReferencedBy;
@@ -94,7 +104,6 @@ namespace VkGenerator.Parsing
             }
             ReferencedBy.Add(command);
         }
-
     }
     public record EnumMember(string Name, ulong Value, string? Comment, string? Alias, string? Extension)
     {
@@ -126,8 +135,7 @@ namespace VkGenerator.Parsing
         public BaseCSType? StrongType;
     }
 
-    public record Feature(string Name, string Number, string? Depends, string? Comment, List<RequireTag> RequireTags);
-
+    public record Feature(string Name, Version Version, string? Depends, string? Comment, List<RequireTag> RequireTags, List<DeprecateTag> DeprecateTags, List<RemoveTag> RemoveTags);
     public record Extension(
         string Name,
         int Number,
@@ -145,12 +153,25 @@ namespace VkGenerator.Parsing
         string? ObsoletedBy,
         bool Provisional,
         string? SpecialUse,
-        List<RequireTag> RequireTags);
-    public record RequireTag(List<RequireEnum> RequiredEnums, List<RequireCommand> RequiredCommands, List<RequireType> RequiredTypes, List<Constant> Constants, string? Comment);
+        List<RequireTag> RequireTags,
+        List<DeprecateTag> DeprecateTags,
+        List<RemoveTag> RemoveTags);
+
+    public record RequireTag(List<RequireEnum> RequiredEnums, List<CommandRef> RequiredCommands, List<TypeRef> RequiredTypes, List<Constant> Constants, string? Comment);
+    // So far no enums have been deprecated so we don't need to decide what info needs to be stored there yet.
+    // - Noggin_bops 2025-07-06
+    public record DeprecateTag(List<CommandRef> DeprecatedCommands, List<TypeRef> DeprecatedTypes, string? ExplanationLink, string? Comment);
+    public record RemoveTag(List<EnumRef> RemovedEnums, List<CommandRef> RemovedCommands, List<TypeRef> RemovedTypes, List<FeatureRef> RemovedFeature, string? ReasonLink, string? Comment);
+
     /// <summary>We either know Value or Alias.</summary>
     public record RequireEnum(string Name, int? Value, string Extends, string? Alias, string? Comment);
-    public record RequireCommand(string Name);
-    public record RequireType(string Name);
+
+    public record EnumRef(string Name);
+    public record CommandRef(string Name);
+    public record TypeRef(string Name);
+    public record FeatureRef(string Name, string Struct);
+
+    public record DeprecationReason(Version? Version, string? Extension, string? ExplanationLink);
 
     public enum ConstantType
     {
@@ -163,11 +184,19 @@ namespace VkGenerator.Parsing
 
     public record Constant(ConstantType Type, string Name, string? Extension, string? Comment, ulong IntValue, float FloatValue, string StringValue);
 
-    public record VersionInfo(Version? Version, Version? Deprecated, List<string> Extensions)
+    public record VersionInfo(Version? Version, List<string> Extensions)
     {
+        public List<DeprecationReason> DeprecatedBy;
+
+        public void Deprecate(DeprecationReason reason)
+        {
+            DeprecatedBy ??= [];
+            DeprecatedBy.Add(reason);
+        }
+
         public override string ToString()
         {
-            return $"V: {Version}{(Deprecated != null ? $" Deprecated: {Deprecated}" : "")} Extensions: {string.Join(", ", Extensions)}";
+            return $"V: {Version}{(DeprecatedBy != null ? $" Deprecated: {string.Join(", ", DeprecatedBy.Select(d => d.Version?.ToString() ?? d.Extension))}" : "")} Extensions: {string.Join(", ", Extensions)}";
         }
     }
 
@@ -198,12 +227,12 @@ namespace VkGenerator.Parsing
             List<Extension> extensions = ParseExtensions(xdocument.Root);
 
             return new SpecificationData(
+                typeData.Defines,
                 enums,
                 typeData.EnumNames,
                 typeData.BitmaskNames,
                 typeData.Structs,
                 constantsMap,
-                typeData.BitmaskNames,
                 typeData.HandleTypes,
                 commands,
                 features,
@@ -231,12 +260,12 @@ namespace VkGenerator.Parsing
             List<Extension> extensions = ParseVideoExtensions(xdocument.Root);
 
             return new SpecificationData(
+                typeData.Defines,
                 enums,
                 typeData.EnumNames,
                 typeData.BitmaskNames,
                 typeData.Structs,
                 constantsMap,
-                typeData.BitmaskNames,
                 typeData.HandleTypes,
                 new List<Command>(),
                 features,
@@ -247,6 +276,7 @@ namespace VkGenerator.Parsing
         {
             XElement? xelement = root.Element("types")!;
 
+            List<Define> defines = new List<Define>();
             List<StructType> structs = new List<StructType>();
             List<EnumName> enumNames = new List<EnumName>();
             List<BitmaskName> bitmaskNames = new List<BitmaskName>();
@@ -279,7 +309,7 @@ namespace VkGenerator.Parsing
                 }
                 else if (category == "define")
                 {
-                    // ignore for now.
+                    defines.Add(ParseDefine(type));
                 }
                 else if (category == "union")
                 {
@@ -347,7 +377,132 @@ namespace VkGenerator.Parsing
                 }
             }
 
-            return new TypeData(structs, enumNames, bitmaskNames, baseTypes, handleTypes, externalTypes);
+            return new TypeData(defines, structs, enumNames, bitmaskNames, baseTypes, handleTypes, externalTypes);
+        }
+
+        internal enum TypeSuffix
+        {
+            Invalid,
+            None,
+            U,
+            Ull,
+            Ll,
+        }
+
+        public static ulong ConvertToUInt64(string val, TypeSuffix type)
+        {
+            return type switch
+            {
+                TypeSuffix.None => (uint)(int)new Int32Converter().ConvertFromString(val)!,
+                TypeSuffix.Ll => (ulong)(long)new Int64Converter().ConvertFromString(val)!,
+                TypeSuffix.Ull => (ulong)new UInt64Converter().ConvertFromString(val)!,
+                TypeSuffix.U => (uint)new UInt32Converter().ConvertFromString(val)!,
+                TypeSuffix.Invalid or _ => throw new Exception($"Invalid suffix '{type}'!"),
+            };
+        }
+
+        public static Define ParseDefine(XElement define)
+        {
+            string name = define.Attribute("name")?.Value ?? define.Element("name")?.Value ?? throw new Exception();
+            string? type = define.Element("type")?.Value;
+
+            switch (name)
+            {
+                case "VK_MAKE_VERSION":
+                    return new Define(name, CSPrimitive.Uint(true), false, 0, [
+                        new DefineArgument("major", CSPrimitive.Uint(true)),
+                        new DefineArgument("minor", CSPrimitive.Uint(true)),
+                        new DefineArgument("patch", CSPrimitive.Uint(true))],
+                        "return (major << 22) | (minor << 12) | (patch);");
+                case "VK_VERSION_MAJOR":
+                    return new Define(name, CSPrimitive.Uint(true), false, 0, [
+                        new DefineArgument("version", CSPrimitive.Uint(true)) ],
+                        "return (version >> 22);");
+                case "VK_VERSION_MINOR":
+                    return new Define(name, CSPrimitive.Uint(true), false, 0, [
+                        new DefineArgument("version", CSPrimitive.Uint(true)) ],
+                        "return ((version >> 12) & 0x3FFU);");
+                case "VK_VERSION_PATCH":
+                    return new Define(name, CSPrimitive.Uint(true), false, 0, [
+                        new DefineArgument("version", CSPrimitive.Uint(true)) ],
+                        "return (version & 0xFFFU);");
+                case "VK_MAKE_API_VERSION":
+                    return new Define(name, CSPrimitive.Uint(true), false, 0, [
+                        new DefineArgument("variant", CSPrimitive.Uint(true)),
+                        new DefineArgument("major", CSPrimitive.Uint(true)),
+                        new DefineArgument("minor", CSPrimitive.Uint(true)),
+                        new DefineArgument("patch", CSPrimitive.Uint(true))],
+                        "return (variant << 29) | (major << 22) | (minor << 12) | (patch);");
+                case "VK_API_VERSION_VARIANT":
+                    return new Define(name, CSPrimitive.Uint(true), false, 0, [
+                        new DefineArgument("version", CSPrimitive.Uint(true)) ],
+                        "return (version >> 29);");
+                case "VK_API_VERSION_MAJOR":
+                    return new Define(name, CSPrimitive.Uint(true), false, 0, [
+                        new DefineArgument("version", CSPrimitive.Uint(true)) ],
+                        "return ((version >> 22) & 0x7FU);");
+                case "VK_API_VERSION_MINOR":
+                    return new Define(name, CSPrimitive.Uint(true), false, 0, [
+                        new DefineArgument("version", CSPrimitive.Uint(true)) ],
+                        "return ((version >> 12) & 0x3FFU);");
+                case "VK_API_VERSION_PATCH":
+                    return new Define(name, CSPrimitive.Uint(true), false, 0, [
+                        new DefineArgument("version", CSPrimitive.Uint(true)) ],
+                        "return (version & 0xFFFU);");
+                // FIXME: Make these into static readonly variables instead of making them functions...
+                // - Noggin_bops 2025-07-07
+                case "VK_API_VERSION_1_0":
+                    return new Define(name, CSPrimitive.Ulong(true), false, 0, [], "return MAKE_API_VERSION(0, 1, 0, 0);");
+                case "VK_API_VERSION_1_1":
+                    return new Define(name, CSPrimitive.Ulong(true), false, 0, [], "return MAKE_API_VERSION(0, 1, 1, 0);");
+                case "VK_API_VERSION_1_2":
+                    return new Define(name, CSPrimitive.Ulong(true), false, 0, [], "return MAKE_API_VERSION(0, 1, 2, 0);");
+                case "VK_API_VERSION_1_3":
+                    return new Define(name, CSPrimitive.Ulong(true), false, 0, [], "return MAKE_API_VERSION(0, 1, 3, 0);");
+                case "VK_API_VERSION_1_4":
+                    return new Define(name, CSPrimitive.Ulong(true), false, 0, [], "return MAKE_API_VERSION(0, 1, 4, 0);");
+                case "VKSC_API_VERSION_1_0":
+                    return new Define(name, CSPrimitive.Ulong(true), false, 0, [], "return MAKE_API_VERSION(VKSC_API_VARIANT, 1, 0, 0);");
+                case "VK_HEADER_VERSION_COMPLETE":
+                    return new Define(name, CSPrimitive.Ulong(true), false, 0, [], "return MAKE_API_VERSION(0, 1, 4, HEADER_VERSION);");
+
+                case "VKSC_API_VARIANT":
+                case "VK_HEADER_VERSION":
+                    Debug.Assert(type == null);
+                    return new Define(name, CSPrimitive.Uint(true), true, ConvertToUInt64(define.Element("name")!.NodesAfterSelf().First().ToString(), TypeSuffix.None), [], null);
+
+                case "VK_API_VERSION":
+                case "VK_DEFINE_HANDLE":
+                case "VK_USE_64_BIT_PTR_DEFINES":
+                case "VK_NULL_HANDLE":
+                case "VK_DEFINE_NON_DISPATCHABLE_HANDLE":
+                    return new Define(name, new CSNotSupportedType(name), false, 0, [], null);
+
+
+                case "VK_MAKE_VIDEO_STD_VERSION":
+                    return new Define(name, CSPrimitive.Uint(true), false, 0, [
+                        new DefineArgument("major", CSPrimitive.Uint(true)),
+                        new DefineArgument("minor", CSPrimitive.Uint(true)),
+                        new DefineArgument("patch", CSPrimitive.Uint(true))],
+                        "return ((major) << 22) | ((minor) << 12) | (patch);");
+                case "VK_STD_VULKAN_VIDEO_CODEC_H264_DECODE_API_VERSION_1_0_0":
+                    return new Define(name, CSPrimitive.Uint(true), false, 0, [], "return MAKE_VIDEO_STD_VERSION(1, 0, 0);");
+                case "VK_STD_VULKAN_VIDEO_CODEC_H264_ENCODE_API_VERSION_1_0_0":
+                    return new Define(name, CSPrimitive.Uint(true), false, 0, [], "return MAKE_VIDEO_STD_VERSION(1, 0, 0);");
+                case "VK_STD_VULKAN_VIDEO_CODEC_H265_DECODE_API_VERSION_1_0_0":
+                    return new Define(name, CSPrimitive.Uint(true), false, 0, [], "return MAKE_VIDEO_STD_VERSION(1, 0, 0);");
+                case "VK_STD_VULKAN_VIDEO_CODEC_H265_ENCODE_API_VERSION_1_0_0":
+                    return new Define(name, CSPrimitive.Uint(true), false, 0, [], "return MAKE_VIDEO_STD_VERSION(1, 0, 0);");
+                case "VK_STD_VULKAN_VIDEO_CODEC_VP9_DECODE_API_VERSION_1_0_0":
+                    return new Define(name, CSPrimitive.Uint(true), false, 0, [], "return MAKE_VIDEO_STD_VERSION(1, 0, 0);");
+                case "VK_STD_VULKAN_VIDEO_CODEC_AV1_DECODE_API_VERSION_1_0_0":
+                    return new Define(name, CSPrimitive.Uint(true), false, 0, [], "return MAKE_VIDEO_STD_VERSION(1, 0, 0);");
+                case "VK_STD_VULKAN_VIDEO_CODEC_AV1_ENCODE_API_VERSION_1_0_0":
+                    return new Define(name, CSPrimitive.Uint(true), false, 0, [], "return MAKE_VIDEO_STD_VERSION(1, 0, 0);");
+
+                default:
+                    throw new Exception($"Unknown define '{name}'.");
+            }
         }
 
         public static List<StructMember> ParseStructMembers(XElement structType)
@@ -599,7 +754,27 @@ namespace VkGenerator.Parsing
                         requireTags.Add(ParseRequireTag(require, 0, null));
                     }
 
-                    features.Add(new Feature(name, number, depends, comment, requireTags));
+                    List<DeprecateTag> deprecateTags = new List<DeprecateTag>();
+                    foreach (XElement deprecate in feature.Elements("deprecate"))
+                    {
+                        if (deprecate.Attribute("api")?.Value == "vulkansc")
+                            continue;
+
+                        // Features have extension number 0
+                        deprecateTags.Add(ParseDeprecateTag(deprecate));
+                    }
+
+                    List<RemoveTag> removeTags = new List<RemoveTag>();
+                    foreach (XElement remove in feature.Elements("remove"))
+                    {
+                        if (remove.Attribute("api")?.Value == "vulkansc")
+                            continue;
+
+                        // Features have extension number 0
+                        removeTags.Add(ParseRemoveTag(remove));
+                    }
+
+                    features.Add(new Feature(name, Version.Parse(number), depends, comment, requireTags, deprecateTags, removeTags));
                 }
             }
 
@@ -651,6 +826,24 @@ namespace VkGenerator.Parsing
                     requireTags.Add(ParseRequireTag(require, number, name));
                 }
 
+                List<DeprecateTag> deprecateTags = new List<DeprecateTag>();
+                foreach (XElement deprecate in extension.Elements("deprecate"))
+                {
+                    if (deprecate.Attribute("api")?.Value == "vulkansc")
+                        continue;
+
+                    deprecateTags.Add(ParseDeprecateTag(deprecate));
+                }
+
+                List<RemoveTag> removeTags = new List<RemoveTag>();
+                foreach (XElement remove in extension.Elements("remove"))
+                {
+                    if (remove.Attribute("api")?.Value == "vulkansc")
+                        continue;
+
+                    removeTags.Add(ParseRemoveTag(remove));
+                }
+
                 extensions.Add(new Extension(
                     name,
                     number,
@@ -668,7 +861,9 @@ namespace VkGenerator.Parsing
                     obsoletedBy,
                     provisional,
                     specialUse,
-                    requireTags));
+                    requireTags,
+                    deprecateTags,
+                    removeTags));
             }
 
             return extensions;
@@ -703,7 +898,7 @@ namespace VkGenerator.Parsing
                             Console.WriteLine(valueStr);
                             continue;
                         }
-                        else if (valueStr.StartsWith("\"") && valueStr.EndsWith("\""))
+                        else if (valueStr.StartsWith('\"') && valueStr.EndsWith('\"'))
                         {
                             // This is a string constant.
                             requiredConstants.Add(new Constant(ConstantType.String, constName, extensionName, comment, 0, 0, valueStr));
@@ -769,25 +964,89 @@ namespace VkGenerator.Parsing
                 }
             }
 
-            List<RequireCommand> requiredCommands = new List<RequireCommand>();
+            List<CommandRef> requiredCommands = new List<CommandRef>();
             foreach (XElement command in require.Elements("command"))
             {
                 string commandName = command.Attribute("name")?.Value ?? throw new Exception();
 
-                requiredCommands.Add(new RequireCommand(commandName));
+                requiredCommands.Add(new CommandRef(commandName));
             }
             
-            List<RequireType> requiredTypes = new List<RequireType>();
+            List<TypeRef> requiredTypes = new List<TypeRef>();
             foreach (XElement command in require.Elements("type"))
             {
                 string commandName = command.Attribute("name")?.Value ?? throw new Exception();
 
-                requiredTypes.Add(new RequireType(commandName));
+                requiredTypes.Add(new TypeRef(commandName));
             }
 
             return new RequireTag(requiredEnums, requiredCommands, requiredTypes, requiredConstants, tagComment);
         }
 
+        public static DeprecateTag ParseDeprecateTag(XElement deprecate)
+        {
+            string? tagComment = deprecate.Attribute("comment")?.Value;
+            string? explanationlink = deprecate.Attribute("explanationlink")?.Value;
+
+            List<CommandRef> deprecatedCommands = new List<CommandRef>();
+            foreach (XElement command in deprecate.Elements("command"))
+            {
+                string commandName = command.Attribute("name")?.Value ?? throw new Exception();
+
+                deprecatedCommands.Add(new CommandRef(commandName));
+            }
+
+            List<TypeRef> deprecatedTypes = new List<TypeRef>();
+            foreach (XElement type in deprecate.Elements("type"))
+            {
+                string typeName = type.Attribute("name")?.Value ?? throw new Exception();
+
+                deprecatedTypes.Add(new TypeRef(typeName));
+            }
+
+            return new DeprecateTag(deprecatedCommands, deprecatedTypes, explanationlink, tagComment);
+        }
+
+        public static RemoveTag ParseRemoveTag(XElement remove)
+        {
+            string? tagComment = remove.Attribute("comment")?.Value;
+            string? explanationlink = remove.Attribute("explanationlink")?.Value;
+
+            List<EnumRef> removedEnums = new List<EnumRef>();
+            foreach (XElement @enum in remove.Elements("command"))
+            {
+                string enumName = @enum.Attribute("name")?.Value ?? throw new Exception();
+
+                removedEnums.Add(new EnumRef(enumName));
+            }
+
+            List<CommandRef> removedCommands = new List<CommandRef>();
+            foreach (XElement command in remove.Elements("command"))
+            {
+                string commandName = command.Attribute("name")?.Value ?? throw new Exception();
+
+                removedCommands.Add(new CommandRef(commandName));
+            }
+
+            List<TypeRef> removedTypes = new List<TypeRef>();
+            foreach (XElement type in remove.Elements("type"))
+            {
+                string typeName = type.Attribute("name")?.Value ?? throw new Exception();
+
+                removedTypes.Add(new TypeRef(typeName));
+            }
+
+            List<FeatureRef> removedFeatures = new List<FeatureRef>();
+            foreach (XElement feature in remove.Elements("feature"))
+            {
+                string featureName = feature.Attribute("name")?.Value ?? throw new Exception();
+                string structName = feature.Attribute("struct")?.Value ?? throw new Exception();
+
+                removedFeatures.Add(new FeatureRef(featureName, structName));
+            }
+
+            return new RemoveTag(removedEnums, removedCommands, removedTypes, removedFeatures, explanationlink, tagComment);
+        }
 
         public static List<Extension> ParseVideoExtensions(XElement root)
         {
@@ -827,6 +1086,24 @@ namespace VkGenerator.Parsing
                     requireTags.Add(ParseVideoRequireTag(require, -1, name));
                 }
 
+                List<DeprecateTag> deprecateTags = new List<DeprecateTag>();
+                foreach (XElement deprecate in extension.Elements("deprecate"))
+                {
+                    if (deprecate.Attribute("api")?.Value == "vulkansc")
+                        continue;
+
+                    deprecateTags.Add(ParseDeprecateTag(deprecate));
+                }
+
+                List<RemoveTag> removeTags = new List<RemoveTag>();
+                foreach (XElement remove in extension.Elements("remove"))
+                {
+                    if (remove.Attribute("api")?.Value == "vulkansc")
+                        continue;
+
+                    removeTags.Add(ParseRemoveTag(remove));
+                }
+
                 extensions.Add(new Extension(
                     name,
                     -1,
@@ -844,7 +1121,9 @@ namespace VkGenerator.Parsing
                     obsoletedBy,
                     provisional,
                     specialUse,
-                    requireTags));
+                    requireTags,
+                    deprecateTags,
+                    removeTags));
             }
 
             return extensions;
@@ -877,7 +1156,7 @@ namespace VkGenerator.Parsing
                         Console.WriteLine(valueStr);
                         continue;
                     }
-                    else if (valueStr.StartsWith("\"") && valueStr.EndsWith("\""))
+                    else if (valueStr.StartsWith('\"') && valueStr.EndsWith('\"'))
                     {
                         // This is a string constant.
                         requiredConstants.Add(new Constant(ConstantType.String, constName, extensionName, comment, 0, 0, valueStr));
@@ -910,20 +1189,20 @@ namespace VkGenerator.Parsing
                 }
             }
 
-            List<RequireCommand> requiredCommands = new List<RequireCommand>();
+            List<CommandRef> requiredCommands = new List<CommandRef>();
             foreach (XElement command in require.Elements("command"))
             {
                 string commandName = command.Attribute("name")?.Value ?? throw new Exception();
 
-                requiredCommands.Add(new RequireCommand(commandName));
+                requiredCommands.Add(new CommandRef(commandName));
             }
 
-            List<RequireType> requiredTypes = new List<RequireType>();
+            List<TypeRef> requiredTypes = new List<TypeRef>();
             foreach (XElement command in require.Elements("type"))
             {
                 string commandName = command.Attribute("name")?.Value ?? throw new Exception();
 
-                requiredTypes.Add(new RequireType(commandName));
+                requiredTypes.Add(new TypeRef(commandName));
             }
 
             return new RequireTag(requiredEnums, requiredCommands, requiredTypes, requiredConstants, tagComment);

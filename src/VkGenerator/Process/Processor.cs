@@ -6,6 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using VkGenerator.Parsing;
+using VkGenerator.Utility;
+using VkGenerator.Utility.Extensions;
 
 namespace VkGenerator.Process
 {
@@ -24,7 +26,6 @@ namespace VkGenerator.Process
             data.EnumNames.Sort((e1, e2) => string.Compare(e1.Name, e2.Name, StringComparison.InvariantCulture));
             data.BitmaskNames.Sort((b1, b2) => string.Compare(b1.Name, b2.Name, StringComparison.InvariantCulture));
             data.Structs.Sort((s1, s2) => string.Compare(s1.Name, s2.Name, StringComparison.InvariantCulture));
-            data.Bitmasks.Sort((b1, b2) => string.Compare(b1.Name, b2.Name, StringComparison.InvariantCulture));
             data.Handles.Sort((h1, h2) => string.Compare(h1.Name, h2.Name, StringComparison.InvariantCulture));
             data.Commands.Sort((c1, c2) => string.Compare(c1.Name, c2.Name, StringComparison.InvariantCulture));
             // FIXME: ?
@@ -275,7 +276,7 @@ namespace VkGenerator.Process
                 }
             }
 
-            foreach (BitmaskName bitmask in data.Bitmasks)
+            foreach (BitmaskName bitmask in data.BitmaskNames)
             {
                 // FIXME: Should we use the ...Bits name or the typedef names?
                 // For now we use the ...Bits name because it's easiest that way
@@ -348,7 +349,7 @@ namespace VkGenerator.Process
                 }
             }
 
-            Debug.Assert(video.Bitmasks.Count == 0);
+            Debug.Assert(video.BitmaskNames.Count == 0);
 
             Debug.Assert(video.Handles.Count == 0);
 
@@ -506,23 +507,20 @@ namespace VkGenerator.Process
         {
             foreach (Feature feature in data.Features)
             {
-                // FIXME: More robust parsing?
-                Version featureVer = Version.Parse(feature.Number);
-                
                 foreach (RequireTag require in feature.RequireTags)
                 {
-                    foreach (RequireCommand requireCommand in require.RequiredCommands)
+                    foreach (CommandRef requireCommand in require.RequiredCommands)
                     {
                         Command command = data.Commands.Find(c => c.Name == requireCommand.Name) ?? throw new Exception();
 
                         if (command.VersionInfo == null)
                         {
-                            command.VersionInfo = new VersionInfo(featureVer, null, new List<string>());
+                            command.VersionInfo = new VersionInfo(feature.Version, new List<string>());
                         }
-                        else if (command.VersionInfo.Version > featureVer)
+                        else if (command.VersionInfo.Version > feature.Version)
                         {
                             Debug.Assert(false, "This has never happened. So this codepath is untested.");
-                            command.VersionInfo = command.VersionInfo with { Version = featureVer };
+                            command.VersionInfo = command.VersionInfo with { Version = feature.Version };
                         }
                     }
 
@@ -533,42 +531,68 @@ namespace VkGenerator.Process
                         EnumMember member = extends.Members.Find(m => m.Name == requireEnum.Name) ?? throw new Exception();
                         if (member.VersionInfo == null)
                         {
-                            member.VersionInfo = new VersionInfo(featureVer, null, new List<string>());
+                            member.VersionInfo = new VersionInfo(feature.Version, new List<string>());
                         }
-                        else if (member.VersionInfo.Version < featureVer)
+                        else if (member.VersionInfo.Version < feature.Version)
                         {
                             Debug.Assert(false, "This has never happened. So this codepath is untested.");
-                            member.VersionInfo = member.VersionInfo with { Version = featureVer };
+                            member.VersionInfo = member.VersionInfo with { Version = feature.Version };
                         }
                     }
 
-                    foreach (RequireType requireType in require.RequiredTypes)
+                    foreach (TypeRef requireType in require.RequiredTypes)
                     {
+                        Define? define = data.Defines.Find(d => d.Name == requireType.Name);
                         StructType? structType = data.Structs.Find(s => s.Name == requireType.Name);
                         EnumType? enumType = data.Enums.Find(e => e.Name == requireType.Name);
-                        Debug.Assert(!(structType != null && enumType != null), "We matched two types for this require... Something has gone bad.");
-                        if (structType != null)
+                        HandleType? handleType = data.Handles.Find(h => h.Name == requireType.Name);
+                        Debug.Assert(ListExtensions.CountTrue(define != null, structType != null, enumType != null, handleType != null) <= 1, "We matched more than one type for this require... Something has gone bad.");
+                        if (define != null)
+                        {
+                            if (define.VersionInfo == null)
+                            {
+                                define.VersionInfo = new VersionInfo(feature.Version, new List<string>());
+                            }
+                            else if (define.VersionInfo.Version < feature.Version)
+                            {
+                                Debug.Assert(false, "This has never happened. So this codepath is untested.");
+                                define.VersionInfo = define.VersionInfo with { Version = feature.Version };
+                            }
+                        }
+                        else if (structType != null)
                         {
                             if (structType.VersionInfo == null)
                             {
-                                structType.VersionInfo = new VersionInfo(featureVer, null, new List<string>());
+                                structType.VersionInfo = new VersionInfo(feature.Version, new List<string>());
                             }
-                            else if (structType.VersionInfo.Version < featureVer)
+                            else if (structType.VersionInfo.Version < feature.Version)
                             {
                                 Debug.Assert(false, "This has never happened. So this codepath is untested.");
-                                structType.VersionInfo = structType.VersionInfo with { Version = featureVer };
+                                structType.VersionInfo = structType.VersionInfo with { Version = feature.Version };
                             }
                         }
                         else if (enumType != null)
                         {
                             if (enumType.VersionInfo == null)
                             {
-                                enumType.VersionInfo = new VersionInfo(featureVer, null, new List<string>());
+                                enumType.VersionInfo = new VersionInfo(feature.Version, new List<string>());
                             }
-                            else if (enumType.VersionInfo.Version < featureVer)
+                            else if (enumType.VersionInfo.Version < feature.Version)
                             {
                                 Debug.Assert(false, "This has never happened. So this codepath is untested.");
-                                enumType.VersionInfo = enumType.VersionInfo with { Version = featureVer };
+                                enumType.VersionInfo = enumType.VersionInfo with { Version = feature.Version };
+                            }
+                        }
+                        else if (handleType != null)
+                        {
+                            if (handleType.VersionInfo == null)
+                            {
+                                handleType.VersionInfo = new VersionInfo(feature.Version, new List<string>());
+                            }
+                            else if (handleType.VersionInfo.Version < feature.Version)
+                            {
+                                Debug.Assert(false, "This has never happened. So this codepath is untested.");
+                                handleType.VersionInfo = handleType.VersionInfo with { Version = feature.Version };
                             }
                         }
                     }
@@ -580,13 +604,13 @@ namespace VkGenerator.Process
                 string extensionName = extension.Name;
                 foreach (RequireTag require in extension.RequireTags)
                 {
-                    foreach (RequireCommand requireCommand in require.RequiredCommands)
+                    foreach (CommandRef requireCommand in require.RequiredCommands)
                     {
                         Command command = data.Commands.Find(c => c.Name == requireCommand.Name) ?? throw new Exception();
 
                         if (command.VersionInfo == null)
                         {
-                            command.VersionInfo = new VersionInfo(null, null, [extensionName]);
+                            command.VersionInfo = new VersionInfo(null, [extensionName]);
                         }
                         else
                         {
@@ -610,7 +634,7 @@ namespace VkGenerator.Process
                         EnumMember member = extends.Members.Find(m => m.Name == requireEnum.Name) ?? throw new Exception();
                         if (member.VersionInfo == null)
                         {
-                            member.VersionInfo = new VersionInfo(null, null, [extensionName]);
+                            member.VersionInfo = new VersionInfo(null, [extensionName]);
                         }
                         else
                         {
@@ -618,16 +642,29 @@ namespace VkGenerator.Process
                         }
                     }
 
-                    foreach (RequireType requireType in require.RequiredTypes)
+                    foreach (TypeRef requireType in require.RequiredTypes)
                     {
+                        Define? define = data.Defines.Find(d => d.Name == requireType.Name);
                         StructType? structType = data.Structs.Find(s => s.Name == requireType.Name);
                         EnumType? enumType = data.Enums.Find(e => e.Name == requireType.Name);
-                        Debug.Assert(!(structType != null && enumType != null), "We matched two types for this require... Something has gone bad.");
-                        if (structType != null)
+                        HandleType? handleType = data.Handles.Find(h => h.Name == requireType.Name);
+                        Debug.Assert(ListExtensions.CountTrue(define != null, structType != null, enumType != null, handleType != null) <= 1, "We matched more than one type for this require... Something has gone bad.");
+                        if (define != null)
+                        {
+                            if (define.VersionInfo == null)
+                            {
+                                define.VersionInfo = new VersionInfo(null, [extensionName]);
+                            }
+                            else
+                            {
+                                define.VersionInfo.Extensions.Add(extensionName);
+                            }
+                        }
+                        else if (structType != null)
                         {
                             if (structType.VersionInfo == null)
                             {
-                                structType.VersionInfo = new VersionInfo(null, null, [extensionName]);
+                                structType.VersionInfo = new VersionInfo(null, [extensionName]);
                             }
                             else
                             {
@@ -638,11 +675,22 @@ namespace VkGenerator.Process
                         {
                             if (enumType.VersionInfo == null)
                             {
-                                enumType.VersionInfo = new VersionInfo(null, null, [extensionName]);
+                                enumType.VersionInfo = new VersionInfo(null, [extensionName]);
                             }
                             else
                             {
                                 enumType.VersionInfo.Extensions.Add(extensionName);
+                            }
+                        }
+                        else if (handleType != null)
+                        {
+                            if (handleType.VersionInfo == null)
+                            {
+                                handleType.VersionInfo = new VersionInfo(null, [extensionName]);
+                            }
+                            else
+                            {
+                                handleType.VersionInfo.Extensions.Add(extensionName);
                             }
                         }
                     }
@@ -670,6 +718,117 @@ namespace VkGenerator.Process
                 else
                 {
                     @enum.StrongUnderlyingType = CSPrimitive.Int(true);
+                }
+            }
+        }
+
+        public static void MarkDeprecations(SpecificationData data)
+        {
+            foreach (Feature feature in data.Features)
+            {
+                foreach (DeprecateTag deprecateTag in feature.DeprecateTags)
+                {
+                    foreach (CommandRef deprecatedCommand in deprecateTag.DeprecatedCommands)
+                    {
+                        Command? command = data.Commands.Find(c => c.Name == deprecatedCommand.Name);
+
+                        if (command != null)
+                        {
+                            Debug.Assert(command.VersionInfo != null, "ResolveVersionInfo needs to be called before this function is called.");
+
+                            command.VersionInfo.Deprecate(new DeprecationReason(feature.Version, null, deprecateTag.ExplanationLink));
+                        }
+                        else
+                        {
+                            Logger.Warning($"Could not find deprecated command '{deprecatedCommand.Name}'");
+                        }
+                    }
+
+                    foreach (TypeRef deprecatedType in deprecateTag.DeprecatedTypes)
+                    {
+                        if (data.Enums.TryFind(e => e.Name == deprecatedType.Name, out EnumType? @enum))
+                        {
+                            Debug.Assert(@enum.VersionInfo != null, "ResolveVersionInfo needs to be called before this function is called.");
+
+                            @enum.VersionInfo.Deprecate(new DeprecationReason(feature.Version, null, deprecateTag.ExplanationLink));
+                        }
+                        else if (data.Structs.TryFind(s => s.Name == deprecatedType.Name, out StructType? @struct))
+                        {
+                            Debug.Assert(@struct.VersionInfo != null, "ResolveVersionInfo needs to be called before this function is called.");
+
+                            @struct.VersionInfo.Deprecate(new DeprecationReason(feature.Version, null, deprecateTag.ExplanationLink));
+                        }
+                        else if (data.Handles.TryFind(h => h.Name == deprecatedType.Name, out HandleType? handle))
+                        {
+                            Debug.Assert(handle.VersionInfo != null, "ResolveVersionInfo needs to be called before this function is called.");
+
+                            handle.VersionInfo.Deprecate(new DeprecationReason(feature.Version, null, deprecateTag.ExplanationLink));
+                        }
+                        else if (data.Defines.TryFind(d => d.Name == deprecatedType.Name, out Define? define))
+                        {
+                            Debug.Assert(define.VersionInfo != null, "ResolveVersionInfo needs to be called before this function is called.");
+
+                            define.VersionInfo.Deprecate(new DeprecationReason(feature.Version, null, deprecateTag.ExplanationLink));
+                        }
+                        else
+                        {
+                            Logger.Warning($"Unable to find type: '{deprecatedType.Name}' when applying v{feature.Version} deprecations.");
+                        }
+                    }
+                }
+            }
+
+            foreach (Extension extension in data.Extensions)
+            {
+                foreach (DeprecateTag deprecateTag in extension.DeprecateTags)
+                {
+                    foreach (CommandRef deprecatedCommand in deprecateTag.DeprecatedCommands)
+                    {
+                        Command? command = data.Commands.Find(c => c.Name == deprecatedCommand.Name);
+
+                        if (command != null)
+                        {
+                            Debug.Assert(command.VersionInfo != null, "ResolveVersionInfo needs to be called before this function is called.");
+
+                            command.VersionInfo.Deprecate(new DeprecationReason(null, extension.Name, deprecateTag.ExplanationLink));
+                        }
+                        else
+                        {
+                            Logger.Warning($"Could not find deprecated command '{deprecatedCommand.Name}'");
+                        }
+                    }
+
+                    foreach (TypeRef deprecatedType in deprecateTag.DeprecatedTypes)
+                    {
+                        if (data.Enums.TryFind(e => e.Name == deprecatedType.Name, out EnumType? @enum))
+                        {
+                            Debug.Assert(@enum.VersionInfo != null, "ResolveVersionInfo needs to be called before this function is called.");
+
+                            @enum.VersionInfo.Deprecate(new DeprecationReason(null, extension.Name, deprecateTag.ExplanationLink));
+                        }
+                        else if (data.Structs.TryFind(s => s.Name == deprecatedType.Name, out StructType? @struct))
+                        {
+                            Debug.Assert(@struct.VersionInfo != null, "ResolveVersionInfo needs to be called before this function is called.");
+
+                            @struct.VersionInfo.Deprecate(new DeprecationReason(null, extension.Name, deprecateTag.ExplanationLink));
+                        }
+                        else if (data.Handles.TryFind(h => h.Name == deprecatedType.Name, out HandleType? handle))
+                        {
+                            Debug.Assert(handle.VersionInfo != null, "ResolveVersionInfo needs to be called before this function is called.");
+
+                            handle.VersionInfo.Deprecate(new DeprecationReason(null, extension.Name, deprecateTag.ExplanationLink));
+                        }
+                        else if (data.Defines.TryFind(d => d.Name == deprecatedType.Name, out Define? define))
+                        {
+                            Debug.Assert(define.VersionInfo != null, "ResolveVersionInfo needs to be called before this function is called.");
+
+                            define.VersionInfo.Deprecate(new DeprecationReason(null, extension.Name, deprecateTag.ExplanationLink));
+                        }
+                        else
+                        {
+                            Logger.Warning($"Unable to find type: '{deprecatedType.Name}' when applying '{extension.Name}' deprecations.");
+                        }
+                    }
                 }
             }
         }
@@ -947,6 +1106,8 @@ namespace VkGenerator.Process
                         "MTLSharedEvent_id" => CSPrimitive.IntPtr(@const),
                         "IOSurfaceRef" => CSPrimitive.IntPtr(@const),
 
+                        "OHNativeWindow" => new CSStruct("OHNativeWindow", @const),
+
                         /*
                         // From vk_video/vulkan_video_codec_h264std.h
                         "StdVideoH264ProfileIdc" => new CSEnum("StdVideoH264ProfileIdc", CSPrimitive.Int(@const), @const),
@@ -1052,6 +1213,7 @@ namespace VkGenerator.Process
                     case "ANativeWindow":
                     case "AHardwareBuffer":
                     case "NvSciSyncFence":
+                    case "OHNativeWindow":
                         return CSPrimitive.IntPtr(csPointer.Constant);
                     default:
                         return type;
