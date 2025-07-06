@@ -360,7 +360,8 @@ namespace OpenTK.Graphics.Vulkan
         AntiLagStagePresentAmd = 1,
     }
     /// <summary><b>[requires: v1.0]</b> 
-    /// <br/><b>[deprecated by: 1.2]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-renderpass2" />
+    /// <br/><b>[deprecated by: v1.2]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-renderpass2" />
+    /// <br/><b>[deprecated by: VK_KHR_create_renderpass2]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-renderpass2" />
     /// </summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/latest/man/html/VkAttachmentDescriptionFlagBits.html" /></remarks>
     [Flags]
@@ -3488,7 +3489,8 @@ namespace OpenTK.Graphics.Vulkan
         FrameBoundaryFrameEndBitExt = 1,
     }
     /// <summary><b>[requires: v1.0]</b> 
-    /// <br/><b>[deprecated by: 1.4]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-dynamicrendering" />
+    /// <br/><b>[deprecated by: v1.4]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-dynamicrendering" />
+    /// <br/><b>[deprecated by: VK_KHR_dynamic_rendering_local_read]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-dynamicrendering" />
     /// </summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/latest/man/html/VkFramebufferCreateFlagBits.html" /></remarks>
     [Flags]
@@ -6060,7 +6062,8 @@ namespace OpenTK.Graphics.Vulkan
     {
     }
     /// <summary><b>[requires: v1.0]</b> 
-    /// <br/><b>[deprecated by: 1.2]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-renderpass2" />
+    /// <br/><b>[deprecated by: v1.2]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-renderpass2" />
+    /// <br/><b>[deprecated by: VK_KHR_create_renderpass2]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-renderpass2" />
     /// </summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/latest/man/html/VkRenderPassCreateFlagBits.html" /></remarks>
     [Flags]
@@ -9472,7 +9475,8 @@ namespace OpenTK.Graphics.Vulkan
     {
     }
     /// <summary><b>[requires: v1.0]</b> 
-    /// <br/><b>[deprecated by: 1.4]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-dynamicrendering" />
+    /// <br/><b>[deprecated by: v1.4]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-dynamicrendering" />
+    /// <br/><b>[deprecated by: VK_KHR_dynamic_rendering_local_read]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-dynamicrendering" />
     /// Used by <see cref="Vk.CmdBeginRenderPass"/>, <see cref="Vk.CmdNextSubpass"/></summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/latest/man/html/VkSubpassContents.html" /></remarks>
     public enum VkSubpassContents : int
@@ -9487,7 +9491,8 @@ namespace OpenTK.Graphics.Vulkan
         SubpassContentsSecondaryCommandBuffers = 1,
     }
     /// <summary><b>[requires: v1.0]</b> 
-    /// <br/><b>[deprecated by: 1.2]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-renderpass2" />
+    /// <br/><b>[deprecated by: v1.2]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-renderpass2" />
+    /// <br/><b>[deprecated by: VK_KHR_create_renderpass2]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-renderpass2" />
     /// </summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/latest/man/html/VkSubpassDescriptionFlagBits.html" /></remarks>
     [Flags]

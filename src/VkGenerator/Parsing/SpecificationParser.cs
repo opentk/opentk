@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,6 +17,7 @@ namespace VkGenerator.Parsing
     }
 
     public record SpecificationData(
+            List<Define> Defines,
             List<EnumType> Enums,
             // FIXME: These are all the enums that are typedef't.
             List<EnumName> EnumNames,
@@ -28,6 +30,7 @@ namespace VkGenerator.Parsing
             List<Extension> Extensions);
 
     public record TypeData (
+        List<Define> Defines, 
         List<StructType> Structs,
         List<EnumName> EnumNames,
         List<BitmaskName> BitmaskNames,
@@ -41,6 +44,13 @@ namespace VkGenerator.Parsing
     public record BitmaskName(string Type, string Name, string? Requires, string? Alias);
 
     public record BaseType(string Name, string? Type);
+
+    // Define the types of the macros?
+    public record Define(string Name, BaseCSType Type, bool IsConstant, ulong ConstValue, List<DefineArgument> Arguments, string? Implementation)
+    {
+        public VersionInfo VersionInfo;
+    }
+    public record DefineArgument(string Name, BaseCSType Type);
 
     public record HandleType(string Name, string? Parent, string Type, string TypeEnum, string? Alias) : IReferable
     {
@@ -217,6 +227,7 @@ namespace VkGenerator.Parsing
             List<Extension> extensions = ParseExtensions(xdocument.Root);
 
             return new SpecificationData(
+                typeData.Defines,
                 enums,
                 typeData.EnumNames,
                 typeData.BitmaskNames,
@@ -249,6 +260,7 @@ namespace VkGenerator.Parsing
             List<Extension> extensions = ParseVideoExtensions(xdocument.Root);
 
             return new SpecificationData(
+                typeData.Defines,
                 enums,
                 typeData.EnumNames,
                 typeData.BitmaskNames,
@@ -264,6 +276,7 @@ namespace VkGenerator.Parsing
         {
             XElement? xelement = root.Element("types")!;
 
+            List<Define> defines = new List<Define>();
             List<StructType> structs = new List<StructType>();
             List<EnumName> enumNames = new List<EnumName>();
             List<BitmaskName> bitmaskNames = new List<BitmaskName>();
@@ -296,7 +309,7 @@ namespace VkGenerator.Parsing
                 }
                 else if (category == "define")
                 {
-                    // ignore for now.
+                    defines.Add(ParseDefine(type));
                 }
                 else if (category == "union")
                 {
@@ -364,7 +377,132 @@ namespace VkGenerator.Parsing
                 }
             }
 
-            return new TypeData(structs, enumNames, bitmaskNames, baseTypes, handleTypes, externalTypes);
+            return new TypeData(defines, structs, enumNames, bitmaskNames, baseTypes, handleTypes, externalTypes);
+        }
+
+        internal enum TypeSuffix
+        {
+            Invalid,
+            None,
+            U,
+            Ull,
+            Ll,
+        }
+
+        public static ulong ConvertToUInt64(string val, TypeSuffix type)
+        {
+            return type switch
+            {
+                TypeSuffix.None => (uint)(int)new Int32Converter().ConvertFromString(val)!,
+                TypeSuffix.Ll => (ulong)(long)new Int64Converter().ConvertFromString(val)!,
+                TypeSuffix.Ull => (ulong)new UInt64Converter().ConvertFromString(val)!,
+                TypeSuffix.U => (uint)new UInt32Converter().ConvertFromString(val)!,
+                TypeSuffix.Invalid or _ => throw new Exception($"Invalid suffix '{type}'!"),
+            };
+        }
+
+        public static Define ParseDefine(XElement define)
+        {
+            string name = define.Attribute("name")?.Value ?? define.Element("name")?.Value ?? throw new Exception();
+            string? type = define.Element("type")?.Value;
+
+            switch (name)
+            {
+                case "VK_MAKE_VERSION":
+                    return new Define(name, CSPrimitive.Uint(true), false, 0, [
+                        new DefineArgument("major", CSPrimitive.Uint(true)),
+                        new DefineArgument("minor", CSPrimitive.Uint(true)),
+                        new DefineArgument("patch", CSPrimitive.Uint(true))],
+                        "return (major << 22) | (minor << 12) | (patch);");
+                case "VK_VERSION_MAJOR":
+                    return new Define(name, CSPrimitive.Uint(true), false, 0, [
+                        new DefineArgument("version", CSPrimitive.Uint(true)) ],
+                        "return (version >> 22);");
+                case "VK_VERSION_MINOR":
+                    return new Define(name, CSPrimitive.Uint(true), false, 0, [
+                        new DefineArgument("version", CSPrimitive.Uint(true)) ],
+                        "return ((version >> 12) & 0x3FFU);");
+                case "VK_VERSION_PATCH":
+                    return new Define(name, CSPrimitive.Uint(true), false, 0, [
+                        new DefineArgument("version", CSPrimitive.Uint(true)) ],
+                        "return (version & 0xFFFU);");
+                case "VK_MAKE_API_VERSION":
+                    return new Define(name, CSPrimitive.Uint(true), false, 0, [
+                        new DefineArgument("variant", CSPrimitive.Uint(true)),
+                        new DefineArgument("major", CSPrimitive.Uint(true)),
+                        new DefineArgument("minor", CSPrimitive.Uint(true)),
+                        new DefineArgument("patch", CSPrimitive.Uint(true))],
+                        "return (variant << 29) | (major << 22) | (minor << 12) | (patch);");
+                case "VK_API_VERSION_VARIANT":
+                    return new Define(name, CSPrimitive.Uint(true), false, 0, [
+                        new DefineArgument("version", CSPrimitive.Uint(true)) ],
+                        "return (version >> 29);");
+                case "VK_API_VERSION_MAJOR":
+                    return new Define(name, CSPrimitive.Uint(true), false, 0, [
+                        new DefineArgument("version", CSPrimitive.Uint(true)) ],
+                        "return ((version >> 22) & 0x7FU);");
+                case "VK_API_VERSION_MINOR":
+                    return new Define(name, CSPrimitive.Uint(true), false, 0, [
+                        new DefineArgument("version", CSPrimitive.Uint(true)) ],
+                        "return ((version >> 12) & 0x3FFU);");
+                case "VK_API_VERSION_PATCH":
+                    return new Define(name, CSPrimitive.Uint(true), false, 0, [
+                        new DefineArgument("version", CSPrimitive.Uint(true)) ],
+                        "return (version & 0xFFFU);");
+                // FIXME: Make these into static readonly variables instead of making them functions...
+                // - Noggin_bops 2025-07-07
+                case "VK_API_VERSION_1_0":
+                    return new Define(name, CSPrimitive.Ulong(true), false, 0, [], "return MAKE_API_VERSION(0, 1, 0, 0);");
+                case "VK_API_VERSION_1_1":
+                    return new Define(name, CSPrimitive.Ulong(true), false, 0, [], "return MAKE_API_VERSION(0, 1, 1, 0);");
+                case "VK_API_VERSION_1_2":
+                    return new Define(name, CSPrimitive.Ulong(true), false, 0, [], "return MAKE_API_VERSION(0, 1, 2, 0);");
+                case "VK_API_VERSION_1_3":
+                    return new Define(name, CSPrimitive.Ulong(true), false, 0, [], "return MAKE_API_VERSION(0, 1, 3, 0);");
+                case "VK_API_VERSION_1_4":
+                    return new Define(name, CSPrimitive.Ulong(true), false, 0, [], "return MAKE_API_VERSION(0, 1, 4, 0);");
+                case "VKSC_API_VERSION_1_0":
+                    return new Define(name, CSPrimitive.Ulong(true), false, 0, [], "return MAKE_API_VERSION(VKSC_API_VARIANT, 1, 0, 0);");
+                case "VK_HEADER_VERSION_COMPLETE":
+                    return new Define(name, CSPrimitive.Ulong(true), false, 0, [], "return MAKE_API_VERSION(0, 1, 4, HEADER_VERSION);");
+
+                case "VKSC_API_VARIANT":
+                case "VK_HEADER_VERSION":
+                    Debug.Assert(type == null);
+                    return new Define(name, CSPrimitive.Uint(true), true, ConvertToUInt64(define.Element("name")!.NodesAfterSelf().First().ToString(), TypeSuffix.None), [], null);
+
+                case "VK_API_VERSION":
+                case "VK_DEFINE_HANDLE":
+                case "VK_USE_64_BIT_PTR_DEFINES":
+                case "VK_NULL_HANDLE":
+                case "VK_DEFINE_NON_DISPATCHABLE_HANDLE":
+                    return new Define(name, new CSNotSupportedType(name), false, 0, [], null);
+
+
+                case "VK_MAKE_VIDEO_STD_VERSION":
+                    return new Define(name, CSPrimitive.Uint(true), false, 0, [
+                        new DefineArgument("major", CSPrimitive.Uint(true)),
+                        new DefineArgument("minor", CSPrimitive.Uint(true)),
+                        new DefineArgument("patch", CSPrimitive.Uint(true))],
+                        "return ((major) << 22) | ((minor) << 12) | (patch);");
+                case "VK_STD_VULKAN_VIDEO_CODEC_H264_DECODE_API_VERSION_1_0_0":
+                    return new Define(name, CSPrimitive.Uint(true), false, 0, [], "return MAKE_VIDEO_STD_VERSION(1, 0, 0);");
+                case "VK_STD_VULKAN_VIDEO_CODEC_H264_ENCODE_API_VERSION_1_0_0":
+                    return new Define(name, CSPrimitive.Uint(true), false, 0, [], "return MAKE_VIDEO_STD_VERSION(1, 0, 0);");
+                case "VK_STD_VULKAN_VIDEO_CODEC_H265_DECODE_API_VERSION_1_0_0":
+                    return new Define(name, CSPrimitive.Uint(true), false, 0, [], "return MAKE_VIDEO_STD_VERSION(1, 0, 0);");
+                case "VK_STD_VULKAN_VIDEO_CODEC_H265_ENCODE_API_VERSION_1_0_0":
+                    return new Define(name, CSPrimitive.Uint(true), false, 0, [], "return MAKE_VIDEO_STD_VERSION(1, 0, 0);");
+                case "VK_STD_VULKAN_VIDEO_CODEC_VP9_DECODE_API_VERSION_1_0_0":
+                    return new Define(name, CSPrimitive.Uint(true), false, 0, [], "return MAKE_VIDEO_STD_VERSION(1, 0, 0);");
+                case "VK_STD_VULKAN_VIDEO_CODEC_AV1_DECODE_API_VERSION_1_0_0":
+                    return new Define(name, CSPrimitive.Uint(true), false, 0, [], "return MAKE_VIDEO_STD_VERSION(1, 0, 0);");
+                case "VK_STD_VULKAN_VIDEO_CODEC_AV1_ENCODE_API_VERSION_1_0_0":
+                    return new Define(name, CSPrimitive.Uint(true), false, 0, [], "return MAKE_VIDEO_STD_VERSION(1, 0, 0);");
+
+                default:
+                    throw new Exception($"Unknown define '{name}'.");
+            }
         }
 
         public static List<StructMember> ParseStructMembers(XElement structType)

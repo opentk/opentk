@@ -953,7 +953,8 @@ namespace OpenTK.Graphics.Vulkan
         }
     }
     /// <summary><b>[requires: v1.0]</b> 
-    /// <br/><b>[deprecated by: 1.2]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-renderpass2" />
+    /// <br/><b>[deprecated by: v1.2]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-renderpass2" />
+    /// <br/><b>[deprecated by: VK_KHR_create_renderpass2]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-renderpass2" />
     /// </summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkAttachmentDescription.html" /></remarks>
     public unsafe struct VkAttachmentDescription
@@ -982,7 +983,8 @@ namespace OpenTK.Graphics.Vulkan
         }
     }
     /// <summary><b>[requires: v1.2]</b> 
-    /// <br/><b>[deprecated by: 1.4]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-dynamicrendering" />
+    /// <br/><b>[deprecated by: v1.4]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-dynamicrendering" />
+    /// <br/><b>[deprecated by: VK_KHR_dynamic_rendering_local_read]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-dynamicrendering" />
     /// </summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkAttachmentDescription2.html" /></remarks>
     public unsafe struct VkAttachmentDescription2
@@ -1046,7 +1048,8 @@ namespace OpenTK.Graphics.Vulkan
         }
     }
     /// <summary><b>[requires: v1.2]</b> 
-    /// <br/><b>[deprecated by: 1.4]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-dynamicrendering" />
+    /// <br/><b>[deprecated by: v1.4]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-dynamicrendering" />
+    /// <br/><b>[deprecated by: VK_KHR_dynamic_rendering_local_read]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-dynamicrendering" />
     /// </summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkAttachmentDescriptionStencilLayout.html" /></remarks>
     public unsafe struct VkAttachmentDescriptionStencilLayout
@@ -1097,7 +1100,8 @@ namespace OpenTK.Graphics.Vulkan
         }
     }
     /// <summary><b>[requires: v1.0]</b> 
-    /// <br/><b>[deprecated by: 1.2]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-renderpass2" />
+    /// <br/><b>[deprecated by: v1.2]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-renderpass2" />
+    /// <br/><b>[deprecated by: VK_KHR_create_renderpass2]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-renderpass2" />
     /// </summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkAttachmentReference.html" /></remarks>
     public unsafe struct VkAttachmentReference
@@ -1112,7 +1116,8 @@ namespace OpenTK.Graphics.Vulkan
         }
     }
     /// <summary><b>[requires: v1.2]</b> 
-    /// <br/><b>[deprecated by: 1.4]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-dynamicrendering" />
+    /// <br/><b>[deprecated by: v1.4]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-dynamicrendering" />
+    /// <br/><b>[deprecated by: VK_KHR_dynamic_rendering_local_read]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-dynamicrendering" />
     /// </summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkAttachmentReference2.html" /></remarks>
     public unsafe struct VkAttachmentReference2
@@ -1220,7 +1225,8 @@ namespace OpenTK.Graphics.Vulkan
         }
     }
     /// <summary><b>[requires: VK_EXT_sample_locations]</b> 
-    /// <br/><b>[deprecated by: 1.4]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-dynamicrendering" />
+    /// <br/><b>[deprecated by: v1.4]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-dynamicrendering" />
+    /// <br/><b>[deprecated by: VK_KHR_dynamic_rendering_local_read]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-dynamicrendering" />
     /// </summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkAttachmentSampleLocationsEXT.html" /></remarks>
     public unsafe struct VkAttachmentSampleLocationsEXT
@@ -7797,7 +7803,8 @@ namespace OpenTK.Graphics.Vulkan
         }
     }
     /// <summary><b>[requires: VK_KHR_fragment_shading_rate]</b> 
-    /// <br/><b>[deprecated by: 1.4]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-dynamicrendering" />
+    /// <br/><b>[deprecated by: v1.4]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-dynamicrendering" />
+    /// <br/><b>[deprecated by: VK_KHR_dynamic_rendering_local_read]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-dynamicrendering" />
     /// </summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkFragmentShadingRateAttachmentInfoKHR.html" /></remarks>
     public unsafe struct VkFragmentShadingRateAttachmentInfoKHR
@@ -7864,7 +7871,8 @@ namespace OpenTK.Graphics.Vulkan
         }
     }
     /// <summary><b>[requires: v1.2]</b> 
-    /// <br/><b>[deprecated by: 1.4]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-dynamicrendering" />
+    /// <br/><b>[deprecated by: v1.4]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-dynamicrendering" />
+    /// <br/><b>[deprecated by: VK_KHR_dynamic_rendering_local_read]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-dynamicrendering" />
     /// </summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkFramebufferAttachmentImageInfo.html" /></remarks>
     public unsafe struct VkFramebufferAttachmentImageInfo
@@ -7920,7 +7928,8 @@ namespace OpenTK.Graphics.Vulkan
         }
     }
     /// <summary><b>[requires: v1.2]</b> 
-    /// <br/><b>[deprecated by: 1.4]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-dynamicrendering" />
+    /// <br/><b>[deprecated by: v1.4]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-dynamicrendering" />
+    /// <br/><b>[deprecated by: VK_KHR_dynamic_rendering_local_read]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-dynamicrendering" />
     /// </summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkFramebufferAttachmentsCreateInfo.html" /></remarks>
     public unsafe struct VkFramebufferAttachmentsCreateInfo
@@ -7956,7 +7965,8 @@ namespace OpenTK.Graphics.Vulkan
         }
     }
     /// <summary><b>[requires: v1.0]</b> 
-    /// <br/><b>[deprecated by: 1.4]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-dynamicrendering" />
+    /// <br/><b>[deprecated by: v1.4]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-dynamicrendering" />
+    /// <br/><b>[deprecated by: VK_KHR_dynamic_rendering_local_read]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-dynamicrendering" />
     /// Used by <see cref="Vk.CreateFramebuffer"/></summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkFramebufferCreateInfo.html" /></remarks>
     public unsafe struct VkFramebufferCreateInfo
@@ -10203,7 +10213,8 @@ namespace OpenTK.Graphics.Vulkan
         }
     }
     /// <summary><b>[requires: v1.1]</b> 
-    /// <br/><b>[deprecated by: 1.2]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-renderpass2" />
+    /// <br/><b>[deprecated by: v1.2]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-renderpass2" />
+    /// <br/><b>[deprecated by: VK_KHR_create_renderpass2]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-renderpass2" />
     /// </summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkInputAttachmentAspectReference.html" /></remarks>
     public unsafe struct VkInputAttachmentAspectReference
@@ -23791,7 +23802,8 @@ namespace OpenTK.Graphics.Vulkan
         }
     }
     /// <summary><b>[requires: v1.2]</b> 
-    /// <br/><b>[deprecated by: 1.4]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-dynamicrendering" />
+    /// <br/><b>[deprecated by: v1.4]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-dynamicrendering" />
+    /// <br/><b>[deprecated by: VK_KHR_dynamic_rendering_local_read]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-dynamicrendering" />
     /// </summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkRenderPassAttachmentBeginInfo.html" /></remarks>
     public unsafe struct VkRenderPassAttachmentBeginInfo
@@ -23827,7 +23839,8 @@ namespace OpenTK.Graphics.Vulkan
         }
     }
     /// <summary><b>[requires: v1.0]</b> 
-    /// <br/><b>[deprecated by: 1.4]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-dynamicrendering" />
+    /// <br/><b>[deprecated by: v1.4]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-dynamicrendering" />
+    /// <br/><b>[deprecated by: VK_KHR_dynamic_rendering_local_read]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-dynamicrendering" />
     /// Used by <see cref="Vk.CmdBeginRenderPass"/>, <see cref="Vk.CmdBeginRenderPass2"/>, <see cref="Vk.CmdBeginRenderPass2KHR"/></summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkRenderPassBeginInfo.html" /></remarks>
     public unsafe struct VkRenderPassBeginInfo
@@ -23852,7 +23865,8 @@ namespace OpenTK.Graphics.Vulkan
         }
     }
     /// <summary><b>[requires: v1.0]</b> 
-    /// <br/><b>[deprecated by: 1.2]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-renderpass2" />
+    /// <br/><b>[deprecated by: v1.2]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-renderpass2" />
+    /// <br/><b>[deprecated by: VK_KHR_create_renderpass2]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-renderpass2" />
     /// Used by <see cref="Vk.CreateRenderPass"/></summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkRenderPassCreateInfo.html" /></remarks>
     public unsafe struct VkRenderPassCreateInfo
@@ -23881,7 +23895,8 @@ namespace OpenTK.Graphics.Vulkan
         }
     }
     /// <summary><b>[requires: v1.2]</b> 
-    /// <br/><b>[deprecated by: 1.4]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-dynamicrendering" />
+    /// <br/><b>[deprecated by: v1.4]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-dynamicrendering" />
+    /// <br/><b>[deprecated by: VK_KHR_dynamic_rendering_local_read]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-dynamicrendering" />
     /// Used by <see cref="Vk.CreateRenderPass2"/>, <see cref="Vk.CreateRenderPass2KHR"/></summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkRenderPassCreateInfo2.html" /></remarks>
     public unsafe struct VkRenderPassCreateInfo2
@@ -23945,7 +23960,8 @@ namespace OpenTK.Graphics.Vulkan
         }
     }
     /// <summary><b>[requires: VK_EXT_subpass_merge_feedback]</b> 
-    /// <br/><b>[deprecated by: 1.4]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-dynamicrendering" />
+    /// <br/><b>[deprecated by: v1.4]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-dynamicrendering" />
+    /// <br/><b>[deprecated by: VK_KHR_dynamic_rendering_local_read]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-dynamicrendering" />
     /// </summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkRenderPassCreationControlEXT.html" /></remarks>
     public unsafe struct VkRenderPassCreationControlEXT
@@ -23962,7 +23978,8 @@ namespace OpenTK.Graphics.Vulkan
         }
     }
     /// <summary><b>[requires: VK_EXT_subpass_merge_feedback]</b> 
-    /// <br/><b>[deprecated by: 1.4]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-dynamicrendering" />
+    /// <br/><b>[deprecated by: v1.4]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-dynamicrendering" />
+    /// <br/><b>[deprecated by: VK_KHR_dynamic_rendering_local_read]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-dynamicrendering" />
     /// </summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkRenderPassCreationFeedbackCreateInfoEXT.html" /></remarks>
     public unsafe struct VkRenderPassCreationFeedbackCreateInfoEXT
@@ -23979,7 +23996,8 @@ namespace OpenTK.Graphics.Vulkan
         }
     }
     /// <summary><b>[requires: VK_EXT_subpass_merge_feedback]</b> 
-    /// <br/><b>[deprecated by: 1.4]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-dynamicrendering" />
+    /// <br/><b>[deprecated by: v1.4]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-dynamicrendering" />
+    /// <br/><b>[deprecated by: VK_KHR_dynamic_rendering_local_read]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-dynamicrendering" />
     /// </summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkRenderPassCreationFeedbackInfoEXT.html" /></remarks>
     public unsafe struct VkRenderPassCreationFeedbackInfoEXT
@@ -23992,7 +24010,8 @@ namespace OpenTK.Graphics.Vulkan
         }
     }
     /// <summary><b>[requires: VK_EXT_fragment_density_map]</b> 
-    /// <br/><b>[deprecated by: 1.4]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-dynamicrendering" />
+    /// <br/><b>[deprecated by: v1.4]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-dynamicrendering" />
+    /// <br/><b>[deprecated by: VK_KHR_dynamic_rendering_local_read]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-dynamicrendering" />
     /// </summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkRenderPassFragmentDensityMapCreateInfoEXT.html" /></remarks>
     public unsafe struct VkRenderPassFragmentDensityMapCreateInfoEXT
@@ -24026,7 +24045,8 @@ namespace OpenTK.Graphics.Vulkan
         }
     }
     /// <summary><b>[requires: v1.1]</b> 
-    /// <br/><b>[deprecated by: 1.2]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-renderpass2" />
+    /// <br/><b>[deprecated by: v1.2]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-renderpass2" />
+    /// <br/><b>[deprecated by: VK_KHR_create_renderpass2]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-renderpass2" />
     /// </summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkRenderPassInputAttachmentAspectCreateInfo.html" /></remarks>
     public unsafe struct VkRenderPassInputAttachmentAspectCreateInfo
@@ -24062,7 +24082,8 @@ namespace OpenTK.Graphics.Vulkan
         }
     }
     /// <summary><b>[requires: v1.1]</b> 
-    /// <br/><b>[deprecated by: 1.2]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-renderpass2" />
+    /// <br/><b>[deprecated by: v1.2]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-renderpass2" />
+    /// <br/><b>[deprecated by: VK_KHR_create_renderpass2]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-renderpass2" />
     /// </summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkRenderPassMultiviewCreateInfo.html" /></remarks>
     public unsafe struct VkRenderPassMultiviewCreateInfo
@@ -24114,7 +24135,8 @@ namespace OpenTK.Graphics.Vulkan
         }
     }
     /// <summary><b>[requires: VK_EXT_sample_locations]</b> 
-    /// <br/><b>[deprecated by: 1.4]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-dynamicrendering" />
+    /// <br/><b>[deprecated by: v1.4]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-dynamicrendering" />
+    /// <br/><b>[deprecated by: VK_KHR_dynamic_rendering_local_read]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-dynamicrendering" />
     /// </summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkRenderPassSampleLocationsBeginInfoEXT.html" /></remarks>
     public unsafe struct VkRenderPassSampleLocationsBeginInfoEXT
@@ -24186,7 +24208,8 @@ namespace OpenTK.Graphics.Vulkan
         }
     }
     /// <summary><b>[requires: VK_EXT_subpass_merge_feedback]</b> 
-    /// <br/><b>[deprecated by: 1.4]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-dynamicrendering" />
+    /// <br/><b>[deprecated by: v1.4]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-dynamicrendering" />
+    /// <br/><b>[deprecated by: VK_KHR_dynamic_rendering_local_read]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-dynamicrendering" />
     /// </summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkRenderPassSubpassFeedbackCreateInfoEXT.html" /></remarks>
     public unsafe struct VkRenderPassSubpassFeedbackCreateInfoEXT
@@ -24203,7 +24226,8 @@ namespace OpenTK.Graphics.Vulkan
         }
     }
     /// <summary><b>[requires: VK_EXT_subpass_merge_feedback]</b> 
-    /// <br/><b>[deprecated by: 1.4]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-dynamicrendering" />
+    /// <br/><b>[deprecated by: v1.4]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-dynamicrendering" />
+    /// <br/><b>[deprecated by: VK_KHR_dynamic_rendering_local_read]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-dynamicrendering" />
     /// </summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkRenderPassSubpassFeedbackInfoEXT.html" /></remarks>
     public unsafe struct VkRenderPassSubpassFeedbackInfoEXT
@@ -25597,7 +25621,8 @@ namespace OpenTK.Graphics.Vulkan
         }
     }
     /// <summary><b>[requires: v1.2]</b> 
-    /// <br/><b>[deprecated by: 1.4]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-dynamicrendering" />
+    /// <br/><b>[deprecated by: v1.4]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-dynamicrendering" />
+    /// <br/><b>[deprecated by: VK_KHR_dynamic_rendering_local_read]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-dynamicrendering" />
     /// Used by <see cref="Vk.CmdBeginRenderPass2"/>, <see cref="Vk.CmdBeginRenderPass2KHR"/>, <see cref="Vk.CmdNextSubpass2"/>, ...</summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkSubpassBeginInfo.html" /></remarks>
     public unsafe struct VkSubpassBeginInfo
@@ -25629,7 +25654,8 @@ namespace OpenTK.Graphics.Vulkan
         }
     }
     /// <summary><b>[requires: v1.0]</b> 
-    /// <br/><b>[deprecated by: 1.2]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-renderpass2" />
+    /// <br/><b>[deprecated by: v1.2]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-renderpass2" />
+    /// <br/><b>[deprecated by: VK_KHR_create_renderpass2]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-renderpass2" />
     /// </summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkSubpassDependency.html" /></remarks>
     public unsafe struct VkSubpassDependency
@@ -25654,7 +25680,8 @@ namespace OpenTK.Graphics.Vulkan
         }
     }
     /// <summary><b>[requires: v1.2]</b> 
-    /// <br/><b>[deprecated by: 1.4]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-dynamicrendering" />
+    /// <br/><b>[deprecated by: v1.4]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-dynamicrendering" />
+    /// <br/><b>[deprecated by: VK_KHR_dynamic_rendering_local_read]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-dynamicrendering" />
     /// </summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkSubpassDependency2.html" /></remarks>
     public unsafe struct VkSubpassDependency2
@@ -25714,7 +25741,8 @@ namespace OpenTK.Graphics.Vulkan
         }
     }
     /// <summary><b>[requires: v1.0]</b> 
-    /// <br/><b>[deprecated by: 1.2]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-renderpass2" />
+    /// <br/><b>[deprecated by: v1.2]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-renderpass2" />
+    /// <br/><b>[deprecated by: VK_KHR_create_renderpass2]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-renderpass2" />
     /// </summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkSubpassDescription.html" /></remarks>
     public unsafe struct VkSubpassDescription
@@ -25745,7 +25773,8 @@ namespace OpenTK.Graphics.Vulkan
         }
     }
     /// <summary><b>[requires: v1.2]</b> 
-    /// <br/><b>[deprecated by: 1.4]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-dynamicrendering" />
+    /// <br/><b>[deprecated by: v1.4]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-dynamicrendering" />
+    /// <br/><b>[deprecated by: VK_KHR_dynamic_rendering_local_read]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-dynamicrendering" />
     /// </summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkSubpassDescription2.html" /></remarks>
     public unsafe struct VkSubpassDescription2
@@ -25817,7 +25846,8 @@ namespace OpenTK.Graphics.Vulkan
         }
     }
     /// <summary><b>[requires: v1.2]</b> 
-    /// <br/><b>[deprecated by: 1.4]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-dynamicrendering" />
+    /// <br/><b>[deprecated by: v1.4]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-dynamicrendering" />
+    /// <br/><b>[deprecated by: VK_KHR_dynamic_rendering_local_read]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-dynamicrendering" />
     /// </summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkSubpassDescriptionDepthStencilResolve.html" /></remarks>
     public unsafe struct VkSubpassDescriptionDepthStencilResolve
@@ -25857,7 +25887,8 @@ namespace OpenTK.Graphics.Vulkan
         }
     }
     /// <summary><b>[requires: v1.2]</b> 
-    /// <br/><b>[deprecated by: 1.4]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-dynamicrendering" />
+    /// <br/><b>[deprecated by: v1.4]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-dynamicrendering" />
+    /// <br/><b>[deprecated by: VK_KHR_dynamic_rendering_local_read]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-dynamicrendering" />
     /// Used by <see cref="Vk.CmdEndRenderPass2"/>, <see cref="Vk.CmdEndRenderPass2KHR"/>, <see cref="Vk.CmdNextSubpass2"/>, ...</summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkSubpassEndInfo.html" /></remarks>
     public unsafe struct VkSubpassEndInfo
@@ -25917,7 +25948,8 @@ namespace OpenTK.Graphics.Vulkan
         }
     }
     /// <summary><b>[requires: VK_EXT_sample_locations]</b> 
-    /// <br/><b>[deprecated by: 1.4]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-dynamicrendering" />
+    /// <br/><b>[deprecated by: v1.4]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-dynamicrendering" />
+    /// <br/><b>[deprecated by: VK_KHR_dynamic_rendering_local_read]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-dynamicrendering" />
     /// </summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkSubpassSampleLocationsEXT.html" /></remarks>
     public unsafe struct VkSubpassSampleLocationsEXT

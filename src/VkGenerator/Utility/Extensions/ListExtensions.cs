@@ -25,5 +25,18 @@ namespace VkGenerator.Utility.Extensions
             result = list.Find(match);
             return result != null;
         }
+
+        public static int CountTrue(params ReadOnlySpan<bool> bools)
+        {
+            int count = 0;
+            foreach (bool b in bools)
+            {
+                if (b)
+                {
+                    count++;
+                }
+            }
+            return count;
+        }
     }
 }

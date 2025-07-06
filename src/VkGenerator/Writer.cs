@@ -30,6 +30,8 @@ namespace VkGenerator
             string directoryPath = Path.Combine(outputProjectPath, "Vulkan");
             if (Directory.Exists(directoryPath) == false) Directory.CreateDirectory(directoryPath);
 
+            WriteDefines(directoryPath, data.Defines, video.Defines);
+
             WriteEnums(directoryPath, data.Enums);
 
             WriteStructs(directoryPath, data.Structs, data.Enums, video);
@@ -40,6 +42,90 @@ namespace VkGenerator
             WriteDispatchTables(directoryPath, data.Commands, video);
 
             WriteConstants(directoryPath, data.Constants);
+        }
+
+        private static void WriteDefines(string directoryPath, List<Define> defines, List<Define> videoDefines)
+        {
+            using StreamWriter stream = File.CreateText(Path.Combine(directoryPath, "Defines.cs"));
+            using IndentedTextWriter writer = new IndentedTextWriter(stream);
+            writer.WriteLine("// This file is auto generated, do not edit.");
+            writer.WriteLine("using System;");
+            writer.WriteLine();
+            writer.WriteLine($"namespace {GraphicsNamespace}.Vulkan");
+            using (writer.CsScope())
+            {
+                writer.WriteLineNoTabs("#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member");
+
+                writer.WriteLine("public static unsafe partial class Vk");
+                using (writer.CsScope())
+                {
+
+                    WriteDefines(writer, defines);
+
+                    writer.WriteLine();
+                    writer.WriteLine("// Vulkan video macros");
+                    writer.WriteLine();
+
+                    WriteDefines(writer, videoDefines);
+                }
+
+                writer.WriteLineNoTabs("#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member");
+            }
+
+            static void WriteDefines(IndentedTextWriter writer, List<Define> defines)
+            {
+                foreach (Define define in defines)
+                {
+                    if (define.IsConstant == false && define.Implementation == null)
+                        continue;
+
+                    writer.Write("/// <summary>");
+                    if (define.VersionInfo != null)
+                    {
+                        WriteVersionInfo(writer, define.VersionInfo);
+                    }
+                    else
+                    {
+                        // There are two "valid" reasons why a define would be missing version data.
+                        // 1. The only reference to the define is in a disabled extension.
+                        //    Currently such defines still get emitted even if no-one references them.
+                        // 2. The define is part of vulkansc or a vulkansc extension. We don't deal with vulkancs atm.
+                        //
+                        // This is a list of the known defines that fullfill any of these criteria.
+                        // - Noggin_bops 2025-07-06
+                        ReadOnlySpan<string> exceptedNames = [
+                                "VKSC_API_VARIANT",
+                                "VKSC_API_VERSION_1_0"
+                            ];
+
+                        if (exceptedNames.Contains(define.Name) == false)
+                        {
+                            Debug.Assert(false);
+                        }
+                    }
+                    writer.WriteLine("</summary>");
+
+                    // FIXME: Make sure to not do name mangling?
+                    writer.WriteLine($"/// <remarks><see href=\"https://registry.khronos.org/vulkan/specs/latest/man/html/{define.Name}.html\" /></remarks>");
+
+                    if (define.IsConstant)
+                    {
+                        writer.WriteLine($"public const {define.Type.ToCSString()} {NameMangler.MangleDefineName(define.Name)} = unchecked(({define.Type.ToCSString()}){define.ConstValue});");
+                    }
+                    else if (define.Implementation != null)
+                    {
+                        StringBuilder arguments = new StringBuilder();
+                        foreach (var arg in define.Arguments)
+                        {
+                            arguments.Append($"{arg.Type.ToCSString()} {arg.Name}, ");
+                        }
+                        if (arguments.Length > 0)
+                            arguments.Length -= 2;
+
+                        writer.WriteLine($"public static {define.Type.ToCSString()} {NameMangler.MangleDefineName(define.Name)}({arguments}) {{ {define.Implementation} }}");
+                    }
+                }
+            }
         }
 
         private static void WriteEnums(string directoryPath, List<EnumType> enums)
@@ -858,6 +944,17 @@ namespace VkGenerator
                                 StructType? @struct = video.Structs.Find(s => s.Name == requiredType.Name);
                                 if (@enum != null)
                                 {
+                                    writer.Write("/// <summary>");
+                                    if (@enum.VersionInfo != null)
+                                    {
+                                        WriteVersionInfo(writer, @enum.VersionInfo);
+                                    }
+                                    else
+                                    {
+                                        Debug.Assert(false);
+                                    }
+                                    writer.WriteLine("</summary>");
+
                                     // FIXME: Mangle the enum name?
                                     writer.WriteLine($"public enum {@enum.Name} : uint");
                                     using (writer.CsScope())
@@ -877,6 +974,17 @@ namespace VkGenerator
                                 }
                                 else if (@struct != null)
                                 {
+                                    writer.Write("/// <summary>");
+                                    if (@struct.VersionInfo != null)
+                                    {
+                                        WriteVersionInfo(writer, @struct.VersionInfo);
+                                    }
+                                    else
+                                    {
+                                        Debug.Assert(false);
+                                    }
+                                    writer.WriteLine("</summary>");
+
                                     WriteStruct(writer, @struct, video.Enums);
                                 }
                                 else
@@ -1095,7 +1203,7 @@ namespace VkGenerator
                 writer.WriteLine();
                 foreach (DeprecationReason deprecation in versionInfo.DeprecatedBy)
                 {
-                    string v = deprecation.Version?.ToString() ?? deprecation.Extension ?? throw new Exception();
+                    string v = deprecation.Version != null ? $"v{deprecation.Version}" : deprecation.Extension ?? throw new Exception();
                     string explanationLink = deprecation.ExplanationLink != null ? $"see: <see href=\"https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#{deprecation.ExplanationLink}\" />" : "";
                     writer.WriteLine($"/// <br/><b>[deprecated by: {v}]</b> {explanationLink}");
                 }

@@ -83,7 +83,7 @@ namespace VkGenerator.Utility
                 }
             }
 
-            throw new System.Exception($"'{@enum}' dosen't start with any of the valid prefixes '{string.Join(", ", Settings.EnumPrefixes)}'");
+            throw new Exception($"'{@enum}' dosen't start with any of the valid prefixes '{string.Join(", ", Settings.EnumPrefixes)}'");
         }
 
         public static string RemoveExtensionPrefix(string extension)
@@ -95,6 +95,14 @@ namespace VkGenerator.Utility
                 throw new System.Exception($"'{extension}' dosen't start with '{prefix}'");
 
             return extension[prefix.Length..];
+        }
+
+        public static string MangleDefineName(string name)
+        {
+            var mangledName = MaybeRemoveStart(name, "VK_");
+            // For now we leave it capitalized.
+            // - Noggin_bops 2025-07-06
+            return mangledName;
         }
 
         public static string MangleConstantName(string name)

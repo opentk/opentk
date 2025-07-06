@@ -466,7 +466,8 @@ namespace OpenTK.Graphics.Vulkan
         public static explicit operator VkFence(ulong handle) => new VkFence(handle);
     }
     /// <summary><b>[requires: v1.0]</b> 
-    /// <br/><b>[deprecated by: 1.4]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-dynamicrendering" />
+    /// <br/><b>[deprecated by: v1.4]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-dynamicrendering" />
+    /// <br/><b>[deprecated by: VK_KHR_dynamic_rendering_local_read]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-dynamicrendering" />
     /// Used by <see cref="Vk.CreateFramebuffer"/>, <see cref="Vk.DestroyFramebuffer"/>, <see cref="Vk.GetFramebufferTilePropertiesQCOM"/></summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkFramebuffer.html" /></remarks>
     [DebuggerDisplay("VkFramebuffer\\{{Handle}\\}")]
@@ -791,7 +792,8 @@ namespace OpenTK.Graphics.Vulkan
         public static explicit operator VkQueue(ulong handle) => new VkQueue(handle);
     }
     /// <summary><b>[requires: v1.0]</b> 
-    /// <br/><b>[deprecated by: 1.4]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-dynamicrendering" />
+    /// <br/><b>[deprecated by: v1.4]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-dynamicrendering" />
+    /// <br/><b>[deprecated by: VK_KHR_dynamic_rendering_local_read]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-dynamicrendering" />
     /// Used by <see cref="Vk.CreateRenderPass"/>, <see cref="Vk.CreateRenderPass2"/>, <see cref="Vk.CreateRenderPass2KHR"/>, ...</summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkRenderPass.html" /></remarks>
     [DebuggerDisplay("VkRenderPass\\{{Handle}\\}")]

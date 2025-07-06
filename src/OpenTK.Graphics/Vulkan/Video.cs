@@ -43,6 +43,7 @@ namespace OpenTK.Graphics.Vulkan
             public const uint VideoAv1MaxNumPosLuma = 24;
             public const uint VideoAv1MaxNumPosChroma = 25;
         }
+        /// <summary><b>[requires: vulkan_video_codec_av1std]</b> </summary>
         public enum StdVideoAV1Profile : uint
         {
             VideoAv1ProfileHigh = 1,
@@ -50,6 +51,7 @@ namespace OpenTK.Graphics.Vulkan
             VideoAv1ProfileMain = 0,
             VideoAv1ProfileProfessional = 2,
         }
+        /// <summary><b>[requires: vulkan_video_codec_av1std]</b> </summary>
         public enum StdVideoAV1Level : uint
         {
             VideoAv1Level20 = 0,
@@ -78,6 +80,7 @@ namespace OpenTK.Graphics.Vulkan
             VideoAv1Level73 = 23,
             VideoAv1LevelInvalid = 2147483647,
         }
+        /// <summary><b>[requires: vulkan_video_codec_av1std]</b> </summary>
         public enum StdVideoAV1FrameType : uint
         {
             VideoAv1FrameTypeInter = 1,
@@ -86,6 +89,7 @@ namespace OpenTK.Graphics.Vulkan
             VideoAv1FrameTypeKey = 0,
             VideoAv1FrameTypeSwitch = 3,
         }
+        /// <summary><b>[requires: vulkan_video_codec_av1std]</b> </summary>
         public enum StdVideoAV1ReferenceName : uint
         {
             VideoAv1ReferenceNameAltrefFrame = 7,
@@ -98,6 +102,7 @@ namespace OpenTK.Graphics.Vulkan
             VideoAv1ReferenceNameLast2Frame = 2,
             VideoAv1ReferenceNameLast3Frame = 3,
         }
+        /// <summary><b>[requires: vulkan_video_codec_av1std]</b> </summary>
         public enum StdVideoAV1InterpolationFilter : uint
         {
             VideoAv1InterpolationFilterBilinear = 3,
@@ -107,6 +112,7 @@ namespace OpenTK.Graphics.Vulkan
             VideoAv1InterpolationFilterInvalid = 2147483647,
             VideoAv1InterpolationFilterSwitchable = 4,
         }
+        /// <summary><b>[requires: vulkan_video_codec_av1std]</b> </summary>
         public enum StdVideoAV1TxMode : uint
         {
             VideoAv1TxModeInvalid = 2147483647,
@@ -114,6 +120,7 @@ namespace OpenTK.Graphics.Vulkan
             VideoAv1TxModeOnly4x4 = 0,
             VideoAv1TxModeSelect = 2,
         }
+        /// <summary><b>[requires: vulkan_video_codec_av1std]</b> </summary>
         public enum StdVideoAV1FrameRestorationType : uint
         {
             VideoAv1FrameRestorationTypeInvalid = 2147483647,
@@ -122,6 +129,7 @@ namespace OpenTK.Graphics.Vulkan
             VideoAv1FrameRestorationTypeSwitchable = 3,
             VideoAv1FrameRestorationTypeWiener = 1,
         }
+        /// <summary><b>[requires: vulkan_video_codec_av1std]</b> </summary>
         public enum StdVideoAV1ColorPrimaries : uint
         {
             VideoAv1ColorPrimariesBt2020 = 9,
@@ -139,6 +147,7 @@ namespace OpenTK.Graphics.Vulkan
             VideoAv1ColorPrimariesUnspecified = 2,
             VideoAv1ColorPrimariesXyz = 10,
         }
+        /// <summary><b>[requires: vulkan_video_codec_av1std]</b> </summary>
         public enum StdVideoAV1TransferCharacteristics : uint
         {
             VideoAv1TransferCharacteristicsBt1361 = 12,
@@ -162,6 +171,7 @@ namespace OpenTK.Graphics.Vulkan
             VideoAv1TransferCharacteristicsSrgb = 13,
             VideoAv1TransferCharacteristicsUnspecified = 2,
         }
+        /// <summary><b>[requires: vulkan_video_codec_av1std]</b> </summary>
         public enum StdVideoAV1MatrixCoefficients : uint
         {
             VideoAv1MatrixCoefficientsBt2020Cl = 10,
@@ -181,6 +191,7 @@ namespace OpenTK.Graphics.Vulkan
             VideoAv1MatrixCoefficientsSmpteYcgco = 8,
             VideoAv1MatrixCoefficientsUnspecified = 2,
         }
+        /// <summary><b>[requires: vulkan_video_codec_av1std]</b> </summary>
         public enum StdVideoAV1ChromaSamplePosition : uint
         {
             VideoAv1ChromaSamplePositionColocated = 2,
@@ -189,6 +200,7 @@ namespace OpenTK.Graphics.Vulkan
             VideoAv1ChromaSamplePositionUnknown = 0,
             VideoAv1ChromaSamplePositionVertical = 1,
         }
+        /// <summary><b>[requires: vulkan_video_codec_av1std]</b> </summary>
         public unsafe struct StdVideoAV1ColorConfigFlags
         {
             private uint _bitfield0;
@@ -219,6 +231,7 @@ namespace OpenTK.Graphics.Vulkan
             }
             public StdVideoAV1ColorConfigFlags() { }
         }
+        /// <summary><b>[requires: vulkan_video_codec_av1std]</b> </summary>
         public unsafe struct StdVideoAV1ColorConfig
         {
             public StdVideoAV1ColorConfigFlags flags;
@@ -244,6 +257,7 @@ namespace OpenTK.Graphics.Vulkan
                 this.chroma_sample_position = chroma_sample_position;
             }
         }
+        /// <summary><b>[requires: vulkan_video_codec_av1std]</b> </summary>
         public unsafe struct StdVideoAV1TimingInfoFlags
         {
             private uint _bitfield0;
@@ -259,6 +273,7 @@ namespace OpenTK.Graphics.Vulkan
             }
             public StdVideoAV1TimingInfoFlags() { }
         }
+        /// <summary><b>[requires: vulkan_video_codec_av1std]</b> </summary>
         public unsafe struct StdVideoAV1TimingInfo
         {
             public StdVideoAV1TimingInfoFlags flags;
@@ -274,6 +289,7 @@ namespace OpenTK.Graphics.Vulkan
                 this.num_ticks_per_picture_minus_1 = num_ticks_per_picture_minus_1;
             }
         }
+        /// <summary><b>[requires: vulkan_video_codec_av1std]</b> </summary>
         public unsafe struct StdVideoAV1LoopFilterFlags
         {
             private uint _bitfield0;
@@ -294,6 +310,7 @@ namespace OpenTK.Graphics.Vulkan
             }
             public StdVideoAV1LoopFilterFlags() { }
         }
+        /// <summary><b>[requires: vulkan_video_codec_av1std]</b> </summary>
         public unsafe struct StdVideoAV1LoopFilter
         {
             public StdVideoAV1LoopFilterFlags flags;
@@ -305,6 +322,7 @@ namespace OpenTK.Graphics.Vulkan
             public fixed sbyte loop_filter_mode_deltas[2];
             public StdVideoAV1LoopFilter() { }
         }
+        /// <summary><b>[requires: vulkan_video_codec_av1std]</b> </summary>
         public unsafe struct StdVideoAV1QuantizationFlags
         {
             private uint _bitfield0;
@@ -325,6 +343,7 @@ namespace OpenTK.Graphics.Vulkan
             }
             public StdVideoAV1QuantizationFlags() { }
         }
+        /// <summary><b>[requires: vulkan_video_codec_av1std]</b> </summary>
         public unsafe struct StdVideoAV1Quantization
         {
             public StdVideoAV1QuantizationFlags flags;
@@ -352,6 +371,7 @@ namespace OpenTK.Graphics.Vulkan
                 this.qm_v = qm_v;
             }
         }
+        /// <summary><b>[requires: vulkan_video_codec_av1std]</b> </summary>
         public unsafe struct StdVideoAV1Segmentation
         {
             public fixed byte FeatureEnabled[8];
@@ -368,6 +388,7 @@ namespace OpenTK.Graphics.Vulkan
             public FeatureDataInlineArray1 FeatureData;
             public StdVideoAV1Segmentation() { }
         }
+        /// <summary><b>[requires: vulkan_video_codec_av1std]</b> </summary>
         public unsafe struct StdVideoAV1TileInfoFlags
         {
             private uint _bitfield0;
@@ -383,6 +404,7 @@ namespace OpenTK.Graphics.Vulkan
             }
             public StdVideoAV1TileInfoFlags() { }
         }
+        /// <summary><b>[requires: vulkan_video_codec_av1std]</b> </summary>
         public unsafe struct StdVideoAV1TileInfo
         {
             public StdVideoAV1TileInfoFlags flags;
@@ -397,6 +419,7 @@ namespace OpenTK.Graphics.Vulkan
             public ushort* pHeightInSbsMinus1;
             public StdVideoAV1TileInfo() { }
         }
+        /// <summary><b>[requires: vulkan_video_codec_av1std]</b> </summary>
         public unsafe struct StdVideoAV1CDEF
         {
             public byte cdef_damping_minus_3;
@@ -407,6 +430,7 @@ namespace OpenTK.Graphics.Vulkan
             public fixed byte cdef_uv_sec_strength[8];
             public StdVideoAV1CDEF() { }
         }
+        /// <summary><b>[requires: vulkan_video_codec_av1std]</b> </summary>
         public unsafe struct StdVideoAV1LoopRestoration
         {
             [InlineArray(3)]
@@ -418,6 +442,7 @@ namespace OpenTK.Graphics.Vulkan
             public fixed ushort LoopRestorationSize[3];
             public StdVideoAV1LoopRestoration() { }
         }
+        /// <summary><b>[requires: vulkan_video_codec_av1std]</b> </summary>
         public unsafe struct StdVideoAV1GlobalMotion
         {
             public fixed byte GmType[8];
@@ -434,6 +459,7 @@ namespace OpenTK.Graphics.Vulkan
             public gm_paramsInlineArray1 gm_params;
             public StdVideoAV1GlobalMotion() { }
         }
+        /// <summary><b>[requires: vulkan_video_codec_av1std]</b> </summary>
         public unsafe struct StdVideoAV1FilmGrainFlags
         {
             private uint _bitfield0;
@@ -464,6 +490,7 @@ namespace OpenTK.Graphics.Vulkan
             }
             public StdVideoAV1FilmGrainFlags() { }
         }
+        /// <summary><b>[requires: vulkan_video_codec_av1std]</b> </summary>
         public unsafe struct StdVideoAV1FilmGrain
         {
             public StdVideoAV1FilmGrainFlags flags;
@@ -493,6 +520,7 @@ namespace OpenTK.Graphics.Vulkan
             public ushort cr_offset;
             public StdVideoAV1FilmGrain() { }
         }
+        /// <summary><b>[requires: vulkan_video_codec_av1std]</b> </summary>
         public unsafe struct StdVideoAV1SequenceHeaderFlags
         {
             private uint _bitfield0;
@@ -598,6 +626,7 @@ namespace OpenTK.Graphics.Vulkan
             }
             public StdVideoAV1SequenceHeaderFlags() { }
         }
+        /// <summary><b>[requires: vulkan_video_codec_av1std]</b> </summary>
         public unsafe struct StdVideoAV1SequenceHeader
         {
             public StdVideoAV1SequenceHeaderFlags flags;
@@ -624,6 +653,7 @@ namespace OpenTK.Graphics.Vulkan
             /// <summary>&quot;VK_STD_vulkan_video_codec_av1_decode&quot;</summary>
             public static ReadOnlySpan<byte> StdVulkanVideoCodecAv1DecodeExtensionName => "VK_STD_vulkan_video_codec_av1_decode"u8;
         }
+        /// <summary><b>[requires: vulkan_video_codec_av1std_decode]</b> </summary>
         public unsafe struct StdVideoDecodeAV1PictureInfoFlags
         {
             private uint _bitfield0;
@@ -779,6 +809,7 @@ namespace OpenTK.Graphics.Vulkan
             }
             public StdVideoDecodeAV1PictureInfoFlags() { }
         }
+        /// <summary><b>[requires: vulkan_video_codec_av1std_decode]</b> </summary>
         public unsafe struct StdVideoDecodeAV1PictureInfo
         {
             public StdVideoDecodeAV1PictureInfoFlags flags;
@@ -807,6 +838,7 @@ namespace OpenTK.Graphics.Vulkan
             public StdVideoAV1FilmGrain* pFilmGrain;
             public StdVideoDecodeAV1PictureInfo() { }
         }
+        /// <summary><b>[requires: vulkan_video_codec_av1std_decode]</b> </summary>
         public unsafe struct StdVideoDecodeAV1ReferenceInfoFlags
         {
             private uint _bitfield0;
@@ -827,6 +859,7 @@ namespace OpenTK.Graphics.Vulkan
             }
             public StdVideoDecodeAV1ReferenceInfoFlags() { }
         }
+        /// <summary><b>[requires: vulkan_video_codec_av1std_decode]</b> </summary>
         public unsafe struct StdVideoDecodeAV1ReferenceInfo
         {
             public StdVideoDecodeAV1ReferenceInfoFlags flags;
@@ -844,6 +877,7 @@ namespace OpenTK.Graphics.Vulkan
             /// <summary>&quot;VK_STD_vulkan_video_codec_av1_encode&quot;</summary>
             public static ReadOnlySpan<byte> StdVulkanVideoCodecAv1EncodeExtensionName => "VK_STD_vulkan_video_codec_av1_encode"u8;
         }
+        /// <summary><b>[requires: vulkan_video_codec_av1std_encode]</b> </summary>
         public unsafe struct StdVideoEncodeAV1DecoderModelInfo
         {
             public byte buffer_delay_length_minus_1;
@@ -861,6 +895,7 @@ namespace OpenTK.Graphics.Vulkan
                 this.num_units_in_decoding_tick = num_units_in_decoding_tick;
             }
         }
+        /// <summary><b>[requires: vulkan_video_codec_av1std_encode]</b> </summary>
         public unsafe struct StdVideoEncodeAV1ExtensionHeader
         {
             public byte temporal_id;
@@ -872,6 +907,7 @@ namespace OpenTK.Graphics.Vulkan
                 this.spatial_id = spatial_id;
             }
         }
+        /// <summary><b>[requires: vulkan_video_codec_av1std_encode]</b> </summary>
         public unsafe struct StdVideoEncodeAV1OperatingPointInfoFlags
         {
             private uint _bitfield0;
@@ -897,6 +933,7 @@ namespace OpenTK.Graphics.Vulkan
             }
             public StdVideoEncodeAV1OperatingPointInfoFlags() { }
         }
+        /// <summary><b>[requires: vulkan_video_codec_av1std_encode]</b> </summary>
         public unsafe struct StdVideoEncodeAV1OperatingPointInfo
         {
             public StdVideoEncodeAV1OperatingPointInfoFlags flags;
@@ -918,6 +955,7 @@ namespace OpenTK.Graphics.Vulkan
                 this.initial_display_delay_minus_1 = initial_display_delay_minus_1;
             }
         }
+        /// <summary><b>[requires: vulkan_video_codec_av1std_encode]</b> </summary>
         public unsafe struct StdVideoEncodeAV1PictureInfoFlags
         {
             private uint _bitfield0;
@@ -1073,6 +1111,7 @@ namespace OpenTK.Graphics.Vulkan
             }
             public StdVideoEncodeAV1PictureInfoFlags() { }
         }
+        /// <summary><b>[requires: vulkan_video_codec_av1std_encode]</b> </summary>
         public unsafe struct StdVideoEncodeAV1PictureInfo
         {
             public StdVideoEncodeAV1PictureInfoFlags flags;
@@ -1104,6 +1143,7 @@ namespace OpenTK.Graphics.Vulkan
             public uint* pBufferRemovalTimes;
             public StdVideoEncodeAV1PictureInfo() { }
         }
+        /// <summary><b>[requires: vulkan_video_codec_av1std_encode]</b> </summary>
         public unsafe struct StdVideoEncodeAV1ReferenceInfoFlags
         {
             private uint _bitfield0;
@@ -1124,6 +1164,7 @@ namespace OpenTK.Graphics.Vulkan
             }
             public StdVideoEncodeAV1ReferenceInfoFlags() { }
         }
+        /// <summary><b>[requires: vulkan_video_codec_av1std_encode]</b> </summary>
         public unsafe struct StdVideoEncodeAV1ReferenceInfo
         {
             public StdVideoEncodeAV1ReferenceInfoFlags flags;
@@ -1148,6 +1189,7 @@ namespace OpenTK.Graphics.Vulkan
             public const uint VideoH264MaxChromaPlanes = 2;
             public const uint VideoH264NoReferencePicture = 255;
         }
+        /// <summary><b>[requires: vulkan_video_codec_h264std]</b> </summary>
         public enum StdVideoH264ChromaFormatIdc : uint
         {
             VideoH264ChromaFormatIdc420 = 1,
@@ -1156,6 +1198,7 @@ namespace OpenTK.Graphics.Vulkan
             VideoH264ChromaFormatIdcInvalid = 2147483647,
             VideoH264ChromaFormatIdcMonochrome = 0,
         }
+        /// <summary><b>[requires: vulkan_video_codec_h264std]</b> </summary>
         public enum StdVideoH264ProfileIdc : uint
         {
             /// <summary>Only constrained baseline is supported</summary>
@@ -1165,6 +1208,7 @@ namespace OpenTK.Graphics.Vulkan
             VideoH264ProfileIdcInvalid = 2147483647,
             VideoH264ProfileIdcMain = 77,
         }
+        /// <summary><b>[requires: vulkan_video_codec_h264std]</b> </summary>
         public enum StdVideoH264LevelIdc : uint
         {
             VideoH264LevelIdc10 = 0,
@@ -1188,6 +1232,7 @@ namespace OpenTK.Graphics.Vulkan
             VideoH264LevelIdc62 = 18,
             VideoH264LevelIdcInvalid = 2147483647,
         }
+        /// <summary><b>[requires: vulkan_video_codec_h264std]</b> </summary>
         public enum StdVideoH264PocType : uint
         {
             VideoH264PocType0 = 0,
@@ -1195,6 +1240,7 @@ namespace OpenTK.Graphics.Vulkan
             VideoH264PocType2 = 2,
             VideoH264PocTypeInvalid = 2147483647,
         }
+        /// <summary><b>[requires: vulkan_video_codec_h264std]</b> </summary>
         public enum StdVideoH264AspectRatioIdc : uint
         {
             VideoH264AspectRatioIdc1011 = 3,
@@ -1217,6 +1263,7 @@ namespace OpenTK.Graphics.Vulkan
             VideoH264AspectRatioIdcSquare = 1,
             VideoH264AspectRatioIdcUnspecified = 0,
         }
+        /// <summary><b>[requires: vulkan_video_codec_h264std]</b> </summary>
         public enum StdVideoH264WeightedBipredIdc : uint
         {
             VideoH264WeightedBipredIdcDefault = 0,
@@ -1224,6 +1271,7 @@ namespace OpenTK.Graphics.Vulkan
             VideoH264WeightedBipredIdcImplicit = 2,
             VideoH264WeightedBipredIdcInvalid = 2147483647,
         }
+        /// <summary><b>[requires: vulkan_video_codec_h264std]</b> </summary>
         public enum StdVideoH264ModificationOfPicNumsIdc : uint
         {
             VideoH264ModificationOfPicNumsIdcEnd = 3,
@@ -1232,6 +1280,7 @@ namespace OpenTK.Graphics.Vulkan
             VideoH264ModificationOfPicNumsIdcShortTermAdd = 1,
             VideoH264ModificationOfPicNumsIdcShortTermSubtract = 0,
         }
+        /// <summary><b>[requires: vulkan_video_codec_h264std]</b> </summary>
         public enum StdVideoH264MemMgmtControlOp : uint
         {
             VideoH264MemMgmtControlOpEnd = 0,
@@ -1243,6 +1292,7 @@ namespace OpenTK.Graphics.Vulkan
             VideoH264MemMgmtControlOpUnmarkLongTerm = 2,
             VideoH264MemMgmtControlOpUnmarkShortTerm = 1,
         }
+        /// <summary><b>[requires: vulkan_video_codec_h264std]</b> </summary>
         public enum StdVideoH264CabacInitIdc : uint
         {
             VideoH264CabacInitIdc0 = 0,
@@ -1250,6 +1300,7 @@ namespace OpenTK.Graphics.Vulkan
             VideoH264CabacInitIdc2 = 2,
             VideoH264CabacInitIdcInvalid = 2147483647,
         }
+        /// <summary><b>[requires: vulkan_video_codec_h264std]</b> </summary>
         public enum StdVideoH264DisableDeblockingFilterIdc : uint
         {
             VideoH264DisableDeblockingFilterIdcDisabled = 0,
@@ -1257,6 +1308,7 @@ namespace OpenTK.Graphics.Vulkan
             VideoH264DisableDeblockingFilterIdcInvalid = 2147483647,
             VideoH264DisableDeblockingFilterIdcPartial = 2,
         }
+        /// <summary><b>[requires: vulkan_video_codec_h264std]</b> </summary>
         public enum StdVideoH264SliceType : uint
         {
             VideoH264SliceTypeB = 1,
@@ -1264,6 +1316,7 @@ namespace OpenTK.Graphics.Vulkan
             VideoH264SliceTypeInvalid = 2147483647,
             VideoH264SliceTypeP = 0,
         }
+        /// <summary><b>[requires: vulkan_video_codec_h264std]</b> </summary>
         public enum StdVideoH264PictureType : uint
         {
             VideoH264PictureTypeB = 1,
@@ -1272,6 +1325,7 @@ namespace OpenTK.Graphics.Vulkan
             VideoH264PictureTypeInvalid = 2147483647,
             VideoH264PictureTypeP = 0,
         }
+        /// <summary><b>[requires: vulkan_video_codec_h264std]</b> </summary>
         public enum StdVideoH264NonVclNaluType : uint
         {
             VideoH264NonVclNaluTypeAud = 2,
@@ -1283,6 +1337,7 @@ namespace OpenTK.Graphics.Vulkan
             VideoH264NonVclNaluTypePrefix = 3,
             VideoH264NonVclNaluTypeSps = 0,
         }
+        /// <summary><b>[requires: vulkan_video_codec_h264std]</b> </summary>
         public unsafe struct StdVideoH264SpsVuiFlags
         {
             private uint _bitfield0;
@@ -1348,6 +1403,7 @@ namespace OpenTK.Graphics.Vulkan
             }
             public StdVideoH264SpsVuiFlags() { }
         }
+        /// <summary><b>[requires: vulkan_video_codec_h264std]</b> </summary>
         public unsafe struct StdVideoH264HrdParameters
         {
             public byte cpb_cnt_minus1;
@@ -1363,6 +1419,7 @@ namespace OpenTK.Graphics.Vulkan
             public uint time_offset_length;
             public StdVideoH264HrdParameters() { }
         }
+        /// <summary><b>[requires: vulkan_video_codec_h264std]</b> </summary>
         public unsafe struct StdVideoH264SequenceParameterSetVui
         {
             public StdVideoH264SpsVuiFlags flags;
@@ -1402,6 +1459,7 @@ namespace OpenTK.Graphics.Vulkan
                 this.pHrdParameters = pHrdParameters;
             }
         }
+        /// <summary><b>[requires: vulkan_video_codec_h264std]</b> </summary>
         public unsafe struct StdVideoH264SpsFlags
         {
             private uint _bitfield0;
@@ -1487,6 +1545,7 @@ namespace OpenTK.Graphics.Vulkan
             }
             public StdVideoH264SpsFlags() { }
         }
+        /// <summary><b>[requires: vulkan_video_codec_h264std]</b> </summary>
         public unsafe struct StdVideoH264ScalingLists
         {
             public ushort scaling_list_present_mask;
@@ -1515,6 +1574,7 @@ namespace OpenTK.Graphics.Vulkan
             public ScalingList8x8InlineArray1 ScalingList8x8;
             public StdVideoH264ScalingLists() { }
         }
+        /// <summary><b>[requires: vulkan_video_codec_h264std]</b> </summary>
         public unsafe struct StdVideoH264SequenceParameterSet
         {
             public StdVideoH264SpsFlags flags;
@@ -1572,6 +1632,7 @@ namespace OpenTK.Graphics.Vulkan
                 this.pSequenceParameterSetVui = pSequenceParameterSetVui;
             }
         }
+        /// <summary><b>[requires: vulkan_video_codec_h264std]</b> </summary>
         public unsafe struct StdVideoH264PpsFlags
         {
             private uint _bitfield0;
@@ -1617,6 +1678,7 @@ namespace OpenTK.Graphics.Vulkan
             }
             public StdVideoH264PpsFlags() { }
         }
+        /// <summary><b>[requires: vulkan_video_codec_h264std]</b> </summary>
         public unsafe struct StdVideoH264PictureParameterSet
         {
             public StdVideoH264PpsFlags flags;
@@ -1655,12 +1717,14 @@ namespace OpenTK.Graphics.Vulkan
             public static ReadOnlySpan<byte> StdVulkanVideoCodecH264DecodeExtensionName => "VK_STD_vulkan_video_codec_h264_decode"u8;
             public const uint VideoDecodeH264FieldOrderCountListSize = 2;
         }
+        /// <summary><b>[requires: vulkan_video_codec_h264std_decode]</b> </summary>
         public enum StdVideoDecodeH264FieldOrderCount : uint
         {
             VideoDecodeH264FieldOrderCountBottom = 1,
             VideoDecodeH264FieldOrderCountInvalid = 2147483647,
             VideoDecodeH264FieldOrderCountTop = 0,
         }
+        /// <summary><b>[requires: vulkan_video_codec_h264std_decode]</b> </summary>
         public unsafe struct StdVideoDecodeH264PictureInfoFlags
         {
             private uint _bitfield0;
@@ -1696,6 +1760,7 @@ namespace OpenTK.Graphics.Vulkan
             }
             public StdVideoDecodeH264PictureInfoFlags() { }
         }
+        /// <summary><b>[requires: vulkan_video_codec_h264std_decode]</b> </summary>
         public unsafe struct StdVideoDecodeH264PictureInfo
         {
             public StdVideoDecodeH264PictureInfoFlags flags;
@@ -1708,6 +1773,7 @@ namespace OpenTK.Graphics.Vulkan
             public fixed int PicOrderCnt[2];
             public StdVideoDecodeH264PictureInfo() { }
         }
+        /// <summary><b>[requires: vulkan_video_codec_h264std_decode]</b> </summary>
         public unsafe struct StdVideoDecodeH264ReferenceInfoFlags
         {
             private uint _bitfield0;
@@ -1733,6 +1799,7 @@ namespace OpenTK.Graphics.Vulkan
             }
             public StdVideoDecodeH264ReferenceInfoFlags() { }
         }
+        /// <summary><b>[requires: vulkan_video_codec_h264std_decode]</b> </summary>
         public unsafe struct StdVideoDecodeH264ReferenceInfo
         {
             public StdVideoDecodeH264ReferenceInfoFlags flags;
@@ -1749,6 +1816,7 @@ namespace OpenTK.Graphics.Vulkan
             /// <summary>&quot;VK_STD_vulkan_video_codec_h264_encode&quot;</summary>
             public static ReadOnlySpan<byte> StdVulkanVideoCodecH264EncodeExtensionName => "VK_STD_vulkan_video_codec_h264_encode"u8;
         }
+        /// <summary><b>[requires: vulkan_video_codec_h264std_encode]</b> </summary>
         public unsafe struct StdVideoEncodeH264WeightTableFlags
         {
             public uint luma_weight_l0_flag;
@@ -1764,6 +1832,7 @@ namespace OpenTK.Graphics.Vulkan
                 this.chroma_weight_l1_flag = chroma_weight_l1_flag;
             }
         }
+        /// <summary><b>[requires: vulkan_video_codec_h264std_encode]</b> </summary>
         public unsafe struct StdVideoEncodeH264WeightTable
         {
             public StdVideoEncodeH264WeightTableFlags flags;
@@ -1819,6 +1888,7 @@ namespace OpenTK.Graphics.Vulkan
             public chroma_offset_l1InlineArray1 chroma_offset_l1;
             public StdVideoEncodeH264WeightTable() { }
         }
+        /// <summary><b>[requires: vulkan_video_codec_h264std_encode]</b> </summary>
         public unsafe struct StdVideoEncodeH264SliceHeaderFlags
         {
             private uint _bitfield0;
@@ -1839,6 +1909,7 @@ namespace OpenTK.Graphics.Vulkan
             }
             public StdVideoEncodeH264SliceHeaderFlags() { }
         }
+        /// <summary><b>[requires: vulkan_video_codec_h264std_encode]</b> </summary>
         public unsafe struct StdVideoEncodeH264PictureInfoFlags
         {
             private uint _bitfield0;
@@ -1874,6 +1945,7 @@ namespace OpenTK.Graphics.Vulkan
             }
             public StdVideoEncodeH264PictureInfoFlags() { }
         }
+        /// <summary><b>[requires: vulkan_video_codec_h264std_encode]</b> </summary>
         public unsafe struct StdVideoEncodeH264ReferenceInfoFlags
         {
             private uint _bitfield0;
@@ -1889,6 +1961,7 @@ namespace OpenTK.Graphics.Vulkan
             }
             public StdVideoEncodeH264ReferenceInfoFlags() { }
         }
+        /// <summary><b>[requires: vulkan_video_codec_h264std_encode]</b> </summary>
         public unsafe struct StdVideoEncodeH264ReferenceListsInfoFlags
         {
             private uint _bitfield0;
@@ -1909,6 +1982,7 @@ namespace OpenTK.Graphics.Vulkan
             }
             public StdVideoEncodeH264ReferenceListsInfoFlags() { }
         }
+        /// <summary><b>[requires: vulkan_video_codec_h264std_encode]</b> </summary>
         public unsafe struct StdVideoEncodeH264RefListModEntry
         {
             public StdVideoH264ModificationOfPicNumsIdc modification_of_pic_nums_idc;
@@ -1922,6 +1996,7 @@ namespace OpenTK.Graphics.Vulkan
                 this.long_term_pic_num = long_term_pic_num;
             }
         }
+        /// <summary><b>[requires: vulkan_video_codec_h264std_encode]</b> </summary>
         public unsafe struct StdVideoEncodeH264RefPicMarkingEntry
         {
             public StdVideoH264MemMgmtControlOp memory_management_control_operation;
@@ -1939,6 +2014,7 @@ namespace OpenTK.Graphics.Vulkan
                 this.max_long_term_frame_idx_plus1 = max_long_term_frame_idx_plus1;
             }
         }
+        /// <summary><b>[requires: vulkan_video_codec_h264std_encode]</b> </summary>
         public unsafe struct StdVideoEncodeH264ReferenceListsInfo
         {
             public StdVideoEncodeH264ReferenceListsInfoFlags flags;
@@ -1955,6 +2031,7 @@ namespace OpenTK.Graphics.Vulkan
             public StdVideoEncodeH264RefPicMarkingEntry* pRefPicMarkingOperations;
             public StdVideoEncodeH264ReferenceListsInfo() { }
         }
+        /// <summary><b>[requires: vulkan_video_codec_h264std_encode]</b> </summary>
         public unsafe struct StdVideoEncodeH264PictureInfo
         {
             public StdVideoEncodeH264PictureInfoFlags flags;
@@ -1969,6 +2046,7 @@ namespace OpenTK.Graphics.Vulkan
             public StdVideoEncodeH264ReferenceListsInfo* pRefLists;
             public StdVideoEncodeH264PictureInfo() { }
         }
+        /// <summary><b>[requires: vulkan_video_codec_h264std_encode]</b> </summary>
         public unsafe struct StdVideoEncodeH264ReferenceInfo
         {
             public StdVideoEncodeH264ReferenceInfoFlags flags;
@@ -1990,6 +2068,7 @@ namespace OpenTK.Graphics.Vulkan
                 this.temporal_id = temporal_id;
             }
         }
+        /// <summary><b>[requires: vulkan_video_codec_h264std_encode]</b> </summary>
         public unsafe struct StdVideoEncodeH264SliceHeader
         {
             public StdVideoEncodeH264SliceHeaderFlags flags;
@@ -2046,6 +2125,7 @@ namespace OpenTK.Graphics.Vulkan
             public const uint VideoH265MaxDeltaPoc = 48;
             public const uint VideoH265NoReferencePicture = 255;
         }
+        /// <summary><b>[requires: vulkan_video_codec_h265std]</b> </summary>
         public enum StdVideoH265ChromaFormatIdc : uint
         {
             VideoH265ChromaFormatIdc420 = 1,
@@ -2054,6 +2134,7 @@ namespace OpenTK.Graphics.Vulkan
             VideoH265ChromaFormatIdcInvalid = 2147483647,
             VideoH265ChromaFormatIdcMonochrome = 0,
         }
+        /// <summary><b>[requires: vulkan_video_codec_h265std]</b> </summary>
         public enum StdVideoH265ProfileIdc : uint
         {
             VideoH265ProfileIdcFormatRangeExtensions = 4,
@@ -2063,6 +2144,7 @@ namespace OpenTK.Graphics.Vulkan
             VideoH265ProfileIdcMainStillPicture = 3,
             VideoH265ProfileIdcSccExtensions = 9,
         }
+        /// <summary><b>[requires: vulkan_video_codec_h265std]</b> </summary>
         public enum StdVideoH265LevelIdc : uint
         {
             VideoH265LevelIdc10 = 0,
@@ -2080,6 +2162,7 @@ namespace OpenTK.Graphics.Vulkan
             VideoH265LevelIdc62 = 12,
             VideoH265LevelIdcInvalid = 2147483647,
         }
+        /// <summary><b>[requires: vulkan_video_codec_h265std]</b> </summary>
         public enum StdVideoH265SliceType : uint
         {
             VideoH265SliceTypeB = 0,
@@ -2087,6 +2170,7 @@ namespace OpenTK.Graphics.Vulkan
             VideoH265SliceTypeInvalid = 2147483647,
             VideoH265SliceTypeP = 1,
         }
+        /// <summary><b>[requires: vulkan_video_codec_h265std]</b> </summary>
         public enum StdVideoH265PictureType : uint
         {
             VideoH265PictureTypeB = 1,
@@ -2095,6 +2179,7 @@ namespace OpenTK.Graphics.Vulkan
             VideoH265PictureTypeInvalid = 2147483647,
             VideoH265PictureTypeP = 0,
         }
+        /// <summary><b>[requires: vulkan_video_codec_h265std]</b> </summary>
         public enum StdVideoH265AspectRatioIdc : uint
         {
             VideoH265AspectRatioIdc1011 = 3,
@@ -2117,6 +2202,7 @@ namespace OpenTK.Graphics.Vulkan
             VideoH265AspectRatioIdcSquare = 1,
             VideoH265AspectRatioIdcUnspecified = 0,
         }
+        /// <summary><b>[requires: vulkan_video_codec_h265std]</b> </summary>
         public unsafe struct StdVideoH265DecPicBufMgr
         {
             public fixed uint max_latency_increase_plus1[7];
@@ -2124,6 +2210,7 @@ namespace OpenTK.Graphics.Vulkan
             public fixed byte max_num_reorder_pics[7];
             public StdVideoH265DecPicBufMgr() { }
         }
+        /// <summary><b>[requires: vulkan_video_codec_h265std]</b> </summary>
         public unsafe struct StdVideoH265SubLayerHrdParameters
         {
             public fixed uint bit_rate_value_minus1[32];
@@ -2133,6 +2220,7 @@ namespace OpenTK.Graphics.Vulkan
             public uint cbr_flag;
             public StdVideoH265SubLayerHrdParameters() { }
         }
+        /// <summary><b>[requires: vulkan_video_codec_h265std]</b> </summary>
         public unsafe struct StdVideoH265HrdFlags
         {
             private uint _bitfield0;
@@ -2173,6 +2261,7 @@ namespace OpenTK.Graphics.Vulkan
             }
             public StdVideoH265HrdFlags() { }
         }
+        /// <summary><b>[requires: vulkan_video_codec_h265std]</b> </summary>
         public unsafe struct StdVideoH265HrdParameters
         {
             public StdVideoH265HrdFlags flags;
@@ -2192,6 +2281,7 @@ namespace OpenTK.Graphics.Vulkan
             public StdVideoH265SubLayerHrdParameters* pSubLayerHrdParametersVcl;
             public StdVideoH265HrdParameters() { }
         }
+        /// <summary><b>[requires: vulkan_video_codec_h265std]</b> </summary>
         public unsafe struct StdVideoH265VpsFlags
         {
             private uint _bitfield0;
@@ -2217,6 +2307,7 @@ namespace OpenTK.Graphics.Vulkan
             }
             public StdVideoH265VpsFlags() { }
         }
+        /// <summary><b>[requires: vulkan_video_codec_h265std]</b> </summary>
         public unsafe struct StdVideoH265ProfileTierLevelFlags
         {
             private uint _bitfield0;
@@ -2247,6 +2338,7 @@ namespace OpenTK.Graphics.Vulkan
             }
             public StdVideoH265ProfileTierLevelFlags() { }
         }
+        /// <summary><b>[requires: vulkan_video_codec_h265std]</b> </summary>
         public unsafe struct StdVideoH265ProfileTierLevel
         {
             public StdVideoH265ProfileTierLevelFlags flags;
@@ -2260,6 +2352,7 @@ namespace OpenTK.Graphics.Vulkan
                 this.general_level_idc = general_level_idc;
             }
         }
+        /// <summary><b>[requires: vulkan_video_codec_h265std]</b> </summary>
         public unsafe struct StdVideoH265VideoParameterSet
         {
             public StdVideoH265VpsFlags flags;
@@ -2291,6 +2384,7 @@ namespace OpenTK.Graphics.Vulkan
                 this.pProfileTierLevel = pProfileTierLevel;
             }
         }
+        /// <summary><b>[requires: vulkan_video_codec_h265std]</b> </summary>
         public unsafe struct StdVideoH265ScalingLists
         {
             [InlineArray(16)]
@@ -2341,6 +2435,7 @@ namespace OpenTK.Graphics.Vulkan
             public fixed byte ScalingListDCCoef32x32[2];
             public StdVideoH265ScalingLists() { }
         }
+        /// <summary><b>[requires: vulkan_video_codec_h265std]</b> </summary>
         public unsafe struct StdVideoH265SpsVuiFlags
         {
             private uint _bitfield0;
@@ -2436,6 +2531,7 @@ namespace OpenTK.Graphics.Vulkan
             }
             public StdVideoH265SpsVuiFlags() { }
         }
+        /// <summary><b>[requires: vulkan_video_codec_h265std]</b> </summary>
         public unsafe struct StdVideoH265SequenceParameterSetVui
         {
             public StdVideoH265SpsVuiFlags flags;
@@ -2495,6 +2591,7 @@ namespace OpenTK.Graphics.Vulkan
                 this.pHrdParameters = pHrdParameters;
             }
         }
+        /// <summary><b>[requires: vulkan_video_codec_h265std]</b> </summary>
         public unsafe struct StdVideoH265PredictorPaletteEntries
         {
             [InlineArray(128)]
@@ -2510,6 +2607,7 @@ namespace OpenTK.Graphics.Vulkan
             public PredictorPaletteEntriesInlineArray1 PredictorPaletteEntries;
             public StdVideoH265PredictorPaletteEntries() { }
         }
+        /// <summary><b>[requires: vulkan_video_codec_h265std]</b> </summary>
         public unsafe struct StdVideoH265SpsFlags
         {
             private uint _bitfield0;
@@ -2665,6 +2763,7 @@ namespace OpenTK.Graphics.Vulkan
             }
             public StdVideoH265SpsFlags() { }
         }
+        /// <summary><b>[requires: vulkan_video_codec_h265std]</b> </summary>
         public unsafe struct StdVideoH265ShortTermRefPicSetFlags
         {
             private uint _bitfield0;
@@ -2680,6 +2779,7 @@ namespace OpenTK.Graphics.Vulkan
             }
             public StdVideoH265ShortTermRefPicSetFlags() { }
         }
+        /// <summary><b>[requires: vulkan_video_codec_h265std]</b> </summary>
         public unsafe struct StdVideoH265ShortTermRefPicSet
         {
             public StdVideoH265ShortTermRefPicSetFlags flags;
@@ -2698,12 +2798,14 @@ namespace OpenTK.Graphics.Vulkan
             public fixed ushort delta_poc_s1_minus1[16];
             public StdVideoH265ShortTermRefPicSet() { }
         }
+        /// <summary><b>[requires: vulkan_video_codec_h265std]</b> </summary>
         public unsafe struct StdVideoH265LongTermRefPicsSps
         {
             public uint used_by_curr_pic_lt_sps_flag;
             public fixed uint lt_ref_pic_poc_lsb_sps[32];
             public StdVideoH265LongTermRefPicsSps() { }
         }
+        /// <summary><b>[requires: vulkan_video_codec_h265std]</b> </summary>
         public unsafe struct StdVideoH265SequenceParameterSet
         {
             public StdVideoH265SpsFlags flags;
@@ -2789,6 +2891,7 @@ namespace OpenTK.Graphics.Vulkan
                 this.pPredictorPaletteEntries = pPredictorPaletteEntries;
             }
         }
+        /// <summary><b>[requires: vulkan_video_codec_h265std]</b> </summary>
         public unsafe struct StdVideoH265PpsFlags
         {
             private uint _bitfield0;
@@ -2949,6 +3052,7 @@ namespace OpenTK.Graphics.Vulkan
             }
             public StdVideoH265PpsFlags() { }
         }
+        /// <summary><b>[requires: vulkan_video_codec_h265std]</b> </summary>
         public unsafe struct StdVideoH265PictureParameterSet
         {
             public StdVideoH265PpsFlags flags;
@@ -2998,6 +3102,7 @@ namespace OpenTK.Graphics.Vulkan
             public static ReadOnlySpan<byte> StdVulkanVideoCodecH265DecodeExtensionName => "VK_STD_vulkan_video_codec_h265_decode"u8;
             public const uint VideoDecodeH265RefPicSetListSize = 8;
         }
+        /// <summary><b>[requires: vulkan_video_codec_h265std_decode]</b> </summary>
         public unsafe struct StdVideoDecodeH265PictureInfoFlags
         {
             private uint _bitfield0;
@@ -3023,6 +3128,7 @@ namespace OpenTK.Graphics.Vulkan
             }
             public StdVideoDecodeH265PictureInfoFlags() { }
         }
+        /// <summary><b>[requires: vulkan_video_codec_h265std_decode]</b> </summary>
         public unsafe struct StdVideoDecodeH265PictureInfo
         {
             public StdVideoDecodeH265PictureInfoFlags flags;
@@ -3038,6 +3144,7 @@ namespace OpenTK.Graphics.Vulkan
             public fixed byte RefPicSetLtCurr[8];
             public StdVideoDecodeH265PictureInfo() { }
         }
+        /// <summary><b>[requires: vulkan_video_codec_h265std_decode]</b> </summary>
         public unsafe struct StdVideoDecodeH265ReferenceInfoFlags
         {
             private uint _bitfield0;
@@ -3053,6 +3160,7 @@ namespace OpenTK.Graphics.Vulkan
             }
             public StdVideoDecodeH265ReferenceInfoFlags() { }
         }
+        /// <summary><b>[requires: vulkan_video_codec_h265std_decode]</b> </summary>
         public unsafe struct StdVideoDecodeH265ReferenceInfo
         {
             public StdVideoDecodeH265ReferenceInfoFlags flags;
@@ -3072,6 +3180,7 @@ namespace OpenTK.Graphics.Vulkan
             /// <summary>&quot;VK_STD_vulkan_video_codec_h265_encode&quot;</summary>
             public static ReadOnlySpan<byte> StdVulkanVideoCodecH265EncodeExtensionName => "VK_STD_vulkan_video_codec_h265_encode"u8;
         }
+        /// <summary><b>[requires: vulkan_video_codec_h265std_encode]</b> </summary>
         public unsafe struct StdVideoEncodeH265WeightTableFlags
         {
             public ushort luma_weight_l0_flag;
@@ -3087,6 +3196,7 @@ namespace OpenTK.Graphics.Vulkan
                 this.chroma_weight_l1_flag = chroma_weight_l1_flag;
             }
         }
+        /// <summary><b>[requires: vulkan_video_codec_h265std_encode]</b> </summary>
         public unsafe struct StdVideoEncodeH265WeightTable
         {
             public StdVideoEncodeH265WeightTableFlags flags;
@@ -3142,6 +3252,7 @@ namespace OpenTK.Graphics.Vulkan
             public delta_chroma_offset_l1InlineArray1 delta_chroma_offset_l1;
             public StdVideoEncodeH265WeightTable() { }
         }
+        /// <summary><b>[requires: vulkan_video_codec_h265std_encode]</b> </summary>
         public unsafe struct StdVideoEncodeH265SliceSegmentHeaderFlags
         {
             private uint _bitfield0;
@@ -3212,6 +3323,7 @@ namespace OpenTK.Graphics.Vulkan
             }
             public StdVideoEncodeH265SliceSegmentHeaderFlags() { }
         }
+        /// <summary><b>[requires: vulkan_video_codec_h265std_encode]</b> </summary>
         public unsafe struct StdVideoEncodeH265SliceSegmentHeader
         {
             public StdVideoEncodeH265SliceSegmentHeaderFlags flags;
@@ -3249,6 +3361,7 @@ namespace OpenTK.Graphics.Vulkan
                 this.pWeightTable = pWeightTable;
             }
         }
+        /// <summary><b>[requires: vulkan_video_codec_h265std_encode]</b> </summary>
         public unsafe struct StdVideoEncodeH265ReferenceListsInfoFlags
         {
             private uint _bitfield0;
@@ -3269,6 +3382,7 @@ namespace OpenTK.Graphics.Vulkan
             }
             public StdVideoEncodeH265ReferenceListsInfoFlags() { }
         }
+        /// <summary><b>[requires: vulkan_video_codec_h265std_encode]</b> </summary>
         public unsafe struct StdVideoEncodeH265ReferenceListsInfo
         {
             public StdVideoEncodeH265ReferenceListsInfoFlags flags;
@@ -3280,6 +3394,7 @@ namespace OpenTK.Graphics.Vulkan
             public fixed byte list_entry_l1[15];
             public StdVideoEncodeH265ReferenceListsInfo() { }
         }
+        /// <summary><b>[requires: vulkan_video_codec_h265std_encode]</b> </summary>
         public unsafe struct StdVideoEncodeH265PictureInfoFlags
         {
             private uint _bitfield0;
@@ -3335,6 +3450,7 @@ namespace OpenTK.Graphics.Vulkan
             }
             public StdVideoEncodeH265PictureInfoFlags() { }
         }
+        /// <summary><b>[requires: vulkan_video_codec_h265std_encode]</b> </summary>
         public unsafe struct StdVideoEncodeH265LongTermRefPics
         {
             public byte num_long_term_sps;
@@ -3346,6 +3462,7 @@ namespace OpenTK.Graphics.Vulkan
             public fixed byte delta_poc_msb_cycle_lt[48];
             public StdVideoEncodeH265LongTermRefPics() { }
         }
+        /// <summary><b>[requires: vulkan_video_codec_h265std_encode]</b> </summary>
         public unsafe struct StdVideoEncodeH265PictureInfo
         {
             public StdVideoEncodeH265PictureInfoFlags flags;
@@ -3362,6 +3479,7 @@ namespace OpenTK.Graphics.Vulkan
             public StdVideoEncodeH265LongTermRefPics* pLongTermRefPics;
             public StdVideoEncodeH265PictureInfo() { }
         }
+        /// <summary><b>[requires: vulkan_video_codec_h265std_encode]</b> </summary>
         public unsafe struct StdVideoEncodeH265ReferenceInfoFlags
         {
             private uint _bitfield0;
@@ -3382,6 +3500,7 @@ namespace OpenTK.Graphics.Vulkan
             }
             public StdVideoEncodeH265ReferenceInfoFlags() { }
         }
+        /// <summary><b>[requires: vulkan_video_codec_h265std_encode]</b> </summary>
         public unsafe struct StdVideoEncodeH265ReferenceInfo
         {
             public StdVideoEncodeH265ReferenceInfoFlags flags;
@@ -3411,6 +3530,7 @@ namespace OpenTK.Graphics.Vulkan
             public const uint VideoVp9MaxSegmentationTreeProbs = 7;
             public const uint VideoVp9MaxSegmentationPredProb = 3;
         }
+        /// <summary><b>[requires: vulkan_video_codec_vp9std]</b> </summary>
         public enum StdVideoVP9Profile : uint
         {
             VideoVp9Profile0 = 0,
@@ -3419,6 +3539,7 @@ namespace OpenTK.Graphics.Vulkan
             VideoVp9Profile3 = 3,
             VideoVp9ProfileInvalid = 2147483647,
         }
+        /// <summary><b>[requires: vulkan_video_codec_vp9std]</b> </summary>
         public enum StdVideoVP9Level : uint
         {
             VideoVp9Level10 = 0,
@@ -3437,12 +3558,14 @@ namespace OpenTK.Graphics.Vulkan
             VideoVp9Level62 = 13,
             VideoVp9LevelInvalid = 2147483647,
         }
+        /// <summary><b>[requires: vulkan_video_codec_vp9std]</b> </summary>
         public enum StdVideoVP9FrameType : uint
         {
             VideoVp9FrameTypeInvalid = 2147483647,
             VideoVp9FrameTypeKey = 0,
             VideoVp9FrameTypeNonKey = 1,
         }
+        /// <summary><b>[requires: vulkan_video_codec_vp9std]</b> </summary>
         public enum StdVideoVP9ReferenceName : uint
         {
             VideoVp9ReferenceNameAltrefFrame = 3,
@@ -3451,6 +3574,7 @@ namespace OpenTK.Graphics.Vulkan
             VideoVp9ReferenceNameInvalid = 2147483647,
             VideoVp9ReferenceNameLastFrame = 1,
         }
+        /// <summary><b>[requires: vulkan_video_codec_vp9std]</b> </summary>
         public enum StdVideoVP9InterpolationFilter : uint
         {
             VideoVp9InterpolationFilterBilinear = 3,
@@ -3460,6 +3584,7 @@ namespace OpenTK.Graphics.Vulkan
             VideoVp9InterpolationFilterInvalid = 2147483647,
             VideoVp9InterpolationFilterSwitchable = 4,
         }
+        /// <summary><b>[requires: vulkan_video_codec_vp9std]</b> </summary>
         public enum StdVideoVP9ColorSpace : uint
         {
             VideoVp9ColorSpaceBt2020 = 5,
@@ -3472,6 +3597,7 @@ namespace OpenTK.Graphics.Vulkan
             VideoVp9ColorSpaceSmpte240 = 4,
             VideoVp9ColorSpaceUnknown = 0,
         }
+        /// <summary><b>[requires: vulkan_video_codec_vp9std]</b> </summary>
         public unsafe struct StdVideoVP9ColorConfigFlags
         {
             private uint _bitfield0;
@@ -3487,6 +3613,7 @@ namespace OpenTK.Graphics.Vulkan
             }
             public StdVideoVP9ColorConfigFlags() { }
         }
+        /// <summary><b>[requires: vulkan_video_codec_vp9std]</b> </summary>
         public unsafe struct StdVideoVP9ColorConfig
         {
             public StdVideoVP9ColorConfigFlags flags;
@@ -3506,6 +3633,7 @@ namespace OpenTK.Graphics.Vulkan
                 this.color_space = color_space;
             }
         }
+        /// <summary><b>[requires: vulkan_video_codec_vp9std]</b> </summary>
         public unsafe struct StdVideoVP9LoopFilterFlags
         {
             private uint _bitfield0;
@@ -3526,6 +3654,7 @@ namespace OpenTK.Graphics.Vulkan
             }
             public StdVideoVP9LoopFilterFlags() { }
         }
+        /// <summary><b>[requires: vulkan_video_codec_vp9std]</b> </summary>
         public unsafe struct StdVideoVP9LoopFilter
         {
             public StdVideoVP9LoopFilterFlags flags;
@@ -3537,6 +3666,7 @@ namespace OpenTK.Graphics.Vulkan
             public fixed sbyte loop_filter_mode_deltas[2];
             public StdVideoVP9LoopFilter() { }
         }
+        /// <summary><b>[requires: vulkan_video_codec_vp9std]</b> </summary>
         public unsafe struct StdVideoVP9SegmentationFlags
         {
             private uint _bitfield0;
@@ -3567,6 +3697,7 @@ namespace OpenTK.Graphics.Vulkan
             }
             public StdVideoVP9SegmentationFlags() { }
         }
+        /// <summary><b>[requires: vulkan_video_codec_vp9std]</b> </summary>
         public unsafe struct StdVideoVP9Segmentation
         {
             public StdVideoVP9SegmentationFlags flags;
@@ -3594,6 +3725,7 @@ namespace OpenTK.Graphics.Vulkan
             /// <summary>&quot;VK_STD_vulkan_video_codec_vp9_decode&quot;</summary>
             public static ReadOnlySpan<byte> StdVulkanVideoCodecVp9DecodeExtensionName => "VK_STD_vulkan_video_codec_vp9_decode"u8;
         }
+        /// <summary><b>[requires: vulkan_video_codec_vp9std_decode]</b> </summary>
         public unsafe struct StdVideoDecodeVP9PictureInfoFlags
         {
             private uint _bitfield0;
@@ -3644,6 +3776,7 @@ namespace OpenTK.Graphics.Vulkan
             }
             public StdVideoDecodeVP9PictureInfoFlags() { }
         }
+        /// <summary><b>[requires: vulkan_video_codec_vp9std_decode]</b> </summary>
         public unsafe struct StdVideoDecodeVP9PictureInfo
         {
             public StdVideoDecodeVP9PictureInfoFlags flags;

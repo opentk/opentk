@@ -542,11 +542,24 @@ namespace VkGenerator.Process
 
                     foreach (TypeRef requireType in require.RequiredTypes)
                     {
+                        Define? define = data.Defines.Find(d => d.Name == requireType.Name);
                         StructType? structType = data.Structs.Find(s => s.Name == requireType.Name);
                         EnumType? enumType = data.Enums.Find(e => e.Name == requireType.Name);
                         HandleType? handleType = data.Handles.Find(h => h.Name == requireType.Name);
-                        Debug.Assert(!(structType != null && enumType != null && handleType != null), "We matched two types for this require... Something has gone bad.");
-                        if (structType != null)
+                        Debug.Assert(ListExtensions.CountTrue(define != null, structType != null, enumType != null, handleType != null) <= 1, "We matched more than one type for this require... Something has gone bad.");
+                        if (define != null)
+                        {
+                            if (define.VersionInfo == null)
+                            {
+                                define.VersionInfo = new VersionInfo(feature.Version, new List<string>());
+                            }
+                            else if (define.VersionInfo.Version < feature.Version)
+                            {
+                                Debug.Assert(false, "This has never happened. So this codepath is untested.");
+                                define.VersionInfo = define.VersionInfo with { Version = feature.Version };
+                            }
+                        }
+                        else if (structType != null)
                         {
                             if (structType.VersionInfo == null)
                             {
@@ -631,11 +644,23 @@ namespace VkGenerator.Process
 
                     foreach (TypeRef requireType in require.RequiredTypes)
                     {
+                        Define? define = data.Defines.Find(d => d.Name == requireType.Name);
                         StructType? structType = data.Structs.Find(s => s.Name == requireType.Name);
                         EnumType? enumType = data.Enums.Find(e => e.Name == requireType.Name);
                         HandleType? handleType = data.Handles.Find(h => h.Name == requireType.Name);
-                        Debug.Assert(!(structType != null && enumType != null && handleType != null), "We matched two types for this require... Something has gone bad.");
-                        if (structType != null)
+                        Debug.Assert(ListExtensions.CountTrue(define != null, structType != null, enumType != null, handleType != null) <= 1, "We matched more than one type for this require... Something has gone bad.");
+                        if (define != null)
+                        {
+                            if (define.VersionInfo == null)
+                            {
+                                define.VersionInfo = new VersionInfo(null, [extensionName]);
+                            }
+                            else
+                            {
+                                define.VersionInfo.Extensions.Add(extensionName);
+                            }
+                        }
+                        else if (structType != null)
                         {
                             if (structType.VersionInfo == null)
                             {
@@ -739,9 +764,69 @@ namespace VkGenerator.Process
 
                             handle.VersionInfo.Deprecate(new DeprecationReason(feature.Version, null, deprecateTag.ExplanationLink));
                         }
+                        else if (data.Defines.TryFind(d => d.Name == deprecatedType.Name, out Define? define))
+                        {
+                            Debug.Assert(define.VersionInfo != null, "ResolveVersionInfo needs to be called before this function is called.");
+
+                            define.VersionInfo.Deprecate(new DeprecationReason(feature.Version, null, deprecateTag.ExplanationLink));
+                        }
                         else
                         {
-                            Logger.Warning($"Unable to find type: '{deprecatedType.Name}'");
+                            Logger.Warning($"Unable to find type: '{deprecatedType.Name}' when applying v{feature.Version} deprecations.");
+                        }
+                    }
+                }
+            }
+
+            foreach (Extension extension in data.Extensions)
+            {
+                foreach (DeprecateTag deprecateTag in extension.DeprecateTags)
+                {
+                    foreach (CommandRef deprecatedCommand in deprecateTag.DeprecatedCommands)
+                    {
+                        Command? command = data.Commands.Find(c => c.Name == deprecatedCommand.Name);
+
+                        if (command != null)
+                        {
+                            Debug.Assert(command.VersionInfo != null, "ResolveVersionInfo needs to be called before this function is called.");
+
+                            command.VersionInfo.Deprecate(new DeprecationReason(null, extension.Name, deprecateTag.ExplanationLink));
+                        }
+                        else
+                        {
+                            Logger.Warning($"Could not find deprecated command '{deprecatedCommand.Name}'");
+                        }
+                    }
+
+                    foreach (TypeRef deprecatedType in deprecateTag.DeprecatedTypes)
+                    {
+                        if (data.Enums.TryFind(e => e.Name == deprecatedType.Name, out EnumType? @enum))
+                        {
+                            Debug.Assert(@enum.VersionInfo != null, "ResolveVersionInfo needs to be called before this function is called.");
+
+                            @enum.VersionInfo.Deprecate(new DeprecationReason(null, extension.Name, deprecateTag.ExplanationLink));
+                        }
+                        else if (data.Structs.TryFind(s => s.Name == deprecatedType.Name, out StructType? @struct))
+                        {
+                            Debug.Assert(@struct.VersionInfo != null, "ResolveVersionInfo needs to be called before this function is called.");
+
+                            @struct.VersionInfo.Deprecate(new DeprecationReason(null, extension.Name, deprecateTag.ExplanationLink));
+                        }
+                        else if (data.Handles.TryFind(h => h.Name == deprecatedType.Name, out HandleType? handle))
+                        {
+                            Debug.Assert(handle.VersionInfo != null, "ResolveVersionInfo needs to be called before this function is called.");
+
+                            handle.VersionInfo.Deprecate(new DeprecationReason(null, extension.Name, deprecateTag.ExplanationLink));
+                        }
+                        else if (data.Defines.TryFind(d => d.Name == deprecatedType.Name, out Define? define))
+                        {
+                            Debug.Assert(define.VersionInfo != null, "ResolveVersionInfo needs to be called before this function is called.");
+
+                            define.VersionInfo.Deprecate(new DeprecationReason(null, extension.Name, deprecateTag.ExplanationLink));
+                        }
+                        else
+                        {
+                            Logger.Warning($"Unable to find type: '{deprecatedType.Name}' when applying '{extension.Name}' deprecations.");
                         }
                     }
                 }
