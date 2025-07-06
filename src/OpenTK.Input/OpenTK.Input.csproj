@@ -5,6 +5,8 @@
     <RootNamespace>OpenTK.Input</RootNamespace>
     <Description>Shared input functionality for the OpenTK library.</Description>
     <PackageIcon>icon.png</PackageIcon>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>../../OpenTK.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
   <ItemGroup>

@@ -1,8 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
+    <!--<LangVersion>preview</LangVersion>-->
     <Deterministic>true</Deterministic>
     <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+    <!-- We need to sign this assembly for the InternalVisibleTo in OpenTK.Windowing.GraphicsLibraryFramework to work. -->
+    <!-- - Noggin_bops 2024-11-27 -->
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>../../OpenTK.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <IsPackable>false</IsPackable>
@@ -28,12 +33,14 @@
     <Compile Include="Box3Tests.fs" />
     <Compile Include="Box2Tests.fs" />
     <Compile Include="Color4Tests.fs" />
+    <Compile Include="Vector2bTests.fs" />
+    <Compile Include="Vector3bTests.fs" />
+    <Compile Include="Vector4bTests.fs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="FsCheck.Xunit" Version="2.16.6" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.10.0" />
-    <PackageReference Include="xunit" Version="2.9.0" />
-    <PackageReference Include="xunit.assert" Version="2.9.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.12.0" />
+    <PackageReference Include="xunit" Version="2.9.2" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.8.2" />
     <DotNetCliToolReference Include="dotnet-xunit" Version="2.3.1" />
   </ItemGroup>

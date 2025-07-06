@@ -1,10 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
     <PropertyGroup>
       <TargetFrameworks>net8.0</TargetFrameworks>
       <RootNamespace>OpenTK.Windowing.Desktop</RootNamespace>
       <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
       <PackageIcon>icon.png</PackageIcon>
+      <SignAssembly>true</SignAssembly>
+      <AssemblyOriginatorKeyFile>../../OpenTK.snk</AssemblyOriginatorKeyFile>
     </PropertyGroup>
 
     <ItemGroup>

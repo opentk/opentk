@@ -69,6 +69,26 @@ namespace OpenTK.Mathematics
         public const float Log2E = 1.442695f;
 
         /// <summary>
+        /// Defines the constant that you should multiply by to convert Radians to Degrees.
+        /// </summary>
+        public const float RadToDeg = 180.0f / MathF.PI;
+
+        /// <summary>
+        /// Defines the constant that you should multiply by to convert Degrees to Radians.
+        /// </summary>
+        public const float DegToRad = MathF.PI / 180.0f;
+
+        /// <summary>
+        /// Defines the constant that you should multiply by to convert Radians to Degrees.
+        /// </summary>
+        public const double RadToDegd = 180.0d / Math.PI;
+
+        /// <summary>
+        /// Defines the constant that you should multiply by to convert Degrees to Radians.
+        /// </summary>
+        public const double DegToRadd = Math.PI / 180.0d;
+
+        /// <summary>
         /// Returns the next power of two that is greater than or equal to the specified number.
         /// </summary>
         /// <param name="n">The specified number.</param>
@@ -170,8 +190,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static float DegreesToRadians(float degrees)
         {
-            const float degToRad = MathF.PI / 180.0f;
-            return degrees * degToRad;
+            return degrees * DegToRad;
         }
 
         /// <summary>
@@ -182,8 +201,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static float RadiansToDegrees(float radians)
         {
-            const float radToDeg = 180.0f / MathF.PI;
-            return radians * radToDeg;
+            return radians * RadToDeg;
         }
 
         /// <summary>
@@ -194,8 +212,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static double DegreesToRadians(double degrees)
         {
-            const double degToRad = Math.PI / 180.0;
-            return degrees * degToRad;
+            return degrees * DegToRadd;
         }
 
         /// <summary>
@@ -206,8 +223,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static double RadiansToDegrees(double radians)
         {
-            const double radToDeg = 180.0 / Math.PI;
-            return radians * radToDeg;
+            return radians * RadToDegd;
         }
 
         /// <summary>
@@ -644,6 +660,12 @@ namespace OpenTK.Mathematics
             }
 
             return CultureInfo.CurrentCulture.TextInfo.ListSeparator;
+        }
+
+        [DoesNotReturn]
+        internal static void ThrowOutOfRangeException(string message)
+        {
+            throw new IndexOutOfRangeException(message);
         }
     }
 }

@@ -548,3 +548,94 @@ module Matrix4 =
             Assert.ApproximatelyEqualDelta(A.M31, B.M31, epsilon)
             Assert.ApproximatelyEqualDelta(A.M32, B.M32, epsilon)
             Assert.ApproximatelyEqualDelta(A.M33, B.M33, epsilon)
+
+    [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
+    module ``Extraction functions`` =
+        //
+        [<Property>]
+        let ``Matrix4.ExtractPerspectiveOffCenter returns what was passed to CreatePerspectiveOffCenter`` (rightLeft: Range, bottomTop: Range, nearFar : PositiveRange) =
+            let right = rightLeft.Start
+            let left = rightLeft.Stop
+            let bottom = bottomTop.Start
+            let top = bottomTop.Stop
+            let near = nearFar.Start
+            let far = nearFar.Stop
+            let A = Matrix4.CreatePerspectiveOffCenter(right, left, bottom, top, near, far)
+
+            let mutable exRight = 0.0f
+            let mutable exLeft = 0.0f
+            let mutable exBottom = 0.0f
+            let mutable exTop = 0.0f
+            let mutable exNear = 0.0f
+            let mutable exFar = 0.0f
+            A.ExtractPerspectiveOffCenter(&exRight, &exLeft, &exBottom, &exTop, &exNear, &exFar)
+
+            Assert.ApproximatelyEqual(right, exRight)
+            Assert.ApproximatelyEqual(left, exLeft)
+            Assert.ApproximatelyEqual(bottom, exBottom)
+            Assert.ApproximatelyEqual(top, exTop)
+            Assert.ApproximatelyEqual(near, exNear)
+            Assert.ApproximatelyEqual(far, exFar)
+
+        [<Property>]
+        let ``Matrix4.ExtractPerspectiveFieldOfView returns what was passed to CreatePerspectiveFieldOfView`` (AcuteAngle fovy, aspect: float32, nearFar : PositiveRange) =
+            let fovy = System.MathF.Abs(fovy)
+            let aspect = System.MathF.Abs(aspect)
+            let near = nearFar.Start
+            let far = nearFar.Stop
+            let A = Matrix4.CreatePerspectiveFieldOfView(fovy, aspect, near, far)
+
+            let mutable exFovy = 0.0f
+            let mutable exAspect = 0.0f
+            let mutable exNear = 0.0f
+            let mutable exFar = 0.0f
+            A.ExtractPerspectiveFieldOfView(&exFovy, &exAspect, &exNear, &exFar)
+
+            Assert.ApproximatelyEqual(fovy, exFovy)
+            Assert.ApproximatelyEqual(aspect, exAspect)
+            Assert.ApproximatelyEqual(near, exNear)
+            Assert.ApproximatelyEqual(far, exFar)
+        
+        [<Property>]
+        let ``Matrix4.ExtractOrthographicOffCenter returns what was passed to CreateOrthographicOffCenter`` (rightLeft: Range, bottomTop: Range, nearFar : PositiveRange) =
+            let right = rightLeft.Start
+            let left = rightLeft.Stop
+            let bottom = bottomTop.Start
+            let top = bottomTop.Stop
+            let near = nearFar.Start
+            let far = nearFar.Stop
+            let A = Matrix4.CreateOrthographicOffCenter(right, left, bottom, top, near, far)
+
+            let mutable exRight = 0.0f
+            let mutable exLeft = 0.0f
+            let mutable exBottom = 0.0f
+            let mutable exTop = 0.0f
+            let mutable exNear = 0.0f
+            let mutable exFar = 0.0f
+            A.ExtractOrthographicOffCenter(&exRight, &exLeft, &exBottom, &exTop, &exNear, &exFar)
+
+            Assert.ApproximatelyEqual(right, exRight);
+            Assert.ApproximatelyEqual(left, exLeft);
+            Assert.ApproximatelyEqual(bottom, exBottom);
+            Assert.ApproximatelyEqual(top, exTop);
+            Assert.ApproximatelyEqual(near, exNear);
+            Assert.ApproximatelyEqual(far, exFar);
+
+        [<Property>]
+        let ``Matrix4.ExtractPerspectiveFieldOfView returns what was passed to CreateOrthographic`` (widthHeight: PositiveRange, nearFar : PositiveRange) =
+            let width = widthHeight.Start
+            let height = widthHeight.Stop
+            let near = nearFar.Start
+            let far = nearFar.Stop
+            let A = Matrix4.CreateOrthographic(width, height, near, far)
+
+            let mutable exWidth = 0.0f
+            let mutable exHeight = 0.0f
+            let mutable exNear = 0.0f
+            let mutable exFar = 0.0f
+            A.ExtractOrthographic(&exWidth, &exHeight, &exNear, &exFar)
+
+            Assert.ApproximatelyEqual(width, exWidth);
+            Assert.ApproximatelyEqual(height, exHeight);
+            Assert.ApproximatelyEqual(near, exNear);
+            Assert.ApproximatelyEqual(far, exFar);

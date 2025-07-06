@@ -8,3 +8,14 @@ files
     bin\Release\net8.0\OpenTK.Input.dll ==> lib\net8.0
     bin\Release\net8.0\OpenTK.Input.xml ==> lib\net8.0
     bin\Release\net8.0\OpenTK.Input.pdb ==> lib\net8.0
+    README.md ==> docs
+    ..\..\.github\opentk-blue-hexagon.png ==> images
+
+readme docs\README.md
+iconUrl https://raw.githubusercontent.com/opentk/opentk/master/.github/opentk-blue-hexagon.png
+projectUrl https://github.com/opentk/opentk
+licenseUrl https://licenses.nuget.org/MIT
+licenseExpression MIT
+tags opentk;opengl;cross-platform;openal;csharp;fsharp;vb;dotnet;mono;graphics;game;scientific;science;3d;2d;math;input;gamepad;joystick
+repositoryType git
+repositoryUrl https://github.com/opentk/opentk.git

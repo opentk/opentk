@@ -24,6 +24,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using System.Numerics;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Runtime.Intrinsics;
 
@@ -411,54 +412,35 @@ namespace OpenTK.Mathematics
         {
             readonly get
             {
-                if (rowIndex == 0)
+                if (((uint)rowIndex) < 4 && ((uint)columnIndex) < 4)
                 {
-                    return Row0[columnIndex];
+                    return GetRowUnsafe(in this, rowIndex)[columnIndex];
                 }
-
-                if (rowIndex == 1)
+                else
                 {
-                    return Row1[columnIndex];
+                    MathHelper.ThrowOutOfRangeException($"You tried to access this matrix at: ({rowIndex}, {columnIndex})");
+                    return default;
                 }
-
-                if (rowIndex == 2)
-                {
-                    return Row2[columnIndex];
-                }
-
-                if (rowIndex == 3)
-                {
-                    return Row3[columnIndex];
-                }
-
-                throw new IndexOutOfRangeException("You tried to access this matrix at: (" + rowIndex + ", " +
-                                                   columnIndex + ")");
             }
 
             set
             {
-                if (rowIndex == 0)
+                if (((uint)rowIndex) < 4 && ((uint)columnIndex) < 4)
                 {
-                    Row0[columnIndex] = value;
-                }
-                else if (rowIndex == 1)
-                {
-                    Row1[columnIndex] = value;
-                }
-                else if (rowIndex == 2)
-                {
-                    Row2[columnIndex] = value;
-                }
-                else if (rowIndex == 3)
-                {
-                    Row3[columnIndex] = value;
+                    GetRowUnsafe(in this, rowIndex)[columnIndex] = value;
                 }
                 else
                 {
-                    throw new IndexOutOfRangeException("You tried to set this matrix at: (" + rowIndex + ", " +
-                                                       columnIndex + ")");
+                    MathHelper.ThrowOutOfRangeException($"You tried to set this matrix at: ({rowIndex}, {columnIndex})");
                 }
             }
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private readonly ref Vector4d GetRowUnsafe(in Matrix4d m, int index)
+        {
+            ref Vector4d address = ref Unsafe.AsRef(in m.Row0);
+            return ref Unsafe.Add(ref address, index);
         }
 
         /// <summary>
@@ -595,9 +577,10 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Returns a copy of this Matrix4d without projection.
+        /// Returns a copy of this Matrix4d without projection. (equivalent to setting <see cref="Column3"/> = (0, 0, 0, 0)).
         /// </summary>
         /// <returns>The matrix without projection.</returns>
+        [Obsolete("This function doesn't actually clear the projection of the matrix. This is equivalent of setting Column3 = (0, 0, 0, 0).")]
         public readonly Matrix4d ClearProjection()
         {
             var m = this;
@@ -695,12 +678,105 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Returns the projection component of this instance.
+        /// Returns the projection component of this instance (equivalent to <see cref="Column3"/>).
         /// </summary>
-        /// <returns>The projection.</returns>
+        /// <returns>The projection (<see cref="Column3"/>).</returns>
+        [Obsolete("Use Column3 if the old behaviour is needed, or use ExtractPerspective*() or ExtractOrthographic* instead.")]
         public readonly Vector4d ExtractProjection()
         {
             return Column3;
+        }
+
+        /// <summary>
+        /// Returns the off-center projection parameters of this instance.
+        /// This only works if the matrix was created using <see cref="CreatePerspectiveOffCenter(double, double, double, double, double, double)"/>.
+        /// </summary>
+        /// <param name="left">The left edge of the view frustum.</param>
+        /// <param name="right">The right edge of the view frustum.</param>
+        /// <param name="bottom">The bottom edge of the view frustum.</param>
+        /// <param name="top">The top edge of the view frustum.</param>
+        /// <param name="depthNear">The distance to the near clip plane.</param>
+        /// <param name="depthFar">The distance to the far clip plane.</param>
+        public readonly void ExtractPerspectiveOffCenter
+        (
+            out double left,
+            out double right,
+            out double bottom,
+            out double top,
+            out double depthNear,
+            out double depthFar
+        )
+        {
+            depthNear = Row3.Z / (Row2.Z - 1);
+            depthFar = Row3.Z / (Row2.Z + 1);
+            left = depthNear * (Row2.X - 1) / Row0.X;
+            right = depthNear * (Row2.X + 1) / Row0.X;
+            bottom = depthNear * (Row2.Y - 1) / Row1.Y;
+            top = depthNear * (Row2.Y + 1) / Row1.Y;
+        }
+
+        /// <summary>
+        /// Returns the field of view projection parameters of this instance.
+        /// This only works if the matrix was created using <see cref="CreatePerspectiveFieldOfView(double, double, double, double)"/>.
+        /// </summary>
+        /// <param name="fovy">Angle of the field of view in the y direction (in radians).</param>
+        /// <param name="aspect">Aspect ratio of the view (width / height).</param>
+        /// <param name="depthNear">The distance to the near clip plane.</param>
+        /// <param name="depthFar">The distance to the far clip plane.</param>
+        public readonly void ExtractPerspectiveFieldOfView(out double fovy, out double aspect, out double depthNear, out double depthFar)
+        {
+            fovy = 2.0f * Math.Atan(1 / Row1.Y);
+            aspect = Row1.Y / Row0.X;
+            depthNear = Row3.Z / (Row2.Z - 1);
+            depthFar = Row3.Z / (Row2.Z + 1);
+        }
+
+        /// <summary>
+        /// Returns the off-center orthographic projection parameters of this instance.
+        /// This only works if the matrix was created using <see cref="CreateOrthographicOffCenter(double, double, double, double, double, double)"/>.
+        /// </summary>
+        /// <param name="left">The left edge of the projection volume.</param>
+        /// <param name="right">The right edge of the projection volume.</param>
+        /// <param name="bottom">The bottom edge of the projection volume.</param>
+        /// <param name="top">The top edge of the projection volume.</param>
+        /// <param name="depthNear">The distance to the near clip plane.</param>
+        /// <param name="depthFar">The distance to the far clip plane.</param>
+        public readonly void ExtractOrthographicOffCenter
+        (
+            out double left,
+            out double right,
+            out double bottom,
+            out double top,
+            out double depthNear,
+            out double depthFar
+        )
+        {
+            left = -(1 + Row3.X) / Row0.X;
+            right = (1 - Row3.X) / Row0.X;
+            bottom = -(1 + Row3.Y) / Row1.Y;
+            top = (1 - Row3.Y) / Row1.Y;
+            depthNear = (1 + Row3.Z) / Row2.Z;
+            depthFar = -(1 - Row3.Z) / Row2.Z;
+        }
+
+        /// <summary>
+        /// Returns the orthographic projection parameters of this instance.
+        /// This only works if the matrix was created using <see cref="CreateOrthographic(double, double, double, double)"/>.
+        /// </summary>
+        /// <param name="width">The width of the projection volume.</param>
+        /// <param name="height">The height of the projection volume.</param>
+        /// <param name="depthNear">The distance to the near clip plane.</param>
+        /// <param name="depthFar">The distance to the far clip plane.</param>
+        public readonly void ExtractOrthographic(out double width, out double height, out double depthNear, out double depthFar)
+        {
+            double left = -(1 + Row3.X) / Row0.X;
+            double right = (1 - Row3.X) / Row0.X;
+            width = right - left;
+            double bottom = -(1 + Row3.Y) / Row1.Y;
+            double top = (1 - Row3.Y) / Row1.Y;
+            height = top - bottom;
+            depthNear = (1 + Row3.Z) / Row2.Z;
+            depthFar = -(1 - Row3.Z) / Row2.Z;
         }
 
         /// <summary>

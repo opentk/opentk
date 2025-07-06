@@ -1025,3 +1025,62 @@ module Vector4 =
             let transformedVector = Vector4(transformedQuat.X, transformedQuat.Y, transformedQuat.Z, transformedQuat.W)
 
             Assert.ApproximatelyEquivalent(transformedVector, q * v)
+
+    [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
+    module Comparison = 
+        //
+        [<Property>]
+        let ``Greater than between two vectors returns the correct boolean vector`` (v1 : Vector4, v2 : Vector4) =
+            let gt = Vector4.GreaterThan(&v1, &v2)
+
+            let xgt = v1.X > v2.X;
+            let ygt = v1.Y > v2.Y;
+            let zgt = v1.Z > v2.Z;
+            let wgt = v1.W > v2.W;
+
+            Assert.Equal(gt.X, xgt)
+            Assert.Equal(gt.Y, ygt)
+            Assert.Equal(gt.Z, zgt)
+            Assert.Equal(gt.W, wgt)
+
+        [<Property>]
+        let ``Greater than or equal between two vectors returns the correct boolean vector`` (v1 : Vector4, v2 : Vector4) =
+            let ge = Vector4.GreaterThanOrEqual(&v1, &v2)
+
+            let xge = v1.X >= v2.X;
+            let yge = v1.Y >= v2.Y;
+            let zge = v1.Z >= v2.Z;
+            let wge = v1.W >= v2.W;
+
+            Assert.Equal(ge.X, xge)
+            Assert.Equal(ge.Y, yge)
+            Assert.Equal(ge.Z, zge)
+            Assert.Equal(ge.W, wge)
+
+        [<Property>]
+        let ``Less than between two vectors returns the correct boolean vector`` (v1 : Vector4, v2 : Vector4) =
+            let lt = Vector4.LessThan(&v1, &v2)
+
+            let xlt = v1.X < v2.X;
+            let ylt = v1.Y < v2.Y;
+            let zlt = v1.Z < v2.Z;
+            let wlt = v1.W < v2.W;
+
+            Assert.Equal(lt.X, xlt)
+            Assert.Equal(lt.Y, ylt)
+            Assert.Equal(lt.Z, zlt)
+            Assert.Equal(lt.W, wlt)
+
+        [<Property>]
+        let ``Less than or equal between two vectors returns the correct boolean vector`` (v1 : Vector4, v2 : Vector4) =
+            let le = Vector4.LessThanOrEqual(&v1, &v2)
+
+            let xle = v1.X <= v2.X;
+            let yle = v1.Y <= v2.Y;
+            let zle = v1.Z <= v2.Z;
+            let wle = v1.W <= v2.W;
+
+            Assert.Equal(le.X, xle)
+            Assert.Equal(le.Y, yle)
+            Assert.Equal(le.Z, zle)
+            Assert.Equal(le.W, wle)

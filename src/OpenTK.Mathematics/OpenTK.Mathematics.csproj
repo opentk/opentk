@@ -7,6 +7,8 @@
     <Description>Mathematical structures and algorithms, provided and used by OpenTK.</Description>
     <PackageIcon>icon.png</PackageIcon>
     <IsTrimmable>true</IsTrimmable>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>../../OpenTK.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
   <ItemGroup>

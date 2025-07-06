@@ -114,43 +114,34 @@ namespace OpenTK.Mathematics
         {
             readonly get
             {
-                if (index == 0)
+                if (((uint)index) < 3)
                 {
-                    return X;
+                    return GetElementUnsafe(in this, index);
                 }
-
-                if (index == 1)
+                else
                 {
-                    return Y;
+                    throw new IndexOutOfRangeException("You tried to access this vector at index: " + index);
                 }
-
-                if (index == 2)
-                {
-                    return Z;
-                }
-
-                throw new IndexOutOfRangeException("You tried to access this vector at index: " + index);
             }
 
             set
             {
-                if (index == 0)
+                if (((uint)index) < 3)
                 {
-                    X = value;
-                }
-                else if (index == 1)
-                {
-                    Y = value;
-                }
-                else if (index == 2)
-                {
-                    Z = value;
+                    GetElementUnsafe(in this, index) = value;
                 }
                 else
                 {
                     throw new IndexOutOfRangeException("You tried to set this vector at index: " + index);
                 }
             }
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private readonly ref float GetElementUnsafe(in Vector3 v, int index)
+        {
+            ref float address = ref Unsafe.AsRef(in v.X);
+            return ref Unsafe.Add(ref address, index);
         }
 
         /// <summary>
@@ -250,6 +241,57 @@ namespace OpenTK.Mathematics
             result.Y = MathF.Abs(result.Y);
             result.Z = MathF.Abs(result.Z);
             return result;
+        }
+
+        /// <summary>
+        /// Returns a new vector were component-wise rounding has been applied.
+        /// Equivalent to calling <see cref="MathF.Round(float)"/> on each component.
+        /// </summary>
+        /// <returns>The rounded vector.</returns>
+        public readonly Vector3 Round()
+        {
+            return Round(this);
+        }
+
+        /// <summary>
+        /// Returns a new vector were component-wise rounding has been applied with the specified midpoint rounding rule.
+        /// Equivalent to calling <see cref="MathF.Round(float,MidpointRounding)"/> on each component.
+        /// </summary>
+        /// <param name="rounding">The midpoint rounding rule to use.</param>
+        /// <returns>The rounded vector.</returns>
+        public readonly Vector3 Round(MidpointRounding rounding)
+        {
+            return Round(this, rounding);
+        }
+
+        /// <summary>
+        /// Returns a new vector were a component-wise ceiling operation has been applied.
+        /// Equivalent to calling <see cref="MathF.Ceiling(float)"/> on each component.
+        /// </summary>
+        /// <returns>The ceiled vector.</returns>
+        public readonly Vector3 Ceiling()
+        {
+            return Ceiling(this);
+        }
+
+        /// <summary>
+        /// Returns a new vector were a component-wise floor operation has been applied.
+        /// Equivalent to calling <see cref="MathF.Floor(float)"/> on each component.
+        /// </summary>
+        /// <returns>The floored vector.</returns>
+        public readonly Vector3 Floor()
+        {
+            return Floor(this);
+        }
+
+        /// <summary>
+        /// Returns a new vector were component-wise truncation has been applied.
+        /// Equivalent to calling <see cref="MathF.Truncate(float)"/> on each component.
+        /// </summary>
+        /// <returns>The truncated vector.</returns>
+        public readonly Vector3 Truncate()
+        {
+            return Truncate(this);
         }
 
         /// <summary>
@@ -589,6 +631,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <param name="vec">The vector to apply component-wise absolute value to.</param>
         /// <returns>The component-wise absolute value vector.</returns>
+        [Pure]
         public static Vector3 Abs(Vector3 vec)
         {
             vec.X = MathF.Abs(vec.X);
@@ -607,6 +650,146 @@ namespace OpenTK.Mathematics
             result.X = MathF.Abs(vec.X);
             result.Y = MathF.Abs(vec.Y);
             result.Z = MathF.Abs(vec.Z);
+        }
+
+        /// <summary>
+        /// Component-wise rounding. Equivalent to calling <see cref="MathF.Round(float)"/> on each component.
+        /// </summary>
+        /// <param name="vec">The vector to round.</param>
+        /// <returns>The component-wise rounded vector.</returns>
+        [Pure]
+        public static Vector3 Round(Vector3 vec)
+        {
+            vec.X = MathF.Round(vec.X);
+            vec.Y = MathF.Round(vec.Y);
+            vec.Z = MathF.Round(vec.Z);
+            return vec;
+        }
+
+        /// <summary>
+        /// Component-wise rounding. Equivalent to calling <see cref="MathF.Round(float)"/> on each component.
+        /// </summary>
+        /// <param name="vec">The vector to round.</param>
+        /// <param name="result">The component-wise rounded vector.</param>
+        public static void Round(in Vector3 vec, out Vector3 result)
+        {
+            result.X = MathF.Round(vec.X);
+            result.Y = MathF.Round(vec.Y);
+            result.Z = MathF.Round(vec.Z);
+        }
+
+        /// <summary>
+        /// Component-wise rounding with specified midpoint rounding rule.
+        /// Equivalent to calling <see cref="MathF.Round(float,MidpointRounding)"/> on each component.
+        /// </summary>
+        /// <param name="vec">The vector to round.</param>
+        /// <param name="rounding">The midpoint rounding rule to use.</param>
+        /// <returns>The component-wise rounded vector.</returns>
+        [Pure]
+        public static Vector3 Round(Vector3 vec, MidpointRounding rounding)
+        {
+            vec.X = MathF.Round(vec.X, rounding);
+            vec.Y = MathF.Round(vec.Y, rounding);
+            vec.Z = MathF.Round(vec.Z, rounding);
+            return vec;
+        }
+
+        /// <summary>
+        /// Component-wise rounding with specified midpoint rounding rule.
+        /// Equivalent to calling <see cref="MathF.Round(float,MidpointRounding)"/> on each component.
+        /// </summary>
+        /// <param name="vec">The vector to round.</param>
+        /// <param name="rounding">The midpoint rounding rule to use.</param>
+        /// <param name="result">The component-wise rounded vector.</param>
+        public static void Round(in Vector3 vec, MidpointRounding rounding, out Vector3 result)
+        {
+            result.X = MathF.Round(vec.X, rounding);
+            result.Y = MathF.Round(vec.Y, rounding);
+            result.Z = MathF.Round(vec.Z, rounding);
+        }
+
+        /// <summary>
+        /// Component-wise ceiling operation.
+        /// Equivalent to calling <see cref="MathF.Ceiling(float)"/> on each component.
+        /// </summary>
+        /// <param name="vec">The vector to take the ceiling of.</param>
+        /// <returns>The component-wise ceiling vector.</returns>
+        [Pure]
+        public static Vector3 Ceiling(Vector3 vec)
+        {
+            vec.X = MathF.Ceiling(vec.X);
+            vec.Y = MathF.Ceiling(vec.Y);
+            vec.Z = MathF.Ceiling(vec.Z);
+            return vec;
+        }
+
+        /// <summary>
+        /// Component-wise ceiling operation.
+        /// Equivalent to calling <see cref="MathF.Ceiling(float)"/> on each component.
+        /// </summary>
+        /// <param name="vec">The vector to take the ceiling of.</param>
+        /// <param name="result">The component-wise ceiling vector.</param>
+        public static void Ceiling(in Vector3 vec, out Vector3 result)
+        {
+            result.X = MathF.Ceiling(vec.X);
+            result.Y = MathF.Ceiling(vec.Y);
+            result.Z = MathF.Ceiling(vec.Z);
+        }
+
+        /// <summary>
+        /// Component-wise floor operation.
+        /// Equivalent to calling <see cref="MathF.Floor(float)"/> on each component.
+        /// </summary>
+        /// <param name="vec">The vector to take the floor of.</param>
+        /// <returns>The component-wise floored vector.</returns>
+        [Pure]
+        public static Vector3 Floor(Vector3 vec)
+        {
+            vec.X = MathF.Floor(vec.X);
+            vec.Y = MathF.Floor(vec.Y);
+            vec.Z = MathF.Floor(vec.Z);
+            return vec;
+        }
+
+        /// <summary>
+        /// Component-wise floor operation.
+        /// Equivalent to calling <see cref="MathF.Floor(float)"/> on each component.
+        /// </summary>
+        /// <param name="vec">The vector to take the floor of.</param>
+        /// <param name="result">The component-wise floored vector.</param>
+        public static void Floor(in Vector3 vec, out Vector3 result)
+        {
+            result.X = MathF.Floor(vec.X);
+            result.Y = MathF.Floor(vec.Y);
+            result.Z = MathF.Floor(vec.Z);
+        }
+
+        /// <summary>
+        /// Component-wise truncation.
+        /// Equivalent to calling <see cref="MathF.Truncate(float)"/> on each component.
+        /// </summary>
+        /// <param name="vec">The vector to truncate.</param>
+        /// <returns>The component-wise truncated vector.</returns>
+        [Pure]
+        public static Vector3 Truncate(Vector3 vec)
+        {
+            vec.X = MathF.Truncate(vec.X);
+            vec.Y = MathF.Truncate(vec.Y);
+            vec.Z = MathF.Truncate(vec.Z);
+            return vec;
+        }
+
+        /// <summary>
+        /// Component-wise truncation.
+        /// Equivalent to calling <see cref="MathF.Truncate(float)"/> on each component.
+        /// </summary>
+        /// <param name="vec">The vector to truncate.</param>
+        /// <param name="result">The component-wise truncated vector.</param>
+        public static void Truncate(in Vector3 vec, out Vector3 result)
+        {
+            result.X = MathF.Truncate(vec.X);
+            result.Y = MathF.Truncate(vec.Y);
+            result.Z = MathF.Truncate(vec.Z);
         }
 
         /// <summary>
@@ -630,8 +813,7 @@ namespace OpenTK.Mathematics
         /// <param name="result">The distance.</param>
         public static void Distance(in Vector3 vec1, in Vector3 vec2, out float result)
         {
-            result = MathF.Sqrt(((vec2.X - vec1.X) * (vec2.X - vec1.X)) + ((vec2.Y - vec1.Y) * (vec2.Y - vec1.Y)) +
-                                      ((vec2.Z - vec1.Z) * (vec2.Z - vec1.Z)));
+            result = MathF.Sqrt(((vec2.X - vec1.X) * (vec2.X - vec1.X)) + ((vec2.Y - vec1.Y) * (vec2.Y - vec1.Y)) + ((vec2.Z - vec1.Z) * (vec2.Z - vec1.Z)));
         }
 
         /// <summary>
@@ -655,8 +837,7 @@ namespace OpenTK.Mathematics
         /// <param name="result">The squared distance.</param>
         public static void DistanceSquared(in Vector3 vec1, in Vector3 vec2, out float result)
         {
-            result = ((vec2.X - vec1.X) * (vec2.X - vec1.X)) + ((vec2.Y - vec1.Y) * (vec2.Y - vec1.Y)) +
-                     ((vec2.Z - vec1.Z) * (vec2.Z - vec1.Z));
+            result = ((vec2.X - vec1.X) * (vec2.X - vec1.X)) + ((vec2.Y - vec1.Y) * (vec2.Y - vec1.Y)) + ((vec2.Z - vec1.Z) * (vec2.Z - vec1.Z));
         }
 
         /// <summary>
@@ -765,6 +946,72 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
+        /// Component wise less than comparision of two vectors.
+        /// </summary>
+        /// <param name="left">The left vector.</param>
+        /// <param name="right">The right vector.</param>
+        /// <returns>A component wise boolean vector whose compoennts are true when the corresponding left component is less than the right component.</returns>
+        public static Vector3b LessThan(in Vector3 left, in Vector3 right)
+        {
+            return new Vector3b(left.X < right.X, left.Y < right.Y, left.Z < right.Z);
+        }
+
+        /// <summary>
+        /// Component wise less than or equal comparision of two vectors.
+        /// </summary>
+        /// <param name="left">The left vector.</param>
+        /// <param name="right">The right vector.</param>
+        /// <returns>A component wise boolean vector whose compoennts are true when the corresponding left component is less than or equal to the right component.</returns>
+        public static Vector3b LessThanOrEqual(in Vector3 left, in Vector3 right)
+        {
+            return new Vector3b(left.X <= right.X, left.Y <= right.Y, left.Z <= right.Z);
+        }
+
+        /// <summary>
+        /// Component wise greater than comparision of two vectors.
+        /// </summary>
+        /// <param name="left">The left vector.</param>
+        /// <param name="right">The right vector.</param>
+        /// <returns>A component wise boolean vector whose compoennts are true when the corresponding left component is greater than the right component.</returns>
+        public static Vector3b GreaterThan(in Vector3 left, in Vector3 right)
+        {
+            return new Vector3b(left.X > right.X, left.Y > right.Y, left.Z > right.Z);
+        }
+
+        /// <summary>
+        /// Component wise greater than or equal comparision of two vectors.
+        /// </summary>
+        /// <param name="left">The left vector.</param>
+        /// <param name="right">The right vector.</param>
+        /// <returns>A component wise boolean vector whose compoennts are true when the corresponding left component is greater than or equal to the right component.</returns>
+        public static Vector3b GreaterThanOrEqual(in Vector3 left, in Vector3 right)
+        {
+            return new Vector3b(left.X >= right.X, left.Y >= right.Y, left.Z >= right.Z);
+        }
+
+        /// <summary>
+        /// Component wise equal comparision of two vectors.
+        /// </summary>
+        /// <param name="left">The left vector.</param>
+        /// <param name="right">The right vector.</param>
+        /// <returns>A component wise boolean vector whose compoennts are true when the corresponding left component is equal to the right component.</returns>
+        public static Vector3b ComponentEqual(in Vector3 left, in Vector3 right)
+        {
+            return new Vector3b(left.X == right.X, left.Y == right.Y, left.Z == right.Z);
+        }
+
+        /// <summary>
+        /// Component wise not equal comparision of two vectors.
+        /// </summary>
+        /// <param name="left">The left vector.</param>
+        /// <param name="right">The right vector.</param>
+        /// <returns>A component wise boolean vector whose compoennts are true when the corresponding left component is not equal to the right component.</returns>
+        public static Vector3b ComponentNotEqual(in Vector3 left, in Vector3 right)
+        {
+            return new Vector3b(left.X != right.X, left.Y != right.Y, left.Z != right.Z);
+        }
+
+        /// <summary>
         /// Returns a new vector that is the linear blend of the 2 given vectors.
         /// </summary>
         /// <param name="a">First input vector.</param>
@@ -827,6 +1074,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Returns a new vector that is the spherical interpolation of the two given vectors.
         /// <paramref name="a"/> and <paramref name="b"/> need to be normalized for this function to work properly.
+        /// Results are undefined for vectors that point in opposite directions or very close to opposite directions.
         /// </summary>
         /// <param name="a">Unit vector start point.</param>
         /// <param name="b">Unit vector end point.</param>
@@ -857,6 +1105,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Returns a new vector that is the spherical interpolation of the two given vectors.
         /// <paramref name="a"/> and <paramref name="b"/> need to be normalized for this function to work properly.
+        /// Results are undefined for vectors that point in opposite directions or very close to opposite directions.
         /// </summary>
         /// <param name="a">Unit vector start point.</param>
         /// <param name="b">Unit vector end point.</param>
@@ -900,6 +1149,7 @@ namespace OpenTK.Mathematics
         /// <param name="t">The blend factor.</param>
         /// <returns>The exponential interpolation between <paramref name="a"/> and <paramref name="b"/>.</returns>
         /// <seealso cref="MathHelper.Elerp(float, float, float)"/>
+        [Pure]
         public static Vector3 Elerp(Vector3 a, Vector3 b, float t)
         {
             a.X = MathF.Pow(a.X, 1 - t) * MathF.Pow(b.X, t);
@@ -1898,6 +2148,54 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
+        /// Component wise less than comparision between the specified instances.
+        /// </summary>
+        /// <param name="left">The left instance.</param>
+        /// <param name="right">The right instance.</param>
+        /// <returns>A component wise boolean vector whose compoennts are true when the corresponding left component is less than the right component.</returns>
+        [Pure]
+        public static Vector3b operator <(Vector3 left, Vector3 right)
+        {
+            return LessThan(left, right);
+        }
+
+        /// <summary>
+        /// Component wise less than or equal comparision between the specified instances.
+        /// </summary>
+        /// <param name="left">The left instance.</param>
+        /// <param name="right">The right instance.</param>
+        /// <returns>A component wise boolean vector whose compoennts are true when the corresponding left component is less than or equal the right component.</returns>
+        [Pure]
+        public static Vector3b operator <=(Vector3 left, Vector3 right)
+        {
+            return LessThanOrEqual(left, right);
+        }
+
+        /// <summary>
+        /// Component wise greater than comparision between the specified instances.
+        /// </summary>
+        /// <param name="left">The left instance.</param>
+        /// <param name="right">The right instance.</param>
+        /// <returns>A component wise boolean vector whose compoennts are true when the corresponding greater component is greater than the right component.</returns>
+        [Pure]
+        public static Vector3b operator >(Vector3 left, Vector3 right)
+        {
+            return GreaterThan(left, right);
+        }
+
+        /// <summary>
+        /// Component wise greater than or equal comparision between the specified instances.
+        /// </summary>
+        /// <param name="left">The left instance.</param>
+        /// <param name="right">The right instance.</param>
+        /// <returns>A component wise boolean vector whose compoennts are true when the corresponding left component is greater than or equal the right component.</returns>
+        [Pure]
+        public static Vector3b operator >=(Vector3 left, Vector3 right)
+        {
+            return GreaterThanOrEqual(left, right);
+        }
+
+        /// <summary>
         /// Compares two instances for equality.
         /// </summary>
         /// <param name="left">The first instance.</param>
@@ -1962,6 +2260,26 @@ namespace OpenTK.Mathematics
         public static implicit operator Vector3((float X, float Y, float Z) values)
         {
             return new Vector3(values.X, values.Y, values.Z);
+        }
+
+        /// <summary>
+        /// Converts <see cref="System.Numerics.Vector3"/> to <see cref="Vector3"/>.
+        /// </summary>
+        /// <param name="vec">The <see cref="System.Numerics.Vector3"/> to cast.</param>
+        [Pure]
+        public static explicit operator Vector3(System.Numerics.Vector3 vec)
+        {
+            return Unsafe.As<System.Numerics.Vector3, Vector3>(ref vec);
+        }
+
+        /// <summary>
+        /// Converts <see cref="Vector3"/> to <see cref="System.Numerics.Vector3"/>.
+        /// </summary>
+        /// <param name="vec">The <see cref="Vector3"/> to cast.</param>
+        [Pure]
+        public static explicit operator System.Numerics.Vector3(Vector3 vec)
+        {
+            return Unsafe.As<Vector3, System.Numerics.Vector3>(ref vec);
         }
 
         /// <inheritdoc/>
