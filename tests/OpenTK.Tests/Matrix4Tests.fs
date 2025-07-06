@@ -579,8 +579,8 @@ module Matrix4 =
 
         [<Property>]
         let ``Matrix4.ExtractPerspectiveFieldOfView returns what was passed to CreatePerspectiveFieldOfView`` (AcuteAngle fovy, aspect: float32, nearFar : PositiveRange) =
-            let fovy = MathHelper.Abs(fovy)
-            let aspect = MathHelper.Abs(aspect)
+            let fovy = System.MathF.Abs(fovy)
+            let aspect = System.MathF.Abs(aspect)
             let near = nearFar.Start
             let far = nearFar.Stop
             let A = Matrix4.CreatePerspectiveFieldOfView(fovy, aspect, near, far)

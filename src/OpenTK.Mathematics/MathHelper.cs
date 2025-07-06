@@ -87,7 +87,7 @@ namespace OpenTK.Mathematics
         /// Defines the constant that you should multiply by to convert Degrees to Radians.
         /// </summary>
         public const double DegToRadd = Math.PI / 180.0d;
-        
+
         /// <summary>
         /// Returns the next power of two that is greater than or equal to the specified number.
         /// </summary>

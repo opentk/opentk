@@ -2,6 +2,7 @@
 
 open Xunit
 open FsCheck.Xunit
+open System
 open System.Runtime.InteropServices
 open OpenTK.Mathematics
 

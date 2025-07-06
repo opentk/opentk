@@ -82,6 +82,7 @@ module private Generators =
         |> Gen.four
         |> Gen.map Vector4d
         |> Gen.filter (fun v -> not <| (Double.IsNaN v.Length || Double.IsInfinity v.Length ))
+        |> Arb.fromGen
     
     let vec2b =
         Arb.Default.Bool() |> Arb.toGen
