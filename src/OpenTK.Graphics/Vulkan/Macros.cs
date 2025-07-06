@@ -40,7 +40,7 @@ namespace OpenTK.Graphics.Vulkan
 
         // FIXME: Auto generate this? if not all of the defines??
         // We want to keep this up to date...
-        public const uint VK_HEADER_VERSION = 312;
+        public const uint VK_HEADER_VERSION = 321;
         public static readonly uint VK_HEADER_VERSION_COMPLETE = MAKE_API_VERSION(0, 1, 4, VK_HEADER_VERSION);
 
         // For vulkansc that we don't support atm.

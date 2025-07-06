@@ -947,6 +947,8 @@ namespace VkGenerator.Process
                         "MTLSharedEvent_id" => CSPrimitive.IntPtr(@const),
                         "IOSurfaceRef" => CSPrimitive.IntPtr(@const),
 
+                        "OHNativeWindow" => new CSStruct("OHNativeWindow", @const),
+
                         /*
                         // From vk_video/vulkan_video_codec_h264std.h
                         "StdVideoH264ProfileIdc" => new CSEnum("StdVideoH264ProfileIdc", CSPrimitive.Int(@const), @const),

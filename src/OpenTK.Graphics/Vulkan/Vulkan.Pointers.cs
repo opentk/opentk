@@ -9,6 +9,8 @@ using OpenTK.Graphics.Vulkan.VulkanVideoCodecH264stdEncode;
 using OpenTK.Graphics.Vulkan.VulkanVideoCodecH265std;
 using OpenTK.Graphics.Vulkan.VulkanVideoCodecH265stdDecode;
 using OpenTK.Graphics.Vulkan.VulkanVideoCodecH265stdEncode;
+using OpenTK.Graphics.Vulkan.VulkanVideoCodecVp9std;
+using OpenTK.Graphics.Vulkan.VulkanVideoCodecVp9stdDecode;
 using OpenTK.Graphics.Vulkan.VulkanVideoCodecsCommon;
 using System;
 using System.Runtime.CompilerServices;
@@ -145,6 +147,13 @@ namespace OpenTK.Graphics.Vulkan
             _vkBindBufferMemory2KHR_fnptr = (delegate* unmanaged<VkDevice, uint, VkBindBufferMemoryInfo*, VkResult>)VKLoader.GetInstanceProcAddress("vkBindBufferMemory2KHR");
             return _vkBindBufferMemory2KHR_fnptr(device, bindInfoCount, pBindInfos);
         }
+        public static delegate* unmanaged<VkDevice, uint, VkBindDataGraphPipelineSessionMemoryInfoARM*, VkResult> _vkBindDataGraphPipelineSessionMemoryARM_fnptr = &vkBindDataGraphPipelineSessionMemoryARM_Lazy;
+        [UnmanagedCallersOnly]
+        private static VkResult vkBindDataGraphPipelineSessionMemoryARM_Lazy(VkDevice device, uint bindInfoCount, VkBindDataGraphPipelineSessionMemoryInfoARM* pBindInfos)
+        {
+            _vkBindDataGraphPipelineSessionMemoryARM_fnptr = (delegate* unmanaged<VkDevice, uint, VkBindDataGraphPipelineSessionMemoryInfoARM*, VkResult>)VKLoader.GetInstanceProcAddress("vkBindDataGraphPipelineSessionMemoryARM");
+            return _vkBindDataGraphPipelineSessionMemoryARM_fnptr(device, bindInfoCount, pBindInfos);
+        }
         public static delegate* unmanaged<VkDevice, VkImage, VkDeviceMemory, ulong, VkResult> _vkBindImageMemory_fnptr = &vkBindImageMemory_Lazy;
         [UnmanagedCallersOnly]
         private static VkResult vkBindImageMemory_Lazy(VkDevice device, VkImage image, VkDeviceMemory memory, ulong memoryOffset)
@@ -172,6 +181,13 @@ namespace OpenTK.Graphics.Vulkan
         {
             _vkBindOpticalFlowSessionImageNV_fnptr = (delegate* unmanaged<VkDevice, VkOpticalFlowSessionNV, VkOpticalFlowSessionBindingPointNV, VkImageView, VkImageLayout, VkResult>)VKLoader.GetInstanceProcAddress("vkBindOpticalFlowSessionImageNV");
             return _vkBindOpticalFlowSessionImageNV_fnptr(device, session, bindingPoint, view, layout);
+        }
+        public static delegate* unmanaged<VkDevice, uint, VkBindTensorMemoryInfoARM*, VkResult> _vkBindTensorMemoryARM_fnptr = &vkBindTensorMemoryARM_Lazy;
+        [UnmanagedCallersOnly]
+        private static VkResult vkBindTensorMemoryARM_Lazy(VkDevice device, uint bindInfoCount, VkBindTensorMemoryInfoARM* pBindInfos)
+        {
+            _vkBindTensorMemoryARM_fnptr = (delegate* unmanaged<VkDevice, uint, VkBindTensorMemoryInfoARM*, VkResult>)VKLoader.GetInstanceProcAddress("vkBindTensorMemoryARM");
+            return _vkBindTensorMemoryARM_fnptr(device, bindInfoCount, pBindInfos);
         }
         public static delegate* unmanaged<VkDevice, VkVideoSessionKHR, uint, VkBindVideoSessionMemoryInfoKHR*, VkResult> _vkBindVideoSessionMemoryKHR_fnptr = &vkBindVideoSessionMemoryKHR_Lazy;
         [UnmanagedCallersOnly]
@@ -375,6 +391,13 @@ namespace OpenTK.Graphics.Vulkan
         {
             _vkCmdBindShadingRateImageNV_fnptr = (delegate* unmanaged<VkCommandBuffer, VkImageView, VkImageLayout, void>)VKLoader.GetInstanceProcAddress("vkCmdBindShadingRateImageNV");
             _vkCmdBindShadingRateImageNV_fnptr(commandBuffer, imageView, imageLayout);
+        }
+        public static delegate* unmanaged<VkCommandBuffer, VkTileMemoryBindInfoQCOM*, void> _vkCmdBindTileMemoryQCOM_fnptr = &vkCmdBindTileMemoryQCOM_Lazy;
+        [UnmanagedCallersOnly]
+        private static void vkCmdBindTileMemoryQCOM_Lazy(VkCommandBuffer commandBuffer, VkTileMemoryBindInfoQCOM* pTileMemoryBindInfo)
+        {
+            _vkCmdBindTileMemoryQCOM_fnptr = (delegate* unmanaged<VkCommandBuffer, VkTileMemoryBindInfoQCOM*, void>)VKLoader.GetInstanceProcAddress("vkCmdBindTileMemoryQCOM");
+            _vkCmdBindTileMemoryQCOM_fnptr(commandBuffer, pTileMemoryBindInfo);
         }
         public static delegate* unmanaged<VkCommandBuffer, uint, uint, VkBuffer*, ulong*, ulong*, void> _vkCmdBindTransformFeedbackBuffersEXT_fnptr = &vkCmdBindTransformFeedbackBuffersEXT_Lazy;
         [UnmanagedCallersOnly]
@@ -656,6 +679,13 @@ namespace OpenTK.Graphics.Vulkan
             _vkCmdCopyQueryPoolResults_fnptr = (delegate* unmanaged<VkCommandBuffer, VkQueryPool, uint, uint, VkBuffer, ulong, ulong, VkQueryResultFlagBits, void>)VKLoader.GetInstanceProcAddress("vkCmdCopyQueryPoolResults");
             _vkCmdCopyQueryPoolResults_fnptr(commandBuffer, queryPool, firstQuery, queryCount, dstBuffer, dstOffset, stride, flags);
         }
+        public static delegate* unmanaged<VkCommandBuffer, VkCopyTensorInfoARM*, void> _vkCmdCopyTensorARM_fnptr = &vkCmdCopyTensorARM_Lazy;
+        [UnmanagedCallersOnly]
+        private static void vkCmdCopyTensorARM_Lazy(VkCommandBuffer commandBuffer, VkCopyTensorInfoARM* pCopyTensorInfo)
+        {
+            _vkCmdCopyTensorARM_fnptr = (delegate* unmanaged<VkCommandBuffer, VkCopyTensorInfoARM*, void>)VKLoader.GetInstanceProcAddress("vkCmdCopyTensorARM");
+            _vkCmdCopyTensorARM_fnptr(commandBuffer, pCopyTensorInfo);
+        }
         public static delegate* unmanaged<VkCommandBuffer, VkCudaLaunchInfoNV*, void> _vkCmdCudaLaunchKernelNV_fnptr = &vkCmdCudaLaunchKernelNV_Lazy;
         [UnmanagedCallersOnly]
         private static void vkCmdCudaLaunchKernelNV_Lazy(VkCommandBuffer commandBuffer, VkCudaLaunchInfoNV* pLaunchInfo)
@@ -733,6 +763,13 @@ namespace OpenTK.Graphics.Vulkan
             _vkCmdDispatchBaseKHR_fnptr = (delegate* unmanaged<VkCommandBuffer, uint, uint, uint, uint, uint, uint, void>)VKLoader.GetInstanceProcAddress("vkCmdDispatchBaseKHR");
             _vkCmdDispatchBaseKHR_fnptr(commandBuffer, baseGroupX, baseGroupY, baseGroupZ, groupCountX, groupCountY, groupCountZ);
         }
+        public static delegate* unmanaged<VkCommandBuffer, VkDataGraphPipelineSessionARM, VkDataGraphPipelineDispatchInfoARM*, void> _vkCmdDispatchDataGraphARM_fnptr = &vkCmdDispatchDataGraphARM_Lazy;
+        [UnmanagedCallersOnly]
+        private static void vkCmdDispatchDataGraphARM_Lazy(VkCommandBuffer commandBuffer, VkDataGraphPipelineSessionARM session, VkDataGraphPipelineDispatchInfoARM* pInfo)
+        {
+            _vkCmdDispatchDataGraphARM_fnptr = (delegate* unmanaged<VkCommandBuffer, VkDataGraphPipelineSessionARM, VkDataGraphPipelineDispatchInfoARM*, void>)VKLoader.GetInstanceProcAddress("vkCmdDispatchDataGraphARM");
+            _vkCmdDispatchDataGraphARM_fnptr(commandBuffer, session, pInfo);
+        }
         public static delegate* unmanaged<VkCommandBuffer, ulong, ulong, VkDispatchGraphCountInfoAMDX*, void> _vkCmdDispatchGraphAMDX_fnptr = &vkCmdDispatchGraphAMDX_Lazy;
         [UnmanagedCallersOnly]
         private static void vkCmdDispatchGraphAMDX_Lazy(VkCommandBuffer commandBuffer, ulong scratch, ulong scratchSize, VkDispatchGraphCountInfoAMDX* pCountInfo)
@@ -761,12 +798,12 @@ namespace OpenTK.Graphics.Vulkan
             _vkCmdDispatchIndirect_fnptr = (delegate* unmanaged<VkCommandBuffer, VkBuffer, ulong, void>)VKLoader.GetInstanceProcAddress("vkCmdDispatchIndirect");
             _vkCmdDispatchIndirect_fnptr(commandBuffer, buffer, offset);
         }
-        public static delegate* unmanaged<VkCommandBuffer, void> _vkCmdDispatchTileQCOM_fnptr = &vkCmdDispatchTileQCOM_Lazy;
+        public static delegate* unmanaged<VkCommandBuffer, VkDispatchTileInfoQCOM*, void> _vkCmdDispatchTileQCOM_fnptr = &vkCmdDispatchTileQCOM_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdDispatchTileQCOM_Lazy(VkCommandBuffer commandBuffer)
+        private static void vkCmdDispatchTileQCOM_Lazy(VkCommandBuffer commandBuffer, VkDispatchTileInfoQCOM* pDispatchTileInfo)
         {
-            _vkCmdDispatchTileQCOM_fnptr = (delegate* unmanaged<VkCommandBuffer, void>)VKLoader.GetInstanceProcAddress("vkCmdDispatchTileQCOM");
-            _vkCmdDispatchTileQCOM_fnptr(commandBuffer);
+            _vkCmdDispatchTileQCOM_fnptr = (delegate* unmanaged<VkCommandBuffer, VkDispatchTileInfoQCOM*, void>)VKLoader.GetInstanceProcAddress("vkCmdDispatchTileQCOM");
+            _vkCmdDispatchTileQCOM_fnptr(commandBuffer, pDispatchTileInfo);
         }
         public static delegate* unmanaged<VkCommandBuffer, uint, uint, uint, uint, void> _vkCmdDraw_fnptr = &vkCmdDraw_Lazy;
         [UnmanagedCallersOnly]
@@ -2294,6 +2331,20 @@ namespace OpenTK.Graphics.Vulkan
             _vkCreateCuModuleNVX_fnptr = (delegate* unmanaged<VkDevice, VkCuModuleCreateInfoNVX*, VkAllocationCallbacks*, VkCuModuleNVX*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateCuModuleNVX");
             return _vkCreateCuModuleNVX_fnptr(device, pCreateInfo, pAllocator, pModule);
         }
+        public static delegate* unmanaged<VkDevice, VkDeferredOperationKHR, VkPipelineCache, uint, VkDataGraphPipelineCreateInfoARM*, VkAllocationCallbacks*, VkPipeline*, VkResult> _vkCreateDataGraphPipelinesARM_fnptr = &vkCreateDataGraphPipelinesARM_Lazy;
+        [UnmanagedCallersOnly]
+        private static VkResult vkCreateDataGraphPipelinesARM_Lazy(VkDevice device, VkDeferredOperationKHR deferredOperation, VkPipelineCache pipelineCache, uint createInfoCount, VkDataGraphPipelineCreateInfoARM* pCreateInfos, VkAllocationCallbacks* pAllocator, VkPipeline* pPipelines)
+        {
+            _vkCreateDataGraphPipelinesARM_fnptr = (delegate* unmanaged<VkDevice, VkDeferredOperationKHR, VkPipelineCache, uint, VkDataGraphPipelineCreateInfoARM*, VkAllocationCallbacks*, VkPipeline*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateDataGraphPipelinesARM");
+            return _vkCreateDataGraphPipelinesARM_fnptr(device, deferredOperation, pipelineCache, createInfoCount, pCreateInfos, pAllocator, pPipelines);
+        }
+        public static delegate* unmanaged<VkDevice, VkDataGraphPipelineSessionCreateInfoARM*, VkAllocationCallbacks*, VkDataGraphPipelineSessionARM*, VkResult> _vkCreateDataGraphPipelineSessionARM_fnptr = &vkCreateDataGraphPipelineSessionARM_Lazy;
+        [UnmanagedCallersOnly]
+        private static VkResult vkCreateDataGraphPipelineSessionARM_Lazy(VkDevice device, VkDataGraphPipelineSessionCreateInfoARM* pCreateInfo, VkAllocationCallbacks* pAllocator, VkDataGraphPipelineSessionARM* pSession)
+        {
+            _vkCreateDataGraphPipelineSessionARM_fnptr = (delegate* unmanaged<VkDevice, VkDataGraphPipelineSessionCreateInfoARM*, VkAllocationCallbacks*, VkDataGraphPipelineSessionARM*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateDataGraphPipelineSessionARM");
+            return _vkCreateDataGraphPipelineSessionARM_fnptr(device, pCreateInfo, pAllocator, pSession);
+        }
         public static delegate* unmanaged<VkInstance, VkDebugReportCallbackCreateInfoEXT*, VkAllocationCallbacks*, VkDebugReportCallbackEXT*, VkResult> _vkCreateDebugReportCallbackEXT_fnptr = &vkCreateDebugReportCallbackEXT_Lazy;
         [UnmanagedCallersOnly]
         private static VkResult vkCreateDebugReportCallbackEXT_Lazy(VkInstance instance, VkDebugReportCallbackCreateInfoEXT* pCreateInfo, VkAllocationCallbacks* pAllocator, VkDebugReportCallbackEXT* pCallback)
@@ -2651,12 +2702,33 @@ namespace OpenTK.Graphics.Vulkan
             _vkCreateStreamDescriptorSurfaceGGP_fnptr = (delegate* unmanaged<VkInstance, VkStreamDescriptorSurfaceCreateInfoGGP*, VkAllocationCallbacks*, VkSurfaceKHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateStreamDescriptorSurfaceGGP");
             return _vkCreateStreamDescriptorSurfaceGGP_fnptr(instance, pCreateInfo, pAllocator, pSurface);
         }
+        public static delegate* unmanaged<VkInstance, VkOHSurfaceCreateInfoOHOS*, VkAllocationCallbacks*, VkSurfaceKHR*, VkResult> _vkCreateSurfaceOHOS_fnptr = &vkCreateSurfaceOHOS_Lazy;
+        [UnmanagedCallersOnly]
+        private static VkResult vkCreateSurfaceOHOS_Lazy(VkInstance instance, VkOHSurfaceCreateInfoOHOS* pCreateInfo, VkAllocationCallbacks* pAllocator, VkSurfaceKHR* pSurface)
+        {
+            _vkCreateSurfaceOHOS_fnptr = (delegate* unmanaged<VkInstance, VkOHSurfaceCreateInfoOHOS*, VkAllocationCallbacks*, VkSurfaceKHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateSurfaceOHOS");
+            return _vkCreateSurfaceOHOS_fnptr(instance, pCreateInfo, pAllocator, pSurface);
+        }
         public static delegate* unmanaged<VkDevice, VkSwapchainCreateInfoKHR*, VkAllocationCallbacks*, VkSwapchainKHR*, VkResult> _vkCreateSwapchainKHR_fnptr = &vkCreateSwapchainKHR_Lazy;
         [UnmanagedCallersOnly]
         private static VkResult vkCreateSwapchainKHR_Lazy(VkDevice device, VkSwapchainCreateInfoKHR* pCreateInfo, VkAllocationCallbacks* pAllocator, VkSwapchainKHR* pSwapchain)
         {
             _vkCreateSwapchainKHR_fnptr = (delegate* unmanaged<VkDevice, VkSwapchainCreateInfoKHR*, VkAllocationCallbacks*, VkSwapchainKHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateSwapchainKHR");
             return _vkCreateSwapchainKHR_fnptr(device, pCreateInfo, pAllocator, pSwapchain);
+        }
+        public static delegate* unmanaged<VkDevice, VkTensorCreateInfoARM*, VkAllocationCallbacks*, VkTensorARM*, VkResult> _vkCreateTensorARM_fnptr = &vkCreateTensorARM_Lazy;
+        [UnmanagedCallersOnly]
+        private static VkResult vkCreateTensorARM_Lazy(VkDevice device, VkTensorCreateInfoARM* pCreateInfo, VkAllocationCallbacks* pAllocator, VkTensorARM* pTensor)
+        {
+            _vkCreateTensorARM_fnptr = (delegate* unmanaged<VkDevice, VkTensorCreateInfoARM*, VkAllocationCallbacks*, VkTensorARM*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateTensorARM");
+            return _vkCreateTensorARM_fnptr(device, pCreateInfo, pAllocator, pTensor);
+        }
+        public static delegate* unmanaged<VkDevice, VkTensorViewCreateInfoARM*, VkAllocationCallbacks*, VkTensorViewARM*, VkResult> _vkCreateTensorViewARM_fnptr = &vkCreateTensorViewARM_Lazy;
+        [UnmanagedCallersOnly]
+        private static VkResult vkCreateTensorViewARM_Lazy(VkDevice device, VkTensorViewCreateInfoARM* pCreateInfo, VkAllocationCallbacks* pAllocator, VkTensorViewARM* pView)
+        {
+            _vkCreateTensorViewARM_fnptr = (delegate* unmanaged<VkDevice, VkTensorViewCreateInfoARM*, VkAllocationCallbacks*, VkTensorViewARM*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateTensorViewARM");
+            return _vkCreateTensorViewARM_fnptr(device, pCreateInfo, pAllocator, pView);
         }
         public static delegate* unmanaged<VkDevice, VkValidationCacheCreateInfoEXT*, VkAllocationCallbacks*, VkValidationCacheEXT*, VkResult> _vkCreateValidationCacheEXT_fnptr = &vkCreateValidationCacheEXT_Lazy;
         [UnmanagedCallersOnly]
@@ -2811,6 +2883,13 @@ namespace OpenTK.Graphics.Vulkan
         {
             _vkDestroyCuModuleNVX_fnptr = (delegate* unmanaged<VkDevice, VkCuModuleNVX, VkAllocationCallbacks*, void>)VKLoader.GetInstanceProcAddress("vkDestroyCuModuleNVX");
             _vkDestroyCuModuleNVX_fnptr(device, module, pAllocator);
+        }
+        public static delegate* unmanaged<VkDevice, VkDataGraphPipelineSessionARM, VkAllocationCallbacks*, void> _vkDestroyDataGraphPipelineSessionARM_fnptr = &vkDestroyDataGraphPipelineSessionARM_Lazy;
+        [UnmanagedCallersOnly]
+        private static void vkDestroyDataGraphPipelineSessionARM_Lazy(VkDevice device, VkDataGraphPipelineSessionARM session, VkAllocationCallbacks* pAllocator)
+        {
+            _vkDestroyDataGraphPipelineSessionARM_fnptr = (delegate* unmanaged<VkDevice, VkDataGraphPipelineSessionARM, VkAllocationCallbacks*, void>)VKLoader.GetInstanceProcAddress("vkDestroyDataGraphPipelineSessionARM");
+            _vkDestroyDataGraphPipelineSessionARM_fnptr(device, session, pAllocator);
         }
         public static delegate* unmanaged<VkInstance, VkDebugReportCallbackEXT, VkAllocationCallbacks*, void> _vkDestroyDebugReportCallbackEXT_fnptr = &vkDestroyDebugReportCallbackEXT_Lazy;
         [UnmanagedCallersOnly]
@@ -3070,6 +3149,20 @@ namespace OpenTK.Graphics.Vulkan
         {
             _vkDestroySwapchainKHR_fnptr = (delegate* unmanaged<VkDevice, VkSwapchainKHR, VkAllocationCallbacks*, void>)VKLoader.GetInstanceProcAddress("vkDestroySwapchainKHR");
             _vkDestroySwapchainKHR_fnptr(device, swapchain, pAllocator);
+        }
+        public static delegate* unmanaged<VkDevice, VkTensorARM, VkAllocationCallbacks*, void> _vkDestroyTensorARM_fnptr = &vkDestroyTensorARM_Lazy;
+        [UnmanagedCallersOnly]
+        private static void vkDestroyTensorARM_Lazy(VkDevice device, VkTensorARM tensor, VkAllocationCallbacks* pAllocator)
+        {
+            _vkDestroyTensorARM_fnptr = (delegate* unmanaged<VkDevice, VkTensorARM, VkAllocationCallbacks*, void>)VKLoader.GetInstanceProcAddress("vkDestroyTensorARM");
+            _vkDestroyTensorARM_fnptr(device, tensor, pAllocator);
+        }
+        public static delegate* unmanaged<VkDevice, VkTensorViewARM, VkAllocationCallbacks*, void> _vkDestroyTensorViewARM_fnptr = &vkDestroyTensorViewARM_Lazy;
+        [UnmanagedCallersOnly]
+        private static void vkDestroyTensorViewARM_Lazy(VkDevice device, VkTensorViewARM tensorView, VkAllocationCallbacks* pAllocator)
+        {
+            _vkDestroyTensorViewARM_fnptr = (delegate* unmanaged<VkDevice, VkTensorViewARM, VkAllocationCallbacks*, void>)VKLoader.GetInstanceProcAddress("vkDestroyTensorViewARM");
+            _vkDestroyTensorViewARM_fnptr(device, tensorView, pAllocator);
         }
         public static delegate* unmanaged<VkDevice, VkValidationCacheEXT, VkAllocationCallbacks*, void> _vkDestroyValidationCacheEXT_fnptr = &vkDestroyValidationCacheEXT_Lazy;
         [UnmanagedCallersOnly]
@@ -3358,6 +3451,34 @@ namespace OpenTK.Graphics.Vulkan
             _vkGetCudaModuleCacheNV_fnptr = (delegate* unmanaged<VkDevice, VkCudaModuleNV, nuint*, void*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetCudaModuleCacheNV");
             return _vkGetCudaModuleCacheNV_fnptr(device, module, pCacheSize, pCacheData);
         }
+        public static delegate* unmanaged<VkDevice, VkDataGraphPipelineInfoARM*, uint*, VkDataGraphPipelinePropertyARM*, VkResult> _vkGetDataGraphPipelineAvailablePropertiesARM_fnptr = &vkGetDataGraphPipelineAvailablePropertiesARM_Lazy;
+        [UnmanagedCallersOnly]
+        private static VkResult vkGetDataGraphPipelineAvailablePropertiesARM_Lazy(VkDevice device, VkDataGraphPipelineInfoARM* pPipelineInfo, uint* pPropertiesCount, VkDataGraphPipelinePropertyARM* pProperties)
+        {
+            _vkGetDataGraphPipelineAvailablePropertiesARM_fnptr = (delegate* unmanaged<VkDevice, VkDataGraphPipelineInfoARM*, uint*, VkDataGraphPipelinePropertyARM*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetDataGraphPipelineAvailablePropertiesARM");
+            return _vkGetDataGraphPipelineAvailablePropertiesARM_fnptr(device, pPipelineInfo, pPropertiesCount, pProperties);
+        }
+        public static delegate* unmanaged<VkDevice, VkDataGraphPipelineInfoARM*, uint, VkDataGraphPipelinePropertyQueryResultARM*, VkResult> _vkGetDataGraphPipelinePropertiesARM_fnptr = &vkGetDataGraphPipelinePropertiesARM_Lazy;
+        [UnmanagedCallersOnly]
+        private static VkResult vkGetDataGraphPipelinePropertiesARM_Lazy(VkDevice device, VkDataGraphPipelineInfoARM* pPipelineInfo, uint propertiesCount, VkDataGraphPipelinePropertyQueryResultARM* pProperties)
+        {
+            _vkGetDataGraphPipelinePropertiesARM_fnptr = (delegate* unmanaged<VkDevice, VkDataGraphPipelineInfoARM*, uint, VkDataGraphPipelinePropertyQueryResultARM*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetDataGraphPipelinePropertiesARM");
+            return _vkGetDataGraphPipelinePropertiesARM_fnptr(device, pPipelineInfo, propertiesCount, pProperties);
+        }
+        public static delegate* unmanaged<VkDevice, VkDataGraphPipelineSessionBindPointRequirementsInfoARM*, uint*, VkDataGraphPipelineSessionBindPointRequirementARM*, VkResult> _vkGetDataGraphPipelineSessionBindPointRequirementsARM_fnptr = &vkGetDataGraphPipelineSessionBindPointRequirementsARM_Lazy;
+        [UnmanagedCallersOnly]
+        private static VkResult vkGetDataGraphPipelineSessionBindPointRequirementsARM_Lazy(VkDevice device, VkDataGraphPipelineSessionBindPointRequirementsInfoARM* pInfo, uint* pBindPointRequirementCount, VkDataGraphPipelineSessionBindPointRequirementARM* pBindPointRequirements)
+        {
+            _vkGetDataGraphPipelineSessionBindPointRequirementsARM_fnptr = (delegate* unmanaged<VkDevice, VkDataGraphPipelineSessionBindPointRequirementsInfoARM*, uint*, VkDataGraphPipelineSessionBindPointRequirementARM*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetDataGraphPipelineSessionBindPointRequirementsARM");
+            return _vkGetDataGraphPipelineSessionBindPointRequirementsARM_fnptr(device, pInfo, pBindPointRequirementCount, pBindPointRequirements);
+        }
+        public static delegate* unmanaged<VkDevice, VkDataGraphPipelineSessionMemoryRequirementsInfoARM*, VkMemoryRequirements2*, void> _vkGetDataGraphPipelineSessionMemoryRequirementsARM_fnptr = &vkGetDataGraphPipelineSessionMemoryRequirementsARM_Lazy;
+        [UnmanagedCallersOnly]
+        private static void vkGetDataGraphPipelineSessionMemoryRequirementsARM_Lazy(VkDevice device, VkDataGraphPipelineSessionMemoryRequirementsInfoARM* pInfo, VkMemoryRequirements2* pMemoryRequirements)
+        {
+            _vkGetDataGraphPipelineSessionMemoryRequirementsARM_fnptr = (delegate* unmanaged<VkDevice, VkDataGraphPipelineSessionMemoryRequirementsInfoARM*, VkMemoryRequirements2*, void>)VKLoader.GetInstanceProcAddress("vkGetDataGraphPipelineSessionMemoryRequirementsARM");
+            _vkGetDataGraphPipelineSessionMemoryRequirementsARM_fnptr(device, pInfo, pMemoryRequirements);
+        }
         public static delegate* unmanaged<VkDevice, VkDeferredOperationKHR, uint> _vkGetDeferredOperationMaxConcurrencyKHR_fnptr = &vkGetDeferredOperationMaxConcurrencyKHR_Lazy;
         [UnmanagedCallersOnly]
         private static uint vkGetDeferredOperationMaxConcurrencyKHR_Lazy(VkDevice device, VkDeferredOperationKHR operation)
@@ -3581,6 +3702,13 @@ namespace OpenTK.Graphics.Vulkan
         {
             _vkGetDeviceSubpassShadingMaxWorkgroupSizeHUAWEI_fnptr = (delegate* unmanaged<VkDevice, VkRenderPass, VkExtent2D*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetDeviceSubpassShadingMaxWorkgroupSizeHUAWEI");
             return _vkGetDeviceSubpassShadingMaxWorkgroupSizeHUAWEI_fnptr(device, renderpass, pMaxWorkgroupSize);
+        }
+        public static delegate* unmanaged<VkDevice, VkDeviceTensorMemoryRequirementsARM*, VkMemoryRequirements2*, void> _vkGetDeviceTensorMemoryRequirementsARM_fnptr = &vkGetDeviceTensorMemoryRequirementsARM_Lazy;
+        [UnmanagedCallersOnly]
+        private static void vkGetDeviceTensorMemoryRequirementsARM_Lazy(VkDevice device, VkDeviceTensorMemoryRequirementsARM* pInfo, VkMemoryRequirements2* pMemoryRequirements)
+        {
+            _vkGetDeviceTensorMemoryRequirementsARM_fnptr = (delegate* unmanaged<VkDevice, VkDeviceTensorMemoryRequirementsARM*, VkMemoryRequirements2*, void>)VKLoader.GetInstanceProcAddress("vkGetDeviceTensorMemoryRequirementsARM");
+            _vkGetDeviceTensorMemoryRequirementsARM_fnptr(device, pInfo, pMemoryRequirements);
         }
         public static delegate* unmanaged<VkPhysicalDevice, VkDisplayKHR, uint*, VkDisplayModeProperties2KHR*, VkResult> _vkGetDisplayModeProperties2KHR_fnptr = &vkGetDisplayModeProperties2KHR_Lazy;
         [UnmanagedCallersOnly]
@@ -4107,6 +4235,13 @@ namespace OpenTK.Graphics.Vulkan
             _vkGetPhysicalDeviceExternalSemaphorePropertiesKHR_fnptr = (delegate* unmanaged<VkPhysicalDevice, VkPhysicalDeviceExternalSemaphoreInfo*, VkExternalSemaphoreProperties*, void>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceExternalSemaphorePropertiesKHR");
             _vkGetPhysicalDeviceExternalSemaphorePropertiesKHR_fnptr(physicalDevice, pExternalSemaphoreInfo, pExternalSemaphoreProperties);
         }
+        public static delegate* unmanaged<VkPhysicalDevice, VkPhysicalDeviceExternalTensorInfoARM*, VkExternalTensorPropertiesARM*, void> _vkGetPhysicalDeviceExternalTensorPropertiesARM_fnptr = &vkGetPhysicalDeviceExternalTensorPropertiesARM_Lazy;
+        [UnmanagedCallersOnly]
+        private static void vkGetPhysicalDeviceExternalTensorPropertiesARM_Lazy(VkPhysicalDevice physicalDevice, VkPhysicalDeviceExternalTensorInfoARM* pExternalTensorInfo, VkExternalTensorPropertiesARM* pExternalTensorProperties)
+        {
+            _vkGetPhysicalDeviceExternalTensorPropertiesARM_fnptr = (delegate* unmanaged<VkPhysicalDevice, VkPhysicalDeviceExternalTensorInfoARM*, VkExternalTensorPropertiesARM*, void>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceExternalTensorPropertiesARM");
+            _vkGetPhysicalDeviceExternalTensorPropertiesARM_fnptr(physicalDevice, pExternalTensorInfo, pExternalTensorProperties);
+        }
         public static delegate* unmanaged<VkPhysicalDevice, VkPhysicalDeviceFeatures*, void> _vkGetPhysicalDeviceFeatures_fnptr = &vkGetPhysicalDeviceFeatures_Lazy;
         [UnmanagedCallersOnly]
         private static void vkGetPhysicalDeviceFeatures_Lazy(VkPhysicalDevice physicalDevice, VkPhysicalDeviceFeatures* pFeatures)
@@ -4239,6 +4374,20 @@ namespace OpenTK.Graphics.Vulkan
         {
             _vkGetPhysicalDeviceProperties2KHR_fnptr = (delegate* unmanaged<VkPhysicalDevice, VkPhysicalDeviceProperties2*, void>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceProperties2KHR");
             _vkGetPhysicalDeviceProperties2KHR_fnptr(physicalDevice, pProperties);
+        }
+        public static delegate* unmanaged<VkPhysicalDevice, VkPhysicalDeviceQueueFamilyDataGraphProcessingEngineInfoARM*, VkQueueFamilyDataGraphProcessingEnginePropertiesARM*, void> _vkGetPhysicalDeviceQueueFamilyDataGraphProcessingEnginePropertiesARM_fnptr = &vkGetPhysicalDeviceQueueFamilyDataGraphProcessingEnginePropertiesARM_Lazy;
+        [UnmanagedCallersOnly]
+        private static void vkGetPhysicalDeviceQueueFamilyDataGraphProcessingEnginePropertiesARM_Lazy(VkPhysicalDevice physicalDevice, VkPhysicalDeviceQueueFamilyDataGraphProcessingEngineInfoARM* pQueueFamilyDataGraphProcessingEngineInfo, VkQueueFamilyDataGraphProcessingEnginePropertiesARM* pQueueFamilyDataGraphProcessingEngineProperties)
+        {
+            _vkGetPhysicalDeviceQueueFamilyDataGraphProcessingEnginePropertiesARM_fnptr = (delegate* unmanaged<VkPhysicalDevice, VkPhysicalDeviceQueueFamilyDataGraphProcessingEngineInfoARM*, VkQueueFamilyDataGraphProcessingEnginePropertiesARM*, void>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceQueueFamilyDataGraphProcessingEnginePropertiesARM");
+            _vkGetPhysicalDeviceQueueFamilyDataGraphProcessingEnginePropertiesARM_fnptr(physicalDevice, pQueueFamilyDataGraphProcessingEngineInfo, pQueueFamilyDataGraphProcessingEngineProperties);
+        }
+        public static delegate* unmanaged<VkPhysicalDevice, uint, uint*, VkQueueFamilyDataGraphPropertiesARM*, VkResult> _vkGetPhysicalDeviceQueueFamilyDataGraphPropertiesARM_fnptr = &vkGetPhysicalDeviceQueueFamilyDataGraphPropertiesARM_Lazy;
+        [UnmanagedCallersOnly]
+        private static VkResult vkGetPhysicalDeviceQueueFamilyDataGraphPropertiesARM_Lazy(VkPhysicalDevice physicalDevice, uint queueFamilyIndex, uint* pQueueFamilyDataGraphPropertyCount, VkQueueFamilyDataGraphPropertiesARM* pQueueFamilyDataGraphProperties)
+        {
+            _vkGetPhysicalDeviceQueueFamilyDataGraphPropertiesARM_fnptr = (delegate* unmanaged<VkPhysicalDevice, uint, uint*, VkQueueFamilyDataGraphPropertiesARM*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceQueueFamilyDataGraphPropertiesARM");
+            return _vkGetPhysicalDeviceQueueFamilyDataGraphPropertiesARM_fnptr(physicalDevice, queueFamilyIndex, pQueueFamilyDataGraphPropertyCount, pQueueFamilyDataGraphProperties);
         }
         public static delegate* unmanaged<VkPhysicalDevice, VkQueryPoolPerformanceCreateInfoKHR*, uint*, void> _vkGetPhysicalDeviceQueueFamilyPerformanceQueryPassesKHR_fnptr = &vkGetPhysicalDeviceQueueFamilyPerformanceQueryPassesKHR_Lazy;
         [UnmanagedCallersOnly]
@@ -4723,6 +4872,27 @@ namespace OpenTK.Graphics.Vulkan
             _vkGetSwapchainStatusKHR_fnptr = (delegate* unmanaged<VkDevice, VkSwapchainKHR, VkResult>)VKLoader.GetInstanceProcAddress("vkGetSwapchainStatusKHR");
             return _vkGetSwapchainStatusKHR_fnptr(device, swapchain);
         }
+        public static delegate* unmanaged<VkDevice, VkTensorMemoryRequirementsInfoARM*, VkMemoryRequirements2*, void> _vkGetTensorMemoryRequirementsARM_fnptr = &vkGetTensorMemoryRequirementsARM_Lazy;
+        [UnmanagedCallersOnly]
+        private static void vkGetTensorMemoryRequirementsARM_Lazy(VkDevice device, VkTensorMemoryRequirementsInfoARM* pInfo, VkMemoryRequirements2* pMemoryRequirements)
+        {
+            _vkGetTensorMemoryRequirementsARM_fnptr = (delegate* unmanaged<VkDevice, VkTensorMemoryRequirementsInfoARM*, VkMemoryRequirements2*, void>)VKLoader.GetInstanceProcAddress("vkGetTensorMemoryRequirementsARM");
+            _vkGetTensorMemoryRequirementsARM_fnptr(device, pInfo, pMemoryRequirements);
+        }
+        public static delegate* unmanaged<VkDevice, VkTensorCaptureDescriptorDataInfoARM*, void*, VkResult> _vkGetTensorOpaqueCaptureDescriptorDataARM_fnptr = &vkGetTensorOpaqueCaptureDescriptorDataARM_Lazy;
+        [UnmanagedCallersOnly]
+        private static VkResult vkGetTensorOpaqueCaptureDescriptorDataARM_Lazy(VkDevice device, VkTensorCaptureDescriptorDataInfoARM* pInfo, void* pData)
+        {
+            _vkGetTensorOpaqueCaptureDescriptorDataARM_fnptr = (delegate* unmanaged<VkDevice, VkTensorCaptureDescriptorDataInfoARM*, void*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetTensorOpaqueCaptureDescriptorDataARM");
+            return _vkGetTensorOpaqueCaptureDescriptorDataARM_fnptr(device, pInfo, pData);
+        }
+        public static delegate* unmanaged<VkDevice, VkTensorViewCaptureDescriptorDataInfoARM*, void*, VkResult> _vkGetTensorViewOpaqueCaptureDescriptorDataARM_fnptr = &vkGetTensorViewOpaqueCaptureDescriptorDataARM_Lazy;
+        [UnmanagedCallersOnly]
+        private static VkResult vkGetTensorViewOpaqueCaptureDescriptorDataARM_Lazy(VkDevice device, VkTensorViewCaptureDescriptorDataInfoARM* pInfo, void* pData)
+        {
+            _vkGetTensorViewOpaqueCaptureDescriptorDataARM_fnptr = (delegate* unmanaged<VkDevice, VkTensorViewCaptureDescriptorDataInfoARM*, void*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetTensorViewOpaqueCaptureDescriptorDataARM");
+            return _vkGetTensorViewOpaqueCaptureDescriptorDataARM_fnptr(device, pInfo, pData);
+        }
         public static delegate* unmanaged<VkDevice, VkValidationCacheEXT, nuint*, void*, VkResult> _vkGetValidationCacheDataEXT_fnptr = &vkGetValidationCacheDataEXT_Lazy;
         [UnmanagedCallersOnly]
         private static VkResult vkGetValidationCacheDataEXT_Lazy(VkDevice device, VkValidationCacheEXT validationCache, nuint* pDataSize, void* pData)
@@ -4989,12 +5159,19 @@ namespace OpenTK.Graphics.Vulkan
             _vkReleaseProfilingLockKHR_fnptr = (delegate* unmanaged<VkDevice, void>)VKLoader.GetInstanceProcAddress("vkReleaseProfilingLockKHR");
             _vkReleaseProfilingLockKHR_fnptr(device);
         }
-        public static delegate* unmanaged<VkDevice, VkReleaseSwapchainImagesInfoEXT*, VkResult> _vkReleaseSwapchainImagesEXT_fnptr = &vkReleaseSwapchainImagesEXT_Lazy;
+        public static delegate* unmanaged<VkDevice, VkReleaseSwapchainImagesInfoKHR*, VkResult> _vkReleaseSwapchainImagesEXT_fnptr = &vkReleaseSwapchainImagesEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkReleaseSwapchainImagesEXT_Lazy(VkDevice device, VkReleaseSwapchainImagesInfoEXT* pReleaseInfo)
+        private static VkResult vkReleaseSwapchainImagesEXT_Lazy(VkDevice device, VkReleaseSwapchainImagesInfoKHR* pReleaseInfo)
         {
-            _vkReleaseSwapchainImagesEXT_fnptr = (delegate* unmanaged<VkDevice, VkReleaseSwapchainImagesInfoEXT*, VkResult>)VKLoader.GetInstanceProcAddress("vkReleaseSwapchainImagesEXT");
+            _vkReleaseSwapchainImagesEXT_fnptr = (delegate* unmanaged<VkDevice, VkReleaseSwapchainImagesInfoKHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkReleaseSwapchainImagesEXT");
             return _vkReleaseSwapchainImagesEXT_fnptr(device, pReleaseInfo);
+        }
+        public static delegate* unmanaged<VkDevice, VkReleaseSwapchainImagesInfoKHR*, VkResult> _vkReleaseSwapchainImagesKHR_fnptr = &vkReleaseSwapchainImagesKHR_Lazy;
+        [UnmanagedCallersOnly]
+        private static VkResult vkReleaseSwapchainImagesKHR_Lazy(VkDevice device, VkReleaseSwapchainImagesInfoKHR* pReleaseInfo)
+        {
+            _vkReleaseSwapchainImagesKHR_fnptr = (delegate* unmanaged<VkDevice, VkReleaseSwapchainImagesInfoKHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkReleaseSwapchainImagesKHR");
+            return _vkReleaseSwapchainImagesKHR_fnptr(device, pReleaseInfo);
         }
         public static delegate* unmanaged<VkCommandBuffer, VkCommandBufferResetFlagBits, VkResult> _vkResetCommandBuffer_fnptr = &vkResetCommandBuffer_Lazy;
         [UnmanagedCallersOnly]
@@ -5254,6 +5431,13 @@ namespace OpenTK.Graphics.Vulkan
         {
             _vkWaitForFences_fnptr = (delegate* unmanaged<VkDevice, uint, VkFence*, int, ulong, VkResult>)VKLoader.GetInstanceProcAddress("vkWaitForFences");
             return _vkWaitForFences_fnptr(device, fenceCount, pFences, waitAll, timeout);
+        }
+        public static delegate* unmanaged<VkDevice, VkSwapchainKHR, VkPresentWait2InfoKHR*, VkResult> _vkWaitForPresent2KHR_fnptr = &vkWaitForPresent2KHR_Lazy;
+        [UnmanagedCallersOnly]
+        private static VkResult vkWaitForPresent2KHR_Lazy(VkDevice device, VkSwapchainKHR swapchain, VkPresentWait2InfoKHR* pPresentWait2Info)
+        {
+            _vkWaitForPresent2KHR_fnptr = (delegate* unmanaged<VkDevice, VkSwapchainKHR, VkPresentWait2InfoKHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkWaitForPresent2KHR");
+            return _vkWaitForPresent2KHR_fnptr(device, swapchain, pPresentWait2Info);
         }
         public static delegate* unmanaged<VkDevice, VkSwapchainKHR, ulong, ulong, VkResult> _vkWaitForPresentKHR_fnptr = &vkWaitForPresentKHR_Lazy;
         [UnmanagedCallersOnly]

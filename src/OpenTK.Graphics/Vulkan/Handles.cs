@@ -193,6 +193,23 @@ namespace OpenTK.Graphics.Vulkan
         public static explicit operator ulong(VkCuModuleNVX handle) => handle.Handle;
         public static explicit operator VkCuModuleNVX(ulong handle) => new VkCuModuleNVX(handle);
     }
+    /// <summary>Used by <see cref="Vk.CmdDispatchDataGraphARM"/>, <see cref="Vk.CreateDataGraphPipelineSessionARM"/>, <see cref="Vk.DestroyDataGraphPipelineSessionARM"/></summary>
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDataGraphPipelineSessionARM.html" /></remarks>
+    [DebuggerDisplay("VkDataGraphPipelineSessionARM\\{{Handle}\\}")]
+    public unsafe struct VkDataGraphPipelineSessionARM : IEquatable<VkDataGraphPipelineSessionARM>
+    {
+        public static VkDataGraphPipelineSessionARM Zero => new VkDataGraphPipelineSessionARM(0);
+        public ulong Handle;
+        public VkDataGraphPipelineSessionARM(ulong handle) => Handle = handle;
+        public override bool Equals(object? obj) => obj is VkDataGraphPipelineSessionARM instance && Equals(instance);
+        public bool Equals(VkDataGraphPipelineSessionARM other) => Handle.Equals(other.Handle);
+        public override int GetHashCode() => HashCode.Combine(Handle);
+        public override string? ToString() => Handle.ToString();
+        public static bool operator ==(VkDataGraphPipelineSessionARM left, VkDataGraphPipelineSessionARM right) => left.Equals(right);
+        public static bool operator !=(VkDataGraphPipelineSessionARM left, VkDataGraphPipelineSessionARM right) => !(left == right);
+        public static explicit operator ulong(VkDataGraphPipelineSessionARM handle) => handle.Handle;
+        public static explicit operator VkDataGraphPipelineSessionARM(ulong handle) => new VkDataGraphPipelineSessionARM(handle);
+    }
     /// <summary>Used by <see cref="Vk.CreateDebugReportCallbackEXT"/>, <see cref="Vk.DestroyDebugReportCallbackEXT"/></summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDebugReportCallbackEXT.html" /></remarks>
     [DebuggerDisplay("VkDebugReportCallbackEXT\\{{Handle}\\}")]
@@ -669,7 +686,7 @@ namespace OpenTK.Graphics.Vulkan
         public static explicit operator ulong(VkPipelineBinaryKHR handle) => handle.Handle;
         public static explicit operator VkPipelineBinaryKHR(ulong handle) => new VkPipelineBinaryKHR(handle);
     }
-    /// <summary>Used by <see cref="Vk.CreateComputePipelines"/>, <see cref="Vk.CreateExecutionGraphPipelinesAMDX"/>, <see cref="Vk.CreateGraphicsPipelines"/>, ...</summary>
+    /// <summary>Used by <see cref="Vk.CreateComputePipelines"/>, <see cref="Vk.CreateDataGraphPipelinesARM"/>, <see cref="Vk.CreateExecutionGraphPipelinesAMDX"/>, ...</summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPipelineCache.html" /></remarks>
     [DebuggerDisplay("VkPipelineCache\\{{Handle}\\}")]
     public unsafe struct VkPipelineCache : IEquatable<VkPipelineCache>
@@ -940,6 +957,40 @@ namespace OpenTK.Graphics.Vulkan
         public static bool operator !=(VkSwapchainKHR left, VkSwapchainKHR right) => !(left == right);
         public static explicit operator ulong(VkSwapchainKHR handle) => handle.Handle;
         public static explicit operator VkSwapchainKHR(ulong handle) => new VkSwapchainKHR(handle);
+    }
+    /// <summary>Used by <see cref="Vk.CreateTensorARM"/>, <see cref="Vk.DestroyTensorARM"/></summary>
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkTensorARM.html" /></remarks>
+    [DebuggerDisplay("VkTensorARM\\{{Handle}\\}")]
+    public unsafe struct VkTensorARM : IEquatable<VkTensorARM>
+    {
+        public static VkTensorARM Zero => new VkTensorARM(0);
+        public ulong Handle;
+        public VkTensorARM(ulong handle) => Handle = handle;
+        public override bool Equals(object? obj) => obj is VkTensorARM instance && Equals(instance);
+        public bool Equals(VkTensorARM other) => Handle.Equals(other.Handle);
+        public override int GetHashCode() => HashCode.Combine(Handle);
+        public override string? ToString() => Handle.ToString();
+        public static bool operator ==(VkTensorARM left, VkTensorARM right) => left.Equals(right);
+        public static bool operator !=(VkTensorARM left, VkTensorARM right) => !(left == right);
+        public static explicit operator ulong(VkTensorARM handle) => handle.Handle;
+        public static explicit operator VkTensorARM(ulong handle) => new VkTensorARM(handle);
+    }
+    /// <summary>Used by <see cref="Vk.CreateTensorViewARM"/>, <see cref="Vk.DestroyTensorViewARM"/></summary>
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkTensorViewARM.html" /></remarks>
+    [DebuggerDisplay("VkTensorViewARM\\{{Handle}\\}")]
+    public unsafe struct VkTensorViewARM : IEquatable<VkTensorViewARM>
+    {
+        public static VkTensorViewARM Zero => new VkTensorViewARM(0);
+        public ulong Handle;
+        public VkTensorViewARM(ulong handle) => Handle = handle;
+        public override bool Equals(object? obj) => obj is VkTensorViewARM instance && Equals(instance);
+        public bool Equals(VkTensorViewARM other) => Handle.Equals(other.Handle);
+        public override int GetHashCode() => HashCode.Combine(Handle);
+        public override string? ToString() => Handle.ToString();
+        public static bool operator ==(VkTensorViewARM left, VkTensorViewARM right) => left.Equals(right);
+        public static bool operator !=(VkTensorViewARM left, VkTensorViewARM right) => !(left == right);
+        public static explicit operator ulong(VkTensorViewARM handle) => handle.Handle;
+        public static explicit operator VkTensorViewARM(ulong handle) => new VkTensorViewARM(handle);
     }
     /// <summary>Used by <see cref="Vk.CreateValidationCacheEXT"/>, <see cref="Vk.DestroyValidationCacheEXT"/>, <see cref="Vk.GetValidationCacheDataEXT"/>, ...</summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkValidationCacheEXT.html" /></remarks>

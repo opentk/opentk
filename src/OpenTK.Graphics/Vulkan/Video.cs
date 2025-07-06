@@ -8,6 +8,8 @@ using OpenTK.Graphics.Vulkan.VulkanVideoCodecH264stdEncode;
 using OpenTK.Graphics.Vulkan.VulkanVideoCodecH265std;
 using OpenTK.Graphics.Vulkan.VulkanVideoCodecH265stdDecode;
 using OpenTK.Graphics.Vulkan.VulkanVideoCodecH265stdEncode;
+using OpenTK.Graphics.Vulkan.VulkanVideoCodecVp9std;
+using OpenTK.Graphics.Vulkan.VulkanVideoCodecVp9stdDecode;
 using OpenTK.Graphics.Vulkan.VulkanVideoCodecsCommon;
 using System;
 using System.Runtime.CompilerServices;
@@ -3394,6 +3396,275 @@ namespace OpenTK.Graphics.Vulkan
                 this.PicOrderCntVal = PicOrderCntVal;
                 this.TemporalId = TemporalId;
             }
+        }
+    }
+    namespace VulkanVideoCodecVp9std
+    {
+        public static class Constants
+        {
+            public const uint VideoVp9NumRefFrames = 8;
+            public const uint VideoVp9RefsPerFrame = 3;
+            public const uint VideoVp9MaxRefFrames = 4;
+            public const uint VideoVp9LoopFilterAdjustments = 2;
+            public const uint VideoVp9MaxSegments = 8;
+            public const uint VideoVp9SegLvlMax = 4;
+            public const uint VideoVp9MaxSegmentationTreeProbs = 7;
+            public const uint VideoVp9MaxSegmentationPredProb = 3;
+        }
+        public enum StdVideoVP9Profile : uint
+        {
+            VideoVp9Profile0 = 0,
+            VideoVp9Profile1 = 1,
+            VideoVp9Profile2 = 2,
+            VideoVp9Profile3 = 3,
+            VideoVp9ProfileInvalid = 2147483647,
+        }
+        public enum StdVideoVP9Level : uint
+        {
+            VideoVp9Level10 = 0,
+            VideoVp9Level11 = 1,
+            VideoVp9Level20 = 2,
+            VideoVp9Level21 = 3,
+            VideoVp9Level30 = 4,
+            VideoVp9Level31 = 5,
+            VideoVp9Level40 = 6,
+            VideoVp9Level41 = 7,
+            VideoVp9Level50 = 8,
+            VideoVp9Level51 = 9,
+            VideoVp9Level52 = 10,
+            VideoVp9Level60 = 11,
+            VideoVp9Level61 = 12,
+            VideoVp9Level62 = 13,
+            VideoVp9LevelInvalid = 2147483647,
+        }
+        public enum StdVideoVP9FrameType : uint
+        {
+            VideoVp9FrameTypeInvalid = 2147483647,
+            VideoVp9FrameTypeKey = 0,
+            VideoVp9FrameTypeNonKey = 1,
+        }
+        public enum StdVideoVP9ReferenceName : uint
+        {
+            VideoVp9ReferenceNameAltrefFrame = 3,
+            VideoVp9ReferenceNameGoldenFrame = 2,
+            VideoVp9ReferenceNameIntraFrame = 0,
+            VideoVp9ReferenceNameInvalid = 2147483647,
+            VideoVp9ReferenceNameLastFrame = 1,
+        }
+        public enum StdVideoVP9InterpolationFilter : uint
+        {
+            VideoVp9InterpolationFilterBilinear = 3,
+            VideoVp9InterpolationFilterEighttap = 0,
+            VideoVp9InterpolationFilterEighttapSharp = 2,
+            VideoVp9InterpolationFilterEighttapSmooth = 1,
+            VideoVp9InterpolationFilterInvalid = 2147483647,
+            VideoVp9InterpolationFilterSwitchable = 4,
+        }
+        public enum StdVideoVP9ColorSpace : uint
+        {
+            VideoVp9ColorSpaceBt2020 = 5,
+            VideoVp9ColorSpaceBt601 = 1,
+            VideoVp9ColorSpaceBt709 = 2,
+            VideoVp9ColorSpaceInvalid = 2147483647,
+            VideoVp9ColorSpaceReserved = 6,
+            VideoVp9ColorSpaceRgb = 7,
+            VideoVp9ColorSpaceSmpte170 = 3,
+            VideoVp9ColorSpaceSmpte240 = 4,
+            VideoVp9ColorSpaceUnknown = 0,
+        }
+        public unsafe struct StdVideoVP9ColorConfigFlags
+        {
+            private uint _bitfield0;
+            public uint color_range
+            {
+                get => (uint)((_bitfield0 >> 0) & 0x1u);
+                set => _bitfield0 = (_bitfield0 & ~(0x1u << 0)) | ((((uint)value) & 0x1u) << 0);
+            }
+            public uint reserved
+            {
+                get => (uint)((_bitfield0 >> 1) & 0x7FFFFFFFu);
+                set => _bitfield0 = (_bitfield0 & ~(0x7FFFFFFFu << 1)) | ((((uint)value) & 0x7FFFFFFFu) << 1);
+            }
+            public StdVideoVP9ColorConfigFlags() { }
+        }
+        public unsafe struct StdVideoVP9ColorConfig
+        {
+            public StdVideoVP9ColorConfigFlags flags;
+            public byte BitDepth;
+            public byte subsampling_x;
+            public byte subsampling_y;
+            public byte reserved1;
+            public StdVideoVP9ColorSpace color_space;
+            public StdVideoVP9ColorConfig() { }
+            public StdVideoVP9ColorConfig(StdVideoVP9ColorConfigFlags flags, byte BitDepth, byte subsampling_x, byte subsampling_y, byte reserved1, StdVideoVP9ColorSpace color_space)
+            {
+                this.flags = flags;
+                this.BitDepth = BitDepth;
+                this.subsampling_x = subsampling_x;
+                this.subsampling_y = subsampling_y;
+                this.reserved1 = reserved1;
+                this.color_space = color_space;
+            }
+        }
+        public unsafe struct StdVideoVP9LoopFilterFlags
+        {
+            private uint _bitfield0;
+            public uint loop_filter_delta_enabled
+            {
+                get => (uint)((_bitfield0 >> 0) & 0x1u);
+                set => _bitfield0 = (_bitfield0 & ~(0x1u << 0)) | ((((uint)value) & 0x1u) << 0);
+            }
+            public uint loop_filter_delta_update
+            {
+                get => (uint)((_bitfield0 >> 1) & 0x1u);
+                set => _bitfield0 = (_bitfield0 & ~(0x1u << 1)) | ((((uint)value) & 0x1u) << 1);
+            }
+            public uint reserved
+            {
+                get => (uint)((_bitfield0 >> 2) & 0x3FFFFFFFu);
+                set => _bitfield0 = (_bitfield0 & ~(0x3FFFFFFFu << 2)) | ((((uint)value) & 0x3FFFFFFFu) << 2);
+            }
+            public StdVideoVP9LoopFilterFlags() { }
+        }
+        public unsafe struct StdVideoVP9LoopFilter
+        {
+            public StdVideoVP9LoopFilterFlags flags;
+            public byte loop_filter_level;
+            public byte loop_filter_sharpness;
+            public byte update_ref_delta;
+            public fixed sbyte loop_filter_ref_deltas[4];
+            public byte update_mode_delta;
+            public fixed sbyte loop_filter_mode_deltas[2];
+            public StdVideoVP9LoopFilter() { }
+        }
+        public unsafe struct StdVideoVP9SegmentationFlags
+        {
+            private uint _bitfield0;
+            public uint segmentation_update_map
+            {
+                get => (uint)((_bitfield0 >> 0) & 0x1u);
+                set => _bitfield0 = (_bitfield0 & ~(0x1u << 0)) | ((((uint)value) & 0x1u) << 0);
+            }
+            public uint segmentation_temporal_update
+            {
+                get => (uint)((_bitfield0 >> 1) & 0x1u);
+                set => _bitfield0 = (_bitfield0 & ~(0x1u << 1)) | ((((uint)value) & 0x1u) << 1);
+            }
+            public uint segmentation_update_data
+            {
+                get => (uint)((_bitfield0 >> 2) & 0x1u);
+                set => _bitfield0 = (_bitfield0 & ~(0x1u << 2)) | ((((uint)value) & 0x1u) << 2);
+            }
+            public uint segmentation_abs_or_delta_update
+            {
+                get => (uint)((_bitfield0 >> 3) & 0x1u);
+                set => _bitfield0 = (_bitfield0 & ~(0x1u << 3)) | ((((uint)value) & 0x1u) << 3);
+            }
+            public uint reserved
+            {
+                get => (uint)((_bitfield0 >> 4) & 0xFFFFFFFu);
+                set => _bitfield0 = (_bitfield0 & ~(0xFFFFFFFu << 4)) | ((((uint)value) & 0xFFFFFFFu) << 4);
+            }
+            public StdVideoVP9SegmentationFlags() { }
+        }
+        public unsafe struct StdVideoVP9Segmentation
+        {
+            public StdVideoVP9SegmentationFlags flags;
+            public fixed byte segmentation_tree_probs[7];
+            public fixed byte segmentation_pred_prob[3];
+            public fixed byte FeatureEnabled[8];
+            [InlineArray(4)]
+            public struct FeatureDataInlineArray1
+            {
+                [InlineArray(8)]
+                public struct FeatureDataInlineArray2
+                {
+                    public short element;
+                }
+                public FeatureDataInlineArray2 FeatureData;
+            }
+            public FeatureDataInlineArray1 FeatureData;
+            public StdVideoVP9Segmentation() { }
+        }
+    }
+    namespace VulkanVideoCodecVp9stdDecode
+    {
+        public static class Constants
+        {
+            /// <summary>&quot;VK_STD_vulkan_video_codec_vp9_decode&quot;</summary>
+            public static ReadOnlySpan<byte> StdVulkanVideoCodecVp9DecodeExtensionName => "VK_STD_vulkan_video_codec_vp9_decode"u8;
+        }
+        public unsafe struct StdVideoDecodeVP9PictureInfoFlags
+        {
+            private uint _bitfield0;
+            public uint error_resilient_mode
+            {
+                get => (uint)((_bitfield0 >> 0) & 0x1u);
+                set => _bitfield0 = (_bitfield0 & ~(0x1u << 0)) | ((((uint)value) & 0x1u) << 0);
+            }
+            public uint intra_only
+            {
+                get => (uint)((_bitfield0 >> 1) & 0x1u);
+                set => _bitfield0 = (_bitfield0 & ~(0x1u << 1)) | ((((uint)value) & 0x1u) << 1);
+            }
+            public uint allow_high_precision_mv
+            {
+                get => (uint)((_bitfield0 >> 2) & 0x1u);
+                set => _bitfield0 = (_bitfield0 & ~(0x1u << 2)) | ((((uint)value) & 0x1u) << 2);
+            }
+            public uint refresh_frame_context
+            {
+                get => (uint)((_bitfield0 >> 3) & 0x1u);
+                set => _bitfield0 = (_bitfield0 & ~(0x1u << 3)) | ((((uint)value) & 0x1u) << 3);
+            }
+            public uint frame_parallel_decoding_mode
+            {
+                get => (uint)((_bitfield0 >> 4) & 0x1u);
+                set => _bitfield0 = (_bitfield0 & ~(0x1u << 4)) | ((((uint)value) & 0x1u) << 4);
+            }
+            public uint segmentation_enabled
+            {
+                get => (uint)((_bitfield0 >> 5) & 0x1u);
+                set => _bitfield0 = (_bitfield0 & ~(0x1u << 5)) | ((((uint)value) & 0x1u) << 5);
+            }
+            public uint show_frame
+            {
+                get => (uint)((_bitfield0 >> 6) & 0x1u);
+                set => _bitfield0 = (_bitfield0 & ~(0x1u << 6)) | ((((uint)value) & 0x1u) << 6);
+            }
+            public uint UsePrevFrameMvs
+            {
+                get => (uint)((_bitfield0 >> 7) & 0x1u);
+                set => _bitfield0 = (_bitfield0 & ~(0x1u << 7)) | ((((uint)value) & 0x1u) << 7);
+            }
+            public uint reserved
+            {
+                get => (uint)((_bitfield0 >> 8) & 0xFFFFFFu);
+                set => _bitfield0 = (_bitfield0 & ~(0xFFFFFFu << 8)) | ((((uint)value) & 0xFFFFFFu) << 8);
+            }
+            public StdVideoDecodeVP9PictureInfoFlags() { }
+        }
+        public unsafe struct StdVideoDecodeVP9PictureInfo
+        {
+            public StdVideoDecodeVP9PictureInfoFlags flags;
+            public StdVideoVP9Profile profile;
+            public StdVideoVP9FrameType frame_type;
+            public byte frame_context_idx;
+            public byte reset_frame_context;
+            public byte refresh_frame_flags;
+            public byte ref_frame_sign_bias_mask;
+            public StdVideoVP9InterpolationFilter interpolation_filter;
+            public byte base_q_idx;
+            public sbyte delta_q_y_dc;
+            public sbyte delta_q_uv_dc;
+            public sbyte delta_q_uv_ac;
+            public byte tile_cols_log2;
+            public byte tile_rows_log2;
+            public fixed ushort reserved1[3];
+            public StdVideoVP9ColorConfig* pColorConfig;
+            public StdVideoVP9LoopFilter* pLoopFilter;
+            public StdVideoVP9Segmentation* pSegmentation;
+            public StdVideoDecodeVP9PictureInfo() { }
         }
     }
     namespace VulkanVideoCodecsCommon
