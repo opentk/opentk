@@ -43,6 +43,7 @@ namespace VkGenerator
             Processor.ResolveHandleParent(specData);
             Processor.ResolveCommandTypes(specData, typeMap);
             Processor.ResolveVersionInfo(specData, typeMap);
+            Processor.MarkDeprecations(specData);
 
             Processor.ResolveStructMemberTypes(videoSpecData, typeMap, constMap);
 

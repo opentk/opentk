@@ -22,7 +22,6 @@ namespace VkGenerator.Parsing
             List<BitmaskName> BitmaskNames,
             List<StructType> Structs,
             Dictionary<string, Constant> Constants,
-            List<BitmaskName> Bitmasks,
             List<HandleType> Handles,
             List<Command> Commands,
             List<Feature> Features,
@@ -45,6 +44,7 @@ namespace VkGenerator.Parsing
 
     public record HandleType(string Name, string? Parent, string Type, string TypeEnum, string? Alias) : IReferable
     {
+        public VersionInfo? VersionInfo;
         public HandleType? ResolvedParent;
 
         public List<Command>? ReferencedBy;
@@ -94,7 +94,6 @@ namespace VkGenerator.Parsing
             }
             ReferencedBy.Add(command);
         }
-
     }
     public record EnumMember(string Name, ulong Value, string? Comment, string? Alias, string? Extension)
     {
@@ -126,8 +125,7 @@ namespace VkGenerator.Parsing
         public BaseCSType? StrongType;
     }
 
-    public record Feature(string Name, string Number, string? Depends, string? Comment, List<RequireTag> RequireTags);
-
+    public record Feature(string Name, Version Version, string? Depends, string? Comment, List<RequireTag> RequireTags, List<DeprecateTag> DeprecateTags, List<RemoveTag> RemoveTags);
     public record Extension(
         string Name,
         int Number,
@@ -145,12 +143,25 @@ namespace VkGenerator.Parsing
         string? ObsoletedBy,
         bool Provisional,
         string? SpecialUse,
-        List<RequireTag> RequireTags);
-    public record RequireTag(List<RequireEnum> RequiredEnums, List<RequireCommand> RequiredCommands, List<RequireType> RequiredTypes, List<Constant> Constants, string? Comment);
+        List<RequireTag> RequireTags,
+        List<DeprecateTag> DeprecateTags,
+        List<RemoveTag> RemoveTags);
+
+    public record RequireTag(List<RequireEnum> RequiredEnums, List<CommandRef> RequiredCommands, List<TypeRef> RequiredTypes, List<Constant> Constants, string? Comment);
+    // So far no enums have been deprecated so we don't need to decide what info needs to be stored there yet.
+    // - Noggin_bops 2025-07-06
+    public record DeprecateTag(List<CommandRef> DeprecatedCommands, List<TypeRef> DeprecatedTypes, string? ExplanationLink, string? Comment);
+    public record RemoveTag(List<EnumRef> RemovedEnums, List<CommandRef> RemovedCommands, List<TypeRef> RemovedTypes, List<FeatureRef> RemovedFeature, string? ReasonLink, string? Comment);
+
     /// <summary>We either know Value or Alias.</summary>
     public record RequireEnum(string Name, int? Value, string Extends, string? Alias, string? Comment);
-    public record RequireCommand(string Name);
-    public record RequireType(string Name);
+
+    public record EnumRef(string Name);
+    public record CommandRef(string Name);
+    public record TypeRef(string Name);
+    public record FeatureRef(string Name, string Struct);
+
+    public record DeprecationReason(Version? Version, string? Extension, string? ExplanationLink);
 
     public enum ConstantType
     {
@@ -163,11 +174,19 @@ namespace VkGenerator.Parsing
 
     public record Constant(ConstantType Type, string Name, string? Extension, string? Comment, ulong IntValue, float FloatValue, string StringValue);
 
-    public record VersionInfo(Version? Version, Version? Deprecated, List<string> Extensions)
+    public record VersionInfo(Version? Version, List<string> Extensions)
     {
+        public List<DeprecationReason> DeprecatedBy;
+
+        public void Deprecate(DeprecationReason reason)
+        {
+            DeprecatedBy ??= [];
+            DeprecatedBy.Add(reason);
+        }
+
         public override string ToString()
         {
-            return $"V: {Version}{(Deprecated != null ? $" Deprecated: {Deprecated}" : "")} Extensions: {string.Join(", ", Extensions)}";
+            return $"V: {Version}{(DeprecatedBy != null ? $" Deprecated: {string.Join(", ", DeprecatedBy.Select(d => d.Version?.ToString() ?? d.Extension))}" : "")} Extensions: {string.Join(", ", Extensions)}";
         }
     }
 
@@ -203,7 +222,6 @@ namespace VkGenerator.Parsing
                 typeData.BitmaskNames,
                 typeData.Structs,
                 constantsMap,
-                typeData.BitmaskNames,
                 typeData.HandleTypes,
                 commands,
                 features,
@@ -236,7 +254,6 @@ namespace VkGenerator.Parsing
                 typeData.BitmaskNames,
                 typeData.Structs,
                 constantsMap,
-                typeData.BitmaskNames,
                 typeData.HandleTypes,
                 new List<Command>(),
                 features,
@@ -599,7 +616,27 @@ namespace VkGenerator.Parsing
                         requireTags.Add(ParseRequireTag(require, 0, null));
                     }
 
-                    features.Add(new Feature(name, number, depends, comment, requireTags));
+                    List<DeprecateTag> deprecateTags = new List<DeprecateTag>();
+                    foreach (XElement deprecate in feature.Elements("deprecate"))
+                    {
+                        if (deprecate.Attribute("api")?.Value == "vulkansc")
+                            continue;
+
+                        // Features have extension number 0
+                        deprecateTags.Add(ParseDeprecateTag(deprecate));
+                    }
+
+                    List<RemoveTag> removeTags = new List<RemoveTag>();
+                    foreach (XElement remove in feature.Elements("remove"))
+                    {
+                        if (remove.Attribute("api")?.Value == "vulkansc")
+                            continue;
+
+                        // Features have extension number 0
+                        removeTags.Add(ParseRemoveTag(remove));
+                    }
+
+                    features.Add(new Feature(name, Version.Parse(number), depends, comment, requireTags, deprecateTags, removeTags));
                 }
             }
 
@@ -651,6 +688,24 @@ namespace VkGenerator.Parsing
                     requireTags.Add(ParseRequireTag(require, number, name));
                 }
 
+                List<DeprecateTag> deprecateTags = new List<DeprecateTag>();
+                foreach (XElement deprecate in extension.Elements("deprecate"))
+                {
+                    if (deprecate.Attribute("api")?.Value == "vulkansc")
+                        continue;
+
+                    deprecateTags.Add(ParseDeprecateTag(deprecate));
+                }
+
+                List<RemoveTag> removeTags = new List<RemoveTag>();
+                foreach (XElement remove in extension.Elements("remove"))
+                {
+                    if (remove.Attribute("api")?.Value == "vulkansc")
+                        continue;
+
+                    removeTags.Add(ParseRemoveTag(remove));
+                }
+
                 extensions.Add(new Extension(
                     name,
                     number,
@@ -668,7 +723,9 @@ namespace VkGenerator.Parsing
                     obsoletedBy,
                     provisional,
                     specialUse,
-                    requireTags));
+                    requireTags,
+                    deprecateTags,
+                    removeTags));
             }
 
             return extensions;
@@ -703,7 +760,7 @@ namespace VkGenerator.Parsing
                             Console.WriteLine(valueStr);
                             continue;
                         }
-                        else if (valueStr.StartsWith("\"") && valueStr.EndsWith("\""))
+                        else if (valueStr.StartsWith('\"') && valueStr.EndsWith('\"'))
                         {
                             // This is a string constant.
                             requiredConstants.Add(new Constant(ConstantType.String, constName, extensionName, comment, 0, 0, valueStr));
@@ -769,25 +826,89 @@ namespace VkGenerator.Parsing
                 }
             }
 
-            List<RequireCommand> requiredCommands = new List<RequireCommand>();
+            List<CommandRef> requiredCommands = new List<CommandRef>();
             foreach (XElement command in require.Elements("command"))
             {
                 string commandName = command.Attribute("name")?.Value ?? throw new Exception();
 
-                requiredCommands.Add(new RequireCommand(commandName));
+                requiredCommands.Add(new CommandRef(commandName));
             }
             
-            List<RequireType> requiredTypes = new List<RequireType>();
+            List<TypeRef> requiredTypes = new List<TypeRef>();
             foreach (XElement command in require.Elements("type"))
             {
                 string commandName = command.Attribute("name")?.Value ?? throw new Exception();
 
-                requiredTypes.Add(new RequireType(commandName));
+                requiredTypes.Add(new TypeRef(commandName));
             }
 
             return new RequireTag(requiredEnums, requiredCommands, requiredTypes, requiredConstants, tagComment);
         }
 
+        public static DeprecateTag ParseDeprecateTag(XElement deprecate)
+        {
+            string? tagComment = deprecate.Attribute("comment")?.Value;
+            string? explanationlink = deprecate.Attribute("explanationlink")?.Value;
+
+            List<CommandRef> deprecatedCommands = new List<CommandRef>();
+            foreach (XElement command in deprecate.Elements("command"))
+            {
+                string commandName = command.Attribute("name")?.Value ?? throw new Exception();
+
+                deprecatedCommands.Add(new CommandRef(commandName));
+            }
+
+            List<TypeRef> deprecatedTypes = new List<TypeRef>();
+            foreach (XElement type in deprecate.Elements("type"))
+            {
+                string typeName = type.Attribute("name")?.Value ?? throw new Exception();
+
+                deprecatedTypes.Add(new TypeRef(typeName));
+            }
+
+            return new DeprecateTag(deprecatedCommands, deprecatedTypes, explanationlink, tagComment);
+        }
+
+        public static RemoveTag ParseRemoveTag(XElement remove)
+        {
+            string? tagComment = remove.Attribute("comment")?.Value;
+            string? explanationlink = remove.Attribute("explanationlink")?.Value;
+
+            List<EnumRef> removedEnums = new List<EnumRef>();
+            foreach (XElement @enum in remove.Elements("command"))
+            {
+                string enumName = @enum.Attribute("name")?.Value ?? throw new Exception();
+
+                removedEnums.Add(new EnumRef(enumName));
+            }
+
+            List<CommandRef> removedCommands = new List<CommandRef>();
+            foreach (XElement command in remove.Elements("command"))
+            {
+                string commandName = command.Attribute("name")?.Value ?? throw new Exception();
+
+                removedCommands.Add(new CommandRef(commandName));
+            }
+
+            List<TypeRef> removedTypes = new List<TypeRef>();
+            foreach (XElement type in remove.Elements("type"))
+            {
+                string typeName = type.Attribute("name")?.Value ?? throw new Exception();
+
+                removedTypes.Add(new TypeRef(typeName));
+            }
+
+            List<FeatureRef> removedFeatures = new List<FeatureRef>();
+            foreach (XElement feature in remove.Elements("feature"))
+            {
+                string featureName = feature.Attribute("name")?.Value ?? throw new Exception();
+                string structName = feature.Attribute("struct")?.Value ?? throw new Exception();
+
+                removedFeatures.Add(new FeatureRef(featureName, structName));
+            }
+
+            return new RemoveTag(removedEnums, removedCommands, removedTypes, removedFeatures, explanationlink, tagComment);
+        }
 
         public static List<Extension> ParseVideoExtensions(XElement root)
         {
@@ -827,6 +948,24 @@ namespace VkGenerator.Parsing
                     requireTags.Add(ParseVideoRequireTag(require, -1, name));
                 }
 
+                List<DeprecateTag> deprecateTags = new List<DeprecateTag>();
+                foreach (XElement deprecate in extension.Elements("deprecate"))
+                {
+                    if (deprecate.Attribute("api")?.Value == "vulkansc")
+                        continue;
+
+                    deprecateTags.Add(ParseDeprecateTag(deprecate));
+                }
+
+                List<RemoveTag> removeTags = new List<RemoveTag>();
+                foreach (XElement remove in extension.Elements("remove"))
+                {
+                    if (remove.Attribute("api")?.Value == "vulkansc")
+                        continue;
+
+                    removeTags.Add(ParseRemoveTag(remove));
+                }
+
                 extensions.Add(new Extension(
                     name,
                     -1,
@@ -844,7 +983,9 @@ namespace VkGenerator.Parsing
                     obsoletedBy,
                     provisional,
                     specialUse,
-                    requireTags));
+                    requireTags,
+                    deprecateTags,
+                    removeTags));
             }
 
             return extensions;
@@ -877,7 +1018,7 @@ namespace VkGenerator.Parsing
                         Console.WriteLine(valueStr);
                         continue;
                     }
-                    else if (valueStr.StartsWith("\"") && valueStr.EndsWith("\""))
+                    else if (valueStr.StartsWith('\"') && valueStr.EndsWith('\"'))
                     {
                         // This is a string constant.
                         requiredConstants.Add(new Constant(ConstantType.String, constName, extensionName, comment, 0, 0, valueStr));
@@ -910,20 +1051,20 @@ namespace VkGenerator.Parsing
                 }
             }
 
-            List<RequireCommand> requiredCommands = new List<RequireCommand>();
+            List<CommandRef> requiredCommands = new List<CommandRef>();
             foreach (XElement command in require.Elements("command"))
             {
                 string commandName = command.Attribute("name")?.Value ?? throw new Exception();
 
-                requiredCommands.Add(new RequireCommand(commandName));
+                requiredCommands.Add(new CommandRef(commandName));
             }
 
-            List<RequireType> requiredTypes = new List<RequireType>();
+            List<TypeRef> requiredTypes = new List<TypeRef>();
             foreach (XElement command in require.Elements("type"))
             {
                 string commandName = command.Attribute("name")?.Value ?? throw new Exception();
 
-                requiredTypes.Add(new RequireType(commandName));
+                requiredTypes.Add(new TypeRef(commandName));
             }
 
             return new RequireTag(requiredEnums, requiredCommands, requiredTypes, requiredConstants, tagComment);

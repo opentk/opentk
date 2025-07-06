@@ -59,12 +59,7 @@ namespace VkGenerator
                     writer.Write("/// <summary>");
                     if (@enum.VersionInfo != null)
                     {
-                        List<string> strs = [.. @enum.VersionInfo.Extensions];
-                        if (@enum.VersionInfo.Version != null)
-                        {
-                            strs.Insert(0, $"v{@enum.VersionInfo.Version.Major}.{@enum.VersionInfo.Version.Minor}");
-                        }
-                        writer.Write($"<b>[requires: {string.Join(" | ", strs)}]</b> ");
+                        WriteVersionInfo(writer, @enum.VersionInfo);
                     }
                     else
                     {
@@ -242,12 +237,7 @@ namespace VkGenerator
                     writer.Write("/// <summary>");
                     if (@struct.VersionInfo != null)
                     {
-                        List<string> strs = [.. @struct.VersionInfo.Extensions];
-                        if (@struct.VersionInfo.Version != null)
-                        {
-                            strs.Insert(0, $"v{@struct.VersionInfo.Version.Major}.{@struct.VersionInfo.Version.Minor}");
-                        }
-                        writer.Write($"<b>[requires: {string.Join(" | ", strs)}]</b> ");
+                        WriteVersionInfo(writer, @struct.VersionInfo);
                     }
                     else
                     {
@@ -328,6 +318,21 @@ namespace VkGenerator
                 foreach (HandleType handle in handles)
                 {
                     writer.Write("/// <summary>");
+                    if (handle.VersionInfo != null)
+                    {
+                        WriteVersionInfo(writer, handle.VersionInfo);
+                    }
+                    else
+                    {
+                        // There are no handles that do not have version info so far.
+                        // - Noggin_bops 2025-07-06
+                        ReadOnlySpan<string> exceptedNames = [];
+
+                        if (exceptedNames.Contains(handle.Name) == false)
+                        {
+                            Debug.Assert(false);
+                        }
+                    }
                     if (handle.ReferencedBy != null)
                     {
                         writer.Write($"Used by {string.Join(", ", handle.ReferencedBy.Take(3).Select(c => $"<see cref=\"Vk.{NameMangler.MangleFunctionName(c.Name)}\"/>"))}");
@@ -847,7 +852,7 @@ namespace VkGenerator
                                 }
                             }
 
-                            foreach (RequireType requiredType in requireTag.RequiredTypes)
+                            foreach (TypeRef requiredType in requireTag.RequiredTypes)
                             {
                                 EnumType? @enum = video.Enums.Find(e => e.Name == requiredType.Name);
                                 StructType? @struct = video.Structs.Find(s => s.Name == requiredType.Name);
@@ -1073,6 +1078,28 @@ namespace VkGenerator
                         }
                     }
                 }
+            }
+        }
+
+        private static void WriteVersionInfo(IndentedTextWriter writer, VersionInfo versionInfo)
+        {
+            List<string> strs = [.. versionInfo.Extensions];
+            if (versionInfo.Version != null)
+            {
+                strs.Insert(0, $"v{versionInfo.Version.Major}.{versionInfo.Version.Minor}");
+            }
+            writer.Write($"<b>[requires: {string.Join(" | ", strs)}]</b> ");
+
+            if (versionInfo.DeprecatedBy?.Count > 0)
+            {
+                writer.WriteLine();
+                foreach (DeprecationReason deprecation in versionInfo.DeprecatedBy)
+                {
+                    string v = deprecation.Version?.ToString() ?? deprecation.Extension ?? throw new Exception();
+                    string explanationLink = deprecation.ExplanationLink != null ? $"see: <see href=\"https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#{deprecation.ExplanationLink}\" />" : "";
+                    writer.WriteLine($"/// <br/><b>[deprecated by: {v}]</b> {explanationLink}");
+                }
+                writer.Write("/// ");
             }
         }
     }
