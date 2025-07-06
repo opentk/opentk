@@ -1,6 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
+    <!--<LangVersion>preview</LangVersion>-->
     <Deterministic>true</Deterministic>
     <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
     <!-- We need to sign this assembly for the InternalVisibleTo in OpenTK.Windowing.GraphicsLibraryFramework to work. -->
