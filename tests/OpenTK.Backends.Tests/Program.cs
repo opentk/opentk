@@ -870,7 +870,7 @@ namespace OpenTK.Backends.Tests
 
                         float w = 1; // FIXME: What do we actually want to pass here?
                         // FIXME: Convert this to proper coordinates
-                        float h = data.InputLineHeight / 2.0f;
+                        float h = data.InputLineHeight;
 
                         // FIXME: Function for scaling either a box or just a distance...
                         Toolkit.Window.FramebufferToClient(window, new Vector2(data.InputPos.X, data.InputPos.Y), out Vector2 clientPos);

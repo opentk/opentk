@@ -66,6 +66,7 @@ namespace OpenTK.Platform.Native.X11
         /// Can be null.
         /// </summary>
         internal XIC IC { get; set; }
+        internal StringBuilder PreeditText { get; } = new StringBuilder();
 
         internal XCursorHandle? Cursor { get; set; }
 

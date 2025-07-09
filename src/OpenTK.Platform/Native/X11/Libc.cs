@@ -31,16 +31,15 @@ namespace OpenTK.Platform.Native.X11
             LC_IDENTIFICATION = 12,
         }
 
-        [DllImport("libc", CallingConvention = CallingConvention.Cdecl)]
-        private static unsafe extern char* setlocale(LC category, /* const */ byte* locale);
-
-        internal static unsafe string? setlocale(LC category, ReadOnlySpan<byte> locale)
+        internal static unsafe string? setlocale(LC category, string? locale)
         {
-            fixed (byte* localePtr = locale)
-            {
-                char* retPtr = setlocale(category, localePtr);
-                return Marshal.PtrToStringUTF8((nint)retPtr);
-            }
+            byte* localePtr = (byte*)Marshal.StringToCoTaskMemUTF8(locale);
+            byte* retPtr = setlocale(category, localePtr);
+            Marshal.ZeroFreeCoTaskMemUTF8((IntPtr)localePtr);
+            return Marshal.PtrToStringUTF8((nint)retPtr);
+            
+            [DllImport("libc", EntryPoint = "setlocale")]
+            static unsafe extern byte* setlocale(LC category, /* const */ byte* locale);
         }
     }
 }

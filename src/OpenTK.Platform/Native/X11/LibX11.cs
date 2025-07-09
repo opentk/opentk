@@ -37,8 +37,14 @@ namespace OpenTK.Platform.Native.X11
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool XSupportsLocale();
 
-        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
-        internal static unsafe extern byte* XSetLocaleModifiers(byte* modifier_list);
+        internal static unsafe string? XSetLocaleModifiers(string? modifier_list)
+        {
+            byte* ret = XSetLocaleModifiers(modifier_list);
+            return Marshal.PtrToStringUTF8((IntPtr)ret);
+
+            [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+            static unsafe extern byte* XSetLocaleModifiers([MarshalAs(UnmanagedType.LPUTF8Str)] string? modifier_list);
+        }
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         internal static extern XDisplayPtr XOpenDisplay([MarshalAs(UnmanagedType.LPStr)]string? name);
@@ -69,6 +75,7 @@ namespace OpenTK.Platform.Native.X11
             int y,
             uint width,
             uint height,
+            uint borderWidth,
             ulong border,
             ulong background);
 
@@ -186,7 +193,7 @@ namespace OpenTK.Platform.Native.X11
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         internal static extern int XNextEvent(XDisplayPtr display, out XEvent @event);
 
-        [return: MarshalAs(UnmanagedType.I1)]
+        [return: MarshalAs(UnmanagedType.Bool)]
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         internal static extern bool XFilterEvent(ref XEvent @event, XWindow w);
 
@@ -295,7 +302,7 @@ namespace OpenTK.Platform.Native.X11
             XAtom property,
             long offset,
             long length,
-            [MarshalAs(UnmanagedType.I1)] bool delete,
+            [MarshalAs(UnmanagedType.Bool)] bool delete,
             XAtom requestType,
             out XAtom actualType,
             out int actualFormat,
@@ -423,11 +430,11 @@ namespace OpenTK.Platform.Native.X11
         internal static extern XCursor XCreatePixmapCursor(XDisplayPtr display, XPixmap source, XPixmap mask, XColorPtr foreground_color, XColorPtr background_color, int x, int y);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        [return: MarshalAs(UnmanagedType.I1)]
+        [return: MarshalAs(UnmanagedType.Bool)]
         internal unsafe delegate bool XPredicate(XDisplayPtr display, ref XEvent @event, IntPtr arg);
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
-        [return: MarshalAs(UnmanagedType.I1)]
+        [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool XCheckIfEvent(XDisplayPtr display, out XEvent event_return, XPredicate predicate, IntPtr arg);
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
@@ -440,7 +447,7 @@ namespace OpenTK.Platform.Native.X11
         internal static extern GrabResult XGrabPointer(
             XDisplayPtr display,
             XWindow grab_window,
-            [MarshalAs(UnmanagedType.I1)] bool owner_events,
+            [MarshalAs(UnmanagedType.Bool)] bool owner_events,
             XEventMask event_mask,
             GrabMode pointer_mode,
             GrabMode keyboard_mode,
@@ -494,6 +501,7 @@ namespace OpenTK.Platform.Native.X11
         internal static ReadOnlySpan<byte> XNInputStyle => "inputStyle"u8;
         internal static ReadOnlySpan<byte> XNClientWindow => "clientWindow"u8;
         internal static ReadOnlySpan<byte> XNFocusWindow => "focusWindow"u8;
+        internal static ReadOnlySpan<byte> XNSpotLocation => "spotLocation"u8;
         internal static ReadOnlySpan<byte> XNPreeditAttributes => "preeditAttributes"u8;
 
         internal static ReadOnlySpan<byte> XNPreeditStartCallback => "preeditStartCallback"u8;
@@ -530,6 +538,9 @@ namespace OpenTK.Platform.Native.X11
             public ushort count_values;
             public byte** supported_values;
         }
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        internal static unsafe extern IntPtr /* XVaNestedList */ XVaCreateNestedList(int dummy, IntPtr value1, IntPtr value2, IntPtr value3);
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         internal static unsafe extern IntPtr /* XVaNestedList */ XVaCreateNestedList(int dummy, IntPtr value1, IntPtr value2, IntPtr value3, IntPtr value4, IntPtr value5, IntPtr value6, IntPtr value7, IntPtr value8, IntPtr value9);
@@ -574,6 +585,9 @@ namespace OpenTK.Platform.Native.X11
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         internal static extern XIM XIMOfIC(XIC ic);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        internal unsafe static extern byte* Xutf8ResetIC(XIC ic);
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         internal static unsafe extern int Xutf8LookupString(XIC ic, XKeyEvent* @event, byte* buffer_return, int bytes_buffer, XKeySym* keysym_return, XLookupStatus* /*Status*/ status_return);
