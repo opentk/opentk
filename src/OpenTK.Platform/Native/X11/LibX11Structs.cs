@@ -62,7 +62,7 @@ namespace OpenTK.Platform.Native.X11
     {
         public IntPtr ClientData;
         public IntPtr Callback;
-        
+
         public XIMCallback(IntPtr clientData, delegate* unmanaged[Cdecl]<XIM, IntPtr, IntPtr, void> callback)
         {
             ClientData = clientData;
@@ -329,8 +329,8 @@ namespace OpenTK.Platform.Native.X11
 
     internal unsafe struct XClassHint
     {
-        public byte *res_name;
-        public byte *res_class;
+        public byte* res_name;
+        public byte* res_class;
     }
 
     internal unsafe struct XTextProperty
@@ -560,9 +560,9 @@ namespace OpenTK.Platform.Native.X11
     {
         public ushort length;
         public XIMFeedback* feedback;
-        public int encoding_is_wchar; 
+        public int encoding_is_wchar;
         // NOTE! This is either a byte* or char* depending on encoding_is_wchar
-        public byte* @string; 
+        public byte* @string;
     }
 
     internal unsafe struct XIMPreeditDrawCallbackStruct
@@ -571,6 +571,10 @@ namespace OpenTK.Platform.Native.X11
         public int chg_first;  /* Starting change position */
         public int chg_length; /* Length of the change in character count */
         public XIMText* text;
+    }
+    
+    internal struct XPoint {
+        public short x, y;
     }
 
 #pragma warning disable CS0649 // Field '' is never assigned to, and will always have its default value 0

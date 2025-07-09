@@ -7,7 +7,6 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
-using OpenTK.Platform;
 using OpenTK.Core.Utility;
 using OpenTK.Mathematics;
 using static OpenTK.Platform.Native.X11.GLX;
@@ -15,10 +14,6 @@ using static OpenTK.Platform.Native.X11.LibX11;
 using static OpenTK.Platform.Native.X11.XI2.XI2;
 using OpenTK.Platform.Native.X11.XRandR;
 using OpenTK.Platform.Native.X11.XI2;
-using System.Reflection.Metadata.Ecma335;
-using OpenTK.Platform.Native.Windows;
-using System.Buffers.Binary;
-using System.Reflection.Metadata;
 using OpenTK.Core;
 
 namespace OpenTK.Platform.Native.X11
@@ -42,7 +37,7 @@ namespace OpenTK.Platform.Native.X11
             XGetErrorText(X11.Display, (int)error_event->error_code, errorMessage, errorMessage.Capacity);
 
             Logger?.LogError($"Error: {errorMessage}, Type: {error_event->type}, S: {error_event->serial}, Error code: {error_event->error_code}, Request code: {error_event->request_code}, Minor code: {error_event->minor_code}");
-
+            
             return (int)error_event->error_code;
         }
 
@@ -292,23 +287,21 @@ namespace OpenTK.Platform.Native.X11
             }
 
             string? prevLocale = Libc.setlocale(Libc.LC.LC_ALL, null);
-            byte* prevModifiers = XSetLocaleModifiers(null);
+            string? prevModifiers = XSetLocaleModifiers(null);
 
-            string? test = Libc.setlocale(Libc.LC.LC_CTYPE, ""u8);
-            byte* test2 = XSetLocaleModifiers(Utils.AsPtr(""u8));
+            Libc.setlocale(Libc.LC.LC_CTYPE, "");
+            string? picked = XSetLocaleModifiers("");
             IM = XOpenIM(X11.Display, new XrmDatabase(0), null, null);
             if (IM.Value == 0)
             {
                 Logger?.LogDebug("XOpenIM failed, trying with '@im=none'.");
-                XSetLocaleModifiers(Utils.AsPtr("@im=none"u8));
+                XSetLocaleModifiers("@im=none");
                 IM = XOpenIM(X11.Display, new XrmDatabase(0), null, null);
             }
 
-            // FIXME: Memory leak!
-            Libc.setlocale(Libc.LC.LC_ALL, Encoding.UTF8.GetBytes(prevLocale!));
+            Libc.setlocale(Libc.LC.LC_ALL, prevLocale);
             XSetLocaleModifiers(prevModifiers);
 
- 
             {
                 XIMStyles* styles = default;
                 ReadOnlySpan<byte> str = Utils.ToSpan(XGetIMValues(IM, Utils.AsPtr(XNQueryInputStyle), (IntPtr)(&styles), 0));
@@ -526,45 +519,6 @@ namespace OpenTK.Platform.Native.X11
             return attributes.MapState != MapState.IsUnmapped;
         }
 
-        internal unsafe bool PrintKeyEvent(ref XEvent e, XIC ic)
-        {
-            bool filtered = XFilterEvent(ref e, e.Any.Window);
-            XKeyEvent kev = e.KeyPressed;
-            byte* str = stackalloc byte[32];
-            XKeySym sym, xmbsym = default, usym = default;
-            XComposeStatus status;
-            XLookupStatus xmbstatus, ustatus;
-
-            byte* buf = stackalloc byte[32];
-            byte* ubuf = stackalloc byte[32];
-
-            int nbytes = XLookupString(&kev, str, 32, &sym, &status);
-
-            string? xmbsymStr = null;
-            string xmbString = "";
-            string uString = "";
-            if (kev.type == XEventType.KeyPress)
-            {
-                int nmbbytes = XmbLookupString(ic, &kev, buf, 32, &xmbsym, &xmbstatus);
-                int nubytes = Xutf8LookupString(ic, &kev, ubuf, 32, &usym, &ustatus);
-                xmbsymStr = XKeysymToString(xmbsym);
-
-                xmbString = Encoding.Latin1.GetString(buf, nmbbytes);
-                uString = Encoding.UTF8.GetString(ubuf, nubytes);
-            }
-
-            Logger?.LogDebug(e.Type == XEventType.KeyPress ? "KeyPress" : "KeyRelease");
-            Logger?.LogDebug($"w: {kev.window}, root {kev.root}, subw: {kev.subwindow} time: {kev.time} root:({kev.x_root},{kev.y_root})");
-            Logger?.LogDebug($"state {kev.state} keycode: {kev.keycode} (sym: {sym} {XKeysymToString(sym)}) (xmb keysym: {xmbsym} '{XKeysymToString(xmbsym)}') (utf8 keysym: {usym} '{XKeysymToString(usym)}') same_screen: {kev.same_screen}");
-            Logger?.LogDebug($"XLookupString: \"{Encoding.Latin1.GetString(str, nbytes)}\", XmbLookupString: \"{xmbString}\", Xutf8LookupString: \"{uString}\"");
-            Logger?.LogDebug($"KeysymToKeycode: {XKeysymToKeycode(X11.Display, sym)} {XKeysymToKeycode(X11.Display, xmbsym)} {XKeysymToKeycode(X11.Display, usym)}");
-
-
-            Logger?.LogDebug($"FilterEvent: {filtered}");
-
-            return filtered;
-        }
-
         /// <inheritdoc/>
         public void ProcessEvents(bool waitForEvents)
         {
@@ -579,33 +533,13 @@ namespace OpenTK.Platform.Native.X11
             while (XEventsQueued(X11.Display, XEventsQueuedMode.QueuedAfterFlush) > 0)
             {
                 XNextEvent(X11.Display, out ea);
-
-                bool filtered = false;
-                if (ea.Type == XEventType.KeyPress || ea.Type == XEventType.KeyRelease)
+                bool filtered = XFilterEvent(ref ea, XWindow.None);
+                if (ea.Type != XEventType.KeyPress && ea.Type != XEventType.KeyRelease)
                 {
-                    filtered = PrintKeyEvent(ref ea, TEST_XIC);
-                }else
-                {
-                    filtered = XFilterEvent(ref ea, ea.Any.Window);
+                    if (filtered)
+                        continue;
                 }
-                if (filtered) continue;
-
-                // FIXME: Use this to do something related to duplicate events...
-                // - Noggin_bops 2024-12-13
-                //bool filtered = XFilterEvent(ref ea, XWindow.None);
-
-                if (filtered) {
-                    if (ea.Type == XEventType.ClientMessage)
-                    {
-                        Logger?.LogDebug($"Filtered! {ea.Type} {ea.ClientMessage.MessageType}");
-                    }
-                    else
-                    {
-                        Logger?.LogDebug($"Filtered! {ea.Type}");
-                    }
-                    continue;
-                }
-
+                
                 // Update the current timestamp.
                 switch (ea.Type)
                 {
@@ -675,9 +609,10 @@ namespace OpenTK.Platform.Native.X11
                         }
                         else
                         {
-                            
-                            if (ea.Type == XEventType.PropertyNotify) {
-                                
+
+                            if (ea.Type == XEventType.PropertyNotify)
+                            {
+
                                 Logger?.LogDebug($"Received unhandled PropertyNotify ({ea.Property.atom} {ea.Property.state}) for root window");
                             }
                             else
@@ -691,7 +626,8 @@ namespace OpenTK.Platform.Native.X11
                         if (ea.Type == XEventType.ClientMessage &&
                             ea.ClientMessage.MessageType == OpenTKUserMessageType)
                         {
-                            unsafe {
+                            unsafe
+                            {
                                 IntPtr ptr = (IntPtr)(ea.ClientMessage.l[1] << 32 | (ea.ClientMessage.l[0] & 0xFFFFFFFF));
                                 GCHandle handle = GCHandle.FromIntPtr(ptr);
                                 EventArgs args = (EventArgs)handle.Target!;
@@ -706,18 +642,18 @@ namespace OpenTK.Platform.Native.X11
                                 handle.Free();
                             }
                         }
-                        else if (ea.Type == XEventType.PropertyNotify && 
+                        else if (ea.Type == XEventType.PropertyNotify &&
                             ea.Property.atom == X11ClipboardComponent.OpenTKSelection)
                         {
                             // If some other window takes ownership of the a selection we expect this.
                         }
-                        else if (ea.Type == XEventType.SelectionClear  ||
+                        else if (ea.Type == XEventType.SelectionClear ||
                                  ea.Type == XEventType.SelectionNotify ||
                                  ea.Type == XEventType.SelectionRequest)
                         {
                             X11ClipboardComponent.HandleClipboardEvent(ref ea, Logger);
                         }
-                        else 
+                        else
                         {
                             Logger?.LogDebug($"Received unhandled event {ea.Type} for helper window.");
                         }
@@ -817,7 +753,7 @@ namespace OpenTK.Platform.Native.X11
                                     // FIXME: Global or local coordinates?
                                     //EventQueue.Raise(xwindow, PlatformEventType.DropLocation, new DropLocationEventArgs((root_x, root_y)));
 
-                                    XWindow source = new XWindow((ulong)clientMessage.l[0]); 
+                                    XWindow source = new XWindow((ulong)clientMessage.l[0]);
 
                                     XEvent @event = default;
                                     ref XClientMessageEvent status = ref @event.ClientMessage;
@@ -932,7 +868,7 @@ namespace OpenTK.Platform.Native.X11
                                     finish.Format = 32;
                                     finish.l[0] = (long)xwindow.Window.Id;
                                     finish.l[1] = (xwindow.XDnDType != XAtom.None) ? 1 : 0;
-                                    finish.l[2] = (xwindow.XDnDType != XAtom.None) ? 
+                                    finish.l[2] = (xwindow.XDnDType != XAtom.None) ?
                                                     (long)X11.Atoms[KnownAtoms.XdndActionCopy].Id :
                                                     (long)XAtom.None.Id;
                                     XSendEvent(
@@ -982,32 +918,32 @@ namespace OpenTK.Platform.Native.X11
                                     switch (type)
                                     {
                                         case HitType.Draggable:
-                                        {
-                                            const long _NET_WM_MOVERESIZE_MOVE = 8;
-
-                                            // FIXME: Do we need to regrab the pointer when the move is done?
-                                            XUngrabPointer(X11.Display, XTime.CurrentTime);
-                                            XFlush(X11.Display);
-
-                                            XEvent e = new XEvent();
-                                            ref XClientMessageEvent client = ref e.ClientMessage;
-                                            client.Type = XEventType.ClientMessage;
-                                            client.Window = xwindow.Window;
-                                            client.MessageType = X11.Atoms[KnownAtoms._NET_WM_MOVERESIZE];
-                                            client.Format = 32;
-                                            unsafe
                                             {
-                                                client.l[0] = buttonPressed.x_root;
-                                                client.l[1] = buttonPressed.y_root;
-                                                client.l[2] = _NET_WM_MOVERESIZE_MOVE;
-                                                client.l[3] = buttonPressed.button;
-                                                client.l[4] = 0;
-                                            }
+                                                const long _NET_WM_MOVERESIZE_MOVE = 8;
 
-                                            bool success = XSendEvent(X11.Display, XDefaultRootWindow(X11.Display), 0, XEventMask.SubstructureRedirect | XEventMask.SubstructureNotify, in e);
-                                            XSync(X11.Display, 0);
-                                            continue;
-                                        }
+                                                // FIXME: Do we need to regrab the pointer when the move is done?
+                                                XUngrabPointer(X11.Display, XTime.CurrentTime);
+                                                XFlush(X11.Display);
+
+                                                XEvent e = new XEvent();
+                                                ref XClientMessageEvent client = ref e.ClientMessage;
+                                                client.Type = XEventType.ClientMessage;
+                                                client.Window = xwindow.Window;
+                                                client.MessageType = X11.Atoms[KnownAtoms._NET_WM_MOVERESIZE];
+                                                client.Format = 32;
+                                                unsafe
+                                                {
+                                                    client.l[0] = buttonPressed.x_root;
+                                                    client.l[1] = buttonPressed.y_root;
+                                                    client.l[2] = _NET_WM_MOVERESIZE_MOVE;
+                                                    client.l[3] = buttonPressed.button;
+                                                    client.l[4] = 0;
+                                                }
+
+                                                bool success = XSendEvent(X11.Display, XDefaultRootWindow(X11.Display), 0, XEventMask.SubstructureRedirect | XEventMask.SubstructureNotify, in e);
+                                                XSync(X11.Display, 0);
+                                                continue;
+                                            }
                                         case HitType.ResizeBottom:
                                         case HitType.ResizeBottomLeft:
                                         case HitType.ResizeBottomRight:
@@ -1016,57 +952,57 @@ namespace OpenTK.Platform.Native.X11
                                         case HitType.ResizeTop:
                                         case HitType.ResizeTopLeft:
                                         case HitType.ResizeTopRight:
-                                        {
-                                            const long _NET_WM_MOVERESIZE_SIZE_TOPLEFT     = 0;
-                                            const long _NET_WM_MOVERESIZE_SIZE_TOP         = 1;
-                                            const long _NET_WM_MOVERESIZE_SIZE_TOPRIGHT    = 2;
-                                            const long _NET_WM_MOVERESIZE_SIZE_RIGHT       = 3;
-                                            const long _NET_WM_MOVERESIZE_SIZE_BOTTOMRIGHT = 4;
-                                            const long _NET_WM_MOVERESIZE_SIZE_BOTTOM      = 5;
-                                            const long _NET_WM_MOVERESIZE_SIZE_BOTTOMLEFT  = 6;
-                                            const long _NET_WM_MOVERESIZE_SIZE_LEFT        = 7;
-
-                                            long direction;
-                                            switch (type)
                                             {
-                                                case HitType.ResizeBottom:      direction = _NET_WM_MOVERESIZE_SIZE_BOTTOM;      break;
-                                                case HitType.ResizeBottomLeft:  direction = _NET_WM_MOVERESIZE_SIZE_BOTTOMLEFT;  break;
-                                                case HitType.ResizeBottomRight: direction = _NET_WM_MOVERESIZE_SIZE_BOTTOMRIGHT; break;
-                                                case HitType.ResizeLeft:        direction = _NET_WM_MOVERESIZE_SIZE_LEFT;        break;
-                                                case HitType.ResizeRight:       direction = _NET_WM_MOVERESIZE_SIZE_RIGHT;       break;
-                                                case HitType.ResizeTop:         direction = _NET_WM_MOVERESIZE_SIZE_TOP;         break;
-                                                case HitType.ResizeTopLeft:     direction = _NET_WM_MOVERESIZE_SIZE_TOPLEFT;     break;
-                                                case HitType.ResizeTopRight:    direction = _NET_WM_MOVERESIZE_SIZE_TOPRIGHT;    break;
-                                                default:
-                                                    throw new UnreachableException($"Unknown resize hit type: {type}");
+                                                const long _NET_WM_MOVERESIZE_SIZE_TOPLEFT = 0;
+                                                const long _NET_WM_MOVERESIZE_SIZE_TOP = 1;
+                                                const long _NET_WM_MOVERESIZE_SIZE_TOPRIGHT = 2;
+                                                const long _NET_WM_MOVERESIZE_SIZE_RIGHT = 3;
+                                                const long _NET_WM_MOVERESIZE_SIZE_BOTTOMRIGHT = 4;
+                                                const long _NET_WM_MOVERESIZE_SIZE_BOTTOM = 5;
+                                                const long _NET_WM_MOVERESIZE_SIZE_BOTTOMLEFT = 6;
+                                                const long _NET_WM_MOVERESIZE_SIZE_LEFT = 7;
+
+                                                long direction;
+                                                switch (type)
+                                                {
+                                                    case HitType.ResizeBottom: direction = _NET_WM_MOVERESIZE_SIZE_BOTTOM; break;
+                                                    case HitType.ResizeBottomLeft: direction = _NET_WM_MOVERESIZE_SIZE_BOTTOMLEFT; break;
+                                                    case HitType.ResizeBottomRight: direction = _NET_WM_MOVERESIZE_SIZE_BOTTOMRIGHT; break;
+                                                    case HitType.ResizeLeft: direction = _NET_WM_MOVERESIZE_SIZE_LEFT; break;
+                                                    case HitType.ResizeRight: direction = _NET_WM_MOVERESIZE_SIZE_RIGHT; break;
+                                                    case HitType.ResizeTop: direction = _NET_WM_MOVERESIZE_SIZE_TOP; break;
+                                                    case HitType.ResizeTopLeft: direction = _NET_WM_MOVERESIZE_SIZE_TOPLEFT; break;
+                                                    case HitType.ResizeTopRight: direction = _NET_WM_MOVERESIZE_SIZE_TOPRIGHT; break;
+                                                    default:
+                                                        throw new UnreachableException($"Unknown resize hit type: {type}");
+                                                }
+
+                                                // FIXME: Do we need to regrab the pointer when the move is done?
+                                                XUngrabPointer(X11.Display, XTime.CurrentTime);
+                                                XFlush(X11.Display);
+
+                                                XEvent e = new XEvent();
+                                                ref XClientMessageEvent client = ref e.ClientMessage;
+                                                client.Type = XEventType.ClientMessage;
+                                                client.Window = xwindow.Window;
+                                                client.MessageType = X11.Atoms[KnownAtoms._NET_WM_MOVERESIZE];
+                                                client.Format = 32;
+                                                unsafe
+                                                {
+                                                    client.l[0] = buttonPressed.x_root;
+                                                    client.l[1] = buttonPressed.y_root;
+                                                    client.l[2] = direction;
+                                                    client.l[3] = buttonPressed.button;
+                                                    client.l[4] = 0;
+                                                }
+
+                                                bool success = XSendEvent(X11.Display, XDefaultRootWindow(X11.Display), 0, XEventMask.SubstructureRedirect | XEventMask.SubstructureNotify, in e);
+                                                XSync(X11.Display, 0);
+
+                                                // FIXME: Handle the resize!
+                                                Logger?.LogWarning("Hit test resizing is not supported in x11 yet.");
+                                                continue;
                                             }
-
-                                            // FIXME: Do we need to regrab the pointer when the move is done?
-                                            XUngrabPointer(X11.Display, XTime.CurrentTime);
-                                            XFlush(X11.Display);
-
-                                            XEvent e = new XEvent();
-                                            ref XClientMessageEvent client = ref e.ClientMessage;
-                                            client.Type = XEventType.ClientMessage;
-                                            client.Window = xwindow.Window;
-                                            client.MessageType = X11.Atoms[KnownAtoms._NET_WM_MOVERESIZE];
-                                            client.Format = 32;
-                                            unsafe
-                                            {
-                                                client.l[0] = buttonPressed.x_root;
-                                                client.l[1] = buttonPressed.y_root;
-                                                client.l[2] = direction;
-                                                client.l[3] = buttonPressed.button;
-                                                client.l[4] = 0;
-                                            }
-
-                                            bool success = XSendEvent(X11.Display, XDefaultRootWindow(X11.Display), 0, XEventMask.SubstructureRedirect | XEventMask.SubstructureNotify, in e);
-                                            XSync(X11.Display, 0);
-
-                                            // FIXME: Handle the resize!
-                                            Logger?.LogWarning("Hit test resizing is not supported in x11 yet.");
-                                            continue;
-                                        }
                                         case HitType.Normal:
                                         case HitType.Default:
                                         default:
@@ -1125,13 +1061,15 @@ namespace OpenTK.Platform.Native.X11
                         {
                             XKeyEvent keyPressed = ea.KeyPressed;
 
-                            unsafe {
+                            unsafe
+                            {
                                 XKeySym keysym = default;
                                 const int TEXT_LENGTH = 64;
                                 byte* str = stackalloc byte[TEXT_LENGTH];
                                 int charsWritten = 0;
 
-                                if (filtered == false) {
+                                if (filtered == false)
+                                {
                                     if (xwindow.IC.Value == IntPtr.Zero)
                                     {
                                         charsWritten = XLookupString(&keyPressed, str, TEXT_LENGTH, &keysym, null);
@@ -1139,25 +1077,21 @@ namespace OpenTK.Platform.Native.X11
                                     else
                                     {
                                         XLookupStatus lookupStatus;
-                                        //charsWritten = XmbLookupString(xwindow.IC, &keyPressed, str, TEXT_LENGTH, &keysym, &lookupStatus);
                                         charsWritten = Xutf8LookupString(xwindow.IC, &keyPressed, str, TEXT_LENGTH, &keysym, &lookupStatus);
                                         if (lookupStatus == XLookupStatus.XBufferOverflow)
                                         {
-                                            Logger?.LogError($"Xutf8LookupString wanted to write more than 32 bytes of text input. If this happens to you please open a issue at https://github.com/opentk/opentk/issues/new.");
+
+                                            Logger?.LogError($"Xutf8LookupString wanted to write more than 64 bytes of text input. If this happens to you please open a issue at https://github.com/opentk/opentk/issues/new.");
                                         }
 
                                         Logger?.LogDebug($"LookupString: {new string((sbyte*)str, 0, charsWritten)}, {keysym} {lookupStatus}");
                                     }
                                 }
-                                else
-                                {
-                                    charsWritten = XLookupString(&keyPressed, str, 0, &keysym, null);
-                                }
 
                                 // Check if the input context wants to handle the key press.
 
                                 Scancode scancode = X11KeyboardComponent.ToScancode(keyPressed.keycode);
-                                Key key = X11KeyboardComponent.TranslateKeySym(stackalloc XKeySym[1] {keysym});
+                                Key key = X11KeyboardComponent.TranslateKeySym(stackalloc XKeySym[1] { keysym });
 
                                 KeyModifier modifiers = X11KeyboardComponent.ModifiersFromState(keyPressed.state);
 
@@ -1174,15 +1108,10 @@ namespace OpenTK.Platform.Native.X11
                                     // basically the same timestamp.
                                 }
 
-                                //if (X11KeyboardComponent.HandleKeyEvent(keysym, keyPressed.keycode, Logger))
-                                //{
-                                //    // FIXME: Make sure to actually receive the IME CommitText and preedit text signals!!
-                                //    // - Noggin_bops 2025-02-21
-                                //}
-                                //else
                                 {
 
-                                    if (filtered == false) {
+                                    if (filtered == false)
+                                    {
                                         EventQueue.Raise(xwindow, PlatformEventType.KeyDown, new KeyDownEventArgs(xwindow, key, scancode, isRepeat, modifiers));
 
                                         string? result = null;
@@ -1228,13 +1157,14 @@ namespace OpenTK.Platform.Native.X11
 
                             if (filtered) continue;
 
-                            unsafe {
+                            unsafe
+                            {
                                 XKeySym keysym = default;
                                 byte* str = stackalloc byte[0];
                                 int charsWritten = XLookupString(&keyPressed, str, 0, &keysym, null);
 
                                 Scancode scancode = X11KeyboardComponent.ToScancode(keyPressed.keycode);
-                                Key key = X11KeyboardComponent.TranslateKeySym(stackalloc XKeySym[1] {keysym});
+                                Key key = X11KeyboardComponent.TranslateKeySym(stackalloc XKeySym[1] { keysym });
 
                                 KeyModifier modifiers = X11KeyboardComponent.ModifiersFromState(keyPressed.state);
 
@@ -1325,7 +1255,7 @@ namespace OpenTK.Platform.Native.X11
                                 break;
                             }
 
-                            X11KeyboardComponent.SetFocus(true, Logger);
+                            XSetICFocus(xwindow.IC);
 
                             EventQueue.Raise(xwindow, PlatformEventType.Focus, new FocusEventArgs(xwindow, true));
 
@@ -1356,7 +1286,7 @@ namespace OpenTK.Platform.Native.X11
                                 break;
                             }
 
-                            X11KeyboardComponent.SetFocus(false, Logger);
+                            XUnsetICFocus(xwindow.IC);
 
                             EventQueue.Raise(xwindow, PlatformEventType.Focus, new FocusEventArgs(xwindow, false));
 
@@ -1636,8 +1566,6 @@ namespace OpenTK.Platform.Native.X11
             }
         }
 
-
-        static XIC TEST_XIC;
         /// <inheritdoc/>
         public WindowHandle Create(GraphicsApiHints hints)
         {
@@ -1929,12 +1857,14 @@ namespace OpenTK.Platform.Native.X11
             // Register to deletion and ping events
             XSetWMProtocols(X11.Display, window, new XAtom[] { X11.Atoms[KnownAtoms.WM_DELETE_WINDOW], X11.Atoms[KnownAtoms._NET_WM_PING] }, 2);
 
-            unsafe {
+            unsafe
+            {
                 XWMHints* wmHints = XAllocWMHints();
                 wmHints->flags |= XWMHintsMask.InputHint;
                 wmHints->input = 1;
 
                 XSetWMHints(X11.Display, window, wmHints);
+                XFree(wmHints);
             }
 
             unsafe {
@@ -2001,10 +1931,10 @@ namespace OpenTK.Platform.Native.X11
             XEventMask filterMask = default;
             XIC ic;
             unsafe {
-                XIMCallback start = new XIMCallback((IntPtr)ComponentGCHandle, &PreeditStartCallback);
-                XIMCallback done  = new XIMCallback((IntPtr)ComponentGCHandle, &PreeditDoneCallback);
-                XIMCallback draw  = new XIMCallback((IntPtr)ComponentGCHandle, &PreeditDrawCallback);
-                XIMCallback caret = new XIMCallback((IntPtr)ComponentGCHandle, &PreeditCaretCallback);
+                XIMCallback start = new XIMCallback((IntPtr)window.Id, &PreeditStartCallback);
+                XIMCallback done  = new XIMCallback((IntPtr)window.Id, &PreeditDoneCallback);
+                XIMCallback draw  = new XIMCallback((IntPtr)window.Id, &PreeditDrawCallback);
+                XIMCallback caret = new XIMCallback((IntPtr)window.Id, &PreeditCaretCallback);
 
                 IntPtr callbacks = XVaCreateNestedList(0,
                     (IntPtr)Utils.AsPtr(XNPreeditStartCallback), (IntPtr)(&start),
@@ -2013,21 +1943,14 @@ namespace OpenTK.Platform.Native.X11
                     (IntPtr)Utils.AsPtr(XNPreeditCaretCallback), (IntPtr)(&caret),
                     IntPtr.Zero);
 
-                /*ic = XCreateIC(IM,
-                    //Utils.AsPtr(XNInputStyle), (ulong)(XIMFlags.PreeditNone | XIMFlags.StatusNone),
-                    Utils.AsPtr(XNInputStyle), (ulong)(XIMFlags.PreeditCallbacks | XIMFlags.StatusNone),
+                // FIXME: Check that PreeditCallbacks is available...?
+                // - Noggin_bops 2025-07-09
+                ic = XCreateIC(IM,
+                    Utils.AsPtr(XNInputStyle), (ulong)(XIMFlags.PreeditCallbacks | XIMFlags.StatusNothing),
                     Utils.AsPtr(XNClientWindow), window.Id,
                     Utils.AsPtr(XNFocusWindow), window.Id,
                     Utils.AsPtr(XNPreeditAttributes), callbacks,
                     null);
-                */
-
-                ic = XCreateIC(IM,
-                    Utils.AsPtr(XNInputStyle), (ulong)(XIMFlags.PreeditNothing | XIMFlags.StatusNothing),
-                    Utils.AsPtr(XNClientWindow), window.Id,
-                    Utils.AsPtr(XNFocusWindow), window.Id,
-                    null);
-                TEST_XIC = ic;
 
                 if (ic.Value != 0)
                 {
@@ -2069,44 +1992,52 @@ namespace OpenTK.Platform.Native.X11
         [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
         internal static unsafe int PreeditStartCallback(XIC xic, IntPtr clientData, IntPtr callData)
         {
-            X11WindowComponent @this = (X11WindowComponent)GCHandle.FromIntPtr(clientData).Target!;
-            @this.Logger?.LogDebug("Start callback!");
             return -1;
         }
 
         [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
         internal static unsafe void PreeditDoneCallback(XIC xic, IntPtr clientData, IntPtr callData)
         {
-            X11WindowComponent @this = (X11WindowComponent)GCHandle.FromIntPtr(clientData).Target!;
-            @this.Logger?.LogDebug("Done callback!");
         }
 
         [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
         internal static unsafe void PreeditDrawCallback(XIC xic, IntPtr clientData, IntPtr callData)
         {
-            X11WindowComponent @this = (X11WindowComponent)GCHandle.FromIntPtr(clientData).Target!;
             XIMPreeditDrawCallbackStruct* data = (XIMPreeditDrawCallbackStruct*)callData;
 
-            XWindow* window;
-            XGetICValues(xic, Utils.AsPtr(XNClientWindow), (IntPtr)(&window), 0);
-            if (window != null)
+            XWindow window = new XWindow((ulong)clientData);
+            if (XWindowDict.TryGetValue(window, out XWindowHandle? xwindow))
             {
-                bool success = XWindowDict.TryGetValue(*window, out XWindowHandle? xwindow);
-            }
+                // FIXME: Are we talking characters or code points...?
+                xwindow.PreeditText.Remove(data->chg_first, data->chg_length);
 
-            @this.Logger?.LogDebug($"Draw callback! {data->caret} {data->chg_first} {data->chg_length} {(IntPtr)data->text}");
-            if (data->text != null)
+                if (data->text != null)
+                {
+                    xwindow.PreeditText.Insert(data->chg_first, Marshal.PtrToStringUTF8((IntPtr)data->text->@string));
+                }
+
+                EventQueue.Raise(xwindow, PlatformEventType.TextEditing, new TextEditingEventArgs(xwindow, xwindow.PreeditText.ToString(), data->caret, data->chg_length));
+
+                Toolkit.Window.Logger?.LogDebug($"Text Editing '{xwindow.PreeditText}'");
+            }
+            else
             {
-                Span<XIMFeedback> feedbacks = data->text->feedback != null ? new Span<XIMFeedback>(data->text->feedback, data->text->length) : default;
-                @this.Logger?.LogDebug($"Draw text len: {data->text->length}, {string.Join(", ", feedbacks.ToArray())} {(IntPtr)data->text->@string} {data->text->encoding_is_wchar}");
+                // FIXME: Log about not being able to find the window...?
             }
         }
 
         [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
         internal static unsafe void PreeditCaretCallback(XIC xic, IntPtr clientData, IntPtr callData)
         {
-            X11WindowComponent @this = (X11WindowComponent)GCHandle.FromIntPtr(clientData).Target!;
-            @this.Logger?.LogDebug("Caret callback!");
+            XWindow window = new XWindow((ulong)clientData);
+            if (XWindowDict.TryGetValue(window, out XWindowHandle? xwindow))
+            {
+                Toolkit.Window.Logger?.LogDebug("Caret callback!");
+            }
+            else
+            {
+                // FIXME: Log about not being able to find the window...?
+            }
         }
 
         /// <inheritdoc/>
