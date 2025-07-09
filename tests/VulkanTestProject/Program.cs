@@ -47,7 +47,7 @@ namespace VulkanTestProject
         {
             VKLoader.Init();
 
-            ToolkitOptions options = new ToolkitOptions() { ApplicationName = "PAL2 Vulkan test app", Logger = new ConsoleLogger() };
+            ToolkitOptions options = new ToolkitOptions() { ApplicationName = "PAL2 Vulkan test app", Logger = new ConsoleLogger(), FeatureFlags = ToolkitFlags.EnableVulkan };
             Toolkit.Init(options);
 
             EventQueue.EventRaised += EventQueue_EventRaised;

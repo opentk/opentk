@@ -3,47 +3,37 @@ using OpenTK.Core.Utility;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGLES2;
 using OpenTK.Mathematics;
-using OpenTK.Platform.Native;
+using System.Diagnostics;
 using OpenTK.Platform.Native.ANGLE;
 
 namespace ANGLETestProject
 {
     internal class Program
     {
-        static IWindowComponent WindowComp;
-        static IOpenGLComponent OpenGLComp;
-
         static void Main(string[] args)
         {
             EventQueue.EventRaised += EventQueue_EventRaised;
 
-            WindowComp = PlatformComponents.CreateWindowComponent();
-            OpenGLComp = new ANGLEOpenGLComponent();
+            Toolkit.Init(new ToolkitOptions() { ApplicationName = "ANGLE Test", Logger = new ConsoleLogger(), FeatureFlags = ToolkitFlags.EnableOpenGL | ToolkitFlags.PreferANGLE });
 
-            ToolkitOptions options = new ToolkitOptions() { Logger = new ConsoleLogger() };
+            Debug.Assert(Toolkit.OpenGL.GetType() == typeof(ANGLEOpenGLComponent));
             
-            WindowComp.Logger = options.Logger;
-            OpenGLComp.Logger = options.Logger;
+            var window = Toolkit.Window.Create(new OpenGLGraphicsApiHints() { Version = new Version(3, 1) });
+            Toolkit.Window.SetSize(window, (800, 600));
+            Toolkit.Window.SetMode(window, WindowMode.Normal);
+            Toolkit.Window.SetTitle(window, "ANGLE Window");
 
-            WindowComp.Initialize(options);
-            OpenGLComp.Initialize(options);
+            var context = Toolkit.OpenGL.CreateFromWindow(window);
+            Toolkit.OpenGL.SetCurrentContext(context);
+            GLLoader.LoadBindings(Toolkit.OpenGL.GetBindingsContext(context));
 
-            var window = WindowComp.Create(new OpenGLGraphicsApiHints() { Version = new Version(3, 1) });
-            WindowComp.SetSize(window, (800, 600));
-            WindowComp.SetMode(window, WindowMode.Normal);
-            WindowComp.SetTitle(window, "ANGLE Window");
-
-            var context = OpenGLComp.CreateFromWindow(window);
-            OpenGLComp.SetCurrentContext(context);
-            GLLoader.LoadBindings(OpenGLComp.GetBindingsContext(context));
-
-            WindowComp.SetTitle(window, $"ANGLE Window - {GL.GetString(StringName.Version)}");
+            Toolkit.Window.SetTitle(window, $"ANGLE Window - {GL.GetString(StringName.Version)}");
 
             while (true)
             {
-                WindowComp.ProcessEvents(false);
+                Toolkit.Window.ProcessEvents(false);
 
-                if (WindowComp.IsWindowDestroyed(window))
+                if (Toolkit.Window.IsWindowDestroyed(window))
                 {
                     break;
                 }
@@ -51,7 +41,7 @@ namespace ANGLETestProject
                 GL.ClearColor(Color4.Coral);
                 GL.Clear(ClearBufferMask.ColorBufferBit);
 
-                OpenGLComp.SwapBuffers(context);
+                Toolkit.OpenGL.SwapBuffers(context);
             }
         }
 
@@ -59,7 +49,7 @@ namespace ANGLETestProject
         {
             if (args is CloseEventArgs close)
             {
-                WindowComp.Destroy(close.Window);
+                Toolkit.Window.Destroy(close.Window);
             }
         }
     }
