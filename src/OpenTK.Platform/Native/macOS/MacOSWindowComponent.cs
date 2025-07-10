@@ -213,6 +213,8 @@ namespace OpenTK.Platform.Native.macOS
 
         internal static readonly Dictionary<IntPtr, NSWindowHandle> NSWindowDict = new Dictionary<nint, NSWindowHandle>();
 
+        internal static CVDisplayLinkRef DisplayLink;
+
         internal static ReadOnlySpan<byte> OtkCompoenntFieldName => "otkPALWindowComponent"u8;
 
         /// <inheritdoc/>
@@ -223,6 +225,8 @@ namespace OpenTK.Platform.Native.macOS
 
         /// <inheritdoc/>
         public ILogger? Logger { get; set; }
+
+        internal long CursorAnimationPrevTime = -1;
 
         /// <inheritdoc/>
         public unsafe void Initialize(ToolkitOptions options)
@@ -376,6 +380,17 @@ namespace OpenTK.Platform.Native.macOS
                 // FIXME: BOOL
                 objc_msgSend(nsApplication, selActivateIgnoringOtherApps, true);
             }
+
+            CVReturn res = CV.CVDisplayLinkCreateWithActiveCGDisplays(out DisplayLink);
+            if (res != CVReturn.kCVReturnSuccess)
+            {
+                Logger?.LogWarning($"Could not create display link: {res}");
+            }
+            res = CV.CVDisplayLinkSetOutputCallback(DisplayLink, DisplayLinkRefresh, 0);
+            if (res != CVReturn.kCVReturnSuccess)
+            {
+                Logger?.LogWarning($"Could not set display link callback: {res}");
+            }
         }
 
         /// <inheritdoc/>
@@ -388,6 +403,16 @@ namespace OpenTK.Platform.Native.macOS
 
             // FIXME: Reset selSetActivationPolicy?
             // FIXME: Reset selDiscardEventsMatchingMask_beforeEvent?
+
+            if (CV.CVDisplayLinkIsRunning(DisplayLink))
+            {
+                CVReturn res = CV.CVDisplayLinkStop(DisplayLink);
+                if (res != CVReturn.kCVReturnSuccess)
+                {
+                    Logger?.LogWarning($"Could not stop display link: {res}");
+                }
+            }
+            CV.CVDisplayLinkRelease(DisplayLink);
         }
 
         private static MacOSWindowComponent GetComponentFromWindow(IntPtr window)
@@ -750,6 +775,7 @@ namespace OpenTK.Platform.Native.macOS
                 {
                     // If the cursor is animated, pick the current frame.
                     case NSCursorHandle.CursorMode.SystemAnimatedCursor:
+                    case NSCursorHandle.CursorMode.CustomAnimatedCursor:
                         cursor = nswindow.Cursor.CursorFrames![nswindow.Cursor.Frame];
                         break;
                     default:
@@ -1083,6 +1109,34 @@ namespace OpenTK.Platform.Native.macOS
         }
 
 
+        internal class CursorAnimationUpdateEvent : EventArgs
+        {
+        }
+
+        internal static readonly CursorAnimationUpdateEvent CursorUpdateEvent = new CursorAnimationUpdateEvent();
+
+        private static unsafe int DisplayLinkRefresh(CVDisplayLinkRef displayLink, ref readonly CVTimeStamp inNow, ref readonly CVTimeStamp inOutputTime, ulong flagsIn, out ulong flagsOut, IntPtr displayLinkContext)
+        {
+            Unsafe.SkipInit(out flagsOut);
+            
+            // This is running on a separate thread so we send an event to the main thread
+            // to tell it to update the cursor animation.
+            // - Noggin_bops 2025-07-10
+            Toolkit.Window.PostUserEvent(CursorUpdateEvent);
+
+            return 0;
+        }
+
+        internal void UpdateCursorAnimations(float deltaTime)
+        {
+            foreach (var nswindow in NSWindowDict.Values)
+            {
+                if (nswindow.Cursor != null && MacOSCursorComponent.IsAnimatedCursorInternal(nswindow.Cursor))
+                {
+                    MacOSCursorComponent.UpdateAnimation(nswindow.Cursor, deltaTime);
+                }
+            }
+        }
 
         private bool ProcessHitTest(IntPtr @event)
         {
@@ -1193,6 +1247,14 @@ namespace OpenTK.Platform.Native.macOS
                     {
                         raisedEvent = false;
                         (Toolkit.Shell as MacOSShellComponent)?.UpdateDockTile();
+                    }
+                    else if (args is CursorAnimationUpdateEvent cursorAnimation)
+                    {
+                        raisedEvent = false;
+                        long currTime = Stopwatch.GetTimestamp();
+                        float deltaTime = (currTime - CursorAnimationPrevTime) / (float)Stopwatch.Frequency;
+                        CursorAnimationPrevTime = currTime;
+                        UpdateCursorAnimations(deltaTime);
                     }
                     else if (args is WindowEventArgs windowArgs)
                     {
@@ -1659,38 +1721,6 @@ namespace OpenTK.Platform.Native.macOS
             nswindow.Icon = nsicon;
 
             // FIXME: Is there something we should do here?
-        }
-
-        // FIXME: Should we pass a window handle here?
-        // FIXME: Maybe move this to MacOSShellComponent.
-        public void SetDockIcon(WindowHandle handle, IconHandle icon)
-        {
-            NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
-            NSIconHandle nsicon = icon.As<NSIconHandle>(this);
-
-            IntPtr image = nsicon.Image;
-            // FIXME: Allocation?
-            // FIXME: It seems like the symbol configuration isn't quite working
-            // I'm not sure why though...
-            // - Noggin_bops 2023-11-25
-            if (nsicon.SymbolConfiguration != 0)
-                image = objc_msgSend_IntPtr(nsicon.Image, selImageWithSymbolConfiguration, nsicon.SymbolConfiguration);
-
-            objc_msgSend(nsApplication, selSetApplicationIconImage, image);
-
-            ((MacOSShellComponent)Toolkit.Shell).UpdateDockTile();
-
-            // FIXME: Maybe make a function for setting the minimized icon...
-            /*
-            IntPtr dockTile = objc_msgSend_IntPtr(nswindow.Window, selDockTile);
-
-            IntPtr imageView = objc_msgSend_IntPtr((IntPtr)NSImageViewClass, selImageViewWithImage, nsicon.Image);
-            if (nsicon.SymbolConfiguration != 0)
-                objc_msgSend(imageView, selSetSymbolConfiguration, nsicon.SymbolConfiguration);
-            objc_msgSend(dockTile, selSetContentView, imageView);
-
-            objc_msgSend(dockTile, selDisplay);
-            */
         }
 
         /// <inheritdoc/>
@@ -2430,6 +2460,27 @@ namespace OpenTK.Platform.Native.macOS
             nswindow.Cursor = nscursor;
 
             objc_msgSend(nswindow.Window, selInvalidateCursorRectsForView, nswindow.View);
+
+            bool needDisplayLink = nscursor != null && MacOSCursorComponent.IsAnimatedCursorInternal(nscursor);
+            bool displayLinkIsRunning = CV.CVDisplayLinkIsRunning(DisplayLink);
+
+            if (needDisplayLink == true && displayLinkIsRunning == false)
+            {
+                CVReturn res = CV.CVDisplayLinkStart(DisplayLink);
+                if (res != CVReturn.kCVReturnSuccess)
+                {
+                    Logger?.LogWarning($"Could not start display link: {res}. Animated cursors might not work.");
+                }
+                CursorAnimationPrevTime = Stopwatch.GetTimestamp();
+            }
+            else if (needDisplayLink == false && displayLinkIsRunning == true)
+            {
+                CVReturn res = CV.CVDisplayLinkStop(DisplayLink);
+                if (res != CVReturn.kCVReturnSuccess)
+                {
+                    Logger?.LogWarning($"Could not stop display link: {res}.");
+                }
+            }
         }
 
         /// <inheritdoc/>

@@ -446,14 +446,17 @@ namespace OpenTK.Platform.Native.macOS
             return Create(width, height, imageData, hotspotX, hotspotY);
         }
 
+        /// <summary>
+        /// Struct defining data for one frame of an custom animated cursor.
+        /// </summary>
         public struct Frame
         {
             /// <summary>
-            /// X resolution of <see cref="Image"/>.
+            /// X resolution of <see cref="Image"/>
             /// </summary>
             public int ResX;
             /// <summary>
-            /// Y resolution of <see cref="Image"/>.
+            /// Y resolution of <see cref="Image"/>
             /// </summary>
             public int ResY;
             /// <summary>
@@ -477,13 +480,25 @@ namespace OpenTK.Platform.Native.macOS
             /// </summary>
             public byte[] Image;
 
-            public Frame(int width, int height, byte[] image, int hotspotX, int hotspotY)
+            /// <summary>
+            /// Creates a animated cursor frame.
+            /// </summary>
+            /// <remarks>Calling this constructor will create a copy of the image data array.</remarks>
+            /// <param name="width">The width in window coordinates of the cursor.</param>
+            /// <param name="height">The height in window coordinates of the cursor.</param>
+            /// <param name="image">The frame image data.</param>
+            /// <param name="hotspotX">The x-coordinate of the image to use as the hotspot.</param>
+            /// <param name="hotspotY">The y-coordinate of the image to use as the hotspot.</param>
+            public Frame(int width, int height, Bitmap image, int hotspotX, int hotspotY)
             {
+                ResX = image.Width;
+                ResY = image.Height;
                 Width = width;
                 Height = height;
-                Image = image;
                 HotspotX = hotspotX;
                 HotspotY = hotspotY;
+                Image = new byte[image.Data.Length];
+                Array.Copy(image.Data, Image, image.Data.Length);
             }
         }
 
@@ -502,7 +517,7 @@ namespace OpenTK.Platform.Native.macOS
                 cursorFrames[i] = NSCursorFromImage(frame.ResX, frame.ResY, frame.Width, frame.Height, frame.Image, frame.HotspotX, frame.HotspotY);
             }
 
-            NSCursorHandle handle = new NSCursorHandle(NSCursorHandle.CursorMode.SystemAnimatedCursor, cursorFrames, delay);
+            NSCursorHandle handle = new NSCursorHandle(NSCursorHandle.CursorMode.CustomAnimatedCursor, cursorFrames, delay);
 
             return handle;
         }
@@ -552,15 +567,8 @@ namespace OpenTK.Platform.Native.macOS
             }
         }
 
-        /// <summary>
-        /// Returns true if the cursor is an animated cursor.
-        /// </summary>
-        /// <param name="handle">The cursor to check if it is an animated</param>
-        /// <returns>True if the cursor is animated, false otherwise.</returns>
-        public bool IsAnimatedCursor(CursorHandle handle)
+        internal static bool IsAnimatedCursorInternal(NSCursorHandle nscursor)
         {
-            NSCursorHandle nscursor = handle.As<NSCursorHandle>(this);
-
             if (nscursor.Mode == NSCursorHandle.CursorMode.SystemAnimatedCursor ||
                 nscursor.Mode == NSCursorHandle.CursorMode.CustomAnimatedCursor)
             {
@@ -570,6 +578,18 @@ namespace OpenTK.Platform.Native.macOS
             {
                 return false;
             }
+        }
+
+        /// <summary>
+        /// Returns true if the cursor is an animated cursor.
+        /// </summary>
+        /// <param name="handle">The cursor to check if it is an animated</param>
+        /// <returns>True if the cursor is animated, false otherwise.</returns>
+        internal bool IsAnimatedCursor(CursorHandle handle)
+        {
+            NSCursorHandle nscursor = handle.As<NSCursorHandle>(this);
+
+            return IsAnimatedCursorInternal(nscursor);
         }
 
         /// <inheritdoc/>
@@ -596,12 +616,10 @@ namespace OpenTK.Platform.Native.macOS
             switch (nscursor.Mode)
             {
                 case NSCursorHandle.CursorMode.SystemAnimatedCursor:
-                    // Measure the current frame
+                case NSCursorHandle.CursorMode.CustomAnimatedCursor:
                     cursor = nscursor.CursorFrames![nscursor.Frame];
                     break;
                 case NSCursorHandle.CursorMode.SystemCursor:
-                    cursor = nscursor.Cursor;
-                    break;
                 case NSCursorHandle.CursorMode.CustomCursor:
                     cursor = nscursor.Cursor;
                     break;
@@ -648,21 +666,10 @@ namespace OpenTK.Platform.Native.macOS
             }
         }
 
-        // FIXME: Use a CVDisplayLink and custom user messages to do this in a way where the user
-        // doesn't need to worry about updating animated cursors.
-        /// <summary>
-        /// Updates the animation of an animated cursor.
-        /// When animated cursors change frame <see cref="IWindowComponent.SetCursor(WindowHandle, CursorHandle?)"/> needs to be called to properly animate.
-        /// This function returns true if the cursor needs to be set again.
-        /// </summary>
-        /// <param name="handle">An animated cursor to update.</param>
-        /// <param name="deltaTime">The amount of time to advance the cursor animation.</param>
-        /// <returns>True if the cursor frame has changed and <see cref="IWindowComponent.SetCursor(WindowHandle, CursorHandle?)"/> needs to be called for the cursor to update, false otherwise.</returns>
-        public bool UpdateAnimation(CursorHandle handle, double deltaTime)
+        // Used to update the animation state of a cursor handle. 
+        internal static bool UpdateAnimation(NSCursorHandle nscursor, double deltaTime)
         {
-            NSCursorHandle nscursor = handle.As<NSCursorHandle>(this);
-
-            if (nscursor.Mode != NSCursorHandle.CursorMode.SystemAnimatedCursor)
+            if (IsAnimatedCursorInternal(nscursor) == false)
             {
                 return false;
             }

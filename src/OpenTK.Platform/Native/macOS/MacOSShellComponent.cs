@@ -133,6 +133,12 @@ namespace OpenTK.Platform.Native.macOS
             objc_msgSend(dockTile, selDisplay);
         }
 
+        /// <inheritdoc/>
+        public void Uninitialize()
+        {
+            objc_msgSend(DefaultScreenSaverReason, Release);
+        }
+
         internal void UpdateDockTile() {
             // FIXME: BOOL
             objc_msgSend(ProgressView, selSetNeedsDisplay, true);
@@ -156,7 +162,7 @@ namespace OpenTK.Platform.Native.macOS
 
         static readonly DockIconUpdateEventArgs DockIconUpdateEvent = new DockIconUpdateEventArgs();
 
-        private static unsafe int DisplayLinkRefresh(CVDisplayLinkRef displayLink, IntPtr inNow, IntPtr inOutputTime, ulong flagsIn, out ulong flagsOut, IntPtr displayLinkContext)
+        private static unsafe int DisplayLinkRefresh(CVDisplayLinkRef displayLink, ref readonly CVTimeStamp inNow, ref readonly CVTimeStamp inOutputTime, ulong flagsIn, out ulong flagsOut, IntPtr displayLinkContext)
         {
             Unsafe.SkipInit(out flagsOut);
 
@@ -239,12 +245,6 @@ namespace OpenTK.Platform.Native.macOS
             rectProgress.size.x = rectProgress.size.x * completion;
             objc_msgSend(progressColor, selSet);
             DrawRoundedRect(rectProgress);
-        }
-
-        /// <inheritdoc/>
-        public void Uninitialize()
-        {
-            objc_msgSend(DefaultScreenSaverReason, Release);
         }
 
         /// <inheritdocs/>
@@ -481,20 +481,73 @@ namespace OpenTK.Platform.Native.macOS
 
             return info;
         }
-    
-        public enum ProgressMode {
+
+        // FIXME: GetDockIcon?
+        /// <summary>
+        /// Sets the icon to use to represent the application in the dock.
+        /// </summary>
+        /// <param name="icon">The icon to use.</param>
+        /// <seealso cref="IWindowComponent.SetIcon(WindowHandle, IconHandle)"/>
+        public void SetDockIcon(IconHandle icon)
+        {
+            NSIconHandle nsicon = icon.As<NSIconHandle>(this);
+
+            IntPtr image = nsicon.Image;
+            // FIXME: Allocation?
+            // FIXME: It seems like the symbol configuration isn't quite working
+            // I'm not sure why though...
+            // - Noggin_bops 2023-11-25
+            if (nsicon.SymbolConfiguration != 0)
+                image = objc_msgSend_IntPtr(nsicon.Image, selImageWithSymbolConfiguration, nsicon.SymbolConfiguration);
+
+            objc_msgSend(nsApplication, selSetApplicationIconImage, image);
+
+            UpdateDockTile();
+        }    
+
+        /// <summary>
+        /// Enum describing different progress modes.
+        /// </summary>
+        /// <seealso cref="SetProgressStatus(WindowHandle, ProgressMode, float)"/>
+        public enum ProgressMode
+        {
+            /// <summary>
+            /// No progress bar is shown.
+            /// </summary>
             NoProgress,
+            /// <summary>
+            /// The application is processing data but cannot make a time estimate for when the operation will be finished.
+            /// </summary>
             Indeterminate,
+            /// <summary>
+            /// The application is processing data. Use <paramref name="completion"/> to indicate current progress.
+            /// </summary>
             Normal,
+
+            /// <summary>
+            /// The application encountered an error while processing data.
+            /// </summary>
             Error,
+
+            /// <summary>
+            /// The application has paused the data processing.
+            /// </summary>
             Paused,
         }
 
+        /// <summary>
+        /// Sets the current progress status for a window.
+        /// The progress status is used to display a progress bar in the taskbar.
+        /// </summary>
+        /// <param name="handle">The window to set the progress status for.</param>
+        /// <param name="mode">The progress mode to us efor the window.</param>
+        /// <param name="completion">A number in the range [0, 1] indicating progress. 0 being no progress and 1 meaning finished. Ignored if <paramref name="mode"/> is <see cref="ProgressMode.NoProgress"/> or <see cref="ProgressMode.Indeterminate"/></param>
+        /// <seealso cref="Windows.ShellComponent.SetProgressStatus(WindowHandle, Windows.ShellComponent.ProgressMode, float)"/>
         public unsafe void SetProgressStatus(WindowHandle handle, ProgressMode mode, float completion) {
             NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
 
             // Deal with multiple windows having different progress statuses.
-            // WE could take a book from the windows documentation about the priority
+            // We could take a book from the windows documentation about the priority
             // of progress states.
             // - Noggin_bops 2025-02-20
 
@@ -505,7 +558,6 @@ namespace OpenTK.Platform.Native.macOS
             {
                 if (DisplayLink.Handle == 0)
                 {
-                    // FIXME: Do not recreate if we only have one, alt. dispose of the old link...
                     CV.CVDisplayLinkCreateWithActiveCGDisplays(out DisplayLink);
 
                     CV.CVDisplayLinkSetOutputCallback(DisplayLink, DisplayLinkRefresh, (IntPtr)ComponentHandle);
@@ -513,7 +565,6 @@ namespace OpenTK.Platform.Native.macOS
                     CV.CVDisplayLinkStart(DisplayLink);
 
                     *getIvarPointer<long>(ProgressView, ProgressAnimationTimeFieldName) = Stopwatch.GetTimestamp();
-
                 }
             }
             else
@@ -521,7 +572,7 @@ namespace OpenTK.Platform.Native.macOS
                 if (DisplayLink.Handle != 0)
                 {
                     CV.CVDisplayLinkStop(DisplayLink);
-                    // FIXME: How do we properly dispose of the displat link?
+                    // FIXME: How do we properly dispose of the display link?
                     DisplayLink = default;
                 }
             }

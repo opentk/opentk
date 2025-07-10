@@ -218,9 +218,6 @@ namespace OpenTK.Backends.Tests
                         // FIXME: Should we even show the cursors if they can't be set?
                         if (Toolkit.Window.CanSetIcon)
                         {
-                            if (handle != null)
-                                (Toolkit.Cursor as MacOSCursorComponent)?.UpdateAnimation(handle, deltaTime);
-                                
                             // FIXME: We are potentially leaking a cursor? or does the window hold it's own copy?
                             Toolkit.Window.SetCursor(Program.Window, handle);
                             setCursor = true;
@@ -413,9 +410,6 @@ namespace OpenTK.Backends.Tests
                 {
                     if (Toolkit.Window.CanSetCursor)
                     {
-                        if (handle != null)
-                            (Toolkit.Cursor as MacOSCursorComponent)?.UpdateAnimation(handle, deltaTime);
-
                         Toolkit.Window.SetCursor(Program.Window, handle);
                         setCursor = true;
                     }

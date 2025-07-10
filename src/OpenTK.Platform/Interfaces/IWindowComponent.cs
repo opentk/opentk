@@ -84,7 +84,7 @@ namespace OpenTK.Platform
 
         /// <summary>
         /// Posts a user defined event to the event queue.
-        /// This is mostly useful when using the <see cref="ProcessEvents(bool)"/> with <see langword="true"/> to wait for events.
+        /// This is useful when using the <see cref="ProcessEvents(bool)"/> with <see langword="true"/> to wait for events.
         /// Then this method can be used to manually post an event and wake up the main thread.
         /// Sending events through this function has overhead so unnecessary calls to this function should be avoided.
         /// </summary>
@@ -150,11 +150,17 @@ namespace OpenTK.Platform
         /// <summary>
         /// Set window icon object handle.
         /// </summary>
+        /// <remarks>
+        /// On macOS windows do not have thier own individual icons, instead the whole app is represented by a single icon.
+        /// To set this icon use <see cref="Native.macOS.MacOSShellComponent.SetDockIcon(IconHandle)"/>.
+        /// Calling <see cref="SetIcon(WindowHandle, IconHandle)"/> and <see cref="GetIcon(WindowHandle)"/> on macOS works but will not have any visual results.
+        /// </remarks>
         /// <param name="handle">Handle to a window.</param>
         /// <param name="icon">Handle to an icon object.</param>
         /// <exception cref="PlatformNotSupportedException">Backend does not support setting the window icon. See <see cref="CanSetIcon"/>.</exception>
         /// <seealso cref="CanSetIcon"/>
         /// <seealso cref="GetIcon(WindowHandle)"/>
+        /// <seealso cref="Native.macOS.MacOSShellComponent.SetDockIcon(IconHandle)"/>
         void SetIcon(WindowHandle handle, IconHandle icon);
 
         /// <summary>

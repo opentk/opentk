@@ -368,6 +368,7 @@ namespace OpenTK.Platform.Native.Windows
         /// <param name="mode">The progress mode to use for the window.</param>
         /// <param name="completion">A number in the range [0, 1] indicating progress. 0 being no progress and 1 meaning finished. Ignored if <paramref name="mode"/> is <see cref="ProgressMode.NoProgress"/> or <see cref="ProgressMode.Indeterminate"/>.</param>
         /// <seealso cref="ProgressMode"/>
+        /// <seealso cref="macOS.MacOSShellComponent.SetProgressStatus(WindowHandle, macOS.MacOSShellComponent.ProgressMode, float)"/>
         public void SetProgressStatus(WindowHandle handle, ProgressMode mode, float completion)
         {
             HWND hwnd = handle.As<HWND>(this);

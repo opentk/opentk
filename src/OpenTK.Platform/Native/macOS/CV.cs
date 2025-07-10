@@ -22,6 +22,32 @@ namespace OpenTK.Platform.Native.macOS
     }
 #pragma warning restore CS0649
 
+    internal struct CVTimeStamp
+    {
+        public uint version;
+        public int videoTimeScale;
+        public long videoTime;
+        public ulong hostTime;
+        public double rateScalar;
+        public int videoRefreshPeriod;
+        public CVSMPTETime smpteTime;
+        public ulong flags;
+        public ulong reserved;
+    }
+
+    internal struct CVSMPTETime
+    {
+        public short  subframes;
+        public short  subframeDivisor;
+        public uint  counter;
+        public uint  type;
+        public uint  flags;
+        public short  hours;
+        public short  minutes;
+        public short  seconds;
+        public short  frames;
+    }
+
 
     internal static unsafe class CV
     {
@@ -33,29 +59,35 @@ namespace OpenTK.Platform.Native.macOS
         internal static readonly int CVIndefiniteTime = (int)GetSymbol(CoreVideo, "kCVIndefiniteTime"u8);
 
         [DllImport(Lib, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern int /* CVReturn */ CVDisplayLinkCreateWithCGDisplay(uint /* CGDirectDisplayID */ displayID, out CVDisplayLinkRef link);
+        internal static extern CVReturn CVDisplayLinkCreateWithCGDisplay(uint /* CGDirectDisplayID */ displayID, out CVDisplayLinkRef link);
 
         [DllImport(Lib, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern int /* CVReturn */ CVDisplayLinkCreateWithActiveCGDisplays(out CVDisplayLinkRef displayLinkOut);
+        internal static extern CVReturn CVDisplayLinkCreateWithActiveCGDisplays(out CVDisplayLinkRef displayLinkOut);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        internal delegate int CVDisplayLinkOutputCallback(CVDisplayLinkRef displayLink, IntPtr inNow, IntPtr inOutputTime, ulong flagsIn, out ulong flagsOut, IntPtr displayLinkContext);
+        internal delegate int CVDisplayLinkOutputCallback(CVDisplayLinkRef displayLink, ref readonly CVTimeStamp inNow, ref readonly CVTimeStamp inOutputTime, ulong flagsIn, out ulong flagsOut, IntPtr displayLinkContext);
 
         [DllImport(Lib, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern int /* CVReturn */ CVDisplayLinkSetOutputCallback(CVDisplayLinkRef displayLink, CVDisplayLinkOutputCallback callback, IntPtr userInfo);
+        internal static extern CVReturn CVDisplayLinkSetOutputCallback(CVDisplayLinkRef displayLink, CVDisplayLinkOutputCallback callback, IntPtr userInfo);
 
         [DllImport(Lib, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern int /* CVReturn */ CVDisplayLinkStart(CVDisplayLinkRef displayLink);
+        internal static extern CVReturn CVDisplayLinkGetCurrentTime(CVDisplayLinkRef displayLink, ref CVTimeStamp outTime);
+
+        // FIXME: Boolean?
+        [DllImport(Lib, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern bool /* Boolean */ CVDisplayLinkIsRunning(CVDisplayLinkRef displayLink);
 
         [DllImport(Lib, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern int /* CVReturn */ CVDisplayLinkStop(CVDisplayLinkRef displayLink);
+        internal static extern CVReturn CVDisplayLinkStart(CVDisplayLinkRef displayLink);
+
+        [DllImport(Lib, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern CVReturn CVDisplayLinkStop(CVDisplayLinkRef displayLink);
 
         [DllImport(Lib, CallingConvention = CallingConvention.Cdecl)]
         internal static extern void CVDisplayLinkRelease(CVDisplayLinkRef displayLink);
 
         [DllImport(Lib, CallingConvention = CallingConvention.Cdecl)]
         internal static extern CVTime CVDisplayLinkGetNominalOutputVideoRefreshPeriod(CVDisplayLinkRef displayLink);
-
     }
 }
 
