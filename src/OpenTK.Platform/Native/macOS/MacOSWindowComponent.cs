@@ -34,6 +34,8 @@ namespace OpenTK.Platform.Native.macOS
         internal static readonly SEL selType = sel_registerName("type"u8);
         internal static readonly SEL selSendEvent = sel_registerName("sendEvent:"u8);
         internal static readonly SEL selNextEventMatchingMask_untilDate_inMode_dequeue = sel_registerName("nextEventMatchingMask:untilDate:inMode:dequeue:"u8);
+        internal static readonly SEL selDistantFuture = sel_registerName("distantFuture"u8);
+        internal static readonly SEL selDistantPast = sel_registerName("distantPast"u8);
         internal static readonly SEL selWindow = sel_registerName("window"u8);
         internal static readonly SEL selButtonNumber = sel_registerName("buttonNumber"u8);
         internal static readonly SEL selLocationInWindow = sel_registerName("locationInWindow"u8);
@@ -75,6 +77,7 @@ namespace OpenTK.Platform.Native.macOS
         internal static readonly SEL selMakeKeyWindow = sel_registerName("makeKeyWindow"u8);
         internal static readonly SEL selCenter = sel_registerName("center"u8);
         internal static readonly SEL selInputContext = sel_registerName("inputContext"u8);
+        internal static readonly SEL selContentRectForFrameRect = sel_registerName("contentRectForFrameRect:"u8);
 
         internal static readonly SEL selMakeKeyAndOrderFront = sel_registerName("makeKeyAndOrderFront:"u8);
         internal static readonly SEL selIsKeyWindow = sel_registerName("isKeyWindow"u8);
@@ -175,9 +178,18 @@ namespace OpenTK.Platform.Native.macOS
         internal static readonly SEL selActivateIgnoringOtherApps = sel_registerName("activateIgnoringOtherApps:"u8);
         internal static readonly SEL selSetRestorable = sel_registerName("setRestorable:"u8);
 
+        internal static readonly SEL selSetPendingKey_scancode_isRepeat_modifiers = sel_registerName("setPendingKey:scancode:isRepeat:modifiers:"u8);
+        internal static readonly SEL selSendPendingKey = sel_registerName("sendPendingKey"u8);
+        internal static readonly SEL selClearPendingKey = sel_registerName("clearPendingKey"u8);
+
+        internal static readonly SEL selOtherEventWithType_Location_ModifierFlags_Timestamp_WindowNumber_Context_Subtype_Data1_Data2 = sel_registerName("otherEventWithType:location:modifierFlags:timestamp:windowNumber:context:subtype:data1:data2:"u8);
+        internal static readonly SEL selPostEvent_AtStart = sel_registerName("postEvent:atStart:"u8);
+        internal static readonly SEL selData1 = sel_registerName("data1"u8);
+
         internal static readonly IntPtr NSPasteboardTypeFileURL = GetStringConstant(AppKitLibrary, "NSPasteboardTypeFileURL"u8);
 
         internal static readonly IntPtr NSDefaultRunLoop = GetStringConstant(FoundationLibrary, "NSDefaultRunLoopMode"u8);
+        internal static readonly IntPtr NSRunLoopCommonModes = GetStringConstant(FoundationLibrary, "NSRunLoopCommonModes"u8);
 
         internal static readonly ObjCClass NSWindowClass = objc_getClass("NSWindow"u8);
         internal static readonly ObjCClass NSApplicationClass = objc_getClass("NSApplication"u8);
@@ -194,11 +206,14 @@ namespace OpenTK.Platform.Native.macOS
         internal static readonly ObjCClass NSStringClass = objc_getClass("NSString"u8);
         internal static readonly ObjCClass NSURLClass = objc_getClass("NSURL"u8);
         internal static readonly ObjCClass NSColorClass = objc_getClass("NSColor"u8);
+        internal static readonly ObjCClass NSDateClass = objc_getClass("NSDate"u8);
 
         internal static ObjCClass NSOpenTKWindowClass;
         internal static ObjCClass NSOpenTKViewClass;
 
         internal static readonly Dictionary<IntPtr, NSWindowHandle> NSWindowDict = new Dictionary<nint, NSWindowHandle>();
+
+        internal static CVDisplayLinkRef DisplayLink;
 
         internal static ReadOnlySpan<byte> OtkCompoenntFieldName => "otkPALWindowComponent"u8;
 
@@ -210,6 +225,8 @@ namespace OpenTK.Platform.Native.macOS
 
         /// <inheritdoc/>
         public ILogger? Logger { get; set; }
+
+        internal long CursorAnimationPrevTime = -1;
 
         /// <inheritdoc/>
         public unsafe void Initialize(ToolkitOptions options)
@@ -301,6 +318,17 @@ namespace OpenTK.Platform.Native.macOS
             // Add an IVar for the markedText, so we can use it without finding the managed window object.
             class_addIvar(NSOpenTKViewClass, "markedText"u8, (nuint)nuint.Size, (nuint)int.Log2(nuint.Size), "@"u8);
 
+            class_addIvar(NSOpenTKViewClass, "inputRect"u8, (nuint)sizeof(CGRect), (nuint)int.Log2(sizeof(CGRect)), "{CGRect={CGPoint=dd}{CGSize=dd}}"u8);
+
+            class_addIvar(NSOpenTKViewClass, "pendingScancode"u8, (nuint)sizeof(Scancode), (nuint)int.Log2(sizeof(Scancode)), "i"u8);
+            class_addIvar(NSOpenTKViewClass, "pendingKey"u8, (nuint)sizeof(Scancode), (nuint)int.Log2(sizeof(Scancode)), "i"u8);
+            class_addIvar(NSOpenTKViewClass, "pendingIsRepeat"u8, (nuint)sizeof(Scancode), (nuint)int.Log2(sizeof(Scancode)), "i"u8);
+            class_addIvar(NSOpenTKViewClass, "pendingKeyModifiers"u8, (nuint)sizeof(Scancode), (nuint)int.Log2(sizeof(Scancode)), "i"u8);
+
+            class_addMethod(NSOpenTKViewClass, selSetPendingKey_scancode_isRepeat_modifiers, (IntPtr)NSOtkView_SetPendingKey_Scancode_IsRepeat_ModifiersInst, "v@:iiii"u8);
+            class_addMethod(NSOpenTKViewClass, selSendPendingKey, (IntPtr)NSOtkView_SendPendingKeyInst, "v@:"u8);
+            class_addMethod(NSOpenTKViewClass, selClearPendingKey, (IntPtr)NSOtkView_ClearPendingKeyInst, "v@:"u8);
+
             class_addMethod(NSOpenTKViewClass, sel_registerName("resetCursorRects"u8), (IntPtr)NSOtkView_ResetCursorRectsInst, "v@:"u8);
             class_addMethod(NSOpenTKViewClass, sel_registerName("mouseEntered:"u8), (IntPtr)NSOtkView_MouseEnteredInst, "v@:@"u8);
             class_addMethod(NSOpenTKViewClass, sel_registerName("mouseExited:"u8), (IntPtr)NSOtkView_MouseExitedInst, "v@:@"u8);
@@ -309,6 +337,11 @@ namespace OpenTK.Platform.Native.macOS
             // TODO: canBecomeKeyView, 
             class_addMethod(NSOpenTKViewClass, sel_registerName("acceptsFirstResponder"u8), (IntPtr)NSOtkView_AcceptsFirstResponderInst, "c@:"u8);
             class_addMethod(NSOpenTKViewClass, sel_registerName("viewDidChangeEffectiveAppearance"u8), (IntPtr)NSOtkView_ViewDidChangeEffectiveAppearanceInst, "v@:"u8);
+
+            // FIXME: We want to decouple the NSTextInputClient from the View
+            // so that we can enable and disable text input whenever we want.
+            // Unless there is a way to tell cocoa that we won't be accepting input...
+            // - Noggin_bops 2024-01-26
 
             // NSTextInputClientProtocol functions
             IntPtr NSTextInputClientProtocol = objc_getProtocol("NSTextInputClient"u8);
@@ -347,6 +380,17 @@ namespace OpenTK.Platform.Native.macOS
                 // FIXME: BOOL
                 objc_msgSend(nsApplication, selActivateIgnoringOtherApps, true);
             }
+
+            CVReturn res = CV.CVDisplayLinkCreateWithActiveCGDisplays(out DisplayLink);
+            if (res != CVReturn.kCVReturnSuccess)
+            {
+                Logger?.LogWarning($"Could not create display link: {res}");
+            }
+            res = CV.CVDisplayLinkSetOutputCallback(DisplayLink, DisplayLinkRefresh, 0);
+            if (res != CVReturn.kCVReturnSuccess)
+            {
+                Logger?.LogWarning($"Could not set display link callback: {res}");
+            }
         }
 
         /// <inheritdoc/>
@@ -359,6 +403,16 @@ namespace OpenTK.Platform.Native.macOS
 
             // FIXME: Reset selSetActivationPolicy?
             // FIXME: Reset selDiscardEventsMatchingMask_beforeEvent?
+
+            if (CV.CVDisplayLinkIsRunning(DisplayLink))
+            {
+                CVReturn res = CV.CVDisplayLinkStop(DisplayLink);
+                if (res != CVReturn.kCVReturnSuccess)
+                {
+                    Logger?.LogWarning($"Could not stop display link: {res}");
+                }
+            }
+            CV.CVDisplayLinkRelease(DisplayLink);
         }
 
         private static MacOSWindowComponent GetComponentFromWindow(IntPtr window)
@@ -647,6 +701,57 @@ namespace OpenTK.Platform.Native.macOS
             }
         }
 
+        private static unsafe readonly delegate* unmanaged[Cdecl]<IntPtr, SEL, int, int, int, int, void> NSOtkView_SetPendingKey_Scancode_IsRepeat_ModifiersInst = &NSOtkView_SetPendingKey_Scancode_IsRepeat_Modifiers;
+        [UnmanagedCallersOnly(CallConvs = new Type[] { typeof(CallConvCdecl) })]
+        private static void NSOtkView_SetPendingKey_Scancode_IsRepeat_Modifiers(IntPtr view, SEL selector, int key, int scancode, int isRepeat, int modifiers)
+        {
+            object_setInstanceVariable(view, "pendingScancode"u8, scancode);
+            object_setInstanceVariable(view, "pendingKey"u8, key);
+            object_setInstanceVariable(view, "pendingIsRepeat"u8, isRepeat);
+            object_setInstanceVariable(view, "pendingKeyModifiers"u8, modifiers);
+
+            GetComponentFromView(view).Logger?.LogDebug("setPendingKey");
+        }
+
+        private static unsafe readonly delegate* unmanaged[Cdecl]<IntPtr, SEL, void> NSOtkView_SendPendingKeyInst = &NSOtkView_SendPendingKey;
+        [UnmanagedCallersOnly(CallConvs = new Type[] { typeof(CallConvCdecl) })]
+        private static void NSOtkView_SendPendingKey(IntPtr view, SEL selector)
+        {
+            object_getInstanceVariable(view, "pendingKey"u8, out nint pendingKey);
+            if (pendingKey == 0)
+                return;
+
+            object_getInstanceVariable(view, "pendingScancode"u8, out nint pendingScancode);
+            object_getInstanceVariable(view, "pendingIsRepeat"u8, out nint pendingIsRepeat);
+            object_getInstanceVariable(view, "pendingKeyModifiers"u8, out nint pendingKeyModifiers);
+
+            IntPtr windowPtr = objc_msgSend_IntPtr(view, selWindow);
+            if (NSWindowDict.TryGetValue(windowPtr, out NSWindowHandle? nswindow) == false)
+            {
+                GetComponentFromView(view).Logger?.LogDebug($"Could not find NSWindow for NSView 0x{view}");
+                return;
+            }
+
+            Key key = (Key)pendingKey;
+            Scancode scancode = (Scancode)pendingScancode;
+            KeyModifier modifier = (KeyModifier)pendingKeyModifiers;
+            bool isRepeat = pendingIsRepeat != 0;
+
+            GetComponentFromView(view).Logger?.LogDebug("sendPendingKey");
+
+            EventQueue.Raise(nswindow, PlatformEventType.KeyDown, new KeyDownEventArgs(nswindow, key, scancode, isRepeat, modifier));
+
+            objc_msgSend(view, selClearPendingKey);
+        }
+
+        private static unsafe readonly delegate* unmanaged[Cdecl]<IntPtr, SEL, void> NSOtkView_ClearPendingKeyInst = &NSOtkView_ClearPendingKey;
+        [UnmanagedCallersOnly(CallConvs = new Type[] { typeof(CallConvCdecl) })]
+        private static void NSOtkView_ClearPendingKey(IntPtr view, SEL selector)
+        {
+            object_setInstanceVariable(view, "pendingKey"u8, 0);
+            GetComponentFromView(view).Logger?.LogDebug("clearPendingKey");
+        }
+
         private static unsafe readonly delegate* unmanaged[Cdecl]<IntPtr, SEL, void> NSOtkView_ResetCursorRectsInst = &NSOtkView_ResetCursorRects;
         [UnmanagedCallersOnly(CallConvs = new Type[] { typeof(CallConvCdecl) })]
         private static void NSOtkView_ResetCursorRects(IntPtr view, SEL selector)
@@ -670,6 +775,7 @@ namespace OpenTK.Platform.Native.macOS
                 {
                     // If the cursor is animated, pick the current frame.
                     case NSCursorHandle.CursorMode.SystemAnimatedCursor:
+                    case NSCursorHandle.CursorMode.CustomAnimatedCursor:
                         cursor = nswindow.Cursor.CursorFrames![nswindow.Cursor.Frame];
                         break;
                     default:
@@ -718,8 +824,9 @@ namespace OpenTK.Platform.Native.macOS
         [UnmanagedCallersOnly(CallConvs = new Type[] { typeof(CallConvCdecl) })]
         private static void NSOtkView_KeyDown(IntPtr view, SEL selector, IntPtr @event)
         {
-            IntPtr array = objc_msgSend_IntPtr((IntPtr)NSArrayClass, selArrayWithObject, @event);
-            objc_msgSend_IntPtr(view, selInterpretKeyEvents, array);
+            // FIXME: Only call interpretKeyEvents if text input is enabled.
+            //IntPtr array = objc_msgSend_IntPtr((IntPtr)NSArrayClass, selArrayWithObject, @event);
+            //objc_msgSend_IntPtr(view, selInterpretKeyEvents, array);
         }
 
         private static unsafe readonly delegate* unmanaged[Cdecl]<IntPtr, SEL, byte> NSOtkView_AcceptsFirstResponderInst = &NSOtkView_AcceptsFirstResponder;
@@ -751,7 +858,7 @@ namespace OpenTK.Platform.Native.macOS
         private static NSRange NSOtkView_NSTextInputClient_MarkedRange(IntPtr view, SEL selector)
         {
             // FIXME: Store the Ivar somewhere to be able to use object_getIvar?
-            object_getInstanceVariable(view, "markedText"u8, out IntPtr markedText);
+            IntPtr test = object_getInstanceVariable(view, "markedText"u8, out IntPtr markedText);
             ulong length = (ulong)objc_msgSend_IntPtr(markedText, selLength);
             if (length > 0)
             {
@@ -778,7 +885,7 @@ namespace OpenTK.Platform.Native.macOS
             object_getInstanceVariable(view, "markedText"u8, out IntPtr markedText);
             objc_msgSend(markedText, Release);
             // FIXME: BOOL
-            if (objc_msgSend_bool(@string, selIsKindOfClass, (IntPtr)objc_getClass("NSAttributedString"u8)))
+            if (objc_msgSend_bool(@string, selIsKindOfClass, (IntPtr)NSAttributedStringClass))
             {
                 markedText = objc_msgSend_IntPtr(objc_msgSend_IntPtr((IntPtr)NSMutableAttributedStringClass, Alloc), selInitWithAttributedString, @string);
 
@@ -789,6 +896,22 @@ namespace OpenTK.Platform.Native.macOS
             }
             // FIXME: Store the Ivar somewhere to be able to use object_getIvar?
             object_setInstanceVariable(view, "markedText"u8, markedText);
+
+            string str;
+            if (objc_msgSend_bool(@string, selIsKindOfClass, (IntPtr)NSAttributedStringClass))
+            {
+                str = FromNSString(objc_msgSend_IntPtr(@string, selString));
+            }
+            else
+            {
+                str = FromNSString(@string);
+            }
+
+            // An IME ate the key press.
+            // - Noggin_bops 2024-01-26
+            objc_msgSend(view, selClearPendingKey);
+
+            GetComponentFromView(view).Logger?.LogDebug($"SetMarkedText \"{str}\"");
         }
 
         private static unsafe readonly delegate* unmanaged[Cdecl]<IntPtr, SEL, void> NSOtkView_NSTextInputClient_UnmarkTextInst = &NSOtkView_NSTextInputClient_UnmarkText;
@@ -799,6 +922,12 @@ namespace OpenTK.Platform.Native.macOS
             object_getInstanceVariable(view, "markedText"u8, out IntPtr markedText);
             // FIXME: Do not create a new NSString every time!
             objc_msgSend(objc_msgSend_IntPtr(markedText, selMutableString), selSetString, ToNSString(""));
+
+            // An IME ate the key press.
+            // - Noggin_bops 2024-01-26
+            objc_msgSend(view, selClearPendingKey);
+
+            GetComponentFromView(view).Logger?.LogDebug($"Unmark text");
         }
 
         private static unsafe readonly delegate* unmanaged[Cdecl]<IntPtr, SEL, IntPtr> NSOtkView_NSTextInputClient_ValidAttributesForMarkedTextInst = &NSOtkView_NSTextInputClient_ValidAttributesForMarkedText;
@@ -827,7 +956,7 @@ namespace OpenTK.Platform.Native.macOS
             }
 
             string str;
-            if (objc_msgSend_bool(@string, selIsKindOfClass, (IntPtr)objc_getClass("NSAttributedString"u8)))
+            if (objc_msgSend_bool(@string, selIsKindOfClass, (IntPtr)NSAttributedStringClass))
             {
                 str = FromNSString(objc_msgSend_IntPtr(@string, selString));
             }
@@ -835,6 +964,14 @@ namespace OpenTK.Platform.Native.macOS
             {
                 str = FromNSString(@string);
             }
+
+            GetComponentFromView(view).Logger?.LogDebug($"InsertText: \"{str}\"");
+
+            // Here we actually send the KeyDown event that generated this text input.
+            // We do this here so that we can avoid sending KeyDown events for key presses
+            // that an IME might have interpreted as something else.
+            // - Noggin_bops 2024-01-26
+            objc_msgSend(view, selSendPendingKey);
 
             EventQueue.Raise(nswindow, PlatformEventType.TextInput, new TextInputEventArgs(nswindow, str));
         }
@@ -846,13 +983,24 @@ namespace OpenTK.Platform.Native.macOS
             return 0;
         }
 
-        private static unsafe readonly delegate* unmanaged[Cdecl]<IntPtr, SEL, CGPoint, CGRect> NSOtkView_NSTextInputClient_FirstRectForCharacterRange_ActualRangeInst = &NSOtkView_NSTextInputClient_FirstRectForCharacterRange_ActualRange;
+        private static unsafe readonly delegate* unmanaged[Cdecl]<IntPtr, SEL, NSRange, NSRange*, CGRect> NSOtkView_NSTextInputClient_FirstRectForCharacterRange_ActualRangeInst = &NSOtkView_NSTextInputClient_FirstRectForCharacterRange_ActualRange;
         [UnmanagedCallersOnly(CallConvs = new Type[] { typeof(CallConvCdecl) })]
-        private static CGRect NSOtkView_NSTextInputClient_FirstRectForCharacterRange_ActualRange(IntPtr view, SEL selector, CGPoint point)
+        private unsafe static CGRect NSOtkView_NSTextInputClient_FirstRectForCharacterRange_ActualRange(IntPtr view, SEL selector, NSRange range, NSRange* actualRange)
         {
-            // FIXME: Why do we do this?
-            CGRect frame = objc_msgSend_CGRect(view, selFrame);
-            return new CGRect(frame.origin, CGPoint.Zero);
+            if (actualRange != null)
+                *actualRange = range;
+            
+            IntPtr window = objc_msgSend_IntPtr(view, selWindow);
+            CGRect contentRect = objc_msgSend_CGRect(window, selContentRectForFrameRect, objc_msgSend_CGRect(window, selFrame));
+            NFloat windowHeight = contentRect.size.y;
+            CGRect inputRect = *(CGRect*)getIvarPointer(view, "inputRect"u8);
+            
+            CGRect rect = new CGRect(inputRect.origin.x, windowHeight - inputRect.origin.y - inputRect.size.y, inputRect.size.x, inputRect.size.y);
+            CGRect screenRect = objc_msgSend_CGRect(window, selConvertRectToScreen, rect);
+
+            ILogger? logger = GetComponentFromView(view).Logger;
+            logger?.LogDebug($"screenRect: {screenRect}, inputRect: {inputRect}, rect: {rect}");
+            return screenRect;
         }
 
         private static unsafe readonly delegate* unmanaged[Cdecl]<IntPtr, SEL, SEL, void> NSOtkView_NSTextInputClient_DoCommandBySelectorInst = &NSOtkView_NSTextInputClient_DoCommandBySelector;
@@ -865,7 +1013,7 @@ namespace OpenTK.Platform.Native.macOS
         [UnmanagedCallersOnly(CallConvs = new Type[] { typeof(CallConvCdecl) })]
         private static nuint /* NSDragOperation */ NSOtkView_NSDraggingDestination_DraggingEntered(IntPtr view, SEL _selector, IntPtr sender)
         {
-            Console.WriteLine("Dragging Entered");
+            GetComponentFromView(view).Logger?.LogDebug("Dragging Entered");
             return (nuint)NSDragOperation.Copy;
         }
 
@@ -873,7 +1021,7 @@ namespace OpenTK.Platform.Native.macOS
         [UnmanagedCallersOnly(CallConvs = new Type[] { typeof(CallConvCdecl) })]
         private static sbyte /* BOOL */ NSOtkView_NSDraggingDestination_WantsPeriodicDraggingUpdates(IntPtr view, SEL _selector)
         {
-            Console.WriteLine("Wants periodic drag update");
+            GetComponentFromView(view).Logger?.LogDebug("Wants periodic drag update");
             return 1;
         }
 
@@ -881,7 +1029,7 @@ namespace OpenTK.Platform.Native.macOS
         [UnmanagedCallersOnly(CallConvs = new Type[] { typeof(CallConvCdecl) })]
         private static nuint /* NSDragOperation */ NSOtkView_NSDraggingDestination_DraggingUpdated(IntPtr view, SEL _selector, IntPtr sender)
         {
-            Console.WriteLine("Drag update");
+            GetComponentFromView(view).Logger?.LogDebug("Drag update");
             return (nuint)NSDragOperation.Copy;
         }
 
@@ -889,21 +1037,21 @@ namespace OpenTK.Platform.Native.macOS
         [UnmanagedCallersOnly(CallConvs = new Type[] { typeof(CallConvCdecl) })]
         private static void NSOtkView_NSDraggingDestination_DraggingExited(IntPtr view, SEL _selector, IntPtr sender)
         {
-            Console.WriteLine("Dragging exited");
+            GetComponentFromView(view).Logger?.LogDebug("Dragging exited");
         }
 
         private static unsafe readonly delegate* unmanaged[Cdecl]<IntPtr, SEL, IntPtr, void> NSOtkView_NSDraggingDestination_DraggingEndedInst = &NSOtkView_NSDraggingDestination_DraggingEnded;
         [UnmanagedCallersOnly(CallConvs = new Type[] { typeof(CallConvCdecl) })]
         private static void NSOtkView_NSDraggingDestination_DraggingEnded(IntPtr view, SEL _selector, IntPtr sender)
         {
-            Console.WriteLine("Dragging ended");
+            GetComponentFromView(view).Logger?.LogDebug("Dragging ended");
         }
 
         private static unsafe readonly delegate* unmanaged[Cdecl]<IntPtr, SEL, IntPtr, sbyte> NSOtkView_NSDraggingDestination_PrepareForDragOperationInst = &NSOtkView_NSDraggingDestination_PrepareForDragOperation;
         [UnmanagedCallersOnly(CallConvs = new Type[] { typeof(CallConvCdecl) })]
         private static sbyte /* BOOL */ NSOtkView_NSDraggingDestination_PrepareForDragOperation(IntPtr view, SEL _selector, IntPtr sender)
         {
-            Console.WriteLine("Prepare drag");
+            GetComponentFromView(view).Logger?.LogDebug("Prepare drag");
             return 1;
         }
 
@@ -950,17 +1098,45 @@ namespace OpenTK.Platform.Native.macOS
         [UnmanagedCallersOnly(CallConvs = new Type[] { typeof(CallConvCdecl) })]
         private static void NSOtkView_NSDraggingDestination_ConcludeDragOperation(IntPtr view, SEL _selector, IntPtr sender)
         {
-            Console.WriteLine("Conclude drag");
+            GetComponentFromView(view).Logger?.LogDebug("Conclude drag");
         }
 
         private static unsafe readonly delegate* unmanaged[Cdecl]<IntPtr, SEL, IntPtr, void> NSOtkView_NSDraggingDestination_UpdateDraggingItemsForDragInst = &NSOtkView_NSDraggingDestination_UpdateDraggingItemsForDrag;
         [UnmanagedCallersOnly(CallConvs = new Type[] { typeof(CallConvCdecl) })]
         private static void NSOtkView_NSDraggingDestination_UpdateDraggingItemsForDrag(IntPtr view, SEL _selector, IntPtr sender)
         {
-            Console.WriteLine("Update dragging items");
+            GetComponentFromView(view).Logger?.LogDebug("Update dragging items");
         }
 
 
+        internal class CursorAnimationUpdateEvent : EventArgs
+        {
+        }
+
+        internal static readonly CursorAnimationUpdateEvent CursorUpdateEvent = new CursorAnimationUpdateEvent();
+
+        private static unsafe int DisplayLinkRefresh(CVDisplayLinkRef displayLink, ref readonly CVTimeStamp inNow, ref readonly CVTimeStamp inOutputTime, ulong flagsIn, out ulong flagsOut, IntPtr displayLinkContext)
+        {
+            Unsafe.SkipInit(out flagsOut);
+            
+            // This is running on a separate thread so we send an event to the main thread
+            // to tell it to update the cursor animation.
+            // - Noggin_bops 2025-07-10
+            Toolkit.Window.PostUserEvent(CursorUpdateEvent);
+
+            return 0;
+        }
+
+        internal void UpdateCursorAnimations(float deltaTime)
+        {
+            foreach (var nswindow in NSWindowDict.Values)
+            {
+                if (nswindow.Cursor != null && MacOSCursorComponent.IsAnimatedCursorInternal(nswindow.Cursor))
+                {
+                    MacOSCursorComponent.UpdateAnimation(nswindow.Cursor, deltaTime);
+                }
+            }
+        }
 
         private bool ProcessHitTest(IntPtr @event)
         {
@@ -1026,313 +1202,331 @@ namespace OpenTK.Platform.Native.macOS
         /// <inheritdoc/>
         public void ProcessEvents(bool waitForEvents)
         {
-            // FIXME: Implement waitForEvents=true.
             IntPtr @event;
+            bool keepWaiting = true;
+            while (waitForEvents && keepWaiting)
+            {
+                IntPtr distantFuture = objc_msgSend_IntPtr((IntPtr)NSDateClass, selDistantFuture);
+                if ((@event = objc_msgSend_IntPtr(nsApplication, selNextEventMatchingMask_untilDate_inMode_dequeue, NSEventMask.Any, distantFuture, NSDefaultRunLoop, true)) != IntPtr.Zero)
+                {
+                    bool userEvent = DispatchEvent(@event);
+                    if (userEvent)
+                        keepWaiting = false;
+                }
+            }
+
             while ((@event = objc_msgSend_IntPtr(nsApplication, selNextEventMatchingMask_untilDate_inMode_dequeue, NSEventMask.Any, IntPtr.Zero, NSDefaultRunLoop, true)) != IntPtr.Zero)
             {
-                NSEventType type = (NSEventType)objc_msgSend_ulong(@event, selType);
+                DispatchEvent(@event);
+            }
+        }
 
-                IntPtr windowPtr = objc_msgSend_IntPtr(@event, selWindow);
-                if (NSWindowDict.TryGetValue(windowPtr, out NSWindowHandle? nswindow) == false)
+        /// <returns>True if this generated a user-facing event or false if no event was sent to use user.</returns>
+        private bool DispatchEvent(IntPtr @event)
+        {
+            NSEventType type = (NSEventType)objc_msgSend_ulong(@event, selType);
+
+            IntPtr windowPtr = objc_msgSend_IntPtr(@event, selWindow);
+            if (NSWindowDict.TryGetValue(windowPtr, out NSWindowHandle? nswindow) == false)
+            {
+                bool raisedEvent = false;
+
+                if (type == NSEventType.MouseMoved ||
+                    type == NSEventType.SystemDefined ||
+                    type == NSEventType.AppKitDefined)
                 {
-                    if (type == NSEventType.MouseMoved ||
-                        type == NSEventType.SystemDefined ||
-                        type == NSEventType.AppKitDefined)
+                    // Do not log the more spammy events..
+                }
+                else if (type == NSEventType.ApplicationDefined)
+                {
+                    // FIXME: A better way to know this a custom user event and not an application event someone else posted?
+                    IntPtr data = objc_msgSend_IntPtr(@event, selData1);
+                    GCHandle handle = GCHandle.FromIntPtr(data);
+                    EventArgs args = (EventArgs)handle.Target!;
+                    if (args is MacOSShellComponent.DockIconUpdateEventArgs dockIconUpdate)
                     {
-                        // Do not log the more spammy events..
+                        raisedEvent = false;
+                        (Toolkit.Shell as MacOSShellComponent)?.UpdateDockTile();
+                    }
+                    else if (args is CursorAnimationUpdateEvent cursorAnimation)
+                    {
+                        raisedEvent = false;
+                        long currTime = Stopwatch.GetTimestamp();
+                        float deltaTime = (currTime - CursorAnimationPrevTime) / (float)Stopwatch.Frequency;
+                        CursorAnimationPrevTime = currTime;
+                        UpdateCursorAnimations(deltaTime);
+                    }
+                    else if (args is WindowEventArgs windowArgs)
+                    {
+                        raisedEvent = true;
+                        EventQueue.Raise(windowArgs.Window, PlatformEventType.UserMessage, windowArgs);
                     }
                     else
                     {
-                        Logger?.LogDebug($"Event for non opentk window: {type} (0x{windowPtr})");
+                        raisedEvent = true;
+                        EventQueue.Raise(null, PlatformEventType.UserMessage, args);
                     }
-
-                    objc_msgSend(nsApplication, selSendEvent, @event);
-
-                    continue;
+                    handle.Free();
+                }
+                else
+                {
+                    Logger?.LogDebug($"Event for non opentk window: {type} (0x{windowPtr})");
                 }
 
-                switch (type)
-                {
-                    case NSEventType.LeftMouseDown:
-                    case NSEventType.RightMouseDown:
-                    case NSEventType.OtherMouseDown:
+                objc_msgSend(nsApplication, selSendEvent, @event);
+
+                return raisedEvent;
+            }
+
+            switch (type)
+            {
+                case NSEventType.LeftMouseDown:
+                case NSEventType.RightMouseDown:
+                case NSEventType.OtherMouseDown:
+                    {
+                        CGRect frame = objc_msgSend_CGRect(objc_msgSend_IntPtr(objc_msgSend_IntPtr(@event, selWindow), selContentView), selFrame);
+                        CGPoint location = objc_msgSend_CGPoint(@event, selLocationInWindow);
+                        if (frame.Contains(location) == false)
                         {
-                            CGRect frame = objc_msgSend_CGRect(objc_msgSend_IntPtr(objc_msgSend_IntPtr(@event, selWindow), selContentView), selFrame);
-                            CGPoint location = objc_msgSend_CGPoint(@event, selLocationInWindow);
-                            if (frame.Contains(location) == false)
-                            {
-                                objc_msgSend(nsApplication, selSendEvent, @event);
-                                continue;
-                            }
-
-                            // We don't want to process this event further.
-                            if (ProcessHitTest(@event))
-                            {
-                                continue;
-                            }
-
-                            // FIXME: This should be a long, not ulong
-                            ulong button = objc_msgSend_ulong(@event, selButtonNumber);
-                            MouseButton mouseButton;
-                            switch (button)
-                            {
-                                case 0: mouseButton = MouseButton.Button1; break;
-                                case 1: mouseButton = MouseButton.Button2; break;
-                                case 2: mouseButton = MouseButton.Button3; break;
-                                case 3: mouseButton = MouseButton.Button4; break;
-                                case 4: mouseButton = MouseButton.Button5; break;
-                                case 5: mouseButton = MouseButton.Button6; break;
-                                case 6: mouseButton = MouseButton.Button7; break;
-                                case 7: mouseButton = MouseButton.Button8; break;
-                                default: throw new PalException(this, $"Unknown mouse button: {button}");
-                            }
-
-                            ModifierFlags modifierFlags = (ModifierFlags)((UIntPtr)objc_msgSend_IntPtr(@event, selModifierFlags)).ToUInt64();
-                            KeyModifier modifiers = MacOSKeyboardComponent.ToKeyModifiers(modifierFlags);
-
-                            MacOSMouseComponent.RegisterButtonState(nswindow, mouseButton, true);
-                            EventQueue.Raise(nswindow, PlatformEventType.MouseDown, new MouseButtonDownEventArgs(nswindow, mouseButton, modifiers));
-
                             objc_msgSend(nsApplication, selSendEvent, @event);
-                            break;
+                            return false;
                         }
-                    case NSEventType.LeftMouseUp:
-                    case NSEventType.RightMouseUp:
-                    case NSEventType.OtherMouseUp:
+
+                        // We don't want to process this event further.
+                        if (ProcessHitTest(@event))
                         {
-                            if (ProcessHitTest(@event))
-                            {
-                                objc_msgSend(nsApplication, selSendEvent, @event);
-                                continue;
-                            }
-
-                            // FIXME: This should be a long, not ulong
-                            ulong button = objc_msgSend_ulong(@event, selButtonNumber);
-                            MouseButton mouseButton;
-                            switch (button)
-                            {
-                                case 0: mouseButton = MouseButton.Button1; break;
-                                case 1: mouseButton = MouseButton.Button2; break;
-                                case 2: mouseButton = MouseButton.Button3; break;
-                                case 3: mouseButton = MouseButton.Button4; break;
-                                case 4: mouseButton = MouseButton.Button5; break;
-                                case 5: mouseButton = MouseButton.Button6; break;
-                                case 6: mouseButton = MouseButton.Button7; break;
-                                case 7: mouseButton = MouseButton.Button8; break;
-                                default: throw new PalException(this, $"Unknown mouse button: {button}");
-                            }
-
-                            ModifierFlags modifierFlags = (ModifierFlags)((UIntPtr)objc_msgSend_IntPtr(@event, selModifierFlags)).ToUInt64();
-                            KeyModifier modifiers = MacOSKeyboardComponent.ToKeyModifiers(modifierFlags);
-
-                            MacOSMouseComponent.RegisterButtonState(nswindow, mouseButton, false);
-                            EventQueue.Raise(nswindow, PlatformEventType.MouseUp, new MouseButtonUpEventArgs(nswindow, mouseButton, modifiers));
-
-                            // FIXME: If the mouse is outside of the window after a drag we want to send a mouse exit event here
-
-                            objc_msgSend(nsApplication, selSendEvent, @event);
-                            break;
+                            return false;
                         }
-                    case NSEventType.MouseMoved:
-                    case NSEventType.LeftMouseDragged:
-                    case NSEventType.RightMouseDragged:
-                    case NSEventType.OtherMouseDragged:
+
+                        // FIXME: This should be a long, not ulong
+                        ulong button = objc_msgSend_ulong(@event, selButtonNumber);
+                        MouseButton mouseButton;
+                        switch (button)
                         {
-                            if (ProcessHitTest(@event))
-                            {
-                                objc_msgSend(nsApplication, selSendEvent, @event);
-                                continue;
-                            }
-
-                            CGPoint point = objc_msgSend_CGPoint(@event, selLocationInWindow);
-
-                            CGRect bounds = objc_msgSend_CGRect(nswindow.View, selBounds);
-
-                            // FIXME: Coordinate space
-                            CGPoint pos = new CGPoint(point.x, bounds.size.y - point.y);
-
-                            if (nswindow.CursorCaptureMode == CursorCaptureMode.Locked)
-                            {
-                                // Handle virtual cursor position
-                                NFloat dx = objc_msgSend_nfloat(@event, selDeltaX);
-                                NFloat dy = objc_msgSend_nfloat(@event, selDeltaY);
-
-                                nswindow.VirtualCursorPosition += new CGPoint(dx, dy);
-
-                                EventQueue.Raise(nswindow, PlatformEventType.MouseMove, new MouseMoveEventArgs(nswindow, (Vector2)nswindow.VirtualCursorPosition));
-                            }
-                            else
-                            {
-                                // Do normal mouse events
-                                EventQueue.Raise(nswindow, PlatformEventType.MouseMove, new MouseMoveEventArgs(nswindow, (Vector2)pos));
-
-                                objc_msgSend(nsApplication, selSendEvent, @event);
-                            }
-
-                            nswindow.LastMousePosition = pos;
-                            break;
+                            case 0: mouseButton = MouseButton.Button1; break;
+                            case 1: mouseButton = MouseButton.Button2; break;
+                            case 2: mouseButton = MouseButton.Button3; break;
+                            case 3: mouseButton = MouseButton.Button4; break;
+                            case 4: mouseButton = MouseButton.Button5; break;
+                            case 5: mouseButton = MouseButton.Button6; break;
+                            case 6: mouseButton = MouseButton.Button7; break;
+                            case 7: mouseButton = MouseButton.Button8; break;
+                            default: throw new PalException(this, $"Unknown mouse button: {button}");
                         }
-                    case NSEventType.ScrollWheel:
-                        {
-                            float scrollX = objc_msgSend_float(@event, selScrollingDeltaX);
-                            float scrollY = objc_msgSend_float(@event, selScrollingDeltaY);
 
-                            bool preciseScrollingDeltas = objc_msgSend_bool(@event, selHasPreciseScrollingDeltas);
+                        ModifierFlags modifierFlags = (ModifierFlags)((UIntPtr)objc_msgSend_IntPtr(@event, selModifierFlags)).ToUInt64();
+                        KeyModifier modifiers = MacOSKeyboardComponent.ToKeyModifiers(modifierFlags);
 
-                            // FIXME: We might need to flip the horizontal direction?
-                            // FIXME: Consider precise deltas...
-                            Vector2 delta = new Vector2(scrollX, scrollY);
-                            Vector2 distance = new Vector2(scrollX, scrollY);
+                        MacOSMouseComponent.RegisterButtonState(nswindow, mouseButton, true);
+                        EventQueue.Raise(nswindow, PlatformEventType.MouseDown, new MouseButtonDownEventArgs(nswindow, mouseButton, modifiers));
 
-                            if (preciseScrollingDeltas)
-                            {
-                                // FIXME: This is an ok hack for now but we want to do this
-                                // "properly" in the future.
-                                delta *= 0.1f;
-                            }
-
-                            MacOSMouseComponent.RegisterMouseWheelDelta(nswindow, delta);
-                            EventQueue.Raise(nswindow, PlatformEventType.Scroll, new ScrollEventArgs(nswindow, delta, distance));
-
-                            objc_msgSend(nsApplication, selSendEvent, @event);
-                            break;
-                        }
-                    case NSEventType.KeyDown:
-                        {
-                            ushort keyCode = objc_msgSend_ushort(@event, selKeyCode);
-                            // FIXME: BOOL
-                            bool isRepeat = objc_msgSend_bool(@event, selARepeat);
-                            Console.WriteLine($"Key down: 0x{keyCode:X}");
-
-                            Scancode scancode = MacOSKeyboardComponent.ScancodeFromVK((VK)keyCode);
-
-                            ModifierFlags modifierFlags = (ModifierFlags)((UIntPtr)objc_msgSend_IntPtr(@event, selModifierFlags)).ToUInt64();
-                            KeyModifier modifiers = MacOSKeyboardComponent.ToKeyModifiers(modifierFlags);
-
-                            MacOSKeyboardComponent.KeyStateChanged(scancode, true);
-
-                            // FIXME: Figure out what we want to do with the Keys enum...
-                            switch (keyCode)
-                            {
-                                case 0x24: // kVK_Return
-                                    EventQueue.Raise(nswindow, PlatformEventType.KeyDown, new KeyDownEventArgs(nswindow, Key.Return, scancode, isRepeat, modifiers));
-                                    break;
-                                case 0x33: // kVK_Delete
-                                    EventQueue.Raise(nswindow, PlatformEventType.KeyDown, new KeyDownEventArgs(nswindow, Key.Backspace, scancode, isRepeat, modifiers));
-                                    break;
-                                case 0x35: // kVK_Escape
-                                    EventQueue.Raise(nswindow, PlatformEventType.KeyDown, new KeyDownEventArgs(nswindow, Key.Escape, scancode, isRepeat, modifiers));
-                                    break;
-                                case 0x7B: // kVK_LeftArrow
-                                    EventQueue.Raise(nswindow, PlatformEventType.KeyDown, new KeyDownEventArgs(nswindow, Key.LeftArrow, scancode, isRepeat, modifiers));
-                                    break;
-                                case 0x7C: // kVK_RightArrow
-                                    EventQueue.Raise(nswindow, PlatformEventType.KeyDown, new KeyDownEventArgs(nswindow, Key.RightArrow, scancode, isRepeat, modifiers));
-                                    break;
-                                case 0x7D: // kVK_DownArrow
-                                    EventQueue.Raise(nswindow, PlatformEventType.KeyDown, new KeyDownEventArgs(nswindow, Key.DownArrow, scancode, isRepeat, modifiers));
-                                    break;
-                                case 0x7E: // kVK_UpArrow
-                                    EventQueue.Raise(nswindow, PlatformEventType.KeyDown, new KeyDownEventArgs(nswindow, Key.UpArrow, scancode, isRepeat, modifiers));
-                                    break;
-                                default:
-                                    EventQueue.Raise(nswindow, PlatformEventType.KeyDown, new KeyDownEventArgs(nswindow, Key.Unknown, scancode, isRepeat, modifiers));
-                                    break;
-                            }
-
-                            objc_msgSend(nsApplication, selSendEvent, @event);
-                            break;
-                        }
-                    case NSEventType.KeyUp:
-                        {
-                            ushort keyCode = objc_msgSend_ushort(@event, selKeyCode);
-                            Console.WriteLine($"Key up: 0x{keyCode:X}");
-
-                            Scancode scancode = MacOSKeyboardComponent.ScancodeFromVK((VK)keyCode);
-
-                            ModifierFlags modifierFlags = (ModifierFlags)((UIntPtr)objc_msgSend_IntPtr(@event, selModifierFlags)).ToUInt64();
-                            KeyModifier modifiers = MacOSKeyboardComponent.ToKeyModifiers(modifierFlags);
-
-                            MacOSKeyboardComponent.KeyStateChanged(scancode, false);
-
-                            // FIXME: Figure out what we want to do with the Keys enum...
-                            switch (keyCode)
-                            {
-                                case 0x24: // kVK_Return
-                                    EventQueue.Raise(nswindow, PlatformEventType.KeyUp, new KeyUpEventArgs(nswindow, Key.Return, scancode, modifiers));
-                                    break;
-                                case 0x33: // kVK_Delete
-                                    EventQueue.Raise(nswindow, PlatformEventType.KeyUp, new KeyUpEventArgs(nswindow, Key.Backspace, scancode, modifiers));
-                                    break;
-                                case 0x35: // kVK_Escape
-                                    EventQueue.Raise(nswindow, PlatformEventType.KeyUp, new KeyUpEventArgs(nswindow, Key.Escape, scancode, modifiers));
-                                    break;
-                                case 0x7B: // kVK_LeftArrow
-                                    EventQueue.Raise(nswindow, PlatformEventType.KeyUp, new KeyUpEventArgs(nswindow, Key.LeftArrow, scancode, modifiers));
-                                    break;
-                                case 0x7C: // kVK_RightArrow
-                                    EventQueue.Raise(nswindow, PlatformEventType.KeyUp, new KeyUpEventArgs(nswindow, Key.RightArrow, scancode, modifiers));
-                                    break;
-                                case 0x7D: // kVK_DownArrow
-                                    EventQueue.Raise(nswindow, PlatformEventType.KeyUp, new KeyUpEventArgs(nswindow, Key.DownArrow, scancode, modifiers));
-                                    break;
-                                case 0x7E: // kVK_UpArrow
-                                    EventQueue.Raise(nswindow, PlatformEventType.KeyUp, new KeyUpEventArgs(nswindow, Key.UpArrow, scancode, modifiers));
-                                    break;
-                                default:
-                                    EventQueue.Raise(nswindow, PlatformEventType.KeyUp, new KeyUpEventArgs(nswindow, Key.Unknown, scancode, modifiers));
-                                    break;
-                            }
-
-                            objc_msgSend(nsApplication, selSendEvent, @event);
-                            break;
-                        }
-                    case NSEventType.FlagsChanged:
-                        {
-                            ModifierFlags modifierFlags = (ModifierFlags)((UIntPtr)objc_msgSend_IntPtr(@event, selModifierFlags)).ToUInt64();
-                            KeyModifier modifiers = MacOSKeyboardComponent.ToKeyModifiers(modifierFlags);
-
-                            // FIXME: Handle CapsLock key state?
-                            // SDL subscribes to flagsChanged: and
-                            // sends KeyDown and KeyUp events then
-                            // the internal state doesn't match OS state..
-                            // Might be the only solution we have but
-                            // I would like to investigate further.
-                            // - Noggin_bops 2024-02-28
-
-                            // FIXME: We probably wont get repeats for modifier keys?
-                            CheckKey(nswindow, modifierFlags, ModifierFlags.NX_DEVICELCTLKEYMASK, Scancode.LeftControl, Key.LeftControl, modifiers);
-                            CheckKey(nswindow, modifierFlags, ModifierFlags.NX_DEVICELSHIFTKEYMASK, Scancode.LeftShift, Key.LeftShift, modifiers);
-                            CheckKey(nswindow, modifierFlags, ModifierFlags.NX_DEVICERSHIFTKEYMASK, Scancode.RightShift, Key.RightShift, modifiers);
-                            CheckKey(nswindow, modifierFlags, ModifierFlags.NX_DEVICELCMDKEYMASK, Scancode.LeftGUI, Key.LeftGUI, modifiers);
-                            CheckKey(nswindow, modifierFlags, ModifierFlags.NX_DEVICERCMDKEYMASK, Scancode.RightGUI, Key.RightGUI, modifiers);
-                            CheckKey(nswindow, modifierFlags, ModifierFlags.NX_DEVICELALTKEYMASK, Scancode.LeftAlt, Key.LeftAlt, modifiers);
-                            CheckKey(nswindow, modifierFlags, ModifierFlags.NX_DEVICERALTKEYMASK, Scancode.RightAlt, Key.RightAlt, modifiers);
-                            CheckKey(nswindow, modifierFlags, ModifierFlags.NX_DEVICERCTLKEYMASK, Scancode.RightControl, Key.RightControl, modifiers);
-
-                            static void CheckKey(NSWindowHandle nswindow, ModifierFlags flags, ModifierFlags modKey, Scancode scancode, Key key, KeyModifier modifiers)
-                            {
-                                bool pressed = flags.HasFlag(modKey);
-                                if (MacOSKeyboardComponent.KeyStateChanged(scancode, pressed))
-                                {
-                                    if (pressed)
-                                    {
-                                        EventQueue.Raise(nswindow, PlatformEventType.KeyDown, new KeyDownEventArgs(nswindow, key, scancode, false, modifiers));
-                                    }
-                                    else
-                                    {
-                                        EventQueue.Raise(nswindow, PlatformEventType.KeyUp, new KeyUpEventArgs(nswindow, key, scancode, modifiers));
-                                    }
-                                }
-                            }
-
-                            break;
-                        }
-                    default:
-                        //Console.WriteLine($"Event type: {type}");
                         objc_msgSend(nsApplication, selSendEvent, @event);
                         break;
-                }
+                    }
+                case NSEventType.LeftMouseUp:
+                case NSEventType.RightMouseUp:
+                case NSEventType.OtherMouseUp:
+                    {
+                        if (ProcessHitTest(@event))
+                        {
+                            objc_msgSend(nsApplication, selSendEvent, @event);
+                            return false;
+                        }
+
+                        // FIXME: This should be a long, not ulong
+                        ulong button = objc_msgSend_ulong(@event, selButtonNumber);
+                        MouseButton mouseButton;
+                        switch (button)
+                        {
+                            case 0: mouseButton = MouseButton.Button1; break;
+                            case 1: mouseButton = MouseButton.Button2; break;
+                            case 2: mouseButton = MouseButton.Button3; break;
+                            case 3: mouseButton = MouseButton.Button4; break;
+                            case 4: mouseButton = MouseButton.Button5; break;
+                            case 5: mouseButton = MouseButton.Button6; break;
+                            case 6: mouseButton = MouseButton.Button7; break;
+                            case 7: mouseButton = MouseButton.Button8; break;
+                            default: throw new PalException(this, $"Unknown mouse button: {button}");
+                        }
+
+                        ModifierFlags modifierFlags = (ModifierFlags)((UIntPtr)objc_msgSend_IntPtr(@event, selModifierFlags)).ToUInt64();
+                        KeyModifier modifiers = MacOSKeyboardComponent.ToKeyModifiers(modifierFlags);
+
+                        MacOSMouseComponent.RegisterButtonState(nswindow, mouseButton, false);
+                        EventQueue.Raise(nswindow, PlatformEventType.MouseUp, new MouseButtonUpEventArgs(nswindow, mouseButton, modifiers));
+
+                        // FIXME: If the mouse is outside of the window after a drag we want to send a mouse exit event here
+
+                        objc_msgSend(nsApplication, selSendEvent, @event);
+                        break;
+                    }
+                case NSEventType.MouseMoved:
+                case NSEventType.LeftMouseDragged:
+                case NSEventType.RightMouseDragged:
+                case NSEventType.OtherMouseDragged:
+                    {
+                        if (ProcessHitTest(@event))
+                        {
+                            objc_msgSend(nsApplication, selSendEvent, @event);
+                            return false;
+                        }
+
+                        CGPoint point = objc_msgSend_CGPoint(@event, selLocationInWindow);
+
+                        CGRect bounds = objc_msgSend_CGRect(nswindow.View, selBounds);
+
+                        // FIXME: Coordinate space
+                        CGPoint pos = new CGPoint(point.x, bounds.size.y - point.y);
+
+                        if (nswindow.CursorCaptureMode == CursorCaptureMode.Locked)
+                        {
+                            // Handle virtual cursor position
+                            NFloat dx = objc_msgSend_nfloat(@event, selDeltaX);
+                            NFloat dy = objc_msgSend_nfloat(@event, selDeltaY);
+
+                            nswindow.VirtualCursorPosition += new CGPoint(dx, dy);
+
+                            EventQueue.Raise(nswindow, PlatformEventType.MouseMove, new MouseMoveEventArgs(nswindow, (Vector2)nswindow.VirtualCursorPosition));
+                        }
+                        else
+                        {
+                            // Do normal mouse events
+                            EventQueue.Raise(nswindow, PlatformEventType.MouseMove, new MouseMoveEventArgs(nswindow, (Vector2)pos));
+
+                            objc_msgSend(nsApplication, selSendEvent, @event);
+                        }
+
+                        nswindow.LastMousePosition = pos;
+                        break;
+                    }
+                case NSEventType.ScrollWheel:
+                    {
+                        float scrollX = objc_msgSend_float(@event, selScrollingDeltaX);
+                        float scrollY = objc_msgSend_float(@event, selScrollingDeltaY);
+
+                        bool preciseScrollingDeltas = objc_msgSend_bool(@event, selHasPreciseScrollingDeltas);
+
+                        // FIXME: We might need to flip the horizontal direction?
+                        // FIXME: Consider precise deltas...
+                        Vector2 delta = new Vector2(scrollX, scrollY);
+                        Vector2 distance = new Vector2(scrollX, scrollY);
+
+                        if (preciseScrollingDeltas)
+                        {
+                            // FIXME: This is an ok hack for now but we want to do this
+                            // "properly" in the future.
+                            delta *= 0.1f;
+                        }
+
+                        MacOSMouseComponent.RegisterMouseWheelDelta(nswindow, delta);
+                        EventQueue.Raise(nswindow, PlatformEventType.Scroll, new ScrollEventArgs(nswindow, delta, distance));
+
+                        objc_msgSend(nsApplication, selSendEvent, @event);
+                        break;
+                    }
+                case NSEventType.KeyDown:
+                    {
+                        ushort keyCode = objc_msgSend_ushort(@event, selKeyCode);
+                        // FIXME: BOOL
+                        bool isRepeat = objc_msgSend_bool(@event, selARepeat);
+                        //Console.WriteLine($"Key down: 0x{keyCode:X}");
+
+                        Scancode scancode = MacOSKeyboardComponent.ScancodeFromVK((VK)keyCode);
+
+                        ModifierFlags modifierFlags = (ModifierFlags)((UIntPtr)objc_msgSend_IntPtr(@event, selModifierFlags)).ToUInt64();
+                        KeyModifier modifiers = MacOSKeyboardComponent.ToKeyModifiers(modifierFlags);
+
+                        MacOSKeyboardComponent.KeyStateChanged(scancode, true);
+
+                        // FIXME: This conversion is temporary.
+                        Key key = MacOSKeyboardComponent.GetKeyFromScancodeInternal(scancode);
+
+                        if (IsFocused(nswindow))
+                        {
+                            // FIXME: For some reason we still get the Return KeyDown event here
+                            // when we use Return to select the wanted string in the IME.
+                            // - Noggin_bops 2024-01-26
+                            // We get the Return key sent because we call sendPendingKey when we get
+                            // the text input. And the last character pressed before getting here
+                            // is return, so we will send the return key.
+                            // - Noggin_bops 2025-01-31
+                            objc_msgSend(nswindow.View, selSetPendingKey_scancode_isRepeat_modifiers, (int)key, (int)scancode, isRepeat ? 1 : 0, (int)modifiers);
+                            IntPtr array = objc_msgSend_IntPtr((IntPtr)NSArrayClass, selArrayWithObject, @event);
+                            objc_msgSend_IntPtr(nswindow.View, selInterpretKeyEvents, array);
+                            objc_msgSend(nswindow.View, selSendPendingKey);
+                        }
+                        else
+                        {
+                            EventQueue.Raise(nswindow, PlatformEventType.KeyDown, new KeyDownEventArgs(nswindow, key, scancode, isRepeat, modifiers));    
+                        }
+
+                        objc_msgSend(nsApplication, selSendEvent, @event);
+                        break;
+                    }
+                case NSEventType.KeyUp:
+                    {
+                        ushort keyCode = objc_msgSend_ushort(@event, selKeyCode);
+                        //Console.WriteLine($"Key up: 0x{keyCode:X}");
+
+                        Scancode scancode = MacOSKeyboardComponent.ScancodeFromVK((VK)keyCode);
+
+                        ModifierFlags modifierFlags = (ModifierFlags)((UIntPtr)objc_msgSend_IntPtr(@event, selModifierFlags)).ToUInt64();
+                        KeyModifier modifiers = MacOSKeyboardComponent.ToKeyModifiers(modifierFlags);
+
+                        MacOSKeyboardComponent.KeyStateChanged(scancode, false);
+
+                        // FIXME: This conversion is temporary.
+                        Key key = MacOSKeyboardComponent.GetKeyFromScancodeInternal(scancode);
+                        EventQueue.Raise(nswindow, PlatformEventType.KeyUp, new KeyUpEventArgs(nswindow, key, scancode, modifiers));
+
+                        objc_msgSend(nsApplication, selSendEvent, @event);
+                        break;
+                    }
+                case NSEventType.FlagsChanged:
+                    {
+                        ModifierFlags modifierFlags = (ModifierFlags)((UIntPtr)objc_msgSend_IntPtr(@event, selModifierFlags)).ToUInt64();
+                        KeyModifier modifiers = MacOSKeyboardComponent.ToKeyModifiers(modifierFlags);
+
+                        // FIXME: Handle CapsLock key state?
+                        // SDL subscribes to flagsChanged: and
+                        // sends KeyDown and KeyUp events then
+                        // the internal state doesn't match OS state..
+                        // Might be the only solution we have but
+                        // I would like to investigate further.
+                        // - Noggin_bops 2024-02-28
+
+                        // FIXME: We probably wont get repeats for modifier keys?
+                        CheckKey(nswindow, modifierFlags, ModifierFlags.NX_DEVICELCTLKEYMASK, Scancode.LeftControl, Key.LeftControl, modifiers);
+                        CheckKey(nswindow, modifierFlags, ModifierFlags.NX_DEVICELSHIFTKEYMASK, Scancode.LeftShift, Key.LeftShift, modifiers);
+                        CheckKey(nswindow, modifierFlags, ModifierFlags.NX_DEVICERSHIFTKEYMASK, Scancode.RightShift, Key.RightShift, modifiers);
+                        CheckKey(nswindow, modifierFlags, ModifierFlags.NX_DEVICELCMDKEYMASK, Scancode.LeftGUI, Key.LeftGUI, modifiers);
+                        CheckKey(nswindow, modifierFlags, ModifierFlags.NX_DEVICERCMDKEYMASK, Scancode.RightGUI, Key.RightGUI, modifiers);
+                        CheckKey(nswindow, modifierFlags, ModifierFlags.NX_DEVICELALTKEYMASK, Scancode.LeftAlt, Key.LeftAlt, modifiers);
+                        CheckKey(nswindow, modifierFlags, ModifierFlags.NX_DEVICERALTKEYMASK, Scancode.RightAlt, Key.RightAlt, modifiers);
+                        CheckKey(nswindow, modifierFlags, ModifierFlags.NX_DEVICERCTLKEYMASK, Scancode.RightControl, Key.RightControl, modifiers);
+
+                        static void CheckKey(NSWindowHandle nswindow, ModifierFlags flags, ModifierFlags modKey, Scancode scancode, Key key, KeyModifier modifiers)
+                        {
+                            bool pressed = flags.HasFlag(modKey);
+                            if (MacOSKeyboardComponent.KeyStateChanged(scancode, pressed))
+                            {
+                                if (pressed)
+                                {
+                                    EventQueue.Raise(nswindow, PlatformEventType.KeyDown, new KeyDownEventArgs(nswindow, key, scancode, false, modifiers));
+                                }
+                                else
+                                {
+                                    EventQueue.Raise(nswindow, PlatformEventType.KeyUp, new KeyUpEventArgs(nswindow, key, scancode, modifiers));
+                                }
+                            }
+                        }
+
+                        break;
+                    }
+                default:
+                    //Console.WriteLine($"Event type: {type}");
+                    objc_msgSend(nsApplication, selSendEvent, @event);
+                    break;
             }
 
             {
@@ -1363,6 +1557,32 @@ namespace OpenTK.Platform.Native.macOS
                     clipboardUpdateTime = long.MaxValue;
                 }
             }
+
+            // FIXME: Getting here doesn't guarantee we generated a user-facing event.
+            return true;
+        }
+
+        /// <inheritdoc/>
+        public void PostUserEvent(EventArgs @event)
+        {
+            GCHandle handle = GCHandle.Alloc(@event, GCHandleType.Normal);
+
+            IntPtr nsevent = objc_msgSend_IntPtr((IntPtr)NSEventClass, selOtherEventWithType_Location_ModifierFlags_Timestamp_WindowNumber_Context_Subtype_Data1_Data2,
+                (nint)NSEventType.ApplicationDefined,
+                new CGPoint(),
+                (nint)0,
+                0.0,
+                // For now I'm leaving this as 0 as it doesn't seem to be causing any issues.
+                // But we might want to have a helper window of sorts in the future.
+                // - Noggin_bops 2025-02-20
+                0,
+                IntPtr.Zero,
+                (short)0,
+                (IntPtr)handle,
+                IntPtr.Zero);
+
+            // FIXME: BOOL
+            objc_msgSend_IntPtr(nsApplication, selPostEvent_AtStart, nsevent, false);
         }
 
         /// <inheritdoc/>
@@ -1439,6 +1659,16 @@ namespace OpenTK.Platform.Native.macOS
 
             NSWindowDict.Remove(nswindow.Window);
 
+            // FIXME: This is a temporary hack to make sure we don't leave the indeterminate
+            // progress state when destroying the last window. This will cause the CVDisplayLink 
+            // thread to be alive and cause the dock icon to keep being visible even when no windows
+            // are present.
+            // - Noggin_bops 2025-02-20
+            if (NSWindowDict.Count == 0)
+            {
+                (Toolkit.Shell as MacOSShellComponent)?.SetProgressStatus(nswindow, MacOSShellComponent.ProgressMode.NoProgress, 0);
+            }
+
             // This also releases the window if the releaseWhenClosed property is true
             // This is the default.
             objc_msgSend(nswindow.Window, selClose);
@@ -1491,36 +1721,6 @@ namespace OpenTK.Platform.Native.macOS
             nswindow.Icon = nsicon;
 
             // FIXME: Is there something we should do here?
-        }
-
-        // FIXME: Should we pass a window handle here?
-        // FIXME: Maybe move this to MacOSShellComponent.
-        public void SetDockIcon(WindowHandle handle, IconHandle icon)
-        {
-            NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
-            NSIconHandle nsicon = icon.As<NSIconHandle>(this);
-
-            IntPtr image = nsicon.Image;
-            // FIXME: Allocation?
-            // FIXME: It seems like the symbol configuration isn't quite working
-            // I'm not sure why though...
-            // - Noggin_bops 2023-11-25
-            if (nsicon.SymbolConfiguration != 0)
-                image = objc_msgSend_IntPtr(nsicon.Image, selImageWithSymbolConfiguration, nsicon.SymbolConfiguration);
-
-            objc_msgSend(nsApplication, selSetApplicationIconImage, image);
-
-            // FIXME: Maybe make a function for setting the minimized icon...
-            /*
-            IntPtr dockTile = objc_msgSend_IntPtr(nswindow.Window, selDockTile);
-
-            IntPtr imageView = objc_msgSend_IntPtr((IntPtr)NSImageViewClass, selImageViewWithImage, nsicon.Image);
-            if (nsicon.SymbolConfiguration != 0)
-                objc_msgSend(imageView, selSetSymbolConfiguration, nsicon.SymbolConfiguration);
-            objc_msgSend(dockTile, selSetContentView, imageView);
-
-            objc_msgSend(dockTile, selDisplay);
-            */
         }
 
         /// <inheritdoc/>
@@ -2260,6 +2460,27 @@ namespace OpenTK.Platform.Native.macOS
             nswindow.Cursor = nscursor;
 
             objc_msgSend(nswindow.Window, selInvalidateCursorRectsForView, nswindow.View);
+
+            bool needDisplayLink = nscursor != null && MacOSCursorComponent.IsAnimatedCursorInternal(nscursor);
+            bool displayLinkIsRunning = CV.CVDisplayLinkIsRunning(DisplayLink);
+
+            if (needDisplayLink == true && displayLinkIsRunning == false)
+            {
+                CVReturn res = CV.CVDisplayLinkStart(DisplayLink);
+                if (res != CVReturn.kCVReturnSuccess)
+                {
+                    Logger?.LogWarning($"Could not start display link: {res}. Animated cursors might not work.");
+                }
+                CursorAnimationPrevTime = Stopwatch.GetTimestamp();
+            }
+            else if (needDisplayLink == false && displayLinkIsRunning == true)
+            {
+                CVReturn res = CV.CVDisplayLinkStop(DisplayLink);
+                if (res != CVReturn.kCVReturnSuccess)
+                {
+                    Logger?.LogWarning($"Could not stop display link: {res}.");
+                }
+            }
         }
 
         /// <inheritdoc/>

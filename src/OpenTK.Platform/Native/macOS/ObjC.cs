@@ -150,6 +150,9 @@ namespace OpenTK.Platform.Native.macOS
         internal static extern void objc_msgSend(IntPtr receiver, SEL selector, CGRect value1, bool value2);
 
         [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
+        internal static extern void objc_msgSend(IntPtr receiver, SEL selector, int value1, int value2, int value3, int value4);
+
+        [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
         internal static extern void objc_msgSend(IntPtr receiver, SEL selector, NSSize size);
 
         [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
@@ -170,8 +173,14 @@ namespace OpenTK.Platform.Native.macOS
         [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
         internal static extern IntPtr objc_msgSend_IntPtr(IntPtr receiver, SEL selector, IntPtr value);
 
+        [DllImport(FoundationFramework, EntryPoint = "objc_msgSend", CallingConvention = CallingConvention.Cdecl)]
+        internal static extern IntPtr objc_msgSend_IntPtr(IntPtr receiver, SEL selector, IntPtr value1, SEL value2);
+
         [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
         internal static extern IntPtr objc_msgSend_IntPtr(IntPtr receiver, SEL selector, IntPtr value0, CGPoint value1);
+
+        [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
+        internal static extern IntPtr objc_msgSend_IntPtr(IntPtr receiver, SEL selector, CGRect value0, NFloat value1, NFloat value2);
 
         [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
         internal static extern IntPtr objc_msgSend_IntPtr(IntPtr receiver, SEL selector, IntPtr value0, NSSize value1);
@@ -181,6 +190,9 @@ namespace OpenTK.Platform.Native.macOS
 
         [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
         internal static extern IntPtr objc_msgSend_IntPtr(IntPtr receiver, SEL selector, SEL value);
+        
+        [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
+        internal static extern IntPtr objc_msgSend_IntPtr(IntPtr receiver, SEL selector, NFloat value1);
 
         [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
         internal static extern IntPtr objc_msgSend_IntPtr(IntPtr receiver, SEL selector, IntPtr value1, IntPtr value2);
@@ -196,6 +208,9 @@ namespace OpenTK.Platform.Native.macOS
 
         [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
         internal static extern IntPtr objc_msgSend_IntPtr(IntPtr receiver, SEL selector, IntPtr planes, nint width, nint height, nint bps, nint spp, [MarshalAs(UnmanagedType.I1)] bool alpha, [MarshalAs(UnmanagedType.I1)] bool isPlanar, IntPtr colorSpaceName, nuint bitmapFormat, nint rBytes, nint pBits);
+
+        [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
+        internal static extern IntPtr objc_msgSend_IntPtr(IntPtr receiver, SEL selector, IntPtr value1, CGPoint value2, IntPtr value3, double value4, IntPtr value5, IntPtr value6, short value7, IntPtr value8, IntPtr value9);
 
         [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
         internal static extern IntPtr objc_msgSend_IntPtr(IntPtr receiver, SEL selector, ulong value);
@@ -493,6 +508,19 @@ namespace OpenTK.Platform.Native.macOS
             // FIXME: BOOL
             [DllImport(FoundationFramework)]
             static extern IntPtr /* Ivar */ object_setInstanceVariable(IntPtr /* id */ @object, byte* name, IntPtr value);
+        }
+
+        [DllImport(FoundationFramework)]
+        internal static extern nint ivar_getOffset(IntPtr /* Ivar */ v);
+
+        internal static void* getIvarPointer(IntPtr /* id */ @object, ReadOnlySpan<byte> /* char const* */ name) {
+            IntPtr ivar = object_getInstanceVariable(@object, name, out _);
+            if (ivar == 0) return null;
+            return (void*)(@object + ivar_getOffset(ivar));
+        }
+
+        internal static T* getIvarPointer<T>(IntPtr /* id */ @object, ReadOnlySpan<byte> /* char const* */ name) where T :unmanaged {
+            return (T*)getIvarPointer(@object, name);
         }
 
         [DllImport(FoundationFramework)]

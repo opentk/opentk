@@ -12,6 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using static OpenTK.Platform.Native.X11.XScreenSaver;
 using static OpenTK.Platform.Native.X11.LibX11;
+using OpenTK.Core;
 
 namespace OpenTK.Platform.Native.X11
 {
@@ -26,23 +27,11 @@ namespace OpenTK.Platform.Native.X11
         /// <inheritdoc/>
         public ILogger? Logger { get; set; }
 
-        internal static unsafe byte* AsPtr(ReadOnlySpan<byte> span) => (byte*)Unsafe.AsPointer(ref MemoryMarshal.GetReference(span));
-
-        internal static unsafe ReadOnlySpan<byte> ToSpan(byte* str)
-        {
-            if (str == null)
-                return ReadOnlySpan<byte>.Empty;
-
-            int len = 0;
-            while (str[len++] != 0) {}
-            return new ReadOnlySpan<byte>(str, len - 1);
-        }
-
         internal IntPtr PortalDesktop;
 
         internal ulong PortalDesktopGSignal;
 
-        // FIXME: Make this non-static while still exposing it to X11WindowComponent.
+        // FIXME: Move this to X11WindowComponent. - Noggin_bops 2024-12-13
         internal static IntPtr GlibMainLoop;
         
         internal IntPtr GVariant_org_freedesktop_appearance_color_scheme;
@@ -65,18 +54,18 @@ namespace OpenTK.Platform.Native.X11
             // We take a ref to this GVariant so that it's not a "floating reference" anymore.
             // This means we can reuse this GVariant in calls to g_dbus_proxy_call_sync.
             // - Noggin_bops 2024-07-22
-            GVariant_org_freedesktop_appearance_color_scheme = LibGio.g_variant_ref(LibGio.g_variant_new(AsPtr("(ss)"u8), AsPtr("org.freedesktop.appearance"u8), AsPtr("color-scheme"u8)));
+            GVariant_org_freedesktop_appearance_color_scheme = LibGio.g_variant_ref(LibGio.g_variant_new(Utils.AsPtr("(ss)"u8), Utils.AsPtr("org.freedesktop.appearance"u8), Utils.AsPtr("color-scheme"u8)));
 
-            GVariant_org_gnome_desktop_a11y_interface_high_contrast = LibGio.g_variant_ref(LibGio.g_variant_new(AsPtr("(ss)"u8), AsPtr("org.gnome.desktop.a11y.interface"u8), AsPtr("high-contrast"u8)));
+            GVariant_org_gnome_desktop_a11y_interface_high_contrast = LibGio.g_variant_ref(LibGio.g_variant_new(Utils.AsPtr("(ss)"u8), Utils.AsPtr("org.gnome.desktop.a11y.interface"u8), Utils.AsPtr("high-contrast"u8)));
             
             GError* error = null;
             PortalDesktop = LibGio.g_dbus_proxy_new_for_bus_sync(
                                             GBusType.G_BUS_TYPE_SESSION,
                                             GDBusProxyFlags.G_DBUS_PROXY_FLAGS_NONE,
                                             IntPtr.Zero,
-                                            AsPtr("org.freedesktop.portal.Desktop"u8),
-                                            AsPtr("/org/freedesktop/portal/desktop"u8),
-                                            AsPtr("org.freedesktop.portal.Settings"u8),
+                                            Utils.AsPtr("org.freedesktop.portal.Desktop"u8),
+                                            Utils.AsPtr("/org/freedesktop/portal/desktop"u8),
+                                            Utils.AsPtr("org.freedesktop.portal.Settings"u8),
                                             IntPtr.Zero,
                                             &error);
             if (error != null)
@@ -85,7 +74,7 @@ namespace OpenTK.Platform.Native.X11
                 LibGio.g_clear_error(&error);
             }
 
-            PortalDesktopGSignal = LibGio.g_signal_connect(PortalDesktop, AsPtr("g-signal"u8), &settings_portal_changed_cb, IntPtr.Zero);
+            PortalDesktopGSignal = LibGio.g_signal_connect(PortalDesktop, Utils.AsPtr("g-signal"u8), &settings_portal_changed_cb, IntPtr.Zero);
 
             if (TryReadColorScheme(out int scheme))
             {
@@ -147,16 +136,16 @@ namespace OpenTK.Platform.Native.X11
                                     IntPtr /* GVariant* */ parameters,
                                     IntPtr userData)
         {
-            Debug.Assert(ToSpan(signal_name).SequenceEqual("SettingChanged"u8));
+            Debug.Assert(Utils.ToSpan(signal_name).SequenceEqual("SettingChanged"u8));
 
             SettingsChangedParameters args;
-            LibGio.g_variant_get(parameters, AsPtr("(ssv)"u8), 
+            LibGio.g_variant_get(parameters, Utils.AsPtr("(ssv)"u8), 
                 out Unsafe.AsRef<IntPtr>(&args.Namespace),
                 out Unsafe.AsRef<IntPtr>(&args.Key),
                 out Unsafe.AsRef<IntPtr>(&args.Value));
 
-            ReadOnlySpan<byte> @namespace = ToSpan(args.Namespace);
-            ReadOnlySpan<byte> key = ToSpan(args.Key);
+            ReadOnlySpan<byte> @namespace = Utils.ToSpan(args.Namespace);
+            ReadOnlySpan<byte> key = Utils.ToSpan(args.Key);
             if (@namespace.SequenceEqual("org.freedesktop.appearance"u8) &&
                 key.SequenceEqual("color-scheme"u8))
             {
@@ -386,7 +375,7 @@ namespace OpenTK.Platform.Native.X11
             scheme = -1;
             unsafe {
                 GError* error = null;
-                IntPtr ret = LibGio.g_dbus_proxy_call_sync(PortalDesktop, AsPtr("Read"u8), GVariant_org_freedesktop_appearance_color_scheme, GDBusCallFlags.G_DBUS_CALL_FLAGS_NONE, int.MaxValue, IntPtr.Zero, &error);
+                IntPtr ret = LibGio.g_dbus_proxy_call_sync(PortalDesktop, Utils.AsPtr("Read"u8), GVariant_org_freedesktop_appearance_color_scheme, GDBusCallFlags.G_DBUS_CALL_FLAGS_NONE, int.MaxValue, IntPtr.Zero, &error);
                 if (error != null)
                 {
                     if (error->domain == LibGio.g_dbus_error_quark())
@@ -410,8 +399,8 @@ namespace OpenTK.Platform.Native.X11
                     return false;
                 }
 
-                LibGio.g_variant_get(ret, AsPtr("(v)"u8), out IntPtr child);
-                LibGio.g_variant_get(child, AsPtr("v"u8), out IntPtr value);
+                LibGio.g_variant_get(ret, Utils.AsPtr("(v)"u8), out IntPtr child);
+                LibGio.g_variant_get(child, Utils.AsPtr("v"u8), out IntPtr value);
 
                 scheme = (int)LibGio.g_variant_get_uint32(value);
 
@@ -429,7 +418,7 @@ namespace OpenTK.Platform.Native.X11
             highContrast = false;
             unsafe {
                 GError* error = null;
-                IntPtr ret = LibGio.g_dbus_proxy_call_sync(PortalDesktop, AsPtr("Read"u8), GVariant_org_gnome_desktop_a11y_interface_high_contrast, GDBusCallFlags.G_DBUS_CALL_FLAGS_NONE, int.MaxValue, IntPtr.Zero, &error);
+                IntPtr ret = LibGio.g_dbus_proxy_call_sync(PortalDesktop, Utils.AsPtr("Read"u8), GVariant_org_gnome_desktop_a11y_interface_high_contrast, GDBusCallFlags.G_DBUS_CALL_FLAGS_NONE, int.MaxValue, IntPtr.Zero, &error);
                 if (error != null)
                 {
                     if (error->domain == LibGio.g_dbus_error_quark())
@@ -453,8 +442,8 @@ namespace OpenTK.Platform.Native.X11
                     return false;
                 }
 
-                LibGio.g_variant_get(ret, AsPtr("(v)"u8), out IntPtr child);
-                LibGio.g_variant_get(child, AsPtr("v"u8), out IntPtr value);
+                LibGio.g_variant_get(ret, Utils.AsPtr("(v)"u8), out IntPtr child);
+                LibGio.g_variant_get(child, Utils.AsPtr("v"u8), out IntPtr value);
 
                 highContrast = LibGio.g_variant_get_boolean(value) != 0;
 

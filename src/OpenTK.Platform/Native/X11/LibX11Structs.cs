@@ -58,6 +58,36 @@ namespace OpenTK.Platform.Native.X11
         }
     }
 
+    internal unsafe struct XIMCallback
+    {
+        public IntPtr ClientData;
+        public IntPtr Callback;
+
+        public XIMCallback(IntPtr clientData, delegate* unmanaged[Cdecl]<XIM, IntPtr, IntPtr, void> callback)
+        {
+            ClientData = clientData;
+            Callback = (IntPtr)callback;
+        }
+
+        public XIMCallback(IntPtr clientData, delegate* unmanaged[Cdecl]<XIC, IntPtr, IntPtr, void> callback)
+        {
+            ClientData = clientData;
+            Callback = (IntPtr)callback;
+        }
+
+        public XIMCallback(IntPtr clientData, delegate* unmanaged[Cdecl]<XIC, IntPtr, IntPtr, int> callback)
+        {
+            ClientData = clientData;
+            Callback = (IntPtr)callback;
+        }
+
+        public override string ToString()
+        {
+            return $"0x{(nint)Callback:X8} - 0x{ClientData:X8}";
+        }
+
+    }
+
     [DebuggerDisplay("{Value}")]
     internal readonly struct XrmDatabase
     {
@@ -69,7 +99,7 @@ namespace OpenTK.Platform.Native.X11
         }
     }
 
-    [DebuggerDisplay("XID={(System.IntPtr)Id}")]
+    //[DebuggerDisplay("XID={(System.IntPtr)Id}")]
     internal readonly struct XAtom : IEquatable<XAtom>
     {
         public readonly ulong Id { get; }
@@ -113,7 +143,7 @@ namespace OpenTK.Platform.Native.X11
 
         public override string ToString()
         {
-            return LibX11.XGetAtomName(X11.Display, this);
+            return Id == 0 ? "0" : LibX11.XGetAtomName(X11.Display, this);
         }
     }
 
@@ -299,8 +329,8 @@ namespace OpenTK.Platform.Native.X11
 
     internal unsafe struct XClassHint
     {
-        public byte *res_name;
-        public byte *res_class;
+        public byte* res_name;
+        public byte* res_class;
     }
 
     internal unsafe struct XTextProperty
@@ -500,7 +530,7 @@ namespace OpenTK.Platform.Native.X11
 
         public override string ToString()
         {
-            return $"{Id}";
+            return $"0x{Id:X}";
         }
     }
 
@@ -524,6 +554,27 @@ namespace OpenTK.Platform.Native.X11
         {
             Id = id;
         }
+    }
+
+    internal unsafe struct XIMText
+    {
+        public ushort length;
+        public XIMFeedback* feedback;
+        public int encoding_is_wchar;
+        // NOTE! This is either a byte* or char* depending on encoding_is_wchar
+        public byte* @string;
+    }
+
+    internal unsafe struct XIMPreeditDrawCallbackStruct
+    {
+        public int caret;      /* Cursor offset within preedit string */
+        public int chg_first;  /* Starting change position */
+        public int chg_length; /* Length of the change in character count */
+        public XIMText* text;
+    }
+    
+    internal struct XPoint {
+        public short x, y;
     }
 
 #pragma warning disable CS0649 // Field '' is never assigned to, and will always have its default value 0

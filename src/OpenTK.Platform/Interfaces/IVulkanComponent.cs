@@ -45,7 +45,5 @@ namespace OpenTK.Platform
         /// <returns>The Vulkan result code of this operation.</returns>
         /// <seealso cref="GetRequiredInstanceExtensions"/>
         public unsafe VkResult CreateWindowSurface(VkInstance instance, WindowHandle window, VkAllocationCallbacks* allocator, out VkSurfaceKHR surface);
-
-        // FIXME: Vulkan error to readable string function.
     }
 }

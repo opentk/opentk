@@ -3,14 +3,14 @@ using OpenTK.Platform.Native;
 using OpenTK.Platform.Native.Windows;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace OpenTK.Platform
 {
-
-    // FIXME: Maybe find another name for this?
     /// <summary>
     /// Provides static access to all OpenTK platform abstraction interfaces.
     /// This is the main way to access the OpenTK PAL2 api.
@@ -19,6 +19,8 @@ namespace OpenTK.Platform
     public static class Toolkit
     {
         private static bool Initialized = false;
+        private static bool EnableOpenGL = false;
+        private static bool EnableVulkan = false;
 
         private static IClipboardComponent? _clipboardComponent;
         private static ICursorComponent? _cursorComponent;
@@ -38,79 +40,119 @@ namespace OpenTK.Platform
         /// Interface for creating, interacting with, and deleting windows.
         /// </summary>
         public static IWindowComponent Window => _windowComponent ??
-            (Initialized ? null! : throw new InvalidOperationException("You need to call Toolkit.Init() before you can use it."));
+            (Initialized ? null! : ThrowNotInitialized<IWindowComponent>());
 
         /// <summary>
         /// Interface for creating, interacting with, and deleting surfaces.
         /// </summary>
         public static ISurfaceComponent Surface => _surfaceComponent ??
-            (Initialized ? null! : throw new InvalidOperationException("You need to call Toolkit.Init() before you can use it."));
+            (Initialized ? null! : ThrowNotInitialized<ISurfaceComponent>());
 
         /// <summary>
         /// Interface for creating, interacting with, and deleting OpenGL contexts.
         /// </summary>
-        public static IOpenGLComponent OpenGL => _openGLComponent ??
-            (Initialized ? null! : throw new InvalidOperationException("You need to call Toolkit.Init() before you can use it."));
+        public static IOpenGLComponent OpenGL
+        {
+            get
+            {
+                if (_openGLComponent != null)
+                {
+                    return _openGLComponent;
+                }
+                else if (!Initialized)
+                {
+                    return ThrowNotInitialized<IOpenGLComponent>();
+                }
+                else if (!EnableOpenGL)
+                {
+                    return ThrowFeatureNotEnabled<IOpenGLComponent>("OpenGL", ToolkitFlags.EnableOpenGL);
+                }
+                else
+                {
+                    return null!;
+                }
+            }
+        }
 
         /// <summary>
         /// Interface for querying information about displays attached to the system.
         /// </summary>
         public static IDisplayComponent Display => _displayComponent ??
-            (Initialized ? null! : throw new InvalidOperationException("You need to call Toolkit.Init() before you can use it."));
+            (Initialized ? null! : ThrowNotInitialized<IDisplayComponent>());
 
         /// <summary>
         /// Interface for shell functions such as battery information, preferred theme, etc.
         /// </summary>
         public static IShellComponent Shell => _shellComponent ??
-            (Initialized ? null! : throw new InvalidOperationException("You need to call Toolkit.Init() before you can use it."));
+            (Initialized ? null! : ThrowNotInitialized<IShellComponent>());
 
         /// <summary>
         /// Interface for getting and setting the mouse position, and getting mouse button information.
         /// </summary>
         public static IMouseComponent Mouse => _mouseComponent ??
-            (Initialized ? null! : throw new InvalidOperationException("You need to call Toolkit.Init() before you can use it."));
+            (Initialized ? null! : ThrowNotInitialized<IMouseComponent>());
 
         /// <summary>
         /// Interface for dealing with keyboard layouts, conversions between <see cref="Key"/> and <see cref="Scancode"/>, and IME.
         /// </summary>
         public static IKeyboardComponent Keyboard => _keyboardComponent ??
-            (Initialized ? null! : throw new InvalidOperationException("You need to call Toolkit.Init() before you can use it."));
+            (Initialized ? null! : ThrowNotInitialized<IKeyboardComponent>());
 
         /// <summary>
         /// Interface for creating, interacting with, and deleting mouse cursor images.
         /// </summary>
         public static ICursorComponent Cursor => _cursorComponent ??
-            (Initialized ? null! : throw new InvalidOperationException("You need to call Toolkit.Init() before you can use it."));
+            (Initialized ? null! : ThrowNotInitialized<ICursorComponent>());
 
         /// <summary>
         /// Interface for creating, interacting with, and deleting window icon images.
         /// </summary>
         public static IIconComponent Icon => _iconComponent ??
-            (Initialized ? null! : throw new InvalidOperationException("You need to call Toolkit.Init() before you can use it."));
+            (Initialized ? null! : ThrowNotInitialized<IIconComponent>());
 
         /// <summary>
         /// Interface for getting and setting clipboard data.
         /// </summary>
         public static IClipboardComponent Clipboard => _clipboardComponent ??
-            (Initialized ? null! : throw new InvalidOperationException("You need to call Toolkit.Init() before you can use it."));
+            (Initialized ? null! : ThrowNotInitialized<IClipboardComponent>());
 
         /// <summary>
         /// Interface for getting joystick input.
         /// </summary>
         public static IJoystickComponent Joystick => _joystickComponent ??
-            (Initialized ? null! : throw new InvalidOperationException("You need to call Toolkit.Init() before you can use it."));
+            (Initialized ? null! : ThrowNotInitialized<IJoystickComponent>());
 
         /// <summary>
         /// Interface for opening system dialogs such as file open dialogs.
         /// </summary>
         public static IDialogComponent Dialog => _dialogComponent ??
-            (Initialized ? null! : throw new InvalidOperationException("You need to call Toolkit.Init() before you can use it."));
+            (Initialized ? null! : ThrowNotInitialized<IDialogComponent>());
 
         /// <summary>
-        /// Interface for opening system dialogs such as file open dialogs.
+        /// Interface for creating Vulkan surfaces.
         /// </summary>
-        public static IVulkanComponent Vulkan => _vulkanComponent ??
-            (Initialized ? null! : throw new InvalidOperationException("You need to call Toolkit.Init() before you can use it."));
+        public static IVulkanComponent Vulkan
+        {
+            get
+            {
+                if (_vulkanComponent != null)
+                {
+                    return _vulkanComponent;
+                }
+                else if (!Initialized)
+                {
+                    return ThrowNotInitialized<IVulkanComponent>();
+                }
+                else if (!EnableVulkan)
+                {
+                    return ThrowFeatureNotEnabled<IVulkanComponent>("Vulkan", ToolkitFlags.EnableVulkan);
+                }
+                else
+                {
+                    return null!;
+                }
+            }
+        }
 
         /// <summary>
         /// Initialize OpenTK with the given settings.
@@ -120,11 +162,19 @@ namespace OpenTK.Platform
         /// <seealso cref="ToolkitOptions"/>
         public static void Init(ToolkitOptions options)
         {
-            // FIXME: Figure out options...
+            EnableOpenGL = options.FeatureFlags.HasFlag(ToolkitFlags.EnableOpenGL);
+            EnableVulkan = options.FeatureFlags.HasFlag(ToolkitFlags.EnableVulkan);
+
+            // FIXME: Figure out where to actually store this setting...
+            // - Noggin_bops 2025-07-09
+            PlatformComponents.PreferANGLE = options.FeatureFlags.HasFlag(ToolkitFlags.PreferANGLE);
 
             try { _windowComponent = PlatformComponents.CreateWindowComponent(); } catch (NotSupportedException) { }
             try { _surfaceComponent = PlatformComponents.CreateSurfaceComponent(); } catch (NotSupportedException) { }
-            try { _openGLComponent = PlatformComponents.CreateOpenGLComponent(); } catch (NotSupportedException) { }
+            if (EnableOpenGL)
+            {
+                try { _openGLComponent = PlatformComponents.CreateOpenGLComponent(); } catch (NotSupportedException) { }
+            }
             try { _displayComponent = PlatformComponents.CreateDisplayComponent(); } catch (NotSupportedException) { }
             try { _shellComponent = PlatformComponents.CreateShellComponent(); } catch (NotSupportedException) { }
             try { _mouseComponent = PlatformComponents.CreateMouseComponent(); } catch (NotSupportedException) { }
@@ -134,7 +184,10 @@ namespace OpenTK.Platform
             try { _clipboardComponent = PlatformComponents.CreateClipboardComponent(); } catch (NotSupportedException) { }
             try { _joystickComponent = PlatformComponents.CreateJoystickComponent(); } catch (NotSupportedException) { }
             try { _dialogComponent = PlatformComponents.CreateDialogComponent(); } catch (NotSupportedException) { }
-            try { _vulkanComponent = PlatformComponents.CreateVulkanComponent(); } catch (NotSupportedException) { }
+            if (EnableVulkan)
+            {
+                try { _vulkanComponent = PlatformComponents.CreateVulkanComponent(); } catch (NotSupportedException) { }
+            }
 
             if (_windowComponent != null)
                 _windowComponent.Logger = options.Logger;
@@ -163,11 +216,6 @@ namespace OpenTK.Platform
             if (_vulkanComponent != null)
                 _vulkanComponent.Logger = options.Logger;
 
-            // FIXME: Change initialize to take toolkit options
-            // This will also allow us to potentially remove the need
-            // to have static classes in the different components
-            // as they could get instances to each other through
-            // this object...
             _windowComponent?.Initialize(options);
             _surfaceComponent?.Initialize(options);
             _openGLComponent?.Initialize(options);
@@ -230,6 +278,20 @@ namespace OpenTK.Platform
             _windowComponent = null;
 
             Initialized = false;
+            EnableOpenGL = false;
+            EnableVulkan = false;
+        }
+
+        [DoesNotReturn]
+        private static T ThrowNotInitialized<T>() where T : IPalComponent
+        {
+            throw new InvalidOperationException("You need to call Toolkit.Init() before you can use it.");
+        }
+
+        [DoesNotReturn]
+        private static T ThrowFeatureNotEnabled<T>(string featureName, ToolkitFlags flag) where T : IPalComponent
+        {
+            throw new InvalidOperationException($"You need to enable {featureName} by adding {nameof(ToolkitFlags)}.{flag} to {nameof(ToolkitOptions)}.{nameof(ToolkitOptions.FeatureFlags)} before you can use {featureName}.");
         }
     }
 }

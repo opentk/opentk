@@ -136,6 +136,12 @@ namespace OpenTK.Platform.Native.SDL
         internal static unsafe extern int SDL_PollEvent(SDLEvent* @event);
 
         [DllImport(SDLLib, CallingConvention = CallingConvention.Cdecl)]
+        internal static unsafe extern uint /* Uint32 */ SDL_RegisterEvents(int numevents);
+
+        [DllImport(SDLLib, CallingConvention = CallingConvention.Cdecl)]
+        internal static unsafe extern bool SDL_PushEvent(SDLEvent* @event);
+
+        [DllImport(SDLLib, CallingConvention = CallingConvention.Cdecl)]
         internal static extern int SDL_SetWindowTitle(SDL_WindowPtr window, [MarshalAs(UnmanagedType.LPUTF8Str)] string title);
 
         [DllImport(SDLLib, CallingConvention = CallingConvention.Cdecl)]

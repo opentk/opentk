@@ -115,7 +115,7 @@ namespace OpenTK.Backends.Tests
                         Toolkit.Window.SetIcon(Program.Window, handle);
 
                         // If we are on mac there is no window icon, so set the dock icon instead.
-                        (Toolkit.Window as MacOSWindowComponent)?.SetDockIcon(Program.Window, handle);
+                        (Toolkit.Shell as MacOSShellComponent)?.SetDockIcon(handle);
                     }
 
                     if (ImGui.IsItemHovered())
@@ -185,7 +185,7 @@ namespace OpenTK.Backends.Tests
                         Toolkit.Window.SetIcon(Program.Window, handle);
 
                         // If we are on mac there is no window icon, so set the dock icon instead.
-                        (Toolkit.Window as MacOSWindowComponent)?.SetDockIcon(Program.Window, handle);
+                        (Toolkit.Shell as MacOSShellComponent)?.SetDockIcon(handle);
                     }
 
                     if (ImGui.IsItemHovered())
@@ -201,7 +201,6 @@ namespace OpenTK.Backends.Tests
                     }
                     */
                 }
-
 
                 Vector2i size = (0, 0);
                 if (hoverIndex != -1)

@@ -142,6 +142,10 @@ namespace OpenTK.Platform
         /// <summary>
         /// A callback that can be used to select appropriate backbuffer values.
         /// </summary>
+        /// <remarks>
+        /// By default on macOS this selector is not used due to slow performance,
+        /// see <see cref="UseSelectorOnMacOS"/> to enable the selector on macOS.
+        /// </remarks>
         /// <seealso cref="UseSelectorOnMacOS"/>
         public ContextValueSelector Selector { get; set; } = ContextValues.DefaultValuesSelector;
 

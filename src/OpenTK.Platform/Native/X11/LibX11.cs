@@ -34,6 +34,19 @@ namespace OpenTK.Platform.Native.X11
         internal static extern void XGetErrorText(XDisplayPtr display, int code, [Out, MarshalAs(UnmanagedType.LPUTF8Str)] StringBuilder buffer_return, int length);
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static extern bool XSupportsLocale();
+
+        internal static unsafe string? XSetLocaleModifiers(string? modifier_list)
+        {
+            byte* ret = XSetLocaleModifiers(modifier_list);
+            return Marshal.PtrToStringUTF8((IntPtr)ret);
+
+            [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+            static unsafe extern byte* XSetLocaleModifiers([MarshalAs(UnmanagedType.LPUTF8Str)] string? modifier_list);
+        }
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         internal static extern XDisplayPtr XOpenDisplay([MarshalAs(UnmanagedType.LPStr)]string? name);
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
@@ -62,6 +75,7 @@ namespace OpenTK.Platform.Native.X11
             int y,
             uint width,
             uint height,
+            uint borderWidth,
             ulong border,
             ulong background);
 
@@ -179,6 +193,10 @@ namespace OpenTK.Platform.Native.X11
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         internal static extern int XNextEvent(XDisplayPtr display, out XEvent @event);
 
+        [return: MarshalAs(UnmanagedType.Bool)]
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern bool XFilterEvent(ref XEvent @event, XWindow w);
+
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         internal static extern void XPutBackEvent(XDisplayPtr display, in XEvent @event);
 
@@ -227,7 +245,8 @@ namespace OpenTK.Platform.Native.X11
             out XWindow child);
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern int XSendEvent(
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static extern bool XSendEvent(
             XDisplayPtr display,
             XWindow window,
             int propagate,
@@ -283,7 +302,7 @@ namespace OpenTK.Platform.Native.X11
             XAtom property,
             long offset,
             long length,
-            [MarshalAs(UnmanagedType.I1)] bool delete,
+            [MarshalAs(UnmanagedType.Bool)] bool delete,
             XAtom requestType,
             out XAtom actualType,
             out int actualFormat,
@@ -411,11 +430,11 @@ namespace OpenTK.Platform.Native.X11
         internal static extern XCursor XCreatePixmapCursor(XDisplayPtr display, XPixmap source, XPixmap mask, XColorPtr foreground_color, XColorPtr background_color, int x, int y);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        [return: MarshalAs(UnmanagedType.I1)]
+        [return: MarshalAs(UnmanagedType.Bool)]
         internal unsafe delegate bool XPredicate(XDisplayPtr display, ref XEvent @event, IntPtr arg);
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
-        [return: MarshalAs(UnmanagedType.I1)]
+        [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool XCheckIfEvent(XDisplayPtr display, out XEvent event_return, XPredicate predicate, IntPtr arg);
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
@@ -428,7 +447,7 @@ namespace OpenTK.Platform.Native.X11
         internal static extern GrabResult XGrabPointer(
             XDisplayPtr display,
             XWindow grab_window,
-            [MarshalAs(UnmanagedType.I1)] bool owner_events,
+            [MarshalAs(UnmanagedType.Bool)] bool owner_events,
             XEventMask event_mask,
             GrabMode pointer_mode,
             GrabMode keyboard_mode,
@@ -479,25 +498,102 @@ namespace OpenTK.Platform.Native.X11
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         internal static unsafe extern int XLookupString(XKeyEvent* event_struct, byte* buffer_return, int bytes_buffer, XKeySym* keysym_return, XComposeStatus* status_in_out);
 
+        internal static ReadOnlySpan<byte> XNInputStyle => "inputStyle"u8;
+        internal static ReadOnlySpan<byte> XNClientWindow => "clientWindow"u8;
+        internal static ReadOnlySpan<byte> XNFocusWindow => "focusWindow"u8;
+        internal static ReadOnlySpan<byte> XNSpotLocation => "spotLocation"u8;
+        internal static ReadOnlySpan<byte> XNPreeditAttributes => "preeditAttributes"u8;
+
+        internal static ReadOnlySpan<byte> XNPreeditStartCallback => "preeditStartCallback"u8;
+        internal static ReadOnlySpan<byte> XNPreeditDoneCallback => "preeditDoneCallback"u8;
+        internal static ReadOnlySpan<byte> XNPreeditDrawCallback => "preeditDrawCallback"u8;
+        internal static ReadOnlySpan<byte> XNPreeditCaretCallback => "preeditCaretCallback"u8;
+
+        internal static ReadOnlySpan<byte> XNQueryInputStyle => "queryInputStyle"u8;
+        internal static ReadOnlySpan<byte> XNQueryIMValuesList => "queryIMValuesList"u8;
+        internal static ReadOnlySpan<byte> XNQueryICValuesList => "queryICValuesList"u8;
+        internal static ReadOnlySpan<byte> XNFilterEvents => "filterEvents"u8;
+        internal static ReadOnlySpan<byte> XNDestroyCallback => "destroyCallback"u8;
+
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern XIM XOpenIM(XDisplayPtr display, XrmDatabase db, string res_name, string res_class);
+        internal static extern XIM XOpenIM(XDisplayPtr display, XrmDatabase db, string? res_name, string? res_class);
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         internal static extern int /* Status */ XCloseIM(XIM im);
 
-        [DllImport(X11, CallingConvention = CallingConvention.Cdecl, EntryPoint = "XSetIMValues")]
-        private static unsafe extern byte* XSetIMValues_(XIM im, __arglist);
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        internal static unsafe extern byte* XSetIMValues(XIM im, byte* key, IntPtr value, IntPtr sentinel);
 
-        internal static unsafe string? XSetIMValues<T>(XIM im, string key, T value) where T : unmanaged
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        internal static unsafe extern byte* XGetIMValues(XIM im, byte* key, IntPtr value, IntPtr sentinel);
+
+        [StructLayout(LayoutKind.Sequential, Pack = 8)]
+        internal unsafe struct XIMStyles
         {
-            byte* str = (byte*)Marshal.StringToCoTaskMemUTF8(key);
-            byte* ret = XSetIMValues_(im, __arglist(str, value, null));
-            Marshal.FreeCoTaskMem((IntPtr)str);
-            return Marshal.PtrToStringUTF8((IntPtr)ret);
+            public ushort count_styles;
+            public XIMFlags* supported_styles;
+        }
+
+        internal unsafe struct XIMValuesList {
+            public ushort count_values;
+            public byte** supported_values;
         }
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
-        internal static unsafe extern int Xutf8LookupString(XIC ic, XKeyEvent* @event, byte* buffer_return, int bytes_buffer, XKeySym* keysym_return, int* /*Status*/ status_return);
+        internal static unsafe extern IntPtr /* XVaNestedList */ XVaCreateNestedList(int dummy, IntPtr value1, IntPtr value2, IntPtr value3);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        internal static unsafe extern IntPtr /* XVaNestedList */ XVaCreateNestedList(int dummy, IntPtr value1, IntPtr value2, IntPtr value3, IntPtr value4, IntPtr value5, IntPtr value6, IntPtr value7, IntPtr value8, IntPtr value9);
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        internal delegate void IMInstantiateCallback(XDisplayPtr display, IntPtr /* XPointer */ client_data, IntPtr /* XPointer */ call_data);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static extern unsafe bool XRegisterIMInstantiateCallback(XDisplayPtr display, XrmDatabase db, byte* res_name, byte* res_class, IMInstantiateCallback /* XIMProc */ callback, IntPtr /* XPointer */ client_data);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static extern unsafe bool XUnregisterIMInstantiateCallback(XDisplayPtr display, XrmDatabase db, byte* res_name, byte* res_class, IMInstantiateCallback /* XIMProc */ callback, IntPtr /* XPointer */ client_data);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        internal static unsafe extern XIC XCreateIC(XIM im, byte* value0, ulong value1, byte* value2, ulong value3, void* sentinel);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        internal static unsafe extern XIC XCreateIC(XIM im, byte* value0, ulong value1, byte* value2, ulong value3, byte* value4, ulong value5, void* sentinel);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        internal static unsafe extern XIC XCreateIC(XIM im, byte* value0, ulong value1, byte* value2, ulong value3, byte* value4, IntPtr value5, void* sentinel);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        internal static unsafe extern XIC XCreateIC(XIM im, byte* value0, ulong value1, byte* value2, ulong value3, byte* value4, ulong value5, byte* value6, IntPtr value7, void* sentinel);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        internal static unsafe extern byte* XSetICValues(XIC ic, byte* key, IntPtr value, IntPtr sentinel);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        internal static unsafe extern byte* XGetICValues(XIC ic, byte* key, IntPtr value, IntPtr sentinel);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void XSetICFocus(XIC ic);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void XUnsetICFocus(XIC ic);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void XDestroyIC(XIC ic);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern XIM XIMOfIC(XIC ic);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        internal unsafe static extern byte* Xutf8ResetIC(XIC ic);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        internal static unsafe extern int Xutf8LookupString(XIC ic, XKeyEvent* @event, byte* buffer_return, int bytes_buffer, XKeySym* keysym_return, XLookupStatus* /*Status*/ status_return);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        internal static unsafe extern int XmbLookupString(XIC ic, XKeyEvent* @event, byte* buffer_return, int bytes_buffer, XKeySym* keysym_return, XLookupStatus* /*Status*/ status_return);
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         internal static extern void XDisplayKeycodes(XDisplayPtr display, out int min_keycodes_return, out int max_keycodes_return);

@@ -9,6 +9,7 @@ using OpenTK.Platform;
 using OpenTK.Platform.Native;
 using ErrorCode = OpenTK.Graphics.OpenGL.ErrorCode;
 using System.Linq;
+using System.Runtime.InteropServices;
 
 namespace Bejeweled
 {
@@ -29,8 +30,12 @@ namespace Bejeweled
         }
     }
 
+    internal delegate void ImDrawCallback(ImDrawListPtr parentList, ImDrawCmdPtr cmd);
+
     internal class ImGuiController : IDisposable
     {
+        public nint Context;
+
         private bool _useGLES;
 
         private bool _frameBegun;
@@ -71,8 +76,8 @@ namespace Bejeweled
 
             KHRDebugAvailable = (major == 4 && minor >= 3) || IsExtensionSupported("KHR_debug") || IsExtensionSupported("GL_KHR_debug");
 
-            IntPtr context = ImGui.CreateContext();
-            ImGui.SetCurrentContext(context);
+            Context = ImGui.CreateContext();
+            ImGui.SetCurrentContext(Context);
             var io = ImGui.GetIO();
             
             io.BackendFlags |= ImGuiBackendFlags.RendererHasVtxOffset;
@@ -420,7 +425,9 @@ void main()
                     ImDrawCmdPtr pcmd = cmd_list.CmdBuffer[cmd_i];
                     if (pcmd.UserCallback != IntPtr.Zero)
                     {
-                        throw new NotImplementedException();
+                        GCHandle handle = GCHandle.FromIntPtr(pcmd.UserCallback);
+                        ImDrawCallback callback = (ImDrawCallback)handle.Target!;
+                        callback(cmd_list, pcmd);
                     }
                     else
                     {

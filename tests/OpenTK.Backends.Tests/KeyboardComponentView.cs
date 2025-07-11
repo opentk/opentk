@@ -56,6 +56,11 @@ namespace OpenTK.Backends.Tests
                 ImGui.EndDisabled();
                 ImGui.EndListBox();
             }
+
+            if (ImGui.Button("Refresh layouts"))
+            {
+                Layouts = Toolkit.Keyboard.GetAvailableKeyboardLayouts();
+            }
             
             ImGui.SeparatorText("Keyboard state");
 
@@ -102,7 +107,7 @@ namespace OpenTK.Backends.Tests
             float width = ImGui.GetColumnWidth();
             float height = ImGui.GetContentRegionAvail().Y;
 
-            bool edited = ImGui.InputTextMultiline("", ref TextInput, 8192, new System.Numerics.Vector2(width, height));
+            bool edited = ImGui.InputTextMultiline("##keyboard-input-area", ref TextInput, 8192, new System.Numerics.Vector2(width, height));
         }
     }
 }

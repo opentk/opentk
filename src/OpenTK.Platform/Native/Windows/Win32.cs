@@ -208,6 +208,13 @@ namespace OpenTK.Platform.Native.Windows
         [DllImport("user32.dll")]
         internal static extern void PostQuitMessage(int nExitCode);
 
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        internal static extern uint RegisterWindowMessage([MarshalAs(UnmanagedType.LPTStr)] string /* LPCSTR */ lpString);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static extern bool ChangeWindowMessageFilterEx(IntPtr /* HWND */ hwnd, uint message, MSGFLT action, IntPtr /* PCHANGEFILTERSTRUCT */ pChangeFilterStruct);
+
         [DllImport("user32.dll")]
         internal static extern int GetMessageTime();
 

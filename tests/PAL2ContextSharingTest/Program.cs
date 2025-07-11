@@ -12,9 +12,6 @@ namespace LocalTest
 {
     class Window
     {
-        static IWindowComponent WindowComp;
-        static IOpenGLComponent OpenGLComponent;
-
         static WindowHandle WindowHandle1;
         static OpenGLContextHandle ContextHandle1;
 
@@ -59,23 +56,14 @@ void main()
         static void Main(string[] args)
         {
             //PlatformComponents.PreferSDL2 = true;
-            WindowComp = PlatformComponents.CreateWindowComponent();
-            OpenGLComponent = PlatformComponents.CreateOpenGLComponent();
-
+            Toolkit.Init(new ToolkitOptions() { ApplicationName = "PAL2 Context Sharing Test", Logger = new ConsoleLogger() });
+            
             if (PlatformComponents.PreferSDL2)
             {
-                Debug.Assert(WindowComp.GetType() == typeof(SDLWindowComponent));
+                Debug.Assert(Toolkit.Window.GetType() == typeof(SDLWindowComponent));
             }
 
-            ToolkitOptions options = new ToolkitOptions() { Logger = new ConsoleLogger() };
-
-            WindowComp.Logger = options.Logger;
-            OpenGLComponent.Logger = options.Logger;
-
-            WindowComp.Initialize(options);
-            OpenGLComponent.Initialize(options);
-
-            WindowHandle1 = WindowComp.Create(new OpenGLGraphicsApiHints()
+            WindowHandle1 = Toolkit.Window.Create(new OpenGLGraphicsApiHints()
             {
                 Version = new Version(4, 1),
                 Profile = OpenGLProfile.Core,
@@ -85,9 +73,9 @@ void main()
                 DepthBits = ContextDepthBits.Depth24,
                 StencilBits = ContextStencilBits.Stencil8,
             });
-            ContextHandle1 = OpenGLComponent.CreateFromWindow(WindowHandle1);
+            ContextHandle1 = Toolkit.OpenGL.CreateFromWindow(WindowHandle1);
 
-            WindowHandle2 = WindowComp.Create(new OpenGLGraphicsApiHints()
+            WindowHandle2 = Toolkit.Window.Create(new OpenGLGraphicsApiHints()
             {
                 Version = new Version(4, 1),
                 Profile = OpenGLProfile.Core,
@@ -98,10 +86,10 @@ void main()
                 StencilBits = ContextStencilBits.Stencil8,
                 SharedContext = ContextHandle1,
             });
-            ContextHandle2 = OpenGLComponent.CreateFromWindow(WindowHandle2);
+            ContextHandle2 = Toolkit.OpenGL.CreateFromWindow(WindowHandle2);
 
-            OpenGLComponent.SetCurrentContext(ContextHandle1);
-            GLLoader.LoadBindings(OpenGLComponent.GetBindingsContext(ContextHandle1));
+            Toolkit.OpenGL.SetCurrentContext(ContextHandle1);
+            GLLoader.LoadBindings(Toolkit.OpenGL.GetBindingsContext(ContextHandle1));
 
             // Load shared
             {
@@ -126,7 +114,7 @@ void main()
                 Program1 = CreateShader("Context 1", VertexShaderSource, FragmentShaderSource);
             }
 
-            OpenGLComponent.SetCurrentContext(ContextHandle2);
+            Toolkit.OpenGL.SetCurrentContext(ContextHandle2);
 
             // Load context 2
             {
@@ -135,25 +123,25 @@ void main()
                 Program2 = CreateShader("Context 2", VertexShaderSource, FragmentShaderSource);
             }
 
-            WindowComp.GetClientPosition(WindowHandle1, out Vector2i p1);
-            WindowComp.SetClientPosition(WindowHandle2, (p1.X + 800, p1.Y));
+            Toolkit.Window.GetClientPosition(WindowHandle1, out Vector2i p1);
+            Toolkit.Window.SetClientPosition(WindowHandle2, (p1.X + 800, p1.Y));
 
-            WindowComp.SetTitle(WindowHandle1, $"{PlatformComponents.GetBackend()} Test Window 1");
-            WindowComp.SetClientSize(WindowHandle1, (800, 600));
-            WindowComp.SetMode(WindowHandle1, WindowMode.Normal);
-            WindowComp.SetTitle(WindowHandle2, $"{PlatformComponents.GetBackend()} Test Window 2");
-            WindowComp.SetClientSize(WindowHandle2, (800, 600));
-            WindowComp.SetMode(WindowHandle2, WindowMode.Normal);
+            Toolkit.Window.SetTitle(WindowHandle1, $"{PlatformComponents.GetBackend()} Test Window 1");
+            Toolkit.Window.SetClientSize(WindowHandle1, (800, 600));
+            Toolkit.Window.SetMode(WindowHandle1, WindowMode.Normal);
+            Toolkit.Window.SetTitle(WindowHandle2, $"{PlatformComponents.GetBackend()} Test Window 2");
+            Toolkit.Window.SetClientSize(WindowHandle2, (800, 600));
+            Toolkit.Window.SetMode(WindowHandle2, WindowMode.Normal);
 
             EventQueue.EventRaised += EventQueue_EventRaised;
 
             while (true)
             {
-                WindowComp.ProcessEvents(false);
+                Toolkit.Window.ProcessEvents(false);
 
                 // If both of our windows are closed, we exit the application.
-                if (WindowComp.IsWindowDestroyed(WindowHandle1) &&
-                    WindowComp.IsWindowDestroyed(WindowHandle2))
+                if (Toolkit.Window.IsWindowDestroyed(WindowHandle1) &&
+                    Toolkit.Window.IsWindowDestroyed(WindowHandle2))
                 {
                     break;
                 }
@@ -164,31 +152,31 @@ void main()
                 }
             }
 
-            WindowComp.ProcessEvents(false);
-            WindowComp.ProcessEvents(false);
-            WindowComp.ProcessEvents(false);
-            WindowComp.ProcessEvents(false);
-            WindowComp.ProcessEvents(false);
+            Toolkit.Window.ProcessEvents(false);
+            Toolkit.Window.ProcessEvents(false);
+            Toolkit.Window.ProcessEvents(false);
+            Toolkit.Window.ProcessEvents(false);
+            Toolkit.Window.ProcessEvents(false);
         }
 
         private static void EventQueue_EventRaised(PalHandle? handle, PlatformEventType type, EventArgs args)
         {
             if (args is CloseEventArgs close)
             {
-                WindowComp.Destroy(close.Window);
+                Toolkit.Window.Destroy(close.Window);
             }
         }
 
         static bool Render()
         {
-            if (WindowComp.IsWindowDestroyed(WindowHandle1) == false)
+            if (Toolkit.Window.IsWindowDestroyed(WindowHandle1) == false)
             {
-                OpenGLComponent.SetCurrentContext(ContextHandle1);
+                Toolkit.OpenGL.SetCurrentContext(ContextHandle1);
 
                 GL.ClearColor(Color4.Red);
                 GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit | ClearBufferMask.StencilBufferBit);
 
-                WindowComp.GetFramebufferSize(WindowHandle1, out Vector2i fbSize);
+                Toolkit.Window.GetFramebufferSize(WindowHandle1, out Vector2i fbSize);
                 GL.Viewport(0, 0, fbSize.X, fbSize.Y);
 
                 GL.UseProgram(Program1);
@@ -196,17 +184,17 @@ void main()
 
                 GL.DrawArrays(PrimitiveType.Triangles, 0, 6);
 
-                OpenGLComponent.SwapBuffers(ContextHandle1);
+                Toolkit.OpenGL.SwapBuffers(ContextHandle1);
             }
 
-            if (WindowComp.IsWindowDestroyed(WindowHandle2) == false)
+            if (Toolkit.Window.IsWindowDestroyed(WindowHandle2) == false)
             {
-                OpenGLComponent.SetCurrentContext(ContextHandle2);
+                Toolkit.OpenGL.SetCurrentContext(ContextHandle2);
 
                 GL.ClearColor(Color4.Blue);
                 GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit | ClearBufferMask.StencilBufferBit);
 
-                WindowComp.GetFramebufferSize(WindowHandle2, out Vector2i fbSize);
+                Toolkit.Window.GetFramebufferSize(WindowHandle2, out Vector2i fbSize);
                 GL.Viewport(0, 0, fbSize.X, fbSize.Y);
 
                 GL.UseProgram(Program2);
@@ -214,7 +202,7 @@ void main()
 
                 GL.DrawArrays(PrimitiveType.Triangles, 0, 6);
 
-                OpenGLComponent.SwapBuffers(ContextHandle2);
+                Toolkit.OpenGL.SwapBuffers(ContextHandle2);
             }
 
             return true;

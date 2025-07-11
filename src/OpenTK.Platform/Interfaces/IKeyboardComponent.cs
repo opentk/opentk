@@ -91,11 +91,11 @@ namespace OpenTK.Platform
         /// Set the rectangle to which the IME interface will appear relative to.
         /// </summary>
         /// <param name="window">The window corresponding to this IME window.</param>
-        /// <param name="x">X coordinate of the rectangle in desktop coordinates.</param>
-        /// <param name="y">Y coordinate of the rectangle in desktop coordinates.</param>
-        /// <param name="width">Width of the rectangle in desktop units.</param>
-        /// <param name="height">Height of the rectangle in desktop units.</param>
-        void SetImeRectangle(WindowHandle window, int x, int y, int width, int height);
+        /// <param name="x">X coordinate of the rectangle in client coordinates.</param>
+        /// <param name="y">Y coordinate of the rectangle in client coordinates.</param>
+        /// <param name="width">Width of the rectangle in client units.</param>
+        /// <param name="height">Height of the rectangle in client units.</param>
+        void SetImeRectangle(WindowHandle window, float x, float y, float width, float height);
 
         /// <summary>
         /// Finish input method editor.
