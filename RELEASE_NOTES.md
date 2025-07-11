@@ -1,3 +1,56 @@
+## 5.0-pre.14
+
+* Added generic math interfaces to all vector and matrix types. (@vovatrykoz)
+* Add boolean vectors `VectorNb` and comparison operators for vectors. (@NogginBops)
+* Add `scalar + vecor`, `scalar - vector`, and `scalar / vector` operator overloads for vectors. (@BoyBaykiller)
+* Add `JoystickState.GUID`. (@DamensIsPoggers)
+* Merged latest OpenTK 4.9.4 changes onto 5.0-pre.14. (@NogginBops)
+* Mark many properties and functions as `readonly` in math library. (@BoyBaykiller)
+* Made GLFW loading compatible with `IlcDisableReflection. (@BoyBaykiller)
+
+**Vulkan bindings changes**:
+
+* Update vulkan bindings to 1.4.321. (@NogginBops)
+* Add `InstanceDispatchTable` and `DeviceDispatchTable` dispatch tables for more efficiently calling vulkan functions. (@NogginBops)
+* Fix aliased structs so that they actually contain the correct memebers. (@NogginBops)
+* Functions, handles, structs and enums now have correct version and deprecation info documented. (@NogginBops)
+* Annotated structs and enums with functions that use them. (@NogginBops)
+* Fix XML escape codes in documentation comments. (@NogginBops)
+
+**OpenGL bindings changes**:
+
+* Add `string[]` overloads to functions where applicable. (@NogginBops)
+* Remove `VertexBufferObjectUsage` in favor of `BufferUsageHint`. (@NogginBops)
+
+**PAL2 changes**:
+
+* Add `Toolkit.Window.PostUserEvent` multi-threaded API on all plaforms for posting events to the main thread (useful with `waitForEvents = true`). (@NogginBops)
+* Add `ToolkitOptions.FeatureFlags` for specifying if pal2 should load OpenGL and/or Vulkan components. (@NogginBops)
+
+win32:
+
+* Fix raw mouse motion. (@JoeTwizzle)
+* Add platform specific api for setting window taskbar progress, `ShellComponent.SetProgressStatus`. (@NogginBops)
+* Fix transitioning from `WindowState.Hidden` to `WindowState.*Fullscreen` directly. (@NogginBops)
+* 
+
+macOS:
+
+* Support for IME text input though `Toolkit.Keyboard.BeginIme`, `Toolkit.Keyboard.SetImeRectangle`, and `Toolkit.Keyboard.EndIme`. (@NogginBops)
+* Add platform specific api for setting window taskbar progress, `ShellComponent.SetProgressStatus`. (@NogginBops)
+* Support `waitForEvents = true` in `Toolkit.Window.ProcessEvents`. (@NogginBops)
+* Animated cursors are not automatically handled, `MacOSCursorComponent.UpdateAnimation` is removed. (@NogginBops)
+* Moved `MacOSWindowComponent.SetDockIcon` to `MacOSShellComponent.SetDockIcon`. (@NogginBops)
+
+x11:
+
+* Fix `DllNotFoundException` for `Xrender`. (@NogginBops)
+* Make it possible to hide the cursor. (@NogginBops)
+* Support for IME text input though `Toolkit.Keyboard.BeginIme`, `Toolkit.Keyboard.SetImeRectangle`, and `Toolkit.Keyboard.EndIme`. (@NogginBops)
+* Fix window shadow for opaque windows with transparent Visuals on Ubuntu. (@NogginBops)
+* Fix `Toolkit.Window.SetCursorCaptureMode` when running on XWayland. (@NogginBops)
+* Fix `Toolkit.Dialog` with newer versions of Zenity. (@NogginBops)
+
 ## 5.0-pre.13
 
 * Changed `MarshalTk.MarshalStringArrayToAnsiStringArrayPtr` to take `ReadOnlySpan<string>` instead of `Span<string>`. (@NogginBops)
