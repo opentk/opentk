@@ -1070,7 +1070,7 @@ namespace OpenTK.Platform.Native.X11
 
                                 if (filtered == false)
                                 {
-                                    if (xwindow.IC.Value == IntPtr.Zero)
+                                    if (xwindow.IC.Value == 0)
                                     {
                                         charsWritten = XLookupString(&keyPressed, str, TEXT_LENGTH, &keysym, null);
                                     }
@@ -1115,7 +1115,7 @@ namespace OpenTK.Platform.Native.X11
                                         EventQueue.Raise(xwindow, PlatformEventType.KeyDown, new KeyDownEventArgs(xwindow, key, scancode, isRepeat, modifiers));
 
                                         string? result = null;
-                                        if (xwindow.IC.Value == IntPtr.Zero)
+                                        if (xwindow.IC.Value == 0)
                                         {
                                             bool isHighLatin1 = false;
                                             for (int i = 0; i < TEXT_LENGTH; i++)
@@ -1255,7 +1255,10 @@ namespace OpenTK.Platform.Native.X11
                                 break;
                             }
 
-                            XSetICFocus(xwindow.IC);
+                            if (xwindow.IC.Value != 0)
+                            {
+                                XSetICFocus(xwindow.IC);
+                            }
 
                             EventQueue.Raise(xwindow, PlatformEventType.Focus, new FocusEventArgs(xwindow, true));
 
@@ -1286,7 +1289,10 @@ namespace OpenTK.Platform.Native.X11
                                 break;
                             }
 
-                            XUnsetICFocus(xwindow.IC);
+                            if (xwindow.IC.Value != 0)
+                            {
+                                XUnsetICFocus(xwindow.IC);
+                            }
 
                             EventQueue.Raise(xwindow, PlatformEventType.Focus, new FocusEventArgs(xwindow, false));
 
@@ -1952,12 +1958,26 @@ namespace OpenTK.Platform.Native.X11
                     Utils.AsPtr(XNPreeditAttributes), callbacks,
                     null);
 
+                if (ic.Value == 0)
+                {
+                    Logger?.LogDebug("Could not create IC supporting preedit callbacks, trying to create an IC wihtout callbacks.");
+                    ic = XCreateIC(IM, 
+                        Utils.AsPtr(XNInputStyle), (ulong)(XIMFlags.PreeditNothing | XIMFlags.StatusNothing),
+                        Utils.AsPtr(XNClientWindow), window.Id,
+                        Utils.AsPtr(XNFocusWindow), window.Id,
+                        null);
+                }
+
                 if (ic.Value != 0)
                 {
                     XSetICFocus(ic);
 
                     // Get the event mask the IC needs.
                     XGetICValues(ic, Utils.AsPtr(XNFilterEvents), (IntPtr)(&filterMask), 0);
+                }
+                else
+                {
+                    Logger?.LogWarning("Could not create IC, IME might not work correctly.");
                 }
 
                 XFree(callbacks);
