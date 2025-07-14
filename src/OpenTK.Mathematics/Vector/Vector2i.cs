@@ -78,31 +78,27 @@ namespace OpenTK.Mathematics
         {
             readonly get
             {
-                if (((uint)index) < 2)
+                if (((uint)index) > 1)
                 {
-                    return GetElementUnsafe(in this, index);
+                    MathHelper.ThrowOutOfRangeException("You tried to access this vector at index: {0}", index);
                 }
-                else
-                {
-                    throw new IndexOutOfRangeException("You tried to access this vector at index: " + index);
-                }
+
+                return GetElementUnsafe(in this, index);
             }
 
             set
             {
-                if (((uint)index) < 2)
+                if (((uint)index) > 1)
                 {
-                    GetElementUnsafe(in this, index) = value;
+                    MathHelper.ThrowOutOfRangeException("You tried to set this vector at index: {0}", index);
                 }
-                else
-                {
-                    throw new IndexOutOfRangeException("You tried to set this vector at index: " + index);
-                }
+
+                GetElementUnsafe(in this, index) = value;
             }
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private readonly ref int GetElementUnsafe(in Vector2i v, int index)
+        private static ref int GetElementUnsafe(in Vector2i v, int index)
         {
             ref int address = ref Unsafe.AsRef(in v.X);
             return ref Unsafe.Add(ref address, index);
