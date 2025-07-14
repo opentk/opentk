@@ -305,32 +305,27 @@ namespace OpenTK.Mathematics
         {
             readonly get
             {
-                if (((uint)rowIndex) < 3 && ((uint)columnIndex) < 3)
+                if (((uint)rowIndex) > 2 || ((uint)columnIndex) > 2)
                 {
-                    return GetRowUnsafe(in this, rowIndex)[columnIndex];
+                    MathHelper.ThrowOutOfRangeException("You tried to access this matrix at: ({0}, {1})", rowIndex, columnIndex);
                 }
-                else
-                {
-                    MathHelper.ThrowOutOfRangeException($"You tried to access this matrix at: ({rowIndex}, {columnIndex})");
-                    return default;
-                }
+
+                return GetRowUnsafe(in this, rowIndex)[columnIndex];
             }
 
             set
             {
-                if (((uint)rowIndex) < 3 && ((uint)columnIndex) < 3)
+                if (((uint)rowIndex) > 2 || ((uint)columnIndex) > 2)
                 {
-                    GetRowUnsafe(in this, rowIndex)[columnIndex] = value;
+                    MathHelper.ThrowOutOfRangeException("You tried to set this matrix at: ({0}, {1})", rowIndex, columnIndex);
                 }
-                else
-                {
-                    MathHelper.ThrowOutOfRangeException($"You tried to set this matrix at: ({rowIndex}, {columnIndex})");
-                }
+
+                GetRowUnsafe(in this, rowIndex)[columnIndex] = value;
             }
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private readonly ref Vector3d GetRowUnsafe(in Matrix3d m, int index)
+        private static ref Vector3d GetRowUnsafe(in Matrix3d m, int index)
         {
             ref Vector3d address = ref Unsafe.AsRef(in m.Row0);
             return ref Unsafe.Add(ref address, index);
