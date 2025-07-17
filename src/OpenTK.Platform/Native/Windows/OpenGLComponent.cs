@@ -744,7 +744,7 @@ namespace OpenTK.Platform.Native.Windows
                             profile = ContextProfileMask.ContextCoreProfileBitArb;
                             break;
                         case OpenGLProfile.Compatibility:
-                            profile = ContextProfileMask.ContextCoreProfileBitArb | ContextProfileMask.ContextCompatibilityProfileBitArb;
+                            profile = ContextProfileMask.ContextCompatibilityProfileBitArb;
                             break;
                         default:
                             break;
