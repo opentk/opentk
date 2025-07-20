@@ -832,6 +832,7 @@ namespace OpenTK.Graphics.Vulkan
         {
             _vkSubmitDebugUtilsMessageEXT_fnptr(instance, messageSeverity, messageTypes, pCallbackData);
         }
+#pragma warning disable IDE1006 // Naming Styles
         public delegate* unmanaged<VkPhysicalDevice, int, VkDisplayKHR, VkResult> _vkAcquireDrmDisplayEXT_fnptr;
         public delegate* unmanaged<VkPhysicalDevice, VkDisplayKHR, VkResult> _vkAcquireWinrtDisplayNV_fnptr;
         public delegate* unmanaged<VkPhysicalDevice, IntPtr, VkDisplayKHR, VkResult> _vkAcquireXlibDisplayEXT_fnptr;
@@ -947,6 +948,7 @@ namespace OpenTK.Graphics.Vulkan
         public delegate* unmanaged<VkPhysicalDevice, uint, VkDisplayKHR*, VkResult> _vkGetWinrtDisplayNV_fnptr;
         public delegate* unmanaged<VkPhysicalDevice, VkDisplayKHR, VkResult> _vkReleaseDisplayEXT_fnptr;
         public delegate* unmanaged<VkInstance, VkDebugUtilsMessageSeverityFlagBitsEXT, VkDebugUtilsMessageTypeFlagBitsEXT, VkDebugUtilsMessengerCallbackDataEXT*, void> _vkSubmitDebugUtilsMessageEXT_fnptr;
+#pragma warning restore IDE1006 // Naming Styles
     }
     public unsafe partial struct DeviceDispatchTable
     {
