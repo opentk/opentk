@@ -765,7 +765,7 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clCreateKernelsInProgram")]
         public static extern CLResultCode CreateKernelsInProgram([In] CLProgram program, [In] uint numberOfKernels,
-            [In] CLKernel[] kernels,
+            [Out] CLKernel[] kernels,
             [Out] out uint numberOfKernelsReturned);
 
         /// <summary>
