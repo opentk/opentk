@@ -27,7 +27,7 @@ namespace GLGenerator.Writing
             // This is quite fragile, no idea if there is an easy way that is "better".
             string outputProjectPath = Path.Combine(
                 Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? throw new NullReferenceException(),
-                "..", "..", "..", "..", GraphicsNamespace);
+                "..", "..", "..", "..", "..", GraphicsNamespace);
 
             foreach (Pointers pointers in data.Pointers)
             {

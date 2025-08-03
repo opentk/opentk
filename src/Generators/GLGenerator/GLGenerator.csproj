@@ -10,6 +10,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Generators\GeneratorBase\GeneratorBase.csproj" />
+    <ProjectReference Include="..\GeneratorBase\GeneratorBase.csproj" />
   </ItemGroup>
 </Project>

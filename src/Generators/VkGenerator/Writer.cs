@@ -25,7 +25,7 @@ namespace VkGenerator
             // This is quite fragile, no idea if there is an easy way that is "better".
             string outputProjectPath = Path.Combine(
                 Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? throw new NullReferenceException(),
-                "..", "..", "..", "..", GraphicsNamespace);
+                "..", "..", "..", "..", "..", GraphicsNamespace);
 
             string directoryPath = Path.Combine(outputProjectPath, "Vulkan");
             if (Directory.Exists(directoryPath) == false) Directory.CreateDirectory(directoryPath);
@@ -874,7 +874,7 @@ namespace VkGenerator
             // This is quite fragile, no idea if there is an easy way that is "better".
             string outputProjectPath = Path.Combine(
                 Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? throw new NullReferenceException(),
-                "..", "..", "..", "..", GraphicsNamespace);
+                "..", "..", "..", "..", "..", GraphicsNamespace);
 
             string directoryPath = Path.Combine(outputProjectPath, "Vulkan");
             if (Directory.Exists(directoryPath) == false) Directory.CreateDirectory(directoryPath);
