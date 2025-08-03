@@ -878,8 +878,6 @@ namespace VkGenerator.Process
                 {
                     return new CSPointer(baseType, @const);
                 }
-
-                return new CSPointer(baseType, @const);
             }
             else if (type.EndsWith(']'))
             {

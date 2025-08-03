@@ -187,11 +187,10 @@ namespace VkGenerator.Parsing
 
     public record VersionInfo(Version? Version, List<string> Extensions)
     {
-        public List<DeprecationReason> DeprecatedBy;
+        public List<DeprecationReason> DeprecatedBy = [];
 
         public void Deprecate(DeprecationReason reason)
         {
-            DeprecatedBy ??= [];
             DeprecatedBy.Add(reason);
         }
 

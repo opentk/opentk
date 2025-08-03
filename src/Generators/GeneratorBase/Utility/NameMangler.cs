@@ -23,6 +23,7 @@ namespace GeneratorBase.Utility
             FunctionsWithoutPrefix = new HashSet<string>();
             EnumsWithoutPrefix = new HashSet<string>();
             EnumGroupNameTranslationTable = new Dictionary<string, string>();
+            DefinePrefix = "";
         }
     }
 
