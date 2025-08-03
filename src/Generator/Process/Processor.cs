@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Generator.Utility.Extensions;
-using Generator.Utility;
-using Generator.Writing;
-using Generator.Parsing;
+using GeneratorBase.Utility.Extensions;
+using GeneratorBase.Utility;
+using GLGenerator.Writing;
+using GLGenerator.Parsing;
 using System.Net.Http.Headers;
 using System.Collections.Immutable;
 
-namespace Generator.Process
+namespace GLGenerator.Process
 {
     internal static class Processor
     {
@@ -46,17 +46,6 @@ namespace Generator.Process
             public override int GetHashCode() =>
                 HashCode.Combine(GroupName);
         };
-
-        record RequireEntryInfo(
-            string Vendor,
-            // FIXME: Make this just one string?
-            Version? IntroducedInVersion,
-            string? IntroducedInExtension,
-            RequireEntry Entry);
-
-        record RemoveEntryInfo(
-            Version RemovedInVersion,
-            RemoveEntry Entry);
 
         internal static OutputData ProcessSpec(Specification2 spec, Documentation docs)
         {
@@ -623,7 +612,7 @@ namespace Generator.Process
                                 {
                                     removedIn.Add($"v{func.RemovedIn.Major}.{func.RemovedIn.Minor}");
                                 }
-
+                                
                                 // FIXME: Added and removed information.
                                 documentation[function.NativeFunction] = new FunctionDocumentation(
                                     commandDocumentation.Name,
@@ -801,9 +790,9 @@ namespace Generator.Process
 
                     for (int i = 0; i < Math.Min(function.Parameters.Count, commandDoc.Parameters.Length); i++)
                     {
-                        if (function.Parameters[i].Name != commandDoc.Parameters[i].Name)
+                        if (function.Parameters[i].OriginalName != commandDoc.Parameters[i].Name)
                         {
-                            Logger.Warning($"[{version}][{function.EntryPoint}] Function parameter '{function.Parameters[i].Name}' doesn't have the same name in the documentation. ('{commandDoc.Parameters[i].Name}')");
+                            Logger.Warning($"[{version}][{function.EntryPoint}] Function parameter '{function.Parameters[i].OriginalName}' doesn't have the same name in the documentation. ('{commandDoc.Parameters[i].Name}')");
                         }
                     }
 

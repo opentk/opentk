@@ -1,4 +1,4 @@
-using VkGenerator.Utility;
+using GeneratorBase.Utility;
 using System;
 using System.Collections.Generic;
 using System.IO;

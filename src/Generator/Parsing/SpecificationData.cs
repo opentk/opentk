@@ -1,11 +1,11 @@
-﻿using Generator.Writing;
+﻿using GLGenerator.Writing;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Dynamic;
 using System.IO.Compression;
 
-namespace Generator.Parsing
+namespace GLGenerator.Parsing
 {
     internal enum InputAPI
     {

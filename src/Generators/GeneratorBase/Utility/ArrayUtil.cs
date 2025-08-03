@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Generator.Utility
+namespace GeneratorBase.Utility
 {
-    static class ArrayUtil
+    public static class ArrayUtil
     {
         public static T[] MakeCopyAndGrow<T>(this T[] array, int additionalElements)
         {

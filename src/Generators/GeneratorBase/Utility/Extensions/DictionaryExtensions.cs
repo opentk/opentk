@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace Generator.Utility.Extensions
+namespace GeneratorBase.Utility.Extensions
 {
-    static class DictionaryExtensions
+    public static class DictionaryExtensions
     {
         /// <summary>
         /// Adds the specified two keys and value to the a nested dictionary.

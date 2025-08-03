@@ -1,21 +1,24 @@
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Dynamic;
 using System.Net.Http.Headers;
 using System.Text;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
-namespace Generator.Utility
+namespace GeneratorBase.Utility
 {
-    internal class NameManglerSettings
+    public class NameManglerSettings
     {
-        internal string ExtensionPrefix { get; init; }
-        internal string FunctionPrefix { get; init; }
-        internal List<string> EnumPrefixes { get; init; }
-        internal HashSet<string> FunctionsWithoutPrefix { get; init; }
-        internal HashSet<string> EnumsWithoutPrefix { get; init; }
+        public string ExtensionPrefix { get; init; }
+        public string FunctionPrefix { get; init; }
+        public List<string> EnumPrefixes { get; init; }
+        public HashSet<string> FunctionsWithoutPrefix { get; init; }
+        public HashSet<string> EnumsWithoutPrefix { get; init; }
+        public string DefinePrefix { get; init; }
 
-        internal Dictionary<string, string> EnumGroupNameTranslationTable { get; init; }
+        public Dictionary<string, string> EnumGroupNameTranslationTable { get; init; }
 
-        internal NameManglerSettings()
+        public NameManglerSettings()
         {
             ExtensionPrefix = "GL_";
             FunctionPrefix = "gl";
@@ -28,10 +31,11 @@ namespace Generator.Utility
 
     // FIXME: Make this not a static class with static settings. Make this an object you have to pass around.
     // This will make this much less error prone.
-    internal class NameMangler
+    public class NameMangler
     {
-        internal NameManglerSettings Settings = new NameManglerSettings();
+        public NameManglerSettings Settings = new NameManglerSettings();
 
+        // FIXME: This is OpenGL specific so it needs to be configurable...
         private static readonly List<string> VendorNames = new List<string>
         {
             // This list is taken from here: https://github.com/KhronosGroup/OpenGL-Registry/tree/main/extensions
@@ -77,12 +81,24 @@ namespace Generator.Utility
             "WIN",
         };
 
-        internal NameMangler(NameManglerSettings settings)
+        public NameMangler(NameManglerSettings settings)
         {
             Settings = settings;
         }
 
-        internal static string RemoveStart(string str, string start)
+        [return: NotNullIfNotNull(nameof(str))]
+        public static string? MaybeRemoveStart(string? str, string start)
+        {
+            if (str == null)
+                return str;
+
+            if (!str.StartsWith(start))
+                return str;
+
+            return str[start.Length..];
+        }
+
+        public static string RemoveStart(string str, string start)
         {
             if (!str.StartsWith(start))
                 throw new System.Exception($"'{str}' dosen't start with '{start}'");
@@ -90,7 +106,7 @@ namespace Generator.Utility
             return str[start.Length..];
         }
 
-        internal static string RemoveEnd(string str, string end)
+        public static string RemoveEnd(string str, string end)
         {
             if (!str.EndsWith(end))
                 throw new System.Exception($"'{str}' dosen't end with '{end}'");
@@ -98,21 +114,7 @@ namespace Generator.Utility
             return str[0..^end.Length];
         }
 
-        internal string RemoveFunctionPrefix(string function)
-        {
-            // FIXME: Get the settings from a more direct source
-            if (Settings.FunctionsWithoutPrefix.Contains(function))
-                return function;
-
-            string prefix = Settings.FunctionPrefix;
-
-            if (!function.StartsWith(prefix))
-                throw new System.Exception($"'{function}' dosen't start with '{prefix}'");
-
-            return function[prefix.Length..];
-        }
-
-        internal string RemoveEnumPrefix(string @enum)
+        public string RemoveEnumPrefix(string @enum)
         {
             // FIXME: Get the settings from a more direct source
             if (Settings.EnumsWithoutPrefix.Contains(@enum))
@@ -126,10 +128,10 @@ namespace Generator.Utility
                 }
             }
 
-            throw new System.Exception($"'{@enum}' dosen't start with any of the valid prefixes '{string.Join(", ", Settings.EnumPrefixes)}'");
+            throw new Exception($"'{@enum}' dosen't start with any of the valid prefixes '{string.Join(", ", Settings.EnumPrefixes)}'");
         }
 
-        internal string RemoveExtensionPrefix(string extension)
+        public string RemoveExtensionPrefix(string extension)
         {
             // FIXME: Get the settings from a more direct source
             string prefix = Settings.ExtensionPrefix;
@@ -140,7 +142,7 @@ namespace Generator.Utility
             return extension[prefix.Length..];
         }
 
-        internal static string RemoveVendorPostfix(string str)
+        public static string RemoveVendorPostfix(string str)
         {
             foreach (var vendor in VendorNames)
             {
@@ -157,13 +159,7 @@ namespace Generator.Utility
             return str;
         }
 
-        internal string MangleFunctionName(string name)
-        {
-            // Remove the "gl" prefix.
-            return RemoveFunctionPrefix(name);
-        }
-
-        internal string TranslateEnumGroupName(string name)
+        public string TranslateEnumGroupName(string name)
         {
             if (Settings.EnumGroupNameTranslationTable.TryGetValue(name, out string? translated))
             {
@@ -173,15 +169,7 @@ namespace Generator.Utility
             return name;
         }
 
-        internal string MangleEnumName(string name)
-        {
-            // Remove the "GL_" prefix.
-
-            var mangledName = RemoveEnumPrefix(name);
-            return MangleMemberName(mangledName);
-        }
-
-        internal static string MangleParameterName(string name) => name switch
+        public static string EscapeKeywords(string name) => name switch
         {
             "base" => "@base",
             "event" => "@event",
@@ -193,17 +181,56 @@ namespace Generator.Utility
             _ => name
         };
 
-        internal static string MangleClassName(string name)
+        // Mangle functions
+
+        public string MangleFunctionName(string functionName)
         {
-            return MangleMemberName(name);
+            // FIXME: Get the settings from a more direct source
+            if (Settings.FunctionsWithoutPrefix.Contains(functionName))
+                return functionName;
+
+            string prefix = Settings.FunctionPrefix;
+
+            if (!functionName.StartsWith(prefix))
+                throw new Exception($"'{functionName}' dosen't start with '{prefix}'");
+
+            return functionName[prefix.Length..];
         }
 
-        internal static string MangleExtensionName(string name)
+        public string MangleDefineName(string name)
         {
-            return MangleMemberName(name);
+            var mangledName = MaybeRemoveStart(name, Settings.DefinePrefix);
+            // For now we leave it capitalized.
+            // - Noggin_bops 2025-07-06
+            return mangledName;
         }
 
-        private static string MangleMemberName(string name)
+        public string MangleConstantName(string name)
+        {
+            var mangledName = RemoveEnumPrefix(name);
+            return MangleCapsUnderscoreName(mangledName);
+        }
+
+        public string MangleEnumName(string name)
+        {
+            // Remove the "GL_" prefix.
+            var mangledName = RemoveEnumPrefix(name);
+            return MangleCapsUnderscoreName(mangledName);
+        }
+
+        public static string MangleParameterName(string name) => EscapeKeywords(name);
+
+        public string MangleClassName(string name)
+        {
+            return MangleCapsUnderscoreName(name);
+        }
+
+        public string MangleExtensionName(string name)
+        {
+            return MangleCapsUnderscoreName(name);
+        }
+
+        private static string MangleCapsUnderscoreName(string name)
         {
             var stringBuilder = new StringBuilder(name.Length);
             var nextUpper = true;
@@ -227,18 +254,20 @@ namespace Generator.Utility
             return stringBuilder.ToString();
         }
 
+        public string MangleStructMemberName(string name) => EscapeKeywords(name);
+
         // Documentation functions
 
         private static readonly char[] NewlineAndTabCharacters = new[] { '\r', '\n', '\t' };
 
-        internal static string MangleCommandPurpose(string purpose)
+        public static string MangleCommandPurpose(string purpose)
         {
             purpose = TrimAndRemoveChars(purpose, NewlineAndTabCharacters);
             purpose = XmlEscapeCharacters(purpose);
             return CapitalizeFirst(purpose) + ".";
         }
 
-        internal static string MangleParameterDescription(string description)
+        public static string MangleParameterDescription(string description)
         {
             description = TrimAndRemoveChars(description, NewlineAndTabCharacters);
             description = XmlEscapeCharacters(description);
@@ -298,7 +327,7 @@ namespace Generator.Utility
         /// Escapes all "'&lt;&gt;&amp; characters.
         /// This extension will not detect already escaped strings.
         /// </summary>
-        internal static string XmlEscapeCharacters(string str)
+        public static string XmlEscapeCharacters(string? str)
         {
             StringBuilder sb = new StringBuilder(str);
 

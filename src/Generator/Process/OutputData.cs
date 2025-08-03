@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics;
-using Generator.Parsing;
+using GLGenerator.Parsing;
 using System.CodeDom.Compiler;
-using Generator.Utility;
+using GeneratorBase.Utility;
 
-namespace Generator.Writing
+namespace GLGenerator.Writing
 {
     internal record OutputData(
         /* FIXME: Maybe do like this?
@@ -31,14 +31,6 @@ namespace Generator.Writing
     internal record Pointers(
         GLFile File,
         List<NativeFunction> NativeFunctions);
-
-    /*
-    internal record GLOutputApi(
-        OutputApi Api,
-        SortedDictionary<string, GLVendorFunctions> Vendors,
-        List<EnumGroup> EnumGroups,
-        Dictionary<NativeFunction, FunctionDocumentation> Documentation);
-    */
 
     internal record FunctionDocumentation(
         string Name,
@@ -85,6 +77,7 @@ namespace Generator.Writing
         BaseCSType Type,
         // FIXME: Should we expose this exactly like it's exposed in gl.xml?
         string[] Kinds,
+        string OriginalName,
         string Name,
         Expression? Length);
 

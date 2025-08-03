@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Reflection;
 using VkGenerator.Parsing;
 using VkGenerator.Process;
-using VkGenerator.Utility;
+using GeneratorBase.Utility;
 
 namespace VkGenerator
 {
@@ -52,8 +52,20 @@ namespace VkGenerator
             Processor.SortMembers(specData);
             Processor.SortMembers(videoSpecData);
 
-            Writer.Write(specData, videoSpecData);
-            Writer.WriteVideo(videoSpecData);
+            NameManglerSettings settings = new NameManglerSettings()
+            {
+                ExtensionPrefix = "VK_",
+                FunctionPrefix = "vk",
+                EnumPrefixes = ["VK_", "STD_"],
+                FunctionsWithoutPrefix = [],
+                EnumsWithoutPrefix = [],
+                DefinePrefix = "VK_"
+            };
+
+            NameMangler mangler = new NameMangler(settings);
+
+            Writer.Write(specData, videoSpecData, mangler);
+            Writer.WriteVideo(videoSpecData, mangler);
 
             watch.Stop();
 

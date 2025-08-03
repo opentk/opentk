@@ -4,7 +4,7 @@ using System.Linq;
 using System.Xml.Linq;
 using System.Collections.Generic;
 
-namespace VkGenerator.Utility.Extensions
+namespace GeneratorBase.Utility.Extensions
 {
     public static class XElementExtensions
     {
@@ -36,7 +36,7 @@ namespace VkGenerator.Utility.Extensions
         {
             return element.Descendants().Where(e => e.Name.LocalName == name);
         }
-        
+
         public static XElement ElementIgnoreNamespace(this XElement element, string name)
         {
             return element.Descendants().Where(e => e.Name.LocalName == name).First();
@@ -47,7 +47,7 @@ namespace VkGenerator.Utility.Extensions
             return element.Descendants().Where(e => pred(e)).FirstOrDefault();
         }
 
-        public static XAttribute? AttributeIgnoreNamespace(this XElement element, string name)
+        public  static XAttribute? AttributeIgnoreNamespace(this XElement element, string name)
         {
             return element.Attributes().Where(a => a.Name.LocalName == "id").FirstOrDefault();
         }

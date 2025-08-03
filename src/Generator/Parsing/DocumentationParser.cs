@@ -1,6 +1,6 @@
-﻿using Generator.Utility;
-using Generator.Utility.Extensions;
-using Generator.Writing;
+﻿using GeneratorBase.Utility;
+using GeneratorBase.Utility.Extensions;
+using GLGenerator.Writing;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
 
-namespace Generator.Parsing
+namespace GLGenerator.Parsing
 {
     static class DocumentationParser
     {

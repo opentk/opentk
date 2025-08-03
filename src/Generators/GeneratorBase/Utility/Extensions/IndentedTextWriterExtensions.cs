@@ -1,7 +1,7 @@
 ﻿using System;
 using System.CodeDom.Compiler;
 
-namespace VkGenerator.Utility.Extensions
+namespace GeneratorBase.Utility.Extensions
 {
     public static class IndentedTextWriterExtension
     {

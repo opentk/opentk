@@ -1,17 +1,17 @@
 ﻿using System.Diagnostics;
 using System.IO;
 using System.Reflection;
-using Generator.Utility;
-using Generator.Writing;
-using Generator.Parsing;
-using Generator.Process;
+using GeneratorBase.Utility;
+using GLGenerator.Writing;
+using GLGenerator.Parsing;
+using GLGenerator.Process;
 using System.Collections.Generic;
 using System;
 using System.Linq;
 using System.Threading;
 using System.Runtime.CompilerServices;
 
-namespace Generator
+namespace GLGenerator
 {
     unsafe class Program
     {

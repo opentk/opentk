@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace VkGenerator.Utility.Extensions
+namespace GeneratorBase.Utility.Extensions
 {
-    internal static class ListExtensions
+    public static class ListExtensions
     {
         /// <summary>
         /// Tries to find an element in the list matching the predicate.

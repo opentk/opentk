@@ -7,8 +7,8 @@ using System.Reflection;
 using System.Text;
 using VkGenerator.Parsing;
 using VkGenerator.Process;
-using VkGenerator.Utility;
-using VkGenerator.Utility.Extensions;
+using GeneratorBase.Utility;
+using GeneratorBase.Utility.Extensions;
 
 namespace VkGenerator
 {
@@ -20,7 +20,7 @@ namespace VkGenerator
 
         private const string LoaderClass = "VKLoader";
 
-        public static void Write(SpecificationData data, SpecificationData video)
+        public static void Write(SpecificationData data, SpecificationData video, NameMangler nameMangler)
         {
             // This is quite fragile, no idea if there is an easy way that is "better".
             string outputProjectPath = Path.Combine(
@@ -30,21 +30,21 @@ namespace VkGenerator
             string directoryPath = Path.Combine(outputProjectPath, "Vulkan");
             if (Directory.Exists(directoryPath) == false) Directory.CreateDirectory(directoryPath);
 
-            WriteDefines(directoryPath, data.Defines, video.Defines);
+            WriteDefines(directoryPath, data.Defines, video.Defines, nameMangler);
 
-            WriteEnums(directoryPath, data.Enums);
+            WriteEnums(directoryPath, data.Enums, nameMangler);
 
-            WriteStructs(directoryPath, data.Structs, data.Enums, video);
-            WriteHandles(directoryPath, data.Handles);
+            WriteStructs(directoryPath, data.Structs, data.Enums, video, nameMangler);
+            WriteHandles(directoryPath, data.Handles, nameMangler);
 
-            WriteFunctionPointers(directoryPath, data.Commands, video);
-            WriteCommands(directoryPath, data.Commands, video);
-            WriteDispatchTables(directoryPath, data.Commands, video);
+            WriteFunctionPointers(directoryPath, data.Commands, video, nameMangler);
+            WriteCommands(directoryPath, data.Commands, video, nameMangler);
+            WriteDispatchTables(directoryPath, data.Commands, video, nameMangler);
 
-            WriteConstants(directoryPath, data.Constants);
+            WriteConstants(directoryPath, data.Constants, nameMangler);
         }
 
-        private static void WriteDefines(string directoryPath, List<Define> defines, List<Define> videoDefines)
+        private static void WriteDefines(string directoryPath, List<Define> defines, List<Define> videoDefines, NameMangler nameMangler)
         {
             using StreamWriter stream = File.CreateText(Path.Combine(directoryPath, "Defines.cs"));
             using IndentedTextWriter writer = new IndentedTextWriter(stream);
@@ -60,19 +60,19 @@ namespace VkGenerator
                 using (writer.CsScope())
                 {
 
-                    WriteDefines(writer, defines);
+                    WriteDefines(writer, defines, nameMangler);
 
                     writer.WriteLine();
                     writer.WriteLine("// Vulkan video macros");
                     writer.WriteLine();
 
-                    WriteDefines(writer, videoDefines);
+                    WriteDefines(writer, videoDefines, nameMangler);
                 }
 
                 writer.WriteLineNoTabs("#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member");
             }
 
-            static void WriteDefines(IndentedTextWriter writer, List<Define> defines)
+            static void WriteDefines(IndentedTextWriter writer, List<Define> defines, NameMangler nameMangler)
             {
                 foreach (Define define in defines)
                 {
@@ -110,7 +110,7 @@ namespace VkGenerator
 
                     if (define.IsConstant)
                     {
-                        writer.WriteLine($"public const {define.Type.ToCSString()} {NameMangler.MangleDefineName(define.Name)} = unchecked(({define.Type.ToCSString()}){define.ConstValue});");
+                        writer.WriteLine($"public const {define.Type.ToCSString()} {nameMangler.MangleDefineName(define.Name)} = unchecked(({define.Type.ToCSString()}){define.ConstValue});");
                     }
                     else if (define.Implementation != null)
                     {
@@ -122,13 +122,13 @@ namespace VkGenerator
                         if (arguments.Length > 0)
                             arguments.Length -= 2;
 
-                        writer.WriteLine($"public static {define.Type.ToCSString()} {NameMangler.MangleDefineName(define.Name)}({arguments}) {{ {define.Implementation} }}");
+                        writer.WriteLine($"public static {define.Type.ToCSString()} {nameMangler.MangleDefineName(define.Name)}({arguments}) {{ {define.Implementation} }}");
                     }
                 }
             }
         }
 
-        private static void WriteEnums(string directoryPath, List<EnumType> enums)
+        private static void WriteEnums(string directoryPath, List<EnumType> enums, NameMangler nameMangler)
         {
             using StreamWriter stream = File.CreateText(Path.Combine(directoryPath, "Enums.cs"));
             using IndentedTextWriter writer = new IndentedTextWriter(stream);
@@ -180,7 +180,7 @@ namespace VkGenerator
                     }
                     if (@enum.ReferencedBy != null)
                     {
-                        writer.Write($"Used by {string.Join(", ", @enum.ReferencedBy.Take(3).Select(c => $"<see cref=\"Vk.{NameMangler.MangleFunctionName(c.Name)}\"/>"))}");
+                        writer.Write($"Used by {string.Join(", ", @enum.ReferencedBy.Take(3).Select(c => $"<see cref=\"Vk.{nameMangler.MangleFunctionName(c.Name)}\"/>"))}");
                         if (@enum.ReferencedBy.Count > 3)
                         {
                             writer.Write(", ...");
@@ -277,15 +277,15 @@ namespace VkGenerator
 
                             if (@enum.StrongUnderlyingType == CSPrimitive.Int(true))
                             {
-                                writer.WriteLine($"{NameMangler.MangleEnumName(member.Name)} = {(int)member.Value},");
+                                writer.WriteLine($"{nameMangler.MangleEnumName(member.Name)} = {(int)member.Value},");
                             }
                             else if (@enum.StrongUnderlyingType == CSPrimitive.Uint(true))
                             {
-                                writer.WriteLine($"{NameMangler.MangleEnumName(member.Name)} = {(uint)member.Value},");
+                                writer.WriteLine($"{nameMangler.MangleEnumName(member.Name)} = {(uint)member.Value},");
                             }
                             else if (@enum.StrongUnderlyingType == CSPrimitive.Ulong(true))
                             {
-                                writer.WriteLine($"{NameMangler.MangleEnumName(member.Name)} = {(ulong)member.Value},");
+                                writer.WriteLine($"{nameMangler.MangleEnumName(member.Name)} = {(ulong)member.Value},");
                             }
                             else
                             {
@@ -299,7 +299,7 @@ namespace VkGenerator
             }
         }
 
-        private static void WriteStructs(string directoryPath, List<StructType> structs, List<EnumType> enums, SpecificationData video)
+        private static void WriteStructs(string directoryPath, List<StructType> structs, List<EnumType> enums, SpecificationData video, NameMangler nameMangler)
         {
             using StreamWriter stream = File.CreateText(Path.Combine(directoryPath, "Structs.cs"));
             using IndentedTextWriter writer = new IndentedTextWriter(stream);
@@ -307,7 +307,7 @@ namespace VkGenerator
             writer.WriteLine("using OpenTK.Mathematics;");
             foreach (Extension extension in video.Extensions)
             {
-                writer.WriteLine($"using {GraphicsNamespace}.Vulkan.{NameMangler.MangleExtensionName(extension.Name)};");
+                writer.WriteLine($"using {GraphicsNamespace}.Vulkan.{nameMangler.MangleExtensionName(extension.Name)};");
             }
             writer.WriteLine("using System;");
             writer.WriteLine("using System.Runtime.CompilerServices;");
@@ -369,7 +369,7 @@ namespace VkGenerator
                         if (@struct.Comment != null)
                             writer.Write("<br/>");
 
-                        writer.Write($"Used by {string.Join(", ", @struct.ReferencedBy.Take(3).Select(c => $"<see cref=\"Vk.{NameMangler.MangleFunctionName(c.Name)}\"/>"))}");
+                        writer.Write($"Used by {string.Join(", ", @struct.ReferencedBy.Take(3).Select(c => $"<see cref=\"Vk.{nameMangler.MangleFunctionName(c.Name)}\"/>"))}");
                         if (@struct.ReferencedBy.Count > 3)
                         {
                             writer.Write(", ...");
@@ -380,14 +380,14 @@ namespace VkGenerator
                     // FIXME: Make sure to not do name mangling?
                     writer.WriteLine($"/// <remarks><see href=\"https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/{@struct.Name}.html\" /></remarks>");
 
-                    WriteStruct(writer, @struct, enums);
+                    WriteStruct(writer, @struct, enums, nameMangler);
                 }
 
                 writer.WriteLineNoTabs("#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member");
             }
         }
 
-        private static void WriteHandles(string directoryPath, List<HandleType> handles)
+        private static void WriteHandles(string directoryPath, List<HandleType> handles, NameMangler nameMangler)
         {
             using StreamWriter stream = File.CreateText(Path.Combine(directoryPath, "Handles.cs"));
             using IndentedTextWriter writer = new IndentedTextWriter(stream);
@@ -421,7 +421,7 @@ namespace VkGenerator
                     }
                     if (handle.ReferencedBy != null)
                     {
-                        writer.Write($"Used by {string.Join(", ", handle.ReferencedBy.Take(3).Select(c => $"<see cref=\"Vk.{NameMangler.MangleFunctionName(c.Name)}\"/>"))}");
+                        writer.Write($"Used by {string.Join(", ", handle.ReferencedBy.Take(3).Select(c => $"<see cref=\"Vk.{nameMangler.MangleFunctionName(c.Name)}\"/>"))}");
                         if (handle.ReferencedBy.Count > 3)
                         {
                             writer.Write(", ...");
@@ -455,7 +455,7 @@ namespace VkGenerator
             }
         }
 
-        private static void WriteCommands(string directoryPath, List<Command> commands, SpecificationData video)
+        private static void WriteCommands(string directoryPath, List<Command> commands, SpecificationData video, NameMangler nameMangler)
         {
             using StreamWriter stream = File.CreateText(Path.Combine(directoryPath, "Vulkan.cs"));
             using IndentedTextWriter writer = new IndentedTextWriter(stream);
@@ -463,7 +463,7 @@ namespace VkGenerator
             writer.WriteLine("using OpenTK.Mathematics;");
             foreach (Extension extension in video.Extensions)
             {
-                writer.WriteLine($"using {GraphicsNamespace}.Vulkan.{NameMangler.MangleExtensionName(extension.Name)};");
+                writer.WriteLine($"using {GraphicsNamespace}.Vulkan.{nameMangler.MangleExtensionName(extension.Name)};");
             }
             writer.WriteLine("using System;");
             writer.WriteLine("using System.Runtime.CompilerServices;");
@@ -478,7 +478,7 @@ namespace VkGenerator
                 {
                     foreach (Command command in commands)
                     {
-                        WriteCommand(writer, command, "static ", "VkPointers.");
+                        WriteCommand(writer, command, "static ", "VkPointers.", nameMangler);
                     }
                 }
 
@@ -486,10 +486,10 @@ namespace VkGenerator
             }
         }
 
-        public static void WriteCommand(IndentedTextWriter writer, Command command, string functionModifiers, string fnpointerPrefix)
+        public static void WriteCommand(IndentedTextWriter writer, Command command, string functionModifiers, string fnpointerPrefix, NameMangler nameMangler)
         {
             string entryPoint = command.Name;
-            string functionName = NameMangler.MangleFunctionName(command.Name);
+            string functionName = nameMangler.MangleFunctionName(command.Name);
 
             StringBuilder signature = new StringBuilder();
             StringBuilder paramNames = new StringBuilder();
@@ -558,7 +558,7 @@ namespace VkGenerator
 
                 if (command.Alias != null)
                 {
-                    writer.Write($" Alias of <see cref=\"{NameMangler.MangleFunctionName(command.Alias)}\"/>");
+                    writer.Write($" Alias of <see cref=\"{nameMangler.MangleFunctionName(command.Alias)}\"/>");
                 }
                 writer.WriteLine("</summary>");
             }
@@ -579,7 +579,7 @@ namespace VkGenerator
             }
         }
 
-        private static void WriteFunctionPointers(string directoryPath, List<Command> commands, SpecificationData video)
+        private static void WriteFunctionPointers(string directoryPath, List<Command> commands, SpecificationData video, NameMangler nameMangler)
         {
             using StreamWriter stream = File.CreateText(Path.Combine(directoryPath, "Vulkan.Pointers.cs"));
             using IndentedTextWriter writer = new IndentedTextWriter(stream);
@@ -587,7 +587,7 @@ namespace VkGenerator
             writer.WriteLine("using OpenTK.Mathematics;");
             foreach (Extension extension in video.Extensions)
             {
-                writer.WriteLine($"using {GraphicsNamespace}.Vulkan.{NameMangler.MangleExtensionName(extension.Name)};");
+                writer.WriteLine($"using {GraphicsNamespace}.Vulkan.{nameMangler.MangleExtensionName(extension.Name)};");
             }
             writer.WriteLine("using System;");
             writer.WriteLine("using System.Runtime.CompilerServices;");
@@ -603,7 +603,7 @@ namespace VkGenerator
                 {
                     foreach (Command command in commands)
                     {
-                        WriteFunctionPointer(writer, command, "static ", true);
+                        WriteFunctionPointer(writer, command, "static ", true, nameMangler);
                     }
                 }
 
@@ -611,7 +611,7 @@ namespace VkGenerator
             }
         }
 
-        public static void WriteFunctionPointer(IndentedTextWriter writer, Command command, string memberModifiers, bool lazyLoader)
+        public static void WriteFunctionPointer(IndentedTextWriter writer, Command command, string memberModifiers, bool lazyLoader, NameMangler nameMangler)
         {
             string entryPoint = command.Name;
 
@@ -659,7 +659,7 @@ namespace VkGenerator
         }
 
 
-        public static void WriteDispatchTables(string directoryPath, List<Command> commands, SpecificationData video)
+        public static void WriteDispatchTables(string directoryPath, List<Command> commands, SpecificationData video, NameMangler nameMangler)
         {
             using StreamWriter stream = File.CreateText(Path.Combine(directoryPath, "DispatchTables.cs"));
             using IndentedTextWriter writer = new IndentedTextWriter(stream);
@@ -667,7 +667,7 @@ namespace VkGenerator
             writer.WriteLine("using OpenTK.Mathematics;");
             foreach (Extension extension in video.Extensions)
             {
-                writer.WriteLine($"using {GraphicsNamespace}.Vulkan.{NameMangler.MangleExtensionName(extension.Name)};");
+                writer.WriteLine($"using {GraphicsNamespace}.Vulkan.{nameMangler.MangleExtensionName(extension.Name)};");
             }
             writer.WriteLine("using System;");
             writer.WriteLine("using System.Runtime.CompilerServices;");
@@ -678,13 +678,13 @@ namespace VkGenerator
             {
                 writer.WriteLineNoTabs("#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member");
 
-                WriteInstanceDispatchTable(writer, commands);
-                WriteDeviceDispatchTable(writer, commands);
+                WriteInstanceDispatchTable(writer, commands, nameMangler);
+                WriteDeviceDispatchTable(writer, commands, nameMangler);
 
                 writer.WriteLineNoTabs("#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member");
             }
 
-            static void WriteInstanceDispatchTable(IndentedTextWriter writer, List<Command> commands)
+            static void WriteInstanceDispatchTable(IndentedTextWriter writer, List<Command> commands, NameMangler nameMangler)
             {
                 writer.WriteLine($"public unsafe partial struct InstanceDispatchTable");
                 using (writer.CsScope())
@@ -702,7 +702,7 @@ namespace VkGenerator
                                 continue;
 
                             string entryPoint = command.Name;
-                            string functionName = NameMangler.MangleFunctionName(command.Name);
+                            string functionName = nameMangler.MangleFunctionName(command.Name);
 
                             StringBuilder signature = new StringBuilder();
                             StringBuilder delegateTypes = new StringBuilder();
@@ -733,7 +733,7 @@ namespace VkGenerator
                         if (command.CommandType != CommandType.Instance)
                             continue;
 
-                        WriteCommand(writer, command, "", "");
+                        WriteCommand(writer, command, "", "", nameMangler);
                     }
 
                     foreach (Command command in commands)
@@ -741,12 +741,12 @@ namespace VkGenerator
                         if (command.CommandType != CommandType.Instance)
                             continue;
 
-                        WriteFunctionPointer(writer, command, "", false);
+                        WriteFunctionPointer(writer, command, "", false, nameMangler);
                     }
                 }
             }
 
-            static void WriteDeviceDispatchTable(IndentedTextWriter writer, List<Command> commands)
+            static void WriteDeviceDispatchTable(IndentedTextWriter writer, List<Command> commands, NameMangler nameMangler)
             {
                 writer.WriteLine($"public unsafe partial struct DeviceDispatchTable");
                 using (writer.CsScope())
@@ -764,7 +764,7 @@ namespace VkGenerator
                                 continue;
 
                             string entryPoint = command.Name;
-                            string functionName = NameMangler.MangleFunctionName(command.Name);
+                            string functionName = nameMangler.MangleFunctionName(command.Name);
 
                             StringBuilder signature = new StringBuilder();
                             StringBuilder delegateTypes = new StringBuilder();
@@ -795,7 +795,7 @@ namespace VkGenerator
                         if (command.CommandType != CommandType.Device)
                             continue;
 
-                        WriteCommand(writer, command, "", "");
+                        WriteCommand(writer, command, "", "", nameMangler);
                     }
 
                     foreach (Command command in commands)
@@ -803,13 +803,13 @@ namespace VkGenerator
                         if (command.CommandType != CommandType.Device)
                             continue;
 
-                        WriteFunctionPointer(writer, command, "", false);
+                        WriteFunctionPointer(writer, command, "", false, nameMangler);
                     }
                 }
             }
         }
 
-        private static void WriteConstants(string directoryPath, Dictionary<string, Constant> constants)
+        private static void WriteConstants(string directoryPath, Dictionary<string, Constant> constants, NameMangler nameMangler)
         {
             using StreamWriter stream = File.CreateText(Path.Combine(directoryPath, "Constants.cs"));
             using IndentedTextWriter writer = new IndentedTextWriter(stream);
@@ -843,20 +843,20 @@ namespace VkGenerator
                         switch (constant.Type)
                         {
                             case ConstantType.Int32:
-                                writer.WriteLine($"public const int {NameMangler.MangleConstantName(name)} = {(int)constant.IntValue};");
+                                writer.WriteLine($"public const int {nameMangler.MangleConstantName(name)} = {(int)constant.IntValue};");
                                 break;
                             case ConstantType.Uint32:
-                                writer.WriteLine($"public const uint {NameMangler.MangleConstantName(name)} = {(uint)constant.IntValue};");
+                                writer.WriteLine($"public const uint {nameMangler.MangleConstantName(name)} = {(uint)constant.IntValue};");
                                 break;
                             case ConstantType.Uint64:
-                                writer.WriteLine($"public const ulong {NameMangler.MangleConstantName(name)} = {(ulong)constant.IntValue};");
+                                writer.WriteLine($"public const ulong {nameMangler.MangleConstantName(name)} = {(ulong)constant.IntValue};");
                                 break;
                             case ConstantType.Float:
-                                writer.WriteLine($"public const float {NameMangler.MangleConstantName(name)} = {(int)constant.FloatValue};");
+                                writer.WriteLine($"public const float {nameMangler.MangleConstantName(name)} = {(int)constant.FloatValue};");
                                 break;
                             case ConstantType.String:
                                 // FIXME: Should expose these are string and/or ReadOnlySpan<byte>?
-                                writer.WriteLine($"public const string {NameMangler.MangleConstantName(name)} = {constant.StringValue};");
+                                writer.WriteLine($"public const string {nameMangler.MangleConstantName(name)} = {constant.StringValue};");
                                 break;
                             default:
                                 throw new Exception();
@@ -869,7 +869,7 @@ namespace VkGenerator
         }
 
 
-        public static void WriteVideo(SpecificationData video)
+        public static void WriteVideo(SpecificationData video, NameMangler nameMangler)
         {
             // This is quite fragile, no idea if there is an easy way that is "better".
             string outputProjectPath = Path.Combine(
@@ -880,17 +880,17 @@ namespace VkGenerator
             if (Directory.Exists(directoryPath) == false) Directory.CreateDirectory(directoryPath);
 
 
-            WriteVideoNamespace(directoryPath, video);
+            WriteVideoNamespace(directoryPath, video, nameMangler);
         }
 
-        private static void WriteVideoNamespace(string directoryPath, SpecificationData video)
+        private static void WriteVideoNamespace(string directoryPath, SpecificationData video, NameMangler nameMangler)
         {
             using StreamWriter stream = File.CreateText(Path.Combine(directoryPath, "Video.cs"));
             using IndentedTextWriter writer = new IndentedTextWriter(stream);
             writer.WriteLine("// This file is auto generated, do not edit.");
             foreach (Extension extension in video.Extensions)
             {
-                writer.WriteLine($"using {GraphicsNamespace}.Vulkan.{NameMangler.MangleExtensionName(extension.Name)};");
+                writer.WriteLine($"using {GraphicsNamespace}.Vulkan.{nameMangler.MangleExtensionName(extension.Name)};");
             }
             writer.WriteLine("using System;");
             writer.WriteLine("using System.Runtime.CompilerServices;");
@@ -902,7 +902,7 @@ namespace VkGenerator
 
                 foreach (Extension extension in video.Extensions)
                 {
-                    writer.WriteLine($"namespace {NameMangler.MangleExtensionName(extension.Name)}");
+                    writer.WriteLine($"namespace {nameMangler.MangleExtensionName(extension.Name)}");
                     using (writer.CsScope())
                     {
                         // FIXME: Consolidate all require stuff into one single thing so we
@@ -917,20 +917,20 @@ namespace VkGenerator
                                     switch (constant.Type)
                                     {
                                         case ConstantType.Int32:
-                                            writer.WriteLine($"public const int {NameMangler.MangleConstantName(constant.Name)} = {(int)constant.IntValue};");
+                                            writer.WriteLine($"public const int {nameMangler.MangleConstantName(constant.Name)} = {(int)constant.IntValue};");
                                             break;
                                         case ConstantType.Uint32:
-                                            writer.WriteLine($"public const uint {NameMangler.MangleConstantName(constant.Name)} = {(uint)constant.IntValue};");
+                                            writer.WriteLine($"public const uint {nameMangler.MangleConstantName(constant.Name)} = {(uint)constant.IntValue};");
                                             break;
                                         case ConstantType.Uint64:
-                                            writer.WriteLine($"public const ulong {NameMangler.MangleConstantName(constant.Name)} = {(ulong)constant.IntValue};");
+                                            writer.WriteLine($"public const ulong {nameMangler.MangleConstantName(constant.Name)} = {(ulong)constant.IntValue};");
                                             break;
                                         case ConstantType.Float:
-                                            writer.WriteLine($"public const float {NameMangler.MangleConstantName(constant.Name)} = {constant.FloatValue};");
+                                            writer.WriteLine($"public const float {nameMangler.MangleConstantName(constant.Name)} = {constant.FloatValue};");
                                             break;
                                         case ConstantType.String:
                                             writer.WriteLine($"/// <summary>{NameMangler.XmlEscapeCharacters(constant.StringValue)}</summary>");
-                                            writer.WriteLine($"public static ReadOnlySpan<byte> {NameMangler.MangleConstantName(constant.Name)} => {constant.StringValue}u8;");
+                                            writer.WriteLine($"public static ReadOnlySpan<byte> {nameMangler.MangleConstantName(constant.Name)} => {constant.StringValue}u8;");
                                             break;
                                         default:
                                             throw new Exception();
@@ -968,7 +968,7 @@ namespace VkGenerator
                                             {
                                                 writer.WriteLine($"/// <summary>{NameMangler.XmlEscapeCharacters(comment)}</summary>");
                                             }
-                                            writer.WriteLine($"{NameMangler.MangleEnumName(member.Name)} = {member.Value},");
+                                            writer.WriteLine($"{nameMangler.MangleEnumName(member.Name)} = {member.Value},");
                                         }
                                     }
                                 }
@@ -985,7 +985,7 @@ namespace VkGenerator
                                     }
                                     writer.WriteLine("</summary>");
 
-                                    WriteStruct(writer, @struct, video.Enums);
+                                    WriteStruct(writer, @struct, video.Enums, nameMangler);
                                 }
                                 else
                                 {
@@ -1002,7 +1002,7 @@ namespace VkGenerator
 
 
 
-        private static void WriteStruct(IndentedTextWriter writer, StructType @struct, List<EnumType> enums)
+        private static void WriteStruct(IndentedTextWriter writer, StructType @struct, List<EnumType> enums, NameMangler nameMangler)
         {
             if (@struct.Union)
             {
@@ -1034,9 +1034,9 @@ namespace VkGenerator
                         // We can't have fixed sized arrays in our ctor
                         canWriteSimpleCtor &= false;
 
-                        WriteInlineArray(writer, @struct.Union, member, csFixedSizeArray, 1);
+                        WriteInlineArray(writer, @struct.Union, member, csFixedSizeArray, 1, nameMangler);
 
-                        static void WriteInlineArray(IndentedTextWriter writer, bool union, StructMember member, CSFixedSizeArray csFixedSizeArray, int level)
+                        static void WriteInlineArray(IndentedTextWriter writer, bool union, StructMember member, CSFixedSizeArray csFixedSizeArray, int level, NameMangler nameMangler)
                         {
                             // FIXME: Reference the constant instead of just emitting a magic number!
                             if (csFixedSizeArray.BaseType is CSFixedSizeArray csFixedSizeArray2)
@@ -1047,7 +1047,7 @@ namespace VkGenerator
                                 writer.WriteLine($"public struct {helperTypeName}");
                                 using (writer.CsScope())
                                 {
-                                    WriteInlineArray(writer, false, member, csFixedSizeArray2, level);
+                                    WriteInlineArray(writer, false, member, csFixedSizeArray2, level, nameMangler);
                                     //writer.WriteLine($"public {member.Name}InlineArray{level} element;");
                                 }
 
@@ -1079,7 +1079,7 @@ namespace VkGenerator
                                 {
                                     writer.WriteLine($"[FieldOffset(0)]");
                                 }
-                                writer.WriteLine($"public fixed {csFixedSizeArray.BaseType.ToCSString()} {NameMangler.MangleMemberName(member.Name)}[{csFixedSizeArray.Size}];");
+                                writer.WriteLine($"public fixed {csFixedSizeArray.BaseType.ToCSString()} {nameMangler.MangleStructMemberName(member.Name)}[{csFixedSizeArray.Size}];");
                             }
                         }
                     }
@@ -1093,11 +1093,11 @@ namespace VkGenerator
                         if (enumMember == null)
                         {
                             Console.WriteLine($"Could't find sType '{member.Values}' for {@struct.Name}");
-                            writer.WriteLine($"public {member.StrongType!.ToCSString()} {NameMangler.MangleMemberName(member.Name)};");
+                            writer.WriteLine($"public {member.StrongType!.ToCSString()} {nameMangler.MangleStructMemberName(member.Name)};");
                         }
                         else
                         {
-                            writer.WriteLine($"public {member.StrongType!.ToCSString()} {NameMangler.MangleMemberName(member.Name)} = VkStructureType.{NameMangler.MangleEnumName(member.Values)};");
+                            writer.WriteLine($"public {member.StrongType!.ToCSString()} {nameMangler.MangleStructMemberName(member.Name)} = VkStructureType.{nameMangler.MangleEnumName(member.Values)};");
                         }
                     }
                     else if (member.StrongType is CSBitfield csBitfield)
@@ -1128,7 +1128,7 @@ namespace VkGenerator
 
                                 int size = actualWidth;
                                 int offset = underlyingBitwidth - bitsLeft;
-                                writer.WriteLine($"public {csBitfield.UnderlyingType.ToCSString()} {NameMangler.MangleMemberName(member.Name)}");
+                                writer.WriteLine($"public {csBitfield.UnderlyingType.ToCSString()} {nameMangler.MangleStructMemberName(member.Name)}");
                                 using (writer.CsScope())
                                 {
                                     // FIXME: Do only 1u if the underlying type is unsigned...?
@@ -1155,7 +1155,7 @@ namespace VkGenerator
                         {
                             writer.WriteLine($"[FieldOffset(0)]");
                         }
-                        writer.WriteLine($"public {member.StrongType!.ToCSString()} {NameMangler.MangleMemberName(member.Name)};");
+                        writer.WriteLine($"public {member.StrongType!.ToCSString()} {nameMangler.MangleStructMemberName(member.Name)};");
                     }
                 }
 
@@ -1169,7 +1169,7 @@ namespace VkGenerator
                     StringBuilder signature = new StringBuilder();
                     foreach (StructMember member in @struct.Members)
                     {
-                        signature.Append($"{member.StrongType!.ToCSString()} {NameMangler.MangleMemberName(member.Name)}, ");
+                        signature.Append($"{member.StrongType!.ToCSString()} {nameMangler.MangleStructMemberName(member.Name)}, ");
                     }
                     if (@struct.Members.Count > 0)
                     {
@@ -1181,7 +1181,7 @@ namespace VkGenerator
                     {
                         foreach (StructMember member in @struct.Members)
                         {
-                            string memberName = NameMangler.MangleMemberName(member.Name);
+                            string memberName = nameMangler.MangleStructMemberName(member.Name);
                             writer.WriteLine($"this.{memberName} = {memberName};");
                         }
                     }

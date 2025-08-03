@@ -6,8 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using VkGenerator.Parsing;
-using VkGenerator.Utility;
-using VkGenerator.Utility.Extensions;
+using GeneratorBase.Utility;
+using GeneratorBase.Utility.Extensions;
 
 namespace VkGenerator.Process
 {

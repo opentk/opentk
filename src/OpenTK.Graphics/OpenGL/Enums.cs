@@ -1,4 +1,4 @@
-// This file is auto generated, do not edit. Generated: 2025-07-05 14:56:17 GMT+02:00
+// This file is auto generated, do not edit. Generated: 2025-08-03 23:25:05 GMT+02:00
 using System;
 
 namespace OpenTK.Graphics.OpenGL

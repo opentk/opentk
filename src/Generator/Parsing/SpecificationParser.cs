@@ -1,6 +1,6 @@
-using Generator.Utility;
-using Generator.Utility.Extensions;
-using Generator.Writing;
+using GeneratorBase.Utility;
+using GeneratorBase.Utility.Extensions;
+using GLGenerator.Writing;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -10,7 +10,7 @@ using System.IO;
 using System.Linq;
 using System.Xml.Linq;
 
-namespace Generator.Parsing
+namespace GLGenerator.Parsing
 {
     internal class SpecificationParser
     {
@@ -311,7 +311,7 @@ namespace Generator.Parsing
                 Expression? paramLength = length == null ? null : ParseExpression(length);
 
                 // FIXME: Parse kinds in some way?
-                paramList.Add(new Parameter(type, kind, mangledName, paramLength));
+                paramList.Add(new Parameter(type, kind, paramName, mangledName, paramLength));
             }
 
             BaseCSType returnType = ParsePType(proto, currentFile, nameMangler, out GroupRef? returnGroup);
@@ -802,14 +802,14 @@ namespace Generator.Parsing
             List<EnumEntry> enumsEntries = new List<EnumEntry>();
             foreach (XElement? enums in input.Elements("enums"))
             {
-                string? @namespace = enums.Attribute("namespace")?.Value;
-                if (@namespace == null) throw new Exception($"Enums entry '{enums}' is missing a namespace attribute.");
+                string @namespace = enums.Attribute("namespace")?.Value ?? throw new Exception($"Enums entry '{enums}' is missing a namespace attribute.");
 
                 // GLX.xml abuses enum tags to define strings,
                 // to work around this we skip all enums tags marked
                 // with the GLXStrings namespace
                 // - 2023-03-25 NogginBops
-                if (@namespace == "GLXStrings") continue;
+                if (@namespace == "GLXStrings")
+                    continue;
 
                 GroupRef[] parentGroups = ParseGroups(enums.Attribute("group")?.Value, currentFile, nameMangler);
 

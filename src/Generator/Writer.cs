@@ -1,15 +1,15 @@
-﻿using Generator.Utility.Extensions;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.CodeDom.Compiler;
-using Generator.Parsing;
-using Generator.Utility;
+using GLGenerator.Parsing;
+using GeneratorBase.Utility;
+using GeneratorBase.Utility.Extensions;
 
-namespace Generator.Writing
+namespace GLGenerator.Writing
 {
     internal static class Writer
     {

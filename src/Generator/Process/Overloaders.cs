@@ -7,12 +7,12 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System.Threading;
-using Generator.Parsing;
-using Generator.Utility;
-using Generator.Utility.Extensions;
-using Generator.Writing;
+using GLGenerator.Parsing;
+using GeneratorBase.Utility;
+using GeneratorBase.Utility.Extensions;
+using GLGenerator.Writing;
 
-namespace Generator.Process
+namespace GLGenerator.Process
 {
     internal interface IOverloader
     {

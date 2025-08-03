@@ -6,6 +6,10 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <StartupObject>Generator.Program</StartupObject>
+    <StartupObject>GLGenerator.Program</StartupObject>
   </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Generators\GeneratorBase\GeneratorBase.csproj" />
+  </ItemGroup>
 </Project>

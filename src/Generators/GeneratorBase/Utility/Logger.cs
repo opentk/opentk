@@ -4,11 +4,11 @@ using System.IO;
 using System.Runtime.CompilerServices;
 using System.Text;
 
-namespace Generator.Utility
+namespace GeneratorBase.Utility
 {
-    internal class Logger : IDisposable
+    public class Logger : IDisposable
     {
-        private enum MessageSeverity
+        public enum MessageSeverity
         {
             Info,
             Warning,
@@ -16,7 +16,7 @@ namespace Generator.Utility
             Fatal
         }
 
-        private readonly struct MessageInfo
+        public readonly struct MessageInfo
         {
             private readonly MessageSeverity _severity;
             private readonly DateTime _time;
@@ -53,12 +53,12 @@ namespace Generator.Utility
             }
         }
 
-        private static FileStream? _fileStream;
-        private static Logger? _instance;
+        public static FileStream? _fileStream;
+        public static Logger? _instance;
 
-        internal static Logger CreateLogger(string logPath) => _instance ??= new Logger(logPath);
+        public static Logger CreateLogger(string logPath) => _instance ??= new Logger(logPath);
 
-        internal Logger(string logPath)
+        public Logger(string logPath)
         {
             _fileStream = File.Create(logPath);
 
@@ -71,19 +71,19 @@ namespace Generator.Utility
             _instance = null;
         }
 
-        internal static void Info(string message, [CallerLineNumber] int lineNumber = 0, [CallerFilePath] string? filePath = null) =>
+        public static void Info(string message, [CallerLineNumber] int lineNumber = 0, [CallerFilePath] string? filePath = null) =>
             _instance?.WriteLog(new MessageInfo(MessageSeverity.Info, DateTime.Now, message, lineNumber, filePath));
 
-        internal static void Warning(string message, [CallerLineNumber] int lineNumber = 0, [CallerFilePath] string? filePath = null) =>
+        public static void Warning(string message, [CallerLineNumber] int lineNumber = 0, [CallerFilePath] string? filePath = null) =>
             _instance?.WriteLog(new MessageInfo(MessageSeverity.Warning, DateTime.Now, message, lineNumber, filePath));
 
-        internal static void Error(string message, [CallerLineNumber] int lineNumber = 0, [CallerFilePath] string? filePath = null) =>
+        public static void Error(string message, [CallerLineNumber] int lineNumber = 0, [CallerFilePath] string? filePath = null) =>
             _instance?.WriteLog(new MessageInfo(MessageSeverity.Error, DateTime.Now, message, lineNumber, filePath));
 
-        internal static void Fatal(string message, [CallerLineNumber] int lineNumber = 0, [CallerFilePath] string? filePath = null) =>
+        public static void Fatal(string message, [CallerLineNumber] int lineNumber = 0, [CallerFilePath] string? filePath = null) =>
             _instance?.WriteLog(new MessageInfo(MessageSeverity.Fatal, DateTime.Now, message, lineNumber, filePath));
 
-        private void WriteLog(MessageInfo info)
+        public void WriteLog(MessageInfo info)
         {
             var data = Encoding.UTF8.GetBytes(info.ToString());
             _fileStream?.Write(data, 0, data.Length);
