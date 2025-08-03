@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics;
-using System.CodeDom.Compiler;
+using System.Linq;
 using System.Text;
-using System.Numerics;
-using System.Runtime.InteropServices.Marshalling;
+using System.Threading.Tasks;
 
-namespace VkGenerator.Process
+namespace GeneratorBase
 {
     public abstract record BaseCSType()
     {
@@ -39,7 +36,7 @@ namespace VkGenerator.Process
     {
         public override string ToCSString()
         {
-            throw new NotSupportedException();
+            throw new NotSupportedException($"Type '{UnsupportedType}' not supported.");
         }
     }
 
@@ -64,7 +61,7 @@ namespace VkGenerator.Process
         public static CSPrimitive Nuint(bool @const) => new CSPrimitive("nuint", @const, null);
         public static CSPrimitive IntPtr(bool @const) => new CSPrimitive("IntPtr", @const, null);
 
-        public static CSPrimitive Half(bool @const) => new CSPrimitive("half", @const, null);
+        public static CSPrimitive Half(bool @const) => new CSPrimitive("Half", @const, null);
         public static CSPrimitive Float(bool @const) => new CSPrimitive("float", @const, null);
         public static CSPrimitive Double(bool @const) => new CSPrimitive("double", @const, null);
 
@@ -89,6 +86,17 @@ namespace VkGenerator.Process
         public override string ToCSString()
         {
             return StructName;
+        }
+    }
+
+    // This struct type is used publicly to mark that this struct is opaque and needs to be converted to
+    // a pointer variant before it can be used.
+    // - Noggin_bops 2024-03-07
+    public record CSOpaqueStruct(string TypeName, bool Constant) : BaseCSType, IConstantCSType
+    {
+        public override string ToCSString()
+        {
+            throw new InvalidOperationException($"Opaque type '{TypeName}' should never be used directly");
         }
     }
 
@@ -142,24 +150,17 @@ namespace VkGenerator.Process
         }
     }
 
-    public record CSPointer(BaseCSType BaseType, bool Constant) : BaseCSType, IConstantCSType, IBaseTypeCSType
+    public record CSPointer(BaseCSType BaseType, bool Constant) : BaseCSType, IConstantCSType
     {
-        public bool TakeAddressInFixedStatement => false;
-
         public override string ToCSString()
         {
             return $"{BaseType.ToCSString()}*";
-        }
-
-        public BaseCSType CreateWithNewType(BaseCSType type)
-        {
-            return new CSPointer(type, false);
         }
     }
 
     public record CSRef(CSRef.Type RefType, BaseCSType ReferencedType) : BaseCSType, IBaseTypeCSType
     {
-        public enum Type { Ref, Out, In }
+        public enum Type { Ref, Out, RefReadonly }
 
         public BaseCSType BaseType => ReferencedType;
 
@@ -171,7 +172,7 @@ namespace VkGenerator.Process
             {
                 Type.Ref => "ref",
                 Type.Out => "out",
-                Type.In => "in",
+                Type.RefReadonly => "ref readonly",
                 _ => throw new Exception()
             };
             return $"{modifier} {ReferencedType.ToCSString()}";

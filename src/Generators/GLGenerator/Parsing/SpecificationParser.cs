@@ -1,3 +1,4 @@
+using GeneratorBase;
 using GeneratorBase.Utility;
 using GeneratorBase.Utility.Extensions;
 using GLGenerator.Writing;
@@ -543,7 +544,7 @@ namespace GLGenerator.Parsing
                 // To make OpenTK 5 more like OpenTK 4 we want handles to be int instead of uint
                 if (handle != null)
                 {
-                    return new CSPrimitive("int", @const);
+                    return CSPrimitive.Int(@const);
                 }
 
                 // For now we only expect int and uint to be able to be turned into groupNameToEnumGroup.
@@ -564,30 +565,30 @@ namespace GLGenerator.Parsing
                     Logger.Info($"Making {type} into group {group.TranslatedName}");
                     CSPrimitive baseType = type switch
                     {
-                        "GLint" => new CSPrimitive("int", @const),
-                        "GLuint" => new CSPrimitive("uint", @const),
-                        "INT" => new CSPrimitive("int", @const),
-                        "UINT" => new CSPrimitive("uint", @const),
-                        "INT32" => new CSPrimitive("int", @const),
-                        "int" => new CSPrimitive("int", @const),
-                        "int32_t" => new CSPrimitive("int", @const),
+                        "GLint" => CSPrimitive.Int(@const),
+                        "GLuint" => CSPrimitive.Uint(@const),
+                        "INT" => CSPrimitive.Int(@const),
+                        "UINT" => CSPrimitive.Uint(@const),
+                        "INT32" => CSPrimitive.Int(@const),
+                        "int" => CSPrimitive.Int(@const),
+                        "int32_t" => CSPrimitive.Int(@const),
                         "EGLint" => CSPrimitive.Int(@const),
                         "EGLuint" => CSPrimitive.Uint(@const),
                         _ => throw new Exception("This should not happen!"),
                     };
 
-                    return new CSEnum(group.TranslatedName, group, baseType, @const);
+                    return new CSEnum(group.TranslatedName, baseType, @const);
                 }
-
+                
                 BaseCSType csType;
                 {
                     csType = type switch
                     {
                         "void" => new CSVoid(@const),
-                        "GLenum" => new CSEnum(group?.TranslatedName ?? "All", group, CSPrimitive.Uint(@const), @const),
+                        "GLenum" => new CSEnum(group?.TranslatedName ?? "All", CSPrimitive.Uint(@const), @const),
                         "GLboolean" => new CSBool8(@const),
                         "GLbitfield" => group != null ?
-                                            new CSEnum(group.TranslatedName, group, CSPrimitive.Uint(@const), @const) :
+                                            new CSEnum(group.TranslatedName, CSPrimitive.Uint(@const), @const) :
                                             CSPrimitive.Uint(@const),
                         "GLvoid" => new CSVoid(@const),
                         "GLbyte" => CSPrimitive.Sbyte(@const),
@@ -621,21 +622,21 @@ namespace GLGenerator.Parsing
                         "GLvdpauSurfaceNV" => CSPrimitive.IntPtr(@const),
 
                         // This type is platform specific on apple.
-                        "GLhandleARB" => new CSStructPrimitive("GLHandleARB", @const, new CSPrimitive("IntPtr", @const)),
+                        "GLhandleARB" => new CSStructPrimitive("GLHandleARB", @const, CSPrimitive.IntPtr(@const)),
 
                         // The following have a custom c# implementation in the writer.
-                        "GLsync" => new CSStructPrimitive("GLSync", @const, new CSPrimitive("IntPtr", @const)),
-                        "_cl_context" => new CSStructPrimitive("CLContext", @const, new CSPrimitive("IntPtr", @const)),
-                        "_cl_event" => new CSStructPrimitive("CLEvent", @const, new CSPrimitive("IntPtr", @const)),
-                        "GLDEBUGPROC" => new CSFunctionPointer("GLDebugProc", @const),
-                        "GLDEBUGPROCARB" => new CSFunctionPointer("GLDebugProcARB", @const),
-                        "GLDEBUGPROCKHR" => new CSFunctionPointer("GLDebugProcKHR", @const),
-                        "GLDEBUGPROCAMD" => new CSFunctionPointer("GLDebugProcAMD", @const),
-                        "GLDEBUGPROCNV" => new CSFunctionPointer("GLDebugProcNV", @const),
+                        "GLsync" => new CSStructPrimitive("GLSync", @const, CSPrimitive.IntPtr(@const)),
+                        "_cl_context" => new CSStructPrimitive("CLContext", @const, CSPrimitive.IntPtr(@const)),
+                        "_cl_event" => new CSStructPrimitive("CLEvent", @const, CSPrimitive.IntPtr(@const)),
+                        "GLDEBUGPROC" => new CSOpaqueFunctionPointer("GLDebugProc", @const),
+                        "GLDEBUGPROCARB" => new CSOpaqueFunctionPointer("GLDebugProcARB", @const),
+                        "GLDEBUGPROCKHR" => new CSOpaqueFunctionPointer("GLDebugProcKHR", @const),
+                        "GLDEBUGPROCAMD" => new CSOpaqueFunctionPointer("GLDebugProcAMD", @const),
+                        "GLDEBUGPROCNV" => new CSOpaqueFunctionPointer("GLDebugProcNV", @const),
                         // This isn't actually used in the output bindings.
                         // But we leave it here as a primitive type so we have the information if we need it later.
                         // - 2021-06-23
-                        "GLVULKANPROCNV" => new CSFunctionPointer("GLVulkanProcNV", @const),
+                        "GLVULKANPROCNV" => new CSOpaqueFunctionPointer("GLVulkanProcNV", @const),
 
                         // WGL.xml types
                         "BOOL" => new CSBool32(@const),
@@ -651,14 +652,14 @@ namespace GLGenerator.Parsing
                         "INT" => CSPrimitive.Int(@const),
                         "INT32" => CSPrimitive.Int(@const),
                         "INT64" => CSPrimitive.Long(@const),
-                        "PROC" => new CSFunctionPointer("???", @const),
+                        "PROC" => new CSOpaqueFunctionPointer("???", @const),
                         "RECT" => new CSStruct("Rect", @const),
                         "LPCSTR" => new CSPointer(new CSChar8(true), @const),
                         "LPVOID" => CSPrimitive.IntPtr(@const),
                         "UINT" => CSPrimitive.Uint(@const),
                         "USHORT" => CSPrimitive.Ushort(@const),
                         "VOID" => new CSVoid(@const),
-                        "COLORREF" => new CSStructPrimitive("ColorRef", @const, new CSPrimitive("uint", false)),
+                        "COLORREF" => new CSStructPrimitive("ColorRef", @const, CSPrimitive.Uint(false)),
                         "HENHMETAFILE" => CSPrimitive.IntPtr(@const),
                         "LAYERPLANEDESCRIPTOR" => new CSStruct("LayerPlaneDescriptor", @const),
                         // FIXME?
@@ -685,13 +686,13 @@ namespace GLGenerator.Parsing
                         // GLX types
 
                         "Bool" => new CSBool8(@const),
-                        "Colormap" => new CSStructPrimitive("Colormap", @const, new CSPrimitive("nuint", @const)),
+                        "Colormap" => new CSStructPrimitive("Colormap", @const, CSPrimitive.Nuint(@const)),
                         "Display" => new CSOpaqueStruct("Display", @const),
-                        "Font" => new CSStructPrimitive("Font", @const, new CSPrimitive("nuint", @const)),
-                        "Pixmap" => new CSStructPrimitive("Pixmap", @const, new CSPrimitive("nuint", @const)),
+                        "Font" => new CSStructPrimitive("Font", @const, CSPrimitive.Nuint(@const)),
+                        "Pixmap" => new CSStructPrimitive("Pixmap", @const, CSPrimitive.Nuint(@const)),
                         "Screen" => new CSOpaqueStruct("Screen", @const),
-                        "Status" => new CSPrimitive("int", @const), // FIXME: Maybe type?
-                        "Window" => new CSStructPrimitive("Window", @const, new CSPrimitive("nuint", @const)),
+                        "Status" => CSPrimitive.Int(@const), // FIXME: Maybe type?
+                        "Window" => new CSStructPrimitive("Window", @const, CSPrimitive.Nuint(@const)),
                         "XVisualInfo" => new CSOpaqueStruct("XVisualInfo", @const),
 
                         // FIXME: These types are conditionally removed from the header if _DM_BUFFER_H_ is not defined
@@ -705,22 +706,22 @@ namespace GLGenerator.Parsing
                         "VLPath" => new CSVoid(@const),
                         "VLServer" => new CSVoid(@const),
 
-                        "__GLXextFuncPtr" => new CSFunctionPointer("__GLXextFuncPtr", @const), // FIXME!
+                        "__GLXextFuncPtr" => new CSOpaqueFunctionPointer("__GLXextFuncPtr", @const), // FIXME!
 
-                        "GLXFBConfigID" => new CSStructPrimitive("FBConfigID", @const, new CSPrimitive("nuint", @const)),
-                        "GLXFBConfig" => new CSStructPrimitive("GLXFBConfig", @const, new CSPrimitive("IntPtr", @const)),
-                        "GLXContextID" => new CSStructPrimitive("GLXContextID", @const, new CSPrimitive("nuint", @const)),
-                        "GLXContext" => new CSStructPrimitive("GLXContext", @const, new CSPrimitive("IntPtr", @const)),
-                        "GLXPixmap" => new CSStructPrimitive("GLXPixmap", @const, new CSPrimitive("nuint", @const)),
-                        "GLXDrawable" => new CSStructPrimitive("GLXDrawable", @const, new CSPrimitive("nuint", @const)),
-                        "GLXWindow" => new CSStructPrimitive("GLXWindow", @const, new CSPrimitive("nuint", @const)),
-                        "GLXPbuffer" => new CSStructPrimitive("GLXPbuffer", @const, new CSPrimitive("nuint", @const)),
-                        "GLXVideoCaptureDeviceNV" => new CSStructPrimitive("GLXVideoCaptureDeviceNV", @const, new CSPrimitive("nuint", @const)),
-                        "GLXVideoDeviceNV" => new CSStructPrimitive("GLXVideoDeviceNV", @const, new CSPrimitive("uint", @const)),
-                        "GLXVideoSourceSGIX" => new CSStructPrimitive("GLXVideoSourceSGIX", @const, new CSPrimitive("nuint", @const)),
-                        "GLXFBConfigIDSGIX" => new CSStructPrimitive("GLXFBConfigIDSGIX", @const, new CSPrimitive("nuint", @const)),
-                        "GLXFBConfigSGIX" => new CSStructPrimitive("GLXFBConfigSGIX", @const, new CSPrimitive("IntPtr", @const)),
-                        "GLXPbufferSGIX" => new CSStructPrimitive("GLXPbufferSGIX", @const, new CSPrimitive("nuint", @const)),
+                        "GLXFBConfigID" => new CSStructPrimitive("FBConfigID", @const, CSPrimitive.Nuint(@const)),
+                        "GLXFBConfig" => new CSStructPrimitive("GLXFBConfig", @const, CSPrimitive.IntPtr(@const)),
+                        "GLXContextID" => new CSStructPrimitive("GLXContextID", @const, CSPrimitive.Nuint(@const)),
+                        "GLXContext" => new CSStructPrimitive("GLXContext", @const, CSPrimitive.IntPtr(@const)),
+                        "GLXPixmap" => new CSStructPrimitive("GLXPixmap", @const, CSPrimitive.Nuint(@const)),
+                        "GLXDrawable" => new CSStructPrimitive("GLXDrawable", @const, CSPrimitive.Nuint(@const)),
+                        "GLXWindow" => new CSStructPrimitive("GLXWindow", @const, CSPrimitive.Nuint(@const)),
+                        "GLXPbuffer" => new CSStructPrimitive("GLXPbuffer", @const, CSPrimitive.Nuint(@const)),
+                        "GLXVideoCaptureDeviceNV" => new CSStructPrimitive("GLXVideoCaptureDeviceNV", @const, CSPrimitive.Nuint(@const)),
+                        "GLXVideoDeviceNV" => new CSStructPrimitive("GLXVideoDeviceNV", @const, CSPrimitive.Uint(@const)),
+                        "GLXVideoSourceSGIX" => new CSStructPrimitive("GLXVideoSourceSGIX", @const, CSPrimitive.Nuint(@const)),
+                        "GLXFBConfigIDSGIX" => new CSStructPrimitive("GLXFBConfigIDSGIX", @const, CSPrimitive.Nuint(@const)),
+                        "GLXFBConfigSGIX" => new CSStructPrimitive("GLXFBConfigSGIX", @const, CSPrimitive.IntPtr(@const)),
+                        "GLXPbufferSGIX" => new CSStructPrimitive("GLXPbufferSGIX", @const, CSPrimitive.Nuint(@const)),
                         "GLXPbufferClobberEvent" => new CSStruct("GLXPbufferClobberEvent", @const),
                         "GLXBufferSwapComplete" => new CSStruct("GLXBufferSwapComplete", @const),
                         "GLXEvent" => new CSStruct("GLXEvent", @const),
@@ -739,7 +740,7 @@ namespace GLGenerator.Parsing
                         "EGLNativeWindowType" => CSPrimitive.IntPtr(@const),
 
                         "EGLint" => CSPrimitive.Int(@const),
-                        "EGLenum" => new CSEnum(group?.TranslatedName ?? "All", group, CSPrimitive.Uint(@const), @const),
+                        "EGLenum" => new CSEnum(group?.TranslatedName ?? "All", CSPrimitive.Uint(@const), @const),
                         "EGLBoolean" => new CSBool32(@const),
                         "EGLAttribKHR" => CSPrimitive.IntPtr(@const),
                         "EGLAttrib" => CSPrimitive.IntPtr(@const),
@@ -774,9 +775,9 @@ namespace GLGenerator.Parsing
 
                         "EGLFrameTokenANGLE" => CSPrimitive.Ulong(@const),
 
-                        "EGLDEBUGPROCKHR" => new CSFunctionPointer("EGLDebugProcKHR", @const),
-                        "EGLSetBlobFuncANDROID" => new CSFunctionPointer("EGLSetBlobFuncANDROID", @const),
-                        "EGLGetBlobFuncANDROID" => new CSFunctionPointer("EGLGetBlobFuncANDROID", @const),
+                        "EGLDEBUGPROCKHR" => new CSOpaqueFunctionPointer("EGLDebugProcKHR", @const),
+                        "EGLSetBlobFuncANDROID" => new CSOpaqueFunctionPointer("EGLSetBlobFuncANDROID", @const),
+                        "EGLGetBlobFuncANDROID" => new CSOpaqueFunctionPointer("EGLGetBlobFuncANDROID", @const),
 
                         "AHardwareBuffer" => new CSOpaqueStruct("AHardwareBuffer", @const),
 

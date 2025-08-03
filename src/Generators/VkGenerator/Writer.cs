@@ -9,6 +9,7 @@ using VkGenerator.Parsing;
 using VkGenerator.Process;
 using GeneratorBase.Utility;
 using GeneratorBase.Utility.Extensions;
+using GeneratorBase;
 
 namespace VkGenerator
 {

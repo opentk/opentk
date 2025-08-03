@@ -11,6 +11,7 @@ using GLGenerator.Parsing;
 using GeneratorBase.Utility;
 using GeneratorBase.Utility.Extensions;
 using GLGenerator.Writing;
+using GeneratorBase;
 
 namespace GLGenerator.Process
 {
@@ -211,7 +212,7 @@ namespace GLGenerator.Process
                 overload.NativeFunction.EntryPoint == "glGetStringi")
             {
                 var newReturnName = $"{overload.NameTable.ReturnName}_str";
-                var layer = new StringReturnLayer(new CSPointer(new CSPrimitive("byte", true), true), newReturnName, overload.NameTable.ReturnName!);
+                var layer = new StringReturnLayer(new CSPointer(CSPrimitive.Byte(true), true), newReturnName, overload.NameTable.ReturnName!);
                 var returnType = new CSString(Nullable: true);
                 var nameTable = overload.NameTable.New();
                 nameTable.ReturnName = newReturnName;
@@ -357,7 +358,7 @@ namespace GLGenerator.Process
                         nameTable.Rename(parameter, $"{parameter.Name}_ptr");
 
                         // FIXME: ref vs ref readonly depending on Constant memeber
-                        Parameter colorParameter = parameter with { Type = new CSRef(CSRef.Type.RefReadonly, new CSPrimitive($"Color{colorSize}<{colorSpace}>", pointer.Constant)), Length = null };
+                        Parameter colorParameter = parameter with { Type = new CSRef(CSRef.Type.RefReadonly, new CSStruct($"Color{colorSize}<{colorSpace}>", pointer.Constant)), Length = null };
 
                         pointerParameters.Add(parameter);
                         colorParameters.Add(colorParameter);
@@ -764,7 +765,7 @@ namespace GLGenerator.Process
                 Parameter parameter = overload.InputParameters[i];
                 parameters[i] = parameter;
 
-                if (parameter.Type is CSFunctionPointer fpt)
+                if (parameter.Type is CSOpaqueFunctionPointer fpt)
                 {
                     // Rename the parameter
                     nameTable.Rename(parameter, $"{parameter.Name}_ptr");
@@ -880,7 +881,7 @@ namespace GLGenerator.Process
             Parameter pointerParameter = overload.InputParameters[parameterIndex];
             Parameter offsetParameter = pointerParameter with
             {
-                Type = new CSPrimitive("nint", false),
+                Type = CSPrimitive.Nint(false),
                 Name = "offset",
                 Length = null
             };
@@ -935,7 +936,7 @@ namespace GLGenerator.Process
                 }
 
                 nameTable.Rename(parameter, parameter.Name + "_vptr");
-                parameters[i] = parameter with { Type = new CSPrimitive("IntPtr", false), Length = null };
+                parameters[i] = parameter with { Type = CSPrimitive.IntPtr(false), Length = null };
                 parameterNames.Add((parameter, parameters[i]));
             }
 

@@ -8,6 +8,7 @@ using System.CodeDom.Compiler;
 using GLGenerator.Parsing;
 using GeneratorBase.Utility;
 using GeneratorBase.Utility.Extensions;
+using GeneratorBase;
 
 namespace GLGenerator.Writing
 {

@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using VkGenerator.Parsing;
 using GeneratorBase.Utility;
 using GeneratorBase.Utility.Extensions;
+using GeneratorBase;
 
 namespace VkGenerator.Process
 {
@@ -853,6 +854,31 @@ namespace VkGenerator.Process
 
                 BaseCSType? baseType = ParseType(withoutAsterisk, typeMap, constantsMap, out reference);
 
+                // Some structs are created as CSOpaqueStructs, this means that the only 
+                // valid way to use these is through a pointer. We intercept them here
+                // and create the proper CSStructPrimitive types from them.
+                // - Noggin_bops 2025-08-04
+                if (baseType is CSOpaqueStruct opaque)
+                {
+                    switch (opaque.TypeName)
+                    {
+                        // FIXME: Decide if we want `DisplayPtr`, `Display` or something like `XDisplay`?
+                        // - Noggin_bops 2024-03-07
+                        case "Display":
+                            return CSPrimitive.IntPtr(opaque.Constant);//new CSStructPrimitive("DisplayPtr", opaque.Constant, CSPrimitive.IntPtr(true));
+                        case "ANativeWindow":
+                            return CSPrimitive.IntPtr(opaque.Constant);//new CSStructPrimitive("ANativeWindow", opaque.Constant, CSPrimitive.IntPtr(true));
+                        case "AHardwareBuffer":
+                            return CSPrimitive.IntPtr(opaque.Constant);//return new CSStructPrimitive("AHardwareBuffer", opaque.Constant, CSPrimitive.IntPtr(true));
+                        default:
+                            throw new Exception($"Unknown opaque struct type {opaque.TypeName}.");
+                    }
+                }
+                else
+                {
+                    return new CSPointer(baseType, @const);
+                }
+
                 return new CSPointer(baseType, @const);
             }
             else if (type.EndsWith(']'))
@@ -1052,7 +1078,7 @@ namespace VkGenerator.Process
 
                         "VkRemoteAddressNV" => new CSPointer(new CSVoid(@const), @const),
 
-                        "Display" => new CSStruct("Display", @const), // FIXME: This is just a struct?
+                        "Display" => new CSOpaqueStruct("Display", @const), // FIXME: This is just a struct?
                         "VisualID" => CSPrimitive.Nuint(@const),
                         // FIXME: Strong type?
                         //"Window" => new CSStructPrimitive("Window", @const, CSPrimitive.Nuint(@const)),
@@ -1095,8 +1121,8 @@ namespace VkGenerator.Process
                         "NvSciBufAttrList" => CSPrimitive.IntPtr(@const),
                         "NvSciBufObj" => CSPrimitive.IntPtr(@const),
 
-                        "ANativeWindow" => new CSStruct("ANativeWindow", @const),
-                        "AHardwareBuffer" => new CSStruct("AHardwareBuffer", @const),
+                        "ANativeWindow" => new CSOpaqueStruct("ANativeWindow", @const),
+                        "AHardwareBuffer" => new CSOpaqueStruct("AHardwareBuffer", @const),
 
                         "CAMetalLayer" => CSPrimitive.IntPtr(@const),
                         "MTLDevice_id" => CSPrimitive.IntPtr(@const),
