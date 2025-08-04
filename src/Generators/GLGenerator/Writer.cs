@@ -9,8 +9,9 @@ using GLGenerator.Parsing;
 using GeneratorBase.Utility;
 using GeneratorBase.Utility.Extensions;
 using GeneratorBase;
+using GLGenerator.Process;
 
-namespace GLGenerator.Writing
+namespace GLGenerator
 {
     internal static class Writer
     {
@@ -88,7 +89,7 @@ namespace GLGenerator.Writing
 
             // FIXME: using OpenTK.Graphics.OpenGL if we are wgl or glx...
 
-            writer.WriteLine($"// This file is auto generated, do not edit. Generated: {DateTime.Now:yyyy-MM-dd HH:mm:ss \"GMT\"zzz}");
+            writer.WriteLine($"// This file is auto generated, do not edit.");
             writer.WriteLine("using System;");
             writer.WriteLine("using System.Runtime.InteropServices;");
             writer.WriteLine("using OpenTK.Graphics;");
@@ -236,7 +237,7 @@ namespace GLGenerator.Writing
         {
             using StreamWriter stream = File.CreateText(Path.Combine(directoryPath, $"{strings.FileNamePrefix}.Native.cs"));
             using IndentedTextWriter writer = new IndentedTextWriter(stream);
-            writer.WriteLine($"// This file is auto generated, do not edit. Generated: {DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss \"GMT\"zzz")}");
+            writer.WriteLine($"// This file is auto generated, do not edit.");
             writer.WriteLine("using System;");
             writer.WriteLine("using System.Runtime.InteropServices;");
             writer.WriteLine("using OpenTK.Graphics;");
@@ -328,7 +329,7 @@ namespace GLGenerator.Writing
         {
             using StreamWriter stream = File.CreateText(Path.Combine(directoryPath, $"{strings.FileNamePrefix}.Overloads.cs"));
             using IndentedTextWriter writer = new IndentedTextWriter(stream);
-            writer.WriteLine($"// This file is auto generated, do not edit. Generated: {DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss \"GMT\"zzz")}");
+            writer.WriteLine($"// This file is auto generated, do not edit.");
             writer.WriteLine("using System;");
             writer.WriteLine("using System.Runtime.CompilerServices;");
             writer.WriteLine("using System.Runtime.InteropServices;");
@@ -480,7 +481,7 @@ namespace GLGenerator.Writing
         {
             using StreamWriter stream = File.CreateText(Path.Combine(directoryPath, "Enums.cs"));
             using IndentedTextWriter writer = new IndentedTextWriter(stream);
-            writer.WriteLine($"// This file is auto generated, do not edit. Generated: {DateTime.Now:yyyy-MM-dd HH:mm:ss \"GMT\"zzz}");
+            writer.WriteLine($"// This file is auto generated, do not edit.");
             writer.WriteLine("using System;");
             writer.WriteLine();
             writer.WriteLine($"namespace {GraphicsNamespace}.{strings.Namespace}");

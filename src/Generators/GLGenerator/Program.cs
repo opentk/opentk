@@ -2,7 +2,7 @@
 using System.IO;
 using System.Reflection;
 using GeneratorBase.Utility;
-using GLGenerator.Writing;
+using GLGenerator.Process;
 using GLGenerator.Parsing;
 using GLGenerator.Process;
 using System.Collections.Generic;
@@ -27,7 +27,7 @@ namespace GLGenerator
                     {
                         FunctionPrefix = "gl",
                         EnumPrefixes = new List<string> { "GL_" },
-                        ExtensionPrefix = "GL_",
+                        ExtensionPrefixes = ["GL_"],
                         EnumGroupNameTranslationTable =
                         {
                             { "BufferTargetARB", "BufferTarget" },
@@ -50,7 +50,7 @@ namespace GLGenerator
                     {
                         FunctionPrefix = "wgl",
                         EnumPrefixes = new List<string> { "WGL_" },
-                        ExtensionPrefix = "WGL_",
+                        ExtensionPrefixes = ["WGL_"],
                         FunctionsWithoutPrefix = new HashSet<string>()
                         {
                             "ChoosePixelFormat",
@@ -83,7 +83,7 @@ namespace GLGenerator
                     {
                         FunctionPrefix = "glX",
                         EnumPrefixes = new List<string> { "GLX_", "__GLX_" },
-                        ExtensionPrefix = "GLX_",
+                        ExtensionPrefixes = ["GLX_"],
                         FunctionsWithoutPrefix = new HashSet<string>()
                         {
                         },
@@ -112,7 +112,7 @@ namespace GLGenerator
                     {
                         FunctionPrefix = "egl",
                         EnumPrefixes = new List<string> { "EGL_" },
-                        ExtensionPrefix = "EGL_",
+                        ExtensionPrefixes = ["EGL_"],
                         FunctionsWithoutPrefix = new HashSet<string>()
                         {
                         },

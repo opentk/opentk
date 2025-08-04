@@ -10,7 +10,7 @@ using System.Threading;
 using GLGenerator.Parsing;
 using GeneratorBase.Utility;
 using GeneratorBase.Utility.Extensions;
-using GLGenerator.Writing;
+using GLGenerator.Process;
 using GeneratorBase;
 
 namespace GLGenerator.Process
@@ -151,7 +151,7 @@ namespace GLGenerator.Process
                     if (overload.InputParameters[^1].Length is not null)
                     {
                         // If there is a length and it's not "1", we don't generate an overload.
-                        if (overload.InputParameters[^1].Length is Constant constant && constant.Value != 1)
+                        if (overload.InputParameters[^1].Length is ConstantExpression constant && constant.Value != 1)
                         {
                             newOverloads = null;
                             return false;
@@ -347,7 +347,7 @@ namespace GLGenerator.Process
                         continue;
                     }
 
-                    if (parameter.Length is Constant constant)
+                    if (parameter.Length is ConstantExpression constant)
                     {
                         int colorSize = constant.Value;
                         if (colorSize > 4 || colorSize < 3)
@@ -518,14 +518,14 @@ namespace GLGenerator.Process
                     string? mathKind = parameter.Kinds.GetMatching(_mathKinds);
                     if (mathKind != null)
                     {
-                        if (parameter.Length is Constant constant)
+                        if (parameter.Length is ConstantExpression constant)
                         {
                             // Verify length with kind
                             Debug.Assert(_kindSize[mathKind] == constant.Value);
                         }
-                        else if (parameter.Length is BinaryOperation binaryOperation)
+                        else if (parameter.Length is BinaryOperationExpression binaryOperation)
                         {
-                            if (binaryOperation.TryDecomposeIntoParameterRefAndConstant(out Constant? @const, out ParameterReference? parameterReference))
+                            if (binaryOperation.TryDecomposeIntoParameterRefAndConstant(out ConstantExpression? @const, out ParameterReferenceExpression? parameterReference))
                             {
                                 Debug.Assert(_kindSize[mathKind] == @const.Value);
 
@@ -1028,7 +1028,7 @@ namespace GLGenerator.Process
                 return false;
             }
 
-            if (pointerParameter.Length == null || pointerParameter.Length is not ParameterReference handleLength)
+            if (pointerParameter.Length == null || pointerParameter.Length is not ParameterReferenceExpression handleLength)
             {
                 newOverloads = default;
                 return false;
@@ -1513,7 +1513,7 @@ namespace GLGenerator.Process
                         // If the parameter has length 1 there is no point in having an array overload.
                         // We leave it to be ref overloaded instead.
                         // - Noggin_bops 2024-03-16
-                        if (param.Length is Constant constant && constant.Value == 1)
+                        if (param.Length is ConstantExpression constant && constant.Value == 1)
                         {
                             continue;
                         }
@@ -1668,12 +1668,12 @@ namespace GLGenerator.Process
                     bool outParamSuitable;
                     if (parameter.Length != null)
                     {
-                        if (parameter.Length is Constant c && c.Value == 1)
+                        if (parameter.Length is ConstantExpression c && c.Value == 1)
                         {
                             // The length is 1, in/out overload is suitable.
                             outParamSuitable = true;
                         }
-                        else if (parameter.Length is CompSize && overload.NativeFunction.EntryPoint.StartsWith("glGet"))
+                        else if (parameter.Length is CompSizeExpression && overload.NativeFunction.EntryPoint.StartsWith("glGet"))
                         {
                             // We assume that all glGet* functions with CompSize arguments are fine to mark as out
                             outParamSuitable = true;

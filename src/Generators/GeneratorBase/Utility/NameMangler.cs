@@ -1,12 +1,13 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
+using System;
 
 namespace GeneratorBase.Utility
 {
     public class NameManglerSettings
     {
-        public string ExtensionPrefix { get; init; }
+        public List<string> ExtensionPrefixes { get; init; }
         public string FunctionPrefix { get; init; }
         public List<string> EnumPrefixes { get; init; }
         public HashSet<string> FunctionsWithoutPrefix { get; init; }
@@ -17,7 +18,7 @@ namespace GeneratorBase.Utility
 
         public NameManglerSettings()
         {
-            ExtensionPrefix = "GL_";
+            ExtensionPrefixes = ["GL_"];
             FunctionPrefix = "gl";
             EnumPrefixes = new List<string> { "GL_" };
             FunctionsWithoutPrefix = new HashSet<string>();
@@ -132,12 +133,15 @@ namespace GeneratorBase.Utility
         public string RemoveExtensionPrefix(string extension)
         {
             // FIXME: Get the settings from a more direct source
-            string prefix = Settings.ExtensionPrefix;
+            foreach (var prefix in Settings.ExtensionPrefixes)
+            {
+                if (extension.StartsWith(prefix))
+                {
+                    return extension[prefix.Length..];
+                }
+            }
 
-            if (!extension.StartsWith(prefix))
-                throw new System.Exception($"'{extension}' dosen't start with '{prefix}'");
-
-            return extension[prefix.Length..];
+            throw new Exception($"'{extension}' dosen't start with any of the valid prefixes '{string.Join(", ", Settings.ExtensionPrefixes)}'");
         }
 
         public static string RemoveVendorPostfix(string str)

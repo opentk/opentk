@@ -1,4 +1,4 @@
-﻿using GLGenerator.Writing;
+﻿using GLGenerator.Process;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -167,100 +167,6 @@ namespace GLGenerator.Parsing
     internal record GLPointerType(
         GLType BaseType,
         bool Constant) : GLType;
-
-
-    internal record Expression
-    {
-        // FIXME: Clean up this mess. We assume a lot of things we maybe dont wanna assume?
-        // Can all lengths even be inverted and what should happen if they cant?
-        // For now this works, but it might break later. 2021-06-23.
-        internal static string? InvertExpressionAndGetReferencedName(Expression expr, out Func<string, string> inverseExpression)
-        {
-            switch (expr)
-            {
-                case Constant c:
-                    inverseExpression = s => c.Value.ToString();
-                    return null;
-                case ParameterReference pr:
-                    inverseExpression = s => $"{s}.Length";
-                    return pr.ParameterName;
-                case BinaryOperation bo:
-                    // FIXME: We don't want to assume that the left expression contains the
-                    // parameter name, but this is true for gl.xml 2020-12-30
-                    string? reference = InvertExpressionAndGetReferencedName(bo.Left, out var leftExpr);
-                    InvertExpressionAndGetReferencedName(bo.Right, out var rightExpr);
-                    var invOp = BinaryOperation.Invert(bo.Operator);
-                    inverseExpression = s => $"{leftExpr(s)} {BinaryOperation.GetOperationChar(invOp)} {rightExpr(s)}";
-                    return reference;
-                default:
-                    inverseExpression = s => "";
-                    return null;
-            }
-        }
-    }
-
-    internal record Constant(int Value) : Expression;
-
-    internal record CompSize(Expression[] Parameters) : Expression;
-
-    internal enum BinaryOperator
-    {
-        Invalid,
-        Addition,
-        Subtraction,
-        Multiplication,
-        Division,
-    }
-
-    internal record BinaryOperation(
-        Expression Left,
-        BinaryOperator Operator,
-        Expression Right) : Expression
-    {
-        internal static BinaryOperator Invert(BinaryOperator @operator) => @operator switch
-        {
-            BinaryOperator.Addition => BinaryOperator.Subtraction,
-            BinaryOperator.Subtraction => BinaryOperator.Addition,
-            BinaryOperator.Multiplication => BinaryOperator.Division,
-            BinaryOperator.Division => BinaryOperator.Multiplication,
-            _ => throw new Exception("Invalid binary operator, we can't invert it."),
-        };
-
-        internal static char GetOperationChar(BinaryOperator @operator) => @operator switch
-        {
-            BinaryOperator.Addition => '+',
-            BinaryOperator.Subtraction => '-',
-            BinaryOperator.Multiplication => '*',
-            BinaryOperator.Division => '/',
-            _ => throw new Exception("Invalid binary operator, there is no char associated."),
-        };
-
-        internal bool TryDecomposeIntoParameterRefAndConstant([NotNullWhen(true)] out Constant? constant, [NotNullWhen(true)] out ParameterReference? reference)
-        {
-            if (Left is ParameterReference leftRef && Right is Constant rightConst)
-            {
-                reference = leftRef;
-                constant = rightConst;
-                return true;
-            }
-            else if (Right is ParameterReference rightRef && Left is Constant leftConst)
-            {
-                reference = rightRef;
-                constant = leftConst;
-                return true;
-            }
-            else
-            {
-                constant = default;
-                reference = default;
-                return false;
-            }
-        }
-    }
-
-    internal record ParameterReference(string ParameterName) : Expression;
-
-
 
     internal enum GLAPI
     {

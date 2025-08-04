@@ -54,7 +54,7 @@ namespace VkGenerator
 
             NameManglerSettings settings = new NameManglerSettings()
             {
-                ExtensionPrefix = "VK_",
+                ExtensionPrefixes = ["VK_"],
                 FunctionPrefix = "vk",
                 EnumPrefixes = ["VK_", "STD_"],
                 FunctionsWithoutPrefix = [],

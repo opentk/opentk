@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using GeneratorBase.Utility.Extensions;
 using GeneratorBase.Utility;
-using GLGenerator.Writing;
+using GLGenerator.Process;
 using GLGenerator.Parsing;
-using System.Net.Http.Headers;
-using System.Collections.Immutable;
 
 namespace GLGenerator.Process
 {
@@ -253,6 +251,10 @@ namespace GLGenerator.Process
                                     else if (@namespace == GLFile.GLX)
                                     {
                                         AddEnumToAPI(OutputApi.GLX, @enum);
+                                    }
+                                    else if (@namespace == GLFile.EGL)
+                                    {
+                                        AddEnumToAPI(OutputApi.EGL, @enum);
                                     }
 
                                     void AddEnumToAPI(OutputApi outputApi, EnumGroupMember @enum)
@@ -563,11 +565,11 @@ namespace GLGenerator.Process
                         {
                             if (!vendors.TryGetValue(vendor, out GLVendorFunctions? group))
                             {
-                                group = new GLVendorFunctions(new List<Writing.OverloadedFunction>(), new HashSet<NativeFunction>());
+                                group = new GLVendorFunctions(new List<Process.OverloadedFunction>(), new HashSet<NativeFunction>());
                                 vendors.Add(vendor, group);
                             }
 
-                            group.Functions.Add(new Writing.OverloadedFunction(overloadedFunction.NativeFunction, overloadedFunction.Overloads));
+                            group.Functions.Add(new Process.OverloadedFunction(overloadedFunction.NativeFunction, overloadedFunction.Overloads));
 
                             if (overloadedFunction.ChangeNativeName)
                             {

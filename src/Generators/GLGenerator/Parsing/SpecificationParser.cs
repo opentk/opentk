@@ -1,7 +1,7 @@
 using GeneratorBase;
 using GeneratorBase.Utility;
 using GeneratorBase.Utility.Extensions;
-using GLGenerator.Writing;
+using GLGenerator.Process;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -346,7 +346,7 @@ namespace GLGenerator.Parsing
                 Expression? right = ParseExpressionPrio1(exp, out exp);
                 exp = exp.TrimStart();
 
-                retExpr = new BinaryOperation(retExpr, op, right);
+                retExpr = new BinaryOperationExpression(retExpr, op, right);
             }
 
             leftOver = exp;
@@ -377,7 +377,7 @@ namespace GLGenerator.Parsing
                 Expression? right = ParseExpressionPrio0(exp, out exp);
                 exp = exp.TrimStart();
 
-                retExpr = new BinaryOperation(retExpr, op, right);
+                retExpr = new BinaryOperationExpression(retExpr, op, right);
             }
 
             leftOver = exp;
@@ -412,7 +412,7 @@ namespace GLGenerator.Parsing
                 }
                 // Remove the last ')'
                 leftOver = exp[1..];
-                return new CompSize(arguments.ToArray());
+                return new CompSizeExpression(arguments.ToArray());
             }
             else if (char.IsDigit(expression[0]))
             {
@@ -423,7 +423,7 @@ namespace GLGenerator.Parsing
                 }
 
                 leftOver = expression[i..];
-                return new Constant(int.Parse(expression[0..i]));
+                return new ConstantExpression(int.Parse(expression[0..i]));
             }
             else if (char.IsLetter(expression[0]))
             {
@@ -434,7 +434,7 @@ namespace GLGenerator.Parsing
                 }
 
                 leftOver = expression[i..];
-                return new ParameterReference(expression[0..i]);
+                return new ParameterReferenceExpression(expression[0..i]);
             }
             else throw new Exception($"Could not parse expression '{expression}'");
         }
@@ -885,6 +885,9 @@ namespace GLGenerator.Parsing
                                 break;
                             case GLFile.GLX:
                                 enumApi |= OutputApiFlags.GLX;
+                                break;
+                            case GLFile.EGL:
+                                enumApi |= OutputApiFlags.EGL;
                                 break;
                         }
                     }

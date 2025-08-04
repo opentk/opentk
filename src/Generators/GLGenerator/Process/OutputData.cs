@@ -7,7 +7,7 @@ using System.CodeDom.Compiler;
 using GeneratorBase.Utility;
 using GeneratorBase;
 
-namespace GLGenerator.Writing
+namespace GLGenerator.Process
 {
     internal record OutputData(
         /* FIXME: Maybe do like this?
