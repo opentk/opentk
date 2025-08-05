@@ -11,7 +11,7 @@ namespace OpenTK.Audio.OpenAL.ALC
         public static bool CaptureCloseDevice(ALCDevice device) => ALCPointers._alcCaptureCloseDevice_fnptr((IntPtr)device) != 0;
         
         /// <summary> <b>[requires: v1.1 | ALC_EXT_CAPTURE]</b> <b>[entry point: <c>alcCaptureOpenDevice</c>]</b><br/>  </summary>
-        public static ALCDevice CaptureOpenDevice(byte* devicename, uint frequency, All format, int buffersize) => (ALCDevice) ALCPointers._alcCaptureOpenDevice_fnptr(devicename, frequency, (int)format, buffersize);
+        public static ALCDevice CaptureOpenDevice(byte* devicename, uint frequency, Format format, int buffersize) => (ALCDevice) ALCPointers._alcCaptureOpenDevice_fnptr(devicename, frequency, (int)format, buffersize);
         
         /// <summary> <b>[requires: v1.1 | ALC_EXT_CAPTURE]</b> <b>[entry point: <c>alcCaptureSamples</c>]</b><br/>  </summary>
         public static void CaptureSamples(ALCDevice device, void* buffer, int samples) => ALCPointers._alcCaptureSamples_fnptr((IntPtr)device, buffer, samples);
@@ -44,16 +44,16 @@ namespace OpenTK.Audio.OpenAL.ALC
         public static ErrorCode GetError(ALCDevice device) => (ErrorCode) ALCPointers._alcGetError_fnptr((IntPtr)device);
         
         /// <summary> <b>[requires: v1.0]</b> <b>[entry point: <c>alcGetIntegerv</c>]</b><br/>  </summary>
-        public static byte* GetIntegerv(ALCDevice device, All param, int size, int* values) => ALCPointers._alcGetIntegerv_fnptr((IntPtr)device, (int)param, size, values);
+        public static void GetIntegerv(ALCDevice device, GetPNameIV param, int size, int* values) => ALCPointers._alcGetIntegerv_fnptr((IntPtr)device, (int)param, size, values);
         
         /// <summary> <b>[requires: v1.0]</b> <b>[entry point: <c>alcGetProcAddress</c>]</b><br/>  </summary>
         public static void* GetProcAddress(ALCDevice device, byte* extname) => ALCPointers._alcGetProcAddress_fnptr((IntPtr)device, extname);
         
         /// <summary> <b>[requires: v1.0]</b> <b>[entry point: <c>alcGetString</c>]</b><br/>  </summary>
-        public static byte* GetString_(ALCDevice device, All param) => ALCPointers._alcGetString_fnptr((IntPtr)device, (int)param);
+        public static byte* GetString_(ALCDevice device, StringName param) => ALCPointers._alcGetString_fnptr((IntPtr)device, (int)param);
         
         /// <summary> <b>[requires: v1.0]</b> <b>[entry point: <c>alcIsExtensionPresent</c>]</b><br/>  </summary>
-        public static bool IsExtensionPresent(byte* extname) => ALCPointers._alcIsExtensionPresent_fnptr(extname) != 0;
+        public static bool IsExtensionPresent(ALCDevice deviceHandle, byte* extname) => ALCPointers._alcIsExtensionPresent_fnptr((IntPtr)deviceHandle, extname) != 0;
         
         /// <summary> <b>[requires: v1.0]</b> <b>[entry point: <c>alcMakeContextCurrent</c>]</b><br/>  </summary>
         public static bool MakeContextCurrent(ALCContext context) => ALCPointers._alcMakeContextCurrent_fnptr((IntPtr)context) != 0;
@@ -86,7 +86,7 @@ namespace OpenTK.Audio.OpenAL.ALC
             public static bool CaptureCloseDevice(ALCDevice device) => ALCPointers._alcCaptureCloseDevice_fnptr((IntPtr)device) != 0;
             
             /// <summary> <b>[requires: v1.1 | ALC_EXT_CAPTURE]</b> <b>[entry point: <c>alcCaptureOpenDevice</c>]</b><br/>  </summary>
-            public static ALCDevice CaptureOpenDevice(byte* devicename, uint frequency, All format, int buffersize) => (ALCDevice) ALCPointers._alcCaptureOpenDevice_fnptr(devicename, frequency, (int)format, buffersize);
+            public static ALCDevice CaptureOpenDevice(byte* devicename, uint frequency, Format format, int buffersize) => (ALCDevice) ALCPointers._alcCaptureOpenDevice_fnptr(devicename, frequency, (int)format, buffersize);
             
             /// <summary> <b>[requires: v1.1 | ALC_EXT_CAPTURE]</b> <b>[entry point: <c>alcCaptureSamples</c>]</b><br/>  </summary>
             public static void CaptureSamples(ALCDevice device, void* buffer, int samples) => ALCPointers._alcCaptureSamples_fnptr((IntPtr)device, buffer, samples);
@@ -163,16 +163,16 @@ namespace OpenTK.Audio.OpenAL.ALC
             public static void EventCallbackSOFT(delegate* unmanaged[Cdecl]<All, All, ALCDevice, nuint, byte*, void*, void> callback, void* userParam) => ALCPointers._alcEventCallbackSOFT_fnptr(callback, userParam);
             
             /// <summary> <b>[requires: ALC_SOFT_system_events]</b> <b>[entry point: <c>alcEventControlSOFT</c>]</b><br/>  </summary>
-            public static bool EventControlSOFT(int count, All* events, bool enable) => ALCPointers._alcEventControlSOFT_fnptr(count, (int*)events, (byte)(enable ? 1 : 0)) != 0;
+            public static bool EventControlSOFT(int count, EventType* events, bool enable) => ALCPointers._alcEventControlSOFT_fnptr(count, (int*)events, (byte)(enable ? 1 : 0)) != 0;
             
             /// <summary> <b>[requires: ALC_SOFT_system_events]</b> <b>[entry point: <c>alcEventIsSupportedSOFT</c>]</b><br/>  </summary>
-            public static All EventIsSupportedSOFT(All eventType, All deviceType) => (All) ALCPointers._alcEventIsSupportedSOFT_fnptr((int)eventType, (int)deviceType);
+            public static EventSupport EventIsSupportedSOFT(EventType eventType, DeviceType deviceType) => (EventSupport) ALCPointers._alcEventIsSupportedSOFT_fnptr((int)eventType, (int)deviceType);
             
             /// <summary> <b>[requires: ALC_SOFT_device_clock]</b> <b>[entry point: <c>alcGetInteger64vSOFT</c>]</b><br/>  </summary>
-            public static void GetInteger64vSOFT(ALCDevice device, All pname, int size, long* values) => ALCPointers._alcGetInteger64vSOFT_fnptr((IntPtr)device, (int)pname, size, values);
+            public static void GetInteger64vSOFT(ALCDevice device, GetPNameI64V pname, int size, long* values) => ALCPointers._alcGetInteger64vSOFT_fnptr((IntPtr)device, (int)pname, size, values);
             
             /// <summary> <b>[requires: ALC_SOFT_HRTF]</b> <b>[entry point: <c>alcGetStringiSOFT</c>]</b><br/>  </summary>
-            public static byte* GetStringiSOFT_(ALCDevice device, All paramName, int index) => ALCPointers._alcGetStringiSOFT_fnptr((IntPtr)device, (int)paramName, index);
+            public static byte* GetStringiSOFT_(ALCDevice device, IndexedStringName paramName, int index) => ALCPointers._alcGetStringiSOFT_fnptr((IntPtr)device, (int)paramName, index);
             
             /// <summary> <b>[requires: ALC_SOFT_loopback]</b> <b>[entry point: <c>alcIsRenderFormatSupportedSOFT</c>]</b><br/>  </summary>
             public static bool IsRenderFormatSupportedSOFT(ALCDevice device, int frequency, RenderFormatChannels channels, RenderFormatType type) => ALCPointers._alcIsRenderFormatSupportedSOFT_fnptr((IntPtr)device, frequency, (int)channels, (int)type) != 0;

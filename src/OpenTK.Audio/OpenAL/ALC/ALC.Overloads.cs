@@ -10,8 +10,8 @@ namespace OpenTK.Audio.OpenAL.ALC
 {
     public static unsafe partial class ALC
     {
-        /// <inheritdoc cref="CaptureOpenDevice(byte*, uint, All, int)"/>
-        public static unsafe ALCDevice CaptureOpenDevice(string devicename, uint frequency, All format, int buffersize)
+        /// <inheritdoc cref="CaptureOpenDevice(byte*, uint, Format, int)"/>
+        public static unsafe ALCDevice CaptureOpenDevice(string devicename, uint frequency, Format format, int buffersize)
         {
             ALCDevice returnValue;
             byte* devicename_ptr = (byte*)Marshal.StringToCoTaskMemUTF8(devicename);
@@ -91,41 +91,29 @@ namespace OpenTK.Audio.OpenAL.ALC
             Marshal.FreeCoTaskMem((IntPtr)enumname_ptr);
             return returnValue;
         }
-        /// <inheritdoc cref="GetIntegerv(ALCDevice, All, int, int*)"/>
-        public static unsafe string? GetInteger(ALCDevice device, All param, int size, Span<int> values)
+        /// <inheritdoc cref="GetIntegerv(ALCDevice, GetPNameIV, int, int*)"/>
+        public static unsafe void GetInteger(ALCDevice device, GetPNameIV param, int size, Span<int> values)
         {
-            string? returnValue_str;
             fixed (int* values_ptr = values)
             {
-                byte* returnValue;
-                returnValue = GetIntegerv(device, param, size, values_ptr);
-                returnValue_str = Marshal.PtrToStringAnsi((IntPtr)returnValue);
+                GetIntegerv(device, param, size, values_ptr);
             }
-            return returnValue_str;
         }
-        /// <inheritdoc cref="GetIntegerv(ALCDevice, All, int, int*)"/>
-        public static unsafe string? GetInteger(ALCDevice device, All param, int size, int[] values)
+        /// <inheritdoc cref="GetIntegerv(ALCDevice, GetPNameIV, int, int*)"/>
+        public static unsafe void GetInteger(ALCDevice device, GetPNameIV param, int size, int[] values)
         {
-            string? returnValue_str;
             fixed (int* values_ptr = values)
             {
-                byte* returnValue;
-                returnValue = GetIntegerv(device, param, size, values_ptr);
-                returnValue_str = Marshal.PtrToStringAnsi((IntPtr)returnValue);
+                GetIntegerv(device, param, size, values_ptr);
             }
-            return returnValue_str;
         }
-        /// <inheritdoc cref="GetIntegerv(ALCDevice, All, int, int*)"/>
-        public static unsafe string? GetInteger(ALCDevice device, All param, int size, ref int values)
+        /// <inheritdoc cref="GetIntegerv(ALCDevice, GetPNameIV, int, int*)"/>
+        public static unsafe void GetInteger(ALCDevice device, GetPNameIV param, int size, ref int values)
         {
-            string? returnValue_str;
             fixed (int* values_ptr = &values)
             {
-                byte* returnValue;
-                returnValue = GetIntegerv(device, param, size, values_ptr);
-                returnValue_str = Marshal.PtrToStringAnsi((IntPtr)returnValue);
+                GetIntegerv(device, param, size, values_ptr);
             }
-            return returnValue_str;
         }
         /// <inheritdoc cref="GetProcAddress(ALCDevice, byte*)"/>
         public static unsafe void* GetProcAddress(ALCDevice device, string extname)
@@ -136,8 +124,8 @@ namespace OpenTK.Audio.OpenAL.ALC
             Marshal.FreeCoTaskMem((IntPtr)extname_ptr);
             return returnValue;
         }
-        /// <inheritdoc cref="GetString_(ALCDevice, All)"/>
-        public static unsafe string? GetString(ALCDevice device, All param)
+        /// <inheritdoc cref="GetString_(ALCDevice, StringName)"/>
+        public static unsafe string? GetString(ALCDevice device, StringName param)
         {
             string? returnValue_str;
             byte* returnValue;
@@ -145,12 +133,12 @@ namespace OpenTK.Audio.OpenAL.ALC
             returnValue_str = Marshal.PtrToStringAnsi((IntPtr)returnValue);
             return returnValue_str;
         }
-        /// <inheritdoc cref="IsExtensionPresent(byte*)"/>
-        public static unsafe bool IsExtensionPresent(string extname)
+        /// <inheritdoc cref="IsExtensionPresent(ALCDevice, byte*)"/>
+        public static unsafe bool IsExtensionPresent(ALCDevice deviceHandle, string extname)
         {
             bool returnValue;
             byte* extname_ptr = (byte*)Marshal.StringToCoTaskMemUTF8(extname);
-            returnValue = IsExtensionPresent(extname_ptr);
+            returnValue = IsExtensionPresent(deviceHandle, extname_ptr);
             Marshal.FreeCoTaskMem((IntPtr)extname_ptr);
             return returnValue;
         }
@@ -393,8 +381,8 @@ namespace OpenTK.Audio.OpenAL.ALC
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="CaptureOpenDevice(byte*, uint, All, int)"/>
-            public static unsafe ALCDevice CaptureOpenDevice(string devicename, uint frequency, All format, int buffersize)
+            /// <inheritdoc cref="CaptureOpenDevice(byte*, uint, Format, int)"/>
+            public static unsafe ALCDevice CaptureOpenDevice(string devicename, uint frequency, Format format, int buffersize)
             {
                 ALCDevice returnValue;
                 byte* devicename_ptr = (byte*)Marshal.StringToCoTaskMemUTF8(devicename);
@@ -516,62 +504,62 @@ namespace OpenTK.Audio.OpenAL.ALC
                     EventCallbackSOFT(callback, userParam_ptr);
                 }
             }
-            /// <inheritdoc cref="EventControlSOFT(int, All*, bool)"/>
-            public static unsafe bool EventControlSOFT(int count, ReadOnlySpan<All> events, bool enable)
+            /// <inheritdoc cref="EventControlSOFT(int, EventType*, bool)"/>
+            public static unsafe bool EventControlSOFT(int count, ReadOnlySpan<EventType> events, bool enable)
             {
                 bool returnValue;
-                fixed (All* events_ptr = events)
+                fixed (EventType* events_ptr = events)
                 {
                     returnValue = EventControlSOFT(count, events_ptr, enable);
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="EventControlSOFT(int, All*, bool)"/>
-            public static unsafe bool EventControlSOFT(int count, All[] events, bool enable)
+            /// <inheritdoc cref="EventControlSOFT(int, EventType*, bool)"/>
+            public static unsafe bool EventControlSOFT(int count, EventType[] events, bool enable)
             {
                 bool returnValue;
-                fixed (All* events_ptr = events)
+                fixed (EventType* events_ptr = events)
                 {
                     returnValue = EventControlSOFT(count, events_ptr, enable);
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="EventControlSOFT(int, All*, bool)"/>
-            public static unsafe bool EventControlSOFT(int count, ref readonly All events, bool enable)
+            /// <inheritdoc cref="EventControlSOFT(int, EventType*, bool)"/>
+            public static unsafe bool EventControlSOFT(int count, ref readonly EventType events, bool enable)
             {
                 bool returnValue;
-                fixed (All* events_ptr = &events)
+                fixed (EventType* events_ptr = &events)
                 {
                     returnValue = EventControlSOFT(count, events_ptr, enable);
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetInteger64vSOFT(ALCDevice, All, int, long*)"/>
-            public static unsafe void GetInteger64vSOFT(ALCDevice device, All pname, int size, Span<long> values)
+            /// <inheritdoc cref="GetInteger64vSOFT(ALCDevice, GetPNameI64V, int, long*)"/>
+            public static unsafe void GetInteger64vSOFT(ALCDevice device, GetPNameI64V pname, int size, Span<long> values)
             {
                 fixed (long* values_ptr = values)
                 {
                     GetInteger64vSOFT(device, pname, size, values_ptr);
                 }
             }
-            /// <inheritdoc cref="GetInteger64vSOFT(ALCDevice, All, int, long*)"/>
-            public static unsafe void GetInteger64vSOFT(ALCDevice device, All pname, int size, long[] values)
+            /// <inheritdoc cref="GetInteger64vSOFT(ALCDevice, GetPNameI64V, int, long*)"/>
+            public static unsafe void GetInteger64vSOFT(ALCDevice device, GetPNameI64V pname, int size, long[] values)
             {
                 fixed (long* values_ptr = values)
                 {
                     GetInteger64vSOFT(device, pname, size, values_ptr);
                 }
             }
-            /// <inheritdoc cref="GetInteger64vSOFT(ALCDevice, All, int, long*)"/>
-            public static unsafe void GetInteger64vSOFT(ALCDevice device, All pname, int size, ref long values)
+            /// <inheritdoc cref="GetInteger64vSOFT(ALCDevice, GetPNameI64V, int, long*)"/>
+            public static unsafe void GetInteger64vSOFT(ALCDevice device, GetPNameI64V pname, int size, ref long values)
             {
                 fixed (long* values_ptr = &values)
                 {
                     GetInteger64vSOFT(device, pname, size, values_ptr);
                 }
             }
-            /// <inheritdoc cref="GetStringiSOFT_(ALCDevice, All, int)"/>
-            public static unsafe string? GetStringiSOFT(ALCDevice device, All paramName, int index)
+            /// <inheritdoc cref="GetStringiSOFT_(ALCDevice, IndexedStringName, int)"/>
+            public static unsafe string? GetStringiSOFT(ALCDevice device, IndexedStringName paramName, int index)
             {
                 string? returnValue_str;
                 byte* returnValue;

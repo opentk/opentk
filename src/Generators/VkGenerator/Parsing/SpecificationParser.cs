@@ -12,11 +12,6 @@ using GeneratorBase;
 
 namespace VkGenerator.Parsing
 {
-    public interface IReferable
-    {
-        void MarkReferencedBy(Command command);
-    }
-
     public record SpecificationData(
             List<Define> Defines,
             List<EnumType> Enums,
@@ -58,57 +53,36 @@ namespace VkGenerator.Parsing
         public VersionInfo? VersionInfo;
         public HandleType? ResolvedParent;
 
-        public List<Command>? ReferencedBy;
-        public void MarkReferencedBy(Command command)
-        {
-            if (ReferencedBy == null)
-            {
-                ReferencedBy = new List<Command>();
-            }
-            ReferencedBy.Add(command);
-        }
+        public List<IFunction> ReferencedBy { get; } = [];
     }
 
     public record ExternalType(string Name, string? HeaderFile);
 
-    public record StructType(string Name, List<StructMember> Members, bool Union, string? Comment, string? Alias) : IReferable
+    public record StructType(string Name, List<StructMember> Members, bool Union, string? Comment, string? Alias) : IStruct
     {
-        public VersionInfo? VersionInfo;
-        public List<Command>? ReferencedBy;
+        List<IStructMember> IStruct.Members => Members.Cast<IStructMember>().ToList();
 
-        public void MarkReferencedBy(Command command)
-        {
-            if (ReferencedBy == null)
-            {
-                ReferencedBy = new List<Command>();
-            }
-            ReferencedBy.Add(command);
-        }
+        public VersionInfo? VersionInfo { get; set; }
+
+        public List<IFunction> ReferencedBy { get; } = [];
     }
-    public record StructMember(string Type, string Name, string? Values)
+    public record StructMember(string Type, string Name, string? Values) : IStructMember
     {
         public BaseCSType? StrongType { get; set; }
     };
 
-    public record EnumType(string Name, List<EnumMember> Members, bool Bitmask, string? Extension) : IReferable
+    public record EnumType(string Name, List<EnumMember> Members, bool Bitmask, string? Extension) : IEnum
     {
+        List<IEnumMember> IEnum.Members => Members.Cast<IEnumMember>().ToList();
+
         public BaseCSType? StrongUnderlyingType { get; set; }
 
         public VersionInfo? VersionInfo;
-        public List<Command>? ReferencedBy;
-
-        public void MarkReferencedBy(Command command)
-        {
-            if (ReferencedBy == null)
-            {
-                ReferencedBy = new List<Command>();
-            }
-            ReferencedBy.Add(command);
-        }
+        public List<IFunction> ReferencedBy { get; } = [];
     }
-    public record EnumMember(string Name, ulong Value, string? Comment, string? Alias, string? Extension)
+    public record EnumMember(string Name, ulong Value, string? Comment, string? Alias, string? Extension) : IEnumMember
     {
-        public VersionInfo? VersionInfo;
+        public VersionInfo? VersionInfo { get; set; }
     }
 
     public enum CommandType
@@ -123,17 +97,22 @@ namespace VkGenerator.Parsing
         Device,
     }
 
-    public record Command(string Name, string ReturnType, List<CommandParameter> Parameters, string? Alias)
+    public record Command(string Name, string ReturnType, List<CommandParameter> Parameters, string? Alias) : IFunction
     {
-        public BaseCSType? StrongReturnType;
-        public CommandType CommandType = CommandType.Invalid;
+        string IFunction.EntryPoint => Name;
+        List<IFunctionParameter> IFunction.Parameters => Parameters.Cast<IFunctionParameter>().ToList();
 
-        public VersionInfo? VersionInfo;
+        public BaseCSType? StrongReturnType { get; set; }
+        public VersionInfo? VersionInfo { get; set; }
+
+        public CommandType CommandType = CommandType.Invalid;
     }
 
-    public record CommandParameter(string Name, string Type, bool Optional, bool ExternSync, string? Length)
+    public record CommandParameter(string Name, string Type, bool Optional, bool ExternSync, string? Length) : IFunctionParameter
     {
-        public BaseCSType? StrongType;
+        string IFunctionParameter.OriginalName => Name;
+
+        public BaseCSType? StrongType { get; set; }
     }
 
     public record Feature(string Name, Version Version, string? Depends, string? Comment, List<RequireTag> RequireTags, List<DeprecateTag> DeprecateTags, List<RemoveTag> RemoveTags);
@@ -172,8 +151,6 @@ namespace VkGenerator.Parsing
     public record TypeRef(string Name);
     public record FeatureRef(string Name, string Struct);
 
-    public record DeprecationReason(Version? Version, string? Extension, string? ExplanationLink);
-
     public enum ConstantType
     {
         Int32,
@@ -184,21 +161,6 @@ namespace VkGenerator.Parsing
     }
 
     public record Constant(ConstantType Type, string Name, string? Extension, string? Comment, ulong IntValue, float FloatValue, string StringValue);
-
-    public record VersionInfo(Version? Version, List<string> Extensions)
-    {
-        public List<DeprecationReason> DeprecatedBy = [];
-
-        public void Deprecate(DeprecationReason reason)
-        {
-            DeprecatedBy.Add(reason);
-        }
-
-        public override string ToString()
-        {
-            return $"V: {Version}{(DeprecatedBy != null ? $" Deprecated: {string.Join(", ", DeprecatedBy.Select(d => d.Version?.ToString() ?? d.Extension))}" : "")} Extensions: {string.Join(", ", Extensions)}";
-        }
-    }
 
     internal class SpecificationParser
     {
@@ -721,8 +683,6 @@ namespace VkGenerator.Parsing
 
                         parameters.Add(new CommandParameter(paramName, paramTypeStr, optional, externsync, len));
                     }
-
-
 
                     commands.Add(new Command(entryPoint, returnTypeStr, parameters, null));
                 }

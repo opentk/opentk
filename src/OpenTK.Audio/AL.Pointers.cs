@@ -13,7 +13,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alAuxiliaryEffectSlotf_Lazy(uint effectslot, int param, float flValue)
         {
-            _alAuxiliaryEffectSlotf_fnptr = (delegate* unmanaged<uint, int, float, void>)ALLoader.BindingsContext.GetProcAddress("alAuxiliaryEffectSlotf");
+            _alAuxiliaryEffectSlotf_fnptr = (delegate* unmanaged<uint, int, float, void>)ALLoader.ALGetProcAddress("alAuxiliaryEffectSlotf");
             _alAuxiliaryEffectSlotf_fnptr(effectslot, param, flValue);
         }
         
@@ -22,7 +22,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alAuxiliaryEffectSlotfv_Lazy(uint effectslot, int param, float* pflValues)
         {
-            _alAuxiliaryEffectSlotfv_fnptr = (delegate* unmanaged<uint, int, float*, void>)ALLoader.BindingsContext.GetProcAddress("alAuxiliaryEffectSlotfv");
+            _alAuxiliaryEffectSlotfv_fnptr = (delegate* unmanaged<uint, int, float*, void>)ALLoader.ALGetProcAddress("alAuxiliaryEffectSlotfv");
             _alAuxiliaryEffectSlotfv_fnptr(effectslot, param, pflValues);
         }
         
@@ -31,7 +31,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alAuxiliaryEffectSloti_Lazy(uint effectslot, int param, int iValue)
         {
-            _alAuxiliaryEffectSloti_fnptr = (delegate* unmanaged<uint, int, int, void>)ALLoader.BindingsContext.GetProcAddress("alAuxiliaryEffectSloti");
+            _alAuxiliaryEffectSloti_fnptr = (delegate* unmanaged<uint, int, int, void>)ALLoader.ALGetProcAddress("alAuxiliaryEffectSloti");
             _alAuxiliaryEffectSloti_fnptr(effectslot, param, iValue);
         }
         
@@ -40,7 +40,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alAuxiliaryEffectSlotiv_Lazy(uint effectslot, int param, int* piValues)
         {
-            _alAuxiliaryEffectSlotiv_fnptr = (delegate* unmanaged<uint, int, int*, void>)ALLoader.BindingsContext.GetProcAddress("alAuxiliaryEffectSlotiv");
+            _alAuxiliaryEffectSlotiv_fnptr = (delegate* unmanaged<uint, int, int*, void>)ALLoader.ALGetProcAddress("alAuxiliaryEffectSlotiv");
             _alAuxiliaryEffectSlotiv_fnptr(effectslot, param, piValues);
         }
         
@@ -49,7 +49,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alBuffer3f_Lazy(uint buffer, int param, float value1, float value2, float value3)
         {
-            _alBuffer3f_fnptr = (delegate* unmanaged<uint, int, float, float, float, void>)ALLoader.BindingsContext.GetProcAddress("alBuffer3f");
+            _alBuffer3f_fnptr = (delegate* unmanaged<uint, int, float, float, float, void>)ALLoader.ALGetProcAddress("alBuffer3f");
             _alBuffer3f_fnptr(buffer, param, value1, value2, value3);
         }
         
@@ -58,7 +58,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alBuffer3i_Lazy(uint buffer, int param, int value1, int value2, int value3)
         {
-            _alBuffer3i_fnptr = (delegate* unmanaged<uint, int, int, int, int, void>)ALLoader.BindingsContext.GetProcAddress("alBuffer3i");
+            _alBuffer3i_fnptr = (delegate* unmanaged<uint, int, int, int, int, void>)ALLoader.ALGetProcAddress("alBuffer3i");
             _alBuffer3i_fnptr(buffer, param, value1, value2, value3);
         }
         
@@ -67,7 +67,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alBufferCallbackSOFT_Lazy(uint buffer, int format, int freq, delegate* unmanaged[Cdecl]<void*, void*, nuint, nuint> callback, void* userptr)
         {
-            _alBufferCallbackSOFT_fnptr = (delegate* unmanaged<uint, int, int, delegate* unmanaged[Cdecl]<void*, void*, nuint, nuint>, void*, void>)ALLoader.BindingsContext.GetProcAddress("alBufferCallbackSOFT");
+            _alBufferCallbackSOFT_fnptr = (delegate* unmanaged<uint, int, int, delegate* unmanaged[Cdecl]<void*, void*, nuint, nuint>, void*, void>)ALLoader.ALGetProcAddress("alBufferCallbackSOFT");
             _alBufferCallbackSOFT_fnptr(buffer, format, freq, callback, userptr);
         }
         
@@ -76,7 +76,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alBufferData_Lazy(uint buffer, int format, void* data, int size, int samplerate)
         {
-            _alBufferData_fnptr = (delegate* unmanaged<uint, int, void*, int, int, void>)ALLoader.BindingsContext.GetProcAddress("alBufferData");
+            _alBufferData_fnptr = (delegate* unmanaged<uint, int, void*, int, int, void>)ALLoader.ALGetProcAddress("alBufferData");
             _alBufferData_fnptr(buffer, format, data, size, samplerate);
         }
         
@@ -85,7 +85,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alBufferf_Lazy(uint buffer, int param, float value)
         {
-            _alBufferf_fnptr = (delegate* unmanaged<uint, int, float, void>)ALLoader.BindingsContext.GetProcAddress("alBufferf");
+            _alBufferf_fnptr = (delegate* unmanaged<uint, int, float, void>)ALLoader.ALGetProcAddress("alBufferf");
             _alBufferf_fnptr(buffer, param, value);
         }
         
@@ -94,7 +94,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alBufferfv_Lazy(uint buffer, int param, float* value)
         {
-            _alBufferfv_fnptr = (delegate* unmanaged<uint, int, float*, void>)ALLoader.BindingsContext.GetProcAddress("alBufferfv");
+            _alBufferfv_fnptr = (delegate* unmanaged<uint, int, float*, void>)ALLoader.ALGetProcAddress("alBufferfv");
             _alBufferfv_fnptr(buffer, param, value);
         }
         
@@ -103,7 +103,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alBufferi_Lazy(uint buffer, int param, int value)
         {
-            _alBufferi_fnptr = (delegate* unmanaged<uint, int, int, void>)ALLoader.BindingsContext.GetProcAddress("alBufferi");
+            _alBufferi_fnptr = (delegate* unmanaged<uint, int, int, void>)ALLoader.ALGetProcAddress("alBufferi");
             _alBufferi_fnptr(buffer, param, value);
         }
         
@@ -112,7 +112,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alBufferiv_Lazy(uint buffer, int param, int* value)
         {
-            _alBufferiv_fnptr = (delegate* unmanaged<uint, int, int*, void>)ALLoader.BindingsContext.GetProcAddress("alBufferiv");
+            _alBufferiv_fnptr = (delegate* unmanaged<uint, int, int*, void>)ALLoader.ALGetProcAddress("alBufferiv");
             _alBufferiv_fnptr(buffer, param, value);
         }
         
@@ -121,7 +121,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alBufferSamplesSOFT_Lazy(uint buffer, uint samplerate, int internalformat, int samples, int channels, int type, void* data)
         {
-            _alBufferSamplesSOFT_fnptr = (delegate* unmanaged<uint, uint, int, int, int, int, void*, void>)ALLoader.BindingsContext.GetProcAddress("alBufferSamplesSOFT");
+            _alBufferSamplesSOFT_fnptr = (delegate* unmanaged<uint, uint, int, int, int, int, void*, void>)ALLoader.ALGetProcAddress("alBufferSamplesSOFT");
             _alBufferSamplesSOFT_fnptr(buffer, samplerate, internalformat, samples, channels, type, data);
         }
         
@@ -130,7 +130,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alBufferSubDataSOFT_Lazy(uint buffer, int format, void* data, int offset, int length)
         {
-            _alBufferSubDataSOFT_fnptr = (delegate* unmanaged<uint, int, void*, int, int, void>)ALLoader.BindingsContext.GetProcAddress("alBufferSubDataSOFT");
+            _alBufferSubDataSOFT_fnptr = (delegate* unmanaged<uint, int, void*, int, int, void>)ALLoader.ALGetProcAddress("alBufferSubDataSOFT");
             _alBufferSubDataSOFT_fnptr(buffer, format, data, offset, length);
         }
         
@@ -139,7 +139,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alBufferSubSamplesSOFT_Lazy(uint buffer, int offset, int samples, int channels, int type, void* data)
         {
-            _alBufferSubSamplesSOFT_fnptr = (delegate* unmanaged<uint, int, int, int, int, void*, void>)ALLoader.BindingsContext.GetProcAddress("alBufferSubSamplesSOFT");
+            _alBufferSubSamplesSOFT_fnptr = (delegate* unmanaged<uint, int, int, int, int, void*, void>)ALLoader.ALGetProcAddress("alBufferSubSamplesSOFT");
             _alBufferSubSamplesSOFT_fnptr(buffer, offset, samples, channels, type, data);
         }
         
@@ -148,7 +148,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alDebugMessageCallbackEXT_Lazy(delegate* unmanaged[Cdecl]<All, All, uint, All, nuint, byte*, void*, int> callback, void* userParam)
         {
-            _alDebugMessageCallbackEXT_fnptr = (delegate* unmanaged<delegate* unmanaged[Cdecl]<All, All, uint, All, nuint, byte*, void*, int>, void*, void>)ALLoader.BindingsContext.GetProcAddress("alDebugMessageCallbackEXT");
+            _alDebugMessageCallbackEXT_fnptr = (delegate* unmanaged<delegate* unmanaged[Cdecl]<All, All, uint, All, nuint, byte*, void*, int>, void*, void>)ALLoader.ALGetProcAddress("alDebugMessageCallbackEXT");
             _alDebugMessageCallbackEXT_fnptr(callback, userParam);
         }
         
@@ -157,7 +157,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alDebugMessageControlEXT_Lazy(int source, int type, uint severity, int count, uint* ids, byte enable)
         {
-            _alDebugMessageControlEXT_fnptr = (delegate* unmanaged<int, int, uint, int, uint*, byte, void>)ALLoader.BindingsContext.GetProcAddress("alDebugMessageControlEXT");
+            _alDebugMessageControlEXT_fnptr = (delegate* unmanaged<int, int, uint, int, uint*, byte, void>)ALLoader.ALGetProcAddress("alDebugMessageControlEXT");
             _alDebugMessageControlEXT_fnptr(source, type, severity, count, ids, enable);
         }
         
@@ -166,7 +166,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alDebugMessageInsertEXT_Lazy(int source, int type, uint severity, int length, byte* message)
         {
-            _alDebugMessageInsertEXT_fnptr = (delegate* unmanaged<int, int, uint, int, byte*, void>)ALLoader.BindingsContext.GetProcAddress("alDebugMessageInsertEXT");
+            _alDebugMessageInsertEXT_fnptr = (delegate* unmanaged<int, int, uint, int, byte*, void>)ALLoader.ALGetProcAddress("alDebugMessageInsertEXT");
             _alDebugMessageInsertEXT_fnptr(source, type, severity, length, message);
         }
         
@@ -175,7 +175,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alDeferUpdatesSOFT_Lazy()
         {
-            _alDeferUpdatesSOFT_fnptr = (delegate* unmanaged<void>)ALLoader.BindingsContext.GetProcAddress("alDeferUpdatesSOFT");
+            _alDeferUpdatesSOFT_fnptr = (delegate* unmanaged<void>)ALLoader.ALGetProcAddress("alDeferUpdatesSOFT");
             _alDeferUpdatesSOFT_fnptr();
         }
         
@@ -184,7 +184,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alDeleteAuxiliaryEffectSlots_Lazy(int n, uint* effectslots)
         {
-            _alDeleteAuxiliaryEffectSlots_fnptr = (delegate* unmanaged<int, uint*, void>)ALLoader.BindingsContext.GetProcAddress("alDeleteAuxiliaryEffectSlots");
+            _alDeleteAuxiliaryEffectSlots_fnptr = (delegate* unmanaged<int, uint*, void>)ALLoader.ALGetProcAddress("alDeleteAuxiliaryEffectSlots");
             _alDeleteAuxiliaryEffectSlots_fnptr(n, effectslots);
         }
         
@@ -193,7 +193,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alDeleteBuffers_Lazy(int n, uint* buffers)
         {
-            _alDeleteBuffers_fnptr = (delegate* unmanaged<int, uint*, void>)ALLoader.BindingsContext.GetProcAddress("alDeleteBuffers");
+            _alDeleteBuffers_fnptr = (delegate* unmanaged<int, uint*, void>)ALLoader.ALGetProcAddress("alDeleteBuffers");
             _alDeleteBuffers_fnptr(n, buffers);
         }
         
@@ -202,7 +202,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alDeleteEffects_Lazy(int n, uint* effects)
         {
-            _alDeleteEffects_fnptr = (delegate* unmanaged<int, uint*, void>)ALLoader.BindingsContext.GetProcAddress("alDeleteEffects");
+            _alDeleteEffects_fnptr = (delegate* unmanaged<int, uint*, void>)ALLoader.ALGetProcAddress("alDeleteEffects");
             _alDeleteEffects_fnptr(n, effects);
         }
         
@@ -211,7 +211,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alDeleteFilters_Lazy(int n, uint* filters)
         {
-            _alDeleteFilters_fnptr = (delegate* unmanaged<int, uint*, void>)ALLoader.BindingsContext.GetProcAddress("alDeleteFilters");
+            _alDeleteFilters_fnptr = (delegate* unmanaged<int, uint*, void>)ALLoader.ALGetProcAddress("alDeleteFilters");
             _alDeleteFilters_fnptr(n, filters);
         }
         
@@ -220,7 +220,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alDeleteSources_Lazy(int n, uint* sources)
         {
-            _alDeleteSources_fnptr = (delegate* unmanaged<int, uint*, void>)ALLoader.BindingsContext.GetProcAddress("alDeleteSources");
+            _alDeleteSources_fnptr = (delegate* unmanaged<int, uint*, void>)ALLoader.ALGetProcAddress("alDeleteSources");
             _alDeleteSources_fnptr(n, sources);
         }
         
@@ -229,7 +229,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alDisable_Lazy(int capability)
         {
-            _alDisable_fnptr = (delegate* unmanaged<int, void>)ALLoader.BindingsContext.GetProcAddress("alDisable");
+            _alDisable_fnptr = (delegate* unmanaged<int, void>)ALLoader.ALGetProcAddress("alDisable");
             _alDisable_fnptr(capability);
         }
         
@@ -238,7 +238,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alDistanceModel_Lazy(int distanceModel)
         {
-            _alDistanceModel_fnptr = (delegate* unmanaged<int, void>)ALLoader.BindingsContext.GetProcAddress("alDistanceModel");
+            _alDistanceModel_fnptr = (delegate* unmanaged<int, void>)ALLoader.ALGetProcAddress("alDistanceModel");
             _alDistanceModel_fnptr(distanceModel);
         }
         
@@ -247,7 +247,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alDopperFactor_Lazy(float value)
         {
-            _alDopperFactor_fnptr = (delegate* unmanaged<float, void>)ALLoader.BindingsContext.GetProcAddress("alDopperFactor");
+            _alDopperFactor_fnptr = (delegate* unmanaged<float, void>)ALLoader.ALGetProcAddress("alDopperFactor");
             _alDopperFactor_fnptr(value);
         }
         
@@ -256,7 +256,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alEffectf_Lazy(uint effect, int param, float flValue)
         {
-            _alEffectf_fnptr = (delegate* unmanaged<uint, int, float, void>)ALLoader.BindingsContext.GetProcAddress("alEffectf");
+            _alEffectf_fnptr = (delegate* unmanaged<uint, int, float, void>)ALLoader.ALGetProcAddress("alEffectf");
             _alEffectf_fnptr(effect, param, flValue);
         }
         
@@ -265,7 +265,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alEffectfv_Lazy(uint effect, int param, float* pflValues)
         {
-            _alEffectfv_fnptr = (delegate* unmanaged<uint, int, float*, void>)ALLoader.BindingsContext.GetProcAddress("alEffectfv");
+            _alEffectfv_fnptr = (delegate* unmanaged<uint, int, float*, void>)ALLoader.ALGetProcAddress("alEffectfv");
             _alEffectfv_fnptr(effect, param, pflValues);
         }
         
@@ -274,7 +274,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alEffecti_Lazy(uint effect, int param, int iValue)
         {
-            _alEffecti_fnptr = (delegate* unmanaged<uint, int, int, void>)ALLoader.BindingsContext.GetProcAddress("alEffecti");
+            _alEffecti_fnptr = (delegate* unmanaged<uint, int, int, void>)ALLoader.ALGetProcAddress("alEffecti");
             _alEffecti_fnptr(effect, param, iValue);
         }
         
@@ -283,7 +283,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alEffectiv_Lazy(uint effect, int param, int* piValues)
         {
-            _alEffectiv_fnptr = (delegate* unmanaged<uint, int, int*, void>)ALLoader.BindingsContext.GetProcAddress("alEffectiv");
+            _alEffectiv_fnptr = (delegate* unmanaged<uint, int, int*, void>)ALLoader.ALGetProcAddress("alEffectiv");
             _alEffectiv_fnptr(effect, param, piValues);
         }
         
@@ -292,7 +292,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alEnable_Lazy(int capability)
         {
-            _alEnable_fnptr = (delegate* unmanaged<int, void>)ALLoader.BindingsContext.GetProcAddress("alEnable");
+            _alEnable_fnptr = (delegate* unmanaged<int, void>)ALLoader.ALGetProcAddress("alEnable");
             _alEnable_fnptr(capability);
         }
         
@@ -301,7 +301,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alEventCallbackSOFT_Lazy(delegate* unmanaged[Cdecl]<All, uint, uint, nuint, byte*, void*, void> callback, void* userParam)
         {
-            _alEventCallbackSOFT_fnptr = (delegate* unmanaged<delegate* unmanaged[Cdecl]<All, uint, uint, nuint, byte*, void*, void>, void*, void>)ALLoader.BindingsContext.GetProcAddress("alEventCallbackSOFT");
+            _alEventCallbackSOFT_fnptr = (delegate* unmanaged<delegate* unmanaged[Cdecl]<All, uint, uint, nuint, byte*, void*, void>, void*, void>)ALLoader.ALGetProcAddress("alEventCallbackSOFT");
             _alEventCallbackSOFT_fnptr(callback, userParam);
         }
         
@@ -310,7 +310,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alEventControlSOFT_Lazy(int count, int* types, byte enable)
         {
-            _alEventControlSOFT_fnptr = (delegate* unmanaged<int, int*, byte, void>)ALLoader.BindingsContext.GetProcAddress("alEventControlSOFT");
+            _alEventControlSOFT_fnptr = (delegate* unmanaged<int, int*, byte, void>)ALLoader.ALGetProcAddress("alEventControlSOFT");
             _alEventControlSOFT_fnptr(count, types, enable);
         }
         
@@ -319,7 +319,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alFilterf_Lazy(uint filter, int param, float flValue)
         {
-            _alFilterf_fnptr = (delegate* unmanaged<uint, int, float, void>)ALLoader.BindingsContext.GetProcAddress("alFilterf");
+            _alFilterf_fnptr = (delegate* unmanaged<uint, int, float, void>)ALLoader.ALGetProcAddress("alFilterf");
             _alFilterf_fnptr(filter, param, flValue);
         }
         
@@ -328,7 +328,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alFilterfv_Lazy(uint filter, int param, float* pflValues)
         {
-            _alFilterfv_fnptr = (delegate* unmanaged<uint, int, float*, void>)ALLoader.BindingsContext.GetProcAddress("alFilterfv");
+            _alFilterfv_fnptr = (delegate* unmanaged<uint, int, float*, void>)ALLoader.ALGetProcAddress("alFilterfv");
             _alFilterfv_fnptr(filter, param, pflValues);
         }
         
@@ -337,7 +337,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alFilteri_Lazy(uint filter, int param, int iValue)
         {
-            _alFilteri_fnptr = (delegate* unmanaged<uint, int, int, void>)ALLoader.BindingsContext.GetProcAddress("alFilteri");
+            _alFilteri_fnptr = (delegate* unmanaged<uint, int, int, void>)ALLoader.ALGetProcAddress("alFilteri");
             _alFilteri_fnptr(filter, param, iValue);
         }
         
@@ -346,7 +346,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alFilteriv_Lazy(uint filter, int param, int* piValues)
         {
-            _alFilteriv_fnptr = (delegate* unmanaged<uint, int, int*, void>)ALLoader.BindingsContext.GetProcAddress("alFilteriv");
+            _alFilteriv_fnptr = (delegate* unmanaged<uint, int, int*, void>)ALLoader.ALGetProcAddress("alFilteriv");
             _alFilteriv_fnptr(filter, param, piValues);
         }
         
@@ -355,7 +355,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alGenAuxiliaryEffectSlots_Lazy(int n, uint* effectslots)
         {
-            _alGenAuxiliaryEffectSlots_fnptr = (delegate* unmanaged<int, uint*, void>)ALLoader.BindingsContext.GetProcAddress("alGenAuxiliaryEffectSlots");
+            _alGenAuxiliaryEffectSlots_fnptr = (delegate* unmanaged<int, uint*, void>)ALLoader.ALGetProcAddress("alGenAuxiliaryEffectSlots");
             _alGenAuxiliaryEffectSlots_fnptr(n, effectslots);
         }
         
@@ -364,7 +364,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alGenBuffers_Lazy(int n, uint* buffers)
         {
-            _alGenBuffers_fnptr = (delegate* unmanaged<int, uint*, void>)ALLoader.BindingsContext.GetProcAddress("alGenBuffers");
+            _alGenBuffers_fnptr = (delegate* unmanaged<int, uint*, void>)ALLoader.ALGetProcAddress("alGenBuffers");
             _alGenBuffers_fnptr(n, buffers);
         }
         
@@ -373,7 +373,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alGenEffects_Lazy(int n, uint* effects)
         {
-            _alGenEffects_fnptr = (delegate* unmanaged<int, uint*, void>)ALLoader.BindingsContext.GetProcAddress("alGenEffects");
+            _alGenEffects_fnptr = (delegate* unmanaged<int, uint*, void>)ALLoader.ALGetProcAddress("alGenEffects");
             _alGenEffects_fnptr(n, effects);
         }
         
@@ -382,7 +382,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alGenFilters_Lazy(int n, uint* filters)
         {
-            _alGenFilters_fnptr = (delegate* unmanaged<int, uint*, void>)ALLoader.BindingsContext.GetProcAddress("alGenFilters");
+            _alGenFilters_fnptr = (delegate* unmanaged<int, uint*, void>)ALLoader.ALGetProcAddress("alGenFilters");
             _alGenFilters_fnptr(n, filters);
         }
         
@@ -391,7 +391,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alGenSources_Lazy(int n, uint* sources)
         {
-            _alGenSources_fnptr = (delegate* unmanaged<int, uint*, void>)ALLoader.BindingsContext.GetProcAddress("alGenSources");
+            _alGenSources_fnptr = (delegate* unmanaged<int, uint*, void>)ALLoader.ALGetProcAddress("alGenSources");
             _alGenSources_fnptr(n, sources);
         }
         
@@ -400,7 +400,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alGetAuxiliaryEffectSlotf_Lazy(uint effectslot, int param, float* pflValue)
         {
-            _alGetAuxiliaryEffectSlotf_fnptr = (delegate* unmanaged<uint, int, float*, void>)ALLoader.BindingsContext.GetProcAddress("alGetAuxiliaryEffectSlotf");
+            _alGetAuxiliaryEffectSlotf_fnptr = (delegate* unmanaged<uint, int, float*, void>)ALLoader.ALGetProcAddress("alGetAuxiliaryEffectSlotf");
             _alGetAuxiliaryEffectSlotf_fnptr(effectslot, param, pflValue);
         }
         
@@ -409,7 +409,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alGetAuxiliaryEffectSlotfv_Lazy(uint effectslot, int param, float* pflValues)
         {
-            _alGetAuxiliaryEffectSlotfv_fnptr = (delegate* unmanaged<uint, int, float*, void>)ALLoader.BindingsContext.GetProcAddress("alGetAuxiliaryEffectSlotfv");
+            _alGetAuxiliaryEffectSlotfv_fnptr = (delegate* unmanaged<uint, int, float*, void>)ALLoader.ALGetProcAddress("alGetAuxiliaryEffectSlotfv");
             _alGetAuxiliaryEffectSlotfv_fnptr(effectslot, param, pflValues);
         }
         
@@ -418,7 +418,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alGetAuxiliaryEffectSloti_Lazy(uint effectslot, int param, int* piValue)
         {
-            _alGetAuxiliaryEffectSloti_fnptr = (delegate* unmanaged<uint, int, int*, void>)ALLoader.BindingsContext.GetProcAddress("alGetAuxiliaryEffectSloti");
+            _alGetAuxiliaryEffectSloti_fnptr = (delegate* unmanaged<uint, int, int*, void>)ALLoader.ALGetProcAddress("alGetAuxiliaryEffectSloti");
             _alGetAuxiliaryEffectSloti_fnptr(effectslot, param, piValue);
         }
         
@@ -427,7 +427,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alGetAuxiliaryEffectSlotiv_Lazy(uint effectslot, int param, int* piValues)
         {
-            _alGetAuxiliaryEffectSlotiv_fnptr = (delegate* unmanaged<uint, int, int*, void>)ALLoader.BindingsContext.GetProcAddress("alGetAuxiliaryEffectSlotiv");
+            _alGetAuxiliaryEffectSlotiv_fnptr = (delegate* unmanaged<uint, int, int*, void>)ALLoader.ALGetProcAddress("alGetAuxiliaryEffectSlotiv");
             _alGetAuxiliaryEffectSlotiv_fnptr(effectslot, param, piValues);
         }
         
@@ -436,7 +436,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static byte alGetBoolean_Lazy(int param)
         {
-            _alGetBoolean_fnptr = (delegate* unmanaged<int, byte>)ALLoader.BindingsContext.GetProcAddress("alGetBoolean");
+            _alGetBoolean_fnptr = (delegate* unmanaged<int, byte>)ALLoader.ALGetProcAddress("alGetBoolean");
             return _alGetBoolean_fnptr(param);
         }
         
@@ -445,7 +445,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alGetBooleanv_Lazy(int param, byte* values)
         {
-            _alGetBooleanv_fnptr = (delegate* unmanaged<int, byte*, void>)ALLoader.BindingsContext.GetProcAddress("alGetBooleanv");
+            _alGetBooleanv_fnptr = (delegate* unmanaged<int, byte*, void>)ALLoader.ALGetProcAddress("alGetBooleanv");
             _alGetBooleanv_fnptr(param, values);
         }
         
@@ -454,7 +454,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alGetBuffer3f_Lazy(uint buffer, int param, float* value1, float* value2, float* value3)
         {
-            _alGetBuffer3f_fnptr = (delegate* unmanaged<uint, int, float*, float*, float*, void>)ALLoader.BindingsContext.GetProcAddress("alGetBuffer3f");
+            _alGetBuffer3f_fnptr = (delegate* unmanaged<uint, int, float*, float*, float*, void>)ALLoader.ALGetProcAddress("alGetBuffer3f");
             _alGetBuffer3f_fnptr(buffer, param, value1, value2, value3);
         }
         
@@ -463,7 +463,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alGetBuffer3i_Lazy(uint buffer, int param, int* value1, int* value2, int* value3)
         {
-            _alGetBuffer3i_fnptr = (delegate* unmanaged<uint, int, int*, int*, int*, void>)ALLoader.BindingsContext.GetProcAddress("alGetBuffer3i");
+            _alGetBuffer3i_fnptr = (delegate* unmanaged<uint, int, int*, int*, int*, void>)ALLoader.ALGetProcAddress("alGetBuffer3i");
             _alGetBuffer3i_fnptr(buffer, param, value1, value2, value3);
         }
         
@@ -472,7 +472,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alGetBuffer3PtrSOFT_Lazy(uint buffer, int param, void** ptr0, void** ptr1, void** ptr2)
         {
-            _alGetBuffer3PtrSOFT_fnptr = (delegate* unmanaged<uint, int, void**, void**, void**, void>)ALLoader.BindingsContext.GetProcAddress("alGetBuffer3PtrSOFT");
+            _alGetBuffer3PtrSOFT_fnptr = (delegate* unmanaged<uint, int, void**, void**, void**, void>)ALLoader.ALGetProcAddress("alGetBuffer3PtrSOFT");
             _alGetBuffer3PtrSOFT_fnptr(buffer, param, ptr0, ptr1, ptr2);
         }
         
@@ -481,7 +481,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alGetBufferf_Lazy(uint buffer, int param, float* value)
         {
-            _alGetBufferf_fnptr = (delegate* unmanaged<uint, int, float*, void>)ALLoader.BindingsContext.GetProcAddress("alGetBufferf");
+            _alGetBufferf_fnptr = (delegate* unmanaged<uint, int, float*, void>)ALLoader.ALGetProcAddress("alGetBufferf");
             _alGetBufferf_fnptr(buffer, param, value);
         }
         
@@ -490,7 +490,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alGetBufferfv_Lazy(uint buffer, int param, float* value)
         {
-            _alGetBufferfv_fnptr = (delegate* unmanaged<uint, int, float*, void>)ALLoader.BindingsContext.GetProcAddress("alGetBufferfv");
+            _alGetBufferfv_fnptr = (delegate* unmanaged<uint, int, float*, void>)ALLoader.ALGetProcAddress("alGetBufferfv");
             _alGetBufferfv_fnptr(buffer, param, value);
         }
         
@@ -499,7 +499,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alGetBufferi_Lazy(uint buffer, int param, int* value)
         {
-            _alGetBufferi_fnptr = (delegate* unmanaged<uint, int, int*, void>)ALLoader.BindingsContext.GetProcAddress("alGetBufferi");
+            _alGetBufferi_fnptr = (delegate* unmanaged<uint, int, int*, void>)ALLoader.ALGetProcAddress("alGetBufferi");
             _alGetBufferi_fnptr(buffer, param, value);
         }
         
@@ -508,7 +508,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alGetBufferiv_Lazy(uint buffer, int param, int* value)
         {
-            _alGetBufferiv_fnptr = (delegate* unmanaged<uint, int, int*, void>)ALLoader.BindingsContext.GetProcAddress("alGetBufferiv");
+            _alGetBufferiv_fnptr = (delegate* unmanaged<uint, int, int*, void>)ALLoader.ALGetProcAddress("alGetBufferiv");
             _alGetBufferiv_fnptr(buffer, param, value);
         }
         
@@ -517,7 +517,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alGetBufferPtrSOFT_Lazy(uint buffer, int param, void** ptr)
         {
-            _alGetBufferPtrSOFT_fnptr = (delegate* unmanaged<uint, int, void**, void>)ALLoader.BindingsContext.GetProcAddress("alGetBufferPtrSOFT");
+            _alGetBufferPtrSOFT_fnptr = (delegate* unmanaged<uint, int, void**, void>)ALLoader.ALGetProcAddress("alGetBufferPtrSOFT");
             _alGetBufferPtrSOFT_fnptr(buffer, param, ptr);
         }
         
@@ -526,7 +526,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alGetBufferPtrvSOFT_Lazy(uint buffer, int param, void** ptr)
         {
-            _alGetBufferPtrvSOFT_fnptr = (delegate* unmanaged<uint, int, void**, void>)ALLoader.BindingsContext.GetProcAddress("alGetBufferPtrvSOFT");
+            _alGetBufferPtrvSOFT_fnptr = (delegate* unmanaged<uint, int, void**, void>)ALLoader.ALGetProcAddress("alGetBufferPtrvSOFT");
             _alGetBufferPtrvSOFT_fnptr(buffer, param, ptr);
         }
         
@@ -535,7 +535,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alGetBufferSamplesSOFT_Lazy(uint buffer, int offset, int samples, int channels, int type, void* data)
         {
-            _alGetBufferSamplesSOFT_fnptr = (delegate* unmanaged<uint, int, int, int, int, void*, void>)ALLoader.BindingsContext.GetProcAddress("alGetBufferSamplesSOFT");
+            _alGetBufferSamplesSOFT_fnptr = (delegate* unmanaged<uint, int, int, int, int, void*, void>)ALLoader.ALGetProcAddress("alGetBufferSamplesSOFT");
             _alGetBufferSamplesSOFT_fnptr(buffer, offset, samples, channels, type, data);
         }
         
@@ -544,7 +544,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static uint alGetDebugMessageLogEXT_Lazy(uint count, int logBufSize, int* sources, int* types, uint* ids, int* severities, int* lengths, byte* logBuf)
         {
-            _alGetDebugMessageLogEXT_fnptr = (delegate* unmanaged<uint, int, int*, int*, uint*, int*, int*, byte*, uint>)ALLoader.BindingsContext.GetProcAddress("alGetDebugMessageLogEXT");
+            _alGetDebugMessageLogEXT_fnptr = (delegate* unmanaged<uint, int, int*, int*, uint*, int*, int*, byte*, uint>)ALLoader.ALGetProcAddress("alGetDebugMessageLogEXT");
             return _alGetDebugMessageLogEXT_fnptr(count, logBufSize, sources, types, ids, severities, lengths, logBuf);
         }
         
@@ -553,7 +553,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static double alGetDouble_Lazy(int param)
         {
-            _alGetDouble_fnptr = (delegate* unmanaged<int, double>)ALLoader.BindingsContext.GetProcAddress("alGetDouble");
+            _alGetDouble_fnptr = (delegate* unmanaged<int, double>)ALLoader.ALGetProcAddress("alGetDouble");
             return _alGetDouble_fnptr(param);
         }
         
@@ -562,7 +562,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alGetDoublev_Lazy(int param, double* values)
         {
-            _alGetDoublev_fnptr = (delegate* unmanaged<int, double*, void>)ALLoader.BindingsContext.GetProcAddress("alGetDoublev");
+            _alGetDoublev_fnptr = (delegate* unmanaged<int, double*, void>)ALLoader.ALGetProcAddress("alGetDoublev");
             _alGetDoublev_fnptr(param, values);
         }
         
@@ -571,7 +571,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alGetEffectf_Lazy(uint effect, int param, float* pflValue)
         {
-            _alGetEffectf_fnptr = (delegate* unmanaged<uint, int, float*, void>)ALLoader.BindingsContext.GetProcAddress("alGetEffectf");
+            _alGetEffectf_fnptr = (delegate* unmanaged<uint, int, float*, void>)ALLoader.ALGetProcAddress("alGetEffectf");
             _alGetEffectf_fnptr(effect, param, pflValue);
         }
         
@@ -580,7 +580,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alGetEffectfv_Lazy(uint effect, int param, float* pflValues)
         {
-            _alGetEffectfv_fnptr = (delegate* unmanaged<uint, int, float*, void>)ALLoader.BindingsContext.GetProcAddress("alGetEffectfv");
+            _alGetEffectfv_fnptr = (delegate* unmanaged<uint, int, float*, void>)ALLoader.ALGetProcAddress("alGetEffectfv");
             _alGetEffectfv_fnptr(effect, param, pflValues);
         }
         
@@ -589,7 +589,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alGetEffecti_Lazy(uint effect, int param, int* piValue)
         {
-            _alGetEffecti_fnptr = (delegate* unmanaged<uint, int, int*, void>)ALLoader.BindingsContext.GetProcAddress("alGetEffecti");
+            _alGetEffecti_fnptr = (delegate* unmanaged<uint, int, int*, void>)ALLoader.ALGetProcAddress("alGetEffecti");
             _alGetEffecti_fnptr(effect, param, piValue);
         }
         
@@ -598,7 +598,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alGetEffectiv_Lazy(uint effect, int param, int* piValues)
         {
-            _alGetEffectiv_fnptr = (delegate* unmanaged<uint, int, int*, void>)ALLoader.BindingsContext.GetProcAddress("alGetEffectiv");
+            _alGetEffectiv_fnptr = (delegate* unmanaged<uint, int, int*, void>)ALLoader.ALGetProcAddress("alGetEffectiv");
             _alGetEffectiv_fnptr(effect, param, piValues);
         }
         
@@ -607,7 +607,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static int alGetEnumValue_Lazy(byte* ename)
         {
-            _alGetEnumValue_fnptr = (delegate* unmanaged<byte*, int>)ALLoader.BindingsContext.GetProcAddress("alGetEnumValue");
+            _alGetEnumValue_fnptr = (delegate* unmanaged<byte*, int>)ALLoader.ALGetProcAddress("alGetEnumValue");
             return _alGetEnumValue_fnptr(ename);
         }
         
@@ -616,7 +616,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static int alGetError_Lazy()
         {
-            _alGetError_fnptr = (delegate* unmanaged<int>)ALLoader.BindingsContext.GetProcAddress("alGetError");
+            _alGetError_fnptr = (delegate* unmanaged<int>)ALLoader.ALGetProcAddress("alGetError");
             return _alGetError_fnptr();
         }
         
@@ -625,7 +625,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alGetFilterf_Lazy(uint filter, int param, float* pflValue)
         {
-            _alGetFilterf_fnptr = (delegate* unmanaged<uint, int, float*, void>)ALLoader.BindingsContext.GetProcAddress("alGetFilterf");
+            _alGetFilterf_fnptr = (delegate* unmanaged<uint, int, float*, void>)ALLoader.ALGetProcAddress("alGetFilterf");
             _alGetFilterf_fnptr(filter, param, pflValue);
         }
         
@@ -634,7 +634,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alGetFilterfv_Lazy(uint filter, int param, float* pflValues)
         {
-            _alGetFilterfv_fnptr = (delegate* unmanaged<uint, int, float*, void>)ALLoader.BindingsContext.GetProcAddress("alGetFilterfv");
+            _alGetFilterfv_fnptr = (delegate* unmanaged<uint, int, float*, void>)ALLoader.ALGetProcAddress("alGetFilterfv");
             _alGetFilterfv_fnptr(filter, param, pflValues);
         }
         
@@ -643,7 +643,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alGetFilteri_Lazy(uint filter, int param, int* piValue)
         {
-            _alGetFilteri_fnptr = (delegate* unmanaged<uint, int, int*, void>)ALLoader.BindingsContext.GetProcAddress("alGetFilteri");
+            _alGetFilteri_fnptr = (delegate* unmanaged<uint, int, int*, void>)ALLoader.ALGetProcAddress("alGetFilteri");
             _alGetFilteri_fnptr(filter, param, piValue);
         }
         
@@ -652,7 +652,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alGetFilteriv_Lazy(uint filter, int param, int* piValues)
         {
-            _alGetFilteriv_fnptr = (delegate* unmanaged<uint, int, int*, void>)ALLoader.BindingsContext.GetProcAddress("alGetFilteriv");
+            _alGetFilteriv_fnptr = (delegate* unmanaged<uint, int, int*, void>)ALLoader.ALGetProcAddress("alGetFilteriv");
             _alGetFilteriv_fnptr(filter, param, piValues);
         }
         
@@ -661,7 +661,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static float alGetFloat_Lazy(int param)
         {
-            _alGetFloat_fnptr = (delegate* unmanaged<int, float>)ALLoader.BindingsContext.GetProcAddress("alGetFloat");
+            _alGetFloat_fnptr = (delegate* unmanaged<int, float>)ALLoader.ALGetProcAddress("alGetFloat");
             return _alGetFloat_fnptr(param);
         }
         
@@ -670,7 +670,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alGetFloatv_Lazy(int param, float* values)
         {
-            _alGetFloatv_fnptr = (delegate* unmanaged<int, float*, void>)ALLoader.BindingsContext.GetProcAddress("alGetFloatv");
+            _alGetFloatv_fnptr = (delegate* unmanaged<int, float*, void>)ALLoader.ALGetProcAddress("alGetFloatv");
             _alGetFloatv_fnptr(param, values);
         }
         
@@ -679,7 +679,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static int alGetInteger_Lazy(int param)
         {
-            _alGetInteger_fnptr = (delegate* unmanaged<int, int>)ALLoader.BindingsContext.GetProcAddress("alGetInteger");
+            _alGetInteger_fnptr = (delegate* unmanaged<int, int>)ALLoader.ALGetProcAddress("alGetInteger");
             return _alGetInteger_fnptr(param);
         }
         
@@ -688,7 +688,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alGetIntegerv_Lazy(int param, int* values)
         {
-            _alGetIntegerv_fnptr = (delegate* unmanaged<int, int*, void>)ALLoader.BindingsContext.GetProcAddress("alGetIntegerv");
+            _alGetIntegerv_fnptr = (delegate* unmanaged<int, int*, void>)ALLoader.ALGetProcAddress("alGetIntegerv");
             _alGetIntegerv_fnptr(param, values);
         }
         
@@ -697,7 +697,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alGetListener3f_Lazy(int param, float* value1, float* value2, float* value3)
         {
-            _alGetListener3f_fnptr = (delegate* unmanaged<int, float*, float*, float*, void>)ALLoader.BindingsContext.GetProcAddress("alGetListener3f");
+            _alGetListener3f_fnptr = (delegate* unmanaged<int, float*, float*, float*, void>)ALLoader.ALGetProcAddress("alGetListener3f");
             _alGetListener3f_fnptr(param, value1, value2, value3);
         }
         
@@ -706,7 +706,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alGetListener3i_Lazy(int param, int* value1, int* value2, int* value3)
         {
-            _alGetListener3i_fnptr = (delegate* unmanaged<int, int*, int*, int*, void>)ALLoader.BindingsContext.GetProcAddress("alGetListener3i");
+            _alGetListener3i_fnptr = (delegate* unmanaged<int, int*, int*, int*, void>)ALLoader.ALGetProcAddress("alGetListener3i");
             _alGetListener3i_fnptr(param, value1, value2, value3);
         }
         
@@ -715,7 +715,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alGetListenerf_Lazy(int param, float* value)
         {
-            _alGetListenerf_fnptr = (delegate* unmanaged<int, float*, void>)ALLoader.BindingsContext.GetProcAddress("alGetListenerf");
+            _alGetListenerf_fnptr = (delegate* unmanaged<int, float*, void>)ALLoader.ALGetProcAddress("alGetListenerf");
             _alGetListenerf_fnptr(param, value);
         }
         
@@ -724,7 +724,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alGetListenerfv_Lazy(int param, float* values)
         {
-            _alGetListenerfv_fnptr = (delegate* unmanaged<int, float*, void>)ALLoader.BindingsContext.GetProcAddress("alGetListenerfv");
+            _alGetListenerfv_fnptr = (delegate* unmanaged<int, float*, void>)ALLoader.ALGetProcAddress("alGetListenerfv");
             _alGetListenerfv_fnptr(param, values);
         }
         
@@ -733,7 +733,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alGetListeneri_Lazy(int param, int* value)
         {
-            _alGetListeneri_fnptr = (delegate* unmanaged<int, int*, void>)ALLoader.BindingsContext.GetProcAddress("alGetListeneri");
+            _alGetListeneri_fnptr = (delegate* unmanaged<int, int*, void>)ALLoader.ALGetProcAddress("alGetListeneri");
             _alGetListeneri_fnptr(param, value);
         }
         
@@ -742,7 +742,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alGetListeneriv_Lazy(int param, int* values)
         {
-            _alGetListeneriv_fnptr = (delegate* unmanaged<int, int*, void>)ALLoader.BindingsContext.GetProcAddress("alGetListeneriv");
+            _alGetListeneriv_fnptr = (delegate* unmanaged<int, int*, void>)ALLoader.ALGetProcAddress("alGetListeneriv");
             _alGetListeneriv_fnptr(param, values);
         }
         
@@ -751,7 +751,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alGetObjectLabelEXT_Lazy(int identifier, uint name, int bufSize, int* length, byte* label)
         {
-            _alGetObjectLabelEXT_fnptr = (delegate* unmanaged<int, uint, int, int*, byte*, void>)ALLoader.BindingsContext.GetProcAddress("alGetObjectLabelEXT");
+            _alGetObjectLabelEXT_fnptr = (delegate* unmanaged<int, uint, int, int*, byte*, void>)ALLoader.ALGetProcAddress("alGetObjectLabelEXT");
             _alGetObjectLabelEXT_fnptr(identifier, name, bufSize, length, label);
         }
         
@@ -760,7 +760,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void* alGetPointerEXT_Lazy(int pname)
         {
-            _alGetPointerEXT_fnptr = (delegate* unmanaged<int, void*>)ALLoader.BindingsContext.GetProcAddress("alGetPointerEXT");
+            _alGetPointerEXT_fnptr = (delegate* unmanaged<int, void*>)ALLoader.ALGetProcAddress("alGetPointerEXT");
             return _alGetPointerEXT_fnptr(pname);
         }
         
@@ -769,7 +769,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void* alGetPointerSOFT_Lazy(int pname)
         {
-            _alGetPointerSOFT_fnptr = (delegate* unmanaged<int, void*>)ALLoader.BindingsContext.GetProcAddress("alGetPointerSOFT");
+            _alGetPointerSOFT_fnptr = (delegate* unmanaged<int, void*>)ALLoader.ALGetProcAddress("alGetPointerSOFT");
             return _alGetPointerSOFT_fnptr(pname);
         }
         
@@ -778,7 +778,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alGetPointervEXT_Lazy(int pname, void** values)
         {
-            _alGetPointervEXT_fnptr = (delegate* unmanaged<int, void**, void>)ALLoader.BindingsContext.GetProcAddress("alGetPointervEXT");
+            _alGetPointervEXT_fnptr = (delegate* unmanaged<int, void**, void>)ALLoader.ALGetProcAddress("alGetPointervEXT");
             _alGetPointervEXT_fnptr(pname, values);
         }
         
@@ -787,7 +787,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alGetPointervSOFT_Lazy(int pname, void** values)
         {
-            _alGetPointervSOFT_fnptr = (delegate* unmanaged<int, void**, void>)ALLoader.BindingsContext.GetProcAddress("alGetPointervSOFT");
+            _alGetPointervSOFT_fnptr = (delegate* unmanaged<int, void**, void>)ALLoader.ALGetProcAddress("alGetPointervSOFT");
             _alGetPointervSOFT_fnptr(pname, values);
         }
         
@@ -796,7 +796,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void* alGetProcAddress_Lazy(byte* fname)
         {
-            _alGetProcAddress_fnptr = (delegate* unmanaged<byte*, void*>)ALLoader.BindingsContext.GetProcAddress("alGetProcAddress");
+            _alGetProcAddress_fnptr = (delegate* unmanaged<byte*, void*>)ALLoader.ALGetProcAddress("alGetProcAddress");
             return _alGetProcAddress_fnptr(fname);
         }
         
@@ -805,7 +805,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alGetSource3dSOFT_Lazy(uint source, int param, double* value1, double* value2, double* value3)
         {
-            _alGetSource3dSOFT_fnptr = (delegate* unmanaged<uint, int, double*, double*, double*, void>)ALLoader.BindingsContext.GetProcAddress("alGetSource3dSOFT");
+            _alGetSource3dSOFT_fnptr = (delegate* unmanaged<uint, int, double*, double*, double*, void>)ALLoader.ALGetProcAddress("alGetSource3dSOFT");
             _alGetSource3dSOFT_fnptr(source, param, value1, value2, value3);
         }
         
@@ -814,7 +814,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alGetSource3f_Lazy(uint source, int param, float* value1, float* value2, float* value3)
         {
-            _alGetSource3f_fnptr = (delegate* unmanaged<uint, int, float*, float*, float*, void>)ALLoader.BindingsContext.GetProcAddress("alGetSource3f");
+            _alGetSource3f_fnptr = (delegate* unmanaged<uint, int, float*, float*, float*, void>)ALLoader.ALGetProcAddress("alGetSource3f");
             _alGetSource3f_fnptr(source, param, value1, value2, value3);
         }
         
@@ -823,7 +823,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alGetSource3i_Lazy(uint source, int param, int* value1, int* value2, int* value3)
         {
-            _alGetSource3i_fnptr = (delegate* unmanaged<uint, int, int*, int*, int*, void>)ALLoader.BindingsContext.GetProcAddress("alGetSource3i");
+            _alGetSource3i_fnptr = (delegate* unmanaged<uint, int, int*, int*, int*, void>)ALLoader.ALGetProcAddress("alGetSource3i");
             _alGetSource3i_fnptr(source, param, value1, value2, value3);
         }
         
@@ -832,7 +832,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alGetSource3i64SOFT_Lazy(uint source, int param, long* value1, long* value2, long* value3)
         {
-            _alGetSource3i64SOFT_fnptr = (delegate* unmanaged<uint, int, long*, long*, long*, void>)ALLoader.BindingsContext.GetProcAddress("alGetSource3i64SOFT");
+            _alGetSource3i64SOFT_fnptr = (delegate* unmanaged<uint, int, long*, long*, long*, void>)ALLoader.ALGetProcAddress("alGetSource3i64SOFT");
             _alGetSource3i64SOFT_fnptr(source, param, value1, value2, value3);
         }
         
@@ -841,7 +841,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alGetSourcedSOFT_Lazy(uint source, int param, double* value)
         {
-            _alGetSourcedSOFT_fnptr = (delegate* unmanaged<uint, int, double*, void>)ALLoader.BindingsContext.GetProcAddress("alGetSourcedSOFT");
+            _alGetSourcedSOFT_fnptr = (delegate* unmanaged<uint, int, double*, void>)ALLoader.ALGetProcAddress("alGetSourcedSOFT");
             _alGetSourcedSOFT_fnptr(source, param, value);
         }
         
@@ -850,7 +850,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alGetSourcedvSOFT_Lazy(uint source, int param, double* values)
         {
-            _alGetSourcedvSOFT_fnptr = (delegate* unmanaged<uint, int, double*, void>)ALLoader.BindingsContext.GetProcAddress("alGetSourcedvSOFT");
+            _alGetSourcedvSOFT_fnptr = (delegate* unmanaged<uint, int, double*, void>)ALLoader.ALGetProcAddress("alGetSourcedvSOFT");
             _alGetSourcedvSOFT_fnptr(source, param, values);
         }
         
@@ -859,7 +859,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alGetSourcef_Lazy(uint source, int param, float* value)
         {
-            _alGetSourcef_fnptr = (delegate* unmanaged<uint, int, float*, void>)ALLoader.BindingsContext.GetProcAddress("alGetSourcef");
+            _alGetSourcef_fnptr = (delegate* unmanaged<uint, int, float*, void>)ALLoader.ALGetProcAddress("alGetSourcef");
             _alGetSourcef_fnptr(source, param, value);
         }
         
@@ -868,7 +868,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alGetSourcefv_Lazy(uint source, int param, float* values)
         {
-            _alGetSourcefv_fnptr = (delegate* unmanaged<uint, int, float*, void>)ALLoader.BindingsContext.GetProcAddress("alGetSourcefv");
+            _alGetSourcefv_fnptr = (delegate* unmanaged<uint, int, float*, void>)ALLoader.ALGetProcAddress("alGetSourcefv");
             _alGetSourcefv_fnptr(source, param, values);
         }
         
@@ -877,7 +877,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alGetSourcei_Lazy(uint source, int param, int* value)
         {
-            _alGetSourcei_fnptr = (delegate* unmanaged<uint, int, int*, void>)ALLoader.BindingsContext.GetProcAddress("alGetSourcei");
+            _alGetSourcei_fnptr = (delegate* unmanaged<uint, int, int*, void>)ALLoader.ALGetProcAddress("alGetSourcei");
             _alGetSourcei_fnptr(source, param, value);
         }
         
@@ -886,7 +886,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alGetSourcei64SOFT_Lazy(uint source, int param, long* value)
         {
-            _alGetSourcei64SOFT_fnptr = (delegate* unmanaged<uint, int, long*, void>)ALLoader.BindingsContext.GetProcAddress("alGetSourcei64SOFT");
+            _alGetSourcei64SOFT_fnptr = (delegate* unmanaged<uint, int, long*, void>)ALLoader.ALGetProcAddress("alGetSourcei64SOFT");
             _alGetSourcei64SOFT_fnptr(source, param, value);
         }
         
@@ -895,7 +895,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alGetSourcei64vSOFT_Lazy(uint source, int param, long* values)
         {
-            _alGetSourcei64vSOFT_fnptr = (delegate* unmanaged<uint, int, long*, void>)ALLoader.BindingsContext.GetProcAddress("alGetSourcei64vSOFT");
+            _alGetSourcei64vSOFT_fnptr = (delegate* unmanaged<uint, int, long*, void>)ALLoader.ALGetProcAddress("alGetSourcei64vSOFT");
             _alGetSourcei64vSOFT_fnptr(source, param, values);
         }
         
@@ -904,7 +904,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alGetSourceiv_Lazy(uint source, int param, int* values)
         {
-            _alGetSourceiv_fnptr = (delegate* unmanaged<uint, int, int*, void>)ALLoader.BindingsContext.GetProcAddress("alGetSourceiv");
+            _alGetSourceiv_fnptr = (delegate* unmanaged<uint, int, int*, void>)ALLoader.ALGetProcAddress("alGetSourceiv");
             _alGetSourceiv_fnptr(source, param, values);
         }
         
@@ -913,7 +913,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static byte* alGetString_Lazy(int param)
         {
-            _alGetString_fnptr = (delegate* unmanaged<int, byte*>)ALLoader.BindingsContext.GetProcAddress("alGetString");
+            _alGetString_fnptr = (delegate* unmanaged<int, byte*>)ALLoader.ALGetProcAddress("alGetString");
             return _alGetString_fnptr(param);
         }
         
@@ -922,7 +922,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static byte* alGetStringiSOFT_Lazy(int pname, int index)
         {
-            _alGetStringiSOFT_fnptr = (delegate* unmanaged<int, int, byte*>)ALLoader.BindingsContext.GetProcAddress("alGetStringiSOFT");
+            _alGetStringiSOFT_fnptr = (delegate* unmanaged<int, int, byte*>)ALLoader.ALGetProcAddress("alGetStringiSOFT");
             return _alGetStringiSOFT_fnptr(pname, index);
         }
         
@@ -931,7 +931,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alIsAuxiliaryEffectSlot_Lazy(uint effectslot)
         {
-            _alIsAuxiliaryEffectSlot_fnptr = (delegate* unmanaged<uint, void>)ALLoader.BindingsContext.GetProcAddress("alIsAuxiliaryEffectSlot");
+            _alIsAuxiliaryEffectSlot_fnptr = (delegate* unmanaged<uint, void>)ALLoader.ALGetProcAddress("alIsAuxiliaryEffectSlot");
             _alIsAuxiliaryEffectSlot_fnptr(effectslot);
         }
         
@@ -940,7 +940,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static byte alIsBuffer_Lazy(uint buffer)
         {
-            _alIsBuffer_fnptr = (delegate* unmanaged<uint, byte>)ALLoader.BindingsContext.GetProcAddress("alIsBuffer");
+            _alIsBuffer_fnptr = (delegate* unmanaged<uint, byte>)ALLoader.ALGetProcAddress("alIsBuffer");
             return _alIsBuffer_fnptr(buffer);
         }
         
@@ -949,7 +949,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static byte alIsBufferFormatSupportedSOFT_Lazy(int format)
         {
-            _alIsBufferFormatSupportedSOFT_fnptr = (delegate* unmanaged<int, byte>)ALLoader.BindingsContext.GetProcAddress("alIsBufferFormatSupportedSOFT");
+            _alIsBufferFormatSupportedSOFT_fnptr = (delegate* unmanaged<int, byte>)ALLoader.ALGetProcAddress("alIsBufferFormatSupportedSOFT");
             return _alIsBufferFormatSupportedSOFT_fnptr(format);
         }
         
@@ -958,7 +958,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static byte alIsEffect_Lazy(uint effect)
         {
-            _alIsEffect_fnptr = (delegate* unmanaged<uint, byte>)ALLoader.BindingsContext.GetProcAddress("alIsEffect");
+            _alIsEffect_fnptr = (delegate* unmanaged<uint, byte>)ALLoader.ALGetProcAddress("alIsEffect");
             return _alIsEffect_fnptr(effect);
         }
         
@@ -967,7 +967,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static byte alIsEnabled_Lazy(int capability)
         {
-            _alIsEnabled_fnptr = (delegate* unmanaged<int, byte>)ALLoader.BindingsContext.GetProcAddress("alIsEnabled");
+            _alIsEnabled_fnptr = (delegate* unmanaged<int, byte>)ALLoader.ALGetProcAddress("alIsEnabled");
             return _alIsEnabled_fnptr(capability);
         }
         
@@ -976,7 +976,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static byte alIsExtensionPresent_Lazy(byte* extname)
         {
-            _alIsExtensionPresent_fnptr = (delegate* unmanaged<byte*, byte>)ALLoader.BindingsContext.GetProcAddress("alIsExtensionPresent");
+            _alIsExtensionPresent_fnptr = (delegate* unmanaged<byte*, byte>)ALLoader.ALGetProcAddress("alIsExtensionPresent");
             return _alIsExtensionPresent_fnptr(extname);
         }
         
@@ -985,7 +985,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alIsFilter_Lazy(uint filter)
         {
-            _alIsFilter_fnptr = (delegate* unmanaged<uint, void>)ALLoader.BindingsContext.GetProcAddress("alIsFilter");
+            _alIsFilter_fnptr = (delegate* unmanaged<uint, void>)ALLoader.ALGetProcAddress("alIsFilter");
             _alIsFilter_fnptr(filter);
         }
         
@@ -994,7 +994,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static byte alIsSource_Lazy(uint source)
         {
-            _alIsSource_fnptr = (delegate* unmanaged<uint, byte>)ALLoader.BindingsContext.GetProcAddress("alIsSource");
+            _alIsSource_fnptr = (delegate* unmanaged<uint, byte>)ALLoader.ALGetProcAddress("alIsSource");
             return _alIsSource_fnptr(source);
         }
         
@@ -1003,7 +1003,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alListener3f_Lazy(int param, float value1, float value2, float value3)
         {
-            _alListener3f_fnptr = (delegate* unmanaged<int, float, float, float, void>)ALLoader.BindingsContext.GetProcAddress("alListener3f");
+            _alListener3f_fnptr = (delegate* unmanaged<int, float, float, float, void>)ALLoader.ALGetProcAddress("alListener3f");
             _alListener3f_fnptr(param, value1, value2, value3);
         }
         
@@ -1012,7 +1012,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alListener3i_Lazy(int param, int value1, int value2, int value3)
         {
-            _alListener3i_fnptr = (delegate* unmanaged<int, int, int, int, void>)ALLoader.BindingsContext.GetProcAddress("alListener3i");
+            _alListener3i_fnptr = (delegate* unmanaged<int, int, int, int, void>)ALLoader.ALGetProcAddress("alListener3i");
             _alListener3i_fnptr(param, value1, value2, value3);
         }
         
@@ -1021,7 +1021,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alListenerf_Lazy(int param, float value)
         {
-            _alListenerf_fnptr = (delegate* unmanaged<int, float, void>)ALLoader.BindingsContext.GetProcAddress("alListenerf");
+            _alListenerf_fnptr = (delegate* unmanaged<int, float, void>)ALLoader.ALGetProcAddress("alListenerf");
             _alListenerf_fnptr(param, value);
         }
         
@@ -1030,7 +1030,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alListenerfv_Lazy(int param, float* values)
         {
-            _alListenerfv_fnptr = (delegate* unmanaged<int, float*, void>)ALLoader.BindingsContext.GetProcAddress("alListenerfv");
+            _alListenerfv_fnptr = (delegate* unmanaged<int, float*, void>)ALLoader.ALGetProcAddress("alListenerfv");
             _alListenerfv_fnptr(param, values);
         }
         
@@ -1039,7 +1039,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alListeneri_Lazy(int param, int value)
         {
-            _alListeneri_fnptr = (delegate* unmanaged<int, int, void>)ALLoader.BindingsContext.GetProcAddress("alListeneri");
+            _alListeneri_fnptr = (delegate* unmanaged<int, int, void>)ALLoader.ALGetProcAddress("alListeneri");
             _alListeneri_fnptr(param, value);
         }
         
@@ -1048,7 +1048,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alListeneriv_Lazy(int param, int* values)
         {
-            _alListeneriv_fnptr = (delegate* unmanaged<int, int*, void>)ALLoader.BindingsContext.GetProcAddress("alListeneriv");
+            _alListeneriv_fnptr = (delegate* unmanaged<int, int*, void>)ALLoader.ALGetProcAddress("alListeneriv");
             _alListeneriv_fnptr(param, values);
         }
         
@@ -1057,7 +1057,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static int alMacOSXGetRenderChannelCount_Lazy()
         {
-            _alMacOSXGetRenderChannelCount_fnptr = (delegate* unmanaged<int>)ALLoader.BindingsContext.GetProcAddress("alMacOSXGetRenderChannelCount");
+            _alMacOSXGetRenderChannelCount_fnptr = (delegate* unmanaged<int>)ALLoader.ALGetProcAddress("alMacOSXGetRenderChannelCount");
             return _alMacOSXGetRenderChannelCount_fnptr();
         }
         
@@ -1066,7 +1066,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alMacOSXRenderChannelCount_Lazy(int value)
         {
-            _alMacOSXRenderChannelCount_fnptr = (delegate* unmanaged<int, void>)ALLoader.BindingsContext.GetProcAddress("alMacOSXRenderChannelCount");
+            _alMacOSXRenderChannelCount_fnptr = (delegate* unmanaged<int, void>)ALLoader.ALGetProcAddress("alMacOSXRenderChannelCount");
             _alMacOSXRenderChannelCount_fnptr(value);
         }
         
@@ -1075,7 +1075,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alObjectLabelEXT_Lazy(int identifier, uint name, int length, byte* label)
         {
-            _alObjectLabelEXT_fnptr = (delegate* unmanaged<int, uint, int, byte*, void>)ALLoader.BindingsContext.GetProcAddress("alObjectLabelEXT");
+            _alObjectLabelEXT_fnptr = (delegate* unmanaged<int, uint, int, byte*, void>)ALLoader.ALGetProcAddress("alObjectLabelEXT");
             _alObjectLabelEXT_fnptr(identifier, name, length, label);
         }
         
@@ -1084,7 +1084,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alPopDebugGroupEXT_Lazy()
         {
-            _alPopDebugGroupEXT_fnptr = (delegate* unmanaged<void>)ALLoader.BindingsContext.GetProcAddress("alPopDebugGroupEXT");
+            _alPopDebugGroupEXT_fnptr = (delegate* unmanaged<void>)ALLoader.ALGetProcAddress("alPopDebugGroupEXT");
             _alPopDebugGroupEXT_fnptr();
         }
         
@@ -1093,7 +1093,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alProcessUpdatesSOFT_Lazy()
         {
-            _alProcessUpdatesSOFT_fnptr = (delegate* unmanaged<void>)ALLoader.BindingsContext.GetProcAddress("alProcessUpdatesSOFT");
+            _alProcessUpdatesSOFT_fnptr = (delegate* unmanaged<void>)ALLoader.ALGetProcAddress("alProcessUpdatesSOFT");
             _alProcessUpdatesSOFT_fnptr();
         }
         
@@ -1102,7 +1102,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alPushDebugGroupEXT_Lazy(int source, uint id, int length, byte* message)
         {
-            _alPushDebugGroupEXT_fnptr = (delegate* unmanaged<int, uint, int, byte*, void>)ALLoader.BindingsContext.GetProcAddress("alPushDebugGroupEXT");
+            _alPushDebugGroupEXT_fnptr = (delegate* unmanaged<int, uint, int, byte*, void>)ALLoader.ALGetProcAddress("alPushDebugGroupEXT");
             _alPushDebugGroupEXT_fnptr(source, id, length, message);
         }
         
@@ -1111,7 +1111,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alRequestFoldbackStart_Lazy(int foldbackMode, int blockCount, int blockLength, float* bufferMemory, delegate* unmanaged[Cdecl]<All, nuint, void> callback)
         {
-            _alRequestFoldbackStart_fnptr = (delegate* unmanaged<int, int, int, float*, delegate* unmanaged[Cdecl]<All, nuint, void>, void>)ALLoader.BindingsContext.GetProcAddress("alRequestFoldbackStart");
+            _alRequestFoldbackStart_fnptr = (delegate* unmanaged<int, int, int, float*, delegate* unmanaged[Cdecl]<All, nuint, void>, void>)ALLoader.ALGetProcAddress("alRequestFoldbackStart");
             _alRequestFoldbackStart_fnptr(foldbackMode, blockCount, blockLength, bufferMemory, callback);
         }
         
@@ -1120,7 +1120,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alRequestFoldbackStop_Lazy()
         {
-            _alRequestFoldbackStop_fnptr = (delegate* unmanaged<void>)ALLoader.BindingsContext.GetProcAddress("alRequestFoldbackStop");
+            _alRequestFoldbackStop_fnptr = (delegate* unmanaged<void>)ALLoader.ALGetProcAddress("alRequestFoldbackStop");
             _alRequestFoldbackStop_fnptr();
         }
         
@@ -1129,7 +1129,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alSource3dSOFT_Lazy(uint source, int param, double value1, double value2, double value3)
         {
-            _alSource3dSOFT_fnptr = (delegate* unmanaged<uint, int, double, double, double, void>)ALLoader.BindingsContext.GetProcAddress("alSource3dSOFT");
+            _alSource3dSOFT_fnptr = (delegate* unmanaged<uint, int, double, double, double, void>)ALLoader.ALGetProcAddress("alSource3dSOFT");
             _alSource3dSOFT_fnptr(source, param, value1, value2, value3);
         }
         
@@ -1138,7 +1138,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alSource3f_Lazy(uint source, int param, float value1, float value2, float value3)
         {
-            _alSource3f_fnptr = (delegate* unmanaged<uint, int, float, float, float, void>)ALLoader.BindingsContext.GetProcAddress("alSource3f");
+            _alSource3f_fnptr = (delegate* unmanaged<uint, int, float, float, float, void>)ALLoader.ALGetProcAddress("alSource3f");
             _alSource3f_fnptr(source, param, value1, value2, value3);
         }
         
@@ -1147,7 +1147,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alSource3i_Lazy(uint source, int param, int value1, int value2, int value3)
         {
-            _alSource3i_fnptr = (delegate* unmanaged<uint, int, int, int, int, void>)ALLoader.BindingsContext.GetProcAddress("alSource3i");
+            _alSource3i_fnptr = (delegate* unmanaged<uint, int, int, int, int, void>)ALLoader.ALGetProcAddress("alSource3i");
             _alSource3i_fnptr(source, param, value1, value2, value3);
         }
         
@@ -1156,7 +1156,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alSource3i64SOFT_Lazy(uint source, int param, long value1, long value2, long value3)
         {
-            _alSource3i64SOFT_fnptr = (delegate* unmanaged<uint, int, long, long, long, void>)ALLoader.BindingsContext.GetProcAddress("alSource3i64SOFT");
+            _alSource3i64SOFT_fnptr = (delegate* unmanaged<uint, int, long, long, long, void>)ALLoader.ALGetProcAddress("alSource3i64SOFT");
             _alSource3i64SOFT_fnptr(source, param, value1, value2, value3);
         }
         
@@ -1165,7 +1165,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static int alSourceAddNotification_Lazy(uint sid, uint notificationID, delegate* unmanaged[Cdecl]<uint, uint, void*, void> notifyProc, void* userData)
         {
-            _alSourceAddNotification_fnptr = (delegate* unmanaged<uint, uint, delegate* unmanaged[Cdecl]<uint, uint, void*, void>, void*, int>)ALLoader.BindingsContext.GetProcAddress("alSourceAddNotification");
+            _alSourceAddNotification_fnptr = (delegate* unmanaged<uint, uint, delegate* unmanaged[Cdecl]<uint, uint, void*, void>, void*, int>)ALLoader.ALGetProcAddress("alSourceAddNotification");
             return _alSourceAddNotification_fnptr(sid, notificationID, notifyProc, userData);
         }
         
@@ -1174,7 +1174,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alSourcedSOFT_Lazy(uint source, int param, double value)
         {
-            _alSourcedSOFT_fnptr = (delegate* unmanaged<uint, int, double, void>)ALLoader.BindingsContext.GetProcAddress("alSourcedSOFT");
+            _alSourcedSOFT_fnptr = (delegate* unmanaged<uint, int, double, void>)ALLoader.ALGetProcAddress("alSourcedSOFT");
             _alSourcedSOFT_fnptr(source, param, value);
         }
         
@@ -1183,7 +1183,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alSourcedvSOFT_Lazy(uint source, int param, double* values)
         {
-            _alSourcedvSOFT_fnptr = (delegate* unmanaged<uint, int, double*, void>)ALLoader.BindingsContext.GetProcAddress("alSourcedvSOFT");
+            _alSourcedvSOFT_fnptr = (delegate* unmanaged<uint, int, double*, void>)ALLoader.ALGetProcAddress("alSourcedvSOFT");
             _alSourcedvSOFT_fnptr(source, param, values);
         }
         
@@ -1192,7 +1192,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alSourcef_Lazy(uint source, int param, float value)
         {
-            _alSourcef_fnptr = (delegate* unmanaged<uint, int, float, void>)ALLoader.BindingsContext.GetProcAddress("alSourcef");
+            _alSourcef_fnptr = (delegate* unmanaged<uint, int, float, void>)ALLoader.ALGetProcAddress("alSourcef");
             _alSourcef_fnptr(source, param, value);
         }
         
@@ -1201,7 +1201,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alSourcefv_Lazy(uint source, int param, float* value)
         {
-            _alSourcefv_fnptr = (delegate* unmanaged<uint, int, float*, void>)ALLoader.BindingsContext.GetProcAddress("alSourcefv");
+            _alSourcefv_fnptr = (delegate* unmanaged<uint, int, float*, void>)ALLoader.ALGetProcAddress("alSourcefv");
             _alSourcefv_fnptr(source, param, value);
         }
         
@@ -1210,7 +1210,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static int alSourceGetRenderingQuality_Lazy(uint sid)
         {
-            _alSourceGetRenderingQuality_fnptr = (delegate* unmanaged<uint, int>)ALLoader.BindingsContext.GetProcAddress("alSourceGetRenderingQuality");
+            _alSourceGetRenderingQuality_fnptr = (delegate* unmanaged<uint, int>)ALLoader.ALGetProcAddress("alSourceGetRenderingQuality");
             return _alSourceGetRenderingQuality_fnptr(sid);
         }
         
@@ -1219,7 +1219,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alSourcei_Lazy(uint source, int param, int value)
         {
-            _alSourcei_fnptr = (delegate* unmanaged<uint, int, int, void>)ALLoader.BindingsContext.GetProcAddress("alSourcei");
+            _alSourcei_fnptr = (delegate* unmanaged<uint, int, int, void>)ALLoader.ALGetProcAddress("alSourcei");
             _alSourcei_fnptr(source, param, value);
         }
         
@@ -1228,7 +1228,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alSourcei64SOFT_Lazy(uint source, int param, long value)
         {
-            _alSourcei64SOFT_fnptr = (delegate* unmanaged<uint, int, long, void>)ALLoader.BindingsContext.GetProcAddress("alSourcei64SOFT");
+            _alSourcei64SOFT_fnptr = (delegate* unmanaged<uint, int, long, void>)ALLoader.ALGetProcAddress("alSourcei64SOFT");
             _alSourcei64SOFT_fnptr(source, param, value);
         }
         
@@ -1237,7 +1237,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alSourcei64vSOFT_Lazy(uint source, int param, long* values)
         {
-            _alSourcei64vSOFT_fnptr = (delegate* unmanaged<uint, int, long*, void>)ALLoader.BindingsContext.GetProcAddress("alSourcei64vSOFT");
+            _alSourcei64vSOFT_fnptr = (delegate* unmanaged<uint, int, long*, void>)ALLoader.ALGetProcAddress("alSourcei64vSOFT");
             _alSourcei64vSOFT_fnptr(source, param, values);
         }
         
@@ -1246,7 +1246,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alSourceiv_Lazy(uint source, int param, int* value)
         {
-            _alSourceiv_fnptr = (delegate* unmanaged<uint, int, int*, void>)ALLoader.BindingsContext.GetProcAddress("alSourceiv");
+            _alSourceiv_fnptr = (delegate* unmanaged<uint, int, int*, void>)ALLoader.ALGetProcAddress("alSourceiv");
             _alSourceiv_fnptr(source, param, value);
         }
         
@@ -1255,7 +1255,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alSourcePause_Lazy(uint source)
         {
-            _alSourcePause_fnptr = (delegate* unmanaged<uint, void>)ALLoader.BindingsContext.GetProcAddress("alSourcePause");
+            _alSourcePause_fnptr = (delegate* unmanaged<uint, void>)ALLoader.ALGetProcAddress("alSourcePause");
             _alSourcePause_fnptr(source);
         }
         
@@ -1264,7 +1264,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alSourcePausev_Lazy(int n, uint* sources)
         {
-            _alSourcePausev_fnptr = (delegate* unmanaged<int, uint*, void>)ALLoader.BindingsContext.GetProcAddress("alSourcePausev");
+            _alSourcePausev_fnptr = (delegate* unmanaged<int, uint*, void>)ALLoader.ALGetProcAddress("alSourcePausev");
             _alSourcePausev_fnptr(n, sources);
         }
         
@@ -1273,7 +1273,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alSourcePlay_Lazy(uint source)
         {
-            _alSourcePlay_fnptr = (delegate* unmanaged<uint, void>)ALLoader.BindingsContext.GetProcAddress("alSourcePlay");
+            _alSourcePlay_fnptr = (delegate* unmanaged<uint, void>)ALLoader.ALGetProcAddress("alSourcePlay");
             _alSourcePlay_fnptr(source);
         }
         
@@ -1282,7 +1282,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alSourcePlayAtTimeSOFT_Lazy(uint source, long start_time)
         {
-            _alSourcePlayAtTimeSOFT_fnptr = (delegate* unmanaged<uint, long, void>)ALLoader.BindingsContext.GetProcAddress("alSourcePlayAtTimeSOFT");
+            _alSourcePlayAtTimeSOFT_fnptr = (delegate* unmanaged<uint, long, void>)ALLoader.ALGetProcAddress("alSourcePlayAtTimeSOFT");
             _alSourcePlayAtTimeSOFT_fnptr(source, start_time);
         }
         
@@ -1291,7 +1291,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alSourcePlayAtTimevSOFT_Lazy(int n, uint* sources, long start_time)
         {
-            _alSourcePlayAtTimevSOFT_fnptr = (delegate* unmanaged<int, uint*, long, void>)ALLoader.BindingsContext.GetProcAddress("alSourcePlayAtTimevSOFT");
+            _alSourcePlayAtTimevSOFT_fnptr = (delegate* unmanaged<int, uint*, long, void>)ALLoader.ALGetProcAddress("alSourcePlayAtTimevSOFT");
             _alSourcePlayAtTimevSOFT_fnptr(n, sources, start_time);
         }
         
@@ -1300,7 +1300,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alSourcePlayv_Lazy(int n, uint* sources)
         {
-            _alSourcePlayv_fnptr = (delegate* unmanaged<int, uint*, void>)ALLoader.BindingsContext.GetProcAddress("alSourcePlayv");
+            _alSourcePlayv_fnptr = (delegate* unmanaged<int, uint*, void>)ALLoader.ALGetProcAddress("alSourcePlayv");
             _alSourcePlayv_fnptr(n, sources);
         }
         
@@ -1309,7 +1309,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alSourceQueueBuffers_Lazy(uint source, int nb, uint* buffers)
         {
-            _alSourceQueueBuffers_fnptr = (delegate* unmanaged<uint, int, uint*, void>)ALLoader.BindingsContext.GetProcAddress("alSourceQueueBuffers");
+            _alSourceQueueBuffers_fnptr = (delegate* unmanaged<uint, int, uint*, void>)ALLoader.ALGetProcAddress("alSourceQueueBuffers");
             _alSourceQueueBuffers_fnptr(source, nb, buffers);
         }
         
@@ -1318,7 +1318,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alSourceRemoveNotification_Lazy(uint sid, uint notificationID, delegate* unmanaged[Cdecl]<uint, uint, void*, void> notifyProc, void* userData)
         {
-            _alSourceRemoveNotification_fnptr = (delegate* unmanaged<uint, uint, delegate* unmanaged[Cdecl]<uint, uint, void*, void>, void*, void>)ALLoader.BindingsContext.GetProcAddress("alSourceRemoveNotification");
+            _alSourceRemoveNotification_fnptr = (delegate* unmanaged<uint, uint, delegate* unmanaged[Cdecl]<uint, uint, void*, void>, void*, void>)ALLoader.ALGetProcAddress("alSourceRemoveNotification");
             _alSourceRemoveNotification_fnptr(sid, notificationID, notifyProc, userData);
         }
         
@@ -1327,7 +1327,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alSourceRenderingQuality_Lazy(uint sid, int value)
         {
-            _alSourceRenderingQuality_fnptr = (delegate* unmanaged<uint, int, void>)ALLoader.BindingsContext.GetProcAddress("alSourceRenderingQuality");
+            _alSourceRenderingQuality_fnptr = (delegate* unmanaged<uint, int, void>)ALLoader.ALGetProcAddress("alSourceRenderingQuality");
             _alSourceRenderingQuality_fnptr(sid, value);
         }
         
@@ -1336,7 +1336,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alSourceRewind_Lazy(uint source)
         {
-            _alSourceRewind_fnptr = (delegate* unmanaged<uint, void>)ALLoader.BindingsContext.GetProcAddress("alSourceRewind");
+            _alSourceRewind_fnptr = (delegate* unmanaged<uint, void>)ALLoader.ALGetProcAddress("alSourceRewind");
             _alSourceRewind_fnptr(source);
         }
         
@@ -1345,7 +1345,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alSourceRewindv_Lazy(int n, uint* sources)
         {
-            _alSourceRewindv_fnptr = (delegate* unmanaged<int, uint*, void>)ALLoader.BindingsContext.GetProcAddress("alSourceRewindv");
+            _alSourceRewindv_fnptr = (delegate* unmanaged<int, uint*, void>)ALLoader.ALGetProcAddress("alSourceRewindv");
             _alSourceRewindv_fnptr(n, sources);
         }
         
@@ -1354,7 +1354,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alSourceStop_Lazy(uint source)
         {
-            _alSourceStop_fnptr = (delegate* unmanaged<uint, void>)ALLoader.BindingsContext.GetProcAddress("alSourceStop");
+            _alSourceStop_fnptr = (delegate* unmanaged<uint, void>)ALLoader.ALGetProcAddress("alSourceStop");
             _alSourceStop_fnptr(source);
         }
         
@@ -1363,7 +1363,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alSourceStopv_Lazy(int n, uint* sources)
         {
-            _alSourceStopv_fnptr = (delegate* unmanaged<int, uint*, void>)ALLoader.BindingsContext.GetProcAddress("alSourceStopv");
+            _alSourceStopv_fnptr = (delegate* unmanaged<int, uint*, void>)ALLoader.ALGetProcAddress("alSourceStopv");
             _alSourceStopv_fnptr(n, sources);
         }
         
@@ -1372,7 +1372,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alSourceUnqueueBuffers_Lazy(uint source, int nb, uint* buffer)
         {
-            _alSourceUnqueueBuffers_fnptr = (delegate* unmanaged<uint, int, uint*, void>)ALLoader.BindingsContext.GetProcAddress("alSourceUnqueueBuffers");
+            _alSourceUnqueueBuffers_fnptr = (delegate* unmanaged<uint, int, uint*, void>)ALLoader.ALGetProcAddress("alSourceUnqueueBuffers");
             _alSourceUnqueueBuffers_fnptr(source, nb, buffer);
         }
         
@@ -1381,7 +1381,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void alSpeedOfSound_Lazy(float value)
         {
-            _alSpeedOfSound_fnptr = (delegate* unmanaged<float, void>)ALLoader.BindingsContext.GetProcAddress("alSpeedOfSound");
+            _alSpeedOfSound_fnptr = (delegate* unmanaged<float, void>)ALLoader.ALGetProcAddress("alSpeedOfSound");
             _alSpeedOfSound_fnptr(value);
         }
         
@@ -1390,7 +1390,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void AttenuationScale_LOKI_Lazy(float value)
         {
-            _AttenuationScale_LOKI_fnptr = (delegate* unmanaged<float, void>)ALLoader.BindingsContext.GetProcAddress("AttenuationScale_LOKI");
+            _AttenuationScale_LOKI_fnptr = (delegate* unmanaged<float, void>)ALLoader.ALGetProcAddress("AttenuationScale_LOKI");
             _AttenuationScale_LOKI_fnptr(value);
         }
         
@@ -1399,7 +1399,7 @@ namespace OpenTK.Audio.OpenAL
         [UnmanagedCallersOnly]
         private static void BufferDataWithCallback_LOKI_Lazy(uint bid, delegate* unmanaged[Cdecl]<uint, uint, void*, All, uint, int> callback)
         {
-            _BufferDataWithCallback_LOKI_fnptr = (delegate* unmanaged<uint, delegate* unmanaged[Cdecl]<uint, uint, void*, All, uint, int>, void>)ALLoader.BindingsContext.GetProcAddress("BufferDataWithCallback_LOKI");
+            _BufferDataWithCallback_LOKI_fnptr = (delegate* unmanaged<uint, delegate* unmanaged[Cdecl]<uint, uint, void*, All, uint, int>, void>)ALLoader.ALGetProcAddress("BufferDataWithCallback_LOKI");
             _BufferDataWithCallback_LOKI_fnptr(bid, callback);
         }
         

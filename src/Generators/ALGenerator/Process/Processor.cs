@@ -457,6 +457,15 @@ namespace ALGenerator.Process
 
                     foreach (var group in groupsReferencedByFunctions)
                     {
+                        // This group is not part of this file, so we can't do anything here about adding it.
+                        // For now this is not a problem as all referenced groups from between the different
+                        // files are always populated, so we will never have to add them to the other file.
+                        // - Noggin_bops 2025-08-05
+                        if (group.Namespace != file)
+                        {
+                            continue;
+                        }
+
                         if (groupNameToEnumGroup.TryGetValue(group.TranslatedName, out List<EnumGroupMember>? members) == false)
                         {
                             if (enumGroupToNativeFunctionsUsingThatEnumGroup.TryGetValue(group, out var functionsUsingEnumGroup) == false)

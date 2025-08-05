@@ -986,27 +986,20 @@ namespace ALGenerator.Process
         // - 2022-06-27
         internal static Dictionary<string, string> pluralNameToSingularName = new Dictionary<string, string>()
         {
-            { "Queries", "Query" },
-            { "TransformFeedbacks", "TransformFeedback" },
-            { "VertexArrays", "VertexArray" },
-            { "Textures", "Texture" },
-            { "Samplers", "Sampler" },
-            { "Renderbuffers", "Renderbuffer" },
-            { "ProgramPipelines", "ProgramPipeline" },
-            { "Framebuffers", "Framebuffer" },
+            { "Sources", "Source" },
             { "Buffers", "Buffer" },
+            { "Effects", "Effect" },
+            { "Filters", "Filter" },
+            { "AuxiliaryEffectSlots", "AuxiliaryEffectSlot" }
         };
 
         internal static Dictionary<string, string> parameterNamesToChange = new Dictionary<string, string>()
         {
-            { "ids", "id" },
-            { "arrays", "array" },
-            { "textures", "texture" },
-            { "samplers", "sampler" },
-            { "renderbuffers", "renderbuffer" },
-            { "pipelines", "pipeline" },
-            { "framebuffers", "framebuffer" },
+            { "sources", "source" },
             { "buffers", "buffer" },
+            { "effects", "effect" },
+            { "filters", "filter" },
+            { "effectslots", "effectslot" }
         };
 
         public bool TryGenerateOverloads(Overload overload, [NotNullWhen(true)] out List<Overload>? newOverloads)

@@ -18,7 +18,7 @@ namespace ALGenerator
         private const string BaseNamespace = "OpenTK";
         private const string AudioNamespace = BaseNamespace + ".Audio";
 
-        internal record FileStrings(string FileNamePrefix, string ClassName, string Namespace, string LoaderClass, string LoaderBindingsContext)
+        internal record FileStrings(string FileNamePrefix, string ClassName, string Namespace, string LoaderClass, string LoaderBindingsContext, string LoadFunction)
         {
             /// <summary>Alias for <see cref="ClassName"/>.</summary>
             public string ApiName => ClassName;
@@ -35,8 +35,8 @@ namespace ALGenerator
             {
                 FileStrings strings = pointers.File switch
                 {
-                    ALFile.AL => new FileStrings("AL", "AL", "OpenAL", "ALLoader", "ALLoader.BindingsContext"),
-                    ALFile.ALC => new FileStrings("ALC", "ALC", "OpenAL.ALC", "ALCLoader", "ALCLoader.BindingsContext"),
+                    ALFile.AL => new FileStrings("AL", "AL", "OpenAL", "ALLoader", "ALLoader", "ALGetProcAddress"),
+                    ALFile.ALC => new FileStrings("ALC", "ALC", "OpenAL.ALC", "ALCLoader", "ALLoader", "ALCGetProcAddress"),
                     _ => throw new Exception(),
                 };
 
@@ -55,8 +55,8 @@ namespace ALGenerator
             // FIXME: Fix function pointers so we can merge this.
             FileStrings strings = @namespace.Name switch
             {
-                OutputApi.AL => new FileStrings("AL", "AL", "OpenAL", "ALLoader", "ALLoader.BindingsContext"),
-                OutputApi.ALC => new FileStrings("ALC", "ALC", "OpenAL.ALC", "ALCLoader", "ALCLoader.BindingsContext"),
+                OutputApi.AL => new FileStrings("AL", "AL", "OpenAL", "ALLoader", "ALLoader", "ALGetProcAddress"),
+                OutputApi.ALC => new FileStrings("ALC", "ALC", "OpenAL.ALC", "ALCLoader", "ALLoader", "ALCGetProcAddress"),
                 _ => throw new Exception($"This is not a valid output API ({@namespace.Name})"),
             };
 
@@ -120,7 +120,7 @@ namespace ALGenerator
             using (writer.CsScope())
             {
                 // Dotnet gurantees you can't get torn values when assigning functionpointers, assuming proper allignment which is default.
-                writer.WriteLine($"_{entryPoint}_fnptr = (delegate* unmanaged<{delegateTypes}>){strings.LoaderBindingsContext}.GetProcAddress(\"{function.EntryPoint}\");");
+                writer.WriteLine($"_{entryPoint}_fnptr = (delegate* unmanaged<{delegateTypes}>){strings.LoaderBindingsContext}.{strings.LoadFunction}(\"{function.EntryPoint}\");");
 
                 if (function.ReturnType is not CSVoid)
                 {

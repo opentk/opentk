@@ -179,7 +179,7 @@ namespace VkGenerator
                             Debug.Assert(false);
                         }
                     }
-                    if (@enum.ReferencedBy != null)
+                    if (@enum.ReferencedBy.Count > 0)
                     {
                         writer.Write($"Used by {string.Join(", ", @enum.ReferencedBy.Take(3).Select(c => $"<see cref=\"Vk.{nameMangler.MangleFunctionName(c.Name)}\"/>"))}");
                         if (@enum.ReferencedBy.Count > 3)
@@ -365,7 +365,7 @@ namespace VkGenerator
                     {
                         writer.Write($"{NameMangler.XmlEscapeCharacters(NameMangler.MaybeRemoveStart(@struct.Comment, "// "))}");
                     }
-                    if (@struct.ReferencedBy != null)
+                    if (@struct.ReferencedBy.Count > 0)
                     {
                         if (@struct.Comment != null)
                             writer.Write("<br/>");
@@ -420,7 +420,7 @@ namespace VkGenerator
                             Debug.Assert(false);
                         }
                     }
-                    if (handle.ReferencedBy != null)
+                    if (handle.ReferencedBy.Count > 0)
                     {
                         writer.Write($"Used by {string.Join(", ", handle.ReferencedBy.Take(3).Select(c => $"<see cref=\"Vk.{nameMangler.MangleFunctionName(c.Name)}\"/>"))}");
                         if (handle.ReferencedBy.Count > 3)

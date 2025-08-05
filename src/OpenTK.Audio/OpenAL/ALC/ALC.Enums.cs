@@ -22,7 +22,6 @@ namespace OpenTK.Audio.OpenAL.ALC
         AsaRogerBeepSensitivityMedium = 1,
         AsaRogerBeepTypeWhitenoise = 1,
         ContextDebugBitExt = 1,
-        DedicatedGain = 1,
         HrtfEnabledSoft = 1,
         Sn3dSoft = 1,
         AsaDistortionTypeLofi = 2,
@@ -93,10 +92,8 @@ namespace OpenTK.Audio.OpenAL.ALC
         AsaRogerBeepGain = 1022,
         AsaRogerBeepOn = 1022,
         AsaRogerBeepSensitivity = 1022,
-        MacOsxRenderChannelCountStereo = 1022,
         AsaDistortionPreset = 1023,
         AsaReverbEqGain = 1023,
-        MacOsxRenderChannelCountMultichannel = 1023,
         MacOsxSpatialRenderingQualityLow = 1023,
         MajorVersion = 4096,
         MinorVersion = 4097,
@@ -114,8 +111,6 @@ namespace OpenTK.Audio.OpenAL.ALC
         DefaultAllDevicesSpecifier = 4114,
         AllDevicesSpecifier = 4115,
         DefaultFilterOrder = 4352,
-        SampleOffsetClockSoft = 4610,
-        SecOffsetClockSoft = 4611,
         ByteSoft = 5120,
         UnsignedByteSoft = 5121,
         ShortSoft = 5122,
@@ -163,14 +158,11 @@ namespace OpenTK.Audio.OpenAL.ALC
         EventNotSupportedSoft = 6618,
         BitsAax = 8194,
         ChannelsAax = 8195,
-        EffectDedicatedLowFrequencyEffect = 36864,
-        EffectDedicatedDialogue = 36865,
         InvalidDevice = 40961,
         InvalidContext = 40962,
         InvalidEnum = 40963,
         InvalidValue = 40964,
         OutOfMemory = 40965,
-        MacOsxConvertDataUponLoading = 61441,
         EfxMajorVersion = 131073,
         EfxMinorVersion = 131074,
         MaxAuxiliarySends = 131075,
@@ -178,6 +170,54 @@ namespace OpenTK.Audio.OpenAL.ALC
         ChanMainLoki = 5242881,
         ChanPcmLoki = 5242882,
         ChanCdLoki = 5242883,
+    }
+    public enum AmbisonicLayout : uint
+    {
+        FumaSoft = 0,
+        AcnSoft = 1,
+    }
+    public enum AmbisonicScaling : uint
+    {
+        FumaSoft = 0,
+        Sn3dSoft = 1,
+        N3dSoft = 2,
+    }
+    public enum AudioChannelLOKI : uint
+    {
+        ChanMainLoki = 5242881,
+        ChanPcmLoki = 5242882,
+        ChanCdLoki = 5242883,
+    }
+    public enum ContextAttribute : uint
+    {
+        Frequency = 4103,
+        Refresh = 4104,
+        Sync = 4105,
+        MonoSources = 4112,
+        StereoSources = 4113,
+        DefaultFilterOrder = 4352,
+        Bformat3dSoft = 5383,
+        FormatChannelsSoft = 6544,
+        FormatTypeSoft = 6545,
+        HrtfSoft = 6546,
+        HrtfIdSoft = 6550,
+        AmbisonicLayoutSoft = 6551,
+        AmbisonicScalingSoft = 6552,
+        AmbisonicOrderSoft = 6553,
+        OutputLimiterSoft = 6554,
+        OutputModeSoft = 6572,
+        ContextFlagsExt = 6607,
+        MaxAuxiliarySends = 131075,
+    }
+    public enum ContextFlags : uint
+    {
+        ContextDebugBitExt = 1,
+    }
+    ///<summary>Used in <see cref="ALC.SOFT.EventIsSupportedSOFT" /></summary>
+    public enum DeviceType : uint
+    {
+        PlaybackDeviceSoft = 6612,
+        CaptureDeviceSoft = 6613,
     }
     ///<summary>Used in <see cref="ALC.GetError" /></summary>
     public enum ErrorCode : uint
@@ -188,6 +228,81 @@ namespace OpenTK.Audio.OpenAL.ALC
         InvalidEnum = 40963,
         InvalidValue = 40964,
         OutOfMemory = 40965,
+    }
+    ///<summary>Used in <see cref="ALC.SOFT.EventIsSupportedSOFT" /></summary>
+    public enum EventSupport : uint
+    {
+        EventSupportedSoft = 6617,
+        EventNotSupportedSoft = 6618,
+    }
+    ///<summary>Used in <see cref="ALC.SOFT.EventControlSOFT" />, <see cref="ALC.SOFT.EventIsSupportedSOFT" /></summary>
+    public enum EventType : uint
+    {
+        EventTypeDefaultDeviceChangedSoft = 6614,
+        EventTypeDeviceAddedSoft = 6615,
+        EventTypeDeviceRemovedSoft = 6616,
+    }
+    ///<summary>Used in <see cref="ALC.SOFT.GetInteger64vSOFT" /></summary>
+    public enum GetPNameI64V : uint
+    {
+        DeviceClockSoft = 5632,
+        DeviceLatencySoft = 5633,
+        DeviceClockLatencySoft = 5634,
+    }
+    ///<summary>Used in <see cref="ALC.GetIntegerv" /></summary>
+    public enum GetPNameIV : uint
+    {
+        CaptureSamples = 786,
+        Connected = 787,
+        MajorVersion = 4096,
+        MinorVersion = 4097,
+        AttributesSize = 4098,
+        AllAttributes = 4099,
+        HrtfSoft = 6546,
+        HrtfStatusSoft = 6547,
+        NumHrtfSpecifiersSoft = 6548,
+        OutputLimiterSoft = 6554,
+        MaxAmbisonicOrderSoft = 6555,
+        EfxMajorVersion = 131073,
+        EfxMinorVersion = 131074,
+    }
+    public enum HRTFMode : uint
+    {
+        DontCareSoft = 2,
+    }
+    public enum HRTFStatus : uint
+    {
+        HrtfDisabledSoft = 0,
+        HrtfEnabledSoft = 1,
+        HrtfDeniedSoft = 2,
+        HrtfRequiredSoft = 3,
+        HrtfHeadphonesDetectedSoft = 4,
+        HrtfUnsupportedFormatSoft = 5,
+    }
+    ///<summary>Used in <see cref="ALC.SOFT.GetStringiSOFT" /></summary>
+    public enum IndexedStringName : uint
+    {
+        HrtfSpecifierSoft = 6549,
+    }
+    ///<summary>Used in <see cref="ALC.EXT.MacOSXGetRenderingQuality" />, <see cref="ALC.EXT.MacOSXRenderingQuality" /></summary>
+    public enum MacOSXSpatialRenderingQuality : uint
+    {
+        MacOsxSpatialRenderingQualityHigh = 1021,
+        MacOsxSpatialRenderingQualityLow = 1023,
+    }
+    public enum OutputLimiterMode : uint
+    {
+        DontCareSoft = 2,
+    }
+    public enum OutputMode : uint
+    {
+        Surround51Soft = 5380,
+        Surround61Soft = 5381,
+        Surround71Soft = 5382,
+        AnySoft = 6573,
+        StereoBasicSoft = 6574,
+        StereoUhjSoft = 6575,
+        StereoHrtfSoft = 6578,
     }
     ///<summary>Used in <see cref="ALC.SOFT.IsRenderFormatSupportedSOFT" /></summary>
     public enum RenderFormatChannels : uint
@@ -209,6 +324,18 @@ namespace OpenTK.Audio.OpenAL.ALC
         IntSoft = 5124,
         UnsignedIntSoft = 5125,
         FloatSoft = 5126,
+    }
+    ///<summary>Used in <see cref="ALC.GetString" /></summary>
+    public enum StringName : uint
+    {
+        CaptureDeviceSpecifier = 784,
+        CaptureDefaultDeviceSpecifier = 785,
+        DefaultDeviceSpecifier = 4100,
+        DeviceSpecifier = 4101,
+        Extensions = 4102,
+        DefaultAllDevicesSpecifier = 4114,
+        AllDevicesSpecifier = 4115,
+        HrtfSpecifierSoft = 6549,
     }
 #pragma warning restore CA1069 // Enums values should not be duplicated
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member

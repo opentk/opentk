@@ -28,11 +28,14 @@
     </types>
 
     <enums>
-        <enum value="0x1007" name="ALC_FREQUENCY" />
-        <enum value="0x1008" name="ALC_REFRESH" />
-        <enum value="0x1009" name="ALC_SYNC" />
-        <enum value="0x1010" name="ALC_MONO_SOURCES" />
-        <enum value="0x1011" name="ALC_STEREO_SOURCES" />
+        <enum value="0x0000" name="ALC_FALSE" group="HRTFMode,OutputLimiterMode" />
+        <enum value="0x0001" name="ALC_TRUE" group="HRTFMode,OutputLimiterMode" />
+
+        <enum value="0x1007" name="ALC_FREQUENCY" group="ContextAttribute" />
+        <enum value="0x1008" name="ALC_REFRESH" group="ContextAttribute" />
+        <enum value="0x1009" name="ALC_SYNC" group="ContextAttribute" />
+        <enum value="0x1010" name="ALC_MONO_SOURCES" group="ContextAttribute" />
+        <enum value="0x1011" name="ALC_STEREO_SOURCES" group="ContextAttribute" />
     </enums>
 
     <enums group="ErrorCode">
@@ -45,13 +48,13 @@
     </enums>
 
     <enums>
-        <enum value="0x1000" name="ALC_MAJOR_VERSION" />
-        <enum value="0x1001" name="ALC_MINOR_VERSION" />
-        <enum value="0x1002" name="ALC_ATTRIBUTES_SIZE" />
-        <enum value="0x1003" name="ALC_ALL_ATTRIBUTES" />
-        <enum value="0x1004" name="ALC_DEFAULT_DEVICE_SPECIFIER" />
-        <enum value="0x1005" name="ALC_DEVICE_SPECIFIER" />
-        <enum value="0x1006" name="ALC_EXTENSIONS" />
+        <enum value="0x1000" name="ALC_MAJOR_VERSION" group="GetPNameIV" />
+        <enum value="0x1001" name="ALC_MINOR_VERSION" group="GetPNameIV" />
+        <enum value="0x1002" name="ALC_ATTRIBUTES_SIZE" group="GetPNameIV" />
+        <enum value="0x1003" name="ALC_ALL_ATTRIBUTES" group="GetPNameIV" />
+        <enum value="0x1004" name="ALC_DEFAULT_DEVICE_SPECIFIER" group="StringName" />
+        <enum value="0x1005" name="ALC_DEVICE_SPECIFIER" group="StringName" />
+        <enum value="0x1006" name="ALC_EXTENSIONS" group="StringName" />
     </enums>
 
     <!-- Extension enums -->
@@ -62,8 +65,8 @@
         <enum value="0x2003" name="ALC_CHANNELS_AAX" />
     </enums>
     <enums comment="From ALC_ENUMERATE_ALL_EXT">
-        <enum value="0x1012" name="ALC_DEFAULT_ALL_DEVICES_SPECIFIER" />
-        <enum value="0x1013" name="ALC_ALL_DEVICES_SPECIFIER" />
+        <enum value="0x1012" name="ALC_DEFAULT_ALL_DEVICES_SPECIFIER" group="StringName" />
+        <enum value="0x1013" name="ALC_ALL_DEVICES_SPECIFIER" group="StringName" />
     </enums>
     <!-- ALC_ENUMERATION_EXT doesn't have any enums -->
     <enums comment="From ALC_EXT_ASA_DISTORTION">
@@ -141,71 +144,61 @@
         <enum value="'obst'" name="ALC_ASA_OBSTRUCTION" />
     </enums>
     <enums comment="From ALC_EXT_CAPTURE">
-        <enum value="0x310" name="ALC_CAPTURE_DEVICE_SPECIFIER" />
-        <enum value="0x311" name="ALC_CAPTURE_DEFAULT_DEVICE_SPECIFIER" />
-        <enum value="0x312" name="ALC_CAPTURE_SAMPLES" />
+        <enum value="0x310" name="ALC_CAPTURE_DEVICE_SPECIFIER" group="StringName" />
+        <enum value="0x311" name="ALC_CAPTURE_DEFAULT_DEVICE_SPECIFIER" group="StringName" />
+        <enum value="0x312" name="ALC_CAPTURE_SAMPLES" group="GetPNameIV" />
     </enums>
-    <enums comment="From ALC_EXT_DEDICATED">
-        <enum value="0x9000" name="AL_EFFECT_DEDICATED_LOW_FREQUENCY_EFFECT" />
-        <enum value="0x9001" name="AL_EFFECT_DEDICATED_DIALOGUE" />
-        <enum value="0x0001" name="AL_DEDICATED_GAIN" />
-    </enums>
+    <!--ALC_EXT_DEDICATED only has AL enums. -->
     <enums comment="From ALC_EXT_DEFAULT_FILTER_ORDER">
-        <enum value="0x1100" name="ALC_DEFAULT_FILTER_ORDER" />
+        <enum value="0x1100" name="ALC_DEFAULT_FILTER_ORDER" group="ContextAttribute" />
     </enums>
     <enums comment="From ALC_EXT_disconnect">
-        <enum value="0x313" name="ALC_CONNECTED" />
+        <enum value="0x313" name="ALC_CONNECTED" group="GetPNameIV" />
     </enums>
     <enums comment="From ALC_EXT_EFX">
-        <enum value="0x20001" name="ALC_EFX_MAJOR_VERSION" />
-        <enum value="0x20002" name="ALC_EFX_MINOR_VERSION" />
-        <enum value="0x20003" name="ALC_MAX_AUXILIARY_SENDS" />
+        <enum value="0x20001" name="ALC_EFX_MAJOR_VERSION" group="GetPNameIV" />
+        <enum value="0x20002" name="ALC_EFX_MINOR_VERSION" group="GetPNameIV" />
+        <enum value="0x20003" name="ALC_MAX_AUXILIARY_SENDS"  group="ContextAttribute" />
     </enums>
     <enums comment="From ALC_EXT_MAC_OSX">
-        <enum value="'rqhi'" name="ALC_MAC_OSX_SPATIAL_RENDERING_QUALITY_HIGH" />
-        <enum value="'rdlo'" name="ALC_MAC_OSX_SPATIAL_RENDERING_QUALITY_LOW" />
-        <enum value="'rcst'" name="ALC_MAC_OSX_RENDER_CHANNEL_COUNT_STEREO" />
-        <enum value="'rcmc'" name="ALC_MAC_OSX_RENDER_CHANNEL_COUNT_MULTICHANNEL" />
+        <enum value="'rqhi'" name="ALC_MAC_OSX_SPATIAL_RENDERING_QUALITY_HIGH" group="MacOSXSpatialRenderingQuality" />
+        <enum value="'rdlo'" name="ALC_MAC_OSX_SPATIAL_RENDERING_QUALITY_LOW" group="MacOSXSpatialRenderingQuality" />
     </enums>
     <enums comment="From ALC_LOKI_audio_channel">
-        <enum value="0x500001" name="ALC_CHAN_MAIN_LOKI" />
-        <enum value="0x500002" name="ALC_CHAN_PCM_LOKI" />
-        <enum value="0x500003" name="ALC_CHAN_CD_LOKI" />
+        <enum value="0x500001" name="ALC_CHAN_MAIN_LOKI" group="AudioChannelLOKI" />
+        <enum value="0x500002" name="ALC_CHAN_PCM_LOKI" group="AudioChannelLOKI" />
+        <enum value="0x500003" name="ALC_CHAN_CD_LOKI" group="AudioChannelLOKI" />
     </enums>
-    <enums comment="From ALC_MAC_OSX_CONVERT_DATA_UPON_LOADING">
-        <enum value="0xF001" name="ALC_MAC_OSX_CONVERT_DATA_UPON_LOADING" />
-    </enums>
+    <!-- ALC_MAC_OSX_CONVERT_DATA_UPON_LOADING only has AL enums -->
     <enums comment="From ALC_SOFT_device_clock">
-        <enum value="0x1600" name="ALC_DEVICE_CLOCK_SOFT" />
-        <enum value="0x1601" name="ALC_DEVICE_LATENCY_SOFT" />
-        <enum value="0x1602" name="ALC_DEVICE_CLOCK_LATENCY_SOFT"/>
-        <enum value="0x1202" name="AL_SAMPLE_OFFSET_CLOCK_SOFT" />
-        <enum value="0x1203" name="AL_SEC_OFFSET_CLOCK_SOFT" />
+        <enum value="0x1600" name="ALC_DEVICE_CLOCK_SOFT" group="GetPNameI64V" />
+        <enum value="0x1601" name="ALC_DEVICE_LATENCY_SOFT" group="GetPNameI64V" />
+        <enum value="0x1602" name="ALC_DEVICE_CLOCK_LATENCY_SOFT" group="GetPNameI64V" />
     </enums>
     <enums comment="From ALC_SOFT_HRTF">
-        <enum value="0x1992" name="ALC_HRTF_SOFT" />
-        <enum value="0x1996" name="ALC_HRTF_ID_SOFT" />
-        <enum value="0x0002" name="ALC_DONT_CARE_SOFT" />
-        <enum value="0x1993" name="ALC_HRTF_STATUS_SOFT" />
-        <enum value="0x1994" name="ALC_NUM_HRTF_SPECIFIERS_SOFT" />
-        <enum value="0x1995" name="ALC_HRTF_SPECIFIER_SOFT" />
-        <enum value="0x0000" name="ALC_HRTF_DISABLED_SOFT" />
-        <enum value="0x0001" name="ALC_HRTF_ENABLED_SOFT" />
-        <enum value="0x0002" name="ALC_HRTF_DENIED_SOFT" />
-        <enum value="0x0003" name="ALC_HRTF_REQUIRED_SOFT" />
-        <enum value="0x0004" name="ALC_HRTF_HEADPHONES_DETECTED_SOFT" />
-        <enum value="0x0005" name="ALC_HRTF_UNSUPPORTED_FORMAT_SOFT" />
+        <enum value="0x1992" name="ALC_HRTF_SOFT" group="ContextAttribute,GetPNameIV" />
+        <enum value="0x1996" name="ALC_HRTF_ID_SOFT" group="ContextAttribute" />
+        <enum value="0x0002" name="ALC_DONT_CARE_SOFT" group="HRTFMode,OutputLimiterMode" />
+        <enum value="0x1993" name="ALC_HRTF_STATUS_SOFT" group="GetPNameIV" />
+        <enum value="0x1994" name="ALC_NUM_HRTF_SPECIFIERS_SOFT" group="GetPNameIV" />
+        <enum value="0x1995" name="ALC_HRTF_SPECIFIER_SOFT" group="StringName,IndexedStringName" />
+        <enum value="0x0000" name="ALC_HRTF_DISABLED_SOFT" group="HRTFStatus" />
+        <enum value="0x0001" name="ALC_HRTF_ENABLED_SOFT" group="HRTFStatus" />
+        <enum value="0x0002" name="ALC_HRTF_DENIED_SOFT" group="HRTFStatus" />
+        <enum value="0x0003" name="ALC_HRTF_REQUIRED_SOFT" group="HRTFStatus" />
+        <enum value="0x0004" name="ALC_HRTF_HEADPHONES_DETECTED_SOFT" group="HRTFStatus" />
+        <enum value="0x0005" name="ALC_HRTF_UNSUPPORTED_FORMAT_SOFT" group="HRTFStatus" />
     </enums>
     <enums comment="From ALC_SOFT_loopback_bformat">
-        <enum value="0x1507" name="ALC_BFORMAT3D_SOFT" />
-        <enum value="0x1997" name="ALC_AMBISONIC_LAYOUT_SOFT" />
-        <enum value="0x1998" name="ALC_AMBISONIC_SCALING_SOFT" />
-        <enum value="0x1999" name="ALC_AMBISONIC_ORDER_SOFT" />
-        <enum value="0x0000" name="ALC_FUMA_SOFT" />
-        <enum value="0x0001" name="ALC_ACN_SOFT" />
-        <enum value="0x0001" name="ALC_SN3D_SOFT" />
-        <enum value="0x0002" name="ALC_N3D_SOFT" />
-        <enum value="0x199B" name="ALC_MAX_AMBISONIC_ORDER_SOFT" />
+        <enum value="0x1507" name="ALC_BFORMAT3D_SOFT" group="ContextAttribute" />
+        <enum value="0x1997" name="ALC_AMBISONIC_LAYOUT_SOFT" group="ContextAttribute" />
+        <enum value="0x1998" name="ALC_AMBISONIC_SCALING_SOFT" group="ContextAttribute" />
+        <enum value="0x1999" name="ALC_AMBISONIC_ORDER_SOFT" group="ContextAttribute" />
+        <enum value="0x0000" name="ALC_FUMA_SOFT" group="AmbisonicLayout,AmbisonicScaling" />
+        <enum value="0x0001" name="ALC_ACN_SOFT"  group="AmbisonicLayout" />
+        <enum value="0x0001" name="ALC_SN3D_SOFT" group="AmbisonicScaling" />
+        <enum value="0x0002" name="ALC_N3D_SOFT" group="AmbisonicScaling" />
+        <enum value="0x199B" name="ALC_MAX_AMBISONIC_ORDER_SOFT" group="GetPNameIV" />
     </enums>
     <enums comment="From ALC_SOFT_loopback">
         <enum value="0x1400" name="ALC_BYTE_SOFT" group="RenderFormatType" />
@@ -221,47 +214,47 @@
         <enum value="0x1504" name="ALC_5POINT1_SOFT" group="RenderFormatChannels" />
         <enum value="0x1505" name="ALC_6POINT1_SOFT" group="RenderFormatChannels" />
         <enum value="0x1506" name="ALC_7POINT1_SOFT" group="RenderFormatChannels" />
-        <enum value="0x1990" name="ALC_FORMAT_CHANNELS_SOFT" />
-        <enum value="0x1991" name="ALC_FORMAT_TYPE_SOFT" />
+        <enum value="0x1990" name="ALC_FORMAT_CHANNELS_SOFT" group="ContextAttribute" />
+        <enum value="0x1991" name="ALC_FORMAT_TYPE_SOFT" group="ContextAttribute" />
     </enums>
     <enums comment="From ALC_SOFT_output_limiter">
-        <enum value="0x199A" name="ALC_OUTPUT_LIMITER_SOFT" />
+        <enum value="0x199A" name="ALC_OUTPUT_LIMITER_SOFT" group="ContextAttribute,GetPNameIV" />
     </enums>
     <enums comment="From ALC_SOFT_output_mode">
-        <enum value="0x19AC" name="ALC_OUTPUT_MODE_SOFT" />
-        <enum value="0x19AD" name="ALC_ANY_SOFT" />
-        <enum value="0x1500" name="ALC_MONO_SOFT" />
-        <enum value="0x1501" name="ALC_STEREO_SOFT" />
-        <enum value="0x19AE" name="ALC_STEREO_BASIC_SOFT" />
-        <enum value="0x19AF" name="ALC_STEREO_UHJ_SOFT" />
-        <enum value="0x19B2" name="ALC_STEREO_HRTF_SOFT" />
-        <enum value="0x1503" name="ALC_QUAD_SOFT" />
-        <enum value="0x1504" name="ALC_SURROUND_5_1_SOFT" />
-        <enum value="0x1505" name="ALC_SURROUND_6_1_SOFT" />
-        <enum value="0x1506" name="ALC_SURROUND_7_1_SOFT" />
+        <enum value="0x19AC" name="ALC_OUTPUT_MODE_SOFT" group="ContextAttribute" />
+        <enum value="0x19AD" name="ALC_ANY_SOFT" group="OutputMode" />
+        <enum value="0x1500" name="ALC_MONO_SOFT" group="OutputMode" />
+        <enum value="0x1501" name="ALC_STEREO_SOFT" group="OutputMode" />
+        <enum value="0x19AE" name="ALC_STEREO_BASIC_SOFT" group="OutputMode" />
+        <enum value="0x19AF" name="ALC_STEREO_UHJ_SOFT" group="OutputMode" />
+        <enum value="0x19B2" name="ALC_STEREO_HRTF_SOFT" group="OutputMode" />
+        <enum value="0x1503" name="ALC_QUAD_SOFT" group="OutputMode" />
+        <enum value="0x1504" name="ALC_SURROUND_5_1_SOFT" group="OutputMode" />
+        <enum value="0x1505" name="ALC_SURROUND_6_1_SOFT" group="OutputMode" />
+        <enum value="0x1506" name="ALC_SURROUND_7_1_SOFT" group="OutputMode" />
     </enums>
     <!-- ALC_SOFT_pause_device does't have any enums -->
     <!-- ALC_SOFT_reopen_device does't have any enums -->
     <enums comment="From ALC_SOFT_system_events">
-        <enum value="0x19D6" name="ALC_EVENT_TYPE_DEFAULT_DEVICE_CHANGED_SOFT" />
-        <enum value="0x19D7" name="ALC_EVENT_TYPE_DEVICE_ADDED_SOFT" />
-        <enum value="0x19D8" name="ALC_EVENT_TYPE_DEVICE_REMOVED_SOFT" />
-        <enum value="0x19D4" name="ALC_PLAYBACK_DEVICE_SOFT" />
-        <enum value="0x19D5" name="ALC_CAPTURE_DEVICE_SOFT" />
-        <enum value="0x19D9" name="ALC_EVENT_SUPPORTED_SOFT" />
-        <enum value="0x19DA" name="ALC_EVENT_NOT_SUPPORTED_SOFT" />
+        <enum value="0x19D6" name="ALC_EVENT_TYPE_DEFAULT_DEVICE_CHANGED_SOFT" group="EventType" />
+        <enum value="0x19D7" name="ALC_EVENT_TYPE_DEVICE_ADDED_SOFT" group="EventType" />
+        <enum value="0x19D8" name="ALC_EVENT_TYPE_DEVICE_REMOVED_SOFT" group="EventType" />
+        <enum value="0x19D4" name="ALC_PLAYBACK_DEVICE_SOFT" group="DeviceType" />
+        <enum value="0x19D5" name="ALC_CAPTURE_DEVICE_SOFT" group="DeviceType" />
+        <enum value="0x19D9" name="ALC_EVENT_SUPPORTED_SOFT" group="EventSupport" />
+        <enum value="0x19DA" name="ALC_EVENT_NOT_SUPPORTED_SOFT" group="EventSupport" />
     </enums>
 
     <!-- From AL_EXT_debug -->
     <enums comment="From ALC_EXT_debug">
-        <enum value="0x19CF" name="ALC_CONTEXT_FLAGS_EXT" />
-        <enum value="0x0001" name="ALC_CONTEXT_DEBUG_BIT_EXT" />
+        <enum value="0x19CF" name="ALC_CONTEXT_FLAGS_EXT" group="ContextAttribute" />
+        <enum value="0x0001" name="ALC_CONTEXT_DEBUG_BIT_EXT" group="ContextFlags" />
     </enums>
 
     <commands comment="From ALC 1.0 and 1.1">
         <command>
             <proto><ptype>ALCcontext</ptype> *<name>alcCreateContext</name></proto>
-            <param><ptype>ALCdevice</ptype> *<name>device</name></param>
+            <param len="1">const <ptype>ALCdevice</ptype> *<name>device</name></param>
             <param>const <ptype>ALCint</ptype> *<name>attrlist</name></param>
         </command>
         <command>
@@ -301,6 +294,7 @@
         </command>
         <command>
             <proto><ptype>ALCboolean</ptype> <name>alcIsExtensionPresent</name></proto>
+            <param>const <ptype>ALCdevice</ptype> *<name>deviceHandle</name></param>
             <param>const <ptype>ALCchar</ptype> *<name>extname</name></param>
         </command>
         <command>
@@ -316,20 +310,20 @@
         <command>
             <proto>const <ptype>ALCchar</ptype> *<name>alcGetString</name></proto>
             <param><ptype>ALCdevice</ptype> *<name>device</name></param>
-            <param><ptype>ALCenum</ptype> <name>param</name></param>
+            <param group="StringName"><ptype>ALCenum</ptype> <name>param</name></param>
         </command>
         <command>
-            <proto>const <ptype>ALCchar</ptype> *<name>alcGetIntegerv</name></proto>
+            <proto>void <name>alcGetIntegerv</name></proto>
             <param><ptype>ALCdevice</ptype> *<name>device</name></param>
-            <param><ptype>ALCenum</ptype> <name>param</name></param>
+            <param group="GetPNameIV"><ptype>ALCenum</ptype> <name>param</name></param>
             <param><ptype>ALCsizei</ptype> <name>size</name></param>
-            <param><ptype>ALCint</ptype> *<name>values</name></param>
+            <param len="size"><ptype>ALCint</ptype> *<name>values</name></param>
         </command>
         <command>
             <proto><ptype>ALCdevice</ptype> *<name>alcCaptureOpenDevice</name></proto>
             <param>const <ptype>ALCchar</ptype> *<name>devicename</name></param>
             <param><ptype>ALCuint</ptype> <name>frequency</name></param>
-            <param><ptype>ALCenum</ptype> <name>format</name></param>
+            <param group="al::Format"><ptype>ALCenum</ptype> <name>format</name></param>
             <param><ptype>ALCsizei</ptype> <name>buffersize</name></param>
         </command>
         <command>
@@ -389,7 +383,7 @@
     <commands comment="From ALC_EXT_MAC_OSX">
         <command>
             <proto><ptype>ALvoid</ptype> <name>alcMacOSXRenderingQuality</name></proto>
-            <param><ptype>ALint</ptype> <name>value</name></param>
+            <param group="MacOSXSpatialRenderingQuality"><ptype>ALint</ptype> <name>value</name></param>
         </command>
         <command>
             <proto><ptype>ALvoid</ptype> <name>alcMacOSXMixerMaxiumumBusses</name></proto>
@@ -400,7 +394,7 @@
             <param><ptype>ALdouble</ptype> <name>value</name></param>
         </command>
         <command>
-            <proto><ptype>ALint</ptype> <name>alcMacOSXGetRenderingQuality</name></proto>
+            <proto group="MacOSXSpatialRenderingQuality"><ptype>ALint</ptype> <name>alcMacOSXGetRenderingQuality</name></proto>
         </command>
         <command>
             <proto><ptype>ALint</ptype> <name>alcMacOSXGetMixerMaxiumumBusses</name></proto>
@@ -455,16 +449,16 @@
         <command>
             <proto>void <name>alcGetInteger64vSOFT</name></proto>
             <param><ptype>ALCdevice</ptype> *<name>device</name></param>
-            <param><ptype>ALCenum</ptype> <name>pname</name></param>
+            <param group="GetPNameI64V"><ptype>ALCenum</ptype> <name>pname</name></param>
             <param><ptype>ALsizei</ptype> <name>size</name></param>
-            <param><ptype>ALCint64SOFT</ptype> *<name>values</name></param>
+            <param len="size"><ptype>ALCint64SOFT</ptype> *<name>values</name></param>
         </command>
     </commands>
     <commands comment="From ALC_SOFT_HRTF">
         <command>
             <proto>const <ptype>ALCchar</ptype> *<name>alcGetStringiSOFT</name></proto>
             <param><ptype>ALCdevice</ptype> *<name>device</name></param>
-            <param><ptype>ALCenum</ptype> <name>paramName</name></param>
+            <param group="IndexedStringName"><ptype>ALCenum</ptype> <name>paramName</name></param>
             <param><ptype>ALCsizei</ptype> <name>index</name></param>
         </command>
         <command>
@@ -512,14 +506,14 @@
     </commands>
     <commands comment="From ALC_SOFT_system_events">
         <command>
-            <proto><ptype>ALCenum</ptype> <name>alcEventIsSupportedSOFT</name></proto>
-            <param><ptype>ALCenum</ptype> <name>eventType</name></param>
-            <param><ptype>ALCenum</ptype> <name>deviceType</name></param>
+            <proto group="EventSupport"><ptype>ALCenum</ptype> <name>alcEventIsSupportedSOFT</name></proto>
+            <param group="EventType"><ptype>ALCenum</ptype> <name>eventType</name></param>
+            <param group="DeviceType"><ptype>ALCenum</ptype> <name>deviceType</name></param>
         </command>
         <command>
             <proto><ptype>ALCboolean</ptype> <name>alcEventControlSOFT</name></proto>
             <param><ptype>ALCsizei</ptype> <name>count</name></param>
-            <param>const <ptype>ALCenum</ptype> *<name>events</name></param>
+            <param group="EventType">const <ptype>ALCenum</ptype> *<name>events</name></param>
             <param><ptype>ALCboolean</ptype> <name>enable</name></param>
         </command>
         <command>
@@ -697,13 +691,7 @@
                 <command name="alcCaptureSamples" />
             </require>
         </extension>
-        <extension name="ALC_EXT_DEDICATED">
-            <require>
-                <enum name="AL_EFFECT_DEDICATED_LOW_FREQUENCY_EFFECT" />
-                <enum name="AL_EFFECT_DEDICATED_DIALOGUE" />
-                <enum name="AL_DEDICATED_GAIN" />
-            </require>
-        </extension>
+        <!-- ALC_EXT_DEDICATED only has AL definitions. -->
         <extension name="ALC_EXT_DEFAULT_FILTER_ORDER">
             <require>
                 <enum name="ALC_DEFAULT_FILTER_ORDER" />
@@ -726,8 +714,6 @@
             <require>
                 <enum name="ALC_MAC_OSX_SPATIAL_RENDERING_QUALITY_HIGH" />
                 <enum name="ALC_MAC_OSX_SPATIAL_RENDERING_QUALITY_LOW" />
-                <enum name="ALC_MAC_OSX_RENDER_CHANNEL_COUNT_STEREO" />
-                <enum name="ALC_MAC_OSX_RENDER_CHANNEL_COUNT_MULTICHANNEL" />
                 <command name="alcMacOSXRenderingQuality" />
                 <command name="alcMacOSXMixerMaxiumumBusses" />
                 <command name="alcMacOSXMixerOutputRate" />
@@ -760,18 +746,12 @@
                 <command name="SetAudioChannel_LOKI" />
             </require>
         </extension>
-        <extension name="ALC_MAC_OSX_CONVERT_DATA_UPON_LOADING">
-            <require>
-                <enum name="ALC_MAC_OSX_CONVERT_DATA_UPON_LOADING" />
-            </require>
-        </extension>
+        <!-- ALC_MAC_OSX_CONVERT_DATA_UPON_LOADING only has AL definitions. -->
         <extension name="ALC_SOFT_device_clock">
             <require>
                 <enum name="ALC_DEVICE_CLOCK_SOFT" />
                 <enum name="ALC_DEVICE_LATENCY_SOFT" />
                 <enum name="ALC_DEVICE_CLOCK_LATENCY_SOFT"/>
-                <enum name="AL_SAMPLE_OFFSET_CLOCK_SOFT" />
-                <enum name="AL_SEC_OFFSET_CLOCK_SOFT" />
                 <command name="alcGetInteger64vSOFT" />
             </require>
         </extension>
