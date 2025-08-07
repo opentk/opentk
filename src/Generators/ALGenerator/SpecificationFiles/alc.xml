@@ -259,26 +259,26 @@
         </command>
         <command>
             <proto><ptype>ALCboolean</ptype> <name>alcMakeContextCurrent</name></proto>
-            <param><ptype>ALCcontext</ptype> *<name>context</name></param>
+            <param len="1"><ptype>ALCcontext</ptype> *<name>context</name></param>
         </command>
         <command>
             <proto>void <name>alcProcessContext</name></proto>
-            <param><ptype>ALCcontext</ptype> *<name>context</name></param>
+            <param len="1"><ptype>ALCcontext</ptype> *<name>context</name></param>
         </command>
         <command>
             <proto>void <name>alcSuspendContext</name></proto>
-            <param><ptype>ALCcontext</ptype> *<name>context</name></param>
+            <param len="1"><ptype>ALCcontext</ptype> *<name>context</name></param>
         </command>
         <command>
             <proto>void <name>alcDestroyContext</name></proto>
-            <param><ptype>ALCcontext</ptype> *<name>context</name></param>
+            <param len="1"><ptype>ALCcontext</ptype> *<name>context</name></param>
         </command>
         <command>
             <proto><ptype>ALCcontext</ptype> *<name>alcGetCurrentContext</name></proto>
         </command>
         <command>
             <proto><ptype>ALCdevice</ptype> *<name>alcGetContextsDevice</name></proto>
-            <param><ptype>ALCcontext</ptype> *<name>context</name></param>
+            <param len="1"><ptype>ALCcontext</ptype> *<name>context</name></param>
         </command>
         <command>
             <proto><ptype>ALCdevice</ptype> *<name>alcOpenDevice</name></proto>
@@ -286,35 +286,35 @@
         </command>
         <command>
             <proto><ptype>ALCboolean</ptype> <name>alcCloseDevice</name></proto>
-            <param><ptype>ALCdevice</ptype> *<name>device</name></param>
+            <param len="1"><ptype>ALCdevice</ptype> *<name>device</name></param>
         </command>
         <command>
             <proto group="ErrorCode"><ptype>ALCenum</ptype> <name>alcGetError</name></proto>
-            <param><ptype>ALCdevice</ptype> *<name>device</name></param>
+            <param len="1"><ptype>ALCdevice</ptype> *<name>device</name></param>
         </command>
         <command>
             <proto><ptype>ALCboolean</ptype> <name>alcIsExtensionPresent</name></proto>
-            <param>const <ptype>ALCdevice</ptype> *<name>deviceHandle</name></param>
+            <param len="1">const <ptype>ALCdevice</ptype> *<name>deviceHandle</name></param>
             <param>const <ptype>ALCchar</ptype> *<name>extname</name></param>
         </command>
         <command>
             <proto><ptype>ALCvoid</ptype> *<name>alcGetProcAddress</name></proto>
-            <param><ptype>ALCdevice</ptype> *<name>device</name></param>
+            <param len="1"><ptype>ALCdevice</ptype> *<name>device</name></param>
             <param>const <ptype>ALCchar</ptype> *<name>extname</name></param>
         </command>
         <command>
             <proto><ptype>ALCenum</ptype> <name>alcGetEnumValue</name></proto>
-            <param><ptype>ALCdevice</ptype> *<name>device</name></param>
+            <param len="1"><ptype>ALCdevice</ptype> *<name>device</name></param>
             <param>const <ptype>ALCchar</ptype> *<name>enumname</name></param>
         </command>
         <command>
             <proto>const <ptype>ALCchar</ptype> *<name>alcGetString</name></proto>
-            <param><ptype>ALCdevice</ptype> *<name>device</name></param>
+            <param len="1"><ptype>ALCdevice</ptype> *<name>device</name></param>
             <param group="StringName"><ptype>ALCenum</ptype> <name>param</name></param>
         </command>
         <command>
             <proto>void <name>alcGetIntegerv</name></proto>
-            <param><ptype>ALCdevice</ptype> *<name>device</name></param>
+            <param len="1"><ptype>ALCdevice</ptype> *<name>device</name></param>
             <param group="GetPNameIV"><ptype>ALCenum</ptype> <name>param</name></param>
             <param><ptype>ALCsizei</ptype> <name>size</name></param>
             <param len="size"><ptype>ALCint</ptype> *<name>values</name></param>
@@ -328,19 +328,19 @@
         </command>
         <command>
             <proto><ptype>ALCboolean</ptype> <name>alcCaptureCloseDevice</name></proto>
-            <param><ptype>ALCdevice</ptype> *<name>device</name></param>
+            <param len="1"><ptype>ALCdevice</ptype> *<name>device</name></param>
         </command>
         <command>
             <proto>void <name>alcCaptureStart</name></proto>
-            <param><ptype>ALCdevice</ptype> *<name>device</name></param>
+            <param len="1"><ptype>ALCdevice</ptype> *<name>device</name></param>
         </command>
         <command>
             <proto>void <name>alcCaptureStop</name></proto>
-            <param><ptype>ALCdevice</ptype> *<name>device</name></param>
+            <param len="1"><ptype>ALCdevice</ptype> *<name>device</name></param>
         </command>
         <command>
             <proto>void <name>alcCaptureSamples</name></proto>
-            <param><ptype>ALCdevice</ptype> *<name>device</name></param>
+            <param len="1"><ptype>ALCdevice</ptype> *<name>device</name></param>
             <param><ptype>ALCvoid</ptype> *<name>buffer</name></param>
             <param><ptype>ALCsizei</ptype> <name>samples</name></param>
         </command>
@@ -376,7 +376,7 @@
     <commands comment="From ALC_EXT_direct_context">
         <command>
             <proto><ptype>ALCvoid</ptype> *<name>alcGetProcAddress2</name></proto>
-            <param><ptype>ALCdevice</ptype> *<name>device</name></param>
+            <param len="1"><ptype>ALCdevice</ptype> *<name>device</name></param>
             <param>const <ptype>ALCchar</ptype> *<name>funcName</name></param>
         </command>
     </commands>
@@ -428,7 +428,7 @@
     <commands comment="From ALC_EXT_thread_local_context">
         <command>
             <proto><ptype>ALCboolean</ptype> <name>alcSetThreadContext</name></proto>
-            <param><ptype>ALCcontext</ptype> *<name>context</name></param>
+            <param len="1"><ptype>ALCcontext</ptype> *<name>context</name></param>
         </command>
         <command>
             <proto><ptype>ALCcontext</ptype> *<name>alcGetThreadContext</name></proto>
@@ -448,7 +448,7 @@
     <commands comment="From ALC_SOFT_device_clock">
         <command>
             <proto>void <name>alcGetInteger64vSOFT</name></proto>
-            <param><ptype>ALCdevice</ptype> *<name>device</name></param>
+            <param len="1"><ptype>ALCdevice</ptype> *<name>device</name></param>
             <param group="GetPNameI64V"><ptype>ALCenum</ptype> <name>pname</name></param>
             <param><ptype>ALsizei</ptype> <name>size</name></param>
             <param len="size"><ptype>ALCint64SOFT</ptype> *<name>values</name></param>
@@ -457,31 +457,31 @@
     <commands comment="From ALC_SOFT_HRTF">
         <command>
             <proto>const <ptype>ALCchar</ptype> *<name>alcGetStringiSOFT</name></proto>
-            <param><ptype>ALCdevice</ptype> *<name>device</name></param>
+            <param len="1"><ptype>ALCdevice</ptype> *<name>device</name></param>
             <param group="IndexedStringName"><ptype>ALCenum</ptype> <name>paramName</name></param>
             <param><ptype>ALCsizei</ptype> <name>index</name></param>
         </command>
         <command>
             <proto><ptype>ALCboolean</ptype> <name>alcResetDeviceSOFT</name></proto>
-            <param><ptype>ALCdevice</ptype> *<name>device</name></param>
+            <param len="1"><ptype>ALCdevice</ptype> *<name>device</name></param>
             <param>const <ptype>ALCint</ptype> *<name>attrList</name></param>
         </command>
     </commands>
     <commands comment="From ALC_SOFT_loopback">
         <command>
             <proto><ptype>ALCdevice</ptype>* <name>alcLoopbackOpenDeviceSOFT</name></proto>
-            <param><ptype>ALCdevice</ptype> *<name>device</name></param>
+            <param len="1"><ptype>ALCdevice</ptype> *<name>device</name></param>
         </command>
         <command>
             <proto><ptype>ALCboolean</ptype> <name>alcIsRenderFormatSupportedSOFT</name></proto>
-            <param><ptype>ALCdevice</ptype> *<name>device</name></param>
+            <param len="1"><ptype>ALCdevice</ptype> *<name>device</name></param>
             <param><ptype>ALCsizei</ptype> <name>frequency</name></param>
             <param group="RenderFormatChannels"><ptype>ALCenum</ptype> <name>channels</name></param>
             <param group="RenderFormatType"><ptype>ALCenum</ptype> <name>type</name></param>
         </command>
         <command>
             <proto>void <name>alcRenderSamplesSOFT</name></proto>
-            <param><ptype>ALCdevice</ptype> *<name>device</name></param>
+            <param len="1"><ptype>ALCdevice</ptype> *<name>device</name></param>
             <param><ptype>ALCvoid</ptype> *<name>buffer</name></param>
             <param><ptype>ALCsizei</ptype> <name>samples</name></param>
         </command>
@@ -489,17 +489,17 @@
     <commands comment="From ALC_SOFT_pause_device">
         <command>
             <proto>void <name>alcDevicePauseSOFT</name></proto>
-            <param><ptype>ALCdevice</ptype> *<name>device</name></param>
+            <param len="1"><ptype>ALCdevice</ptype> *<name>device</name></param>
         </command>
         <command>
             <proto>void <name>alcDeviceResumeSOFT</name></proto>
-            <param><ptype>ALCdevice</ptype> *<name>device</name></param>
+            <param len="1"><ptype>ALCdevice</ptype> *<name>device</name></param>
         </command>
     </commands>
     <commands comment="From ALC_SOFT_reopen_device">
         <command>
             <proto><ptype>ALCboolean</ptype> <name>alcReopenDeviceSOFT</name></proto>
-            <param><ptype>ALCdevice</ptype> *<name>device</name></param>
+            <param len="1"><ptype>ALCdevice</ptype> *<name>device</name></param>
             <param>const <ptype>ALCchar</ptype> *<name>deviceName</name></param>
             <param>const <ptype>ALCint</ptype> *<name>attribs</name></param>
         </command>
@@ -513,7 +513,7 @@
         <command>
             <proto><ptype>ALCboolean</ptype> <name>alcEventControlSOFT</name></proto>
             <param><ptype>ALCsizei</ptype> <name>count</name></param>
-            <param group="EventType">const <ptype>ALCenum</ptype> *<name>events</name></param>
+            <param len="count" group="EventType">const <ptype>ALCenum</ptype> *<name>events</name></param>
             <param><ptype>ALCboolean</ptype> <name>enable</name></param>
         </command>
         <command>
