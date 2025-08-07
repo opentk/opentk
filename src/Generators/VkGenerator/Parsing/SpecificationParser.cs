@@ -113,6 +113,7 @@ namespace VkGenerator.Parsing
         string IFunctionParameter.OriginalName => Name;
 
         public BaseCSType? StrongType { get; set; }
+        public Expression? StrongLength { get; set; }
     }
 
     public record Feature(string Name, Version Version, string? Depends, string? Comment, List<RequireTag> RequireTags, List<DeprecateTag> DeprecateTags, List<RemoveTag> RemoveTags);
