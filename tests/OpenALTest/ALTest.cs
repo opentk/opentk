@@ -107,14 +107,14 @@ namespace OpenALTest
             {
                 Console.WriteLine("  " + item);
             }
-            uint auxSlot = 0;
+            int auxSlot = 0;
             if (ALC.IsExtensionPresent(device, "ALC_EXT_EFX"))
             {
                 Console.WriteLine("EFX extension is present!!");
-                AL.EXT.GenEffect(out uint effect);
+                AL.EXT.GenEffect(out int effect);
                 AL.EXT.Effecti(effect, EffectPNameI.EffectType, (int)EffectType.EffectReverb);
                 AL.EXT.GenAuxiliaryEffectSlot(out auxSlot);
-                AL.EXT.AuxiliaryEffectSloti(auxSlot, AuxEffectSlotPNameI.EffectslotEffect, (int)effect);
+                AL.EXT.AuxiliaryEffectSloti(auxSlot, AuxEffectSlotPNameI.EffectslotEffect, effect);
             }
 
             // Record a second of data
@@ -143,7 +143,7 @@ namespace OpenALTest
 
             // Playback the recorded data
             CheckALError("Before data");
-            AL.GenBuffer(out uint alBuffer);
+            AL.GenBuffer(out int alBuffer);
             // short[] sine = new short[44100 * 1];
             // FillSine(sine, 4400, 44100);
             // FillSine(recording, 440, 44100);
@@ -152,12 +152,12 @@ namespace OpenALTest
 
             AL.Listenerf(ListenerPNameF.Gain, 0.1f);
 
-            AL.GenSource(out uint alSource);
+            AL.GenSource(out int alSource);
             AL.Sourcef(alSource, SourcePNameF.Gain, 1f);
-            AL.Sourcei(alSource, SourcePNameI.Buffer, (int)alBuffer);
+            AL.Sourcei(alSource, SourcePNameI.Buffer, alBuffer);
             if (ALC.IsExtensionPresent(device, "ALC_EXT_EFX"))
             {
-                AL.Source3i(alSource, SourcePName3I.AuxiliarySendFilter, (int)auxSlot, 0, 0);
+                AL.Source3i(alSource, SourcePName3I.AuxiliarySendFilter, auxSlot, 0, 0);
             }
             AL.SourcePlay(alSource);
 

@@ -192,7 +192,12 @@ namespace ALGenerator.Parsing
     internal enum HandleType
     {
         // FIXME:
-        Handle,
+        Any,
+        Source,
+        Buffer,
+        Effect,
+        EffectSlot,
+        Filter,
     }
 
     internal enum EnumType

@@ -742,26 +742,26 @@
         <command>
             <proto>void <name>alGenSources</name></proto>
             <param><ptype>ALsizei</ptype> <name>n</name></param>
-            <param len="n"><ptype>ALuint</ptype> *<name>sources</name></param>
+            <param len="n" class="source"><ptype>ALuint</ptype> *<name>sources</name></param>
         </command>
         <command>
             <proto>void <name>alDeleteSources</name></proto>
             <param><ptype>ALsizei</ptype> <name>n</name></param>
-            <param len="n">const <ptype>ALuint</ptype> *<name>sources</name></param>
+            <param len="n" class="source">const <ptype>ALuint</ptype> *<name>sources</name></param>
         </command>
         <command>
             <proto><ptype>ALboolean</ptype> <name>alIsSource</name></proto>
-            <param><ptype>ALuint</ptype> <name>source</name></param>
+            <param class="any"><ptype>ALuint</ptype> <name>source</name></param>
         </command>
         <command>
             <proto>void <name>alSourcef</name></proto>
-            <param><ptype>ALuint</ptype> <name>source</name></param>
+            <param class="source"><ptype>ALuint</ptype> <name>source</name></param>
             <param group="SourcePNameF"><ptype>ALenum</ptype> <name>param</name></param>
             <param><ptype>ALfloat</ptype> <name>value</name></param>
         </command>
         <command>
             <proto>void <name>alSource3f</name></proto>
-            <param><ptype>ALuint</ptype> <name>source</name></param>
+            <param class="source"><ptype>ALuint</ptype> <name>source</name></param>
             <param group="SourcePName3F"><ptype>ALenum</ptype> <name>param</name></param>
             <param><ptype>ALfloat</ptype> <name>value1</name></param>
             <param><ptype>ALfloat</ptype> <name>value2</name></param>
@@ -769,19 +769,19 @@
         </command>
         <command>
             <proto>void <name>alSourcefv</name></proto>
-            <param><ptype>ALuint</ptype> <name>source</name></param>
+            <param class="source"><ptype>ALuint</ptype> <name>source</name></param>
             <param group="SourcePNameFV"><ptype>ALenum</ptype> <name>param</name></param>
             <param>const <ptype>ALfloat</ptype> *<name>value</name></param>
         </command>
         <command>
             <proto>void <name>alSourcei</name></proto>
-            <param><ptype>ALuint</ptype> <name>source</name></param>
+            <param class="source"><ptype>ALuint</ptype> <name>source</name></param>
             <param group="SourcePNameI"><ptype>ALenum</ptype> <name>param</name></param>
             <param><ptype>ALint</ptype> <name>value</name></param>
         </command>
         <command>
             <proto>void <name>alSource3i</name></proto>
-            <param><ptype>ALuint</ptype> <name>source</name></param>
+            <param class="source"><ptype>ALuint</ptype> <name>source</name></param>
             <param group="SourcePName3I"><ptype>ALenum</ptype> <name>param</name></param>
             <param><ptype>ALint</ptype> <name>value1</name></param>
             <param><ptype>ALint</ptype> <name>value2</name></param>
@@ -789,19 +789,19 @@
         </command>
         <command>
             <proto>void <name>alSourceiv</name></proto>
-            <param><ptype>ALuint</ptype> <name>source</name></param>
+            <param class="source"><ptype>ALuint</ptype> <name>source</name></param>
             <param group="SourcePNameIV"><ptype>ALenum</ptype> <name>param</name></param>
             <param>const <ptype>ALint</ptype> *<name>value</name></param>
         </command>
         <command>
             <proto>void <name>alGetSourcef</name></proto>
-            <param><ptype>ALuint</ptype> <name>source</name></param>
+            <param class="source"><ptype>ALuint</ptype> <name>source</name></param>
             <param group="SourceGetPNameF"><ptype>ALenum</ptype> <name>param</name></param>
             <param len="1"><ptype>ALfloat</ptype> *<name>value</name></param>
         </command>
         <command>
             <proto>void <name>alGetSource3f</name></proto>
-            <param><ptype>ALuint</ptype> <name>source</name></param>
+            <param class="source"><ptype>ALuint</ptype> <name>source</name></param>
             <param group="SourceGetPName3F"><ptype>ALenum</ptype> <name>param</name></param>
             <param len="1"><ptype>ALfloat</ptype> *<name>value1</name></param>
             <param len="1"><ptype>ALfloat</ptype> *<name>value2</name></param>
@@ -809,19 +809,19 @@
         </command>
         <command>
             <proto>void <name>alGetSourcefv</name></proto>
-            <param><ptype>ALuint</ptype> <name>source</name></param>
+            <param class="source"><ptype>ALuint</ptype> <name>source</name></param>
             <param group="SourceGetPNameFV"><ptype>ALenum</ptype> <name>param</name></param>
             <param><ptype>ALfloat</ptype> *<name>values</name></param>
         </command>
         <command>
             <proto>void <name>alGetSourcei</name></proto>
-            <param><ptype>ALuint</ptype> <name>source</name></param>
+            <param class="source"><ptype>ALuint</ptype> <name>source</name></param>
             <param group="SourceGetPNameI"><ptype>ALenum</ptype> <name>param</name></param>
             <param len="1"><ptype>ALint</ptype> *<name>value</name></param>
         </command>
         <command>
             <proto>void <name>alGetSource3i</name></proto>
-            <param><ptype>ALuint</ptype> <name>source</name></param>
+            <param class="source"><ptype>ALuint</ptype> <name>source</name></param>
             <param group="SourceGetPName3I"><ptype>ALenum</ptype> <name>param</name></param>
             <param len="1"><ptype>ALint</ptype> *<name>value1</name></param>
             <param len="1"><ptype>ALint</ptype> *<name>value2</name></param>
@@ -829,75 +829,75 @@
         </command>
         <command>
             <proto>void <name>alGetSourceiv</name></proto>
-            <param><ptype>ALuint</ptype> <name>source</name></param>
+            <param class="source"><ptype>ALuint</ptype> <name>source</name></param>
             <param group="SourceGetPNameIV"><ptype>ALenum</ptype> <name>param</name></param>
             <param><ptype>ALint</ptype> *<name>values</name></param>
         </command>
         <command>
             <proto>void <name>alSourcePlay</name></proto>
-            <param><ptype>ALuint</ptype> <name>source</name></param>
+            <param class="source"><ptype>ALuint</ptype> <name>source</name></param>
         </command>
         <command>
             <proto>void <name>alSourceStop</name></proto>
-            <param><ptype>ALuint</ptype> <name>source</name></param>
+            <param class="source"><ptype>ALuint</ptype> <name>source</name></param>
         </command>
         <command>
             <proto>void <name>alSourceRewind</name></proto>
-            <param><ptype>ALuint</ptype> <name>source</name></param>
+            <param class="source"><ptype>ALuint</ptype> <name>source</name></param>
         </command>
         <command>
             <proto>void <name>alSourcePause</name></proto>
-            <param><ptype>ALuint</ptype> <name>source</name></param>
+            <param class="source"><ptype>ALuint</ptype> <name>source</name></param>
         </command>
         <command>
             <proto>void <name>alSourcePlayv</name></proto>
             <param><ptype>ALsizei</ptype> <name>n</name></param>
-            <param len="n">const <ptype>ALuint</ptype> *<name>sources</name></param>
+            <param len="n" class="source">const <ptype>ALuint</ptype> *<name>sources</name></param>
         </command>
         <command>
             <proto>void <name>alSourceStopv</name></proto>
             <param><ptype>ALsizei</ptype> <name>n</name></param>
-            <param len="n">const <ptype>ALuint</ptype> *<name>sources</name></param>
+            <param len="n" class="source">const <ptype>ALuint</ptype> *<name>sources</name></param>
         </command>
         <command>
             <proto>void <name>alSourceRewindv</name></proto>
             <param><ptype>ALsizei</ptype> <name>n</name></param>
-            <param len="n">const <ptype>ALuint</ptype> *<name>sources</name></param>
+            <param len="n" class="source">const <ptype>ALuint</ptype> *<name>sources</name></param>
         </command>
         <command>
             <proto>void <name>alSourcePausev</name></proto>
             <param><ptype>ALsizei</ptype> <name>n</name></param>
-            <param len="n">const <ptype>ALuint</ptype> *<name>sources</name></param>
+            <param len="n" class="source">const <ptype>ALuint</ptype> *<name>sources</name></param>
         </command>
         <command>
             <proto>void <name>alSourceQueueBuffers</name></proto>
-            <param><ptype>ALuint</ptype> <name>source</name></param>
+            <param class="source"><ptype>ALuint</ptype> <name>source</name></param>
             <param><ptype>ALsizei</ptype> <name>nb</name></param>
             <param len="nb">const <ptype>ALuint</ptype> *<name>buffers</name></param>
         </command>
         <command>
             <proto>void <name>alSourceUnqueueBuffers</name></proto>
-            <param><ptype>ALuint</ptype> <name>source</name></param>
+            <param class="source"><ptype>ALuint</ptype> <name>source</name></param>
             <param><ptype>ALsizei</ptype> <name>nb</name></param>
-            <param len="nb"><ptype>ALuint</ptype> *<name>buffer</name></param>
+            <param len="nb" class="buffer"><ptype>ALuint</ptype> *<name>buffer</name></param>
         </command>
         <command>
             <proto>void <name>alGenBuffers</name></proto>
             <param><ptype>ALsizei</ptype> <name>n</name></param>
-            <param len="n"><ptype>ALuint</ptype> *<name>buffers</name></param>
+            <param len="n" class="buffer"><ptype>ALuint</ptype> *<name>buffers</name></param>
         </command>
         <command>
             <proto>void <name>alDeleteBuffers</name></proto>
             <param><ptype>ALsizei</ptype> <name>n</name></param>
-            <param len="n">const <ptype>ALuint</ptype> *<name>buffers</name></param>
+            <param len="n" class="buffer">const <ptype>ALuint</ptype> *<name>buffers</name></param>
         </command>
         <command>
             <proto><ptype>ALboolean</ptype> <name>alIsBuffer</name></proto>
-            <param><ptype>ALuint</ptype> <name>buffer</name></param>
+            <param class="any"><ptype>ALuint</ptype> <name>buffer</name></param>
         </command>
         <command>
             <proto>void <name>alBufferData</name></proto>
-            <param><ptype>ALuint</ptype> <name>buffer</name></param>
+            <param class="buffer"><ptype>ALuint</ptype> <name>buffer</name></param>
             <param group="Format"><ptype>ALenum</ptype> <name>format</name></param>
             <param len="size">const <ptype>ALvoid</ptype> *<name>data</name></param>
             <param><ptype>ALsizei</ptype> <name>size</name></param>
@@ -905,13 +905,13 @@
         </command>
         <command>
             <proto>void <name>alBufferf</name></proto>
-            <param><ptype>ALuint</ptype> <name>buffer</name></param>
+            <param class="buffer"><ptype>ALuint</ptype> <name>buffer</name></param>
             <param group="BufferPNameF"><ptype>ALenum</ptype> <name>param</name></param>
             <param><ptype>ALfloat</ptype> <name>value</name></param>
         </command>
         <command>
             <proto>void <name>alBuffer3f</name></proto>
-            <param><ptype>ALuint</ptype> <name>buffer</name></param>
+            <param class="buffer"><ptype>ALuint</ptype> <name>buffer</name></param>
             <param group="BufferPName3F"><ptype>ALenum</ptype> <name>param</name></param>
             <param len="1"><ptype>ALfloat</ptype> <name>value1</name></param>
             <param len="1"><ptype>ALfloat</ptype> <name>value2</name></param>
@@ -919,19 +919,19 @@
         </command>
         <command>
             <proto>void <name>alBufferfv</name></proto>
-            <param><ptype>ALuint</ptype> <name>buffer</name></param>
+            <param class="buffer"><ptype>ALuint</ptype> <name>buffer</name></param>
             <param group="BufferPNameFV"><ptype>ALenum</ptype> <name>param</name></param>
             <param>const <ptype>ALfloat</ptype> *<name>value</name></param>
         </command>
         <command>
             <proto>void <name>alBufferi</name></proto>
-            <param><ptype>ALuint</ptype> <name>buffer</name></param>
+            <param class="buffer"><ptype>ALuint</ptype> <name>buffer</name></param>
             <param group="BufferPNameI"><ptype>ALenum</ptype> <name>param</name></param>
             <param><ptype>ALint</ptype> <name>value</name></param>
         </command>
         <command>
             <proto>void <name>alBuffer3i</name></proto>
-            <param><ptype>ALuint</ptype> <name>buffer</name></param>
+            <param class="buffer"><ptype>ALuint</ptype> <name>buffer</name></param>
             <param group="BufferPName3I"><ptype>ALenum</ptype> <name>param</name></param>
             <param len="1"><ptype>ALint</ptype> <name>value1</name></param>
             <param len="1"><ptype>ALint</ptype> <name>value2</name></param>
@@ -939,19 +939,19 @@
         </command>
         <command>
             <proto>void <name>alBufferiv</name></proto>
-            <param><ptype>ALuint</ptype> <name>buffer</name></param>
+            <param class="buffer"><ptype>ALuint</ptype> <name>buffer</name></param>
             <param group="BufferPNameIV"><ptype>ALenum</ptype> <name>param</name></param>
             <param>const <ptype>ALint</ptype> *<name>value</name></param>
         </command>
         <command>
             <proto>void <name>alGetBufferf</name></proto>
-            <param><ptype>ALuint</ptype> <name>buffer</name></param>
+            <param class="buffer"><ptype>ALuint</ptype> <name>buffer</name></param>
             <param group="BufferGetPNameF"><ptype>ALenum</ptype> <name>param</name></param>
             <param len="1"><ptype>ALfloat</ptype> *<name>value</name></param>
         </command>
         <command>
             <proto>void <name>alGetBuffer3f</name></proto>
-            <param><ptype>ALuint</ptype> <name>buffer</name></param>
+            <param class="buffer"><ptype>ALuint</ptype> <name>buffer</name></param>
             <param group="BufferGetPName3F"><ptype>ALenum</ptype> <name>param</name></param>
             <param len="1"><ptype>ALfloat</ptype> *<name>value1</name></param>
             <param len="1"><ptype>ALfloat</ptype> *<name>value2</name></param>
@@ -959,19 +959,19 @@
         </command>
         <command>
             <proto>void <name>alGetBufferfv</name></proto>
-            <param><ptype>ALuint</ptype> <name>buffer</name></param>
+            <param class="buffer"><ptype>ALuint</ptype> <name>buffer</name></param>
             <param group="BufferGetPNameFV"><ptype>ALenum</ptype> <name>param</name></param>
             <param><ptype>ALfloat</ptype> *<name>value</name></param>
         </command>
         <command>
             <proto>void <name>alGetBufferi</name></proto>
-            <param><ptype>ALuint</ptype> <name>buffer</name></param>
+            <param class="buffer"><ptype>ALuint</ptype> <name>buffer</name></param>
             <param group="BufferGetPNameI"><ptype>ALenum</ptype> <name>param</name></param>
             <param len="1"><ptype>ALint</ptype> *<name>value</name></param>
         </command>
         <command>
             <proto>void <name>alGetBuffer3i</name></proto>
-            <param><ptype>ALuint</ptype> <name>buffer</name></param>
+            <param class="buffer"><ptype>ALuint</ptype> <name>buffer</name></param>
             <param group="BufferGetPName3I"><ptype>ALenum</ptype> <name>param</name></param>
             <param len="1"><ptype>ALint</ptype> *<name>value1</name></param>
             <param len="1"><ptype>ALint</ptype> *<name>value2</name></param>
@@ -979,20 +979,20 @@
         </command>
         <command>
             <proto>void <name>alGetBufferiv</name></proto>
-            <param><ptype>ALuint</ptype> <name>buffer</name></param>
+            <param class="buffer"><ptype>ALuint</ptype> <name>buffer</name></param>
             <param group="BufferGetPNameIV"><ptype>ALenum</ptype> <name>param</name></param>
             <param><ptype>ALint</ptype> *<name>value</name></param>
         </command>
 
         <command>
             <proto>void <name>alSourcedSOFT</name></proto>
-            <param><ptype>ALuint</ptype> <name>source</name></param>
+            <param class="source"><ptype>ALuint</ptype> <name>source</name></param>
             <param group="SourcePNameD"><ptype>ALenum</ptype> <name>param</name></param>
             <param><ptype>ALdouble</ptype> <name>value</name></param>
         </command>
         <command>
             <proto>void <name>alSource3dSOFT</name></proto>
-            <param><ptype>ALuint</ptype> <name>source</name></param>
+            <param class="source"><ptype>ALuint</ptype> <name>source</name></param>
             <param group="SourcePName3D"><ptype>ALenum</ptype> <name>param</name></param>
             <param len="1"><ptype>ALdouble</ptype> <name>value1</name></param>
             <param len="1"><ptype>ALdouble</ptype> <name>value2</name></param>
@@ -1000,19 +1000,19 @@
         </command>
         <command>
             <proto>void <name>alSourcedvSOFT</name></proto>
-            <param><ptype>ALuint</ptype> <name>source</name></param>
+            <param class="source"><ptype>ALuint</ptype> <name>source</name></param>
             <param group="SourcePNameDV"><ptype>ALenum</ptype> <name>param</name></param>
             <param>const <ptype>ALdouble</ptype> *<name>values</name></param>
         </command>
         <command>
             <proto>void <name>alGetSourcedSOFT</name></proto>
-            <param><ptype>ALuint</ptype> <name>source</name></param>
+            <param class="source"><ptype>ALuint</ptype> <name>source</name></param>
             <param group="SourceGetPNameD"><ptype>ALenum</ptype> <name>param</name></param>
             <param len="1"><ptype>ALdouble</ptype> *<name>value</name></param>
         </command>
         <command>
             <proto>void <name>alGetSource3dSOFT</name></proto>
-            <param><ptype>ALuint</ptype> <name>source</name></param>
+            <param class="source"><ptype>ALuint</ptype> <name>source</name></param>
             <param group="SourceGetPName3D"><ptype>ALenum</ptype> <name>param</name></param>
             <param len="1"><ptype>ALdouble</ptype> *<name>value1</name></param>
             <param len="1"><ptype>ALdouble</ptype> *<name>value2</name></param>
@@ -1020,19 +1020,19 @@
         </command>
         <command>
             <proto>void <name>alGetSourcedvSOFT</name></proto>
-            <param><ptype>ALuint</ptype> <name>source</name></param>
+            <param class="source"><ptype>ALuint</ptype> <name>source</name></param>
             <param group="SourceGetPNameDV"><ptype>ALenum</ptype> <name>param</name></param>
             <param><ptype>ALdouble</ptype> *<name>values</name></param>
         </command>
         <command>
             <proto>void <name>alSourcei64SOFT</name></proto>
-            <param><ptype>ALuint</ptype> <name>source</name></param>
+            <param class="source"><ptype>ALuint</ptype> <name>source</name></param>
             <param group="SourcePNameI64"><ptype>ALenum</ptype> <name>param</name></param>
             <param><ptype>ALint64SOFT</ptype> <name>value</name></param>
         </command>
         <command>
             <proto>void <name>alSource3i64SOFT</name></proto>
-            <param><ptype>ALuint</ptype> <name>source</name></param>
+            <param class="source"><ptype>ALuint</ptype> <name>source</name></param>
             <param group="SourcePName3I64"><ptype>ALenum</ptype> <name>param</name></param>
             <param len="1"><ptype>ALint64SOFT</ptype> <name>value1</name></param>
             <param len="1"><ptype>ALint64SOFT</ptype> <name>value2</name></param>
@@ -1040,19 +1040,19 @@
         </command>
         <command>
             <proto>void <name>alSourcei64vSOFT</name></proto>
-            <param><ptype>ALuint</ptype> <name>source</name></param>
+            <param class="source"><ptype>ALuint</ptype> <name>source</name></param>
             <param group="SourcePNameI64V"><ptype>ALenum</ptype> <name>param</name></param>
             <param>const <ptype>ALint64SOFT</ptype> *<name>values</name></param>
         </command>
         <command>
             <proto>void <name>alGetSourcei64SOFT</name></proto>
-            <param><ptype>ALuint</ptype> <name>source</name></param>
+            <param class="source"><ptype>ALuint</ptype> <name>source</name></param>
             <param group="SourceGetPNameI64"><ptype>ALenum</ptype> <name>param</name></param>
             <param len="1"><ptype>ALint64SOFT</ptype> *<name>value</name></param>
         </command>
         <command>
             <proto>void <name>alGetSource3i64SOFT</name></proto>
-            <param><ptype>ALuint</ptype> <name>source</name></param>
+            <param class="source"><ptype>ALuint</ptype> <name>source</name></param>
             <param group="SourceGetPName3I64"><ptype>ALenum</ptype> <name>param</name></param>
             <param len="1"><ptype>ALint64SOFT</ptype> *<name>value1</name></param>
             <param len="1"><ptype>ALint64SOFT</ptype> *<name>value2</name></param>
@@ -1060,7 +1060,7 @@
         </command>
         <command>
             <proto>void <name>alGetSourcei64vSOFT</name></proto>
-            <param><ptype>ALuint</ptype> <name>source</name></param>
+            <param class="source"><ptype>ALuint</ptype> <name>source</name></param>
             <param group="SourceGetPNameI64V"><ptype>ALenum</ptype> <name>param</name></param>
             <param><ptype>ALint64SOFT</ptype> *<name>values</name></param>
         </command>
@@ -1071,13 +1071,13 @@
         </command>
         <command>
             <proto>void <name>alSourcePlayAtTimeSOFT</name></proto>
-            <param><ptype>ALuint</ptype> <name>source</name></param>
+            <param class="source"><ptype>ALuint</ptype> <name>source</name></param>
             <param><ptype>ALint64SOFT</ptype> <name>start_time</name></param>
         </command>
         <command>
             <proto>void <name>alSourcePlayAtTimevSOFT</name></proto>
             <param><ptype>ALsizei</ptype> <name>n</name></param>
-            <param len="n">const <ptype>ALuint</ptype> *<name>sources</name></param>
+            <param len="n" class="source">const <ptype>ALuint</ptype> *<name>sources</name></param>
             <param><ptype>ALint64SOFT</ptype> <name>start_time</name></param>
         </command>
     </commands>
@@ -1169,14 +1169,14 @@
     <commands comment="From AL_EXT_SOURCE_NOTIFICATIONS">
         <command>
             <proto group="ErrorCode"><ptype>ALenum</ptype> <name>alSourceAddNotification</name></proto>
-            <param><ptype>ALuint</ptype> <name>sid</name></param>
+            <param class="source"><ptype>ALuint</ptype> <name>sid</name></param>
             <param><ptype>ALuint</ptype> <name>notificationID</name></param>
             <param><ptype>alSourceNotificationProc</ptype> <name>notifyProc</name></param>
             <param><ptype>ALvoid</ptype> *<name>userData</name></param>
         </command>
         <command>
             <proto><ptype>ALvoid</ptype> <name>alSourceRemoveNotification</name></proto>
-            <param><ptype>ALuint</ptype> <name>sid</name></param>
+            <param class="source"><ptype>ALuint</ptype> <name>sid</name></param>
             <param><ptype>ALuint</ptype> <name>notificationID</name></param>
             <param><ptype>alSourceNotificationProc</ptype> <name>notifyProc</name></param>
             <param><ptype>ALvoid</ptype> *<name>userData</name></param>
@@ -1185,12 +1185,12 @@
     <commands comment="From AL_EXT_SOURCE_SPATIALIZATION">
         <command>
             <proto><ptype>ALvoid</ptype> <name>alSourceRenderingQuality</name></proto>
-            <param><ptype>ALuint</ptype> <name>sid</name></param>
+            <param class="source"><ptype>ALuint</ptype> <name>sid</name></param>
             <param group="MacOSXSpatialRenderingQuality"><ptype>ALint</ptype> <name>value</name></param>
         </command>
         <command>
             <proto><ptype>ALint</ptype> <name>alSourceGetRenderingQuality</name></proto>
-            <param group="MacOSXSpatialRenderingQuality"><ptype>ALuint</ptype> <name>sid</name></param>
+            <param group="MacOSXSpatialRenderingQuality" class="source"><ptype>ALuint</ptype> <name>sid</name></param>
         </command>
     </commands>
     <commands comment="From AL_LOKI_attenuation_scale">
@@ -1202,14 +1202,14 @@
     <commands comment="From AL_LOKI_buffer_data_callback">
         <command>
             <proto>void <name>BufferDataWithCallback_LOKI</name></proto>
-            <param><ptype>uint</ptype> <name>bid</name></param>
+            <param class="buffer"><ptype>uint</ptype> <name>bid</name></param>
             <param><ptype>ALBUFFERDATACALLBACKLOKI</ptype> <name>callback</name></param>
         </command>
     </commands>
     <commands comment="From AL_SOFT_buffer_samples">
         <command>
             <proto>void <name>alBufferSamplesSOFT</name></proto>
-            <param><ptype>ALuint</ptype> <name>buffer</name></param>
+            <param class="buffer"><ptype>ALuint</ptype> <name>buffer</name></param>
             <param><ptype>ALuint</ptype> <name>samplerate</name></param>
             <param group="InternalFormat"><ptype>ALenum</ptype> <name>internalformat</name></param>
             <param><ptype>ALsizei</ptype> <name>samples</name></param>
@@ -1219,7 +1219,7 @@
         </command>
         <command>
             <proto>void <name>alBufferSubSamplesSOFT</name></proto>
-            <param><ptype>ALuint</ptype> <name>buffer</name></param>
+            <param class="buffer"><ptype>ALuint</ptype> <name>buffer</name></param>
             <param><ptype>ALsizei</ptype> <name>offset</name></param>
             <param><ptype>ALsizei</ptype> <name>samples</name></param>
             <param group="Channels"><ptype>ALenum</ptype> <name>channels</name></param>
@@ -1228,7 +1228,7 @@
         </command>
         <command>
             <proto>void <name>alGetBufferSamplesSOFT</name></proto>
-            <param><ptype>ALuint</ptype> <name>buffer</name></param>
+            <param class="buffer"><ptype>ALuint</ptype> <name>buffer</name></param>
             <param><ptype>ALsizei</ptype> <name>offset</name></param>
             <param><ptype>ALsizei</ptype> <name>samples</name></param>
             <param group="Channels"><ptype>ALenum</ptype> <name>channels</name></param>
@@ -1243,7 +1243,7 @@
     <commands comment="From AL_SOFT_buffer_sub_data">
         <command>
             <proto>void <name>alBufferSubDataSOFT</name></proto>
-            <param><ptype>ALuint</ptype> <name>buffer</name></param>
+            <param class="buffer"><ptype>ALuint</ptype> <name>buffer</name></param>
             <param group="Format"><ptype>ALenum</ptype> <name>format</name></param>
             <param len="length">const <ptype>ALvoid</ptype> *<name>data</name></param>
             <param><ptype>ALsizei</ptype> <name>offset</name></param>
@@ -1253,7 +1253,7 @@
     <commands comment="From AL_SOFT_callback_buffer">
         <command>
             <proto>void <name>alBufferCallbackSOFT</name></proto>
-            <param><ptype>ALuint</ptype> <name>buffer</name></param>
+            <param class="buffer"><ptype>ALuint</ptype> <name>buffer</name></param>
             <param group="Format"><ptype>ALenum</ptype> <name>format</name></param>
             <param><ptype>ALsizei</ptype> <name>freq</name></param>
             <param><ptype>ALBUFFERCALLBACKTYPESOFT</ptype> <name>callback</name></param>
@@ -1261,13 +1261,13 @@
         </command>
         <command>
             <proto>void <name>alGetBufferPtrSOFT</name></proto>
-            <param><ptype>ALuint</ptype> <name>buffer</name></param>
+            <param class="buffer"><ptype>ALuint</ptype> <name>buffer</name></param>
             <param group="BufferGetPNamePtr"><ptype>ALenum</ptype> <name>param</name></param>
             <param len="1"><ptype>ALvoid</ptype> **<name>ptr</name></param>
         </command>
         <command>
             <proto>void <name>alGetBuffer3PtrSOFT</name></proto>
-            <param><ptype>ALuint</ptype> <name>buffer</name></param>
+            <param class="buffer"><ptype>ALuint</ptype> <name>buffer</name></param>
             <param group="BufferGetPName3Ptr"><ptype>ALenum</ptype> <name>param</name></param>
             <param len="1"><ptype>ALvoid</ptype> **<name>ptr0</name></param>
             <param len="1"><ptype>ALvoid</ptype> **<name>ptr1</name></param>
@@ -1275,7 +1275,7 @@
         </command>
         <command>
             <proto>void <name>alGetBufferPtrvSOFT</name></proto>
-            <param><ptype>ALuint</ptype> <name>buffer</name></param>
+            <param class="buffer"><ptype>ALuint</ptype> <name>buffer</name></param>
             <param group="BufferGetPNamePtrV"><ptype>ALenum</ptype> <name>param</name></param>
             <param><ptype>ALvoid</ptype> **<name>ptr</name></param>
         </command>
@@ -1315,186 +1315,186 @@
         <command>
             <proto><ptype>ALvoid</ptype> <name>alGenEffects</name></proto>
             <param><ptype>ALsizei</ptype> <name>n</name></param>
-            <param len="n"><ptype>ALuint</ptype> *<name>effects</name></param>
+            <param len="n" class="effect"><ptype>ALuint</ptype> *<name>effects</name></param>
         </command>
         <command>
             <proto><ptype>ALvoid</ptype> <name>alDeleteEffects</name></proto>
             <param><ptype>ALsizei</ptype> <name>n</name></param>
-            <param len="n"><ptype>ALuint</ptype> *<name>effects</name></param>
+            <param len="n" class="effect"><ptype>ALuint</ptype> *<name>effects</name></param>
         </command>
         <command>
             <proto><ptype>ALboolean</ptype> <name>alIsEffect</name></proto>
-            <param><ptype>ALuint</ptype> <name>effect</name></param>
+            <param class="any"><ptype>ALuint</ptype> <name>effect</name></param>
         </command>
         <command>
             <proto><ptype>ALvoid</ptype> <name>alEffecti</name></proto>
-            <param><ptype>ALuint</ptype> <name>effect</name></param>
+            <param class="effect"><ptype>ALuint</ptype> <name>effect</name></param>
             <param group="EffectPNameI"><ptype>ALenum</ptype> <name>param</name></param>
             <param><ptype>ALint</ptype> <name>iValue</name></param>
         </command>
         <command>
             <proto><ptype>ALvoid</ptype> <name>alEffectiv</name></proto>
-            <param><ptype>ALuint</ptype> <name>effect</name></param>
+            <param class="effect"><ptype>ALuint</ptype> <name>effect</name></param>
             <param group="EffectPNameIV"><ptype>ALenum</ptype> <name>param</name></param>
             <param><ptype>ALint</ptype> *<name>piValues</name></param>
         </command>
         <command>
             <proto><ptype>ALvoid</ptype> <name>alEffectf</name></proto>
-            <param><ptype>ALuint</ptype> <name>effect</name></param>
+            <param class="effect"><ptype>ALuint</ptype> <name>effect</name></param>
             <param group="EffectPNameF"><ptype>ALenum</ptype> <name>param</name></param>
             <param><ptype>ALfloat</ptype> <name>flValue</name></param>
         </command>
         <command>
             <proto><ptype>ALvoid</ptype> <name>alEffectfv</name></proto>
-            <param><ptype>ALuint</ptype> <name>effect</name></param>
+            <param class="effect"><ptype>ALuint</ptype> <name>effect</name></param>
             <param group="EffectPNameFV"><ptype>ALenum</ptype> <name>param</name></param>
             <param><ptype>ALfloat</ptype> *<name>pflValues</name></param>
         </command>
         <command>
             <proto><ptype>ALvoid</ptype> <name>alGetEffecti</name></proto>
-            <param><ptype>ALuint</ptype> <name>effect</name></param>
+            <param class="effect"><ptype>ALuint</ptype> <name>effect</name></param>
             <param group="EffectGetPNameI"><ptype>ALenum</ptype> <name>param</name></param>
             <param len="1"><ptype>ALint</ptype> *<name>piValue</name></param>
         </command>
         <command>
             <proto><ptype>ALvoid</ptype> <name>alGetEffectiv</name></proto>
-            <param><ptype>ALuint</ptype> <name>effect</name></param>
+            <param class="effect"><ptype>ALuint</ptype> <name>effect</name></param>
             <param group="EffectGetPNameIV"><ptype>ALenum</ptype> <name>param</name></param>
             <param><ptype>ALint</ptype> *<name>piValues</name></param>
         </command>
         <command>
             <proto><ptype>ALvoid</ptype> <name>alGetEffectf</name></proto>
-            <param><ptype>ALuint</ptype> <name>effect</name></param>
+            <param class="effect"><ptype>ALuint</ptype> <name>effect</name></param>
             <param group="EffectGetPNameF"><ptype>ALenum</ptype> <name>param</name></param>
             <param len="1"><ptype>ALfloat</ptype> *<name>pflValue</name></param>
         </command>
         <command>
             <proto><ptype>ALvoid</ptype> <name>alGetEffectfv</name></proto>
-            <param><ptype>ALuint</ptype> <name>effect</name></param>
+            <param class="effect"><ptype>ALuint</ptype> <name>effect</name></param>
             <param group="EffectGetPNameFV"><ptype>ALenum</ptype> <name>param</name></param>
             <param><ptype>ALfloat</ptype> *<name>pflValues</name></param>
         </command>
         <command>
             <proto><ptype>ALvoid</ptype> <name>alGenFilters</name></proto>
             <param><ptype>ALsizei</ptype> <name>n</name></param>
-            <param len="n"><ptype>ALuint</ptype> *<name>filters</name></param>
+            <param len="n" class="filter"><ptype>ALuint</ptype> *<name>filters</name></param>
         </command>
         <command>
             <proto><ptype>ALvoid</ptype> <name>alDeleteFilters</name></proto>
             <param><ptype>ALsizei</ptype> <name>n</name></param>
-            <param len="n"><ptype>ALuint</ptype> *<name>filters</name></param>
+            <param len="n" class="filter"><ptype>ALuint</ptype> *<name>filters</name></param>
         </command>
         <command>
             <proto><ptype>ALvoid</ptype> <name>alIsFilter</name></proto>
-            <param><ptype>ALuint</ptype> <name>filter</name></param>
+            <param class="any"><ptype>ALuint</ptype> <name>filter</name></param>
         </command>
         <command>
-            <proto><ptype>ALvoid</ptype> <name>alFilteri</name>
-            </proto><param><ptype>ALuint</ptype> <name>filter</name></param>
+            <proto><ptype>ALvoid</ptype> <name>alFilteri</name></proto>
+            <param class="filter"><ptype>ALuint</ptype> <name>filter</name></param>
             <param group="FilterPNameI"><ptype>ALenum</ptype> <name>param</name></param>
             <param><ptype>ALint</ptype> <name>iValue</name></param>
         </command>
         <command>
             <proto><ptype>ALvoid</ptype> <name>alFilteriv</name></proto>
-            <param><ptype>ALuint</ptype> <name>filter</name></param>
+            <param class="filter"><ptype>ALuint</ptype> <name>filter</name></param>
             <param group="FilterPNameIV"><ptype>ALenum</ptype> <name>param</name></param>
             <param><ptype>ALint</ptype> *<name>piValues</name></param>
         </command>
         <command>
             <proto><ptype>ALvoid</ptype> <name>alFilterf</name></proto>
-            <param><ptype>ALuint</ptype> <name>filter</name></param>
+            <param class="filter"><ptype>ALuint</ptype> <name>filter</name></param>
             <param group="FilterPNameF"><ptype>ALenum</ptype> <name>param</name></param>
             <param><ptype>ALfloat</ptype> <name>flValue</name></param>
         </command>
         <command>
             <proto><ptype>ALvoid</ptype> <name>alFilterfv</name></proto>
-            <param><ptype>ALuint</ptype> <name>filter</name></param>
+            <param class="filter"><ptype>ALuint</ptype> <name>filter</name></param>
             <param group="FilterPNameFV"><ptype>ALenum</ptype> <name>param</name></param>
             <param><ptype>ALfloat</ptype> *<name>pflValues</name></param>
         </command>
         <command>
             <proto><ptype>ALvoid</ptype> <name>alGetFilteri</name></proto>
-            <param><ptype>ALuint</ptype> <name>filter</name></param>
+            <param class="filter"><ptype>ALuint</ptype> <name>filter</name></param>
             <param group="FilterGetPNameI"><ptype>ALenum</ptype> <name>param</name></param>
             <param len="1"><ptype>ALint</ptype> *<name>piValue</name></param>
         </command>
         <command>
             <proto><ptype>ALvoid</ptype> <name>alGetFilteriv</name></proto>
-            <param><ptype>ALuint</ptype> <name>filter</name></param>
+            <param class="filter"><ptype>ALuint</ptype> <name>filter</name></param>
             <param group="FilterGetPNameIV"><ptype>ALenum</ptype> <name>param</name></param>
             <param><ptype>ALint</ptype> *<name>piValues</name></param>
         </command>
         <command>
             <proto><ptype>ALvoid</ptype> <name>alGetFilterf</name></proto>
-            <param><ptype>ALuint</ptype> <name>filter</name></param>
+            <param class="filter"><ptype>ALuint</ptype> <name>filter</name></param>
             <param group="FilterGetPNameF"><ptype>ALenum</ptype> <name>param</name></param>
             <param len="1"><ptype>ALfloat</ptype> *<name>pflValue</name></param>
         </command>
         <command>
             <proto><ptype>ALvoid</ptype> <name>alGetFilterfv</name></proto>
-            <param><ptype>ALuint</ptype> <name>filter</name></param>
+            <param class="filter"><ptype>ALuint</ptype> <name>filter</name></param>
             <param group="FilterGetPNameFV"><ptype>ALenum</ptype> <name>param</name></param>
             <param><ptype>ALfloat</ptype> *<name>pflValues</name></param>
         </command>
         <command>
             <proto><ptype>ALvoid</ptype> <name>alGenAuxiliaryEffectSlots</name></proto>
             <param><ptype>ALsizei</ptype> <name>n</name></param>
-            <param len="n"><ptype>ALuint</ptype> *<name>effectslots</name></param>
+            <param len="n" class="effectSlot"><ptype>ALuint</ptype> *<name>effectslots</name></param>
         </command>
         <command>
             <proto><ptype>ALvoid</ptype> <name>alDeleteAuxiliaryEffectSlots</name></proto>
             <param><ptype>ALsizei</ptype> <name>n</name></param>
-            <param len="n"><ptype>ALuint</ptype> *<name>effectslots</name></param>
+            <param len="n" class="effectSlot"><ptype>ALuint</ptype> *<name>effectslots</name></param>
         </command>
         <command>
             <proto><ptype>ALvoid</ptype> <name>alIsAuxiliaryEffectSlot</name></proto>
-            <param><ptype>ALuint</ptype> <name>effectslot</name></param>
+            <param class="effectSlot"><ptype>ALuint</ptype> <name>effectslot</name></param>
         </command>
         <command>
             <proto><ptype>ALvoid</ptype> <name>alAuxiliaryEffectSloti</name></proto>
-            <param><ptype>ALuint</ptype> <name>effectslot</name></param>
+            <param class="effectSlot"><ptype>ALuint</ptype> <name>effectslot</name></param>
             <param group="AuxEffectSlotPNameI"><ptype>ALenum</ptype> <name>param</name></param>
             <param><ptype>ALint</ptype> <name>iValue</name></param>
         </command>
         <command>
             <proto><ptype>ALvoid</ptype> <name>alAuxiliaryEffectSlotiv</name></proto>
-            <param><ptype>ALuint</ptype> <name>effectslot</name></param>
+            <param class="effectSlot"><ptype>ALuint</ptype> <name>effectslot</name></param>
             <param group="AuxEffectSlotPNameIV"><ptype>ALenum</ptype> <name>param</name></param>
             <param><ptype>ALint</ptype> *<name>piValues</name></param>
         </command>
         <command>
             <proto><ptype>ALvoid</ptype> <name>alAuxiliaryEffectSlotf</name></proto>
-            <param><ptype>ALuint</ptype> <name>effectslot</name></param>
+            <param class="effectSlot"><ptype>ALuint</ptype> <name>effectslot</name></param>
             <param group="AuxEffectSlotPNameF"><ptype>ALenum</ptype> <name>param</name></param>
             <param><ptype>ALfloat</ptype> <name>flValue</name></param>
         </command>
         <command>
             <proto><ptype>ALvoid</ptype> <name>alAuxiliaryEffectSlotfv</name></proto>
-            <param><ptype>ALuint</ptype> <name>effectslot</name></param>
+            <param class="effectSlot"><ptype>ALuint</ptype> <name>effectslot</name></param>
             <param group="AuxEffectSlotPNameFV"><ptype>ALenum</ptype> <name>param</name></param>
             <param><ptype>ALfloat</ptype> *<name>pflValues</name></param>
         </command>
         <command>
             <proto><ptype>ALvoid</ptype> <name>alGetAuxiliaryEffectSloti</name></proto>
-            <param><ptype>ALuint</ptype> <name>effectslot</name></param>
+            <param class="effectSlot"><ptype>ALuint</ptype> <name>effectslot</name></param>
             <param group="AuxEffectSlotGetPNameI"><ptype>ALenum</ptype> <name>param</name></param>
             <param len="1"><ptype>ALint</ptype> *<name>piValue</name></param>
         </command>
         <command>
             <proto><ptype>ALvoid</ptype> <name>alGetAuxiliaryEffectSlotiv</name></proto>
-            <param><ptype>ALuint</ptype> <name>effectslot</name></param>
+            <param class="effectSlot"><ptype>ALuint</ptype> <name>effectslot</name></param>
             <param group="AuxEffectSlotGetPNameIV"><ptype>ALenum</ptype> <name>param</name></param>
             <param><ptype>ALint</ptype> *<name>piValues</name></param>
         </command>
         <command>
             <proto><ptype>ALvoid</ptype> <name>alGetAuxiliaryEffectSlotf</name></proto>
-            <param><ptype>ALuint</ptype> <name>effectslot</name></param>
+            <param class="effectSlot"><ptype>ALuint</ptype> <name>effectslot</name></param>
             <param group="AuxEffectSlotGetPNameF"><ptype>ALenum</ptype> <name>param</name></param>
             <param len="1"><ptype>ALfloat</ptype> *<name>pflValue</name></param>
         </command>
         <command>
             <proto><ptype>ALvoid</ptype> <name>alGetAuxiliaryEffectSlotfv</name></proto>
-            <param><ptype>ALuint</ptype> <name>effectslot</name></param>
+            <param class="effectSlot"><ptype>ALuint</ptype> <name>effectslot</name></param>
             <param group="AuxEffectSlotGetPNameFV"><ptype>ALenum</ptype> <name>param</name></param>
             <param><ptype>ALfloat</ptype> *<name>pflValues</name></param>
         </command>

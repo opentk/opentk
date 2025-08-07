@@ -424,6 +424,12 @@ namespace ALGenerator.Parsing
             HandleType? handle = className switch
             {
                 null => null,
+                "any" => HandleType.Any,
+                "source" => HandleType.Source,
+                "buffer" => HandleType.Buffer,
+                "effect" => HandleType.Effect,
+                "effectSlot" => HandleType.EffectSlot,
+                "filter" => HandleType.Filter,
                 // FIXME!
                 _ => throw new Exception(className + " is not a supported handle type yet!"),
             };

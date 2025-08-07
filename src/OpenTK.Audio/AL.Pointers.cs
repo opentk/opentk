@@ -9,137 +9,137 @@ namespace OpenTK.Audio.OpenAL
     public static unsafe partial class ALPointers
     {
         /// <summary><b>[entry point: <c>alAuxiliaryEffectSlotf</c>]</b></summary>
-        public static delegate* unmanaged<uint, int, float, void> _alAuxiliaryEffectSlotf_fnptr = &alAuxiliaryEffectSlotf_Lazy;
+        public static delegate* unmanaged<int, int, float, void> _alAuxiliaryEffectSlotf_fnptr = &alAuxiliaryEffectSlotf_Lazy;
         [UnmanagedCallersOnly]
-        private static void alAuxiliaryEffectSlotf_Lazy(uint effectslot, int param, float flValue)
+        private static void alAuxiliaryEffectSlotf_Lazy(int effectslot, int param, float flValue)
         {
-            _alAuxiliaryEffectSlotf_fnptr = (delegate* unmanaged<uint, int, float, void>)ALLoader.ALGetProcAddress("alAuxiliaryEffectSlotf");
+            _alAuxiliaryEffectSlotf_fnptr = (delegate* unmanaged<int, int, float, void>)ALLoader.ALGetProcAddress("alAuxiliaryEffectSlotf");
             _alAuxiliaryEffectSlotf_fnptr(effectslot, param, flValue);
         }
         
         /// <summary><b>[entry point: <c>alAuxiliaryEffectSlotfv</c>]</b></summary>
-        public static delegate* unmanaged<uint, int, float*, void> _alAuxiliaryEffectSlotfv_fnptr = &alAuxiliaryEffectSlotfv_Lazy;
+        public static delegate* unmanaged<int, int, float*, void> _alAuxiliaryEffectSlotfv_fnptr = &alAuxiliaryEffectSlotfv_Lazy;
         [UnmanagedCallersOnly]
-        private static void alAuxiliaryEffectSlotfv_Lazy(uint effectslot, int param, float* pflValues)
+        private static void alAuxiliaryEffectSlotfv_Lazy(int effectslot, int param, float* pflValues)
         {
-            _alAuxiliaryEffectSlotfv_fnptr = (delegate* unmanaged<uint, int, float*, void>)ALLoader.ALGetProcAddress("alAuxiliaryEffectSlotfv");
+            _alAuxiliaryEffectSlotfv_fnptr = (delegate* unmanaged<int, int, float*, void>)ALLoader.ALGetProcAddress("alAuxiliaryEffectSlotfv");
             _alAuxiliaryEffectSlotfv_fnptr(effectslot, param, pflValues);
         }
         
         /// <summary><b>[entry point: <c>alAuxiliaryEffectSloti</c>]</b></summary>
-        public static delegate* unmanaged<uint, int, int, void> _alAuxiliaryEffectSloti_fnptr = &alAuxiliaryEffectSloti_Lazy;
+        public static delegate* unmanaged<int, int, int, void> _alAuxiliaryEffectSloti_fnptr = &alAuxiliaryEffectSloti_Lazy;
         [UnmanagedCallersOnly]
-        private static void alAuxiliaryEffectSloti_Lazy(uint effectslot, int param, int iValue)
+        private static void alAuxiliaryEffectSloti_Lazy(int effectslot, int param, int iValue)
         {
-            _alAuxiliaryEffectSloti_fnptr = (delegate* unmanaged<uint, int, int, void>)ALLoader.ALGetProcAddress("alAuxiliaryEffectSloti");
+            _alAuxiliaryEffectSloti_fnptr = (delegate* unmanaged<int, int, int, void>)ALLoader.ALGetProcAddress("alAuxiliaryEffectSloti");
             _alAuxiliaryEffectSloti_fnptr(effectslot, param, iValue);
         }
         
         /// <summary><b>[entry point: <c>alAuxiliaryEffectSlotiv</c>]</b></summary>
-        public static delegate* unmanaged<uint, int, int*, void> _alAuxiliaryEffectSlotiv_fnptr = &alAuxiliaryEffectSlotiv_Lazy;
+        public static delegate* unmanaged<int, int, int*, void> _alAuxiliaryEffectSlotiv_fnptr = &alAuxiliaryEffectSlotiv_Lazy;
         [UnmanagedCallersOnly]
-        private static void alAuxiliaryEffectSlotiv_Lazy(uint effectslot, int param, int* piValues)
+        private static void alAuxiliaryEffectSlotiv_Lazy(int effectslot, int param, int* piValues)
         {
-            _alAuxiliaryEffectSlotiv_fnptr = (delegate* unmanaged<uint, int, int*, void>)ALLoader.ALGetProcAddress("alAuxiliaryEffectSlotiv");
+            _alAuxiliaryEffectSlotiv_fnptr = (delegate* unmanaged<int, int, int*, void>)ALLoader.ALGetProcAddress("alAuxiliaryEffectSlotiv");
             _alAuxiliaryEffectSlotiv_fnptr(effectslot, param, piValues);
         }
         
         /// <summary><b>[entry point: <c>alBuffer3f</c>]</b></summary>
-        public static delegate* unmanaged<uint, int, float, float, float, void> _alBuffer3f_fnptr = &alBuffer3f_Lazy;
+        public static delegate* unmanaged<int, int, float, float, float, void> _alBuffer3f_fnptr = &alBuffer3f_Lazy;
         [UnmanagedCallersOnly]
-        private static void alBuffer3f_Lazy(uint buffer, int param, float value1, float value2, float value3)
+        private static void alBuffer3f_Lazy(int buffer, int param, float value1, float value2, float value3)
         {
-            _alBuffer3f_fnptr = (delegate* unmanaged<uint, int, float, float, float, void>)ALLoader.ALGetProcAddress("alBuffer3f");
+            _alBuffer3f_fnptr = (delegate* unmanaged<int, int, float, float, float, void>)ALLoader.ALGetProcAddress("alBuffer3f");
             _alBuffer3f_fnptr(buffer, param, value1, value2, value3);
         }
         
         /// <summary><b>[entry point: <c>alBuffer3i</c>]</b></summary>
-        public static delegate* unmanaged<uint, int, int, int, int, void> _alBuffer3i_fnptr = &alBuffer3i_Lazy;
+        public static delegate* unmanaged<int, int, int, int, int, void> _alBuffer3i_fnptr = &alBuffer3i_Lazy;
         [UnmanagedCallersOnly]
-        private static void alBuffer3i_Lazy(uint buffer, int param, int value1, int value2, int value3)
+        private static void alBuffer3i_Lazy(int buffer, int param, int value1, int value2, int value3)
         {
-            _alBuffer3i_fnptr = (delegate* unmanaged<uint, int, int, int, int, void>)ALLoader.ALGetProcAddress("alBuffer3i");
+            _alBuffer3i_fnptr = (delegate* unmanaged<int, int, int, int, int, void>)ALLoader.ALGetProcAddress("alBuffer3i");
             _alBuffer3i_fnptr(buffer, param, value1, value2, value3);
         }
         
         /// <summary><b>[entry point: <c>alBufferCallbackSOFT</c>]</b></summary>
-        public static delegate* unmanaged<uint, int, int, delegate* unmanaged[Cdecl]<void*, void*, nuint, nuint>, void*, void> _alBufferCallbackSOFT_fnptr = &alBufferCallbackSOFT_Lazy;
+        public static delegate* unmanaged<int, int, int, delegate* unmanaged[Cdecl]<void*, void*, nuint, nuint>, void*, void> _alBufferCallbackSOFT_fnptr = &alBufferCallbackSOFT_Lazy;
         [UnmanagedCallersOnly]
-        private static void alBufferCallbackSOFT_Lazy(uint buffer, int format, int freq, delegate* unmanaged[Cdecl]<void*, void*, nuint, nuint> callback, void* userptr)
+        private static void alBufferCallbackSOFT_Lazy(int buffer, int format, int freq, delegate* unmanaged[Cdecl]<void*, void*, nuint, nuint> callback, void* userptr)
         {
-            _alBufferCallbackSOFT_fnptr = (delegate* unmanaged<uint, int, int, delegate* unmanaged[Cdecl]<void*, void*, nuint, nuint>, void*, void>)ALLoader.ALGetProcAddress("alBufferCallbackSOFT");
+            _alBufferCallbackSOFT_fnptr = (delegate* unmanaged<int, int, int, delegate* unmanaged[Cdecl]<void*, void*, nuint, nuint>, void*, void>)ALLoader.ALGetProcAddress("alBufferCallbackSOFT");
             _alBufferCallbackSOFT_fnptr(buffer, format, freq, callback, userptr);
         }
         
         /// <summary><b>[entry point: <c>alBufferData</c>]</b></summary>
-        public static delegate* unmanaged<uint, int, void*, int, int, void> _alBufferData_fnptr = &alBufferData_Lazy;
+        public static delegate* unmanaged<int, int, void*, int, int, void> _alBufferData_fnptr = &alBufferData_Lazy;
         [UnmanagedCallersOnly]
-        private static void alBufferData_Lazy(uint buffer, int format, void* data, int size, int samplerate)
+        private static void alBufferData_Lazy(int buffer, int format, void* data, int size, int samplerate)
         {
-            _alBufferData_fnptr = (delegate* unmanaged<uint, int, void*, int, int, void>)ALLoader.ALGetProcAddress("alBufferData");
+            _alBufferData_fnptr = (delegate* unmanaged<int, int, void*, int, int, void>)ALLoader.ALGetProcAddress("alBufferData");
             _alBufferData_fnptr(buffer, format, data, size, samplerate);
         }
         
         /// <summary><b>[entry point: <c>alBufferf</c>]</b></summary>
-        public static delegate* unmanaged<uint, int, float, void> _alBufferf_fnptr = &alBufferf_Lazy;
+        public static delegate* unmanaged<int, int, float, void> _alBufferf_fnptr = &alBufferf_Lazy;
         [UnmanagedCallersOnly]
-        private static void alBufferf_Lazy(uint buffer, int param, float value)
+        private static void alBufferf_Lazy(int buffer, int param, float value)
         {
-            _alBufferf_fnptr = (delegate* unmanaged<uint, int, float, void>)ALLoader.ALGetProcAddress("alBufferf");
+            _alBufferf_fnptr = (delegate* unmanaged<int, int, float, void>)ALLoader.ALGetProcAddress("alBufferf");
             _alBufferf_fnptr(buffer, param, value);
         }
         
         /// <summary><b>[entry point: <c>alBufferfv</c>]</b></summary>
-        public static delegate* unmanaged<uint, int, float*, void> _alBufferfv_fnptr = &alBufferfv_Lazy;
+        public static delegate* unmanaged<int, int, float*, void> _alBufferfv_fnptr = &alBufferfv_Lazy;
         [UnmanagedCallersOnly]
-        private static void alBufferfv_Lazy(uint buffer, int param, float* value)
+        private static void alBufferfv_Lazy(int buffer, int param, float* value)
         {
-            _alBufferfv_fnptr = (delegate* unmanaged<uint, int, float*, void>)ALLoader.ALGetProcAddress("alBufferfv");
+            _alBufferfv_fnptr = (delegate* unmanaged<int, int, float*, void>)ALLoader.ALGetProcAddress("alBufferfv");
             _alBufferfv_fnptr(buffer, param, value);
         }
         
         /// <summary><b>[entry point: <c>alBufferi</c>]</b></summary>
-        public static delegate* unmanaged<uint, int, int, void> _alBufferi_fnptr = &alBufferi_Lazy;
+        public static delegate* unmanaged<int, int, int, void> _alBufferi_fnptr = &alBufferi_Lazy;
         [UnmanagedCallersOnly]
-        private static void alBufferi_Lazy(uint buffer, int param, int value)
+        private static void alBufferi_Lazy(int buffer, int param, int value)
         {
-            _alBufferi_fnptr = (delegate* unmanaged<uint, int, int, void>)ALLoader.ALGetProcAddress("alBufferi");
+            _alBufferi_fnptr = (delegate* unmanaged<int, int, int, void>)ALLoader.ALGetProcAddress("alBufferi");
             _alBufferi_fnptr(buffer, param, value);
         }
         
         /// <summary><b>[entry point: <c>alBufferiv</c>]</b></summary>
-        public static delegate* unmanaged<uint, int, int*, void> _alBufferiv_fnptr = &alBufferiv_Lazy;
+        public static delegate* unmanaged<int, int, int*, void> _alBufferiv_fnptr = &alBufferiv_Lazy;
         [UnmanagedCallersOnly]
-        private static void alBufferiv_Lazy(uint buffer, int param, int* value)
+        private static void alBufferiv_Lazy(int buffer, int param, int* value)
         {
-            _alBufferiv_fnptr = (delegate* unmanaged<uint, int, int*, void>)ALLoader.ALGetProcAddress("alBufferiv");
+            _alBufferiv_fnptr = (delegate* unmanaged<int, int, int*, void>)ALLoader.ALGetProcAddress("alBufferiv");
             _alBufferiv_fnptr(buffer, param, value);
         }
         
         /// <summary><b>[entry point: <c>alBufferSamplesSOFT</c>]</b></summary>
-        public static delegate* unmanaged<uint, uint, int, int, int, int, void*, void> _alBufferSamplesSOFT_fnptr = &alBufferSamplesSOFT_Lazy;
+        public static delegate* unmanaged<int, uint, int, int, int, int, void*, void> _alBufferSamplesSOFT_fnptr = &alBufferSamplesSOFT_Lazy;
         [UnmanagedCallersOnly]
-        private static void alBufferSamplesSOFT_Lazy(uint buffer, uint samplerate, int internalformat, int samples, int channels, int type, void* data)
+        private static void alBufferSamplesSOFT_Lazy(int buffer, uint samplerate, int internalformat, int samples, int channels, int type, void* data)
         {
-            _alBufferSamplesSOFT_fnptr = (delegate* unmanaged<uint, uint, int, int, int, int, void*, void>)ALLoader.ALGetProcAddress("alBufferSamplesSOFT");
+            _alBufferSamplesSOFT_fnptr = (delegate* unmanaged<int, uint, int, int, int, int, void*, void>)ALLoader.ALGetProcAddress("alBufferSamplesSOFT");
             _alBufferSamplesSOFT_fnptr(buffer, samplerate, internalformat, samples, channels, type, data);
         }
         
         /// <summary><b>[entry point: <c>alBufferSubDataSOFT</c>]</b></summary>
-        public static delegate* unmanaged<uint, int, void*, int, int, void> _alBufferSubDataSOFT_fnptr = &alBufferSubDataSOFT_Lazy;
+        public static delegate* unmanaged<int, int, void*, int, int, void> _alBufferSubDataSOFT_fnptr = &alBufferSubDataSOFT_Lazy;
         [UnmanagedCallersOnly]
-        private static void alBufferSubDataSOFT_Lazy(uint buffer, int format, void* data, int offset, int length)
+        private static void alBufferSubDataSOFT_Lazy(int buffer, int format, void* data, int offset, int length)
         {
-            _alBufferSubDataSOFT_fnptr = (delegate* unmanaged<uint, int, void*, int, int, void>)ALLoader.ALGetProcAddress("alBufferSubDataSOFT");
+            _alBufferSubDataSOFT_fnptr = (delegate* unmanaged<int, int, void*, int, int, void>)ALLoader.ALGetProcAddress("alBufferSubDataSOFT");
             _alBufferSubDataSOFT_fnptr(buffer, format, data, offset, length);
         }
         
         /// <summary><b>[entry point: <c>alBufferSubSamplesSOFT</c>]</b></summary>
-        public static delegate* unmanaged<uint, int, int, int, int, void*, void> _alBufferSubSamplesSOFT_fnptr = &alBufferSubSamplesSOFT_Lazy;
+        public static delegate* unmanaged<int, int, int, int, int, void*, void> _alBufferSubSamplesSOFT_fnptr = &alBufferSubSamplesSOFT_Lazy;
         [UnmanagedCallersOnly]
-        private static void alBufferSubSamplesSOFT_Lazy(uint buffer, int offset, int samples, int channels, int type, void* data)
+        private static void alBufferSubSamplesSOFT_Lazy(int buffer, int offset, int samples, int channels, int type, void* data)
         {
-            _alBufferSubSamplesSOFT_fnptr = (delegate* unmanaged<uint, int, int, int, int, void*, void>)ALLoader.ALGetProcAddress("alBufferSubSamplesSOFT");
+            _alBufferSubSamplesSOFT_fnptr = (delegate* unmanaged<int, int, int, int, int, void*, void>)ALLoader.ALGetProcAddress("alBufferSubSamplesSOFT");
             _alBufferSubSamplesSOFT_fnptr(buffer, offset, samples, channels, type, data);
         }
         
@@ -180,47 +180,47 @@ namespace OpenTK.Audio.OpenAL
         }
         
         /// <summary><b>[entry point: <c>alDeleteAuxiliaryEffectSlots</c>]</b></summary>
-        public static delegate* unmanaged<int, uint*, void> _alDeleteAuxiliaryEffectSlots_fnptr = &alDeleteAuxiliaryEffectSlots_Lazy;
+        public static delegate* unmanaged<int, int*, void> _alDeleteAuxiliaryEffectSlots_fnptr = &alDeleteAuxiliaryEffectSlots_Lazy;
         [UnmanagedCallersOnly]
-        private static void alDeleteAuxiliaryEffectSlots_Lazy(int n, uint* effectslots)
+        private static void alDeleteAuxiliaryEffectSlots_Lazy(int n, int* effectslots)
         {
-            _alDeleteAuxiliaryEffectSlots_fnptr = (delegate* unmanaged<int, uint*, void>)ALLoader.ALGetProcAddress("alDeleteAuxiliaryEffectSlots");
+            _alDeleteAuxiliaryEffectSlots_fnptr = (delegate* unmanaged<int, int*, void>)ALLoader.ALGetProcAddress("alDeleteAuxiliaryEffectSlots");
             _alDeleteAuxiliaryEffectSlots_fnptr(n, effectslots);
         }
         
         /// <summary><b>[entry point: <c>alDeleteBuffers</c>]</b></summary>
-        public static delegate* unmanaged<int, uint*, void> _alDeleteBuffers_fnptr = &alDeleteBuffers_Lazy;
+        public static delegate* unmanaged<int, int*, void> _alDeleteBuffers_fnptr = &alDeleteBuffers_Lazy;
         [UnmanagedCallersOnly]
-        private static void alDeleteBuffers_Lazy(int n, uint* buffers)
+        private static void alDeleteBuffers_Lazy(int n, int* buffers)
         {
-            _alDeleteBuffers_fnptr = (delegate* unmanaged<int, uint*, void>)ALLoader.ALGetProcAddress("alDeleteBuffers");
+            _alDeleteBuffers_fnptr = (delegate* unmanaged<int, int*, void>)ALLoader.ALGetProcAddress("alDeleteBuffers");
             _alDeleteBuffers_fnptr(n, buffers);
         }
         
         /// <summary><b>[entry point: <c>alDeleteEffects</c>]</b></summary>
-        public static delegate* unmanaged<int, uint*, void> _alDeleteEffects_fnptr = &alDeleteEffects_Lazy;
+        public static delegate* unmanaged<int, int*, void> _alDeleteEffects_fnptr = &alDeleteEffects_Lazy;
         [UnmanagedCallersOnly]
-        private static void alDeleteEffects_Lazy(int n, uint* effects)
+        private static void alDeleteEffects_Lazy(int n, int* effects)
         {
-            _alDeleteEffects_fnptr = (delegate* unmanaged<int, uint*, void>)ALLoader.ALGetProcAddress("alDeleteEffects");
+            _alDeleteEffects_fnptr = (delegate* unmanaged<int, int*, void>)ALLoader.ALGetProcAddress("alDeleteEffects");
             _alDeleteEffects_fnptr(n, effects);
         }
         
         /// <summary><b>[entry point: <c>alDeleteFilters</c>]</b></summary>
-        public static delegate* unmanaged<int, uint*, void> _alDeleteFilters_fnptr = &alDeleteFilters_Lazy;
+        public static delegate* unmanaged<int, int*, void> _alDeleteFilters_fnptr = &alDeleteFilters_Lazy;
         [UnmanagedCallersOnly]
-        private static void alDeleteFilters_Lazy(int n, uint* filters)
+        private static void alDeleteFilters_Lazy(int n, int* filters)
         {
-            _alDeleteFilters_fnptr = (delegate* unmanaged<int, uint*, void>)ALLoader.ALGetProcAddress("alDeleteFilters");
+            _alDeleteFilters_fnptr = (delegate* unmanaged<int, int*, void>)ALLoader.ALGetProcAddress("alDeleteFilters");
             _alDeleteFilters_fnptr(n, filters);
         }
         
         /// <summary><b>[entry point: <c>alDeleteSources</c>]</b></summary>
-        public static delegate* unmanaged<int, uint*, void> _alDeleteSources_fnptr = &alDeleteSources_Lazy;
+        public static delegate* unmanaged<int, int*, void> _alDeleteSources_fnptr = &alDeleteSources_Lazy;
         [UnmanagedCallersOnly]
-        private static void alDeleteSources_Lazy(int n, uint* sources)
+        private static void alDeleteSources_Lazy(int n, int* sources)
         {
-            _alDeleteSources_fnptr = (delegate* unmanaged<int, uint*, void>)ALLoader.ALGetProcAddress("alDeleteSources");
+            _alDeleteSources_fnptr = (delegate* unmanaged<int, int*, void>)ALLoader.ALGetProcAddress("alDeleteSources");
             _alDeleteSources_fnptr(n, sources);
         }
         
@@ -252,38 +252,38 @@ namespace OpenTK.Audio.OpenAL
         }
         
         /// <summary><b>[entry point: <c>alEffectf</c>]</b></summary>
-        public static delegate* unmanaged<uint, int, float, void> _alEffectf_fnptr = &alEffectf_Lazy;
+        public static delegate* unmanaged<int, int, float, void> _alEffectf_fnptr = &alEffectf_Lazy;
         [UnmanagedCallersOnly]
-        private static void alEffectf_Lazy(uint effect, int param, float flValue)
+        private static void alEffectf_Lazy(int effect, int param, float flValue)
         {
-            _alEffectf_fnptr = (delegate* unmanaged<uint, int, float, void>)ALLoader.ALGetProcAddress("alEffectf");
+            _alEffectf_fnptr = (delegate* unmanaged<int, int, float, void>)ALLoader.ALGetProcAddress("alEffectf");
             _alEffectf_fnptr(effect, param, flValue);
         }
         
         /// <summary><b>[entry point: <c>alEffectfv</c>]</b></summary>
-        public static delegate* unmanaged<uint, int, float*, void> _alEffectfv_fnptr = &alEffectfv_Lazy;
+        public static delegate* unmanaged<int, int, float*, void> _alEffectfv_fnptr = &alEffectfv_Lazy;
         [UnmanagedCallersOnly]
-        private static void alEffectfv_Lazy(uint effect, int param, float* pflValues)
+        private static void alEffectfv_Lazy(int effect, int param, float* pflValues)
         {
-            _alEffectfv_fnptr = (delegate* unmanaged<uint, int, float*, void>)ALLoader.ALGetProcAddress("alEffectfv");
+            _alEffectfv_fnptr = (delegate* unmanaged<int, int, float*, void>)ALLoader.ALGetProcAddress("alEffectfv");
             _alEffectfv_fnptr(effect, param, pflValues);
         }
         
         /// <summary><b>[entry point: <c>alEffecti</c>]</b></summary>
-        public static delegate* unmanaged<uint, int, int, void> _alEffecti_fnptr = &alEffecti_Lazy;
+        public static delegate* unmanaged<int, int, int, void> _alEffecti_fnptr = &alEffecti_Lazy;
         [UnmanagedCallersOnly]
-        private static void alEffecti_Lazy(uint effect, int param, int iValue)
+        private static void alEffecti_Lazy(int effect, int param, int iValue)
         {
-            _alEffecti_fnptr = (delegate* unmanaged<uint, int, int, void>)ALLoader.ALGetProcAddress("alEffecti");
+            _alEffecti_fnptr = (delegate* unmanaged<int, int, int, void>)ALLoader.ALGetProcAddress("alEffecti");
             _alEffecti_fnptr(effect, param, iValue);
         }
         
         /// <summary><b>[entry point: <c>alEffectiv</c>]</b></summary>
-        public static delegate* unmanaged<uint, int, int*, void> _alEffectiv_fnptr = &alEffectiv_Lazy;
+        public static delegate* unmanaged<int, int, int*, void> _alEffectiv_fnptr = &alEffectiv_Lazy;
         [UnmanagedCallersOnly]
-        private static void alEffectiv_Lazy(uint effect, int param, int* piValues)
+        private static void alEffectiv_Lazy(int effect, int param, int* piValues)
         {
-            _alEffectiv_fnptr = (delegate* unmanaged<uint, int, int*, void>)ALLoader.ALGetProcAddress("alEffectiv");
+            _alEffectiv_fnptr = (delegate* unmanaged<int, int, int*, void>)ALLoader.ALGetProcAddress("alEffectiv");
             _alEffectiv_fnptr(effect, param, piValues);
         }
         
@@ -315,119 +315,119 @@ namespace OpenTK.Audio.OpenAL
         }
         
         /// <summary><b>[entry point: <c>alFilterf</c>]</b></summary>
-        public static delegate* unmanaged<uint, int, float, void> _alFilterf_fnptr = &alFilterf_Lazy;
+        public static delegate* unmanaged<int, int, float, void> _alFilterf_fnptr = &alFilterf_Lazy;
         [UnmanagedCallersOnly]
-        private static void alFilterf_Lazy(uint filter, int param, float flValue)
+        private static void alFilterf_Lazy(int filter, int param, float flValue)
         {
-            _alFilterf_fnptr = (delegate* unmanaged<uint, int, float, void>)ALLoader.ALGetProcAddress("alFilterf");
+            _alFilterf_fnptr = (delegate* unmanaged<int, int, float, void>)ALLoader.ALGetProcAddress("alFilterf");
             _alFilterf_fnptr(filter, param, flValue);
         }
         
         /// <summary><b>[entry point: <c>alFilterfv</c>]</b></summary>
-        public static delegate* unmanaged<uint, int, float*, void> _alFilterfv_fnptr = &alFilterfv_Lazy;
+        public static delegate* unmanaged<int, int, float*, void> _alFilterfv_fnptr = &alFilterfv_Lazy;
         [UnmanagedCallersOnly]
-        private static void alFilterfv_Lazy(uint filter, int param, float* pflValues)
+        private static void alFilterfv_Lazy(int filter, int param, float* pflValues)
         {
-            _alFilterfv_fnptr = (delegate* unmanaged<uint, int, float*, void>)ALLoader.ALGetProcAddress("alFilterfv");
+            _alFilterfv_fnptr = (delegate* unmanaged<int, int, float*, void>)ALLoader.ALGetProcAddress("alFilterfv");
             _alFilterfv_fnptr(filter, param, pflValues);
         }
         
         /// <summary><b>[entry point: <c>alFilteri</c>]</b></summary>
-        public static delegate* unmanaged<uint, int, int, void> _alFilteri_fnptr = &alFilteri_Lazy;
+        public static delegate* unmanaged<int, int, int, void> _alFilteri_fnptr = &alFilteri_Lazy;
         [UnmanagedCallersOnly]
-        private static void alFilteri_Lazy(uint filter, int param, int iValue)
+        private static void alFilteri_Lazy(int filter, int param, int iValue)
         {
-            _alFilteri_fnptr = (delegate* unmanaged<uint, int, int, void>)ALLoader.ALGetProcAddress("alFilteri");
+            _alFilteri_fnptr = (delegate* unmanaged<int, int, int, void>)ALLoader.ALGetProcAddress("alFilteri");
             _alFilteri_fnptr(filter, param, iValue);
         }
         
         /// <summary><b>[entry point: <c>alFilteriv</c>]</b></summary>
-        public static delegate* unmanaged<uint, int, int*, void> _alFilteriv_fnptr = &alFilteriv_Lazy;
+        public static delegate* unmanaged<int, int, int*, void> _alFilteriv_fnptr = &alFilteriv_Lazy;
         [UnmanagedCallersOnly]
-        private static void alFilteriv_Lazy(uint filter, int param, int* piValues)
+        private static void alFilteriv_Lazy(int filter, int param, int* piValues)
         {
-            _alFilteriv_fnptr = (delegate* unmanaged<uint, int, int*, void>)ALLoader.ALGetProcAddress("alFilteriv");
+            _alFilteriv_fnptr = (delegate* unmanaged<int, int, int*, void>)ALLoader.ALGetProcAddress("alFilteriv");
             _alFilteriv_fnptr(filter, param, piValues);
         }
         
         /// <summary><b>[entry point: <c>alGenAuxiliaryEffectSlots</c>]</b></summary>
-        public static delegate* unmanaged<int, uint*, void> _alGenAuxiliaryEffectSlots_fnptr = &alGenAuxiliaryEffectSlots_Lazy;
+        public static delegate* unmanaged<int, int*, void> _alGenAuxiliaryEffectSlots_fnptr = &alGenAuxiliaryEffectSlots_Lazy;
         [UnmanagedCallersOnly]
-        private static void alGenAuxiliaryEffectSlots_Lazy(int n, uint* effectslots)
+        private static void alGenAuxiliaryEffectSlots_Lazy(int n, int* effectslots)
         {
-            _alGenAuxiliaryEffectSlots_fnptr = (delegate* unmanaged<int, uint*, void>)ALLoader.ALGetProcAddress("alGenAuxiliaryEffectSlots");
+            _alGenAuxiliaryEffectSlots_fnptr = (delegate* unmanaged<int, int*, void>)ALLoader.ALGetProcAddress("alGenAuxiliaryEffectSlots");
             _alGenAuxiliaryEffectSlots_fnptr(n, effectslots);
         }
         
         /// <summary><b>[entry point: <c>alGenBuffers</c>]</b></summary>
-        public static delegate* unmanaged<int, uint*, void> _alGenBuffers_fnptr = &alGenBuffers_Lazy;
+        public static delegate* unmanaged<int, int*, void> _alGenBuffers_fnptr = &alGenBuffers_Lazy;
         [UnmanagedCallersOnly]
-        private static void alGenBuffers_Lazy(int n, uint* buffers)
+        private static void alGenBuffers_Lazy(int n, int* buffers)
         {
-            _alGenBuffers_fnptr = (delegate* unmanaged<int, uint*, void>)ALLoader.ALGetProcAddress("alGenBuffers");
+            _alGenBuffers_fnptr = (delegate* unmanaged<int, int*, void>)ALLoader.ALGetProcAddress("alGenBuffers");
             _alGenBuffers_fnptr(n, buffers);
         }
         
         /// <summary><b>[entry point: <c>alGenEffects</c>]</b></summary>
-        public static delegate* unmanaged<int, uint*, void> _alGenEffects_fnptr = &alGenEffects_Lazy;
+        public static delegate* unmanaged<int, int*, void> _alGenEffects_fnptr = &alGenEffects_Lazy;
         [UnmanagedCallersOnly]
-        private static void alGenEffects_Lazy(int n, uint* effects)
+        private static void alGenEffects_Lazy(int n, int* effects)
         {
-            _alGenEffects_fnptr = (delegate* unmanaged<int, uint*, void>)ALLoader.ALGetProcAddress("alGenEffects");
+            _alGenEffects_fnptr = (delegate* unmanaged<int, int*, void>)ALLoader.ALGetProcAddress("alGenEffects");
             _alGenEffects_fnptr(n, effects);
         }
         
         /// <summary><b>[entry point: <c>alGenFilters</c>]</b></summary>
-        public static delegate* unmanaged<int, uint*, void> _alGenFilters_fnptr = &alGenFilters_Lazy;
+        public static delegate* unmanaged<int, int*, void> _alGenFilters_fnptr = &alGenFilters_Lazy;
         [UnmanagedCallersOnly]
-        private static void alGenFilters_Lazy(int n, uint* filters)
+        private static void alGenFilters_Lazy(int n, int* filters)
         {
-            _alGenFilters_fnptr = (delegate* unmanaged<int, uint*, void>)ALLoader.ALGetProcAddress("alGenFilters");
+            _alGenFilters_fnptr = (delegate* unmanaged<int, int*, void>)ALLoader.ALGetProcAddress("alGenFilters");
             _alGenFilters_fnptr(n, filters);
         }
         
         /// <summary><b>[entry point: <c>alGenSources</c>]</b></summary>
-        public static delegate* unmanaged<int, uint*, void> _alGenSources_fnptr = &alGenSources_Lazy;
+        public static delegate* unmanaged<int, int*, void> _alGenSources_fnptr = &alGenSources_Lazy;
         [UnmanagedCallersOnly]
-        private static void alGenSources_Lazy(int n, uint* sources)
+        private static void alGenSources_Lazy(int n, int* sources)
         {
-            _alGenSources_fnptr = (delegate* unmanaged<int, uint*, void>)ALLoader.ALGetProcAddress("alGenSources");
+            _alGenSources_fnptr = (delegate* unmanaged<int, int*, void>)ALLoader.ALGetProcAddress("alGenSources");
             _alGenSources_fnptr(n, sources);
         }
         
         /// <summary><b>[entry point: <c>alGetAuxiliaryEffectSlotf</c>]</b></summary>
-        public static delegate* unmanaged<uint, int, float*, void> _alGetAuxiliaryEffectSlotf_fnptr = &alGetAuxiliaryEffectSlotf_Lazy;
+        public static delegate* unmanaged<int, int, float*, void> _alGetAuxiliaryEffectSlotf_fnptr = &alGetAuxiliaryEffectSlotf_Lazy;
         [UnmanagedCallersOnly]
-        private static void alGetAuxiliaryEffectSlotf_Lazy(uint effectslot, int param, float* pflValue)
+        private static void alGetAuxiliaryEffectSlotf_Lazy(int effectslot, int param, float* pflValue)
         {
-            _alGetAuxiliaryEffectSlotf_fnptr = (delegate* unmanaged<uint, int, float*, void>)ALLoader.ALGetProcAddress("alGetAuxiliaryEffectSlotf");
+            _alGetAuxiliaryEffectSlotf_fnptr = (delegate* unmanaged<int, int, float*, void>)ALLoader.ALGetProcAddress("alGetAuxiliaryEffectSlotf");
             _alGetAuxiliaryEffectSlotf_fnptr(effectslot, param, pflValue);
         }
         
         /// <summary><b>[entry point: <c>alGetAuxiliaryEffectSlotfv</c>]</b></summary>
-        public static delegate* unmanaged<uint, int, float*, void> _alGetAuxiliaryEffectSlotfv_fnptr = &alGetAuxiliaryEffectSlotfv_Lazy;
+        public static delegate* unmanaged<int, int, float*, void> _alGetAuxiliaryEffectSlotfv_fnptr = &alGetAuxiliaryEffectSlotfv_Lazy;
         [UnmanagedCallersOnly]
-        private static void alGetAuxiliaryEffectSlotfv_Lazy(uint effectslot, int param, float* pflValues)
+        private static void alGetAuxiliaryEffectSlotfv_Lazy(int effectslot, int param, float* pflValues)
         {
-            _alGetAuxiliaryEffectSlotfv_fnptr = (delegate* unmanaged<uint, int, float*, void>)ALLoader.ALGetProcAddress("alGetAuxiliaryEffectSlotfv");
+            _alGetAuxiliaryEffectSlotfv_fnptr = (delegate* unmanaged<int, int, float*, void>)ALLoader.ALGetProcAddress("alGetAuxiliaryEffectSlotfv");
             _alGetAuxiliaryEffectSlotfv_fnptr(effectslot, param, pflValues);
         }
         
         /// <summary><b>[entry point: <c>alGetAuxiliaryEffectSloti</c>]</b></summary>
-        public static delegate* unmanaged<uint, int, int*, void> _alGetAuxiliaryEffectSloti_fnptr = &alGetAuxiliaryEffectSloti_Lazy;
+        public static delegate* unmanaged<int, int, int*, void> _alGetAuxiliaryEffectSloti_fnptr = &alGetAuxiliaryEffectSloti_Lazy;
         [UnmanagedCallersOnly]
-        private static void alGetAuxiliaryEffectSloti_Lazy(uint effectslot, int param, int* piValue)
+        private static void alGetAuxiliaryEffectSloti_Lazy(int effectslot, int param, int* piValue)
         {
-            _alGetAuxiliaryEffectSloti_fnptr = (delegate* unmanaged<uint, int, int*, void>)ALLoader.ALGetProcAddress("alGetAuxiliaryEffectSloti");
+            _alGetAuxiliaryEffectSloti_fnptr = (delegate* unmanaged<int, int, int*, void>)ALLoader.ALGetProcAddress("alGetAuxiliaryEffectSloti");
             _alGetAuxiliaryEffectSloti_fnptr(effectslot, param, piValue);
         }
         
         /// <summary><b>[entry point: <c>alGetAuxiliaryEffectSlotiv</c>]</b></summary>
-        public static delegate* unmanaged<uint, int, int*, void> _alGetAuxiliaryEffectSlotiv_fnptr = &alGetAuxiliaryEffectSlotiv_Lazy;
+        public static delegate* unmanaged<int, int, int*, void> _alGetAuxiliaryEffectSlotiv_fnptr = &alGetAuxiliaryEffectSlotiv_Lazy;
         [UnmanagedCallersOnly]
-        private static void alGetAuxiliaryEffectSlotiv_Lazy(uint effectslot, int param, int* piValues)
+        private static void alGetAuxiliaryEffectSlotiv_Lazy(int effectslot, int param, int* piValues)
         {
-            _alGetAuxiliaryEffectSlotiv_fnptr = (delegate* unmanaged<uint, int, int*, void>)ALLoader.ALGetProcAddress("alGetAuxiliaryEffectSlotiv");
+            _alGetAuxiliaryEffectSlotiv_fnptr = (delegate* unmanaged<int, int, int*, void>)ALLoader.ALGetProcAddress("alGetAuxiliaryEffectSlotiv");
             _alGetAuxiliaryEffectSlotiv_fnptr(effectslot, param, piValues);
         }
         
@@ -450,92 +450,92 @@ namespace OpenTK.Audio.OpenAL
         }
         
         /// <summary><b>[entry point: <c>alGetBuffer3f</c>]</b></summary>
-        public static delegate* unmanaged<uint, int, float*, float*, float*, void> _alGetBuffer3f_fnptr = &alGetBuffer3f_Lazy;
+        public static delegate* unmanaged<int, int, float*, float*, float*, void> _alGetBuffer3f_fnptr = &alGetBuffer3f_Lazy;
         [UnmanagedCallersOnly]
-        private static void alGetBuffer3f_Lazy(uint buffer, int param, float* value1, float* value2, float* value3)
+        private static void alGetBuffer3f_Lazy(int buffer, int param, float* value1, float* value2, float* value3)
         {
-            _alGetBuffer3f_fnptr = (delegate* unmanaged<uint, int, float*, float*, float*, void>)ALLoader.ALGetProcAddress("alGetBuffer3f");
+            _alGetBuffer3f_fnptr = (delegate* unmanaged<int, int, float*, float*, float*, void>)ALLoader.ALGetProcAddress("alGetBuffer3f");
             _alGetBuffer3f_fnptr(buffer, param, value1, value2, value3);
         }
         
         /// <summary><b>[entry point: <c>alGetBuffer3i</c>]</b></summary>
-        public static delegate* unmanaged<uint, int, int*, int*, int*, void> _alGetBuffer3i_fnptr = &alGetBuffer3i_Lazy;
+        public static delegate* unmanaged<int, int, int*, int*, int*, void> _alGetBuffer3i_fnptr = &alGetBuffer3i_Lazy;
         [UnmanagedCallersOnly]
-        private static void alGetBuffer3i_Lazy(uint buffer, int param, int* value1, int* value2, int* value3)
+        private static void alGetBuffer3i_Lazy(int buffer, int param, int* value1, int* value2, int* value3)
         {
-            _alGetBuffer3i_fnptr = (delegate* unmanaged<uint, int, int*, int*, int*, void>)ALLoader.ALGetProcAddress("alGetBuffer3i");
+            _alGetBuffer3i_fnptr = (delegate* unmanaged<int, int, int*, int*, int*, void>)ALLoader.ALGetProcAddress("alGetBuffer3i");
             _alGetBuffer3i_fnptr(buffer, param, value1, value2, value3);
         }
         
         /// <summary><b>[entry point: <c>alGetBuffer3PtrSOFT</c>]</b></summary>
-        public static delegate* unmanaged<uint, int, void**, void**, void**, void> _alGetBuffer3PtrSOFT_fnptr = &alGetBuffer3PtrSOFT_Lazy;
+        public static delegate* unmanaged<int, int, void**, void**, void**, void> _alGetBuffer3PtrSOFT_fnptr = &alGetBuffer3PtrSOFT_Lazy;
         [UnmanagedCallersOnly]
-        private static void alGetBuffer3PtrSOFT_Lazy(uint buffer, int param, void** ptr0, void** ptr1, void** ptr2)
+        private static void alGetBuffer3PtrSOFT_Lazy(int buffer, int param, void** ptr0, void** ptr1, void** ptr2)
         {
-            _alGetBuffer3PtrSOFT_fnptr = (delegate* unmanaged<uint, int, void**, void**, void**, void>)ALLoader.ALGetProcAddress("alGetBuffer3PtrSOFT");
+            _alGetBuffer3PtrSOFT_fnptr = (delegate* unmanaged<int, int, void**, void**, void**, void>)ALLoader.ALGetProcAddress("alGetBuffer3PtrSOFT");
             _alGetBuffer3PtrSOFT_fnptr(buffer, param, ptr0, ptr1, ptr2);
         }
         
         /// <summary><b>[entry point: <c>alGetBufferf</c>]</b></summary>
-        public static delegate* unmanaged<uint, int, float*, void> _alGetBufferf_fnptr = &alGetBufferf_Lazy;
+        public static delegate* unmanaged<int, int, float*, void> _alGetBufferf_fnptr = &alGetBufferf_Lazy;
         [UnmanagedCallersOnly]
-        private static void alGetBufferf_Lazy(uint buffer, int param, float* value)
+        private static void alGetBufferf_Lazy(int buffer, int param, float* value)
         {
-            _alGetBufferf_fnptr = (delegate* unmanaged<uint, int, float*, void>)ALLoader.ALGetProcAddress("alGetBufferf");
+            _alGetBufferf_fnptr = (delegate* unmanaged<int, int, float*, void>)ALLoader.ALGetProcAddress("alGetBufferf");
             _alGetBufferf_fnptr(buffer, param, value);
         }
         
         /// <summary><b>[entry point: <c>alGetBufferfv</c>]</b></summary>
-        public static delegate* unmanaged<uint, int, float*, void> _alGetBufferfv_fnptr = &alGetBufferfv_Lazy;
+        public static delegate* unmanaged<int, int, float*, void> _alGetBufferfv_fnptr = &alGetBufferfv_Lazy;
         [UnmanagedCallersOnly]
-        private static void alGetBufferfv_Lazy(uint buffer, int param, float* value)
+        private static void alGetBufferfv_Lazy(int buffer, int param, float* value)
         {
-            _alGetBufferfv_fnptr = (delegate* unmanaged<uint, int, float*, void>)ALLoader.ALGetProcAddress("alGetBufferfv");
+            _alGetBufferfv_fnptr = (delegate* unmanaged<int, int, float*, void>)ALLoader.ALGetProcAddress("alGetBufferfv");
             _alGetBufferfv_fnptr(buffer, param, value);
         }
         
         /// <summary><b>[entry point: <c>alGetBufferi</c>]</b></summary>
-        public static delegate* unmanaged<uint, int, int*, void> _alGetBufferi_fnptr = &alGetBufferi_Lazy;
+        public static delegate* unmanaged<int, int, int*, void> _alGetBufferi_fnptr = &alGetBufferi_Lazy;
         [UnmanagedCallersOnly]
-        private static void alGetBufferi_Lazy(uint buffer, int param, int* value)
+        private static void alGetBufferi_Lazy(int buffer, int param, int* value)
         {
-            _alGetBufferi_fnptr = (delegate* unmanaged<uint, int, int*, void>)ALLoader.ALGetProcAddress("alGetBufferi");
+            _alGetBufferi_fnptr = (delegate* unmanaged<int, int, int*, void>)ALLoader.ALGetProcAddress("alGetBufferi");
             _alGetBufferi_fnptr(buffer, param, value);
         }
         
         /// <summary><b>[entry point: <c>alGetBufferiv</c>]</b></summary>
-        public static delegate* unmanaged<uint, int, int*, void> _alGetBufferiv_fnptr = &alGetBufferiv_Lazy;
+        public static delegate* unmanaged<int, int, int*, void> _alGetBufferiv_fnptr = &alGetBufferiv_Lazy;
         [UnmanagedCallersOnly]
-        private static void alGetBufferiv_Lazy(uint buffer, int param, int* value)
+        private static void alGetBufferiv_Lazy(int buffer, int param, int* value)
         {
-            _alGetBufferiv_fnptr = (delegate* unmanaged<uint, int, int*, void>)ALLoader.ALGetProcAddress("alGetBufferiv");
+            _alGetBufferiv_fnptr = (delegate* unmanaged<int, int, int*, void>)ALLoader.ALGetProcAddress("alGetBufferiv");
             _alGetBufferiv_fnptr(buffer, param, value);
         }
         
         /// <summary><b>[entry point: <c>alGetBufferPtrSOFT</c>]</b></summary>
-        public static delegate* unmanaged<uint, int, void**, void> _alGetBufferPtrSOFT_fnptr = &alGetBufferPtrSOFT_Lazy;
+        public static delegate* unmanaged<int, int, void**, void> _alGetBufferPtrSOFT_fnptr = &alGetBufferPtrSOFT_Lazy;
         [UnmanagedCallersOnly]
-        private static void alGetBufferPtrSOFT_Lazy(uint buffer, int param, void** ptr)
+        private static void alGetBufferPtrSOFT_Lazy(int buffer, int param, void** ptr)
         {
-            _alGetBufferPtrSOFT_fnptr = (delegate* unmanaged<uint, int, void**, void>)ALLoader.ALGetProcAddress("alGetBufferPtrSOFT");
+            _alGetBufferPtrSOFT_fnptr = (delegate* unmanaged<int, int, void**, void>)ALLoader.ALGetProcAddress("alGetBufferPtrSOFT");
             _alGetBufferPtrSOFT_fnptr(buffer, param, ptr);
         }
         
         /// <summary><b>[entry point: <c>alGetBufferPtrvSOFT</c>]</b></summary>
-        public static delegate* unmanaged<uint, int, void**, void> _alGetBufferPtrvSOFT_fnptr = &alGetBufferPtrvSOFT_Lazy;
+        public static delegate* unmanaged<int, int, void**, void> _alGetBufferPtrvSOFT_fnptr = &alGetBufferPtrvSOFT_Lazy;
         [UnmanagedCallersOnly]
-        private static void alGetBufferPtrvSOFT_Lazy(uint buffer, int param, void** ptr)
+        private static void alGetBufferPtrvSOFT_Lazy(int buffer, int param, void** ptr)
         {
-            _alGetBufferPtrvSOFT_fnptr = (delegate* unmanaged<uint, int, void**, void>)ALLoader.ALGetProcAddress("alGetBufferPtrvSOFT");
+            _alGetBufferPtrvSOFT_fnptr = (delegate* unmanaged<int, int, void**, void>)ALLoader.ALGetProcAddress("alGetBufferPtrvSOFT");
             _alGetBufferPtrvSOFT_fnptr(buffer, param, ptr);
         }
         
         /// <summary><b>[entry point: <c>alGetBufferSamplesSOFT</c>]</b></summary>
-        public static delegate* unmanaged<uint, int, int, int, int, void*, void> _alGetBufferSamplesSOFT_fnptr = &alGetBufferSamplesSOFT_Lazy;
+        public static delegate* unmanaged<int, int, int, int, int, void*, void> _alGetBufferSamplesSOFT_fnptr = &alGetBufferSamplesSOFT_Lazy;
         [UnmanagedCallersOnly]
-        private static void alGetBufferSamplesSOFT_Lazy(uint buffer, int offset, int samples, int channels, int type, void* data)
+        private static void alGetBufferSamplesSOFT_Lazy(int buffer, int offset, int samples, int channels, int type, void* data)
         {
-            _alGetBufferSamplesSOFT_fnptr = (delegate* unmanaged<uint, int, int, int, int, void*, void>)ALLoader.ALGetProcAddress("alGetBufferSamplesSOFT");
+            _alGetBufferSamplesSOFT_fnptr = (delegate* unmanaged<int, int, int, int, int, void*, void>)ALLoader.ALGetProcAddress("alGetBufferSamplesSOFT");
             _alGetBufferSamplesSOFT_fnptr(buffer, offset, samples, channels, type, data);
         }
         
@@ -567,38 +567,38 @@ namespace OpenTK.Audio.OpenAL
         }
         
         /// <summary><b>[entry point: <c>alGetEffectf</c>]</b></summary>
-        public static delegate* unmanaged<uint, int, float*, void> _alGetEffectf_fnptr = &alGetEffectf_Lazy;
+        public static delegate* unmanaged<int, int, float*, void> _alGetEffectf_fnptr = &alGetEffectf_Lazy;
         [UnmanagedCallersOnly]
-        private static void alGetEffectf_Lazy(uint effect, int param, float* pflValue)
+        private static void alGetEffectf_Lazy(int effect, int param, float* pflValue)
         {
-            _alGetEffectf_fnptr = (delegate* unmanaged<uint, int, float*, void>)ALLoader.ALGetProcAddress("alGetEffectf");
+            _alGetEffectf_fnptr = (delegate* unmanaged<int, int, float*, void>)ALLoader.ALGetProcAddress("alGetEffectf");
             _alGetEffectf_fnptr(effect, param, pflValue);
         }
         
         /// <summary><b>[entry point: <c>alGetEffectfv</c>]</b></summary>
-        public static delegate* unmanaged<uint, int, float*, void> _alGetEffectfv_fnptr = &alGetEffectfv_Lazy;
+        public static delegate* unmanaged<int, int, float*, void> _alGetEffectfv_fnptr = &alGetEffectfv_Lazy;
         [UnmanagedCallersOnly]
-        private static void alGetEffectfv_Lazy(uint effect, int param, float* pflValues)
+        private static void alGetEffectfv_Lazy(int effect, int param, float* pflValues)
         {
-            _alGetEffectfv_fnptr = (delegate* unmanaged<uint, int, float*, void>)ALLoader.ALGetProcAddress("alGetEffectfv");
+            _alGetEffectfv_fnptr = (delegate* unmanaged<int, int, float*, void>)ALLoader.ALGetProcAddress("alGetEffectfv");
             _alGetEffectfv_fnptr(effect, param, pflValues);
         }
         
         /// <summary><b>[entry point: <c>alGetEffecti</c>]</b></summary>
-        public static delegate* unmanaged<uint, int, int*, void> _alGetEffecti_fnptr = &alGetEffecti_Lazy;
+        public static delegate* unmanaged<int, int, int*, void> _alGetEffecti_fnptr = &alGetEffecti_Lazy;
         [UnmanagedCallersOnly]
-        private static void alGetEffecti_Lazy(uint effect, int param, int* piValue)
+        private static void alGetEffecti_Lazy(int effect, int param, int* piValue)
         {
-            _alGetEffecti_fnptr = (delegate* unmanaged<uint, int, int*, void>)ALLoader.ALGetProcAddress("alGetEffecti");
+            _alGetEffecti_fnptr = (delegate* unmanaged<int, int, int*, void>)ALLoader.ALGetProcAddress("alGetEffecti");
             _alGetEffecti_fnptr(effect, param, piValue);
         }
         
         /// <summary><b>[entry point: <c>alGetEffectiv</c>]</b></summary>
-        public static delegate* unmanaged<uint, int, int*, void> _alGetEffectiv_fnptr = &alGetEffectiv_Lazy;
+        public static delegate* unmanaged<int, int, int*, void> _alGetEffectiv_fnptr = &alGetEffectiv_Lazy;
         [UnmanagedCallersOnly]
-        private static void alGetEffectiv_Lazy(uint effect, int param, int* piValues)
+        private static void alGetEffectiv_Lazy(int effect, int param, int* piValues)
         {
-            _alGetEffectiv_fnptr = (delegate* unmanaged<uint, int, int*, void>)ALLoader.ALGetProcAddress("alGetEffectiv");
+            _alGetEffectiv_fnptr = (delegate* unmanaged<int, int, int*, void>)ALLoader.ALGetProcAddress("alGetEffectiv");
             _alGetEffectiv_fnptr(effect, param, piValues);
         }
         
@@ -621,38 +621,38 @@ namespace OpenTK.Audio.OpenAL
         }
         
         /// <summary><b>[entry point: <c>alGetFilterf</c>]</b></summary>
-        public static delegate* unmanaged<uint, int, float*, void> _alGetFilterf_fnptr = &alGetFilterf_Lazy;
+        public static delegate* unmanaged<int, int, float*, void> _alGetFilterf_fnptr = &alGetFilterf_Lazy;
         [UnmanagedCallersOnly]
-        private static void alGetFilterf_Lazy(uint filter, int param, float* pflValue)
+        private static void alGetFilterf_Lazy(int filter, int param, float* pflValue)
         {
-            _alGetFilterf_fnptr = (delegate* unmanaged<uint, int, float*, void>)ALLoader.ALGetProcAddress("alGetFilterf");
+            _alGetFilterf_fnptr = (delegate* unmanaged<int, int, float*, void>)ALLoader.ALGetProcAddress("alGetFilterf");
             _alGetFilterf_fnptr(filter, param, pflValue);
         }
         
         /// <summary><b>[entry point: <c>alGetFilterfv</c>]</b></summary>
-        public static delegate* unmanaged<uint, int, float*, void> _alGetFilterfv_fnptr = &alGetFilterfv_Lazy;
+        public static delegate* unmanaged<int, int, float*, void> _alGetFilterfv_fnptr = &alGetFilterfv_Lazy;
         [UnmanagedCallersOnly]
-        private static void alGetFilterfv_Lazy(uint filter, int param, float* pflValues)
+        private static void alGetFilterfv_Lazy(int filter, int param, float* pflValues)
         {
-            _alGetFilterfv_fnptr = (delegate* unmanaged<uint, int, float*, void>)ALLoader.ALGetProcAddress("alGetFilterfv");
+            _alGetFilterfv_fnptr = (delegate* unmanaged<int, int, float*, void>)ALLoader.ALGetProcAddress("alGetFilterfv");
             _alGetFilterfv_fnptr(filter, param, pflValues);
         }
         
         /// <summary><b>[entry point: <c>alGetFilteri</c>]</b></summary>
-        public static delegate* unmanaged<uint, int, int*, void> _alGetFilteri_fnptr = &alGetFilteri_Lazy;
+        public static delegate* unmanaged<int, int, int*, void> _alGetFilteri_fnptr = &alGetFilteri_Lazy;
         [UnmanagedCallersOnly]
-        private static void alGetFilteri_Lazy(uint filter, int param, int* piValue)
+        private static void alGetFilteri_Lazy(int filter, int param, int* piValue)
         {
-            _alGetFilteri_fnptr = (delegate* unmanaged<uint, int, int*, void>)ALLoader.ALGetProcAddress("alGetFilteri");
+            _alGetFilteri_fnptr = (delegate* unmanaged<int, int, int*, void>)ALLoader.ALGetProcAddress("alGetFilteri");
             _alGetFilteri_fnptr(filter, param, piValue);
         }
         
         /// <summary><b>[entry point: <c>alGetFilteriv</c>]</b></summary>
-        public static delegate* unmanaged<uint, int, int*, void> _alGetFilteriv_fnptr = &alGetFilteriv_Lazy;
+        public static delegate* unmanaged<int, int, int*, void> _alGetFilteriv_fnptr = &alGetFilteriv_Lazy;
         [UnmanagedCallersOnly]
-        private static void alGetFilteriv_Lazy(uint filter, int param, int* piValues)
+        private static void alGetFilteriv_Lazy(int filter, int param, int* piValues)
         {
-            _alGetFilteriv_fnptr = (delegate* unmanaged<uint, int, int*, void>)ALLoader.ALGetProcAddress("alGetFilteriv");
+            _alGetFilteriv_fnptr = (delegate* unmanaged<int, int, int*, void>)ALLoader.ALGetProcAddress("alGetFilteriv");
             _alGetFilteriv_fnptr(filter, param, piValues);
         }
         
@@ -801,110 +801,110 @@ namespace OpenTK.Audio.OpenAL
         }
         
         /// <summary><b>[entry point: <c>alGetSource3dSOFT</c>]</b></summary>
-        public static delegate* unmanaged<uint, int, double*, double*, double*, void> _alGetSource3dSOFT_fnptr = &alGetSource3dSOFT_Lazy;
+        public static delegate* unmanaged<int, int, double*, double*, double*, void> _alGetSource3dSOFT_fnptr = &alGetSource3dSOFT_Lazy;
         [UnmanagedCallersOnly]
-        private static void alGetSource3dSOFT_Lazy(uint source, int param, double* value1, double* value2, double* value3)
+        private static void alGetSource3dSOFT_Lazy(int source, int param, double* value1, double* value2, double* value3)
         {
-            _alGetSource3dSOFT_fnptr = (delegate* unmanaged<uint, int, double*, double*, double*, void>)ALLoader.ALGetProcAddress("alGetSource3dSOFT");
+            _alGetSource3dSOFT_fnptr = (delegate* unmanaged<int, int, double*, double*, double*, void>)ALLoader.ALGetProcAddress("alGetSource3dSOFT");
             _alGetSource3dSOFT_fnptr(source, param, value1, value2, value3);
         }
         
         /// <summary><b>[entry point: <c>alGetSource3f</c>]</b></summary>
-        public static delegate* unmanaged<uint, int, float*, float*, float*, void> _alGetSource3f_fnptr = &alGetSource3f_Lazy;
+        public static delegate* unmanaged<int, int, float*, float*, float*, void> _alGetSource3f_fnptr = &alGetSource3f_Lazy;
         [UnmanagedCallersOnly]
-        private static void alGetSource3f_Lazy(uint source, int param, float* value1, float* value2, float* value3)
+        private static void alGetSource3f_Lazy(int source, int param, float* value1, float* value2, float* value3)
         {
-            _alGetSource3f_fnptr = (delegate* unmanaged<uint, int, float*, float*, float*, void>)ALLoader.ALGetProcAddress("alGetSource3f");
+            _alGetSource3f_fnptr = (delegate* unmanaged<int, int, float*, float*, float*, void>)ALLoader.ALGetProcAddress("alGetSource3f");
             _alGetSource3f_fnptr(source, param, value1, value2, value3);
         }
         
         /// <summary><b>[entry point: <c>alGetSource3i</c>]</b></summary>
-        public static delegate* unmanaged<uint, int, int*, int*, int*, void> _alGetSource3i_fnptr = &alGetSource3i_Lazy;
+        public static delegate* unmanaged<int, int, int*, int*, int*, void> _alGetSource3i_fnptr = &alGetSource3i_Lazy;
         [UnmanagedCallersOnly]
-        private static void alGetSource3i_Lazy(uint source, int param, int* value1, int* value2, int* value3)
+        private static void alGetSource3i_Lazy(int source, int param, int* value1, int* value2, int* value3)
         {
-            _alGetSource3i_fnptr = (delegate* unmanaged<uint, int, int*, int*, int*, void>)ALLoader.ALGetProcAddress("alGetSource3i");
+            _alGetSource3i_fnptr = (delegate* unmanaged<int, int, int*, int*, int*, void>)ALLoader.ALGetProcAddress("alGetSource3i");
             _alGetSource3i_fnptr(source, param, value1, value2, value3);
         }
         
         /// <summary><b>[entry point: <c>alGetSource3i64SOFT</c>]</b></summary>
-        public static delegate* unmanaged<uint, int, long*, long*, long*, void> _alGetSource3i64SOFT_fnptr = &alGetSource3i64SOFT_Lazy;
+        public static delegate* unmanaged<int, int, long*, long*, long*, void> _alGetSource3i64SOFT_fnptr = &alGetSource3i64SOFT_Lazy;
         [UnmanagedCallersOnly]
-        private static void alGetSource3i64SOFT_Lazy(uint source, int param, long* value1, long* value2, long* value3)
+        private static void alGetSource3i64SOFT_Lazy(int source, int param, long* value1, long* value2, long* value3)
         {
-            _alGetSource3i64SOFT_fnptr = (delegate* unmanaged<uint, int, long*, long*, long*, void>)ALLoader.ALGetProcAddress("alGetSource3i64SOFT");
+            _alGetSource3i64SOFT_fnptr = (delegate* unmanaged<int, int, long*, long*, long*, void>)ALLoader.ALGetProcAddress("alGetSource3i64SOFT");
             _alGetSource3i64SOFT_fnptr(source, param, value1, value2, value3);
         }
         
         /// <summary><b>[entry point: <c>alGetSourcedSOFT</c>]</b></summary>
-        public static delegate* unmanaged<uint, int, double*, void> _alGetSourcedSOFT_fnptr = &alGetSourcedSOFT_Lazy;
+        public static delegate* unmanaged<int, int, double*, void> _alGetSourcedSOFT_fnptr = &alGetSourcedSOFT_Lazy;
         [UnmanagedCallersOnly]
-        private static void alGetSourcedSOFT_Lazy(uint source, int param, double* value)
+        private static void alGetSourcedSOFT_Lazy(int source, int param, double* value)
         {
-            _alGetSourcedSOFT_fnptr = (delegate* unmanaged<uint, int, double*, void>)ALLoader.ALGetProcAddress("alGetSourcedSOFT");
+            _alGetSourcedSOFT_fnptr = (delegate* unmanaged<int, int, double*, void>)ALLoader.ALGetProcAddress("alGetSourcedSOFT");
             _alGetSourcedSOFT_fnptr(source, param, value);
         }
         
         /// <summary><b>[entry point: <c>alGetSourcedvSOFT</c>]</b></summary>
-        public static delegate* unmanaged<uint, int, double*, void> _alGetSourcedvSOFT_fnptr = &alGetSourcedvSOFT_Lazy;
+        public static delegate* unmanaged<int, int, double*, void> _alGetSourcedvSOFT_fnptr = &alGetSourcedvSOFT_Lazy;
         [UnmanagedCallersOnly]
-        private static void alGetSourcedvSOFT_Lazy(uint source, int param, double* values)
+        private static void alGetSourcedvSOFT_Lazy(int source, int param, double* values)
         {
-            _alGetSourcedvSOFT_fnptr = (delegate* unmanaged<uint, int, double*, void>)ALLoader.ALGetProcAddress("alGetSourcedvSOFT");
+            _alGetSourcedvSOFT_fnptr = (delegate* unmanaged<int, int, double*, void>)ALLoader.ALGetProcAddress("alGetSourcedvSOFT");
             _alGetSourcedvSOFT_fnptr(source, param, values);
         }
         
         /// <summary><b>[entry point: <c>alGetSourcef</c>]</b></summary>
-        public static delegate* unmanaged<uint, int, float*, void> _alGetSourcef_fnptr = &alGetSourcef_Lazy;
+        public static delegate* unmanaged<int, int, float*, void> _alGetSourcef_fnptr = &alGetSourcef_Lazy;
         [UnmanagedCallersOnly]
-        private static void alGetSourcef_Lazy(uint source, int param, float* value)
+        private static void alGetSourcef_Lazy(int source, int param, float* value)
         {
-            _alGetSourcef_fnptr = (delegate* unmanaged<uint, int, float*, void>)ALLoader.ALGetProcAddress("alGetSourcef");
+            _alGetSourcef_fnptr = (delegate* unmanaged<int, int, float*, void>)ALLoader.ALGetProcAddress("alGetSourcef");
             _alGetSourcef_fnptr(source, param, value);
         }
         
         /// <summary><b>[entry point: <c>alGetSourcefv</c>]</b></summary>
-        public static delegate* unmanaged<uint, int, float*, void> _alGetSourcefv_fnptr = &alGetSourcefv_Lazy;
+        public static delegate* unmanaged<int, int, float*, void> _alGetSourcefv_fnptr = &alGetSourcefv_Lazy;
         [UnmanagedCallersOnly]
-        private static void alGetSourcefv_Lazy(uint source, int param, float* values)
+        private static void alGetSourcefv_Lazy(int source, int param, float* values)
         {
-            _alGetSourcefv_fnptr = (delegate* unmanaged<uint, int, float*, void>)ALLoader.ALGetProcAddress("alGetSourcefv");
+            _alGetSourcefv_fnptr = (delegate* unmanaged<int, int, float*, void>)ALLoader.ALGetProcAddress("alGetSourcefv");
             _alGetSourcefv_fnptr(source, param, values);
         }
         
         /// <summary><b>[entry point: <c>alGetSourcei</c>]</b></summary>
-        public static delegate* unmanaged<uint, int, int*, void> _alGetSourcei_fnptr = &alGetSourcei_Lazy;
+        public static delegate* unmanaged<int, int, int*, void> _alGetSourcei_fnptr = &alGetSourcei_Lazy;
         [UnmanagedCallersOnly]
-        private static void alGetSourcei_Lazy(uint source, int param, int* value)
+        private static void alGetSourcei_Lazy(int source, int param, int* value)
         {
-            _alGetSourcei_fnptr = (delegate* unmanaged<uint, int, int*, void>)ALLoader.ALGetProcAddress("alGetSourcei");
+            _alGetSourcei_fnptr = (delegate* unmanaged<int, int, int*, void>)ALLoader.ALGetProcAddress("alGetSourcei");
             _alGetSourcei_fnptr(source, param, value);
         }
         
         /// <summary><b>[entry point: <c>alGetSourcei64SOFT</c>]</b></summary>
-        public static delegate* unmanaged<uint, int, long*, void> _alGetSourcei64SOFT_fnptr = &alGetSourcei64SOFT_Lazy;
+        public static delegate* unmanaged<int, int, long*, void> _alGetSourcei64SOFT_fnptr = &alGetSourcei64SOFT_Lazy;
         [UnmanagedCallersOnly]
-        private static void alGetSourcei64SOFT_Lazy(uint source, int param, long* value)
+        private static void alGetSourcei64SOFT_Lazy(int source, int param, long* value)
         {
-            _alGetSourcei64SOFT_fnptr = (delegate* unmanaged<uint, int, long*, void>)ALLoader.ALGetProcAddress("alGetSourcei64SOFT");
+            _alGetSourcei64SOFT_fnptr = (delegate* unmanaged<int, int, long*, void>)ALLoader.ALGetProcAddress("alGetSourcei64SOFT");
             _alGetSourcei64SOFT_fnptr(source, param, value);
         }
         
         /// <summary><b>[entry point: <c>alGetSourcei64vSOFT</c>]</b></summary>
-        public static delegate* unmanaged<uint, int, long*, void> _alGetSourcei64vSOFT_fnptr = &alGetSourcei64vSOFT_Lazy;
+        public static delegate* unmanaged<int, int, long*, void> _alGetSourcei64vSOFT_fnptr = &alGetSourcei64vSOFT_Lazy;
         [UnmanagedCallersOnly]
-        private static void alGetSourcei64vSOFT_Lazy(uint source, int param, long* values)
+        private static void alGetSourcei64vSOFT_Lazy(int source, int param, long* values)
         {
-            _alGetSourcei64vSOFT_fnptr = (delegate* unmanaged<uint, int, long*, void>)ALLoader.ALGetProcAddress("alGetSourcei64vSOFT");
+            _alGetSourcei64vSOFT_fnptr = (delegate* unmanaged<int, int, long*, void>)ALLoader.ALGetProcAddress("alGetSourcei64vSOFT");
             _alGetSourcei64vSOFT_fnptr(source, param, values);
         }
         
         /// <summary><b>[entry point: <c>alGetSourceiv</c>]</b></summary>
-        public static delegate* unmanaged<uint, int, int*, void> _alGetSourceiv_fnptr = &alGetSourceiv_Lazy;
+        public static delegate* unmanaged<int, int, int*, void> _alGetSourceiv_fnptr = &alGetSourceiv_Lazy;
         [UnmanagedCallersOnly]
-        private static void alGetSourceiv_Lazy(uint source, int param, int* values)
+        private static void alGetSourceiv_Lazy(int source, int param, int* values)
         {
-            _alGetSourceiv_fnptr = (delegate* unmanaged<uint, int, int*, void>)ALLoader.ALGetProcAddress("alGetSourceiv");
+            _alGetSourceiv_fnptr = (delegate* unmanaged<int, int, int*, void>)ALLoader.ALGetProcAddress("alGetSourceiv");
             _alGetSourceiv_fnptr(source, param, values);
         }
         
@@ -927,20 +927,20 @@ namespace OpenTK.Audio.OpenAL
         }
         
         /// <summary><b>[entry point: <c>alIsAuxiliaryEffectSlot</c>]</b></summary>
-        public static delegate* unmanaged<uint, void> _alIsAuxiliaryEffectSlot_fnptr = &alIsAuxiliaryEffectSlot_Lazy;
+        public static delegate* unmanaged<int, void> _alIsAuxiliaryEffectSlot_fnptr = &alIsAuxiliaryEffectSlot_Lazy;
         [UnmanagedCallersOnly]
-        private static void alIsAuxiliaryEffectSlot_Lazy(uint effectslot)
+        private static void alIsAuxiliaryEffectSlot_Lazy(int effectslot)
         {
-            _alIsAuxiliaryEffectSlot_fnptr = (delegate* unmanaged<uint, void>)ALLoader.ALGetProcAddress("alIsAuxiliaryEffectSlot");
+            _alIsAuxiliaryEffectSlot_fnptr = (delegate* unmanaged<int, void>)ALLoader.ALGetProcAddress("alIsAuxiliaryEffectSlot");
             _alIsAuxiliaryEffectSlot_fnptr(effectslot);
         }
         
         /// <summary><b>[entry point: <c>alIsBuffer</c>]</b></summary>
-        public static delegate* unmanaged<uint, byte> _alIsBuffer_fnptr = &alIsBuffer_Lazy;
+        public static delegate* unmanaged<int, byte> _alIsBuffer_fnptr = &alIsBuffer_Lazy;
         [UnmanagedCallersOnly]
-        private static byte alIsBuffer_Lazy(uint buffer)
+        private static byte alIsBuffer_Lazy(int buffer)
         {
-            _alIsBuffer_fnptr = (delegate* unmanaged<uint, byte>)ALLoader.ALGetProcAddress("alIsBuffer");
+            _alIsBuffer_fnptr = (delegate* unmanaged<int, byte>)ALLoader.ALGetProcAddress("alIsBuffer");
             return _alIsBuffer_fnptr(buffer);
         }
         
@@ -954,11 +954,11 @@ namespace OpenTK.Audio.OpenAL
         }
         
         /// <summary><b>[entry point: <c>alIsEffect</c>]</b></summary>
-        public static delegate* unmanaged<uint, byte> _alIsEffect_fnptr = &alIsEffect_Lazy;
+        public static delegate* unmanaged<int, byte> _alIsEffect_fnptr = &alIsEffect_Lazy;
         [UnmanagedCallersOnly]
-        private static byte alIsEffect_Lazy(uint effect)
+        private static byte alIsEffect_Lazy(int effect)
         {
-            _alIsEffect_fnptr = (delegate* unmanaged<uint, byte>)ALLoader.ALGetProcAddress("alIsEffect");
+            _alIsEffect_fnptr = (delegate* unmanaged<int, byte>)ALLoader.ALGetProcAddress("alIsEffect");
             return _alIsEffect_fnptr(effect);
         }
         
@@ -981,20 +981,20 @@ namespace OpenTK.Audio.OpenAL
         }
         
         /// <summary><b>[entry point: <c>alIsFilter</c>]</b></summary>
-        public static delegate* unmanaged<uint, void> _alIsFilter_fnptr = &alIsFilter_Lazy;
+        public static delegate* unmanaged<int, void> _alIsFilter_fnptr = &alIsFilter_Lazy;
         [UnmanagedCallersOnly]
-        private static void alIsFilter_Lazy(uint filter)
+        private static void alIsFilter_Lazy(int filter)
         {
-            _alIsFilter_fnptr = (delegate* unmanaged<uint, void>)ALLoader.ALGetProcAddress("alIsFilter");
+            _alIsFilter_fnptr = (delegate* unmanaged<int, void>)ALLoader.ALGetProcAddress("alIsFilter");
             _alIsFilter_fnptr(filter);
         }
         
         /// <summary><b>[entry point: <c>alIsSource</c>]</b></summary>
-        public static delegate* unmanaged<uint, byte> _alIsSource_fnptr = &alIsSource_Lazy;
+        public static delegate* unmanaged<int, byte> _alIsSource_fnptr = &alIsSource_Lazy;
         [UnmanagedCallersOnly]
-        private static byte alIsSource_Lazy(uint source)
+        private static byte alIsSource_Lazy(int source)
         {
-            _alIsSource_fnptr = (delegate* unmanaged<uint, byte>)ALLoader.ALGetProcAddress("alIsSource");
+            _alIsSource_fnptr = (delegate* unmanaged<int, byte>)ALLoader.ALGetProcAddress("alIsSource");
             return _alIsSource_fnptr(source);
         }
         
@@ -1125,254 +1125,254 @@ namespace OpenTK.Audio.OpenAL
         }
         
         /// <summary><b>[entry point: <c>alSource3dSOFT</c>]</b></summary>
-        public static delegate* unmanaged<uint, int, double, double, double, void> _alSource3dSOFT_fnptr = &alSource3dSOFT_Lazy;
+        public static delegate* unmanaged<int, int, double, double, double, void> _alSource3dSOFT_fnptr = &alSource3dSOFT_Lazy;
         [UnmanagedCallersOnly]
-        private static void alSource3dSOFT_Lazy(uint source, int param, double value1, double value2, double value3)
+        private static void alSource3dSOFT_Lazy(int source, int param, double value1, double value2, double value3)
         {
-            _alSource3dSOFT_fnptr = (delegate* unmanaged<uint, int, double, double, double, void>)ALLoader.ALGetProcAddress("alSource3dSOFT");
+            _alSource3dSOFT_fnptr = (delegate* unmanaged<int, int, double, double, double, void>)ALLoader.ALGetProcAddress("alSource3dSOFT");
             _alSource3dSOFT_fnptr(source, param, value1, value2, value3);
         }
         
         /// <summary><b>[entry point: <c>alSource3f</c>]</b></summary>
-        public static delegate* unmanaged<uint, int, float, float, float, void> _alSource3f_fnptr = &alSource3f_Lazy;
+        public static delegate* unmanaged<int, int, float, float, float, void> _alSource3f_fnptr = &alSource3f_Lazy;
         [UnmanagedCallersOnly]
-        private static void alSource3f_Lazy(uint source, int param, float value1, float value2, float value3)
+        private static void alSource3f_Lazy(int source, int param, float value1, float value2, float value3)
         {
-            _alSource3f_fnptr = (delegate* unmanaged<uint, int, float, float, float, void>)ALLoader.ALGetProcAddress("alSource3f");
+            _alSource3f_fnptr = (delegate* unmanaged<int, int, float, float, float, void>)ALLoader.ALGetProcAddress("alSource3f");
             _alSource3f_fnptr(source, param, value1, value2, value3);
         }
         
         /// <summary><b>[entry point: <c>alSource3i</c>]</b></summary>
-        public static delegate* unmanaged<uint, int, int, int, int, void> _alSource3i_fnptr = &alSource3i_Lazy;
+        public static delegate* unmanaged<int, int, int, int, int, void> _alSource3i_fnptr = &alSource3i_Lazy;
         [UnmanagedCallersOnly]
-        private static void alSource3i_Lazy(uint source, int param, int value1, int value2, int value3)
+        private static void alSource3i_Lazy(int source, int param, int value1, int value2, int value3)
         {
-            _alSource3i_fnptr = (delegate* unmanaged<uint, int, int, int, int, void>)ALLoader.ALGetProcAddress("alSource3i");
+            _alSource3i_fnptr = (delegate* unmanaged<int, int, int, int, int, void>)ALLoader.ALGetProcAddress("alSource3i");
             _alSource3i_fnptr(source, param, value1, value2, value3);
         }
         
         /// <summary><b>[entry point: <c>alSource3i64SOFT</c>]</b></summary>
-        public static delegate* unmanaged<uint, int, long, long, long, void> _alSource3i64SOFT_fnptr = &alSource3i64SOFT_Lazy;
+        public static delegate* unmanaged<int, int, long, long, long, void> _alSource3i64SOFT_fnptr = &alSource3i64SOFT_Lazy;
         [UnmanagedCallersOnly]
-        private static void alSource3i64SOFT_Lazy(uint source, int param, long value1, long value2, long value3)
+        private static void alSource3i64SOFT_Lazy(int source, int param, long value1, long value2, long value3)
         {
-            _alSource3i64SOFT_fnptr = (delegate* unmanaged<uint, int, long, long, long, void>)ALLoader.ALGetProcAddress("alSource3i64SOFT");
+            _alSource3i64SOFT_fnptr = (delegate* unmanaged<int, int, long, long, long, void>)ALLoader.ALGetProcAddress("alSource3i64SOFT");
             _alSource3i64SOFT_fnptr(source, param, value1, value2, value3);
         }
         
         /// <summary><b>[entry point: <c>alSourceAddNotification</c>]</b></summary>
-        public static delegate* unmanaged<uint, uint, delegate* unmanaged[Cdecl]<uint, uint, void*, void>, void*, int> _alSourceAddNotification_fnptr = &alSourceAddNotification_Lazy;
+        public static delegate* unmanaged<int, uint, delegate* unmanaged[Cdecl]<uint, uint, void*, void>, void*, int> _alSourceAddNotification_fnptr = &alSourceAddNotification_Lazy;
         [UnmanagedCallersOnly]
-        private static int alSourceAddNotification_Lazy(uint sid, uint notificationID, delegate* unmanaged[Cdecl]<uint, uint, void*, void> notifyProc, void* userData)
+        private static int alSourceAddNotification_Lazy(int sid, uint notificationID, delegate* unmanaged[Cdecl]<uint, uint, void*, void> notifyProc, void* userData)
         {
-            _alSourceAddNotification_fnptr = (delegate* unmanaged<uint, uint, delegate* unmanaged[Cdecl]<uint, uint, void*, void>, void*, int>)ALLoader.ALGetProcAddress("alSourceAddNotification");
+            _alSourceAddNotification_fnptr = (delegate* unmanaged<int, uint, delegate* unmanaged[Cdecl]<uint, uint, void*, void>, void*, int>)ALLoader.ALGetProcAddress("alSourceAddNotification");
             return _alSourceAddNotification_fnptr(sid, notificationID, notifyProc, userData);
         }
         
         /// <summary><b>[entry point: <c>alSourcedSOFT</c>]</b></summary>
-        public static delegate* unmanaged<uint, int, double, void> _alSourcedSOFT_fnptr = &alSourcedSOFT_Lazy;
+        public static delegate* unmanaged<int, int, double, void> _alSourcedSOFT_fnptr = &alSourcedSOFT_Lazy;
         [UnmanagedCallersOnly]
-        private static void alSourcedSOFT_Lazy(uint source, int param, double value)
+        private static void alSourcedSOFT_Lazy(int source, int param, double value)
         {
-            _alSourcedSOFT_fnptr = (delegate* unmanaged<uint, int, double, void>)ALLoader.ALGetProcAddress("alSourcedSOFT");
+            _alSourcedSOFT_fnptr = (delegate* unmanaged<int, int, double, void>)ALLoader.ALGetProcAddress("alSourcedSOFT");
             _alSourcedSOFT_fnptr(source, param, value);
         }
         
         /// <summary><b>[entry point: <c>alSourcedvSOFT</c>]</b></summary>
-        public static delegate* unmanaged<uint, int, double*, void> _alSourcedvSOFT_fnptr = &alSourcedvSOFT_Lazy;
+        public static delegate* unmanaged<int, int, double*, void> _alSourcedvSOFT_fnptr = &alSourcedvSOFT_Lazy;
         [UnmanagedCallersOnly]
-        private static void alSourcedvSOFT_Lazy(uint source, int param, double* values)
+        private static void alSourcedvSOFT_Lazy(int source, int param, double* values)
         {
-            _alSourcedvSOFT_fnptr = (delegate* unmanaged<uint, int, double*, void>)ALLoader.ALGetProcAddress("alSourcedvSOFT");
+            _alSourcedvSOFT_fnptr = (delegate* unmanaged<int, int, double*, void>)ALLoader.ALGetProcAddress("alSourcedvSOFT");
             _alSourcedvSOFT_fnptr(source, param, values);
         }
         
         /// <summary><b>[entry point: <c>alSourcef</c>]</b></summary>
-        public static delegate* unmanaged<uint, int, float, void> _alSourcef_fnptr = &alSourcef_Lazy;
+        public static delegate* unmanaged<int, int, float, void> _alSourcef_fnptr = &alSourcef_Lazy;
         [UnmanagedCallersOnly]
-        private static void alSourcef_Lazy(uint source, int param, float value)
+        private static void alSourcef_Lazy(int source, int param, float value)
         {
-            _alSourcef_fnptr = (delegate* unmanaged<uint, int, float, void>)ALLoader.ALGetProcAddress("alSourcef");
+            _alSourcef_fnptr = (delegate* unmanaged<int, int, float, void>)ALLoader.ALGetProcAddress("alSourcef");
             _alSourcef_fnptr(source, param, value);
         }
         
         /// <summary><b>[entry point: <c>alSourcefv</c>]</b></summary>
-        public static delegate* unmanaged<uint, int, float*, void> _alSourcefv_fnptr = &alSourcefv_Lazy;
+        public static delegate* unmanaged<int, int, float*, void> _alSourcefv_fnptr = &alSourcefv_Lazy;
         [UnmanagedCallersOnly]
-        private static void alSourcefv_Lazy(uint source, int param, float* value)
+        private static void alSourcefv_Lazy(int source, int param, float* value)
         {
-            _alSourcefv_fnptr = (delegate* unmanaged<uint, int, float*, void>)ALLoader.ALGetProcAddress("alSourcefv");
+            _alSourcefv_fnptr = (delegate* unmanaged<int, int, float*, void>)ALLoader.ALGetProcAddress("alSourcefv");
             _alSourcefv_fnptr(source, param, value);
         }
         
         /// <summary><b>[entry point: <c>alSourceGetRenderingQuality</c>]</b></summary>
-        public static delegate* unmanaged<uint, int> _alSourceGetRenderingQuality_fnptr = &alSourceGetRenderingQuality_Lazy;
+        public static delegate* unmanaged<int, int> _alSourceGetRenderingQuality_fnptr = &alSourceGetRenderingQuality_Lazy;
         [UnmanagedCallersOnly]
-        private static int alSourceGetRenderingQuality_Lazy(uint sid)
+        private static int alSourceGetRenderingQuality_Lazy(int sid)
         {
-            _alSourceGetRenderingQuality_fnptr = (delegate* unmanaged<uint, int>)ALLoader.ALGetProcAddress("alSourceGetRenderingQuality");
+            _alSourceGetRenderingQuality_fnptr = (delegate* unmanaged<int, int>)ALLoader.ALGetProcAddress("alSourceGetRenderingQuality");
             return _alSourceGetRenderingQuality_fnptr(sid);
         }
         
         /// <summary><b>[entry point: <c>alSourcei</c>]</b></summary>
-        public static delegate* unmanaged<uint, int, int, void> _alSourcei_fnptr = &alSourcei_Lazy;
+        public static delegate* unmanaged<int, int, int, void> _alSourcei_fnptr = &alSourcei_Lazy;
         [UnmanagedCallersOnly]
-        private static void alSourcei_Lazy(uint source, int param, int value)
+        private static void alSourcei_Lazy(int source, int param, int value)
         {
-            _alSourcei_fnptr = (delegate* unmanaged<uint, int, int, void>)ALLoader.ALGetProcAddress("alSourcei");
+            _alSourcei_fnptr = (delegate* unmanaged<int, int, int, void>)ALLoader.ALGetProcAddress("alSourcei");
             _alSourcei_fnptr(source, param, value);
         }
         
         /// <summary><b>[entry point: <c>alSourcei64SOFT</c>]</b></summary>
-        public static delegate* unmanaged<uint, int, long, void> _alSourcei64SOFT_fnptr = &alSourcei64SOFT_Lazy;
+        public static delegate* unmanaged<int, int, long, void> _alSourcei64SOFT_fnptr = &alSourcei64SOFT_Lazy;
         [UnmanagedCallersOnly]
-        private static void alSourcei64SOFT_Lazy(uint source, int param, long value)
+        private static void alSourcei64SOFT_Lazy(int source, int param, long value)
         {
-            _alSourcei64SOFT_fnptr = (delegate* unmanaged<uint, int, long, void>)ALLoader.ALGetProcAddress("alSourcei64SOFT");
+            _alSourcei64SOFT_fnptr = (delegate* unmanaged<int, int, long, void>)ALLoader.ALGetProcAddress("alSourcei64SOFT");
             _alSourcei64SOFT_fnptr(source, param, value);
         }
         
         /// <summary><b>[entry point: <c>alSourcei64vSOFT</c>]</b></summary>
-        public static delegate* unmanaged<uint, int, long*, void> _alSourcei64vSOFT_fnptr = &alSourcei64vSOFT_Lazy;
+        public static delegate* unmanaged<int, int, long*, void> _alSourcei64vSOFT_fnptr = &alSourcei64vSOFT_Lazy;
         [UnmanagedCallersOnly]
-        private static void alSourcei64vSOFT_Lazy(uint source, int param, long* values)
+        private static void alSourcei64vSOFT_Lazy(int source, int param, long* values)
         {
-            _alSourcei64vSOFT_fnptr = (delegate* unmanaged<uint, int, long*, void>)ALLoader.ALGetProcAddress("alSourcei64vSOFT");
+            _alSourcei64vSOFT_fnptr = (delegate* unmanaged<int, int, long*, void>)ALLoader.ALGetProcAddress("alSourcei64vSOFT");
             _alSourcei64vSOFT_fnptr(source, param, values);
         }
         
         /// <summary><b>[entry point: <c>alSourceiv</c>]</b></summary>
-        public static delegate* unmanaged<uint, int, int*, void> _alSourceiv_fnptr = &alSourceiv_Lazy;
+        public static delegate* unmanaged<int, int, int*, void> _alSourceiv_fnptr = &alSourceiv_Lazy;
         [UnmanagedCallersOnly]
-        private static void alSourceiv_Lazy(uint source, int param, int* value)
+        private static void alSourceiv_Lazy(int source, int param, int* value)
         {
-            _alSourceiv_fnptr = (delegate* unmanaged<uint, int, int*, void>)ALLoader.ALGetProcAddress("alSourceiv");
+            _alSourceiv_fnptr = (delegate* unmanaged<int, int, int*, void>)ALLoader.ALGetProcAddress("alSourceiv");
             _alSourceiv_fnptr(source, param, value);
         }
         
         /// <summary><b>[entry point: <c>alSourcePause</c>]</b></summary>
-        public static delegate* unmanaged<uint, void> _alSourcePause_fnptr = &alSourcePause_Lazy;
+        public static delegate* unmanaged<int, void> _alSourcePause_fnptr = &alSourcePause_Lazy;
         [UnmanagedCallersOnly]
-        private static void alSourcePause_Lazy(uint source)
+        private static void alSourcePause_Lazy(int source)
         {
-            _alSourcePause_fnptr = (delegate* unmanaged<uint, void>)ALLoader.ALGetProcAddress("alSourcePause");
+            _alSourcePause_fnptr = (delegate* unmanaged<int, void>)ALLoader.ALGetProcAddress("alSourcePause");
             _alSourcePause_fnptr(source);
         }
         
         /// <summary><b>[entry point: <c>alSourcePausev</c>]</b></summary>
-        public static delegate* unmanaged<int, uint*, void> _alSourcePausev_fnptr = &alSourcePausev_Lazy;
+        public static delegate* unmanaged<int, int*, void> _alSourcePausev_fnptr = &alSourcePausev_Lazy;
         [UnmanagedCallersOnly]
-        private static void alSourcePausev_Lazy(int n, uint* sources)
+        private static void alSourcePausev_Lazy(int n, int* sources)
         {
-            _alSourcePausev_fnptr = (delegate* unmanaged<int, uint*, void>)ALLoader.ALGetProcAddress("alSourcePausev");
+            _alSourcePausev_fnptr = (delegate* unmanaged<int, int*, void>)ALLoader.ALGetProcAddress("alSourcePausev");
             _alSourcePausev_fnptr(n, sources);
         }
         
         /// <summary><b>[entry point: <c>alSourcePlay</c>]</b></summary>
-        public static delegate* unmanaged<uint, void> _alSourcePlay_fnptr = &alSourcePlay_Lazy;
+        public static delegate* unmanaged<int, void> _alSourcePlay_fnptr = &alSourcePlay_Lazy;
         [UnmanagedCallersOnly]
-        private static void alSourcePlay_Lazy(uint source)
+        private static void alSourcePlay_Lazy(int source)
         {
-            _alSourcePlay_fnptr = (delegate* unmanaged<uint, void>)ALLoader.ALGetProcAddress("alSourcePlay");
+            _alSourcePlay_fnptr = (delegate* unmanaged<int, void>)ALLoader.ALGetProcAddress("alSourcePlay");
             _alSourcePlay_fnptr(source);
         }
         
         /// <summary><b>[entry point: <c>alSourcePlayAtTimeSOFT</c>]</b></summary>
-        public static delegate* unmanaged<uint, long, void> _alSourcePlayAtTimeSOFT_fnptr = &alSourcePlayAtTimeSOFT_Lazy;
+        public static delegate* unmanaged<int, long, void> _alSourcePlayAtTimeSOFT_fnptr = &alSourcePlayAtTimeSOFT_Lazy;
         [UnmanagedCallersOnly]
-        private static void alSourcePlayAtTimeSOFT_Lazy(uint source, long start_time)
+        private static void alSourcePlayAtTimeSOFT_Lazy(int source, long start_time)
         {
-            _alSourcePlayAtTimeSOFT_fnptr = (delegate* unmanaged<uint, long, void>)ALLoader.ALGetProcAddress("alSourcePlayAtTimeSOFT");
+            _alSourcePlayAtTimeSOFT_fnptr = (delegate* unmanaged<int, long, void>)ALLoader.ALGetProcAddress("alSourcePlayAtTimeSOFT");
             _alSourcePlayAtTimeSOFT_fnptr(source, start_time);
         }
         
         /// <summary><b>[entry point: <c>alSourcePlayAtTimevSOFT</c>]</b></summary>
-        public static delegate* unmanaged<int, uint*, long, void> _alSourcePlayAtTimevSOFT_fnptr = &alSourcePlayAtTimevSOFT_Lazy;
+        public static delegate* unmanaged<int, int*, long, void> _alSourcePlayAtTimevSOFT_fnptr = &alSourcePlayAtTimevSOFT_Lazy;
         [UnmanagedCallersOnly]
-        private static void alSourcePlayAtTimevSOFT_Lazy(int n, uint* sources, long start_time)
+        private static void alSourcePlayAtTimevSOFT_Lazy(int n, int* sources, long start_time)
         {
-            _alSourcePlayAtTimevSOFT_fnptr = (delegate* unmanaged<int, uint*, long, void>)ALLoader.ALGetProcAddress("alSourcePlayAtTimevSOFT");
+            _alSourcePlayAtTimevSOFT_fnptr = (delegate* unmanaged<int, int*, long, void>)ALLoader.ALGetProcAddress("alSourcePlayAtTimevSOFT");
             _alSourcePlayAtTimevSOFT_fnptr(n, sources, start_time);
         }
         
         /// <summary><b>[entry point: <c>alSourcePlayv</c>]</b></summary>
-        public static delegate* unmanaged<int, uint*, void> _alSourcePlayv_fnptr = &alSourcePlayv_Lazy;
+        public static delegate* unmanaged<int, int*, void> _alSourcePlayv_fnptr = &alSourcePlayv_Lazy;
         [UnmanagedCallersOnly]
-        private static void alSourcePlayv_Lazy(int n, uint* sources)
+        private static void alSourcePlayv_Lazy(int n, int* sources)
         {
-            _alSourcePlayv_fnptr = (delegate* unmanaged<int, uint*, void>)ALLoader.ALGetProcAddress("alSourcePlayv");
+            _alSourcePlayv_fnptr = (delegate* unmanaged<int, int*, void>)ALLoader.ALGetProcAddress("alSourcePlayv");
             _alSourcePlayv_fnptr(n, sources);
         }
         
         /// <summary><b>[entry point: <c>alSourceQueueBuffers</c>]</b></summary>
-        public static delegate* unmanaged<uint, int, uint*, void> _alSourceQueueBuffers_fnptr = &alSourceQueueBuffers_Lazy;
+        public static delegate* unmanaged<int, int, uint*, void> _alSourceQueueBuffers_fnptr = &alSourceQueueBuffers_Lazy;
         [UnmanagedCallersOnly]
-        private static void alSourceQueueBuffers_Lazy(uint source, int nb, uint* buffers)
+        private static void alSourceQueueBuffers_Lazy(int source, int nb, uint* buffers)
         {
-            _alSourceQueueBuffers_fnptr = (delegate* unmanaged<uint, int, uint*, void>)ALLoader.ALGetProcAddress("alSourceQueueBuffers");
+            _alSourceQueueBuffers_fnptr = (delegate* unmanaged<int, int, uint*, void>)ALLoader.ALGetProcAddress("alSourceQueueBuffers");
             _alSourceQueueBuffers_fnptr(source, nb, buffers);
         }
         
         /// <summary><b>[entry point: <c>alSourceRemoveNotification</c>]</b></summary>
-        public static delegate* unmanaged<uint, uint, delegate* unmanaged[Cdecl]<uint, uint, void*, void>, void*, void> _alSourceRemoveNotification_fnptr = &alSourceRemoveNotification_Lazy;
+        public static delegate* unmanaged<int, uint, delegate* unmanaged[Cdecl]<uint, uint, void*, void>, void*, void> _alSourceRemoveNotification_fnptr = &alSourceRemoveNotification_Lazy;
         [UnmanagedCallersOnly]
-        private static void alSourceRemoveNotification_Lazy(uint sid, uint notificationID, delegate* unmanaged[Cdecl]<uint, uint, void*, void> notifyProc, void* userData)
+        private static void alSourceRemoveNotification_Lazy(int sid, uint notificationID, delegate* unmanaged[Cdecl]<uint, uint, void*, void> notifyProc, void* userData)
         {
-            _alSourceRemoveNotification_fnptr = (delegate* unmanaged<uint, uint, delegate* unmanaged[Cdecl]<uint, uint, void*, void>, void*, void>)ALLoader.ALGetProcAddress("alSourceRemoveNotification");
+            _alSourceRemoveNotification_fnptr = (delegate* unmanaged<int, uint, delegate* unmanaged[Cdecl]<uint, uint, void*, void>, void*, void>)ALLoader.ALGetProcAddress("alSourceRemoveNotification");
             _alSourceRemoveNotification_fnptr(sid, notificationID, notifyProc, userData);
         }
         
         /// <summary><b>[entry point: <c>alSourceRenderingQuality</c>]</b></summary>
-        public static delegate* unmanaged<uint, int, void> _alSourceRenderingQuality_fnptr = &alSourceRenderingQuality_Lazy;
+        public static delegate* unmanaged<int, int, void> _alSourceRenderingQuality_fnptr = &alSourceRenderingQuality_Lazy;
         [UnmanagedCallersOnly]
-        private static void alSourceRenderingQuality_Lazy(uint sid, int value)
+        private static void alSourceRenderingQuality_Lazy(int sid, int value)
         {
-            _alSourceRenderingQuality_fnptr = (delegate* unmanaged<uint, int, void>)ALLoader.ALGetProcAddress("alSourceRenderingQuality");
+            _alSourceRenderingQuality_fnptr = (delegate* unmanaged<int, int, void>)ALLoader.ALGetProcAddress("alSourceRenderingQuality");
             _alSourceRenderingQuality_fnptr(sid, value);
         }
         
         /// <summary><b>[entry point: <c>alSourceRewind</c>]</b></summary>
-        public static delegate* unmanaged<uint, void> _alSourceRewind_fnptr = &alSourceRewind_Lazy;
+        public static delegate* unmanaged<int, void> _alSourceRewind_fnptr = &alSourceRewind_Lazy;
         [UnmanagedCallersOnly]
-        private static void alSourceRewind_Lazy(uint source)
+        private static void alSourceRewind_Lazy(int source)
         {
-            _alSourceRewind_fnptr = (delegate* unmanaged<uint, void>)ALLoader.ALGetProcAddress("alSourceRewind");
+            _alSourceRewind_fnptr = (delegate* unmanaged<int, void>)ALLoader.ALGetProcAddress("alSourceRewind");
             _alSourceRewind_fnptr(source);
         }
         
         /// <summary><b>[entry point: <c>alSourceRewindv</c>]</b></summary>
-        public static delegate* unmanaged<int, uint*, void> _alSourceRewindv_fnptr = &alSourceRewindv_Lazy;
+        public static delegate* unmanaged<int, int*, void> _alSourceRewindv_fnptr = &alSourceRewindv_Lazy;
         [UnmanagedCallersOnly]
-        private static void alSourceRewindv_Lazy(int n, uint* sources)
+        private static void alSourceRewindv_Lazy(int n, int* sources)
         {
-            _alSourceRewindv_fnptr = (delegate* unmanaged<int, uint*, void>)ALLoader.ALGetProcAddress("alSourceRewindv");
+            _alSourceRewindv_fnptr = (delegate* unmanaged<int, int*, void>)ALLoader.ALGetProcAddress("alSourceRewindv");
             _alSourceRewindv_fnptr(n, sources);
         }
         
         /// <summary><b>[entry point: <c>alSourceStop</c>]</b></summary>
-        public static delegate* unmanaged<uint, void> _alSourceStop_fnptr = &alSourceStop_Lazy;
+        public static delegate* unmanaged<int, void> _alSourceStop_fnptr = &alSourceStop_Lazy;
         [UnmanagedCallersOnly]
-        private static void alSourceStop_Lazy(uint source)
+        private static void alSourceStop_Lazy(int source)
         {
-            _alSourceStop_fnptr = (delegate* unmanaged<uint, void>)ALLoader.ALGetProcAddress("alSourceStop");
+            _alSourceStop_fnptr = (delegate* unmanaged<int, void>)ALLoader.ALGetProcAddress("alSourceStop");
             _alSourceStop_fnptr(source);
         }
         
         /// <summary><b>[entry point: <c>alSourceStopv</c>]</b></summary>
-        public static delegate* unmanaged<int, uint*, void> _alSourceStopv_fnptr = &alSourceStopv_Lazy;
+        public static delegate* unmanaged<int, int*, void> _alSourceStopv_fnptr = &alSourceStopv_Lazy;
         [UnmanagedCallersOnly]
-        private static void alSourceStopv_Lazy(int n, uint* sources)
+        private static void alSourceStopv_Lazy(int n, int* sources)
         {
-            _alSourceStopv_fnptr = (delegate* unmanaged<int, uint*, void>)ALLoader.ALGetProcAddress("alSourceStopv");
+            _alSourceStopv_fnptr = (delegate* unmanaged<int, int*, void>)ALLoader.ALGetProcAddress("alSourceStopv");
             _alSourceStopv_fnptr(n, sources);
         }
         
         /// <summary><b>[entry point: <c>alSourceUnqueueBuffers</c>]</b></summary>
-        public static delegate* unmanaged<uint, int, uint*, void> _alSourceUnqueueBuffers_fnptr = &alSourceUnqueueBuffers_Lazy;
+        public static delegate* unmanaged<int, int, int*, void> _alSourceUnqueueBuffers_fnptr = &alSourceUnqueueBuffers_Lazy;
         [UnmanagedCallersOnly]
-        private static void alSourceUnqueueBuffers_Lazy(uint source, int nb, uint* buffer)
+        private static void alSourceUnqueueBuffers_Lazy(int source, int nb, int* buffer)
         {
-            _alSourceUnqueueBuffers_fnptr = (delegate* unmanaged<uint, int, uint*, void>)ALLoader.ALGetProcAddress("alSourceUnqueueBuffers");
+            _alSourceUnqueueBuffers_fnptr = (delegate* unmanaged<int, int, int*, void>)ALLoader.ALGetProcAddress("alSourceUnqueueBuffers");
             _alSourceUnqueueBuffers_fnptr(source, nb, buffer);
         }
         
@@ -1395,11 +1395,11 @@ namespace OpenTK.Audio.OpenAL
         }
         
         /// <summary><b>[entry point: <c>BufferDataWithCallback_LOKI</c>]</b></summary>
-        public static delegate* unmanaged<uint, delegate* unmanaged[Cdecl]<uint, uint, void*, All, uint, int>, void> _BufferDataWithCallback_LOKI_fnptr = &BufferDataWithCallback_LOKI_Lazy;
+        public static delegate* unmanaged<int, delegate* unmanaged[Cdecl]<uint, uint, void*, All, uint, int>, void> _BufferDataWithCallback_LOKI_fnptr = &BufferDataWithCallback_LOKI_Lazy;
         [UnmanagedCallersOnly]
-        private static void BufferDataWithCallback_LOKI_Lazy(uint bid, delegate* unmanaged[Cdecl]<uint, uint, void*, All, uint, int> callback)
+        private static void BufferDataWithCallback_LOKI_Lazy(int bid, delegate* unmanaged[Cdecl]<uint, uint, void*, All, uint, int> callback)
         {
-            _BufferDataWithCallback_LOKI_fnptr = (delegate* unmanaged<uint, delegate* unmanaged[Cdecl]<uint, uint, void*, All, uint, int>, void>)ALLoader.ALGetProcAddress("BufferDataWithCallback_LOKI");
+            _BufferDataWithCallback_LOKI_fnptr = (delegate* unmanaged<int, delegate* unmanaged[Cdecl]<uint, uint, void*, All, uint, int>, void>)ALLoader.ALGetProcAddress("BufferDataWithCallback_LOKI");
             _BufferDataWithCallback_LOKI_fnptr(bid, callback);
         }
         
