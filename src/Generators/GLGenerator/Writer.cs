@@ -294,7 +294,7 @@ namespace GLGenerator
 
             if (documentation != null)
             {
-                WriteDocumentation(writer, documentation, function.EntryPoint);
+                WriteDocumentation(writer, function, documentation);
             }
 
             if (handleAbiDifferenceForTypesafeHandles)
@@ -457,18 +457,25 @@ namespace GLGenerator
         }
 
 
-        private static void WriteDocumentation(IndentedTextWriter writer, FunctionDocumentation documentation, string entryPoint)
+        private static void WriteDocumentation(IndentedTextWriter writer, NativeFunction function, FunctionDocumentation documentation)
         {
             writer.Write("/// <summary> ");
             writer.Write($"<b>[requires: {string.Join(" | ", documentation.AddedIn)}]</b> ");
             if (documentation.RemovedIn?.Count > 0)
                 writer.Write($"<b>[removed in: {string.Join(" | ", documentation.RemovedIn)}]</b> ");
-            writer.Write($"<b>[entry point: <c>{entryPoint}</c>]</b><br/>");
+            writer.Write($"<b>[entry point: <c>{function.EntryPoint}</c>]</b><br/>");
             writer.WriteLine($" {documentation.Purpose} </summary>");
 
-            foreach (ParameterDocumentation parameter in documentation.Parameters)
+            for (int i = 0; i < documentation.Parameters.Length; i++)
             {
-                writer.WriteLine($"/// <param name=\"{parameter.Name}\">{parameter.Description}</param>");
+                ParameterDocumentation parameterDoc = documentation.Parameters[i];
+                Parameter parameter = function.Parameters[i];
+
+                // We use the parameter name here, if the documentation uses another name
+                // we've already warned about this, and using the name the C# documentation
+                // system expects reduces a lot of the warnings that are generated.
+                // - Noggin_bops 2025-08-08
+                writer.WriteLine($"/// <param name=\"{parameter.Name}\">{parameterDoc.Description}</param>");
             }
 
             if (documentation.RefPagesLink != null)

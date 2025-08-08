@@ -130,7 +130,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glBindFragDataLocation</c>]</b><br/> Bind a user-defined varying out variable to a fragment shader color number. </summary>
         /// <param name="program"> The name of the program containing varying out variable whose binding to modify </param>
-        /// <param name="colorNumber"> The color number to bind the user-defined varying out variable to </param>
+        /// <param name="color"> The color number to bind the user-defined varying out variable to </param>
         /// <param name="name"> The name of the user-defined varying out variable whose binding to modify </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glBindFragDataLocation.xhtml" /></remarks>
         public static void BindFragDataLocation(int program, uint color, byte* name) => GLPointers._glBindFragDataLocation_fnptr(program, color, name);
@@ -289,16 +289,16 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         
         /// <summary> <b>[requires: v4.0]</b> <b>[entry point: <c>glBlendFunci</c>]</b><br/> Specify pixel arithmetic. </summary>
         /// <param name="buf"> For glBlendFunci, specifies the index of the draw buffer for which to set the blend function. </param>
-        /// <param name="sfactor"> Specifies how the red, green, blue, and alpha source blending factors are computed. The initial value is GL_ONE. </param>
-        /// <param name="dfactor"> Specifies how the red, green, blue, and alpha destination blending factors are computed. The following symbolic constants are accepted: GL_ZERO, GL_ONE, GL_SRC_COLOR, GL_ONE_MINUS_SRC_COLOR, GL_DST_COLOR, GL_ONE_MINUS_DST_COLOR, GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_DST_ALPHA, GL_ONE_MINUS_DST_ALPHA. GL_CONSTANT_COLOR, GL_ONE_MINUS_CONSTANT_COLOR, GL_CONSTANT_ALPHA, and GL_ONE_MINUS_CONSTANT_ALPHA. The initial value is GL_ZERO. </param>
+        /// <param name="src"> Specifies how the red, green, blue, and alpha source blending factors are computed. The initial value is GL_ONE. </param>
+        /// <param name="dst"> Specifies how the red, green, blue, and alpha destination blending factors are computed. The following symbolic constants are accepted: GL_ZERO, GL_ONE, GL_SRC_COLOR, GL_ONE_MINUS_SRC_COLOR, GL_DST_COLOR, GL_ONE_MINUS_DST_COLOR, GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_DST_ALPHA, GL_ONE_MINUS_DST_ALPHA. GL_CONSTANT_COLOR, GL_ONE_MINUS_CONSTANT_COLOR, GL_CONSTANT_ALPHA, and GL_ONE_MINUS_CONSTANT_ALPHA. The initial value is GL_ZERO. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glBlendFunc.xhtml" /></remarks>
         public static void BlendFunci(uint buf, BlendingFactor src, BlendingFactor dst) => GLPointers._glBlendFunci_fnptr(buf, (uint)src, (uint)dst);
         
         /// <summary> <b>[requires: v1.4]</b> <b>[entry point: <c>glBlendFuncSeparate</c>]</b><br/> Specify pixel arithmetic for RGB and alpha components separately. </summary>
-        /// <param name="srcRGB"> Specifies how the red, green, and blue blending factors are computed. The initial value is GL_ONE. </param>
-        /// <param name="dstRGB"> Specifies how the red, green, and blue destination blending factors are computed. The initial value is GL_ZERO. </param>
-        /// <param name="srcAlpha"> Specified how the alpha source blending factor is computed. The initial value is GL_ONE. </param>
-        /// <param name="dstAlpha"> Specified how the alpha destination blending factor is computed. The initial value is GL_ZERO. </param>
+        /// <param name="sfactorRGB"> Specifies how the red, green, and blue blending factors are computed. The initial value is GL_ONE. </param>
+        /// <param name="dfactorRGB"> Specifies how the red, green, and blue destination blending factors are computed. The initial value is GL_ZERO. </param>
+        /// <param name="sfactorAlpha"> Specified how the alpha source blending factor is computed. The initial value is GL_ONE. </param>
+        /// <param name="dfactorAlpha"> Specified how the alpha destination blending factor is computed. The initial value is GL_ZERO. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glBlendFuncSeparate.xhtml" /></remarks>
         public static void BlendFuncSeparate(BlendingFactor sfactorRGB, BlendingFactor dfactorRGB, BlendingFactor sfactorAlpha, BlendingFactor dfactorAlpha) => GLPointers._glBlendFuncSeparate_fnptr((uint)sfactorRGB, (uint)dfactorRGB, (uint)sfactorAlpha, (uint)dfactorAlpha);
         
@@ -470,7 +470,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         public static void ClearDepth(double depth) => GLPointers._glClearDepth_fnptr(depth);
         
         /// <summary> <b>[requires: v4.1 | GL_ARB_ES2_compatibility]</b> <b>[entry point: <c>glClearDepthf</c>]</b><br/> Specify the clear value for the depth buffer. </summary>
-        /// <param name="depth"> Specifies the depth value used when the depth buffer is cleared. The initial value is 1. </param>
+        /// <param name="d"> Specifies the depth value used when the depth buffer is cleared. The initial value is 1. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glClearDepth.xhtml" /></remarks>
         public static void ClearDepthf(float d) => GLPointers._glClearDepthf_fnptr(d);
         
@@ -762,11 +762,11 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         public static void ColorMask(bool red, bool green, bool blue, bool alpha) => GLPointers._glColorMask_fnptr((byte)(red ? 1 : 0), (byte)(green ? 1 : 0), (byte)(blue ? 1 : 0), (byte)(alpha ? 1 : 0));
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glColorMaski</c>]</b><br/> Enable and disable writing of frame buffer color components. </summary>
-        /// <param name="buf"> For glColorMaski, specifies the index of the draw buffer whose color mask to set. </param>
-        /// <param name="red"> Specify whether red, green, blue, and alpha are to be written into the frame buffer. The initial values are all GL_TRUE, indicating that the color components are written. </param>
-        /// <param name="green"> Specify whether red, green, blue, and alpha are to be written into the frame buffer. The initial values are all GL_TRUE, indicating that the color components are written. </param>
-        /// <param name="blue"> Specify whether red, green, blue, and alpha are to be written into the frame buffer. The initial values are all GL_TRUE, indicating that the color components are written. </param>
-        /// <param name="alpha"> Specify whether red, green, blue, and alpha are to be written into the frame buffer. The initial values are all GL_TRUE, indicating that the color components are written. </param>
+        /// <param name="index"> For glColorMaski, specifies the index of the draw buffer whose color mask to set. </param>
+        /// <param name="r"> Specify whether red, green, blue, and alpha are to be written into the frame buffer. The initial values are all GL_TRUE, indicating that the color components are written. </param>
+        /// <param name="g"> Specify whether red, green, blue, and alpha are to be written into the frame buffer. The initial values are all GL_TRUE, indicating that the color components are written. </param>
+        /// <param name="b"> Specify whether red, green, blue, and alpha are to be written into the frame buffer. The initial values are all GL_TRUE, indicating that the color components are written. </param>
+        /// <param name="a"> Specify whether red, green, blue, and alpha are to be written into the frame buffer. The initial values are all GL_TRUE, indicating that the color components are written. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glColorMask.xhtml" /></remarks>
         public static void ColorMaski(uint index, bool r, bool g, bool b, bool a) => GLPointers._glColorMaski_fnptr(index, (byte)(r ? 1 : 0), (byte)(g ? 1 : 0), (byte)(b ? 1 : 0), (byte)(a ? 1 : 0));
         
@@ -1096,7 +1096,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         public static void CreateSamplers(int n, int* samplers) => GLPointers._glCreateSamplers_fnptr(n, samplers);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glCreateShader</c>]</b><br/> Creates a shader object. </summary>
-        /// <param name="shaderType">Specifies the type of shader to be created. Must be one of GL_COMPUTE_SHADER, GL_VERTEX_SHADER, GL_TESS_CONTROL_SHADER, GL_TESS_EVALUATION_SHADER, GL_GEOMETRY_SHADER, or GL_FRAGMENT_SHADER.</param>
+        /// <param name="type">Specifies the type of shader to be created. Must be one of GL_COMPUTE_SHADER, GL_VERTEX_SHADER, GL_TESS_CONTROL_SHADER, GL_TESS_EVALUATION_SHADER, GL_GEOMETRY_SHADER, or GL_FRAGMENT_SHADER.</param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glCreateShader.xhtml" /></remarks>
         public static int CreateShader(ShaderType type) => GLPointers._glCreateShader_fnptr((uint)type);
         
@@ -1153,7 +1153,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         /// <param name="id"> The user-supplied identifier of the message to insert. </param>
         /// <param name="severity"> The severity of the debug messages to insert. </param>
         /// <param name="length"> The length string contained in the character array whose address is given by message. </param>
-        /// <param name="message"> The address of a character array containing the message to insert. </param>
+        /// <param name="buf"> The address of a character array containing the message to insert. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glDebugMessageInsert.xhtml" /></remarks>
         public static void DebugMessageInsert(DebugSource source, DebugType type, uint id, DebugSeverity severity, int length, byte* buf) => GLPointers._glDebugMessageInsert_fnptr((uint)source, (uint)type, id, (uint)severity, length, buf);
         
@@ -1199,7 +1199,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         public static void DeleteRenderbuffers(int n, int* renderbuffers) => GLPointers._glDeleteRenderbuffers_fnptr(n, renderbuffers);
         
         /// <summary> <b>[requires: v3.3 | GL_ARB_sampler_objects]</b> <b>[entry point: <c>glDeleteSamplers</c>]</b><br/> Delete named sampler objects. </summary>
-        /// <param name="n"> Specifies the number of sampler objects to be deleted. </param>
+        /// <param name="count"> Specifies the number of sampler objects to be deleted. </param>
         /// <param name="samplers"> Specifies an array of sampler objects to be deleted. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glDeleteSamplers.xhtml" /></remarks>
         public static void DeleteSamplers(int count, int* samplers) => GLPointers._glDeleteSamplers_fnptr(count, samplers);
@@ -1243,8 +1243,8 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         public static void DepthMask(bool flag) => GLPointers._glDepthMask_fnptr((byte)(flag ? 1 : 0));
         
         /// <summary> <b>[requires: v1.0]</b> <b>[entry point: <c>glDepthRange</c>]</b><br/> Specify mapping of depth values from normalized device coordinates to window coordinates. </summary>
-        /// <param name="nearVal"> Specifies the mapping of the near clipping plane to window coordinates. The initial value is 0. </param>
-        /// <param name="farVal"> Specifies the mapping of the far clipping plane to window coordinates. The initial value is 1. </param>
+        /// <param name="n"> Specifies the mapping of the near clipping plane to window coordinates. The initial value is 0. </param>
+        /// <param name="f"> Specifies the mapping of the far clipping plane to window coordinates. The initial value is 1. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glDepthRange.xhtml" /></remarks>
         public static void DepthRange(double n, double f) => GLPointers._glDepthRange_fnptr(n, f);
         
@@ -1256,15 +1256,15 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         public static void DepthRangeArrayv(uint first, int count, double* v) => GLPointers._glDepthRangeArrayv_fnptr(first, count, v);
         
         /// <summary> <b>[requires: v4.1 | GL_ARB_ES2_compatibility]</b> <b>[entry point: <c>glDepthRangef</c>]</b><br/> Specify mapping of depth values from normalized device coordinates to window coordinates. </summary>
-        /// <param name="nearVal"> Specifies the mapping of the near clipping plane to window coordinates. The initial value is 0. </param>
-        /// <param name="farVal"> Specifies the mapping of the far clipping plane to window coordinates. The initial value is 1. </param>
+        /// <param name="n"> Specifies the mapping of the near clipping plane to window coordinates. The initial value is 0. </param>
+        /// <param name="f"> Specifies the mapping of the far clipping plane to window coordinates. The initial value is 1. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glDepthRange.xhtml" /></remarks>
         public static void DepthRangef(float n, float f) => GLPointers._glDepthRangef_fnptr(n, f);
         
         /// <summary> <b>[requires: v4.1 | GL_ARB_viewport_array]</b> <b>[entry point: <c>glDepthRangeIndexed</c>]</b><br/> Specify mapping of depth values from normalized device coordinates to window coordinates for a specified viewport. </summary>
         /// <param name="index"> Specifies the index of the viewport whose depth range to update. </param>
-        /// <param name="nearVal"> Specifies the mapping of the near clipping plane to window coordinates. The initial value is 0. </param>
-        /// <param name="farVal"> Specifies the mapping of the far clipping plane to window coordinates. The initial value is 1. </param>
+        /// <param name="n"> Specifies the mapping of the near clipping plane to window coordinates. The initial value is 0. </param>
+        /// <param name="f"> Specifies the mapping of the far clipping plane to window coordinates. The initial value is 1. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glDepthRangeIndexed.xhtml" /></remarks>
         public static void DepthRangeIndexed(uint index, double n, double f) => GLPointers._glDepthRangeIndexed_fnptr(index, n, f);
         
@@ -1283,7 +1283,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         public static void DisableClientState(EnableCap array) => GLPointers._glDisableClientState_fnptr((uint)array);
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glDisablei</c>]</b><br/> Enable or disable server-side GL capabilities. </summary>
-        /// <param name="cap"> Specifies a symbolic constant indicating a GL capability. </param>
+        /// <param name="target"> Specifies a symbolic constant indicating a GL capability. </param>
         /// <param name="index"> Specifies the index of the switch to disable (for glEnablei and glDisablei only). </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glEnable.xhtml" /></remarks>
         public static void Disablei(EnableCap target, uint index) => GLPointers._glDisablei_fnptr((uint)target, index);
@@ -1421,7 +1421,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         /// <param name="height"> Specify the dimensions of the pixel rectangle to be written into the frame buffer. </param>
         /// <param name="format"> Specifies the format of the pixel data. Symbolic constants GL_COLOR_INDEX, GL_STENCIL_INDEX, GL_DEPTH_COMPONENT, GL_RGB, GL_BGR, GL_RGBA, GL_BGRA, GL_RED, GL_GREEN, GL_BLUE, GL_ALPHA, GL_LUMINANCE, and GL_LUMINANCE_ALPHA are accepted. </param>
         /// <param name="type"> Specifies the data type for data. Symbolic constants GL_UNSIGNED_BYTE, GL_BYTE, GL_BITMAP, GL_UNSIGNED_SHORT, GL_SHORT, GL_UNSIGNED_INT, GL_INT, GL_FLOAT, GL_UNSIGNED_BYTE_3_3_2, GL_UNSIGNED_BYTE_2_3_3_REV, GL_UNSIGNED_SHORT_5_6_5, GL_UNSIGNED_SHORT_5_6_5_REV, GL_UNSIGNED_SHORT_4_4_4_4, GL_UNSIGNED_SHORT_4_4_4_4_REV, GL_UNSIGNED_SHORT_5_5_5_1, GL_UNSIGNED_SHORT_1_5_5_5_REV, GL_UNSIGNED_INT_8_8_8_8, GL_UNSIGNED_INT_8_8_8_8_REV, GL_UNSIGNED_INT_10_10_10_2, and GL_UNSIGNED_INT_2_10_10_10_REV are accepted. </param>
-        /// <param name="data"> Specifies a pointer to the pixel data. </param>
+        /// <param name="pixels"> Specifies a pointer to the pixel data. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glDrawPixels.xml" /></remarks>
         public static void DrawPixels(int width, int height, PixelFormat format, PixelType type, void* pixels) => GLPointers._glDrawPixels_fnptr(width, height, (uint)format, (uint)type, pixels);
         
@@ -1494,12 +1494,12 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         public static void Enable(EnableCap cap) => GLPointers._glEnable_fnptr((uint)cap);
         
         /// <summary> <b>[requires: v1.1]</b> <b>[removed in: v3.2]</b> <b>[entry point: <c>glEnableClientState</c>]</b><br/> Enable or disable client-side capability. </summary>
-        /// <param name="cap"> Specifies the capability to enable. Symbolic constants GL_COLOR_ARRAY, GL_EDGE_FLAG_ARRAY, GL_FOG_COORD_ARRAY, GL_INDEX_ARRAY, GL_NORMAL_ARRAY, GL_SECONDARY_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY, and GL_VERTEX_ARRAY are accepted. </param>
+        /// <param name="array"> Specifies the capability to enable. Symbolic constants GL_COLOR_ARRAY, GL_EDGE_FLAG_ARRAY, GL_FOG_COORD_ARRAY, GL_INDEX_ARRAY, GL_NORMAL_ARRAY, GL_SECONDARY_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY, and GL_VERTEX_ARRAY are accepted. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glEnableClientState.xml" /></remarks>
         public static void EnableClientState(EnableCap array) => GLPointers._glEnableClientState_fnptr((uint)array);
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glEnablei</c>]</b><br/> Enable or disable server-side GL capabilities. </summary>
-        /// <param name="cap"> Specifies a symbolic constant indicating a GL capability. </param>
+        /// <param name="target"> Specifies a symbolic constant indicating a GL capability. </param>
         /// <param name="index"> Specifies the index of the switch to disable (for glEnablei and glDisablei only). </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glEnable.xhtml" /></remarks>
         public static void Enablei(EnableCap target, uint index) => GLPointers._glEnablei_fnptr((uint)target, index);
@@ -1718,7 +1718,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         /// <param name="textarget"> For glFramebufferTexture1D, glFramebufferTexture2D and glFramebufferTexture3D, specifies what type of texture is expected in the texture parameter, or for cube map textures, which face is to be attached. </param>
         /// <param name="texture"> Specifies the name of an existing texture object to attach. </param>
         /// <param name="level"> Specifies the mipmap level of the texture object to attach. </param>
-        /// <param name="layer">!!missing documentation!!</param>
+        /// <param name="zoffset">!!missing documentation!!</param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glFramebufferTexture.xhtml" /></remarks>
         public static void FramebufferTexture3D(FramebufferTarget target, FramebufferAttachment attachment, TextureTarget textarget, int texture, int level, int zoffset) => GLPointers._glFramebufferTexture3D_fnptr((uint)target, (uint)attachment, (uint)textarget, texture, level, zoffset);
         
@@ -1741,8 +1741,8 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         /// <param name="right"> Specify the coordinates for the left and right vertical clipping planes. </param>
         /// <param name="bottom"> Specify the coordinates for the bottom and top horizontal clipping planes. </param>
         /// <param name="top"> Specify the coordinates for the bottom and top horizontal clipping planes. </param>
-        /// <param name="nearVal"> Specify the distances to the near and far depth clipping planes. Both distances must be positive. </param>
-        /// <param name="farVal"> Specify the distances to the near and far depth clipping planes. Both distances must be positive. </param>
+        /// <param name="zNear"> Specify the distances to the near and far depth clipping planes. Both distances must be positive. </param>
+        /// <param name="zFar"> Specify the distances to the near and far depth clipping planes. Both distances must be positive. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glFrustum.xml" /></remarks>
         public static void Frustum(double left, double right, double bottom, double top, double zNear, double zFar) => GLPointers._glFrustum_fnptr(left, right, bottom, top, zNear, zFar);
         
@@ -1764,7 +1764,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         
         /// <summary> <b>[requires: v3.0 | GL_ARB_framebuffer_object]</b> <b>[entry point: <c>glGenFramebuffers</c>]</b><br/> Generate framebuffer object names. </summary>
         /// <param name="n"> Specifies the number of framebuffer object names to generate. </param>
-        /// <param name="ids"> Specifies an array in which the generated framebuffer object names are stored. </param>
+        /// <param name="framebuffers"> Specifies an array in which the generated framebuffer object names are stored. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glGenFramebuffers.xhtml" /></remarks>
         public static void GenFramebuffers(int n, int* framebuffers) => GLPointers._glGenFramebuffers_fnptr(n, framebuffers);
         
@@ -1792,7 +1792,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         public static void GenRenderbuffers(int n, int* renderbuffers) => GLPointers._glGenRenderbuffers_fnptr(n, renderbuffers);
         
         /// <summary> <b>[requires: v3.3 | GL_ARB_sampler_objects]</b> <b>[entry point: <c>glGenSamplers</c>]</b><br/> Generate sampler object names. </summary>
-        /// <param name="n"> Specifies the number of sampler object names to generate. </param>
+        /// <param name="count"> Specifies the number of sampler object names to generate. </param>
         /// <param name="samplers"> Specifies an array in which the generated sampler object names are stored. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glGenSamplers.xhtml" /></remarks>
         public static void GenSamplers(int count, int* samplers) => GLPointers._glGenSamplers_fnptr(count, samplers);
@@ -1938,15 +1938,15 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         
         /// <summary> <b>[requires: v3.2]</b> <b>[entry point: <c>glGetBufferParameteri64v</c>]</b><br/> Return parameters of a buffer object. </summary>
         /// <param name="target"> Specifies the target to which the buffer object is bound for glGetBufferParameteriv and glGetBufferParameteri64v. Must be one of the buffer binding targets in the following table: </param>
-        /// <param name="value"> Specifies the name of the buffer object parameter to query. </param>
-        /// <param name="data"> Returns the requested parameter. </param>
+        /// <param name="pname"> Specifies the name of the buffer object parameter to query. </param>
+        /// <param name="parameters"> Returns the requested parameter. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glGetBufferParameter.xhtml" /></remarks>
         public static void GetBufferParameteri64v(BufferTarget target, BufferPName pname, long* parameters) => GLPointers._glGetBufferParameteri64v_fnptr((uint)target, (uint)pname, parameters);
         
         /// <summary> <b>[requires: v1.5]</b> <b>[entry point: <c>glGetBufferParameteriv</c>]</b><br/> Return parameters of a buffer object. </summary>
         /// <param name="target"> Specifies the target to which the buffer object is bound for glGetBufferParameteriv and glGetBufferParameteri64v. Must be one of the buffer binding targets in the following table: </param>
-        /// <param name="value"> Specifies the name of the buffer object parameter to query. </param>
-        /// <param name="data"> Returns the requested parameter. </param>
+        /// <param name="pname"> Specifies the name of the buffer object parameter to query. </param>
+        /// <param name="parameters"> Returns the requested parameter. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glGetBufferParameter.xhtml" /></remarks>
         public static void GetBufferParameteriv(BufferTarget target, BufferPName pname, int* parameters) => GLPointers._glGetBufferParameteriv_fnptr((uint)target, (uint)pname, parameters);
         
@@ -1974,7 +1974,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         /// <summary> <b>[requires: v1.3]</b> <b>[entry point: <c>glGetCompressedTexImage</c>]</b><br/> Return a compressed texture image. </summary>
         /// <param name="target">Specifies the target to which the texture is bound for glGetCompressedTexImage and glGetnCompressedTexImage functions. GL_TEXTURE_1D, GL_TEXTURE_1D_ARRAY, GL_TEXTURE_2D, GL_TEXTURE_2D_ARRAY, GL_TEXTURE_3D, GL_TEXTURE_CUBE_MAP_ARRAY, GL_TEXTURE_CUBE_MAP_POSITIVE_X, GL_TEXTURE_CUBE_MAP_NEGATIVE_X, GL_TEXTURE_CUBE_MAP_POSITIVE_Y, GL_TEXTURE_CUBE_MAP_NEGATIVE_Y, GL_TEXTURE_CUBE_MAP_POSITIVE_Z, and GL_TEXTURE_CUBE_MAP_NEGATIVE_Z, GL_TEXTURE_RECTANGLE are accepted.</param>
         /// <param name="level">Specifies the level-of-detail number of the desired image. Level 0 is the base image level. Level $n$ is the $n$-th mipmap reduction image.</param>
-        /// <param name="pixels">Returns the compressed texture image.</param>
+        /// <param name="img">Returns the compressed texture image.</param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glGetCompressedTexImage.xhtml" /></remarks>
         public static void GetCompressedTexImage(TextureTarget target, int level, void* img) => GLPointers._glGetCompressedTexImage_fnptr((uint)target, level, img);
         
@@ -2103,7 +2103,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         /// <param name="target"> Indicates the usage of the internal format. target must be GL_TEXTURE_1D, GL_TEXTURE_1D_ARRAY, GL_TEXTURE_2D, GL_TEXTURE_2D_ARRAY, GL_TEXTURE_3D, GL_TEXTURE_CUBE_MAP, GL_TEXTURE_CUBE_MAP_ARRAY, GL_TEXTURE_RECTANGLE, GL_TEXTURE_BUFFER, GL_RENDERBUFFER, GL_TEXTURE_2D_MULTISAMPLE or GL_TEXTURE_2D_MULTISAMPLE_ARRAY. </param>
         /// <param name="internalformat"> Specifies the internal format about which to retrieve information. </param>
         /// <param name="pname"> Specifies the type of information to query. </param>
-        /// <param name="bufSize"> Specifies the maximum number of integers of the specified width that may be written to params by the function. </param>
+        /// <param name="count"> Specifies the maximum number of integers of the specified width that may be written to params by the function. </param>
         /// <param name="parameters"> Specifies the address of a variable into which to write the retrieved information. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glGetInternalformat.xhtml" /></remarks>
         public static void GetInternalformati64v(TextureTarget target, InternalFormat internalformat, InternalFormatPName pname, int count, long* parameters) => GLPointers._glGetInternalformati64v_fnptr((uint)target, (uint)internalformat, (uint)pname, count, parameters);
@@ -2112,7 +2112,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         /// <param name="target"> Indicates the usage of the internal format. target must be GL_TEXTURE_1D, GL_TEXTURE_1D_ARRAY, GL_TEXTURE_2D, GL_TEXTURE_2D_ARRAY, GL_TEXTURE_3D, GL_TEXTURE_CUBE_MAP, GL_TEXTURE_CUBE_MAP_ARRAY, GL_TEXTURE_RECTANGLE, GL_TEXTURE_BUFFER, GL_RENDERBUFFER, GL_TEXTURE_2D_MULTISAMPLE or GL_TEXTURE_2D_MULTISAMPLE_ARRAY. </param>
         /// <param name="internalformat"> Specifies the internal format about which to retrieve information. </param>
         /// <param name="pname"> Specifies the type of information to query. </param>
-        /// <param name="bufSize"> Specifies the maximum number of integers of the specified width that may be written to params by the function. </param>
+        /// <param name="count"> Specifies the maximum number of integers of the specified width that may be written to params by the function. </param>
         /// <param name="parameters"> Specifies the address of a variable into which to write the retrieved information. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glGetInternalformat.xhtml" /></remarks>
         public static void GetInternalformativ(TextureTarget target, InternalFormat internalformat, InternalFormatPName pname, int count, int* parameters) => GLPointers._glGetInternalformativ_fnptr((uint)target, (uint)internalformat, (uint)pname, count, parameters);
@@ -2229,7 +2229,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         
         /// <summary> <b>[requires: v4.5]</b> <b>[entry point: <c>glGetnCompressedTexImage</c>]</b><br/> Return a compressed texture image. </summary>
         /// <param name="target">Specifies the target to which the texture is bound for glGetCompressedTexImage and glGetnCompressedTexImage functions. GL_TEXTURE_1D, GL_TEXTURE_1D_ARRAY, GL_TEXTURE_2D, GL_TEXTURE_2D_ARRAY, GL_TEXTURE_3D, GL_TEXTURE_CUBE_MAP_ARRAY, GL_TEXTURE_CUBE_MAP_POSITIVE_X, GL_TEXTURE_CUBE_MAP_NEGATIVE_X, GL_TEXTURE_CUBE_MAP_POSITIVE_Y, GL_TEXTURE_CUBE_MAP_NEGATIVE_Y, GL_TEXTURE_CUBE_MAP_POSITIVE_Z, and GL_TEXTURE_CUBE_MAP_NEGATIVE_Z, GL_TEXTURE_RECTANGLE are accepted.</param>
-        /// <param name="level">Specifies the level-of-detail number of the desired image. Level 0 is the base image level. Level $n$ is the $n$-th mipmap reduction image.</param>
+        /// <param name="lod">Specifies the level-of-detail number of the desired image. Level 0 is the base image level. Level $n$ is the $n$-th mipmap reduction image.</param>
         /// <param name="bufSize">Specifies the size of the buffer pixels for glGetCompressedTextureImage and glGetnCompressedTexImage functions.</param>
         /// <param name="pixels">Returns the compressed texture image.</param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glGetCompressedTexImage.xhtml" /></remarks>
@@ -2329,19 +2329,19 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         
         /// <summary> <b>[requires: v1.0]</b> <b>[removed in: v3.2]</b> <b>[entry point: <c>glGetPixelMapfv</c>]</b><br/> Return the specified pixel map. </summary>
         /// <param name="map"> Specifies the name of the pixel map to return. Accepted values are GL_PIXEL_MAP_I_TO_I, GL_PIXEL_MAP_S_TO_S, GL_PIXEL_MAP_I_TO_R, GL_PIXEL_MAP_I_TO_G, GL_PIXEL_MAP_I_TO_B, GL_PIXEL_MAP_I_TO_A, GL_PIXEL_MAP_R_TO_R, GL_PIXEL_MAP_G_TO_G, GL_PIXEL_MAP_B_TO_B, and GL_PIXEL_MAP_A_TO_A. </param>
-        /// <param name="data"> Returns the pixel map contents. </param>
+        /// <param name="values"> Returns the pixel map contents. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glGetPixelMap.xml" /></remarks>
         public static void GetPixelMapfv(PixelMap map, float* values) => GLPointers._glGetPixelMapfv_fnptr((uint)map, values);
         
         /// <summary> <b>[requires: v1.0]</b> <b>[removed in: v3.2]</b> <b>[entry point: <c>glGetPixelMapuiv</c>]</b><br/> Return the specified pixel map. </summary>
         /// <param name="map"> Specifies the name of the pixel map to return. Accepted values are GL_PIXEL_MAP_I_TO_I, GL_PIXEL_MAP_S_TO_S, GL_PIXEL_MAP_I_TO_R, GL_PIXEL_MAP_I_TO_G, GL_PIXEL_MAP_I_TO_B, GL_PIXEL_MAP_I_TO_A, GL_PIXEL_MAP_R_TO_R, GL_PIXEL_MAP_G_TO_G, GL_PIXEL_MAP_B_TO_B, and GL_PIXEL_MAP_A_TO_A. </param>
-        /// <param name="data"> Returns the pixel map contents. </param>
+        /// <param name="values"> Returns the pixel map contents. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glGetPixelMap.xml" /></remarks>
         public static void GetPixelMapuiv(PixelMap map, uint* values) => GLPointers._glGetPixelMapuiv_fnptr((uint)map, values);
         
         /// <summary> <b>[requires: v1.0]</b> <b>[removed in: v3.2]</b> <b>[entry point: <c>glGetPixelMapusv</c>]</b><br/> Return the specified pixel map. </summary>
         /// <param name="map"> Specifies the name of the pixel map to return. Accepted values are GL_PIXEL_MAP_I_TO_I, GL_PIXEL_MAP_S_TO_S, GL_PIXEL_MAP_I_TO_R, GL_PIXEL_MAP_I_TO_G, GL_PIXEL_MAP_I_TO_B, GL_PIXEL_MAP_I_TO_A, GL_PIXEL_MAP_R_TO_R, GL_PIXEL_MAP_G_TO_G, GL_PIXEL_MAP_B_TO_B, and GL_PIXEL_MAP_A_TO_A. </param>
-        /// <param name="data"> Returns the pixel map contents. </param>
+        /// <param name="values"> Returns the pixel map contents. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glGetPixelMap.xml" /></remarks>
         public static void GetPixelMapusv(PixelMap map, ushort* values) => GLPointers._glGetPixelMapusv_fnptr((uint)map, values);
         
@@ -2352,7 +2352,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         public static void GetPointerv(GetPointervPName pname, void** parameters) => GLPointers._glGetPointerv_fnptr((uint)pname, parameters);
         
         /// <summary> <b>[requires: v1.0]</b> <b>[removed in: v3.2]</b> <b>[entry point: <c>glGetPolygonStipple</c>]</b><br/> Return the polygon stipple pattern. </summary>
-        /// <param name="pattern"> Returns the stipple pattern. The initial value is all 1&apos;s. </param>
+        /// <param name="mask"> Returns the stipple pattern. The initial value is all 1&apos;s. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glGetPolygonStipple.xml" /></remarks>
         public static void GetPolygonStipple(byte* mask) => GLPointers._glGetPolygonStipple_fnptr(mask);
         
@@ -2367,7 +2367,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glGetProgramInfoLog</c>]</b><br/> Returns the information log for a program object. </summary>
         /// <param name="program">Specifies the program object whose information log is to be queried.</param>
-        /// <param name="maxLength">Specifies the size of the character buffer for storing the returned information log.</param>
+        /// <param name="bufSize">Specifies the size of the character buffer for storing the returned information log.</param>
         /// <param name="length">Returns the length of the string returned in infoLog (excluding the null terminator).</param>
         /// <param name="infoLog">Specifies an array of characters that is used to return the information log.</param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glGetProgramInfoLog.xhtml" /></remarks>
@@ -2416,7 +2416,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         /// <param name="index">!!missing documentation!!</param>
         /// <param name="propCount">!!missing documentation!!</param>
         /// <param name="props">!!missing documentation!!</param>
-        /// <param name="bufSize">!!missing documentation!!</param>
+        /// <param name="count">!!missing documentation!!</param>
         /// <param name="length">!!missing documentation!!</param>
         /// <param name="parameters">!!missing documentation!!</param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glGetProgramResource.xhtml" /></remarks>
@@ -2566,7 +2566,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glGetShaderInfoLog</c>]</b><br/> Returns the information log for a shader object. </summary>
         /// <param name="shader">Specifies the shader object whose information log is to be queried.</param>
-        /// <param name="maxLength">Specifies the size of the character buffer for storing the returned information log.</param>
+        /// <param name="bufSize">Specifies the size of the character buffer for storing the returned information log.</param>
         /// <param name="length">Returns the length of the string returned in infoLog (excluding the null terminator).</param>
         /// <param name="infoLog">Specifies an array of characters that is used to return the information log.</param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glGetShaderInfoLog.xhtml" /></remarks>
@@ -2580,8 +2580,8 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         public static void GetShaderiv(int shader, ShaderParameterName pname, int* parameters) => GLPointers._glGetShaderiv_fnptr(shader, (uint)pname, parameters);
         
         /// <summary> <b>[requires: v4.1 | GL_ARB_ES2_compatibility]</b> <b>[entry point: <c>glGetShaderPrecisionFormat</c>]</b><br/> Retrieve the range and precision for numeric formats supported by the shader compiler. </summary>
-        /// <param name="shaderType"> Specifies the type of shader whose precision to query. shaderType must be GL_VERTEX_SHADER or GL_FRAGMENT_SHADER. </param>
-        /// <param name="precisionType"> Specifies the numeric format whose precision and range to query. </param>
+        /// <param name="shadertype"> Specifies the type of shader whose precision to query. shaderType must be GL_VERTEX_SHADER or GL_FRAGMENT_SHADER. </param>
+        /// <param name="precisiontype"> Specifies the numeric format whose precision and range to query. </param>
         /// <param name="range"> Specifies the address of array of two integers into which encodings of the implementation&apos;s numeric range are returned. </param>
         /// <param name="precision"> Specifies the address of an integer into which the numeric precision of the implementation is written. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glGetShaderPrecisionFormat.xhtml" /></remarks>
@@ -2623,7 +2623,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         /// <summary> <b>[requires: v3.2 | GL_ARB_sync]</b> <b>[entry point: <c>glGetSynciv</c>]</b><br/> Query the properties of a sync object. </summary>
         /// <param name="sync"> Specifies the sync object whose properties to query. </param>
         /// <param name="pname"> Specifies the parameter whose value to retrieve from the sync object specified in sync. </param>
-        /// <param name="bufSize"> Specifies the size of the buffer whose address is given in values. </param>
+        /// <param name="count"> Specifies the size of the buffer whose address is given in values. </param>
         /// <param name="length"> Specifies the address of an variable to receive the number of integers placed in values. </param>
         /// <param name="values"> Specifies the address of an array to receive the values of the queried parameter. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glGetSync.xhtml" /></remarks>
@@ -2865,7 +2865,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         /// <summary> <b>[requires: v4.0 | GL_ARB_shader_subroutine]</b> <b>[entry point: <c>glGetUniformSubroutineuiv</c>]</b><br/> Retrieve the value of a subroutine uniform of a given shader stage of the current program. </summary>
         /// <param name="shadertype"> Specifies the shader stage from which to query for subroutine uniform index. shadertype must be one of GL_VERTEX_SHADER, GL_TESS_CONTROL_SHADER, GL_TESS_EVALUATION_SHADER, GL_GEOMETRY_SHADER or GL_FRAGMENT_SHADER. </param>
         /// <param name="location"> Specifies the location of the subroutine uniform. </param>
-        /// <param name="values"> Specifies the address of a variable to receive the value or values of the subroutine uniform. </param>
+        /// <param name="parameters"> Specifies the address of a variable to receive the value or values of the subroutine uniform. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glGetUniformSubroutine.xhtml" /></remarks>
         public static void GetUniformSubroutineuiv(ShaderType shadertype, int location, uint* parameters) => GLPointers._glGetUniformSubroutineuiv_fnptr((uint)shadertype, location, parameters);
         
@@ -3094,7 +3094,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         public static bool IsEnabled(EnableCap cap) => GLPointers._glIsEnabled_fnptr((uint)cap) != 0;
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glIsEnabledi</c>]</b><br/> Test whether a capability is enabled. </summary>
-        /// <param name="cap"> Specifies a symbolic constant indicating a GL capability. </param>
+        /// <param name="target"> Specifies a symbolic constant indicating a GL capability. </param>
         /// <param name="index"> Specifies the index of the capability. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glIsEnabled.xhtml" /></remarks>
         public static bool IsEnabledi(EnableCap target, uint index) => GLPointers._glIsEnabledi_fnptr((uint)target, index) != 0;
@@ -3130,7 +3130,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         public static bool IsRenderbuffer(int renderbuffer) => GLPointers._glIsRenderbuffer_fnptr(renderbuffer) != 0;
         
         /// <summary> <b>[requires: v3.3 | GL_ARB_sampler_objects]</b> <b>[entry point: <c>glIsSampler</c>]</b><br/> Determine if a name corresponds to a sampler object. </summary>
-        /// <param name="id"> Specifies a value that may be the name of a sampler object. </param>
+        /// <param name="sampler"> Specifies a value that may be the name of a sampler object. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glIsSampler.xhtml" /></remarks>
         public static bool IsSampler(int sampler) => GLPointers._glIsSampler_fnptr(sampler) != 0;
         
@@ -3710,7 +3710,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         
         /// <summary> <b>[requires: v4.5 | GL_ARB_direct_state_access]</b> <b>[entry point: <c>glNamedFramebufferReadBuffer</c>]</b><br/> Select a color buffer source for pixels. </summary>
         /// <param name="framebuffer">Specifies the name of the framebuffer object for glNamedFramebufferReadBuffer function.</param>
-        /// <param name="mode">Specifies a color buffer. Accepted values are GL_FRONT_LEFT, GL_FRONT_RIGHT, GL_BACK_LEFT, GL_BACK_RIGHT, GL_FRONT, GL_BACK, GL_LEFT, GL_RIGHT, and the constants GL_COLOR_ATTACHMENTi.</param>
+        /// <param name="src">Specifies a color buffer. Accepted values are GL_FRONT_LEFT, GL_FRONT_RIGHT, GL_BACK_LEFT, GL_BACK_RIGHT, GL_FRONT, GL_BACK, GL_LEFT, GL_RIGHT, and the constants GL_COLOR_ATTACHMENTi.</param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glReadBuffer.xhtml" /></remarks>
         public static void NamedFramebufferReadBuffer(int framebuffer, ColorBuffer src) => GLPointers._glNamedFramebufferReadBuffer_fnptr(framebuffer, (uint)src);
         
@@ -3845,8 +3845,8 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         /// <param name="right"> Specify the coordinates for the left and right vertical clipping planes. </param>
         /// <param name="bottom"> Specify the coordinates for the bottom and top horizontal clipping planes. </param>
         /// <param name="top"> Specify the coordinates for the bottom and top horizontal clipping planes. </param>
-        /// <param name="nearVal"> Specify the distances to the nearer and farther depth clipping planes. These values are negative if the plane is to be behind the viewer. </param>
-        /// <param name="farVal"> Specify the distances to the nearer and farther depth clipping planes. These values are negative if the plane is to be behind the viewer. </param>
+        /// <param name="zNear"> Specify the distances to the nearer and farther depth clipping planes. These values are negative if the plane is to be behind the viewer. </param>
+        /// <param name="zFar"> Specify the distances to the nearer and farther depth clipping planes. These values are negative if the plane is to be behind the viewer. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glOrtho.xml" /></remarks>
         public static void Ortho(double left, double right, double bottom, double top, double zNear, double zFar) => GLPointers._glOrtho_fnptr(left, right, bottom, top, zNear, zFar);
         
@@ -3967,7 +3967,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         public static void PolygonOffsetClamp(float factor, float units, float clamp) => GLPointers._glPolygonOffsetClamp_fnptr(factor, units, clamp);
         
         /// <summary> <b>[requires: v1.0]</b> <b>[removed in: v3.2]</b> <b>[entry point: <c>glPolygonStipple</c>]</b><br/> Set the polygon stippling pattern. </summary>
-        /// <param name="pattern"> Specifies a pointer to a 32 32 stipple pattern that will be unpacked from memory in the same way that glDrawPixels unpacks pixels. </param>
+        /// <param name="mask"> Specifies a pointer to a 32 32 stipple pattern that will be unpacked from memory in the same way that glDrawPixels unpacks pixels. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glPolygonStipple.xml" /></remarks>
         public static void PolygonStipple(byte* mask) => GLPointers._glPolygonStipple_fnptr(mask);
         
@@ -4345,7 +4345,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         public static void ProgramUniformMatrix4x3fv(int program, int location, int count, bool transpose, float* value) => GLPointers._glProgramUniformMatrix4x3fv_fnptr(program, location, count, (byte)(transpose ? 1 : 0), value);
         
         /// <summary> <b>[requires: v3.2 | GL_ARB_provoking_vertex]</b> <b>[entry point: <c>glProvokingVertex</c>]</b><br/> Specifiy the vertex to be used as the source of data for flat shaded varyings. </summary>
-        /// <param name="provokeMode"> Specifies the vertex to be used as the source of data for flat shaded varyings. </param>
+        /// <param name="mode"> Specifies the vertex to be used as the source of data for flat shaded varyings. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glProvokingVertex.xhtml" /></remarks>
         public static void ProvokingVertex(VertexProvokingMode mode) => GLPointers._glProvokingVertex_fnptr((uint)mode);
         
@@ -4503,7 +4503,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         public static void RasterPos4sv(short* v) => GLPointers._glRasterPos4sv_fnptr(v);
         
         /// <summary> <b>[requires: v1.0]</b> <b>[entry point: <c>glReadBuffer</c>]</b><br/> Select a color buffer source for pixels. </summary>
-        /// <param name="mode">Specifies a color buffer. Accepted values are GL_FRONT_LEFT, GL_FRONT_RIGHT, GL_BACK_LEFT, GL_BACK_RIGHT, GL_FRONT, GL_BACK, GL_LEFT, GL_RIGHT, and the constants GL_COLOR_ATTACHMENTi.</param>
+        /// <param name="src">Specifies a color buffer. Accepted values are GL_FRONT_LEFT, GL_FRONT_RIGHT, GL_BACK_LEFT, GL_BACK_RIGHT, GL_FRONT, GL_BACK, GL_LEFT, GL_RIGHT, and the constants GL_COLOR_ATTACHMENTi.</param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glReadBuffer.xhtml" /></remarks>
         public static void ReadBuffer(ReadBufferMode src) => GLPointers._glReadBuffer_fnptr((uint)src);
         
@@ -4526,7 +4526,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         /// <param name="height">Specify the dimensions of the pixel rectangle. width and height of one correspond to a single pixel.</param>
         /// <param name="format">Specifies the format of the pixel data. The following symbolic values are accepted: GL_STENCIL_INDEX, GL_DEPTH_COMPONENT, GL_DEPTH_STENCIL, GL_RED, GL_GREEN, GL_BLUE, GL_RGB, GL_BGR, GL_RGBA, and GL_BGRA.</param>
         /// <param name="type">Specifies the data type of the pixel data. Must be one of GL_UNSIGNED_BYTE, GL_BYTE, GL_UNSIGNED_SHORT, GL_SHORT, GL_UNSIGNED_INT, GL_INT, GL_HALF_FLOAT, GL_FLOAT, GL_UNSIGNED_BYTE_3_3_2, GL_UNSIGNED_BYTE_2_3_3_REV, GL_UNSIGNED_SHORT_5_6_5, GL_UNSIGNED_SHORT_5_6_5_REV, GL_UNSIGNED_SHORT_4_4_4_4, GL_UNSIGNED_SHORT_4_4_4_4_REV, GL_UNSIGNED_SHORT_5_5_5_1, GL_UNSIGNED_SHORT_1_5_5_5_REV, GL_UNSIGNED_INT_8_8_8_8, GL_UNSIGNED_INT_8_8_8_8_REV, GL_UNSIGNED_INT_10_10_10_2, GL_UNSIGNED_INT_2_10_10_10_REV, GL_UNSIGNED_INT_24_8, GL_UNSIGNED_INT_10F_11F_11F_REV, GL_UNSIGNED_INT_5_9_9_9_REV, or GL_FLOAT_32_UNSIGNED_INT_24_8_REV.</param>
-        /// <param name="data">Returns the pixel data.</param>
+        /// <param name="pixels">Returns the pixel data.</param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glReadPixels.xhtml" /></remarks>
         public static void ReadPixels(int x, int y, int width, int height, PixelFormat format, PixelType type, void* pixels) => GLPointers._glReadPixels_fnptr(x, y, width, height, (uint)format, (uint)type, pixels);
         
@@ -4642,7 +4642,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         /// <summary> <b>[requires: v3.3 | GL_ARB_sampler_objects]</b> <b>[entry point: <c>glSamplerParameterfv</c>]</b><br/> Set sampler parameters. </summary>
         /// <param name="sampler"> Specifies the sampler object whose parameter to modify. </param>
         /// <param name="pname"> Specifies the symbolic name of a sampler parameter. pname can be one of the following: GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, GL_TEXTURE_WRAP_R, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_BORDER_COLOR, GL_TEXTURE_MIN_LOD, GL_TEXTURE_MAX_LOD, GL_TEXTURE_LOD_BIAS GL_TEXTURE_COMPARE_MODE, or GL_TEXTURE_COMPARE_FUNC. </param>
-        /// <param name="parameters"> For the vector commands (glSamplerParameter*v), specifies a pointer to an array where the value or values of pname are stored. </param>
+        /// <param name="param"> For the vector commands (glSamplerParameter*v), specifies a pointer to an array where the value or values of pname are stored. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glSamplerParameter.xhtml" /></remarks>
         public static void SamplerParameterfv(int sampler, SamplerParameterF pname, float* param) => GLPointers._glSamplerParameterfv_fnptr(sampler, (uint)pname, param);
         
@@ -4656,21 +4656,21 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         /// <summary> <b>[requires: v3.3 | GL_ARB_sampler_objects]</b> <b>[entry point: <c>glSamplerParameterIiv</c>]</b><br/> Set sampler parameters. </summary>
         /// <param name="sampler"> Specifies the sampler object whose parameter to modify. </param>
         /// <param name="pname"> Specifies the symbolic name of a sampler parameter. pname can be one of the following: GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, GL_TEXTURE_WRAP_R, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_BORDER_COLOR, GL_TEXTURE_MIN_LOD, GL_TEXTURE_MAX_LOD, GL_TEXTURE_LOD_BIAS GL_TEXTURE_COMPARE_MODE, or GL_TEXTURE_COMPARE_FUNC. </param>
-        /// <param name="parameters"> For the vector commands (glSamplerParameter*v), specifies a pointer to an array where the value or values of pname are stored. </param>
+        /// <param name="param"> For the vector commands (glSamplerParameter*v), specifies a pointer to an array where the value or values of pname are stored. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glSamplerParameter.xhtml" /></remarks>
         public static void SamplerParameterIiv(int sampler, SamplerParameterI pname, int* param) => GLPointers._glSamplerParameterIiv_fnptr(sampler, (uint)pname, param);
         
         /// <summary> <b>[requires: v3.3 | GL_ARB_sampler_objects]</b> <b>[entry point: <c>glSamplerParameterIuiv</c>]</b><br/> Set sampler parameters. </summary>
         /// <param name="sampler"> Specifies the sampler object whose parameter to modify. </param>
         /// <param name="pname"> Specifies the symbolic name of a sampler parameter. pname can be one of the following: GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, GL_TEXTURE_WRAP_R, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_BORDER_COLOR, GL_TEXTURE_MIN_LOD, GL_TEXTURE_MAX_LOD, GL_TEXTURE_LOD_BIAS GL_TEXTURE_COMPARE_MODE, or GL_TEXTURE_COMPARE_FUNC. </param>
-        /// <param name="parameters"> For the vector commands (glSamplerParameter*v), specifies a pointer to an array where the value or values of pname are stored. </param>
+        /// <param name="param"> For the vector commands (glSamplerParameter*v), specifies a pointer to an array where the value or values of pname are stored. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glSamplerParameter.xhtml" /></remarks>
         public static void SamplerParameterIuiv(int sampler, SamplerParameterI pname, uint* param) => GLPointers._glSamplerParameterIuiv_fnptr(sampler, (uint)pname, param);
         
         /// <summary> <b>[requires: v3.3 | GL_ARB_sampler_objects]</b> <b>[entry point: <c>glSamplerParameteriv</c>]</b><br/> Set sampler parameters. </summary>
         /// <param name="sampler"> Specifies the sampler object whose parameter to modify. </param>
         /// <param name="pname"> Specifies the symbolic name of a sampler parameter. pname can be one of the following: GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, GL_TEXTURE_WRAP_R, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_BORDER_COLOR, GL_TEXTURE_MIN_LOD, GL_TEXTURE_MAX_LOD, GL_TEXTURE_LOD_BIAS GL_TEXTURE_COMPARE_MODE, or GL_TEXTURE_COMPARE_FUNC. </param>
-        /// <param name="parameters"> For the vector commands (glSamplerParameter*v), specifies a pointer to an array where the value or values of pname are stored. </param>
+        /// <param name="param"> For the vector commands (glSamplerParameter*v), specifies a pointer to an array where the value or values of pname are stored. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glSamplerParameter.xhtml" /></remarks>
         public static void SamplerParameteriv(int sampler, SamplerParameterI pname, int* param) => GLPointers._glSamplerParameteriv_fnptr(sampler, (uint)pname, param);
         
@@ -4877,9 +4877,9 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         public static void StencilMaskSeparate(TriangleFace face, uint mask) => GLPointers._glStencilMaskSeparate_fnptr((uint)face, mask);
         
         /// <summary> <b>[requires: v1.0]</b> <b>[entry point: <c>glStencilOp</c>]</b><br/> Set front and back stencil test actions. </summary>
-        /// <param name="sfail"> Specifies the action to take when the stencil test fails. Eight symbolic constants are accepted: GL_KEEP, GL_ZERO, GL_REPLACE, GL_INCR, GL_INCR_WRAP, GL_DECR, GL_DECR_WRAP, and GL_INVERT. The initial value is GL_KEEP. </param>
-        /// <param name="dpfail"> Specifies the stencil action when the stencil test passes, but the depth test fails. dpfail accepts the same symbolic constants as sfail. The initial value is GL_KEEP. </param>
-        /// <param name="dppass"> Specifies the stencil action when both the stencil test and the depth test pass, or when the stencil test passes and either there is no depth buffer or depth testing is not enabled. dppass accepts the same symbolic constants as sfail. The initial value is GL_KEEP. </param>
+        /// <param name="fail"> Specifies the action to take when the stencil test fails. Eight symbolic constants are accepted: GL_KEEP, GL_ZERO, GL_REPLACE, GL_INCR, GL_INCR_WRAP, GL_DECR, GL_DECR_WRAP, and GL_INVERT. The initial value is GL_KEEP. </param>
+        /// <param name="zfail"> Specifies the stencil action when the stencil test passes, but the depth test fails. dpfail accepts the same symbolic constants as sfail. The initial value is GL_KEEP. </param>
+        /// <param name="zpass"> Specifies the stencil action when both the stencil test and the depth test pass, or when the stencil test passes and either there is no depth buffer or depth testing is not enabled. dppass accepts the same symbolic constants as sfail. The initial value is GL_KEEP. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glStencilOp.xhtml" /></remarks>
         public static void StencilOp(StencilOp fail, StencilOp zfail, StencilOp zpass) => GLPointers._glStencilOp_fnptr((uint)fail, (uint)zfail, (uint)zpass);
         
@@ -5149,7 +5149,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         /// <param name="border"> This value must be 0. </param>
         /// <param name="format"> Specifies the format of the pixel data. The following symbolic values are accepted: GL_RED, GL_RG, GL_RGB, GL_BGR, GL_RGBA, GL_BGRA, GL_RED_INTEGER, GL_RG_INTEGER, GL_RGB_INTEGER, GL_BGR_INTEGER, GL_RGBA_INTEGER, GL_BGRA_INTEGER, GL_STENCIL_INDEX, GL_DEPTH_COMPONENT, GL_DEPTH_STENCIL. </param>
         /// <param name="type"> Specifies the data type of the pixel data. The following symbolic values are accepted: GL_UNSIGNED_BYTE, GL_BYTE, GL_UNSIGNED_SHORT, GL_SHORT, GL_UNSIGNED_INT, GL_INT, GL_HALF_FLOAT, GL_FLOAT, GL_UNSIGNED_BYTE_3_3_2, GL_UNSIGNED_BYTE_2_3_3_REV, GL_UNSIGNED_SHORT_5_6_5, GL_UNSIGNED_SHORT_5_6_5_REV, GL_UNSIGNED_SHORT_4_4_4_4, GL_UNSIGNED_SHORT_4_4_4_4_REV, GL_UNSIGNED_SHORT_5_5_5_1, GL_UNSIGNED_SHORT_1_5_5_5_REV, GL_UNSIGNED_INT_8_8_8_8, GL_UNSIGNED_INT_8_8_8_8_REV, GL_UNSIGNED_INT_10_10_10_2, and GL_UNSIGNED_INT_2_10_10_10_REV. </param>
-        /// <param name="data"> Specifies a pointer to the image data in memory. </param>
+        /// <param name="pixels"> Specifies a pointer to the image data in memory. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glTexImage1D.xhtml" /></remarks>
         public static void TexImage1D(TextureTarget target, int level, InternalFormat internalformat, int width, int border, PixelFormat format, PixelType type, void* pixels) => GLPointers._glTexImage1D_fnptr((uint)target, level, (int)internalformat, width, border, (uint)format, (uint)type, pixels);
         
@@ -5162,7 +5162,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         /// <param name="border"> This value must be 0. </param>
         /// <param name="format"> Specifies the format of the pixel data. The following symbolic values are accepted: GL_RED, GL_RG, GL_RGB, GL_BGR, GL_RGBA, GL_BGRA, GL_RED_INTEGER, GL_RG_INTEGER, GL_RGB_INTEGER, GL_BGR_INTEGER, GL_RGBA_INTEGER, GL_BGRA_INTEGER, GL_STENCIL_INDEX, GL_DEPTH_COMPONENT, GL_DEPTH_STENCIL. </param>
         /// <param name="type"> Specifies the data type of the pixel data. The following symbolic values are accepted: GL_UNSIGNED_BYTE, GL_BYTE, GL_UNSIGNED_SHORT, GL_SHORT, GL_UNSIGNED_INT, GL_INT, GL_HALF_FLOAT, GL_FLOAT, GL_UNSIGNED_BYTE_3_3_2, GL_UNSIGNED_BYTE_2_3_3_REV, GL_UNSIGNED_SHORT_5_6_5, GL_UNSIGNED_SHORT_5_6_5_REV, GL_UNSIGNED_SHORT_4_4_4_4, GL_UNSIGNED_SHORT_4_4_4_4_REV, GL_UNSIGNED_SHORT_5_5_5_1, GL_UNSIGNED_SHORT_1_5_5_5_REV, GL_UNSIGNED_INT_8_8_8_8, GL_UNSIGNED_INT_8_8_8_8_REV, GL_UNSIGNED_INT_10_10_10_2, and GL_UNSIGNED_INT_2_10_10_10_REV. </param>
-        /// <param name="data"> Specifies a pointer to the image data in memory. </param>
+        /// <param name="pixels"> Specifies a pointer to the image data in memory. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glTexImage2D.xhtml" /></remarks>
         public static void TexImage2D(TextureTarget target, int level, InternalFormat internalformat, int width, int height, int border, PixelFormat format, PixelType type, void* pixels) => GLPointers._glTexImage2D_fnptr((uint)target, level, (int)internalformat, width, height, border, (uint)format, (uint)type, pixels);
         
@@ -5186,7 +5186,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         /// <param name="border"> This value must be 0. </param>
         /// <param name="format"> Specifies the format of the pixel data. The following symbolic values are accepted: GL_RED, GL_RG, GL_RGB, GL_BGR, GL_RGBA, GL_BGRA, GL_RED_INTEGER, GL_RG_INTEGER, GL_RGB_INTEGER, GL_BGR_INTEGER, GL_RGBA_INTEGER, GL_BGRA_INTEGER, GL_STENCIL_INDEX, GL_DEPTH_COMPONENT, GL_DEPTH_STENCIL. </param>
         /// <param name="type"> Specifies the data type of the pixel data. The following symbolic values are accepted: GL_UNSIGNED_BYTE, GL_BYTE, GL_UNSIGNED_SHORT, GL_SHORT, GL_UNSIGNED_INT, GL_INT, GL_HALF_FLOAT, GL_FLOAT, GL_UNSIGNED_BYTE_3_3_2, GL_UNSIGNED_BYTE_2_3_3_REV, GL_UNSIGNED_SHORT_5_6_5, GL_UNSIGNED_SHORT_5_6_5_REV, GL_UNSIGNED_SHORT_4_4_4_4, GL_UNSIGNED_SHORT_4_4_4_4_REV, GL_UNSIGNED_SHORT_5_5_5_1, GL_UNSIGNED_SHORT_1_5_5_5_REV, GL_UNSIGNED_INT_8_8_8_8, GL_UNSIGNED_INT_8_8_8_8_REV, GL_UNSIGNED_INT_10_10_10_2, and GL_UNSIGNED_INT_2_10_10_10_REV. </param>
-        /// <param name="data"> Specifies a pointer to the image data in memory. </param>
+        /// <param name="pixels"> Specifies a pointer to the image data in memory. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glTexImage3D.xhtml" /></remarks>
         public static void TexImage3D(TextureTarget target, int level, InternalFormat internalformat, int width, int height, int depth, int border, PixelFormat format, PixelType type, void* pixels) => GLPointers._glTexImage3D_fnptr((uint)target, level, (int)internalformat, width, height, depth, border, (uint)format, (uint)type, pixels);
         
@@ -5360,7 +5360,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         /// <summary> <b>[requires: v4.5 | GL_ARB_direct_state_access]</b> <b>[entry point: <c>glTextureParameterfv</c>]</b><br/> Set texture parameters. </summary>
         /// <param name="texture">Specifies the texture object name for glTextureParameter functions.</param>
         /// <param name="pname">Specifies the symbolic name of a single-valued texture parameter. pname can be one of the following: GL_DEPTH_STENCIL_TEXTURE_MODE, GL_TEXTURE_BASE_LEVEL, GL_TEXTURE_COMPARE_FUNC, GL_TEXTURE_COMPARE_MODE, GL_TEXTURE_LOD_BIAS, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_MIN_LOD, GL_TEXTURE_MAX_LOD, GL_TEXTURE_MAX_LEVEL, GL_TEXTURE_SWIZZLE_R, GL_TEXTURE_SWIZZLE_G, GL_TEXTURE_SWIZZLE_B, GL_TEXTURE_SWIZZLE_A, GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, or GL_TEXTURE_WRAP_R.</param>
-        /// <param name="parameters">For the vector commands, specifies a pointer to an array where the value or values of pname are stored.</param>
+        /// <param name="param">For the vector commands, specifies a pointer to an array where the value or values of pname are stored.</param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glTexParameter.xhtml" /></remarks>
         public static void TextureParameterfv(int texture, TextureParameterName pname, float* param) => GLPointers._glTextureParameterfv_fnptr(texture, (uint)pname, param);
         
@@ -5388,7 +5388,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         /// <summary> <b>[requires: v4.5 | GL_ARB_direct_state_access]</b> <b>[entry point: <c>glTextureParameteriv</c>]</b><br/> Set texture parameters. </summary>
         /// <param name="texture">Specifies the texture object name for glTextureParameter functions.</param>
         /// <param name="pname">Specifies the symbolic name of a single-valued texture parameter. pname can be one of the following: GL_DEPTH_STENCIL_TEXTURE_MODE, GL_TEXTURE_BASE_LEVEL, GL_TEXTURE_COMPARE_FUNC, GL_TEXTURE_COMPARE_MODE, GL_TEXTURE_LOD_BIAS, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_MIN_LOD, GL_TEXTURE_MAX_LOD, GL_TEXTURE_MAX_LEVEL, GL_TEXTURE_SWIZZLE_R, GL_TEXTURE_SWIZZLE_G, GL_TEXTURE_SWIZZLE_B, GL_TEXTURE_SWIZZLE_A, GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, or GL_TEXTURE_WRAP_R.</param>
-        /// <param name="parameters">For the vector commands, specifies a pointer to an array where the value or values of pname are stored.</param>
+        /// <param name="param">For the vector commands, specifies a pointer to an array where the value or values of pname are stored.</param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glTexParameter.xhtml" /></remarks>
         public static void TextureParameteriv(int texture, TextureParameterName pname, int* param) => GLPointers._glTextureParameteriv_fnptr(texture, (uint)pname, param);
         
@@ -6061,7 +6061,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glVertexAttrib1d</c>]</b><br/> Specifies the value of a generic vertex attribute. </summary>
         /// <param name="index">Specifies the index of the generic vertex attribute to be modified.</param>
-        /// <param name="v0"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
+        /// <param name="x"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glVertexAttrib.xhtml" /></remarks>
         public static void VertexAttrib1d(uint index, double x) => GLPointers._glVertexAttrib1d_fnptr(index, x);
         
@@ -6073,7 +6073,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glVertexAttrib1f</c>]</b><br/> Specifies the value of a generic vertex attribute. </summary>
         /// <param name="index">Specifies the index of the generic vertex attribute to be modified.</param>
-        /// <param name="v0"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
+        /// <param name="x"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glVertexAttrib.xhtml" /></remarks>
         public static void VertexAttrib1f(uint index, float x) => GLPointers._glVertexAttrib1f_fnptr(index, x);
         
@@ -6085,7 +6085,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glVertexAttrib1s</c>]</b><br/> Specifies the value of a generic vertex attribute. </summary>
         /// <param name="index">Specifies the index of the generic vertex attribute to be modified.</param>
-        /// <param name="v0"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
+        /// <param name="x"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glVertexAttrib.xhtml" /></remarks>
         public static void VertexAttrib1s(uint index, short x) => GLPointers._glVertexAttrib1s_fnptr(index, x);
         
@@ -6097,8 +6097,8 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glVertexAttrib2d</c>]</b><br/> Specifies the value of a generic vertex attribute. </summary>
         /// <param name="index">Specifies the index of the generic vertex attribute to be modified.</param>
-        /// <param name="v0"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
-        /// <param name="v1"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
+        /// <param name="x"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
+        /// <param name="y"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glVertexAttrib.xhtml" /></remarks>
         public static void VertexAttrib2d(uint index, double x, double y) => GLPointers._glVertexAttrib2d_fnptr(index, x, y);
         
@@ -6110,8 +6110,8 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glVertexAttrib2f</c>]</b><br/> Specifies the value of a generic vertex attribute. </summary>
         /// <param name="index">Specifies the index of the generic vertex attribute to be modified.</param>
-        /// <param name="v0"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
-        /// <param name="v1"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
+        /// <param name="x"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
+        /// <param name="y"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glVertexAttrib.xhtml" /></remarks>
         public static void VertexAttrib2f(uint index, float x, float y) => GLPointers._glVertexAttrib2f_fnptr(index, x, y);
         
@@ -6123,8 +6123,8 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glVertexAttrib2s</c>]</b><br/> Specifies the value of a generic vertex attribute. </summary>
         /// <param name="index">Specifies the index of the generic vertex attribute to be modified.</param>
-        /// <param name="v0"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
-        /// <param name="v1"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
+        /// <param name="x"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
+        /// <param name="y"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glVertexAttrib.xhtml" /></remarks>
         public static void VertexAttrib2s(uint index, short x, short y) => GLPointers._glVertexAttrib2s_fnptr(index, x, y);
         
@@ -6136,9 +6136,9 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glVertexAttrib3d</c>]</b><br/> Specifies the value of a generic vertex attribute. </summary>
         /// <param name="index">Specifies the index of the generic vertex attribute to be modified.</param>
-        /// <param name="v0"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
-        /// <param name="v1"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
-        /// <param name="v2"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
+        /// <param name="x"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
+        /// <param name="y"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
+        /// <param name="z"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glVertexAttrib.xhtml" /></remarks>
         public static void VertexAttrib3d(uint index, double x, double y, double z) => GLPointers._glVertexAttrib3d_fnptr(index, x, y, z);
         
@@ -6150,9 +6150,9 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glVertexAttrib3f</c>]</b><br/> Specifies the value of a generic vertex attribute. </summary>
         /// <param name="index">Specifies the index of the generic vertex attribute to be modified.</param>
-        /// <param name="v0"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
-        /// <param name="v1"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
-        /// <param name="v2"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
+        /// <param name="x"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
+        /// <param name="y"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
+        /// <param name="z"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glVertexAttrib.xhtml" /></remarks>
         public static void VertexAttrib3f(uint index, float x, float y, float z) => GLPointers._glVertexAttrib3f_fnptr(index, x, y, z);
         
@@ -6164,9 +6164,9 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glVertexAttrib3s</c>]</b><br/> Specifies the value of a generic vertex attribute. </summary>
         /// <param name="index">Specifies the index of the generic vertex attribute to be modified.</param>
-        /// <param name="v0"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
-        /// <param name="v1"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
-        /// <param name="v2"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
+        /// <param name="x"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
+        /// <param name="y"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
+        /// <param name="z"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glVertexAttrib.xhtml" /></remarks>
         public static void VertexAttrib3s(uint index, short x, short y, short z) => GLPointers._glVertexAttrib3s_fnptr(index, x, y, z);
         
@@ -6184,10 +6184,10 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glVertexAttrib4d</c>]</b><br/> Specifies the value of a generic vertex attribute. </summary>
         /// <param name="index">Specifies the index of the generic vertex attribute to be modified.</param>
-        /// <param name="v0"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
-        /// <param name="v1"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
-        /// <param name="v2"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
-        /// <param name="v3"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
+        /// <param name="x"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
+        /// <param name="y"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
+        /// <param name="z"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
+        /// <param name="w"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glVertexAttrib.xhtml" /></remarks>
         public static void VertexAttrib4d(uint index, double x, double y, double z, double w) => GLPointers._glVertexAttrib4d_fnptr(index, x, y, z, w);
         
@@ -6199,10 +6199,10 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glVertexAttrib4f</c>]</b><br/> Specifies the value of a generic vertex attribute. </summary>
         /// <param name="index">Specifies the index of the generic vertex attribute to be modified.</param>
-        /// <param name="v0"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
-        /// <param name="v1"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
-        /// <param name="v2"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
-        /// <param name="v3"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
+        /// <param name="x"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
+        /// <param name="y"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
+        /// <param name="z"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
+        /// <param name="w"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glVertexAttrib.xhtml" /></remarks>
         public static void VertexAttrib4f(uint index, float x, float y, float z, float w) => GLPointers._glVertexAttrib4f_fnptr(index, x, y, z, w);
         
@@ -6238,10 +6238,10 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glVertexAttrib4Nub</c>]</b><br/> Specifies the value of a generic vertex attribute. </summary>
         /// <param name="index">Specifies the index of the generic vertex attribute to be modified.</param>
-        /// <param name="v0"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
-        /// <param name="v1"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
-        /// <param name="v2"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
-        /// <param name="v3"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
+        /// <param name="x"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
+        /// <param name="y"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
+        /// <param name="z"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
+        /// <param name="w"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glVertexAttrib.xhtml" /></remarks>
         public static void VertexAttrib4Nub(uint index, byte x, byte y, byte z, byte w) => GLPointers._glVertexAttrib4Nub_fnptr(index, x, y, z, w);
         
@@ -6265,10 +6265,10 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glVertexAttrib4s</c>]</b><br/> Specifies the value of a generic vertex attribute. </summary>
         /// <param name="index">Specifies the index of the generic vertex attribute to be modified.</param>
-        /// <param name="v0"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
-        /// <param name="v1"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
-        /// <param name="v2"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
-        /// <param name="v3"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
+        /// <param name="x"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
+        /// <param name="y"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
+        /// <param name="z"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
+        /// <param name="w"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glVertexAttrib.xhtml" /></remarks>
         public static void VertexAttrib4s(uint index, short x, short y, short z, short w) => GLPointers._glVertexAttrib4s_fnptr(index, x, y, z, w);
         
@@ -6319,7 +6319,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glVertexAttribI1i</c>]</b><br/> Specifies the value of a generic vertex attribute. </summary>
         /// <param name="index">Specifies the index of the generic vertex attribute to be modified.</param>
-        /// <param name="v0"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
+        /// <param name="x"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glVertexAttrib.xhtml" /></remarks>
         public static void VertexAttribI1i(uint index, int x) => GLPointers._glVertexAttribI1i_fnptr(index, x);
         
@@ -6331,7 +6331,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glVertexAttribI1ui</c>]</b><br/> Specifies the value of a generic vertex attribute. </summary>
         /// <param name="index">Specifies the index of the generic vertex attribute to be modified.</param>
-        /// <param name="v0"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
+        /// <param name="x"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glVertexAttrib.xhtml" /></remarks>
         public static void VertexAttribI1ui(uint index, uint x) => GLPointers._glVertexAttribI1ui_fnptr(index, x);
         
@@ -6343,8 +6343,8 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glVertexAttribI2i</c>]</b><br/> Specifies the value of a generic vertex attribute. </summary>
         /// <param name="index">Specifies the index of the generic vertex attribute to be modified.</param>
-        /// <param name="v0"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
-        /// <param name="v1"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
+        /// <param name="x"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
+        /// <param name="y"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glVertexAttrib.xhtml" /></remarks>
         public static void VertexAttribI2i(uint index, int x, int y) => GLPointers._glVertexAttribI2i_fnptr(index, x, y);
         
@@ -6356,8 +6356,8 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glVertexAttribI2ui</c>]</b><br/> Specifies the value of a generic vertex attribute. </summary>
         /// <param name="index">Specifies the index of the generic vertex attribute to be modified.</param>
-        /// <param name="v0"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
-        /// <param name="v1"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
+        /// <param name="x"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
+        /// <param name="y"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glVertexAttrib.xhtml" /></remarks>
         public static void VertexAttribI2ui(uint index, uint x, uint y) => GLPointers._glVertexAttribI2ui_fnptr(index, x, y);
         
@@ -6369,9 +6369,9 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glVertexAttribI3i</c>]</b><br/> Specifies the value of a generic vertex attribute. </summary>
         /// <param name="index">Specifies the index of the generic vertex attribute to be modified.</param>
-        /// <param name="v0"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
-        /// <param name="v1"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
-        /// <param name="v2"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
+        /// <param name="x"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
+        /// <param name="y"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
+        /// <param name="z"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glVertexAttrib.xhtml" /></remarks>
         public static void VertexAttribI3i(uint index, int x, int y, int z) => GLPointers._glVertexAttribI3i_fnptr(index, x, y, z);
         
@@ -6383,9 +6383,9 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glVertexAttribI3ui</c>]</b><br/> Specifies the value of a generic vertex attribute. </summary>
         /// <param name="index">Specifies the index of the generic vertex attribute to be modified.</param>
-        /// <param name="v0"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
-        /// <param name="v1"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
-        /// <param name="v2"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
+        /// <param name="x"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
+        /// <param name="y"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
+        /// <param name="z"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glVertexAttrib.xhtml" /></remarks>
         public static void VertexAttribI3ui(uint index, uint x, uint y, uint z) => GLPointers._glVertexAttribI3ui_fnptr(index, x, y, z);
         
@@ -6403,10 +6403,10 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glVertexAttribI4i</c>]</b><br/> Specifies the value of a generic vertex attribute. </summary>
         /// <param name="index">Specifies the index of the generic vertex attribute to be modified.</param>
-        /// <param name="v0"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
-        /// <param name="v1"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
-        /// <param name="v2"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
-        /// <param name="v3"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
+        /// <param name="x"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
+        /// <param name="y"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
+        /// <param name="z"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
+        /// <param name="w"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glVertexAttrib.xhtml" /></remarks>
         public static void VertexAttribI4i(uint index, int x, int y, int z, int w) => GLPointers._glVertexAttribI4i_fnptr(index, x, y, z, w);
         
@@ -6430,10 +6430,10 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glVertexAttribI4ui</c>]</b><br/> Specifies the value of a generic vertex attribute. </summary>
         /// <param name="index">Specifies the index of the generic vertex attribute to be modified.</param>
-        /// <param name="v0"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
-        /// <param name="v1"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
-        /// <param name="v2"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
-        /// <param name="v3"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
+        /// <param name="x"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
+        /// <param name="y"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
+        /// <param name="z"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
+        /// <param name="w"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glVertexAttrib.xhtml" /></remarks>
         public static void VertexAttribI4ui(uint index, uint x, uint y, uint z, uint w) => GLPointers._glVertexAttribI4ui_fnptr(index, x, y, z, w);
         
@@ -6468,7 +6468,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         
         /// <summary> <b>[requires: v4.1 | GL_ARB_vertex_attrib_64bit]</b> <b>[entry point: <c>glVertexAttribL1d</c>]</b><br/> Specifies the value of a generic vertex attribute. </summary>
         /// <param name="index">Specifies the index of the generic vertex attribute to be modified.</param>
-        /// <param name="v0"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
+        /// <param name="x"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glVertexAttrib.xhtml" /></remarks>
         public static void VertexAttribL1d(uint index, double x) => GLPointers._glVertexAttribL1d_fnptr(index, x);
         
@@ -6480,8 +6480,8 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         
         /// <summary> <b>[requires: v4.1 | GL_ARB_vertex_attrib_64bit]</b> <b>[entry point: <c>glVertexAttribL2d</c>]</b><br/> Specifies the value of a generic vertex attribute. </summary>
         /// <param name="index">Specifies the index of the generic vertex attribute to be modified.</param>
-        /// <param name="v0"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
-        /// <param name="v1"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
+        /// <param name="x"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
+        /// <param name="y"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glVertexAttrib.xhtml" /></remarks>
         public static void VertexAttribL2d(uint index, double x, double y) => GLPointers._glVertexAttribL2d_fnptr(index, x, y);
         
@@ -6493,9 +6493,9 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         
         /// <summary> <b>[requires: v4.1 | GL_ARB_vertex_attrib_64bit]</b> <b>[entry point: <c>glVertexAttribL3d</c>]</b><br/> Specifies the value of a generic vertex attribute. </summary>
         /// <param name="index">Specifies the index of the generic vertex attribute to be modified.</param>
-        /// <param name="v0"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
-        /// <param name="v1"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
-        /// <param name="v2"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
+        /// <param name="x"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
+        /// <param name="y"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
+        /// <param name="z"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glVertexAttrib.xhtml" /></remarks>
         public static void VertexAttribL3d(uint index, double x, double y, double z) => GLPointers._glVertexAttribL3d_fnptr(index, x, y, z);
         
@@ -6507,10 +6507,10 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         
         /// <summary> <b>[requires: v4.1 | GL_ARB_vertex_attrib_64bit]</b> <b>[entry point: <c>glVertexAttribL4d</c>]</b><br/> Specifies the value of a generic vertex attribute. </summary>
         /// <param name="index">Specifies the index of the generic vertex attribute to be modified.</param>
-        /// <param name="v0"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
-        /// <param name="v1"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
-        /// <param name="v2"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
-        /// <param name="v3"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
+        /// <param name="x"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
+        /// <param name="y"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
+        /// <param name="z"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
+        /// <param name="w"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glVertexAttrib.xhtml" /></remarks>
         public static void VertexAttribL4d(uint index, double x, double y, double z, double w) => GLPointers._glVertexAttribL4d_fnptr(index, x, y, z, w);
         
@@ -7341,7 +7341,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             public static void ClearBufferSubData(BufferTarget target, SizedInternalFormat internalformat, IntPtr offset, nint size, PixelFormat format, PixelType type, void* data) => GLPointers._glClearBufferSubData_fnptr((uint)target, (uint)internalformat, offset, size, (uint)format, (uint)type, data);
             
             /// <summary> <b>[requires: v4.1 | GL_ARB_ES2_compatibility]</b> <b>[entry point: <c>glClearDepthf</c>]</b><br/> Specify the clear value for the depth buffer. </summary>
-            /// <param name="depth"> Specifies the depth value used when the depth buffer is cleared. The initial value is 1. </param>
+            /// <param name="d"> Specifies the depth value used when the depth buffer is cleared. The initial value is 1. </param>
             /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glClearDepth.xhtml" /></remarks>
             public static void ClearDepthf(float d) => GLPointers._glClearDepthf_fnptr(d);
             
@@ -7466,7 +7466,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             /// <param name="width"> The number of entries in the color lookup table specified by data. </param>
             /// <param name="format"> The format of the pixel data in data. The allowable values are GL_RED, GL_GREEN, GL_BLUE, GL_ALPHA, GL_LUMINANCE, GL_LUMINANCE_ALPHA, GL_RGB, GL_BGR, GL_RGBA, and GL_BGRA. </param>
             /// <param name="type"> The type of the pixel data in data. The allowable values are GL_UNSIGNED_BYTE, GL_BYTE, GL_UNSIGNED_SHORT, GL_SHORT, GL_UNSIGNED_INT, GL_INT, GL_FLOAT, GL_UNSIGNED_BYTE_3_3_2, GL_UNSIGNED_BYTE_2_3_3_REV, GL_UNSIGNED_SHORT_5_6_5, GL_UNSIGNED_SHORT_5_6_5_REV, GL_UNSIGNED_SHORT_4_4_4_4, GL_UNSIGNED_SHORT_4_4_4_4_REV, GL_UNSIGNED_SHORT_5_5_5_1, GL_UNSIGNED_SHORT_1_5_5_5_REV, GL_UNSIGNED_INT_8_8_8_8, GL_UNSIGNED_INT_8_8_8_8_REV, GL_UNSIGNED_INT_10_10_10_2, and GL_UNSIGNED_INT_2_10_10_10_REV. </param>
-            /// <param name="data"> Pointer to a one-dimensional array of pixel data that is processed to build the color table. </param>
+            /// <param name="table"> Pointer to a one-dimensional array of pixel data that is processed to build the color table. </param>
             /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glColorTable.xml" /></remarks>
             public static void ColorTable(ColorTableTarget target, InternalFormat internalformat, int width, PixelFormat format, PixelType type, void* table) => GLPointers._glColorTable_fnptr((uint)target, (uint)internalformat, width, (uint)format, (uint)type, table);
             
@@ -7553,7 +7553,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             /// <param name="width"> The width of the pixel array referenced by data. </param>
             /// <param name="format"> The format of the pixel data in data. The allowable values are GL_ALPHA, GL_LUMINANCE, GL_LUMINANCE_ALPHA, GL_INTENSITY, GL_RGB, and GL_RGBA. </param>
             /// <param name="type"> The type of the pixel data in data. Symbolic constants GL_UNSIGNED_BYTE, GL_BYTE, GL_BITMAP, GL_UNSIGNED_SHORT, GL_SHORT, GL_UNSIGNED_INT, GL_INT, GL_FLOAT, GL_UNSIGNED_BYTE_3_3_2, GL_UNSIGNED_BYTE_2_3_3_REV, GL_UNSIGNED_SHORT_5_6_5, GL_UNSIGNED_SHORT_5_6_5_REV, GL_UNSIGNED_SHORT_4_4_4_4, GL_UNSIGNED_SHORT_4_4_4_4_REV, GL_UNSIGNED_SHORT_5_5_5_1, GL_UNSIGNED_SHORT_1_5_5_5_REV, GL_UNSIGNED_INT_8_8_8_8, GL_UNSIGNED_INT_8_8_8_8_REV, GL_UNSIGNED_INT_10_10_10_2, and GL_UNSIGNED_INT_2_10_10_10_REV are accepted. </param>
-            /// <param name="data"> Pointer to a one-dimensional array of pixel data that is processed to build the convolution filter kernel. </param>
+            /// <param name="image"> Pointer to a one-dimensional array of pixel data that is processed to build the convolution filter kernel. </param>
             /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glConvolutionFilter1D.xml" /></remarks>
             public static void ConvolutionFilter1D(ConvolutionTarget target, InternalFormat internalformat, int width, PixelFormat format, PixelType type, void* image) => GLPointers._glConvolutionFilter1D_fnptr((uint)target, (uint)internalformat, width, (uint)format, (uint)type, image);
             
@@ -7564,7 +7564,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             /// <param name="height"> The height of the pixel array referenced by data. </param>
             /// <param name="format"> The format of the pixel data in data. The allowable values are GL_RED, GL_GREEN, GL_BLUE, GL_ALPHA, GL_RGB, GL_BGR, GL_RGBA, GL_BGRA, GL_LUMINANCE, and GL_LUMINANCE_ALPHA. </param>
             /// <param name="type"> The type of the pixel data in data. Symbolic constants GL_UNSIGNED_BYTE, GL_BYTE, GL_BITMAP, GL_UNSIGNED_SHORT, GL_SHORT, GL_UNSIGNED_INT, GL_INT, GL_FLOAT, GL_UNSIGNED_BYTE_3_3_2, GL_UNSIGNED_BYTE_2_3_3_REV, GL_UNSIGNED_SHORT_5_6_5, GL_UNSIGNED_SHORT_5_6_5_REV, GL_UNSIGNED_SHORT_4_4_4_4, GL_UNSIGNED_SHORT_4_4_4_4_REV, GL_UNSIGNED_SHORT_5_5_5_1, GL_UNSIGNED_SHORT_1_5_5_5_REV, GL_UNSIGNED_INT_8_8_8_8, GL_UNSIGNED_INT_8_8_8_8_REV, GL_UNSIGNED_INT_10_10_10_2, and GL_UNSIGNED_INT_2_10_10_10_REV are accepted. </param>
-            /// <param name="data"> Pointer to a two-dimensional array of pixel data that is processed to build the convolution filter kernel. </param>
+            /// <param name="image"> Pointer to a two-dimensional array of pixel data that is processed to build the convolution filter kernel. </param>
             /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glConvolutionFilter2D.xml" /></remarks>
             public static void ConvolutionFilter2D(ConvolutionTarget target, InternalFormat internalformat, int width, int height, PixelFormat format, PixelType type, void* image) => GLPointers._glConvolutionFilter2D_fnptr((uint)target, (uint)internalformat, width, height, (uint)format, (uint)type, image);
             
@@ -7815,7 +7815,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             public static void DeleteRenderbuffers(int n, int* renderbuffers) => GLPointers._glDeleteRenderbuffers_fnptr(n, renderbuffers);
             
             /// <summary> <b>[requires: v3.3 | GL_ARB_sampler_objects]</b> <b>[entry point: <c>glDeleteSamplers</c>]</b><br/> Delete named sampler objects. </summary>
-            /// <param name="n"> Specifies the number of sampler objects to be deleted. </param>
+            /// <param name="count"> Specifies the number of sampler objects to be deleted. </param>
             /// <param name="samplers"> Specifies an array of sampler objects to be deleted. </param>
             /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glDeleteSamplers.xhtml" /></remarks>
             public static void DeleteSamplers(int count, int* samplers) => GLPointers._glDeleteSamplers_fnptr(count, samplers);
@@ -7848,15 +7848,15 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             public static void DepthRangeArrayv(uint first, int count, double* v) => GLPointers._glDepthRangeArrayv_fnptr(first, count, v);
             
             /// <summary> <b>[requires: v4.1 | GL_ARB_ES2_compatibility]</b> <b>[entry point: <c>glDepthRangef</c>]</b><br/> Specify mapping of depth values from normalized device coordinates to window coordinates. </summary>
-            /// <param name="nearVal"> Specifies the mapping of the near clipping plane to window coordinates. The initial value is 0. </param>
-            /// <param name="farVal"> Specifies the mapping of the far clipping plane to window coordinates. The initial value is 1. </param>
+            /// <param name="n"> Specifies the mapping of the near clipping plane to window coordinates. The initial value is 0. </param>
+            /// <param name="f"> Specifies the mapping of the far clipping plane to window coordinates. The initial value is 1. </param>
             /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glDepthRange.xhtml" /></remarks>
             public static void DepthRangef(float n, float f) => GLPointers._glDepthRangef_fnptr(n, f);
             
             /// <summary> <b>[requires: v4.1 | GL_ARB_viewport_array]</b> <b>[entry point: <c>glDepthRangeIndexed</c>]</b><br/> Specify mapping of depth values from normalized device coordinates to window coordinates for a specified viewport. </summary>
             /// <param name="index"> Specifies the index of the viewport whose depth range to update. </param>
-            /// <param name="nearVal"> Specifies the mapping of the near clipping plane to window coordinates. The initial value is 0. </param>
-            /// <param name="farVal"> Specifies the mapping of the far clipping plane to window coordinates. The initial value is 1. </param>
+            /// <param name="n"> Specifies the mapping of the near clipping plane to window coordinates. The initial value is 0. </param>
+            /// <param name="f"> Specifies the mapping of the far clipping plane to window coordinates. The initial value is 1. </param>
             /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glDepthRangeIndexed.xhtml" /></remarks>
             public static void DepthRangeIndexed(uint index, double n, double f) => GLPointers._glDepthRangeIndexed_fnptr(index, n, f);
             
@@ -8083,7 +8083,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             /// <param name="textarget"> For glFramebufferTexture1D, glFramebufferTexture2D and glFramebufferTexture3D, specifies what type of texture is expected in the texture parameter, or for cube map textures, which face is to be attached. </param>
             /// <param name="texture"> Specifies the name of an existing texture object to attach. </param>
             /// <param name="level"> Specifies the mipmap level of the texture object to attach. </param>
-            /// <param name="layer">!!missing documentation!!</param>
+            /// <param name="zoffset">!!missing documentation!!</param>
             /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glFramebufferTexture.xhtml" /></remarks>
             public static void FramebufferTexture3D(FramebufferTarget target, FramebufferAttachment attachment, TextureTarget textarget, int texture, int level, int zoffset) => GLPointers._glFramebufferTexture3D_fnptr((uint)target, (uint)attachment, (uint)textarget, texture, level, zoffset);
             
@@ -8120,7 +8120,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             
             /// <summary> <b>[requires: v3.0 | GL_ARB_framebuffer_object]</b> <b>[entry point: <c>glGenFramebuffers</c>]</b><br/> Generate framebuffer object names. </summary>
             /// <param name="n"> Specifies the number of framebuffer object names to generate. </param>
-            /// <param name="ids"> Specifies an array in which the generated framebuffer object names are stored. </param>
+            /// <param name="framebuffers"> Specifies an array in which the generated framebuffer object names are stored. </param>
             /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glGenFramebuffers.xhtml" /></remarks>
             public static void GenFramebuffers(int n, int* framebuffers) => GLPointers._glGenFramebuffers_fnptr(n, framebuffers);
             
@@ -8143,7 +8143,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             public static void GenRenderbuffers(int n, int* renderbuffers) => GLPointers._glGenRenderbuffers_fnptr(n, renderbuffers);
             
             /// <summary> <b>[requires: v3.3 | GL_ARB_sampler_objects]</b> <b>[entry point: <c>glGenSamplers</c>]</b><br/> Generate sampler object names. </summary>
-            /// <param name="n"> Specifies the number of sampler object names to generate. </param>
+            /// <param name="count"> Specifies the number of sampler object names to generate. </param>
             /// <param name="samplers"> Specifies an array in which the generated sampler object names are stored. </param>
             /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glGenSamplers.xhtml" /></remarks>
             public static void GenSamplers(int count, int* samplers) => GLPointers._glGenSamplers_fnptr(count, samplers);
@@ -8412,7 +8412,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             /// <param name="target"> Indicates the usage of the internal format. target must be GL_TEXTURE_1D, GL_TEXTURE_1D_ARRAY, GL_TEXTURE_2D, GL_TEXTURE_2D_ARRAY, GL_TEXTURE_3D, GL_TEXTURE_CUBE_MAP, GL_TEXTURE_CUBE_MAP_ARRAY, GL_TEXTURE_RECTANGLE, GL_TEXTURE_BUFFER, GL_RENDERBUFFER, GL_TEXTURE_2D_MULTISAMPLE or GL_TEXTURE_2D_MULTISAMPLE_ARRAY. </param>
             /// <param name="internalformat"> Specifies the internal format about which to retrieve information. </param>
             /// <param name="pname"> Specifies the type of information to query. </param>
-            /// <param name="bufSize"> Specifies the maximum number of integers of the specified width that may be written to params by the function. </param>
+            /// <param name="count"> Specifies the maximum number of integers of the specified width that may be written to params by the function. </param>
             /// <param name="parameters"> Specifies the address of a variable into which to write the retrieved information. </param>
             /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glGetInternalformat.xhtml" /></remarks>
             public static void GetInternalformati64v(TextureTarget target, InternalFormat internalformat, InternalFormatPName pname, int count, long* parameters) => GLPointers._glGetInternalformati64v_fnptr((uint)target, (uint)internalformat, (uint)pname, count, parameters);
@@ -8421,7 +8421,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             /// <param name="target"> Indicates the usage of the internal format. target must be GL_TEXTURE_1D, GL_TEXTURE_1D_ARRAY, GL_TEXTURE_2D, GL_TEXTURE_2D_ARRAY, GL_TEXTURE_3D, GL_TEXTURE_CUBE_MAP, GL_TEXTURE_CUBE_MAP_ARRAY, GL_TEXTURE_RECTANGLE, GL_TEXTURE_BUFFER, GL_RENDERBUFFER, GL_TEXTURE_2D_MULTISAMPLE or GL_TEXTURE_2D_MULTISAMPLE_ARRAY. </param>
             /// <param name="internalformat"> Specifies the internal format about which to retrieve information. </param>
             /// <param name="pname"> Specifies the type of information to query. </param>
-            /// <param name="bufSize"> Specifies the maximum number of integers of the specified width that may be written to params by the function. </param>
+            /// <param name="count"> Specifies the maximum number of integers of the specified width that may be written to params by the function. </param>
             /// <param name="parameters"> Specifies the address of a variable into which to write the retrieved information. </param>
             /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glGetInternalformat.xhtml" /></remarks>
             public static void GetInternalformativ(TextureTarget target, InternalFormat internalformat, InternalFormatPName pname, int count, int* parameters) => GLPointers._glGetInternalformativ_fnptr((uint)target, (uint)internalformat, (uint)pname, count, parameters);
@@ -8430,7 +8430,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             /// <param name="target"> Must be GL_MINMAX. </param>
             /// <param name="reset"> If GL_TRUE, all entries in the minmax table that are actually returned are reset to their initial values. (Other entries are unaltered.) If GL_FALSE, the minmax table is unaltered. </param>
             /// <param name="format"> The format of the data to be returned in values. Must be one of GL_RED, GL_GREEN, GL_BLUE, GL_ALPHA, GL_RGB, GL_BGR, GL_RGBA, GL_BGRA, GL_LUMINANCE, or GL_LUMINANCE_ALPHA. </param>
-            /// <param name="types"> The type of the data to be returned in values. Symbolic constants GL_UNSIGNED_BYTE, GL_BYTE, GL_BITMAP, GL_UNSIGNED_SHORT, GL_SHORT, GL_UNSIGNED_INT, GL_INT, GL_FLOAT, GL_UNSIGNED_BYTE_3_3_2, GL_UNSIGNED_BYTE_2_3_3_REV, GL_UNSIGNED_SHORT_5_6_5, GL_UNSIGNED_SHORT_5_6_5_REV, GL_UNSIGNED_SHORT_4_4_4_4, GL_UNSIGNED_SHORT_4_4_4_4_REV, GL_UNSIGNED_SHORT_5_5_5_1, GL_UNSIGNED_SHORT_1_5_5_5_REV, GL_UNSIGNED_INT_8_8_8_8, GL_UNSIGNED_INT_8_8_8_8_REV, GL_UNSIGNED_INT_10_10_10_2, and GL_UNSIGNED_INT_2_10_10_10_REV are accepted. </param>
+            /// <param name="type"> The type of the data to be returned in values. Symbolic constants GL_UNSIGNED_BYTE, GL_BYTE, GL_BITMAP, GL_UNSIGNED_SHORT, GL_SHORT, GL_UNSIGNED_INT, GL_INT, GL_FLOAT, GL_UNSIGNED_BYTE_3_3_2, GL_UNSIGNED_BYTE_2_3_3_REV, GL_UNSIGNED_SHORT_5_6_5, GL_UNSIGNED_SHORT_5_6_5_REV, GL_UNSIGNED_SHORT_4_4_4_4, GL_UNSIGNED_SHORT_4_4_4_4_REV, GL_UNSIGNED_SHORT_5_5_5_1, GL_UNSIGNED_SHORT_1_5_5_5_REV, GL_UNSIGNED_INT_8_8_8_8, GL_UNSIGNED_INT_8_8_8_8_REV, GL_UNSIGNED_INT_10_10_10_2, and GL_UNSIGNED_INT_2_10_10_10_REV are accepted. </param>
             /// <param name="values"> A pointer to storage for the returned values. </param>
             /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glGetMinmax.xml" /></remarks>
             public static void GetMinmax(MinmaxTargetEXT target, bool reset, PixelFormat format, PixelType type, void* values) => GLPointers._glGetMinmax_fnptr((uint)target, (byte)(reset ? 1 : 0), (uint)format, (uint)type, values);
@@ -8639,7 +8639,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             /// <param name="index">!!missing documentation!!</param>
             /// <param name="propCount">!!missing documentation!!</param>
             /// <param name="props">!!missing documentation!!</param>
-            /// <param name="bufSize">!!missing documentation!!</param>
+            /// <param name="count">!!missing documentation!!</param>
             /// <param name="length">!!missing documentation!!</param>
             /// <param name="parameters">!!missing documentation!!</param>
             /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glGetProgramResource.xhtml" /></remarks>
@@ -8789,8 +8789,8 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             public static void GetSeparableFilter(SeparableTargetEXT target, PixelFormat format, PixelType type, void* row, void* column, void* span) => GLPointers._glGetSeparableFilter_fnptr((uint)target, (uint)format, (uint)type, row, column, span);
             
             /// <summary> <b>[requires: v4.1 | GL_ARB_ES2_compatibility]</b> <b>[entry point: <c>glGetShaderPrecisionFormat</c>]</b><br/> Retrieve the range and precision for numeric formats supported by the shader compiler. </summary>
-            /// <param name="shaderType"> Specifies the type of shader whose precision to query. shaderType must be GL_VERTEX_SHADER or GL_FRAGMENT_SHADER. </param>
-            /// <param name="precisionType"> Specifies the numeric format whose precision and range to query. </param>
+            /// <param name="shadertype"> Specifies the type of shader whose precision to query. shaderType must be GL_VERTEX_SHADER or GL_FRAGMENT_SHADER. </param>
+            /// <param name="precisiontype"> Specifies the numeric format whose precision and range to query. </param>
             /// <param name="range"> Specifies the address of array of two integers into which encodings of the implementation&apos;s numeric range are returned. </param>
             /// <param name="precision"> Specifies the address of an integer into which the numeric precision of the implementation is written. </param>
             /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glGetShaderPrecisionFormat.xhtml" /></remarks>
@@ -8816,7 +8816,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             /// <summary> <b>[requires: v3.2 | GL_ARB_sync]</b> <b>[entry point: <c>glGetSynciv</c>]</b><br/> Query the properties of a sync object. </summary>
             /// <param name="sync"> Specifies the sync object whose properties to query. </param>
             /// <param name="pname"> Specifies the parameter whose value to retrieve from the sync object specified in sync. </param>
-            /// <param name="bufSize"> Specifies the size of the buffer whose address is given in values. </param>
+            /// <param name="count"> Specifies the size of the buffer whose address is given in values. </param>
             /// <param name="length"> Specifies the address of an variable to receive the number of integers placed in values. </param>
             /// <param name="values"> Specifies the address of an array to receive the values of the queried parameter. </param>
             /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glGetSync.xhtml" /></remarks>
@@ -8957,7 +8957,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             /// <summary> <b>[requires: v4.0 | GL_ARB_shader_subroutine]</b> <b>[entry point: <c>glGetUniformSubroutineuiv</c>]</b><br/> Retrieve the value of a subroutine uniform of a given shader stage of the current program. </summary>
             /// <param name="shadertype"> Specifies the shader stage from which to query for subroutine uniform index. shadertype must be one of GL_VERTEX_SHADER, GL_TESS_CONTROL_SHADER, GL_TESS_EVALUATION_SHADER, GL_GEOMETRY_SHADER or GL_FRAGMENT_SHADER. </param>
             /// <param name="location"> Specifies the location of the subroutine uniform. </param>
-            /// <param name="values"> Specifies the address of a variable to receive the value or values of the subroutine uniform. </param>
+            /// <param name="parameters"> Specifies the address of a variable to receive the value or values of the subroutine uniform. </param>
             /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glGetUniformSubroutine.xhtml" /></remarks>
             public static void GetUniformSubroutineuiv(ShaderType shadertype, int location, uint* parameters) => GLPointers._glGetUniformSubroutineuiv_fnptr((uint)shadertype, location, parameters);
             
@@ -9114,7 +9114,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             public static bool IsRenderbuffer(int renderbuffer) => GLPointers._glIsRenderbuffer_fnptr(renderbuffer) != 0;
             
             /// <summary> <b>[requires: v3.3 | GL_ARB_sampler_objects]</b> <b>[entry point: <c>glIsSampler</c>]</b><br/> Determine if a name corresponds to a sampler object. </summary>
-            /// <param name="id"> Specifies a value that may be the name of a sampler object. </param>
+            /// <param name="sampler"> Specifies a value that may be the name of a sampler object. </param>
             /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glIsSampler.xhtml" /></remarks>
             public static bool IsSampler(int sampler) => GLPointers._glIsSampler_fnptr(sampler) != 0;
             
@@ -9428,7 +9428,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             
             /// <summary> <b>[requires: v4.5 | GL_ARB_direct_state_access]</b> <b>[entry point: <c>glNamedFramebufferReadBuffer</c>]</b><br/> Select a color buffer source for pixels. </summary>
             /// <param name="framebuffer">Specifies the name of the framebuffer object for glNamedFramebufferReadBuffer function.</param>
-            /// <param name="mode">Specifies a color buffer. Accepted values are GL_FRONT_LEFT, GL_FRONT_RIGHT, GL_BACK_LEFT, GL_BACK_RIGHT, GL_FRONT, GL_BACK, GL_LEFT, GL_RIGHT, and the constants GL_COLOR_ATTACHMENTi.</param>
+            /// <param name="src">Specifies a color buffer. Accepted values are GL_FRONT_LEFT, GL_FRONT_RIGHT, GL_BACK_LEFT, GL_BACK_RIGHT, GL_FRONT, GL_BACK, GL_LEFT, GL_RIGHT, and the constants GL_COLOR_ATTACHMENTi.</param>
             /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glReadBuffer.xhtml" /></remarks>
             public static void NamedFramebufferReadBuffer(int framebuffer, ColorBuffer src) => GLPointers._glNamedFramebufferReadBuffer_fnptr(framebuffer, (uint)src);
             
@@ -9944,7 +9944,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             public static void ProgramUniformMatrix4x3fv(int program, int location, int count, bool transpose, float* value) => GLPointers._glProgramUniformMatrix4x3fv_fnptr(program, location, count, (byte)(transpose ? 1 : 0), value);
             
             /// <summary> <b>[requires: v3.2 | GL_ARB_provoking_vertex]</b> <b>[entry point: <c>glProvokingVertex</c>]</b><br/> Specifiy the vertex to be used as the source of data for flat shaded varyings. </summary>
-            /// <param name="provokeMode"> Specifies the vertex to be used as the source of data for flat shaded varyings. </param>
+            /// <param name="mode"> Specifies the vertex to be used as the source of data for flat shaded varyings. </param>
             /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glProvokingVertex.xhtml" /></remarks>
             public static void ProvokingVertex(VertexProvokingMode mode) => GLPointers._glProvokingVertex_fnptr((uint)mode);
             
@@ -10011,7 +10011,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             /// <summary> <b>[requires: v3.3 | GL_ARB_sampler_objects]</b> <b>[entry point: <c>glSamplerParameterfv</c>]</b><br/> Set sampler parameters. </summary>
             /// <param name="sampler"> Specifies the sampler object whose parameter to modify. </param>
             /// <param name="pname"> Specifies the symbolic name of a sampler parameter. pname can be one of the following: GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, GL_TEXTURE_WRAP_R, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_BORDER_COLOR, GL_TEXTURE_MIN_LOD, GL_TEXTURE_MAX_LOD, GL_TEXTURE_LOD_BIAS GL_TEXTURE_COMPARE_MODE, or GL_TEXTURE_COMPARE_FUNC. </param>
-            /// <param name="parameters"> For the vector commands (glSamplerParameter*v), specifies a pointer to an array where the value or values of pname are stored. </param>
+            /// <param name="param"> For the vector commands (glSamplerParameter*v), specifies a pointer to an array where the value or values of pname are stored. </param>
             /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glSamplerParameter.xhtml" /></remarks>
             public static void SamplerParameterfv(int sampler, SamplerParameterF pname, float* param) => GLPointers._glSamplerParameterfv_fnptr(sampler, (uint)pname, param);
             
@@ -10025,21 +10025,21 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             /// <summary> <b>[requires: v3.3 | GL_ARB_sampler_objects]</b> <b>[entry point: <c>glSamplerParameterIiv</c>]</b><br/> Set sampler parameters. </summary>
             /// <param name="sampler"> Specifies the sampler object whose parameter to modify. </param>
             /// <param name="pname"> Specifies the symbolic name of a sampler parameter. pname can be one of the following: GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, GL_TEXTURE_WRAP_R, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_BORDER_COLOR, GL_TEXTURE_MIN_LOD, GL_TEXTURE_MAX_LOD, GL_TEXTURE_LOD_BIAS GL_TEXTURE_COMPARE_MODE, or GL_TEXTURE_COMPARE_FUNC. </param>
-            /// <param name="parameters"> For the vector commands (glSamplerParameter*v), specifies a pointer to an array where the value or values of pname are stored. </param>
+            /// <param name="param"> For the vector commands (glSamplerParameter*v), specifies a pointer to an array where the value or values of pname are stored. </param>
             /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glSamplerParameter.xhtml" /></remarks>
             public static void SamplerParameterIiv(int sampler, SamplerParameterI pname, int* param) => GLPointers._glSamplerParameterIiv_fnptr(sampler, (uint)pname, param);
             
             /// <summary> <b>[requires: v3.3 | GL_ARB_sampler_objects]</b> <b>[entry point: <c>glSamplerParameterIuiv</c>]</b><br/> Set sampler parameters. </summary>
             /// <param name="sampler"> Specifies the sampler object whose parameter to modify. </param>
             /// <param name="pname"> Specifies the symbolic name of a sampler parameter. pname can be one of the following: GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, GL_TEXTURE_WRAP_R, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_BORDER_COLOR, GL_TEXTURE_MIN_LOD, GL_TEXTURE_MAX_LOD, GL_TEXTURE_LOD_BIAS GL_TEXTURE_COMPARE_MODE, or GL_TEXTURE_COMPARE_FUNC. </param>
-            /// <param name="parameters"> For the vector commands (glSamplerParameter*v), specifies a pointer to an array where the value or values of pname are stored. </param>
+            /// <param name="param"> For the vector commands (glSamplerParameter*v), specifies a pointer to an array where the value or values of pname are stored. </param>
             /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glSamplerParameter.xhtml" /></remarks>
             public static void SamplerParameterIuiv(int sampler, SamplerParameterI pname, uint* param) => GLPointers._glSamplerParameterIuiv_fnptr(sampler, (uint)pname, param);
             
             /// <summary> <b>[requires: v3.3 | GL_ARB_sampler_objects]</b> <b>[entry point: <c>glSamplerParameteriv</c>]</b><br/> Set sampler parameters. </summary>
             /// <param name="sampler"> Specifies the sampler object whose parameter to modify. </param>
             /// <param name="pname"> Specifies the symbolic name of a sampler parameter. pname can be one of the following: GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, GL_TEXTURE_WRAP_R, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_BORDER_COLOR, GL_TEXTURE_MIN_LOD, GL_TEXTURE_MAX_LOD, GL_TEXTURE_LOD_BIAS GL_TEXTURE_COMPARE_MODE, or GL_TEXTURE_COMPARE_FUNC. </param>
-            /// <param name="parameters"> For the vector commands (glSamplerParameter*v), specifies a pointer to an array where the value or values of pname are stored. </param>
+            /// <param name="param"> For the vector commands (glSamplerParameter*v), specifies a pointer to an array where the value or values of pname are stored. </param>
             /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glSamplerParameter.xhtml" /></remarks>
             public static void SamplerParameteriv(int sampler, SamplerParameterI pname, int* param) => GLPointers._glSamplerParameteriv_fnptr(sampler, (uint)pname, param);
             
@@ -10243,7 +10243,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             /// <summary> <b>[requires: v4.5 | GL_ARB_direct_state_access]</b> <b>[entry point: <c>glTextureParameterfv</c>]</b><br/> Set texture parameters. </summary>
             /// <param name="texture">Specifies the texture object name for glTextureParameter functions.</param>
             /// <param name="pname">Specifies the symbolic name of a single-valued texture parameter. pname can be one of the following: GL_DEPTH_STENCIL_TEXTURE_MODE, GL_TEXTURE_BASE_LEVEL, GL_TEXTURE_COMPARE_FUNC, GL_TEXTURE_COMPARE_MODE, GL_TEXTURE_LOD_BIAS, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_MIN_LOD, GL_TEXTURE_MAX_LOD, GL_TEXTURE_MAX_LEVEL, GL_TEXTURE_SWIZZLE_R, GL_TEXTURE_SWIZZLE_G, GL_TEXTURE_SWIZZLE_B, GL_TEXTURE_SWIZZLE_A, GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, or GL_TEXTURE_WRAP_R.</param>
-            /// <param name="parameters">For the vector commands, specifies a pointer to an array where the value or values of pname are stored.</param>
+            /// <param name="param">For the vector commands, specifies a pointer to an array where the value or values of pname are stored.</param>
             /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glTexParameter.xhtml" /></remarks>
             public static void TextureParameterfv(int texture, TextureParameterName pname, float* param) => GLPointers._glTextureParameterfv_fnptr(texture, (uint)pname, param);
             
@@ -10271,7 +10271,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             /// <summary> <b>[requires: v4.5 | GL_ARB_direct_state_access]</b> <b>[entry point: <c>glTextureParameteriv</c>]</b><br/> Set texture parameters. </summary>
             /// <param name="texture">Specifies the texture object name for glTextureParameter functions.</param>
             /// <param name="pname">Specifies the symbolic name of a single-valued texture parameter. pname can be one of the following: GL_DEPTH_STENCIL_TEXTURE_MODE, GL_TEXTURE_BASE_LEVEL, GL_TEXTURE_COMPARE_FUNC, GL_TEXTURE_COMPARE_MODE, GL_TEXTURE_LOD_BIAS, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_MIN_LOD, GL_TEXTURE_MAX_LOD, GL_TEXTURE_MAX_LEVEL, GL_TEXTURE_SWIZZLE_R, GL_TEXTURE_SWIZZLE_G, GL_TEXTURE_SWIZZLE_B, GL_TEXTURE_SWIZZLE_A, GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, or GL_TEXTURE_WRAP_R.</param>
-            /// <param name="parameters">For the vector commands, specifies a pointer to an array where the value or values of pname are stored.</param>
+            /// <param name="param">For the vector commands, specifies a pointer to an array where the value or values of pname are stored.</param>
             /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glTexParameter.xhtml" /></remarks>
             public static void TextureParameteriv(int texture, TextureParameterName pname, int* param) => GLPointers._glTextureParameteriv_fnptr(texture, (uint)pname, param);
             
@@ -10795,7 +10795,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             
             /// <summary> <b>[requires: v4.1 | GL_ARB_vertex_attrib_64bit]</b> <b>[entry point: <c>glVertexAttribL1d</c>]</b><br/> Specifies the value of a generic vertex attribute. </summary>
             /// <param name="index">Specifies the index of the generic vertex attribute to be modified.</param>
-            /// <param name="v0"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
+            /// <param name="x"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
             /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glVertexAttrib.xhtml" /></remarks>
             public static void VertexAttribL1d(uint index, double x) => GLPointers._glVertexAttribL1d_fnptr(index, x);
             
@@ -10813,8 +10813,8 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             
             /// <summary> <b>[requires: v4.1 | GL_ARB_vertex_attrib_64bit]</b> <b>[entry point: <c>glVertexAttribL2d</c>]</b><br/> Specifies the value of a generic vertex attribute. </summary>
             /// <param name="index">Specifies the index of the generic vertex attribute to be modified.</param>
-            /// <param name="v0"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
-            /// <param name="v1"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
+            /// <param name="x"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
+            /// <param name="y"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
             /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glVertexAttrib.xhtml" /></remarks>
             public static void VertexAttribL2d(uint index, double x, double y) => GLPointers._glVertexAttribL2d_fnptr(index, x, y);
             
@@ -10826,9 +10826,9 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             
             /// <summary> <b>[requires: v4.1 | GL_ARB_vertex_attrib_64bit]</b> <b>[entry point: <c>glVertexAttribL3d</c>]</b><br/> Specifies the value of a generic vertex attribute. </summary>
             /// <param name="index">Specifies the index of the generic vertex attribute to be modified.</param>
-            /// <param name="v0"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
-            /// <param name="v1"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
-            /// <param name="v2"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
+            /// <param name="x"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
+            /// <param name="y"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
+            /// <param name="z"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
             /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glVertexAttrib.xhtml" /></remarks>
             public static void VertexAttribL3d(uint index, double x, double y, double z) => GLPointers._glVertexAttribL3d_fnptr(index, x, y, z);
             
@@ -10840,10 +10840,10 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             
             /// <summary> <b>[requires: v4.1 | GL_ARB_vertex_attrib_64bit]</b> <b>[entry point: <c>glVertexAttribL4d</c>]</b><br/> Specifies the value of a generic vertex attribute. </summary>
             /// <param name="index">Specifies the index of the generic vertex attribute to be modified.</param>
-            /// <param name="v0"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
-            /// <param name="v1"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
-            /// <param name="v2"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
-            /// <param name="v3"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
+            /// <param name="x"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
+            /// <param name="y"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
+            /// <param name="z"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
+            /// <param name="w"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
             /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glVertexAttrib.xhtml" /></remarks>
             public static void VertexAttribL4d(uint index, double x, double y, double z, double w) => GLPointers._glVertexAttribL4d_fnptr(index, x, y, z, w);
             
@@ -13247,7 +13247,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             /// <param name="id"> The user-supplied identifier of the message to insert. </param>
             /// <param name="severity"> The severity of the debug messages to insert. </param>
             /// <param name="length"> The length string contained in the character array whose address is given by message. </param>
-            /// <param name="message"> The address of a character array containing the message to insert. </param>
+            /// <param name="buf"> The address of a character array containing the message to insert. </param>
             /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glDebugMessageInsert.xhtml" /></remarks>
             public static void DebugMessageInsert(DebugSource source, DebugType type, uint id, DebugSeverity severity, int length, byte* buf) => GLPointers._glDebugMessageInsert_fnptr((uint)source, (uint)type, id, (uint)severity, length, buf);
             

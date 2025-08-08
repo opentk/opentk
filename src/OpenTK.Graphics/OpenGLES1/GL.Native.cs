@@ -84,7 +84,7 @@ namespace OpenTK.Graphics.OpenGLES1
         public static void ClearColorx(int red, int green, int blue, int alpha) => GLPointers._glClearColorx_fnptr(red, green, blue, alpha);
         
         /// <summary> <b>[requires: v1.0]</b> <b>[entry point: <c>glClearDepthf</c>]</b><br/> Specify the clear value for the depth buffer. </summary>
-        /// <param name="depth">Specifies the depth value used when the depth buffer is cleared. The initial value is 1.</param>
+        /// <param name="d">Specifies the depth value used when the depth buffer is cleared. The initial value is 1.</param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es1.1/xhtml/glClearDepth.xml" /></remarks>
         public static void ClearDepthf(float d) => GLPointers._glClearDepthf_fnptr(d);
         
@@ -104,8 +104,8 @@ namespace OpenTK.Graphics.OpenGLES1
         public static void ClientActiveTexture(TextureUnit texture) => GLPointers._glClientActiveTexture_fnptr((uint)texture);
         
         /// <summary> <b>[requires: v1.0]</b> <b>[entry point: <c>glClipPlanef</c>]</b><br/> Specify a plane against which all geometry is    clipped. </summary>
-        /// <param name="plane">Specifies which clipping plane is being positioned. Symbolic names of the form GL_CLIP_PLANEi, where i is an integer between 0 and GL_MAX_CLIP_PLANES -1 , are accepted.</param>
-        /// <param name="equation">Specifies the address of an array of four fixed-point or floating-point values. These are the coefficients of a plane equation in object coordinates: p1, p2, p3, and p4, in that order.</param>
+        /// <param name="p">Specifies which clipping plane is being positioned. Symbolic names of the form GL_CLIP_PLANEi, where i is an integer between 0 and GL_MAX_CLIP_PLANES -1 , are accepted.</param>
+        /// <param name="eqn">Specifies the address of an array of four fixed-point or floating-point values. These are the coefficients of a plane equation in object coordinates: p1, p2, p3, and p4, in that order.</param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es1.1/xhtml/glClipPlane.xml" /></remarks>
         public static void ClipPlanef(ClipPlaneName p, float* eqn) => GLPointers._glClipPlanef_fnptr((uint)p, eqn);
         
@@ -232,14 +232,14 @@ namespace OpenTK.Graphics.OpenGLES1
         public static void DepthMask(bool flag) => GLPointers._glDepthMask_fnptr((byte)(flag ? 1 : 0));
         
         /// <summary> <b>[requires: v1.0]</b> <b>[entry point: <c>glDepthRangef</c>]</b><br/> Specify mapping of depth values from normalized        device coordinates to window coordinates. </summary>
-        /// <param name="near">Specifies the mapping of the near clipping plane to window coordinates. The initial value is 0.</param>
-        /// <param name="far">Specifies the mapping of the far clipping plane to window coordinates. The initial value is 1.</param>
+        /// <param name="n">Specifies the mapping of the near clipping plane to window coordinates. The initial value is 0.</param>
+        /// <param name="f">Specifies the mapping of the far clipping plane to window coordinates. The initial value is 1.</param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es1.1/xhtml/glDepthRange.xml" /></remarks>
         public static void DepthRangef(float n, float f) => GLPointers._glDepthRangef_fnptr(n, f);
         
         /// <summary> <b>[requires: v1.0]</b> <b>[entry point: <c>glDepthRangex</c>]</b><br/> Specify mapping of depth values from normalized        device coordinates to window coordinates. </summary>
-        /// <param name="near">Specifies the mapping of the near clipping plane to window coordinates. The initial value is 0.</param>
-        /// <param name="far">Specifies the mapping of the far clipping plane to window coordinates. The initial value is 1.</param>
+        /// <param name="n">Specifies the mapping of the near clipping plane to window coordinates. The initial value is 0.</param>
+        /// <param name="f">Specifies the mapping of the far clipping plane to window coordinates. The initial value is 1.</param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es1.1/xhtml/glDepthRange.xml" /></remarks>
         public static void DepthRangex(int n, int f) => GLPointers._glDepthRangex_fnptr(n, f);
         
@@ -310,22 +310,22 @@ namespace OpenTK.Graphics.OpenGLES1
         public static void FrontFace(FrontFaceDirection mode) => GLPointers._glFrontFace_fnptr((uint)mode);
         
         /// <summary> <b>[requires: v1.0]</b> <b>[entry point: <c>glFrustumf</c>]</b><br/> Multiply the current matrix by a perspective matrix. </summary>
-        /// <param name="left">Specify the coordinates for the left and right vertical clipping planes.</param>
-        /// <param name="right">Specify the coordinates for the left and right vertical clipping planes.</param>
-        /// <param name="bottom">Specify the coordinates for the bottom and top horizontal clipping planes.</param>
-        /// <param name="top">Specify the coordinates for the bottom and top horizontal clipping planes.</param>
-        /// <param name="near">Specify the distances to the near and far depth clipping planes. Both distances must be positive.</param>
-        /// <param name="far">Specify the distances to the near and far depth clipping planes. Both distances must be positive.</param>
+        /// <param name="l">Specify the coordinates for the left and right vertical clipping planes.</param>
+        /// <param name="r">Specify the coordinates for the left and right vertical clipping planes.</param>
+        /// <param name="b">Specify the coordinates for the bottom and top horizontal clipping planes.</param>
+        /// <param name="t">Specify the coordinates for the bottom and top horizontal clipping planes.</param>
+        /// <param name="n">Specify the distances to the near and far depth clipping planes. Both distances must be positive.</param>
+        /// <param name="f">Specify the distances to the near and far depth clipping planes. Both distances must be positive.</param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es1.1/xhtml/glFrustum.xml" /></remarks>
         public static void Frustumf(float l, float r, float b, float t, float n, float f) => GLPointers._glFrustumf_fnptr(l, r, b, t, n, f);
         
         /// <summary> <b>[requires: v1.0]</b> <b>[entry point: <c>glFrustumx</c>]</b><br/> Multiply the current matrix by a perspective matrix. </summary>
-        /// <param name="left">Specify the coordinates for the left and right vertical clipping planes.</param>
-        /// <param name="right">Specify the coordinates for the left and right vertical clipping planes.</param>
-        /// <param name="bottom">Specify the coordinates for the bottom and top horizontal clipping planes.</param>
-        /// <param name="top">Specify the coordinates for the bottom and top horizontal clipping planes.</param>
-        /// <param name="near">Specify the distances to the near and far depth clipping planes. Both distances must be positive.</param>
-        /// <param name="far">Specify the distances to the near and far depth clipping planes. Both distances must be positive.</param>
+        /// <param name="l">Specify the coordinates for the left and right vertical clipping planes.</param>
+        /// <param name="r">Specify the coordinates for the left and right vertical clipping planes.</param>
+        /// <param name="b">Specify the coordinates for the bottom and top horizontal clipping planes.</param>
+        /// <param name="t">Specify the coordinates for the bottom and top horizontal clipping planes.</param>
+        /// <param name="n">Specify the distances to the near and far depth clipping planes. Both distances must be positive.</param>
+        /// <param name="f">Specify the distances to the near and far depth clipping planes. Both distances must be positive.</param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es1.1/xhtml/glFrustum.xml" /></remarks>
         public static void Frustumx(int l, int r, int b, int t, int n, int f) => GLPointers._glFrustumx_fnptr(l, r, b, t, n, f);
         
@@ -343,7 +343,7 @@ namespace OpenTK.Graphics.OpenGLES1
         
         /// <summary> <b>[requires: v1.0]</b> <b>[entry point: <c>glGetBooleanv</c>]</b><br/> Return the value or values of a selected parameter. </summary>
         /// <param name="pname">Specifies the parameter value to be returned. The symbolic constants in the list below are accepted.</param>
-        /// <param name="parameters">Returns the value or values of the specified parameter.</param>
+        /// <param name="data">Returns the value or values of the specified parameter.</param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es1.1/xhtml/glGet.xml" /></remarks>
         public static void GetBooleanv(GetPName pname, bool* data) => GLPointers._glGetBooleanv_fnptr((uint)pname, (byte*)data);
         
@@ -378,13 +378,13 @@ namespace OpenTK.Graphics.OpenGLES1
         
         /// <summary> <b>[requires: v1.0]</b> <b>[entry point: <c>glGetFloatv</c>]</b><br/> Return the value or values of a selected parameter. </summary>
         /// <param name="pname">Specifies the parameter value to be returned. The symbolic constants in the list below are accepted.</param>
-        /// <param name="parameters">Returns the value or values of the specified parameter.</param>
+        /// <param name="data">Returns the value or values of the specified parameter.</param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es1.1/xhtml/glGet.xml" /></remarks>
         public static void GetFloatv(GetPName pname, float* data) => GLPointers._glGetFloatv_fnptr((uint)pname, data);
         
         /// <summary> <b>[requires: v1.0]</b> <b>[entry point: <c>glGetIntegerv</c>]</b><br/> Return the value or values of a selected parameter. </summary>
         /// <param name="pname">Specifies the parameter value to be returned. The symbolic constants in the list below are accepted.</param>
-        /// <param name="parameters">Returns the value or values of the specified parameter.</param>
+        /// <param name="data">Returns the value or values of the specified parameter.</param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es1.1/xhtml/glGet.xml" /></remarks>
         public static void GetIntegerv(GetPName pname, int* data) => GLPointers._glGetIntegerv_fnptr((uint)pname, data);
         
@@ -592,7 +592,7 @@ namespace OpenTK.Graphics.OpenGLES1
         public static void MultiTexCoord4f(TextureUnit target, float s, float t, float r, float q) => GLPointers._glMultiTexCoord4f_fnptr((uint)target, s, t, r, q);
         
         /// <summary> <b>[requires: v1.0]</b> <b>[entry point: <c>glMultiTexCoord4x</c>]</b><br/> Set the current texture coordinates. </summary>
-        /// <param name="target">Specifies the texture unit whose coordinates should be modified. The number of texture units is implementation dependent, but must be at least twoone. Symbolic constant must be one of GL_TEXTUREi, where i ranges from 0 to GL_MAX_TEXTURE_UNITS - 1, which is an implementation-dependent value.</param>
+        /// <param name="texture">Specifies the texture unit whose coordinates should be modified. The number of texture units is implementation dependent, but must be at least twoone. Symbolic constant must be one of GL_TEXTUREi, where i ranges from 0 to GL_MAX_TEXTURE_UNITS - 1, which is an implementation-dependent value.</param>
         /// <param name="s">Specify s, t, r, and q texture coordinates for target texture unit.</param>
         /// <param name="t">Specify s, t, r, and q texture coordinates for target texture unit.</param>
         /// <param name="r">Specify s, t, r, and q texture coordinates for target texture unit.</param>
@@ -632,22 +632,22 @@ namespace OpenTK.Graphics.OpenGLES1
         public static void NormalPointer(NormalPointerType type, int stride, void* pointer) => GLPointers._glNormalPointer_fnptr((uint)type, stride, pointer);
         
         /// <summary> <b>[requires: v1.0]</b> <b>[entry point: <c>glOrthof</c>]</b><br/> Multiply the current matrix with an orthographicmatrix. </summary>
-        /// <param name="left">Specify the coordinates for the left and right vertical clipping planes.</param>
-        /// <param name="right">Specify the coordinates for the left and right vertical clipping planes.</param>
-        /// <param name="bottom">Specify the coordinates for the bottom and top horizontal clipping planes.</param>
-        /// <param name="top">Specify the coordinates for the bottom and top horizontal clipping planes.</param>
-        /// <param name="near">Specify the distances to the nearer and farther depth clipping planes. These values are negative if the plane is to be behind the viewer.</param>
-        /// <param name="far">Specify the distances to the nearer and farther depth clipping planes. These values are negative if the plane is to be behind the viewer.</param>
+        /// <param name="l">Specify the coordinates for the left and right vertical clipping planes.</param>
+        /// <param name="r">Specify the coordinates for the left and right vertical clipping planes.</param>
+        /// <param name="b">Specify the coordinates for the bottom and top horizontal clipping planes.</param>
+        /// <param name="t">Specify the coordinates for the bottom and top horizontal clipping planes.</param>
+        /// <param name="n">Specify the distances to the nearer and farther depth clipping planes. These values are negative if the plane is to be behind the viewer.</param>
+        /// <param name="f">Specify the distances to the nearer and farther depth clipping planes. These values are negative if the plane is to be behind the viewer.</param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es1.1/xhtml/glOrtho.xml" /></remarks>
         public static void Orthof(float l, float r, float b, float t, float n, float f) => GLPointers._glOrthof_fnptr(l, r, b, t, n, f);
         
         /// <summary> <b>[requires: v1.0]</b> <b>[entry point: <c>glOrthox</c>]</b><br/> Multiply the current matrix with an orthographicmatrix. </summary>
-        /// <param name="left">Specify the coordinates for the left and right vertical clipping planes.</param>
-        /// <param name="right">Specify the coordinates for the left and right vertical clipping planes.</param>
-        /// <param name="bottom">Specify the coordinates for the bottom and top horizontal clipping planes.</param>
-        /// <param name="top">Specify the coordinates for the bottom and top horizontal clipping planes.</param>
-        /// <param name="near">Specify the distances to the nearer and farther depth clipping planes. These values are negative if the plane is to be behind the viewer.</param>
-        /// <param name="far">Specify the distances to the nearer and farther depth clipping planes. These values are negative if the plane is to be behind the viewer.</param>
+        /// <param name="l">Specify the coordinates for the left and right vertical clipping planes.</param>
+        /// <param name="r">Specify the coordinates for the left and right vertical clipping planes.</param>
+        /// <param name="b">Specify the coordinates for the bottom and top horizontal clipping planes.</param>
+        /// <param name="t">Specify the coordinates for the bottom and top horizontal clipping planes.</param>
+        /// <param name="n">Specify the distances to the nearer and farther depth clipping planes. These values are negative if the plane is to be behind the viewer.</param>
+        /// <param name="f">Specify the distances to the nearer and farther depth clipping planes. These values are negative if the plane is to be behind the viewer.</param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es1.1/xhtml/glOrtho.xml" /></remarks>
         public static void Orthox(int l, int r, int b, int t, int n, int f) => GLPointers._glOrthox_fnptr(l, r, b, t, n, f);
         
@@ -1202,7 +1202,7 @@ namespace OpenTK.Graphics.OpenGLES1
             public static void ConvolutionParameterxvOES(ConvolutionTargetEXT target, ConvolutionParameter pname, int* parameters) => GLPointers._glConvolutionParameterxvOES_fnptr((uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_OES_matrix_palette]</b> <b>[entry point: <c>glCurrentPaletteMatrixOES</c>]</b><br/>         defines which of the palette&apos;s matrices is affected by        subsequent matrix operations        . </summary>
-            /// <param name="index"> specifies the index into the palette&apos;s matrices. </param>
+            /// <param name="matrixpaletteindex"> specifies the index into the palette&apos;s matrices. </param>
             /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es1.1/xhtml/glCurrentPaletteMatrix.xml" /></remarks>
             public static void CurrentPaletteMatrixOES(uint matrixpaletteindex) => GLPointers._glCurrentPaletteMatrixOES_fnptr(matrixpaletteindex);
             
