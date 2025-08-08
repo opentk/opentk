@@ -5,6 +5,7 @@ using GeneratorBase.Utility.Extensions;
 using GeneratorBase.Utility;
 using GLGenerator.Process;
 using GLGenerator.Parsing;
+using System.Diagnostics;
 
 namespace GLGenerator.Process
 {
@@ -380,7 +381,7 @@ namespace GLGenerator.Process
 
                     // FIXME: Make api an OutputAPI
 
-                    Dictionary<string, HashSet<OverloadedFunction>> functionsByVendor = new Dictionary<string, HashSet<OverloadedFunction>>();
+                    Dictionary<string, List<OverloadedFunction>> functionsByVendor = new Dictionary<string, List<OverloadedFunction>>();
                     
                     HashSet<EnumGroupMember> theAllEnumGroup = new HashSet<EnumGroupMember>();
 
@@ -398,16 +399,14 @@ namespace GLGenerator.Process
                                 }
                                 else
                                 {
-                                    functionsByVendor.AddToNestedHashSet("", overloadedFunction);
-                                    
+                                    Debug.Assert(functionsByVendor.AddToNestedListIfNotPresent("", overloadedFunction));
                                     referenced = true;
                                 }
                             }
 
                             foreach (var extension in functionRef.PartOfExtensions)
                             {
-                                functionsByVendor.AddToNestedHashSet(extension.Vendor, overloadedFunction);
-
+                                functionsByVendor.AddToNestedListIfNotPresent(extension.Vendor, overloadedFunction);
                                 referenced = true;
                             }
 
@@ -559,7 +558,7 @@ namespace GLGenerator.Process
                     // Group groupNameToEnumGroup
                     // Lookup documentation
                     Dictionary<string, GLVendorFunctions> vendors = new Dictionary<string, GLVendorFunctions>();
-                    foreach ((string vendor, HashSet<OverloadedFunction> overloadedFunctions) in functionsByVendor)
+                    foreach ((string vendor, List<OverloadedFunction> overloadedFunctions) in functionsByVendor)
                     {
                         foreach (OverloadedFunction overloadedFunction in overloadedFunctions)
                         {
@@ -727,7 +726,7 @@ namespace GLGenerator.Process
 
             Pointers CreatePointersList(GLFile file, List<Namespace> namespaces)
             {
-                List<NativeFunction> allFunctions = new List<NativeFunction>();
+                SortedList<string, NativeFunction> allFunctions = new SortedList<string, NativeFunction>();
                 foreach (Namespace @namespace in namespaces)
                 {
                     bool addFunctions = false;
@@ -768,18 +767,16 @@ namespace GLGenerator.Process
                         {
                             foreach (var function in functions.Functions)
                             {
-                                if (allFunctions.Contains(function.NativeFunction) == false)
+                                if (allFunctions.ContainsKey(function.NativeFunction.EntryPoint) == false)
                                 {
-                                    allFunctions.Add(function.NativeFunction);
+                                    allFunctions.Add(function.NativeFunction.EntryPoint, function.NativeFunction);
                                 }
                             }
                         }
                     }
                 }
 
-                allFunctions.Sort((f1, f2) => f1.EntryPoint.CompareTo(f2.EntryPoint));
-
-                return new Pointers(file, allFunctions);
+                return new Pointers(file, allFunctions.Values.ToList());
             }
         }
 

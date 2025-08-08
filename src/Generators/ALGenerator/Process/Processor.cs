@@ -462,6 +462,45 @@ namespace ALGenerator.Process
                         {
                             if (enumGroupToNativeFunctionsUsingThatEnumGroup.TryGetValue(group, out var functionsUsingEnumGroup) == false)
                             {
+                                Pointers CreatePointersList(ALFile file, List<Namespace> namespaces)
+                                {
+                                    SortedList<string, NativeFunction> allFunctions = new SortedList<string, NativeFunction>();
+                                    foreach (Namespace @namespace in namespaces)
+                                    {
+                                        bool addFunctions = false;
+                                        switch (file)
+                                        {
+                                            case ALFile.AL:
+                                                if (@namespace.Name == OutputApi.AL)
+                                                {
+                                                    addFunctions = true;
+                                                }
+                                                break;
+                                            case ALFile.ALC:
+                                                if (@namespace.Name == OutputApi.ALC)
+                                                {
+                                                    addFunctions = true;
+                                                }
+                                                break;
+                                        }
+
+                                        if (addFunctions)
+                                        {
+                                            foreach (var functions in @namespace.VendorFunctions)
+                                            {
+                                                foreach (var function in functions.Functions)
+                                                {
+                                                    if (allFunctions.ContainsKey(function.NativeFunction.EntryPoint) == false)
+                                                    {
+                                                        allFunctions.Add(function.NativeFunction.EntryPoint, function.NativeFunction);
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                    return new Pointers(file, allFunctions.Values.ToList());
+                                }
                                 functionsUsingEnumGroup = null;
                             }
 
@@ -641,7 +680,7 @@ namespace ALGenerator.Process
 
             Pointers CreatePointersList(ALFile file, List<Namespace> namespaces)
             {
-                List<NativeFunction> allFunctions = new List<NativeFunction>();
+                SortedList<string, NativeFunction> allFunctions = new SortedList<string, NativeFunction>();
                 foreach (Namespace @namespace in namespaces)
                 {
                     bool addFunctions = false;
@@ -667,18 +706,16 @@ namespace ALGenerator.Process
                         {
                             foreach (var function in functions.Functions)
                             {
-                                if (allFunctions.Contains(function.NativeFunction) == false)
+                                if (allFunctions.ContainsKey(function.NativeFunction.EntryPoint) == false)
                                 {
-                                    allFunctions.Add(function.NativeFunction);
+                                    allFunctions.Add(function.NativeFunction.EntryPoint, function.NativeFunction);
                                 }
                             }
                         }
                     }
                 }
 
-                allFunctions.Sort((f1, f2) => f1.EntryPoint.CompareTo(f2.EntryPoint));
-
-                return new Pointers(file, allFunctions);
+                return new Pointers(file, allFunctions.Values.ToList());
             }
         }
 

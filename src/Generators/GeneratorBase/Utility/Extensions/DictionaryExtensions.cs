@@ -61,7 +61,7 @@ namespace GeneratorBase.Utility.Extensions
         /// <param name="dict">The dictionary with a nested hashset.</param>
         /// <param name="key">The key of the element to add.</param>
         /// <param name="value">The value of the element to add.</param>
-        public static void AddToNestedHashSet<TKey, TValue>(this Dictionary<TKey, HashSet<TValue>> dict, TKey key, TValue value)
+        public static bool AddToNestedHashSet<TKey, TValue>(this Dictionary<TKey, HashSet<TValue>> dict, TKey key, TValue value)
             where TKey : notnull
         {
             if (dict.TryGetValue(key, out var nestedCollection) == false)
@@ -69,7 +69,7 @@ namespace GeneratorBase.Utility.Extensions
                 nestedCollection = new HashSet<TValue>();
                 dict.Add(key, nestedCollection);
             }
-            nestedCollection.Add(value);
+            return nestedCollection.Add(value);
         }
 
         /// <summary>
@@ -90,6 +90,36 @@ namespace GeneratorBase.Utility.Extensions
                 dict.Add(key, nestedCollection);
             }
             nestedCollection.Add(value);
+        }
+
+        /// <summary>
+        /// Adds the specified key and value to the a dictionary with a nested list.
+        /// This method allocates a nested list if needed.
+        /// </summary>
+        /// <typeparam name="TKey">Key of the dictionary.</typeparam>
+        /// <typeparam name="TValue">The value to store.</typeparam>
+        /// <param name="dict">The dictionary with a nested list.</param>
+        /// <param name="key">The key of the element to add.</param>
+        /// <param name="value">The value of the element to add.</param>
+        /// <returns>If the value was added to the inner list.</returns>
+        public static bool AddToNestedListIfNotPresent<TKey, TValue>(this Dictionary<TKey, List<TValue>> dict, TKey key, TValue value)
+            where TKey : notnull
+        {
+            if (dict.TryGetValue(key, out var nestedCollection) == false)
+            {
+                nestedCollection = new List<TValue>();
+                dict.Add(key, nestedCollection);
+            }
+
+            if (nestedCollection.Contains(value) == false)
+            {
+                nestedCollection.Add(value);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

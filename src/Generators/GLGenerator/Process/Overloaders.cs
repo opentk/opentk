@@ -28,7 +28,6 @@ namespace GLGenerator.Process
             new TrimNameOverloader(),
 
             new StringReturnOverloader(),
-            //new GetReturnOverloader(),
             new BoolReturnOverloader(),
 
             new ColorTypeOverloader(),
@@ -107,97 +106,6 @@ namespace GLGenerator.Process
             {
                 newOverloads = default;
                 return false;
-            }
-        }
-    }
-
-    internal class GetReturnOverloader : IOverloader
-    {
-        public bool TryGenerateOverloads(Overload overload, [NotNullWhen(true)] out List<Overload>? newOverloads)
-        {
-            if (overload.NativeFunction.EntryPoint.StartsWith("glGet") &&
-                overload.NativeFunction.EntryPoint.StartsWith("glGetUniform") == false &&
-                overload.NativeFunction.EntryPoint.StartsWith("glGetVertexAttrib") == false
-                // FIXME: It might be better to be more selective about what
-                // functions we overload like this to reduce the number of
-                // garbage overloads generated.
-                /*
-                overload.NativeFunction.EntryPoint.StartsWith("glGetInteger") ||
-                overload.NativeFunction.EntryPoint.StartsWith("glGetFloat") ||
-                overload.NativeFunction.EntryPoint.StartsWith("glGetDouble") ||
-                overload.NativeFunction.EntryPoint.StartsWith("glGetBoolean") ||
-                overload.NativeFunction.EntryPoint.StartsWith("glGetFixed") ||
-                overload.NativeFunction.EntryPoint.StartsWith("glGetShader") ||
-                overload.NativeFunction.EntryPoint.StartsWith("glGetProgram") ||
-                overload.NativeFunction.EntryPoint.StartsWith("glGetBuffer") ||
-                overload.NativeFunction.EntryPoint.StartsWith("glGetFramebuffer") ||
-                overload.NativeFunction.EntryPoint.StartsWith("glGetTexture") ||
-                overload.NativeFunction.EntryPoint.StartsWith("glGetSampler") ||
-                overload.NativeFunction.EntryPoint.StartsWith("glGetVertexArray") ||
-                */
-                )
-            {
-                if (overload.InputParameters.Length == 0)
-                {
-                    newOverloads = default;
-                    return false;
-                }
-
-                // We are looking for function where the last parameter is a pointer argument called "data" that we are going to convert to a return value.
-                if (overload.InputParameters[^1].Type is CSPointer pointer &&
-                    pointer.BaseType is not CSVoid &&
-                    pointer.BaseType is not CSChar8)
-                {
-                    if (overload.InputParameters[^1].Length is not null)
-                    {
-                        // If there is a length and it's not "1", we don't generate an overload.
-                        if (overload.InputParameters[^1].Length is ConstantExpression constant && constant.Value != 1)
-                        {
-                            newOverloads = null;
-                            return false;
-                        }
-                    }
-
-                    string newReturnName = $"{overload.InputParameters[^1].Name}_val";
-                    var layer = new GetReturnLayer(overload.InputParameters[^1], pointer.BaseType, newReturnName);
-
-                    var inputParams = overload.InputParameters[0..^1];
-
-                    var nameTable = overload.NameTable.New();
-                    nameTable.ReturnName = newReturnName;
-
-                    newOverloads = new List<Overload>()
-                    {
-                        overload,
-                        overload with
-                        {
-                            NestedOverload = overload,
-                            MarshalLayerToNested = layer,
-                            InputParameters = inputParams,
-                            ReturnType = pointer.BaseType,
-                            NameTable = nameTable,
-                        }
-                    };
-                    return true;
-                }
-            }
-
-            newOverloads = default;
-            return false;
-        }
-
-        private record GetReturnLayer(Parameter ReturnParam, BaseCSType BaseType, string NewReturnName) : IOverloadLayer
-        {
-            public void WritePrologue(IndentedTextWriter writer, NameTable nameTable)
-            {
-                // FIXME: Detect if we need to create our own variable!
-                //writer.WriteLine($"{BaseType.ToCSString()} {NewReturnName};");
-                writer.WriteLine($"{ReturnParam.Type.ToCSString()} {nameTable[ReturnParam]} = &{NewReturnName};");
-            }
-
-            public string? WriteEpilogue(IndentedTextWriter writer, NameTable nameTable, string? returnName)
-            {
-                return NewReturnName;
             }
         }
     }
