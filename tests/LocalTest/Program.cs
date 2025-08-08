@@ -90,7 +90,7 @@ namespace LocalTest
 
             GL.ClearColor(color);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
-
+            
             SwapBuffers();
         }
 
