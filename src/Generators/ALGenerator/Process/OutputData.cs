@@ -25,7 +25,7 @@ namespace ALGenerator.Process
     // FIXME: Maybe change to API.. something? "namespace" is quite generic.
     internal record Namespace(
         OutputApi Name,
-        SortedDictionary<string, ALVendorFunctions> Vendors,
+        List<ALVendorFunctions> VendorFunctions,
         List<EnumGroup> EnumGroups,
         Dictionary<NativeFunction, FunctionDocumentation> Documentation);
 
@@ -43,6 +43,7 @@ namespace ALGenerator.Process
         );
 
     internal record ALVendorFunctions(
+        string Vendor,
         List<OverloadedFunction> Functions,
         HashSet<NativeFunction> NativeFunctionsWithPostfix);
 

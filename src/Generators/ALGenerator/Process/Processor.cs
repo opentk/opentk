@@ -48,14 +48,12 @@ namespace ALGenerator.Process
         internal static OutputData ProcessSpec(Specification2 spec, Documentation docs)
         {
             // The first thing we do is process all of the vendorFunctions defined into a dictionary of Functions.
-            List<NativeFunction> allEntryPoints = new List<NativeFunction>(spec.Functions.Count);
             Dictionary<string, OverloadedFunction> allFunctions = new Dictionary<string, OverloadedFunction>(spec.Functions.Count);
             foreach (NativeFunction nativeFunction in spec.Functions)
             {
                 Dictionary<OutputApi, CommandDocumentation> functionDocumentation = MakeDocumentationForNativeFunction(nativeFunction, docs);
                 OverloadedFunction overloadedFunction = GenerateOverloads(nativeFunction, functionDocumentation);
 
-                allEntryPoints.Add(nativeFunction);
                 allFunctions.Add(nativeFunction.EntryPoint, overloadedFunction);
             }
 
@@ -122,6 +120,7 @@ namespace ALGenerator.Process
                 }
             }
 
+            // Resolve cross referenced enums between APIs
             foreach (var (api, _, enums) in spec.APIs)
             {
                 OutputApi outAPI = api switch
@@ -141,115 +140,108 @@ namespace ALGenerator.Process
                     _ => throw new Exception(),
                 };
 
-                CrossReferenceEnums(outAPI, file);
-
-                void CrossReferenceEnums(OutputApi outAPI, ALFile glFile)
+                bool removeFunctions = outAPI switch
                 {
-                    bool removeFunctions = outAPI switch
-                    {
-                        OutputApi.AL => true,
-                        OutputApi.ALC => true,
-                        _ => false,
-                    };
+                    OutputApi.AL => true,
+                    OutputApi.ALC => true,
+                    _ => false,
+                };
 
-                    Dictionary<string, EnumGroupMember>? enumsDict = allEnumsPerAPI[outAPI];
+                Dictionary<string, EnumGroupMember>? enumsDict = allEnumsPerAPI[outAPI];
 
-                    foreach (EnumReference enumRef in enums)
+                foreach (EnumReference enumRef in enums)
+                {
+                    if (enumRef.IsCrossReferenced)
+                        continue;
+
+                    if (removeFunctions)
                     {
-                        if (enumRef.IsCrossReferenced)
+                        // FIXME: Should we check the profile of the extension??
+                        if (enumRef.RemovedIn != null)
+                        {
+                            // FIXME: Add the enum if an extension uses it??
                             continue;
-
-                        if (removeFunctions)
-                        {
-                            // FIXME: Should we check the profile of the extension??
-                            if (enumRef.RemovedIn != null)
-                            {
-                                // FIXME: Add the enum if an extension uses it??
-                                continue;
-                            }
                         }
+                    }
 
-                        // FIXME! This is a big hack!
-                        // We don't want to process this "enum" as it is a string.
-                        if (enumRef.EnumName == "GLX_EXTENSION_NAME") continue;
+                    // FIXME! This is a big hack!
+                    // We don't want to process this "enum" as it is a string.
+                    if (enumRef.EnumName == "GLX_EXTENSION_NAME") continue;
 
-                        if (enumsDict.TryGetValue(enumRef.EnumName, out EnumGroupMember? @enum))
+                    if (enumsDict.TryGetValue(enumRef.EnumName, out EnumGroupMember? @enum))
+                    {
+                        foreach (var groupRef in @enum.Groups)
                         {
-                            foreach (var groupRef in @enum.Groups)
+                            ALFile @namespace = groupRef.Namespace;
+                            if (@namespace != file)
                             {
-                                ALFile @namespace = groupRef.Namespace;
-                                if (@namespace != glFile)
+                                if (@namespace == ALFile.AL)
                                 {
-                                    if (@namespace == ALFile.AL)
+                                    AddEnumToAPI(OutputApi.AL, @enum);
+                                }
+                                else if (@namespace == ALFile.ALC)
+                                {
+                                    AddEnumToAPI(OutputApi.ALC, @enum);
+                                }
+
+                                void AddEnumToAPI(OutputApi outputApi, EnumGroupMember @enum)
+                                {
+                                    // FIXME: There is an issue where a cross referenced enum gets readded here.
+                                    // We want to avoid this.
+
+                                    if (allEnumsPerAPI[outputApi].ContainsKey(@enum.Name) == false)
                                     {
-                                        AddEnumToAPI(OutputApi.AL, @enum);
+                                        allEnumsPerAPI.AddToNestedDict(outputApi, @enum.Name, @enum);
                                     }
-                                    else if (@namespace == ALFile.ALC)
+
+                                    foreach (var api in spec.APIs)
                                     {
-                                        AddEnumToAPI(OutputApi.ALC, @enum);
-                                    }
-
-                                    void AddEnumToAPI(OutputApi outputApi, EnumGroupMember @enum)
-                                    {
-                                        // FIXME: There is an issue where a cross referenced enum gets readded here.
-                                        // We want to avoid this.
-
-                                        if (allEnumsPerAPI[outputApi].ContainsKey(@enum.Name) == false)
+                                        if (MatchesAPI(api.Name, outputApi))
                                         {
-                                            allEnumsPerAPI.AddToNestedDict(outputApi, @enum.Name, @enum);
-                                        }
-
-                                        foreach (var api in spec.APIs)
-                                        {
-                                            if (MatchesAPI(api.Name, outputApi))
-                                            {
-                                                api.Enums.Add(new EnumReference(@enum.Name, null, null, new List<ExtensionReference>(), true));
-                                                Logger.Info($"Added enum entry '{@enum.MangledName}' to {outputApi}.");
-                                            }
-                                        }
-
-                                        AddToGroup(allEnumGroups, outputApi, groupRef, @enum.IsFlag);
-
-                                        static bool MatchesAPI(InputAPI api, OutputApi output)
-                                        {
-                                            switch (api)
-                                            {
-                                                case InputAPI.AL: return output == OutputApi.AL;
-                                                case InputAPI.ALC: return output == OutputApi.ALC;
-                                                default: throw new Exception();
-                                            }
-                                        }
-
-                                        // FIXME: Duplicate implementation, see above.
-                                        static void AddToGroup(Dictionary<OutputApi, HashSet<EnumGroupInfo>> allEnumGroups, OutputApi api, GroupRef @ref, bool isFlag)
-                                        {
-                                            // If the first groupNameToEnumGroup tag wasn't flagged as a bitmask, but later ones in the same groupName are.
-                                            // Then we want the groupName to be considered a bitmask.
-                                            if (allEnumGroups[api].TryGetValue(new EnumGroupInfo(@ref.OriginalName, @ref.TranslatedName, isFlag), out EnumGroupInfo? actual))
-                                            {
-                                                // In the current spec this case never happens, but it could.
-                                                // - 2021-07-04
-                                                if (isFlag == true && actual.IsFlags == false)
-                                                {
-                                                    allEnumGroups[api].Remove(actual);
-                                                    allEnumGroups[api].Add(actual with { IsFlags = true });
-                                                }
-                                            }
-                                            else
-                                            {
-                                                allEnumGroups[api].Add(new EnumGroupInfo(@ref.OriginalName, @ref.TranslatedName, isFlag));
-                                            }
+                                            api.Enums.Add(new EnumReference(@enum.Name, null, null, new List<ExtensionReference>(), true));
+                                            Logger.Info($"Added enum entry '{@enum.MangledName}' to {outputApi}.");
                                         }
                                     }
 
-                                    
+                                    AddToGroup(allEnumGroups, outputApi, groupRef, @enum.IsFlag);
+
+                                    static bool MatchesAPI(InputAPI api, OutputApi output)
+                                    {
+                                        switch (api)
+                                        {
+                                            case InputAPI.AL: return output == OutputApi.AL;
+                                            case InputAPI.ALC: return output == OutputApi.ALC;
+                                            default: throw new Exception();
+                                        }
+                                    }
+
+                                    // FIXME: Duplicate implementation, see above.
+                                    static void AddToGroup(Dictionary<OutputApi, HashSet<EnumGroupInfo>> allEnumGroups, OutputApi api, GroupRef @ref, bool isFlag)
+                                    {
+                                        // If the first groupNameToEnumGroup tag wasn't flagged as a bitmask, but later ones in the same groupName are.
+                                        // Then we want the groupName to be considered a bitmask.
+                                        if (allEnumGroups[api].TryGetValue(new EnumGroupInfo(@ref.OriginalName, @ref.TranslatedName, isFlag), out EnumGroupInfo? actual))
+                                        {
+                                            // In the current spec this case never happens, but it could.
+                                            // - 2021-07-04
+                                            if (isFlag == true && actual.IsFlags == false)
+                                            {
+                                                allEnumGroups[api].Remove(actual);
+                                                allEnumGroups[api].Add(actual with { IsFlags = true });
+                                            }
+                                        }
+                                        else
+                                        {
+                                            allEnumGroups[api].Add(new EnumGroupInfo(@ref.OriginalName, @ref.TranslatedName, isFlag));
+                                        }
+                                    }
                                 }
                             }
                         }
-                        else
-                        {
-                            throw new Exception($"Could not find any enum called '{enumRef.EnumName}'.");
-                        }
+                    }
+                    else
+                    {
+                        throw new Exception($"Could not find any enum called '{enumRef.EnumName}'.");
                     }
                 }
             }
@@ -496,7 +488,7 @@ namespace ALGenerator.Process
                         {
                             if (!vendors.TryGetValue(vendor, out ALVendorFunctions? group))
                             {
-                                group = new ALVendorFunctions(new List<Process.OverloadedFunction>(), new HashSet<NativeFunction>());
+                                group = new ALVendorFunctions(vendor, new List<Process.OverloadedFunction>(), new HashSet<NativeFunction>());
                                 vendors.Add(vendor, group);
                             }
 
@@ -509,11 +501,12 @@ namespace ALGenerator.Process
                         }
                     }
 
-                    SortedDictionary<string, ALVendorFunctions> sortedVendors = new SortedDictionary<string, ALVendorFunctions>(vendors);
-                    foreach (var (vendor, vendorFunctions) in sortedVendors)
+                    List<ALVendorFunctions> sortedVendorFunctions = [..vendors.Values];
+                    foreach (ALVendorFunctions functions in sortedVendorFunctions)
                     {
-                        vendorFunctions.Functions.Sort();
+                        functions.Functions.Sort();
                     }
+                    sortedVendorFunctions.Sort((e1, e2) => e1.Vendor.CompareTo(e2.Vendor));
 
                     Dictionary<NativeFunction, FunctionDocumentation> documentation = new Dictionary<NativeFunction, FunctionDocumentation>();
                     foreach (var (vendor, vendorFunctions) in functionsByVendor)
@@ -635,8 +628,7 @@ namespace ALGenerator.Process
                         }
                     }
 
-                    return new Namespace(outAPI, sortedVendors, finalGroups, documentation);
-                    //return new GLOutputApi(outAPI, sortedVendors, finalGroups, documentation);
+                    return new Namespace(outAPI, sortedVendorFunctions, finalGroups, documentation);
                 }
             }
 
@@ -671,7 +663,7 @@ namespace ALGenerator.Process
 
                     if (addFunctions)
                     {
-                        foreach (var (_, functions) in @namespace.Vendors)
+                        foreach (var functions in @namespace.VendorFunctions)
                         {
                             foreach (var function in functions.Functions)
                             {

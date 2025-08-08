@@ -1210,6 +1210,10 @@ namespace VkGenerator
                 }
                 writer.Write("/// ");
             }
+
+            // We don't have to deal with this in the Vulkan generator yet.
+            // - Noggin_bops 2025-08-08
+            Debug.Assert(versionInfo.RemovedBy.Count == 0);
         }
     }
 }

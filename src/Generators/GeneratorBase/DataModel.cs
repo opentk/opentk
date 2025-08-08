@@ -7,21 +7,29 @@ using System.Threading.Tasks;
 namespace GeneratorBase
 {
     public record DeprecationReason(Version? Version, string? Extension, string? ExplanationLink);
+    public record RemoveReason(Version? Version, string? Extension, string? ExplanationLink);
 
     public record VersionInfo(Version? Version, List<string> Extensions)
     {
         // FIXME: Maybe we should record who removes this thing too?
 
         public List<DeprecationReason> DeprecatedBy = [];
+        public List<RemoveReason> RemovedBy = [];
 
         public void Deprecate(DeprecationReason reason)
         {
             DeprecatedBy.Add(reason);
         }
 
+        public void Remove(RemoveReason reason)
+        {
+            RemovedBy.Add(reason);
+        }
+
         public override string ToString()
         {
-            return $"V: {Version}{(DeprecatedBy != null ? $" Deprecated: {string.Join(", ", DeprecatedBy.Select(d => d.Version?.ToString() ?? d.Extension))}" : "")} Extensions: {string.Join(", ", Extensions)}";
+            // V: X.x Deprecated: Y.y Removed: Z.z Extensions: API_EXT_EXTENSION
+            return $"V: {Version}{(DeprecatedBy != null ? $" Deprecated: {string.Join(", ", DeprecatedBy.Select(d => d.Version?.ToString() ?? d.Extension))}" : "")}{(RemovedBy != null ? $"Removed: {string.Join(", ", RemovedBy.Select(d => d.Version?.ToString() ?? d.Extension))}" : "")} Extensions: {string.Join(", ", Extensions)}";
         }
     }
 

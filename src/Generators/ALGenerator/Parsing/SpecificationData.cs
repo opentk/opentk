@@ -1,4 +1,5 @@
 ﻿using ALGenerator.Process;
+using GeneratorBase;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;

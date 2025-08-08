@@ -565,7 +565,7 @@ namespace GLGenerator.Process
                         {
                             if (!vendors.TryGetValue(vendor, out GLVendorFunctions? group))
                             {
-                                group = new GLVendorFunctions(new List<Process.OverloadedFunction>(), new HashSet<NativeFunction>());
+                                group = new GLVendorFunctions(vendor, new List<Process.OverloadedFunction>(), new HashSet<NativeFunction>());
                                 vendors.Add(vendor, group);
                             }
 
@@ -577,6 +577,13 @@ namespace GLGenerator.Process
                             }
                         }
                     }
+
+                    List<GLVendorFunctions> sortedVendorFunctions = [..vendors.Values];
+                    foreach (GLVendorFunctions functions in sortedVendorFunctions)
+                    {
+                        functions.Functions.Sort();
+                    }
+                    sortedVendorFunctions.Sort((e1, e2) => e1.Vendor.CompareTo(e2.Vendor));
 
                     SortedDictionary<string, GLVendorFunctions> sortedVendors = new SortedDictionary<string, GLVendorFunctions>(vendors);
                     foreach (var (vendor, vendorFunctions) in sortedVendors)
@@ -704,8 +711,7 @@ namespace GLGenerator.Process
                         }
                     }
 
-                    return new Namespace(outAPI, sortedVendors, finalGroups, documentation);
-                    //return new GLOutputApi(outAPI, sortedVendors, finalGroups, documentation);
+                    return new Namespace(outAPI, sortedVendorFunctions, finalGroups, documentation);
                 }
             }
 
@@ -758,7 +764,7 @@ namespace GLGenerator.Process
 
                     if (addFunctions)
                     {
-                        foreach (var (_, functions) in @namespace.Vendors)
+                        foreach (var functions in @namespace.VendorFunctions)
                         {
                             foreach (var function in functions.Functions)
                             {

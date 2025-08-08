@@ -1505,6 +1505,8 @@ namespace GLGenerator.Process
                     }
                     else if (pointer.BaseType is CSPointer)
                     {
+                        // FIXME: Maybe we can generate an IntPtr[] overload when this happens?
+                        // - Noggin_bops 2025-08-08
                         Logger.Warning($"Pointer leaked from earlier overloaders: \"{overload.NativeFunction.EntryPoint}\" ({param})");
                         continue;
                     }

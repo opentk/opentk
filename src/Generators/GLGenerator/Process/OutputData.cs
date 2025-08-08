@@ -25,7 +25,8 @@ namespace GLGenerator.Process
     // FIXME: Maybe change to API.. something? "namespace" is quite generic.
     internal record Namespace(
         OutputApi Name,
-        SortedDictionary<string, GLVendorFunctions> Vendors,
+        List<GLVendorFunctions> VendorFunctions,
+        //SortedDictionary<string, GLVendorFunctions> Vendors,
         List<EnumGroup> EnumGroups,
         Dictionary<NativeFunction, FunctionDocumentation> Documentation);
 
@@ -43,6 +44,7 @@ namespace GLGenerator.Process
         );
 
     internal record GLVendorFunctions(
+        string Vendor,
         List<OverloadedFunction> Functions,
         HashSet<NativeFunction> NativeFunctionsWithPostfix);
 

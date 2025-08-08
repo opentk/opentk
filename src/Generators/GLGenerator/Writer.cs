@@ -75,8 +75,8 @@ namespace GLGenerator
                 File.Delete(file);
             }
 
-            WriteNativeFunctions(directoryPath, strings, @namespace.Vendors, @namespace.Documentation);
-            WriteOverloads(directoryPath, strings, @namespace.Vendors);
+            WriteNativeFunctions(directoryPath, strings, @namespace.VendorFunctions, @namespace.Documentation);
+            WriteOverloads(directoryPath, strings, @namespace.VendorFunctions);
 
             WriteEnums(directoryPath, strings, @namespace.EnumGroups);
         }
@@ -232,7 +232,7 @@ namespace GLGenerator
         private static void WriteNativeFunctions(
             string directoryPath,
             FileStrings strings,
-            SortedDictionary<string, GLVendorFunctions> groups,
+            List<GLVendorFunctions> groups,
             Dictionary<NativeFunction, FunctionDocumentation> documentation)
         {
             using StreamWriter stream = File.CreateText(Path.Combine(directoryPath, $"{strings.FileNamePrefix}.Native.cs"));
@@ -255,13 +255,13 @@ namespace GLGenerator
                 writer.WriteLine($"public static unsafe partial class {strings.ApiName}");
                 using (writer.CsScope())
                 {
-                    foreach (var (vendor, group) in groups)
+                    foreach (var group in groups)
                     {
                         CsScope? scope = null;
-                        if (!string.IsNullOrWhiteSpace(vendor))
+                        if (!string.IsNullOrWhiteSpace(group.Vendor))
                         {
-                            writer.WriteLine($"/// <summary>{vendor} extensions.</summary>");
-                            writer.WriteLine($"public static unsafe partial class {vendor}");
+                            writer.WriteLine($"/// <summary>{group.Vendor} extensions.</summary>");
+                            writer.WriteLine($"public static unsafe partial class {group.Vendor}");
                             scope = writer.CsScope();
                         }
 
@@ -325,7 +325,7 @@ namespace GLGenerator
         private static void WriteOverloads(
             string directoryPath,
             FileStrings strings,
-            SortedDictionary<string, GLVendorFunctions> groups)
+            List<GLVendorFunctions> groups)
         {
             using StreamWriter stream = File.CreateText(Path.Combine(directoryPath, $"{strings.FileNamePrefix}.Overloads.cs"));
             using IndentedTextWriter writer = new IndentedTextWriter(stream);
@@ -350,12 +350,12 @@ namespace GLGenerator
                 writer.WriteLine($"public static unsafe partial class {strings.ApiName}");
                 using (writer.CsScope())
                 {
-                    foreach (var (vendor, group) in groups)
+                    foreach (var group in groups)
                     {
                         CsScope? scope = null;
-                        if (!string.IsNullOrWhiteSpace(vendor))
+                        if (!string.IsNullOrWhiteSpace(group.Vendor))
                         {
-                            writer.WriteLine($"public static unsafe partial class {vendor}");
+                            writer.WriteLine($"public static unsafe partial class {group.Vendor}");
                             scope = writer.CsScope();
                         }
 

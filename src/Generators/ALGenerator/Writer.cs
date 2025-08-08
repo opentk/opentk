@@ -10,6 +10,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace ALGenerator
 {
@@ -63,8 +64,8 @@ namespace ALGenerator
             string directoryPath = Path.Combine(outputProjectPath, Path.Combine(strings.Namespace.Split('.')));
             if (Directory.Exists(directoryPath) == false) Directory.CreateDirectory(directoryPath);
             
-            WriteNativeFunctions(directoryPath, strings, @namespace.Vendors, @namespace.Documentation);
-            WriteOverloads(directoryPath, strings, @namespace.Vendors);
+            WriteNativeFunctions(directoryPath, strings, @namespace.VendorFunctions, @namespace.Documentation);
+            WriteOverloads(directoryPath, strings, @namespace.VendorFunctions);
 
             WriteEnums(directoryPath, strings, @namespace.EnumGroups);
         }
@@ -218,7 +219,7 @@ namespace ALGenerator
         private static void WriteNativeFunctions(
             string directoryPath,
             FileStrings strings,
-            SortedDictionary<string, ALVendorFunctions> groups,
+            List<ALVendorFunctions> groups,
             Dictionary<NativeFunction, FunctionDocumentation> documentation)
         {
             using StreamWriter stream = File.CreateText(Path.Combine(directoryPath, $"{strings.FileNamePrefix}.Native.cs"));
@@ -235,13 +236,13 @@ namespace ALGenerator
                 writer.WriteLine($"public static unsafe partial class {strings.ApiName}");
                 using (writer.CsScope())
                 {
-                    foreach (var (vendor, group) in groups)
+                    foreach (var group in groups)
                     {
                         CsScope? scope = null;
-                        if (!string.IsNullOrWhiteSpace(vendor))
+                        if (!string.IsNullOrWhiteSpace(group.Vendor))
                         {
-                            writer.WriteLine($"/// <summary>{vendor} extensions.</summary>");
-                            writer.WriteLine($"public static unsafe partial class {vendor}");
+                            writer.WriteLine($"/// <summary>{group.Vendor} extensions.</summary>");
+                            writer.WriteLine($"public static unsafe partial class {group.Vendor}");
                             scope = writer.CsScope();
                         }
 
@@ -274,7 +275,7 @@ namespace ALGenerator
 
             if (documentation != null)
             {
-                WriteDocumentation(writer, documentation, function.EntryPoint);
+                WriteDocumentation(writer, function, documentation);
             }
 
             if (handleAbiDifferenceForTypesafeHandles)
@@ -305,7 +306,7 @@ namespace ALGenerator
         private static void WriteOverloads(
             string directoryPath,
             FileStrings strings,
-            SortedDictionary<string, ALVendorFunctions> groups)
+            List<ALVendorFunctions> groups)
         {
             using StreamWriter stream = File.CreateText(Path.Combine(directoryPath, $"{strings.FileNamePrefix}.Overloads.cs"));
             using IndentedTextWriter writer = new IndentedTextWriter(stream);
@@ -325,12 +326,12 @@ namespace ALGenerator
                 writer.WriteLine($"public static unsafe partial class {strings.ApiName}");
                 using (writer.CsScope())
                 {
-                    foreach (var (vendor, group) in groups)
+                    foreach (var group in groups)
                     {
                         CsScope? scope = null;
-                        if (!string.IsNullOrWhiteSpace(vendor))
+                        if (!string.IsNullOrWhiteSpace(group.Vendor))
                         {
-                            writer.WriteLine($"public static unsafe partial class {vendor}");
+                            writer.WriteLine($"public static unsafe partial class {group.Vendor}");
                             scope = writer.CsScope();
                         }
 
@@ -440,18 +441,25 @@ namespace ALGenerator
         }
 
 
-        private static void WriteDocumentation(IndentedTextWriter writer, FunctionDocumentation documentation, string entryPoint)
+        private static void WriteDocumentation(IndentedTextWriter writer, NativeFunction function, FunctionDocumentation documentation)
         {
             writer.Write("/// <summary> ");
             writer.Write($"<b>[requires: {string.Join(" | ", documentation.AddedIn)}]</b> ");
             if (documentation.RemovedIn?.Count > 0)
                 writer.Write($"<b>[removed in: {string.Join(" | ", documentation.RemovedIn)}]</b> ");
-            writer.Write($"<b>[entry point: <c>{entryPoint}</c>]</b><br/>");
+            writer.Write($"<b>[entry point: <c>{function.EntryPoint}</c>]</b><br/>");
             writer.WriteLine($" {documentation.Purpose} </summary>");
 
-            foreach (ParameterDocumentation parameter in documentation.Parameters)
+            for (int i = 0; i < documentation.Parameters.Length; i++)
             {
-                writer.WriteLine($"/// <param name=\"{parameter.Name}\">{parameter.Description}</param>");
+                ParameterDocumentation parameterDoc = documentation.Parameters[i];
+                Parameter parameter = function.Parameters[i];
+
+                // We use the parameter name here, if the documentation uses another name
+                // we've already warned about this, and using the name the C# documentation
+                // system expects reduces a lot of the warnings that are generated.
+                // - Noggin_bops 2025-08-08
+                writer.WriteLine($"/// <param name=\"{parameter.Name}\">{parameterDoc.Description}</param>");
             }
 
             if (documentation.RefPagesLink != null)
@@ -522,6 +530,27 @@ namespace ALGenerator
             }
         }
 
+        private static void WriteVersionInfo(IndentedTextWriter writer, VersionInfo versionInfo)
+        {
+            List<string> strs = [.. versionInfo.Extensions];
+            if (versionInfo.Version != null)
+            {
+                strs.Insert(0, $"v{versionInfo.Version.Major}.{versionInfo.Version.Minor}");
+            }
+            writer.Write($"<b>[requires: {string.Join(" | ", strs)}]</b> ");
+
+            if (versionInfo.DeprecatedBy?.Count > 0)
+            {
+                writer.WriteLine();
+                foreach (DeprecationReason deprecation in versionInfo.DeprecatedBy)
+                {
+                    string v = deprecation.Version != null ? $"v{deprecation.Version}" : deprecation.Extension ?? throw new Exception();
+                    string explanationLink = deprecation.ExplanationLink != null ? $"see: <see href=\"https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#{deprecation.ExplanationLink}\" />" : "";
+                    writer.WriteLine($"/// <br/><b>[deprecated by: {v}]</b> {explanationLink}");
+                }
+                writer.Write("/// ");
+            }
+        }
 
 
         internal static void WriteEFXPresets(List<EFXPreset> efxPresets)
