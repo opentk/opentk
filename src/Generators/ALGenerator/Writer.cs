@@ -1,15 +1,15 @@
 ﻿using ALGenerator.Parsing;
 using ALGenerator.Process;
+using GeneratorBase;
+using GeneratorBase.Utility;
+using GeneratorBase.Utility.Extensions;
 using System;
+using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using System.CodeDom.Compiler;
-using GeneratorBase.Utility;
-using GeneratorBase.Utility.Extensions;
-using GeneratorBase;
 
 namespace ALGenerator
 {
@@ -352,6 +352,14 @@ namespace ALGenerator
         private static void WriteOverloadMethod(IndentedTextWriter writer, Overload overload, bool postfixNativeCall)
         {
             string parameterTypes = string.Join(", ", overload.NativeFunction.Parameters.Select(p => p.Type.ToCSString()));
+            // Because this will be used in the <inheritdoc> comment we replace
+            // generic <T> angle brackets with braces to conform with the xml format.
+            // - Noggin_bops 2025-08-07
+            // FIXME: Functions taking function pointer parameters cannot be properly referenced
+            // in a cref as of yet (see https://github.com/dotnet/roslyn/issues/48363) so this
+            // will fail for these functions.
+            // - Noggin_bops 2025-08-076
+            parameterTypes = parameterTypes.Replace("<", "{").Replace(">", "}");
 
             string nativeFunctionName = overload.NativeFunction.FunctionName;
             if (postfixNativeCall)
@@ -509,6 +517,70 @@ namespace ALGenerator
                         {
                             writer.WriteLine($"{member.MangledName} = {member.Value},");
                         }
+                    }
+                }
+            }
+        }
+
+
+
+        internal static void WriteEFXPresets(List<EFXPreset> efxPresets)
+        {
+            // This is quite fragile, no idea if there is an easy way that is "better".
+            string outputProjectPath = Path.Combine(
+                Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? throw new NullReferenceException(),
+                "..", "..", "..", "..", "..", AudioNamespace);
+
+            string directoryPath = Path.Combine(outputProjectPath, "OpenAL");
+
+            using StreamWriter stream = File.CreateText(Path.Combine(directoryPath, $"EFXPresets.cs"));
+            using IndentedTextWriter writer = new IndentedTextWriter(stream);
+
+            writer.WriteLine($"// This file is auto generated, do not edit.");
+            writer.WriteLine("using System;");
+            writer.WriteLine("using System.Runtime.InteropServices;");
+            writer.WriteLine("using OpenTK.Audio;");
+            writer.WriteLine("using OpenTK.Mathematics;");
+            writer.WriteLine();
+            writer.WriteLine($"namespace {AudioNamespace}.OpenAL");
+            using (writer.CsScope())
+            {
+                // FIXME: Better class name?
+                writer.WriteLine($"public static unsafe partial class ReverbPresets");
+                using (writer.CsScope())
+                {
+                    foreach (var preset in efxPresets)
+                    {
+                        writer.WriteLine($"public static readonly ReverbProperties {preset.Name} = new ReverbProperties");
+                        writer.WriteLine("(");
+                        using (writer.Indent())
+                        {
+                            writer.WriteLine($"{preset.Density:0.0000}f,");
+                            writer.WriteLine($"{preset.Diffusion:0.0000}f,");
+                            writer.WriteLine($"{preset.Gain:0.0000}f,");
+                            writer.WriteLine($"{preset.GainHF:0.0000}f,");
+                            writer.WriteLine($"{preset.GainLF:0.0000}f,");
+                            writer.WriteLine($"{preset.DecayTime:0.0000}f,");
+                            writer.WriteLine($"{preset.DecayHFRatio:0.0000}f,");
+                            writer.WriteLine($"{preset.DecayLFRatio:0.0000}f,");
+                            writer.WriteLine($"{preset.ReflectionsGain:0.0000}f,");
+                            writer.WriteLine($"{preset.RelfectionsDelay:0.0000}f,");
+                            writer.WriteLine($"new Vector3({preset.ReflectionsPan.X:0.0000}f, {preset.ReflectionsPan.Y:0.0000}f, {preset.ReflectionsPan.Z:0.0000}f),");
+                            writer.WriteLine($"{preset.LateReverbGain:0.0000}f,");
+                            writer.WriteLine($"{preset.LateReverbDelay:0.0000}f,");
+                            writer.WriteLine($"new Vector3({preset.LateReverbPan.X:0.0000}f, {preset.LateReverbPan.Y:0.0000}f, {preset.LateReverbPan.Z:0.0000}f),");
+                            writer.WriteLine($"{preset.EchoTime:0.0000}f,");
+                            writer.WriteLine($"{preset.EchoDepth:0.0000}f,");
+                            writer.WriteLine($"{preset.ModulationTime:0.0000}f,");
+                            writer.WriteLine($"{preset.ModulationDepth:0.0000}f,");
+                            writer.WriteLine($"{preset.AirAbsorptionGainHF:0.0000}f,");
+                            writer.WriteLine($"{preset.HFReference:0.0000}f,");
+                            writer.WriteLine($"{preset.LFReference:0.0000}f,");
+                            writer.WriteLine($"{preset.RoomRolloffFactor:0.0000}f,");
+                            writer.WriteLine($"{(preset.DecayHFLimit ? 1 : 0)}");
+                        }
+                        writer.WriteLine(");");
+                        writer.WriteLine();
                     }
                 }
             }

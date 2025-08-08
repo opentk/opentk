@@ -4,6 +4,7 @@ using OpenTK.Audio.OpenAL.ALC;
 using OpenTK.Mathematics;
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
@@ -50,6 +51,69 @@ namespace OpenALTest
 
                 return strings;
             }
+        }
+
+        public static unsafe int LoadEffect(ReverbProperties preset)
+        {
+            AL.GetError();
+            int effect = AL.EXT.GenEffect();
+            AL.EXT.Effecti(effect, EffectPNameI.EffectType, (int)EffectType.EffectEaxreverb);
+            var error = AL.GetError();
+            if (error == OpenTK.Audio.OpenAL.ErrorCode.NoError)
+            {
+                Console.WriteLine("Using EAX reverb.");
+
+                AL.EXT.Effectf(effect, EffectPNameF.EaxreverbDensity, preset.Density);
+                AL.EXT.Effectf(effect, EffectPNameF.EaxreverbDiffusion, preset.Diffusion);
+                AL.EXT.Effectf(effect, EffectPNameF.EaxreverbGain, preset.Gain);
+                AL.EXT.Effectf(effect, EffectPNameF.EaxreverbGainhf, preset.GainHF);
+                AL.EXT.Effectf(effect, EffectPNameF.EaxreverbGainlf, preset.GainLF);
+                AL.EXT.Effectf(effect, EffectPNameF.EaxreverbDecayTime, preset.DecayTime);
+                AL.EXT.Effectf(effect, EffectPNameF.EaxreverbDecayHfratio, preset.DecayHFRatio);
+                AL.EXT.Effectf(effect, EffectPNameF.EaxreverbDecayLfratio, preset.DecayLFRatio);
+                AL.EXT.Effectf(effect, EffectPNameF.EaxreverbReflectionsGain, preset.ReflectionsGain);
+                AL.EXT.Effectf(effect, EffectPNameF.EaxreverbReflectionsDelay, preset.ReflectionsDelay);
+                AL.EXT.Effectfv(effect, EffectPNameFV.EaxreverbReflectionsPan, ref Unsafe.AsRef(in preset.ReflectionsPan.X));
+                AL.EXT.Effectf(effect, EffectPNameF.EaxreverbLateReverbGain, preset.LateReverbGain);
+                AL.EXT.Effectf(effect, EffectPNameF.EaxreverbLateReverbDelay, preset.LateReverbDelay);
+                AL.EXT.Effectfv(effect, EffectPNameFV.EaxreverbLateReverbPan, ref Unsafe.AsRef(in preset.LateReverbPan.X));
+                AL.EXT.Effectf(effect, EffectPNameF.EaxreverbEchoTime, preset.EchoTime);
+                AL.EXT.Effectf(effect, EffectPNameF.EaxreverbEchoDepth, preset.EchoDepth);
+                AL.EXT.Effectf(effect, EffectPNameF.EaxreverbModulationTime, preset.ModulationTime);
+                AL.EXT.Effectf(effect, EffectPNameF.EaxreverbModulationDepth, preset.ModulationDepth);
+                AL.EXT.Effectf(effect, EffectPNameF.EaxreverbAirAbsorptionGainhf, preset.AirAbsorptionGainHF);
+                AL.EXT.Effectf(effect, EffectPNameF.EaxreverbHfreference, preset.HFReference);
+                AL.EXT.Effectf(effect, EffectPNameF.EaxreverbLfreference, preset.LFReference);
+                AL.EXT.Effectf(effect, EffectPNameF.EaxreverbRoomRolloffFactor, preset.RoomRolloffFactor);
+                AL.EXT.Effecti(effect, EffectPNameI.EaxreverbDecayHflimit, preset.DecayHFLimit);
+            }
+            else
+            {
+                Console.WriteLine("Using standard reverb.");
+                AL.EXT.Effecti(effect, EffectPNameI.EffectType, (int)EffectType.EffectReverb);
+
+                AL.EXT.Effectf(effect, EffectPNameF.ReverbDensity, preset.Density);
+                AL.EXT.Effectf(effect, EffectPNameF.ReverbDiffusion, preset.Diffusion);
+                AL.EXT.Effectf(effect, EffectPNameF.ReverbGain, preset.Gain);
+                AL.EXT.Effectf(effect, EffectPNameF.ReverbGainhf, preset.GainHF);
+                AL.EXT.Effectf(effect, EffectPNameF.ReverbDecayTime, preset.DecayTime);
+                AL.EXT.Effectf(effect, EffectPNameF.ReverbDecayHfratio, preset.DecayHFRatio);
+                AL.EXT.Effectf(effect, EffectPNameF.ReverbReflectionsGain, preset.ReflectionsGain);
+                AL.EXT.Effectf(effect, EffectPNameF.ReverbReflectionsDelay, preset.ReflectionsDelay);
+                AL.EXT.Effectf(effect, EffectPNameF.ReverbLateReverbGain, preset.LateReverbGain);
+                AL.EXT.Effectf(effect, EffectPNameF.ReverbLateReverbDelay, preset.LateReverbDelay);
+                AL.EXT.Effectf(effect, EffectPNameF.ReverbAirAbsorptionGainhf, preset.AirAbsorptionGainHF);
+                AL.EXT.Effectf(effect, EffectPNameF.ReverbRoomRolloffFactor, preset.RoomRolloffFactor);
+                AL.EXT.Effecti(effect, EffectPNameI.ReverbDecayHflimit, preset.DecayHFLimit);
+            }
+
+            error = AL.GetError();
+            if (error != OpenTK.Audio.OpenAL.ErrorCode.NoError)
+            {
+                Console.WriteLine($"Could not create effect, error: {error}");
+            }
+
+            return effect;
         }
 
         public static void Main()
@@ -111,8 +175,7 @@ namespace OpenALTest
             if (ALC.IsExtensionPresent(device, "ALC_EXT_EFX"))
             {
                 Console.WriteLine("EFX extension is present!!");
-                AL.EXT.GenEffect(out int effect);
-                AL.EXT.Effecti(effect, EffectPNameI.EffectType, (int)EffectType.EffectReverb);
+                int effect = LoadEffect(ReverbPresets.CastleHall);
                 AL.EXT.GenAuxiliaryEffectSlot(out auxSlot);
                 AL.EXT.AuxiliaryEffectSloti(auxSlot, AuxEffectSlotPNameI.EffectslotEffect, effect);
             }
@@ -122,6 +185,11 @@ namespace OpenALTest
             short[] recording = new short[44100 * 4];
             ALCDevice captureDevice = ALC.CaptureOpenDevice((string)null, 44100u, Format.FormatMono16, 1024);
             {
+                string defaultCaptureName = ALC.GetString(captureDevice, OpenTK.Audio.OpenAL.ALC.StringName.CaptureDefaultDeviceSpecifier);
+                string version = AL.GetString(OpenTK.Audio.OpenAL.StringName.Version);
+                string vendor = AL.GetString(OpenTK.Audio.OpenAL.StringName.Vendor);
+                string renderer = AL.GetString(OpenTK.Audio.OpenAL.StringName.Renderer);
+                Console.WriteLine($"Recording 4 seconds of audio from {defaultCaptureName} OpenAL version: {version} {vendor} {renderer}...");
                 ALC.CaptureStart(captureDevice);
 
                 int current = 0;
@@ -271,13 +339,16 @@ namespace OpenALTest
             ALC.CloseDevice(device);
         }
 
-        public static void CheckALError(string str)
+        public static bool CheckALError(string str)
         {
+            bool hadError = false;
             var error = AL.GetError();
             if (error != OpenTK.Audio.OpenAL.ErrorCode.NoError)
             {
+                hadError = true;
                 Console.WriteLine($"ALError at '{str}': {AL.GetString((OpenTK.Audio.OpenAL.StringName)error)}");
             }
+            return hadError;
         }
 
         public static void FillSine(short[] buffer, float frequency, float sampleRate)

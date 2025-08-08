@@ -34,50 +34,13 @@ namespace GeneratorBase.Utility
     {
         public NameManglerSettings Settings = new NameManglerSettings();
 
-        // FIXME: This is OpenGL specific so it needs to be configurable...
+        // FIXME: This is OpenGL/OpenAL/etc specific so it needs to be configurable...
         private static readonly List<string> VendorNames = new List<string>
         {
-            // This list is taken from here: https://github.com/KhronosGroup/OpenGL-Registry/tree/main/extensions
-            // - Noggin_bops 2023-01-25
-            "3DFX",
-            "3DL",
-            "AMD",
-            "ANDROID",
-            "ANGLE",
-            "APPLE",
-            "ARB",
-            "ARM",
-            "ATI",
-            "DMP",
+            "AAX",
             "EXT",
-            "FJ",
-            "GREMEDY",
-            "HP",
-            "I3D",
-            "IBM",
-            "IGLOO",
-            "IMG",
-            "INGR",
-            "INTEL",
-            "KHR",
-            "MESA",
-            "MESAX",
-            "NV",
-            "NVX",
-            "OES",
-            "OML",
-            "OVR",
-            "PGI",
-            "QCOM",
-            "REND",
-            "S3",
-            "SGI",
-            "SGIS",
-            "SGIX",
-            "SUN",
-            "SUNX",
-            "VIV",
-            "WIN",
+            "LOKI",
+            "SOFT",
         };
 
         public NameMangler(NameManglerSettings settings)
@@ -159,6 +122,18 @@ namespace GeneratorBase.Utility
             }
 
             return str;
+        }
+
+        public static string GetVendorPostfix(string str)
+        {
+            foreach (var vendor in VendorNames)
+            {
+                if (str.EndsWith(vendor))
+                {
+                    return vendor;
+                }
+            }
+            return "";
         }
 
         public string TranslateEnumGroupName(string name)

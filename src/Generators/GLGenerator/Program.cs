@@ -4,7 +4,6 @@ using System.Reflection;
 using GeneratorBase.Utility;
 using GLGenerator.Process;
 using GLGenerator.Parsing;
-using GLGenerator.Process;
 using System.Collections.Generic;
 using System;
 using System.Linq;

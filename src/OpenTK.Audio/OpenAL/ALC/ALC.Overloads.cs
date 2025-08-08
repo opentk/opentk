@@ -471,13 +471,13 @@ namespace OpenTK.Audio.OpenAL.ALC
         }
         public static unsafe partial class SOFT
         {
-            /// <inheritdoc cref="EventCallbackSOFT(delegate* unmanaged[Cdecl]<All, All, ALCDevice, nuint, byte*, void*, void>, void*)"/>
+            /// <inheritdoc cref="EventCallbackSOFT(delegate* unmanaged[Cdecl]{All, All, ALCDevice, nuint, byte*, void*, void}, void*)"/>
             public static unsafe void EventCallbackSOFT(delegate* unmanaged[Cdecl]<All, All, ALCDevice, nuint, byte*, void*, void> callback, IntPtr userParam)
             {
                 void* userParam_vptr = (void*)userParam;
                 EventCallbackSOFT(callback, userParam_vptr);
             }
-            /// <inheritdoc cref="EventCallbackSOFT(delegate* unmanaged[Cdecl]<All, All, ALCDevice, nuint, byte*, void*, void>, void*)"/>
+            /// <inheritdoc cref="EventCallbackSOFT(delegate* unmanaged[Cdecl]{All, All, ALCDevice, nuint, byte*, void*, void}, void*)"/>
             public static unsafe void EventCallbackSOFT<T1>(delegate* unmanaged[Cdecl]<All, All, ALCDevice, nuint, byte*, void*, void> callback, Span<T1> userParam)
                 where T1 : unmanaged
             {
@@ -486,7 +486,7 @@ namespace OpenTK.Audio.OpenAL.ALC
                     EventCallbackSOFT(callback, userParam_ptr);
                 }
             }
-            /// <inheritdoc cref="EventCallbackSOFT(delegate* unmanaged[Cdecl]<All, All, ALCDevice, nuint, byte*, void*, void>, void*)"/>
+            /// <inheritdoc cref="EventCallbackSOFT(delegate* unmanaged[Cdecl]{All, All, ALCDevice, nuint, byte*, void*, void}, void*)"/>
             public static unsafe void EventCallbackSOFT<T1>(delegate* unmanaged[Cdecl]<All, All, ALCDevice, nuint, byte*, void*, void> callback, T1[] userParam)
                 where T1 : unmanaged
             {
@@ -495,7 +495,7 @@ namespace OpenTK.Audio.OpenAL.ALC
                     EventCallbackSOFT(callback, userParam_ptr);
                 }
             }
-            /// <inheritdoc cref="EventCallbackSOFT(delegate* unmanaged[Cdecl]<All, All, ALCDevice, nuint, byte*, void*, void>, void*)"/>
+            /// <inheritdoc cref="EventCallbackSOFT(delegate* unmanaged[Cdecl]{All, All, ALCDevice, nuint, byte*, void*, void}, void*)"/>
             public static unsafe void EventCallbackSOFT<T1>(delegate* unmanaged[Cdecl]<All, All, ALCDevice, nuint, byte*, void*, void> callback, ref T1 userParam)
                 where T1 : unmanaged
             {

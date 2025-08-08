@@ -13,6 +13,7 @@ using System.Xml.Linq;
 using System.Threading;
 using System.Buffers.Binary;
 using System.Net.Http.Headers;
+using System.Numerics;
 
 namespace ALGenerator.Parsing
 {
@@ -26,10 +27,20 @@ namespace ALGenerator.Parsing
                 throw new NullReferenceException("The parsed xml didn't contain a Root node.");
 
             List<NativeFunction> functions = ParseCommands(xdocument.Root, nameMangler, currentFile, ignoreFunctions);
+
             List<EnumEntry>? enums = ParseEnums(xdocument.Root, nameMangler, currentFile);
 
             List<Feature>? features = ParseFeatures(xdocument.Root, currentFile);
             List<Extension>? extensions = ParseExtensions(xdocument.Root, currentFile, nameMangler);
+
+            if (currentFile == ALFile.AL)
+            {
+                // Adds AL_EXT_direct_context functions to the functions list
+                // and modifies the AL_EXT_direct_context extensions require tag
+                // list to include these functions.
+                // - Noggin_bops 2025-08-08
+                CreateDirectContextCommands(functions, extensions);
+            }
 
             List<API> APIs = MakeAPIs(features, extensions);
 
@@ -233,6 +244,42 @@ namespace ALGenerator.Parsing
 
                 return enumNameToReference.Values.ToList();
             }
+        }
+
+        private static void CreateDirectContextCommands(List<NativeFunction> functions, List<Extension> extensions)
+        {
+            // FIXME: We probably want to generate these functions in the same namespace as their original version.
+            // And modify the required string to be something like "[requires: ALC_EXT_EFX & AL_EXT_direct_context]"
+            // meaning both ALC_EXT_EFX and AL_EXT_direct_context needs to be supported for this to work.
+            // We also need to deal with the fact that AL_EXT_direct_context devices need to load all of their
+            // function pointers from alcGetProcAddress2 which you only get access to after creating your first
+            // context, similar to how you need to do with OpenGL on windows.
+            // - Noggin_bops 2025-08-08
+
+            List<NativeFunction> directContextFunctions = new List<NativeFunction>();
+            List<string> directContextFunctionNames = new List<string>();
+
+            foreach (var function in functions)
+            {
+                string entryPoint = $"{NameMangler.RemoveVendorPostfix(function.EntryPoint)}Direct{NameMangler.GetVendorPostfix(function.EntryPoint)}";
+
+                NativeFunction directFunction = function with {
+                    Parameters = [
+                        new Parameter(new CSStructPrimitive("ALCContext", false, CSPrimitive.IntPtr(true)), [], "context", "context", null) ,
+                        ..function.Parameters
+                        ],
+                    // FIXME: Extension stuff!
+                    EntryPoint = entryPoint,
+                    FunctionName = $"{NameMangler.RemoveVendorPostfix(function.FunctionName)}Direct{NameMangler.GetVendorPostfix(function.FunctionName)}",
+                };
+
+                directContextFunctions.Add(directFunction);
+                directContextFunctionNames.Add(entryPoint);
+            }
+            functions.AddRange(directContextFunctions);
+
+            Extension extension = extensions.Find(e => e.Name == "AL_EXT_direct_context")!;
+            extension.Requires.Add(new RequireEntry(ALAPI.AL, null, directContextFunctionNames, []));
         }
 
         // FIXME: Maybe change name?
@@ -962,5 +1009,84 @@ namespace ALGenerator.Parsing
 
             _ => ALAPI.Invalid,
         };
+
+
+
+        internal static List<EFXPreset> ParseEFXPresets(FileStream input, NameMangler nameMangler)
+        {
+            XDocument? xdocument = XDocument.Load(input);
+
+            if (xdocument.Root == null)
+                throw new NullReferenceException("The parsed xml didn't contain a Root node.");
+
+            List<EFXPreset> presets = new List<EFXPreset>();
+
+            XElement xelement = xdocument.Root!;
+            foreach (var preset in xelement.Elements("preset"))
+            {
+                static Vector3 ParseVector3(string str)
+                {
+                    string[] strs = str.Split(' ');
+                    float x = float.Parse(strs[0]);
+                    float y = float.Parse(strs[1]);
+                    float z = float.Parse(strs[2]);
+                    return new Vector3(x, y, z);
+                }
+
+                string name = preset.Attribute("name")?.Value ?? throw new Exception();
+                float density = float.Parse(preset.Attribute("density")?.Value ?? throw new Exception());
+                float diffusion = float.Parse(preset.Attribute("diffusion")?.Value ?? throw new Exception());
+                float gain = float.Parse(preset.Attribute("gain")?.Value ?? throw new Exception());
+                float gainHF = float.Parse(preset.Attribute("gainHF")?.Value ?? throw new Exception());
+                float gainLF = float.Parse(preset.Attribute("gainLF")?.Value ?? throw new Exception());
+                float decayTime = float.Parse(preset.Attribute("decayTime")?.Value ?? throw new Exception());
+                float decayHFRatio = float.Parse(preset.Attribute("decayHFRatio")?.Value ?? throw new Exception());
+                float decayLFRatio = float.Parse(preset.Attribute("decayLFRatio")?.Value ?? throw new Exception());
+                float reflectionsGain = float.Parse(preset.Attribute("reflectionsGain")?.Value ?? throw new Exception());
+                float reflectionsDelay = float.Parse(preset.Attribute("reflectionsDelay")?.Value ?? throw new Exception());
+                Vector3 reflectionsPan = ParseVector3(preset.Attribute("reflectionsPan")?.Value ?? throw new Exception());
+                float lateReverbGain = float.Parse(preset.Attribute("lateReverbGain")?.Value ?? throw new Exception());
+                float lateReverbDelay = float.Parse(preset.Attribute("lateReverbDelay")?.Value ?? throw new Exception());
+                Vector3 lateReverbPan = ParseVector3(preset.Attribute("lateReverbPan")?.Value ?? throw new Exception());
+                float echoTime = float.Parse(preset.Attribute("echoTime")?.Value ?? throw new Exception());
+                float echoDepth = float.Parse(preset.Attribute("echoDepth")?.Value ?? throw new Exception());
+                float modulationTime = float.Parse(preset.Attribute("modulationTime")?.Value ?? throw new Exception());
+                float modulationDepth = float.Parse(preset.Attribute("modulationDepth")?.Value ?? throw new Exception());
+                float airAbsorptionGainHF = float.Parse(preset.Attribute("airAbsorptionGainHF")?.Value ?? throw new Exception());
+                float hfReference = float.Parse(preset.Attribute("hfReference")?.Value ?? throw new Exception());
+                float lfReference = float.Parse(preset.Attribute("lfReference")?.Value ?? throw new Exception());
+                float roomRolloffFactor = float.Parse(preset.Attribute("roomRolloffFactor")?.Value ?? throw new Exception());
+                // FIXME:
+                bool decayHFLimit = bool.Parse(preset.Attribute("decayHFLimit")?.Value ?? throw new Exception());
+                
+                presets.Add(new EFXPreset(
+                    nameMangler.MangleEnumName(name),
+                    density,
+                    diffusion,
+                    gain,
+                    gainHF,
+                    gainLF,
+                    decayTime,
+                    decayHFRatio,
+                    decayLFRatio,
+                    reflectionsGain,
+                    reflectionsDelay,
+                    reflectionsPan,
+                    lateReverbGain,
+                    lateReverbDelay,
+                    lateReverbPan,
+                    echoTime,
+                    echoDepth,
+                    modulationTime,
+                    modulationDepth,
+                    airAbsorptionGainHF,
+                    hfReference,
+                    lfReference,
+                    roomRolloffFactor,
+                    decayHFLimit));
+            }
+
+            return presets;
+        }
     }
 }

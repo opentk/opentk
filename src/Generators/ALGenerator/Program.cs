@@ -61,6 +61,25 @@ namespace ALGenerator
                     alcSpecification = SpecificationParser.Parse(alcSpecificationStream, new NameMangler(alcSettings), ALFile.ALC, new List<string>());
                 }
 
+                List<EFXPreset> efxPresets;
+                {
+                    NameManglerSettings efxSettings = new NameManglerSettings()
+                    {
+                        FunctionPrefix = "",
+                        EnumPrefixes = ["EFX_REVERB_PRESET_"],
+                        ExtensionPrefixes = [],
+                        FunctionsWithoutPrefix = new HashSet<string>()
+                        {
+                        },
+                        EnumsWithoutPrefix = new HashSet<string>()
+                        {
+                        }
+                    };
+
+                    using FileStream efxPresetsStream = Reader.ReadEFXPresetsSpecFromGithub();
+                    efxPresets = SpecificationParser.ParseEFXPresets(efxPresetsStream, new NameMangler(efxSettings));
+                }
+
                 List<NativeFunction> functions = new List<NativeFunction>(alSpecification.Functions.Count + alcSpecification.Functions.Count);
                 functions.AddRange(alSpecification.Functions);
                 functions.AddRange(alcSpecification.Functions);
@@ -138,6 +157,8 @@ namespace ALGenerator
 
                 // Writing cs files.
                 Writer.Write(outputSpec);
+
+                Writer.WriteEFXPresets(efxPresets);
 
                 st.Stop();
                 Logger.Info($"Generated OpenAL bindings in {st.ElapsedMilliseconds} ms");

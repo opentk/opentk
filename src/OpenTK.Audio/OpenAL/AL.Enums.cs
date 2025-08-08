@@ -448,23 +448,23 @@ namespace OpenTK.Audio.OpenAL
     {
         EffectslotAuxiliarySendAuto = 3,
     }
-    ///<summary>Used in <see cref="AL.EXT.GetAuxiliaryEffectSlotf" /></summary>
+    ///<summary>Used in <see cref="AL.EXT.GetAuxiliaryEffectSlotf" />, <see cref="AL.EXT.GetAuxiliaryEffectSlotfDirect" /></summary>
     public enum AuxEffectSlotGetPNameF : uint
     {
         EffectslotGain = 2,
     }
-    ///<summary>Used in <see cref="AL.EXT.GetAuxiliaryEffectSlotfv" /></summary>
+    ///<summary>Used in <see cref="AL.EXT.GetAuxiliaryEffectSlotfv" />, <see cref="AL.EXT.GetAuxiliaryEffectSlotfvDirect" /></summary>
     public enum AuxEffectSlotGetPNameFV : uint
     {
         EffectslotGain = 2,
     }
-    ///<summary>Used in <see cref="AL.EXT.GetAuxiliaryEffectSloti" /></summary>
+    ///<summary>Used in <see cref="AL.EXT.GetAuxiliaryEffectSloti" />, <see cref="AL.EXT.GetAuxiliaryEffectSlotiDirect" /></summary>
     public enum AuxEffectSlotGetPNameI : uint
     {
         EffectslotEffect = 1,
         EffectslotTargetSoft = 6556,
     }
-    ///<summary>Used in <see cref="AL.EXT.GetAuxiliaryEffectSlotiv" /></summary>
+    ///<summary>Used in <see cref="AL.EXT.GetAuxiliaryEffectSlotiv" />, <see cref="AL.EXT.GetAuxiliaryEffectSlotivDirect" /></summary>
     public enum AuxEffectSlotGetPNameIV : uint
     {
         EffectslotEffect = 1,
@@ -477,23 +477,23 @@ namespace OpenTK.Audio.OpenAL
     {
         EffectslotAuxiliarySendAuto = 3,
     }
-    ///<summary>Used in <see cref="AL.EXT.AuxiliaryEffectSlotf" /></summary>
+    ///<summary>Used in <see cref="AL.EXT.AuxiliaryEffectSlotf" />, <see cref="AL.EXT.AuxiliaryEffectSlotfDirect" /></summary>
     public enum AuxEffectSlotPNameF : uint
     {
         EffectslotGain = 2,
     }
-    ///<summary>Used in <see cref="AL.EXT.AuxiliaryEffectSlotfv" /></summary>
+    ///<summary>Used in <see cref="AL.EXT.AuxiliaryEffectSlotfv" />, <see cref="AL.EXT.AuxiliaryEffectSlotfvDirect" /></summary>
     public enum AuxEffectSlotPNameFV : uint
     {
         EffectslotGain = 2,
     }
-    ///<summary>Used in <see cref="AL.EXT.AuxiliaryEffectSloti" /></summary>
+    ///<summary>Used in <see cref="AL.EXT.AuxiliaryEffectSloti" />, <see cref="AL.EXT.AuxiliaryEffectSlotiDirect" /></summary>
     public enum AuxEffectSlotPNameI : uint
     {
         EffectslotEffect = 1,
         EffectslotTargetSoft = 6556,
     }
-    ///<summary>Used in <see cref="AL.EXT.AuxiliaryEffectSlotiv" /></summary>
+    ///<summary>Used in <see cref="AL.EXT.AuxiliaryEffectSlotiv" />, <see cref="AL.EXT.AuxiliaryEffectSlotivDirect" /></summary>
     public enum AuxEffectSlotPNameIV : uint
     {
         EffectslotEffect = 1,
@@ -504,30 +504,30 @@ namespace OpenTK.Audio.OpenAL
         BandpassGainlf = 2,
         BandpassGainhf = 3,
     }
-    ///<summary>Used in <see cref="AL.GetBuffer3f" /></summary>
+    ///<summary>Used in <see cref="AL.GetBuffer3f" />, <see cref="AL.EXT.GetBuffer3fDirect" /></summary>
     public enum BufferGetPName3F : uint
     {
     }
-    ///<summary>Used in <see cref="AL.GetBuffer3i" /></summary>
+    ///<summary>Used in <see cref="AL.GetBuffer3i" />, <see cref="AL.EXT.GetBuffer3iDirect" /></summary>
     public enum BufferGetPName3I : uint
     {
     }
-    ///<summary>Used in <see cref="AL.SOFT.GetBuffer3PtrSOFT" /></summary>
+    ///<summary>Used in <see cref="AL.EXT.GetBuffer3PtrDirectSOFT" />, <see cref="AL.SOFT.GetBuffer3PtrSOFT" /></summary>
     public enum BufferGetPName3Ptr : uint
     {
     }
-    ///<summary>Used in <see cref="AL.GetBufferf" /></summary>
+    ///<summary>Used in <see cref="AL.GetBufferf" />, <see cref="AL.EXT.GetBufferfDirect" /></summary>
     public enum BufferGetPNameF : uint
     {
         ByteRwOffsetsSoft = 4145,
         SampleRwOffsetsSoft = 4146,
         SecLengthSoft = 8203,
     }
-    ///<summary>Used in <see cref="AL.GetBufferfv" /></summary>
+    ///<summary>Used in <see cref="AL.GetBufferfv" />, <see cref="AL.EXT.GetBufferfvDirect" /></summary>
     public enum BufferGetPNameFV : uint
     {
     }
-    ///<summary>Used in <see cref="AL.GetBufferi" /></summary>
+    ///<summary>Used in <see cref="AL.GetBufferi" />, <see cref="AL.EXT.GetBufferiDirect" /></summary>
     public enum BufferGetPNameI : uint
     {
         AmbisonicLayoutSoft = 6551,
@@ -543,7 +543,7 @@ namespace OpenTK.Audio.OpenAL
         PackBlockAlignmentSoft = 8205,
         LoopPointsExt = 8213,
     }
-    ///<summary>Used in <see cref="AL.GetBufferiv" /></summary>
+    ///<summary>Used in <see cref="AL.GetBufferiv" />, <see cref="AL.EXT.GetBufferivDirect" /></summary>
     public enum BufferGetPNameIV : uint
     {
         Frequency = 8193,
@@ -552,33 +552,33 @@ namespace OpenTK.Audio.OpenAL
         Size = 8196,
         LoopPointsSoft = 8213,
     }
-    ///<summary>Used in <see cref="AL.SOFT.GetBufferPtrSOFT" /></summary>
+    ///<summary>Used in <see cref="AL.EXT.GetBufferPtrDirectSOFT" />, <see cref="AL.SOFT.GetBufferPtrSOFT" /></summary>
     public enum BufferGetPNamePtr : uint
     {
         BufferCallbackFunctionSoft = 6560,
         BufferCallbackUserParamSoft = 6561,
     }
-    ///<summary>Used in <see cref="AL.SOFT.GetBufferPtrvSOFT" /></summary>
+    ///<summary>Used in <see cref="AL.EXT.GetBufferPtrvDirectSOFT" />, <see cref="AL.SOFT.GetBufferPtrvSOFT" /></summary>
     public enum BufferGetPNamePtrV : uint
     {
     }
-    ///<summary>Used in <see cref="AL.Buffer3f" /></summary>
+    ///<summary>Used in <see cref="AL.Buffer3f" />, <see cref="AL.EXT.Buffer3fDirect" /></summary>
     public enum BufferPName3F : uint
     {
     }
-    ///<summary>Used in <see cref="AL.Buffer3i" /></summary>
+    ///<summary>Used in <see cref="AL.Buffer3i" />, <see cref="AL.EXT.Buffer3iDirect" /></summary>
     public enum BufferPName3I : uint
     {
     }
-    ///<summary>Used in <see cref="AL.Bufferf" /></summary>
+    ///<summary>Used in <see cref="AL.Bufferf" />, <see cref="AL.EXT.BufferfDirect" /></summary>
     public enum BufferPNameF : uint
     {
     }
-    ///<summary>Used in <see cref="AL.Bufferfv" /></summary>
+    ///<summary>Used in <see cref="AL.Bufferfv" />, <see cref="AL.EXT.BufferfvDirect" /></summary>
     public enum BufferPNameFV : uint
     {
     }
-    ///<summary>Used in <see cref="AL.Bufferi" /></summary>
+    ///<summary>Used in <see cref="AL.Bufferi" />, <see cref="AL.EXT.BufferiDirect" /></summary>
     public enum BufferPNameI : uint
     {
         AmbisonicLayoutSoft = 6551,
@@ -588,12 +588,12 @@ namespace OpenTK.Audio.OpenAL
         PackBlockAlignmentSoft = 8205,
         LoopPointsExt = 8213,
     }
-    ///<summary>Used in <see cref="AL.Bufferiv" /></summary>
+    ///<summary>Used in <see cref="AL.Bufferiv" />, <see cref="AL.EXT.BufferivDirect" /></summary>
     public enum BufferPNameIV : uint
     {
         LoopPointsSoft = 8213,
     }
-    ///<summary>Used in <see cref="AL.SOFT.BufferSamplesSOFT" />, <see cref="AL.SOFT.BufferSubSamplesSOFT" />, <see cref="AL.SOFT.GetBufferSamplesSOFT" /></summary>
+    ///<summary>Used in <see cref="AL.EXT.BufferSamplesDirectSOFT" />, <see cref="AL.SOFT.BufferSamplesSOFT" />, <see cref="AL.EXT.BufferSubSamplesDirectSOFT" />, ...</summary>
     public enum Channels : uint
     {
         MonoSoft = 5376,
@@ -625,7 +625,7 @@ namespace OpenTK.Audio.OpenAL
     {
         ContextDebugBitExt = 1,
     }
-    ///<summary>Used in <see cref="AL.EXT.GetDebugMessageLogEXT" /></summary>
+    ///<summary>Used in <see cref="AL.EXT.GetDebugMessageLogDirectEXT" />, <see cref="AL.EXT.GetDebugMessageLogEXT" /></summary>
     public enum DebugSeverity : uint
     {
         DontCareExt = 2,
@@ -634,7 +634,7 @@ namespace OpenTK.Audio.OpenAL
         DebugSeverityLowExt = 6597,
         DebugSeverityNotificationExt = 6598,
     }
-    ///<summary>Used in <see cref="AL.EXT.DebugMessageControlEXT" />, <see cref="AL.EXT.DebugMessageInsertEXT" />, <see cref="AL.EXT.GetDebugMessageLogEXT" />, ...</summary>
+    ///<summary>Used in <see cref="AL.EXT.DebugMessageControlDirectEXT" />, <see cref="AL.EXT.DebugMessageControlEXT" />, <see cref="AL.EXT.DebugMessageInsertDirectEXT" />, ...</summary>
     public enum DebugSource : uint
     {
         DontCareExt = 2,
@@ -644,7 +644,7 @@ namespace OpenTK.Audio.OpenAL
         DebugSourceApplicationExt = 6584,
         DebugSourceOtherExt = 6585,
     }
-    ///<summary>Used in <see cref="AL.EXT.DebugMessageControlEXT" />, <see cref="AL.EXT.DebugMessageInsertEXT" />, <see cref="AL.EXT.GetDebugMessageLogEXT" /></summary>
+    ///<summary>Used in <see cref="AL.EXT.DebugMessageControlDirectEXT" />, <see cref="AL.EXT.DebugMessageControlEXT" />, <see cref="AL.EXT.DebugMessageInsertDirectEXT" />, ...</summary>
     public enum DebugType : uint
     {
         DontCareExt = 2,
@@ -673,7 +673,7 @@ namespace OpenTK.Audio.OpenAL
         True = 1,
         RemixUnmatchedSoft = 2,
     }
-    ///<summary>Used in <see cref="AL.DistanceModel" /></summary>
+    ///<summary>Used in <see cref="AL.DistanceModel" />, <see cref="AL.EXT.DistanceModelDirect" /></summary>
     public enum DistanceModel : uint
     {
         None = 0,
@@ -732,38 +732,125 @@ namespace OpenTK.Audio.OpenAL
         EchoFeedback = 4,
         EchoSpread = 5,
     }
-    ///<summary>Used in <see cref="AL.EXT.GetEffectf" /></summary>
+    ///<summary>Used in <see cref="AL.EXT.GetEffectfDirect" />, <see cref="AL.EXT.GetEffectf" /></summary>
     public enum EffectGetPNameF : uint
     {
     }
-    ///<summary>Used in <see cref="AL.EXT.GetEffectfv" /></summary>
+    ///<summary>Used in <see cref="AL.EXT.GetEffectfvDirect" />, <see cref="AL.EXT.GetEffectfv" /></summary>
     public enum EffectGetPNameFV : uint
     {
     }
-    ///<summary>Used in <see cref="AL.EXT.GetEffecti" /></summary>
+    ///<summary>Used in <see cref="AL.EXT.GetEffecti" />, <see cref="AL.EXT.GetEffectiDirect" /></summary>
     public enum EffectGetPNameI : uint
     {
         EffectType = 32769,
     }
-    ///<summary>Used in <see cref="AL.EXT.GetEffectiv" /></summary>
+    ///<summary>Used in <see cref="AL.EXT.GetEffectiv" />, <see cref="AL.EXT.GetEffectivDirect" /></summary>
     public enum EffectGetPNameIV : uint
     {
         EffectType = 32769,
     }
-    ///<summary>Used in <see cref="AL.EXT.Effectf" /></summary>
+    ///<summary>Used in <see cref="AL.EXT.Effectf" />, <see cref="AL.EXT.EffectfDirect" /></summary>
     public enum EffectPNameF : uint
     {
+        AutowahAttackTime = 1,
+        DistortionEdge = 1,
+        EaxreverbDensity = 1,
+        EchoDelay = 1,
+        EqualizerLowGain = 1,
+        FrequencyShifterFrequency = 1,
+        ReverbDensity = 1,
+        RingModulatorFrequency = 1,
+        AutowahReleaseTime = 2,
+        ChorusPhase = 2,
+        DistortionGain = 2,
+        EaxreverbDiffusion = 2,
+        EchoLrdelay = 2,
+        EqualizerLowCutoff = 2,
+        FlangerPhase = 2,
+        ReverbDiffusion = 2,
+        RingModulatorHighpassCutoff = 2,
+        AutowahResonance = 3,
+        ChorusRate = 3,
+        DistortionLowpassCutoff = 3,
+        EaxreverbGain = 3,
+        EchoDamping = 3,
+        EqualizerMid1Gain = 3,
+        FlangerRate = 3,
+        ReverbGain = 3,
+        AutowahPeakGain = 4,
+        ChorusDepth = 4,
+        DistortionEqcenter = 4,
+        EaxreverbGainhf = 4,
+        EchoFeedback = 4,
+        EqualizerMid1Center = 4,
+        FlangerDepth = 4,
+        ReverbGainhf = 4,
+        ChorusFeedback = 5,
+        DistortionEqbandwidth = 5,
+        EaxreverbGainlf = 5,
+        EchoSpread = 5,
+        EqualizerMid1Width = 5,
+        FlangerFeedback = 5,
+        ReverbDecayTime = 5,
+        ChorusDelay = 6,
+        EaxreverbDecayTime = 6,
+        EqualizerMid2Gain = 6,
+        FlangerDelay = 6,
+        ReverbDecayHfratio = 6,
+        VocalMorpherRate = 6,
+        EaxreverbDecayHfratio = 7,
+        EqualizerMid2Center = 7,
+        ReverbReflectionsGain = 7,
+        EaxreverbDecayLfratio = 8,
+        EqualizerMid2Width = 8,
+        ReverbReflectionsDelay = 8,
+        EaxreverbReflectionsGain = 9,
+        EqualizerHighGain = 9,
+        ReverbLateReverbGain = 9,
+        EaxreverbReflectionsDelay = 10,
+        EqualizerHighCutoff = 10,
+        ReverbLateReverbDelay = 10,
+        ReverbAirAbsorptionGainhf = 11,
+        EaxreverbLateReverbGain = 12,
+        ReverbRoomRolloffFactor = 12,
+        EaxreverbLateReverbDelay = 13,
+        EaxreverbEchoTime = 15,
+        EaxreverbEchoDepth = 16,
+        EaxreverbModulationTime = 17,
+        EaxreverbModulationDepth = 18,
+        EaxreverbAirAbsorptionGainhf = 19,
+        EaxreverbHfreference = 20,
+        EaxreverbLfreference = 21,
+        EaxreverbRoomRolloffFactor = 22,
     }
-    ///<summary>Used in <see cref="AL.EXT.Effectfv" /></summary>
+    ///<summary>Used in <see cref="AL.EXT.Effectfv" />, <see cref="AL.EXT.EffectfvDirect" /></summary>
     public enum EffectPNameFV : uint
     {
+        EaxreverbReflectionsPan = 11,
+        EaxreverbLateReverbPan = 14,
     }
-    ///<summary>Used in <see cref="AL.EXT.Effecti" /></summary>
+    ///<summary>Used in <see cref="AL.EXT.Effecti" />, <see cref="AL.EXT.EffectiDirect" /></summary>
     public enum EffectPNameI : uint
     {
+        ChorusWaveform = 1,
+        CompressorOnoff = 1,
+        FlangerWaveform = 1,
+        PitchShifterCoarseTune = 1,
+        VocalMorpherPhonemea = 1,
+        FrequencyShifterLeftDirection = 2,
+        PitchShifterFineTune = 2,
+        VocalMorpherPhonemeaCoarseTuning = 2,
+        FrequencyShifterRightDirection = 3,
+        RingModulatorWaveform = 3,
+        VocalMorpherPhonemeb = 3,
+        VocalMorpherPhonemebCoarseTuning = 4,
+        VocalMorpherWaveform = 5,
+        ReverbDecayHflimit = 13,
+        EaxreverbDecayHflimit = 23,
         EffectType = 32769,
     }
-    ///<summary>Used in <see cref="AL.EXT.Effectiv" /></summary>
+    ///<summary>Used in <see cref="AL.EXT.Effectiv" />, <see cref="AL.EXT.EffectivDirect" /></summary>
     public enum EffectPNameIV : uint
     {
         EffectType = 32769,
@@ -787,7 +874,7 @@ namespace OpenTK.Audio.OpenAL
         EffectDedicatedLowFrequencyEffect = 36864,
         EffectDedicatedDialogue = 36865,
     }
-    ///<summary>Used in <see cref="AL.Disable" />, <see cref="AL.Enable" />, <see cref="AL.IsEnabled" /></summary>
+    ///<summary>Used in <see cref="AL.Disable" />, <see cref="AL.Enable" />, <see cref="AL.IsEnabled" />, ...</summary>
     public enum EnableCap : uint
     {
         SourceDistanceModel = 512,
@@ -808,7 +895,7 @@ namespace OpenTK.Audio.OpenAL
         EqualizerHighGain = 9,
         EqualizerHighCutoff = 10,
     }
-    ///<summary>Used in <see cref="AL.GetError" />, <see cref="AL.EXT.SourceAddNotification" /></summary>
+    ///<summary>Used in <see cref="AL.GetError" />, <see cref="AL.EXT.GetErrorDirect" />, <see cref="AL.EXT.SourceAddNotification" />, ...</summary>
     public enum ErrorCode : uint
     {
         NoError = 0,
@@ -820,45 +907,45 @@ namespace OpenTK.Audio.OpenAL
         InvalidOperation = 40964,
         OutOfMemory = 40965,
     }
-    ///<summary>Used in <see cref="AL.SOFT.EventControlSOFT" /></summary>
+    ///<summary>Used in <see cref="AL.EXT.EventControlDirectSOFT" />, <see cref="AL.SOFT.EventControlSOFT" /></summary>
     public enum EventType : uint
     {
         EventTypeBufferCompletedSoft = 6564,
         EventTypeSourceStateChangedSoft = 6565,
         EventTypeDisconnectedSoft = 6566,
     }
-    ///<summary>Used in <see cref="AL.EXT.GetFilterf" /></summary>
+    ///<summary>Used in <see cref="AL.EXT.GetFilterfDirect" />, <see cref="AL.EXT.GetFilterf" /></summary>
     public enum FilterGetPNameF : uint
     {
     }
-    ///<summary>Used in <see cref="AL.EXT.GetFilterfv" /></summary>
+    ///<summary>Used in <see cref="AL.EXT.GetFilterfvDirect" />, <see cref="AL.EXT.GetFilterfv" /></summary>
     public enum FilterGetPNameFV : uint
     {
     }
-    ///<summary>Used in <see cref="AL.EXT.GetFilteri" /></summary>
+    ///<summary>Used in <see cref="AL.EXT.GetFilteri" />, <see cref="AL.EXT.GetFilteriDirect" /></summary>
     public enum FilterGetPNameI : uint
     {
         FilterType = 32769,
     }
-    ///<summary>Used in <see cref="AL.EXT.GetFilteriv" /></summary>
+    ///<summary>Used in <see cref="AL.EXT.GetFilteriv" />, <see cref="AL.EXT.GetFilterivDirect" /></summary>
     public enum FilterGetPNameIV : uint
     {
         FilterType = 32769,
     }
-    ///<summary>Used in <see cref="AL.EXT.Filterf" /></summary>
+    ///<summary>Used in <see cref="AL.EXT.FilterfDirect" />, <see cref="AL.EXT.Filterf" /></summary>
     public enum FilterPNameF : uint
     {
     }
-    ///<summary>Used in <see cref="AL.EXT.Filterfv" /></summary>
+    ///<summary>Used in <see cref="AL.EXT.FilterfvDirect" />, <see cref="AL.EXT.Filterfv" /></summary>
     public enum FilterPNameFV : uint
     {
     }
-    ///<summary>Used in <see cref="AL.EXT.Filteri" /></summary>
+    ///<summary>Used in <see cref="AL.EXT.Filteri" />, <see cref="AL.EXT.FilteriDirect" /></summary>
     public enum FilterPNameI : uint
     {
         FilterType = 32769,
     }
-    ///<summary>Used in <see cref="AL.EXT.Filteriv" /></summary>
+    ///<summary>Used in <see cref="AL.EXT.Filteriv" />, <see cref="AL.EXT.FilterivDirect" /></summary>
     public enum FilterPNameIV : uint
     {
         FilterType = 32769,
@@ -885,13 +972,13 @@ namespace OpenTK.Audio.OpenAL
         FoldbackEventBlock = 16658,
         FoldbackEventStop = 16659,
     }
-    ///<summary>Used in <see cref="AL.EXT.RequestFoldbackStart" /></summary>
+    ///<summary>Used in <see cref="AL.EXT.RequestFoldbackStart" />, <see cref="AL.EXT.RequestFoldbackStartDirect" /></summary>
     public enum FoldbackMode : uint
     {
         FoldbackModeMono = 16641,
         FoldbackModeStereo = 16642,
     }
-    ///<summary>Used in <see cref="AL.BufferData" />, <see cref="AL.SOFT.BufferCallbackSOFT" />, <see cref="AL.SOFT.BufferSubDataSOFT" /></summary>
+    ///<summary>Used in <see cref="AL.BufferData" />, <see cref="AL.EXT.BufferCallbackDirectSOFT" />, <see cref="AL.SOFT.BufferCallbackSOFT" />, ...</summary>
     public enum Format : uint
     {
         FormatMono8 = 4352,
@@ -971,7 +1058,7 @@ namespace OpenTK.Audio.OpenAL
         FrequencyShifterLeftDirection = 2,
         FrequencyShifterRightDirection = 3,
     }
-    ///<summary>Used in <see cref="AL.GetBoolean" /></summary>
+    ///<summary>Used in <see cref="AL.GetBoolean" />, <see cref="AL.EXT.GetBooleanDirect" /></summary>
     public enum GetPNameB : uint
     {
         DebugLoggedMessagesExt = 6599,
@@ -983,12 +1070,12 @@ namespace OpenTK.Audio.OpenAL
         GainLimitSoft = 8206,
         DeferredUpdatesSoft = 49154,
     }
-    ///<summary>Used in <see cref="AL.GetBooleanv" /></summary>
+    ///<summary>Used in <see cref="AL.GetBooleanv" />, <see cref="AL.EXT.GetBooleanvDirect" /></summary>
     public enum GetPNameBV : uint
     {
         DeferredUpdatesSoft = 49154,
     }
-    ///<summary>Used in <see cref="AL.GetDouble" /></summary>
+    ///<summary>Used in <see cref="AL.GetDouble" />, <see cref="AL.EXT.GetDoubleDirect" /></summary>
     public enum GetPNameD : uint
     {
         DebugLoggedMessagesExt = 6599,
@@ -1000,12 +1087,12 @@ namespace OpenTK.Audio.OpenAL
         GainLimitSoft = 8206,
         DeferredUpdatesSoft = 49154,
     }
-    ///<summary>Used in <see cref="AL.GetDoublev" /></summary>
+    ///<summary>Used in <see cref="AL.GetDoublev" />, <see cref="AL.EXT.GetDoublevDirect" /></summary>
     public enum GetPNameDV : uint
     {
         DeferredUpdatesSoft = 49154,
     }
-    ///<summary>Used in <see cref="AL.GetFloat" /></summary>
+    ///<summary>Used in <see cref="AL.GetFloat" />, <see cref="AL.EXT.GetFloatDirect" /></summary>
     public enum GetPNameF : uint
     {
         DebugLoggedMessagesExt = 6599,
@@ -1017,12 +1104,12 @@ namespace OpenTK.Audio.OpenAL
         GainLimitSoft = 8206,
         DeferredUpdatesSoft = 49154,
     }
-    ///<summary>Used in <see cref="AL.GetFloatv" /></summary>
+    ///<summary>Used in <see cref="AL.GetFloatv" />, <see cref="AL.EXT.GetFloatvDirect" /></summary>
     public enum GetPNameFV : uint
     {
         DeferredUpdatesSoft = 49154,
     }
-    ///<summary>Used in <see cref="AL.GetInteger" /></summary>
+    ///<summary>Used in <see cref="AL.GetInteger" />, <see cref="AL.EXT.GetIntegerDirect" /></summary>
     public enum GetPNameI : uint
     {
         NumResamplersSoft = 4624,
@@ -1035,13 +1122,13 @@ namespace OpenTK.Audio.OpenAL
         GainLimitSoft = 8206,
         DeferredUpdatesSoft = 49154,
     }
-    ///<summary>Used in <see cref="AL.GetIntegerv" /></summary>
+    ///<summary>Used in <see cref="AL.GetIntegerv" />, <see cref="AL.EXT.GetIntegervDirect" /></summary>
     public enum GetPNameIV : uint
     {
         NumResamplersSoft = 4624,
         DeferredUpdatesSoft = 49154,
     }
-    ///<summary>Used in <see cref="AL.EXT.GetPointerEXT" />, <see cref="AL.SOFT.GetPointerSOFT" />, <see cref="AL.EXT.GetPointervEXT" /></summary>
+    ///<summary>Used in <see cref="AL.EXT.GetPointerDirectEXT" />, <see cref="AL.EXT.GetPointerDirectSOFT" />, <see cref="AL.EXT.GetPointerEXT" />, ...</summary>
     public enum GetPNamePtr : uint
     {
         EventCallbackFunctionSoft = 6562,
@@ -1049,7 +1136,7 @@ namespace OpenTK.Audio.OpenAL
         DebugCallbackFunctionExt = 6579,
         DebugCallbackUserParamExt = 6580,
     }
-    ///<summary>Used in <see cref="AL.SOFT.GetPointervSOFT" /></summary>
+    ///<summary>Used in <see cref="AL.EXT.GetPointervDirectSOFT" />, <see cref="AL.SOFT.GetPointervSOFT" /></summary>
     public enum GetPNamePtrV : uint
     {
     }
@@ -1058,12 +1145,12 @@ namespace OpenTK.Audio.OpenAL
         HighpassGain = 1,
         HighpassGainlf = 2,
     }
-    ///<summary>Used in <see cref="AL.SOFT.GetStringiSOFT" /></summary>
+    ///<summary>Used in <see cref="AL.EXT.GetStringiDirectSOFT" />, <see cref="AL.SOFT.GetStringiSOFT" /></summary>
     public enum IndexedStringName : uint
     {
         ResamplerNameSoft = 4627,
     }
-    ///<summary>Used in <see cref="AL.SOFT.BufferSamplesSOFT" />, <see cref="AL.SOFT.IsBufferFormatSupportedSOFT" /></summary>
+    ///<summary>Used in <see cref="AL.EXT.BufferSamplesDirectSOFT" />, <see cref="AL.SOFT.BufferSamplesSOFT" />, <see cref="AL.EXT.IsBufferFormatSupportedDirectSOFT" />, ...</summary>
     public enum InternalFormat : uint
     {
         Mono8Soft = 4352,
@@ -1088,25 +1175,25 @@ namespace OpenTK.Audio.OpenAL
         Mono32fSoft = 65552,
         Stereo32fSoft = 65553,
     }
-    ///<summary>Used in <see cref="AL.GetListener3f" /></summary>
+    ///<summary>Used in <see cref="AL.GetListener3f" />, <see cref="AL.EXT.GetListener3fDirect" /></summary>
     public enum ListenerGetPName3F : uint
     {
         Position = 4100,
         Velocity = 4102,
     }
-    ///<summary>Used in <see cref="AL.GetListener3i" /></summary>
+    ///<summary>Used in <see cref="AL.GetListener3i" />, <see cref="AL.EXT.GetListener3iDirect" /></summary>
     public enum ListenerGetPName3I : uint
     {
         Position = 4100,
         Velocity = 4102,
     }
-    ///<summary>Used in <see cref="AL.GetListenerf" /></summary>
+    ///<summary>Used in <see cref="AL.GetListenerf" />, <see cref="AL.EXT.GetListenerfDirect" /></summary>
     public enum ListenerGetPNameF : uint
     {
         Gain = 4106,
         MetersPerUnit = 131076,
     }
-    ///<summary>Used in <see cref="AL.GetListenerfv" /></summary>
+    ///<summary>Used in <see cref="AL.GetListenerfv" />, <see cref="AL.EXT.GetListenerfvDirect" /></summary>
     public enum ListenerGetPNameFV : uint
     {
         Position = 4100,
@@ -1115,36 +1202,36 @@ namespace OpenTK.Audio.OpenAL
         Orientation = 4111,
         MetersPerUnit = 131076,
     }
-    ///<summary>Used in <see cref="AL.GetListeneri" /></summary>
+    ///<summary>Used in <see cref="AL.GetListeneri" />, <see cref="AL.EXT.GetListeneriDirect" /></summary>
     public enum ListenerGetPNameI : uint
     {
     }
-    ///<summary>Used in <see cref="AL.GetListeneriv" /></summary>
+    ///<summary>Used in <see cref="AL.GetListeneriv" />, <see cref="AL.EXT.GetListenerivDirect" /></summary>
     public enum ListenerGetPNameIV : uint
     {
         Position = 4100,
         Velocity = 4102,
         Orientation = 4111,
     }
-    ///<summary>Used in <see cref="AL.Listener3f" /></summary>
+    ///<summary>Used in <see cref="AL.Listener3f" />, <see cref="AL.EXT.Listener3fDirect" /></summary>
     public enum ListenerPName3F : uint
     {
         Position = 4100,
         Velocity = 4102,
     }
-    ///<summary>Used in <see cref="AL.Listener3i" /></summary>
+    ///<summary>Used in <see cref="AL.Listener3i" />, <see cref="AL.EXT.Listener3iDirect" /></summary>
     public enum ListenerPName3I : uint
     {
         Position = 4100,
         Velocity = 4102,
     }
-    ///<summary>Used in <see cref="AL.Listenerf" /></summary>
+    ///<summary>Used in <see cref="AL.Listenerf" />, <see cref="AL.EXT.ListenerfDirect" /></summary>
     public enum ListenerPNameF : uint
     {
         Gain = 4106,
         MetersPerUnit = 131076,
     }
-    ///<summary>Used in <see cref="AL.Listenerfv" /></summary>
+    ///<summary>Used in <see cref="AL.Listenerfv" />, <see cref="AL.EXT.ListenerfvDirect" /></summary>
     public enum ListenerPNameFV : uint
     {
         Position = 4100,
@@ -1153,11 +1240,11 @@ namespace OpenTK.Audio.OpenAL
         Orientation = 4111,
         MetersPerUnit = 131076,
     }
-    ///<summary>Used in <see cref="AL.Listeneri" /></summary>
+    ///<summary>Used in <see cref="AL.Listeneri" />, <see cref="AL.EXT.ListeneriDirect" /></summary>
     public enum ListenerPNameI : uint
     {
     }
-    ///<summary>Used in <see cref="AL.Listeneriv" /></summary>
+    ///<summary>Used in <see cref="AL.Listeneriv" />, <see cref="AL.EXT.ListenerivDirect" /></summary>
     public enum ListenerPNameIV : uint
     {
         Position = 4100,
@@ -1169,19 +1256,19 @@ namespace OpenTK.Audio.OpenAL
         LowpassGain = 1,
         LowpassGainhf = 2,
     }
-    ///<summary>Used in <see cref="AL.EXT.MacOSXGetRenderChannelCount" />, <see cref="AL.EXT.MacOSXRenderChannelCount" /></summary>
+    ///<summary>Used in <see cref="AL.EXT.MacOSXGetRenderChannelCount" />, <see cref="AL.EXT.MacOSXGetRenderChannelCountDirect" />, <see cref="AL.EXT.MacOSXRenderChannelCount" />, ...</summary>
     public enum MacOSXRenderChannelCount : uint
     {
         MacOsxRenderChannelCountStereo = 1022,
         MacOsxRenderChannelCountMultichannel = 1023,
     }
-    ///<summary>Used in <see cref="AL.EXT.SourceGetRenderingQuality" />, <see cref="AL.EXT.SourceRenderingQuality" /></summary>
+    ///<summary>Used in <see cref="AL.EXT.SourceGetRenderingQuality" />, <see cref="AL.EXT.SourceGetRenderingQualityDirect" />, <see cref="AL.EXT.SourceRenderingQuality" />, ...</summary>
     public enum MacOSXSpatialRenderingQuality : uint
     {
         MacOsxSpatialRenderingQualityHigh = 1021,
         MacOsxSpatialRenderingQualityLow = 1023,
     }
-    ///<summary>Used in <see cref="AL.EXT.GetObjectLabelEXT" />, <see cref="AL.EXT.ObjectLabelEXT" /></summary>
+    ///<summary>Used in <see cref="AL.EXT.GetObjectLabelDirectEXT" />, <see cref="AL.EXT.GetObjectLabelEXT" />, <see cref="AL.EXT.ObjectLabelDirectEXT" />, ...</summary>
     public enum ObjectType : uint
     {
         BufferExt = 4105,
@@ -1217,7 +1304,7 @@ namespace OpenTK.Audio.OpenAL
         RingModulatorHighpassCutoff = 2,
         RingModulatorWaveform = 3,
     }
-    ///<summary>Used in <see cref="AL.SOFT.BufferSamplesSOFT" />, <see cref="AL.SOFT.BufferSubSamplesSOFT" />, <see cref="AL.SOFT.GetBufferSamplesSOFT" /></summary>
+    ///<summary>Used in <see cref="AL.EXT.BufferSamplesDirectSOFT" />, <see cref="AL.SOFT.BufferSamplesSOFT" />, <see cref="AL.EXT.BufferSubSamplesDirectSOFT" />, ...</summary>
     public enum SampleType : uint
     {
         ByteSoft = 5120,
@@ -1236,18 +1323,18 @@ namespace OpenTK.Audio.OpenAL
         ConeInnerAngle = 4097,
         ConeOuterAngle = 4098,
     }
-    ///<summary>Used in <see cref="AL.SOFT.GetSource3dSOFT" /></summary>
+    ///<summary>Used in <see cref="AL.EXT.GetSource3dDirectSOFT" />, <see cref="AL.SOFT.GetSource3dSOFT" /></summary>
     public enum SourceGetPName3D : uint
     {
     }
-    ///<summary>Used in <see cref="AL.GetSource3f" /></summary>
+    ///<summary>Used in <see cref="AL.GetSource3f" />, <see cref="AL.EXT.GetSource3fDirect" /></summary>
     public enum SourceGetPName3F : uint
     {
         Position = 4100,
         Direction = 4101,
         Velocity = 4102,
     }
-    ///<summary>Used in <see cref="AL.GetSource3i" /></summary>
+    ///<summary>Used in <see cref="AL.GetSource3i" />, <see cref="AL.EXT.GetSource3iDirect" /></summary>
     public enum SourceGetPName3I : uint
     {
         Position = 4100,
@@ -1255,7 +1342,7 @@ namespace OpenTK.Audio.OpenAL
         Velocity = 4102,
         AuxiliarySendFilter = 131078,
     }
-    ///<summary>Used in <see cref="AL.SOFT.GetSource3i64SOFT" /></summary>
+    ///<summary>Used in <see cref="AL.EXT.GetSource3i64DirectSOFT" />, <see cref="AL.SOFT.GetSource3i64SOFT" /></summary>
     public enum SourceGetPName3I64 : uint
     {
     }
@@ -1272,17 +1359,17 @@ namespace OpenTK.Audio.OpenAL
         AuxiliarySendFilterGainAuto = 131083,
         AuxiliarySendFilterGainhfAuto = 131084,
     }
-    ///<summary>Used in <see cref="AL.SOFT.GetSourcedSOFT" /></summary>
+    ///<summary>Used in <see cref="AL.EXT.GetSourcedDirectSOFT" />, <see cref="AL.SOFT.GetSourcedSOFT" /></summary>
     public enum SourceGetPNameD : uint
     {
     }
-    ///<summary>Used in <see cref="AL.SOFT.GetSourcedvSOFT" /></summary>
+    ///<summary>Used in <see cref="AL.EXT.GetSourcedvDirectSOFT" />, <see cref="AL.SOFT.GetSourcedvSOFT" /></summary>
     public enum SourceGetPNameDV : uint
     {
         SecOffsetLatencySoft = 4609,
         SecOffsetClockSoft = 4611,
     }
-    ///<summary>Used in <see cref="AL.GetSourcef" /></summary>
+    ///<summary>Used in <see cref="AL.GetSourcef" />, <see cref="AL.EXT.GetSourcefDirect" /></summary>
     public enum SourceGetPNameF : uint
     {
         ConeInnerAngle = 4097,
@@ -1305,7 +1392,7 @@ namespace OpenTK.Audio.OpenAL
         RoomRolloffFactor = 131080,
         ConeOuterGainhf = 131081,
     }
-    ///<summary>Used in <see cref="AL.GetSourcefv" /></summary>
+    ///<summary>Used in <see cref="AL.GetSourcefv" />, <see cref="AL.EXT.GetSourcefvDirect" /></summary>
     public enum SourceGetPNameFV : uint
     {
         ConeInnerAngle = 4097,
@@ -1328,7 +1415,7 @@ namespace OpenTK.Audio.OpenAL
         RoomRolloffFactor = 131080,
         ConeOuterGainhf = 131081,
     }
-    ///<summary>Used in <see cref="AL.GetSourcei" /></summary>
+    ///<summary>Used in <see cref="AL.GetSourcei" />, <see cref="AL.EXT.GetSourceiDirect" /></summary>
     public enum SourceGetPNameI : uint
     {
         SourceDistanceModel = 512,
@@ -1355,17 +1442,17 @@ namespace OpenTK.Audio.OpenAL
         StereoModeSoft = 6576,
         DirectFilter = 131077,
     }
-    ///<summary>Used in <see cref="AL.SOFT.GetSourcei64SOFT" /></summary>
+    ///<summary>Used in <see cref="AL.EXT.GetSourcei64DirectSOFT" />, <see cref="AL.SOFT.GetSourcei64SOFT" /></summary>
     public enum SourceGetPNameI64 : uint
     {
     }
-    ///<summary>Used in <see cref="AL.SOFT.GetSourcei64vSOFT" /></summary>
+    ///<summary>Used in <see cref="AL.EXT.GetSourcei64vDirectSOFT" />, <see cref="AL.SOFT.GetSourcei64vSOFT" /></summary>
     public enum SourceGetPNameI64V : uint
     {
         SampleOffsetLatencySoft = 4608,
         SampleOffsetClockSoft = 4610,
     }
-    ///<summary>Used in <see cref="AL.GetSourceiv" /></summary>
+    ///<summary>Used in <see cref="AL.GetSourceiv" />, <see cref="AL.EXT.GetSourceivDirect" /></summary>
     public enum SourceGetPNameIV : uint
     {
         Position = 4100,
@@ -1393,18 +1480,18 @@ namespace OpenTK.Audio.OpenAL
     {
         QueueHasLooped = 36864,
     }
-    ///<summary>Used in <see cref="AL.SOFT.Source3dSOFT" /></summary>
+    ///<summary>Used in <see cref="AL.EXT.Source3dDirectSOFT" />, <see cref="AL.SOFT.Source3dSOFT" /></summary>
     public enum SourcePName3D : uint
     {
     }
-    ///<summary>Used in <see cref="AL.Source3f" /></summary>
+    ///<summary>Used in <see cref="AL.Source3f" />, <see cref="AL.EXT.Source3fDirect" /></summary>
     public enum SourcePName3F : uint
     {
         Position = 4100,
         Direction = 4101,
         Velocity = 4102,
     }
-    ///<summary>Used in <see cref="AL.Source3i" /></summary>
+    ///<summary>Used in <see cref="AL.Source3i" />, <see cref="AL.EXT.Source3iDirect" /></summary>
     public enum SourcePName3I : uint
     {
         Position = 4100,
@@ -1412,7 +1499,7 @@ namespace OpenTK.Audio.OpenAL
         Velocity = 4102,
         AuxiliarySendFilter = 131078,
     }
-    ///<summary>Used in <see cref="AL.SOFT.Source3i64SOFT" /></summary>
+    ///<summary>Used in <see cref="AL.EXT.Source3i64DirectSOFT" />, <see cref="AL.SOFT.Source3i64SOFT" /></summary>
     public enum SourcePName3I64 : uint
     {
     }
@@ -1429,16 +1516,16 @@ namespace OpenTK.Audio.OpenAL
         AuxiliarySendFilterGainAuto = 131083,
         AuxiliarySendFilterGainhfAuto = 131084,
     }
-    ///<summary>Used in <see cref="AL.SOFT.SourcedSOFT" /></summary>
+    ///<summary>Used in <see cref="AL.EXT.SourcedDirectSOFT" />, <see cref="AL.SOFT.SourcedSOFT" /></summary>
     public enum SourcePNameD : uint
     {
     }
-    ///<summary>Used in <see cref="AL.SOFT.SourcedvSOFT" /></summary>
+    ///<summary>Used in <see cref="AL.EXT.SourcedvDirectSOFT" />, <see cref="AL.SOFT.SourcedvSOFT" /></summary>
     public enum SourcePNameDV : uint
     {
         SecOffsetLatencySoft = 4609,
     }
-    ///<summary>Used in <see cref="AL.Sourcef" /></summary>
+    ///<summary>Used in <see cref="AL.Sourcef" />, <see cref="AL.EXT.SourcefDirect" /></summary>
     public enum SourcePNameF : uint
     {
         ConeInnerAngle = 4097,
@@ -1461,7 +1548,7 @@ namespace OpenTK.Audio.OpenAL
         RoomRolloffFactor = 131080,
         ConeOuterGainhf = 131081,
     }
-    ///<summary>Used in <see cref="AL.Sourcefv" /></summary>
+    ///<summary>Used in <see cref="AL.Sourcefv" />, <see cref="AL.EXT.SourcefvDirect" /></summary>
     public enum SourcePNameFV : uint
     {
         ConeInnerAngle = 4097,
@@ -1484,7 +1571,7 @@ namespace OpenTK.Audio.OpenAL
         RoomRolloffFactor = 131080,
         ConeOuterGainhf = 131081,
     }
-    ///<summary>Used in <see cref="AL.Sourcei" /></summary>
+    ///<summary>Used in <see cref="AL.Sourcei" />, <see cref="AL.EXT.SourceiDirect" /></summary>
     public enum SourcePNameI : uint
     {
         SourceDistanceModel = 512,
@@ -1509,16 +1596,16 @@ namespace OpenTK.Audio.OpenAL
         StereoModeSoft = 6576,
         DirectFilter = 131077,
     }
-    ///<summary>Used in <see cref="AL.SOFT.Sourcei64SOFT" /></summary>
+    ///<summary>Used in <see cref="AL.EXT.Sourcei64DirectSOFT" />, <see cref="AL.SOFT.Sourcei64SOFT" /></summary>
     public enum SourcePNameI64 : uint
     {
     }
-    ///<summary>Used in <see cref="AL.SOFT.Sourcei64vSOFT" /></summary>
+    ///<summary>Used in <see cref="AL.EXT.Sourcei64vDirectSOFT" />, <see cref="AL.SOFT.Sourcei64vSOFT" /></summary>
     public enum SourcePNameI64V : uint
     {
         SampleOffsetLatencySoft = 4608,
     }
-    ///<summary>Used in <see cref="AL.Sourceiv" /></summary>
+    ///<summary>Used in <see cref="AL.Sourceiv" />, <see cref="AL.EXT.SourceivDirect" /></summary>
     public enum SourcePNameIV : uint
     {
         ConeInnerAngle = 4097,
@@ -1568,7 +1655,7 @@ namespace OpenTK.Audio.OpenAL
         NormalSoft = 0,
         SuperStereoSoft = 1,
     }
-    ///<summary>Used in <see cref="AL.GetString" /></summary>
+    ///<summary>Used in <see cref="AL.GetString" />, <see cref="AL.EXT.GetStringDirect" /></summary>
     public enum StringName : uint
     {
         Vendor = 45057,
