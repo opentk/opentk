@@ -913,7 +913,7 @@ namespace VkGenerator
                             writer.WriteLine($"public static class Constants");
                             using (writer.CsScope())
                             {
-                                foreach (Constant constant in requireTag.Constants)
+                                foreach (Constant constant in requireTag.AddedConstants)
                                 {
                                     switch (constant.Type)
                                     {
@@ -939,7 +939,7 @@ namespace VkGenerator
                                 }
                             }
 
-                            foreach (TypeRef requiredType in requireTag.RequiredTypes)
+                            foreach (TypeRef requiredType in requireTag.Types)
                             {
                                 EnumType? @enum = video.Enums.Find(e => e.Name == requiredType.Name);
                                 StructType? @struct = video.Structs.Find(s => s.Name == requiredType.Name);

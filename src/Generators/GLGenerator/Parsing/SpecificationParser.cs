@@ -38,13 +38,13 @@ namespace GLGenerator.Parsing
             Dictionary<GLAPI, List<Feature>> FeaturesPerAPI = new Dictionary<GLAPI, List<Feature>>();
             foreach (var feature in features)
             {
-                FeaturesPerAPI.AddToNestedList(feature.Api, feature);
+                FeaturesPerAPI.AddToNestedList(feature.GLApi, feature);
             }
 
             Dictionary<GLAPI, List<Extension>> ExtensionsPerAPI = new Dictionary<GLAPI, List<Extension>>();
             foreach (var extension in extensions)
             {
-                foreach (var supportedAPI in extension.SupportedApis)
+                foreach (var supportedAPI in extension.SupportedGLApis)
                 {
                     ExtensionsPerAPI.AddToNestedList(supportedAPI, extension);
                 }
@@ -97,16 +97,16 @@ namespace GLGenerator.Parsing
                 // FIXME: If we want to generate the compatibility thing we want to remove all of the 
                 foreach (var feature in features)
                 {
-                    foreach (var requires in feature.Requires)
+                    foreach (var requires in feature.RequireTags)
                     {
-                        Debug.Assert(requires.Api != feature.Api);
+                        Debug.Assert(requires.GLApi != feature.GLApi);
 
                         foreach (var entryPoint in requires.Commands)
                         {
-                            if (entryPointToReference.TryGetValue(entryPoint, out FunctionReference? value) == false)
+                            if (entryPointToReference.TryGetValue(entryPoint.Name, out FunctionReference? value) == false)
                             {
-                                value = new FunctionReference(entryPoint, feature.Version, null, new List<ExtensionReference>(), GLProfile.None);
-                                entryPointToReference.Add(entryPoint, value);
+                                value = new FunctionReference(entryPoint.Name, feature.Version, null, new List<ExtensionReference>(), GLProfile.None);
+                                entryPointToReference.Add(entryPoint.Name, value);
                             }
 
                             // FIXME: This isn't strictly needed... they are already going to be in order.
@@ -115,22 +115,24 @@ namespace GLGenerator.Parsing
                                 value = value with { AddedIn = feature.Version };
                             }
 
-                            value = value with { Profile = requires.Profile };
+                            value = value with { Profile = requires.GLProfile };
 
-                            entryPointToReference[entryPoint] = value;
+                            entryPointToReference[entryPoint.Name] = value;
                         }
                     }
 
-                    foreach (var removes in feature.Removes)
+                    Debug.Assert(feature.DeprecateTags.Count == 0);
+
+                    foreach (var removes in feature.RemoveTags)
                     {
                         bool isCompatibility = removes.Profile == GLProfile.Compatibility;
 
                         foreach (var entryPoint in removes.Commands)
                         {
-                            if (entryPointToReference.TryGetValue(entryPoint, out FunctionReference? value) == false)
+                            if (entryPointToReference.TryGetValue(entryPoint.Name, out FunctionReference? value) == false)
                             {
-                                value = new FunctionReference(entryPoint, feature.Version, null, new List<ExtensionReference>(), GLProfile.None);
-                                entryPointToReference.Add(entryPoint, value);
+                                value = new FunctionReference(entryPoint.Name, feature.Version, null, new List<ExtensionReference>(), GLProfile.None);
+                                entryPointToReference.Add(entryPoint.Name, value);
                             }
 
                             // If we should, update the removed in.
@@ -141,35 +143,38 @@ namespace GLGenerator.Parsing
 
                             value = value with { Profile = removes.Profile };
 
-                            entryPointToReference[entryPoint] = value;
+                            entryPointToReference[entryPoint.Name] = value;
                         }
                     }
                 }
 
                 foreach (var extension in extensions)
                 {
-                    Debug.Assert(extension.SupportedApis.Contains(api));
+                    Debug.Assert(extension.SupportedGLApis.Contains(api));
 
-                    foreach (var requires in extension.Requires)
+                    foreach (var requires in extension.RequireTags)
                     {
-                        Debug.Assert(extension.SupportedApis.Contains(requires.Api) || requires.Api == GLAPI.None);
+                        Debug.Assert(extension.SupportedGLApis.Contains(requires.GLApi) || requires.GLApi == GLAPI.None);
 
                         foreach (var entryPoint in requires.Commands)
                         {
-                            if (entryPointToReference.TryGetValue(entryPoint, out FunctionReference? value) == false)
+                            if (entryPointToReference.TryGetValue(entryPoint.Name, out FunctionReference? value) == false)
                             {
-                                value = new FunctionReference(entryPoint, null, null, new List<ExtensionReference>(), GLProfile.None);
-                                entryPointToReference.Add(entryPoint, value);
+                                value = new FunctionReference(entryPoint.Name, null, null, new List<ExtensionReference>(), GLProfile.None);
+                                entryPointToReference.Add(entryPoint.Name, value);
                             }
 
                             value.PartOfExtensions.Add(new ExtensionReference(extension.Name, extension.Vendor));
 
                             // FIXME: Should we do this?
-                            value = value with { Profile = requires.Profile };
+                            value = value with { Profile = requires.GLProfile };
 
-                            entryPointToReference[entryPoint] = value;
+                            entryPointToReference[entryPoint.Name] = value;
                         }
                     }
+
+                    Debug.Assert(extension.DeprecateTags.Count == 0);
+                    Debug.Assert(extension.RemoveTags.Count == 0);
                 }
 
                 return entryPointToReference.Values.ToList();
@@ -181,16 +186,16 @@ namespace GLGenerator.Parsing
 
                 foreach (var feature in features)
                 {
-                    foreach (var requires in feature.Requires)
+                    foreach (var requires in feature.RequireTags)
                     {
-                        Debug.Assert(requires.Api != feature.Api);
+                        Debug.Assert(requires.GLApi != feature.GLApi);
 
                         foreach (var enumName in requires.Enums)
                         {
-                            if (enumNameToReference.TryGetValue(enumName, out EnumReference? value) == false)
+                            if (enumNameToReference.TryGetValue(enumName.Name, out EnumReference? value) == false)
                             {
-                                value = new EnumReference(enumName, feature.Version, null, new List<ExtensionReference>(), GLProfile.None, false);
-                                enumNameToReference.Add(enumName, value);
+                                value = new EnumReference(enumName.Name, feature.Version, null, new List<ExtensionReference>(), GLProfile.None, false);
+                                enumNameToReference.Add(enumName.Name, value);
                             }
 
                             // If this enum value was removed and later readded.
@@ -205,20 +210,20 @@ namespace GLGenerator.Parsing
                                 value = value with { AddedIn = feature.Version };
                             }
 
-                            value = value with { Profile = requires.Profile };
+                            value = value with { Profile = requires.GLProfile };
 
-                            enumNameToReference[enumName] = value;
+                            enumNameToReference[enumName.Name] = value;
                         }
                     }
 
-                    foreach (var removes in feature.Removes)
+                    foreach (var removes in feature.RemoveTags)
                     {
                         foreach (var enumName in removes.Enums)
                         {
-                            if (enumNameToReference.TryGetValue(enumName, out EnumReference? value) == false)
+                            if (enumNameToReference.TryGetValue(enumName.Name, out EnumReference? value) == false)
                             {
-                                value = new EnumReference(enumName, feature.Version, null, new List<ExtensionReference>(), GLProfile.None, false);
-                                enumNameToReference.Add(enumName, value);
+                                value = new EnumReference(enumName.Name, feature.Version, null, new List<ExtensionReference>(), GLProfile.None, false);
+                                enumNameToReference.Add(enumName.Name, value);
                             }
 
                             // If we should, update the removed in.
@@ -229,35 +234,38 @@ namespace GLGenerator.Parsing
 
                             value = value with { Profile = removes.Profile };
 
-                            enumNameToReference[enumName] = value;
+                            enumNameToReference[enumName.Name] = value;
                         }
                     }
                 }
 
                 foreach (var extension in extensions)
                 {
-                    Debug.Assert(extension.SupportedApis.Contains(api));
+                    Debug.Assert(extension.SupportedGLApis.Contains(api));
 
-                    foreach (var requires in extension.Requires)
+                    foreach (var requires in extension.RequireTags)
                     {
-                        Debug.Assert(extension.SupportedApis.Contains(requires.Api) || requires.Api == GLAPI.None);
+                        Debug.Assert(extension.SupportedGLApis.Contains(requires.GLApi) || requires.GLApi == GLAPI.None);
 
                         foreach (var enumName in requires.Enums)
                         {
-                            if (enumNameToReference.TryGetValue(enumName, out EnumReference? value) == false)
+                            if (enumNameToReference.TryGetValue(enumName.Name, out EnumReference? value) == false)
                             {
-                                value = new EnumReference(enumName, null, null, new List<ExtensionReference>(), GLProfile.None, false);
-                                enumNameToReference.Add(enumName, value);
+                                value = new EnumReference(enumName.Name, null, null, new List<ExtensionReference>(), GLProfile.None, false);
+                                enumNameToReference.Add(enumName.Name, value);
                             }
 
                             value.PartOfExtensions.Add(new ExtensionReference(extension.Name, extension.Vendor));
 
                             // FIXME: Should we do this?
-                            value = value with { Profile = requires.Profile };
+                            value = value with { Profile = requires.GLProfile };
 
-                            enumNameToReference[enumName] = value;
+                            enumNameToReference[enumName.Name] = value;
                         }
                     }
+
+                    Debug.Assert(extension.DeprecateTags.Count == 0);
+                    Debug.Assert(extension.RemoveTags.Count == 0);
                 }
 
                 return enumNameToReference.Values.ToList();
@@ -1004,21 +1012,30 @@ namespace GLGenerator.Parsing
                 Version? version = Version.Parse(number);
                 GLAPI api = ParseApi(apiStr);
 
-                List<RequireEntry> requireEntries = new List<RequireEntry>();
+                List<RequireTag> requireEntries = new List<RequireTag>();
                 foreach (XElement? require in feature.Elements("require"))
                 {
-                    RequireEntry reqEntry = ParseRequire(require, ignoreFunctions);
-                    requireEntries.Add(reqEntry);
+                    RequireTag reqTag = ParseRequire(require, ignoreFunctions);
+                    requireEntries.Add(reqTag);
                 }
 
-                List<RemoveEntry> removeEntries = new List<RemoveEntry>();
+                List<RemoveTag> removeEntries = new List<RemoveTag>();
                 foreach (XElement? remove in feature.Elements("remove"))
                 {
-                    RemoveEntry removeEntry = ParseRemove(remove, ignoreFunctions);
-                    removeEntries.Add(removeEntry);
+                    RemoveTag removeTag = ParseRemove(remove, ignoreFunctions);
+                    removeEntries.Add(removeTag);
                 }
 
-                features.Add(new Feature(api, version, name, requireEntries, removeEntries));
+                features.Add(new Feature()
+                {
+                    Name = name,
+                    Version = version,
+                    RequireTags = requireEntries,
+                    DeprecateTags = [],
+                    RemoveTags = removeEntries,
+
+                    GLApi = api,
+                });
             }
 
             return features;
@@ -1063,26 +1080,37 @@ namespace GLGenerator.Parsing
                     throw new Exception($"Extension '{extension}' did not specify any supported APIs.");
                 }
 
-                List<RequireEntry> requires = new List<RequireEntry>();
+                List<RequireTag> requires = new List<RequireTag>();
                 foreach (XElement? require in extension.Elements("require"))
                 {
                     requires.Add(ParseRequire(require, ignoreFunctions));
                 }
 
-                extensions.Add(new Extension(extName, vendor, supportedApis, comment, requires));
+                extensions.Add(new Extension()
+                {
+                    Name = extName,
+                    RequireTags = requires,
+                    DeprecateTags = [],
+                    RemoveTags = [],
+
+                    Comment = comment,
+
+                    Vendor = vendor,
+                    SupportedGLApis = supportedApis,
+                });
             }
 
             return extensions;
         }
 
-        internal static RequireEntry ParseRequire(XElement requires, List<string> ignoreFunctions)
+        internal static RequireTag ParseRequire(XElement requires, List<string> ignoreFunctions)
         {
             GLAPI api = ParseApi(requires.Attribute("api")?.Value);
             GLProfile profile = ParseProfile(requires.Attribute("profile")?.Value);
             string? comment = requires.Attribute("comment")?.Value;
 
-            List<string> reqCommands = new List<string>();
-            List<string> reqEnums = new List<string>();
+            List<CommandRef> reqCommands = new List<CommandRef>();
+            List<EnumRef> reqEnums = new List<EnumRef>();
 
             foreach (XElement? entry in requires.Elements())
             {
@@ -1095,26 +1123,38 @@ namespace GLGenerator.Parsing
                     case "command":
                         if (ignoreFunctions.Contains(name))
                             continue;
-                        reqCommands.Add(name);
+                        reqCommands.Add(new CommandRef(name));
                         break;
                     case "enum":
-                        reqEnums.Add(name);
+                        reqEnums.Add(new EnumRef(name));
                         break;
-                    default:
+                    case "type":
                         continue;
+                    default:
+                        throw new Exception();
                 }
             }
 
-            return new RequireEntry(api, profile, comment, reqCommands, reqEnums);
+            return new RequireTag()
+            {
+                Commands = reqCommands,
+                Enums = reqEnums,
+                Constants = [],
+
+                Comment = comment,
+
+                GLApi = api,
+                GLProfile = profile,
+            };
         }
 
-        internal static RemoveEntry ParseRemove(XElement requires, List<string> ignoreFunctions)
+        internal static RemoveTag ParseRemove(XElement requires, List<string> ignoreFunctions)
         {
             GLProfile profile = ParseProfile(requires.Attribute("profile")?.Value);
             string? comment = requires.Attribute("comment")?.Value;
 
-            List<string> removeCommands = new List<string>();
-            List<string> removeEnums = new List<string>();
+            List<CommandRef> removeCommands = new List<CommandRef>();
+            List<EnumRef> removeEnums = new List<EnumRef>();
 
             foreach (XElement? entry in requires.Elements())
             {
@@ -1127,17 +1167,27 @@ namespace GLGenerator.Parsing
                     case "command":
                         if (ignoreFunctions.Contains(name))
                             continue;
-                        removeCommands.Add(name);
+                        removeCommands.Add(new CommandRef(name));
                         break;
                     case "enum":
-                        removeEnums.Add(name);
+                        removeEnums.Add(new EnumRef(name));
                         break;
                     default:
-                        continue;
+                        throw new Exception();
                 }
             }
 
-            return new RemoveEntry(profile, comment, removeCommands, removeEnums);
+            //return new RemoveTag(profile, comment, removeCommands, removeEnums);
+            return new RemoveTag()
+            {
+                Commands = removeCommands,
+                Enums = removeEnums,
+                Constants = [],
+
+                Comment = comment,
+
+                Profile = profile,
+            };
         }
 
 

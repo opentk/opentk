@@ -73,7 +73,7 @@ namespace VkGenerator.Process
             {
                 foreach (RequireTag require in feature.RequireTags)
                 {
-                    foreach (RequireEnum requiredEnum in require.RequiredEnums)
+                    foreach (RequireEnum requiredEnum in require.AddedEnums)
                     {
                         if (requiredEnum.Alias == null)
                         {
@@ -93,7 +93,7 @@ namespace VkGenerator.Process
             {
                 foreach (RequireTag require in feature.RequireTags)
                 {
-                    foreach (RequireEnum requiredEnum in require.RequiredEnums)
+                    foreach (RequireEnum requiredEnum in require.AddedEnums)
                     {
                         // VK_STRUCTURE_TYPE_SURFACE_CAPABILITIES_2_EXT and VK_STRUCTURE_TYPE_SURFACE_CAPABILITIES2_EXT both mangle to the same name in C#.
                         // Atm this is the only symbol to have this problem, so we do a quick hack instead of doing something fancy to detect this situation.
@@ -124,7 +124,7 @@ namespace VkGenerator.Process
             {
                 foreach (RequireTag require in extension.RequireTags)
                 {
-                    foreach (RequireEnum requiredEnum in require.RequiredEnums)
+                    foreach (RequireEnum requiredEnum in require.AddedEnums)
                     {
                         if (requiredEnum.Alias == null)
                         {
@@ -144,7 +144,7 @@ namespace VkGenerator.Process
             {
                 foreach (RequireTag require in extension.RequireTags)
                 {
-                    foreach (RequireEnum requiredEnum in require.RequiredEnums)
+                    foreach (RequireEnum requiredEnum in require.AddedEnums)
                     {
                         // VK_STRUCTURE_TYPE_SURFACE_CAPABILITIES_2_EXT and VK_STRUCTURE_TYPE_SURFACE_CAPABILITIES2_EXT both mangle to the same name in C#.
                         // Atm this is the only symbol to have this problem, so we do a quick hack instead of doing something fancy to detect this situation.
@@ -181,7 +181,7 @@ namespace VkGenerator.Process
             {
                 foreach (RequireTag requireTag in extension.RequireTags)
                 {
-                    foreach (Constant constant in requireTag.Constants)
+                    foreach (Constant constant in requireTag.AddedConstants)
                     {
                         // FIXME: Mark these as from a specific extension so we can add a comment about that.
                         data.Constants.Add(constant.Name, constant);
@@ -510,7 +510,7 @@ namespace VkGenerator.Process
             {
                 foreach (RequireTag require in feature.RequireTags)
                 {
-                    foreach (CommandRef requireCommand in require.RequiredCommands)
+                    foreach (CommandRef requireCommand in require.Commands)
                     {
                         Function command = data.Commands.Find(c => c.Name == requireCommand.Name) ?? throw new Exception();
 
@@ -525,7 +525,8 @@ namespace VkGenerator.Process
                         }
                     }
 
-                    foreach (RequireEnum requireEnum in require.RequiredEnums)
+                    // FIXME: Should we be looking at AddedEnum, Enums or both??
+                    foreach (RequireEnum requireEnum in require.AddedEnums)
                     {
                         EnumType? extends = data.Enums.Find(e => e.Name == requireEnum.Extends);
                         Debug.Assert(extends != null);
@@ -541,7 +542,7 @@ namespace VkGenerator.Process
                         }
                     }
 
-                    foreach (TypeRef requireType in require.RequiredTypes)
+                    foreach (TypeRef requireType in require.Types)
                     {
                         Define? define = data.Defines.Find(d => d.Name == requireType.Name);
                         StructType? structType = data.Structs.Find(s => s.Name == requireType.Name);
@@ -605,7 +606,7 @@ namespace VkGenerator.Process
                 string extensionName = extension.Name;
                 foreach (RequireTag require in extension.RequireTags)
                 {
-                    foreach (CommandRef requireCommand in require.RequiredCommands)
+                    foreach (CommandRef requireCommand in require.Commands)
                     {
                         Function command = data.Commands.Find(c => c.Name == requireCommand.Name) ?? throw new Exception();
 
@@ -619,7 +620,8 @@ namespace VkGenerator.Process
                         }
                     }
 
-                    foreach (RequireEnum requireEnum in require.RequiredEnums)
+                    // FIXME: Should we be looking at AddedEnum, Enums or both??
+                    foreach (RequireEnum requireEnum in require.AddedEnums)
                     {
                         // FIXME: This enum is referenced in the VK_EXT_display_surface_counter but it's
                         // actually never defined outside it. So we won't be able to find it's EnumType.
@@ -643,7 +645,7 @@ namespace VkGenerator.Process
                         }
                     }
 
-                    foreach (TypeRef requireType in require.RequiredTypes)
+                    foreach (TypeRef requireType in require.Types)
                     {
                         Define? define = data.Defines.Find(d => d.Name == requireType.Name);
                         StructType? structType = data.Structs.Find(s => s.Name == requireType.Name);
@@ -729,7 +731,7 @@ namespace VkGenerator.Process
             {
                 foreach (DeprecateTag deprecateTag in feature.DeprecateTags)
                 {
-                    foreach (CommandRef deprecatedCommand in deprecateTag.DeprecatedCommands)
+                    foreach (CommandRef deprecatedCommand in deprecateTag.Commands)
                     {
                         Function? command = data.Commands.Find(c => c.Name == deprecatedCommand.Name);
 
@@ -745,7 +747,7 @@ namespace VkGenerator.Process
                         }
                     }
 
-                    foreach (TypeRef deprecatedType in deprecateTag.DeprecatedTypes)
+                    foreach (TypeRef deprecatedType in deprecateTag.Types)
                     {
                         if (data.Enums.TryFind(e => e.Name == deprecatedType.Name, out EnumType? @enum))
                         {
@@ -783,7 +785,7 @@ namespace VkGenerator.Process
             {
                 foreach (DeprecateTag deprecateTag in extension.DeprecateTags)
                 {
-                    foreach (CommandRef deprecatedCommand in deprecateTag.DeprecatedCommands)
+                    foreach (CommandRef deprecatedCommand in deprecateTag.Commands)
                     {
                         Function? command = data.Commands.Find(c => c.Name == deprecatedCommand.Name);
 
@@ -799,7 +801,7 @@ namespace VkGenerator.Process
                         }
                     }
 
-                    foreach (TypeRef deprecatedType in deprecateTag.DeprecatedTypes)
+                    foreach (TypeRef deprecatedType in deprecateTag.Types)
                     {
                         if (data.Enums.TryFind(e => e.Name == deprecatedType.Name, out EnumType? @enum))
                         {

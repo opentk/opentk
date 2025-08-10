@@ -1,15 +1,16 @@
-﻿using System;
+﻿using GeneratorBase;
+using GeneratorBase.Utility;
+using GeneratorBase.Utility.Extensions;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using VkGenerator.Process;
-using GeneratorBase.Utility.Extensions;
-using GeneratorBase;
-using GeneratorBase.Utility;
 
 namespace VkGenerator.Parsing
 {
@@ -86,83 +87,7 @@ namespace VkGenerator.Parsing
         public VersionInfo? VersionInfo { get; set; }
     }
 
-    /*public enum CommandType
-    {
-        /// <summary>This command does not have a resolved command type yet.</summary>
-        Invalid,
-        /// <summary>This command is one of the global vulkan commands.</summary>
-        Global,
-        /// <summary>This command is an instance command.</summary>
-        Instance,
-        /// <summary>This command is a device command.</summary>
-        Device,
-    }
-
-    public record Command(string Name, string ReturnType, List<CommandParameter> Parameters, string? Alias) : IFunction
-    {
-        string IFunction.EntryPoint => Name;
-        List<IFunctionParameter> IFunction.Parameters => Parameters.Cast<IFunctionParameter>().ToList();
-
-        public BaseCSType? StrongReturnType { get; set; }
-        public VersionInfo? VersionInfo { get; set; }
-
-        public CommandType CommandType = CommandType.Invalid;
-    }
-
-    public record CommandParameter(string Name, string Type, bool Optional, bool ExternSync, string? Length) : IFunctionParameter
-    {
-        string IFunctionParameter.OriginalName => Name;
-
-        public BaseCSType? StrongType { get; set; }
-        public Expression? StrongLength { get; set; }
-    }*/
-
-    public record Feature(string Name, Version Version, string? Depends, string? Comment, List<RequireTag> RequireTags, List<DeprecateTag> DeprecateTags, List<RemoveTag> RemoveTags);
-    public record Extension(
-        string Name,
-        int Number,
-        int SortOrder,
-        string? Protect,
-        string? Platform,
-        string Author,
-        string Contact,
-        string Type,
-        string? Depends,
-        string? Supported,
-        string? Ratified,
-        string? PromotedTo,
-        string? DeprecatedBy,
-        string? ObsoletedBy,
-        bool Provisional,
-        string? SpecialUse,
-        List<RequireTag> RequireTags,
-        List<DeprecateTag> DeprecateTags,
-        List<RemoveTag> RemoveTags);
-
-    public record RequireTag(List<RequireEnum> RequiredEnums, List<CommandRef> RequiredCommands, List<TypeRef> RequiredTypes, List<Constant> Constants, string? Comment);
-    // So far no enums have been deprecated so we don't need to decide what info needs to be stored there yet.
-    // - Noggin_bops 2025-07-06
-    public record DeprecateTag(List<CommandRef> DeprecatedCommands, List<TypeRef> DeprecatedTypes, string? ExplanationLink, string? Comment);
-    public record RemoveTag(List<EnumRef> RemovedEnums, List<CommandRef> RemovedCommands, List<TypeRef> RemovedTypes, List<FeatureRef> RemovedFeature, string? ReasonLink, string? Comment);
-
-    /// <summary>We either know Value or Alias.</summary>
-    public record RequireEnum(string Name, int? Value, string Extends, string? Alias, string? Comment);
-
-    public record EnumRef(string Name);
-    public record CommandRef(string Name);
-    public record TypeRef(string Name);
     public record FeatureRef(string Name, string Struct);
-
-    public enum ConstantType
-    {
-        Int32,
-        Uint32,
-        Uint64,
-        Float,
-        String,
-    }
-
-    public record Constant(ConstantType Type, string Name, string? Extension, string? Comment, ulong IntValue, float FloatValue, string StringValue);
 
     internal class SpecificationParser
     {
@@ -177,8 +102,6 @@ namespace VkGenerator.Parsing
 
             if (xdocument.Root == null)
                 throw new NullReferenceException("The parsed xml didn't contain a Root node.");
-
-            //XElement registry = xdocument.Element("registry") ?? throw new Exception("No <registry> tag.");
 
             TypeData typeData = ParseTypes(xdocument.Root);
 
@@ -754,7 +677,16 @@ namespace VkGenerator.Parsing
                         removeTags.Add(ParseRemoveTag(remove));
                     }
 
-                    features.Add(new Feature(name, Version.Parse(number), depends, comment, requireTags, deprecateTags, removeTags));
+                    features.Add(new Feature()
+                    {
+                        Name = name,
+                        Version = Version.Parse(number),
+                        RequireTags = requireTags,
+                        DeprecateTags = deprecateTags,
+                        RemoveTags = removeTags,
+
+                        Depends = depends,
+                    });
                 }
             }
 
@@ -824,26 +756,28 @@ namespace VkGenerator.Parsing
                     removeTags.Add(ParseRemoveTag(remove));
                 }
 
-                extensions.Add(new Extension(
-                    name,
-                    number,
-                    sortOrder,
-                    protect,
-                    platform,
-                    author,
-                    contact,
-                    type,
-                    depends,
-                    supported,
-                    ratified,
-                    promotedTo,
-                    deprecatedBy,
-                    obsoletedBy,
-                    provisional,
-                    specialUse,
-                    requireTags,
-                    deprecateTags,
-                    removeTags));
+                extensions.Add(new Extension()
+                {
+                    Name = name,
+                    RequireTags = requireTags,
+                    DeprecateTags = deprecateTags,
+                    RemoveTags = removeTags,
+
+                    Number = number,
+                    SortOrder = sortOrder,
+                    Protect = protect,
+                    Platform = platform,
+                    Author = author,
+                    Contact = contact,
+                    Type = type,
+                    Depends = depends,
+                    Supported = supported,
+                    Ratified = ratified,
+                    DeprecatedBy = deprecatedBy,
+                    ObsoletedBy = obsoletedBy,
+                    Provisional = provisional,
+                    SpecialUse = specialUse,
+                });
             }
 
             return extensions;
@@ -855,8 +789,11 @@ namespace VkGenerator.Parsing
             string? requireDepends = require.Attribute("depends")?.Value;
             string? tagComment = require.Attribute("comment")?.Value;
 
-            List<RequireEnum> requiredEnums = new List<RequireEnum>();
-            List<Constant> requiredConstants = new List<Constant>();
+            List<RequireEnum> addedEnums = new List<RequireEnum>();
+            List<Constant> addedConstants = new List<Constant>();
+
+            List<EnumRef> requiredEnums = new List<EnumRef>();
+            List<string> requiredConstants = new List<string>();
             foreach (XElement @enum in require.Elements("enum"))
             {
                 if (@enum.Attribute("api")?.Value == "vulkansc")
@@ -881,14 +818,16 @@ namespace VkGenerator.Parsing
                         else if (valueStr.StartsWith('\"') && valueStr.EndsWith('\"'))
                         {
                             // This is a string constant.
-                            requiredConstants.Add(new Constant(ConstantType.String, constName, extensionName, comment, 0, 0, valueStr));
+                            addedConstants.Add(new Constant(ConstantType.String, constName, extensionName, comment, 0, 0, valueStr));
+                            requiredConstants.Add(constName);
                         }
                         else
                         {
                             int value = (int)Int32Converter.ConvertFromString(valueStr)!;
 
                             // FIXME: Figure out the type?
-                            requiredConstants.Add(new Constant(ConstantType.Uint32, constName, extensionName, comment, (ulong)value, 0, ""));
+                            addedConstants.Add(new Constant(ConstantType.Uint32, constName, extensionName, comment, (ulong)value, 0, ""));
+                            requiredConstants.Add(constName);
                         }
                     }
                     else
@@ -907,7 +846,8 @@ namespace VkGenerator.Parsing
                     string? alias = @enum.Attribute("alias")?.Value;
                     if (alias != null)
                     {
-                        requiredEnums.Add(new RequireEnum(enumName, null, extends, alias, comment));
+                        addedEnums.Add(new RequireEnum(enumName, null, extends, alias, comment));
+                        requiredEnums.Add(new EnumRef(enumName));
                     }
                     else
                     {
@@ -939,7 +879,8 @@ namespace VkGenerator.Parsing
                             throw new Exception();
                         }
 
-                        requiredEnums.Add(new RequireEnum(enumName, value, extends, null, comment));
+                        addedEnums.Add(new RequireEnum(enumName, value, extends, null, comment));
+                        requiredEnums.Add(new EnumRef(enumName));
                     }
                 }
             }
@@ -960,7 +901,19 @@ namespace VkGenerator.Parsing
                 requiredTypes.Add(new TypeRef(commandName));
             }
 
-            return new RequireTag(requiredEnums, requiredCommands, requiredTypes, requiredConstants, tagComment);
+            //return new RequireTag(requiredEnums, requiredCommands, requiredTypes, requiredConstants, tagComment);
+            return new RequireTag()
+            {
+                Commands = requiredCommands,
+                Enums = requiredEnums,
+                Types = requiredTypes,
+                Constants = requiredConstants,
+
+                Comment = tagComment,
+
+                AddedEnums = addedEnums,
+                AddedConstants = addedConstants,
+            };
         }
 
         public static DeprecateTag ParseDeprecateTag(XElement deprecate)
@@ -984,7 +937,17 @@ namespace VkGenerator.Parsing
                 deprecatedTypes.Add(new TypeRef(typeName));
             }
 
-            return new DeprecateTag(deprecatedCommands, deprecatedTypes, explanationlink, tagComment);
+            return new DeprecateTag()
+            {
+                Commands = deprecatedCommands,
+                Enums = [],
+                Types = deprecatedTypes,
+                Constants = [],
+
+                Comment = tagComment,
+
+                ExplanationLink = explanationlink,
+            };
         }
 
         public static RemoveTag ParseRemoveTag(XElement remove)
@@ -1025,7 +988,17 @@ namespace VkGenerator.Parsing
                 removedFeatures.Add(new FeatureRef(featureName, structName));
             }
 
-            return new RemoveTag(removedEnums, removedCommands, removedTypes, removedFeatures, explanationlink, tagComment);
+            return new RemoveTag()
+            {
+                Commands = removedCommands,
+                Enums = removedEnums,
+                Types = removedTypes,
+                Constants = [],
+
+                Comment = tagComment,
+
+                ReasonLink = explanationlink,
+            };
         }
 
         public static List<Extension> ParseVideoExtensions(XElement root)
@@ -1084,26 +1057,28 @@ namespace VkGenerator.Parsing
                     removeTags.Add(ParseRemoveTag(remove));
                 }
 
-                extensions.Add(new Extension(
-                    name,
-                    -1,
-                    sortOrder,
-                    protect,
-                    platform,
-                    null,
-                    null,
-                    null,
-                    depends,
-                    supported,
-                    ratified,
-                    promotedTo,
-                    deprecatedBy,
-                    obsoletedBy,
-                    provisional,
-                    specialUse,
-                    requireTags,
-                    deprecateTags,
-                    removeTags));
+                extensions.Add(new Extension()
+                {
+                    Name = name,
+                    RequireTags = requireTags,
+                    DeprecateTags = deprecateTags,
+                    RemoveTags = removeTags,
+
+                    Number = -1,
+                    SortOrder = sortOrder,
+                    Protect = protect,
+                    Platform = platform,
+                    Author = null,
+                    Contact = null,
+                    Type = null,
+                    Depends = depends,
+                    Supported = supported,
+                    Ratified = ratified,
+                    DeprecatedBy = deprecatedBy,
+                    ObsoletedBy = obsoletedBy,
+                    Provisional = provisional,
+                    SpecialUse = specialUse,
+                });
             }
 
             return extensions;
@@ -1115,8 +1090,11 @@ namespace VkGenerator.Parsing
             string? requireDepends = require.Attribute("depends")?.Value;
             string? tagComment = require.Attribute("comment")?.Value;
 
-            List<RequireEnum> requiredEnums = new List<RequireEnum>();
-            List<Constant> requiredConstants = new List<Constant>();
+            List<RequireEnum> addedEnums = new List<RequireEnum>();
+            List<Constant> addedConstants = new List<Constant>();
+
+            List<EnumRef> requiredEnums = new List<EnumRef>();
+            List<string> requiredConstants = new List<string>();
             foreach (XElement @enum in require.Elements("enum"))
             {
                 if (@enum.Attribute("api")?.Value == "vulkansc")
@@ -1139,14 +1117,16 @@ namespace VkGenerator.Parsing
                     else if (valueStr.StartsWith('\"') && valueStr.EndsWith('\"'))
                     {
                         // This is a string constant.
-                        requiredConstants.Add(new Constant(ConstantType.String, constName, extensionName, comment, 0, 0, valueStr));
+                        addedConstants.Add(new Constant(ConstantType.String, constName, extensionName, comment, 0, 0, valueStr));
+                        requiredConstants.Add(constName);
                     }
                     else
                     {
                         int value = (int)Int32Converter.ConvertFromString(valueStr)!;
 
                         // FIXME: Figure out the type?
-                        requiredConstants.Add(new Constant(ConstantType.Uint32, constName, extensionName, comment, (ulong)value, 0, ""));
+                        addedConstants.Add(new Constant(ConstantType.Uint32, constName, extensionName, comment, (ulong)value, 0, ""));
+                        requiredConstants.Add(constName);
                     }
                 }
                 else
@@ -1158,13 +1138,15 @@ namespace VkGenerator.Parsing
                     string? alias = @enum.Attribute("alias")?.Value;
                     if (alias != null)
                     {
-                        requiredEnums.Add(new RequireEnum(enumName, null, extends, alias, comment));
+                        addedEnums.Add(new RequireEnum(enumName, null, extends, alias, comment));
+                        requiredEnums.Add(new EnumRef(enumName));
                     }
                     else
                     {
                         string valueStr = @enum.Attribute("value")?.Value ?? throw new Exception();
                         int value = int.Parse(valueStr);
-                        requiredEnums.Add(new RequireEnum(enumName, value, extends, null, comment));
+                        addedEnums.Add(new RequireEnum(enumName, value, extends, null, comment));
+                        requiredEnums.Add(new EnumRef(enumName));
                     }
                 }
             }
@@ -1185,8 +1167,18 @@ namespace VkGenerator.Parsing
                 requiredTypes.Add(new TypeRef(commandName));
             }
 
-            return new RequireTag(requiredEnums, requiredCommands, requiredTypes, requiredConstants, tagComment);
-        }
+            return new RequireTag()
+            {
+                Commands = requiredCommands,
+                Enums = requiredEnums,
+                Types = requiredTypes,
+                Constants = requiredConstants,
 
+                Comment = tagComment,
+
+                AddedEnums = addedEnums,
+                AddedConstants = addedConstants,
+            };
+        }
     }
 }

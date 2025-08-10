@@ -30,7 +30,7 @@ namespace ALGenerator.Process
         Dictionary<Function, FunctionDocumentation> Documentation);
 
     internal record Pointers(
-        ALFile File,
+        APIFile File,
         List<Function> NativeFunctions);
 
     internal record FunctionDocumentation(

@@ -36,8 +36,8 @@ namespace ALGenerator
             {
                 FileStrings strings = pointers.File switch
                 {
-                    ALFile.AL => new FileStrings("AL", "AL", "OpenAL", "ALLoader", "ALLoader", "ALGetProcAddress"),
-                    ALFile.ALC => new FileStrings("ALC", "ALC", "OpenAL.ALC", "ALCLoader", "ALLoader", "ALCGetProcAddress"),
+                    APIFile.AL => new FileStrings("AL", "AL", "OpenAL", "ALLoader", "ALLoader", "ALGetProcAddress"),
+                    APIFile.ALC => new FileStrings("ALC", "ALC", "OpenAL.ALC", "ALCLoader", "ALLoader", "ALCGetProcAddress"),
                     _ => throw new Exception(),
                 };
 

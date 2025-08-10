@@ -26,24 +26,6 @@ namespace ALGenerator.Parsing
         ALC = 1 << 1,
     }
 
-    /*internal record NativeFunction(string Name, string EntryPoint, string ReturnType, List<Parameter> Parameters) : IFunction
-    {
-        List<IFunctionParameter> IFunction.Parameters => Parameters.Cast<IFunctionParameter>().ToList();
-
-        public BaseCSType? StrongReturnType { get; set; }
-        public VersionInfo? VersionInfo { get; set; }
-
-        // FIXME: Migrate to marking the references directly on the enums.
-        public GroupRef[] ReferencedEnumGroups { get; set; }
-    }
-
-    internal record Parameter(string OriginalName, string Name, string Type, string? Length, string[] Kinds) : IFunctionParameter
-    {
-        public BaseCSType? StrongType { get; set; }
-        public Expression? StrongLength { get; set; }
-    }*/
-
-
     internal record Specification(
         //List<Command> Commands,
         List<Function> Functions,
@@ -77,8 +59,6 @@ namespace ALGenerator.Parsing
     internal record ExtensionReference(
         string Name,
         string Vendor);
-        //List<string> EntryPoints,
-        //List<string> EnumValues);
 
     internal record EnumEntry(
         string Name,
@@ -90,58 +70,6 @@ namespace ALGenerator.Parsing
         string? Alias,
         GroupRef[] Groups,
         TypeSuffix Suffix);
-
-
-    internal record Feature(
-        ALAPI Api,
-        Version Version,
-        string Name,
-        List<RequireEntry> Requires,
-        List<RemoveEntry> Removes);
-
-    internal record Extension(
-        string Name,
-        string Vendor,
-        ALAPI[] SupportedApis,
-        string? Comment,
-        List<RequireEntry> Requires);
-
-
-    internal record RequireEntry(
-        ALAPI Api,
-        string? Comment,
-        List<string> Commands,
-        List<string> Enums);
-
-    internal record RemoveEntry(
-        string? Comment,
-        List<string> Commands,
-        List<string> Enums);
-
-
-    internal enum ALFile
-    {
-        AL,
-        ALC,
-    }
-
-    /*
-    /// <param name="OriginalName">The name of the referenced enum group (as seen in the xml files).</param>
-    /// <param name="TranslatedName">The name of the referenced enum group (as seen in OpenTK).</param>
-    /// <param name="Namespace">The enum namespace that is referenced (gl, wgl, or glx).</param>
-    internal record GroupRef(string OriginalName, string TranslatedName, ALFile Namespace);*/
-
-    internal abstract record GLType();
-
-    internal record GLBaseType(
-        string OriginalString,
-        PrimitiveType Type,
-        bool Constant) : GLType;
-
-    internal record GLPointerType(
-        GLType BaseType,
-        bool Constant) : GLType;
-
 
     internal record EFXPreset(
         string Name,
@@ -168,40 +96,6 @@ namespace ALGenerator.Parsing
         float LFReference,
         float RoomRolloffFactor,
         bool DecayHFLimit);
-
-
-    internal enum ALAPI
-    {
-        Invalid,
-        None,
-        AL,
-        ALC,
-    }
-
-    internal enum PrimitiveType
-    {
-        Invalid,
-
-        Void,
-        Byte,
-        Sbyte,
-        Short,
-        Ushort,
-        Int,
-        Uint,
-        Long,
-        Ulong,
-        Half,
-        Float,
-        Double,
-        IntPtr,
-        Nint,
-        Enum,
-        Bool8,
-        Bool32,
-        Char8,
-        VoidPtr,
-    }
 
     internal enum HandleType
     {

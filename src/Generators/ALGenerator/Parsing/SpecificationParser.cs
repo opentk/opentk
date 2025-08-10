@@ -51,13 +51,13 @@ namespace ALGenerator.Parsing
             Dictionary<ALAPI, List<Feature>> FeaturesPerAPI = new Dictionary<ALAPI, List<Feature>>();
             foreach (var feature in features)
             {
-                FeaturesPerAPI.AddToNestedList(feature.Api, feature);
+                FeaturesPerAPI.AddToNestedList(feature.ALApi, feature);
             }
 
             Dictionary<ALAPI, List<Extension>> ExtensionsPerAPI = new Dictionary<ALAPI, List<Extension>>();
             foreach (var extension in extensions)
             {
-                foreach (var supportedAPI in extension.SupportedApis)
+                foreach (var supportedAPI in extension.SupportedALApis)
                 {
                     ExtensionsPerAPI.AddToNestedList(supportedAPI, extension);
                 }
@@ -94,16 +94,16 @@ namespace ALGenerator.Parsing
                 // FIXME: If we want to generate the compatibility thing we want to remove all of the 
                 foreach (var feature in features)
                 {
-                    foreach (var requires in feature.Requires)
+                    foreach (var requires in feature.RequireTags)
                     {
-                        Debug.Assert(requires.Api != feature.Api);
+                        Debug.Assert(requires.ALApi != feature.ALApi);
 
                         foreach (var entryPoint in requires.Commands)
                         {
-                            if (entryPointToReference.TryGetValue(entryPoint, out FunctionReference? value) == false)
+                            if (entryPointToReference.TryGetValue(entryPoint.Name, out FunctionReference? value) == false)
                             {
-                                value = new FunctionReference(entryPoint, feature.Version, null, new List<ExtensionReference>());
-                                entryPointToReference.Add(entryPoint, value);
+                                value = new FunctionReference(entryPoint.Name, feature.Version, null, new List<ExtensionReference>());
+                                entryPointToReference.Add(entryPoint.Name, value);
                             }
 
                             // FIXME: This isn't strictly needed... they are already going to be in order.
@@ -112,18 +112,20 @@ namespace ALGenerator.Parsing
                                 value = value with { AddedIn = feature.Version };
                             }
 
-                            entryPointToReference[entryPoint] = value;
+                            entryPointToReference[entryPoint.Name] = value;
                         }
                     }
 
-                    foreach (var removes in feature.Removes)
+                    Debug.Assert(feature.DeprecateTags.Count == 0);
+
+                    foreach (var removes in feature.RemoveTags)
                     {
                         foreach (var entryPoint in removes.Commands)
                         {
-                            if (entryPointToReference.TryGetValue(entryPoint, out FunctionReference? value) == false)
+                            if (entryPointToReference.TryGetValue(entryPoint.Name, out FunctionReference? value) == false)
                             {
-                                value = new FunctionReference(entryPoint, feature.Version, null, new List<ExtensionReference>());
-                                entryPointToReference.Add(entryPoint, value);
+                                value = new FunctionReference(entryPoint.Name, feature.Version, null, new List<ExtensionReference>());
+                                entryPointToReference.Add(entryPoint.Name, value);
                             }
 
                             // If we should, update the removed in.
@@ -132,32 +134,34 @@ namespace ALGenerator.Parsing
                                 value = value with { RemovedIn = feature.Version };
                             }
 
-                            entryPointToReference[entryPoint] = value;
+                            entryPointToReference[entryPoint.Name] = value;
                         }
                     }
                 }
 
                 foreach (var extension in extensions)
                 {
-                    Debug.Assert(extension.SupportedApis.Contains(api));
+                    Debug.Assert(extension.SupportedALApis.Contains(api));
 
-                    foreach (var requires in extension.Requires)
+                    foreach (var requires in extension.RequireTags)
                     {
-                        Debug.Assert(extension.SupportedApis.Contains(requires.Api) || requires.Api == ALAPI.None);
+                        Debug.Assert(extension.SupportedALApis.Contains(requires.ALApi) || requires.ALApi == ALAPI.None);
 
                         foreach (var entryPoint in requires.Commands)
                         {
-                            if (entryPointToReference.TryGetValue(entryPoint, out FunctionReference? value) == false)
+                            if (entryPointToReference.TryGetValue(entryPoint.Name, out FunctionReference? value) == false)
                             {
-                                value = new FunctionReference(entryPoint, null, null, new List<ExtensionReference>());
-                                entryPointToReference.Add(entryPoint, value);
+                                value = new FunctionReference(entryPoint.Name, null, null, new List<ExtensionReference>());
+                                entryPointToReference.Add(entryPoint.Name, value);
                             }
 
                             value.PartOfExtensions.Add(new ExtensionReference(extension.Name, extension.Vendor));
 
-                            entryPointToReference[entryPoint] = value;
+                            entryPointToReference[entryPoint.Name] = value;
                         }
                     }
+
+                    
                 }
 
                 return entryPointToReference.Values.ToList();
@@ -169,16 +173,16 @@ namespace ALGenerator.Parsing
 
                 foreach (var feature in features)
                 {
-                    foreach (var requires in feature.Requires)
+                    foreach (var requires in feature.RequireTags)
                     {
-                        Debug.Assert(requires.Api != feature.Api);
+                        Debug.Assert(requires.ALApi != feature.ALApi);
 
                         foreach (var enumName in requires.Enums)
                         {
-                            if (enumNameToReference.TryGetValue(enumName, out EnumReference? value) == false)
+                            if (enumNameToReference.TryGetValue(enumName.Name, out EnumReference? value) == false)
                             {
-                                value = new EnumReference(enumName, feature.Version, null, new List<ExtensionReference>(), false);
-                                enumNameToReference.Add(enumName, value);
+                                value = new EnumReference(enumName.Name, feature.Version, null, new List<ExtensionReference>(), false);
+                                enumNameToReference.Add(enumName.Name, value);
                             }
 
                             // If this enum value was removed and later readded.
@@ -193,18 +197,20 @@ namespace ALGenerator.Parsing
                                 value = value with { AddedIn = feature.Version };
                             }
 
-                            enumNameToReference[enumName] = value;
+                            enumNameToReference[enumName.Name] = value;
                         }
                     }
 
-                    foreach (var removes in feature.Removes)
+                    Debug.Assert(feature.DeprecateTags.Count == 0);
+
+                    foreach (var removes in feature.RemoveTags)
                     {
                         foreach (var enumName in removes.Enums)
                         {
-                            if (enumNameToReference.TryGetValue(enumName, out EnumReference? value) == false)
+                            if (enumNameToReference.TryGetValue(enumName.Name, out EnumReference? value) == false)
                             {
-                                value = new EnumReference(enumName, feature.Version, null, new List<ExtensionReference>(), false);
-                                enumNameToReference.Add(enumName, value);
+                                value = new EnumReference(enumName.Name, feature.Version, null, new List<ExtensionReference>(), false);
+                                enumNameToReference.Add(enumName.Name, value);
                             }
 
                             // If we should, update the removed in.
@@ -213,32 +219,35 @@ namespace ALGenerator.Parsing
                                 value = value with { RemovedIn = feature.Version };
                             }
 
-                            enumNameToReference[enumName] = value;
+                            enumNameToReference[enumName.Name] = value;
                         }
                     }
                 }
 
                 foreach (var extension in extensions)
                 {
-                    Debug.Assert(extension.SupportedApis.Contains(api));
+                    Debug.Assert(extension.SupportedALApis.Contains(api));
 
-                    foreach (var requires in extension.Requires)
+                    foreach (var requires in extension.RequireTags)
                     {
-                        Debug.Assert(extension.SupportedApis.Contains(requires.Api) || requires.Api == ALAPI.None);
+                        Debug.Assert(extension.SupportedALApis.Contains(requires.ALApi) || requires.ALApi == ALAPI.None);
 
                         foreach (var enumName in requires.Enums)
                         {
-                            if (enumNameToReference.TryGetValue(enumName, out EnumReference? value) == false)
+                            if (enumNameToReference.TryGetValue(enumName.Name, out EnumReference? value) == false)
                             {
-                                value = new EnumReference(enumName, null, null, new List<ExtensionReference>(), false);
-                                enumNameToReference.Add(enumName, value);
+                                value = new EnumReference(enumName.Name, null, null, new List<ExtensionReference>(), false);
+                                enumNameToReference.Add(enumName.Name, value);
                             }
 
                             value.PartOfExtensions.Add(new ExtensionReference(extension.Name, extension.Vendor));
 
-                            enumNameToReference[enumName] = value;
+                            enumNameToReference[enumName.Name] = value;
                         }
                     }
+
+                    Debug.Assert(extension.DeprecateTags.Count == 0);
+                    Debug.Assert(extension.RemoveTags.Count == 0);
                 }
 
                 return enumNameToReference.Values.ToList();
@@ -256,7 +265,7 @@ namespace ALGenerator.Parsing
             // - Noggin_bops 2025-08-08
 
             List<Function> directContextFunctions = new List<Function>();
-            List<string> directContextFunctionNames = new List<string>();
+            List<CommandRef> directContextFunctionNames = new List<CommandRef>();
 
             CSStructPrimitive contextType = new CSStructPrimitive("ALCContext", false, CSPrimitive.IntPtr(true));
 
@@ -286,12 +295,22 @@ namespace ALGenerator.Parsing
                 };
 
                 directContextFunctions.Add(directFunction);
-                directContextFunctionNames.Add(entryPoint);
+                directContextFunctionNames.Add(new CommandRef(entryPoint));
             }
             functions.AddRange(directContextFunctions);
 
             Extension extension = extensions.Find(e => e.Name == "AL_EXT_direct_context")!;
-            extension.Requires.Add(new RequireEntry(ALAPI.AL, null, directContextFunctionNames, []));
+
+            extension.RequireTags.Add(new RequireTag()
+            {
+                Commands = directContextFunctionNames,
+                Enums = [],
+                Constants = [],
+
+                Comment = "All AL_EXT_direct_context functions",
+
+                ALApi = ALAPI.AL,
+            });
         }
 
         private static List<Function> ParseCommands(XElement input, NameMangler nameMangler, APIFile currentFile, List<string> ignoreFunctions)
@@ -882,21 +901,30 @@ namespace ALGenerator.Parsing
                 Version? version = Version.Parse(number);
                 ALAPI api = FileToAPI(currentFile);
 
-                List<RequireEntry> requireEntries = new List<RequireEntry>();
+                List<RequireTag> requireTags = new List<RequireTag>();
                 foreach (XElement? require in feature.Elements("require"))
                 {
-                    RequireEntry reqEntry = ParseRequire(require);
-                    requireEntries.Add(reqEntry);
+                    RequireTag reqTag = ParseRequire(require);
+                    requireTags.Add(reqTag);
                 }
 
-                List<RemoveEntry> removeEntries = new List<RemoveEntry>();
+                List<RemoveTag> removeTags = new List<RemoveTag>();
                 foreach (XElement? remove in feature.Elements("remove"))
                 {
-                    RemoveEntry removeEntry = ParseRemove(remove);
-                    removeEntries.Add(removeEntry);
+                    RemoveTag removeTag = ParseRemove(remove);
+                    removeTags.Add(removeTag);
                 }
 
-                features.Add(new Feature(api, version, name, requireEntries, removeEntries));
+                features.Add(new Feature()
+                {
+                    Name = name,
+                    Version = version,
+                    RequireTags = requireTags,
+                    DeprecateTags = [],
+                    RemoveTags = removeTags,
+
+                    ALApi = api,
+                });
             }
 
             return features;
@@ -931,7 +959,7 @@ namespace ALGenerator.Parsing
 
                 string? comment = extension.Attribute("comment")?.Value;
 
-                List<RequireEntry> requires = new List<RequireEntry>();
+                List<RequireTag> requires = new List<RequireTag>();
                 foreach (XElement? require in extension.Elements("require"))
                 {
                     requires.Add(ParseRequire(require));
@@ -939,19 +967,30 @@ namespace ALGenerator.Parsing
 
                 ALAPI supportedApi = FileToAPI(currentFile);
 
-                extensions.Add(new Extension(extName, vendor, [supportedApi], comment, requires));
+                extensions.Add(new Extension()
+                {
+                    Name = extName,
+                    RequireTags = requires,
+                    DeprecateTags = [],
+                    RemoveTags = [],
+
+                    Comment = comment,
+
+                    Vendor = vendor,
+                    SupportedALApis = [supportedApi],
+                });
             }
 
             return extensions;
         }
 
-        internal static RequireEntry ParseRequire(XElement requires)
+        internal static RequireTag ParseRequire(XElement requires)
         {
             ALAPI api = ParseApi(requires.Attribute("api")?.Value);
             string? comment = requires.Attribute("comment")?.Value;
 
-            List<string> reqCommands = new List<string>();
-            List<string> reqEnums = new List<string>();
+            List<CommandRef> reqCommands = new List<CommandRef>();
+            List<EnumRef> reqEnums = new List<EnumRef>();
 
             foreach (XElement? entry in requires.Elements())
             {
@@ -967,25 +1006,35 @@ namespace ALGenerator.Parsing
                 switch (entry.Name.LocalName)
                 {
                     case "command":
-                        reqCommands.Add(name);
+                        reqCommands.Add(new CommandRef(name));
                         break;
                     case "enum":
-                        reqEnums.Add(name);
+                        reqEnums.Add(new EnumRef(name));
                         break;
                     default:
                         continue;
                 }
             }
 
-            return new RequireEntry(api, comment, reqCommands, reqEnums);
+            //return new RequireTag(api, comment, reqCommands, reqEnums);
+            return new RequireTag()
+            {
+                Commands = reqCommands,
+                Enums = reqEnums,
+                Constants = [],
+
+                Comment = comment,
+
+                ALApi = api,
+            };
         }
 
-        internal static RemoveEntry ParseRemove(XElement requires)
+        internal static RemoveTag ParseRemove(XElement requires)
         {
             string? comment = requires.Attribute("comment")?.Value;
 
-            List<string> removeCommands = new List<string>();
-            List<string> removeEnums = new List<string>();
+            List<CommandRef> removeCommands = new List<CommandRef>();
+            List<EnumRef> removeEnums = new List<EnumRef>();
 
             foreach (XElement? entry in requires.Elements())
             {
@@ -996,17 +1045,24 @@ namespace ALGenerator.Parsing
                 switch (entry.Name.LocalName)
                 {
                     case "command":
-                        removeCommands.Add(name);
+                        removeCommands.Add(new CommandRef(name));
                         break;
                     case "enum":
-                        removeEnums.Add(name);
+                        removeEnums.Add(new EnumRef(name));
                         break;
                     default:
                         continue;
                 }
             }
 
-            return new RemoveEntry(comment, removeCommands, removeEnums);
+            return new RemoveTag()
+            {
+                Commands = removeCommands,
+                Enums = removeEnums,
+                Constants = [],
+
+                Comment = comment,
+            };
         }
 
         internal static ALAPI FileToAPI(APIFile file)

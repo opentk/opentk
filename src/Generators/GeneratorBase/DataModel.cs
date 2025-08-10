@@ -44,6 +44,125 @@ namespace GeneratorBase
         }
     }
 
+    public record Feature
+    {
+        public required string Name { get; set; }
+        public required Version Version { get; set; }
+        public required List<RequireTag> RequireTags { get; set; }
+        public required List<DeprecateTag> DeprecateTags { get; set; }
+        public required List<RemoveTag> RemoveTags { get; set; }
+
+        // OpenGL?
+        public GLAPI GLApi { get; set; }
+
+        // OpenGL?
+        public ALAPI ALApi { get; set; }
+
+        // Vulkan
+        public string? Depends { get; init; }
+    }
+
+    public record Extension
+    {
+        public required string Name { get; init; }
+        public required List<RequireTag> RequireTags { get; init; }
+        public required List<DeprecateTag> DeprecateTags { get; init; }
+        public required List<RemoveTag> RemoveTags { get; init; }
+
+        public string? Comment { get; init; }
+
+        // OpenGL/OpenAL
+        public string Vendor { get; init; }
+
+        // OpenGL
+        public GLAPI[] SupportedGLApis { get; init; }
+
+        // OpenAL
+        public ALAPI[] SupportedALApis { get; init; }
+
+        // Vulkan
+        public int Number { get; init; }
+        public int SortOrder { get; init; }
+        public string? Protect { get; init; }
+        public string? Platform { get; init; }
+        public string Author { get; init; }
+        public string Contact { get; init; }
+        public string Type { get; init; }
+        public string? Depends { get; init; }
+        public string? Supported { get; init; }
+        public string? Ratified { get; init; }
+        public string? DeprecatedBy { get; init; }
+        public string? ObsoletedBy { get; init; }
+        public bool Provisional { get; init; }
+        public string? SpecialUse { get; init; }
+    }
+
+
+
+    public record RequireTag
+    {
+        public required List<CommandRef> Commands { get; init; }
+        public required List<EnumRef> Enums { get; init; }
+        // FIXME??
+        public required List<string> Constants { get; init; }
+
+        public string? Comment { get; init; }
+
+        // OpenGL
+        public GLProfile GLProfile { get; init; }
+        public GLAPI GLApi { get; init; }
+
+        // OpenAL
+        public ALAPI ALApi { get; init; }
+
+        // Vulkan
+        public List<TypeRef> Types { get; init; }
+        public List<RequireEnum> AddedEnums { get; init; }
+        public List<Constant> AddedConstants { get; init; }
+    }
+
+    public record DeprecateTag
+    {
+        public required List<CommandRef> Commands { get; init; }
+        public required List<EnumRef> Enums { get; init; }
+        // FIXME??
+        public required List<string> Constants { get; init; }
+
+        public string? Comment { get; init; }
+
+        // OpenGL
+        public GLProfile Profile;
+
+        // Vulkan
+        public List<TypeRef> Types { get; init; }
+        public string? ExplanationLink { get; init; }
+    }
+
+    public record RemoveTag
+    {
+        public required List<CommandRef> Commands { get; init; }
+        public required List<EnumRef> Enums { get; init; }
+        // FIXME??
+        public required List<string> Constants { get; init; }
+
+        public string? Comment { get; init; }
+
+        // OpenGL
+        public GLProfile Profile { get; init; }
+
+        // Vulkan
+        public List<TypeRef> Types { get; init; }
+        public string? ReasonLink { get; init; }
+        // FIXME: Vulkan features...
+    }
+
+    // Vulkan
+    public record RequireEnum(string Name, int? Value, string Extends, string? Alias, string? Comment);
+
+    public record CommandRef(string Name);
+    public record EnumRef(string Name);
+    public record TypeRef(string Name);
+
     // Should this type help us with overloading only
     // or should it also help with type resolution?
     // Type resolution might be too API specific but I'm not too sure...
@@ -83,6 +202,18 @@ namespace GeneratorBase
         public bool Optional { get; init; }
         public bool ExternSync { get; init; }
     }
+
+    public enum ConstantType
+    {
+        Int32,
+        Uint32,
+        Uint64,
+        Float,
+        String,
+    }
+
+    // FIXME: Figure out what is Vulkan specific and what generalizes to other APIs.
+    public record Constant(ConstantType Type, string Name, string? Extension, string? Comment, ulong IntValue, float FloatValue, string StringValue);
 
     public interface IStruct : IReferable
     {
@@ -139,6 +270,42 @@ namespace GeneratorBase
     /// <param name="TranslatedName">The name of the referenced enum group (as seen in OpenTK).</param>
     /// <param name="Namespace">The enum namespace that is referenced.</param>
     public record GroupRef(string OriginalName, string TranslatedName, APIFile Namespace);
+
+    public enum GLProfile
+    {
+        Invalid,
+        None,
+        Core,
+        Compatibility,
+        Common,
+    }
+
+    public enum GLAPI
+    {
+        Invalid,
+        None,
+        GL,
+        GLES1,
+        GLES2,
+        GLSC2,
+        GLCore,
+
+        WGL,
+        GLX,
+        EGL,
+    }
+
+    #endregion
+
+    #region OpenAL
+
+    public enum ALAPI
+    {
+        Invalid,
+        None,
+        AL,
+        ALC,
+    }
 
     #endregion
 

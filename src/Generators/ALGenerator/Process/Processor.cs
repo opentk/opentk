@@ -609,12 +609,12 @@ namespace ALGenerator.Process
 
             // FIXME: This requires us to merge all input data!
             List<Pointers> pointers = new List<Pointers>();
-            pointers.Add(CreatePointersList(ALFile.AL, outputNamespaces));
-            pointers.Add(CreatePointersList(ALFile.ALC, outputNamespaces));
+            pointers.Add(CreatePointersList(APIFile.AL, outputNamespaces));
+            pointers.Add(CreatePointersList(APIFile.ALC, outputNamespaces));
 
             return new OutputData(pointers, outputNamespaces);
 
-            Pointers CreatePointersList(ALFile file, List<Namespace> namespaces)
+            Pointers CreatePointersList(APIFile file, List<Namespace> namespaces)
             {
                 SortedList<string, Function> allFunctions = new SortedList<string, Function>();
                 foreach (Namespace @namespace in namespaces)
@@ -622,18 +622,20 @@ namespace ALGenerator.Process
                     bool addFunctions = false;
                     switch (file)
                     {
-                        case ALFile.AL:
+                        case APIFile.AL:
                             if (@namespace.Name == OutputApi.AL)
                             {
                                 addFunctions = true;
                             }
                             break;
-                        case ALFile.ALC:
+                        case APIFile.ALC:
                             if (@namespace.Name == OutputApi.ALC)
                             {
                                 addFunctions = true;
                             }
                             break;
+                        default:
+                            throw new Exception();
                     }
 
                     if (addFunctions)
