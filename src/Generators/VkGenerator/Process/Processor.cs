@@ -81,7 +81,15 @@ namespace VkGenerator.Process
                             Debug.Assert(extends != null);
                             if (extends.Members.Find(m => m.Name == requiredEnum.Name) == null)
                             {
-                                extends.Members.Add(new EnumMember(requiredEnum.Name, (ulong)requiredEnum.Value!.Value, requiredEnum.Comment, null, feature.Name));
+                                extends.Members.Add(new EnumMember()
+                                {
+                                    Name = requiredEnum.Name,
+                                    OriginalName = requiredEnum.Name,
+                                    Value = (ulong)requiredEnum.Value!.Value,
+                                    Comment = requiredEnum.Comment,
+                                    Alias = null,
+                                    Extension = feature.Name,
+                                });
                             }
                         }
                     }
@@ -109,7 +117,15 @@ namespace VkGenerator.Process
                             {
                                 // FIXME: Maybe we need to search through all possible enum not just the ones in this namespace....
                                 EnumMember aliasedMember = FindEnumMember(data.Enums, requiredEnum.Alias) ?? throw new Exception();
-                                extends.Members.Add(new EnumMember(requiredEnum.Name, aliasedMember.Value, requiredEnum.Comment, requiredEnum.Alias, feature.Name));
+                                extends.Members.Add(new EnumMember()
+                                {
+                                    Name = requiredEnum.Name,
+                                    OriginalName = requiredEnum.Name,
+                                    Value = aliasedMember.Value,
+                                    Comment = requiredEnum.Comment,
+                                    Alias = requiredEnum.Alias,
+                                    Extension = feature.Name,
+                                });
                             }
                         }
                     }
@@ -132,7 +148,15 @@ namespace VkGenerator.Process
                             Debug.Assert(extends != null);
                             if (extends.Members.Find(m => m.Name == requiredEnum.Name) == null)
                             {
-                                extends.Members.Add(new EnumMember(requiredEnum.Name, (ulong)requiredEnum.Value!.Value, requiredEnum.Comment, null, extension.Name));
+                                extends.Members.Add(new EnumMember()
+                                {
+                                    Name = requiredEnum.Name,
+                                    OriginalName = requiredEnum.Name,
+                                    Value = (ulong)requiredEnum.Value!.Value,
+                                    Comment = requiredEnum.Comment,
+                                    Alias = null,
+                                    Extension = extension.Name,
+                                });
                             }
                         }
                     }
@@ -160,19 +184,20 @@ namespace VkGenerator.Process
                             {
                                 // FIXME: Maybe we need to search through all possible enum not just the ones in this namespace....
                                 EnumMember aliasedMember = FindEnumMember(data.Enums, requiredEnum.Alias) ?? throw new Exception();
-                                extends.Members.Add(new EnumMember(requiredEnum.Name, aliasedMember.Value, requiredEnum.Comment, requiredEnum.Alias, extension.Name));
+                                extends.Members.Add(new EnumMember()
+                                {
+                                    Name = requiredEnum.Name,
+                                    OriginalName = requiredEnum.Name,
+                                    Value = aliasedMember.Value,
+                                    Comment = requiredEnum.Comment,
+                                    Alias = requiredEnum.Alias,
+                                    Extension = extension.Name,
+                                });
                             }
                         }
                     }
                 }
             }
-        }
-
-        public static void ApplyVideoEnums(SpecificationData data, SpecificationData video)
-        {
-            // FIXME: We want to generate these somewhere else!
-            //data.Enums.AddRange(video.Enums);
-            //data.EnumNames.AddRange(video.EnumNames);
         }
 
         public static void ApplyExtensionConstants(SpecificationData data)
@@ -295,7 +320,13 @@ namespace VkGenerator.Process
                         _ => throw new Exception(),
                     };
 
-                    EnumType newEnumType = new EnumType(bitmask.Name, new List<EnumMember>(), true, null) { StrongUnderlyingType = type };
+                    EnumType newEnumType = new EnumType() {
+                        Name = bitmask.Name,
+                        IsFlags = true,
+                        Members = [],
+                        Extension = null,
+                        StrongUnderlyingType = type,
+                    };
 
                     typeMap.Add(bitmask.Name, new TypeEntry(new CSEnum(bitmask.Name, type, true), newEnumType));
 

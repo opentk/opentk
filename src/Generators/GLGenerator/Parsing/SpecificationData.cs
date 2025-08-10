@@ -45,17 +45,11 @@ namespace GLGenerator.Parsing
     internal record FunctionReference(
         string EntryPoint,
         VersionInfo VersionInfo,
-        /*Version? AddedIn,
-        Version? RemovedIn,
-        List<ExtensionReference> PartOfExtensions,*/
         GLProfile Profile);
 
     internal record EnumReference(
         string EnumName,
         VersionInfo VersionInfo,
-        /*Version? AddedIn,
-        Version? RemovedIn,
-        List<ExtensionReference> PartOfExtensions,*/
         // FIXME! there can be multiple profiles??
         GLProfile Profile,
         // Is this enum reference copied from another namespace.
@@ -71,7 +65,7 @@ namespace GLGenerator.Parsing
         string MangledName,
         ulong Value,
         OutputApiFlags Apis,
-        EnumType Type,
+        bool IsFlags,
         string? Vendor,
         string? Alias,
         GroupRef[] Groups,
@@ -92,14 +86,6 @@ namespace GLGenerator.Parsing
         VertexArrayHandle,
         DisplayListHandle,
         PerfQueryHandle,
-    }
-
-
-    internal enum EnumType
-    {
-        Invalid,
-        None,
-        Bitmask
     }
 
     /// <summary>

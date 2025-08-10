@@ -54,7 +54,7 @@ namespace ALGenerator.Parsing
         string MangledName,
         ulong Value,
         OutputApiFlags Apis,
-        EnumType Type,
+        bool IsFlags,
         string? Vendor,
         string? Alias,
         GroupRef[] Groups,
@@ -95,13 +95,6 @@ namespace ALGenerator.Parsing
         Effect,
         EffectSlot,
         Filter,
-    }
-
-    internal enum EnumType
-    {
-        Invalid,
-        None,
-        Bitmask
     }
 
     /// <summary>

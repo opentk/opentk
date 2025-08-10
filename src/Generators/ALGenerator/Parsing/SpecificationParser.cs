@@ -157,7 +157,8 @@ namespace ALGenerator.Parsing
                         }
                     }
 
-                    
+                    Debug.Assert(extension.DeprecateTags.Count == 0);
+                    Debug.Assert(extension.RemoveTags.Count == 0);
                 }
 
                 return entryPointToReference.Values.ToList();
@@ -735,7 +736,7 @@ namespace ALGenerator.Parsing
 
                 string? vendor = enums.Attribute("vendor")?.Value;
 
-                EnumType type = ParseEnumsType(enums.Attribute("type")?.Value);
+                bool isFlags = EnumTypeIsBitmask(enums.Attribute("type")?.Value);
 
                 string? enumsComment = enums.Attribute("comment")?.Value;
 
@@ -798,17 +799,17 @@ namespace ALGenerator.Parsing
                         }
                     }
 
-                    enumsEntries.Add(new EnumEntry(name, nameMangler.MangleEnumName(name), value, enumApi, type, vendor, alias, groups, suffix));
+                    enumsEntries.Add(new EnumEntry(name, nameMangler.MangleEnumName(name), value, enumApi, isFlags, vendor, alias, groups, suffix));
                 }
             }
 
             return enumsEntries;
 
-            static EnumType ParseEnumsType(string? value) => value switch
+            static bool EnumTypeIsBitmask(string? value) => value switch
             {
-                null or "" => EnumType.None,
-                "bitmask" => EnumType.Bitmask,
-                _ => EnumType.Invalid,
+                null or "" => false,
+                "bitmask" => true,
+                _ => throw new Exception(),
             };
 
             static TypeSuffix ParseEnumTypeSuffix(string? suffix) => suffix switch

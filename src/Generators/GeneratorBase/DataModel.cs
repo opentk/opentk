@@ -98,8 +98,6 @@ namespace GeneratorBase
         public string? SpecialUse { get; init; }
     }
 
-
-
     public record RequireTag
     {
         public required List<CommandRef> Commands { get; init; }
@@ -203,6 +201,45 @@ namespace GeneratorBase
         public bool Optional { get; init; }
         public bool ExternSync { get; init; }
     }
+
+    public record class EnumType : IReferable
+    {
+        public required string Name { get; init; }
+        public required bool IsFlags { get; init; }
+        public required List<EnumMember> Members { get; init; }
+
+        public List<Function> ReferencedBy { get; init; } = [];
+
+        // OpenGL
+        public List<(string Vendor, Function Function)>? FunctionsUsingEnumGroup { get; init; }
+
+        // Vulkan
+        public string? Extension { get; init; }
+
+        public BaseCSType? StrongUnderlyingType { get; set; }
+        public VersionInfo? VersionInfo { get; set; }
+    }
+
+    public record class EnumMember
+    {
+        public required string Name { get; init; }
+        public required string OriginalName { get; init; }
+        public required ulong Value { get; init; }
+
+        public string? Comment { get; init; }
+
+        // OpenGL/OpenAL
+        // FIXME: We can probably remove this property...
+        public GroupRef[] Groups { get; init; }
+        public bool IsFlag { get; init; }
+
+        // Vulkan
+        public string? Alias { get; init; }
+        public string? Extension { get; init; }
+
+        public VersionInfo? VersionInfo { get; set; }
+    }
+
 
     public enum ConstantType
     {

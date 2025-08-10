@@ -827,7 +827,7 @@ namespace GLGenerator.Parsing
 
                 string? vendor = enums.Attribute("vendor")?.Value;
 
-                EnumType type = ParseEnumsType(enums.Attribute("type")?.Value);
+                bool isFlags = IsEnumTypeBitmask(enums.Attribute("type")?.Value);
 
                 string? enumsComment = enums.Attribute("comment")?.Value;
 
@@ -903,17 +903,17 @@ namespace GLGenerator.Parsing
                         }
                     }
 
-                    enumsEntries.Add(new EnumEntry(name, nameMangler.MangleEnumName(name), value, enumApi, type, vendor, alias, groups, suffix));
+                    enumsEntries.Add(new EnumEntry(name, nameMangler.MangleEnumName(name), value, enumApi, isFlags, vendor, alias, groups, suffix));
                 }
             }
 
             return enumsEntries;
 
-            static EnumType ParseEnumsType(string? value) => value switch
+            static bool IsEnumTypeBitmask(string? value) => value switch
             {
-                null or "" => EnumType.None,
-                "bitmask" => EnumType.Bitmask,
-                _ => EnumType.Invalid,
+                null or "" => false,
+                "bitmask" => true,
+                _ => throw new Exception(),
             };
 
             static TypeSuffix ParseEnumTypeSuffix(string? suffix) => suffix switch

@@ -73,20 +73,6 @@ namespace VkGenerator.Parsing
         public BaseCSType? StrongType { get; set; }
     };
 
-    public record EnumType(string Name, List<EnumMember> Members, bool Bitmask, string? Extension) : IEnum
-    {
-        List<IEnumMember> IEnum.Members => Members.Cast<IEnumMember>().ToList();
-
-        public BaseCSType? StrongUnderlyingType { get; set; }
-
-        public VersionInfo? VersionInfo;
-        public List<Function> ReferencedBy { get; } = [];
-    }
-    public record EnumMember(string Name, ulong Value, string? Comment, string? Alias, string? Extension) : IEnumMember
-    {
-        public VersionInfo? VersionInfo { get; set; }
-    }
-
     public record FeatureRef(string Name, string Struct);
 
     internal class SpecificationParser
@@ -503,7 +489,15 @@ namespace VkGenerator.Parsing
                             EnumMember aliasMember = members.Find(m => m.Name == alias) ?? throw new Exception();
                             string memberName = member.Attribute("name")?.Value ?? throw new Exception();
                             // FIXME: Should we check if this one has a comment?
-                            members.Add(new EnumMember(memberName, aliasMember.Value, aliasMember.Comment, alias, null));
+                            members.Add(new EnumMember()
+                            {
+                                Name = memberName,
+                                OriginalName = memberName,
+                                Value = aliasMember.Value,
+                                Comment = aliasMember.Comment,
+                                Alias = alias,
+                                Extension = null,
+                            });
                         }
                         else
                         {
@@ -511,11 +505,26 @@ namespace VkGenerator.Parsing
                             string value = member.Attribute("value")?.Value ?? throw new Exception();
                             string? comment = member.Attribute("comment")?.Value;
 
-                            members.Add(new EnumMember(memberName, (ulong)(int)Int32Converter.ConvertFromString(value)!, comment, null, null));
+                            members.Add(new EnumMember()
+                            {
+                                Name = memberName,
+                                OriginalName = memberName,
+                                Value = (ulong)(int)Int32Converter.ConvertFromString(value)!,
+                                Comment = comment,
+                                Alias = null,
+                                Extension = null,
+                            });
                         }
                     }
 
-                    enumTypes.Add(new EnumType(name, members, false, null));
+                    enumTypes.Add(new EnumType()
+                    {
+                        Name = name,
+                        IsFlags = false,
+                        Members = members,
+
+                        Extension = null,
+                    });
                 }
                 else if (type == "bitmask")
                 {
@@ -528,7 +537,16 @@ namespace VkGenerator.Parsing
                             EnumMember aliasMember = members.Find(m => m.Name == alias) ?? throw new Exception();
                             string memberName = member.Attribute("name")?.Value ?? throw new Exception();
                             // FIXME: Should we check if this one has a comment?
-                            members.Add(new EnumMember(memberName, aliasMember.Value, aliasMember.Comment, alias, null));
+                            //members.Add(new EnumMember(memberName, aliasMember.Value, aliasMember.Comment, alias, null));
+                            members.Add(new EnumMember()
+                            {
+                                Name = memberName,
+                                OriginalName = memberName,
+                                Value = aliasMember.Value,
+                                Comment = aliasMember.Comment,
+                                Alias = alias,
+                                Extension = null,
+                            });
                         }
                         else
                         {
@@ -538,17 +556,41 @@ namespace VkGenerator.Parsing
                             string? bitpos = member.Attribute("bitpos")?.Value;
                             if (bitpos != null)
                             {
-                                members.Add(new EnumMember(memberName, (ulong)1 << int.Parse(bitpos), comment, null, null));
+                                members.Add(new EnumMember()
+                                {
+                                    Name = memberName,
+                                    OriginalName = memberName,
+                                    Value = (ulong)1 << int.Parse(bitpos),
+                                    Comment = comment,
+                                    Alias = null,
+                                    Extension = null,
+                                });
                             }
                             else
                             {
                                 string value = member.Attribute("value")?.Value ?? throw new Exception();
-                                members.Add(new EnumMember(memberName, (ulong)(int)Int32Converter.ConvertFromString(value)!, comment, null, null));
+                                members.Add(new EnumMember()
+                                {
+                                    Name = memberName,
+                                    OriginalName = memberName,
+                                    Value = (ulong)(int)Int32Converter.ConvertFromString(value)!,
+                                    Comment = comment,
+                                    Alias = null,
+                                    Extension = null,
+                                });
                             }
                         }
                     }
 
-                    enumTypes.Add(new EnumType(name, members, true, null));
+                    //enumTypes.Add(new EnumType(name, members, true, null));
+                    enumTypes.Add(new EnumType()
+                    {
+                        Name = name,
+                        IsFlags = true,
+                        Members = members,
+
+                        Extension = null,
+                    });
                 }
                 else
                 {

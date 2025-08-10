@@ -70,7 +70,7 @@ namespace ALGenerator.Process
 
             foreach (EnumEntry @enum in spec.Enums)
             {
-                bool isFlag = @enum.Type == EnumType.Bitmask;
+                bool isFlag = @enum.IsFlags;
 
                 foreach ((string originalName, string translatedName, APIFile @namespace) in @enum.Groups)
                 {

@@ -30,7 +30,6 @@ namespace VkGenerator
 
             Processor.ApplyFeatureEnums(specData);
             Processor.ApplyExtensionEnums(specData);
-            Processor.ApplyVideoEnums(specData, videoSpecData);
             Processor.ResolveEnumUnderlyingTypes(specData);
             Processor.ResolveEnumUnderlyingTypes(videoSpecData);
             var typeMap = Processor.BuildTypeMap(specData, videoSpecData);
