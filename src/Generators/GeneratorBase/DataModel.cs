@@ -53,6 +53,20 @@ namespace GeneratorBase
         public VersionInfo? VersionInfo { get; set; }
     }
 
+    // Should this type help us with overloading only
+    // or should it also help with type resolution?
+    // Type resolution might be too API specific but I'm not too sure...
+    /*public record class Function
+    {
+        public string EntryPoint { get; init; }
+        public string FunctionName { get; init; }
+        public List<Parameter> Parameters { get; init; }
+        public BaseCSType ReturnType { get; init; }
+        public string? Alias { get; init; }
+
+        public VersionInfo? VersionInfo { get; init; }
+    }*/
+
     public interface IFunctionParameter
     {
         public string OriginalName { get; }

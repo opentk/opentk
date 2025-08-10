@@ -45,7 +45,7 @@ namespace ALGenerator.Process
                 HashCode.Combine(GroupName);
         };
 
-        internal static OutputData ProcessSpec(Specification2 spec, Documentation docs)
+        internal static OutputData ProcessSpec(Specification spec, Documentation docs)
         {
             // The first thing we do is process all of the vendorFunctions defined into a dictionary of Functions.
             Dictionary<string, OverloadedFunction> allFunctions = new Dictionary<string, OverloadedFunction>(spec.Functions.Count);
@@ -439,7 +439,7 @@ namespace ALGenerator.Process
                                 if (f1.Vendor == "" && f2.Vendor != "") return -1;
                                 if (f1.Vendor != "" && f2.Vendor == "") return 1;
 
-                                return f1.Function.FunctionName.CompareTo(f2.Function.FunctionName);
+                                return f1.Function.Name.CompareTo(f2.Function.Name);
                             });
 
                         members.Sort(EnumGroupMember.DefaultComparison);
@@ -462,45 +462,6 @@ namespace ALGenerator.Process
                         {
                             if (enumGroupToNativeFunctionsUsingThatEnumGroup.TryGetValue(group, out var functionsUsingEnumGroup) == false)
                             {
-                                Pointers CreatePointersList(ALFile file, List<Namespace> namespaces)
-                                {
-                                    SortedList<string, NativeFunction> allFunctions = new SortedList<string, NativeFunction>();
-                                    foreach (Namespace @namespace in namespaces)
-                                    {
-                                        bool addFunctions = false;
-                                        switch (file)
-                                        {
-                                            case ALFile.AL:
-                                                if (@namespace.Name == OutputApi.AL)
-                                                {
-                                                    addFunctions = true;
-                                                }
-                                                break;
-                                            case ALFile.ALC:
-                                                if (@namespace.Name == OutputApi.ALC)
-                                                {
-                                                    addFunctions = true;
-                                                }
-                                                break;
-                                        }
-
-                                        if (addFunctions)
-                                        {
-                                            foreach (var functions in @namespace.VendorFunctions)
-                                            {
-                                                foreach (var function in functions.Functions)
-                                                {
-                                                    if (allFunctions.ContainsKey(function.NativeFunction.EntryPoint) == false)
-                                                    {
-                                                        allFunctions.Add(function.NativeFunction.EntryPoint, function.NativeFunction);
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-
-                                    return new Pointers(file, allFunctions.Values.ToList());
-                                }
                                 functionsUsingEnumGroup = null;
                             }
 
@@ -520,14 +481,14 @@ namespace ALGenerator.Process
                     // Group vendors
                     // Group groupNameToEnumGroup
                     // Lookup documentation
-                    Dictionary<string, ALVendorFunctions> vendors = new Dictionary<string, ALVendorFunctions>();
+                    Dictionary<string, VendorFunctions> vendors = new Dictionary<string, VendorFunctions>();
                     foreach ((string vendor, HashSet<OverloadedFunction> overloadedFunctions) in functionsByVendor)
                     {
                         foreach (OverloadedFunction overloadedFunction in overloadedFunctions)
                         {
-                            if (!vendors.TryGetValue(vendor, out ALVendorFunctions? group))
+                            if (!vendors.TryGetValue(vendor, out VendorFunctions? group))
                             {
-                                group = new ALVendorFunctions(vendor, new List<Process.OverloadedFunction>(), new HashSet<NativeFunction>());
+                                group = new VendorFunctions(vendor, new List<Process.OverloadedFunction>(), new HashSet<NativeFunction>());
                                 vendors.Add(vendor, group);
                             }
 
@@ -540,8 +501,8 @@ namespace ALGenerator.Process
                         }
                     }
 
-                    List<ALVendorFunctions> sortedVendorFunctions = [..vendors.Values];
-                    foreach (ALVendorFunctions functions in sortedVendorFunctions)
+                    List<VendorFunctions> sortedVendorFunctions = [..vendors.Values];
+                    foreach (VendorFunctions functions in sortedVendorFunctions)
                     {
                         functions.Functions.Sort();
                     }
@@ -552,38 +513,54 @@ namespace ALGenerator.Process
                     {
                         foreach (var function in vendorFunctions)
                         {
+                            FunctionReference func = functions.Find(f => f.EntryPoint == function.NativeFunction.EntryPoint) ?? throw new Exception($"Could not find function {function.NativeFunction.EntryPoint}!");
+
+                            List<string> addedIn = new List<string>();
+                            if (func.AddedIn != null)
+                            {
+                                addedIn.Add($"v{func.AddedIn.Major}.{func.AddedIn.Minor}");
+                            }
+
+                            foreach (var extension in func.PartOfExtensions)
+                            {
+                                addedIn.Add(extension.Name);
+                            }
+
+                            List<string> removedIn = new List<string>();
+                            if (func.RemovedIn != null)
+                            {
+                                removedIn.Add($"v{func.RemovedIn.Major}.{func.RemovedIn.Minor}");
+                            }
+
+                            List<string> extensionURLs = [];
+                            foreach (var extension in func.PartOfExtensions)
+                            {
+                                string ext = NameMangler.MaybeRemoveStart(extension.Name, "GL_");
+
+                                // FIXME: This does not work super well here as there are
+                                // ALC extensions like ALC_EXT_EFX that have many functions
+                                // added to the AL api, which means we will choose the wrong
+                                // api string in the url here.
+                                // - Noggin_bops 2025-08-10
+                                string apiString = api switch
+                                {
+                                    InputAPI.AL => "AL%20Extensions",
+                                    InputAPI.ALC => "ALC%20Extensions",
+                                    _ => throw new Exception()
+                                };
+
+                                string url = $"https://raw.githubusercontent.com/Raulshc/OpenAL-EXT-Repository/refs/heads/master/{apiString}/{ext}.txt";
+                                extensionURLs.Add(url);
+                            }
+
                             if (function.Documentation.TryGetValue(outAPI, out CommandDocumentation? commandDocumentation))
                             {
-                                var func = functions.Find(f => f.EntryPoint == function.NativeFunction.EntryPoint);
-
-                                if (func == null)
-                                {
-                                    throw new Exception($"Could not find function {function.NativeFunction.EntryPoint}!");
-                                }
-
-                                List<string> addedIn = new List<string>();
-                                if (func.AddedIn != null)
-                                {
-                                    addedIn.Add($"v{func.AddedIn.Major}.{func.AddedIn.Minor}");
-                                }
-
-                                foreach (var extension in func.PartOfExtensions)
-                                {
-                                    addedIn.Add(extension.Name);
-                                }
-
-                                List<string> removedIn = new List<string>();
-                                if (func.RemovedIn != null)
-                                {
-                                    removedIn.Add($"v{func.RemovedIn.Major}.{func.RemovedIn.Minor}");
-                                }
-                                
                                 // FIXME: Added and removed information.
                                 documentation[function.NativeFunction] = new FunctionDocumentation(
                                     commandDocumentation.Name,
                                     commandDocumentation.Purpose,
                                     commandDocumentation.Parameters,
-                                    commandDocumentation.RefPagesLink,
+                                    [commandDocumentation.RefPagesLink, .. extensionURLs],
                                     addedIn,
                                     removedIn
                                     );
@@ -594,74 +571,26 @@ namespace ALGenerator.Process
                                 {
                                     Logger.Warning($"{function.NativeFunction.EntryPoint} doesn't have any documentation for {api}");
 
-                                    var func = functions.Find(f => f.EntryPoint == function.NativeFunction.EntryPoint);
-
-                                    if (func == null)
-                                    {
-                                        throw new Exception($"Could not find function {function.NativeFunction.EntryPoint}!");
-                                    }
-
-                                    List<string> addedIn = new List<string>();
-                                    if (func.AddedIn != null)
-                                    {
-                                        addedIn.Add($"v{func.AddedIn.Major}.{func.AddedIn.Minor}");
-                                    }
-
-                                    foreach (var extension in func.PartOfExtensions)
-                                    {
-                                        addedIn.Add(extension.Name);
-                                    }
-
-                                    List<string> removedIn = new List<string>();
-                                    if (func.RemovedIn != null)
-                                    {
-                                        removedIn.Add($"v{func.RemovedIn.Major}.{func.RemovedIn.Minor}");
-                                    }
-
                                     documentation[function.NativeFunction] = new FunctionDocumentation(
                                         function.NativeFunction.EntryPoint,
                                         "",
                                         Array.Empty<ParameterDocumentation>(),
                                         // TODO: Is it possible to get the functionRef spec file and link to it here?
-                                        null,
+                                        extensionURLs,
                                         addedIn,
                                         removedIn);
                                 }
                                 else
                                 {
-                                    var func = functions.Find(f => f.EntryPoint == function.NativeFunction.EntryPoint);
-
-                                    if (func == null)
-                                    {
-                                        throw new Exception($"Could not find function {function.NativeFunction.EntryPoint}!");
-                                    }
-
-                                    List<string> addedIn = new List<string>();
-                                    if (func.AddedIn != null)
-                                    {
-                                        addedIn.Add($"v{func.AddedIn.Major}.{func.AddedIn.Minor}");
-                                    }
-
-                                    foreach (var extension in func.PartOfExtensions)
-                                    {
-                                        addedIn.Add(extension.Name);
-                                    }
-
-                                    List<string> removedIn = new List<string>();
-                                    if (func.RemovedIn != null)
-                                    {
-                                        removedIn.Add($"v{func.RemovedIn.Major}.{func.RemovedIn.Minor}");
-                                    }
-
+                                    // Extensions don't have documentation (yet?)
                                     documentation[function.NativeFunction] = new FunctionDocumentation(
                                         function.NativeFunction.EntryPoint,
                                         "",
                                         Array.Empty<ParameterDocumentation>(),
                                         // TODO: Is it possible to get the extension spec file and link to it here?
-                                        null,
+                                        extensionURLs,
                                         addedIn,
                                         removedIn);
-                                    // Extensions don't have documentation (yet?)
                                 }
                             }
                         }
@@ -753,8 +682,8 @@ namespace ALGenerator.Process
             List<Overload> overloads = new List<Overload>
             {
                 // Make a "base" overload
-                new Overload(null, null, nativeFunction.Parameters.ToArray(), nativeFunction, nativeFunction.ReturnType,
-                    new NameTable(), /*"returnValue",*/ Array.Empty<string>(), nativeFunction.FunctionName),
+                new Overload(null, null, nativeFunction.Parameters.ToArray(), nativeFunction, nativeFunction.StrongReturnType,
+                    new NameTable(), /*"returnValue",*/ Array.Empty<string>(), nativeFunction.Name),
             };
 
             bool overloadedOnce = false;
@@ -789,29 +718,29 @@ namespace ALGenerator.Process
             }
 
             return new OverloadedFunction(nativeFunction, functionDocumentation, overloadArray, changeNativeName);
-        }
 
-        private static bool AreSignaturesDifferent(NativeFunction nativeFunction, Overload overload)
-        {
-            if (nativeFunction.Parameters.Count != overload.InputParameters.Length)
+            static bool AreSignaturesDifferent(NativeFunction nativeFunction, Overload overload)
             {
-                return true;
-            }
-
-            if (overload.OverloadName != nativeFunction.FunctionName)
-            {
-                return true;
-            }
-
-            for (int i = 0; i < nativeFunction.Parameters.Count; i++)
-            {
-                if (nativeFunction.Parameters[i].Type.Equals(overload.InputParameters[i].Type) == false)
+                if (nativeFunction.Parameters.Count != overload.InputParameters.Length)
                 {
                     return true;
                 }
-            }
 
-            return false;
+                if (overload.OverloadName != nativeFunction.Name)
+                {
+                    return true;
+                }
+
+                for (int i = 0; i < nativeFunction.Parameters.Count; i++)
+                {
+                    if (nativeFunction.Parameters[i].StrongType!.Equals(overload.InputParameters[i].StrongType!) == false)
+                    {
+                        return true;
+                    }
+                }
+
+                return false;
+            }
         }
     }
 }

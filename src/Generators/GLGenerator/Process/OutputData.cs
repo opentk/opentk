@@ -10,23 +10,13 @@ using GeneratorBase;
 namespace GLGenerator.Process
 {
     internal record OutputData(
-        /* FIXME: Maybe do like this?
-        Namespace GL,
-        Namespace GLCompat,
-        Namespace GLES1,
-        Namespace GLES2,
-        Namespace WGL,
-        Namespace GLX,
-        */
-
         List<Pointers> Pointers,
         List<Namespace> Namespaces);
 
     // FIXME: Maybe change to API.. something? "namespace" is quite generic.
     internal record Namespace(
         OutputApi Name,
-        List<GLVendorFunctions> VendorFunctions,
-        //SortedDictionary<string, GLVendorFunctions> Vendors,
+        List<VendorFunctions> VendorFunctions,
         List<EnumGroup> EnumGroups,
         Dictionary<NativeFunction, FunctionDocumentation> Documentation);
 
@@ -38,12 +28,12 @@ namespace GLGenerator.Process
         string Name,
         string Purpose,
         ParameterDocumentation[] Parameters,
-        string? RefPagesLink,
+        List<string> RefPagesLinks,
         List<string> AddedIn,
         List<string>? RemovedIn
         );
 
-    internal record GLVendorFunctions(
+    internal record VendorFunctions(
         string Vendor,
         List<OverloadedFunction> Functions,
         HashSet<NativeFunction> NativeFunctionsWithPostfix);
@@ -54,17 +44,9 @@ namespace GLGenerator.Process
     {
         public int CompareTo(OverloadedFunction? other)
         {
-            return NativeFunction.FunctionName.CompareTo(other?.NativeFunction.FunctionName);
+            return NativeFunction.Name.CompareTo(other?.NativeFunction.Name);
         }
     }
-
-    internal record NativeFunction(
-        string EntryPoint,
-        string FunctionName,
-        List<Parameter> Parameters,
-        BaseCSType ReturnType,
-        // FIXME: Convert referencedEnumGroups to use GroupRef!
-        GroupRef[] ReferencedEnumGroups);
 
     internal record Overload(
         Overload? NestedOverload,
@@ -75,14 +57,6 @@ namespace GLGenerator.Process
         NameTable NameTable,
         string[] GenericTypes,
         string OverloadName);
-
-    internal record Parameter(
-        BaseCSType Type,
-        // FIXME: Should we expose this exactly like it's exposed in gl.xml?
-        string[] Kinds,
-        string OriginalName,
-        string Name,
-        Expression? Length);
 
 
     internal record EnumGroupMember(
@@ -110,7 +84,10 @@ namespace GLGenerator.Process
         string Name,
         bool IsFlags,
         List<EnumGroupMember> Members,
-        List<(string Vendor, NativeFunction Function)>? FunctionsUsingEnumGroup);
+        List<(string Vendor, NativeFunction Function)>? FunctionsUsingEnumGroup)
+    {
+        public List<NativeFunction> ReferencedBy = [];
+    }
 
 
     internal interface IOverloadLayer

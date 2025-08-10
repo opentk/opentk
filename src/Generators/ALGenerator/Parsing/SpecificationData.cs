@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Dynamic;
 using System.IO.Compression;
+using System.Linq;
 using System.Numerics;
 using System.Runtime;
 using System.Runtime.CompilerServices;
@@ -25,13 +26,25 @@ namespace ALGenerator.Parsing
         ALC = 1 << 1,
     }
 
-    internal record GLFileData(
-        ALFile File,
-        List<NativeFunction> Functions,
-        List<EnumEntry> Enums,
-        List<API> APIs);
+    internal record NativeFunction(string Name, string EntryPoint, string ReturnType, List<Parameter> Parameters) : IFunction
+    {
+        List<IFunctionParameter> IFunction.Parameters => Parameters.Cast<IFunctionParameter>().ToList();
 
-    internal record Specification2(
+        public BaseCSType? StrongReturnType { get; set; }
+        public VersionInfo? VersionInfo { get; set; }
+
+        // FIXME: Migrate to marking the references directly on the enums.
+        public GroupRef[] ReferencedEnumGroups { get; set; }
+    }
+
+    internal record Parameter(string OriginalName, string Name, string Type, string? Length, string[] Kinds) : IFunctionParameter
+    {
+        public BaseCSType? StrongType { get; set; }
+        public Expression? StrongLength { get; set; }
+    }
+
+
+    internal record Specification(
         //List<Command> Commands,
         List<NativeFunction> Functions,
         List<EnumEntry> Enums,
@@ -66,29 +79,6 @@ namespace ALGenerator.Parsing
         string Vendor);
         //List<string> EntryPoints,
         //List<string> EnumValues);
-
-
-    /*internal record Specification(
-        List<Command> Commands,
-        List<Enums> Enums,
-        List<Feature> Features,
-        List<Extension> Extensions);*/
-
-
-    /*internal record Command(
-        string EntryPoint,
-        PType ReturnType,
-        GLParameter[] Parameters);*/
-
-    // FIXME: Maybe flatten the list of enums?
-    /*internal record Enums(
-        string Namespace,
-        GroupRef[] Groups,
-        EnumType Type,
-        string? Vendor,
-        Range? Range,
-        string? Comment,
-        List<EnumEntry> Entries);*/
 
     internal record EnumEntry(
         string Name,
@@ -128,11 +118,6 @@ namespace ALGenerator.Parsing
         List<string> Commands,
         List<string> Enums);
 
-
-    internal record PType(
-        GLType Type,
-        HandleType? Handle,
-        GroupRef? Group);
 
     internal enum ALFile
     {

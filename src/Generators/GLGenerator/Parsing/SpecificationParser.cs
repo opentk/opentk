@@ -15,7 +15,7 @@ namespace GLGenerator.Parsing
 {
     internal class SpecificationParser
     {
-        internal static Specification2 Parse(Stream input, NameMangler nameMangler, GLFile currentFile, List<string> ignoreFunctions)
+        internal static Specification Parse(Stream input, NameMangler nameMangler, GLFile currentFile, List<string> ignoreFunctions)
         {
             XDocument? xdocument = XDocument.Load(input);
 
@@ -25,12 +25,12 @@ namespace GLGenerator.Parsing
             List<NativeFunction> functions = ParseCommands(xdocument.Root, nameMangler, currentFile, ignoreFunctions);
             List<EnumEntry>? enums = ParseEnums(xdocument.Root, nameMangler, currentFile);
 
-            List<Feature>? features = ParseFeatures(xdocument.Root);
-            List<Extension>? extensions = ParseExtensions(xdocument.Root, nameMangler);
+            List<Feature>? features = ParseFeatures(xdocument.Root, ignoreFunctions);
+            List<Extension>? extensions = ParseExtensions(xdocument.Root, nameMangler, ignoreFunctions);
 
             List<API> APIs = MakeAPIs(features, extensions);
 
-            return new Specification2(functions, enums, APIs);
+            return new Specification(functions, enums, APIs);
         }
 
         private static List<API> MakeAPIs(List<Feature> features, List<Extension> extensions)
@@ -264,63 +264,50 @@ namespace GLGenerator.Parsing
             }
         }
 
-        // FIXME: Maybe change name?
         private static List<NativeFunction> ParseCommands(XElement input, NameMangler nameMangler, GLFile currentFile, List<string> ignoreFunctions)
         {
             Logger.Info("Begining parsing of commands.");
             XElement? xelement = input.Element("commands")!;
 
             List<NativeFunction> functions = new List<NativeFunction>();
-            foreach (XElement element in xelement.Elements("command"))
+            foreach (XElement command in xelement.Elements("command"))
             {
-                NativeFunction function = ParseCommand(element, nameMangler, currentFile);
+                XElement proto = command.Element("proto") ?? throw new Exception("Missing proto tag!");
 
-                // Don't add this command to the list if we should ignore it.
-                if (ignoreFunctions.Contains(function.EntryPoint))
+                string entryPoint = proto.Element("name")?.Value ?? throw new Exception("Missing name tag!");
+                if (ignoreFunctions.Contains(entryPoint))
                 {
                     continue;
                 }
 
-                functions.Add(function);
+                HashSet<GroupRef> referencedEnumGroups = new HashSet<GroupRef>();
+
+                List<Parameter>? paramList = new List<Parameter>();
+                foreach (XElement? element in command.Elements("param"))
+                {
+                    string paramName = element.Element("name")?.Value ?? throw new Exception("Missing parameter name!");
+                    string mangledName = NameMangler.MangleParameterName(paramName);
+
+                    BaseCSType type = ParsePType(element, currentFile, nameMangler, out GroupRef? groupRef);
+                    if (groupRef != null) referencedEnumGroups.Add(groupRef);
+
+                    string[] kind = element.Attribute("kind")?.Value?.Split(',') ?? Array.Empty<string>();
+
+                    string? length = element.Attribute("len")?.Value;
+                    Expression? paramLength = length == null ? null : ParseExpression(length);
+
+                    paramList.Add(new Parameter(paramName, mangledName, type.ToCSString(), length, kind){ StrongType = type, StrongLength = paramLength });
+                }
+
+                BaseCSType returnType = ParsePType(proto, currentFile, nameMangler, out GroupRef? returnGroup);
+                if (returnGroup != null) referencedEnumGroups.Add(returnGroup);
+
+                string functionName = nameMangler.MangleFunctionName(entryPoint);
+
+                functions.Add(new NativeFunction(functionName, entryPoint, returnType.ToCSString(), paramList) { StrongReturnType = returnType, ReferencedEnumGroups = referencedEnumGroups.ToArray() });
             }
 
             return functions;
-        }
-
-        private static NativeFunction ParseCommand(XElement c, NameMangler nameMangler, GLFile currentFile)
-        {
-            XElement? proto = c.Element("proto");
-            if (proto == null) throw new Exception("Missing proto tag!");
-
-            string? entryPoint = proto.Element("name")?.Value;
-            if (entryPoint == null) throw new Exception("Missing name tag!");
-
-            HashSet<GroupRef> referencedEnumGroups = new HashSet<GroupRef>();
-
-            List<Parameter>? paramList = new List<Parameter>();
-            foreach (XElement? element in c.Elements("param"))
-            {
-                string paramName = element.Element("name")?.Value ?? throw new Exception("Missing parameter name!");
-                string mangledName = NameMangler.MangleParameterName(paramName);
-
-                BaseCSType type = ParsePType(element, currentFile, nameMangler, out GroupRef? groupRef);
-                if (groupRef != null) referencedEnumGroups.Add(groupRef);
-
-                string[] kind = element.Attribute("kind")?.Value?.Split(',') ?? Array.Empty<string>();
-
-                string? length = element.Attribute("len")?.Value;
-                Expression? paramLength = length == null ? null : ParseExpression(length);
-
-                // FIXME: Parse kinds in some way?
-                paramList.Add(new Parameter(type, kind, paramName, mangledName, paramLength));
-            }
-
-            BaseCSType returnType = ParsePType(proto, currentFile, nameMangler, out GroupRef? returnGroup);
-            if (returnGroup != null) referencedEnumGroups.Add(returnGroup);
-            
-            string functionName = nameMangler.MangleFunctionName(entryPoint);
-
-            return new NativeFunction(entryPoint, functionName, paramList, returnType, referencedEnumGroups.ToArray());
         }
 
         private static Expression ParseExpression(string expression)
@@ -976,7 +963,7 @@ namespace GLGenerator.Parsing
         }
 
 
-        internal static List<Feature> ParseFeatures(XElement input)
+        internal static List<Feature> ParseFeatures(XElement input, List<string> ignoreFunctions)
         {
             Logger.Info("Begining parsing of features.");
 
@@ -999,14 +986,14 @@ namespace GLGenerator.Parsing
                 List<RequireEntry> requireEntries = new List<RequireEntry>();
                 foreach (XElement? require in feature.Elements("require"))
                 {
-                    RequireEntry reqEntry = ParseRequire(require);
+                    RequireEntry reqEntry = ParseRequire(require, ignoreFunctions);
                     requireEntries.Add(reqEntry);
                 }
 
                 List<RemoveEntry> removeEntries = new List<RemoveEntry>();
                 foreach (XElement? remove in feature.Elements("remove"))
                 {
-                    RemoveEntry removeEntry = ParseRemove(remove);
+                    RemoveEntry removeEntry = ParseRemove(remove, ignoreFunctions);
                     removeEntries.Add(removeEntry);
                 }
 
@@ -1016,7 +1003,7 @@ namespace GLGenerator.Parsing
             return features;
         }
 
-        internal static List<Extension> ParseExtensions(XElement input, NameMangler nameMangler)
+        internal static List<Extension> ParseExtensions(XElement input, NameMangler nameMangler, List<string> ignoreFunctions)
         {
             List<Extension> extensions = new List<Extension>();
             XElement? xelement = input.Element("extensions")!;
@@ -1058,7 +1045,7 @@ namespace GLGenerator.Parsing
                 List<RequireEntry> requires = new List<RequireEntry>();
                 foreach (XElement? require in extension.Elements("require"))
                 {
-                    requires.Add(ParseRequire(require));
+                    requires.Add(ParseRequire(require, ignoreFunctions));
                 }
 
                 extensions.Add(new Extension(extName, vendor, supportedApis, comment, requires));
@@ -1067,7 +1054,7 @@ namespace GLGenerator.Parsing
             return extensions;
         }
 
-        internal static RequireEntry ParseRequire(XElement requires)
+        internal static RequireEntry ParseRequire(XElement requires, List<string> ignoreFunctions)
         {
             GLAPI api = ParseApi(requires.Attribute("api")?.Value);
             GLProfile profile = ParseProfile(requires.Attribute("profile")?.Value);
@@ -1085,6 +1072,8 @@ namespace GLGenerator.Parsing
                 switch (entry.Name.LocalName)
                 {
                     case "command":
+                        if (ignoreFunctions.Contains(name))
+                            continue;
                         reqCommands.Add(name);
                         break;
                     case "enum":
@@ -1098,7 +1087,7 @@ namespace GLGenerator.Parsing
             return new RequireEntry(api, profile, comment, reqCommands, reqEnums);
         }
 
-        internal static RemoveEntry ParseRemove(XElement requires)
+        internal static RemoveEntry ParseRemove(XElement requires, List<string> ignoreFunctions)
         {
             GLProfile profile = ParseProfile(requires.Attribute("profile")?.Value);
             string? comment = requires.Attribute("comment")?.Value;
@@ -1115,6 +1104,8 @@ namespace GLGenerator.Parsing
                 switch (entry.Name.LocalName)
                 {
                     case "command":
+                        if (ignoreFunctions.Contains(name))
+                            continue;
                         removeCommands.Add(name);
                         break;
                     case "enum":

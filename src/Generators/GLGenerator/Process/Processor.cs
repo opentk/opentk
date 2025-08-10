@@ -46,7 +46,7 @@ namespace GLGenerator.Process
                 HashCode.Combine(GroupName);
         };
 
-        internal static OutputData ProcessSpec(Specification2 spec, Documentation docs)
+        internal static OutputData ProcessSpec(Specification spec, Documentation docs)
         {
             // The first thing we do is process all of the vendorFunctions defined into a dictionary of Functions.
             List<NativeFunction> allEntryPoints = new List<NativeFunction>(spec.Functions.Count);
@@ -379,8 +379,6 @@ namespace GLGenerator.Process
 
                     Dictionary<string, EnumGroupMember>? enumsDict = allEnumsPerAPI[outAPI];
 
-                    // FIXME: Make api an OutputAPI
-
                     Dictionary<string, List<OverloadedFunction>> functionsByVendor = new Dictionary<string, List<OverloadedFunction>>();
                     
                     HashSet<EnumGroupMember> theAllEnumGroup = new HashSet<EnumGroupMember>();
@@ -417,15 +415,7 @@ namespace GLGenerator.Process
                         }
                         else
                         {
-                            // FIXME!
-                            /*if (GeneratorSettings.Settings.IgnoreFunctions.Contains(functionRef.EntryPoint))
-                            {
-                                // We are ignoring this function.
-                            }
-                            else
-                            {
-                                throw new Exception($"Could not find function '{functionRef.EntryPoint}'!");
-                            }*/
+                            Logger.Error($"Function '{functionRef.EntryPoint}' not found.");
                         }
                     }
 
@@ -537,7 +527,7 @@ namespace GLGenerator.Process
                                 if (f1.Vendor == "" && f2.Vendor != "") return -1;
                                 if (f1.Vendor != "" && f2.Vendor == "") return 1;
 
-                                return f1.Function.FunctionName.CompareTo(f2.Function.FunctionName);
+                                return f1.Function.Name.CompareTo(f2.Function.Name);
                             });
 
                         members.Sort(EnumGroupMember.DefaultComparison);
@@ -557,14 +547,14 @@ namespace GLGenerator.Process
                     // Group vendors
                     // Group groupNameToEnumGroup
                     // Lookup documentation
-                    Dictionary<string, GLVendorFunctions> vendors = new Dictionary<string, GLVendorFunctions>();
+                    Dictionary<string, VendorFunctions> vendors = new Dictionary<string, VendorFunctions>();
                     foreach ((string vendor, List<OverloadedFunction> overloadedFunctions) in functionsByVendor)
                     {
                         foreach (OverloadedFunction overloadedFunction in overloadedFunctions)
                         {
-                            if (!vendors.TryGetValue(vendor, out GLVendorFunctions? group))
+                            if (!vendors.TryGetValue(vendor, out VendorFunctions? group))
                             {
-                                group = new GLVendorFunctions(vendor, new List<Process.OverloadedFunction>(), new HashSet<NativeFunction>());
+                                group = new VendorFunctions(vendor, new List<Process.OverloadedFunction>(), new HashSet<NativeFunction>());
                                 vendors.Add(vendor, group);
                             }
 
@@ -577,14 +567,14 @@ namespace GLGenerator.Process
                         }
                     }
 
-                    List<GLVendorFunctions> sortedVendorFunctions = [..vendors.Values];
-                    foreach (GLVendorFunctions functions in sortedVendorFunctions)
+                    List<VendorFunctions> sortedVendorFunctions = [..vendors.Values];
+                    foreach (VendorFunctions functions in sortedVendorFunctions)
                     {
                         functions.Functions.Sort();
                     }
                     sortedVendorFunctions.Sort((e1, e2) => e1.Vendor.CompareTo(e2.Vendor));
 
-                    SortedDictionary<string, GLVendorFunctions> sortedVendors = new SortedDictionary<string, GLVendorFunctions>(vendors);
+                    SortedDictionary<string, VendorFunctions> sortedVendors = new SortedDictionary<string, VendorFunctions>(vendors);
                     foreach (var (vendor, vendorFunctions) in sortedVendors)
                     {
                         vendorFunctions.Functions.Sort();
@@ -595,38 +585,60 @@ namespace GLGenerator.Process
                     {
                         foreach (var function in vendorFunctions)
                         {
+                            FunctionReference func = functions.Find(f => f.EntryPoint == function.NativeFunction.EntryPoint) ?? throw new Exception($"Could not find function {function.NativeFunction.EntryPoint}!");
+                            
+                            List<string> addedIn = new List<string>();
+                            if (func.AddedIn != null)
+                            {
+                                addedIn.Add($"v{func.AddedIn.Major}.{func.AddedIn.Minor}");
+                            }
+
+                            foreach (var extension in func.PartOfExtensions)
+                            {
+                                addedIn.Add(extension.Name);
+                            }
+
+                            List<string> removedIn = new List<string>();
+                            if (func.RemovedIn != null)
+                            {
+                                removedIn.Add($"v{func.RemovedIn.Major}.{func.RemovedIn.Minor}");
+                            }
+
+                            List<string> extensionURLs = [];
+                            foreach (var extension in func.PartOfExtensions)
+                            {
+                                string ext = NameMangler.MaybeRemoveStart(extension.Name, "GL_");
+
+                                string url;
+                                if (vendor == "ANGLE" || vendor == "CHROMIUM")
+                                {
+                                    url = $"https://chromium.googlesource.com/angle/angle/+/refs/heads/main/extensions/{ext}.txt";
+                                }
+                                else
+                                {
+                                    string apiString = api switch
+                                    {
+                                        InputAPI.GL => "OpenGL",
+                                        InputAPI.GLES1 => "OpenGL",
+                                        InputAPI.GLES2 => "OpenGL",
+                                        InputAPI.WGL => "OpenGL",
+                                        InputAPI.GLX => "OpenGL",
+                                        InputAPI.EGL => "EGL",
+                                        _ => throw new Exception()
+                                    };
+
+                                    url = $"https://registry.khronos.org/{apiString}/extensions/{vendor}/{ext}.txt";
+                                }
+                                extensionURLs.Add(url);
+                            }
+
                             if (function.Documentation.TryGetValue(outAPI, out CommandDocumentation? commandDocumentation))
                             {
-                                var func = functions.Find(f => f.EntryPoint == function.NativeFunction.EntryPoint);
-
-                                if (func == null)
-                                {
-                                    throw new Exception($"Could not find function {function.NativeFunction.EntryPoint}!");
-                                }
-
-                                List<string> addedIn = new List<string>();
-                                if (func.AddedIn != null)
-                                {
-                                    addedIn.Add($"v{func.AddedIn.Major}.{func.AddedIn.Minor}");
-                                }
-
-                                foreach (var extension in func.PartOfExtensions)
-                                {
-                                    addedIn.Add(extension.Name);
-                                }
-
-                                List<string> removedIn = new List<string>();
-                                if (func.RemovedIn != null)
-                                {
-                                    removedIn.Add($"v{func.RemovedIn.Major}.{func.RemovedIn.Minor}");
-                                }
-                                
-                                // FIXME: Added and removed information.
                                 documentation[function.NativeFunction] = new FunctionDocumentation(
                                     commandDocumentation.Name,
                                     commandDocumentation.Purpose,
                                     commandDocumentation.Parameters,
-                                    commandDocumentation.RefPagesLink,
+                                    [commandDocumentation.RefPagesLink, .. extensionURLs],
                                     addedIn,
                                     removedIn
                                     );
@@ -637,74 +649,26 @@ namespace GLGenerator.Process
                                 {
                                     Logger.Warning($"{function.NativeFunction.EntryPoint} doesn't have any documentation for {api}");
 
-                                    var func = functions.Find(f => f.EntryPoint == function.NativeFunction.EntryPoint);
-
-                                    if (func == null)
-                                    {
-                                        throw new Exception($"Could not find function {function.NativeFunction.EntryPoint}!");
-                                    }
-
-                                    List<string> addedIn = new List<string>();
-                                    if (func.AddedIn != null)
-                                    {
-                                        addedIn.Add($"v{func.AddedIn.Major}.{func.AddedIn.Minor}");
-                                    }
-
-                                    foreach (var extension in func.PartOfExtensions)
-                                    {
-                                        addedIn.Add(extension.Name);
-                                    }
-
-                                    List<string> removedIn = new List<string>();
-                                    if (func.RemovedIn != null)
-                                    {
-                                        removedIn.Add($"v{func.RemovedIn.Major}.{func.RemovedIn.Minor}");
-                                    }
-
                                     documentation[function.NativeFunction] = new FunctionDocumentation(
                                         function.NativeFunction.EntryPoint,
                                         "",
                                         Array.Empty<ParameterDocumentation>(),
                                         // TODO: Is it possible to get the functionRef spec file and link to it here?
-                                        null,
+                                        extensionURLs,
                                         addedIn,
                                         removedIn);
                                 }
                                 else
                                 {
-                                    var func = functions.Find(f => f.EntryPoint == function.NativeFunction.EntryPoint);
-
-                                    if (func == null)
-                                    {
-                                        throw new Exception($"Could not find function {function.NativeFunction.EntryPoint}!");
-                                    }
-
-                                    List<string> addedIn = new List<string>();
-                                    if (func.AddedIn != null)
-                                    {
-                                        addedIn.Add($"v{func.AddedIn.Major}.{func.AddedIn.Minor}");
-                                    }
-
-                                    foreach (var extension in func.PartOfExtensions)
-                                    {
-                                        addedIn.Add(extension.Name);
-                                    }
-
-                                    List<string> removedIn = new List<string>();
-                                    if (func.RemovedIn != null)
-                                    {
-                                        removedIn.Add($"v{func.RemovedIn.Major}.{func.RemovedIn.Minor}");
-                                    }
-
+                                    // Extensions don't have documentation (yet?)
                                     documentation[function.NativeFunction] = new FunctionDocumentation(
                                         function.NativeFunction.EntryPoint,
                                         "",
                                         Array.Empty<ParameterDocumentation>(),
                                         // TODO: Is it possible to get the extension spec file and link to it here?
-                                        null,
+                                        extensionURLs,
                                         addedIn,
                                         removedIn);
-                                    // Extensions don't have documentation (yet?)
                                 }
                             }
                         }
@@ -814,8 +778,8 @@ namespace GLGenerator.Process
             List<Overload> overloads = new List<Overload>
             {
                 // Make a "base" overload
-                new Overload(null, null, nativeFunction.Parameters.ToArray(), nativeFunction, nativeFunction.ReturnType,
-                    new NameTable(), /*"returnValue",*/ Array.Empty<string>(), nativeFunction.FunctionName),
+                new Overload(null, null, nativeFunction.Parameters.ToArray(), nativeFunction, nativeFunction.StrongReturnType!,
+                    new NameTable(), /*"returnValue",*/ Array.Empty<string>(), nativeFunction.Name),
             };
 
             bool overloadedOnce = false;
@@ -850,29 +814,29 @@ namespace GLGenerator.Process
             }
 
             return new OverloadedFunction(nativeFunction, functionDocumentation, overloadArray, changeNativeName);
-        }
 
-        private static bool AreSignaturesDifferent(NativeFunction nativeFunction, Overload overload)
-        {
-            if (nativeFunction.Parameters.Count != overload.InputParameters.Length)
+            static bool AreSignaturesDifferent(NativeFunction nativeFunction, Overload overload)
             {
-                return true;
-            }
-
-            if (overload.OverloadName != nativeFunction.FunctionName)
-            {
-                return true;
-            }
-
-            for (int i = 0; i < nativeFunction.Parameters.Count; i++)
-            {
-                if (nativeFunction.Parameters[i].Type.Equals(overload.InputParameters[i].Type) == false)
+                if (nativeFunction.Parameters.Count != overload.InputParameters.Length)
                 {
                     return true;
                 }
-            }
 
-            return false;
+                if (overload.OverloadName != nativeFunction.Name)
+                {
+                    return true;
+                }
+
+                for (int i = 0; i < nativeFunction.Parameters.Count; i++)
+                {
+                    if (nativeFunction.Parameters[i].StrongType!.Equals(overload.InputParameters[i].StrongType!) == false)
+                    {
+                        return true;
+                    }
+                }
+
+                return false;
+            }
         }
     }
 }

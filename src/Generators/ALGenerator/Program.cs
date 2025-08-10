@@ -18,7 +18,7 @@ namespace ALGenerator
             st.Start();
             using (Logger.CreateLogger(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly()!.Location)!, "log.txt")))
             {
-                Specification2 alSpecification;
+                Specification alSpecification;
                 {
                     NameManglerSettings alSettings = new NameManglerSettings()
                     {
@@ -40,7 +40,7 @@ namespace ALGenerator
                     alSpecification = SpecificationParser.Parse(alSpecificationStream, new NameMangler(alSettings), ALFile.AL, new List<string>());
                 }
 
-                Specification2 alcSpecification;
+                Specification alcSpecification;
                 {
                     NameManglerSettings alcSettings = new NameManglerSettings()
                     {
@@ -80,13 +80,15 @@ namespace ALGenerator
                     efxPresets = SpecificationParser.ParseEFXPresets(efxPresetsStream, new NameMangler(efxSettings));
                 }
 
-                List<NativeFunction> functions = new List<NativeFunction>(alSpecification.Functions.Count + alcSpecification.Functions.Count);
-                functions.AddRange(alSpecification.Functions);
-                functions.AddRange(alcSpecification.Functions);
+                List<NativeFunction> functions = [
+                    .. alSpecification.Functions,
+                    .. alcSpecification.Functions
+                ];
 
-                List<EnumEntry> enums = new List<EnumEntry>(alSpecification.Enums.Count + alcSpecification.Enums.Count);
-                enums.AddRange(alSpecification.Enums);
-                enums.AddRange(alcSpecification.Enums);
+                List<EnumEntry> enums = [
+                    .. alSpecification.Enums,
+                    .. alcSpecification.Enums
+                ];
 
                 // FIXME: This is one point where we could do some processing to move things from one namespace to another.
                 // Alternatively we can try and do this later in processing. See comment with the same date.
@@ -145,7 +147,7 @@ namespace ALGenerator
                     }
                 }
 
-                Specification2 finalSpecification = new Specification2(functions, enums, apis);
+                Specification finalSpecification = new Specification(functions, enums, apis);
 
                 // Read the documentation folders and parse it into data structures.
                 //using DocumentationSource documentationSource = Reader.ReadDocumentationFromGithub();

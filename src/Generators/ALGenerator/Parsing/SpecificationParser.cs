@@ -1,33 +1,33 @@
+using ALGenerator.Process;
 using GeneratorBase;
 using GeneratorBase.Utility;
 using GeneratorBase.Utility.Extensions;
-using ALGenerator.Process;
 using System;
+using System.Buffers.Binary;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Xml.Linq;
-using System.Threading;
-using System.Buffers.Binary;
 using System.Net.Http.Headers;
 using System.Numerics;
+using System.Threading;
+using System.Xml.Linq;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ALGenerator.Parsing
 {
     internal class SpecificationParser
     {
-        internal static Specification2 Parse(Stream input, NameMangler nameMangler, ALFile currentFile, List<string> ignoreFunctions)
+        internal static Specification Parse(Stream input, NameMangler nameMangler, ALFile currentFile, List<string> ignoreFunctions)
         {
             XDocument? xdocument = XDocument.Load(input);
 
             if (xdocument.Root == null)
                 throw new NullReferenceException("The parsed xml didn't contain a Root node.");
 
-            List<NativeFunction> functions = ParseCommands(xdocument.Root, nameMangler, currentFile, ignoreFunctions);
-
+            List<NativeFunction> functions2 = ParseCommands(xdocument.Root, nameMangler, currentFile, ignoreFunctions);
             List<EnumEntry>? enums = ParseEnums(xdocument.Root, nameMangler, currentFile);
 
             List<Feature>? features = ParseFeatures(xdocument.Root, currentFile);
@@ -39,12 +39,12 @@ namespace ALGenerator.Parsing
                 // and modifies the AL_EXT_direct_context extensions require tag
                 // list to include these functions.
                 // - Noggin_bops 2025-08-08
-                CreateDirectContextCommands(functions, extensions);
+                CreateDirectContextCommands(functions2, extensions);
             }
 
             List<API> APIs = MakeAPIs(features, extensions);
 
-            return new Specification2(functions, enums, APIs);
+            return new Specification(functions2, enums, APIs);
         }
 
         private static List<API> MakeAPIs(List<Feature> features, List<Extension> extensions)
@@ -259,18 +259,20 @@ namespace ALGenerator.Parsing
             List<NativeFunction> directContextFunctions = new List<NativeFunction>();
             List<string> directContextFunctionNames = new List<string>();
 
+            CSStructPrimitive contextType = new CSStructPrimitive("ALCContext", false, CSPrimitive.IntPtr(true));
+
             foreach (var function in functions)
             {
                 string entryPoint = $"{NameMangler.RemoveVendorPostfix(function.EntryPoint)}Direct{NameMangler.GetVendorPostfix(function.EntryPoint)}";
 
                 NativeFunction directFunction = function with {
                     Parameters = [
-                        new Parameter(new CSStructPrimitive("ALCContext", false, CSPrimitive.IntPtr(true)), [], "context", "context", null) ,
+                        new Parameter("context", "context", contextType.ToCSString(), null, []) { StrongType = contextType, StrongLength = null } ,
                         ..function.Parameters
                         ],
                     // FIXME: Extension stuff!
                     EntryPoint = entryPoint,
-                    FunctionName = $"{NameMangler.RemoveVendorPostfix(function.FunctionName)}Direct{NameMangler.GetVendorPostfix(function.FunctionName)}",
+                    Name = $"{NameMangler.RemoveVendorPostfix(function.Name)}Direct{NameMangler.GetVendorPostfix(function.Name)}",
                 };
 
                 directContextFunctions.Add(directFunction);
@@ -282,7 +284,6 @@ namespace ALGenerator.Parsing
             extension.Requires.Add(new RequireEntry(ALAPI.AL, null, directContextFunctionNames, []));
         }
 
-        // FIXME: Maybe change name?
         private static List<NativeFunction> ParseCommands(XElement input, NameMangler nameMangler, ALFile currentFile, List<string> ignoreFunctions)
         {
             Logger.Info("Begining parsing of commands.");
@@ -290,57 +291,45 @@ namespace ALGenerator.Parsing
             List<NativeFunction> functions = new List<NativeFunction>();
             foreach (XElement? commands in input.Elements("commands"))
             {
-                foreach (XElement command in commands .Elements("command"))
+                foreach (XElement command in commands.Elements("command"))
                 {
-                    NativeFunction function = ParseCommand(command, nameMangler, currentFile);
+                    XElement? proto = command.Element("proto") ?? throw new Exception("Missing proto tag!");
 
-                    // Don't add this command to the list if we should ignore it.
-                    if (ignoreFunctions.Contains(function.EntryPoint))
+                    string? entryPoint = proto.Element("name")?.Value ?? throw new Exception("Missing name tag!");
+                    if (ignoreFunctions.Contains(entryPoint))
                     {
                         continue;
                     }
 
-                    functions.Add(function);
+                    HashSet<GroupRef> referencedEnumGroups = new HashSet<GroupRef>();
+
+                    List<Parameter>? paramList = new List<Parameter>();
+                    foreach (XElement? element in command.Elements("param"))
+                    {
+                        string paramName = element.Element("name")?.Value ?? throw new Exception("Missing parameter name!");
+                        string mangledName = NameMangler.MangleParameterName(paramName);
+
+                        BaseCSType type = ParsePType(element, currentFile, nameMangler, out GroupRef? groupRef);
+                        if (groupRef != null) referencedEnumGroups.Add(groupRef);
+
+                        string[] kind = element.Attribute("kind")?.Value?.Split(',') ?? Array.Empty<string>();
+
+                        string? length = element.Attribute("len")?.Value;
+                        Expression? paramLength = length == null ? null : ParseExpression(length);
+
+                        paramList.Add(new Parameter(paramName, mangledName, type.ToCSString(), length, kind) { StrongType = type, StrongLength = paramLength });
+                    }
+
+                    BaseCSType returnType = ParsePType(proto, currentFile, nameMangler, out GroupRef? returnGroup);
+                    if (returnGroup != null) referencedEnumGroups.Add(returnGroup);
+
+                    string functionName = nameMangler.MangleFunctionName(entryPoint);
+
+                    functions.Add(new NativeFunction(functionName, entryPoint, returnType.ToCSString(), paramList) { StrongReturnType = returnType, ReferencedEnumGroups = referencedEnumGroups.ToArray() });
                 }
             }
 
             return functions;
-        }
-
-        private static NativeFunction ParseCommand(XElement c, NameMangler nameMangler, ALFile currentFile)
-        {
-            XElement? proto = c.Element("proto");
-            if (proto == null) throw new Exception("Missing proto tag!");
-
-            string? entryPoint = proto.Element("name")?.Value;
-            if (entryPoint == null) throw new Exception("Missing name tag!");
-
-            HashSet<GroupRef> referencedEnumGroups = new HashSet<GroupRef>();
-
-            List<Parameter>? paramList = new List<Parameter>();
-            foreach (XElement? element in c.Elements("param"))
-            {
-                string paramName = element.Element("name")?.Value ?? throw new Exception("Missing parameter name!");
-                string mangledName = NameMangler.MangleParameterName(paramName);
-
-                BaseCSType type = ParsePType(element, currentFile, nameMangler, out GroupRef? groupRef);
-                if (groupRef != null) referencedEnumGroups.Add(groupRef);
-
-                string[] kind = element.Attribute("kind")?.Value?.Split(',') ?? Array.Empty<string>();
-
-                string? length = element.Attribute("len")?.Value;
-                Expression? paramLength = length == null ? null : ParseExpression(length);
-
-                // FIXME: Parse kinds in some way?
-                paramList.Add(new Parameter(type, kind, paramName, mangledName, paramLength));
-            }
-
-            BaseCSType returnType = ParsePType(proto, currentFile, nameMangler, out GroupRef? returnGroup);
-            if (returnGroup != null) referencedEnumGroups.Add(returnGroup);
-            
-            string functionName = nameMangler.MangleFunctionName(entryPoint);
-
-            return new NativeFunction(entryPoint, functionName, paramList, returnType, referencedEnumGroups.ToArray());
         }
 
         private static Expression ParseExpression(string expression)

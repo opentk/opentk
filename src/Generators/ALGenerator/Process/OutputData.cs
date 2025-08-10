@@ -25,7 +25,7 @@ namespace ALGenerator.Process
     // FIXME: Maybe change to API.. something? "namespace" is quite generic.
     internal record Namespace(
         OutputApi Name,
-        List<ALVendorFunctions> VendorFunctions,
+        List<VendorFunctions> VendorFunctions,
         List<EnumGroup> EnumGroups,
         Dictionary<NativeFunction, FunctionDocumentation> Documentation);
 
@@ -37,12 +37,12 @@ namespace ALGenerator.Process
         string Name,
         string Purpose,
         ParameterDocumentation[] Parameters,
-        string? RefPagesLink,
+        List<string> RefPagesLinks,
         List<string> AddedIn,
         List<string>? RemovedIn
         );
 
-    internal record ALVendorFunctions(
+    internal record VendorFunctions(
         string Vendor,
         List<OverloadedFunction> Functions,
         HashSet<NativeFunction> NativeFunctionsWithPostfix);
@@ -53,17 +53,9 @@ namespace ALGenerator.Process
     {
         public int CompareTo(OverloadedFunction? other)
         {
-            return NativeFunction.FunctionName.CompareTo(other?.NativeFunction.FunctionName);
+            return NativeFunction.Name.CompareTo(other?.NativeFunction.Name);
         }
     }
-
-    internal record NativeFunction(
-        string EntryPoint,
-        string FunctionName,
-        List<Parameter> Parameters,
-        BaseCSType ReturnType,
-        // FIXME: Convert referencedEnumGroups to use GroupRef!
-        GroupRef[] ReferencedEnumGroups);
 
     internal record Overload(
         Overload? NestedOverload,
@@ -74,14 +66,6 @@ namespace ALGenerator.Process
         NameTable NameTable,
         string[] GenericTypes,
         string OverloadName);
-
-    internal record Parameter(
-        BaseCSType Type,
-        // FIXME: Should we expose this exactly like it's exposed in gl.xml?
-        string[] Kinds,
-        string OriginalName,
-        string Name,
-        Expression? Length);
 
 
     internal record EnumGroupMember(

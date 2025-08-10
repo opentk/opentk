@@ -20,7 +20,7 @@ namespace GLGenerator
             st.Start();
             using (Logger.CreateLogger(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly()!.Location)!, "log.txt")))
             {
-                Specification2 glSpecification;
+                Specification glSpecification;
                 {
                     NameManglerSettings glSettings = new NameManglerSettings()
                     {
@@ -43,7 +43,7 @@ namespace GLGenerator
                     glSpecification = SpecificationParser.Parse(specificationStream, new NameMangler(glSettings), GLFile.GL, new List<string>());
                 }
 
-                Specification2 wglSpecification;
+                Specification wglSpecification;
                 {
                     NameManglerSettings wglSettings = new NameManglerSettings()
                     {
@@ -76,7 +76,7 @@ namespace GLGenerator
                     wglSpecification = SpecificationParser.Parse(wglSpecificationStream, new NameMangler(wglSettings), GLFile.WGL, new List<string>());
                 }
 
-                Specification2 glxSpecification;
+                Specification glxSpecification;
                 {
                     NameManglerSettings glxSettings = new NameManglerSettings()
                     {
@@ -105,7 +105,7 @@ namespace GLGenerator
                     glxSpecification = SpecificationParser.Parse(glxSpecificationStream, new NameMangler(glxSettings), GLFile.GLX, glxIgnoreFunctions);
                 }
 
-                Specification2 eglSpecification;
+                Specification eglSpecification;
                 {
                     NameManglerSettings eglSettings = new NameManglerSettings()
                     {
@@ -129,7 +129,7 @@ namespace GLGenerator
                     eglSpecification = SpecificationParser.Parse(eglSpecificationStream, new NameMangler(eglSettings), GLFile.EGL, eglIgnoreFunctions);
 
                     using FileStream eglANGLESpecificationStream = Reader.ReadEGLANGLESpecFromFile();
-                    Specification2 eglANGLESpecification = SpecificationParser.Parse(eglANGLESpecificationStream, new NameMangler(eglSettings), GLFile.EGL, eglIgnoreFunctions);
+                    Specification eglANGLESpecification = SpecificationParser.Parse(eglANGLESpecificationStream, new NameMangler(eglSettings), GLFile.EGL, eglIgnoreFunctions);
 
                     eglSpecification.Functions.AddRange(eglANGLESpecification.Functions);
                     eglSpecification.Enums.AddRange(eglANGLESpecification.Enums);
@@ -143,18 +143,21 @@ namespace GLGenerator
                     eglSpecification.APIs[0].Enums.AddRange(eglANGLESpecification.APIs[0].Enums);
                 }
 
+                List<NativeFunction> functions =
+                [
+                    .. glSpecification.Functions,
+                    .. wglSpecification.Functions,
+                    .. glxSpecification.Functions,
+                    .. eglSpecification.Functions,
+                ];
 
-                List<NativeFunction> functions = new List<NativeFunction>(glSpecification.Functions.Count + wglSpecification.Functions.Count + glxSpecification.Functions.Count + eglSpecification.Functions.Count);
-                functions.AddRange(glSpecification.Functions);
-                functions.AddRange(wglSpecification.Functions);
-                functions.AddRange(glxSpecification.Functions);
-                functions.AddRange(eglSpecification.Functions);
-
-                List<EnumEntry> enums = new List<EnumEntry>(glSpecification.Enums.Count + wglSpecification.Enums.Count + glxSpecification.Enums.Count + eglSpecification.Enums.Count);
-                enums.AddRange(glSpecification.Enums);
-                enums.AddRange(wglSpecification.Enums);
-                enums.AddRange(glxSpecification.Enums);
-                enums.AddRange(eglSpecification.Enums);
+                List<EnumEntry> enums =
+                [
+                    .. glSpecification.Enums,
+                    .. wglSpecification.Enums,
+                    .. glxSpecification.Enums,
+                    .. eglSpecification.Enums,
+                ];
 
                 // FIXME: This is one point where we could do some processing to move things from one namespace to another.
                 // Alternatively we can try and do this later in processing. See comment with the same date.
@@ -217,7 +220,7 @@ namespace GLGenerator
                     }
                 }
 
-                Specification2 finalSpecification = new Specification2(functions, enums, apis);
+                Specification finalSpecification = new Specification(functions, enums, apis);
 
                 // Read the documentation folders and parse it into data structures.
                 using DocumentationSource documentationSource = Reader.ReadDocumentationFromGithub();

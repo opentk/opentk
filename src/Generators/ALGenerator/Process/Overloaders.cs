@@ -243,7 +243,7 @@ namespace ALGenerator.Process
             {
                 Parameter parameter = parameters[i];
 
-                if (parameter.Type is CSPointer pointer && parameter.Kinds.Contains("Color"))
+                if (parameter.StrongType is CSPointer pointer && parameter.Kinds.Contains("Color"))
                 {
                     // We only support float colors!
                     if (pointer.BaseType is not CSPrimitive primitive || primitive.TypeName != "float")
@@ -251,12 +251,12 @@ namespace ALGenerator.Process
                         continue;
                     }
 
-                    if (parameter.Length == null)
+                    if (parameter.StrongLength == null)
                     {
                         continue;
                     }
 
-                    if (parameter.Length is ConstantExpression constant)
+                    if (parameter.StrongLength is ConstantExpression constant)
                     {
                         int colorSize = constant.Value;
                         if (colorSize > 4 || colorSize < 3)
@@ -267,7 +267,7 @@ namespace ALGenerator.Process
                         nameTable.Rename(parameter, $"{parameter.Name}_ptr");
 
                         // FIXME: ref vs ref readonly depending on Constant memeber
-                        Parameter colorParameter = parameter with { Type = new CSRef(CSRef.Type.RefReadonly, new CSStruct($"Color{colorSize}<{colorSpace}>", pointer.Constant)), Length = null };
+                        Parameter colorParameter = parameter with { StrongType = new CSRef(CSRef.Type.RefReadonly, new CSStruct($"Color{colorSize}<{colorSpace}>", pointer.Constant)), StrongLength = null };
 
                         pointerParameters.Add(parameter);
                         colorParameters.Add(colorParameter);
@@ -318,7 +318,7 @@ namespace ALGenerator.Process
                 for (int i = 0; i < ColorParamters.Count; i++)
                 {
                     Parameter colorParamter = ColorParamters[i];
-                    BaseCSType colorType = ((CSRef)colorParamter.Type).ReferencedType;
+                    BaseCSType colorType = ((CSRef)colorParamter.StrongType!).ReferencedType;
 
                     writer.WriteLine($"fixed ({colorType.ToCSString()}* tmp_{nameTable[colorParamter]} = &{nameTable[colorParamter]})");
                 }
@@ -329,7 +329,7 @@ namespace ALGenerator.Process
                     Parameter colorParamter = ColorParamters[i];
                     Parameter pointerParameter = PointerParameters[i];
 
-                    writer.WriteLine($"{pointerParameter.Type.ToCSString()} {nameTable[pointerParameter]} = ({pointerParameter.Type.ToCSString()})tmp_{nameTable[colorParamter]};");
+                    writer.WriteLine($"{pointerParameter.StrongType!.ToCSString()} {nameTable[pointerParameter]} = ({pointerParameter.StrongType!.ToCSString()})tmp_{nameTable[colorParamter]};");
                 }
             }
 
@@ -411,7 +411,7 @@ namespace ALGenerator.Process
             {
                 Parameter parameter = overload.InputParameters[i];
 
-                if (parameter.Type is CSPointer pointer && pointer.BaseType is CSPrimitive baseType)
+                if (parameter.StrongType is CSPointer pointer && pointer.BaseType is CSPrimitive baseType)
                 {
                     // FIXME: Maybe we don't overload the uint vectors??
                     string? typePostfix = pointer.BaseType switch
@@ -427,12 +427,12 @@ namespace ALGenerator.Process
                     string? mathKind = parameter.Kinds.GetMatching(_mathKinds);
                     if (mathKind != null)
                     {
-                        if (parameter.Length is ConstantExpression constant)
+                        if (parameter.StrongLength is ConstantExpression constant)
                         {
                             // Verify length with kind
                             Debug.Assert(_kindSize[mathKind] == constant.Value);
                         }
-                        else if (parameter.Length is BinaryOperationExpression binaryOperation)
+                        else if (parameter.StrongLength is BinaryOperationExpression binaryOperation)
                         {
                             if (binaryOperation.TryDecomposeIntoParameterRefAndConstant(out ConstantExpression? @const, out ParameterReferenceExpression? parameterReference))
                             {
@@ -460,9 +460,9 @@ namespace ALGenerator.Process
 
                         CSStruct mathType = new CSStruct(name, baseType.Constant);
 
-                        Parameter refParamter = parameter with { Type = new CSRef(baseType.Constant ? CSRef.Type.RefReadonly : CSRef.Type.Ref, mathType), Length = null };
-                        Parameter spanParamter = parameter with { Type = new CSSpan(mathType, baseType.Constant), Length = null };
-                        Parameter arrayParamter = parameter with { Type = new CSArray(mathType), Length = null };
+                        Parameter refParamter = parameter with { StrongType = new CSRef(baseType.Constant ? CSRef.Type.RefReadonly : CSRef.Type.Ref, mathType), StrongLength = null };
+                        Parameter spanParamter = parameter with { StrongType = new CSSpan(mathType, baseType.Constant), StrongLength = null };
+                        Parameter arrayParamter = parameter with { StrongType = new CSArray(mathType), StrongLength = null };
 
                         refParameters.Add(refParamter);
                         spanParameters.Add(spanParamter);
@@ -503,9 +503,9 @@ namespace ALGenerator.Process
 
                             CSStruct mathType = new CSStruct(typeName, baseType.Constant);
 
-                            Parameter refParamter = parameter with { Type = new CSRef(baseType.Constant ? CSRef.Type.RefReadonly : CSRef.Type.Ref, mathType), Length = null };
-                            Parameter spanParamter = parameter with { Type = new CSSpan(mathType, baseType.Constant), Length = null };
-                            Parameter arrayParamter = parameter with { Type = new CSArray(mathType), Length = null };
+                            Parameter refParamter = parameter with { StrongType = new CSRef(baseType.Constant ? CSRef.Type.RefReadonly : CSRef.Type.Ref, mathType), StrongLength = null };
+                            Parameter spanParamter = parameter with { StrongType = new CSSpan(mathType, baseType.Constant), StrongLength = null };
+                            Parameter arrayParamter = parameter with { StrongType = new CSArray(mathType), StrongLength = null };
 
                             refParameters.Add(refParamter);
                             spanParameters.Add(spanParamter);
@@ -598,12 +598,12 @@ namespace ALGenerator.Process
                 {
                     Parameter parameter = overload.InputParameters[i];
 
-                    if (parameter.Type is IBaseTypeCSType pointerType &&
+                    if (parameter.StrongType is IBaseTypeCSType pointerType &&
                         pointerType.BaseType is CSStruct mathType &&
                         _toSystemNumerics.TryGetValue(mathType.TypeName, out string? numericsTypeName))
                     {
                         // Create new object with the same mathType as pointerType
-                        Parameter numericsParam = parameter with { Type = pointerType.CreateWithNewType(new CSStruct(numericsTypeName, mathType.Constant)) };
+                        Parameter numericsParam = parameter with { StrongType = pointerType.CreateWithNewType(new CSStruct(numericsTypeName, mathType.Constant)) };
 
                         parameters[i] = numericsParam;
 
@@ -637,8 +637,8 @@ namespace ALGenerator.Process
                 {
                     Parameter ptrParam = PointerParams[i];
                     Parameter vectorParam = VectorParams[i];
-                    BaseCSType vectorType = ((IBaseTypeCSType)vectorParam.Type).BaseType;
-                    bool takeAddress = ((IBaseTypeCSType)vectorParam.Type).TakeAddressInFixedStatement;
+                    BaseCSType vectorType = ((IBaseTypeCSType)vectorParam.StrongType!).BaseType;
+                    bool takeAddress = ((IBaseTypeCSType)vectorParam.StrongType!).TakeAddressInFixedStatement;
 
                     writer.WriteLine($"fixed ({vectorType.ToCSString()}* tmp_{nameTable[vectorParam]} = {(takeAddress ? "&" : "")}{nameTable[vectorParam]})");
                 }
@@ -649,7 +649,7 @@ namespace ALGenerator.Process
                     Parameter pointerParameter = PointerParams[i];
                     Parameter colorParamter = VectorParams[i];
 
-                    writer.WriteLine($"{pointerParameter.Type.ToCSString()} {nameTable[pointerParameter]} = ({pointerParameter.Type.ToCSString()})tmp_{nameTable[colorParamter]};");
+                    writer.WriteLine($"{pointerParameter.StrongType!.ToCSString()} {nameTable[pointerParameter]} = ({pointerParameter.StrongType!.ToCSString()})tmp_{nameTable[colorParamter]};");
                 }
             }
 
@@ -674,14 +674,14 @@ namespace ALGenerator.Process
                 Parameter parameter = overload.InputParameters[i];
                 parameters[i] = parameter;
 
-                if (parameter.Type is CSOpaqueFunctionPointer fpt)
+                if (parameter.StrongType is CSOpaqueFunctionPointer fpt)
                 {
                     // Rename the parameter
                     nameTable.Rename(parameter, $"{parameter.Name}_ptr");
 
                     original.Add(parameters[i]);
 
-                    parameters[i] = parameters[i] with { Type = new CSDelegateType(fpt.TypeName) };
+                    parameters[i] = parameters[i] with { StrongType = new CSDelegateType(fpt.TypeName) };
 
                     changed.Add(parameters[i]);
                 }
@@ -718,7 +718,7 @@ namespace ALGenerator.Process
             {
                 for (int i = 0; i < DelegateParameters.Count; i++)
                 {
-                    string type = PointerParameters[i].Type.ToCSString();
+                    string type = PointerParameters[i].StrongType!.ToCSString();
                     writer.WriteLine($"{type} {nameTable[PointerParameters[i]]} = Marshal.GetFunctionPointerForDelegate({nameTable[DelegateParameters[i]]});");
                 }
             }
@@ -781,7 +781,7 @@ namespace ALGenerator.Process
             int parameterIndex = Array.FindIndex(overload.InputParameters, p => p.Name == parameterName);
             if (parameterIndex == -1)
             {
-                Logger.Warning($"{overload.NativeFunction.FunctionName} does not have a parameter with the name {parameterName}");
+                Logger.Warning($"{overload.NativeFunction.Name} does not have a parameter with the name {parameterName}");
                 newOverloads = null;
                 return false;
             }
@@ -790,9 +790,9 @@ namespace ALGenerator.Process
             Parameter pointerParameter = overload.InputParameters[parameterIndex];
             Parameter offsetParameter = pointerParameter with
             {
-                Type = CSPrimitive.Nint(false),
+                StrongType = CSPrimitive.Nint(false),
                 Name = "offset",
-                Length = null
+                StrongLength = null
             };
             Parameter[] newParameters = overload.InputParameters.ToArray();
             newParameters[parameterIndex] = offsetParameter;
@@ -816,7 +816,7 @@ namespace ALGenerator.Process
             public void WritePrologue(IndentedTextWriter writer, NameTable nameTable)
             {
                 writer.WriteLine(
-                    $"{PointerParameter.Type.ToCSString()} {nameTable[PointerParameter]} = ({PointerParameter.Type.ToCSString()}){nameTable[OffsetParameter]};");
+                    $"{PointerParameter.StrongType!.ToCSString()} {nameTable[PointerParameter]} = ({PointerParameter.StrongType!.ToCSString()}){nameTable[OffsetParameter]};");
             }
 
             public string? WriteEpilogue(IndentedTextWriter writer, NameTable nameTable, string? returnName)
@@ -838,14 +838,14 @@ namespace ALGenerator.Process
             for (int i = 0; i < parameters.Length; i++)
             {
                 Parameter parameter = parameters[i];
-                if (parameter.Type is not CSPointer pointerType ||
+                if (parameter.StrongType is not CSPointer pointerType ||
                     pointerType.BaseType is not CSVoid)
                 {
                     continue;
                 }
 
                 nameTable.Rename(parameter, parameter.Name + "_vptr");
-                parameters[i] = parameter with { Type = CSPrimitive.IntPtr(false), Length = null };
+                parameters[i] = parameter with { StrongType = CSPrimitive.IntPtr(false), StrongLength = null };
                 parameterNames.Add((parameter, parameters[i]));
             }
 
@@ -913,7 +913,7 @@ namespace ALGenerator.Process
 
         public bool TryGenerateOverloads(Overload overload, [NotNullWhen(true)] out List<Overload>? newOverloads)
         {
-            var nativeName = overload.NativeFunction.FunctionName;
+            var nativeName = overload.NativeFunction.Name;
             if (!nativeName.StartsWith("Create") && !nativeName.StartsWith("Gen") && !nativeName.StartsWith("Delete") ||
                 !nativeName.EndsWith("s"))
             {
@@ -924,13 +924,13 @@ namespace ALGenerator.Process
             // Here we assume that the last parameter is the pointer parameter.
             var pointerParameter = overload.InputParameters.LastOrDefault();
 
-            if (pointerParameter == null || pointerParameter.Type is not CSPointer pointerParameterType)
+            if (pointerParameter == null || pointerParameter.StrongType is not CSPointer pointerParameterType)
             {
                 newOverloads = default;
                 return false;
             }
 
-            if (pointerParameter.Length == null || pointerParameter.Length is not ParameterReferenceExpression handleLength)
+            if (pointerParameter.StrongLength == null || pointerParameter.StrongLength is not ParameterReferenceExpression handleLength)
             {
                 newOverloads = default;
                 return false;
@@ -1000,8 +1000,8 @@ namespace ALGenerator.Process
                     // This works for Queries/Query because the parameter names in these functions is "ids
                     // - 2022-06-27
                     Name = newPointerParameterName,
-                    Type = pointerParameterType.BaseType,
-                    Length = null
+                    StrongType = pointerParameterType.BaseType,
+                    StrongLength = null
                 };
                 layer = new DeleteOverloadLayer(overload.InputParameters[lengthParameterIndex], parameters[^1], pointerParameter);
             }
@@ -1013,8 +1013,8 @@ namespace ALGenerator.Process
                     // This works for Queries/Query because the parameter names in these functions is "ids
                     // - 2022-06-27
                     Name = newPointerParameterName,
-                    Type = new CSRef(CSRef.Type.Out, pointerParameterType.BaseType),
-                    Length = null
+                    StrongType = new CSRef(CSRef.Type.Out, pointerParameterType.BaseType),
+                    StrongLength = null
                 };
                 layer = new GenAndCreateOverloadLayer(overload.InputParameters[lengthParameterIndex], parameters[^1], pointerParameter);
             }
@@ -1038,8 +1038,8 @@ namespace ALGenerator.Process
         {
             public void WritePrologue(IndentedTextWriter writer, NameTable nameTable)
             {
-                writer.WriteLine($"{LengthParameter.Type.ToCSString()} {nameTable[LengthParameter]} = 1;");
-                writer.WriteLine($"{PointerParameter.Type.ToCSString()} {nameTable[PointerParameter]} = &{nameTable[InParameter]};");
+                writer.WriteLine($"{LengthParameter.StrongType!.ToCSString()} {nameTable[LengthParameter]} = 1;");
+                writer.WriteLine($"{PointerParameter.StrongType!.ToCSString()} {nameTable[PointerParameter]} = &{nameTable[InParameter]};");
             }
 
             public string? WriteEpilogue(IndentedTextWriter writer, NameTable nameTable, string? returnName)
@@ -1055,16 +1055,16 @@ namespace ALGenerator.Process
             private CsScope? _csScope = null;
             public void WritePrologue(IndentedTextWriter writer, NameTable nameTable)
             {
-                writer.WriteLine($"{LengthParameter.Type.ToCSString()} {nameTable[LengthParameter]} = 1;");
+                writer.WriteLine($"{LengthParameter.StrongType!.ToCSString()} {nameTable[LengthParameter]} = 1;");
                 writer.WriteLine($"Unsafe.SkipInit(out {nameTable[OutParameter]});");
                 if (nameTable.IsFixed(OutParameter))
                 {
-                    writer.WriteLine($"{PointerParameter.Type.ToCSString()} {nameTable[PointerParameter]} = &{nameTable[OutParameter]};");
+                    writer.WriteLine($"{PointerParameter.StrongType!.ToCSString()} {nameTable[PointerParameter]} = &{nameTable[OutParameter]};");
                     _csScope = null;
                 }
                 else
                 {
-                    writer.WriteLine($"fixed({PointerParameter.Type.ToCSString()} {nameTable[PointerParameter]} = &{nameTable[OutParameter]})");
+                    writer.WriteLine($"fixed({PointerParameter.StrongType!.ToCSString()} {nameTable[PointerParameter]} = &{nameTable[OutParameter]})");
                     _csScope = writer.CsScope();
                 }
             }
@@ -1092,7 +1092,7 @@ namespace ALGenerator.Process
                 // There are a few functions that are supposed to take string arguments but are defined as
                 // GLubyte* or unsigned byte*. The ones marked with kind="String" we overload so that they get the correct signature.
                 // - Noggin_bops 2024-09-23
-                if (param.Kinds.Contains("String") && param.Type is CSPointer spt && spt.BaseType is CSPrimitive sbt && sbt.TypeName == "byte")
+                if (param.Kinds.Contains("String") && param.StrongType is CSPointer spt && spt.BaseType is CSPrimitive sbt && sbt.TypeName == "byte")
                 {
                     var pointerParam = newParams[i];
                     var nameTable = newOverload.NameTable.New();
@@ -1101,7 +1101,7 @@ namespace ALGenerator.Process
                     StringLayer.StringType stringType = StringLayer.StringType.Char8;
 
                     // FIXME: Can we know if the string is nullable or not?
-                    newParams[i] = newParams[i] with { Type = new CSString(Nullable: false), Length = null };
+                    newParams[i] = newParams[i] with { StrongType = new CSString(Nullable: false), StrongLength = null };
                     var stringParams = newParams.ToArray();
                     var stringLayer = new StringLayer(pointerParam, newParams[i], stringType);
 
@@ -1113,7 +1113,7 @@ namespace ALGenerator.Process
                         NameTable = nameTable
                     };
                 }
-                else if (param.Type is CSPointer pt && pt.BaseType is ICSCharType bt)
+                else if (param.StrongType is CSPointer pt && pt.BaseType is ICSCharType bt)
                 {
                     var pointerParam = newParams[i];
                     var nameTable = newOverload.NameTable.New();
@@ -1129,7 +1129,7 @@ namespace ALGenerator.Process
                         };
 
                         // FIXME: Can we know if the string is nullable or not?
-                        newParams[i] = newParams[i] with { Type = new CSString(Nullable: false), Length = null };
+                        newParams[i] = newParams[i] with { StrongType = new CSString(Nullable: false), StrongLength = null };
                         var stringParams = newParams.ToArray();
                         var stringLayer = new StringLayer(pointerParam, newParams[i], stringType);
 
@@ -1145,9 +1145,9 @@ namespace ALGenerator.Process
                     {
                         int stringParamIndex = i;
                         Parameter? lenParam = null;
-                        if (param.Length != null)
+                        if (param.StrongLength != null)
                         {
-                            string? paramName = Expression.InvertExpressionAndGetReferencedName(param.Length, out var expr);
+                            string? paramName = Expression.InvertExpressionAndGetReferencedName(param.StrongLength, out var expr);
                             if (paramName == null)
                             {
                                 Logger.Info($"{overload.NativeFunction.EntryPoint} has a COMPSIZE string length for parameter '{param.Name}'!");
@@ -1167,8 +1167,8 @@ namespace ALGenerator.Process
                         // FIXME: Can we know if the string is nullable or not?
                         var stringParam = newParams[stringParamIndex] with
                         {
-                            Type = new CSRef(CSRef.Type.Out, new CSString(Nullable: false)),
-                            Length = null
+                            StrongType = new CSRef(CSRef.Type.Out, new CSString(Nullable: false)),
+                            StrongLength = null
                         };
                         newParams[stringParamIndex] = stringParam;
 
@@ -1245,7 +1245,7 @@ namespace ALGenerator.Process
         {
             public void WritePrologue(IndentedTextWriter writer, NameTable nameTable)
             {
-                if (StringLengthParameter.Type is CSPrimitive primitive)
+                if (StringLengthParameter.StrongType is CSPrimitive primitive)
                 {
                     // If the parameter is unsigned we need to cast it for AllocCoTaskMem
                     if (primitive.TypeName == "int")
@@ -1262,7 +1262,7 @@ namespace ALGenerator.Process
                         throw new Exception($"Unsupported primitive type for length parameter ({primitive.ToCSString()})!");
                     }
                 }
-                else if (StringLengthParameter.Type is CSPointer pointer && pointer.BaseType is CSPrimitive basePrimitive)
+                else if (StringLengthParameter.StrongType is CSPointer pointer && pointer.BaseType is CSPrimitive basePrimitive)
                 {
                     if (basePrimitive.TypeName == "int")
                     {
@@ -1277,7 +1277,7 @@ namespace ALGenerator.Process
                 }
                 else
                 {
-                    throw new Exception($"Unsupported type for length parameter ({StringLengthParameter.Type.ToCSString()})");
+                    throw new Exception($"Unsupported type for length parameter ({StringLengthParameter.StrongType!.ToCSString()})");
                 }
             }
 
@@ -1299,7 +1299,7 @@ namespace ALGenerator.Process
             {
                 var param = overload.InputParameters[i];
 
-                if (param.Type is CSPointer pointer && pointer.BaseType is CSPointer pointer2 && pointer2.BaseType is ICSCharType bt)
+                if (param.StrongType is CSPointer pointer && pointer.BaseType is CSPointer pointer2 && pointer2.BaseType is ICSCharType bt)
                 {
                     Debug.Assert(stringArrayParameterIndex == -1, "We only expect one string array argument per function.");
                     Debug.Assert(bt is CSChar8);
@@ -1315,9 +1315,9 @@ namespace ALGenerator.Process
 
                 var arrayParam = newParams[stringArrayParameterIndex];
                 nameTable.Rename(arrayParam, $"{arrayParam.Name}_ptr");
-                newParams[stringArrayParameterIndex] = arrayParam with { Type = new CSArray(new CSString(false)) };
+                newParams[stringArrayParameterIndex] = arrayParam with { StrongType = new CSArray(new CSString(false)) };
 
-                StringArrayLayer.StringType stringType = ((arrayParam.Type as CSPointer)!.BaseType as CSPointer)!.BaseType switch
+                StringArrayLayer.StringType stringType = ((arrayParam.StrongType as CSPointer)!.BaseType as CSPointer)!.BaseType switch
                 {
                     CSChar8 => StringArrayLayer.StringType.Char8,
                     CSChar16 => StringArrayLayer.StringType.Char16,
@@ -1325,7 +1325,7 @@ namespace ALGenerator.Process
                 };
 
                 // FIXME: Can we know if the string is nullable or not?
-                newParams[stringArrayParameterIndex] = newParams[stringArrayParameterIndex] with { Type = new CSArray(new CSString(Nullable: false)) };
+                newParams[stringArrayParameterIndex] = newParams[stringArrayParameterIndex] with { StrongType = new CSArray(new CSString(Nullable: false)) };
                 var stringParams = newParams.ToArray();
                 var stringArrayLayer = new StringArrayLayer(arrayParam, newParams[stringArrayParameterIndex], stringType);
 
@@ -1398,7 +1398,7 @@ namespace ALGenerator.Process
             {
                 Parameter param = overload.InputParameters[i];
 
-                if (param.Type is CSPointer pointer)
+                if (param.StrongType is CSPointer pointer)
                 {
                     if (pointer.BaseType is CSChar8)
                     {
@@ -1415,7 +1415,7 @@ namespace ALGenerator.Process
                         // If the parameter has length 1 there is no point in having an array overload.
                         // We leave it to be ref overloaded instead.
                         // - Noggin_bops 2024-03-16
-                        if (param.Length is ConstantExpression constant && constant.Value == 1)
+                        if (param.StrongLength is ConstantExpression constant && constant.Value == 1)
                         {
                             continue;
                         }
@@ -1444,8 +1444,8 @@ namespace ALGenerator.Process
                         spanNameTable.Rename(param, $"{param.Name}_ptr");
                         arrayNameTable.Rename(param, $"{param.Name}_ptr");
 
-                        newArrayParams[i] = newArrayParams[i] with { Type = new CSArray(baseType) };
-                        newSpanParams[i] = newSpanParams[i] with { Type = new CSSpan(baseType, isBaseTypeConstant) };
+                        newArrayParams[i] = newArrayParams[i] with { StrongType = new CSArray(baseType) };
+                        newSpanParams[i] = newSpanParams[i] with { StrongType = new CSSpan(baseType, isBaseTypeConstant) };
 
                         var arrayLayer = new SpanOrArrayLayer(param, newArrayParams[i]);
                         var spanLayer = new SpanOrArrayLayer(param, newSpanParams[i]);
@@ -1495,7 +1495,7 @@ namespace ALGenerator.Process
 
             public void WritePrologue(IndentedTextWriter writer, NameTable nameTable)
             {
-                writer.WriteLine($"fixed ({PointerParameter.Type.ToCSString()} {nameTable[PointerParameter]} = {nameTable[SpanOrArrayParameter]})");
+                writer.WriteLine($"fixed ({PointerParameter.StrongType!.ToCSString()} {nameTable[PointerParameter]} = {nameTable[SpanOrArrayParameter]})");
                 _csScope = writer.CsScope();
             }
 
@@ -1521,7 +1521,7 @@ namespace ALGenerator.Process
                 Parameter parameter = overload.InputParameters[i];
                 parameters[i] = parameter;
 
-                if (parameter.Type is CSPointer pt)
+                if (parameter.StrongType is CSPointer pt)
                 {
                     bool constant = pt.Constant;
                     BaseCSType baseType;
@@ -1568,14 +1568,14 @@ namespace ALGenerator.Process
                     }
 
                     bool outParamSuitable;
-                    if (parameter.Length != null)
+                    if (parameter.StrongLength != null)
                     {
-                        if (parameter.Length is ConstantExpression c && c.Value == 1)
+                        if (parameter.StrongLength is ConstantExpression c && c.Value == 1)
                         {
                             // The length is 1, in/out overload is suitable.
                             outParamSuitable = true;
                         }
-                        else if (parameter.Length is CompSizeExpression && overload.NativeFunction.EntryPoint.StartsWith("glGet"))
+                        else if (parameter.StrongLength is CompSizeExpression && overload.NativeFunction.EntryPoint.StartsWith("glGet"))
                         {
                             // We assume that all glGet* functions with CompSize arguments are fine to mark as out
                             outParamSuitable = true;
@@ -1633,7 +1633,7 @@ namespace ALGenerator.Process
 
                     original.Add(parameters[i]);
 
-                    parameters[i] = parameters[i] with { Type = new CSRef(refType, baseType) };
+                    parameters[i] = parameters[i] with { StrongType = new CSRef(refType, baseType) };
 
                     changed.Add(parameters[i]);
                 }
@@ -1672,7 +1672,7 @@ namespace ALGenerator.Process
                 {
                     if (nameTable.IsFixed(RefParameters[i]))
                     {
-                        string type = PointerParameters[i].Type.ToCSString();
+                        string type = PointerParameters[i].StrongType!.ToCSString();
                         writer.WriteLine($"{type} {nameTable[PointerParameters[i]]} = &{nameTable[RefParameters[i]]};");
                     }
                 }
@@ -1682,7 +1682,7 @@ namespace ALGenerator.Process
                 {
                     if (nameTable.IsFixed(RefParameters[i]) == false)
                     {
-                        string type = PointerParameters[i].Type.ToCSString();
+                        string type = PointerParameters[i].StrongType!.ToCSString();
                         writer.WriteLine($"fixed ({type} {nameTable[PointerParameters[i]]} = &{nameTable[RefParameters[i]]})");
                     }
                 }
@@ -1709,7 +1709,7 @@ namespace ALGenerator.Process
                 return false;
             }
 
-            if (oldParameters[^1].Type is CSRef pRef && pRef.RefType == CSRef.Type.Out)
+            if (oldParameters[^1].StrongType is CSRef pRef && pRef.RefType == CSRef.Type.Out)
             {
                 Parameter[] newParameters = new Parameter[oldParameters.Length - 1];
                 Array.Copy(oldParameters, newParameters, newParameters.Length);

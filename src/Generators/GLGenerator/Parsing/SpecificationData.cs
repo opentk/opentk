@@ -1,9 +1,11 @@
-﻿using GLGenerator.Process;
+﻿using GeneratorBase;
+using GLGenerator.Process;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Dynamic;
 using System.IO.Compression;
+using System.Linq;
 
 namespace GLGenerator.Parsing
 {
@@ -30,14 +32,29 @@ namespace GLGenerator.Parsing
         EGL = 1 << 6,
     }
 
-    internal record GLFileData(
-        GLFile File,
-        List<NativeFunction> Functions,
-        List<EnumEntry> Enums,
-        List<API> APIs);
+    internal record NativeFunction(string Name, string EntryPoint, string ReturnType, List<Parameter> Parameters) : IFunction
+    {
+        List<IFunctionParameter> IFunction.Parameters => Parameters.Cast<IFunctionParameter>().ToList();
 
-    internal record Specification2(
-        //List<Command> Commands,
+        public BaseCSType? StrongReturnType { get; set; }
+        public VersionInfo? VersionInfo { get; set; }
+
+        // FIXME: Migrate to marking the references directly on the enums.
+        public GroupRef[] ReferencedEnumGroups { get; set; }
+    }
+
+    internal record Parameter(string OriginalName, string Name, string Type, string? Length, string[] Kinds) : IFunctionParameter
+    {
+        public BaseCSType? StrongType { get; set; }
+        public Expression? StrongLength { get; set; }
+    }
+
+    internal record EnumMember2();
+
+
+
+
+    internal record Specification(
         List<NativeFunction> Functions,
         List<EnumEntry> Enums,
         List<API> APIs);
@@ -74,29 +91,6 @@ namespace GLGenerator.Parsing
         string Vendor);
         //List<string> EntryPoints,
         //List<string> EnumValues);
-
-
-    /*internal record Specification(
-        List<Command> Commands,
-        List<Enums> Enums,
-        List<Feature> Features,
-        List<Extension> Extensions);*/
-
-
-    /*internal record Command(
-        string EntryPoint,
-        PType ReturnType,
-        GLParameter[] Parameters);*/
-
-    // FIXME: Maybe flatten the list of enums?
-    /*internal record Enums(
-        string Namespace,
-        GroupRef[] Groups,
-        EnumType Type,
-        string? Vendor,
-        Range? Range,
-        string? Comment,
-        List<EnumEntry> Entries);*/
 
     internal record EnumEntry(
         string Name,
@@ -138,11 +132,6 @@ namespace GLGenerator.Parsing
         List<string> Commands,
         List<string> Enums);
 
-
-    internal record PType(
-        GLType Type,
-        HandleType? Handle,
-        GroupRef? Group);
 
     internal enum GLFile
     {

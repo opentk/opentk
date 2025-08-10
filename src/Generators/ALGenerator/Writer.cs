@@ -123,7 +123,7 @@ namespace ALGenerator
                 // Dotnet gurantees you can't get torn values when assigning functionpointers, assuming proper allignment which is default.
                 writer.WriteLine($"_{entryPoint}_fnptr = (delegate* unmanaged<{delegateTypes}>){strings.LoaderBindingsContext}.{strings.LoadFunction}(\"{function.EntryPoint}\");");
 
-                if (function.ReturnType is not CSVoid)
+                if (function.StrongReturnType is not CSVoid)
                 {
                     writer.WriteLine($"return _{entryPoint}_fnptr({paramNames});");
                 }
@@ -139,7 +139,7 @@ namespace ALGenerator
         private static void GetNativeFunctionSignature(NativeFunction function, bool postfixName, bool swapTypesForUnderlyingType,
             out string name, out StringBuilder paramNames, out StringBuilder delegateTypes, out StringBuilder signature, out bool castReturnType, out string returnType)
         {
-            name = function.FunctionName;
+            name = function.Name;
             if (postfixName) name += "_";
 
             paramNames = new StringBuilder();
@@ -148,9 +148,9 @@ namespace ALGenerator
             for (int i = 0; i < function.Parameters.Count; i++)
             {
                 var param = function.Parameters[i];
-                string type = swapTypesForUnderlyingType ? SwapUnderlyingTypeForPrimitive(param.Type) : param.Type.ToCSString();
+                string type = swapTypesForUnderlyingType ? SwapUnderlyingTypeForPrimitive(param.StrongType!) : param.StrongType!.ToCSString();
 
-                string primitiveType = SwapUnderlyingTypeForPrimitive(param.Type);
+                string primitiveType = SwapUnderlyingTypeForPrimitive(param.StrongType!);
                 
                 if (type != primitiveType)
                 {
@@ -158,7 +158,7 @@ namespace ALGenerator
                 }
 
                 // HACK: FIXME: You can't cast a bool to byte, sigh..
-                if (swapTypesForUnderlyingType == false && param.Type is CSBool8)
+                if (swapTypesForUnderlyingType == false && param.StrongType is CSBool8)
                 {
                     paramNames.Append($"({param.Name} ? 1 : 0)");
                 }
@@ -180,8 +180,8 @@ namespace ALGenerator
                 delegateTypes.Append(", ");
             }
 
-            returnType = swapTypesForUnderlyingType ? SwapUnderlyingTypeForPrimitive(function.ReturnType) : function.ReturnType.ToCSString();
-            string primitiveReturnType = SwapUnderlyingTypeForPrimitive(function.ReturnType);
+            returnType = swapTypesForUnderlyingType ? SwapUnderlyingTypeForPrimitive(function.StrongReturnType!) : function.StrongReturnType!.ToCSString();
+            string primitiveReturnType = SwapUnderlyingTypeForPrimitive(function.StrongReturnType!);
             if (returnType != primitiveReturnType)
             {
                 castReturnType = true;
@@ -219,7 +219,7 @@ namespace ALGenerator
         private static void WriteNativeFunctions(
             string directoryPath,
             FileStrings strings,
-            List<ALVendorFunctions> groups,
+            List<VendorFunctions> groups,
             Dictionary<NativeFunction, FunctionDocumentation> documentation)
         {
             using StreamWriter stream = File.CreateText(Path.Combine(directoryPath, $"{strings.FileNamePrefix}.Native.cs"));
@@ -285,14 +285,14 @@ namespace ALGenerator
                 // These casts need to be added manually for this to work correctly.
                 // - 2021-06-22
 
-                if (function.ReturnType is CSBool8)
+                if (function.StrongReturnType is CSBool8)
                 {
                     // HACK: We can't cast byte to bool, sigh...
-                    writer.WriteLine($"public static {function.ReturnType.ToCSString()} {name}({signature}) => {apiName}Pointers._{entryPoint}_fnptr({paramNames}) != 0;");
+                    writer.WriteLine($"public static {function.StrongReturnType!.ToCSString()} {name}({signature}) => {apiName}Pointers._{entryPoint}_fnptr({paramNames}) != 0;");
                 }
                 else
                 {
-                    writer.WriteLine($"public static {function.ReturnType.ToCSString()} {name}({signature}) => ({function.ReturnType.ToCSString()}) {apiName}Pointers._{entryPoint}_fnptr({paramNames});");
+                    writer.WriteLine($"public static {function.StrongReturnType!.ToCSString()} {name}({signature}) => ({function.StrongReturnType!.ToCSString()}) {apiName}Pointers._{entryPoint}_fnptr({paramNames});");
                 }
             }
             else
@@ -306,7 +306,7 @@ namespace ALGenerator
         private static void WriteOverloads(
             string directoryPath,
             FileStrings strings,
-            List<ALVendorFunctions> groups)
+            List<VendorFunctions> groups)
         {
             using StreamWriter stream = File.CreateText(Path.Combine(directoryPath, $"{strings.FileNamePrefix}.Overloads.cs"));
             using IndentedTextWriter writer = new IndentedTextWriter(stream);
@@ -352,7 +352,7 @@ namespace ALGenerator
 
         private static void WriteOverloadMethod(IndentedTextWriter writer, Overload overload, bool postfixNativeCall)
         {
-            string parameterTypes = string.Join(", ", overload.NativeFunction.Parameters.Select(p => p.Type.ToCSString()));
+            string parameterTypes = string.Join(", ", overload.NativeFunction.Parameters.Select(p => p.StrongType!.ToCSString()));
             // Because this will be used in the <inheritdoc> comment we replace
             // generic <T> angle brackets with braces to conform with the xml format.
             // - Noggin_bops 2025-08-07
@@ -362,7 +362,7 @@ namespace ALGenerator
             // - Noggin_bops 2025-08-076
             parameterTypes = parameterTypes.Replace("<", "{").Replace(">", "}");
 
-            string nativeFunctionName = overload.NativeFunction.FunctionName;
+            string nativeFunctionName = overload.NativeFunction.Name;
             if (postfixNativeCall)
             {
                 nativeFunctionName += "_";
@@ -370,7 +370,7 @@ namespace ALGenerator
 
             writer.WriteLine($"/// <inheritdoc cref=\"{nativeFunctionName}({parameterTypes})\"/>");
 
-            string parameterString = string.Join(", ", overload.InputParameters.Select(p => $"{p.Type.ToCSString()} {p.Name}"));
+            string parameterString = string.Join(", ", overload.InputParameters.Select(p => $"{p.StrongType.ToCSString()} {p.Name}"));
 
             string genericTypes = overload.GenericTypes.Length <= 0 ? "" : $"<{string.Join(", ", overload.GenericTypes)}>";
             writer.WriteLine($"public static unsafe {overload.ReturnType.ToCSString()} {overload.OverloadName}{genericTypes}({parameterString})");
@@ -420,12 +420,12 @@ namespace ALGenerator
             {
                 // Writes the native call.
                 NativeFunction nativeFunction = overload.NativeFunction;
-                string name = nativeFunction.FunctionName;
+                string name = nativeFunction.Name;
                 if (postfixNativeCall) name += "_";
 
                 string arguments = string.Join(", ", nativeFunction.Parameters.Select(p => nameTable[p]));
 
-                if (nativeFunction.ReturnType is CSVoid)
+                if (nativeFunction.StrongReturnType is CSVoid)
                 {
                     writer.WriteLine($"{name}({arguments});");
                     return null;
@@ -462,9 +462,9 @@ namespace ALGenerator
                 writer.WriteLine($"/// <param name=\"{parameter.Name}\">{parameterDoc.Description}</param>");
             }
 
-            if (documentation.RefPagesLink != null)
+            if (documentation.RefPagesLinks.Count > 0)
             {
-                writer.WriteLine($"/// <remarks><see href=\"{documentation.RefPagesLink}\" /></remarks>");
+                writer.WriteLine($"/// <remarks>{string.Join("<br/>", documentation.RefPagesLinks.Select(url => $"<see href=\"{url}\"/>"))}</remarks>");
             }
         }
 
@@ -498,11 +498,11 @@ namespace ALGenerator
                 {
                     if (group.FunctionsUsingEnumGroup.Count > 3)
                     {
-                        writer.WriteLine($"///<summary>Used in {string.Join(", ", group.FunctionsUsingEnumGroup.Take(3).Select(f => $"<see cref=\"{apiName}.{(f.Vendor != "" ? $"{f.Vendor}." : "")}{f.Function.FunctionName}\" />"))}, ...</summary>");
+                        writer.WriteLine($"///<summary>Used in {string.Join(", ", group.FunctionsUsingEnumGroup.Take(3).Select(f => $"<see cref=\"{apiName}.{(f.Vendor != "" ? $"{f.Vendor}." : "")}{f.Function.Name}\" />"))}, ...</summary>");
                     }
                     else
                     {
-                        writer.WriteLine($"///<summary>Used in {string.Join(", ", group.FunctionsUsingEnumGroup.Select(f => $"<see cref=\"{apiName}.{(f.Vendor != "" ? $"{f.Vendor}." : "")}{f.Function.FunctionName}\" />"))}</summary>");
+                        writer.WriteLine($"///<summary>Used in {string.Join(", ", group.FunctionsUsingEnumGroup.Select(f => $"<see cref=\"{apiName}.{(f.Vendor != "" ? $"{f.Vendor}." : "")}{f.Function.Name}\" />"))}</summary>");
                     }
                 }
 
