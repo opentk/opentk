@@ -44,16 +44,18 @@ namespace GLGenerator.Parsing
 
     internal record FunctionReference(
         string EntryPoint,
-        Version? AddedIn,
+        VersionInfo VersionInfo,
+        /*Version? AddedIn,
         Version? RemovedIn,
-        List<ExtensionReference> PartOfExtensions,
+        List<ExtensionReference> PartOfExtensions,*/
         GLProfile Profile);
 
     internal record EnumReference(
         string EnumName,
-        Version? AddedIn,
+        VersionInfo VersionInfo,
+        /*Version? AddedIn,
         Version? RemovedIn,
-        List<ExtensionReference> PartOfExtensions,
+        List<ExtensionReference> PartOfExtensions,*/
         // FIXME! there can be multiple profiles??
         GLProfile Profile,
         // Is this enum reference copied from another namespace.
@@ -63,8 +65,6 @@ namespace GLGenerator.Parsing
         Version Name,
         List<string> EntryPoints,
         List<string> EnumValues);
-
-    internal record ExtensionReference(string Name, string Vendor);
 
     internal record EnumEntry(
         string Name,

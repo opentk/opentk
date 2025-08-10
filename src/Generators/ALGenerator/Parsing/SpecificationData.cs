@@ -27,7 +27,6 @@ namespace ALGenerator.Parsing
     }
 
     internal record Specification(
-        //List<Command> Commands,
         List<Function> Functions,
         List<EnumEntry> Enums,
         List<API> APIs);
@@ -37,17 +36,11 @@ namespace ALGenerator.Parsing
         List<FunctionReference> Functions,
         List<EnumReference> Enums);
 
-    internal record FunctionReference(
-        string EntryPoint,
-        Version? AddedIn,
-        Version? RemovedIn,
-        List<ExtensionReference> PartOfExtensions);
+    internal record FunctionReference(string EntryPoint, VersionInfo VersionInfo);
 
     internal record EnumReference(
         string EnumName,
-        Version? AddedIn,
-        Version? RemovedIn,
-        List<ExtensionReference> PartOfExtensions,
+        VersionInfo VersionInfo,
         // Is this enum reference copied from another namespace.
         bool IsCrossReferenced);
 
@@ -55,10 +48,6 @@ namespace ALGenerator.Parsing
         Version Name,
         List<string> EntryPoints,
         List<string> EnumValues);
-
-    internal record ExtensionReference(
-        string Name,
-        string Vendor);
 
     internal record EnumEntry(
         string Name,

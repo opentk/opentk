@@ -206,13 +206,13 @@ namespace VkGenerator
                             if (member.Extension != null && member.VersionInfo != null)
                             {
                                 if (member.Extension.StartsWith("VK_VERSION") == false)
-                                    Debug.Assert(member.VersionInfo.Extensions.Contains(member.Extension));
+                                    Debug.Assert(member.VersionInfo.Extensions.Any(e => e.Name == member.Extension));
                             }
 
                             writer.Write("/// <summary>");
                             if (member.VersionInfo != null)
                             {
-                                List<string> strs = [.. member.VersionInfo.Extensions];
+                                List<string> strs = [.. member.VersionInfo.Extensions.Select(e => e.Name)];
                                 if (member.VersionInfo.Version != null)
                                 {
                                     strs.Insert(0, $"v{member.VersionInfo.Version.Major}.{member.VersionInfo.Version.Minor}");
@@ -228,7 +228,7 @@ namespace VkGenerator
                                     // for this enum type.
                                     // - Noggin_bops 2024-09-24
 
-                                    List<string> strs = [.. @enum.VersionInfo.Extensions];
+                                    List<string> strs = [.. @enum.VersionInfo.Extensions.Select(e => e.Name)];
                                     if (@enum.VersionInfo.Version != null)
                                     {
                                         strs.Insert(0, $"v{@enum.VersionInfo.Version.Major}.{@enum.VersionInfo.Version.Minor}");
@@ -509,7 +509,7 @@ namespace VkGenerator
                 writer.Write("/// <summary>");
                 if (command.VersionInfo != null)
                 {
-                    List<string> strs = [.. command.VersionInfo.Extensions];
+                    List<string> strs = [.. command.VersionInfo.Extensions.Select(e => e.Name)];
                     if (command.VersionInfo.Version != null)
                     {
                         strs.Insert(0, $"v{command.VersionInfo.Version.Major}.{command.VersionInfo.Version.Minor}");
@@ -1192,7 +1192,7 @@ namespace VkGenerator
 
         private static void WriteVersionInfo(IndentedTextWriter writer, VersionInfo versionInfo)
         {
-            List<string> strs = [.. versionInfo.Extensions];
+            List<string> strs = [.. versionInfo.Extensions.Select(e => e.Name)];
             if (versionInfo.Version != null)
             {
                 strs.Insert(0, $"v{versionInfo.Version.Major}.{versionInfo.Version.Minor}");

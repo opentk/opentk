@@ -530,29 +530,6 @@ namespace ALGenerator
             }
         }
 
-        private static void WriteVersionInfo(IndentedTextWriter writer, VersionInfo versionInfo)
-        {
-            List<string> strs = [.. versionInfo.Extensions];
-            if (versionInfo.Version != null)
-            {
-                strs.Insert(0, $"v{versionInfo.Version.Major}.{versionInfo.Version.Minor}");
-            }
-            writer.Write($"<b>[requires: {string.Join(" | ", strs)}]</b> ");
-
-            if (versionInfo.DeprecatedBy?.Count > 0)
-            {
-                writer.WriteLine();
-                foreach (DeprecationReason deprecation in versionInfo.DeprecatedBy)
-                {
-                    string v = deprecation.Version != null ? $"v{deprecation.Version}" : deprecation.Extension ?? throw new Exception();
-                    string explanationLink = deprecation.ExplanationLink != null ? $"see: <see href=\"https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#{deprecation.ExplanationLink}\" />" : "";
-                    writer.WriteLine($"/// <br/><b>[deprecated by: {v}]</b> {explanationLink}");
-                }
-                writer.Write("/// ");
-            }
-        }
-
-
         internal static void WriteEFXPresets(List<EFXPreset> efxPresets)
         {
             // This is quite fragile, no idea if there is an easy way that is "better".

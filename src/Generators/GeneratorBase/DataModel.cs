@@ -11,7 +11,8 @@ namespace GeneratorBase
     public record DeprecationReason(Version? Version, string? Extension, string? ExplanationLink);
     public record RemoveReason(Version? Version, string? Extension, string? ExplanationLink);
 
-    public record VersionInfo(Version? Version, List<string> Extensions)
+    public record ExtensionInfo(string Name, string Vendor);
+    public record VersionInfo(Version? Version, List<ExtensionInfo> Extensions)
     {
         // FIXME: Maybe we should record who removes this thing too?
 

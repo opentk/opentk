@@ -516,7 +516,7 @@ namespace VkGenerator.Process
 
                         if (command.VersionInfo == null)
                         {
-                            command.VersionInfo = new VersionInfo(feature.Version, new List<string>());
+                            command.VersionInfo = new VersionInfo(feature.Version, []);
                         }
                         else if (command.VersionInfo.Version > feature.Version)
                         {
@@ -533,7 +533,7 @@ namespace VkGenerator.Process
                         EnumMember member = extends.Members.Find(m => m.Name == requireEnum.Name) ?? throw new Exception();
                         if (member.VersionInfo == null)
                         {
-                            member.VersionInfo = new VersionInfo(feature.Version, new List<string>());
+                            member.VersionInfo = new VersionInfo(feature.Version, []);
                         }
                         else if (member.VersionInfo.Version < feature.Version)
                         {
@@ -553,7 +553,7 @@ namespace VkGenerator.Process
                         {
                             if (define.VersionInfo == null)
                             {
-                                define.VersionInfo = new VersionInfo(feature.Version, new List<string>());
+                                define.VersionInfo = new VersionInfo(feature.Version, []);
                             }
                             else if (define.VersionInfo.Version < feature.Version)
                             {
@@ -565,7 +565,7 @@ namespace VkGenerator.Process
                         {
                             if (structType.VersionInfo == null)
                             {
-                                structType.VersionInfo = new VersionInfo(feature.Version, new List<string>());
+                                structType.VersionInfo = new VersionInfo(feature.Version, []);
                             }
                             else if (structType.VersionInfo.Version < feature.Version)
                             {
@@ -577,7 +577,7 @@ namespace VkGenerator.Process
                         {
                             if (enumType.VersionInfo == null)
                             {
-                                enumType.VersionInfo = new VersionInfo(feature.Version, new List<string>());
+                                enumType.VersionInfo = new VersionInfo(feature.Version, []);
                             }
                             else if (enumType.VersionInfo.Version < feature.Version)
                             {
@@ -589,7 +589,7 @@ namespace VkGenerator.Process
                         {
                             if (handleType.VersionInfo == null)
                             {
-                                handleType.VersionInfo = new VersionInfo(feature.Version, new List<string>());
+                                handleType.VersionInfo = new VersionInfo(feature.Version, []);
                             }
                             else if (handleType.VersionInfo.Version < feature.Version)
                             {
@@ -603,7 +603,8 @@ namespace VkGenerator.Process
 
             foreach (Extension extension in data.Extensions)
             {
-                string extensionName = extension.Name;
+                ExtensionInfo extInfo = new ExtensionInfo(extension.Name, extension.Author);
+
                 foreach (RequireTag require in extension.RequireTags)
                 {
                     foreach (CommandRef requireCommand in require.Commands)
@@ -612,11 +613,11 @@ namespace VkGenerator.Process
 
                         if (command.VersionInfo == null)
                         {
-                            command.VersionInfo = new VersionInfo(null, [extensionName]);
+                            command.VersionInfo = new VersionInfo(null, [extInfo]);
                         }
                         else
                         {
-                            command.VersionInfo.Extensions.Add(extensionName);
+                            command.VersionInfo.Extensions.Add(extInfo);
                         }
                     }
 
@@ -637,11 +638,11 @@ namespace VkGenerator.Process
                         EnumMember member = extends.Members.Find(m => m.Name == requireEnum.Name) ?? throw new Exception();
                         if (member.VersionInfo == null)
                         {
-                            member.VersionInfo = new VersionInfo(null, [extensionName]);
+                            member.VersionInfo = new VersionInfo(null, [extInfo]);
                         }
                         else
                         {
-                            member.VersionInfo.Extensions.Add(extensionName);
+                            member.VersionInfo.Extensions.Add(extInfo);
                         }
                     }
 
@@ -656,44 +657,44 @@ namespace VkGenerator.Process
                         {
                             if (define.VersionInfo == null)
                             {
-                                define.VersionInfo = new VersionInfo(null, [extensionName]);
+                                define.VersionInfo = new VersionInfo(null, [extInfo]);
                             }
                             else
                             {
-                                define.VersionInfo.Extensions.Add(extensionName);
+                                define.VersionInfo.Extensions.Add(extInfo);
                             }
                         }
                         else if (structType != null)
                         {
                             if (structType.VersionInfo == null)
                             {
-                                structType.VersionInfo = new VersionInfo(null, [extensionName]);
+                                structType.VersionInfo = new VersionInfo(null, [extInfo]);
                             }
                             else
                             {
-                                structType.VersionInfo.Extensions.Add(extensionName);
+                                structType.VersionInfo.Extensions.Add(extInfo);
                             }
                         }
                         else if (enumType != null)
                         {
                             if (enumType.VersionInfo == null)
                             {
-                                enumType.VersionInfo = new VersionInfo(null, [extensionName]);
+                                enumType.VersionInfo = new VersionInfo(null, [extInfo]);
                             }
                             else
                             {
-                                enumType.VersionInfo.Extensions.Add(extensionName);
+                                enumType.VersionInfo.Extensions.Add(extInfo);
                             }
                         }
                         else if (handleType != null)
                         {
                             if (handleType.VersionInfo == null)
                             {
-                                handleType.VersionInfo = new VersionInfo(null, [extensionName]);
+                                handleType.VersionInfo = new VersionInfo(null, [extInfo]);
                             }
                             else
                             {
-                                handleType.VersionInfo.Extensions.Add(extensionName);
+                                handleType.VersionInfo.Extensions.Add(extInfo);
                             }
                         }
                     }

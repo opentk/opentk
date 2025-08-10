@@ -6,6 +6,7 @@ using GeneratorBase.Utility;
 using ALGenerator.Process;
 using ALGenerator.Parsing;
 using GeneratorBase;
+using System.Diagnostics;
 
 namespace ALGenerator.Process
 {
@@ -161,7 +162,7 @@ namespace ALGenerator.Process
                     if (removeFunctions)
                     {
                         // FIXME: Should we check the profile of the extension??
-                        if (enumRef.RemovedIn != null)
+                        if (enumRef.VersionInfo.RemovedBy.Count > 0)
                         {
                             // FIXME: Add the enum if an extension uses it??
                             continue;
@@ -205,7 +206,7 @@ namespace ALGenerator.Process
                                     {
                                         if (MatchesAPI(api.Name, outputApi))
                                         {
-                                            api.Enums.Add(new EnumReference(@enum.Name, null, null, new List<ExtensionReference>(), true));
+                                            api.Enums.Add(new EnumReference(@enum.Name, new VersionInfo(null, []), true));
                                             Logger.Info($"Added enum entry '{@enum.MangledName}' to {outputApi}.");
                                         }
                                     }
@@ -302,9 +303,9 @@ namespace ALGenerator.Process
                         {
                             bool referenced = false;
 
-                            if (functionRef.AddedIn != null)
+                            if (functionRef.VersionInfo.Version != null)
                             {
-                                if (removeFunctions && (functionRef.RemovedIn != null))
+                                if (removeFunctions && (functionRef.VersionInfo.RemovedBy.Count > 0))
                                 {
                                     // Do not add this function
                                 }
@@ -316,7 +317,7 @@ namespace ALGenerator.Process
                                 }
                             }
 
-                            foreach (var extension in functionRef.PartOfExtensions)
+                            foreach (var extension in functionRef.VersionInfo.Extensions)
                             {
                                 functionsByVendor.AddToNestedHashSet(extension.Vendor, overloadedFunction);
 
@@ -353,7 +354,7 @@ namespace ALGenerator.Process
                         if (removeFunctions)
                         {
                             // FIXME: Should we check the profile of the extension??
-                            if (enumRef.RemovedIn != null)
+                            if (enumRef.VersionInfo.RemovedBy.Count > 0)
                             {
                                 // FIXME: Add the enum if an extension uses it??
                                 continue;
@@ -523,24 +524,32 @@ namespace ALGenerator.Process
                             FunctionReference func = functions.Find(f => f.EntryPoint == function.NativeFunction.EntryPoint) ?? throw new Exception($"Could not find function {function.NativeFunction.EntryPoint}!");
 
                             List<string> addedIn = new List<string>();
-                            if (func.AddedIn != null)
+                            if (func.VersionInfo.Version != null)
                             {
-                                addedIn.Add($"v{func.AddedIn.Major}.{func.AddedIn.Minor}");
+                                addedIn.Add($"v{func.VersionInfo.Version.Major}.{func.VersionInfo.Version.Minor}");
                             }
 
-                            foreach (var extension in func.PartOfExtensions)
+                            foreach (var extension in func.VersionInfo.Extensions)
                             {
                                 addedIn.Add(extension.Name);
                             }
 
+                            
                             List<string> removedIn = new List<string>();
-                            if (func.RemovedIn != null)
+                            if (func.VersionInfo.RemovedBy.Count > 0)
                             {
-                                removedIn.Add($"v{func.RemovedIn.Major}.{func.RemovedIn.Minor}");
+                                // FIXME: We only handle one RemovedBy entry for now.
+                                Debug.Assert(func.VersionInfo.RemovedBy.Count == 1);
+
+                                // In OpenGL only feature versions can remove so we can use the version straight.
+                                // - Noggin_bops 2025-08-11
+                                Version removedInV = func.VersionInfo.RemovedBy[0].Version!;
+
+                                removedIn.Add($"v{removedInV.Major}.{removedInV.Minor}");
                             }
 
                             List<string> extensionURLs = [];
-                            foreach (var extension in func.PartOfExtensions)
+                            foreach (var extension in func.VersionInfo.Extensions)
                             {
                                 string ext = NameMangler.MaybeRemoveStart(extension.Name, "GL_");
 

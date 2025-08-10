@@ -105,14 +105,14 @@ namespace GLGenerator.Parsing
                         {
                             if (entryPointToReference.TryGetValue(entryPoint.Name, out FunctionReference? value) == false)
                             {
-                                value = new FunctionReference(entryPoint.Name, feature.Version, null, new List<ExtensionReference>(), GLProfile.None);
+                                value = new FunctionReference(entryPoint.Name, new VersionInfo(feature.Version, []), GLProfile.None);
                                 entryPointToReference.Add(entryPoint.Name, value);
                             }
 
                             // FIXME: This isn't strictly needed... they are already going to be in order.
-                            if (feature.Version < value.AddedIn)
+                            if (feature.Version < value.VersionInfo.Version)
                             {
-                                value = value with { AddedIn = feature.Version };
+                                value = value with { VersionInfo = value.VersionInfo with { Version = feature.Version } };
                             }
 
                             value = value with { Profile = requires.GLProfile };
@@ -131,15 +131,11 @@ namespace GLGenerator.Parsing
                         {
                             if (entryPointToReference.TryGetValue(entryPoint.Name, out FunctionReference? value) == false)
                             {
-                                value = new FunctionReference(entryPoint.Name, feature.Version, null, new List<ExtensionReference>(), GLProfile.None);
+                                value = new FunctionReference(entryPoint.Name, new VersionInfo(feature.Version, []), GLProfile.None);
                                 entryPointToReference.Add(entryPoint.Name, value);
                             }
 
-                            // If we should, update the removed in.
-                            if (value.RemovedIn == null || feature.Version < value.RemovedIn)
-                            {
-                                value = value with { RemovedIn = feature.Version };
-                            }
+                            value.VersionInfo.Remove(new RemoveReason(feature.Version, null, null));
 
                             value = value with { Profile = removes.Profile };
 
@@ -160,11 +156,11 @@ namespace GLGenerator.Parsing
                         {
                             if (entryPointToReference.TryGetValue(entryPoint.Name, out FunctionReference? value) == false)
                             {
-                                value = new FunctionReference(entryPoint.Name, null, null, new List<ExtensionReference>(), GLProfile.None);
+                                value = new FunctionReference(entryPoint.Name, new VersionInfo(null, []), GLProfile.None);
                                 entryPointToReference.Add(entryPoint.Name, value);
                             }
 
-                            value.PartOfExtensions.Add(new ExtensionReference(extension.Name, extension.Vendor));
+                            value.VersionInfo.Extensions.Add(new ExtensionInfo(extension.Name, extension.Vendor));
 
                             // FIXME: Should we do this?
                             value = value with { Profile = requires.GLProfile };
@@ -194,20 +190,23 @@ namespace GLGenerator.Parsing
                         {
                             if (enumNameToReference.TryGetValue(enumName.Name, out EnumReference? value) == false)
                             {
-                                value = new EnumReference(enumName.Name, feature.Version, null, new List<ExtensionReference>(), GLProfile.None, false);
+                                value = new EnumReference(enumName.Name, new VersionInfo(feature.Version, []), GLProfile.None, false);
                                 enumNameToReference.Add(enumName.Name, value);
                             }
 
-                            // If this enum value was removed and later readded.
-                            if (value.RemovedIn != null && feature.Version > value.RemovedIn)
+                            Debug.Assert(value.VersionInfo.RemovedBy.Count <= 1);
+
+                            if (value.VersionInfo.RemovedBy.Count == 1 &&
+                                value.VersionInfo.RemovedBy[0].Version != null &&
+                                feature.Version > value.VersionInfo.RemovedBy[0].Version)
                             {
-                                value = value with { AddedIn = feature.Version, RemovedIn = null };
+                                value = value with { VersionInfo = value.VersionInfo with { Version = feature.Version, RemovedBy = [] } };
                             }
 
                             // FIXME: This isn't strictly needed... they are already going to be in order.
-                            if (feature.Version < value.AddedIn)
+                            if (feature.Version < value.VersionInfo.Version)
                             {
-                                value = value with { AddedIn = feature.Version };
+                                value = value with { VersionInfo = value.VersionInfo with { Version = feature.Version } };
                             }
 
                             value = value with { Profile = requires.GLProfile };
@@ -222,15 +221,11 @@ namespace GLGenerator.Parsing
                         {
                             if (enumNameToReference.TryGetValue(enumName.Name, out EnumReference? value) == false)
                             {
-                                value = new EnumReference(enumName.Name, feature.Version, null, new List<ExtensionReference>(), GLProfile.None, false);
+                                value = new EnumReference(enumName.Name, new VersionInfo(feature.Version, []), GLProfile.None, false);
                                 enumNameToReference.Add(enumName.Name, value);
                             }
 
-                            // If we should, update the removed in.
-                            if (value.RemovedIn == null || feature.Version < value.RemovedIn)
-                            {
-                                value = value with { RemovedIn = feature.Version };
-                            }
+                            value.VersionInfo.Remove(new RemoveReason(feature.Version, null, null));
 
                             value = value with { Profile = removes.Profile };
 
@@ -251,11 +246,11 @@ namespace GLGenerator.Parsing
                         {
                             if (enumNameToReference.TryGetValue(enumName.Name, out EnumReference? value) == false)
                             {
-                                value = new EnumReference(enumName.Name, null, null, new List<ExtensionReference>(), GLProfile.None, false);
+                                value = new EnumReference(enumName.Name, new VersionInfo(null, []), GLProfile.None, false);
                                 enumNameToReference.Add(enumName.Name, value);
                             }
 
-                            value.PartOfExtensions.Add(new ExtensionReference(extension.Name, extension.Vendor));
+                            value.VersionInfo.Extensions.Add(new ExtensionInfo(extension.Name, extension.Vendor));
 
                             // FIXME: Should we do this?
                             value = value with { Profile = requires.GLProfile };
