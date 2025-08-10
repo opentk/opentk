@@ -32,30 +32,8 @@ namespace GLGenerator.Parsing
         EGL = 1 << 6,
     }
 
-    internal record NativeFunction(string Name, string EntryPoint, string ReturnType, List<Parameter> Parameters) : IFunction
-    {
-        List<IFunctionParameter> IFunction.Parameters => Parameters.Cast<IFunctionParameter>().ToList();
-
-        public BaseCSType? StrongReturnType { get; set; }
-        public VersionInfo? VersionInfo { get; set; }
-
-        // FIXME: Migrate to marking the references directly on the enums.
-        public GroupRef[] ReferencedEnumGroups { get; set; }
-    }
-
-    internal record Parameter(string OriginalName, string Name, string Type, string? Length, string[] Kinds) : IFunctionParameter
-    {
-        public BaseCSType? StrongType { get; set; }
-        public Expression? StrongLength { get; set; }
-    }
-
-    internal record EnumMember2();
-
-
-
-
     internal record Specification(
-        List<NativeFunction> Functions,
+        List<Function> Functions,
         List<EnumEntry> Enums,
         List<API> APIs);
 
@@ -131,20 +109,6 @@ namespace GLGenerator.Parsing
         string? Comment,
         List<string> Commands,
         List<string> Enums);
-
-
-    internal enum GLFile
-    {
-        GL,
-        WGL,
-        GLX,
-        EGL,
-    }
-
-    /// <param name="OriginalName">The name of the referenced enum group (as seen in the xml files).</param>
-    /// <param name="TranslatedName">The name of the referenced enum group (as seen in OpenTK).</param>
-    /// <param name="Namespace">The enum namespace that is referenced (gl, wgl, or glx).</param>
-    internal record GroupRef(string OriginalName, string TranslatedName, GLFile Namespace);
 
     internal abstract record GLType();
 

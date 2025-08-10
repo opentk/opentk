@@ -27,11 +27,11 @@ namespace ALGenerator.Process
         OutputApi Name,
         List<VendorFunctions> VendorFunctions,
         List<EnumGroup> EnumGroups,
-        Dictionary<NativeFunction, FunctionDocumentation> Documentation);
+        Dictionary<Function, FunctionDocumentation> Documentation);
 
     internal record Pointers(
         ALFile File,
-        List<NativeFunction> NativeFunctions);
+        List<Function> NativeFunctions);
 
     internal record FunctionDocumentation(
         string Name,
@@ -45,10 +45,10 @@ namespace ALGenerator.Process
     internal record VendorFunctions(
         string Vendor,
         List<OverloadedFunction> Functions,
-        HashSet<NativeFunction> NativeFunctionsWithPostfix);
+        HashSet<Function> NativeFunctionsWithPostfix);
 
     internal record OverloadedFunction(
-        NativeFunction NativeFunction,
+        Function NativeFunction,
         Overload[] Overloads) : IComparable<OverloadedFunction>
     {
         public int CompareTo(OverloadedFunction? other)
@@ -61,7 +61,7 @@ namespace ALGenerator.Process
         Overload? NestedOverload,
         IOverloadLayer? MarshalLayerToNested,
         Parameter[] InputParameters,
-        NativeFunction NativeFunction,
+        Function NativeFunction,
         BaseCSType ReturnType,
         NameTable NameTable,
         string[] GenericTypes,
@@ -93,7 +93,7 @@ namespace ALGenerator.Process
         string Name,
         bool IsFlags,
         List<EnumGroupMember> Members,
-        List<(string Vendor, NativeFunction Function)>? FunctionsUsingEnumGroup);
+        List<(string Vendor, Function Function)>? FunctionsUsingEnumGroup);
 
 
     internal interface IOverloadLayer

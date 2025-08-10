@@ -18,11 +18,11 @@ namespace GLGenerator.Process
         OutputApi Name,
         List<VendorFunctions> VendorFunctions,
         List<EnumGroup> EnumGroups,
-        Dictionary<NativeFunction, FunctionDocumentation> Documentation);
+        Dictionary<Function, FunctionDocumentation> Documentation);
 
     internal record Pointers(
-        GLFile File,
-        List<NativeFunction> NativeFunctions);
+        APIFile File,
+        List<Function> NativeFunctions);
 
     internal record FunctionDocumentation(
         string Name,
@@ -36,10 +36,10 @@ namespace GLGenerator.Process
     internal record VendorFunctions(
         string Vendor,
         List<OverloadedFunction> Functions,
-        HashSet<NativeFunction> NativeFunctionsWithPostfix);
+        HashSet<Function> NativeFunctionsWithPostfix);
 
     internal record OverloadedFunction(
-        NativeFunction NativeFunction,
+        Function NativeFunction,
         Overload[] Overloads) : IComparable<OverloadedFunction>
     {
         public int CompareTo(OverloadedFunction? other)
@@ -52,7 +52,7 @@ namespace GLGenerator.Process
         Overload? NestedOverload,
         IOverloadLayer? MarshalLayerToNested,
         Parameter[] InputParameters,
-        NativeFunction NativeFunction,
+        Function NativeFunction,
         BaseCSType ReturnType,
         NameTable NameTable,
         string[] GenericTypes,
@@ -84,9 +84,9 @@ namespace GLGenerator.Process
         string Name,
         bool IsFlags,
         List<EnumGroupMember> Members,
-        List<(string Vendor, NativeFunction Function)>? FunctionsUsingEnumGroup)
+        List<(string Vendor, Function Function)>? FunctionsUsingEnumGroup)
     {
-        public List<NativeFunction> ReferencedBy = [];
+        public List<Function> ReferencedBy = [];
     }
 
 

@@ -437,7 +437,7 @@ namespace VkGenerator.Process
 
         public static void ResolveCommandTypes(SpecificationData data, Dictionary<string, TypeEntry> typeMap)
         {
-            foreach (Command command in data.Commands)
+            foreach (Function command in data.Commands)
             {
                 command.StrongReturnType = ParseType(command.ReturnType, typeMap, data.Constants, out IReferable? reference);
                 command.StrongReturnType = ReplaceOpaqueStructPointers(command.StrongReturnType);
@@ -445,7 +445,7 @@ namespace VkGenerator.Process
 
                 reference?.MarkReferencedBy(command);
 
-                foreach (CommandParameter param in command.Parameters)
+                foreach (Parameter param in command.Parameters)
                 {
                     param.StrongType = ParseType(param.Type, typeMap, data.Constants, out reference);
                     param.StrongType = ReplaceOpaqueStructPointers(param.StrongType);
@@ -512,7 +512,7 @@ namespace VkGenerator.Process
                 {
                     foreach (CommandRef requireCommand in require.RequiredCommands)
                     {
-                        Command command = data.Commands.Find(c => c.Name == requireCommand.Name) ?? throw new Exception();
+                        Function command = data.Commands.Find(c => c.Name == requireCommand.Name) ?? throw new Exception();
 
                         if (command.VersionInfo == null)
                         {
@@ -607,7 +607,7 @@ namespace VkGenerator.Process
                 {
                     foreach (CommandRef requireCommand in require.RequiredCommands)
                     {
-                        Command command = data.Commands.Find(c => c.Name == requireCommand.Name) ?? throw new Exception();
+                        Function command = data.Commands.Find(c => c.Name == requireCommand.Name) ?? throw new Exception();
 
                         if (command.VersionInfo == null)
                         {
@@ -731,7 +731,7 @@ namespace VkGenerator.Process
                 {
                     foreach (CommandRef deprecatedCommand in deprecateTag.DeprecatedCommands)
                     {
-                        Command? command = data.Commands.Find(c => c.Name == deprecatedCommand.Name);
+                        Function? command = data.Commands.Find(c => c.Name == deprecatedCommand.Name);
 
                         if (command != null)
                         {
@@ -785,7 +785,7 @@ namespace VkGenerator.Process
                 {
                     foreach (CommandRef deprecatedCommand in deprecateTag.DeprecatedCommands)
                     {
-                        Command? command = data.Commands.Find(c => c.Name == deprecatedCommand.Name);
+                        Function? command = data.Commands.Find(c => c.Name == deprecatedCommand.Name);
 
                         if (command != null)
                         {

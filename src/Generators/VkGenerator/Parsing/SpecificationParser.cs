@@ -9,6 +9,7 @@ using System.Xml.Linq;
 using VkGenerator.Process;
 using GeneratorBase.Utility.Extensions;
 using GeneratorBase;
+using GeneratorBase.Utility;
 
 namespace VkGenerator.Parsing
 {
@@ -21,7 +22,7 @@ namespace VkGenerator.Parsing
             List<StructType> Structs,
             Dictionary<string, Constant> Constants,
             List<HandleType> Handles,
-            List<Command> Commands,
+            List<Function> Commands,
             List<Feature> Features,
             List<Extension> Extensions);
 
@@ -53,7 +54,7 @@ namespace VkGenerator.Parsing
         public VersionInfo? VersionInfo;
         public HandleType? ResolvedParent;
 
-        public List<IFunction> ReferencedBy { get; } = [];
+        public List<Function> ReferencedBy { get; } = [];
     }
 
     public record ExternalType(string Name, string? HeaderFile);
@@ -64,7 +65,7 @@ namespace VkGenerator.Parsing
 
         public VersionInfo? VersionInfo { get; set; }
 
-        public List<IFunction> ReferencedBy { get; } = [];
+        public List<Function> ReferencedBy { get; } = [];
     }
     public record StructMember(string Type, string Name, string? Values) : IStructMember
     {
@@ -78,14 +79,14 @@ namespace VkGenerator.Parsing
         public BaseCSType? StrongUnderlyingType { get; set; }
 
         public VersionInfo? VersionInfo;
-        public List<IFunction> ReferencedBy { get; } = [];
+        public List<Function> ReferencedBy { get; } = [];
     }
     public record EnumMember(string Name, ulong Value, string? Comment, string? Alias, string? Extension) : IEnumMember
     {
         public VersionInfo? VersionInfo { get; set; }
     }
 
-    public enum CommandType
+    /*public enum CommandType
     {
         /// <summary>This command does not have a resolved command type yet.</summary>
         Invalid,
@@ -114,7 +115,7 @@ namespace VkGenerator.Parsing
 
         public BaseCSType? StrongType { get; set; }
         public Expression? StrongLength { get; set; }
-    }
+    }*/
 
     public record Feature(string Name, Version Version, string? Depends, string? Comment, List<RequireTag> RequireTags, List<DeprecateTag> DeprecateTags, List<RemoveTag> RemoveTags);
     public record Extension(
@@ -183,7 +184,7 @@ namespace VkGenerator.Parsing
 
             List<EnumType> enums = ParseEnums(xdocument.Root, out Dictionary<string, Constant> constantsMap);
 
-            List<Command> commands = ParseCommands(xdocument.Root);
+            List<Function> commands = ParseCommands(xdocument.Root);
 
             List<Feature> features = ParseFeatures(xdocument.Root);
 
@@ -230,7 +231,7 @@ namespace VkGenerator.Parsing
                 typeData.Structs,
                 constantsMap,
                 typeData.HandleTypes,
-                new List<Command>(),
+                new List<Function>(),
                 features,
                 extensions);
         }
@@ -635,11 +636,11 @@ namespace VkGenerator.Parsing
             return enumTypes;
         }
 
-        public static List<Command> ParseCommands(XElement root)
+        public static List<Function> ParseCommands(XElement root)
         {
             XElement? xelement = root.Element("commands")!;
 
-            List<Command> commands = new List<Command>();
+            List<Function> commands = new List<Function>();
             foreach (XElement command in xelement.Elements("command"))
             {
                 // FIXME: We don't do vulkansc for now..
@@ -651,7 +652,7 @@ namespace VkGenerator.Parsing
                 {
                     string entryPoint = command.Attribute("name")?.Value ?? throw new Exception();
 
-                    Command cmd = commands.Find(c => c.Name == alias) ?? throw new Exception();
+                    Function cmd = commands.Find(c => c.Name == alias) ?? throw new Exception();
 
                     // Add a copy of the aliased function and mark it as an alias.
                     commands.Add(cmd with { Name = entryPoint, Alias = cmd.Name });
@@ -669,7 +670,7 @@ namespace VkGenerator.Parsing
 
                     // FIXME: Read <implicitexternsyncparams> tags?
 
-                    List<CommandParameter> parameters = new List<CommandParameter>();
+                    List<Parameter> parameters = new List<Parameter>();
                     foreach (XElement param in command.Elements("param"))
                     {
                         // FIXME: We don't do vulkansc for now...
@@ -682,10 +683,28 @@ namespace VkGenerator.Parsing
                         bool externsync = param.Attribute("externsync")?.Value == "true";
                         string? len = param.Attribute("len")?.Value;
 
-                        parameters.Add(new CommandParameter(paramName, paramTypeStr, optional, externsync, len));
+                        parameters.Add(new Parameter()
+                        {
+                            Name = paramName,
+                            OriginalName = paramName,
+                            Type = paramTypeStr,
+                            Length = len,
+
+                            Optional = optional,
+                            ExternSync = externsync,
+                        });
                     }
 
-                    commands.Add(new Command(entryPoint, returnTypeStr, parameters, null));
+                    commands.Add(new Function()
+                    {
+                        // FIXME: Name mangler!
+                        Name = entryPoint,
+                        EntryPoint = entryPoint,
+                        Parameters = parameters,
+                        ReturnType = returnTypeStr,
+
+                        Alias = null,
+                    });
                 }
             }
 

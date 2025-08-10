@@ -14,37 +14,36 @@ using System.Net.Http.Headers;
 using System.Numerics;
 using System.Threading;
 using System.Xml.Linq;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ALGenerator.Parsing
 {
     internal class SpecificationParser
     {
-        internal static Specification Parse(Stream input, NameMangler nameMangler, ALFile currentFile, List<string> ignoreFunctions)
+        internal static Specification Parse(Stream input, NameMangler nameMangler, APIFile currentFile, List<string> ignoreFunctions)
         {
             XDocument? xdocument = XDocument.Load(input);
 
             if (xdocument.Root == null)
                 throw new NullReferenceException("The parsed xml didn't contain a Root node.");
 
-            List<NativeFunction> functions2 = ParseCommands(xdocument.Root, nameMangler, currentFile, ignoreFunctions);
+            List<Function> functions = ParseCommands(xdocument.Root, nameMangler, currentFile, ignoreFunctions);
             List<EnumEntry>? enums = ParseEnums(xdocument.Root, nameMangler, currentFile);
 
             List<Feature>? features = ParseFeatures(xdocument.Root, currentFile);
             List<Extension>? extensions = ParseExtensions(xdocument.Root, currentFile, nameMangler);
 
-            if (currentFile == ALFile.AL)
+            if (currentFile == APIFile.AL)
             {
                 // Adds AL_EXT_direct_context functions to the functions list
                 // and modifies the AL_EXT_direct_context extensions require tag
                 // list to include these functions.
                 // - Noggin_bops 2025-08-08
-                CreateDirectContextCommands(functions2, extensions);
+                CreateDirectContextCommands(functions, extensions);
             }
 
             List<API> APIs = MakeAPIs(features, extensions);
 
-            return new Specification(functions2, enums, APIs);
+            return new Specification(functions, enums, APIs);
         }
 
         private static List<API> MakeAPIs(List<Feature> features, List<Extension> extensions)
@@ -246,7 +245,7 @@ namespace ALGenerator.Parsing
             }
         }
 
-        private static void CreateDirectContextCommands(List<NativeFunction> functions, List<Extension> extensions)
+        private static void CreateDirectContextCommands(List<Function> functions, List<Extension> extensions)
         {
             // FIXME: We probably want to generate these functions in the same namespace as their original version.
             // And modify the required string to be something like "[requires: ALC_EXT_EFX & AL_EXT_direct_context]"
@@ -256,7 +255,7 @@ namespace ALGenerator.Parsing
             // context, similar to how you need to do with OpenGL on windows.
             // - Noggin_bops 2025-08-08
 
-            List<NativeFunction> directContextFunctions = new List<NativeFunction>();
+            List<Function> directContextFunctions = new List<Function>();
             List<string> directContextFunctionNames = new List<string>();
 
             CSStructPrimitive contextType = new CSStructPrimitive("ALCContext", false, CSPrimitive.IntPtr(true));
@@ -265,9 +264,20 @@ namespace ALGenerator.Parsing
             {
                 string entryPoint = $"{NameMangler.RemoveVendorPostfix(function.EntryPoint)}Direct{NameMangler.GetVendorPostfix(function.EntryPoint)}";
 
-                NativeFunction directFunction = function with {
+                Function directFunction = function with {
                     Parameters = [
-                        new Parameter("context", "context", contextType.ToCSString(), null, []) { StrongType = contextType, StrongLength = null } ,
+                        new Parameter()
+                        {
+                            Name = "context",
+                            OriginalName = "context",
+                            Type = contextType.ToCSString(),
+                            Length = null,
+
+                            StrongType = contextType,
+                            StrongLength = null,
+
+                            Kinds = [],
+                        },
                         ..function.Parameters
                         ],
                     // FIXME: Extension stuff!
@@ -284,11 +294,11 @@ namespace ALGenerator.Parsing
             extension.Requires.Add(new RequireEntry(ALAPI.AL, null, directContextFunctionNames, []));
         }
 
-        private static List<NativeFunction> ParseCommands(XElement input, NameMangler nameMangler, ALFile currentFile, List<string> ignoreFunctions)
+        private static List<Function> ParseCommands(XElement input, NameMangler nameMangler, APIFile currentFile, List<string> ignoreFunctions)
         {
             Logger.Info("Begining parsing of commands.");
 
-            List<NativeFunction> functions = new List<NativeFunction>();
+            List<Function> functions = new List<Function>();
             foreach (XElement? commands in input.Elements("commands"))
             {
                 foreach (XElement command in commands.Elements("command"))
@@ -312,12 +322,23 @@ namespace ALGenerator.Parsing
                         BaseCSType type = ParsePType(element, currentFile, nameMangler, out GroupRef? groupRef);
                         if (groupRef != null) referencedEnumGroups.Add(groupRef);
 
-                        string[] kind = element.Attribute("kind")?.Value?.Split(',') ?? Array.Empty<string>();
+                        string[] kinds = element.Attribute("kind")?.Value?.Split(',') ?? Array.Empty<string>();
 
                         string? length = element.Attribute("len")?.Value;
                         Expression? paramLength = length == null ? null : ParseExpression(length);
 
-                        paramList.Add(new Parameter(paramName, mangledName, type.ToCSString(), length, kind) { StrongType = type, StrongLength = paramLength });
+                        paramList.Add(new Parameter
+                        {
+                            Name = mangledName,
+                            OriginalName = paramName,
+                            Type = type.ToCSString(),
+                            Length = length,
+
+                            StrongType = type,
+                            StrongLength = paramLength,
+
+                            Kinds = kinds,
+                        });
                     }
 
                     BaseCSType returnType = ParsePType(proto, currentFile, nameMangler, out GroupRef? returnGroup);
@@ -325,7 +346,17 @@ namespace ALGenerator.Parsing
 
                     string functionName = nameMangler.MangleFunctionName(entryPoint);
 
-                    functions.Add(new NativeFunction(functionName, entryPoint, returnType.ToCSString(), paramList) { StrongReturnType = returnType, ReferencedEnumGroups = referencedEnumGroups.ToArray() });
+                    functions.Add(new Function()
+                    {
+                        Name = functionName,
+                        EntryPoint = entryPoint,
+                        Parameters = paramList,
+                        ReturnType = returnType.ToCSString(),
+
+                        StrongReturnType = returnType,
+
+                        ReferencedEnumGroups = referencedEnumGroups.ToArray(),
+                    });
                 }
             }
 
@@ -448,7 +479,7 @@ namespace ALGenerator.Parsing
             else throw new Exception($"Could not parse expression '{expression}'");
         }
 
-        private static BaseCSType ParsePType(XElement t, ALFile currentFile, NameMangler nameMangler, out GroupRef? groupRef)
+        private static BaseCSType ParsePType(XElement t, APIFile currentFile, NameMangler nameMangler, out GroupRef? groupRef)
         {
             string? group = t.Attribute("group")?.Value;
             if (group != null)
@@ -680,7 +711,7 @@ namespace ALGenerator.Parsing
         }
 
 
-        internal static List<EnumEntry> ParseEnums(XElement input, NameMangler nameMangler, ALFile currentFile)
+        internal static List<EnumEntry> ParseEnums(XElement input, NameMangler nameMangler, APIFile currentFile)
         {
             Logger.Info("Begining parsing of enums.");
             List<EnumEntry> enumsEntries = new List<EnumEntry>();
@@ -721,8 +752,8 @@ namespace ALGenerator.Parsing
                     {
                         enumApi = currentFile switch
                         {
-                            ALFile.AL => OutputApiFlags.AL,
-                            ALFile.ALC => OutputApiFlags.ALC,
+                            APIFile.AL => OutputApiFlags.AL,
+                            APIFile.ALC => OutputApiFlags.ALC,
 
                             _ => throw new Exception(),
                         };
@@ -742,12 +773,14 @@ namespace ALGenerator.Parsing
                     {
                         switch (group.Namespace)
                         {
-                            case ALFile.AL:
+                            case APIFile.AL:
                                 enumApi |= OutputApiFlags.AL;
                                 break;
-                            case ALFile.ALC:
+                            case APIFile.ALC:
                                 enumApi |= OutputApiFlags.ALC;
                                 break;
+                            default:
+                                throw new Exception();
                         }
                     }
 
@@ -789,7 +822,7 @@ namespace ALGenerator.Parsing
             }
         }
 
-        internal static GroupRef[] ParseGroups(string? groups, ALFile currentFile, NameMangler nameMangler)
+        internal static GroupRef[] ParseGroups(string? groups, APIFile currentFile, NameMangler nameMangler)
         {
             if (groups == null) return Array.Empty<GroupRef>();
 
@@ -803,19 +836,19 @@ namespace ALGenerator.Parsing
             return groupRefs;
         }
 
-        internal static GroupRef GroupRefFromString(string group, ALFile currentFile, NameMangler nameMangler)
+        internal static GroupRef GroupRefFromString(string group, APIFile currentFile, NameMangler nameMangler)
         {
             string name;
-            ALFile file;
+            APIFile file;
             if (group.StartsWith("al::"))
             {
                 name = NameMangler.RemoveStart(group, "al::");
-                file = ALFile.AL;
+                file = APIFile.AL;
             }
             else if (group.StartsWith("alc::"))
             {
                 name = NameMangler.RemoveStart(group, "alc::");
-                file = ALFile.ALC;
+                file = APIFile.ALC;
             }
             else
             {
@@ -829,7 +862,7 @@ namespace ALGenerator.Parsing
         }
 
 
-        internal static List<Feature> ParseFeatures(XElement input, ALFile currentFile)
+        internal static List<Feature> ParseFeatures(XElement input, APIFile currentFile)
         {
             Logger.Info("Begining parsing of features.");
 
@@ -869,7 +902,7 @@ namespace ALGenerator.Parsing
             return features;
         }
 
-        internal static List<Extension> ParseExtensions(XElement input, ALFile currentFile, NameMangler nameMangler)
+        internal static List<Extension> ParseExtensions(XElement input, APIFile currentFile, NameMangler nameMangler)
         {
             List<Extension> extensions = new List<Extension>();
             XElement? xelement = input.Element("extensions")!;
@@ -976,13 +1009,13 @@ namespace ALGenerator.Parsing
             return new RemoveEntry(comment, removeCommands, removeEnums);
         }
 
-        internal static ALAPI FileToAPI(ALFile file)
+        internal static ALAPI FileToAPI(APIFile file)
         {
             switch (file)
             {
-                case ALFile.AL:
+                case APIFile.AL:
                     return ALAPI.AL;
-                case ALFile.ALC:
+                case APIFile.ALC:
                     return ALAPI.ALC;
                 default:
                     throw new Exception();

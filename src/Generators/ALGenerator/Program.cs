@@ -1,5 +1,6 @@
 ﻿using ALGenerator.Parsing;
 using ALGenerator.Process;
+using GeneratorBase;
 using GeneratorBase.Utility;
 using System;
 using System.Collections.Generic;
@@ -37,7 +38,7 @@ namespace ALGenerator
 
                     // Reading the gl.xml file and parsing it into data structures.
                     using FileStream alSpecificationStream = Reader.ReadALSpecFromGithub();
-                    alSpecification = SpecificationParser.Parse(alSpecificationStream, new NameMangler(alSettings), ALFile.AL, new List<string>());
+                    alSpecification = SpecificationParser.Parse(alSpecificationStream, new NameMangler(alSettings), APIFile.AL, new List<string>());
                 }
 
                 Specification alcSpecification;
@@ -58,7 +59,7 @@ namespace ALGenerator
                     };
 
                     using FileStream alcSpecificationStream = Reader.ReadALCSpecFromGithub();
-                    alcSpecification = SpecificationParser.Parse(alcSpecificationStream, new NameMangler(alcSettings), ALFile.ALC, new List<string>());
+                    alcSpecification = SpecificationParser.Parse(alcSpecificationStream, new NameMangler(alcSettings), APIFile.ALC, new List<string>());
                 }
 
                 List<EFXPreset> efxPresets;
@@ -80,7 +81,7 @@ namespace ALGenerator
                     efxPresets = SpecificationParser.ParseEFXPresets(efxPresetsStream, new NameMangler(efxSettings));
                 }
 
-                List<NativeFunction> functions = [
+                List<Function> functions = [
                     .. alSpecification.Functions,
                     .. alcSpecification.Functions
                 ];

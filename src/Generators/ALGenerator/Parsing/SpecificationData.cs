@@ -26,7 +26,7 @@ namespace ALGenerator.Parsing
         ALC = 1 << 1,
     }
 
-    internal record NativeFunction(string Name, string EntryPoint, string ReturnType, List<Parameter> Parameters) : IFunction
+    /*internal record NativeFunction(string Name, string EntryPoint, string ReturnType, List<Parameter> Parameters) : IFunction
     {
         List<IFunctionParameter> IFunction.Parameters => Parameters.Cast<IFunctionParameter>().ToList();
 
@@ -41,12 +41,12 @@ namespace ALGenerator.Parsing
     {
         public BaseCSType? StrongType { get; set; }
         public Expression? StrongLength { get; set; }
-    }
+    }*/
 
 
     internal record Specification(
         //List<Command> Commands,
-        List<NativeFunction> Functions,
+        List<Function> Functions,
         List<EnumEntry> Enums,
         List<API> APIs);
 
@@ -125,10 +125,11 @@ namespace ALGenerator.Parsing
         ALC,
     }
 
+    /*
     /// <param name="OriginalName">The name of the referenced enum group (as seen in the xml files).</param>
     /// <param name="TranslatedName">The name of the referenced enum group (as seen in OpenTK).</param>
     /// <param name="Namespace">The enum namespace that is referenced (gl, wgl, or glx).</param>
-    internal record GroupRef(string OriginalName, string TranslatedName, ALFile Namespace);
+    internal record GroupRef(string OriginalName, string TranslatedName, ALFile Namespace);*/
 
     internal abstract record GLType();
 

@@ -71,7 +71,7 @@ namespace ALGenerator
         }
 
         // FIXME: Maybe we should nest this 
-        private static void WriteFunctionPointers(string directoryPath, FileStrings strings, List<NativeFunction> nativeFunctions)
+        private static void WriteFunctionPointers(string directoryPath, FileStrings strings, List<Function> nativeFunctions)
         {
             using StreamWriter stream = File.CreateText(Path.Combine(directoryPath, $"{strings.FileNamePrefix}.Pointers.cs"));
             using IndentedTextWriter writer = new IndentedTextWriter(stream);
@@ -90,7 +90,7 @@ namespace ALGenerator
                 writer.WriteLine($"public static unsafe partial class {strings.ClassName}Pointers");
                 using (writer.CsScope())
                 {
-                    foreach (NativeFunction function in nativeFunctions)
+                    foreach (Function function in nativeFunctions)
                     {
                         WriteFunctionPointer(writer, function, strings);
                     }
@@ -98,7 +98,7 @@ namespace ALGenerator
             }
         }
 
-        private static void WriteFunctionPointer(IndentedTextWriter writer, NativeFunction function, FileStrings strings)
+        private static void WriteFunctionPointer(IndentedTextWriter writer, Function function, FileStrings strings)
         {
             // Write delegate field initialized to the lazy loader.
             // Write public function definition that calls delegate.
@@ -136,7 +136,7 @@ namespace ALGenerator
             writer.WriteLine();
         }
 
-        private static void GetNativeFunctionSignature(NativeFunction function, bool postfixName, bool swapTypesForUnderlyingType,
+        private static void GetNativeFunctionSignature(Function function, bool postfixName, bool swapTypesForUnderlyingType,
             out string name, out StringBuilder paramNames, out StringBuilder delegateTypes, out StringBuilder signature, out bool castReturnType, out string returnType)
         {
             name = function.Name;
@@ -220,7 +220,7 @@ namespace ALGenerator
             string directoryPath,
             FileStrings strings,
             List<VendorFunctions> groups,
-            Dictionary<NativeFunction, FunctionDocumentation> documentation)
+            Dictionary<Function, FunctionDocumentation> documentation)
         {
             using StreamWriter stream = File.CreateText(Path.Combine(directoryPath, $"{strings.FileNamePrefix}.Native.cs"));
             using IndentedTextWriter writer = new IndentedTextWriter(stream);
@@ -261,7 +261,7 @@ namespace ALGenerator
             writer.Flush();
         }
 
-        private static void WriteNativeFunction(IndentedTextWriter writer, NativeFunction function, bool postfixName, FunctionDocumentation? documentation, string apiName)
+        private static void WriteNativeFunction(IndentedTextWriter writer, Function function, bool postfixName, FunctionDocumentation? documentation, string apiName)
         {
             GetNativeFunctionSignature(function, postfixName, swapTypesForUnderlyingType: false,
                 out string name,
@@ -419,7 +419,7 @@ namespace ALGenerator
             else
             {
                 // Writes the native call.
-                NativeFunction nativeFunction = overload.NativeFunction;
+                Function nativeFunction = overload.NativeFunction;
                 string name = nativeFunction.Name;
                 if (postfixNativeCall) name += "_";
 
@@ -441,7 +441,7 @@ namespace ALGenerator
         }
 
 
-        private static void WriteDocumentation(IndentedTextWriter writer, NativeFunction function, FunctionDocumentation documentation)
+        private static void WriteDocumentation(IndentedTextWriter writer, Function function, FunctionDocumentation documentation)
         {
             writer.Write("/// <summary> ");
             writer.Write($"<b>[requires: {string.Join(" | ", documentation.AddedIn)}]</b> ");

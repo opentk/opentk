@@ -456,7 +456,7 @@ namespace VkGenerator
             }
         }
 
-        private static void WriteCommands(string directoryPath, List<Command> commands, SpecificationData video, NameMangler nameMangler)
+        private static void WriteCommands(string directoryPath, List<Function> commands, SpecificationData video, NameMangler nameMangler)
         {
             using StreamWriter stream = File.CreateText(Path.Combine(directoryPath, "Vulkan.cs"));
             using IndentedTextWriter writer = new IndentedTextWriter(stream);
@@ -477,7 +477,7 @@ namespace VkGenerator
                 writer.WriteLine("public static unsafe partial class Vk");
                 using (writer.CsScope())
                 {
-                    foreach (Command command in commands)
+                    foreach (Function command in commands)
                     {
                         WriteCommand(writer, command, "static ", "VkPointers.", nameMangler);
                     }
@@ -487,14 +487,14 @@ namespace VkGenerator
             }
         }
 
-        public static void WriteCommand(IndentedTextWriter writer, Command command, string functionModifiers, string fnpointerPrefix, NameMangler nameMangler)
+        public static void WriteCommand(IndentedTextWriter writer, Function command, string functionModifiers, string fnpointerPrefix, NameMangler nameMangler)
         {
             string entryPoint = command.Name;
             string functionName = nameMangler.MangleFunctionName(command.Name);
 
             StringBuilder signature = new StringBuilder();
             StringBuilder paramNames = new StringBuilder();
-            foreach (CommandParameter parameter in command.Parameters)
+            foreach (Parameter parameter in command.Parameters)
             {
                 string name = NameMangler.MangleParameterName(parameter.Name);
                 string type = parameter.StrongType!.ToCSString();
@@ -580,7 +580,7 @@ namespace VkGenerator
             }
         }
 
-        private static void WriteFunctionPointers(string directoryPath, List<Command> commands, SpecificationData video, NameMangler nameMangler)
+        private static void WriteFunctionPointers(string directoryPath, List<Function> commands, SpecificationData video, NameMangler nameMangler)
         {
             using StreamWriter stream = File.CreateText(Path.Combine(directoryPath, "Vulkan.Pointers.cs"));
             using IndentedTextWriter writer = new IndentedTextWriter(stream);
@@ -602,7 +602,7 @@ namespace VkGenerator
                 writer.WriteLine("public static unsafe partial class VkPointers");
                 using (writer.CsScope())
                 {
-                    foreach (Command command in commands)
+                    foreach (Function command in commands)
                     {
                         WriteFunctionPointer(writer, command, "static ", true, nameMangler);
                     }
@@ -612,14 +612,14 @@ namespace VkGenerator
             }
         }
 
-        public static void WriteFunctionPointer(IndentedTextWriter writer, Command command, string memberModifiers, bool lazyLoader, NameMangler nameMangler)
+        public static void WriteFunctionPointer(IndentedTextWriter writer, Function command, string memberModifiers, bool lazyLoader, NameMangler nameMangler)
         {
             string entryPoint = command.Name;
 
             StringBuilder signature = new StringBuilder();
             StringBuilder delegateTypes = new StringBuilder();
             StringBuilder paramNames = new StringBuilder();
-            foreach (CommandParameter parameter in command.Parameters)
+            foreach (Parameter parameter in command.Parameters)
             {
                 string name = NameMangler.MangleParameterName(parameter.Name);
                 string type = parameter.StrongType!.ToCSString();
@@ -660,7 +660,7 @@ namespace VkGenerator
         }
 
 
-        public static void WriteDispatchTables(string directoryPath, List<Command> commands, SpecificationData video, NameMangler nameMangler)
+        public static void WriteDispatchTables(string directoryPath, List<Function> commands, SpecificationData video, NameMangler nameMangler)
         {
             using StreamWriter stream = File.CreateText(Path.Combine(directoryPath, "DispatchTables.cs"));
             using IndentedTextWriter writer = new IndentedTextWriter(stream);
@@ -685,7 +685,7 @@ namespace VkGenerator
                 writer.WriteLineNoTabs("#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member");
             }
 
-            static void WriteInstanceDispatchTable(IndentedTextWriter writer, List<Command> commands, NameMangler nameMangler)
+            static void WriteInstanceDispatchTable(IndentedTextWriter writer, List<Function> commands, NameMangler nameMangler)
             {
                 writer.WriteLine($"public unsafe partial struct InstanceDispatchTable");
                 using (writer.CsScope())
@@ -697,7 +697,7 @@ namespace VkGenerator
                     using (writer.CsScope())
                     {
                         writer.WriteLine("Instance = instance;");
-                        foreach (Command command in commands)
+                        foreach (Function command in commands)
                         {
                             if (command.CommandType != CommandType.Instance)
                                 continue;
@@ -708,7 +708,7 @@ namespace VkGenerator
                             StringBuilder signature = new StringBuilder();
                             StringBuilder delegateTypes = new StringBuilder();
                             StringBuilder paramNames = new StringBuilder();
-                            foreach (CommandParameter parameter in command.Parameters)
+                            foreach (Parameter parameter in command.Parameters)
                             {
                                 string name = NameMangler.MangleParameterName(parameter.Name);
                                 string type = parameter.StrongType!.ToCSString();
@@ -729,7 +729,7 @@ namespace VkGenerator
                     // we might want to do like VkBootstrap does as implicitly
                     // fill it in.
                     // - Noggin_bops 2025-03-27
-                    foreach (Command command in commands)
+                    foreach (Function command in commands)
                     {
                         if (command.CommandType != CommandType.Instance)
                             continue;
@@ -737,7 +737,7 @@ namespace VkGenerator
                         WriteCommand(writer, command, "", "", nameMangler);
                     }
 
-                    foreach (Command command in commands)
+                    foreach (Function command in commands)
                     {
                         if (command.CommandType != CommandType.Instance)
                             continue;
@@ -747,7 +747,7 @@ namespace VkGenerator
                 }
             }
 
-            static void WriteDeviceDispatchTable(IndentedTextWriter writer, List<Command> commands, NameMangler nameMangler)
+            static void WriteDeviceDispatchTable(IndentedTextWriter writer, List<Function> commands, NameMangler nameMangler)
             {
                 writer.WriteLine($"public unsafe partial struct DeviceDispatchTable");
                 using (writer.CsScope())
@@ -759,7 +759,7 @@ namespace VkGenerator
                     using (writer.CsScope())
                     {
                         writer.WriteLine("Device = device;");
-                        foreach (Command command in commands)
+                        foreach (Function command in commands)
                         {
                             if (command.CommandType != CommandType.Device)
                                 continue;
@@ -770,7 +770,7 @@ namespace VkGenerator
                             StringBuilder signature = new StringBuilder();
                             StringBuilder delegateTypes = new StringBuilder();
                             StringBuilder paramNames = new StringBuilder();
-                            foreach (CommandParameter parameter in command.Parameters)
+                            foreach (Parameter parameter in command.Parameters)
                             {
                                 string name = NameMangler.MangleParameterName(parameter.Name);
                                 string type = parameter.StrongType!.ToCSString();
@@ -791,7 +791,7 @@ namespace VkGenerator
                     // we might want to do like VkBootstrap does as implicitly
                     // fill it in.
                     // - Noggin_bops 2025-03-27
-                    foreach (Command command in commands)
+                    foreach (Function command in commands)
                     {
                         if (command.CommandType != CommandType.Device)
                             continue;
@@ -799,7 +799,7 @@ namespace VkGenerator
                         WriteCommand(writer, command, "", "", nameMangler);
                     }
 
-                    foreach (Command command in commands)
+                    foreach (Function command in commands)
                     {
                         if (command.CommandType != CommandType.Device)
                             continue;

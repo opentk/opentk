@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -35,47 +37,51 @@ namespace GeneratorBase
 
     public interface IReferable
     {
-        List<IFunction> ReferencedBy { get; }
-        void MarkReferencedBy(IFunction function)
+        List<Function> ReferencedBy { get; }
+        void MarkReferencedBy(Function function)
         {
             ReferencedBy.Add(function);
         }
     }
 
-    public interface IFunction
-    {
-        public string EntryPoint { get; }
-        public string Name { get; }
-        public string ReturnType { get; }
-        public List<IFunctionParameter> Parameters { get; }
-
-        public BaseCSType? StrongReturnType { get; set; }
-        public VersionInfo? VersionInfo { get; set; }
-    }
-
     // Should this type help us with overloading only
     // or should it also help with type resolution?
     // Type resolution might be too API specific but I'm not too sure...
-    /*public record class Function
+    public record class Function
     {
-        public string EntryPoint { get; init; }
-        public string FunctionName { get; init; }
-        public List<Parameter> Parameters { get; init; }
-        public BaseCSType ReturnType { get; init; }
         public string? Alias { get; init; }
 
-        public VersionInfo? VersionInfo { get; init; }
-    }*/
+        public required string Name { get; init; }
+        public required string EntryPoint { get; init; }
+        public required List<Parameter> Parameters { get; init; }
+        public required string ReturnType { get; init; }
 
-    public interface IFunctionParameter
+        public BaseCSType? StrongReturnType { get; set; }
+        public VersionInfo? VersionInfo { get; set; }
+
+        // OpenGL/OpenAL
+        public GroupRef[] ReferencedEnumGroups { get; set; }
+
+        // Vulkan
+        public CommandType CommandType { get; set; } = CommandType.Invalid;
+    }
+
+    public record class Parameter
     {
-        public string OriginalName { get; }
-        public string Name { get; }
-        public string Type { get; }
-        public string? Length { get; }
+        public required string Name { get; init; }
+        public required string OriginalName { get; init; }
+        public required string Type { get; init; }
+        public required string? Length { get; init; }
 
         public BaseCSType? StrongType { get; set; }
         public Expression? StrongLength { get; set; }
+
+        // OpenGL/OpenAL
+        public string[] Kinds { get; init; }
+
+        // Vulkan
+        public bool Optional { get; init; }
+        public bool ExternSync { get; init; }
     }
 
     public interface IStruct : IReferable
@@ -110,4 +116,45 @@ namespace GeneratorBase
 
         public VersionInfo? VersionInfo { get; set; }
     }
+
+    public enum APIFile
+    {
+        // OpenGL
+        GL,
+        WGL,
+        GLX,
+        EGL,
+
+        // OpenAL
+        AL,
+        ALC,
+
+        // Vulkan
+        Vulkan,
+    }
+
+    #region OpenGL
+
+    /// <param name="OriginalName">The name of the referenced enum group (as seen in the xml files).</param>
+    /// <param name="TranslatedName">The name of the referenced enum group (as seen in OpenTK).</param>
+    /// <param name="Namespace">The enum namespace that is referenced.</param>
+    public record GroupRef(string OriginalName, string TranslatedName, APIFile Namespace);
+
+    #endregion
+
+    #region Vulkan
+
+    public enum CommandType
+    {
+        /// <summary>This command does not have a resolved command type yet.</summary>
+        Invalid,
+        /// <summary>This command is one of the global vulkan commands.</summary>
+        Global,
+        /// <summary>This command is an instance command.</summary>
+        Instance,
+        /// <summary>This command is a device command.</summary>
+        Device,
+    }
+
+    #endregion
 }

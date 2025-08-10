@@ -6,6 +6,7 @@ using GeneratorBase.Utility;
 using GLGenerator.Process;
 using GLGenerator.Parsing;
 using System.Diagnostics;
+using GeneratorBase;
 
 namespace GLGenerator.Process
 {
@@ -18,7 +19,7 @@ namespace GLGenerator.Process
             List<EnumGroupInfo> AllEnumGroups);
 
         internal record OverloadedFunction(
-            NativeFunction NativeFunction,
+            Function NativeFunction,
             Dictionary<OutputApi, CommandDocumentation> Documentation,
             Overload[] Overloads,
             bool ChangeNativeName);
@@ -49,15 +50,15 @@ namespace GLGenerator.Process
         internal static OutputData ProcessSpec(Specification spec, Documentation docs)
         {
             // The first thing we do is process all of the vendorFunctions defined into a dictionary of Functions.
-            List<NativeFunction> allEntryPoints = new List<NativeFunction>(spec.Functions.Count);
+            List<Function> allEntryPoints = new List<Function>(spec.Functions.Count);
             Dictionary<string, OverloadedFunction> allFunctions = new Dictionary<string, OverloadedFunction>(spec.Functions.Count);
-            foreach (NativeFunction nativeFunction in spec.Functions)
+            foreach (Function function in spec.Functions)
             {
-                Dictionary<OutputApi, CommandDocumentation> functionDocumentation = MakeDocumentationForNativeFunction(nativeFunction, docs);
-                OverloadedFunction overloadedFunction = GenerateOverloads(nativeFunction, functionDocumentation);
+                Dictionary<OutputApi, CommandDocumentation> functionDocumentation = MakeDocumentationForNativeFunction(function, docs);
+                OverloadedFunction overloadedFunction = GenerateOverloads(function, functionDocumentation);
 
-                allEntryPoints.Add(nativeFunction);
-                allFunctions.Add(nativeFunction.EntryPoint, overloadedFunction);
+                allEntryPoints.Add(function);
+                allFunctions.Add(function.EntryPoint, overloadedFunction);
             }
 
             Dictionary<OutputApi, Dictionary<string, EnumGroupMember>> allEnumsPerAPI = new Dictionary<OutputApi, Dictionary<string, EnumGroupMember>>();
@@ -73,24 +74,24 @@ namespace GLGenerator.Process
             {
                 bool isFlag = @enum.Type == EnumType.Bitmask;
 
-                foreach ((string originalName, string translatedName, GLFile @namespace) in @enum.Groups)
+                foreach ((string originalName, string translatedName, APIFile @namespace) in @enum.Groups)
                 {
-                    if (@namespace == GLFile.GL)
+                    if (@namespace == APIFile.GL)
                     {
                         AddToGroup(allEnumGroups, OutputApi.GL, originalName, translatedName, isFlag);
                         AddToGroup(allEnumGroups, OutputApi.GLCompat, originalName, translatedName, isFlag);
                         AddToGroup(allEnumGroups, OutputApi.GLES1, originalName, translatedName, isFlag);
                         AddToGroup(allEnumGroups, OutputApi.GLES2, originalName, translatedName, isFlag);
                     }
-                    else if (@namespace == GLFile.WGL)
+                    else if (@namespace == APIFile.WGL)
                     {
                         AddToGroup(allEnumGroups, OutputApi.WGL, originalName, translatedName, isFlag);
                     }
-                    else if (@namespace == GLFile.GLX)
+                    else if (@namespace == APIFile.GLX)
                     {
                         AddToGroup(allEnumGroups, OutputApi.GLX, originalName, translatedName, isFlag);
                     }
-                    else if (@namespace == GLFile.EGL)
+                    else if (@namespace == APIFile.EGL)
                     {
                         AddToGroup(allEnumGroups, OutputApi.EGL, originalName, translatedName, isFlag);
                     }
@@ -176,14 +177,14 @@ namespace GLGenerator.Process
                 };
 
                 // FIXME: Do we need this here?
-                GLFile file = api switch
+                APIFile file = api switch
                 {
-                    InputAPI.GL => GLFile.GL,
-                    InputAPI.GLES1 => GLFile.GL,
-                    InputAPI.GLES2 => GLFile.GL,
-                    InputAPI.WGL => GLFile.WGL,
-                    InputAPI.GLX => GLFile.GLX,
-                    InputAPI.EGL => GLFile.EGL,
+                    InputAPI.GL => APIFile.GL,
+                    InputAPI.GLES1 => APIFile.GL,
+                    InputAPI.GLES2 => APIFile.GL,
+                    InputAPI.WGL => APIFile.WGL,
+                    InputAPI.GLX => APIFile.GLX,
+                    InputAPI.EGL => APIFile.EGL,
 
                     _ => throw new Exception(),
                 };
@@ -197,7 +198,7 @@ namespace GLGenerator.Process
                     CrossReferenceEnums(OutputApi.GLCompat, file);
                 }
 
-                void CrossReferenceEnums(OutputApi outAPI, GLFile glFile)
+                void CrossReferenceEnums(OutputApi outAPI, APIFile glFile)
                 {
                     bool removeFunctions = outAPI switch
                     {
@@ -231,10 +232,10 @@ namespace GLGenerator.Process
                         {
                             foreach (var groupRef in @enum.Groups)
                             {
-                                GLFile @namespace = groupRef.Namespace;
+                                APIFile @namespace = groupRef.Namespace;
                                 if (@namespace != glFile)
                                 {
-                                    if (@namespace == GLFile.GL)
+                                    if (@namespace == APIFile.GL)
                                     {
                                         // FIXME: Cleanup
 
@@ -245,15 +246,15 @@ namespace GLGenerator.Process
                                         AddEnumToAPI(OutputApi.GLES1, @enum);
                                         AddEnumToAPI(OutputApi.GLES2, @enum);
                                     }
-                                    else if (@namespace == GLFile.WGL)
+                                    else if (@namespace == APIFile.WGL)
                                     {
                                         AddEnumToAPI(OutputApi.WGL, @enum);
                                     }
-                                    else if (@namespace == GLFile.GLX)
+                                    else if (@namespace == APIFile.GLX)
                                     {
                                         AddEnumToAPI(OutputApi.GLX, @enum);
                                     }
-                                    else if (@namespace == GLFile.EGL)
+                                    else if (@namespace == APIFile.EGL)
                                     {
                                         AddEnumToAPI(OutputApi.EGL, @enum);
                                     }
@@ -347,14 +348,14 @@ namespace GLGenerator.Process
                 };
 
                 // FIXME: Do we need this here?
-                GLFile file = api switch
+                APIFile file = api switch
                 {
-                    InputAPI.GL => GLFile.GL,
-                    InputAPI.GLES1 => GLFile.GL,
-                    InputAPI.GLES2 => GLFile.GL,
-                    InputAPI.WGL => GLFile.WGL,
-                    InputAPI.GLX => GLFile.GLX,
-                    InputAPI.EGL => GLFile.EGL,
+                    InputAPI.GL => APIFile.GL,
+                    InputAPI.GLES1 => APIFile.GL,
+                    InputAPI.GLES2 => APIFile.GL,
+                    InputAPI.WGL => APIFile.WGL,
+                    InputAPI.GLX => APIFile.GLX,
+                    InputAPI.EGL => APIFile.EGL,
 
                     _ => throw new Exception(),
                 };
@@ -366,7 +367,7 @@ namespace GLGenerator.Process
                     outputNamespaces.Add(CreateOutputAPI(OutputApi.GLCompat, file));
                 }
 
-                Namespace CreateOutputAPI(OutputApi outAPI, GLFile glFile)
+                Namespace CreateOutputAPI(OutputApi outAPI, APIFile glFile)
                 {
                     bool removeFunctions = outAPI switch
                     {
@@ -472,7 +473,7 @@ namespace GLGenerator.Process
                     }
 
                     // Go through all vendorFunctions and build up a Dictionary from enumName groups to function using them
-                    Dictionary<GroupRef, List<(string Vendor, NativeFunction Function)>> enumGroupToNativeFunctionsUsingThatEnumGroup = new Dictionary<GroupRef, List<(string Vendor, NativeFunction Function)>>();
+                    Dictionary<GroupRef, List<(string Vendor, Function Function)>> enumGroupToNativeFunctionsUsingThatEnumGroup = new Dictionary<GroupRef, List<(string Vendor, Function Function)>>();
                     foreach (var (vendor, vendorFunctions) in functionsByVendor)
                     {
                         foreach (var function in vendorFunctions)
@@ -481,7 +482,7 @@ namespace GLGenerator.Process
                             {
                                 if (enumGroupToNativeFunctionsUsingThatEnumGroup.TryGetValue(group, out var listOfFunctions) == false)
                                 {
-                                    listOfFunctions = new List<(string Vendor, NativeFunction Function)>();
+                                    listOfFunctions = new List<(string Vendor, Function Function)>();
                                     enumGroupToNativeFunctionsUsingThatEnumGroup.Add(group, listOfFunctions);
                                 }
 
@@ -554,7 +555,7 @@ namespace GLGenerator.Process
                         {
                             if (!vendors.TryGetValue(vendor, out VendorFunctions? group))
                             {
-                                group = new VendorFunctions(vendor, new List<Process.OverloadedFunction>(), new HashSet<NativeFunction>());
+                                group = new VendorFunctions(vendor, new List<Process.OverloadedFunction>(), new HashSet<Function>());
                                 vendors.Add(vendor, group);
                             }
 
@@ -580,7 +581,7 @@ namespace GLGenerator.Process
                         vendorFunctions.Functions.Sort();
                     }
 
-                    Dictionary<NativeFunction, FunctionDocumentation> documentation = new Dictionary<NativeFunction, FunctionDocumentation>();
+                    Dictionary<Function, FunctionDocumentation> documentation = new Dictionary<Function, FunctionDocumentation>();
                     foreach (var (vendor, vendorFunctions) in functionsByVendor)
                     {
                         foreach (var function in vendorFunctions)
@@ -681,22 +682,22 @@ namespace GLGenerator.Process
             // FIXME: This requires us to merge all input data!
             // FIXME: Potentially split the GLES function pointers from the GL ones.
             List<Pointers> pointers = new List<Pointers>();
-            pointers.Add(CreatePointersList(GLFile.GL, outputNamespaces));
-            pointers.Add(CreatePointersList(GLFile.WGL, outputNamespaces));
-            pointers.Add(CreatePointersList(GLFile.GLX, outputNamespaces));
-            pointers.Add(CreatePointersList(GLFile.EGL, outputNamespaces));
+            pointers.Add(CreatePointersList(APIFile.GL, outputNamespaces));
+            pointers.Add(CreatePointersList(APIFile.WGL, outputNamespaces));
+            pointers.Add(CreatePointersList(APIFile.GLX, outputNamespaces));
+            pointers.Add(CreatePointersList(APIFile.EGL, outputNamespaces));
 
             return new OutputData(pointers, outputNamespaces);
 
-            Pointers CreatePointersList(GLFile file, List<Namespace> namespaces)
+            Pointers CreatePointersList(APIFile file, List<Namespace> namespaces)
             {
-                SortedList<string, NativeFunction> allFunctions = new SortedList<string, NativeFunction>();
+                SortedList<string, Function> allFunctions = new SortedList<string, Function>();
                 foreach (Namespace @namespace in namespaces)
                 {
                     bool addFunctions = false;
                     switch (file)
                     {
-                        case GLFile.GL:
+                        case APIFile.GL:
                             if (@namespace.Name == OutputApi.GL ||
                                 @namespace.Name == OutputApi.GLCompat ||
                                 @namespace.Name == OutputApi.GLES1 ||
@@ -705,19 +706,19 @@ namespace GLGenerator.Process
                                 addFunctions = true;
                             }
                             break;
-                        case GLFile.WGL:
+                        case APIFile.WGL:
                             if (@namespace.Name == OutputApi.WGL)
                             {
                                 addFunctions = true;
                             }
                             break;
-                        case GLFile.GLX:
+                        case APIFile.GLX:
                             if (@namespace.Name == OutputApi.GLX)
                             {
                                 addFunctions = true;
                             }
                             break;
-                        case GLFile.EGL:
+                        case APIFile.EGL:
                             if (@namespace.Name == OutputApi.EGL)
                             {
                                 addFunctions = true;
@@ -744,7 +745,7 @@ namespace GLGenerator.Process
             }
         }
 
-        internal static Dictionary<OutputApi, CommandDocumentation> MakeDocumentationForNativeFunction(NativeFunction function, Documentation documentation)
+        internal static Dictionary<OutputApi, CommandDocumentation> MakeDocumentationForNativeFunction(Function function, Documentation documentation)
         {
             Dictionary<OutputApi, CommandDocumentation> commandDocs = new Dictionary<OutputApi, CommandDocumentation>();
 
@@ -773,7 +774,7 @@ namespace GLGenerator.Process
         }
 
         // Maybe we can do the return type overloading in a post processing step?
-        internal static OverloadedFunction GenerateOverloads(NativeFunction nativeFunction, Dictionary<OutputApi, CommandDocumentation> functionDocumentation)
+        internal static OverloadedFunction GenerateOverloads(Function nativeFunction, Dictionary<OutputApi, CommandDocumentation> functionDocumentation)
         {
             List<Overload> overloads = new List<Overload>
             {
@@ -815,7 +816,7 @@ namespace GLGenerator.Process
 
             return new OverloadedFunction(nativeFunction, functionDocumentation, overloadArray, changeNativeName);
 
-            static bool AreSignaturesDifferent(NativeFunction nativeFunction, Overload overload)
+            static bool AreSignaturesDifferent(Function nativeFunction, Overload overload)
             {
                 if (nativeFunction.Parameters.Count != overload.InputParameters.Length)
                 {

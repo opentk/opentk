@@ -5,6 +5,7 @@ using GeneratorBase.Utility.Extensions;
 using GeneratorBase.Utility;
 using ALGenerator.Process;
 using ALGenerator.Parsing;
+using GeneratorBase;
 
 namespace ALGenerator.Process
 {
@@ -17,7 +18,7 @@ namespace ALGenerator.Process
             List<EnumGroupInfo> AllEnumGroups);
 
         internal record OverloadedFunction(
-            NativeFunction NativeFunction,
+            Function NativeFunction,
             Dictionary<OutputApi, CommandDocumentation> Documentation,
             Overload[] Overloads,
             bool ChangeNativeName);
@@ -49,7 +50,7 @@ namespace ALGenerator.Process
         {
             // The first thing we do is process all of the vendorFunctions defined into a dictionary of Functions.
             Dictionary<string, OverloadedFunction> allFunctions = new Dictionary<string, OverloadedFunction>(spec.Functions.Count);
-            foreach (NativeFunction nativeFunction in spec.Functions)
+            foreach (Function nativeFunction in spec.Functions)
             {
                 Dictionary<OutputApi, CommandDocumentation> functionDocumentation = MakeDocumentationForNativeFunction(nativeFunction, docs);
                 OverloadedFunction overloadedFunction = GenerateOverloads(nativeFunction, functionDocumentation);
@@ -70,15 +71,18 @@ namespace ALGenerator.Process
             {
                 bool isFlag = @enum.Type == EnumType.Bitmask;
 
-                foreach ((string originalName, string translatedName, ALFile @namespace) in @enum.Groups)
+                foreach ((string originalName, string translatedName, APIFile @namespace) in @enum.Groups)
                 {
-                    if (@namespace == ALFile.AL)
+                    switch (@namespace)
                     {
-                        AddToGroup(allEnumGroups, OutputApi.AL, originalName, translatedName, isFlag);
-                    }
-                    else if (@namespace == ALFile.ALC)
-                    {
-                        AddToGroup(allEnumGroups, OutputApi.ALC, originalName, translatedName, isFlag);
+                        case APIFile.AL:
+                            AddToGroup(allEnumGroups, OutputApi.AL, originalName, translatedName, isFlag);
+                            break;
+                        case APIFile.ALC:
+                            AddToGroup(allEnumGroups, OutputApi.ALC, originalName, translatedName, isFlag);
+                            break;
+                        default:
+                            throw new Exception();
                     }
 
                     static void AddToGroup(Dictionary<OutputApi, HashSet<EnumGroupInfo>> allEnumGroups, OutputApi api, string originalName, string translatedName, bool isFlag)
@@ -132,10 +136,10 @@ namespace ALGenerator.Process
                 };
 
                 // FIXME: Do we need this here?
-                ALFile file = api switch
+                APIFile file = api switch
                 {
-                    InputAPI.AL => ALFile.AL,
-                    InputAPI.ALC => ALFile.ALC,
+                    InputAPI.AL => APIFile.AL,
+                    InputAPI.ALC => APIFile.ALC,
 
                     _ => throw new Exception(),
                 };
@@ -172,16 +176,19 @@ namespace ALGenerator.Process
                     {
                         foreach (var groupRef in @enum.Groups)
                         {
-                            ALFile @namespace = groupRef.Namespace;
+                            APIFile @namespace = groupRef.Namespace;
                             if (@namespace != file)
                             {
-                                if (@namespace == ALFile.AL)
+                                switch (@namespace)
                                 {
-                                    AddEnumToAPI(OutputApi.AL, @enum);
-                                }
-                                else if (@namespace == ALFile.ALC)
-                                {
-                                    AddEnumToAPI(OutputApi.ALC, @enum);
+                                    case APIFile.AL:
+                                        AddEnumToAPI(OutputApi.AL, @enum);
+                                        break;
+                                    case APIFile.ALC:
+                                        AddEnumToAPI(OutputApi.ALC, @enum);
+                                        break;
+                                    default:
+                                        throw new Exception();
                                 }
 
                                 void AddEnumToAPI(OutputApi outputApi, EnumGroupMember @enum)
@@ -260,17 +267,17 @@ namespace ALGenerator.Process
                 };
 
                 // FIXME: Do we need this here?
-                ALFile file = api switch
+                APIFile file = api switch
                 {
-                    InputAPI.AL => ALFile.AL,
-                    InputAPI.ALC => ALFile.ALC,
+                    InputAPI.AL => APIFile.AL,
+                    InputAPI.ALC => APIFile.ALC,
 
                     _ => throw new Exception(),
                 };
 
                 outputNamespaces.Add(CreateOutputAPI(outAPI, file));
 
-                Namespace CreateOutputAPI(OutputApi outAPI, ALFile alFile)
+                Namespace CreateOutputAPI(OutputApi outAPI, APIFile alFile)
                 {
                     bool removeFunctions = outAPI switch
                     {
@@ -384,7 +391,7 @@ namespace ALGenerator.Process
                     }
 
                     // Go through all vendorFunctions and build up a Dictionary from enumName groups to function using them
-                    Dictionary<GroupRef, List<(string Vendor, NativeFunction Function)>> enumGroupToNativeFunctionsUsingThatEnumGroup = new Dictionary<GroupRef, List<(string Vendor, NativeFunction Function)>>();
+                    Dictionary<GroupRef, List<(string Vendor, Function Function)>> enumGroupToNativeFunctionsUsingThatEnumGroup = new Dictionary<GroupRef, List<(string Vendor, Function Function)>>();
                     foreach (var (vendor, vendorFunctions) in functionsByVendor)
                     {
                         foreach (var function in vendorFunctions)
@@ -393,7 +400,7 @@ namespace ALGenerator.Process
                             {
                                 if (enumGroupToNativeFunctionsUsingThatEnumGroup.TryGetValue(group, out var listOfFunctions) == false)
                                 {
-                                    listOfFunctions = new List<(string Vendor, NativeFunction Function)>();
+                                    listOfFunctions = new List<(string Vendor, Function Function)>();
                                     enumGroupToNativeFunctionsUsingThatEnumGroup.Add(group, listOfFunctions);
                                 }
 
@@ -488,7 +495,7 @@ namespace ALGenerator.Process
                         {
                             if (!vendors.TryGetValue(vendor, out VendorFunctions? group))
                             {
-                                group = new VendorFunctions(vendor, new List<Process.OverloadedFunction>(), new HashSet<NativeFunction>());
+                                group = new VendorFunctions(vendor, new List<Process.OverloadedFunction>(), new HashSet<Function>());
                                 vendors.Add(vendor, group);
                             }
 
@@ -508,7 +515,7 @@ namespace ALGenerator.Process
                     }
                     sortedVendorFunctions.Sort((e1, e2) => e1.Vendor.CompareTo(e2.Vendor));
 
-                    Dictionary<NativeFunction, FunctionDocumentation> documentation = new Dictionary<NativeFunction, FunctionDocumentation>();
+                    Dictionary<Function, FunctionDocumentation> documentation = new Dictionary<Function, FunctionDocumentation>();
                     foreach (var (vendor, vendorFunctions) in functionsByVendor)
                     {
                         foreach (var function in vendorFunctions)
@@ -609,7 +616,7 @@ namespace ALGenerator.Process
 
             Pointers CreatePointersList(ALFile file, List<Namespace> namespaces)
             {
-                SortedList<string, NativeFunction> allFunctions = new SortedList<string, NativeFunction>();
+                SortedList<string, Function> allFunctions = new SortedList<string, Function>();
                 foreach (Namespace @namespace in namespaces)
                 {
                     bool addFunctions = false;
@@ -648,7 +655,7 @@ namespace ALGenerator.Process
             }
         }
 
-        internal static Dictionary<OutputApi, CommandDocumentation> MakeDocumentationForNativeFunction(NativeFunction function, Documentation documentation)
+        internal static Dictionary<OutputApi, CommandDocumentation> MakeDocumentationForNativeFunction(Function function, Documentation documentation)
         {
             Dictionary<OutputApi, CommandDocumentation> commandDocs = new Dictionary<OutputApi, CommandDocumentation>();
 
@@ -677,7 +684,7 @@ namespace ALGenerator.Process
         }
 
         // Maybe we can do the return type overloading in a post processing step?
-        internal static OverloadedFunction GenerateOverloads(NativeFunction nativeFunction, Dictionary<OutputApi, CommandDocumentation> functionDocumentation)
+        internal static OverloadedFunction GenerateOverloads(Function nativeFunction, Dictionary<OutputApi, CommandDocumentation> functionDocumentation)
         {
             List<Overload> overloads = new List<Overload>
             {
@@ -719,7 +726,7 @@ namespace ALGenerator.Process
 
             return new OverloadedFunction(nativeFunction, functionDocumentation, overloadArray, changeNativeName);
 
-            static bool AreSignaturesDifferent(NativeFunction nativeFunction, Overload overload)
+            static bool AreSignaturesDifferent(Function nativeFunction, Overload overload)
             {
                 if (nativeFunction.Parameters.Count != overload.InputParameters.Length)
                 {

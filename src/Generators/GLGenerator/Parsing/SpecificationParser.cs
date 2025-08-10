@@ -15,14 +15,14 @@ namespace GLGenerator.Parsing
 {
     internal class SpecificationParser
     {
-        internal static Specification Parse(Stream input, NameMangler nameMangler, GLFile currentFile, List<string> ignoreFunctions)
+        internal static Specification Parse(Stream input, NameMangler nameMangler, APIFile currentFile, List<string> ignoreFunctions)
         {
             XDocument? xdocument = XDocument.Load(input);
 
             if (xdocument.Root == null)
                 throw new NullReferenceException("The parsed xml didn't contain a Root node.");
 
-            List<NativeFunction> functions = ParseCommands(xdocument.Root, nameMangler, currentFile, ignoreFunctions);
+            List<Function> functions = ParseCommands(xdocument.Root, nameMangler, currentFile, ignoreFunctions);
             List<EnumEntry>? enums = ParseEnums(xdocument.Root, nameMangler, currentFile);
 
             List<Feature>? features = ParseFeatures(xdocument.Root, ignoreFunctions);
@@ -264,12 +264,12 @@ namespace GLGenerator.Parsing
             }
         }
 
-        private static List<NativeFunction> ParseCommands(XElement input, NameMangler nameMangler, GLFile currentFile, List<string> ignoreFunctions)
+        private static List<Function> ParseCommands(XElement input, NameMangler nameMangler, APIFile currentFile, List<string> ignoreFunctions)
         {
             Logger.Info("Begining parsing of commands.");
             XElement? xelement = input.Element("commands")!;
 
-            List<NativeFunction> functions = new List<NativeFunction>();
+            List<Function> functions = new List<Function>();
             foreach (XElement command in xelement.Elements("command"))
             {
                 XElement proto = command.Element("proto") ?? throw new Exception("Missing proto tag!");
@@ -291,12 +291,23 @@ namespace GLGenerator.Parsing
                     BaseCSType type = ParsePType(element, currentFile, nameMangler, out GroupRef? groupRef);
                     if (groupRef != null) referencedEnumGroups.Add(groupRef);
 
-                    string[] kind = element.Attribute("kind")?.Value?.Split(',') ?? Array.Empty<string>();
+                    string[] kinds = element.Attribute("kind")?.Value?.Split(',') ?? Array.Empty<string>();
 
                     string? length = element.Attribute("len")?.Value;
                     Expression? paramLength = length == null ? null : ParseExpression(length);
 
-                    paramList.Add(new Parameter(paramName, mangledName, type.ToCSString(), length, kind){ StrongType = type, StrongLength = paramLength });
+                    paramList.Add(new Parameter()
+                    {
+                        Name = mangledName,
+                        OriginalName = paramName,
+                        Type = type.ToCSString(),
+                        Length = length,
+
+                        StrongType = type,
+                        StrongLength = paramLength,
+
+                        Kinds = kinds
+                    });
                 }
 
                 BaseCSType returnType = ParsePType(proto, currentFile, nameMangler, out GroupRef? returnGroup);
@@ -304,7 +315,17 @@ namespace GLGenerator.Parsing
 
                 string functionName = nameMangler.MangleFunctionName(entryPoint);
 
-                functions.Add(new NativeFunction(functionName, entryPoint, returnType.ToCSString(), paramList) { StrongReturnType = returnType, ReferencedEnumGroups = referencedEnumGroups.ToArray() });
+                functions.Add(new Function()
+                {
+                    Name = functionName,
+                    EntryPoint = entryPoint,
+                    ReturnType = returnType.ToCSString(),
+                    Parameters = paramList,
+
+                    StrongReturnType = returnType,
+
+                    ReferencedEnumGroups = referencedEnumGroups.ToArray(),
+                });
             }
 
             return functions;
@@ -426,7 +447,7 @@ namespace GLGenerator.Parsing
             else throw new Exception($"Could not parse expression '{expression}'");
         }
 
-        private static BaseCSType ParsePType(XElement t, GLFile currentFile, NameMangler nameMangler, out GroupRef? groupRef)
+        private static BaseCSType ParsePType(XElement t, APIFile currentFile, NameMangler nameMangler, out GroupRef? groupRef)
         {
             string? group = t.Attribute("group")?.Value;
             if (group != null)
@@ -784,7 +805,7 @@ namespace GLGenerator.Parsing
         }
 
 
-        internal static List<EnumEntry> ParseEnums(XElement input, NameMangler nameMangler, GLFile currentFile)
+        internal static List<EnumEntry> ParseEnums(XElement input, NameMangler nameMangler, APIFile currentFile)
         {
             Logger.Info("Begining parsing of enums.");
             List<EnumEntry> enumsEntries = new List<EnumEntry>();
@@ -834,10 +855,10 @@ namespace GLGenerator.Parsing
                     {
                         enumApi = currentFile switch
                         {
-                            GLFile.GL => OutputApiFlags.GL | OutputApiFlags.GLCompat | OutputApiFlags.GLES1 | OutputApiFlags.GLES2,
-                            GLFile.WGL => OutputApiFlags.WGL,
-                            GLFile.GLX => OutputApiFlags.GLX,
-                            GLFile.EGL => OutputApiFlags.EGL,
+                            APIFile.GL => OutputApiFlags.GL | OutputApiFlags.GLCompat | OutputApiFlags.GLES1 | OutputApiFlags.GLES2,
+                            APIFile.WGL => OutputApiFlags.WGL,
+                            APIFile.GLX => OutputApiFlags.GLX,
+                            APIFile.EGL => OutputApiFlags.EGL,
 
                             _ => throw new Exception(),
                         };
@@ -864,16 +885,16 @@ namespace GLGenerator.Parsing
                     {
                         switch (group.Namespace)
                         {
-                            case GLFile.GL:
+                            case APIFile.GL:
                                 enumApi |= OutputApiFlags.GL | OutputApiFlags.GLCompat | OutputApiFlags.GLES1 | OutputApiFlags.GLES2;
                                 break;
-                            case GLFile.WGL:
+                            case APIFile.WGL:
                                 enumApi |= OutputApiFlags.WGL;
                                 break;
-                            case GLFile.GLX:
+                            case APIFile.GLX:
                                 enumApi |= OutputApiFlags.GLX;
                                 break;
-                            case GLFile.EGL:
+                            case APIFile.EGL:
                                 enumApi |= OutputApiFlags.EGL;
                                 break;
                         }
@@ -918,7 +939,7 @@ namespace GLGenerator.Parsing
             }
         }
 
-        internal static GroupRef[] ParseGroups(string? groups, GLFile currentFile, NameMangler nameMangler)
+        internal static GroupRef[] ParseGroups(string? groups, APIFile currentFile, NameMangler nameMangler)
         {
             if (groups == null) return Array.Empty<GroupRef>();
 
@@ -932,24 +953,24 @@ namespace GLGenerator.Parsing
             return groupRefs;
         }
 
-        internal static GroupRef GroupRefFromString(string group, GLFile currentFile, NameMangler nameMangler)
+        internal static GroupRef GroupRefFromString(string group, APIFile currentFile, NameMangler nameMangler)
         {
             string name;
-            GLFile file;
+            APIFile file;
             if (group.StartsWith("gl::"))
             {
                 name = NameMangler.RemoveStart(group, "gl::");
-                file = GLFile.GL;
+                file = APIFile.GL;
             }
             else if (group.StartsWith("wgl::"))
             {
                 name = NameMangler.RemoveStart(group, "wgl::");
-                file = GLFile.WGL;
+                file = APIFile.WGL;
             }
             else if (group.StartsWith("glx::"))
             {
                 name = NameMangler.RemoveStart(group, "glx::");
-                file = GLFile.GLX;
+                file = APIFile.GLX;
             }
             else
             {
