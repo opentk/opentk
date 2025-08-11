@@ -7,6 +7,7 @@ using GLGenerator.Process;
 using GLGenerator.Parsing;
 using System.Diagnostics;
 using GeneratorBase;
+using GeneratorBase.Overloading;
 
 namespace GLGenerator.Process
 {
@@ -780,6 +781,27 @@ namespace GLGenerator.Process
             return commandDocs;
         }
 
+        public static readonly IOverloader[] Overloaders = [
+                new TrimNameOverloader(TrimNameOverloader.EndingsNotToTrimOpenGL),
+
+                new StringReturnOverloader(),
+                new BoolReturnOverloader(),
+
+                new ColorTypeOverloader(),
+                new MathTypeOverloader(),
+                new FunctionPtrToDelegateOverloader(),
+                new PointerToOffsetOverloader(),
+                new VoidPtrToIntPtrOverloader(),
+                new GenCreateAndDeleteOverloader(
+                    GenCreateAndDeleteOverloader.PluralNameToSingularNameOpenGL,
+                    GenCreateAndDeleteOverloader.PluralParameterNameToSingularNameOpenGL),
+                new StringOverloader(),
+                new StringArrayOverloader(),
+                new SpanAndArrayOverloader(),
+                new RefInsteadOfPointerOverloader(),
+                new OutToReturnOverloader(),
+            ];
+
         // Maybe we can do the return type overloading in a post processing step?
         internal static OverloadedFunction GenerateOverloads(Function nativeFunction, Dictionary<OutputApi, CommandDocumentation> functionDocumentation)
         {
@@ -791,7 +813,7 @@ namespace GLGenerator.Process
             };
 
             bool overloadedOnce = false;
-            foreach (IOverloader overloader in IOverloader.Overloaders)
+            foreach (IOverloader overloader in Overloaders)
             {
                 List<Overload> newOverloads = new List<Overload>();
                 foreach (Overload overload in overloads)

@@ -7,6 +7,7 @@ using ALGenerator.Process;
 using ALGenerator.Parsing;
 using GeneratorBase;
 using System.Diagnostics;
+using GeneratorBase.Overloading;
 
 namespace ALGenerator.Process
 {
@@ -694,25 +695,46 @@ namespace ALGenerator.Process
             return commandDocs;
         }
 
+        public static readonly IOverloader[] Overloaders = [
+                new TrimNameOverloader(TrimNameOverloader.EndingsNotToTrimOpenAL),
+
+                new StringReturnOverloader(),
+                new BoolReturnOverloader(),
+
+                new ColorTypeOverloader(),
+                new MathTypeOverloader(),
+                new FunctionPtrToDelegateOverloader(),
+                new PointerToOffsetOverloader(),
+                new VoidPtrToIntPtrOverloader(),
+                new GenCreateAndDeleteOverloader(
+                    GenCreateAndDeleteOverloader.PluralNameToSingularNameOpenAL,
+                    GenCreateAndDeleteOverloader.PluralParameterNameToSingularNameOpenAL),
+                new StringOverloader(),
+                new StringArrayOverloader(),
+                new SpanAndArrayOverloader(),
+                new RefInsteadOfPointerOverloader(),
+                new OutToReturnOverloader(),
+            ];
+
         // Maybe we can do the return type overloading in a post processing step?
         internal static OverloadedFunction GenerateOverloads(Function nativeFunction, Dictionary<OutputApi, CommandDocumentation> functionDocumentation)
         {
             List<Overload> overloads = new List<Overload>
             {
                 // Make a "base" overload
-                new Overload(null, null, nativeFunction.Parameters.ToArray(), nativeFunction, nativeFunction.StrongReturnType,
+                new Overload(null, null, nativeFunction.Parameters.ToArray(), nativeFunction, nativeFunction.StrongReturnType!,
                     new NameTable(), /*"returnValue",*/ Array.Empty<string>(), nativeFunction.Name),
             };
 
-            bool overloadedOnce = false;
-            foreach (IOverloader overloader in IOverloader.Overloaders)
+            bool hasOverloads = false;
+            foreach (IOverloader overloader in Overloaders)
             {
                 List<Overload> newOverloads = new List<Overload>();
                 foreach (Overload overload in overloads)
                 {
                     if (overloader.TryGenerateOverloads(overload, out List<Overload>? overloaderOverloads))
                     {
-                        overloadedOnce = true;
+                        hasOverloads = true;
 
                         newOverloads.AddRange(overloaderOverloads);
                     }
@@ -724,7 +746,7 @@ namespace ALGenerator.Process
                 // Replace the old overloads with the new overloads
                 overloads = newOverloads;
             }
-            Overload[] overloadArray = overloadedOnce ? overloads.ToArray() : Array.Empty<Overload>();
+            Overload[] overloadArray = hasOverloads ? overloads.ToArray() : [];
 
             bool changeNativeName = false;
             foreach (Overload overload in overloadArray)

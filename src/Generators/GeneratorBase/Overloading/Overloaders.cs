@@ -1,3 +1,6 @@
+using GeneratorBase;
+using GeneratorBase.Utility;
+using GeneratorBase.Utility.Extensions;
 using System;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
@@ -7,57 +10,59 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System.Threading;
-using GLGenerator.Parsing;
-using GeneratorBase.Utility;
-using GeneratorBase.Utility.Extensions;
-using GLGenerator.Process;
-using GeneratorBase;
+using System.Xml;
 
-namespace GLGenerator.Process
+namespace GeneratorBase.Overloading
 {
-    internal interface IOverloader
+    public record Overload(
+        Overload? NestedOverload,
+        IOverloadLayer? MarshalLayerToNested,
+        Parameter[] InputParameters,
+        Function NativeFunction,
+        BaseCSType ReturnType,
+        NameTable NameTable,
+        string[] GenericTypes,
+        string OverloadName);
+
+    public interface IOverloadLayer
     {
-        public bool TryGenerateOverloads(Overload overload, [NotNullWhen(true)] out List<Overload>? newOverloads);
-
-        // /!\ IMPORTANT /!\:
-        // All return mathType overloaders need to run before any of the other overloaders.
-        // This is to ensure that correct scoping for the new return variables.
-        // FIXME: Maybe we dont want classes for these?
-        internal static readonly IOverloader[] Overloaders = new IOverloader[]
-        {
-            new TrimNameOverloader(),
-
-            new StringReturnOverloader(),
-            new BoolReturnOverloader(),
-
-            new ColorTypeOverloader(),
-            new MathTypeOverloader(),
-            new FunctionPtrToDelegateOverloader(),
-            new PointerToOffsetOverloader(),
-            new VoidPtrToIntPtrOverloader(),
-            new GenCreateAndDeleteOverloader(),
-            new StringOverloader(),
-            new StringArrayOverloader(),
-            new SpanAndArrayOverloader(),
-            new RefInsteadOfPointerOverloader(),
-            new OutToReturnOverloader(),
-        };
+        public void WritePrologue(IndentedTextWriter writer, NameTable nameTable);
+        public string? WriteEpilogue(IndentedTextWriter writer, NameTable nameTable, string? returnName);
     }
 
-    internal class TrimNameOverloader : IOverloader
+    public interface IOverloader
+    {
+        public bool TryGenerateOverloads(Overload overload, [NotNullWhen(true)] out List<Overload>? newOverloads);
+    }
+
+    public class TrimNameOverloader : IOverloader
     {
         private static readonly Regex Endings = new Regex(
             @"(u?[sb](64)?v?|v|i_v|fi)$",
             RegexOptions.Compiled);
 
-        private static readonly Regex EndingsNotToTrim = new Regex(
+        public static readonly Regex EndingsNotToTrimOpenGL = new Regex(
             "(sh|ib|[tdrey]s|[eE]n[vd]|bled" +
             "|Attrib|Address|Access|Boolean|Bitmaps|Coord|Depth|Feedbacks|Finish|Flag" +
             "|Groups|IDs|Indexed|Instanced|Pixels|Queries|Status|Tess|Through" +
             "|Uniforms|Varyings|Weight|Width|[1-4][fdhi]v)$",
             RegexOptions.Compiled);
 
+        public static readonly Regex EndingsNotToTrimOpenAL = new Regex(
+            "(sh|ib|[tdrey]s|[eE]n[vd]|bled" +
+            "|Attrib|Address|Access|Boolean|Bitmaps|Coord|Depth|Feedbacks|Finish|Flag" +
+            "|Groups|IDs|Indexed|Instanced|Pixels|Queries|Status|Tess|Through" +
+            "|Uniforms|Varyings|Weight|Width|[1-4][fdhi]v|fv|iv)$",
+            RegexOptions.Compiled);
+
         private static readonly Regex EndingsAddV = new Regex("^0", RegexOptions.Compiled);
+
+        private readonly Regex EndingsNotToTrim;
+
+        public TrimNameOverloader(Regex endingsNotToTrim)
+        {
+            EndingsNotToTrim = endingsNotToTrim;
+        }
 
         public bool TryGenerateOverloads(Overload overload, [NotNullWhen(true)] out List<Overload>? newOverloads)
         {
@@ -110,7 +115,7 @@ namespace GLGenerator.Process
         }
     }
 
-    internal class StringReturnOverloader : IOverloader
+    public class StringReturnOverloader : IOverloader
     {
         public bool TryGenerateOverloads(Overload overload, [NotNullWhen(true)] out List<Overload>? newOverloads)
         {
@@ -138,6 +143,7 @@ namespace GLGenerator.Process
             }
             else if (overload.ReturnType is CSPointer pt && pt.BaseType is ICSCharType bt)
             {
+                // FIXME: Handle CSChar8 and CSChar16 differently!
                 var newReturnName = $"{overload.NameTable.ReturnName}_str";
                 var layer = new StringReturnLayer(pt, newReturnName, overload.NameTable.ReturnName!);
                 var returnType = new CSString(Nullable: true);
@@ -180,7 +186,7 @@ namespace GLGenerator.Process
         }
     }
 
-    internal class BoolReturnOverloader : IOverloader
+    public class BoolReturnOverloader : IOverloader
     {
         public bool TryGenerateOverloads(Overload overload, [NotNullWhen(true)] out List<Overload>? newOverloads)
         {
@@ -228,7 +234,7 @@ namespace GLGenerator.Process
         }
     }
 
-    internal class ColorTypeOverloader : IOverloader
+    public class ColorTypeOverloader : IOverloader
     {
         public bool TryGenerateOverloads(Overload overload, [NotNullWhen(true)] out List<Overload>? newOverloads)
         {
@@ -340,7 +346,7 @@ namespace GLGenerator.Process
         }
     }
 
-    internal sealed class MathTypeOverloader : IOverloader
+    public sealed class MathTypeOverloader : IOverloader
     {
         // Regex to match names of vector methods.
         private static readonly Regex VectorNameMatch = new Regex("(?<!6)([1-4])([fdhi])v$", RegexOptions.Compiled);
@@ -660,7 +666,7 @@ namespace GLGenerator.Process
         }
     }
 
-    internal class FunctionPtrToDelegateOverloader : IOverloader
+    public class FunctionPtrToDelegateOverloader : IOverloader
     {
         public bool TryGenerateOverloads(Overload overload, [NotNullWhen(true)] out List<Overload>? newOverloads)
         {
@@ -729,7 +735,7 @@ namespace GLGenerator.Process
         }
     }
 
-    internal sealed class PointerToOffsetOverloader : IOverloader
+    public sealed class PointerToOffsetOverloader : IOverloader
     {
         private readonly Dictionary<string, string> _methodsAndParametersToOverload = new Dictionary<string, string>
         {
@@ -824,7 +830,7 @@ namespace GLGenerator.Process
         }
     }
 
-    internal class VoidPtrToIntPtrOverloader : IOverloader
+    public class VoidPtrToIntPtrOverloader : IOverloader
     {
         public bool TryGenerateOverloads(Overload overload, [NotNullWhen(true)] out List<Overload>? newOverloads)
         {
@@ -885,13 +891,11 @@ namespace GLGenerator.Process
         }
     }
 
-    internal class GenCreateAndDeleteOverloader : IOverloader
+    public class GenCreateAndDeleteOverloader : IOverloader
     {
         internal static readonly string[] Prefixes = new string[] { "Gen", "Create", "Delete" };
 
-        // Atm only Queries/Query needs this renaming
-        // - 2022-06-27
-        internal static Dictionary<string, string> pluralNameToSingularName = new Dictionary<string, string>()
+        public static readonly Dictionary<string, string> PluralNameToSingularNameOpenGL = new Dictionary<string, string>()
         {
             { "Queries", "Query" },
             { "TransformFeedbacks", "TransformFeedback" },
@@ -903,8 +907,7 @@ namespace GLGenerator.Process
             { "Framebuffers", "Framebuffer" },
             { "Buffers", "Buffer" },
         };
-
-        internal static Dictionary<string, string> parameterNamesToChange = new Dictionary<string, string>()
+        public static readonly Dictionary<string, string> PluralParameterNameToSingularNameOpenGL = new Dictionary<string, string>()
         {
             { "ids", "id" },
             { "arrays", "array" },
@@ -915,6 +918,32 @@ namespace GLGenerator.Process
             { "framebuffers", "framebuffer" },
             { "buffers", "buffer" },
         };
+
+        public static readonly Dictionary<string, string> PluralNameToSingularNameOpenAL = new Dictionary<string, string>()
+        {
+            { "Sources", "Source" },
+            { "Buffers", "Buffer" },
+            { "Effects", "Effect" },
+            { "Filters", "Filter" },
+            { "AuxiliaryEffectSlots", "AuxiliaryEffectSlot" },
+        };
+        public static readonly Dictionary<string, string> PluralParameterNameToSingularNameOpenAL = new Dictionary<string, string>()
+        {
+            { "sources", "source" },
+            { "buffers", "buffer" },
+            { "effects", "effect" },
+            { "filters", "filter" },
+            { "effectslots", "effectslot" },
+        };
+
+        internal readonly Dictionary<string, string> PluralNameToSingular;
+        internal readonly Dictionary<string, string> PluralParameterNameToSingular;
+
+        public GenCreateAndDeleteOverloader(Dictionary<string, string> pluralNameToSingular, Dictionary<string, string> pluralParameterNameToSingular)
+        {
+            PluralNameToSingular = pluralNameToSingular;
+            PluralParameterNameToSingular = pluralParameterNameToSingular;
+        }
 
         public bool TryGenerateOverloads(Overload overload, [NotNullWhen(true)] out List<Overload>? newOverloads)
         {
@@ -956,7 +985,7 @@ namespace GLGenerator.Process
                 throw new Exception($"Function name '{nativeName}' doesn't start with Gen/Create/Delete and cannot be overloaded by this overloader.");
 
             string newName;
-            if (pluralNameToSingularName.TryGetValue(nameWithoutPrefix, out string? newPostfix))
+            if (PluralNameToSingular.TryGetValue(nameWithoutPrefix, out string? newPostfix))
             {
                 newName = $"{namePrefix}{newPostfix}";
             }
@@ -986,7 +1015,7 @@ namespace GLGenerator.Process
                 throw new Exception($"Couldnt find len {handleLength.ParameterName} on method {nativeName}");
 
             string? newPointerParameterName;
-            if (parameterNamesToChange.TryGetValue(pointerParameter.Name, out newPointerParameterName) == false)
+            if (PluralParameterNameToSingular.TryGetValue(pointerParameter.Name, out newPointerParameterName) == false)
             {
                 newPointerParameterName = pointerParameter.Name;
                 Logger.Warning($"Parameter '{pointerParameter.Name}' needs a depluralized name!");
@@ -1086,7 +1115,7 @@ namespace GLGenerator.Process
         }
     }
 
-    internal class StringOverloader : IOverloader
+    public class StringOverloader : IOverloader
     {
         public bool TryGenerateOverloads(Overload overload, [NotNullWhen(true)] out List<Overload>? newOverloads)
         {
@@ -1298,7 +1327,7 @@ namespace GLGenerator.Process
         }
     }
 
-    internal class StringArrayOverloader : IOverloader
+    public class StringArrayOverloader : IOverloader
     {
         public bool TryGenerateOverloads(Overload overload, [NotNullWhen(true)] out List<Overload>? newOverloads)
         {
@@ -1386,7 +1415,7 @@ namespace GLGenerator.Process
 
     }
 
-    internal class SpanAndArrayOverloader : IOverloader
+    public class SpanAndArrayOverloader : IOverloader
     {
         public bool TryGenerateOverloads(Overload overload, [NotNullWhen(true)] out List<Overload>? newOverloads)
         {
@@ -1517,7 +1546,7 @@ namespace GLGenerator.Process
         }
     }
 
-    internal class RefInsteadOfPointerOverloader : IOverloader
+    public class RefInsteadOfPointerOverloader : IOverloader
     {
         public bool TryGenerateOverloads(Overload overload, [NotNullWhen(true)] out List<Overload>? newOverloads)
         {
@@ -1709,7 +1738,7 @@ namespace GLGenerator.Process
         }
     }
 
-    internal class OutToReturnOverloader : IOverloader
+    public class OutToReturnOverloader : IOverloader
     {
         public bool TryGenerateOverloads(Overload overload, [NotNullWhen(true)] out List<Overload>? newOverloads)
         {

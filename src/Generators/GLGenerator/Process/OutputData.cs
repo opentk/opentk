@@ -6,6 +6,7 @@ using GLGenerator.Parsing;
 using System.CodeDom.Compiler;
 using GeneratorBase.Utility;
 using GeneratorBase;
+using GeneratorBase.Overloading;
 
 namespace GLGenerator.Process
 {
@@ -48,16 +49,6 @@ namespace GLGenerator.Process
         }
     }
 
-    internal record Overload(
-        Overload? NestedOverload,
-        IOverloadLayer? MarshalLayerToNested,
-        Parameter[] InputParameters,
-        Function NativeFunction,
-        BaseCSType ReturnType,
-        NameTable NameTable,
-        string[] GenericTypes,
-        string OverloadName);
-
 
     internal record EnumGroupMember(
         string Name,
@@ -88,77 +79,6 @@ namespace GLGenerator.Process
     {
         public List<Function> ReferencedBy = [];
     }
-
-
-    internal interface IOverloadLayer
-    {
-        internal void WritePrologue(IndentedTextWriter writer, NameTable nameTable);
-        internal string? WriteEpilogue(IndentedTextWriter writer, NameTable nameTable, string? returnName);
-    }
-
-    // FIXME: Clean up our naming/renaming of variables entirely. Do we even need/want a nametable?
-    // If we do this is definitely not the correct API for it.
-    internal class NameTable
-    {
-        internal Dictionary<Parameter, string> Table = new Dictionary<Parameter, string>();
-
-        internal HashSet<Parameter> FixedTable = new HashSet<Parameter>();
-
-        internal string? ReturnName = "returnValue";
-
-        internal NameTable()
-        {
-        }
-
-        internal NameTable(NameTable table)
-        {
-            Table = new Dictionary<Parameter, string>(table.Table);
-            FixedTable = new HashSet<Parameter>(table.FixedTable);
-            ReturnName = table.ReturnName;
-        }
-
-        internal NameTable New()
-        {
-            return new NameTable(this);
-        }
-
-        internal void Rename(Parameter param, string name) => Table[param] = name;
-
-        /// <summary>Mark this parameter as fixed, so generators don't try to use <see langword="fixed"/> on this parameter.</summary>
-        internal void MarkFixed(Parameter param) => FixedTable.Add(param);
-
-        internal bool IsFixed(Parameter param) => FixedTable.Contains(param);
-
-        internal string this[Parameter param]
-        {
-            get
-            {
-                if (Table.TryGetValue(param, out var name) == false)
-                {
-                    name = param.Name;
-                }
-
-                return name;
-            }
-        }
-
-        internal void Apply(NameTable table)
-        {
-            foreach (var (param, name) in table.Table)
-            {
-                Table[param] = name;
-            }
-
-            foreach (var fixedParam in table.FixedTable)
-            {
-                FixedTable.Add(fixedParam);
-            }
-
-            // Replace the return name.
-            ReturnName = table.ReturnName;
-        }
-    }
-
 
     internal enum OutputApi
     {
