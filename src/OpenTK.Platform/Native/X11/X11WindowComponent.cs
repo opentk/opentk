@@ -1587,22 +1587,22 @@ namespace OpenTK.Platform.Native.X11
                 // Ignoring ES for now.
                 OpenGLGraphicsApiHints glhints = (hints as OpenGLGraphicsApiHints)!;
 
-                byte depthBits;
+                byte requrestedDepthBits;
                 switch (glhints.DepthBits)
                 {
-                    case ContextDepthBits.None:    depthBits = 0;  break;
-                    case ContextDepthBits.Depth16: depthBits = 16; break;
-                    case ContextDepthBits.Depth24: depthBits = 24; break;
-                    case ContextDepthBits.Depth32: depthBits = 32; break;
+                    case ContextDepthBits.None:    requrestedDepthBits = 0;  break;
+                    case ContextDepthBits.Depth16: requrestedDepthBits = 16; break;
+                    case ContextDepthBits.Depth24: requrestedDepthBits = 24; break;
+                    case ContextDepthBits.Depth32: requrestedDepthBits = 32; break;
                     default: throw new InvalidEnumArgumentException(nameof(glhints.DepthBits), (int)glhints.DepthBits, glhints.DepthBits.GetType());
                 }
 
-                byte stencilBits;
+                byte requestedStencilBits;
                 switch (glhints.StencilBits)
                 {
-                    case ContextStencilBits.None:     stencilBits = 0; break;
-                    case ContextStencilBits.Stencil1: stencilBits = 1; break;
-                    case ContextStencilBits.Stencil8: stencilBits = 8; break;
+                    case ContextStencilBits.None:     requestedStencilBits = 0; break;
+                    case ContextStencilBits.Stencil1: requestedStencilBits = 1; break;
+                    case ContextStencilBits.Stencil8: requestedStencilBits = 8; break;
                     default: throw new InvalidEnumArgumentException(nameof(glhints.StencilBits), (int)glhints.StencilBits, glhints.StencilBits.GetType());
                 }
 
@@ -1612,8 +1612,8 @@ namespace OpenTK.Platform.Native.X11
                 requested.GreenBits = glhints.GreenColorBits;
                 requested.BlueBits = glhints.BlueColorBits;
                 requested.AlphaBits = glhints.AlphaColorBits;
-                requested.DepthBits = depthBits;
-                requested.StencilBits = stencilBits;
+                requested.DepthBits = requrestedDepthBits;
+                requested.StencilBits = requestedStencilBits;
                 requested.DoubleBuffered = glhints.DoubleBuffer;
                 requested.SRGBFramebuffer = glhints.sRGBFramebuffer;
                 requested.PixelFormat = glhints.PixelFormat;
@@ -1734,8 +1734,8 @@ namespace OpenTK.Platform.Native.X11
                         option.GreenBits = greenSize;
                         option.BlueBits = blueSize;
                         option.AlphaBits = alphaSize;
-                        option.DepthBits = depthBits;
-                        option.StencilBits = stencilBits;
+                        option.DepthBits = depthSize;
+                        option.StencilBits = stencilSize;
                         option.DoubleBuffered = doubleBuffer == 1;
                         option.SRGBFramebuffer = srgbCapable == 1;
                         option.Samples = samples;
