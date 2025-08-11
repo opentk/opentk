@@ -2798,5 +2798,41 @@ namespace OpenTK.Audio.OpenAL
             _BufferDataWithCallback_LOKI_fnptr(bid, callback);
         }
         
+        /// <summary><b>[entry point: <c>EAXGetBufferMode</c>]</b></summary>
+        public static delegate* unmanaged<uint, int*, int> _EAXGetBufferMode_fnptr = &EAXGetBufferMode_Lazy;
+        [UnmanagedCallersOnly]
+        private static int EAXGetBufferMode_Lazy(uint buffer, int* pReserved)
+        {
+            _EAXGetBufferMode_fnptr = (delegate* unmanaged<uint, int*, int>)ALLoader.ALGetProcAddress("EAXGetBufferMode");
+            return _EAXGetBufferMode_fnptr(buffer, pReserved);
+        }
+        
+        /// <summary><b>[entry point: <c>EAXGetBufferModeDirect</c>]</b></summary>
+        public static delegate* unmanaged<IntPtr, uint, int*, int> _EAXGetBufferModeDirect_fnptr = &EAXGetBufferModeDirect_Lazy;
+        [UnmanagedCallersOnly]
+        private static int EAXGetBufferModeDirect_Lazy(IntPtr context, uint buffer, int* pReserved)
+        {
+            _EAXGetBufferModeDirect_fnptr = (delegate* unmanaged<IntPtr, uint, int*, int>)ALLoader.ALGetProcAddress("EAXGetBufferModeDirect");
+            return _EAXGetBufferModeDirect_fnptr(context, buffer, pReserved);
+        }
+        
+        /// <summary><b>[entry point: <c>EAXSetBufferMode</c>]</b></summary>
+        public static delegate* unmanaged<int, uint*, int, byte> _EAXSetBufferMode_fnptr = &EAXSetBufferMode_Lazy;
+        [UnmanagedCallersOnly]
+        private static byte EAXSetBufferMode_Lazy(int n, uint* buffers, int value)
+        {
+            _EAXSetBufferMode_fnptr = (delegate* unmanaged<int, uint*, int, byte>)ALLoader.ALGetProcAddress("EAXSetBufferMode");
+            return _EAXSetBufferMode_fnptr(n, buffers, value);
+        }
+        
+        /// <summary><b>[entry point: <c>EAXSetBufferModeDirect</c>]</b></summary>
+        public static delegate* unmanaged<IntPtr, int, uint*, int, byte> _EAXSetBufferModeDirect_fnptr = &EAXSetBufferModeDirect_Lazy;
+        [UnmanagedCallersOnly]
+        private static byte EAXSetBufferModeDirect_Lazy(IntPtr context, int n, uint* buffers, int value)
+        {
+            _EAXSetBufferModeDirect_fnptr = (delegate* unmanaged<IntPtr, int, uint*, int, byte>)ALLoader.ALGetProcAddress("EAXSetBufferModeDirect");
+            return _EAXSetBufferModeDirect_fnptr(context, n, buffers, value);
+        }
+        
     }
 }

@@ -26,6 +26,18 @@ namespace ALGenerator
                         FunctionPrefix = "al",
                         EnumPrefixes = new List<string> { "AL_", "ALC_" },
                         ExtensionPrefixes = ["AL_", "ALC_"],
+                        ExtensionsWithoutPrefixes =
+                        [
+                            "EAX-AC3",
+                            "EAX-RAM",
+                            "EAX",
+                            "EAX2.0",
+                            "EAX3.0",
+                            "EAX3.0EMULATED",
+                            "EAX4.0",
+                            "EAX4.0EMULATED",
+                            "EAX5.0",
+                        ],
                         EnumGroupNameTranslationTable =
                         {
                         },
@@ -33,6 +45,8 @@ namespace ALGenerator
                         [
                             "AttenuationScale_LOKI",
                             "BufferDataWithCallback_LOKI",
+                            "EAXSetBufferMode",
+                            "EAXGetBufferMode",
                         ]
                     };
 

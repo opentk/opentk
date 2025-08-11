@@ -942,7 +942,8 @@ namespace ALGenerator.Parsing
                 // Remove "GL_" and get the vendor name from the first part of the extension name
                 // Extension name convention: "GL_VENDOR_EXTENSION_NAME"
                 string? extNameWithoutGLPrefix = nameMangler.RemoveExtensionPrefix(extName);
-                string? vendor = extNameWithoutGLPrefix[..extNameWithoutGLPrefix.IndexOf("_")];
+                // FIXME: Hack, if the extension name begins with "EAX" it's a Creative extension...
+                string? vendor = extNameWithoutGLPrefix.StartsWith("EAX") ? "Creative" : extNameWithoutGLPrefix[..extNameWithoutGLPrefix.IndexOf("_")];
                 if (string.IsNullOrEmpty(vendor))
                 {
                     throw new Exception($"Extension '{extension}' doesn't have the vendor in it's name!");

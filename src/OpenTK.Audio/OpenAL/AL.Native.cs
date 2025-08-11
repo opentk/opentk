@@ -223,6 +223,18 @@ namespace OpenTK.Audio.OpenAL
         /// <summary> <b>[requires: v1.0]</b> <b>[entry point: <c>alSpeedOfSound</c>]</b><br/>  </summary>
         public static void SpeedOfSound(float value) => ALPointers._alSpeedOfSound_fnptr(value);
         
+        /// <summary>Creative extensions.</summary>
+        public static unsafe partial class Creative
+        {
+            /// <summary> <b>[requires: EAX-RAM]</b> <b>[entry point: <c>EAXGetBufferMode</c>]</b><br/>  </summary>
+            /// <remarks><see href="https://raw.githubusercontent.com/Raulshc/OpenAL-EXT-Repository/refs/heads/master/AL%20Extensions/EAX-RAM.txt"/></remarks>
+            public static EAXBufferMode EAXGetBufferMode(uint buffer, int* pReserved) => (EAXBufferMode) ALPointers._EAXGetBufferMode_fnptr(buffer, pReserved);
+            
+            /// <summary> <b>[requires: EAX-RAM]</b> <b>[entry point: <c>EAXSetBufferMode</c>]</b><br/>  </summary>
+            /// <remarks><see href="https://raw.githubusercontent.com/Raulshc/OpenAL-EXT-Repository/refs/heads/master/AL%20Extensions/EAX-RAM.txt"/></remarks>
+            public static bool EAXSetBufferMode(int n, uint* buffers, int value) => ALPointers._EAXSetBufferMode_fnptr(n, buffers, value) != 0;
+            
+        }
         /// <summary>EXT extensions.</summary>
         public static unsafe partial class EXT
         {
@@ -381,6 +393,14 @@ namespace OpenTK.Audio.OpenAL
             /// <summary> <b>[requires: AL_EXT_direct_context]</b> <b>[entry point: <c>alDopperFactorDirect</c>]</b><br/>  </summary>
             /// <remarks><see href="https://raw.githubusercontent.com/Raulshc/OpenAL-EXT-Repository/refs/heads/master/AL%20Extensions/AL_EXT_direct_context.txt"/></remarks>
             public static void DopperFactorDirect(ALCContext context, float value) => ALPointers._alDopperFactorDirect_fnptr((IntPtr)context, value);
+            
+            /// <summary> <b>[requires: AL_EXT_direct_context]</b> <b>[entry point: <c>EAXGetBufferModeDirect</c>]</b><br/>  </summary>
+            /// <remarks><see href="https://raw.githubusercontent.com/Raulshc/OpenAL-EXT-Repository/refs/heads/master/AL%20Extensions/AL_EXT_direct_context.txt"/></remarks>
+            public static EAXBufferMode EAXGetBufferModeDirect(ALCContext context, uint buffer, int* pReserved) => (EAXBufferMode) ALPointers._EAXGetBufferModeDirect_fnptr((IntPtr)context, buffer, pReserved);
+            
+            /// <summary> <b>[requires: AL_EXT_direct_context]</b> <b>[entry point: <c>EAXSetBufferModeDirect</c>]</b><br/>  </summary>
+            /// <remarks><see href="https://raw.githubusercontent.com/Raulshc/OpenAL-EXT-Repository/refs/heads/master/AL%20Extensions/AL_EXT_direct_context.txt"/></remarks>
+            public static bool EAXSetBufferModeDirect(ALCContext context, int n, uint* buffers, int value) => ALPointers._EAXSetBufferModeDirect_fnptr((IntPtr)context, n, buffers, value) != 0;
             
             /// <summary> <b>[requires: ALC_EXT_EFX]</b> <b>[entry point: <c>alEffectf</c>]</b><br/>  </summary>
             /// <remarks><see href="https://raw.githubusercontent.com/Raulshc/OpenAL-EXT-Repository/refs/heads/master/AL%20Extensions/ALC_EXT_EFX.txt"/></remarks>

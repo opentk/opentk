@@ -8,6 +8,7 @@ namespace GeneratorBase.Utility
     public class NameManglerSettings
     {
         public List<string> ExtensionPrefixes { get; init; }
+        public HashSet<string> ExtensionsWithoutPrefixes { get; init; }
         public string FunctionPrefix { get; init; }
         public List<string> EnumPrefixes { get; init; }
         public HashSet<string> FunctionsWithoutPrefix { get; init; }
@@ -19,6 +20,7 @@ namespace GeneratorBase.Utility
         public NameManglerSettings()
         {
             ExtensionPrefixes = ["GL_"];
+            ExtensionsWithoutPrefixes = [];
             FunctionPrefix = "gl";
             EnumPrefixes = new List<string> { "GL_" };
             FunctionsWithoutPrefix = new HashSet<string>();
@@ -95,6 +97,11 @@ namespace GeneratorBase.Utility
 
         public string RemoveExtensionPrefix(string extension)
         {
+            if (Settings.ExtensionsWithoutPrefixes.Contains(extension))
+            {
+                return extension;
+            }
+
             // FIXME: Get the settings from a more direct source
             foreach (var prefix in Settings.ExtensionPrefixes)
             {

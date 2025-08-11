@@ -440,6 +440,18 @@
         <enum value="0x19A5" name="AL_EVENT_TYPE_SOURCE_STATE_CHANGED_SOFT" group="EventType" />
         <enum value="0x19A6" name="AL_EVENT_TYPE_DISCONNECTED_SOFT" group="EventType" />
     </enums>
+    <enums comment="From EAX-RAM">
+        <!-- EAX-RAM specifies that alGetEnumValue needs to be used
+         to receive the numeric value of these enums. The values used
+         here are the values present in the OpenAL SOFT implementation.
+         - Noggin_bops 2025-08-11
+          -->
+        <enum value="0x202201" name="AL_EAX_RAM_SIZE" group="GetPNameI" />
+        <enum value="0x202202" name="AL_EAX_RAM_FREE" group="GetPNameI" />
+        <enum value="0x202203" name="AL_STORAGE_AUTOMATIC" group="EAXBufferMode" />
+        <enum value="0x202204" name="AL_STORAGE_HARDWARE" group="EAXBufferMode" />
+        <enum value="0x202205" name="AL_STORAGE_ACCESSIBLE" group="EAXBufferMode" />
+    </enums>
 
     <enums comment="From ALC_EXT_EFX">
         <enum value="0x20004" name="AL_METERS_PER_UNIT" group="ListenerPNameF,ListenerPNameFV,ListenerGetPNameF,ListenerGetPNameFV" />
@@ -1310,6 +1322,19 @@
             <param><ptype>ALvoid</ptype> **<name>values</name></param>
         </command>
     </commands>
+    <commands comment="From EAX-RAM">
+        <command>
+            <proto><ptype>ALboolean</ptype> <name>EAXSetBufferMode</name></proto>
+            <param><ptype>ALsizei</ptype> <name>n</name></param>
+            <param len="n"><ptype>ALuint</ptype> *<name>buffers</name></param>
+            <param group="EAXBufferMode"><ptype>ALint</ptype> <name>value</name></param>
+        </command>
+        <command>
+            <proto group="EAXBufferMode"><ptype>ALenum</ptype> <name>EAXGetBufferMode</name></proto>
+            <param><ptype>ALuint</ptype> <name>buffer</name></param>
+            <param><ptype>ALint</ptype> *<name>pReserved</name></param>
+        </command>
+    </commands>
 
     <commands comment="From ALC_EXT_EFX">
         <command>
@@ -2164,6 +2189,33 @@
                 <enum name="AL_FORMAT_UHJ2CHN_IMA4_SOFT" />
                 <enum name="AL_FORMAT_UHJ2CHN_MSADPCM_SOFT" />
             </require>
+        </extension>
+        <extension name="EAX-AC3" comment="FIXME: Find documentation for this extension">
+        </extension>
+        <extension name="EAX-RAM">
+            <require>
+                <enum name="AL_EAX_RAM_SIZE" />
+                <enum name="AL_EAX_RAM_FREE" />
+                <enum name="AL_STORAGE_AUTOMATIC" />
+                <enum name="AL_STORAGE_HARDWARE" />
+                <enum name="AL_STORAGE_ACCESSIBLE" />
+                <command name="EAXSetBufferMode" />
+                <command name="EAXGetBufferMode" />
+            </require>
+        </extension>
+        <extension name="EAX" comment="FIXME: Find documentation for this extension">
+        </extension>
+        <extension name="EAX2.0" comment="FIXME: Find documentation for this extension">
+        </extension>
+        <extension name="EAX3.0" comment="FIXME: Find documentation for this extension">
+        </extension>
+        <extension name="EAX3.0EMULATED" comment="FIXME: Find documentation for this extension">
+        </extension>
+        <extension name="EAX4.0" comment="FIXME: Find documentation for this extension">
+        </extension>
+        <extension name="EAX4.0EMULATED" comment="FIXME: Find documentation for this extension">
+        </extension>
+        <extension name="EAX5.0" comment="FIXME: Find documentation for this extension">
         </extension>
 
          <extension name="ALC_EXT_EFX">

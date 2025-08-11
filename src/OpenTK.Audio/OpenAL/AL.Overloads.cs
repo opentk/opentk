@@ -997,6 +997,69 @@ namespace OpenTK.Audio.OpenAL
                 SourceUnqueueBuffers(source, nb, buffer_ptr);
             }
         }
+        public static unsafe partial class Creative
+        {
+            /// <inheritdoc cref="EAXGetBufferMode(uint, int*)"/>
+            public static unsafe EAXBufferMode EAXGetBufferMode(uint buffer, Span<int> pReserved)
+            {
+                EAXBufferMode returnValue;
+                fixed (int* pReserved_ptr = pReserved)
+                {
+                    returnValue = EAXGetBufferMode(buffer, pReserved_ptr);
+                }
+                return returnValue;
+            }
+            /// <inheritdoc cref="EAXGetBufferMode(uint, int*)"/>
+            public static unsafe EAXBufferMode EAXGetBufferMode(uint buffer, int[] pReserved)
+            {
+                EAXBufferMode returnValue;
+                fixed (int* pReserved_ptr = pReserved)
+                {
+                    returnValue = EAXGetBufferMode(buffer, pReserved_ptr);
+                }
+                return returnValue;
+            }
+            /// <inheritdoc cref="EAXGetBufferMode(uint, int*)"/>
+            public static unsafe EAXBufferMode EAXGetBufferMode(uint buffer, ref int pReserved)
+            {
+                EAXBufferMode returnValue;
+                fixed (int* pReserved_ptr = &pReserved)
+                {
+                    returnValue = EAXGetBufferMode(buffer, pReserved_ptr);
+                }
+                return returnValue;
+            }
+            /// <inheritdoc cref="EAXSetBufferMode(int, uint*, int)"/>
+            public static unsafe bool EAXSetBufferMode(int n, Span<uint> buffers, int value)
+            {
+                bool returnValue;
+                fixed (uint* buffers_ptr = buffers)
+                {
+                    returnValue = EAXSetBufferMode(n, buffers_ptr, value);
+                }
+                return returnValue;
+            }
+            /// <inheritdoc cref="EAXSetBufferMode(int, uint*, int)"/>
+            public static unsafe bool EAXSetBufferMode(int n, uint[] buffers, int value)
+            {
+                bool returnValue;
+                fixed (uint* buffers_ptr = buffers)
+                {
+                    returnValue = EAXSetBufferMode(n, buffers_ptr, value);
+                }
+                return returnValue;
+            }
+            /// <inheritdoc cref="EAXSetBufferMode(int, uint*, int)"/>
+            public static unsafe bool EAXSetBufferMode(int n, ref uint buffers, int value)
+            {
+                bool returnValue;
+                fixed (uint* buffers_ptr = &buffers)
+                {
+                    returnValue = EAXSetBufferMode(n, buffers_ptr, value);
+                }
+                return returnValue;
+            }
+        }
         public static unsafe partial class EXT
         {
             /// <inheritdoc cref="AuxiliaryEffectSlotfv(int, AuxEffectSlotPNameFV, float*)"/>
@@ -1648,6 +1711,66 @@ namespace OpenTK.Audio.OpenAL
                 {
                     DeleteSourcesDirect(context, n, sources_ptr);
                 }
+            }
+            /// <inheritdoc cref="EAXGetBufferModeDirect(ALCContext, uint, int*)"/>
+            public static unsafe EAXBufferMode EAXGetBufferModeDirect(ALCContext context, uint buffer, Span<int> pReserved)
+            {
+                EAXBufferMode returnValue;
+                fixed (int* pReserved_ptr = pReserved)
+                {
+                    returnValue = EAXGetBufferModeDirect(context, buffer, pReserved_ptr);
+                }
+                return returnValue;
+            }
+            /// <inheritdoc cref="EAXGetBufferModeDirect(ALCContext, uint, int*)"/>
+            public static unsafe EAXBufferMode EAXGetBufferModeDirect(ALCContext context, uint buffer, int[] pReserved)
+            {
+                EAXBufferMode returnValue;
+                fixed (int* pReserved_ptr = pReserved)
+                {
+                    returnValue = EAXGetBufferModeDirect(context, buffer, pReserved_ptr);
+                }
+                return returnValue;
+            }
+            /// <inheritdoc cref="EAXGetBufferModeDirect(ALCContext, uint, int*)"/>
+            public static unsafe EAXBufferMode EAXGetBufferModeDirect(ALCContext context, uint buffer, ref int pReserved)
+            {
+                EAXBufferMode returnValue;
+                fixed (int* pReserved_ptr = &pReserved)
+                {
+                    returnValue = EAXGetBufferModeDirect(context, buffer, pReserved_ptr);
+                }
+                return returnValue;
+            }
+            /// <inheritdoc cref="EAXSetBufferModeDirect(ALCContext, int, uint*, int)"/>
+            public static unsafe bool EAXSetBufferModeDirect(ALCContext context, int n, Span<uint> buffers, int value)
+            {
+                bool returnValue;
+                fixed (uint* buffers_ptr = buffers)
+                {
+                    returnValue = EAXSetBufferModeDirect(context, n, buffers_ptr, value);
+                }
+                return returnValue;
+            }
+            /// <inheritdoc cref="EAXSetBufferModeDirect(ALCContext, int, uint*, int)"/>
+            public static unsafe bool EAXSetBufferModeDirect(ALCContext context, int n, uint[] buffers, int value)
+            {
+                bool returnValue;
+                fixed (uint* buffers_ptr = buffers)
+                {
+                    returnValue = EAXSetBufferModeDirect(context, n, buffers_ptr, value);
+                }
+                return returnValue;
+            }
+            /// <inheritdoc cref="EAXSetBufferModeDirect(ALCContext, int, uint*, int)"/>
+            public static unsafe bool EAXSetBufferModeDirect(ALCContext context, int n, ref uint buffers, int value)
+            {
+                bool returnValue;
+                fixed (uint* buffers_ptr = &buffers)
+                {
+                    returnValue = EAXSetBufferModeDirect(context, n, buffers_ptr, value);
+                }
+                return returnValue;
             }
             /// <inheritdoc cref="Effectfv(int, EffectPNameFV, float*)"/>
             public static unsafe void Effectfv(int effect, EffectPNameFV param, Span<float> pflValues)

@@ -404,6 +404,11 @@ namespace OpenTK.Audio.OpenAL
         FormatBformat3d8 = 131121,
         FormatBformat3d16 = 131122,
         FormatBformat3dFloat32 = 131123,
+        EaxRamSize = 2105857,
+        EaxRamFree = 2105858,
+        StorageAutomatic = 2105859,
+        StorageHardware = 2105860,
+        StorageAccessible = 2105861,
         FrequencyFilterEnableAax = 2555904,
         FrequencyFilterGainlfAax = 2555905,
         FrequencyFilterGainhfAax = 2555906,
@@ -697,6 +702,13 @@ namespace OpenTK.Audio.OpenAL
         DistortionLowpassCutoff = 3,
         DistortionEqcenter = 4,
         DistortionEqbandwidth = 5,
+    }
+    ///<summary>Used in <see cref="AL.Creative.EAXGetBufferMode" />, <see cref="AL.EXT.EAXGetBufferModeDirect" />, <see cref="AL.Creative.EAXSetBufferMode" />, ...</summary>
+    public enum EAXBufferMode : uint
+    {
+        StorageAutomatic = 2105859,
+        StorageHardware = 2105860,
+        StorageAccessible = 2105861,
     }
     public enum EAXReverbParameterName : uint
     {
@@ -1121,6 +1133,8 @@ namespace OpenTK.Audio.OpenAL
         MaxLabelLengthExt = 6604,
         GainLimitSoft = 8206,
         DeferredUpdatesSoft = 49154,
+        EaxRamSize = 2105857,
+        EaxRamFree = 2105858,
     }
     ///<summary>Used in <see cref="AL.GetIntegerv" />, <see cref="AL.EXT.GetIntegervDirect" /></summary>
     public enum GetPNameIV : uint
