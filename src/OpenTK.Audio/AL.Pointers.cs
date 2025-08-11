@@ -2798,6 +2798,15 @@ namespace OpenTK.Audio.OpenAL
             _BufferDataWithCallback_LOKI_fnptr(bid, callback);
         }
         
+        /// <summary><b>[entry point: <c>EAXGet</c>]</b></summary>
+        public static delegate* unmanaged<Guid*, uint, uint, void*, uint, int> _EAXGet_fnptr = &EAXGet_Lazy;
+        [UnmanagedCallersOnly]
+        private static int EAXGet_Lazy(Guid* property_get_id, uint property_id, uint source_id, void* value, uint value_size)
+        {
+            _EAXGet_fnptr = (delegate* unmanaged<Guid*, uint, uint, void*, uint, int>)ALLoader.ALGetProcAddress("EAXGet");
+            return _EAXGet_fnptr(property_get_id, property_id, source_id, value, value_size);
+        }
+        
         /// <summary><b>[entry point: <c>EAXGetBufferMode</c>]</b></summary>
         public static delegate* unmanaged<uint, int*, int> _EAXGetBufferMode_fnptr = &EAXGetBufferMode_Lazy;
         [UnmanagedCallersOnly]
@@ -2816,6 +2825,24 @@ namespace OpenTK.Audio.OpenAL
             return _EAXGetBufferModeDirect_fnptr(context, buffer, pReserved);
         }
         
+        /// <summary><b>[entry point: <c>EAXGetDirect</c>]</b></summary>
+        public static delegate* unmanaged<IntPtr, Guid*, uint, uint, void*, uint, int> _EAXGetDirect_fnptr = &EAXGetDirect_Lazy;
+        [UnmanagedCallersOnly]
+        private static int EAXGetDirect_Lazy(IntPtr context, Guid* property_get_id, uint property_id, uint source_id, void* value, uint value_size)
+        {
+            _EAXGetDirect_fnptr = (delegate* unmanaged<IntPtr, Guid*, uint, uint, void*, uint, int>)ALLoader.ALGetProcAddress("EAXGetDirect");
+            return _EAXGetDirect_fnptr(context, property_get_id, property_id, source_id, value, value_size);
+        }
+        
+        /// <summary><b>[entry point: <c>EAXSet</c>]</b></summary>
+        public static delegate* unmanaged<Guid*, uint, uint, void*, uint, int> _EAXSet_fnptr = &EAXSet_Lazy;
+        [UnmanagedCallersOnly]
+        private static int EAXSet_Lazy(Guid* property_set_id, uint property_id, uint source_id, void* value, uint value_size)
+        {
+            _EAXSet_fnptr = (delegate* unmanaged<Guid*, uint, uint, void*, uint, int>)ALLoader.ALGetProcAddress("EAXSet");
+            return _EAXSet_fnptr(property_set_id, property_id, source_id, value, value_size);
+        }
+        
         /// <summary><b>[entry point: <c>EAXSetBufferMode</c>]</b></summary>
         public static delegate* unmanaged<int, uint*, int, byte> _EAXSetBufferMode_fnptr = &EAXSetBufferMode_Lazy;
         [UnmanagedCallersOnly]
@@ -2832,6 +2859,15 @@ namespace OpenTK.Audio.OpenAL
         {
             _EAXSetBufferModeDirect_fnptr = (delegate* unmanaged<IntPtr, int, uint*, int, byte>)ALLoader.ALGetProcAddress("EAXSetBufferModeDirect");
             return _EAXSetBufferModeDirect_fnptr(context, n, buffers, value);
+        }
+        
+        /// <summary><b>[entry point: <c>EAXSetDirect</c>]</b></summary>
+        public static delegate* unmanaged<IntPtr, Guid*, uint, uint, void*, uint, int> _EAXSetDirect_fnptr = &EAXSetDirect_Lazy;
+        [UnmanagedCallersOnly]
+        private static int EAXSetDirect_Lazy(IntPtr context, Guid* property_set_id, uint property_id, uint source_id, void* value, uint value_size)
+        {
+            _EAXSetDirect_fnptr = (delegate* unmanaged<IntPtr, Guid*, uint, uint, void*, uint, int>)ALLoader.ALGetProcAddress("EAXSetDirect");
+            return _EAXSetDirect_fnptr(context, property_set_id, property_id, source_id, value, value_size);
         }
         
     }

@@ -999,6 +999,57 @@ namespace OpenTK.Audio.OpenAL
         }
         public static unsafe partial class Creative
         {
+            /// <inheritdoc cref="EAXGet(Guid*, uint, uint, void*, uint)"/>
+            public static unsafe All EAXGet(ref readonly Guid property_get_id, uint property_id, uint source_id, IntPtr value, uint value_size)
+            {
+                All returnValue;
+                fixed (Guid* property_get_id_ptr = &property_get_id)
+                {
+                    void* value_vptr = (void*)value;
+                    returnValue = EAXGet(property_get_id_ptr, property_id, source_id, value_vptr, value_size);
+                }
+                return returnValue;
+            }
+            /// <inheritdoc cref="EAXGet(Guid*, uint, uint, void*, uint)"/>
+            public static unsafe All EAXGet<T1>(ref readonly Guid property_get_id, uint property_id, uint source_id, Span<T1> value, uint value_size)
+                where T1 : unmanaged
+            {
+                All returnValue;
+                fixed (Guid* property_get_id_ptr = &property_get_id)
+                {
+                    fixed (void* value_ptr = value)
+                    {
+                        returnValue = EAXGet(property_get_id_ptr, property_id, source_id, value_ptr, value_size);
+                    }
+                }
+                return returnValue;
+            }
+            /// <inheritdoc cref="EAXGet(Guid*, uint, uint, void*, uint)"/>
+            public static unsafe All EAXGet<T1>(ref readonly Guid property_get_id, uint property_id, uint source_id, T1[] value, uint value_size)
+                where T1 : unmanaged
+            {
+                All returnValue;
+                fixed (Guid* property_get_id_ptr = &property_get_id)
+                {
+                    fixed (void* value_ptr = value)
+                    {
+                        returnValue = EAXGet(property_get_id_ptr, property_id, source_id, value_ptr, value_size);
+                    }
+                }
+                return returnValue;
+            }
+            /// <inheritdoc cref="EAXGet(Guid*, uint, uint, void*, uint)"/>
+            public static unsafe All EAXGet<T1>(ref readonly Guid property_get_id, uint property_id, uint source_id, ref T1 value, uint value_size)
+                where T1 : unmanaged
+            {
+                All returnValue;
+                fixed (Guid* property_get_id_ptr = &property_get_id)
+                fixed (void* value_ptr = &value)
+                {
+                    returnValue = EAXGet(property_get_id_ptr, property_id, source_id, value_ptr, value_size);
+                }
+                return returnValue;
+            }
             /// <inheritdoc cref="EAXGetBufferMode(uint, int*)"/>
             public static unsafe EAXBufferMode EAXGetBufferMode(uint buffer, Span<int> pReserved)
             {
@@ -1026,6 +1077,57 @@ namespace OpenTK.Audio.OpenAL
                 fixed (int* pReserved_ptr = &pReserved)
                 {
                     returnValue = EAXGetBufferMode(buffer, pReserved_ptr);
+                }
+                return returnValue;
+            }
+            /// <inheritdoc cref="EAXSet(Guid*, uint, uint, void*, uint)"/>
+            public static unsafe All EAXSet(ref readonly Guid property_set_id, uint property_id, uint source_id, IntPtr value, uint value_size)
+            {
+                All returnValue;
+                fixed (Guid* property_set_id_ptr = &property_set_id)
+                {
+                    void* value_vptr = (void*)value;
+                    returnValue = EAXSet(property_set_id_ptr, property_id, source_id, value_vptr, value_size);
+                }
+                return returnValue;
+            }
+            /// <inheritdoc cref="EAXSet(Guid*, uint, uint, void*, uint)"/>
+            public static unsafe All EAXSet<T1>(ref readonly Guid property_set_id, uint property_id, uint source_id, Span<T1> value, uint value_size)
+                where T1 : unmanaged
+            {
+                All returnValue;
+                fixed (Guid* property_set_id_ptr = &property_set_id)
+                {
+                    fixed (void* value_ptr = value)
+                    {
+                        returnValue = EAXSet(property_set_id_ptr, property_id, source_id, value_ptr, value_size);
+                    }
+                }
+                return returnValue;
+            }
+            /// <inheritdoc cref="EAXSet(Guid*, uint, uint, void*, uint)"/>
+            public static unsafe All EAXSet<T1>(ref readonly Guid property_set_id, uint property_id, uint source_id, T1[] value, uint value_size)
+                where T1 : unmanaged
+            {
+                All returnValue;
+                fixed (Guid* property_set_id_ptr = &property_set_id)
+                {
+                    fixed (void* value_ptr = value)
+                    {
+                        returnValue = EAXSet(property_set_id_ptr, property_id, source_id, value_ptr, value_size);
+                    }
+                }
+                return returnValue;
+            }
+            /// <inheritdoc cref="EAXSet(Guid*, uint, uint, void*, uint)"/>
+            public static unsafe All EAXSet<T1>(ref readonly Guid property_set_id, uint property_id, uint source_id, ref T1 value, uint value_size)
+                where T1 : unmanaged
+            {
+                All returnValue;
+                fixed (Guid* property_set_id_ptr = &property_set_id)
+                fixed (void* value_ptr = &value)
+                {
+                    returnValue = EAXSet(property_set_id_ptr, property_id, source_id, value_ptr, value_size);
                 }
                 return returnValue;
             }
@@ -1742,6 +1844,57 @@ namespace OpenTK.Audio.OpenAL
                 }
                 return returnValue;
             }
+            /// <inheritdoc cref="EAXGetDirect(ALCContext, Guid*, uint, uint, void*, uint)"/>
+            public static unsafe All EAXGetDirect(ALCContext context, ref readonly Guid property_get_id, uint property_id, uint source_id, IntPtr value, uint value_size)
+            {
+                All returnValue;
+                fixed (Guid* property_get_id_ptr = &property_get_id)
+                {
+                    void* value_vptr = (void*)value;
+                    returnValue = EAXGetDirect(context, property_get_id_ptr, property_id, source_id, value_vptr, value_size);
+                }
+                return returnValue;
+            }
+            /// <inheritdoc cref="EAXGetDirect(ALCContext, Guid*, uint, uint, void*, uint)"/>
+            public static unsafe All EAXGetDirect<T1>(ALCContext context, ref readonly Guid property_get_id, uint property_id, uint source_id, Span<T1> value, uint value_size)
+                where T1 : unmanaged
+            {
+                All returnValue;
+                fixed (Guid* property_get_id_ptr = &property_get_id)
+                {
+                    fixed (void* value_ptr = value)
+                    {
+                        returnValue = EAXGetDirect(context, property_get_id_ptr, property_id, source_id, value_ptr, value_size);
+                    }
+                }
+                return returnValue;
+            }
+            /// <inheritdoc cref="EAXGetDirect(ALCContext, Guid*, uint, uint, void*, uint)"/>
+            public static unsafe All EAXGetDirect<T1>(ALCContext context, ref readonly Guid property_get_id, uint property_id, uint source_id, T1[] value, uint value_size)
+                where T1 : unmanaged
+            {
+                All returnValue;
+                fixed (Guid* property_get_id_ptr = &property_get_id)
+                {
+                    fixed (void* value_ptr = value)
+                    {
+                        returnValue = EAXGetDirect(context, property_get_id_ptr, property_id, source_id, value_ptr, value_size);
+                    }
+                }
+                return returnValue;
+            }
+            /// <inheritdoc cref="EAXGetDirect(ALCContext, Guid*, uint, uint, void*, uint)"/>
+            public static unsafe All EAXGetDirect<T1>(ALCContext context, ref readonly Guid property_get_id, uint property_id, uint source_id, ref T1 value, uint value_size)
+                where T1 : unmanaged
+            {
+                All returnValue;
+                fixed (Guid* property_get_id_ptr = &property_get_id)
+                fixed (void* value_ptr = &value)
+                {
+                    returnValue = EAXGetDirect(context, property_get_id_ptr, property_id, source_id, value_ptr, value_size);
+                }
+                return returnValue;
+            }
             /// <inheritdoc cref="EAXSetBufferModeDirect(ALCContext, int, uint*, int)"/>
             public static unsafe bool EAXSetBufferModeDirect(ALCContext context, int n, Span<uint> buffers, int value)
             {
@@ -1769,6 +1922,57 @@ namespace OpenTK.Audio.OpenAL
                 fixed (uint* buffers_ptr = &buffers)
                 {
                     returnValue = EAXSetBufferModeDirect(context, n, buffers_ptr, value);
+                }
+                return returnValue;
+            }
+            /// <inheritdoc cref="EAXSetDirect(ALCContext, Guid*, uint, uint, void*, uint)"/>
+            public static unsafe All EAXSetDirect(ALCContext context, ref readonly Guid property_set_id, uint property_id, uint source_id, IntPtr value, uint value_size)
+            {
+                All returnValue;
+                fixed (Guid* property_set_id_ptr = &property_set_id)
+                {
+                    void* value_vptr = (void*)value;
+                    returnValue = EAXSetDirect(context, property_set_id_ptr, property_id, source_id, value_vptr, value_size);
+                }
+                return returnValue;
+            }
+            /// <inheritdoc cref="EAXSetDirect(ALCContext, Guid*, uint, uint, void*, uint)"/>
+            public static unsafe All EAXSetDirect<T1>(ALCContext context, ref readonly Guid property_set_id, uint property_id, uint source_id, Span<T1> value, uint value_size)
+                where T1 : unmanaged
+            {
+                All returnValue;
+                fixed (Guid* property_set_id_ptr = &property_set_id)
+                {
+                    fixed (void* value_ptr = value)
+                    {
+                        returnValue = EAXSetDirect(context, property_set_id_ptr, property_id, source_id, value_ptr, value_size);
+                    }
+                }
+                return returnValue;
+            }
+            /// <inheritdoc cref="EAXSetDirect(ALCContext, Guid*, uint, uint, void*, uint)"/>
+            public static unsafe All EAXSetDirect<T1>(ALCContext context, ref readonly Guid property_set_id, uint property_id, uint source_id, T1[] value, uint value_size)
+                where T1 : unmanaged
+            {
+                All returnValue;
+                fixed (Guid* property_set_id_ptr = &property_set_id)
+                {
+                    fixed (void* value_ptr = value)
+                    {
+                        returnValue = EAXSetDirect(context, property_set_id_ptr, property_id, source_id, value_ptr, value_size);
+                    }
+                }
+                return returnValue;
+            }
+            /// <inheritdoc cref="EAXSetDirect(ALCContext, Guid*, uint, uint, void*, uint)"/>
+            public static unsafe All EAXSetDirect<T1>(ALCContext context, ref readonly Guid property_set_id, uint property_id, uint source_id, ref T1 value, uint value_size)
+                where T1 : unmanaged
+            {
+                All returnValue;
+                fixed (Guid* property_set_id_ptr = &property_set_id)
+                fixed (void* value_ptr = &value)
+                {
+                    returnValue = EAXSetDirect(context, property_set_id_ptr, property_id, source_id, value_ptr, value_size);
                 }
                 return returnValue;
             }

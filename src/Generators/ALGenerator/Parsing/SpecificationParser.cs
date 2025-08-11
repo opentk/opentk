@@ -717,6 +717,8 @@ namespace ALGenerator.Parsing
                             CSPrimitive.Uint(true)
                             ]),
 
+                        "GUID" => new CSStruct("Guid", @const),
+
                         _ => throw new Exception($"Type conversion has not been created for type {type}"),
                     };
                 }

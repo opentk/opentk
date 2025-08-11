@@ -103,7 +103,7 @@ namespace GeneratorBase
         public required List<CommandRef> Commands { get; init; }
         public required List<EnumRef> Enums { get; init; }
         // FIXME??
-        public required List<string> Constants { get; init; }
+        public required List<ConstantRef> Constants { get; init; }
 
         public string? Comment { get; init; }
 
@@ -125,7 +125,7 @@ namespace GeneratorBase
         public required List<CommandRef> Commands { get; init; }
         public required List<EnumRef> Enums { get; init; }
         // FIXME??
-        public required List<string> Constants { get; init; }
+        public required List<ConstantRef> Constants { get; init; }
 
         public string? Comment { get; init; }
 
@@ -142,7 +142,7 @@ namespace GeneratorBase
         public required List<CommandRef> Commands { get; init; }
         public required List<EnumRef> Enums { get; init; }
         // FIXME??
-        public required List<string> Constants { get; init; }
+        public required List<ConstantRef> Constants { get; init; }
 
         public string? Comment { get; init; }
 
@@ -161,6 +161,7 @@ namespace GeneratorBase
     public record CommandRef(string Name);
     public record EnumRef(string Name);
     public record TypeRef(string Name);
+    public record ConstantRef(string Name);
 
     // Should this type help us with overloading only
     // or should it also help with type resolution?
@@ -251,6 +252,7 @@ namespace GeneratorBase
     }
 
     // FIXME: Figure out what is Vulkan specific and what generalizes to other APIs.
+    // FIXME: Should this have a VersionInfo?
     public record Constant(ConstantType Type, string Name, string? Extension, string? Comment, ulong IntValue, float FloatValue, string StringValue);
 
     public interface IStruct : IReferable

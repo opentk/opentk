@@ -835,7 +835,7 @@ namespace VkGenerator.Parsing
             List<Constant> addedConstants = new List<Constant>();
 
             List<EnumRef> requiredEnums = new List<EnumRef>();
-            List<string> requiredConstants = new List<string>();
+            List<ConstantRef> requiredConstants = new List<ConstantRef>();
             foreach (XElement @enum in require.Elements("enum"))
             {
                 if (@enum.Attribute("api")?.Value == "vulkansc")
@@ -861,7 +861,7 @@ namespace VkGenerator.Parsing
                         {
                             // This is a string constant.
                             addedConstants.Add(new Constant(ConstantType.String, constName, extensionName, comment, 0, 0, valueStr));
-                            requiredConstants.Add(constName);
+                            requiredConstants.Add(new ConstantRef(constName));
                         }
                         else
                         {
@@ -869,7 +869,7 @@ namespace VkGenerator.Parsing
 
                             // FIXME: Figure out the type?
                             addedConstants.Add(new Constant(ConstantType.Uint32, constName, extensionName, comment, (ulong)value, 0, ""));
-                            requiredConstants.Add(constName);
+                            requiredConstants.Add(new ConstantRef(constName));
                         }
                     }
                     else
@@ -1136,7 +1136,7 @@ namespace VkGenerator.Parsing
             List<Constant> addedConstants = new List<Constant>();
 
             List<EnumRef> requiredEnums = new List<EnumRef>();
-            List<string> requiredConstants = new List<string>();
+            List<ConstantRef> requiredConstants = new List<ConstantRef>();
             foreach (XElement @enum in require.Elements("enum"))
             {
                 if (@enum.Attribute("api")?.Value == "vulkansc")
@@ -1160,7 +1160,7 @@ namespace VkGenerator.Parsing
                     {
                         // This is a string constant.
                         addedConstants.Add(new Constant(ConstantType.String, constName, extensionName, comment, 0, 0, valueStr));
-                        requiredConstants.Add(constName);
+                        requiredConstants.Add(new ConstantRef(constName));
                     }
                     else
                     {
@@ -1168,7 +1168,7 @@ namespace VkGenerator.Parsing
 
                         // FIXME: Figure out the type?
                         addedConstants.Add(new Constant(ConstantType.Uint32, constName, extensionName, comment, (ulong)value, 0, ""));
-                        requiredConstants.Add(constName);
+                        requiredConstants.Add(new ConstantRef(constName));
                     }
                 }
                 else

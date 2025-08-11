@@ -226,12 +226,20 @@ namespace OpenTK.Audio.OpenAL
         /// <summary>Creative extensions.</summary>
         public static unsafe partial class Creative
         {
-            /// <summary> <b>[requires: EAX-RAM]</b> <b>[entry point: <c>EAXGetBufferMode</c>]</b><br/>  </summary>
-            /// <remarks><see href="https://raw.githubusercontent.com/Raulshc/OpenAL-EXT-Repository/refs/heads/master/AL%20Extensions/EAX-RAM.txt"/></remarks>
+            /// <summary> <b>[requires: EAX | EAX2.0 | EAX3.0 | EAX3.0EMULATED | EAX4.0 | EAX4.0EMULATED | EAX5.0]</b> <b>[entry point: <c>EAXGet</c>]</b><br/>  </summary>
+            /// <remarks><see href="https://raw.githubusercontent.com/Raulshc/OpenAL-EXT-Repository/refs/heads/master/AL%20Extensions/EAX.txt"/><br/><see href="https://raw.githubusercontent.com/Raulshc/OpenAL-EXT-Repository/refs/heads/master/AL%20Extensions/EAX2.0.txt"/><br/><see href="https://raw.githubusercontent.com/Raulshc/OpenAL-EXT-Repository/refs/heads/master/AL%20Extensions/EAX3.0.txt"/><br/><see href="https://raw.githubusercontent.com/Raulshc/OpenAL-EXT-Repository/refs/heads/master/AL%20Extensions/EAX3.0EMULATED.txt"/><br/><see href="https://raw.githubusercontent.com/Raulshc/OpenAL-EXT-Repository/refs/heads/master/AL%20Extensions/EAX4.0.txt"/><br/><see href="https://raw.githubusercontent.com/Raulshc/OpenAL-EXT-Repository/refs/heads/master/AL%20Extensions/EAX4.0EMULATED.txt"/><br/><see href="https://raw.githubusercontent.com/Raulshc/OpenAL-EXT-Repository/refs/heads/master/AL%20Extensions/EAX5.0.txt"/></remarks>
+            public static All EAXGet(Guid* property_get_id, uint property_id, uint source_id, void* value, uint value_size) => (All) ALPointers._EAXGet_fnptr(property_get_id, property_id, source_id, value, value_size);
+            
+            /// <summary> <b>[requires: EAX-RAM | EAX3.0 | EAX3.0EMULATED | EAX4.0 | EAX4.0EMULATED | EAX5.0]</b> <b>[entry point: <c>EAXGetBufferMode</c>]</b><br/>  </summary>
+            /// <remarks><see href="https://raw.githubusercontent.com/Raulshc/OpenAL-EXT-Repository/refs/heads/master/AL%20Extensions/EAX-RAM.txt"/><br/><see href="https://raw.githubusercontent.com/Raulshc/OpenAL-EXT-Repository/refs/heads/master/AL%20Extensions/EAX3.0.txt"/><br/><see href="https://raw.githubusercontent.com/Raulshc/OpenAL-EXT-Repository/refs/heads/master/AL%20Extensions/EAX3.0EMULATED.txt"/><br/><see href="https://raw.githubusercontent.com/Raulshc/OpenAL-EXT-Repository/refs/heads/master/AL%20Extensions/EAX4.0.txt"/><br/><see href="https://raw.githubusercontent.com/Raulshc/OpenAL-EXT-Repository/refs/heads/master/AL%20Extensions/EAX4.0EMULATED.txt"/><br/><see href="https://raw.githubusercontent.com/Raulshc/OpenAL-EXT-Repository/refs/heads/master/AL%20Extensions/EAX5.0.txt"/></remarks>
             public static EAXBufferMode EAXGetBufferMode(uint buffer, int* pReserved) => (EAXBufferMode) ALPointers._EAXGetBufferMode_fnptr(buffer, pReserved);
             
-            /// <summary> <b>[requires: EAX-RAM]</b> <b>[entry point: <c>EAXSetBufferMode</c>]</b><br/>  </summary>
-            /// <remarks><see href="https://raw.githubusercontent.com/Raulshc/OpenAL-EXT-Repository/refs/heads/master/AL%20Extensions/EAX-RAM.txt"/></remarks>
+            /// <summary> <b>[requires: EAX | EAX2.0 | EAX3.0 | EAX3.0EMULATED | EAX4.0 | EAX4.0EMULATED | EAX5.0]</b> <b>[entry point: <c>EAXSet</c>]</b><br/>  </summary>
+            /// <remarks><see href="https://raw.githubusercontent.com/Raulshc/OpenAL-EXT-Repository/refs/heads/master/AL%20Extensions/EAX.txt"/><br/><see href="https://raw.githubusercontent.com/Raulshc/OpenAL-EXT-Repository/refs/heads/master/AL%20Extensions/EAX2.0.txt"/><br/><see href="https://raw.githubusercontent.com/Raulshc/OpenAL-EXT-Repository/refs/heads/master/AL%20Extensions/EAX3.0.txt"/><br/><see href="https://raw.githubusercontent.com/Raulshc/OpenAL-EXT-Repository/refs/heads/master/AL%20Extensions/EAX3.0EMULATED.txt"/><br/><see href="https://raw.githubusercontent.com/Raulshc/OpenAL-EXT-Repository/refs/heads/master/AL%20Extensions/EAX4.0.txt"/><br/><see href="https://raw.githubusercontent.com/Raulshc/OpenAL-EXT-Repository/refs/heads/master/AL%20Extensions/EAX4.0EMULATED.txt"/><br/><see href="https://raw.githubusercontent.com/Raulshc/OpenAL-EXT-Repository/refs/heads/master/AL%20Extensions/EAX5.0.txt"/></remarks>
+            public static All EAXSet(Guid* property_set_id, uint property_id, uint source_id, void* value, uint value_size) => (All) ALPointers._EAXSet_fnptr(property_set_id, property_id, source_id, value, value_size);
+            
+            /// <summary> <b>[requires: EAX-RAM | EAX3.0 | EAX3.0EMULATED | EAX4.0 | EAX4.0EMULATED | EAX5.0]</b> <b>[entry point: <c>EAXSetBufferMode</c>]</b><br/>  </summary>
+            /// <remarks><see href="https://raw.githubusercontent.com/Raulshc/OpenAL-EXT-Repository/refs/heads/master/AL%20Extensions/EAX-RAM.txt"/><br/><see href="https://raw.githubusercontent.com/Raulshc/OpenAL-EXT-Repository/refs/heads/master/AL%20Extensions/EAX3.0.txt"/><br/><see href="https://raw.githubusercontent.com/Raulshc/OpenAL-EXT-Repository/refs/heads/master/AL%20Extensions/EAX3.0EMULATED.txt"/><br/><see href="https://raw.githubusercontent.com/Raulshc/OpenAL-EXT-Repository/refs/heads/master/AL%20Extensions/EAX4.0.txt"/><br/><see href="https://raw.githubusercontent.com/Raulshc/OpenAL-EXT-Repository/refs/heads/master/AL%20Extensions/EAX4.0EMULATED.txt"/><br/><see href="https://raw.githubusercontent.com/Raulshc/OpenAL-EXT-Repository/refs/heads/master/AL%20Extensions/EAX5.0.txt"/></remarks>
             public static bool EAXSetBufferMode(int n, uint* buffers, int value) => ALPointers._EAXSetBufferMode_fnptr(n, buffers, value) != 0;
             
         }
@@ -398,9 +406,17 @@ namespace OpenTK.Audio.OpenAL
             /// <remarks><see href="https://raw.githubusercontent.com/Raulshc/OpenAL-EXT-Repository/refs/heads/master/AL%20Extensions/AL_EXT_direct_context.txt"/></remarks>
             public static EAXBufferMode EAXGetBufferModeDirect(ALCContext context, uint buffer, int* pReserved) => (EAXBufferMode) ALPointers._EAXGetBufferModeDirect_fnptr((IntPtr)context, buffer, pReserved);
             
+            /// <summary> <b>[requires: AL_EXT_direct_context]</b> <b>[entry point: <c>EAXGetDirect</c>]</b><br/>  </summary>
+            /// <remarks><see href="https://raw.githubusercontent.com/Raulshc/OpenAL-EXT-Repository/refs/heads/master/AL%20Extensions/AL_EXT_direct_context.txt"/></remarks>
+            public static All EAXGetDirect(ALCContext context, Guid* property_get_id, uint property_id, uint source_id, void* value, uint value_size) => (All) ALPointers._EAXGetDirect_fnptr((IntPtr)context, property_get_id, property_id, source_id, value, value_size);
+            
             /// <summary> <b>[requires: AL_EXT_direct_context]</b> <b>[entry point: <c>EAXSetBufferModeDirect</c>]</b><br/>  </summary>
             /// <remarks><see href="https://raw.githubusercontent.com/Raulshc/OpenAL-EXT-Repository/refs/heads/master/AL%20Extensions/AL_EXT_direct_context.txt"/></remarks>
             public static bool EAXSetBufferModeDirect(ALCContext context, int n, uint* buffers, int value) => ALPointers._EAXSetBufferModeDirect_fnptr((IntPtr)context, n, buffers, value) != 0;
+            
+            /// <summary> <b>[requires: AL_EXT_direct_context]</b> <b>[entry point: <c>EAXSetDirect</c>]</b><br/>  </summary>
+            /// <remarks><see href="https://raw.githubusercontent.com/Raulshc/OpenAL-EXT-Repository/refs/heads/master/AL%20Extensions/AL_EXT_direct_context.txt"/></remarks>
+            public static All EAXSetDirect(ALCContext context, Guid* property_set_id, uint property_id, uint source_id, void* value, uint value_size) => (All) ALPointers._EAXSetDirect_fnptr((IntPtr)context, property_set_id, property_id, source_id, value, value_size);
             
             /// <summary> <b>[requires: ALC_EXT_EFX]</b> <b>[entry point: <c>alEffectf</c>]</b><br/>  </summary>
             /// <remarks><see href="https://raw.githubusercontent.com/Raulshc/OpenAL-EXT-Repository/refs/heads/master/AL%20Extensions/ALC_EXT_EFX.txt"/></remarks>

@@ -47,6 +47,8 @@ namespace ALGenerator
                             "BufferDataWithCallback_LOKI",
                             "EAXSetBufferMode",
                             "EAXGetBufferMode",
+                            "EAXSet",
+                            "EAXGet",
                         ]
                     };
 

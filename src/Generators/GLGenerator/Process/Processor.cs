@@ -370,6 +370,8 @@ namespace GLGenerator.Process
 
                 Namespace CreateOutputAPI(OutputApi outAPI, APIFile glFile)
                 {
+                    // Function processing
+
                     bool removeFunctions = outAPI switch
                     {
                         OutputApi.GL => true,
@@ -378,13 +380,7 @@ namespace GLGenerator.Process
                     };
 
                     HashSet<GroupRef> groupsReferencedByFunctions = new HashSet<GroupRef>();
-
-                    Dictionary<string, EnumGroupMember>? enumsDict = allEnumsPerAPI[outAPI];
-
                     Dictionary<string, List<OverloadedFunction>> functionsByVendor = new Dictionary<string, List<OverloadedFunction>>();
-                    
-                    HashSet<EnumGroupMember> theAllEnumGroup = new HashSet<EnumGroupMember>();
-
                     foreach (var functionRef in functions)
                     {
                         if (allFunctions.TryGetValue(functionRef.EntryPoint, out OverloadedFunction? overloadedFunction))
@@ -421,70 +417,31 @@ namespace GLGenerator.Process
                         }
                     }
 
-                    Dictionary<string, List<EnumGroupMember>> groupNameToEnumGroup = new Dictionary<string, List<EnumGroupMember>>();
-
-                    // FIXME: Here we are trusting that the enum refs in the <require> tags tell us all of the
-                    // enums to include. But this is not necessarily true as is the case with WGL as it references
-                    // some enums from OpenGL without them going through the require tag...
-                    // - Noggin_bops 2023-08-26
-                    foreach (var enumRef in enums)
-                    {
-                        if (removeFunctions)
-                        {
-                            // FIXME: Should we check the profile of the extension??
-                            if (enumRef.VersionInfo.RemovedBy.Count > 0 || enumRef.Profile == GLProfile.Compatibility)
-                            {
-                                // FIXME: Add the enum if an extension uses it??
-                                continue;
-                            }
-                        }
-
-                        // FIXME! This is a big hack!
-                        // We don't want to process this "enum" as it is a string.
-                        if (enumRef.EnumName == "GLX_EXTENSION_NAME") continue;
-
-                        if (enumsDict.TryGetValue(enumRef.EnumName, out EnumGroupMember? @enum))
-                        {
-                            foreach (var (originalName, translatedName, @namespace) in @enum.Groups)
-                            {
-                                if (@namespace != glFile)
-                                    continue;
-
-                                if (groupNameToEnumGroup.TryGetValue(translatedName, out List<EnumGroupMember>? groupMembers) == false)
-                                {
-                                    groupMembers = new List<EnumGroupMember>();
-                                    groupNameToEnumGroup.Add(translatedName, groupMembers);
-                                }
-
-                                if (groupMembers.Find(g => g.MangledName == @enum.MangledName) == null)
-                                {
-                                    groupMembers.Add(@enum);
-                                }
-                            }
-
-                            if (@enum.Value <= uint.MaxValue)
-                            {
-                                theAllEnumGroup.Add(@enum);
-                            }
-                        }
-                        else
-                        {
-                            throw new Exception($"Could not find any enum called '{enumRef.EnumName}'.");
-                        }
-                    }
-
-                    // Go through all vendorFunctions and build up a Dictionary from enumName groups to function using them
                     Dictionary<GroupRef, List<(string Vendor, Function Function)>> enumGroupToNativeFunctionsUsingThatEnumGroup = new Dictionary<GroupRef, List<(string Vendor, Function Function)>>();
+                    Dictionary<string, VendorFunctions> vendors = new Dictionary<string, VendorFunctions>();
                     foreach (var (vendor, vendorFunctions) in functionsByVendor)
                     {
                         foreach (var function in vendorFunctions)
                         {
-                            foreach (var group in function.NativeFunction.ReferencedEnumGroups)
+                            if (!vendors.TryGetValue(vendor, out VendorFunctions? group))
                             {
-                                if (enumGroupToNativeFunctionsUsingThatEnumGroup.TryGetValue(group, out var listOfFunctions) == false)
+                                group = new VendorFunctions(vendor, new List<Process.OverloadedFunction>(), new HashSet<Function>());
+                                vendors.Add(vendor, group);
+                            }
+
+                            group.Functions.Add(new Process.OverloadedFunction(function.NativeFunction, function.Overloads));
+
+                            if (function.ChangeNativeName)
+                            {
+                                group.NativeFunctionsWithPostfix.Add(function.NativeFunction);
+                            }
+
+                            foreach (var enumGroup in function.NativeFunction.ReferencedEnumGroups)
+                            {
+                                if (enumGroupToNativeFunctionsUsingThatEnumGroup.TryGetValue(enumGroup, out var listOfFunctions) == false)
                                 {
                                     listOfFunctions = new List<(string Vendor, Function Function)>();
-                                    enumGroupToNativeFunctionsUsingThatEnumGroup.Add(group, listOfFunctions);
+                                    enumGroupToNativeFunctionsUsingThatEnumGroup.Add(enumGroup, listOfFunctions);
                                 }
 
                                 if (listOfFunctions.Contains((vendor, function.NativeFunction)) == false)
@@ -495,92 +452,12 @@ namespace GLGenerator.Process
                         }
                     }
 
-                    // Go through all of the groupNameToEnumGroup and put them into their groups
-
-                    // Add keys + lists for all enumName names
-                    List<EnumGroup> finalGroups = new List<EnumGroup>();
-
-                    foreach ((string originalName, string translatedName, bool isFlags) in allEnumGroups[outAPI])
-                    {
-                        groupNameToEnumGroup.TryGetValue(translatedName, out List<EnumGroupMember>? members);
-                        members ??= new List<EnumGroupMember>();
-
-                        // SpecialNumbers is not an enumName groupName that we want to output.
-                        // We handle these entries differently as some of the entries don't fit in an int.
-                        if (originalName == "SpecialNumbers")
-                            continue;
-
-                        // Remove all empty enumName groups, except the empty groups referenced by included vendorFunctions.
-                        // In GL 4.1 to 4.5 there are vendorFunctions that use the groupName "ShaderBinaryFormat"
-                        // while not including any members for that enumName groupName.
-                        // This is needed to solve that case.
-                        if (members.Count <= 0 && groupsReferencedByFunctions.Contains(new GroupRef(originalName, translatedName, glFile)) == false)
-                            continue;
-
-                        if (enumGroupToNativeFunctionsUsingThatEnumGroup.TryGetValue(new GroupRef(originalName, translatedName, glFile), out var functionsUsingEnumGroup) == false)
-                        {
-                            functionsUsingEnumGroup = null;
-                        }
-
-                        // If there is a list, sort it by name
-                        if (functionsUsingEnumGroup != null)
-                            functionsUsingEnumGroup.Sort((f1, f2) => {
-                                // We want to prioritize "core" vendorFunctions before extensions.
-                                if (f1.Vendor == "" && f2.Vendor != "") return -1;
-                                if (f1.Vendor != "" && f2.Vendor == "") return 1;
-
-                                return f1.Function.Name.CompareTo(f2.Function.Name);
-                            });
-
-                        members.Sort(EnumGroupMember.DefaultComparison);
-
-                        finalGroups.Add(new EnumGroup(translatedName, isFlags, members, functionsUsingEnumGroup));
-                    }
-
-                    // Sort enum groups be name
-                    finalGroups.Sort((g1, g2) => g1.Name.CompareTo(g2.Name));
-
-                    List<EnumGroupMember> allEnumGroup = theAllEnumGroup.ToList();
-                    allEnumGroup.Sort(EnumGroupMember.DefaultComparison);
-
-                    // Add the All enum group first.
-                    finalGroups.Insert(0, new EnumGroup("All", false, allEnumGroup, null));
-
-                    // Group vendors
-                    // Group groupNameToEnumGroup
-                    // Lookup documentation
-                    Dictionary<string, VendorFunctions> vendors = new Dictionary<string, VendorFunctions>();
-                    foreach ((string vendor, List<OverloadedFunction> overloadedFunctions) in functionsByVendor)
-                    {
-                        foreach (OverloadedFunction overloadedFunction in overloadedFunctions)
-                        {
-                            if (!vendors.TryGetValue(vendor, out VendorFunctions? group))
-                            {
-                                group = new VendorFunctions(vendor, new List<Process.OverloadedFunction>(), new HashSet<Function>());
-                                vendors.Add(vendor, group);
-                            }
-
-                            group.Functions.Add(new Process.OverloadedFunction(overloadedFunction.NativeFunction, overloadedFunction.Overloads));
-
-                            if (overloadedFunction.ChangeNativeName)
-                            {
-                                group.NativeFunctionsWithPostfix.Add(overloadedFunction.NativeFunction);
-                            }
-                        }
-                    }
-
-                    List<VendorFunctions> sortedVendorFunctions = [..vendors.Values];
+                    List<VendorFunctions> sortedVendorFunctions = [.. vendors.Values];
                     foreach (VendorFunctions functions in sortedVendorFunctions)
                     {
                         functions.Functions.Sort();
                     }
                     sortedVendorFunctions.Sort((e1, e2) => e1.Vendor.CompareTo(e2.Vendor));
-
-                    SortedDictionary<string, VendorFunctions> sortedVendors = new SortedDictionary<string, VendorFunctions>(vendors);
-                    foreach (var (vendor, vendorFunctions) in sortedVendors)
-                    {
-                        vendorFunctions.Functions.Sort();
-                    }
 
                     Dictionary<Function, FunctionDocumentation> documentation = new Dictionary<Function, FunctionDocumentation>();
                     foreach (var (vendor, vendorFunctions) in functionsByVendor)
@@ -588,7 +465,7 @@ namespace GLGenerator.Process
                         foreach (var function in vendorFunctions)
                         {
                             FunctionReference func = functions.Find(f => f.EntryPoint == function.NativeFunction.EntryPoint) ?? throw new Exception($"Could not find function {function.NativeFunction.EntryPoint}!");
-                            
+
                             List<string> addedIn = new List<string>();
                             if (func.VersionInfo.Version != null)
                             {
@@ -682,6 +559,138 @@ namespace GLGenerator.Process
                             }
                         }
                     }
+
+                    /// Enum processing
+
+                    Dictionary<string, EnumGroupMember>? enumsDict = allEnumsPerAPI[outAPI];
+
+                    Dictionary<string, List<EnumGroupMember>> groupNameToEnumGroup = new Dictionary<string, List<EnumGroupMember>>();
+
+                    HashSet<EnumGroupMember> theAllEnumGroup = new HashSet<EnumGroupMember>();
+
+                    // FIXME: Here we are trusting that the enum refs in the <require> tags tell us all of the
+                    // enums to include. But this is not necessarily true as is the case with WGL as it references
+                    // some enums from OpenGL without them going through the require tag...
+                    // - Noggin_bops 2023-08-26
+                    foreach (var enumRef in enums)
+                    {
+                        if (removeFunctions)
+                        {
+                            // FIXME: Should we check the profile of the extension??
+                            if (enumRef.VersionInfo.RemovedBy.Count > 0 || enumRef.Profile == GLProfile.Compatibility)
+                            {
+                                // FIXME: Add the enum if an extension uses it??
+                                continue;
+                            }
+                        }
+
+                        // FIXME! This is a big hack!
+                        // We don't want to process this "enum" as it is a string.
+                        if (enumRef.EnumName == "GLX_EXTENSION_NAME") continue;
+
+                        if (enumsDict.TryGetValue(enumRef.EnumName, out EnumGroupMember? @enum))
+                        {
+                            foreach (var (originalName, translatedName, @namespace) in @enum.Groups)
+                            {
+                                if (@namespace != glFile)
+                                    continue;
+
+                                if (groupNameToEnumGroup.TryGetValue(translatedName, out List<EnumGroupMember>? groupMembers) == false)
+                                {
+                                    groupMembers = new List<EnumGroupMember>();
+                                    groupNameToEnumGroup.Add(translatedName, groupMembers);
+                                }
+
+                                if (groupMembers.Find(g => g.MangledName == @enum.MangledName) == null)
+                                {
+                                    groupMembers.Add(@enum);
+                                }
+                            }
+
+                            if (@enum.Value <= uint.MaxValue)
+                            {
+                                theAllEnumGroup.Add(@enum);
+                            }
+                        }
+                        else
+                        {
+                            throw new Exception($"Could not find any enum called '{enumRef.EnumName}'.");
+                        }
+                    }
+
+                    // Go through all of the groupNameToEnumGroup and put them into their groups
+
+                    // Add keys + lists for all enumName names
+                    List<EnumGroup> finalGroups = new List<EnumGroup>();
+                    foreach ((string originalName, string translatedName, bool isFlags) in allEnumGroups[outAPI])
+                    {
+                        if (groupNameToEnumGroup.TryGetValue(translatedName, out List<EnumGroupMember>? members) == false)
+                        {
+                            members = [];
+                            groupNameToEnumGroup.Add(translatedName, members);
+                        }
+
+                        // SpecialNumbers is not an enumName groupName that we want to output.
+                        // We handle these entries differently as some of the entries don't fit in an int.
+                        if (originalName == "SpecialNumbers")
+                            continue;
+
+                        // Remove all empty enumName groups, except the empty groups referenced by included vendorFunctions.
+                        // In GL 4.1 to 4.5 there are vendorFunctions that use the groupName "ShaderBinaryFormat"
+                        // while not including any members for that enumName groupName.
+                        // This is needed to solve that case.
+                        if (members.Count <= 0 && groupsReferencedByFunctions.Contains(new GroupRef(originalName, translatedName, glFile)) == false)
+                            continue;
+
+                        if (enumGroupToNativeFunctionsUsingThatEnumGroup.TryGetValue(new GroupRef(originalName, translatedName, glFile), out var functionsUsingEnumGroup) == false)
+                        {
+                            functionsUsingEnumGroup = null;
+                        }
+
+                        // If there is a list, sort it by name
+                        if (functionsUsingEnumGroup != null)
+                            functionsUsingEnumGroup.Sort((f1, f2) => {
+                                // We want to prioritize "core" vendorFunctions before extensions.
+                                if (f1.Vendor == "" && f2.Vendor != "") return -1;
+                                if (f1.Vendor != "" && f2.Vendor == "") return 1;
+
+                                return f1.Function.Name.CompareTo(f2.Function.Name);
+                            });
+
+                        members.Sort(EnumGroupMember.DefaultComparison);
+
+                        finalGroups.Add(new EnumGroup(translatedName, isFlags, members, functionsUsingEnumGroup));
+                    }
+                    foreach (var group in groupsReferencedByFunctions)
+                    {
+                        // This group is not part of this file, so we can't do anything here about adding it.
+                        // For now this is not a problem as all referenced groups from between the different
+                        // files are always populated, so we will never have to add them to the other file.
+                        // - Noggin_bops 2025-08-05
+                        if (group.Namespace != file)
+                        {
+                            continue;
+                        }
+
+                        if (groupNameToEnumGroup.TryGetValue(group.TranslatedName, out List<EnumGroupMember>? members) == false)
+                        {
+                            if (enumGroupToNativeFunctionsUsingThatEnumGroup.TryGetValue(group, out var functionsUsingEnumGroup) == false)
+                            {
+                                functionsUsingEnumGroup = null;
+                            }
+
+                            finalGroups.Add(new EnumGroup(group.TranslatedName, false, [], functionsUsingEnumGroup));
+                        }
+                    }
+
+                    // Sort enum groups be name
+                    finalGroups.Sort((g1, g2) => g1.Name.CompareTo(g2.Name));
+
+                    List<EnumGroupMember> allEnumGroup = theAllEnumGroup.ToList();
+                    allEnumGroup.Sort(EnumGroupMember.DefaultComparison);
+
+                    // Add the All enum group first.
+                    finalGroups.Insert(0, new EnumGroup("All", false, allEnumGroup, null));
 
                     return new Namespace(outAPI, sortedVendorFunctions, finalGroups, documentation);
                 }

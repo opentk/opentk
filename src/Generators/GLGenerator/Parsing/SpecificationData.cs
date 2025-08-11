@@ -55,6 +55,11 @@ namespace GLGenerator.Parsing
         // Is this enum reference copied from another namespace.
         bool IsCrossReferenced);
 
+    internal record ConstantReference(
+        string ConstantName,
+        VersionInfo VersionInfo,
+        GLProfile Profile);
+
     internal record APIVersion(
         Version Name,
         List<string> EntryPoints,

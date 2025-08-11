@@ -131,7 +131,7 @@ namespace OpenALTest
                     deviceName = d;
                 }
             }
-
+            
             var allDevices = ALC.GetString(ALCDevice.Null, OpenTK.Audio.OpenAL.ALC.StringName.AllDevicesSpecifier);
             Console.WriteLine($"All Devices: {string.Join(", ", allDevices)}");
 

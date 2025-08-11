@@ -29,6 +29,15 @@
         <type>typedef void (<apientry/> *<name>ALEVENTPROCSOFT</name>)(ALenum eventType, ALuint object, ALuint param, ALsizei length, const ALchar *message, ALvoid *userParam);</type>
         <!-- This type is not defined in AL_LOKI_buffer_data_callback but it's needed in the current XML format. -->
         <type>typedef int (*<name>ALBUFFERDATACALLBACKLOKI</name>)(uint sid, uint bid, void *data, enum format, uint samples);</type>
+
+        <!-- This type is part of the EAX extensions. -->
+        <type>typedef struct _GUID
+        {
+            unsigned long Data1;
+            unsigned short Data2;
+            unsigned short Data3;
+            unsigned char Data4[8];
+        } <name>GUID</name>;</type>
     </types>
 
     <enums>
@@ -1322,6 +1331,24 @@
             <param><ptype>ALvoid</ptype> **<name>values</name></param>
         </command>
     </commands>
+    <commands comment="From EAX">
+        <command>
+            <proto><ptype>ALenum</ptype> <name>EAXSet</name></proto>
+            <param len="1">const <ptype>GUID</ptype> *<name>property_set_id</name></param>
+            <param><ptype>ALuint</ptype> <name>property_id</name></param>
+            <param><ptype>ALuint</ptype> <name>source_id</name></param>
+            <param><ptype>ALvoid</ptype> *<name>value</name></param>
+            <param><ptype>ALuint</ptype> <name>value_size</name></param>
+        </command>
+        <command>
+            <proto><ptype>ALenum</ptype> <name>EAXGet</name></proto>
+            <param len="1">const <ptype>GUID</ptype> *<name>property_get_id</name></param>
+            <param><ptype>ALuint</ptype> <name>property_id</name></param>
+            <param><ptype>ALuint</ptype> <name>source_id</name></param>
+            <param><ptype>ALvoid</ptype> *<name>value</name></param>
+            <param><ptype>ALuint</ptype> <name>value_size</name></param>
+        </command>
+    </commands>
     <commands comment="From EAX-RAM">
         <command>
             <proto><ptype>ALboolean</ptype> <name>EAXSetBufferMode</name></proto>
@@ -2204,18 +2231,61 @@
             </require>
         </extension>
         <extension name="EAX" comment="FIXME: Find documentation for this extension">
+            <require>
+                <command name="EAXSet" />
+                <command name="EAXGet" />
+            </require>
         </extension>
         <extension name="EAX2.0" comment="FIXME: Find documentation for this extension">
+            <require>
+                <command name="EAXSet" />
+                <command name="EAXGet" />
+            </require>
         </extension>
         <extension name="EAX3.0" comment="FIXME: Find documentation for this extension">
+            <require>
+                <command name="EAXSet" />
+                <command name="EAXGet" />
+                <!-- The EAX3 header includes these, without the enum definitions. -->
+                <command name="EAXSetBufferMode" />
+                <command name="EAXGetBufferMode" />
+            </require>
         </extension>
         <extension name="EAX3.0EMULATED" comment="FIXME: Find documentation for this extension">
+            <require>
+                <command name="EAXSet" />
+                <command name="EAXGet" />
+                <!-- The EAX3 header includes these, without the enum definitions. -->
+                <command name="EAXSetBufferMode" />
+                <command name="EAXGetBufferMode" />
+            </require>
         </extension>
         <extension name="EAX4.0" comment="FIXME: Find documentation for this extension">
+            <require>
+                <command name="EAXSet" />
+                <command name="EAXGet" />
+                <!-- The EAX4 header includes these, without the enum definitions. -->
+                <command name="EAXSetBufferMode" />
+                <command name="EAXGetBufferMode" />
+            </require>
         </extension>
         <extension name="EAX4.0EMULATED" comment="FIXME: Find documentation for this extension">
+            <require>
+                <command name="EAXSet" />
+                <command name="EAXGet" />
+                <!-- The EAX4 header includes these, without the enum definitions. -->
+                <command name="EAXSetBufferMode" />
+                <command name="EAXGetBufferMode" />
+            </require>
         </extension>
         <extension name="EAX5.0" comment="FIXME: Find documentation for this extension">
+            <require>
+                <command name="EAXSet" />
+                <command name="EAXGet" />
+                <!-- The EAX4 header includes these, without the enum definitions. -->
+                <command name="EAXSetBufferMode" />
+                <command name="EAXGetBufferMode" />
+            </require>
         </extension>
 
          <extension name="ALC_EXT_EFX">

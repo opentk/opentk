@@ -11,6 +11,7 @@ using GeneratorBase.Utility.Extensions;
 using GeneratorBase;
 using GLGenerator.Process;
 using GeneratorBase.Overloading;
+using System.Diagnostics;
 
 namespace GLGenerator
 {
