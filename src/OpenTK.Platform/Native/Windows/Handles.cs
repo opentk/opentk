@@ -73,11 +73,14 @@ namespace OpenTK.Platform.Native.Windows
 
         public bool UseDwmFlush { get; set; } = false;
 
-        public HGLRC(IntPtr hGlrc, IntPtr hdc, HGLRC? sharedContext)
+        public ContextValues ContextValues { get; private set; }
+
+        public HGLRC(IntPtr hGlrc, IntPtr hdc, HGLRC? sharedContext, ContextValues contextValues)
         {
             HGlrc = hGlrc;
             HDC = hdc;
             SharedContext = sharedContext;
+            ContextValues = contextValues;
         }
     }
 

@@ -574,7 +574,7 @@ namespace OpenTK.Platform.Native.macOS
         }
 
         /// <inheritdoc/>
-        public string? ShowSaveDialog(WindowHandle parent, string title, string directory, DialogFileFilter[]? allowedExtensions, SaveDialogOptions options)
+        public string? ShowSaveDialog(WindowHandle parent, string title, string directory, string? defaultFileName, DialogFileFilter[]? allowedExtensions, SaveDialogOptions options)
         {
             NSWindowHandle nswindow = parent.As<NSWindowHandle>(this);
 
@@ -614,8 +614,8 @@ namespace OpenTK.Platform.Native.macOS
         /// <summary>
         /// Shows a modal "save file" dialog not attached to any specific window.
         /// </summary>
-        /// <inheritdoc cref="ShowOpenDialog"/>
-        public string? ShowSaveDialogNoWindow(string title, string directory, DialogFileFilter[]? allowedExtensions, SaveDialogOptions options)
+        /// <inheritdoc cref="ShowSaveDialog"/>
+        public string? ShowSaveDialogNoWindow(string title, string directory, string? defaultFileName, DialogFileFilter[]? allowedExtensions, SaveDialogOptions options)
         {
             IntPtr savePanel = objc_msgSend_IntPtr((IntPtr)NSSavePanelClass, selSavePanel);
 

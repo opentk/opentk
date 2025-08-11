@@ -67,6 +67,12 @@ namespace OpenTK.Platform
         /// </summary>
         public bool sRGBFramebuffer { get; set; } = false;
 
+        // FIXME: Better documentation...
+        /// <summary>
+        /// Makes the backbuffer support left and right buffers.
+        /// </summary>
+        public bool Stereo { get; set; } = false;
+
         /// <summary>
         /// The pixel format of the context.
         /// This differentiates between "normal" fixed point LDR formats

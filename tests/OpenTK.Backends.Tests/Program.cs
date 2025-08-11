@@ -219,7 +219,7 @@ namespace OpenTK.Backends.Tests
                         // Using the icon UI to set the icon does change the taskbar icon...
                         // - Noggin_bops 2024-04-02
                         Toolkit.Window.SetIcon(Window, handle);
-                        (Toolkit.Window as MacOSWindowComponent)?.SetDockIcon(Window, handle);
+                        (Toolkit.Shell as MacOSShellComponent)?.SetDockIcon(handle);
 
                         // FIXME: Should we destroy the icon?
                         Toolkit.Icon?.Destroy(handle);

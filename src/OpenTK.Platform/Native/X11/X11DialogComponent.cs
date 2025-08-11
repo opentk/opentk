@@ -636,7 +636,7 @@ namespace OpenTK.Platform.Native.X11
         }
 
         /// <inheritdoc/>
-        public string? ShowSaveDialog(WindowHandle parent, string title, string directory, DialogFileFilter[]? allowedExtensions, SaveDialogOptions options)
+        public string? ShowSaveDialog(WindowHandle parent, string title, string directory, string? defaultFileName, DialogFileFilter[]? allowedExtensions, SaveDialogOptions options)
         {
             XWindowHandle xwindow = parent.As<XWindowHandle>(this);
 
@@ -663,6 +663,7 @@ namespace OpenTK.Platform.Native.X11
 
             arguments.Append($"--title \"{title}\" ");
 
+            // FIXME: Add defaultFileName?
             arguments.Append($"--filename=\"{directory}\" ");
             arguments.Append($"--save ");
             

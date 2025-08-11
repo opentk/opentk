@@ -1,14 +1,16 @@
+using Hardware.Info;
 using ImGuiNET;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Platform;
+using OpenTK.Platform.Native;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Numerics;
 using System.Text.RegularExpressions;
-using System.Diagnostics;
-using OpenTK.Platform.Native;
 
 namespace OpenTK.Backends.Tests
 {
@@ -40,8 +42,6 @@ namespace OpenTK.Backends.Tests
         private string[] testAppNames = TestApps.All.Select(app => app.Name).ToArray();
 
         private int lastActiveApp = 0;
-
-        private string savePath = Path.Combine(Environment.CurrentDirectory, "opengl.ini");
 
         private readonly Regex vendorRegex = new Regex("GL_([0-9a-zA-Z]+)", RegexOptions.CultureInvariant | RegexOptions.Compiled);
 
@@ -121,6 +121,7 @@ namespace OpenTK.Backends.Tests
                 ImGui.BeginDisabled();
                 if (ImGui.BeginCombo("Child Window", "No child windows"))
                 {
+
                     ImGui.EndCombo();
                 }
                 ImGui.EndDisabled();
@@ -227,11 +228,49 @@ namespace OpenTK.Backends.Tests
             ImGuiUtils.ReadonlyText("OpenGL Vendor", vendorString);
             ImGuiUtils.ReadonlyText("OpenGL Renderer", renderer);
 
-            ImGui.SeparatorText(extensionHeader);
-            ImGui.InputText("##file-path", ref savePath, 4096); ImGui.SameLine();
-            if (ImGui.Button("Save"))
             {
-                SaveOpenGLDetails(savePath);
+                ContextValues values = Toolkit.OpenGL.GetContextValues(Program.WindowContext);
+
+                if (ImGui.BeginTable("context_values_table_id", 2, ImGuiTableFlags.Borders))
+                {
+                    ImGui.TableSetupColumn("Field", ImGuiTableColumnFlags.WidthFixed);
+                    ImGui.TableSetupColumn("Value", ImGuiTableColumnFlags.WidthStretch);
+                    ImGui.TableHeadersRow();
+
+                    Row("Red bits", values.RedBits);
+                    Row("Green bits", values.GreenBits);
+                    Row("Blue bits", values.BlueBits);
+                    Row("Alpha bits", values.AlphaBits);
+                    Row("Depth bits", values.DepthBits);
+                    Row("Stencil bits", values.StencilBits);
+                    Row("Double buffered", values.DoubleBuffered);
+                    Row("sRGB framebuffer", values.SRGBFramebuffer);
+                    Row("Pixel format", values.PixelFormat);
+                    Row("Swap method", values.SwapMethod);
+                    Row("Samples", values.Samples);
+                    Row("Supports fb transparency", values.SupportsFramebufferTransparency);
+                    Row("Stereo", values.Stereo);
+
+                    ImGui.EndTable();
+
+                    static void Row<T>(string key, T value)
+                    {
+                        ImGui.TableNextRow();
+                        ImGui.TableNextColumn(); ImGui.TextUnformatted(key);
+                        ImGui.TableNextColumn(); ImGui.TextUnformatted(value.ToString());
+                    }
+                }
+            }
+
+            ImGui.SeparatorText(extensionHeader);
+            if (ImGui.Button("Save extensions"))
+            {
+                // FIXME: Ability to pass a suggested/default file name!
+                string? savePath = Toolkit.Dialog.ShowSaveDialog(Program.Window, "Save OpenGL extensions", Environment.CurrentDirectory, "opengl.ini", null, 0);
+                if (savePath != null)
+                {
+                    SaveOpenGLDetails(savePath);
+                }
             }
 
             if (ImGui.BeginChild("opengl_view_extensions_child_frame", Vector2.Zero, ImGuiChildFlags.Borders, ImGuiWindowFlags.AlwaysVerticalScrollbar))
@@ -275,8 +314,8 @@ namespace OpenTK.Backends.Tests
 
                     ImGui.TreePop();
                 }
-                ImGui.EndChild();
             }
+            ImGui.EndChild();
         }
 
         private void SaveOpenGLDetails(string path)

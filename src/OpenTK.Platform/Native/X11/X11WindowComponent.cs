@@ -1577,7 +1577,7 @@ namespace OpenTK.Platform.Native.X11
         {
             XWindow window;
             GLXFBConfig? chosenConfig = null;
-            ContextPixelFormat chosenPixelFormat = ContextPixelFormat.RGBA;
+            ContextValues chosenValues;
             XColorMap? map = null;
 
             bool visualSupportsFramebufferTransparency = false;
@@ -1620,6 +1620,7 @@ namespace OpenTK.Platform.Native.X11
                 requested.SwapMethod = glhints.SwapMethod;
                 requested.Samples = glhints.Multisamples;
                 requested.SupportsFramebufferTransparency = glhints.SupportTransparentFramebufferX11;
+                requested.Stereo = glhints.Stereo;
 
                 unsafe
                 {
@@ -1679,6 +1680,7 @@ namespace OpenTK.Platform.Native.X11
                         glXGetFBConfigAttrib(X11.Display, configs[i], GLX_ALPHA_SIZE, out int alphaSize);
                         glXGetFBConfigAttrib(X11.Display, configs[i], GLX_DEPTH_SIZE, out int depthSize);
                         glXGetFBConfigAttrib(X11.Display, configs[i], GLX_STENCIL_SIZE, out int stencilSize);
+                        glXGetFBConfigAttrib(X11.Display, configs[i], GLX_STEREO, out int stereo);
 
                         bool supportsFramebufferTransparency = false;
                         if (X11.Extensions.Contains("RENDER"))
@@ -1736,11 +1738,12 @@ namespace OpenTK.Platform.Native.X11
                         option.AlphaBits = alphaSize;
                         option.DepthBits = depthSize;
                         option.StencilBits = stencilSize;
-                        option.DoubleBuffered = doubleBuffer == 1;
-                        option.SRGBFramebuffer = srgbCapable == 1;
+                        option.DoubleBuffered = doubleBuffer != 0;
+                        option.SRGBFramebuffer = srgbCapable != 0;
                         option.Samples = samples;
                         option.SwapMethod = swapMethod;
                         option.SupportsFramebufferTransparency = supportsFramebufferTransparency;
+                        option.Stereo = stereo != 0;
 
                         if ((renderType & GLX_RGBA_UNSIGNED_FLOAT_BIT_EXT) != 0)
                         {
@@ -1772,7 +1775,7 @@ namespace OpenTK.Platform.Native.X11
                         throw new IndexOutOfRangeException($"The selected format index ({selectedIndex}) is outside the range of valid indeces. This is either an OpenTK bug or an issue with your custom ContextValueSelector.");
                     }
 
-                    chosenPixelFormat = options[selectedIndex].PixelFormat;
+                    chosenValues = options[selectedIndex];
                     visualSupportsFramebufferTransparency = options[selectedIndex].SupportsFramebufferTransparency;
                     chosenConfig = configs[(int)options[selectedIndex].ID];
                     XFree(configsPtr);
@@ -1817,6 +1820,7 @@ namespace OpenTK.Platform.Native.X11
 
                 unsafe
                 {
+                    // FIXME: Support for framebuffer transparency??
                     XVisual* visual = XDefaultVisual(X11.Display, X11.DefaultScreen);
 
                     window = XCreateWindow(X11.Display, X11.DefaultRootWindow, 
@@ -1828,6 +1832,9 @@ namespace OpenTK.Platform.Native.X11
                         XWindowAttributeValueMask.BorderPixel | XWindowAttributeValueMask.EventMask, 
                         ref attributes);
                 }
+
+                // This is only used for OpenGL windows. Set it to the default.
+                chosenValues = default;
             }
             else
             {
@@ -1846,7 +1853,9 @@ namespace OpenTK.Platform.Native.X11
                     XWindowAttributeValueMask.BorderPixel | XWindowAttributeValueMask.EventMask, 
                     ref attributes);
 
-                // FIXME: How do we handle vulkan windows?
+                // This is only used for OpenGL windows. Set it to the default.
+                chosenValues = default;
+
                 throw new PalException(this, "Cannot create a X11 window without a graphics API.");
             }
 
@@ -2002,7 +2011,7 @@ namespace OpenTK.Platform.Native.X11
                     XEventMask.PropertyChange |
                     filterMask);
 
-            XWindowHandle handle = new XWindowHandle(X11.Display, window, hints, chosenConfig, chosenPixelFormat, visualSupportsFramebufferTransparency, map, ic);
+            XWindowHandle handle = new XWindowHandle(X11.Display, window, hints, chosenConfig, chosenValues, visualSupportsFramebufferTransparency, map, ic);
 
             XWindowDict.Add(handle.Window, handle);
 

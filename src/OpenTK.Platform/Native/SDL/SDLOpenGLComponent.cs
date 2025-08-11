@@ -102,6 +102,15 @@ namespace OpenTK.Platform.Native.SDL
         }
 
         /// <inheritdoc/>
+        public ContextValues GetContextValues(OpenGLContextHandle handle)
+        {
+            SDLOpenGLContext context = handle.As<SDLOpenGLContext>(this);
+
+            // FIXME:
+            return default;
+        }
+
+        /// <inheritdoc/>
         public IBindingsContext GetBindingsContext(OpenGLContextHandle handle)
         {
             return new Pal2BindingsContext(this, handle);
