@@ -1,4 +1,4 @@
-// This file is auto generated, do not edit. Generated: 2025-07-05 14:56:18 GMT+02:00
+// This file is auto generated, do not edit.
 using System;
 
 namespace OpenTK.Graphics.Egl
