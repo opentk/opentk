@@ -332,6 +332,8 @@ void main()
                 return;
             }
 
+            CheckGLError("Begining");
+
             // Get intial state.
             int prevVAO = GL.GetInteger(GetPName.VertexArrayBinding);
             int prevArrayBuffer = GL.GetInteger(GetPName.ArrayBufferBinding);
@@ -351,6 +353,7 @@ void main()
             int prevTexture2D = GL.GetInteger(GetPName.TextureBinding2d);
             Span<int> prevScissorBox = stackalloc int[4];
             GL.GetInteger(GetPName.ScissorBox, prevScissorBox);
+            CheckGLError("Save state");
 
             // Bind the element buffer (thru the VAO) so that we can resize it.
             GL.BindVertexArray(_vertexArray);

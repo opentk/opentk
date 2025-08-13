@@ -47,6 +47,9 @@ namespace OpenTK.Platform.Native.macOS
         internal static readonly SEL selDirectoryURL = sel_registerName("directoryURL"u8);
         internal static readonly SEL selSetDirectoryURL = sel_registerName("setDirectoryURL:"u8);
 
+        internal static readonly SEL selNameFieldStringValue = sel_registerName("nameFieldStringValue"u8);
+        internal static readonly SEL selSetNameFieldStringValue = sel_registerName("setNameFieldStringValue:"u8);
+
         internal static readonly SEL selCanCreateDirectories = sel_registerName("canCreateDirectories"u8);
         internal static readonly SEL selSetCanCreateDirectories = sel_registerName("setCanCreateDirectories:"u8);
 
@@ -461,8 +464,9 @@ namespace OpenTK.Platform.Native.macOS
             NSWindowHandle nswindow = parent.As<NSWindowHandle>(this);
             IntPtr openPanel = objc_msgSend_IntPtr((IntPtr)NSOpenPanelClass, selOpenPanel);
 
-            // FIXME: Memory leak?
-            objc_msgSend(openPanel, selSetTitle, ToNSString(title));
+            IntPtr titleString = ToNSString(title);
+            objc_msgSend(openPanel, selSetTitle, titleString);
+            objc_msgSend(titleString, Release);
 
             IntPtr directoryString = ToNSString(directory);
             IntPtr directoryURL = objc_msgSend_IntPtr((IntPtr)NSURLClass, selFileURLWithPath_isDirectory, directoryString, true);
@@ -522,8 +526,9 @@ namespace OpenTK.Platform.Native.macOS
         {
             IntPtr openPanel = objc_msgSend_IntPtr((IntPtr)NSOpenPanelClass, selOpenPanel);
 
-            // FIXME: Memory leak?
-            objc_msgSend(openPanel, selSetTitle, ToNSString(title));
+            IntPtr titleString = ToNSString(title);
+            objc_msgSend(openPanel, selSetTitle, titleString);
+            objc_msgSend(titleString, Release);
 
             IntPtr directoryString = ToNSString(directory);
             IntPtr directoryURL = objc_msgSend_IntPtr((IntPtr)NSURLClass, selFileURLWithPath_isDirectory, directoryString, true);
@@ -580,14 +585,22 @@ namespace OpenTK.Platform.Native.macOS
 
             IntPtr savePanel = objc_msgSend_IntPtr((IntPtr)NSSavePanelClass, selSavePanel);
 
-            // FIXME: Memory leak?
-            objc_msgSend(savePanel, selSetTitle, ToNSString(title));
+            IntPtr titleString = ToNSString(title);
+            objc_msgSend(savePanel, selSetTitle, titleString);
+            objc_msgSend(titleString, Release);
 
             IntPtr directoryString = ToNSString(directory);
             IntPtr directoryURL = objc_msgSend_IntPtr((IntPtr)NSURLClass, selFileURLWithPath_isDirectory, directoryString, true);
             objc_msgSend(savePanel, selSetDirectoryURL, directoryURL);
             objc_msgSend(directoryURL, Release);
             objc_msgSend(directoryString, Release);
+
+            if (defaultFileName != null)
+            {
+                IntPtr defaultFileNameString = ToNSString(defaultFileName);
+                objc_msgSend(savePanel, selSetNameFieldStringValue, defaultFileNameString);
+                objc_msgSend(defaultFileNameString, Release);
+            }
 
             IntPtr allowedContentTypesArray = CreateAllowedContentsTypeArray(allowedExtensions);
             if (allowedContentTypesArray != 0)
@@ -619,14 +632,22 @@ namespace OpenTK.Platform.Native.macOS
         {
             IntPtr savePanel = objc_msgSend_IntPtr((IntPtr)NSSavePanelClass, selSavePanel);
 
-            // FIXME: Memory leak?
-            objc_msgSend(savePanel, selSetTitle, ToNSString(title));
+            IntPtr titleString = ToNSString(title);
+            objc_msgSend(savePanel, selSetTitle, titleString);
+            objc_msgSend(titleString, Release);
 
             IntPtr directoryString = ToNSString(directory);
             IntPtr directoryURL = objc_msgSend_IntPtr((IntPtr)NSURLClass, selFileURLWithPath_isDirectory, directoryString, true);
             objc_msgSend(savePanel, selSetDirectoryURL, directoryURL);
             objc_msgSend(directoryURL, Release);
             objc_msgSend(directoryString, Release);
+
+            if (defaultFileName != null)
+            {
+                IntPtr defaultFileNameString = ToNSString(defaultFileName);
+                objc_msgSend(savePanel, selSetNameFieldStringValue, defaultFileNameString);
+                objc_msgSend(defaultFileNameString, Release);
+            }
 
             IntPtr allowedContentTypesArray = CreateAllowedContentsTypeArray(allowedExtensions);
             if (allowedContentTypesArray != 0)

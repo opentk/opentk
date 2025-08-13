@@ -577,7 +577,7 @@ namespace OpenTK.Backends.Tests
                 {
                     if (args is CloseEventArgs close2)
                     {
-                        Console.WriteLine($"Closing window: '{Toolkit.Window.GetTitle(close2.Window)}'");
+                        Logger.LogInfo($"Closing window: '{Toolkit.Window.GetTitle(close2.Window)}'");
                         CloseApplicationWindow(close2.Window);
                         return;
                     }
@@ -690,7 +690,7 @@ namespace OpenTK.Backends.Tests
 
             if (args is CloseEventArgs close)
             {
-                Console.WriteLine("Closing main window!");
+                Logger.LogInfo("Closing main window!");
                 Toolkit.Window.Destroy(close.Window);
             }
             else if (args is FocusEventArgs focus)
