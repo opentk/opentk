@@ -412,32 +412,27 @@ namespace OpenTK.Mathematics
         {
             readonly get
             {
-                if (((uint)rowIndex) < 4 && ((uint)columnIndex) < 4)
+                if (((uint)rowIndex) >= 4 || ((uint)columnIndex) >= 4)
                 {
-                    return GetRowUnsafe(in this, rowIndex)[columnIndex];
+                    MathHelper.ThrowOutOfRangeException("You tried to access this matrix at: ({0}, {1})", rowIndex, columnIndex);
                 }
-                else
-                {
-                    MathHelper.ThrowOutOfRangeException($"You tried to access this matrix at: ({rowIndex}, {columnIndex})");
-                    return default;
-                }
+
+                return GetRowUnsafe(in this, rowIndex)[columnIndex];
             }
 
             set
             {
-                if (((uint)rowIndex) < 4 && ((uint)columnIndex) < 4)
+                if (((uint)rowIndex) >= 4 || ((uint)columnIndex) >= 4)
                 {
-                    GetRowUnsafe(in this, rowIndex)[columnIndex] = value;
+                    MathHelper.ThrowOutOfRangeException("You tried to set this matrix at: ({0}, {1})", rowIndex, columnIndex);
                 }
-                else
-                {
-                    MathHelper.ThrowOutOfRangeException($"You tried to set this matrix at: ({rowIndex}, {columnIndex})");
-                }
+
+                GetRowUnsafe(in this, rowIndex)[columnIndex] = value;
             }
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private readonly ref Vector4d GetRowUnsafe(in Matrix4d m, int index)
+        private static ref Vector4d GetRowUnsafe(in Matrix4d m, int index)
         {
             ref Vector4d address = ref Unsafe.AsRef(in m.Row0);
             return ref Unsafe.Add(ref address, index);
