@@ -251,7 +251,7 @@ namespace OpenTK.Mathematics
         {
             readonly get
             {
-                if (((uint)rowIndex) > 1 || ((uint)columnIndex) > 3)
+                if (((uint)rowIndex) >= 2 || ((uint)columnIndex) >= 4)
                 {
                     MathHelper.ThrowOutOfRangeException("You tried to access this matrix at: ({0}, {1})", rowIndex, columnIndex);
                 }
@@ -261,7 +261,7 @@ namespace OpenTK.Mathematics
 
             set
             {
-                if (((uint)rowIndex) > 1 || ((uint)columnIndex) > 3)
+                if (((uint)rowIndex) >= 2 || ((uint)columnIndex) >= 4)
                 {
                     MathHelper.ThrowOutOfRangeException("You tried to set this matrix at: ({0}, {1})", rowIndex, columnIndex);
                 }

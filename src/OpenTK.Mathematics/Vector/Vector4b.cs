@@ -115,7 +115,7 @@ namespace OpenTK.Mathematics
         {
             readonly get
             {
-                if (((uint)index) > 3)
+                if (((uint)index) >= 4)
                 {
                     MathHelper.ThrowOutOfRangeException("You tried to access this vector at index: {0}", index);
                 }
@@ -125,7 +125,7 @@ namespace OpenTK.Mathematics
 
             set
             {
-                if (((uint)index) > 3)
+                if (((uint)index) >= 4)
                 {
                     MathHelper.ThrowOutOfRangeException("You tried to set this vector at index: {0}", index);
                 }
