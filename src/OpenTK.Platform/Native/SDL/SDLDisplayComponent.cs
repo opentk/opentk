@@ -243,5 +243,12 @@ namespace OpenTK.Platform.Native.SDL
             scaleX = dpiX / 96;
             scaleY = dpiY / 96;
         }
+
+        /// <inheritdoc />
+        public bool GetHDRInfo(DisplayHandle handle, out HdrInfo hdrInfo)
+        {
+            hdrInfo = default;
+            return false;
+        }
     }
 }

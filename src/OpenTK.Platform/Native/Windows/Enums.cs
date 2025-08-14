@@ -1,4 +1,5 @@
 ﻿using System;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace OpenTK.Platform.Native.Windows
 {
@@ -1565,6 +1566,364 @@ namespace OpenTK.Platform.Native.Windows
     {
         AbsAxis = 0x00000001,
         RelAxis = 0x00000002,
+    }
+
+    internal enum DISPLAYCONFIG_TOPOLOGY_ID : uint
+    {
+        Internal= 0x00000001,
+        Clone = 0x00000002,
+        Extend = 0x00000004,
+        External = 0x00000008,
+    }
+
+    internal enum DISPLAYCONFIG_VIDEO_OUTPUT_TECHNOLOGY : uint
+    {
+        /// <summary>
+        /// Indicates a connector that is not one of the types that is indicated by the following enumerators in this enumeration.
+        /// </summary>
+        Other = unchecked((uint)-1),
+        /// <summary>
+        /// Indicates an HD15 (VGA) connector.
+        /// </summary>
+        HD15 = 0,
+        /// <summary>
+        /// Indicates an S-video connector.
+        /// </summary>
+        SVideo = 1,
+        /// <summary>
+        /// Indicates a composite video connector group.
+        /// </summary>
+        CompositeVideo = 2,
+        /// <summary>
+        /// Indicates a component video connector group.
+        /// </summary>
+        ComponentVideo = 3,
+        /// <summary>
+        /// Indicates a Digital Video Interface (DVI) connector.
+        /// </summary>
+        DVI = 4,
+        /// <summary>
+        /// Indicates a High-Definition Multimedia Interface (HDMI) connector.
+        /// </summary>
+        HDMI = 5,
+        /// <summary>
+        /// Indicates a Low Voltage Differential Swing (LVDS) connector.
+        /// </summary>
+        LVDS = 6,
+        /// <summary>
+        /// Indicates a Japanese D connector.
+        /// </summary>
+        DJpn = 8,
+        /// <summary>
+        /// Indicates an SDI connector.
+        /// </summary>
+        SDI = 9,
+        /// <summary>
+        /// Indicates an external display port, which is a display port that connects externally to a display device.
+        /// </summary>
+        DisplayPortExternal = 10,
+        /// <summary>
+        /// Indicates an embedded display port that connects internally to a display device.
+        /// </summary>
+        DisplayPortEmbedded = 11,
+        /// <summary>
+        /// Indicates an external Unified Display Interface (UDI), which is a UDI that connects externally to a display device.
+        /// </summary>
+        UDIExternal = 12,
+        /// <summary>
+        /// Indicates an embedded UDI that connects internally to a display device.
+        /// </summary>
+        UDIEmbedded = 13,
+        /// <summary>
+        /// Indicates a dongle cable that supports standard definition television (SDTV).
+        /// </summary>
+        SDTVDongle = 14,
+        /// <summary>
+        /// Indicates that the VidPN target is a Miracast wireless display device.
+        /// Supported starting in Windows 8.1.
+        /// </summary>
+        Miracast = 15,
+        IndirectWired = 16,
+        IndirectVirtual = 17,
+        DisplayPortUSBTunnel,
+        /// <summary>
+        /// Indicates that the video output device connects internally to a display device (for example, the internal connection in a laptop computer).
+        /// </summary>
+        Internal = 0x80000000,
+    }
+
+    internal enum DISPLAYCONFIG_ROTATION : uint
+    {
+        /// <summary>
+        /// Indicates that rotation is 0 degrees—landscape mode.
+        /// </summary>
+        Identity = 1,
+        /// <summary>
+        /// Indicates that rotation is 90 degrees clockwise—portrait mode.
+        /// </summary>
+        Rotate90 = 2,
+        /// <summary>
+        /// Indicates that rotation is 180 degrees clockwise—inverted landscape mode.
+        /// </summary>
+        Rotate180 = 3,
+        /// <summary>
+        /// Indicates that rotation is 270 degrees clockwise—inverted portrait mode.
+        /// </summary>
+        Rotate270 = 4,
+    }
+
+    internal enum DISPLAYCONFIG_SCALING : uint
+    {
+        /// <summary>
+        /// Indicates the identity transformation; the source content is presented with no change.
+        /// This transformation is available only if the path's source mode has the same spatial resolution as the path's target mode.
+        /// </summary>
+        Identity = 1,
+        /// <summary>
+        /// Indicates the centering transformation; the source content is presented unscaled,
+        /// centered with respect to the spatial resolution of the target mode.
+        /// </summary>
+        Centered = 2,
+        /// <summary>
+        /// Indicates the content is scaled to fit the path's target.
+        /// </summary>
+        Stretched = 3,
+        /// <summary>
+        /// Indicates the aspect-ratio centering transformation.
+        /// </summary>
+        AspectRatioCenteredMax = 4,
+        /// <summary>
+        /// Indicates that the caller requests a custom scaling that the caller cannot describe with any of the other DISPLAYCONFIG_SCALING_XXX values.
+        /// Only a hardware vendor's value-add application should use DISPLAYCONFIG_SCALING_CUSTOM, because the value-add application might require a private interface to the driver.
+        /// The application can then use DISPLAYCONFIG_SCALING_CUSTOM to indicate additional context for the driver for the custom value on the specified path.
+        /// </summary>
+        Custom = 5,
+        /// <summary>
+        /// Indicates that the caller does not have any preference for the scaling.
+        /// The SetDisplayConfig function will use the scaling value that was last saved in the database for the path.
+        /// If such a scaling value does not exist, SetDisplayConfig will use the default scaling for the computer.
+        /// For example, stretched (DISPLAYCONFIG_SCALING_STRETCHED) for tablet computers and
+        /// aspect-ratio centered (DISPLAYCONFIG_SCALING_ASPECTRATIOCENTEREDMAX) for non-tablet computers.
+        /// </summary>
+        Preferred = 128,
+    }
+
+    internal enum DISPLAYCONFIG_SCANLINE_ORDERING : uint
+    {
+        /// <summary>
+        /// Indicates that scan-line ordering of the output is unspecified.
+        /// The caller can only set the scanLineOrdering member of the DISPLAYCONFIG_PATH_TARGET_INFO structure
+        /// in a call to the SetDisplayConfig function to DISPLAYCONFIG_SCANLINE_ORDERING_UNSPECIFIED
+        /// if the caller also set the refresh rate denominator and numerator of the refreshRate member
+        /// both to zero.
+        /// In this case, SetDisplayConfig uses the best refresh rate it can find.
+        /// </summary>
+        Unspecified = 0,
+        /// <summary>
+        /// Indicates that the output is a progressive image.
+        /// </summary>
+        Progressive = 1,
+        /// <summary>
+        /// Indicates that the output is an interlaced image that is created beginning with the upper field.
+        /// </summary>
+        Interlaced = 2,
+        /// <summary>
+        /// Indicates that the output is an interlaced image that is created beginning with the upper field.
+        /// </summary>
+        InterlacedUpperFieldFirst = 2,
+        /// <summary>
+        /// Indicates that the output is an interlaced image that is created beginning with the lower field.
+        /// </summary>
+        InterlacedLowerFieldFirst = 3,
+    }
+
+    internal enum DISPLAYCONFIG_MODE_INFO_TYPE : uint
+    {
+        /// <summary>
+        /// Indicates that the DISPLAYCONFIG_MODE_INFO structure contains source mode information.
+        /// </summary>
+        Source = 1,
+        /// <summary>
+        /// Indicates that the DISPLAYCONFIG_MODE_INFO structure contains target mode information.
+        /// </summary>
+        Target = 2,
+        /// <summary>
+        /// Indicates that the DISPLAYCONFIG_MODE_INFO structure contains a valid DISPLAYCONFIG_DESKTOP_IMAGE_INFO structure.
+        /// Supported starting in Windows 10.
+        /// </summary>
+        DesktopImage = 3,
+    }
+
+    internal enum DISPLAYCONFIG_PIXELFORMAT : uint
+    {
+        /// <summary>
+        /// Indicates 8 BPP format.
+        /// </summary>
+        _8Bpp = 1,
+        /// <summary>
+        /// Indicates 16 BPP format.
+        /// </summary>
+        _16Bpp = 2,
+        /// <summary>
+        /// Indicates 24 BPP format.
+        /// </summary>
+        _24Bpp = 3,
+        /// <summary>
+        /// Indicates 32 BPP format.
+        /// </summary>
+        _32Bpp = 4,
+        /// <summary>
+        /// Indicates that the current display is not an 8, 16, 24, or 32 BPP GDI desktop mode.
+        /// For example, a call to the QueryDisplayConfig function returns DISPLAYCONFIG_PIXELFORMAT_NONGDI if a DirectX application previously set the desktop to A2R10G10B10 format.
+        /// A call to the SetDisplayConfig function fails if any pixel formats for active paths are set to DISPLAYCONFIG_PIXELFORMAT_NONGDI.
+        /// </summary>
+        NonGdi = 5,
+    }
+
+    [Flags]
+    internal enum DISPLAYCONFIG_PATH : uint
+    {
+        /// <summary>
+        /// Set by QueryDisplayConfig to indicate that the path is active and part of the desktop.
+        /// If this flag value is set, SetDisplayConfig attempts to enable this path.
+        /// </summary>
+        Active = 0x00000001,
+
+        /// <summary>
+        /// Set by QueryDisplayConfig to indicate that the path supports virtual modes.
+        /// Supported starting in Windows 10.
+        /// </summary>
+        VirtualMode = 0x00000008,
+
+        /// <summary>
+        /// Set by QueryDisplayConfig to indicate that the path supports virtual refresh rates.
+        /// Supported starting in Windows 11.
+        /// </summary>
+        BoostRefreshRate = 0x00000010,
+
+    }
+
+    [Flags]
+    internal enum DISPLAYCONFIG_SOURCE : uint
+    {
+        /// <summary>
+        /// This source is in use by at least one active path.
+        /// </summary>
+        InUse = 1,
+    }
+
+    internal enum DISPLAYCONFIG_TARGET : uint
+    {
+        /// <summary>
+        /// Target is in use on an active path.
+        /// </summary>
+        InUSe = 0x00000001,
+        /// <summary>
+        /// The output can be forced on this target even if a monitor is not detected.
+        /// </summary>
+        FORCIBLE = 0x00000002,
+
+        /// <summary>
+        /// Output is currently being forced in a boot-persistent manner.
+        /// </summary>
+        ForcedAvailabilityBoot = 0x00000004,
+
+        /// <summary>
+        /// Output is currently being forced in a path-persistent manner.
+        /// </summary>
+        ForcedAvailabilityPath = 0x00000008,
+
+        /// <summary>
+        /// Output is currently being forced in a nonpersistent manner.
+        /// </summary>
+        ForcedAvailabilitySystem = 0x00000010,
+
+        /// <summary>
+        /// The output is a head-mounted display (HMD). Such a path is only returned from QueryDisplayConfig using the QDC_INCLUDE_HMD flag.
+        /// Supported starting in the Windows 10 Creators Update (Version 1703).
+        /// </summary>
+        IsHMD = 0x00000020,
+    }
+
+    internal enum DISPLAYCONFIG_DEVICE_INFO_TYPE : uint
+    {
+        /// <summary>
+        /// Specifies the source name of the display device.
+        /// If the DisplayConfigGetDeviceInfo function is successful,
+        /// DisplayConfigGetDeviceInfo returns the source name in the DISPLAYCONFIG_SOURCE_DEVICE_NAME structure.
+        /// </summary>
+        GetSourceName = 1,
+        /// <summary>
+        /// Specifies information about the monitor.
+        /// If the DisplayConfigGetDeviceInfo function is successful,
+        /// DisplayConfigGetDeviceInfo returns info about the monitor in the DISPLAYCONFIG_TARGET_DEVICE_NAME structure.
+        /// </summary>
+        GetTargetName = 2,
+        /// <summary>
+        /// Specifies information about the preferred mode of a monitor.
+        /// If the DisplayConfigGetDeviceInfo function is successful,
+        /// DisplayConfigGetDeviceInfo returns info about the preferred mode of a monitor in the DISPLAYCONFIG_TARGET_PREFERRED_MODE structure.
+        /// </summary>
+        GetTargetPreferredMode = 3,
+        /// <summary>
+        /// Specifies the graphics adapter name.
+        /// If the DisplayConfigGetDeviceInfo function is successful,
+        /// DisplayConfigGetDeviceInfo returns the adapter name in the DISPLAYCONFIG_ADAPTER_NAME structure.
+        /// </summary>
+        GetAdapterName = 4,
+        /// <summary>
+        /// Specifies how to set the monitor.
+        /// If the DisplayConfigSetDeviceInfo function is successful,
+        /// DisplayConfigSetDeviceInfo uses info in the DISPLAYCONFIG_SET_TARGET_PERSISTENCE structure to force the output in a boot-persistent manner.
+        /// </summary>
+        SetTargetPersistence = 5,
+        /// <summary>
+        /// Specifies how to set the base output technology for a given target ID.
+        /// If the DisplayConfigGetDeviceInfo function is successful,
+        /// DisplayConfigGetDeviceInfo returns base output technology info in the DISPLAYCONFIG_TARGET_BASE_TYPE structure.
+        /// <br/>
+        /// Supported by WDDM 1.3 and later user-mode display drivers running on Windows 8.1 and later.
+        /// </summary>
+        GetTargetBaseType = 6,
+        /// <summary>
+        /// Specifies the state of virtual mode support.
+        /// If the DisplayConfigGetDeviceInfo function is successful,
+        /// DisplayConfigGetDeviceInfo returns virtual mode support information in the DISPLAYCONFIG_SUPPORT_VIRTUAL_RESOLUTION structure.
+        /// Supported starting in Windows 10.
+        /// </summary>
+        GetSupportVirtualResolution = 7,
+        /// <summary>
+        /// Specifies how to set the state of virtual mode support.
+        /// If the DisplayConfigSetDeviceInfo function is successful,
+        /// DisplayConfigSetDeviceInfo uses info in the DISPLAYCONFIG_SUPPORT_VIRTUAL_RESOLUTION structure to change the state of virtual mode support.
+        /// Supported starting in Windows 10.
+        /// </summary>
+        SetSupportVirtualResolution = 8,
+        GetAdvancedColorInfo = 9,
+        SetAdvancedColorState = 10,
+        /// <summary>
+        /// Specifies the current SDR white level for an HDR monitor.
+        /// If the DisplayConfigGetDeviceInfo function is successful,
+        /// DisplayConfigGetDeviceInfo return SDR white level info in the DISPLAYCONFIG_SDR_WHITE_LEVEL structure.
+        /// <br/>
+        /// Supported starting in Windows 10 Fall Creators Update (Version 1709).
+        /// </summary>
+        GetSDRWhiteLevel = 11,
+        GetMonitorSpecialization = 12,
+        SetMonitorSpecialization = 13,
+        SetReserved1 = 14,
+        GetAdvancedColorInfo2 = 15,
+        SetHDRState = 16,
+        SetWCGState = 17,
+    }
+
+    internal enum DISPLAYCONFIG_COLOR_ENCODING : uint
+    {
+        Rgb = 0,
+        YCbCr444 = 1,
+        YCbCr422 = 2,
+        YCbCr420 = 3,
+        Intensity = 4,
     }
 
     internal enum DBT : int
@@ -5497,6 +5856,27 @@ namespace OpenTK.Platform.Native.Windows
         /// Windows 2000: This key is not supported.
         /// </summary>
         HKEY_PERFORMANCE_NLSTEXT = 0x80000060,
+    }
+
+    internal enum QDC : uint
+    {
+        /// <summary>
+        /// Returns all the possible path combinations of sources to targets.
+        /// <para>Note: In the case of any temporary modes, the QDC_ALL_PATHS setting means the mode data returned may not be the same as that which is stored in the persistence database.</para>
+        /// <para>Note: This flag may be very expensive to compute. It's not recommended to use this flag unless the caller is trying to determine the set of valid connections between sources and targets.</para>
+        /// </summary>
+        AllPaths = 0x00000001,
+
+        /// <summary>
+        /// Returns currently active paths only.
+        /// <para>Note: In the case of any temporary modes, the QDC_ONLY_ACTIVE_PATHS setting means the mode data returned may not be the same as that which is stored in the persistence database.</para>
+        /// </summary>
+        OnlyActivePaths = 0x00000002,
+
+        /// <summary>
+        /// Returns active paths as defined in the CCD database for the currently connected displays.
+        /// </summary>
+        DatabaseCurrent = 0x00000004,
     }
 
     internal enum RDW : uint

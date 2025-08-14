@@ -242,6 +242,16 @@ namespace OpenTK.Backends.Tests
                 ImGui.Text($"Scale factor: {disp.Scale}");
 
                 DisplayHandle handle = Toolkit.Display.Open(disp.Index);
+
+                bool hasHdr = Toolkit.Display.GetHDRInfo(handle, out HdrInfo hdrInfo);
+                ImGui.Text($"Has HDR: {hasHdr}");
+                if (hasHdr)
+                {
+                    ImGui.Text($"  HDR Supported: {hdrInfo.Supported}");
+                    ImGui.Text($"  HDR Enabled: {hdrInfo.Enabled}");
+                    ImGui.Text($"  SDR White point: {hdrInfo.SDRWhitePoint}");
+                }
+
                 Toolkit.Display.GetVideoMode(handle, out VideoMode currentVideoMode);
                 ImGui.Text($"Video mode: {currentVideoMode}");
 

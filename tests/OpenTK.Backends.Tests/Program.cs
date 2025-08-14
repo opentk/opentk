@@ -691,6 +691,8 @@ namespace OpenTK.Backends.Tests
             if (args is CloseEventArgs close)
             {
                 Logger.LogInfo("Closing main window!");
+                // FIXME: Function for getting the OpenGL context from a WindowHandle...
+                Toolkit.OpenGL.DestroyContext(Program.WindowContext);
                 Toolkit.Window.Destroy(close.Window);
             }
             else if (args is FocusEventArgs focus)

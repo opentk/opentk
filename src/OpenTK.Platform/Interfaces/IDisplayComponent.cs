@@ -4,6 +4,17 @@ using OpenTK.Mathematics;
 namespace OpenTK.Platform
 {
     /// <summary>
+    /// Display HDR info.
+    /// </summary>
+    // FIXME: Indicate support and enabled difference...?
+    public struct HdrInfo
+    {
+        public bool Supported;
+        public bool Enabled;
+        public float SDRWhitePoint;
+    }
+
+    /// <summary>
     /// Interface for drivers which provide the display component.
     /// </summary>
     /// <seealso cref="Toolkit.Display"/>
@@ -124,5 +135,13 @@ namespace OpenTK.Platform
         /// <param name="scaleX">The X-axis scale of the monitor.</param>
         /// <param name="scaleY">The Y-axis scale of the monitor.</param>
         void GetDisplayScale(DisplayHandle handle, out float scaleX, out float scaleY);
+
+        /// <summary>
+        /// Gets the HDR info of the display, or if the display does not support HDR this function returns <see langword="false"/>.
+        /// </summary>
+        /// <param name="handle">Handle to a display.</param>
+        /// <param name="hdrInfo">HDR info about this display if the display supports HDR.</param>
+        /// <returns><see langword="true"/> if the display supports HDR, or <see langword="false"/> if the display does not support HDR.</returns>
+        bool GetHDRInfo(DisplayHandle handle, out HdrInfo hdrInfo);
     }
 }
