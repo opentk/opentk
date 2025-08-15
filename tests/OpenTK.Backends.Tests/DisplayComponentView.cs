@@ -251,9 +251,9 @@ namespace OpenTK.Backends.Tests
                     ImGui.Text($"  HDR Supported: {hdrInfo.HdrSupported}");
                     ImGui.Text($"  HDR Enabled: {hdrInfo.HdrEnabled?.ToString() ?? "?"}");
                     ImGui.Text($"  HDR Active: {hdrInfo.HdrActive}");
-                    ImGui.Text($"  WGC Supported: {hdrInfo.HdrSupported}");
-                    ImGui.Text($"  WGC Enabled: {hdrInfo.HdrEnabled?.ToString() ?? "?"}");
-                    ImGui.Text($"  WGC Active: {hdrInfo.HdrActive}");
+                    ImGui.Text($"  WGC Supported: {hdrInfo.WideColorGammutSupported}");
+                    ImGui.Text($"  WGC Enabled: {hdrInfo.WideColorGammutEnabled}");
+                    ImGui.Text($"  WGC Active: {hdrInfo.WideColorGammutActive}");
                     ImGui.Text($"  SDR White point: {hdrInfo.SDRWhitePoint}");
                     ImGui.Text($"  Color encoding: {hdrInfo.ColorEncoding}");
                 }
