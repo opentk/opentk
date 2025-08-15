@@ -1,17 +1,37 @@
 using System;
 using OpenTK.Mathematics;
+using OpenTK.Platform.Native.Windows;
 
 namespace OpenTK.Platform
 {
-    /// <summary>
-    /// Display HDR info.
-    /// </summary>
-    // FIXME: Indicate support and enabled difference...?
-    public struct HdrInfo
+    public enum ColorEncoding : uint
     {
-        public bool Supported;
-        public bool Enabled;
-        public float SDRWhitePoint;
+        Rgb = 0,
+        YCbCr444 = 1,
+        YCbCr422 = 2,
+        YCbCr420 = 3,
+        Intensity = 4,
+    }
+
+/// <summary>
+/// Display HDR info.
+/// </summary>
+// FIXME: Indicate support and enabled difference...?
+public struct HdrInfo
+    {
+        public bool IsAdvancedColorInfo2;
+
+        public bool HdrSupported;
+        public bool? HdrEnabled;
+        public bool HdrActive;
+
+        public bool WideColorGammutSupported;
+        public bool WideColorGammutEnabled;
+        public bool WideColorGammutActive;
+
+        public ColorEncoding ColorEncoding;
+
+        public ulong SDRWhitePoint;
     }
 
     /// <summary>

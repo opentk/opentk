@@ -247,9 +247,15 @@ namespace OpenTK.Backends.Tests
                 ImGui.Text($"Has HDR: {hasHdr}");
                 if (hasHdr)
                 {
-                    ImGui.Text($"  HDR Supported: {hdrInfo.Supported}");
-                    ImGui.Text($"  HDR Enabled: {hdrInfo.Enabled}");
+                    ImGui.Text($"  Advanced Color Info 2: {hdrInfo.IsAdvancedColorInfo2}");
+                    ImGui.Text($"  HDR Supported: {hdrInfo.HdrSupported}");
+                    ImGui.Text($"  HDR Enabled: {hdrInfo.HdrEnabled?.ToString() ?? "?"}");
+                    ImGui.Text($"  HDR Active: {hdrInfo.HdrActive}");
+                    ImGui.Text($"  WGC Supported: {hdrInfo.HdrSupported}");
+                    ImGui.Text($"  WGC Enabled: {hdrInfo.HdrEnabled?.ToString() ?? "?"}");
+                    ImGui.Text($"  WGC Active: {hdrInfo.HdrActive}");
                     ImGui.Text($"  SDR White point: {hdrInfo.SDRWhitePoint}");
+                    ImGui.Text($"  Color encoding: {hdrInfo.ColorEncoding}");
                 }
 
                 Toolkit.Display.GetVideoMode(handle, out VideoMode currentVideoMode);

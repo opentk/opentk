@@ -285,29 +285,74 @@ namespace OpenTK.Platform.Native.Windows
                     if (result != 0)
                         throw new Win32Exception(result);
 
-                    DISPLAYCONFIG_GET_ADVANCED_COLOR_INFO colorInfo = new DISPLAYCONFIG_GET_ADVANCED_COLOR_INFO();
-                    colorInfo.header.type = DISPLAYCONFIG_DEVICE_INFO_TYPE.GetAdvancedColorInfo;
-                    colorInfo.header.size = (uint)sizeof(DISPLAYCONFIG_GET_ADVANCED_COLOR_INFO);
-                    colorInfo.header.adapterId = path.targetInfo.adapterId;
-                    colorInfo.header.id = path.targetInfo.id;
-                    result = DisplayConfigGetDeviceInfo(ref colorInfo);
+                    DISPLAYCONFIG_SDR_WHITE_LEVEL whiteLevel = new DISPLAYCONFIG_SDR_WHITE_LEVEL();
+                    whiteLevel.header.type = DISPLAYCONFIG_DEVICE_INFO_TYPE.GetSDRWhiteLevel;
+                    whiteLevel.header.size = (uint)sizeof(DISPLAYCONFIG_SDR_WHITE_LEVEL);
+                    whiteLevel.header.adapterId = path.targetInfo.adapterId;
+                    whiteLevel.header.id = path.targetInfo.id;
+                    result = DisplayConfigGetDeviceInfo(ref whiteLevel);
                     if (result != 0)
                         throw new Win32Exception(result);
 
-                    bool hdrSupported = false;
-                    bool hdrEnabled = false;
-
-                    if (colorInfo.union.advancedColorSupported && !colorInfo.union.wideColorEnforced)
+                    // 24H2 or greater.
+                    if (OperatingSystem.IsWindowsVersionAtLeast(10, 0, 26100))
                     {
-                        hdrSupported = true;
-                    }
+                        DISPLAYCONFIG_GET_ADVANCED_COLOR_INFO_2 colorInfo2 = new DISPLAYCONFIG_GET_ADVANCED_COLOR_INFO_2();
+                        colorInfo2.header.type = DISPLAYCONFIG_DEVICE_INFO_TYPE.GetAdvancedColorInfo2;
+                        colorInfo2.header.size = (uint)sizeof(DISPLAYCONFIG_GET_ADVANCED_COLOR_INFO_2);
+                        colorInfo2.header.adapterId = path.targetInfo.adapterId;
+                        colorInfo2.header.id = path.targetInfo.id;
+                        result = DisplayConfigGetDeviceInfo(ref colorInfo2);
+                        if (result != 0)
+                            throw new Win32Exception(result);
 
-                    if (hdrSupported == true && colorInfo.union.advancedColorEnabled)
+                        display.HdrInfo = new HdrInfo()
+                        {
+                            IsAdvancedColorInfo2 = true,
+                            HdrSupported = colorInfo2.union.highDynamicRangeSupported,
+                            HdrEnabled = colorInfo2.union.highDynamicRangeUserEnabled,
+                            HdrActive = colorInfo2.activeColorMode == DISPLAYCONFIG_ADVANCED_COLOR_MODE.DISPLAYCONFIG_ADVANCED_COLOR_MODE_HDR,
+                            WideColorGammutSupported = colorInfo2.union.wideColorSupported,
+                            WideColorGammutEnabled = colorInfo2.union.wideColorUserEnabled,
+                            WideColorGammutActive = colorInfo2.activeColorMode != DISPLAYCONFIG_ADVANCED_COLOR_MODE.DISPLAYCONFIG_ADVANCED_COLOR_MODE_SDR,
+                            ColorEncoding = (ColorEncoding)colorInfo2.colorEncoding,
+                            SDRWhitePoint = whiteLevel.SDRWhiteLevel,
+                        };
+                    }
+                    else
                     {
-                        hdrEnabled = true;
-                    }
+                        DISPLAYCONFIG_GET_ADVANCED_COLOR_INFO colorInfo = new DISPLAYCONFIG_GET_ADVANCED_COLOR_INFO();
+                        colorInfo.header.type = DISPLAYCONFIG_DEVICE_INFO_TYPE.GetAdvancedColorInfo;
+                        colorInfo.header.size = (uint)sizeof(DISPLAYCONFIG_GET_ADVANCED_COLOR_INFO);
+                        colorInfo.header.adapterId = path.targetInfo.adapterId;
+                        colorInfo.header.id = path.targetInfo.id;
+                        result = DisplayConfigGetDeviceInfo(ref colorInfo);
+                        if (result != 0)
+                            throw new Win32Exception(result);
 
-                    display.HdrInfo = new HdrInfo() { Supported = hdrSupported, Enabled = hdrEnabled };
+                        bool hdrSupported = false;
+                        bool hdrEnabled = false;
+
+                        if (colorInfo.union.advancedColorSupported && !colorInfo.union.wideColorEnforced)
+                        {
+                            hdrSupported = true;
+                        }
+
+                        if (hdrSupported == true && colorInfo.union.advancedColorEnabled)
+                        {
+                            hdrEnabled = true;
+                        }
+
+                        display.HdrInfo = new HdrInfo()
+                        {
+                            IsAdvancedColorInfo2 = false,
+                            HdrSupported = hdrSupported,
+                            HdrEnabled = null,
+                            HdrActive = hdrEnabled,
+                            ColorEncoding = (ColorEncoding)colorInfo.colorEncoding,
+                            SDRWhitePoint = whiteLevel.SDRWhiteLevel,
+                        };
+                    }
                 }
             }
 

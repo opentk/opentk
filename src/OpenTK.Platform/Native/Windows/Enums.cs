@@ -1926,6 +1926,22 @@ namespace OpenTK.Platform.Native.Windows
         Intensity = 4,
     }
 
+    internal enum DISPLAYCONFIG_ADVANCED_COLOR_MODE : int
+    {
+        /// <summary>
+        /// RGB888 composition, display-referred color, display-referred luminance
+        /// </summary>
+        DISPLAYCONFIG_ADVANCED_COLOR_MODE_SDR,
+        /// <summary>
+        /// Advanced color (FP16 scRGB composition), scene-referred color, display-referred luminance
+        /// </summary>
+        DISPLAYCONFIG_ADVANCED_COLOR_MODE_WCG,
+        /// <summary>
+        /// Advanced color (FP16 scRGB composition), scene-referred color, scene-referred luminance
+        /// </summary>
+        DISPLAYCONFIG_ADVANCED_COLOR_MODE_HDR,
+    }
+
     internal enum DBT : int
     {
         /// <summary>

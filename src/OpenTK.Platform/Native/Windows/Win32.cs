@@ -1866,6 +1866,141 @@ namespace OpenTK.Platform.Native.Windows
             }
         }
 
+        [StructLayout(LayoutKind.Explicit)]
+        internal struct DISPLAYCONFIG_GET_ADVANCED_COLOR_INFO_2
+        {
+            [FieldOffset(0)] public DISPLAYCONFIG_DEVICE_INFO_HEADER header;
+            //union
+            //{
+                [FieldOffset(20)] public DummyUnion_struct union;
+                [FieldOffset(20)] public uint value;
+            //}
+
+            [FieldOffset(24)] public DISPLAYCONFIG_COLOR_ENCODING colorEncoding;
+            [FieldOffset(28)] public uint bitsPerColorChannel;
+
+            /// <summary>
+            /// The active color mode for this monitor
+            /// </summary>
+            [FieldOffset(32)] public DISPLAYCONFIG_ADVANCED_COLOR_MODE activeColorMode;
+
+            internal struct DummyUnion_struct
+            {
+                uint _bitfield;
+
+                /// <summary>
+                /// A type of advanced color is supported
+                /// </summary>
+                internal bool advancedColorSupported
+                {
+                    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                    readonly get => (this._bitfield & 0x00000001) != 0;
+                    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                    set => this._bitfield = (uint)(value ? this._bitfield | 0x00000001 : (this._bitfield & unchecked((uint)~0x00000001)));
+                }
+
+                /// <summary>
+                /// A type of advanced color is active (see currentColorMode for the specific advanced color mode)
+                /// </summary>
+                internal bool advancedColorActive
+                {
+                    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                    readonly get => (this._bitfield & 0x00000002) != 0;
+                    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                    set => this._bitfield = (uint)(value ? this._bitfield | 0x00000002 : (this._bitfield & unchecked((uint)~0x00000002)));
+                }
+
+                /// <summary>
+                /// Wide color gamut is enabled
+                /// </summary>
+                internal bool reserved1
+                {
+                    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                    readonly get => (this._bitfield & 0x00000004) != 0;
+                    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                    set => this._bitfield = (uint)(value ? this._bitfield | 0x00000004 : (this._bitfield & unchecked((uint)~0x00000004)));
+                }
+
+                /// <summary>
+                /// System/OS policy is limiting advanced color options (see currentColorMode for the current mode)
+                /// </summary>
+                internal bool advancedColorLimitedByPolicy
+                {
+                    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                    readonly get => (this._bitfield & 0x00000008) != 0;
+                    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                    set => this._bitfield = (uint)(value ? this._bitfield | 0x00000008 : (this._bitfield & unchecked((uint)~0x00000008)));
+                }
+
+                /// <summary>
+                /// HDR is supported
+                /// </summary>
+                internal bool highDynamicRangeSupported
+                {
+                    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                    readonly get => (this._bitfield & 0x00000010) != 0;
+                    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                    set => this._bitfield = (uint)(value ? this._bitfield | 0x00000010 : (this._bitfield & unchecked((uint)~0x00000010)));
+                }
+
+                /// <summary>
+                /// HDR is enabled by the user (but may not be active)
+                /// </summary>
+                internal bool highDynamicRangeUserEnabled
+                {
+                    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                    readonly get => (this._bitfield & 0x00000020) != 0;
+                    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                    set => this._bitfield = (uint)(value ? this._bitfield | 0x00000020 : (this._bitfield & unchecked((uint)~0x00000020)));
+                }
+
+                /// <summary>
+                /// Wide color gamut is supported
+                /// </summary>
+                internal bool wideColorSupported
+                {
+                    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                    readonly get => (this._bitfield & 0x00000040) != 0;
+                    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                    set => this._bitfield = (uint)(value ? this._bitfield | 0x00000040 : (this._bitfield & unchecked((uint)~0x00000040)));
+                }
+
+                /// <summary>
+                /// Wide color gamut is enabled by the user (but may not be active)
+                /// </summary>
+                internal bool wideColorUserEnabled
+                {
+                    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                    readonly get => (this._bitfield & 0x00000080) != 0;
+                    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                    set => this._bitfield = (uint)(value ? this._bitfield | 0x00000080 : (this._bitfield & unchecked((uint)~0x00000080)));
+                }
+
+                internal uint reserved
+                {
+                    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                    readonly get => (byte)((this._bitfield >> 8) & 0x00FFFFFF);
+                    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                    set
+                    {
+                        global::System.Diagnostics.Debug.Assert(value is <= (uint)16777216L);
+                        this._bitfield = (uint)((this._bitfield & unchecked((uint)~0xFFFFFF00)) | ((uint)(value & 0x00FFFFFF) << 8));
+                    }
+                }
+            }
+        }
+
+        internal struct DISPLAYCONFIG_SDR_WHITE_LEVEL
+        {
+            public DISPLAYCONFIG_DEVICE_INFO_HEADER header;
+
+            // SDRWhiteLevel represents a multiplier for standard SDR white
+            // peak value i.e. 80 nits represented as fixed point.
+            // To get value in nits use the following conversion
+            // SDRWhiteLevel in nits = (SDRWhiteLevel / 1000 ) * 80
+            public uint SDRWhiteLevel;
+        }
+
         [DllImport("user32.dll", SetLastError = false)]
         internal static extern int DisplayConfigGetDeviceInfo(ref DISPLAYCONFIG_DEVICE_INFO_HEADER requestPacket);
 
@@ -1874,6 +2009,12 @@ namespace OpenTK.Platform.Native.Windows
 
         [DllImport("user32.dll", SetLastError = false)]
         internal static extern int DisplayConfigGetDeviceInfo(ref DISPLAYCONFIG_GET_ADVANCED_COLOR_INFO requestPacket);
+
+        [DllImport("user32.dll", SetLastError = false)]
+        internal static extern int DisplayConfigGetDeviceInfo(ref DISPLAYCONFIG_GET_ADVANCED_COLOR_INFO_2 requestPacket);
+
+        [DllImport("user32.dll", SetLastError = false)]
+        internal static extern int DisplayConfigGetDeviceInfo(ref DISPLAYCONFIG_SDR_WHITE_LEVEL requestPacket);
     }
 #pragma warning restore CS0649 // Field 'field' is never assigned to, and will always have its default value 'value'
 }
