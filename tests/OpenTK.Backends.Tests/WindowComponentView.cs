@@ -385,6 +385,10 @@ namespace OpenTK.Backends.Tests
                         ImGui.EndDisabled();
                     }
 
+                    ContextPixelFormat pixelFormat = openglSettings.PixelFormat;
+                    if (ImGuiUtils.EnumCombo("Pixel format", ref pixelFormat))
+                        openglSettings.PixelFormat = pixelFormat;
+
                     bool doubleBuffer = openglSettings.DoubleBuffer;
                     if (ImGui.Checkbox("Double buffer", ref doubleBuffer))
                         openglSettings.DoubleBuffer = doubleBuffer;
