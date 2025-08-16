@@ -7,4 +7,7 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\..\src\OpenTK.Mathematics\OpenTK.Mathematics.csproj" />
+    </ItemGroup>
 </Project>
