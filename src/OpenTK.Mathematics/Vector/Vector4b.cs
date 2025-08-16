@@ -1308,6 +1308,26 @@ namespace OpenTK.Mathematics
             return new Vector4b(values.X, values.Y, values.Z, values.W);
         }
 
+        /// <summary>
+        /// Casts <see cref="Vector4b"/> to a <see cref="Vector4i"/>.
+        /// </summary>
+        /// <param name="vector">The <see cref="Vector4b"/> to cast.</param>
+        /// <returns>A new instance of the <see cref="Vector4i"/> struct corresponding to the boolean values of the <see cref="Vector4b"/> components.</returns>
+        public static explicit operator Vector4i(Vector4b vector)
+        {
+            return new Vector4i(vector.X ? 1 : 0, vector.Y ? 1 : 0, vector.Z ? 1 : 0, vector.W ? 1 : 0);
+        }
+
+        /// <summary>
+        /// Casts <see cref="Vector4b"/> to a <see cref="Vector4"/>.
+        /// </summary>
+        /// <param name="vector">The <see cref="Vector4b"/> to cast.</param>
+        /// <returns>A new instance of the <see cref="Vector4"/> struct corresponding to the boolean values of the <see cref="Vector4b"/> components.</returns>
+        public static explicit operator Vector4(Vector4b vector)
+        {
+            return new Vector4(vector.X ? 1.0f : 0.0f, vector.Y ? 1.0f : 0.0f, vector.Z ? 1.0f : 0.0f, vector.W ? 1.0f : 0.0f);
+        }
+
         /// <inheritdoc/>
         public override readonly bool Equals(object obj)
         {
@@ -1339,7 +1359,7 @@ namespace OpenTK.Mathematics
         public readonly string ToString(IFormatProvider formatProvider)
         {
             return string.Format(
-                "({0}{4} {1}{4}, {2}{4}, {3})",
+                "({0}{4} {1}{4} {2}{4} {3})",
                 X.ToString(formatProvider),
                 Y.ToString(formatProvider),
                 Z.ToString(formatProvider),
