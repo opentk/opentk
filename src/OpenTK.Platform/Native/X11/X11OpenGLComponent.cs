@@ -244,7 +244,7 @@ namespace OpenTK.Platform.Native.X11
 
             {
                 attribs.Add((int)ContextAttribs.RenderType);
-                switch (window.PixelFormat)
+                switch (window.ContextValues.PixelFormat)
                 {
                     case ContextPixelFormat.RGBAPackedFloat:
                         attribs.Add((int)RenderType.RgbaUnsignedFloatTypeExt);
@@ -256,7 +256,7 @@ namespace OpenTK.Platform.Native.X11
                         attribs.Add((int)RenderType.RgbaType);
                         break;
                     default:
-                        throw new InvalidEnumArgumentException(nameof(window.PixelFormat), (int)window.PixelFormat, window.PixelFormat.GetType());
+                        throw new InvalidEnumArgumentException(nameof(window.ContextValues.PixelFormat), (int)window.ContextValues.PixelFormat, window.ContextValues.PixelFormat.GetType());
                 }
             }
 
@@ -286,7 +286,7 @@ namespace OpenTK.Platform.Native.X11
                 glxWindow = Glx.CreateWindow(X11.Display, window.FBConfig!.Value, window.Window, (int*)null);
             }
 
-            XOpenGLContextHandle contextHandle = new XOpenGLContextHandle(window.Display, context, glxWindow, window.Window, sharedContext);
+            XOpenGLContextHandle contextHandle = new XOpenGLContextHandle(window.Display, context, glxWindow, window.Window, sharedContext, window.ContextValues);
 
             contextDict[contextHandle.Context] = contextHandle;
 
@@ -300,6 +300,14 @@ namespace OpenTK.Platform.Native.X11
             // FIXME: Remove the glxWindow from the window handle!
             Glx.DestroyWindow(X11.Display, xhandle.GLXWindow);
             Glx.DestroyContext(X11.Display, xhandle.Context);
+        }
+
+        /// <inheritdoc/>
+        public ContextValues GetContextValues(OpenGLContextHandle handle)
+        {
+            XOpenGLContextHandle xhandle = handle.As<XOpenGLContextHandle>(this);
+
+            return xhandle.ContextValues;
         }
 
         /// <inheritdoc/>

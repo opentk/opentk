@@ -52,6 +52,21 @@ namespace OpenTK.Platform
         void DestroyContext(OpenGLContextHandle handle);
 
         /// <summary>
+        /// Gets the context values of the OpenGL context.
+        /// This can be used to query the actually selected context values initially requested in <see cref="OpenGLGraphicsApiHints"/>.
+        /// </summary>
+        /// <remarks>
+        /// During context creation all possible context values are enumerated and sent to <see cref="OpenGLGraphicsApiHints.Selector"/>
+        /// (by default set to <see cref="ContextValues.DefaultValuesSelector(System.Collections.Generic.IReadOnlyList{ContextValues}, ContextValues, Core.Utility.ILogger?)"/>)
+        /// which can choose the an appropriate format. This function returns these selected values.
+        /// </remarks>
+        /// <param name="handle">The OpenGL context to get the context values from.</param>
+        /// <returns>The context values for the OpenGL context.</returns>
+        /// <seealso cref="OpenGLGraphicsApiHints"/>
+        /// <seealso cref="OpenGLGraphicsApiHints.Selector"/>
+        ContextValues GetContextValues(OpenGLContextHandle handle);
+
+        /// <summary>
         /// Gets a <see cref="IBindingsContext"/> from an <see cref="OpenGLContextHandle"/>.
         /// Pass this to <see cref="OpenTK.Graphics.GLLoader.LoadBindings(IBindingsContext)"/> to load the OpenGL bindings.
         /// </summary>

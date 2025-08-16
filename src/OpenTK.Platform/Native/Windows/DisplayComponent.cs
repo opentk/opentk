@@ -1,10 +1,12 @@
-﻿using OpenTK.Platform;
-using OpenTK.Core.Utility;
+﻿using OpenTK.Core.Utility;
+using OpenTK.Graphics.Vulkan;
 using OpenTK.Mathematics;
+using OpenTK.Platform;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -65,6 +67,85 @@ namespace OpenTK.Platform.Native.Windows
             }
 
             return monitorHandle;
+        }
+
+        private static unsafe int FindPathInfo(string deviceName, out Win32.DISPLAYCONFIG_PATH_INFO pathInfo)
+        {
+            int result = Win32.S_OK;
+            uint NumPathArrayElements = 0;
+            uint NumModeInfoArrayElements = 0;
+
+            Win32.DISPLAYCONFIG_PATH_INFO[] PathInfoArray;
+            Win32.DISPLAYCONFIG_MODE_INFO[] ModeInfoArray;
+            do
+            {
+                result = Win32.GetDisplayConfigBufferSizes(QDC.OnlyActivePaths, out NumPathArrayElements, out NumModeInfoArrayElements);
+                if (result != 0)
+                {
+                    pathInfo = default;
+                    return result;
+                }
+
+                PathInfoArray = new Win32.DISPLAYCONFIG_PATH_INFO[NumPathArrayElements];
+                ModeInfoArray = new Win32.DISPLAYCONFIG_MODE_INFO[NumModeInfoArrayElements];
+
+                result = Win32.QueryDisplayConfig(QDC.OnlyActivePaths, ref NumPathArrayElements, ref PathInfoArray[0], ref NumModeInfoArrayElements, ref ModeInfoArray[0], ref Unsafe.NullRef<DISPLAYCONFIG_TOPOLOGY_ID>());
+            } while (result == Win32.ERROR_INSUFFICIENT_BUFFER);
+
+            int DesiredPathIdx = -1;
+
+            if (result == 0)
+            {
+                // Loop through all sources until the one which matches the 'monitor' is found.
+                for (int PathIdx = 0; PathIdx < NumPathArrayElements; ++PathIdx)
+                {
+                    Win32.DISPLAYCONFIG_SOURCE_DEVICE_NAME SourceName = default;
+                    SourceName.header.type = DISPLAYCONFIG_DEVICE_INFO_TYPE.GetSourceName;
+                    SourceName.header.size = (uint)sizeof(Win32.DISPLAYCONFIG_SOURCE_DEVICE_NAME);
+                    SourceName.header.adapterId = PathInfoArray[PathIdx].sourceInfo.adapterId;
+                    SourceName.header.id = PathInfoArray[PathIdx].sourceInfo.id;
+
+                    result = Win32.DisplayConfigGetDeviceInfo(ref SourceName.header);
+                    if (result == 0)
+                    {
+                        ReadOnlySpan<char> gdiDeviceName = Win32.SliceAtFirstNull(new ReadOnlySpan<char>(SourceName.viewGdiDeviceName, 32));
+                        if (deviceName.AsSpan().SequenceEqual(gdiDeviceName))
+                        {
+                            // Found the source which matches this hmonitor. The paths are given in path-priority order
+                            // so the first found is the most desired, unless we later find an internal.
+                            if (DesiredPathIdx == -1 || IsInternalVideoOutput(PathInfoArray[PathIdx].targetInfo.outputTechnology))
+                            {
+                                DesiredPathIdx = PathIdx;
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (DesiredPathIdx != -1)
+            {
+                pathInfo = PathInfoArray[DesiredPathIdx];
+            }
+            else
+            {
+                pathInfo = default;
+                result = result != 0 ? result : Win32.E_INVALIDARG;
+            }
+
+            return result;
+
+            static bool IsInternalVideoOutput(DISPLAYCONFIG_VIDEO_OUTPUT_TECHNOLOGY videoOutputTechnologyType)
+            {
+                switch (videoOutputTechnologyType)
+                {
+                    case DISPLAYCONFIG_VIDEO_OUTPUT_TECHNOLOGY.Internal:
+                    case DISPLAYCONFIG_VIDEO_OUTPUT_TECHNOLOGY.DisplayPortEmbedded:
+                    case DISPLAYCONFIG_VIDEO_OUTPUT_TECHNOLOGY.UDIEmbedded:
+                        return true;
+                    default:
+                        return false;
+                }
+            }
         }
 
         internal static void UpdateMonitors(bool sendEvents, ILogger? logger)
@@ -195,6 +276,90 @@ namespace OpenTK.Platform.Native.Windows
 
             // Console.WriteLine();
             // Console.WriteLine();
+
+            unsafe {
+                foreach (var display in newDisplays)
+                {
+                    // FIXME: O(n^2) loop + unecessary OS calls.
+                    // We should get the path info list once and find the
+                    // paths in that list for each new monitor.
+                    // - Noggin_bops
+                    int result = FindPathInfo(display.AdapterName, out Win32.DISPLAYCONFIG_PATH_INFO path);
+                    if (result != 0)
+                        throw new Win32Exception(result);
+
+                    display.RefreshRate = path.targetInfo.refreshRate.Numerator / (float)path.targetInfo.refreshRate.Denominator;
+
+                    Win32.DISPLAYCONFIG_SDR_WHITE_LEVEL whiteLevel = new Win32.DISPLAYCONFIG_SDR_WHITE_LEVEL();
+                    whiteLevel.header.type = DISPLAYCONFIG_DEVICE_INFO_TYPE.GetSDRWhiteLevel;
+                    whiteLevel.header.size = (uint)sizeof(Win32.DISPLAYCONFIG_SDR_WHITE_LEVEL);
+                    whiteLevel.header.adapterId = path.targetInfo.adapterId;
+                    whiteLevel.header.id = path.targetInfo.id;
+                    result = Win32.DisplayConfigGetDeviceInfo(ref whiteLevel);
+                    if (result != 0)
+                        throw new Win32Exception(result);
+
+                    // 24H2 or greater.
+                    if (OperatingSystem.IsWindowsVersionAtLeast(10, 0, 26100))
+                    {
+                        Win32.DISPLAYCONFIG_GET_ADVANCED_COLOR_INFO_2 colorInfo2 = new Win32.DISPLAYCONFIG_GET_ADVANCED_COLOR_INFO_2();
+                        colorInfo2.header.type = DISPLAYCONFIG_DEVICE_INFO_TYPE.GetAdvancedColorInfo2;
+                        colorInfo2.header.size = (uint)sizeof(Win32.DISPLAYCONFIG_GET_ADVANCED_COLOR_INFO_2);
+                        colorInfo2.header.adapterId = path.targetInfo.adapterId;
+                        colorInfo2.header.id = path.targetInfo.id;
+                        result = Win32.DisplayConfigGetDeviceInfo(ref colorInfo2);
+                        if (result != 0)
+                            throw new Win32Exception(result);
+
+                        display.HdrInfo = new HdrInfo()
+                        {
+                            IsAdvancedColorInfo2 = true,
+                            HdrSupported = colorInfo2.union.highDynamicRangeSupported,
+                            HdrEnabled = colorInfo2.union.highDynamicRangeUserEnabled,
+                            HdrActive = colorInfo2.activeColorMode == DISPLAYCONFIG_ADVANCED_COLOR_MODE.DISPLAYCONFIG_ADVANCED_COLOR_MODE_HDR,
+                            WideColorGammutSupported = colorInfo2.union.wideColorSupported,
+                            WideColorGammutEnabled = colorInfo2.union.wideColorUserEnabled,
+                            WideColorGammutActive = colorInfo2.activeColorMode != DISPLAYCONFIG_ADVANCED_COLOR_MODE.DISPLAYCONFIG_ADVANCED_COLOR_MODE_SDR,
+                            ColorEncoding = (ColorEncoding)colorInfo2.colorEncoding,
+                            SDRWhitePoint = whiteLevel.SDRWhiteLevel,
+                        };
+                    }
+                    else
+                    {
+                        Win32.DISPLAYCONFIG_GET_ADVANCED_COLOR_INFO colorInfo = new Win32.DISPLAYCONFIG_GET_ADVANCED_COLOR_INFO();
+                        colorInfo.header.type = DISPLAYCONFIG_DEVICE_INFO_TYPE.GetAdvancedColorInfo;
+                        colorInfo.header.size = (uint)sizeof(Win32.DISPLAYCONFIG_GET_ADVANCED_COLOR_INFO);
+                        colorInfo.header.adapterId = path.targetInfo.adapterId;
+                        colorInfo.header.id = path.targetInfo.id;
+                        result = Win32.DisplayConfigGetDeviceInfo(ref colorInfo);
+                        if (result != 0)
+                            throw new Win32Exception(result);
+
+                        bool hdrSupported = false;
+                        bool hdrEnabled = false;
+
+                        if (colorInfo.union.advancedColorSupported && !colorInfo.union.wideColorEnforced)
+                        {
+                            hdrSupported = true;
+                        }
+
+                        if (hdrSupported == true && colorInfo.union.advancedColorEnabled)
+                        {
+                            hdrEnabled = true;
+                        }
+
+                        display.HdrInfo = new HdrInfo()
+                        {
+                            IsAdvancedColorInfo2 = false,
+                            HdrSupported = hdrSupported,
+                            HdrEnabled = null,
+                            HdrActive = hdrEnabled,
+                            ColorEncoding = (ColorEncoding)colorInfo.colorEncoding,
+                            SDRWhitePoint = whiteLevel.SDRWhiteLevel,
+                        };
+                    }
+                }
+            }
 
             // FIXME: Maybe we should just send all of the data at once to the user.
 
@@ -410,6 +575,8 @@ namespace OpenTK.Platform.Native.Windows
                 if ((lpDevMode.dmFields & RequiredFields) != RequiredFields)
                     throw new PalException(this, $"Adapter setting {modeIndex - 1} didn't have all required fields set. dmFields={lpDevMode.dmFields}, requiredFields={RequiredFields}");
 
+
+
                 modes.Add(new VideoMode((int)lpDevMode.dmPelsWidth, (int)lpDevMode.dmPelsHeight, lpDevMode.dmDisplayFrequency, (int)lpDevMode.dmBitsPerPel));
             }
 
@@ -468,6 +635,23 @@ namespace OpenTK.Platform.Native.Windows
 
             scaleX = dpiX / DefaultDPI;
             scaleY = dpiY / DefaultDPI;
+        }
+
+        /// <inheritdoc/>
+        public bool GetHDRInfo(DisplayHandle handle, out HdrInfo hdrInfo)
+        {
+            HMonitor hmonitor = handle.As<HMonitor>(this);
+
+            if (hmonitor.HdrInfo.HasValue)
+            {
+                hdrInfo = hmonitor.HdrInfo.Value;
+                return true;
+            }
+            else
+            {
+                hdrInfo = default;
+                return true;
+            }
         }
 
         /// <summary>

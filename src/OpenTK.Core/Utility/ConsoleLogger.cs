@@ -34,10 +34,23 @@ namespace OpenTK.Core.Utility
 
             string fileName = Path.GetFileName(filePath);
 
+            ConsoleColor color = level switch
+            {
+                LogLevel.Warning => ConsoleColor.Yellow,
+                LogLevel.Error => ConsoleColor.Red,
+
+                _ => Console.ForegroundColor,
+            };
+
+            ConsoleColor prevColor = Console.ForegroundColor;
+            Console.ForegroundColor = color;
+
             // Example format:
             // [Warning] Method ConsoleLogger.cs:123 <Message>
             writer.Write($"[{level}] {member} {Path.GetFileName(fileName)}:{line} ");
             writer.WriteLine(str);
+
+            Console.ForegroundColor = prevColor;
         }
 
         void ILogger.Flush()

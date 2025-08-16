@@ -11,7 +11,7 @@ namespace OpenTK.Backends.Tests
     [TestApp]
     public class FpsCamera : ITestApp
     {
-        public string Name => "Fps Camera";
+        public static string Name => "Fps Camera";
 
         struct Vertex
         {

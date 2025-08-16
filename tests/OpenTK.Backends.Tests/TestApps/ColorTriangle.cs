@@ -16,7 +16,7 @@ namespace OpenTK.Backends.Tests
     [TestApp]
     public class ColorTriangle : ITestApp
     {
-        public string Name => "Color Triangle";
+        public static string Name => "Color Triangle";
 
         public struct Vertex
         {

@@ -77,6 +77,7 @@ namespace OpenTK.Platform.Native.macOS
             CGL.CGLDescribePixelFormat(pixelFormatObj, 0, CGLPixelFormatAttribute.kCGLPFADoubleBuffer, out int hasDoubleBuffer);
             CGL.CGLDescribePixelFormat(pixelFormatObj, 0, CGLPixelFormatAttribute.kCGLPFAColorFloat, out int colorFloat);
             CGL.CGLDescribePixelFormat(pixelFormatObj, 0, CGLPixelFormatAttribute.kCGLPFABackingStore, out int hasBackingStore);
+            CGL.CGLDescribePixelFormat(pixelFormatObj, 0, CGLPixelFormatAttribute.kCGLPFAStereo, out int hasStereo);
 
             // FIXME: change ID to ulong?
             values.ID = (ulong)pixelFormatObj;
@@ -86,13 +87,14 @@ namespace OpenTK.Platform.Native.macOS
             values.AlphaBits = alphaSize;
             values.DepthBits = depthSize;
             values.StencilBits = stencilSize;
-            values.DoubleBuffered = hasDoubleBuffer == 1;
+            values.DoubleBuffered = hasDoubleBuffer != 1;
             values.SRGBFramebuffer = false;
-            values.PixelFormat = (colorFloat == 1) ? ContextPixelFormat.RGBAFloat : ContextPixelFormat.RGBA;
-            values.SwapMethod = (hasBackingStore == 1) ? ContextSwapMethod.Copy : ContextSwapMethod.Undefined;
+            values.PixelFormat = (colorFloat != 0) ? ContextPixelFormat.RGBAFloat : ContextPixelFormat.RGBA;
+            values.SwapMethod = (hasBackingStore != 0) ? ContextSwapMethod.Copy : ContextSwapMethod.Undefined;
             // FIXME: Maybe querying samples is not enough...
             values.Samples = samples;
             values.SupportsFramebufferTransparency = true;
+            values.Stereo = hasStereo != 0;
         }
 
         internal void EnumerateContextValues(List<ContextValues> options, CGLOpenGLProfile profile)
@@ -228,7 +230,6 @@ namespace OpenTK.Platform.Native.macOS
                     }
                 }
             }
-
         }
 
         /// <inheritdoc/>
@@ -288,6 +289,7 @@ namespace OpenTK.Platform.Native.macOS
             }
 
             IntPtr pixelFormat;
+            ContextValues chosenValues;
             if (settings.UseSelectorOnMacOS)
             {
                 ContextValues requested;
@@ -304,6 +306,7 @@ namespace OpenTK.Platform.Native.macOS
                 requested.SwapMethod = settings.SwapMethod;
                 requested.Samples = settings.Multisamples;
                 requested.SupportsFramebufferTransparency = true;
+                requested.Stereo = settings.Stereo;
 
                 List<ContextValues> options = new List<ContextValues>();
                 Stopwatch watch = Stopwatch.StartNew();
@@ -321,7 +324,7 @@ namespace OpenTK.Platform.Native.macOS
                 pixelFormat = objc_msgSend_IntPtr(pixelFormat, selInitWithCGLPixelFormatObj, (IntPtr)options[index].ID);
 
                 IntPtr format = objc_msgSend_IntPtr(pixelFormat, selCGLPixelFormatObj);
-                GetContextValuesFromCGLPixelFormatObj(format, out ContextValues selected);
+                GetContextValuesFromCGLPixelFormatObj(format, out chosenValues);
 
                 // Release all pixel formats, the one we selected is retained by the NSOpenGLPixelFormat object.
                 for (int i = 0; i < options.Count; i++)
@@ -382,6 +385,9 @@ namespace OpenTK.Platform.Native.macOS
                     // FIXME: Better error message!
                     throw new PalException(this, $"Failed to create pixel format matching settings.");
                 }
+
+                IntPtr format = objc_msgSend_IntPtr(pixelFormat, selCGLPixelFormatObj);
+                GetContextValuesFromCGLPixelFormatObj(format, out chosenValues);
             }
             
             IntPtr share = nsShareContext?.Context ?? IntPtr.Zero;
@@ -391,7 +397,7 @@ namespace OpenTK.Platform.Native.macOS
                 selInitWithFormatShareContext,
                 pixelFormat, share);
 
-            NSOpenGLContext nscontext = new NSOpenGLContext(context, nsShareContext);
+            NSOpenGLContext nscontext = new NSOpenGLContext(context, nsShareContext, chosenValues);
 
             // We do this so the window component can implement SwapBuffers.
             // And so we can call [Context update] when the window resizes or moves
@@ -432,6 +438,14 @@ namespace OpenTK.Platform.Native.macOS
             objc_msgSend(nscontext.Context, Release);
 
             nscontext.Context = IntPtr.Zero;
+        }
+
+        /// <inheritdoc/>
+        public ContextValues GetContextValues(OpenGLContextHandle handle)
+        {
+            NSOpenGLContext nscontext = handle.As<NSOpenGLContext>(this);
+
+            return nscontext.ContextValues;
         }
 
         /// <inheritdoc/>

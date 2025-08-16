@@ -17,7 +17,7 @@ namespace OpenTK.Platform.Native.X11
         public XDisplayPtr Display { get; }
         public XWindow Window { get; }
         public GLXFBConfig? FBConfig { get; }
-        public ContextPixelFormat PixelFormat { get; }
+        public ContextValues ContextValues { get; }
 
         public bool VisualSupportsFramebufferTransparency { get; set; }
 
@@ -75,7 +75,7 @@ namespace OpenTK.Platform.Native.X11
             XWindow window,
             GraphicsApiHints hints,
             GLXFBConfig? fbConfig,
-            ContextPixelFormat pixelFormat,
+            ContextValues contextValues,
             bool visualSupportsFramebufferTransparency,
             XColorMap? colorMap,
             XIC ic) : base(hints)
@@ -83,7 +83,7 @@ namespace OpenTK.Platform.Native.X11
             Display = display;
             Window = window;
             FBConfig = fbConfig;
-            PixelFormat = pixelFormat;
+            ContextValues = contextValues;
             VisualSupportsFramebufferTransparency = visualSupportsFramebufferTransparency;
             ColorMap = colorMap;
             IC = ic;
@@ -101,6 +101,8 @@ namespace OpenTK.Platform.Native.X11
 
         public XOpenGLContextHandle? SharedContext { get; }
 
+        public ContextValues ContextValues { get; }
+
         /// <summary>
         /// We use this value to keep track of the latest swap interval set through GLX_SGI_swap_control.
         /// </summary>
@@ -111,13 +113,15 @@ namespace OpenTK.Platform.Native.X11
             GLXContext context,
             GLXWindow glxWindow,
             XWindow window,
-            XOpenGLContextHandle? sharedContext)
+            XOpenGLContextHandle? sharedContext,
+            ContextValues contextValues)
         {
             Display = display;
             Context = context;
             GLXWindow = glxWindow;
             Window = window;
             SharedContext = sharedContext;
+            ContextValues = contextValues;
         }
     }
 

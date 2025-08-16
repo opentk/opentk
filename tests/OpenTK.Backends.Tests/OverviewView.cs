@@ -141,7 +141,7 @@ namespace OpenTK.Backends.Tests
                             filter = new DialogFileFilter[] { new("Text documents (*.txt;*.text)", "txt;text"), new("All files (*.*)", "*") };
                         }
 
-                        string? location = Toolkit.Dialog.ShowSaveDialog(Program.Window, "Save", Directory.GetCurrentDirectory(), filter, 0);
+                        string? location = Toolkit.Dialog.ShowSaveDialog(Program.Window, "Save", Directory.GetCurrentDirectory(), "log.txt", filter, 0);
                         if (location != null)
                         {
                             if (Path.HasExtension(location) == false)

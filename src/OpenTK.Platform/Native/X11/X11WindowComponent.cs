@@ -1070,7 +1070,7 @@ namespace OpenTK.Platform.Native.X11
 
                                 if (filtered == false)
                                 {
-                                    if (xwindow.IC.Value == IntPtr.Zero)
+                                    if (xwindow.IC.Value == 0)
                                     {
                                         charsWritten = XLookupString(&keyPressed, str, TEXT_LENGTH, &keysym, null);
                                     }
@@ -1115,7 +1115,7 @@ namespace OpenTK.Platform.Native.X11
                                         EventQueue.Raise(xwindow, PlatformEventType.KeyDown, new KeyDownEventArgs(xwindow, key, scancode, isRepeat, modifiers));
 
                                         string? result = null;
-                                        if (xwindow.IC.Value == IntPtr.Zero)
+                                        if (xwindow.IC.Value == 0)
                                         {
                                             bool isHighLatin1 = false;
                                             for (int i = 0; i < TEXT_LENGTH; i++)
@@ -1255,7 +1255,10 @@ namespace OpenTK.Platform.Native.X11
                                 break;
                             }
 
-                            XSetICFocus(xwindow.IC);
+                            if (xwindow.IC.Value != 0)
+                            {
+                                XSetICFocus(xwindow.IC);
+                            }
 
                             EventQueue.Raise(xwindow, PlatformEventType.Focus, new FocusEventArgs(xwindow, true));
 
@@ -1286,7 +1289,10 @@ namespace OpenTK.Platform.Native.X11
                                 break;
                             }
 
-                            XUnsetICFocus(xwindow.IC);
+                            if (xwindow.IC.Value != 0)
+                            {
+                                XUnsetICFocus(xwindow.IC);
+                            }
 
                             EventQueue.Raise(xwindow, PlatformEventType.Focus, new FocusEventArgs(xwindow, false));
 
@@ -1571,7 +1577,7 @@ namespace OpenTK.Platform.Native.X11
         {
             XWindow window;
             GLXFBConfig? chosenConfig = null;
-            ContextPixelFormat chosenPixelFormat = ContextPixelFormat.RGBA;
+            ContextValues chosenValues;
             XColorMap? map = null;
 
             bool visualSupportsFramebufferTransparency = false;
@@ -1581,22 +1587,22 @@ namespace OpenTK.Platform.Native.X11
                 // Ignoring ES for now.
                 OpenGLGraphicsApiHints glhints = (hints as OpenGLGraphicsApiHints)!;
 
-                byte depthBits;
+                byte requrestedDepthBits;
                 switch (glhints.DepthBits)
                 {
-                    case ContextDepthBits.None:    depthBits = 0;  break;
-                    case ContextDepthBits.Depth16: depthBits = 16; break;
-                    case ContextDepthBits.Depth24: depthBits = 24; break;
-                    case ContextDepthBits.Depth32: depthBits = 32; break;
+                    case ContextDepthBits.None:    requrestedDepthBits = 0;  break;
+                    case ContextDepthBits.Depth16: requrestedDepthBits = 16; break;
+                    case ContextDepthBits.Depth24: requrestedDepthBits = 24; break;
+                    case ContextDepthBits.Depth32: requrestedDepthBits = 32; break;
                     default: throw new InvalidEnumArgumentException(nameof(glhints.DepthBits), (int)glhints.DepthBits, glhints.DepthBits.GetType());
                 }
 
-                byte stencilBits;
+                byte requestedStencilBits;
                 switch (glhints.StencilBits)
                 {
-                    case ContextStencilBits.None:     stencilBits = 0; break;
-                    case ContextStencilBits.Stencil1: stencilBits = 1; break;
-                    case ContextStencilBits.Stencil8: stencilBits = 8; break;
+                    case ContextStencilBits.None:     requestedStencilBits = 0; break;
+                    case ContextStencilBits.Stencil1: requestedStencilBits = 1; break;
+                    case ContextStencilBits.Stencil8: requestedStencilBits = 8; break;
                     default: throw new InvalidEnumArgumentException(nameof(glhints.StencilBits), (int)glhints.StencilBits, glhints.StencilBits.GetType());
                 }
 
@@ -1606,14 +1612,15 @@ namespace OpenTK.Platform.Native.X11
                 requested.GreenBits = glhints.GreenColorBits;
                 requested.BlueBits = glhints.BlueColorBits;
                 requested.AlphaBits = glhints.AlphaColorBits;
-                requested.DepthBits = depthBits;
-                requested.StencilBits = stencilBits;
+                requested.DepthBits = requrestedDepthBits;
+                requested.StencilBits = requestedStencilBits;
                 requested.DoubleBuffered = glhints.DoubleBuffer;
                 requested.SRGBFramebuffer = glhints.sRGBFramebuffer;
                 requested.PixelFormat = glhints.PixelFormat;
                 requested.SwapMethod = glhints.SwapMethod;
                 requested.Samples = glhints.Multisamples;
                 requested.SupportsFramebufferTransparency = glhints.SupportTransparentFramebufferX11;
+                requested.Stereo = glhints.Stereo;
 
                 unsafe
                 {
@@ -1673,6 +1680,7 @@ namespace OpenTK.Platform.Native.X11
                         glXGetFBConfigAttrib(X11.Display, configs[i], GLX_ALPHA_SIZE, out int alphaSize);
                         glXGetFBConfigAttrib(X11.Display, configs[i], GLX_DEPTH_SIZE, out int depthSize);
                         glXGetFBConfigAttrib(X11.Display, configs[i], GLX_STENCIL_SIZE, out int stencilSize);
+                        glXGetFBConfigAttrib(X11.Display, configs[i], GLX_STEREO, out int stereo);
 
                         bool supportsFramebufferTransparency = false;
                         if (X11.Extensions.Contains("RENDER"))
@@ -1728,13 +1736,14 @@ namespace OpenTK.Platform.Native.X11
                         option.GreenBits = greenSize;
                         option.BlueBits = blueSize;
                         option.AlphaBits = alphaSize;
-                        option.DepthBits = depthBits;
-                        option.StencilBits = stencilBits;
-                        option.DoubleBuffered = doubleBuffer == 1;
-                        option.SRGBFramebuffer = srgbCapable == 1;
+                        option.DepthBits = depthSize;
+                        option.StencilBits = stencilSize;
+                        option.DoubleBuffered = doubleBuffer != 0;
+                        option.SRGBFramebuffer = srgbCapable != 0;
                         option.Samples = samples;
                         option.SwapMethod = swapMethod;
                         option.SupportsFramebufferTransparency = supportsFramebufferTransparency;
+                        option.Stereo = stereo != 0;
 
                         if ((renderType & GLX_RGBA_UNSIGNED_FLOAT_BIT_EXT) != 0)
                         {
@@ -1766,7 +1775,7 @@ namespace OpenTK.Platform.Native.X11
                         throw new IndexOutOfRangeException($"The selected format index ({selectedIndex}) is outside the range of valid indeces. This is either an OpenTK bug or an issue with your custom ContextValueSelector.");
                     }
 
-                    chosenPixelFormat = options[selectedIndex].PixelFormat;
+                    chosenValues = options[selectedIndex];
                     visualSupportsFramebufferTransparency = options[selectedIndex].SupportsFramebufferTransparency;
                     chosenConfig = configs[(int)options[selectedIndex].ID];
                     XFree(configsPtr);
@@ -1811,6 +1820,7 @@ namespace OpenTK.Platform.Native.X11
 
                 unsafe
                 {
+                    // FIXME: Support for framebuffer transparency??
                     XVisual* visual = XDefaultVisual(X11.Display, X11.DefaultScreen);
 
                     window = XCreateWindow(X11.Display, X11.DefaultRootWindow, 
@@ -1822,6 +1832,9 @@ namespace OpenTK.Platform.Native.X11
                         XWindowAttributeValueMask.BorderPixel | XWindowAttributeValueMask.EventMask, 
                         ref attributes);
                 }
+
+                // This is only used for OpenGL windows. Set it to the default.
+                chosenValues = default;
             }
             else
             {
@@ -1840,7 +1853,9 @@ namespace OpenTK.Platform.Native.X11
                     XWindowAttributeValueMask.BorderPixel | XWindowAttributeValueMask.EventMask, 
                     ref attributes);
 
-                // FIXME: How do we handle vulkan windows?
+                // This is only used for OpenGL windows. Set it to the default.
+                chosenValues = default;
+
                 throw new PalException(this, "Cannot create a X11 window without a graphics API.");
             }
 
@@ -1952,12 +1967,26 @@ namespace OpenTK.Platform.Native.X11
                     Utils.AsPtr(XNPreeditAttributes), callbacks,
                     null);
 
+                if (ic.Value == 0)
+                {
+                    Logger?.LogDebug("Could not create IC supporting preedit callbacks, trying to create an IC wihtout callbacks.");
+                    ic = XCreateIC(IM, 
+                        Utils.AsPtr(XNInputStyle), (ulong)(XIMFlags.PreeditNothing | XIMFlags.StatusNothing),
+                        Utils.AsPtr(XNClientWindow), window.Id,
+                        Utils.AsPtr(XNFocusWindow), window.Id,
+                        null);
+                }
+
                 if (ic.Value != 0)
                 {
                     XSetICFocus(ic);
 
                     // Get the event mask the IC needs.
                     XGetICValues(ic, Utils.AsPtr(XNFilterEvents), (IntPtr)(&filterMask), 0);
+                }
+                else
+                {
+                    Logger?.LogWarning("Could not create IC, IME might not work correctly.");
                 }
 
                 XFree(callbacks);
@@ -1982,7 +2011,7 @@ namespace OpenTK.Platform.Native.X11
                     XEventMask.PropertyChange |
                     filterMask);
 
-            XWindowHandle handle = new XWindowHandle(X11.Display, window, hints, chosenConfig, chosenPixelFormat, visualSupportsFramebufferTransparency, map, ic);
+            XWindowHandle handle = new XWindowHandle(X11.Display, window, hints, chosenConfig, chosenValues, visualSupportsFramebufferTransparency, map, ic);
 
             XWindowDict.Add(handle.Window, handle);
 

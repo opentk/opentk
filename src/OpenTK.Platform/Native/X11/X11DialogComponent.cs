@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.IO;
 using System.Text;
 using System.Threading;
 using OpenTK.Platform;
@@ -636,7 +637,7 @@ namespace OpenTK.Platform.Native.X11
         }
 
         /// <inheritdoc/>
-        public string? ShowSaveDialog(WindowHandle parent, string title, string directory, DialogFileFilter[]? allowedExtensions, SaveDialogOptions options)
+        public string? ShowSaveDialog(WindowHandle parent, string title, string directory, string? defaultFileName, DialogFileFilter[]? allowedExtensions, SaveDialogOptions options)
         {
             XWindowHandle xwindow = parent.As<XWindowHandle>(this);
 
@@ -663,7 +664,12 @@ namespace OpenTK.Platform.Native.X11
 
             arguments.Append($"--title \"{title}\" ");
 
-            arguments.Append($"--filename=\"{directory}\" ");
+            // FIXME: It seems like Zenity 4 broke file name suggestion in their save dialogs.
+            // See: https://gitlab.gnome.org/GNOME/zenity/-/issues/107
+            // This is fixed in 4.1.99, so maybe we only want to add the defaultName to the path 
+            // if we are on a version 3.x version or above 4.1.99...
+            // - Noggin_bops 2025-08-13
+            arguments.Append($"--filename=\"{Path.Combine(directory, defaultFileName ?? "")}\" ");
             arguments.Append($"--save ");
             
             // FIXME: Extensions...

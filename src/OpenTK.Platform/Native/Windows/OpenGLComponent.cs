@@ -1,5 +1,7 @@
-﻿using OpenTK.Platform;
+﻿using Microsoft.VisualBasic.FileIO;
 using OpenTK.Core.Utility;
+using OpenTK.Graphics.Wgl;
+using OpenTK.Platform;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -11,7 +13,6 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Wgl = OpenTK.Graphics.Wgl.Wgl;
-using OpenTK.Graphics.Wgl;
 
 namespace OpenTK.Platform.Native.Windows
 {
@@ -321,7 +322,9 @@ namespace OpenTK.Platform.Native.Windows
             requested.PixelFormat = settings.PixelFormat;
             requested.SwapMethod = settings.SwapMethod;
             requested.Samples = settings.Multisamples;
+            requested.Stereo = settings.Stereo;
 
+            ContextValues chosenValues;
             if (ARB_pixel_format)
             {
                 // We have the pixel format extension!
@@ -463,7 +466,7 @@ namespace OpenTK.Platform.Native.Windows
                     }
                     //Logger?.LogDebug($"Swap method: {(WGLSwapMethod)FindAttribute(contextValueAttrib, contextValues, WGLPixelFormatAttribute.SWAP_METHOD_ARB)}");
 
-                    // FIXME: Add stereo to this?
+                    
                     ContextValues option;
                     option.ID = (ulong)i;
                     option.RedBits = FindAttribute(contextValueAttrib, contextValues, PixelFormatAttribute.RedBitsArb);
@@ -472,10 +475,10 @@ namespace OpenTK.Platform.Native.Windows
                     option.AlphaBits = FindAttribute(contextValueAttrib, contextValues, PixelFormatAttribute.AlphaBitsArb);
                     option.DepthBits = FindAttribute(contextValueAttrib, contextValues, PixelFormatAttribute.DepthBitsArb);
                     option.StencilBits = FindAttribute(contextValueAttrib, contextValues, PixelFormatAttribute.StencilBitsArb);
-                    option.DoubleBuffered = (FindAttribute(contextValueAttrib, contextValues, PixelFormatAttribute.DoubleBufferArb) == 1);
+                    option.DoubleBuffered = (FindAttribute(contextValueAttrib, contextValues, PixelFormatAttribute.DoubleBufferArb) != 0);
                     if (ARB_framebuffer_sRGB || EXT_framebuffer_sRGB)
                     {
-                        option.SRGBFramebuffer = FindAttribute(contextValueAttrib, contextValues, PixelFormatAttribute.FramebufferSrgbCapableArb) == 1;
+                        option.SRGBFramebuffer = FindAttribute(contextValueAttrib, contextValues, PixelFormatAttribute.FramebufferSrgbCapableArb) != 0;
                     }
                     else if (EXT_colorspace)
                     {
@@ -489,6 +492,7 @@ namespace OpenTK.Platform.Native.Windows
                     option.SwapMethod = swapMethod;
                     option.Samples = ARB_multisample ? FindAttribute(contextValueAttrib, contextValues, PixelFormatAttribute.SamplesArb) : 0;
                     option.SupportsFramebufferTransparency = true;
+                    option.Stereo = (FindAttribute(contextValueAttrib, contextValues, PixelFormatAttribute.StereoArb) != 0);
                     possibleContextValues.Add(option);
                 }
 
@@ -564,14 +568,13 @@ namespace OpenTK.Platform.Native.Windows
                 bool chosenSRGB = false;
                 if (ARB_framebuffer_sRGB || EXT_framebuffer_sRGB)
                 {
-                    chosenSRGB = FindAttribute(contextValueAttrib, contextValues, PixelFormatAttribute.FramebufferSrgbCapableArb) == 1;
+                    chosenSRGB = FindAttribute(contextValueAttrib, contextValues, PixelFormatAttribute.FramebufferSrgbCapableArb) != 0;
                 }
                 else if (EXT_colorspace)
                 {
                     chosenSRGB = FindAttribute(contextValueAttrib, contextValues, PixelFormatAttribute.ColorspaceExt) == (int)ColorspaceEXT.ColorspaceSrgbExt;
                 }
 
-                ContextValues chosenValues;
                 chosenValues.ID = (ulong)selectedFormat;
                 chosenValues.RedBits = FindAttribute(contextValueAttrib, contextValues, PixelFormatAttribute.RedBitsArb);
                 chosenValues.GreenBits = FindAttribute(contextValueAttrib, contextValues, PixelFormatAttribute.GreenBitsArb);
@@ -579,12 +582,13 @@ namespace OpenTK.Platform.Native.Windows
                 chosenValues.AlphaBits = FindAttribute(contextValueAttrib, contextValues, PixelFormatAttribute.AlphaBitsArb);
                 chosenValues.DepthBits = FindAttribute(contextValueAttrib, contextValues, PixelFormatAttribute.DepthBitsArb);
                 chosenValues.StencilBits = FindAttribute(contextValueAttrib, contextValues, PixelFormatAttribute.StencilBitsArb);
-                chosenValues.DoubleBuffered = FindAttribute(contextValueAttrib, contextValues, PixelFormatAttribute.DoubleBufferArb) == 1;
+                chosenValues.DoubleBuffered = FindAttribute(contextValueAttrib, contextValues, PixelFormatAttribute.DoubleBufferArb) != 0;
                 chosenValues.SRGBFramebuffer = chosenSRGB;
                 chosenValues.PixelFormat = chosenPixelFormat;
                 chosenValues.SwapMethod = chosenSwapMethod;
                 chosenValues.Samples = ARB_multisample ? FindAttribute(contextValueAttrib, contextValues, PixelFormatAttribute.SamplesArb) : 0;
                 chosenValues.SupportsFramebufferTransparency = true;
+                chosenValues.Stereo = (FindAttribute(contextValueAttrib, contextValues, PixelFormatAttribute.StereoArb) != 0);
 
                 StringBuilder sb = new StringBuilder();
                 for (int j = 0; j < contextValueAttrib.Length; j++)
@@ -684,6 +688,7 @@ namespace OpenTK.Platform.Native.Windows
                     option.SwapMethod = ContextSwapMethod.Undefined;
                     option.Samples = 0;
                     option.SupportsFramebufferTransparency = true;
+                    option.Stereo = pfd.dwFlags.HasFlag(PFD.STEREO);
                     possibleContextValues.Add(option);
                 }
 
@@ -721,6 +726,21 @@ namespace OpenTK.Platform.Native.Windows
                     throw new Win32Exception();
                 }
 
+                chosenValues.ID = (ulong)selectedFormat;
+                chosenValues.RedBits = chosenFormat.cRedBits;
+                chosenValues.GreenBits = chosenFormat.cGreenBits;
+                chosenValues.BlueBits = chosenFormat.cBlueBits;
+                chosenValues.AlphaBits = chosenFormat.cAlphaBits;
+                chosenValues.DepthBits = chosenFormat.cDepthBits;
+                chosenValues.StencilBits = chosenFormat.cStencilBits;
+                chosenValues.DoubleBuffered = chosenFormat.dwFlags.HasFlag(PFD.DOUBLEBUFFER);
+                chosenValues.SRGBFramebuffer = false;
+                chosenValues.PixelFormat = ContextPixelFormat.RGBA;
+                chosenValues.SwapMethod = ContextSwapMethod.Undefined;
+                chosenValues.Samples = 0;
+                chosenValues.SupportsFramebufferTransparency = true;
+                chosenValues.Stereo = chosenFormat.dwFlags.HasFlag(PFD.STEREO);
+
                 Logger?.LogDebug("Got pixel format from DescribePixelFormat");
             }
 
@@ -744,7 +764,7 @@ namespace OpenTK.Platform.Native.Windows
                             profile = ContextProfileMask.ContextCoreProfileBitArb;
                             break;
                         case OpenGLProfile.Compatibility:
-                            profile = ContextProfileMask.ContextCoreProfileBitArb | ContextProfileMask.ContextCompatibilityProfileBitArb;
+                            profile = ContextProfileMask.ContextCompatibilityProfileBitArb;
                             break;
                         default:
                             break;
@@ -844,7 +864,7 @@ namespace OpenTK.Platform.Native.Windows
                 throw new Win32Exception();
             }
 
-            HGLRC hglrc = new HGLRC(hGLRC, hDC, hshareContext);
+            HGLRC hglrc = new HGLRC(hGLRC, hDC, hshareContext, chosenValues);
             HGLRCDict.Add(hGLRC, hglrc);
 
             return hglrc;
@@ -863,6 +883,14 @@ namespace OpenTK.Platform.Native.Windows
             {
                 throw new Win32Exception();
             }
+        }
+
+        /// <inheritdoc/>
+        public ContextValues GetContextValues(OpenGLContextHandle handle)
+        {
+            HGLRC hglrc = handle.As<HGLRC>(this);
+
+            return hglrc.ContextValues;
         }
 
         /// <inheritdoc/>

@@ -13,7 +13,7 @@ namespace OpenTK.Backends.Tests
     [TestApp]
     public class VsyncTest : ITestApp
     {
-        public string Name => "Vsync test";
+        public static string Name => "Vsync test";
 
         private WindowHandle Window;
         private OpenGLContextHandle Context;

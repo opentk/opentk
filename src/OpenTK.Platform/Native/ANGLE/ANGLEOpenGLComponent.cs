@@ -168,6 +168,9 @@ namespace OpenTK.Platform.Native.ANGLE
                 values.SwapMethod = ContextSwapMethod.Undefined;
                 values.Samples = configSamples;
                 values.SupportsFramebufferTransparency = false;
+                // EGL 1.5 nor any extensions specify how to create or query support for stereo display.
+                // - Noggin_bops 2025-08-11
+                values.Stereo = false;
 
                 possibleContextValues.Add(values);
             }
@@ -208,6 +211,7 @@ namespace OpenTK.Platform.Native.ANGLE
             }
 
             EGLConfig selectedConfig = new EGLConfig((nint)possibleContextValues[selectedFormatIndex].ID);
+            ContextValues chosenValues = possibleContextValues[selectedFormatIndex];
 
             List<int> surface_attribs = new List<int>();
             surface_attribs.Add((int)SurfaceCreateAttribute.RenderBuffer);
@@ -239,7 +243,7 @@ namespace OpenTK.Platform.Native.ANGLE
 
             EGLContext contextPtr = Egl.CreateContext(eglDisplay, selectedConfig, shareContext, context_attribs.ToArray());
 
-            ANGLEOpenGLContextHandle context = new ANGLEOpenGLContextHandle(eglSurface, contextPtr, shared);
+            ANGLEOpenGLContextHandle context = new ANGLEOpenGLContextHandle(eglSurface, contextPtr, shared, chosenValues);
 
             ContextDict.Add(contextPtr, context);
 
@@ -264,6 +268,14 @@ namespace OpenTK.Platform.Native.ANGLE
             {
                 Logger?.LogError($"Failed to destroy egl surface: {Egl.GetError()}");
             }
+        }
+
+        /// <inheritdoc/>
+        public ContextValues GetContextValues(OpenGLContextHandle handle)
+        {
+            ANGLEOpenGLContextHandle context = handle.As<ANGLEOpenGLContextHandle>(this);
+
+            return context.ContextValues;
         }
 
         /// <inheritdoc/>

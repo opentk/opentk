@@ -6,7 +6,7 @@ namespace OpenTK.Backends.Tests.Bejeweled
     [TestApp]
     internal class Bejeweled : ITestApp
     {
-        public string Name => "Bejeweled";
+        public static string Name => "Bejeweled";
         
         private global::Bejeweled.Bejeweled BejeweledGame = new global::Bejeweled.Bejeweled();
 
