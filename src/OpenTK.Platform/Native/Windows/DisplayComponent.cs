@@ -12,8 +12,6 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
-using static OpenTK.Platform.Native.Windows.Win32;
-using static System.Net.WebRequestMethods;
 
 namespace OpenTK.Platform.Native.Windows
 {
@@ -71,24 +69,29 @@ namespace OpenTK.Platform.Native.Windows
             return monitorHandle;
         }
 
-        private static unsafe int FindPathInfo(string deviceName, out DISPLAYCONFIG_PATH_INFO pathInfo)
+        private static unsafe int FindPathInfo(string deviceName, out Win32.DISPLAYCONFIG_PATH_INFO pathInfo)
         {
-            int result = S_OK;
+            int result = Win32.S_OK;
             uint NumPathArrayElements = 0;
             uint NumModeInfoArrayElements = 0;
-            
-            result = GetDisplayConfigBufferSizes(QDC.OnlyActivePaths, out NumPathArrayElements, out NumModeInfoArrayElements);
-            if (result != 0)
+
+            Win32.DISPLAYCONFIG_PATH_INFO[] PathInfoArray;
+            Win32.DISPLAYCONFIG_MODE_INFO[] ModeInfoArray;
+            do
             {
-                pathInfo = default;
-                return result;
-            }
+                result = Win32.GetDisplayConfigBufferSizes(QDC.OnlyActivePaths, out NumPathArrayElements, out NumModeInfoArrayElements);
+                if (result != 0)
+                {
+                    pathInfo = default;
+                    return result;
+                }
 
-            DISPLAYCONFIG_PATH_INFO[] PathInfoArray = new DISPLAYCONFIG_PATH_INFO[NumPathArrayElements];
-            DISPLAYCONFIG_MODE_INFO[] ModeInfoArray = new DISPLAYCONFIG_MODE_INFO[NumModeInfoArrayElements];
+                PathInfoArray = new Win32.DISPLAYCONFIG_PATH_INFO[NumPathArrayElements];
+                ModeInfoArray = new Win32.DISPLAYCONFIG_MODE_INFO[NumModeInfoArrayElements];
 
-            result = QueryDisplayConfig(QDC.OnlyActivePaths, ref NumPathArrayElements, ref PathInfoArray[0], ref NumModeInfoArrayElements, ref ModeInfoArray[0], ref Unsafe.NullRef<DISPLAYCONFIG_TOPOLOGY_ID>());
-            
+                result = Win32.QueryDisplayConfig(QDC.OnlyActivePaths, ref NumPathArrayElements, ref PathInfoArray[0], ref NumModeInfoArrayElements, ref ModeInfoArray[0], ref Unsafe.NullRef<DISPLAYCONFIG_TOPOLOGY_ID>());
+            } while (result == Win32.ERROR_INSUFFICIENT_BUFFER);
+
             int DesiredPathIdx = -1;
 
             if (result == 0)
@@ -96,13 +99,13 @@ namespace OpenTK.Platform.Native.Windows
                 // Loop through all sources until the one which matches the 'monitor' is found.
                 for (int PathIdx = 0; PathIdx < NumPathArrayElements; ++PathIdx)
                 {
-                    DISPLAYCONFIG_SOURCE_DEVICE_NAME SourceName = default;
+                    Win32.DISPLAYCONFIG_SOURCE_DEVICE_NAME SourceName = default;
                     SourceName.header.type = DISPLAYCONFIG_DEVICE_INFO_TYPE.GetSourceName;
-                    SourceName.header.size = (uint)sizeof(DISPLAYCONFIG_SOURCE_DEVICE_NAME);
+                    SourceName.header.size = (uint)sizeof(Win32.DISPLAYCONFIG_SOURCE_DEVICE_NAME);
                     SourceName.header.adapterId = PathInfoArray[PathIdx].sourceInfo.adapterId;
                     SourceName.header.id = PathInfoArray[PathIdx].sourceInfo.id;
 
-                    result = DisplayConfigGetDeviceInfo(ref SourceName.header);
+                    result = Win32.DisplayConfigGetDeviceInfo(ref SourceName.header);
                     if (result == 0)
                     {
                         ReadOnlySpan<char> gdiDeviceName = Win32.SliceAtFirstNull(new ReadOnlySpan<char>(SourceName.viewGdiDeviceName, 32));
@@ -126,7 +129,7 @@ namespace OpenTK.Platform.Native.Windows
             else
             {
                 pathInfo = default;
-                result = E_INVALIDARG;
+                result = result != 0 ? result : Win32.E_INVALIDARG;
             }
 
             return result;
@@ -275,34 +278,36 @@ namespace OpenTK.Platform.Native.Windows
             // Console.WriteLine();
 
             unsafe {
-                foreach (var display  in newDisplays)
+                foreach (var display in newDisplays)
                 {
                     // FIXME: O(n^2) loop + unecessary OS calls.
                     // We should get the path info list once and find the
                     // paths in that list for each new monitor.
                     // - Noggin_bops
-                    int result = FindPathInfo(display.AdapterName, out DISPLAYCONFIG_PATH_INFO path);
+                    int result = FindPathInfo(display.AdapterName, out Win32.DISPLAYCONFIG_PATH_INFO path);
                     if (result != 0)
                         throw new Win32Exception(result);
 
-                    DISPLAYCONFIG_SDR_WHITE_LEVEL whiteLevel = new DISPLAYCONFIG_SDR_WHITE_LEVEL();
+                    display.RefreshRate = path.targetInfo.refreshRate.Numerator / (float)path.targetInfo.refreshRate.Denominator;
+
+                    Win32.DISPLAYCONFIG_SDR_WHITE_LEVEL whiteLevel = new Win32.DISPLAYCONFIG_SDR_WHITE_LEVEL();
                     whiteLevel.header.type = DISPLAYCONFIG_DEVICE_INFO_TYPE.GetSDRWhiteLevel;
-                    whiteLevel.header.size = (uint)sizeof(DISPLAYCONFIG_SDR_WHITE_LEVEL);
+                    whiteLevel.header.size = (uint)sizeof(Win32.DISPLAYCONFIG_SDR_WHITE_LEVEL);
                     whiteLevel.header.adapterId = path.targetInfo.adapterId;
                     whiteLevel.header.id = path.targetInfo.id;
-                    result = DisplayConfigGetDeviceInfo(ref whiteLevel);
+                    result = Win32.DisplayConfigGetDeviceInfo(ref whiteLevel);
                     if (result != 0)
                         throw new Win32Exception(result);
 
                     // 24H2 or greater.
                     if (OperatingSystem.IsWindowsVersionAtLeast(10, 0, 26100))
                     {
-                        DISPLAYCONFIG_GET_ADVANCED_COLOR_INFO_2 colorInfo2 = new DISPLAYCONFIG_GET_ADVANCED_COLOR_INFO_2();
+                        Win32.DISPLAYCONFIG_GET_ADVANCED_COLOR_INFO_2 colorInfo2 = new Win32.DISPLAYCONFIG_GET_ADVANCED_COLOR_INFO_2();
                         colorInfo2.header.type = DISPLAYCONFIG_DEVICE_INFO_TYPE.GetAdvancedColorInfo2;
-                        colorInfo2.header.size = (uint)sizeof(DISPLAYCONFIG_GET_ADVANCED_COLOR_INFO_2);
+                        colorInfo2.header.size = (uint)sizeof(Win32.DISPLAYCONFIG_GET_ADVANCED_COLOR_INFO_2);
                         colorInfo2.header.adapterId = path.targetInfo.adapterId;
                         colorInfo2.header.id = path.targetInfo.id;
-                        result = DisplayConfigGetDeviceInfo(ref colorInfo2);
+                        result = Win32.DisplayConfigGetDeviceInfo(ref colorInfo2);
                         if (result != 0)
                             throw new Win32Exception(result);
 
@@ -321,12 +326,12 @@ namespace OpenTK.Platform.Native.Windows
                     }
                     else
                     {
-                        DISPLAYCONFIG_GET_ADVANCED_COLOR_INFO colorInfo = new DISPLAYCONFIG_GET_ADVANCED_COLOR_INFO();
+                        Win32.DISPLAYCONFIG_GET_ADVANCED_COLOR_INFO colorInfo = new Win32.DISPLAYCONFIG_GET_ADVANCED_COLOR_INFO();
                         colorInfo.header.type = DISPLAYCONFIG_DEVICE_INFO_TYPE.GetAdvancedColorInfo;
-                        colorInfo.header.size = (uint)sizeof(DISPLAYCONFIG_GET_ADVANCED_COLOR_INFO);
+                        colorInfo.header.size = (uint)sizeof(Win32.DISPLAYCONFIG_GET_ADVANCED_COLOR_INFO);
                         colorInfo.header.adapterId = path.targetInfo.adapterId;
                         colorInfo.header.id = path.targetInfo.id;
-                        result = DisplayConfigGetDeviceInfo(ref colorInfo);
+                        result = Win32.DisplayConfigGetDeviceInfo(ref colorInfo);
                         if (result != 0)
                             throw new Win32Exception(result);
 
@@ -569,6 +574,8 @@ namespace OpenTK.Platform.Native.Windows
 
                 if ((lpDevMode.dmFields & RequiredFields) != RequiredFields)
                     throw new PalException(this, $"Adapter setting {modeIndex - 1} didn't have all required fields set. dmFields={lpDevMode.dmFields}, requiredFields={RequiredFields}");
+
+
 
                 modes.Add(new VideoMode((int)lpDevMode.dmPelsWidth, (int)lpDevMode.dmPelsHeight, lpDevMode.dmDisplayFrequency, (int)lpDevMode.dmBitsPerPel));
             }

@@ -9,7 +9,7 @@ namespace OpenTK.Backends.Tests
     [TestApp]
     public class ColorWheel : ITestApp
     {
-        public string Name => "Color Wheel";
+        public static string Name => "Color Wheel";
 
         public WindowHandle Window;
         public OpenGLContextHandle Context;

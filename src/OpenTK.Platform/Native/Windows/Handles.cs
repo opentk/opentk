@@ -140,7 +140,7 @@ namespace OpenTK.Platform.Native.Windows
 
         public Win32.RECT WorkArea { get; set; }
 
-        public int RefreshRate { get; set; }
+        public float RefreshRate { get; set; }
 
         public int BitsPerPixel { get; set; }
 

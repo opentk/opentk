@@ -39,7 +39,7 @@ namespace OpenTK.Backends.Tests
         private int selectedWindow = -1;
 
         // FIXME: Linq
-        private string[] testAppNames = TestApps.All.Select(app => app.Name).ToArray();
+        private string[] testAppNames = TestApps.All.Select(app => (string)app.GetProperty("Name")!.GetValue(null)!).ToArray();
 
         private int lastActiveApp = 0;
 
