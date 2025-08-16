@@ -15,5 +15,10 @@ class Program
         Console.WriteLine($"The Vector3b is {booleanVec3}");
         Console.WriteLine($"To Vector3i is {(Vector3i)booleanVec3}");
         Console.WriteLine($"To Vector3 is {(Vector3)booleanVec3}");
+
+        Vector4b booleanVec4 = (true, false, true, false);
+        Console.WriteLine($"The Vector4b is {booleanVec4}");
+        Console.WriteLine($"To Vector4i is {(Vector4i)booleanVec4}");
+        Console.WriteLine($"To Vector4 is {(Vector4)booleanVec4}");
     }
 }
