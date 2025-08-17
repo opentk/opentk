@@ -126,7 +126,7 @@ namespace Generator.Writing
             string funcPointer = $"_{function.EntryPoint}_fnptr";
 
             writer.WriteLine($"/// <summary><b>[entry point: <c>{function.EntryPoint}</c>]</b></summary>");
-            writer.WriteLine($"internal static delegate* unmanaged<{delegateTypes}> {funcPointer};");
+            writer.WriteLine($"public static delegate* unmanaged<{delegateTypes}> {funcPointer};");
 
             writer.WriteLine($"[MethodImpl(MethodImplOptions.NoInlining)]");
             writer.WriteLine($"internal static {returnType} {function.EntryPoint}_Lazy({signature})");
