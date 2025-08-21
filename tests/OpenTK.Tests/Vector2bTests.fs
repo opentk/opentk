@@ -255,13 +255,21 @@ module Vector2b =
     module Casts =
         //
         [<Property>]
-        let ``Cast to Vector2i is accurate`` (a: Vector2b, b: Vector2i) =
+        let ``Cast to Vector2i is accurate`` (a: Vector2b) =
+            let mutable b = Vector2i.Zero
+            if a.X then b.X <- 1 else b.X <- 0
+            if a.Y then b.Y <- 1 else b.Y <- 0
+            
             let c: Vector2i = Vector2b.op_Explicit a
             
             Assert.Equal(b, c)
             
         [<Property>]
-        let ``Cast to Vector2 is accurate`` (a: Vector2b, b: Vector2) =
+        let ``Cast to Vector2 is accurate`` (a: Vector2b) =
+            let mutable b = Vector2.Zero
+            if a.X then b.X <- 1.0f else b.X <- 0.0f
+            if a.Y then b.Y <- 1.0f else b.Y <- 0.0f;
+            
             let c: Vector2 = Vector2b.op_Explicit a
             
             Assert.Equal(b, c)

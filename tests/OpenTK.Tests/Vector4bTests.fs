@@ -340,13 +340,25 @@ module Vector4b =
     module Casts =
         //
         [<Property>]
-        let ``Cast to Vector4i is accurate`` (a: Vector4b, b: Vector4i) =
+        let ``Cast to Vector4i is accurate`` (a: Vector4b) =
+            let mutable b = Vector4i.Zero
+            if a.X then b.X <- 1 else b.X <- 0
+            if a.Y then b.Y <- 1 else b.Y <- 0
+            if a.Z then b.Z <- 1 else b.Z <- 0
+            if a.W then b.W <- 1 else b.W <- 0
+            
             let c: Vector4i = Vector4b.op_Explicit a
             
             Assert.Equal(b, c)
             
         [<Property>]
-        let ``Cast to Vector4 is accurate`` (a: Vector4b, b: Vector4) =
+        let ``Cast to Vector4 is accurate`` (a: Vector4b) =
+            let mutable b = Vector4.Zero
+            if a.X then b.X <- 1.0f else b.X <- 0.0f
+            if a.Y then b.Y <- 1.0f else b.Y <- 0.0f
+            if a.Z then b.Z <- 1.0f else b.Z <- 0.0f
+            if a.W then b.W <- 1.0f else b.W <- 0.0f
+            
             let c: Vector4 = Vector4b.op_Explicit a
             
             Assert.Equal(b, c)
