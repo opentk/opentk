@@ -663,9 +663,15 @@ namespace OpenTK.Mathematics
         }
 
         [DoesNotReturn]
-        internal static void ThrowOutOfRangeException(string message)
+        internal static void ThrowOutOfRangeException<T>(string message, T arg0)
         {
-            throw new IndexOutOfRangeException(message);
+            throw new IndexOutOfRangeException(string.Format(message, arg0));
+        }
+
+        [DoesNotReturn]
+        internal static void ThrowOutOfRangeException<T>(string message, T arg0, T arg1)
+        {
+            throw new IndexOutOfRangeException(string.Format(message, arg0, arg1));
         }
     }
 }
