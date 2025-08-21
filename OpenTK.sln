@@ -90,8 +90,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LocalTest", "tests\LocalTes
 EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "build", "build\build.fsproj", "{3A9D1CB1-89CA-4326-AF11-4B8A2F69BE4A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VectorCastTest", "tests\VectorCastTest\VectorCastTest.csproj", "{502E69C2-CF78-4292-8C66-5EFA98C9F10F}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -182,10 +180,6 @@ Global
 		{3A9D1CB1-89CA-4326-AF11-4B8A2F69BE4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3A9D1CB1-89CA-4326-AF11-4B8A2F69BE4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3A9D1CB1-89CA-4326-AF11-4B8A2F69BE4A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{502E69C2-CF78-4292-8C66-5EFA98C9F10F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{502E69C2-CF78-4292-8C66-5EFA98C9F10F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{502E69C2-CF78-4292-8C66-5EFA98C9F10F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{502E69C2-CF78-4292-8C66-5EFA98C9F10F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -204,7 +198,6 @@ Global
 		{A31363E2-783D-4F6A-B447-130E7A344442} = {0B9B71A1-29F7-4CC5-9A9D-9DF122BE8B28}
 		{B2A8C618-E2D7-45BD-B751-37CD7EA315B9} = {0B9B71A1-29F7-4CC5-9A9D-9DF122BE8B28}
 		{3A9D1CB1-89CA-4326-AF11-4B8A2F69BE4A} = {471E0D18-D620-4CBE-A471-F3DB470E6D49}
-		{502E69C2-CF78-4292-8C66-5EFA98C9F10F} = {0B9B71A1-29F7-4CC5-9A9D-9DF122BE8B28}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {82DDE6D6-0D55-49B4-9C64-B31B4A6E729F}
