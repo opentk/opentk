@@ -133,7 +133,7 @@ namespace Generator.Writing
             using (writer.CsScope())
             {
                 writer.WriteLine($"if ({funcPointer} == null)");
-                using (writer.CsScope())
+                using (writer.Indent())
                 {
                     // Dotnet gurantees you can't get torn values when assigning functionpointers, assuming proper allignment which is default.
                     writer.WriteLine($"{funcPointer} = (delegate* unmanaged<{delegateTypes}>){strings.LoaderBindingsContext}.GetProcAddress(\"{function.EntryPoint}\");");

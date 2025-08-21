@@ -1,4 +1,4 @@
-// This file is auto generated, do not edit. Generated: 2025-08-17 15:26:47 GMT+02:00
+// This file is auto generated, do not edit. Generated: 2025-08-22 01:00:25 GMT+02:00
 using System;
 using System.Runtime.InteropServices;
 using System.Runtime.CompilerServices;
@@ -15,9 +15,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int ChoosePixelFormat_Lazy(IntPtr hDc, PixelFormatDescriptor* pPfd)
         {
             if (_ChoosePixelFormat_fnptr == null)
-            {
                 _ChoosePixelFormat_fnptr = (delegate* unmanaged<IntPtr, PixelFormatDescriptor*, int>)WGLLoader.BindingsContext.GetProcAddress("ChoosePixelFormat");
-            }
             return _ChoosePixelFormat_fnptr(hDc, pPfd);
         }
         
@@ -27,9 +25,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int DescribePixelFormat_Lazy(IntPtr hdc, int ipfd, uint cjpfd, PixelFormatDescriptor* ppfd)
         {
             if (_DescribePixelFormat_fnptr == null)
-            {
                 _DescribePixelFormat_fnptr = (delegate* unmanaged<IntPtr, int, uint, PixelFormatDescriptor*, int>)WGLLoader.BindingsContext.GetProcAddress("DescribePixelFormat");
-            }
             return _DescribePixelFormat_fnptr(hdc, ipfd, cjpfd, ppfd);
         }
         
@@ -39,9 +35,7 @@ namespace OpenTK.Graphics.Wgl
         internal static uint GetEnhMetaFilePixelFormat_Lazy(IntPtr hemf, uint cbBuffer, PixelFormatDescriptor* ppfd)
         {
             if (_GetEnhMetaFilePixelFormat_fnptr == null)
-            {
                 _GetEnhMetaFilePixelFormat_fnptr = (delegate* unmanaged<IntPtr, uint, PixelFormatDescriptor*, uint>)WGLLoader.BindingsContext.GetProcAddress("GetEnhMetaFilePixelFormat");
-            }
             return _GetEnhMetaFilePixelFormat_fnptr(hemf, cbBuffer, ppfd);
         }
         
@@ -51,9 +45,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int GetPixelFormat_Lazy(IntPtr hdc)
         {
             if (_GetPixelFormat_fnptr == null)
-            {
                 _GetPixelFormat_fnptr = (delegate* unmanaged<IntPtr, int>)WGLLoader.BindingsContext.GetProcAddress("GetPixelFormat");
-            }
             return _GetPixelFormat_fnptr(hdc);
         }
         
@@ -63,9 +55,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int SetPixelFormat_Lazy(IntPtr hdc, int ipfd, PixelFormatDescriptor* ppfd)
         {
             if (_SetPixelFormat_fnptr == null)
-            {
                 _SetPixelFormat_fnptr = (delegate* unmanaged<IntPtr, int, PixelFormatDescriptor*, int>)WGLLoader.BindingsContext.GetProcAddress("SetPixelFormat");
-            }
             return _SetPixelFormat_fnptr(hdc, ipfd, ppfd);
         }
         
@@ -75,9 +65,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int SwapBuffers_Lazy(IntPtr hdc)
         {
             if (_SwapBuffers_fnptr == null)
-            {
                 _SwapBuffers_fnptr = (delegate* unmanaged<IntPtr, int>)WGLLoader.BindingsContext.GetProcAddress("SwapBuffers");
-            }
             return _SwapBuffers_fnptr(hdc);
         }
         
@@ -87,9 +75,7 @@ namespace OpenTK.Graphics.Wgl
         internal static void* wglAllocateMemoryNV_Lazy(int size, float readfreq, float writefreq, float priority)
         {
             if (_wglAllocateMemoryNV_fnptr == null)
-            {
                 _wglAllocateMemoryNV_fnptr = (delegate* unmanaged<int, float, float, float, void*>)WGLLoader.BindingsContext.GetProcAddress("wglAllocateMemoryNV");
-            }
             return _wglAllocateMemoryNV_fnptr(size, readfreq, writefreq, priority);
         }
         
@@ -99,9 +85,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int wglAssociateImageBufferEventsI3D_Lazy(IntPtr hDC, IntPtr* pEvent, IntPtr* pAddress, uint* pSize, uint count)
         {
             if (_wglAssociateImageBufferEventsI3D_fnptr == null)
-            {
                 _wglAssociateImageBufferEventsI3D_fnptr = (delegate* unmanaged<IntPtr, IntPtr*, IntPtr*, uint*, uint, int>)WGLLoader.BindingsContext.GetProcAddress("wglAssociateImageBufferEventsI3D");
-            }
             return _wglAssociateImageBufferEventsI3D_fnptr(hDC, pEvent, pAddress, pSize, count);
         }
         
@@ -111,9 +95,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int wglBeginFrameTrackingI3D_Lazy()
         {
             if (_wglBeginFrameTrackingI3D_fnptr == null)
-            {
                 _wglBeginFrameTrackingI3D_fnptr = (delegate* unmanaged<int>)WGLLoader.BindingsContext.GetProcAddress("wglBeginFrameTrackingI3D");
-            }
             return _wglBeginFrameTrackingI3D_fnptr();
         }
         
@@ -123,9 +105,7 @@ namespace OpenTK.Graphics.Wgl
         internal static byte wglBindDisplayColorTableEXT_Lazy(ushort id)
         {
             if (_wglBindDisplayColorTableEXT_fnptr == null)
-            {
                 _wglBindDisplayColorTableEXT_fnptr = (delegate* unmanaged<ushort, byte>)WGLLoader.BindingsContext.GetProcAddress("wglBindDisplayColorTableEXT");
-            }
             return _wglBindDisplayColorTableEXT_fnptr(id);
         }
         
@@ -135,9 +115,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int wglBindSwapBarrierNV_Lazy(uint group, uint barrier)
         {
             if (_wglBindSwapBarrierNV_fnptr == null)
-            {
                 _wglBindSwapBarrierNV_fnptr = (delegate* unmanaged<uint, uint, int>)WGLLoader.BindingsContext.GetProcAddress("wglBindSwapBarrierNV");
-            }
             return _wglBindSwapBarrierNV_fnptr(group, barrier);
         }
         
@@ -147,9 +125,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int wglBindTexImageARB_Lazy(IntPtr hPbuffer, int iBuffer)
         {
             if (_wglBindTexImageARB_fnptr == null)
-            {
                 _wglBindTexImageARB_fnptr = (delegate* unmanaged<IntPtr, int, int>)WGLLoader.BindingsContext.GetProcAddress("wglBindTexImageARB");
-            }
             return _wglBindTexImageARB_fnptr(hPbuffer, iBuffer);
         }
         
@@ -159,9 +135,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int wglBindVideoCaptureDeviceNV_Lazy(uint uVideoSlot, IntPtr hDevice)
         {
             if (_wglBindVideoCaptureDeviceNV_fnptr == null)
-            {
                 _wglBindVideoCaptureDeviceNV_fnptr = (delegate* unmanaged<uint, IntPtr, int>)WGLLoader.BindingsContext.GetProcAddress("wglBindVideoCaptureDeviceNV");
-            }
             return _wglBindVideoCaptureDeviceNV_fnptr(uVideoSlot, hDevice);
         }
         
@@ -171,9 +145,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int wglBindVideoDeviceNV_Lazy(IntPtr hDc, uint uVideoSlot, IntPtr hVideoDevice, int* piAttribList)
         {
             if (_wglBindVideoDeviceNV_fnptr == null)
-            {
                 _wglBindVideoDeviceNV_fnptr = (delegate* unmanaged<IntPtr, uint, IntPtr, int*, int>)WGLLoader.BindingsContext.GetProcAddress("wglBindVideoDeviceNV");
-            }
             return _wglBindVideoDeviceNV_fnptr(hDc, uVideoSlot, hVideoDevice, piAttribList);
         }
         
@@ -183,9 +155,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int wglBindVideoImageNV_Lazy(IntPtr hVideoDevice, IntPtr hPbuffer, int iVideoBuffer)
         {
             if (_wglBindVideoImageNV_fnptr == null)
-            {
                 _wglBindVideoImageNV_fnptr = (delegate* unmanaged<IntPtr, IntPtr, int, int>)WGLLoader.BindingsContext.GetProcAddress("wglBindVideoImageNV");
-            }
             return _wglBindVideoImageNV_fnptr(hVideoDevice, hPbuffer, iVideoBuffer);
         }
         
@@ -195,9 +165,7 @@ namespace OpenTK.Graphics.Wgl
         internal static void wglBlitContextFramebufferAMD_Lazy(IntPtr dstCtx, int srcX0, int srcY0, int srcX1, int srcY1, int dstX0, int dstY0, int dstX1, int dstY1, uint mask, uint filter)
         {
             if (_wglBlitContextFramebufferAMD_fnptr == null)
-            {
                 _wglBlitContextFramebufferAMD_fnptr = (delegate* unmanaged<IntPtr, int, int, int, int, int, int, int, int, uint, uint, void>)WGLLoader.BindingsContext.GetProcAddress("wglBlitContextFramebufferAMD");
-            }
             _wglBlitContextFramebufferAMD_fnptr(dstCtx, srcX0, srcY0, srcX1, srcY1, dstX0, dstY0, dstX1, dstY1, mask, filter);
         }
         
@@ -207,9 +175,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int wglChoosePixelFormatARB_Lazy(IntPtr hdc, int* piAttribIList, float* pfAttribFList, uint nMaxFormats, int* piFormats, uint* nNumFormats)
         {
             if (_wglChoosePixelFormatARB_fnptr == null)
-            {
                 _wglChoosePixelFormatARB_fnptr = (delegate* unmanaged<IntPtr, int*, float*, uint, int*, uint*, int>)WGLLoader.BindingsContext.GetProcAddress("wglChoosePixelFormatARB");
-            }
             return _wglChoosePixelFormatARB_fnptr(hdc, piAttribIList, pfAttribFList, nMaxFormats, piFormats, nNumFormats);
         }
         
@@ -219,9 +185,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int wglChoosePixelFormatEXT_Lazy(IntPtr hdc, int* piAttribIList, float* pfAttribFList, uint nMaxFormats, int* piFormats, uint* nNumFormats)
         {
             if (_wglChoosePixelFormatEXT_fnptr == null)
-            {
                 _wglChoosePixelFormatEXT_fnptr = (delegate* unmanaged<IntPtr, int*, float*, uint, int*, uint*, int>)WGLLoader.BindingsContext.GetProcAddress("wglChoosePixelFormatEXT");
-            }
             return _wglChoosePixelFormatEXT_fnptr(hdc, piAttribIList, pfAttribFList, nMaxFormats, piFormats, nNumFormats);
         }
         
@@ -231,9 +195,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int wglCopyContext_Lazy(IntPtr hglrcSrc, IntPtr hglrcDst, uint mask)
         {
             if (_wglCopyContext_fnptr == null)
-            {
                 _wglCopyContext_fnptr = (delegate* unmanaged<IntPtr, IntPtr, uint, int>)WGLLoader.BindingsContext.GetProcAddress("wglCopyContext");
-            }
             return _wglCopyContext_fnptr(hglrcSrc, hglrcDst, mask);
         }
         
@@ -243,9 +205,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int wglCopyImageSubDataNV_Lazy(IntPtr hSrcRC, uint srcName, uint srcTarget, int srcLevel, int srcX, int srcY, int srcZ, IntPtr hDstRC, uint dstName, uint dstTarget, int dstLevel, int dstX, int dstY, int dstZ, int width, int height, int depth)
         {
             if (_wglCopyImageSubDataNV_fnptr == null)
-            {
                 _wglCopyImageSubDataNV_fnptr = (delegate* unmanaged<IntPtr, uint, uint, int, int, int, int, IntPtr, uint, uint, int, int, int, int, int, int, int, int>)WGLLoader.BindingsContext.GetProcAddress("wglCopyImageSubDataNV");
-            }
             return _wglCopyImageSubDataNV_fnptr(hSrcRC, srcName, srcTarget, srcLevel, srcX, srcY, srcZ, hDstRC, dstName, dstTarget, dstLevel, dstX, dstY, dstZ, width, height, depth);
         }
         
@@ -255,9 +215,7 @@ namespace OpenTK.Graphics.Wgl
         internal static IntPtr wglCreateAffinityDCNV_Lazy(IntPtr* phGpuList)
         {
             if (_wglCreateAffinityDCNV_fnptr == null)
-            {
                 _wglCreateAffinityDCNV_fnptr = (delegate* unmanaged<IntPtr*, IntPtr>)WGLLoader.BindingsContext.GetProcAddress("wglCreateAffinityDCNV");
-            }
             return _wglCreateAffinityDCNV_fnptr(phGpuList);
         }
         
@@ -267,9 +225,7 @@ namespace OpenTK.Graphics.Wgl
         internal static IntPtr wglCreateAssociatedContextAMD_Lazy(uint id)
         {
             if (_wglCreateAssociatedContextAMD_fnptr == null)
-            {
                 _wglCreateAssociatedContextAMD_fnptr = (delegate* unmanaged<uint, IntPtr>)WGLLoader.BindingsContext.GetProcAddress("wglCreateAssociatedContextAMD");
-            }
             return _wglCreateAssociatedContextAMD_fnptr(id);
         }
         
@@ -279,9 +235,7 @@ namespace OpenTK.Graphics.Wgl
         internal static IntPtr wglCreateAssociatedContextAttribsAMD_Lazy(uint id, IntPtr hShareContext, int* attribList)
         {
             if (_wglCreateAssociatedContextAttribsAMD_fnptr == null)
-            {
                 _wglCreateAssociatedContextAttribsAMD_fnptr = (delegate* unmanaged<uint, IntPtr, int*, IntPtr>)WGLLoader.BindingsContext.GetProcAddress("wglCreateAssociatedContextAttribsAMD");
-            }
             return _wglCreateAssociatedContextAttribsAMD_fnptr(id, hShareContext, attribList);
         }
         
@@ -291,9 +245,7 @@ namespace OpenTK.Graphics.Wgl
         internal static IntPtr wglCreateBufferRegionARB_Lazy(IntPtr hDC, int iLayerPlane, uint uType)
         {
             if (_wglCreateBufferRegionARB_fnptr == null)
-            {
                 _wglCreateBufferRegionARB_fnptr = (delegate* unmanaged<IntPtr, int, uint, IntPtr>)WGLLoader.BindingsContext.GetProcAddress("wglCreateBufferRegionARB");
-            }
             return _wglCreateBufferRegionARB_fnptr(hDC, iLayerPlane, uType);
         }
         
@@ -303,9 +255,7 @@ namespace OpenTK.Graphics.Wgl
         internal static IntPtr wglCreateContext_Lazy(IntPtr hDc)
         {
             if (_wglCreateContext_fnptr == null)
-            {
                 _wglCreateContext_fnptr = (delegate* unmanaged<IntPtr, IntPtr>)WGLLoader.BindingsContext.GetProcAddress("wglCreateContext");
-            }
             return _wglCreateContext_fnptr(hDc);
         }
         
@@ -315,9 +265,7 @@ namespace OpenTK.Graphics.Wgl
         internal static IntPtr wglCreateContextAttribsARB_Lazy(IntPtr hDC, IntPtr hShareContext, int* attribList)
         {
             if (_wglCreateContextAttribsARB_fnptr == null)
-            {
                 _wglCreateContextAttribsARB_fnptr = (delegate* unmanaged<IntPtr, IntPtr, int*, IntPtr>)WGLLoader.BindingsContext.GetProcAddress("wglCreateContextAttribsARB");
-            }
             return _wglCreateContextAttribsARB_fnptr(hDC, hShareContext, attribList);
         }
         
@@ -327,9 +275,7 @@ namespace OpenTK.Graphics.Wgl
         internal static byte wglCreateDisplayColorTableEXT_Lazy(ushort id)
         {
             if (_wglCreateDisplayColorTableEXT_fnptr == null)
-            {
                 _wglCreateDisplayColorTableEXT_fnptr = (delegate* unmanaged<ushort, byte>)WGLLoader.BindingsContext.GetProcAddress("wglCreateDisplayColorTableEXT");
-            }
             return _wglCreateDisplayColorTableEXT_fnptr(id);
         }
         
@@ -339,9 +285,7 @@ namespace OpenTK.Graphics.Wgl
         internal static IntPtr wglCreateImageBufferI3D_Lazy(IntPtr hDC, uint dwSize, uint uFlags)
         {
             if (_wglCreateImageBufferI3D_fnptr == null)
-            {
                 _wglCreateImageBufferI3D_fnptr = (delegate* unmanaged<IntPtr, uint, uint, IntPtr>)WGLLoader.BindingsContext.GetProcAddress("wglCreateImageBufferI3D");
-            }
             return _wglCreateImageBufferI3D_fnptr(hDC, dwSize, uFlags);
         }
         
@@ -351,9 +295,7 @@ namespace OpenTK.Graphics.Wgl
         internal static IntPtr wglCreateLayerContext_Lazy(IntPtr hDc, int level)
         {
             if (_wglCreateLayerContext_fnptr == null)
-            {
                 _wglCreateLayerContext_fnptr = (delegate* unmanaged<IntPtr, int, IntPtr>)WGLLoader.BindingsContext.GetProcAddress("wglCreateLayerContext");
-            }
             return _wglCreateLayerContext_fnptr(hDc, level);
         }
         
@@ -363,9 +305,7 @@ namespace OpenTK.Graphics.Wgl
         internal static IntPtr wglCreatePbufferARB_Lazy(IntPtr hDC, int iPixelFormat, int iWidth, int iHeight, int* piAttribList)
         {
             if (_wglCreatePbufferARB_fnptr == null)
-            {
                 _wglCreatePbufferARB_fnptr = (delegate* unmanaged<IntPtr, int, int, int, int*, IntPtr>)WGLLoader.BindingsContext.GetProcAddress("wglCreatePbufferARB");
-            }
             return _wglCreatePbufferARB_fnptr(hDC, iPixelFormat, iWidth, iHeight, piAttribList);
         }
         
@@ -375,9 +315,7 @@ namespace OpenTK.Graphics.Wgl
         internal static IntPtr wglCreatePbufferEXT_Lazy(IntPtr hDC, int iPixelFormat, int iWidth, int iHeight, int* piAttribList)
         {
             if (_wglCreatePbufferEXT_fnptr == null)
-            {
                 _wglCreatePbufferEXT_fnptr = (delegate* unmanaged<IntPtr, int, int, int, int*, IntPtr>)WGLLoader.BindingsContext.GetProcAddress("wglCreatePbufferEXT");
-            }
             return _wglCreatePbufferEXT_fnptr(hDC, iPixelFormat, iWidth, iHeight, piAttribList);
         }
         
@@ -387,9 +325,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int wglDelayBeforeSwapNV_Lazy(IntPtr hDC, float seconds)
         {
             if (_wglDelayBeforeSwapNV_fnptr == null)
-            {
                 _wglDelayBeforeSwapNV_fnptr = (delegate* unmanaged<IntPtr, float, int>)WGLLoader.BindingsContext.GetProcAddress("wglDelayBeforeSwapNV");
-            }
             return _wglDelayBeforeSwapNV_fnptr(hDC, seconds);
         }
         
@@ -399,9 +335,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int wglDeleteAssociatedContextAMD_Lazy(IntPtr hglrc)
         {
             if (_wglDeleteAssociatedContextAMD_fnptr == null)
-            {
                 _wglDeleteAssociatedContextAMD_fnptr = (delegate* unmanaged<IntPtr, int>)WGLLoader.BindingsContext.GetProcAddress("wglDeleteAssociatedContextAMD");
-            }
             return _wglDeleteAssociatedContextAMD_fnptr(hglrc);
         }
         
@@ -411,9 +345,7 @@ namespace OpenTK.Graphics.Wgl
         internal static void wglDeleteBufferRegionARB_Lazy(IntPtr hRegion)
         {
             if (_wglDeleteBufferRegionARB_fnptr == null)
-            {
                 _wglDeleteBufferRegionARB_fnptr = (delegate* unmanaged<IntPtr, void>)WGLLoader.BindingsContext.GetProcAddress("wglDeleteBufferRegionARB");
-            }
             _wglDeleteBufferRegionARB_fnptr(hRegion);
         }
         
@@ -423,9 +355,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int wglDeleteContext_Lazy(IntPtr oldContext)
         {
             if (_wglDeleteContext_fnptr == null)
-            {
                 _wglDeleteContext_fnptr = (delegate* unmanaged<IntPtr, int>)WGLLoader.BindingsContext.GetProcAddress("wglDeleteContext");
-            }
             return _wglDeleteContext_fnptr(oldContext);
         }
         
@@ -435,9 +365,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int wglDeleteDCNV_Lazy(IntPtr hdc)
         {
             if (_wglDeleteDCNV_fnptr == null)
-            {
                 _wglDeleteDCNV_fnptr = (delegate* unmanaged<IntPtr, int>)WGLLoader.BindingsContext.GetProcAddress("wglDeleteDCNV");
-            }
             return _wglDeleteDCNV_fnptr(hdc);
         }
         
@@ -447,9 +375,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int wglDescribeLayerPlane_Lazy(IntPtr hDc, int pixelFormat, int layerPlane, uint nBytes, LayerPlaneDescriptor* plpd)
         {
             if (_wglDescribeLayerPlane_fnptr == null)
-            {
                 _wglDescribeLayerPlane_fnptr = (delegate* unmanaged<IntPtr, int, int, uint, LayerPlaneDescriptor*, int>)WGLLoader.BindingsContext.GetProcAddress("wglDescribeLayerPlane");
-            }
             return _wglDescribeLayerPlane_fnptr(hDc, pixelFormat, layerPlane, nBytes, plpd);
         }
         
@@ -459,9 +385,7 @@ namespace OpenTK.Graphics.Wgl
         internal static void wglDestroyDisplayColorTableEXT_Lazy(ushort id)
         {
             if (_wglDestroyDisplayColorTableEXT_fnptr == null)
-            {
                 _wglDestroyDisplayColorTableEXT_fnptr = (delegate* unmanaged<ushort, void>)WGLLoader.BindingsContext.GetProcAddress("wglDestroyDisplayColorTableEXT");
-            }
             _wglDestroyDisplayColorTableEXT_fnptr(id);
         }
         
@@ -471,9 +395,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int wglDestroyImageBufferI3D_Lazy(IntPtr hDC, IntPtr pAddress)
         {
             if (_wglDestroyImageBufferI3D_fnptr == null)
-            {
                 _wglDestroyImageBufferI3D_fnptr = (delegate* unmanaged<IntPtr, IntPtr, int>)WGLLoader.BindingsContext.GetProcAddress("wglDestroyImageBufferI3D");
-            }
             return _wglDestroyImageBufferI3D_fnptr(hDC, pAddress);
         }
         
@@ -483,9 +405,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int wglDestroyPbufferARB_Lazy(IntPtr hPbuffer)
         {
             if (_wglDestroyPbufferARB_fnptr == null)
-            {
                 _wglDestroyPbufferARB_fnptr = (delegate* unmanaged<IntPtr, int>)WGLLoader.BindingsContext.GetProcAddress("wglDestroyPbufferARB");
-            }
             return _wglDestroyPbufferARB_fnptr(hPbuffer);
         }
         
@@ -495,9 +415,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int wglDestroyPbufferEXT_Lazy(IntPtr hPbuffer)
         {
             if (_wglDestroyPbufferEXT_fnptr == null)
-            {
                 _wglDestroyPbufferEXT_fnptr = (delegate* unmanaged<IntPtr, int>)WGLLoader.BindingsContext.GetProcAddress("wglDestroyPbufferEXT");
-            }
             return _wglDestroyPbufferEXT_fnptr(hPbuffer);
         }
         
@@ -507,9 +425,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int wglDisableFrameLockI3D_Lazy()
         {
             if (_wglDisableFrameLockI3D_fnptr == null)
-            {
                 _wglDisableFrameLockI3D_fnptr = (delegate* unmanaged<int>)WGLLoader.BindingsContext.GetProcAddress("wglDisableFrameLockI3D");
-            }
             return _wglDisableFrameLockI3D_fnptr();
         }
         
@@ -519,9 +435,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int wglDisableGenlockI3D_Lazy(IntPtr hDC)
         {
             if (_wglDisableGenlockI3D_fnptr == null)
-            {
                 _wglDisableGenlockI3D_fnptr = (delegate* unmanaged<IntPtr, int>)WGLLoader.BindingsContext.GetProcAddress("wglDisableGenlockI3D");
-            }
             return _wglDisableGenlockI3D_fnptr(hDC);
         }
         
@@ -531,9 +445,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int wglDXCloseDeviceNV_Lazy(IntPtr hDevice)
         {
             if (_wglDXCloseDeviceNV_fnptr == null)
-            {
                 _wglDXCloseDeviceNV_fnptr = (delegate* unmanaged<IntPtr, int>)WGLLoader.BindingsContext.GetProcAddress("wglDXCloseDeviceNV");
-            }
             return _wglDXCloseDeviceNV_fnptr(hDevice);
         }
         
@@ -543,9 +455,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int wglDXLockObjectsNV_Lazy(IntPtr hDevice, int count, IntPtr* hObjects)
         {
             if (_wglDXLockObjectsNV_fnptr == null)
-            {
                 _wglDXLockObjectsNV_fnptr = (delegate* unmanaged<IntPtr, int, IntPtr*, int>)WGLLoader.BindingsContext.GetProcAddress("wglDXLockObjectsNV");
-            }
             return _wglDXLockObjectsNV_fnptr(hDevice, count, hObjects);
         }
         
@@ -555,9 +465,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int wglDXObjectAccessNV_Lazy(IntPtr hObject, uint access)
         {
             if (_wglDXObjectAccessNV_fnptr == null)
-            {
                 _wglDXObjectAccessNV_fnptr = (delegate* unmanaged<IntPtr, uint, int>)WGLLoader.BindingsContext.GetProcAddress("wglDXObjectAccessNV");
-            }
             return _wglDXObjectAccessNV_fnptr(hObject, access);
         }
         
@@ -567,9 +475,7 @@ namespace OpenTK.Graphics.Wgl
         internal static IntPtr wglDXOpenDeviceNV_Lazy(void* dxDevice)
         {
             if (_wglDXOpenDeviceNV_fnptr == null)
-            {
                 _wglDXOpenDeviceNV_fnptr = (delegate* unmanaged<void*, IntPtr>)WGLLoader.BindingsContext.GetProcAddress("wglDXOpenDeviceNV");
-            }
             return _wglDXOpenDeviceNV_fnptr(dxDevice);
         }
         
@@ -579,9 +485,7 @@ namespace OpenTK.Graphics.Wgl
         internal static IntPtr wglDXRegisterObjectNV_Lazy(IntPtr hDevice, void* dxObject, uint name, uint type, uint access)
         {
             if (_wglDXRegisterObjectNV_fnptr == null)
-            {
                 _wglDXRegisterObjectNV_fnptr = (delegate* unmanaged<IntPtr, void*, uint, uint, uint, IntPtr>)WGLLoader.BindingsContext.GetProcAddress("wglDXRegisterObjectNV");
-            }
             return _wglDXRegisterObjectNV_fnptr(hDevice, dxObject, name, type, access);
         }
         
@@ -591,9 +495,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int wglDXSetResourceShareHandleNV_Lazy(void* dxObject, IntPtr shareHandle)
         {
             if (_wglDXSetResourceShareHandleNV_fnptr == null)
-            {
                 _wglDXSetResourceShareHandleNV_fnptr = (delegate* unmanaged<void*, IntPtr, int>)WGLLoader.BindingsContext.GetProcAddress("wglDXSetResourceShareHandleNV");
-            }
             return _wglDXSetResourceShareHandleNV_fnptr(dxObject, shareHandle);
         }
         
@@ -603,9 +505,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int wglDXUnlockObjectsNV_Lazy(IntPtr hDevice, int count, IntPtr* hObjects)
         {
             if (_wglDXUnlockObjectsNV_fnptr == null)
-            {
                 _wglDXUnlockObjectsNV_fnptr = (delegate* unmanaged<IntPtr, int, IntPtr*, int>)WGLLoader.BindingsContext.GetProcAddress("wglDXUnlockObjectsNV");
-            }
             return _wglDXUnlockObjectsNV_fnptr(hDevice, count, hObjects);
         }
         
@@ -615,9 +515,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int wglDXUnregisterObjectNV_Lazy(IntPtr hDevice, IntPtr hObject)
         {
             if (_wglDXUnregisterObjectNV_fnptr == null)
-            {
                 _wglDXUnregisterObjectNV_fnptr = (delegate* unmanaged<IntPtr, IntPtr, int>)WGLLoader.BindingsContext.GetProcAddress("wglDXUnregisterObjectNV");
-            }
             return _wglDXUnregisterObjectNV_fnptr(hDevice, hObject);
         }
         
@@ -627,9 +525,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int wglEnableFrameLockI3D_Lazy()
         {
             if (_wglEnableFrameLockI3D_fnptr == null)
-            {
                 _wglEnableFrameLockI3D_fnptr = (delegate* unmanaged<int>)WGLLoader.BindingsContext.GetProcAddress("wglEnableFrameLockI3D");
-            }
             return _wglEnableFrameLockI3D_fnptr();
         }
         
@@ -639,9 +535,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int wglEnableGenlockI3D_Lazy(IntPtr hDC)
         {
             if (_wglEnableGenlockI3D_fnptr == null)
-            {
                 _wglEnableGenlockI3D_fnptr = (delegate* unmanaged<IntPtr, int>)WGLLoader.BindingsContext.GetProcAddress("wglEnableGenlockI3D");
-            }
             return _wglEnableGenlockI3D_fnptr(hDC);
         }
         
@@ -651,9 +545,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int wglEndFrameTrackingI3D_Lazy()
         {
             if (_wglEndFrameTrackingI3D_fnptr == null)
-            {
                 _wglEndFrameTrackingI3D_fnptr = (delegate* unmanaged<int>)WGLLoader.BindingsContext.GetProcAddress("wglEndFrameTrackingI3D");
-            }
             return _wglEndFrameTrackingI3D_fnptr();
         }
         
@@ -663,9 +555,7 @@ namespace OpenTK.Graphics.Wgl
         internal static uint wglEnumerateVideoCaptureDevicesNV_Lazy(IntPtr hDc, IntPtr* phDeviceList)
         {
             if (_wglEnumerateVideoCaptureDevicesNV_fnptr == null)
-            {
                 _wglEnumerateVideoCaptureDevicesNV_fnptr = (delegate* unmanaged<IntPtr, IntPtr*, uint>)WGLLoader.BindingsContext.GetProcAddress("wglEnumerateVideoCaptureDevicesNV");
-            }
             return _wglEnumerateVideoCaptureDevicesNV_fnptr(hDc, phDeviceList);
         }
         
@@ -675,9 +565,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int wglEnumerateVideoDevicesNV_Lazy(IntPtr hDc, IntPtr* phDeviceList)
         {
             if (_wglEnumerateVideoDevicesNV_fnptr == null)
-            {
                 _wglEnumerateVideoDevicesNV_fnptr = (delegate* unmanaged<IntPtr, IntPtr*, int>)WGLLoader.BindingsContext.GetProcAddress("wglEnumerateVideoDevicesNV");
-            }
             return _wglEnumerateVideoDevicesNV_fnptr(hDc, phDeviceList);
         }
         
@@ -687,9 +575,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int wglEnumGpuDevicesNV_Lazy(IntPtr hGpu, uint iDeviceIndex, _GPU_DEVICE* lpGpuDevice)
         {
             if (_wglEnumGpuDevicesNV_fnptr == null)
-            {
                 _wglEnumGpuDevicesNV_fnptr = (delegate* unmanaged<IntPtr, uint, _GPU_DEVICE*, int>)WGLLoader.BindingsContext.GetProcAddress("wglEnumGpuDevicesNV");
-            }
             return _wglEnumGpuDevicesNV_fnptr(hGpu, iDeviceIndex, lpGpuDevice);
         }
         
@@ -699,9 +585,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int wglEnumGpusFromAffinityDCNV_Lazy(IntPtr hAffinityDC, uint iGpuIndex, IntPtr* hGpu)
         {
             if (_wglEnumGpusFromAffinityDCNV_fnptr == null)
-            {
                 _wglEnumGpusFromAffinityDCNV_fnptr = (delegate* unmanaged<IntPtr, uint, IntPtr*, int>)WGLLoader.BindingsContext.GetProcAddress("wglEnumGpusFromAffinityDCNV");
-            }
             return _wglEnumGpusFromAffinityDCNV_fnptr(hAffinityDC, iGpuIndex, hGpu);
         }
         
@@ -711,9 +595,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int wglEnumGpusNV_Lazy(uint iGpuIndex, IntPtr* phGpu)
         {
             if (_wglEnumGpusNV_fnptr == null)
-            {
                 _wglEnumGpusNV_fnptr = (delegate* unmanaged<uint, IntPtr*, int>)WGLLoader.BindingsContext.GetProcAddress("wglEnumGpusNV");
-            }
             return _wglEnumGpusNV_fnptr(iGpuIndex, phGpu);
         }
         
@@ -723,9 +605,7 @@ namespace OpenTK.Graphics.Wgl
         internal static void wglFreeMemoryNV_Lazy(void* pointer)
         {
             if (_wglFreeMemoryNV_fnptr == null)
-            {
                 _wglFreeMemoryNV_fnptr = (delegate* unmanaged<void*, void>)WGLLoader.BindingsContext.GetProcAddress("wglFreeMemoryNV");
-            }
             _wglFreeMemoryNV_fnptr(pointer);
         }
         
@@ -735,9 +615,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int wglGenlockSampleRateI3D_Lazy(IntPtr hDC, uint uRate)
         {
             if (_wglGenlockSampleRateI3D_fnptr == null)
-            {
                 _wglGenlockSampleRateI3D_fnptr = (delegate* unmanaged<IntPtr, uint, int>)WGLLoader.BindingsContext.GetProcAddress("wglGenlockSampleRateI3D");
-            }
             return _wglGenlockSampleRateI3D_fnptr(hDC, uRate);
         }
         
@@ -747,9 +625,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int wglGenlockSourceDelayI3D_Lazy(IntPtr hDC, uint uDelay)
         {
             if (_wglGenlockSourceDelayI3D_fnptr == null)
-            {
                 _wglGenlockSourceDelayI3D_fnptr = (delegate* unmanaged<IntPtr, uint, int>)WGLLoader.BindingsContext.GetProcAddress("wglGenlockSourceDelayI3D");
-            }
             return _wglGenlockSourceDelayI3D_fnptr(hDC, uDelay);
         }
         
@@ -759,9 +635,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int wglGenlockSourceEdgeI3D_Lazy(IntPtr hDC, uint uEdge)
         {
             if (_wglGenlockSourceEdgeI3D_fnptr == null)
-            {
                 _wglGenlockSourceEdgeI3D_fnptr = (delegate* unmanaged<IntPtr, uint, int>)WGLLoader.BindingsContext.GetProcAddress("wglGenlockSourceEdgeI3D");
-            }
             return _wglGenlockSourceEdgeI3D_fnptr(hDC, uEdge);
         }
         
@@ -771,9 +645,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int wglGenlockSourceI3D_Lazy(IntPtr hDC, uint uSource)
         {
             if (_wglGenlockSourceI3D_fnptr == null)
-            {
                 _wglGenlockSourceI3D_fnptr = (delegate* unmanaged<IntPtr, uint, int>)WGLLoader.BindingsContext.GetProcAddress("wglGenlockSourceI3D");
-            }
             return _wglGenlockSourceI3D_fnptr(hDC, uSource);
         }
         
@@ -783,9 +655,7 @@ namespace OpenTK.Graphics.Wgl
         internal static uint wglGetContextGPUIDAMD_Lazy(IntPtr hglrc)
         {
             if (_wglGetContextGPUIDAMD_fnptr == null)
-            {
                 _wglGetContextGPUIDAMD_fnptr = (delegate* unmanaged<IntPtr, uint>)WGLLoader.BindingsContext.GetProcAddress("wglGetContextGPUIDAMD");
-            }
             return _wglGetContextGPUIDAMD_fnptr(hglrc);
         }
         
@@ -795,9 +665,7 @@ namespace OpenTK.Graphics.Wgl
         internal static IntPtr wglGetCurrentAssociatedContextAMD_Lazy()
         {
             if (_wglGetCurrentAssociatedContextAMD_fnptr == null)
-            {
                 _wglGetCurrentAssociatedContextAMD_fnptr = (delegate* unmanaged<IntPtr>)WGLLoader.BindingsContext.GetProcAddress("wglGetCurrentAssociatedContextAMD");
-            }
             return _wglGetCurrentAssociatedContextAMD_fnptr();
         }
         
@@ -807,9 +675,7 @@ namespace OpenTK.Graphics.Wgl
         internal static IntPtr wglGetCurrentContext_Lazy()
         {
             if (_wglGetCurrentContext_fnptr == null)
-            {
                 _wglGetCurrentContext_fnptr = (delegate* unmanaged<IntPtr>)WGLLoader.BindingsContext.GetProcAddress("wglGetCurrentContext");
-            }
             return _wglGetCurrentContext_fnptr();
         }
         
@@ -819,9 +685,7 @@ namespace OpenTK.Graphics.Wgl
         internal static IntPtr wglGetCurrentDC_Lazy()
         {
             if (_wglGetCurrentDC_fnptr == null)
-            {
                 _wglGetCurrentDC_fnptr = (delegate* unmanaged<IntPtr>)WGLLoader.BindingsContext.GetProcAddress("wglGetCurrentDC");
-            }
             return _wglGetCurrentDC_fnptr();
         }
         
@@ -831,9 +695,7 @@ namespace OpenTK.Graphics.Wgl
         internal static IntPtr wglGetCurrentReadDCARB_Lazy()
         {
             if (_wglGetCurrentReadDCARB_fnptr == null)
-            {
                 _wglGetCurrentReadDCARB_fnptr = (delegate* unmanaged<IntPtr>)WGLLoader.BindingsContext.GetProcAddress("wglGetCurrentReadDCARB");
-            }
             return _wglGetCurrentReadDCARB_fnptr();
         }
         
@@ -843,9 +705,7 @@ namespace OpenTK.Graphics.Wgl
         internal static IntPtr wglGetCurrentReadDCEXT_Lazy()
         {
             if (_wglGetCurrentReadDCEXT_fnptr == null)
-            {
                 _wglGetCurrentReadDCEXT_fnptr = (delegate* unmanaged<IntPtr>)WGLLoader.BindingsContext.GetProcAddress("wglGetCurrentReadDCEXT");
-            }
             return _wglGetCurrentReadDCEXT_fnptr();
         }
         
@@ -855,9 +715,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int wglGetDigitalVideoParametersI3D_Lazy(IntPtr hDC, int iAttribute, int* piValue)
         {
             if (_wglGetDigitalVideoParametersI3D_fnptr == null)
-            {
                 _wglGetDigitalVideoParametersI3D_fnptr = (delegate* unmanaged<IntPtr, int, int*, int>)WGLLoader.BindingsContext.GetProcAddress("wglGetDigitalVideoParametersI3D");
-            }
             return _wglGetDigitalVideoParametersI3D_fnptr(hDC, iAttribute, piValue);
         }
         
@@ -867,9 +725,7 @@ namespace OpenTK.Graphics.Wgl
         internal static byte* wglGetExtensionsStringARB_Lazy(IntPtr hdc)
         {
             if (_wglGetExtensionsStringARB_fnptr == null)
-            {
                 _wglGetExtensionsStringARB_fnptr = (delegate* unmanaged<IntPtr, byte*>)WGLLoader.BindingsContext.GetProcAddress("wglGetExtensionsStringARB");
-            }
             return _wglGetExtensionsStringARB_fnptr(hdc);
         }
         
@@ -879,9 +735,7 @@ namespace OpenTK.Graphics.Wgl
         internal static byte* wglGetExtensionsStringEXT_Lazy()
         {
             if (_wglGetExtensionsStringEXT_fnptr == null)
-            {
                 _wglGetExtensionsStringEXT_fnptr = (delegate* unmanaged<byte*>)WGLLoader.BindingsContext.GetProcAddress("wglGetExtensionsStringEXT");
-            }
             return _wglGetExtensionsStringEXT_fnptr();
         }
         
@@ -891,9 +745,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int wglGetFrameUsageI3D_Lazy(float* pUsage)
         {
             if (_wglGetFrameUsageI3D_fnptr == null)
-            {
                 _wglGetFrameUsageI3D_fnptr = (delegate* unmanaged<float*, int>)WGLLoader.BindingsContext.GetProcAddress("wglGetFrameUsageI3D");
-            }
             return _wglGetFrameUsageI3D_fnptr(pUsage);
         }
         
@@ -903,9 +755,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int wglGetGammaTableI3D_Lazy(IntPtr hDC, int iEntries, ushort* puRed, ushort* puGreen, ushort* puBlue)
         {
             if (_wglGetGammaTableI3D_fnptr == null)
-            {
                 _wglGetGammaTableI3D_fnptr = (delegate* unmanaged<IntPtr, int, ushort*, ushort*, ushort*, int>)WGLLoader.BindingsContext.GetProcAddress("wglGetGammaTableI3D");
-            }
             return _wglGetGammaTableI3D_fnptr(hDC, iEntries, puRed, puGreen, puBlue);
         }
         
@@ -915,9 +765,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int wglGetGammaTableParametersI3D_Lazy(IntPtr hDC, int iAttribute, int* piValue)
         {
             if (_wglGetGammaTableParametersI3D_fnptr == null)
-            {
                 _wglGetGammaTableParametersI3D_fnptr = (delegate* unmanaged<IntPtr, int, int*, int>)WGLLoader.BindingsContext.GetProcAddress("wglGetGammaTableParametersI3D");
-            }
             return _wglGetGammaTableParametersI3D_fnptr(hDC, iAttribute, piValue);
         }
         
@@ -927,9 +775,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int wglGetGenlockSampleRateI3D_Lazy(IntPtr hDC, uint* uRate)
         {
             if (_wglGetGenlockSampleRateI3D_fnptr == null)
-            {
                 _wglGetGenlockSampleRateI3D_fnptr = (delegate* unmanaged<IntPtr, uint*, int>)WGLLoader.BindingsContext.GetProcAddress("wglGetGenlockSampleRateI3D");
-            }
             return _wglGetGenlockSampleRateI3D_fnptr(hDC, uRate);
         }
         
@@ -939,9 +785,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int wglGetGenlockSourceDelayI3D_Lazy(IntPtr hDC, uint* uDelay)
         {
             if (_wglGetGenlockSourceDelayI3D_fnptr == null)
-            {
                 _wglGetGenlockSourceDelayI3D_fnptr = (delegate* unmanaged<IntPtr, uint*, int>)WGLLoader.BindingsContext.GetProcAddress("wglGetGenlockSourceDelayI3D");
-            }
             return _wglGetGenlockSourceDelayI3D_fnptr(hDC, uDelay);
         }
         
@@ -951,9 +795,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int wglGetGenlockSourceEdgeI3D_Lazy(IntPtr hDC, uint* uEdge)
         {
             if (_wglGetGenlockSourceEdgeI3D_fnptr == null)
-            {
                 _wglGetGenlockSourceEdgeI3D_fnptr = (delegate* unmanaged<IntPtr, uint*, int>)WGLLoader.BindingsContext.GetProcAddress("wglGetGenlockSourceEdgeI3D");
-            }
             return _wglGetGenlockSourceEdgeI3D_fnptr(hDC, uEdge);
         }
         
@@ -963,9 +805,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int wglGetGenlockSourceI3D_Lazy(IntPtr hDC, uint* uSource)
         {
             if (_wglGetGenlockSourceI3D_fnptr == null)
-            {
                 _wglGetGenlockSourceI3D_fnptr = (delegate* unmanaged<IntPtr, uint*, int>)WGLLoader.BindingsContext.GetProcAddress("wglGetGenlockSourceI3D");
-            }
             return _wglGetGenlockSourceI3D_fnptr(hDC, uSource);
         }
         
@@ -975,9 +815,7 @@ namespace OpenTK.Graphics.Wgl
         internal static uint wglGetGPUIDsAMD_Lazy(uint maxCount, uint* ids)
         {
             if (_wglGetGPUIDsAMD_fnptr == null)
-            {
                 _wglGetGPUIDsAMD_fnptr = (delegate* unmanaged<uint, uint*, uint>)WGLLoader.BindingsContext.GetProcAddress("wglGetGPUIDsAMD");
-            }
             return _wglGetGPUIDsAMD_fnptr(maxCount, ids);
         }
         
@@ -987,9 +825,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int wglGetGPUInfoAMD_Lazy(uint id, int property, uint dataType, uint size, void* data)
         {
             if (_wglGetGPUInfoAMD_fnptr == null)
-            {
                 _wglGetGPUInfoAMD_fnptr = (delegate* unmanaged<uint, int, uint, uint, void*, int>)WGLLoader.BindingsContext.GetProcAddress("wglGetGPUInfoAMD");
-            }
             return _wglGetGPUInfoAMD_fnptr(id, property, dataType, size, data);
         }
         
@@ -999,9 +835,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int wglGetLayerPaletteEntries_Lazy(IntPtr hdc, int iLayerPlane, int iStart, int cEntries, uint* pcr)
         {
             if (_wglGetLayerPaletteEntries_fnptr == null)
-            {
                 _wglGetLayerPaletteEntries_fnptr = (delegate* unmanaged<IntPtr, int, int, int, uint*, int>)WGLLoader.BindingsContext.GetProcAddress("wglGetLayerPaletteEntries");
-            }
             return _wglGetLayerPaletteEntries_fnptr(hdc, iLayerPlane, iStart, cEntries, pcr);
         }
         
@@ -1011,9 +845,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int wglGetMscRateOML_Lazy(IntPtr hdc, int* numerator, int* denominator)
         {
             if (_wglGetMscRateOML_fnptr == null)
-            {
                 _wglGetMscRateOML_fnptr = (delegate* unmanaged<IntPtr, int*, int*, int>)WGLLoader.BindingsContext.GetProcAddress("wglGetMscRateOML");
-            }
             return _wglGetMscRateOML_fnptr(hdc, numerator, denominator);
         }
         
@@ -1023,9 +855,7 @@ namespace OpenTK.Graphics.Wgl
         internal static IntPtr wglGetPbufferDCARB_Lazy(IntPtr hPbuffer)
         {
             if (_wglGetPbufferDCARB_fnptr == null)
-            {
                 _wglGetPbufferDCARB_fnptr = (delegate* unmanaged<IntPtr, IntPtr>)WGLLoader.BindingsContext.GetProcAddress("wglGetPbufferDCARB");
-            }
             return _wglGetPbufferDCARB_fnptr(hPbuffer);
         }
         
@@ -1035,9 +865,7 @@ namespace OpenTK.Graphics.Wgl
         internal static IntPtr wglGetPbufferDCEXT_Lazy(IntPtr hPbuffer)
         {
             if (_wglGetPbufferDCEXT_fnptr == null)
-            {
                 _wglGetPbufferDCEXT_fnptr = (delegate* unmanaged<IntPtr, IntPtr>)WGLLoader.BindingsContext.GetProcAddress("wglGetPbufferDCEXT");
-            }
             return _wglGetPbufferDCEXT_fnptr(hPbuffer);
         }
         
@@ -1047,9 +875,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int wglGetPixelFormatAttribfvARB_Lazy(IntPtr hdc, int iPixelFormat, int iLayerPlane, uint nAttributes, int* piAttributes, float* pfValues)
         {
             if (_wglGetPixelFormatAttribfvARB_fnptr == null)
-            {
                 _wglGetPixelFormatAttribfvARB_fnptr = (delegate* unmanaged<IntPtr, int, int, uint, int*, float*, int>)WGLLoader.BindingsContext.GetProcAddress("wglGetPixelFormatAttribfvARB");
-            }
             return _wglGetPixelFormatAttribfvARB_fnptr(hdc, iPixelFormat, iLayerPlane, nAttributes, piAttributes, pfValues);
         }
         
@@ -1059,9 +885,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int wglGetPixelFormatAttribfvEXT_Lazy(IntPtr hdc, int iPixelFormat, int iLayerPlane, uint nAttributes, int* piAttributes, float* pfValues)
         {
             if (_wglGetPixelFormatAttribfvEXT_fnptr == null)
-            {
                 _wglGetPixelFormatAttribfvEXT_fnptr = (delegate* unmanaged<IntPtr, int, int, uint, int*, float*, int>)WGLLoader.BindingsContext.GetProcAddress("wglGetPixelFormatAttribfvEXT");
-            }
             return _wglGetPixelFormatAttribfvEXT_fnptr(hdc, iPixelFormat, iLayerPlane, nAttributes, piAttributes, pfValues);
         }
         
@@ -1071,9 +895,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int wglGetPixelFormatAttribivARB_Lazy(IntPtr hdc, int iPixelFormat, int iLayerPlane, uint nAttributes, int* piAttributes, int* piValues)
         {
             if (_wglGetPixelFormatAttribivARB_fnptr == null)
-            {
                 _wglGetPixelFormatAttribivARB_fnptr = (delegate* unmanaged<IntPtr, int, int, uint, int*, int*, int>)WGLLoader.BindingsContext.GetProcAddress("wglGetPixelFormatAttribivARB");
-            }
             return _wglGetPixelFormatAttribivARB_fnptr(hdc, iPixelFormat, iLayerPlane, nAttributes, piAttributes, piValues);
         }
         
@@ -1083,9 +905,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int wglGetPixelFormatAttribivEXT_Lazy(IntPtr hdc, int iPixelFormat, int iLayerPlane, uint nAttributes, int* piAttributes, int* piValues)
         {
             if (_wglGetPixelFormatAttribivEXT_fnptr == null)
-            {
                 _wglGetPixelFormatAttribivEXT_fnptr = (delegate* unmanaged<IntPtr, int, int, uint, int*, int*, int>)WGLLoader.BindingsContext.GetProcAddress("wglGetPixelFormatAttribivEXT");
-            }
             return _wglGetPixelFormatAttribivEXT_fnptr(hdc, iPixelFormat, iLayerPlane, nAttributes, piAttributes, piValues);
         }
         
@@ -1095,9 +915,7 @@ namespace OpenTK.Graphics.Wgl
         internal static IntPtr wglGetProcAddress_Lazy(byte* lpszProc)
         {
             if (_wglGetProcAddress_fnptr == null)
-            {
                 _wglGetProcAddress_fnptr = (delegate* unmanaged<byte*, IntPtr>)WGLLoader.BindingsContext.GetProcAddress("wglGetProcAddress");
-            }
             return _wglGetProcAddress_fnptr(lpszProc);
         }
         
@@ -1107,9 +925,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int wglGetSwapIntervalEXT_Lazy()
         {
             if (_wglGetSwapIntervalEXT_fnptr == null)
-            {
                 _wglGetSwapIntervalEXT_fnptr = (delegate* unmanaged<int>)WGLLoader.BindingsContext.GetProcAddress("wglGetSwapIntervalEXT");
-            }
             return _wglGetSwapIntervalEXT_fnptr();
         }
         
@@ -1119,9 +935,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int wglGetSyncValuesOML_Lazy(IntPtr hdc, long* ust, long* msc, long* sbc)
         {
             if (_wglGetSyncValuesOML_fnptr == null)
-            {
                 _wglGetSyncValuesOML_fnptr = (delegate* unmanaged<IntPtr, long*, long*, long*, int>)WGLLoader.BindingsContext.GetProcAddress("wglGetSyncValuesOML");
-            }
             return _wglGetSyncValuesOML_fnptr(hdc, ust, msc, sbc);
         }
         
@@ -1131,9 +945,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int wglGetVideoDeviceNV_Lazy(IntPtr hDC, int numDevices, IntPtr* hVideoDevice)
         {
             if (_wglGetVideoDeviceNV_fnptr == null)
-            {
                 _wglGetVideoDeviceNV_fnptr = (delegate* unmanaged<IntPtr, int, IntPtr*, int>)WGLLoader.BindingsContext.GetProcAddress("wglGetVideoDeviceNV");
-            }
             return _wglGetVideoDeviceNV_fnptr(hDC, numDevices, hVideoDevice);
         }
         
@@ -1143,9 +955,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int wglGetVideoInfoNV_Lazy(IntPtr hpVideoDevice, ulong* pulCounterOutputPbuffer, ulong* pulCounterOutputVideo)
         {
             if (_wglGetVideoInfoNV_fnptr == null)
-            {
                 _wglGetVideoInfoNV_fnptr = (delegate* unmanaged<IntPtr, ulong*, ulong*, int>)WGLLoader.BindingsContext.GetProcAddress("wglGetVideoInfoNV");
-            }
             return _wglGetVideoInfoNV_fnptr(hpVideoDevice, pulCounterOutputPbuffer, pulCounterOutputVideo);
         }
         
@@ -1155,9 +965,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int wglIsEnabledFrameLockI3D_Lazy(int* pFlag)
         {
             if (_wglIsEnabledFrameLockI3D_fnptr == null)
-            {
                 _wglIsEnabledFrameLockI3D_fnptr = (delegate* unmanaged<int*, int>)WGLLoader.BindingsContext.GetProcAddress("wglIsEnabledFrameLockI3D");
-            }
             return _wglIsEnabledFrameLockI3D_fnptr(pFlag);
         }
         
@@ -1167,9 +975,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int wglIsEnabledGenlockI3D_Lazy(IntPtr hDC, int* pFlag)
         {
             if (_wglIsEnabledGenlockI3D_fnptr == null)
-            {
                 _wglIsEnabledGenlockI3D_fnptr = (delegate* unmanaged<IntPtr, int*, int>)WGLLoader.BindingsContext.GetProcAddress("wglIsEnabledGenlockI3D");
-            }
             return _wglIsEnabledGenlockI3D_fnptr(hDC, pFlag);
         }
         
@@ -1179,9 +985,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int wglJoinSwapGroupNV_Lazy(IntPtr hDC, uint group)
         {
             if (_wglJoinSwapGroupNV_fnptr == null)
-            {
                 _wglJoinSwapGroupNV_fnptr = (delegate* unmanaged<IntPtr, uint, int>)WGLLoader.BindingsContext.GetProcAddress("wglJoinSwapGroupNV");
-            }
             return _wglJoinSwapGroupNV_fnptr(hDC, group);
         }
         
@@ -1191,9 +995,7 @@ namespace OpenTK.Graphics.Wgl
         internal static byte wglLoadDisplayColorTableEXT_Lazy(ushort* table, uint length)
         {
             if (_wglLoadDisplayColorTableEXT_fnptr == null)
-            {
                 _wglLoadDisplayColorTableEXT_fnptr = (delegate* unmanaged<ushort*, uint, byte>)WGLLoader.BindingsContext.GetProcAddress("wglLoadDisplayColorTableEXT");
-            }
             return _wglLoadDisplayColorTableEXT_fnptr(table, length);
         }
         
@@ -1203,9 +1005,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int wglLockVideoCaptureDeviceNV_Lazy(IntPtr hDc, IntPtr hDevice)
         {
             if (_wglLockVideoCaptureDeviceNV_fnptr == null)
-            {
                 _wglLockVideoCaptureDeviceNV_fnptr = (delegate* unmanaged<IntPtr, IntPtr, int>)WGLLoader.BindingsContext.GetProcAddress("wglLockVideoCaptureDeviceNV");
-            }
             return _wglLockVideoCaptureDeviceNV_fnptr(hDc, hDevice);
         }
         
@@ -1215,9 +1015,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int wglMakeAssociatedContextCurrentAMD_Lazy(IntPtr hglrc)
         {
             if (_wglMakeAssociatedContextCurrentAMD_fnptr == null)
-            {
                 _wglMakeAssociatedContextCurrentAMD_fnptr = (delegate* unmanaged<IntPtr, int>)WGLLoader.BindingsContext.GetProcAddress("wglMakeAssociatedContextCurrentAMD");
-            }
             return _wglMakeAssociatedContextCurrentAMD_fnptr(hglrc);
         }
         
@@ -1227,9 +1025,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int wglMakeContextCurrentARB_Lazy(IntPtr hDrawDC, IntPtr hReadDC, IntPtr hglrc)
         {
             if (_wglMakeContextCurrentARB_fnptr == null)
-            {
                 _wglMakeContextCurrentARB_fnptr = (delegate* unmanaged<IntPtr, IntPtr, IntPtr, int>)WGLLoader.BindingsContext.GetProcAddress("wglMakeContextCurrentARB");
-            }
             return _wglMakeContextCurrentARB_fnptr(hDrawDC, hReadDC, hglrc);
         }
         
@@ -1239,9 +1035,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int wglMakeContextCurrentEXT_Lazy(IntPtr hDrawDC, IntPtr hReadDC, IntPtr hglrc)
         {
             if (_wglMakeContextCurrentEXT_fnptr == null)
-            {
                 _wglMakeContextCurrentEXT_fnptr = (delegate* unmanaged<IntPtr, IntPtr, IntPtr, int>)WGLLoader.BindingsContext.GetProcAddress("wglMakeContextCurrentEXT");
-            }
             return _wglMakeContextCurrentEXT_fnptr(hDrawDC, hReadDC, hglrc);
         }
         
@@ -1251,9 +1045,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int wglMakeCurrent_Lazy(IntPtr hDc, IntPtr newContext)
         {
             if (_wglMakeCurrent_fnptr == null)
-            {
                 _wglMakeCurrent_fnptr = (delegate* unmanaged<IntPtr, IntPtr, int>)WGLLoader.BindingsContext.GetProcAddress("wglMakeCurrent");
-            }
             return _wglMakeCurrent_fnptr(hDc, newContext);
         }
         
@@ -1263,9 +1055,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int wglQueryCurrentContextNV_Lazy(int iAttribute, int* piValue)
         {
             if (_wglQueryCurrentContextNV_fnptr == null)
-            {
                 _wglQueryCurrentContextNV_fnptr = (delegate* unmanaged<int, int*, int>)WGLLoader.BindingsContext.GetProcAddress("wglQueryCurrentContextNV");
-            }
             return _wglQueryCurrentContextNV_fnptr(iAttribute, piValue);
         }
         
@@ -1275,9 +1065,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int wglQueryFrameCountNV_Lazy(IntPtr hDC, uint* count)
         {
             if (_wglQueryFrameCountNV_fnptr == null)
-            {
                 _wglQueryFrameCountNV_fnptr = (delegate* unmanaged<IntPtr, uint*, int>)WGLLoader.BindingsContext.GetProcAddress("wglQueryFrameCountNV");
-            }
             return _wglQueryFrameCountNV_fnptr(hDC, count);
         }
         
@@ -1287,9 +1075,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int wglQueryFrameLockMasterI3D_Lazy(int* pFlag)
         {
             if (_wglQueryFrameLockMasterI3D_fnptr == null)
-            {
                 _wglQueryFrameLockMasterI3D_fnptr = (delegate* unmanaged<int*, int>)WGLLoader.BindingsContext.GetProcAddress("wglQueryFrameLockMasterI3D");
-            }
             return _wglQueryFrameLockMasterI3D_fnptr(pFlag);
         }
         
@@ -1299,9 +1085,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int wglQueryFrameTrackingI3D_Lazy(uint* pFrameCount, uint* pMissedFrames, float* pLastMissedUsage)
         {
             if (_wglQueryFrameTrackingI3D_fnptr == null)
-            {
                 _wglQueryFrameTrackingI3D_fnptr = (delegate* unmanaged<uint*, uint*, float*, int>)WGLLoader.BindingsContext.GetProcAddress("wglQueryFrameTrackingI3D");
-            }
             return _wglQueryFrameTrackingI3D_fnptr(pFrameCount, pMissedFrames, pLastMissedUsage);
         }
         
@@ -1311,9 +1095,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int wglQueryGenlockMaxSourceDelayI3D_Lazy(IntPtr hDC, uint* uMaxLineDelay, uint* uMaxPixelDelay)
         {
             if (_wglQueryGenlockMaxSourceDelayI3D_fnptr == null)
-            {
                 _wglQueryGenlockMaxSourceDelayI3D_fnptr = (delegate* unmanaged<IntPtr, uint*, uint*, int>)WGLLoader.BindingsContext.GetProcAddress("wglQueryGenlockMaxSourceDelayI3D");
-            }
             return _wglQueryGenlockMaxSourceDelayI3D_fnptr(hDC, uMaxLineDelay, uMaxPixelDelay);
         }
         
@@ -1323,9 +1105,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int wglQueryMaxSwapGroupsNV_Lazy(IntPtr hDC, uint* maxGroups, uint* maxBarriers)
         {
             if (_wglQueryMaxSwapGroupsNV_fnptr == null)
-            {
                 _wglQueryMaxSwapGroupsNV_fnptr = (delegate* unmanaged<IntPtr, uint*, uint*, int>)WGLLoader.BindingsContext.GetProcAddress("wglQueryMaxSwapGroupsNV");
-            }
             return _wglQueryMaxSwapGroupsNV_fnptr(hDC, maxGroups, maxBarriers);
         }
         
@@ -1335,9 +1115,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int wglQueryPbufferARB_Lazy(IntPtr hPbuffer, int iAttribute, int* piValue)
         {
             if (_wglQueryPbufferARB_fnptr == null)
-            {
                 _wglQueryPbufferARB_fnptr = (delegate* unmanaged<IntPtr, int, int*, int>)WGLLoader.BindingsContext.GetProcAddress("wglQueryPbufferARB");
-            }
             return _wglQueryPbufferARB_fnptr(hPbuffer, iAttribute, piValue);
         }
         
@@ -1347,9 +1125,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int wglQueryPbufferEXT_Lazy(IntPtr hPbuffer, int iAttribute, int* piValue)
         {
             if (_wglQueryPbufferEXT_fnptr == null)
-            {
                 _wglQueryPbufferEXT_fnptr = (delegate* unmanaged<IntPtr, int, int*, int>)WGLLoader.BindingsContext.GetProcAddress("wglQueryPbufferEXT");
-            }
             return _wglQueryPbufferEXT_fnptr(hPbuffer, iAttribute, piValue);
         }
         
@@ -1359,9 +1135,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int wglQuerySwapGroupNV_Lazy(IntPtr hDC, uint* group, uint* barrier)
         {
             if (_wglQuerySwapGroupNV_fnptr == null)
-            {
                 _wglQuerySwapGroupNV_fnptr = (delegate* unmanaged<IntPtr, uint*, uint*, int>)WGLLoader.BindingsContext.GetProcAddress("wglQuerySwapGroupNV");
-            }
             return _wglQuerySwapGroupNV_fnptr(hDC, group, barrier);
         }
         
@@ -1371,9 +1145,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int wglQueryVideoCaptureDeviceNV_Lazy(IntPtr hDc, IntPtr hDevice, int iAttribute, int* piValue)
         {
             if (_wglQueryVideoCaptureDeviceNV_fnptr == null)
-            {
                 _wglQueryVideoCaptureDeviceNV_fnptr = (delegate* unmanaged<IntPtr, IntPtr, int, int*, int>)WGLLoader.BindingsContext.GetProcAddress("wglQueryVideoCaptureDeviceNV");
-            }
             return _wglQueryVideoCaptureDeviceNV_fnptr(hDc, hDevice, iAttribute, piValue);
         }
         
@@ -1383,9 +1155,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int wglRealizeLayerPalette_Lazy(IntPtr hdc, int iLayerPlane, int bRealize)
         {
             if (_wglRealizeLayerPalette_fnptr == null)
-            {
                 _wglRealizeLayerPalette_fnptr = (delegate* unmanaged<IntPtr, int, int, int>)WGLLoader.BindingsContext.GetProcAddress("wglRealizeLayerPalette");
-            }
             return _wglRealizeLayerPalette_fnptr(hdc, iLayerPlane, bRealize);
         }
         
@@ -1395,9 +1165,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int wglReleaseImageBufferEventsI3D_Lazy(IntPtr hDC, IntPtr* pAddress, uint count)
         {
             if (_wglReleaseImageBufferEventsI3D_fnptr == null)
-            {
                 _wglReleaseImageBufferEventsI3D_fnptr = (delegate* unmanaged<IntPtr, IntPtr*, uint, int>)WGLLoader.BindingsContext.GetProcAddress("wglReleaseImageBufferEventsI3D");
-            }
             return _wglReleaseImageBufferEventsI3D_fnptr(hDC, pAddress, count);
         }
         
@@ -1407,9 +1175,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int wglReleasePbufferDCARB_Lazy(IntPtr hPbuffer, IntPtr hDC)
         {
             if (_wglReleasePbufferDCARB_fnptr == null)
-            {
                 _wglReleasePbufferDCARB_fnptr = (delegate* unmanaged<IntPtr, IntPtr, int>)WGLLoader.BindingsContext.GetProcAddress("wglReleasePbufferDCARB");
-            }
             return _wglReleasePbufferDCARB_fnptr(hPbuffer, hDC);
         }
         
@@ -1419,9 +1185,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int wglReleasePbufferDCEXT_Lazy(IntPtr hPbuffer, IntPtr hDC)
         {
             if (_wglReleasePbufferDCEXT_fnptr == null)
-            {
                 _wglReleasePbufferDCEXT_fnptr = (delegate* unmanaged<IntPtr, IntPtr, int>)WGLLoader.BindingsContext.GetProcAddress("wglReleasePbufferDCEXT");
-            }
             return _wglReleasePbufferDCEXT_fnptr(hPbuffer, hDC);
         }
         
@@ -1431,9 +1195,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int wglReleaseTexImageARB_Lazy(IntPtr hPbuffer, int iBuffer)
         {
             if (_wglReleaseTexImageARB_fnptr == null)
-            {
                 _wglReleaseTexImageARB_fnptr = (delegate* unmanaged<IntPtr, int, int>)WGLLoader.BindingsContext.GetProcAddress("wglReleaseTexImageARB");
-            }
             return _wglReleaseTexImageARB_fnptr(hPbuffer, iBuffer);
         }
         
@@ -1443,9 +1205,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int wglReleaseVideoCaptureDeviceNV_Lazy(IntPtr hDc, IntPtr hDevice)
         {
             if (_wglReleaseVideoCaptureDeviceNV_fnptr == null)
-            {
                 _wglReleaseVideoCaptureDeviceNV_fnptr = (delegate* unmanaged<IntPtr, IntPtr, int>)WGLLoader.BindingsContext.GetProcAddress("wglReleaseVideoCaptureDeviceNV");
-            }
             return _wglReleaseVideoCaptureDeviceNV_fnptr(hDc, hDevice);
         }
         
@@ -1455,9 +1215,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int wglReleaseVideoDeviceNV_Lazy(IntPtr hVideoDevice)
         {
             if (_wglReleaseVideoDeviceNV_fnptr == null)
-            {
                 _wglReleaseVideoDeviceNV_fnptr = (delegate* unmanaged<IntPtr, int>)WGLLoader.BindingsContext.GetProcAddress("wglReleaseVideoDeviceNV");
-            }
             return _wglReleaseVideoDeviceNV_fnptr(hVideoDevice);
         }
         
@@ -1467,9 +1225,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int wglReleaseVideoImageNV_Lazy(IntPtr hPbuffer, int iVideoBuffer)
         {
             if (_wglReleaseVideoImageNV_fnptr == null)
-            {
                 _wglReleaseVideoImageNV_fnptr = (delegate* unmanaged<IntPtr, int, int>)WGLLoader.BindingsContext.GetProcAddress("wglReleaseVideoImageNV");
-            }
             return _wglReleaseVideoImageNV_fnptr(hPbuffer, iVideoBuffer);
         }
         
@@ -1479,9 +1235,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int wglResetFrameCountNV_Lazy(IntPtr hDC)
         {
             if (_wglResetFrameCountNV_fnptr == null)
-            {
                 _wglResetFrameCountNV_fnptr = (delegate* unmanaged<IntPtr, int>)WGLLoader.BindingsContext.GetProcAddress("wglResetFrameCountNV");
-            }
             return _wglResetFrameCountNV_fnptr(hDC);
         }
         
@@ -1491,9 +1245,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int wglRestoreBufferRegionARB_Lazy(IntPtr hRegion, int x, int y, int width, int height, int xSrc, int ySrc)
         {
             if (_wglRestoreBufferRegionARB_fnptr == null)
-            {
                 _wglRestoreBufferRegionARB_fnptr = (delegate* unmanaged<IntPtr, int, int, int, int, int, int, int>)WGLLoader.BindingsContext.GetProcAddress("wglRestoreBufferRegionARB");
-            }
             return _wglRestoreBufferRegionARB_fnptr(hRegion, x, y, width, height, xSrc, ySrc);
         }
         
@@ -1503,9 +1255,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int wglSaveBufferRegionARB_Lazy(IntPtr hRegion, int x, int y, int width, int height)
         {
             if (_wglSaveBufferRegionARB_fnptr == null)
-            {
                 _wglSaveBufferRegionARB_fnptr = (delegate* unmanaged<IntPtr, int, int, int, int, int>)WGLLoader.BindingsContext.GetProcAddress("wglSaveBufferRegionARB");
-            }
             return _wglSaveBufferRegionARB_fnptr(hRegion, x, y, width, height);
         }
         
@@ -1515,9 +1265,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int wglSendPbufferToVideoNV_Lazy(IntPtr hPbuffer, int iBufferType, ulong* pulCounterPbuffer, int bBlock)
         {
             if (_wglSendPbufferToVideoNV_fnptr == null)
-            {
                 _wglSendPbufferToVideoNV_fnptr = (delegate* unmanaged<IntPtr, int, ulong*, int, int>)WGLLoader.BindingsContext.GetProcAddress("wglSendPbufferToVideoNV");
-            }
             return _wglSendPbufferToVideoNV_fnptr(hPbuffer, iBufferType, pulCounterPbuffer, bBlock);
         }
         
@@ -1527,9 +1275,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int wglSetDigitalVideoParametersI3D_Lazy(IntPtr hDC, int iAttribute, int* piValue)
         {
             if (_wglSetDigitalVideoParametersI3D_fnptr == null)
-            {
                 _wglSetDigitalVideoParametersI3D_fnptr = (delegate* unmanaged<IntPtr, int, int*, int>)WGLLoader.BindingsContext.GetProcAddress("wglSetDigitalVideoParametersI3D");
-            }
             return _wglSetDigitalVideoParametersI3D_fnptr(hDC, iAttribute, piValue);
         }
         
@@ -1539,9 +1285,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int wglSetGammaTableI3D_Lazy(IntPtr hDC, int iEntries, ushort* puRed, ushort* puGreen, ushort* puBlue)
         {
             if (_wglSetGammaTableI3D_fnptr == null)
-            {
                 _wglSetGammaTableI3D_fnptr = (delegate* unmanaged<IntPtr, int, ushort*, ushort*, ushort*, int>)WGLLoader.BindingsContext.GetProcAddress("wglSetGammaTableI3D");
-            }
             return _wglSetGammaTableI3D_fnptr(hDC, iEntries, puRed, puGreen, puBlue);
         }
         
@@ -1551,9 +1295,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int wglSetGammaTableParametersI3D_Lazy(IntPtr hDC, int iAttribute, int* piValue)
         {
             if (_wglSetGammaTableParametersI3D_fnptr == null)
-            {
                 _wglSetGammaTableParametersI3D_fnptr = (delegate* unmanaged<IntPtr, int, int*, int>)WGLLoader.BindingsContext.GetProcAddress("wglSetGammaTableParametersI3D");
-            }
             return _wglSetGammaTableParametersI3D_fnptr(hDC, iAttribute, piValue);
         }
         
@@ -1563,9 +1305,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int wglSetLayerPaletteEntries_Lazy(IntPtr hdc, int iLayerPlane, int iStart, int cEntries, uint* pcr)
         {
             if (_wglSetLayerPaletteEntries_fnptr == null)
-            {
                 _wglSetLayerPaletteEntries_fnptr = (delegate* unmanaged<IntPtr, int, int, int, uint*, int>)WGLLoader.BindingsContext.GetProcAddress("wglSetLayerPaletteEntries");
-            }
             return _wglSetLayerPaletteEntries_fnptr(hdc, iLayerPlane, iStart, cEntries, pcr);
         }
         
@@ -1575,9 +1315,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int wglSetPbufferAttribARB_Lazy(IntPtr hPbuffer, int* piAttribList)
         {
             if (_wglSetPbufferAttribARB_fnptr == null)
-            {
                 _wglSetPbufferAttribARB_fnptr = (delegate* unmanaged<IntPtr, int*, int>)WGLLoader.BindingsContext.GetProcAddress("wglSetPbufferAttribARB");
-            }
             return _wglSetPbufferAttribARB_fnptr(hPbuffer, piAttribList);
         }
         
@@ -1587,9 +1325,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int wglSetStereoEmitterState3DL_Lazy(IntPtr hDC, uint uState)
         {
             if (_wglSetStereoEmitterState3DL_fnptr == null)
-            {
                 _wglSetStereoEmitterState3DL_fnptr = (delegate* unmanaged<IntPtr, uint, int>)WGLLoader.BindingsContext.GetProcAddress("wglSetStereoEmitterState3DL");
-            }
             return _wglSetStereoEmitterState3DL_fnptr(hDC, uState);
         }
         
@@ -1599,9 +1335,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int wglShareLists_Lazy(IntPtr hrcSrvShare, IntPtr hrcSrvSource)
         {
             if (_wglShareLists_fnptr == null)
-            {
                 _wglShareLists_fnptr = (delegate* unmanaged<IntPtr, IntPtr, int>)WGLLoader.BindingsContext.GetProcAddress("wglShareLists");
-            }
             return _wglShareLists_fnptr(hrcSrvShare, hrcSrvSource);
         }
         
@@ -1611,9 +1345,7 @@ namespace OpenTK.Graphics.Wgl
         internal static long wglSwapBuffersMscOML_Lazy(IntPtr hdc, long target_msc, long divisor, long remainder)
         {
             if (_wglSwapBuffersMscOML_fnptr == null)
-            {
                 _wglSwapBuffersMscOML_fnptr = (delegate* unmanaged<IntPtr, long, long, long, long>)WGLLoader.BindingsContext.GetProcAddress("wglSwapBuffersMscOML");
-            }
             return _wglSwapBuffersMscOML_fnptr(hdc, target_msc, divisor, remainder);
         }
         
@@ -1623,9 +1355,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int wglSwapIntervalEXT_Lazy(int interval)
         {
             if (_wglSwapIntervalEXT_fnptr == null)
-            {
                 _wglSwapIntervalEXT_fnptr = (delegate* unmanaged<int, int>)WGLLoader.BindingsContext.GetProcAddress("wglSwapIntervalEXT");
-            }
             return _wglSwapIntervalEXT_fnptr(interval);
         }
         
@@ -1635,9 +1365,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int wglSwapLayerBuffers_Lazy(IntPtr hdc, uint fuFlags)
         {
             if (_wglSwapLayerBuffers_fnptr == null)
-            {
                 _wglSwapLayerBuffers_fnptr = (delegate* unmanaged<IntPtr, uint, int>)WGLLoader.BindingsContext.GetProcAddress("wglSwapLayerBuffers");
-            }
             return _wglSwapLayerBuffers_fnptr(hdc, fuFlags);
         }
         
@@ -1647,9 +1375,7 @@ namespace OpenTK.Graphics.Wgl
         internal static long wglSwapLayerBuffersMscOML_Lazy(IntPtr hdc, int fuPlanes, long target_msc, long divisor, long remainder)
         {
             if (_wglSwapLayerBuffersMscOML_fnptr == null)
-            {
                 _wglSwapLayerBuffersMscOML_fnptr = (delegate* unmanaged<IntPtr, int, long, long, long, long>)WGLLoader.BindingsContext.GetProcAddress("wglSwapLayerBuffersMscOML");
-            }
             return _wglSwapLayerBuffersMscOML_fnptr(hdc, fuPlanes, target_msc, divisor, remainder);
         }
         
@@ -1659,9 +1385,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int wglUseFontBitmaps_Lazy(IntPtr hDC, uint first, uint count, uint listBase)
         {
             if (_wglUseFontBitmaps_fnptr == null)
-            {
                 _wglUseFontBitmaps_fnptr = (delegate* unmanaged<IntPtr, uint, uint, uint, int>)WGLLoader.BindingsContext.GetProcAddress("wglUseFontBitmaps");
-            }
             return _wglUseFontBitmaps_fnptr(hDC, first, count, listBase);
         }
         
@@ -1671,9 +1395,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int wglUseFontBitmapsA_Lazy(IntPtr hDC, uint first, uint count, uint listBase)
         {
             if (_wglUseFontBitmapsA_fnptr == null)
-            {
                 _wglUseFontBitmapsA_fnptr = (delegate* unmanaged<IntPtr, uint, uint, uint, int>)WGLLoader.BindingsContext.GetProcAddress("wglUseFontBitmapsA");
-            }
             return _wglUseFontBitmapsA_fnptr(hDC, first, count, listBase);
         }
         
@@ -1683,9 +1405,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int wglUseFontBitmapsW_Lazy(IntPtr hDC, uint first, uint count, uint listBase)
         {
             if (_wglUseFontBitmapsW_fnptr == null)
-            {
                 _wglUseFontBitmapsW_fnptr = (delegate* unmanaged<IntPtr, uint, uint, uint, int>)WGLLoader.BindingsContext.GetProcAddress("wglUseFontBitmapsW");
-            }
             return _wglUseFontBitmapsW_fnptr(hDC, first, count, listBase);
         }
         
@@ -1695,9 +1415,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int wglUseFontOutlines_Lazy(IntPtr hDC, uint first, uint count, uint listBase, float deviation, float extrusion, int format, IntPtr lpgmf)
         {
             if (_wglUseFontOutlines_fnptr == null)
-            {
                 _wglUseFontOutlines_fnptr = (delegate* unmanaged<IntPtr, uint, uint, uint, float, float, int, IntPtr, int>)WGLLoader.BindingsContext.GetProcAddress("wglUseFontOutlines");
-            }
             return _wglUseFontOutlines_fnptr(hDC, first, count, listBase, deviation, extrusion, format, lpgmf);
         }
         
@@ -1707,9 +1425,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int wglUseFontOutlinesA_Lazy(IntPtr hDC, uint first, uint count, uint listBase, float deviation, float extrusion, int format, IntPtr lpgmf)
         {
             if (_wglUseFontOutlinesA_fnptr == null)
-            {
                 _wglUseFontOutlinesA_fnptr = (delegate* unmanaged<IntPtr, uint, uint, uint, float, float, int, IntPtr, int>)WGLLoader.BindingsContext.GetProcAddress("wglUseFontOutlinesA");
-            }
             return _wglUseFontOutlinesA_fnptr(hDC, first, count, listBase, deviation, extrusion, format, lpgmf);
         }
         
@@ -1719,9 +1435,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int wglUseFontOutlinesW_Lazy(IntPtr hDC, uint first, uint count, uint listBase, float deviation, float extrusion, int format, IntPtr lpgmf)
         {
             if (_wglUseFontOutlinesW_fnptr == null)
-            {
                 _wglUseFontOutlinesW_fnptr = (delegate* unmanaged<IntPtr, uint, uint, uint, float, float, int, IntPtr, int>)WGLLoader.BindingsContext.GetProcAddress("wglUseFontOutlinesW");
-            }
             return _wglUseFontOutlinesW_fnptr(hDC, first, count, listBase, deviation, extrusion, format, lpgmf);
         }
         
@@ -1731,9 +1445,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int wglWaitForMscOML_Lazy(IntPtr hdc, long target_msc, long divisor, long remainder, long* ust, long* msc, long* sbc)
         {
             if (_wglWaitForMscOML_fnptr == null)
-            {
                 _wglWaitForMscOML_fnptr = (delegate* unmanaged<IntPtr, long, long, long, long*, long*, long*, int>)WGLLoader.BindingsContext.GetProcAddress("wglWaitForMscOML");
-            }
             return _wglWaitForMscOML_fnptr(hdc, target_msc, divisor, remainder, ust, msc, sbc);
         }
         
@@ -1743,9 +1455,7 @@ namespace OpenTK.Graphics.Wgl
         internal static int wglWaitForSbcOML_Lazy(IntPtr hdc, long target_sbc, long* ust, long* msc, long* sbc)
         {
             if (_wglWaitForSbcOML_fnptr == null)
-            {
                 _wglWaitForSbcOML_fnptr = (delegate* unmanaged<IntPtr, long, long*, long*, long*, int>)WGLLoader.BindingsContext.GetProcAddress("wglWaitForSbcOML");
-            }
             return _wglWaitForSbcOML_fnptr(hdc, target_sbc, ust, msc, sbc);
         }
         
