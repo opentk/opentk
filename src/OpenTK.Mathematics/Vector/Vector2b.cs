@@ -308,6 +308,26 @@ namespace OpenTK.Mathematics
             return new Vector2b(values.X, values.Y);
         }
 
+        /// <summary>
+        /// Casts <see cref="Vector2b"/> to a <see cref="Vector2i"/>.
+        /// </summary>
+        /// <param name="vector">The <see cref="Vector2b"/> to cast.</param>
+        /// <returns>A new instance of the <see cref="Vector2i"/> struct corresponding to the boolean values of the <see cref="Vector2b"/> components.</returns>
+        public static explicit operator Vector2i(Vector2b vector)
+        {
+            return new Vector2i(vector.X ? 1 : 0, vector.Y ? 1 : 0);
+        }
+
+        /// <summary>
+        /// Casts <see cref="Vector2b"/> to a <see cref="Vector2"/>.
+        /// </summary>
+        /// <param name="vector">The <see cref="Vector2b"/> to cast.</param>
+        /// <returns>A new instance of the <see cref="Vector2"/> struct corresponding to the boolean values of the <see cref="Vector2b"/> components.</returns>
+        public static explicit operator Vector2(Vector2b vector)
+        {
+            return new Vector2(vector.X ? 1.0f : 0.0f, vector.Y ? 1.0f : 0.0f);
+        }
+
         /// <inheritdoc/>
         public override readonly bool Equals(object obj)
         {

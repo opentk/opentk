@@ -335,3 +335,32 @@ module Vector4b =
             let e = a.X || a.Y || a.Z || a.W;
 
             Assert.Equal(e, b)
+
+    [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
+    module Casts =
+        //
+        [<Property>]
+        let ``Cast to Vector4i is accurate`` (a: Vector4b) =
+            let b = Vector4i(
+                (if a.X then 1 else 0),
+                (if a.Y then 1 else 0),
+                (if a.Z then 1 else 0),
+                (if a.W then 1 else 0)
+            )
+            
+            let c: Vector4i = Vector4b.op_Explicit a
+            
+            Assert.Equal(b, c)
+            
+        [<Property>]
+        let ``Cast to Vector4 is accurate`` (a: Vector4b) =
+            let b = Vector4(
+                (if a.X then 1.0f else 0.0f),
+                (if a.Y then 1.0f else 0.0f),
+                (if a.Z then 1.0f else 0.0f),
+                (if a.W then 1.0f else 0.0f)
+            )
+            
+            let c: Vector4 = Vector4b.op_Explicit a
+            
+            Assert.Equal(b, c)

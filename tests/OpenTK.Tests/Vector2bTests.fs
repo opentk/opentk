@@ -250,3 +250,28 @@ module Vector2b =
             let e = a.X || a.Y;
 
             Assert.Equal(e, b)
+
+    [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
+    module Casts =
+        //
+        [<Property>]
+        let ``Cast to Vector2i is accurate`` (a: Vector2b) =
+            let b = Vector2i(
+                (if a.X then 1 else 0),
+                (if a.Y then 1 else 0)
+            )
+            
+            let c: Vector2i = Vector2b.op_Explicit a
+            
+            Assert.Equal(b, c)
+            
+        [<Property>]
+        let ``Cast to Vector2 is accurate`` (a: Vector2b) =
+            let b = Vector2(
+                (if a.X then 1.0f else 0.0f),
+                (if a.Y then 1.0f else 0.0f)
+            )
+            
+            let c: Vector2 = Vector2b.op_Explicit a
+            
+            Assert.Equal(b, c)
