@@ -290,10 +290,11 @@ module Vector3b =
         //
         [<Property>]
         let ``Cast to Vector3i is accurate`` (a: Vector3b) =
-            let mutable b = Vector3i.Zero
-            if a.X then b.X <- 1 else b.X <- 0
-            if a.Y then b.Y <- 1 else b.Y <- 0
-            if a.Z then b.Z <- 1 else b.Z <- 0
+            let b = Vector3i(
+                (if a.X then 1 else 0),
+                (if a.Y then 1 else 0),
+                (if a.Z then 1 else 0)
+            )
             
             let c: Vector3i = Vector3b.op_Explicit a
             
@@ -301,10 +302,11 @@ module Vector3b =
             
         [<Property>]
         let ``Cast to Vector3 is accurate`` (a: Vector3b) =
-            let mutable b = Vector3.Zero
-            if a.X then b.X <- 1.0f else b.X <- 0.0f
-            if a.Y then b.Y <- 1.0f else b.Y <- 0.0f
-            if a.Z then b.Z <- 1.0f else b.Z <- 0.0f
+            let b = Vector3(
+                (if a.X then 1.0f else 0.0f),
+                (if a.Y then 1.0f else 0.0f),
+                (if a.Z then 1.0f else 0.0f)
+            )
             
             let c: Vector3 = Vector3b.op_Explicit a
             
