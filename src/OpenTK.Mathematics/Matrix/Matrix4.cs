@@ -1820,7 +1820,7 @@ namespace OpenTK.Mathematics
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static unsafe void InvertSse3(in Matrix4 mat, out Matrix4 result)
+        public static unsafe void InvertSse3(in Matrix4 mat, out Matrix4 result)
         {
 #pragma warning disable SA1114 // Parameter list should follow declaration
 #pragma warning disable SA1312 // Variable names should begin with lower-case letter
@@ -1991,7 +1991,7 @@ namespace OpenTK.Mathematics
 
             if (MathF.Abs(detM.GetElement(0)) < float.Epsilon)
             {
-                throw new InvalidOperationException("Matrix is singular and cannot be inverted.");
+                MathHelper.ThrowInvalidOperationException("Matrix is singular and cannot be inverted.");
             }
 
             // const __m128 adjSignMask = _mm_setr_ps(1.f, -1.f, -1.f, 1.f);
@@ -2058,7 +2058,7 @@ namespace OpenTK.Mathematics
 
             if (MathF.Abs(det) < float.Epsilon)
             {
-                throw new InvalidOperationException("Matrix is singular and cannot be inverted.");
+                MathHelper.ThrowInvalidOperationException("Matrix is singular and cannot be inverted.");
             }
 
             float invDet = 1.0f / det;

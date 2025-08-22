@@ -657,7 +657,7 @@ namespace OpenTK.Mathematics
 
             if (det == 0)
             {
-                throw new InvalidOperationException("Matrix is singular and cannot be inverted.");
+                MathHelper.ThrowInvalidOperationException("Matrix is singular and cannot be inverted.");
             }
 
             double invDet = 1.0 / det;
