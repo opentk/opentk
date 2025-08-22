@@ -48,7 +48,7 @@ namespace OpenTK.Backends.Tests
 
         private int SelectedDisplay = -1;
 
-        private int Granularity = 4;
+        private const int Granularity = 3;
         private Vector2[]? Locus = null;
         private static readonly Vector2i LocusDiagramSize = (200, 200);
 
@@ -259,10 +259,6 @@ namespace OpenTK.Backends.Tests
                     ImGui.Text($"  WGC Supported: {colorInfo.WideColorGammutSupported} | Enabled: {colorInfo.WideColorGammutEnabled} | Active: {colorInfo.WideColorGammutActive}");
                     ImGui.Text($"  SDR White point: {colorInfo.SDRWhitePoint}");
                     ImGui.Text($"  Color encoding: {colorInfo.ColorEncoding}");
-                    
-                    ImGui.EndDisabled();
-                    ImGui.DragInt("Granularity", ref Granularity, 1, 1, 20);
-                    ImGui.BeginDisabled();
 
                     ImGui.Text($"  Has color volume info: {colorInfo.HasColorVolumeInfo}");
                     ImGui.Columns(2);
