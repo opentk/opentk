@@ -9,6 +9,60 @@ using static OpenTK.Platform.Native.Windows.Win32;
 
 namespace OpenTK.Platform.Native.Windows
 {
+    // FIXME: Maybe start using this...
+    internal readonly struct BOOL : IEquatable<BOOL>
+    {
+        public readonly int Value;
+
+        public BOOL(bool value)
+        {
+            Value = value ? 1 : 0;
+        }
+
+        public readonly override bool Equals(object? obj)
+        {
+            return obj is BOOL @bool && Equals(@bool);
+        }
+
+        public readonly bool Equals(BOOL other)
+        {
+            return ((bool)this) == ((bool)other);
+        }
+
+        public readonly override int GetHashCode()
+        {
+            return HashCode.Combine((bool)this);
+        }
+
+        public readonly override string? ToString()
+        {
+            return this ? bool.TrueString : bool.FalseString;
+        }
+
+        public static bool operator ==(BOOL left, BOOL right)
+        {
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(BOOL left, BOOL right)
+        {
+            return !(left == right);
+        }
+
+        public static bool operator true(BOOL a)
+        {
+            return a.Value != 0;
+        }
+
+        public static bool operator false(BOOL a)
+        {
+            return a.Value == 0;
+        }
+
+        public static implicit operator bool(BOOL @bool) => @bool;
+        public static implicit operator BOOL(bool @bool) => new BOOL(@bool);
+    }
+
 #pragma warning disable CS0649 // Field 'field' is never assigned to, and will always have its default value 'value'
     internal static unsafe class Win32
     {

@@ -245,10 +245,10 @@ namespace OpenTK.Platform.Native.SDL
         }
 
         /// <inheritdoc />
-        public bool GetHDRInfo(DisplayHandle handle, out HdrInfo hdrInfo)
-        {
-            hdrInfo = default;
-            return false;
-        }
+        //public bool GetHDRInfo(DisplayHandle handle, out HdrInfo hdrInfo)
+        //{
+        //    hdrInfo = default;
+        //    return false;
+        //}
     }
 }

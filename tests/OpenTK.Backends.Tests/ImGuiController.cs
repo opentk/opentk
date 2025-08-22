@@ -1,14 +1,15 @@
 ﻿using ImGuiNET;
-using System;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Diagnostics;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Mathematics;
 using OpenTK.Platform;
 using OpenTK.Platform.Native;
-using ErrorCode = OpenTK.Graphics.OpenGL.ErrorCode;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
+using ErrorCode = OpenTK.Graphics.OpenGL.ErrorCode;
 
 namespace OpenTK.Backends.Tests
 {
@@ -28,6 +29,8 @@ namespace OpenTK.Backends.Tests
             KeysPressed = new bool[values.Max() + 1];
         }
     }
+
+    internal delegate void ImDrawCallback(ImDrawListPtr parentList, ImDrawCmdPtr cmd);
 
     internal class ImGuiController : IDisposable
     {
@@ -114,8 +117,6 @@ namespace OpenTK.Backends.Tests
             GL.BindBuffer(BufferTarget.ElementArrayBuffer, _indexBuffer);
             LabelObject(ObjectIdentifier.Buffer, _indexBuffer, "EBO: ImGui");
             GL.BufferData(BufferTarget.ElementArrayBuffer, _indexBufferSize, IntPtr.Zero, BufferUsage.DynamicDraw);
-
-            //RecreateFontDeviceTexture();
 
             string VertexSource = @"#version 330 core
 
@@ -423,7 +424,9 @@ void main()
                     ImDrawCmdPtr pcmd = cmd_list.CmdBuffer[cmd_i];
                     if (pcmd.UserCallback != IntPtr.Zero)
                     {
-                        throw new NotImplementedException();
+                        GCHandle handle = GCHandle.FromIntPtr(pcmd.UserCallback);
+                        ImDrawCallback callback = (ImDrawCallback)handle.Target!;
+                        callback(cmd_list, pcmd);
                     }
                     else
                     {

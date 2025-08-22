@@ -539,11 +539,11 @@ namespace OpenTK.Platform.Native.macOS
         }
 
         /// <inheritdoc />
-        public bool GetHDRInfo(DisplayHandle handle, out HdrInfo hdrInfo)
-        {
-            hdrInfo = default;
-            return false;
-        }
+        //public bool GetHDRInfo(DisplayHandle handle, out HdrInfo hdrInfo)
+        //{
+        //    hdrInfo = default;
+        //    return false;
+        //}
 
         /// <summary>
         /// Returns the <c>CGDirectDisplayID</c> associated with this display handle.

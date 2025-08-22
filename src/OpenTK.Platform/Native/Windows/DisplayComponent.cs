@@ -6,15 +6,105 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using System.Runtime.InteropServices.Marshalling;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace OpenTK.Platform.Native.Windows
 {
+    public enum ColorEncoding : uint
+    {
+        Rgb = 0,
+        YCbCr444 = 1,
+        YCbCr422 = 2,
+        YCbCr420 = 3,
+        Intensity = 4,
+    }
+
+    public enum ColorSpace : uint
+    {
+        RGB_FULL_G22_NONE_P709 = 0,
+        RGB_FULL_G10_NONE_P709 = 1,
+        RGB_STUDIO_G22_NONE_P709 = 2,
+        RGB_STUDIO_G22_NONE_P2020 = 3,
+        RESERVED = 4,
+        YCBCR_FULL_G22_NONE_P709_X601 = 5,
+        YCBCR_STUDIO_G22_LEFT_P601 = 6,
+        YCBCR_FULL_G22_LEFT_P601 = 7,
+        YCBCR_STUDIO_G22_LEFT_P709 = 8,
+        YCBCR_FULL_G22_LEFT_P709 = 9,
+        YCBCR_STUDIO_G22_LEFT_P2020 = 10,
+        YCBCR_FULL_G22_LEFT_P2020 = 11,
+        RGB_FULL_G2084_NONE_P2020 = 12,
+        YCBCR_STUDIO_G2084_LEFT_P2020 = 13,
+        RGB_STUDIO_G2084_NONE_P2020 = 14,
+        YCBCR_STUDIO_G22_TOPLEFT_P2020 = 15,
+        YCBCR_STUDIO_G2084_TOPLEFT_P2020 = 16,
+        RGB_FULL_G22_NONE_P2020 = 17,
+        YCBCR_STUDIO_GHLG_TOPLEFT_P2020 = 18,
+        YCBCR_FULL_GHLG_TOPLEFT_P2020 = 19,
+        RGB_STUDIO_G24_NONE_P709 = 20,
+        RGB_STUDIO_G24_NONE_P2020 = 21,
+        YCBCR_STUDIO_G24_LEFT_P709 = 22,
+        YCBCR_STUDIO_G24_LEFT_P2020 = 23,
+        YCBCR_STUDIO_G24_TOPLEFT_P2020 = 24,
+        CUSTOM = 0xFFFFFFFF
+    }
+
+    public struct RGBColorVolume
+    {
+        internal static readonly RGBColorVolume DefaultSRGBColorVolume = new RGBColorVolume()
+        {
+            RedPrimary = (0.6400f, 0.3300f),
+            GreenPrimary = (0.3000f, 0.6000f),
+            BluePrimary = (0.1500f, 0.0600f),
+            WhitePoint = (0.3127f, 0.3290f),
+            MinLuminance = 0,
+            MaxLuminance = 80,
+            MaxFullFrameLuminance = 80,
+        };
+
+        public Vector2 RedPrimary;
+        public Vector2 GreenPrimary;
+        public Vector2 BluePrimary;
+        public Vector2 WhitePoint;
+
+        public float MinLuminance;
+        public float MaxLuminance;
+        public float MaxFullFrameLuminance;
+    }
+
+    /// <summary>
+    /// Display color and HDR info.
+    /// </summary>
+    // FIXME: Indicate support and enabled difference...?
+    public struct DisplayColorInfo
+    {
+        public bool IsAdvancedColorInfo2;
+
+        public bool HdrSupported;
+        public bool? HdrEnabled;
+        public bool HdrActive;
+
+        public bool WideColorGammutSupported;
+        public bool WideColorGammutEnabled;
+        public bool WideColorGammutActive;
+
+        public ColorEncoding ColorEncoding;
+        public ColorSpace ColorSpace;
+
+        public ulong SDRWhitePoint;
+
+        public bool HasColorVolumeInfo;
+        public RGBColorVolume ColorVolume;
+
+    }
+
     public class DisplayComponent : IDisplayComponent
     {
         /// <inheritdoc/>
@@ -67,6 +157,43 @@ namespace OpenTK.Platform.Native.Windows
             }
 
             return monitorHandle;
+        }
+
+        private static Dxgi.IDXGIOutput? FindDXGIOutput(IntPtr hMonitor, out Dxgi.IDXGIAdapter? adapter)
+        {
+            // From my understaind creating this object should be cheap?
+            // - Noggin_bops 2025-08-22
+            ComWrappers wrapper = new StrategyBasedComWrappers();
+
+            Guid guid = typeof(Dxgi.IDXGIFactory).GUID;
+            int result = Dxgi.CreateDXGIFactory(guid, out IntPtr factoryPtr);
+            if (result != 0)
+            {
+                throw new Win32Exception(result);
+            }
+
+            Dxgi.IDXGIFactory factory = (Dxgi.IDXGIFactory)wrapper.GetOrCreateObjectForComInstance(factoryPtr, CreateObjectFlags.None);
+
+            uint adapterIdx = 0;
+            while (factory.EnumAdapters(adapterIdx++, out IntPtr adapterPtr) != Dxgi.DXGI_ERROR_NOT_FOUND)
+            {
+                adapter = (Dxgi.IDXGIAdapter)wrapper.GetOrCreateObjectForComInstance(adapterPtr, CreateObjectFlags.None);
+
+                uint outputIdx = 0;
+                while (adapter.EnumOutputs(outputIdx++, out IntPtr outputPtr) != Dxgi.DXGI_ERROR_NOT_FOUND)
+                {
+                    Dxgi.IDXGIOutput output = (Dxgi.IDXGIOutput)wrapper.GetOrCreateObjectForComInstance(outputPtr, CreateObjectFlags.None);
+                    output.GetDesc(out var desc);
+
+                    if (desc.Monitor == hMonitor)
+                    {
+                        return output;
+                    }
+                }
+            }
+
+            adapter = default;
+            return default;
         }
 
         private static unsafe int FindPathInfo(string deviceName, out Win32.DISPLAYCONFIG_PATH_INFO pathInfo)
@@ -311,7 +438,8 @@ namespace OpenTK.Platform.Native.Windows
                         if (result != 0)
                             throw new Win32Exception(result);
 
-                        display.HdrInfo = new HdrInfo()
+                        display.HasColorInfo = true;
+                        display.ColorInfo = new DisplayColorInfo()
                         {
                             IsAdvancedColorInfo2 = true,
                             HdrSupported = colorInfo2.union.highDynamicRangeSupported,
@@ -348,7 +476,8 @@ namespace OpenTK.Platform.Native.Windows
                             hdrEnabled = true;
                         }
 
-                        display.HdrInfo = new HdrInfo()
+                        display.HasColorInfo = true;
+                        display.ColorInfo = new DisplayColorInfo()
                         {
                             IsAdvancedColorInfo2 = false,
                             HdrSupported = hdrSupported,
@@ -356,6 +485,30 @@ namespace OpenTK.Platform.Native.Windows
                             HdrActive = hdrEnabled,
                             ColorEncoding = (ColorEncoding)colorInfo.colorEncoding,
                             SDRWhitePoint = whiteLevel.SDRWhiteLevel,
+                            HasColorVolumeInfo = false,
+                            ColorVolume = RGBColorVolume.DefaultSRGBColorVolume,
+                        };
+                    }
+
+                    var dxgiOutput = FindDXGIOutput(display.Monitor, out var dxgiAdapter);
+                    var dxgiOutput6 = dxgiOutput as Dxgi.IDXGIOutput6;
+
+                    if (dxgiOutput6 != null)
+                    {
+                        dxgiOutput6.GetDesc1(out var desc);
+
+                        RGBColorVolume colorVolume;
+                        colorVolume.RedPrimary = (Vector2)desc.RedPrimary;
+                        colorVolume.GreenPrimary = (Vector2)desc.GreenPrimary;
+                        colorVolume.BluePrimary = (Vector2)desc.BluePrimary;
+                        colorVolume.WhitePoint = (Vector2)desc.WhitePoint;
+                        colorVolume.MinLuminance = desc.MinLuminance;
+                        colorVolume.MaxLuminance = desc.MaxLuminance;
+                        colorVolume.MaxFullFrameLuminance = desc.MaxFullFrameLuminance;
+                        display.ColorInfo = display.ColorInfo with {
+                            HasColorVolumeInfo = true,
+                            ColorVolume = colorVolume,
+                            ColorSpace = (ColorSpace)desc.ColorSpace,
                         };
                     }
                 }
@@ -575,8 +728,6 @@ namespace OpenTK.Platform.Native.Windows
                 if ((lpDevMode.dmFields & RequiredFields) != RequiredFields)
                     throw new PalException(this, $"Adapter setting {modeIndex - 1} didn't have all required fields set. dmFields={lpDevMode.dmFields}, requiredFields={RequiredFields}");
 
-
-
                 modes.Add(new VideoMode((int)lpDevMode.dmPelsWidth, (int)lpDevMode.dmPelsHeight, lpDevMode.dmDisplayFrequency, (int)lpDevMode.dmBitsPerPel));
             }
 
@@ -637,19 +788,24 @@ namespace OpenTK.Platform.Native.Windows
             scaleY = dpiY / DefaultDPI;
         }
 
-        /// <inheritdoc/>
-        public bool GetHDRInfo(DisplayHandle handle, out HdrInfo hdrInfo)
+        /// <summary>
+        /// Temporary API: Gets the color and HDR info from a monitor.
+        /// </summary>
+        /// <param name="handle"></param>
+        /// <param name="displayColorInfo"></param>
+        /// <returns></returns>
+        public bool GetColorInfo(DisplayHandle handle, out DisplayColorInfo displayColorInfo)
         {
             HMonitor hmonitor = handle.As<HMonitor>(this);
 
-            if (hmonitor.HdrInfo.HasValue)
+            if (hmonitor.HasColorInfo)
             {
-                hdrInfo = hmonitor.HdrInfo.Value;
+                displayColorInfo = hmonitor.ColorInfo;
                 return true;
             }
             else
             {
-                hdrInfo = default;
+                displayColorInfo = default;
                 return true;
             }
         }

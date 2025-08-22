@@ -4,36 +4,6 @@ using OpenTK.Platform.Native.Windows;
 
 namespace OpenTK.Platform
 {
-    public enum ColorEncoding : uint
-    {
-        Rgb = 0,
-        YCbCr444 = 1,
-        YCbCr422 = 2,
-        YCbCr420 = 3,
-        Intensity = 4,
-    }
-
-/// <summary>
-/// Display HDR info.
-/// </summary>
-// FIXME: Indicate support and enabled difference...?
-public struct HdrInfo
-    {
-        public bool IsAdvancedColorInfo2;
-
-        public bool HdrSupported;
-        public bool? HdrEnabled;
-        public bool HdrActive;
-
-        public bool WideColorGammutSupported;
-        public bool WideColorGammutEnabled;
-        public bool WideColorGammutActive;
-
-        public ColorEncoding ColorEncoding;
-
-        public ulong SDRWhitePoint;
-    }
-
     /// <summary>
     /// Interface for drivers which provide the display component.
     /// </summary>
@@ -156,12 +126,13 @@ public struct HdrInfo
         /// <param name="scaleY">The Y-axis scale of the monitor.</param>
         void GetDisplayScale(DisplayHandle handle, out float scaleX, out float scaleY);
 
+        // FIXME: Figure out the API for this...
         /// <summary>
         /// Gets the HDR info of the display, or if the display does not support HDR this function returns <see langword="false"/>.
         /// </summary>
         /// <param name="handle">Handle to a display.</param>
         /// <param name="hdrInfo">HDR info about this display if the display supports HDR.</param>
         /// <returns><see langword="true"/> if the display supports HDR, or <see langword="false"/> if the display does not support HDR.</returns>
-        bool GetHDRInfo(DisplayHandle handle, out HdrInfo hdrInfo);
+        //bool GetHDRInfo(DisplayHandle handle, out HdrInfo hdrInfo);
     }
 }

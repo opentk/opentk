@@ -149,7 +149,8 @@ namespace OpenTK.Platform.Native.Windows
         public int DpiY { get; set; }
 
         // FIXME: Can this change during the lifetime of the display??
-        public HdrInfo? HdrInfo { get; set; }
+        public bool HasColorInfo { get; set; }
+        public DisplayColorInfo ColorInfo { get; set; }
     }
 
     internal class Joystick : JoystickHandle
