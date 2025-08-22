@@ -1820,7 +1820,7 @@ namespace OpenTK.Mathematics
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static unsafe void InvertSse3(in Matrix4 mat, out Matrix4 result)
+        private static unsafe void InvertSse3(in Matrix4 mat, out Matrix4 result)
         {
 #pragma warning disable SA1114 // Parameter list should follow declaration
 #pragma warning disable SA1312 // Variable names should begin with lower-case letter
