@@ -1819,7 +1819,6 @@ namespace OpenTK.Mathematics
             }
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static unsafe void InvertSse3(in Matrix4 mat, out Matrix4 result)
         {
 #pragma warning disable SA1114 // Parameter list should follow declaration
@@ -2031,7 +2030,6 @@ namespace OpenTK.Mathematics
 #pragma warning restore SA1515 // Single-line comment should be preceded by blank line
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static unsafe void InvertFallback(in Matrix4 mat, out Matrix4 result)
         {
             // Original implementation can be found here:
