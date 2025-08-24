@@ -2010,7 +2010,7 @@ namespace OpenTK.Mathematics
 
             if (Math.Abs(det) < double.Epsilon)
             {
-                throw new InvalidOperationException("Matrix is singular and cannot be inverted.");
+                MathHelper.ThrowInvalidOperationException("Matrix is singular and cannot be inverted.");
             }
 
             double invDet = 1.0f / det;

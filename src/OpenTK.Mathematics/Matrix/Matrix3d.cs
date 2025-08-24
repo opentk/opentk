@@ -1121,7 +1121,7 @@ namespace OpenTK.Mathematics
 
             if (det == 0f)
             {
-                throw new InvalidOperationException("Matrix is singular and cannot be inverted.");
+                MathHelper.ThrowInvalidOperationException("Matrix is singular and cannot be inverted.");
             }
 
             // Compute adjoint:

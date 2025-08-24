@@ -1991,7 +1991,7 @@ namespace OpenTK.Mathematics
 
             if (MathF.Abs(detM.GetElement(0)) < float.Epsilon)
             {
-                throw new InvalidOperationException("Matrix is singular and cannot be inverted.");
+                MathHelper.ThrowInvalidOperationException("Matrix is singular and cannot be inverted.");
             }
 
             // const __m128 adjSignMask = _mm_setr_ps(1.f, -1.f, -1.f, 1.f);
@@ -2058,7 +2058,7 @@ namespace OpenTK.Mathematics
 
             if (MathF.Abs(det) < float.Epsilon)
             {
-                throw new InvalidOperationException("Matrix is singular and cannot be inverted.");
+                MathHelper.ThrowInvalidOperationException("Matrix is singular and cannot be inverted.");
             }
 
             float invDet = 1.0f / det;
