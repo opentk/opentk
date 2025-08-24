@@ -13,7 +13,7 @@ namespace OpenALTest
 {
     internal class ALTest
     {
-        public static ALCContextAttributes GetContextAttributes(ALCDevice device)
+        public static ALCContextAttributes ALCGetContextAttributes(ALCDevice device)
         {
             int size = 0;
             ALC.GetInteger(device, OpenTK.Audio.OpenAL.ALC.GetPNameIV.AttributesSize, 1, ref size);
@@ -148,7 +148,7 @@ namespace OpenALTest
             ALC.GetInteger(device, OpenTK.Audio.OpenAL.ALC.GetPNameIV.MinorVersion, 1, ref alcMinorVersion);
             string alcExts = ALC.GetString(device, OpenTK.Audio.OpenAL.ALC.StringName.Extensions);
 
-            var attrs = GetContextAttributes(device);
+            var attrs = ALCGetContextAttributes(device);
             Console.WriteLine($"Attributes: {attrs}");
 
             string exts = AL.GetString(OpenTK.Audio.OpenAL.StringName.Extensions);
