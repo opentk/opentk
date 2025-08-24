@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace OpenTK.Platform.Native.Windows
 {
-    internal class VulkanComponent : IVulkanComponent
+    public class VulkanComponent : IVulkanComponent
     {
         /// <inheritdoc/>
         public string Name => nameof(VulkanComponent);

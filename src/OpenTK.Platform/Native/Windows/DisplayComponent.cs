@@ -1,18 +1,110 @@
-﻿using OpenTK.Platform;
-using OpenTK.Core.Utility;
+﻿using OpenTK.Core.Utility;
+using OpenTK.Graphics.Vulkan;
 using OpenTK.Mathematics;
+using OpenTK.Platform;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using System.Runtime.InteropServices.Marshalling;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace OpenTK.Platform.Native.Windows
 {
+    public enum ColorEncoding : uint
+    {
+        Rgb = 0,
+        YCbCr444 = 1,
+        YCbCr422 = 2,
+        YCbCr420 = 3,
+        Intensity = 4,
+    }
+
+    public enum ColorSpace : uint
+    {
+        RGB_FULL_G22_NONE_P709 = 0,
+        RGB_FULL_G10_NONE_P709 = 1,
+        RGB_STUDIO_G22_NONE_P709 = 2,
+        RGB_STUDIO_G22_NONE_P2020 = 3,
+        RESERVED = 4,
+        YCBCR_FULL_G22_NONE_P709_X601 = 5,
+        YCBCR_STUDIO_G22_LEFT_P601 = 6,
+        YCBCR_FULL_G22_LEFT_P601 = 7,
+        YCBCR_STUDIO_G22_LEFT_P709 = 8,
+        YCBCR_FULL_G22_LEFT_P709 = 9,
+        YCBCR_STUDIO_G22_LEFT_P2020 = 10,
+        YCBCR_FULL_G22_LEFT_P2020 = 11,
+        RGB_FULL_G2084_NONE_P2020 = 12,
+        YCBCR_STUDIO_G2084_LEFT_P2020 = 13,
+        RGB_STUDIO_G2084_NONE_P2020 = 14,
+        YCBCR_STUDIO_G22_TOPLEFT_P2020 = 15,
+        YCBCR_STUDIO_G2084_TOPLEFT_P2020 = 16,
+        RGB_FULL_G22_NONE_P2020 = 17,
+        YCBCR_STUDIO_GHLG_TOPLEFT_P2020 = 18,
+        YCBCR_FULL_GHLG_TOPLEFT_P2020 = 19,
+        RGB_STUDIO_G24_NONE_P709 = 20,
+        RGB_STUDIO_G24_NONE_P2020 = 21,
+        YCBCR_STUDIO_G24_LEFT_P709 = 22,
+        YCBCR_STUDIO_G24_LEFT_P2020 = 23,
+        YCBCR_STUDIO_G24_TOPLEFT_P2020 = 24,
+        CUSTOM = 0xFFFFFFFF
+    }
+
+    public struct RGBColorVolume
+    {
+        internal static readonly RGBColorVolume DefaultSRGBColorVolume = new RGBColorVolume()
+        {
+            RedPrimary = (0.6400f, 0.3300f),
+            GreenPrimary = (0.3000f, 0.6000f),
+            BluePrimary = (0.1500f, 0.0600f),
+            WhitePoint = (0.3127f, 0.3290f),
+            MinLuminance = 0,
+            MaxLuminance = 80,
+            MaxFullFrameLuminance = 80,
+        };
+
+        public Vector2 RedPrimary;
+        public Vector2 GreenPrimary;
+        public Vector2 BluePrimary;
+        public Vector2 WhitePoint;
+
+        public float MinLuminance;
+        public float MaxLuminance;
+        public float MaxFullFrameLuminance;
+    }
+
+    /// <summary>
+    /// Display color and HDR info.
+    /// </summary>
+    // FIXME: Indicate support and enabled difference...?
+    public struct DisplayColorInfo
+    {
+        public bool IsAdvancedColorInfo2;
+
+        public bool HdrSupported;
+        public bool? HdrEnabled;
+        public bool HdrActive;
+
+        public bool WideColorGammutSupported;
+        public bool WideColorGammutEnabled;
+        public bool WideColorGammutActive;
+
+        public ColorEncoding ColorEncoding;
+        public ColorSpace ColorSpace;
+
+        public ulong SDRWhitePoint;
+
+        public bool HasColorVolumeInfo;
+        public RGBColorVolume ColorVolume;
+
+    }
+
     public class DisplayComponent : IDisplayComponent
     {
         /// <inheritdoc/>
@@ -65,6 +157,122 @@ namespace OpenTK.Platform.Native.Windows
             }
 
             return monitorHandle;
+        }
+
+        private static Dxgi.IDXGIOutput? FindDXGIOutput(IntPtr hMonitor, out Dxgi.IDXGIAdapter? adapter)
+        {
+            // From my understaind creating this object should be cheap?
+            // - Noggin_bops 2025-08-22
+            ComWrappers wrapper = new StrategyBasedComWrappers();
+
+            Guid guid = typeof(Dxgi.IDXGIFactory).GUID;
+            int result = Dxgi.CreateDXGIFactory(guid, out IntPtr factoryPtr);
+            if (result != 0)
+            {
+                throw new Win32Exception(result);
+            }
+
+            Dxgi.IDXGIFactory factory = (Dxgi.IDXGIFactory)wrapper.GetOrCreateObjectForComInstance(factoryPtr, CreateObjectFlags.None);
+
+            uint adapterIdx = 0;
+            while (factory.EnumAdapters(adapterIdx++, out IntPtr adapterPtr) != Dxgi.DXGI_ERROR_NOT_FOUND)
+            {
+                adapter = (Dxgi.IDXGIAdapter)wrapper.GetOrCreateObjectForComInstance(adapterPtr, CreateObjectFlags.None);
+
+                uint outputIdx = 0;
+                while (adapter.EnumOutputs(outputIdx++, out IntPtr outputPtr) != Dxgi.DXGI_ERROR_NOT_FOUND)
+                {
+                    Dxgi.IDXGIOutput output = (Dxgi.IDXGIOutput)wrapper.GetOrCreateObjectForComInstance(outputPtr, CreateObjectFlags.None);
+                    output.GetDesc(out var desc);
+
+                    if (desc.Monitor == hMonitor)
+                    {
+                        return output;
+                    }
+                }
+            }
+
+            adapter = default;
+            return default;
+        }
+
+        private static unsafe int FindPathInfo(string deviceName, out Win32.DISPLAYCONFIG_PATH_INFO pathInfo)
+        {
+            int result = Win32.S_OK;
+            uint NumPathArrayElements = 0;
+            uint NumModeInfoArrayElements = 0;
+
+            Win32.DISPLAYCONFIG_PATH_INFO[] PathInfoArray;
+            Win32.DISPLAYCONFIG_MODE_INFO[] ModeInfoArray;
+            do
+            {
+                result = Win32.GetDisplayConfigBufferSizes(QDC.OnlyActivePaths, out NumPathArrayElements, out NumModeInfoArrayElements);
+                if (result != 0)
+                {
+                    pathInfo = default;
+                    return result;
+                }
+
+                PathInfoArray = new Win32.DISPLAYCONFIG_PATH_INFO[NumPathArrayElements];
+                ModeInfoArray = new Win32.DISPLAYCONFIG_MODE_INFO[NumModeInfoArrayElements];
+
+                result = Win32.QueryDisplayConfig(QDC.OnlyActivePaths, ref NumPathArrayElements, ref PathInfoArray[0], ref NumModeInfoArrayElements, ref ModeInfoArray[0], ref Unsafe.NullRef<DISPLAYCONFIG_TOPOLOGY_ID>());
+            } while (result == Win32.ERROR_INSUFFICIENT_BUFFER);
+
+            int DesiredPathIdx = -1;
+
+            if (result == 0)
+            {
+                // Loop through all sources until the one which matches the 'monitor' is found.
+                for (int PathIdx = 0; PathIdx < NumPathArrayElements; ++PathIdx)
+                {
+                    Win32.DISPLAYCONFIG_SOURCE_DEVICE_NAME SourceName = default;
+                    SourceName.header.type = DISPLAYCONFIG_DEVICE_INFO_TYPE.GetSourceName;
+                    SourceName.header.size = (uint)sizeof(Win32.DISPLAYCONFIG_SOURCE_DEVICE_NAME);
+                    SourceName.header.adapterId = PathInfoArray[PathIdx].sourceInfo.adapterId;
+                    SourceName.header.id = PathInfoArray[PathIdx].sourceInfo.id;
+
+                    result = Win32.DisplayConfigGetDeviceInfo(ref SourceName.header);
+                    if (result == 0)
+                    {
+                        ReadOnlySpan<char> gdiDeviceName = Win32.SliceAtFirstNull(new ReadOnlySpan<char>(SourceName.viewGdiDeviceName, 32));
+                        if (deviceName.AsSpan().SequenceEqual(gdiDeviceName))
+                        {
+                            // Found the source which matches this hmonitor. The paths are given in path-priority order
+                            // so the first found is the most desired, unless we later find an internal.
+                            if (DesiredPathIdx == -1 || IsInternalVideoOutput(PathInfoArray[PathIdx].targetInfo.outputTechnology))
+                            {
+                                DesiredPathIdx = PathIdx;
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (DesiredPathIdx != -1)
+            {
+                pathInfo = PathInfoArray[DesiredPathIdx];
+            }
+            else
+            {
+                pathInfo = default;
+                result = result != 0 ? result : Win32.E_INVALIDARG;
+            }
+
+            return result;
+
+            static bool IsInternalVideoOutput(DISPLAYCONFIG_VIDEO_OUTPUT_TECHNOLOGY videoOutputTechnologyType)
+            {
+                switch (videoOutputTechnologyType)
+                {
+                    case DISPLAYCONFIG_VIDEO_OUTPUT_TECHNOLOGY.Internal:
+                    case DISPLAYCONFIG_VIDEO_OUTPUT_TECHNOLOGY.DisplayPortEmbedded:
+                    case DISPLAYCONFIG_VIDEO_OUTPUT_TECHNOLOGY.UDIEmbedded:
+                        return true;
+                    default:
+                        return false;
+                }
+            }
         }
 
         internal static void UpdateMonitors(bool sendEvents, ILogger? logger)
@@ -195,6 +403,116 @@ namespace OpenTK.Platform.Native.Windows
 
             // Console.WriteLine();
             // Console.WriteLine();
+
+            unsafe {
+                foreach (var display in newDisplays)
+                {
+                    // FIXME: O(n^2) loop + unecessary OS calls.
+                    // We should get the path info list once and find the
+                    // paths in that list for each new monitor.
+                    // - Noggin_bops
+                    int result = FindPathInfo(display.AdapterName, out Win32.DISPLAYCONFIG_PATH_INFO path);
+                    if (result != 0)
+                        throw new Win32Exception(result);
+
+                    display.RefreshRate = path.targetInfo.refreshRate.Numerator / (float)path.targetInfo.refreshRate.Denominator;
+
+                    Win32.DISPLAYCONFIG_SDR_WHITE_LEVEL whiteLevel = new Win32.DISPLAYCONFIG_SDR_WHITE_LEVEL();
+                    whiteLevel.header.type = DISPLAYCONFIG_DEVICE_INFO_TYPE.GetSDRWhiteLevel;
+                    whiteLevel.header.size = (uint)sizeof(Win32.DISPLAYCONFIG_SDR_WHITE_LEVEL);
+                    whiteLevel.header.adapterId = path.targetInfo.adapterId;
+                    whiteLevel.header.id = path.targetInfo.id;
+                    result = Win32.DisplayConfigGetDeviceInfo(ref whiteLevel);
+                    if (result != 0)
+                        throw new Win32Exception(result);
+
+                    // 24H2 or greater.
+                    if (OperatingSystem.IsWindowsVersionAtLeast(10, 0, 26100))
+                    {
+                        Win32.DISPLAYCONFIG_GET_ADVANCED_COLOR_INFO_2 colorInfo2 = new Win32.DISPLAYCONFIG_GET_ADVANCED_COLOR_INFO_2();
+                        colorInfo2.header.type = DISPLAYCONFIG_DEVICE_INFO_TYPE.GetAdvancedColorInfo2;
+                        colorInfo2.header.size = (uint)sizeof(Win32.DISPLAYCONFIG_GET_ADVANCED_COLOR_INFO_2);
+                        colorInfo2.header.adapterId = path.targetInfo.adapterId;
+                        colorInfo2.header.id = path.targetInfo.id;
+                        result = Win32.DisplayConfigGetDeviceInfo(ref colorInfo2);
+                        if (result != 0)
+                            throw new Win32Exception(result);
+
+                        display.HasColorInfo = true;
+                        display.ColorInfo = new DisplayColorInfo()
+                        {
+                            IsAdvancedColorInfo2 = true,
+                            HdrSupported = colorInfo2.union.highDynamicRangeSupported,
+                            HdrEnabled = colorInfo2.union.highDynamicRangeUserEnabled,
+                            HdrActive = colorInfo2.activeColorMode == DISPLAYCONFIG_ADVANCED_COLOR_MODE.DISPLAYCONFIG_ADVANCED_COLOR_MODE_HDR,
+                            WideColorGammutSupported = colorInfo2.union.wideColorSupported,
+                            WideColorGammutEnabled = colorInfo2.union.wideColorUserEnabled,
+                            WideColorGammutActive = colorInfo2.activeColorMode != DISPLAYCONFIG_ADVANCED_COLOR_MODE.DISPLAYCONFIG_ADVANCED_COLOR_MODE_SDR,
+                            ColorEncoding = (ColorEncoding)colorInfo2.colorEncoding,
+                            SDRWhitePoint = whiteLevel.SDRWhiteLevel,
+                        };
+                    }
+                    else
+                    {
+                        Win32.DISPLAYCONFIG_GET_ADVANCED_COLOR_INFO colorInfo = new Win32.DISPLAYCONFIG_GET_ADVANCED_COLOR_INFO();
+                        colorInfo.header.type = DISPLAYCONFIG_DEVICE_INFO_TYPE.GetAdvancedColorInfo;
+                        colorInfo.header.size = (uint)sizeof(Win32.DISPLAYCONFIG_GET_ADVANCED_COLOR_INFO);
+                        colorInfo.header.adapterId = path.targetInfo.adapterId;
+                        colorInfo.header.id = path.targetInfo.id;
+                        result = Win32.DisplayConfigGetDeviceInfo(ref colorInfo);
+                        if (result != 0)
+                            throw new Win32Exception(result);
+
+                        bool hdrSupported = false;
+                        bool hdrEnabled = false;
+
+                        if (colorInfo.union.advancedColorSupported && !colorInfo.union.wideColorEnforced)
+                        {
+                            hdrSupported = true;
+                        }
+
+                        if (hdrSupported == true && colorInfo.union.advancedColorEnabled)
+                        {
+                            hdrEnabled = true;
+                        }
+
+                        display.HasColorInfo = true;
+                        display.ColorInfo = new DisplayColorInfo()
+                        {
+                            IsAdvancedColorInfo2 = false,
+                            HdrSupported = hdrSupported,
+                            HdrEnabled = null,
+                            HdrActive = hdrEnabled,
+                            ColorEncoding = (ColorEncoding)colorInfo.colorEncoding,
+                            SDRWhitePoint = whiteLevel.SDRWhiteLevel,
+                            HasColorVolumeInfo = false,
+                            ColorVolume = RGBColorVolume.DefaultSRGBColorVolume,
+                        };
+                    }
+
+                    var dxgiOutput = FindDXGIOutput(display.Monitor, out var dxgiAdapter);
+                    var dxgiOutput6 = dxgiOutput as Dxgi.IDXGIOutput6;
+
+                    if (dxgiOutput6 != null)
+                    {
+                        dxgiOutput6.GetDesc1(out var desc);
+
+                        RGBColorVolume colorVolume;
+                        colorVolume.RedPrimary = (Vector2)desc.RedPrimary;
+                        colorVolume.GreenPrimary = (Vector2)desc.GreenPrimary;
+                        colorVolume.BluePrimary = (Vector2)desc.BluePrimary;
+                        colorVolume.WhitePoint = (Vector2)desc.WhitePoint;
+                        colorVolume.MinLuminance = desc.MinLuminance;
+                        colorVolume.MaxLuminance = desc.MaxLuminance;
+                        colorVolume.MaxFullFrameLuminance = desc.MaxFullFrameLuminance;
+                        display.ColorInfo = display.ColorInfo with {
+                            HasColorVolumeInfo = true,
+                            ColorVolume = colorVolume,
+                            ColorSpace = (ColorSpace)desc.ColorSpace,
+                        };
+                    }
+                }
+            }
 
             // FIXME: Maybe we should just send all of the data at once to the user.
 
@@ -468,6 +786,28 @@ namespace OpenTK.Platform.Native.Windows
 
             scaleX = dpiX / DefaultDPI;
             scaleY = dpiY / DefaultDPI;
+        }
+
+        /// <summary>
+        /// Temporary API: Gets the color and HDR info from a monitor.
+        /// </summary>
+        /// <param name="handle"></param>
+        /// <param name="displayColorInfo"></param>
+        /// <returns></returns>
+        public bool GetColorInfo(DisplayHandle handle, out DisplayColorInfo displayColorInfo)
+        {
+            HMonitor hmonitor = handle.As<HMonitor>(this);
+
+            if (hmonitor.HasColorInfo)
+            {
+                displayColorInfo = hmonitor.ColorInfo;
+                return true;
+            }
+            else
+            {
+                displayColorInfo = default;
+                return true;
+            }
         }
 
         /// <summary>

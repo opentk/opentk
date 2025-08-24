@@ -348,14 +348,12 @@ namespace OpenTK.Platform.Native.Windows
 
             char* titlePtr = (char*)Marshal.StringToHGlobalUni(title);
             char* directoryPtr = (char*)Marshal.StringToHGlobalUni(directory);
-            // FIXME: Do something to support default extension..
-            //char* defaultExt = (char*)Marshal.StringToHGlobalUni($"\0{allowedExtensions?[0].Ext}");
-
+            
             Win32.OPENFILENAMEW dialog;
             dialog.lStructSize = (uint)Marshal.SizeOf<Win32.OPENFILENAMEW>();
             dialog.hwndOwner = hwnd.HWnd;
             dialog.hInstance = 0;
-            dialog.lpstrFilter = extensionListPtr; // FIXME: Create a string with all of the required null terminations and internal strings.
+            dialog.lpstrFilter = extensionListPtr;
             dialog.lpstrCustomFilter = null;
             dialog.nMaxCustFilter = 0;
             dialog.nFilterIndex = 0;
@@ -368,7 +366,6 @@ namespace OpenTK.Platform.Native.Windows
             dialog.Flags = OFN.Explorer | OFN.HideReadOnly | (options.HasFlag(OpenDialogOptions.AllowMultiSelect) ? OFN.AllowMultiSelect : 0u);
             dialog.nFileOffset = 0;
             dialog.nFileExtension = 0;
-            // FIXME: This only appends 3 characters...
             dialog.lpstrDefExt = null;
             dialog.lCustData = 0;
             dialog.lpfnHook = 0;
@@ -396,8 +393,9 @@ namespace OpenTK.Platform.Native.Windows
             Marshal.FreeHGlobal((nint)extensionListPtr);
             Marshal.FreeHGlobal((nint)titlePtr);
             Marshal.FreeHGlobal((nint)directoryPtr);
-            //Marshal.FreeHGlobal((nint)defaultExt);
 
+            // FIXME: This length function is wrong when OFN.AllowMultiSelect is not enabled.
+            // - Noggin_bops 2025-08-12
             int length = 0;
             while (dialog.lpstrFile[length + 1] != 0)
             {
@@ -433,7 +431,7 @@ namespace OpenTK.Platform.Native.Windows
         }
 
         /// <inheritdoc/>
-        public unsafe string? ShowSaveDialog(WindowHandle parent, string title, string directory, DialogFileFilter[]? allowedExtensions, SaveDialogOptions options)
+        public unsafe string? ShowSaveDialog(WindowHandle parent, string title, string directory, string? defaultFileName, DialogFileFilter[]? allowedExtensions, SaveDialogOptions options)
         {
             HWND hwnd = parent.As<HWND>(this);
 
@@ -441,17 +439,25 @@ namespace OpenTK.Platform.Native.Windows
             
             char* titlePtr = (char*)Marshal.StringToHGlobalUni(title);
             char* directoryPtr = (char*)Marshal.StringToHGlobalUni(directory);
-            //char* defaultExt = (char*)Marshal.StringToHGlobalUni($"\0{allowedExtensions[0]}");
+            
+            char* filePtr = (char*)NativeMemory.AllocZeroed(MAX_FILE_LENGTH);
+
+            if (defaultFileName != null)
+            {
+                Span<char> file = new Span<char>(filePtr, MAX_FILE_LENGTH);
+                ReadOnlySpan<char> defaultFile = Path.Combine(directory, defaultFileName).AsSpan();
+                defaultFile.CopyTo(file);
+            }
 
             Win32.OPENFILENAMEW dialog;
             dialog.lStructSize = (uint)Marshal.SizeOf<Win32.OPENFILENAMEW>();
             dialog.hwndOwner = hwnd.HWnd;
             dialog.hInstance = 0;
-            dialog.lpstrFilter = extensionListPtr; // FIXME: Create a string with all of the required null terminations and internal strings.
+            dialog.lpstrFilter = extensionListPtr;
             dialog.lpstrCustomFilter = null;
             dialog.nMaxCustFilter = 0;
             dialog.nFilterIndex = 0;
-            dialog.lpstrFile = (char*)NativeMemory.AllocZeroed(MAX_FILE_LENGTH);
+            dialog.lpstrFile = filePtr;
             dialog.nMaxFile = MAX_FILE_LENGTH;
             dialog.lpstrFileTitle = null;
             dialog.nMaxFileTitle = 0;
@@ -460,7 +466,6 @@ namespace OpenTK.Platform.Native.Windows
             dialog.Flags = OFN.Explorer | OFN.OverwritePrompt;
             dialog.nFileOffset = 0;
             dialog.nFileExtension = 0;
-            // FIXME: This only appends 3 characters...
             dialog.lpstrDefExt = null;
             dialog.lCustData = 0;
             dialog.lpfnHook = 0;
@@ -488,24 +493,21 @@ namespace OpenTK.Platform.Native.Windows
             Marshal.FreeHGlobal((nint)extensionListPtr);
             Marshal.FreeHGlobal((nint)titlePtr);
             Marshal.FreeHGlobal((nint)directoryPtr);
-            //Marshal.FreeHGlobal((nint)defaultExt);
-
+            
+            // Because we don't have OFN.AllowMultiSelect enabled this will
+            // always be a simple null terminated string.
+            // - Noggin_bops 2025-08-12
             int length = 0;
-            while (dialog.lpstrFile[length + 1] != 0)
-            {
-                while (dialog.lpstrFile[++length] != 0) { }
-            }
+            while (dialog.lpstrFile[length++] != 0) {}
 
             string result;
-            // FIXME: Double check this logic...
-            Span<char> selectedFiles = new Span<char>(dialog.lpstrFile, length + 1);
+            Span<char> selectedFiles = new Span<char>(dialog.lpstrFile, length);
             {
-                // FIXME: What if the file name is weird or zero?
-                // We trim the last byte off the name as that is a null terminator.
+                // Length will always be at least 1 here due to counting the null terminator.
                 result = selectedFiles.Slice(0, selectedFiles.Length - 1).ToString();
             }
 
-            NativeMemory.Free(dialog.lpstrFile);
+            NativeMemory.Free(filePtr);
 
             return result;
         }

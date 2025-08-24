@@ -549,7 +549,10 @@ namespace OpenTK.Platform.Native.X11
         {
             XWindowHandle xwindow = window.As<XWindowHandle>(this);
 
-            Xutf8ResetIC(xwindow.IC);
+            if (xwindow.IC.Value != 0)
+            {
+                Xutf8ResetIC(xwindow.IC);
+            }
         }
 
         /// <inheritdoc/>
@@ -557,12 +560,15 @@ namespace OpenTK.Platform.Native.X11
         {
             XWindowHandle xwindow = window.As<XWindowHandle>(this);
 
-            XPoint spot;
-            spot.x = (short)float.Round(x);
-            spot.y = (short)float.Round(y + height);
-            IntPtr preedit_attr = XVaCreateNestedList(0, (IntPtr)Utils.AsPtr(XNSpotLocation), (IntPtr)(&spot), IntPtr.Zero);
-            XSetICValues(xwindow.IC, Utils.AsPtr(XNPreeditAttributes), preedit_attr, IntPtr.Zero);
-            XFree(preedit_attr);
+            if (xwindow.IC.Value != 0)
+            {
+                XPoint spot;
+                spot.x = (short)float.Round(x);
+                spot.y = (short)float.Round(y + height);
+                IntPtr preedit_attr = XVaCreateNestedList(0, (IntPtr)Utils.AsPtr(XNSpotLocation), (IntPtr)(&spot), IntPtr.Zero);
+                XSetICValues(xwindow.IC, Utils.AsPtr(XNPreeditAttributes), preedit_attr, IntPtr.Zero);
+                XFree(preedit_attr);
+            }
         }
 
         /// <inheritdoc/>
@@ -570,7 +576,10 @@ namespace OpenTK.Platform.Native.X11
         {
             XWindowHandle xwindow = window.As<XWindowHandle>(this);
 
-            Xutf8ResetIC(xwindow.IC);
+            if (xwindow.IC.Value != 0)
+            {
+                Xutf8ResetIC(xwindow.IC);
+            }
         }
     }
 }

@@ -1,12 +1,14 @@
 ﻿using ImGuiNET;
-using OpenTK.Platform;
+using OpenTK.Graphics.OpenGL;
 using OpenTK.Mathematics;
+using OpenTK.Platform;
 using OpenTK.Platform.Native;
 using OpenTK.Platform.Native.macOS;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.WebSockets;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -45,6 +47,10 @@ namespace OpenTK.Backends.Tests
         private Box2i BoundingBox = Box2i.Empty;
 
         private int SelectedDisplay = -1;
+
+        private const int Granularity = 3;
+        private Vector2[]? Locus = null;
+        private static readonly Vector2i LocusDiagramSize = (200, 200);
 
         const float PADDING = 5;
         static readonly Vector2 PADDINGV2 = (PADDING, PADDING);
@@ -242,6 +248,67 @@ namespace OpenTK.Backends.Tests
                 ImGui.Text($"Scale factor: {disp.Scale}");
 
                 DisplayHandle handle = Toolkit.Display.Open(disp.Index);
+
+                Platform.Native.Windows.DisplayColorInfo colorInfo = default;
+                bool hasColorInfo = (Toolkit.Display as Platform.Native.Windows.DisplayComponent)?.GetColorInfo(handle, out colorInfo) ?? false;
+                ImGui.Text($"Has HDR Info: {hasColorInfo}");
+                if (hasColorInfo)
+                {
+                    ImGui.Text($"  Advanced Color Info 2: {colorInfo.IsAdvancedColorInfo2}");
+                    ImGui.Text($"  HDR Supported: {colorInfo.HdrSupported} | Enabled: {colorInfo.HdrEnabled?.ToString() ?? "?"} | Active: {colorInfo.HdrActive}");
+                    ImGui.Text($"  WGC Supported: {colorInfo.WideColorGammutSupported} | Enabled: {colorInfo.WideColorGammutEnabled} | Active: {colorInfo.WideColorGammutActive}");
+                    ImGui.Text($"  SDR White point: {colorInfo.SDRWhitePoint}");
+                    ImGui.Text($"  Color encoding: {colorInfo.ColorEncoding}");
+
+                    ImGui.Text($"  Has color volume info: {colorInfo.HasColorVolumeInfo}");
+                    ImGui.Columns(2);
+                    ImGui.SetColumnWidth(0, 200 + 3 * ImGui.GetStyle().FramePadding.X);
+                    {
+                        Vector2 diagramPos = ImGui.GetCursorScreenPos().ToOpenTK();
+                        Vector2 diagramSize = LocusDiagramSize;
+                        Box2 diagramBounds = Box2.FromSize(diagramPos, diagramSize);
+
+                        uint bgColor = ImGui.GetColorU32(ImGuiCol.FrameBg);
+                        uint textColor = ImGui.GetColorU32(ImGuiCol.Text);
+                        uint borderColor = 0xFF000000;
+
+                        ImDrawListPtr drawList = ImGui.GetWindowDrawList();
+                        drawList.PushClipRect(diagramPos.AsNumerics(), (diagramPos + diagramSize).ToNumerics());
+
+                        draw_list.AddRectFilled(diagramPos.AsNumerics(), (diagramPos + diagramSize).ToNumerics(), 0xFF444444, 5f, ImDrawFlags.RoundCornersAll);
+
+                        ColorMatchingFunctions.CalculateLocus(ColorMatchingFunctions.CIEXYZ1931, ref Locus, Granularity, diagramBounds.Scaled(new Vector2(0.95f), diagramBounds.Center), out var xyTransform);
+
+                        Vector2 red = xyTransform.Transform(colorInfo.ColorVolume.RedPrimary);
+                        Vector2 green = xyTransform.Transform(colorInfo.ColorVolume.GreenPrimary);
+                        Vector2 blue = xyTransform.Transform(colorInfo.ColorVolume.BluePrimary);
+                        Vector2 white = xyTransform.Transform(colorInfo.ColorVolume.WhitePoint);
+
+                        // FIXME: We might need a custom shader to do the colors properly...
+                        drawList.AddConvexPolyFilled(ref Locus.AsSpan().ToNumerics()[0], Locus.Length, textColor);
+
+                        drawList.AddTriangle(red.AsNumerics(), green.AsNumerics(), blue.AsNumerics(), borderColor, 2);
+                        drawList.AddCircleFilled(white.AsNumerics(), 2, borderColor);
+
+
+                        drawList.PopClipRect();
+                        ImGui.SetCursorScreenPos(diagramPos.ToNumerics());
+                        ImGui.Dummy(diagramSize.AsNumerics());
+                    }
+                    ImGui.NextColumn();
+                    {
+                        ImGui.Text($"Red primary: {colorInfo.ColorVolume.RedPrimary}");
+                        ImGui.Text($"Green primary: {colorInfo.ColorVolume.GreenPrimary}");
+                        ImGui.Text($"Blue primary: {colorInfo.ColorVolume.BluePrimary}");
+                        ImGui.Text($"White point: {colorInfo.ColorVolume.WhitePoint}");
+                        ImGui.Text($"Min luminance (cd/m^2): {colorInfo.ColorVolume.MinLuminance}");
+                        ImGui.Text($"Max luminance (cd/m^2): {colorInfo.ColorVolume.MaxLuminance}"); ImGui.SameLine(); ImGuiUtils.HelpMarker("Most HDR displays can only achive this luminance for a small area of the screen. The \"full frame\" luminance describes the luminance that can be achived when a single color fills the entire area of the display.");
+                        ImGui.Text($"Max full frame luminance (cd/m^2): {colorInfo.ColorVolume.MaxFullFrameLuminance}"); ImGui.SameLine(); ImGuiUtils.HelpMarker("The luminance that can be achived for a single color that fills the entire area of the display.");
+                        ImGui.Text($"Color space: {colorInfo.ColorSpace}");
+                    }
+                    ImGui.Columns(1);
+                }
+
                 Toolkit.Display.GetVideoMode(handle, out VideoMode currentVideoMode);
                 ImGui.Text($"Video mode: {currentVideoMode}");
 

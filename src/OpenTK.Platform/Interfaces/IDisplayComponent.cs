@@ -1,5 +1,6 @@
 using System;
 using OpenTK.Mathematics;
+using OpenTK.Platform.Native.Windows;
 
 namespace OpenTK.Platform
 {
@@ -124,5 +125,14 @@ namespace OpenTK.Platform
         /// <param name="scaleX">The X-axis scale of the monitor.</param>
         /// <param name="scaleY">The Y-axis scale of the monitor.</param>
         void GetDisplayScale(DisplayHandle handle, out float scaleX, out float scaleY);
+
+        // FIXME: Figure out the API for this...
+        /// <summary>
+        /// Gets the HDR info of the display, or if the display does not support HDR this function returns <see langword="false"/>.
+        /// </summary>
+        /// <param name="handle">Handle to a display.</param>
+        /// <param name="hdrInfo">HDR info about this display if the display supports HDR.</param>
+        /// <returns><see langword="true"/> if the display supports HDR, or <see langword="false"/> if the display does not support HDR.</returns>
+        //bool GetHDRInfo(DisplayHandle handle, out HdrInfo hdrInfo);
     }
 }

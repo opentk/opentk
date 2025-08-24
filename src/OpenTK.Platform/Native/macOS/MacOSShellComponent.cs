@@ -78,13 +78,13 @@ namespace OpenTK.Platform.Native.macOS
             return (MacOSShellComponent)((GCHandle)shellCompPtr).Target!;
         }
 
-        /// <inheritdocs/>
+        /// <inheritdoc/>
         public string Name => nameof(MacOSShellComponent);
 
-        /// <inheritdocs/>
+        /// <inheritdoc/>
         public PalComponents Provides => PalComponents.Shell;
 
-        /// <inheritdocs/>
+        /// <inheritdoc/>
         public ILogger? Logger { get; set; }
 
         private int ScreenSaverAssertion = 0;
@@ -96,7 +96,7 @@ namespace OpenTK.Platform.Native.macOS
         private IntPtr ProgressView;
         private CVDisplayLinkRef DisplayLink;
 
-        /// <inheritdocs/>
+        /// <inheritdoc/>
         public unsafe void Initialize(ToolkitOptions options)
         {
             string? appName = options.ApplicationName;
@@ -247,7 +247,7 @@ namespace OpenTK.Platform.Native.macOS
             DrawRoundedRect(rectProgress);
         }
 
-        /// <inheritdocs/>
+        /// <inheritdoc/>
         public void AllowScreenSaver(bool allow, string? disableReason)
         {
             if (allow == false)
@@ -279,13 +279,13 @@ namespace OpenTK.Platform.Native.macOS
             }
         }
 
-        /// <inheritdocs/>
+        /// <inheritdoc/>
         public bool IsScreenSaverAllowed()
         {
             return ScreenSaverAssertion == 0;
         }
 
-        /// <inheritdocs/>
+        /// <inheritdoc/>
         public unsafe BatteryStatus GetBatteryInfo(out BatteryInfo batteryInfo)
         {
             BatteryStatus status;
@@ -439,13 +439,13 @@ namespace OpenTK.Platform.Native.macOS
             }
         }
 
-        /// <inheritdocs/>
+        /// <inheritdoc/>
         public ThemeInfo GetPreferredTheme()
         {
             return GetCurrentTheme();
         }
 
-        /// <inheritdocs/>
+        /// <inheritdoc/>
         public unsafe SystemMemoryInfo GetSystemMemoryInformation()
         {
             // Seems like host_statistics64 doesn't like to have a count >15 on my test machine

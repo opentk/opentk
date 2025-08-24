@@ -112,7 +112,7 @@ namespace OpenTK.Backends.Tests
             {
                 if (ImGui.Button("Save file"))
                 {
-                    saveFileFilename = Toolkit.Dialog.ShowSaveDialog(Program.Window, "Save file (custom title)", Directory.GetCurrentDirectory(), null, 0);
+                    saveFileFilename = Toolkit.Dialog.ShowSaveDialog(Program.Window, "Save file (custom title)", Directory.GetCurrentDirectory(), "defaultFileName.txt", null, 0);
                 }
 
                 {
@@ -121,7 +121,7 @@ namespace OpenTK.Backends.Tests
                         ImGui.SameLine();
                         if (ImGui.Button("Open save (no window)"))
                         {
-                            saveFileFilename = macOSDialog.ShowSaveDialogNoWindow("Save file (custom title)", Directory.GetCurrentDirectory(), null, 0);
+                            saveFileFilename = macOSDialog.ShowSaveDialogNoWindow("Save file (custom title)", Directory.GetCurrentDirectory(), "defaultFileName.txt", null, 0);
                         }
                     }
                 }

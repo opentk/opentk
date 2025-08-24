@@ -431,32 +431,27 @@ namespace OpenTK.Mathematics
         {
             readonly get
             {
-                if (((uint)rowIndex) < 4 && ((uint)columnIndex) < 4)
+                if (((uint)rowIndex) >= 4 || ((uint)columnIndex) >= 4)
                 {
-                    return GetRowUnsafe(in this, rowIndex)[columnIndex];
+                    MathHelper.ThrowOutOfRangeException("You tried to access this matrix at: ({0}, {1})", rowIndex, columnIndex);
                 }
-                else
-                {
-                    MathHelper.ThrowOutOfRangeException($"You tried to access this matrix at: ({rowIndex}, {columnIndex})");
-                    return default;
-                }
+
+                return GetRowUnsafe(in this, rowIndex)[columnIndex];
             }
 
             set
             {
-                if (((uint)rowIndex) < 4 && ((uint)columnIndex) < 4)
+                if (((uint)rowIndex) >= 4 || ((uint)columnIndex) >= 4)
                 {
-                    GetRowUnsafe(in this, rowIndex)[columnIndex] = value;
+                    MathHelper.ThrowOutOfRangeException("You tried to set this matrix at: ({0}, {1})", rowIndex, columnIndex);
                 }
-                else
-                {
-                    MathHelper.ThrowOutOfRangeException($"You tried to set this matrix at: ({rowIndex}, {columnIndex})");
-                }
+
+                GetRowUnsafe(in this, rowIndex)[columnIndex] = value;
             }
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private readonly ref Vector4 GetRowUnsafe(in Matrix4 m, int index)
+        private static ref Vector4 GetRowUnsafe(in Matrix4 m, int index)
         {
             ref Vector4 address = ref Unsafe.AsRef(in m.Row0);
             return ref Unsafe.Add(ref address, index);
@@ -1824,7 +1819,6 @@ namespace OpenTK.Mathematics
             }
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static unsafe void InvertSse3(in Matrix4 mat, out Matrix4 result)
         {
 #pragma warning disable SA1114 // Parameter list should follow declaration
@@ -1996,7 +1990,7 @@ namespace OpenTK.Mathematics
 
             if (MathF.Abs(detM.GetElement(0)) < float.Epsilon)
             {
-                throw new InvalidOperationException("Matrix is singular and cannot be inverted.");
+                MathHelper.ThrowInvalidOperationException("Matrix is singular and cannot be inverted.");
             }
 
             // const __m128 adjSignMask = _mm_setr_ps(1.f, -1.f, -1.f, 1.f);
@@ -2036,7 +2030,6 @@ namespace OpenTK.Mathematics
 #pragma warning restore SA1515 // Single-line comment should be preceded by blank line
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static unsafe void InvertFallback(in Matrix4 mat, out Matrix4 result)
         {
             // Original implementation can be found here:
@@ -2063,7 +2056,7 @@ namespace OpenTK.Mathematics
 
             if (MathF.Abs(det) < float.Epsilon)
             {
-                throw new InvalidOperationException("Matrix is singular and cannot be inverted.");
+                MathHelper.ThrowInvalidOperationException("Matrix is singular and cannot be inverted.");
             }
 
             float invDet = 1.0f / det;

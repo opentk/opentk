@@ -71,11 +71,12 @@ namespace OpenTK.Platform
         /// <param name="parent">The parent window handle for which this dialog will be modal.</param>
         /// <param name="title">The title of the dialog.</param>
         /// <param name="directory">The starting directory of the file dialog.</param>
+        /// <param name="defaultFileName">The default suggested file name.</param>
         /// <param name="allowedExtensions">A list of file filters that filter valid file extensions to save as. See <see cref="DialogFileFilter"/> for more info.</param>
         /// <param name="options">Additional options for the file dialog.</param>
         /// <returns>The path to the selected save file, or <see langword="null"/> if no file was selected.</returns>
         /// <seealso cref="DialogFileFilter"/>
         /// <seealso cref="SaveDialogOptions"/>
-        public unsafe string? ShowSaveDialog(WindowHandle parent, string title, string directory, DialogFileFilter[]? allowedExtensions, SaveDialogOptions options);
+        public unsafe string? ShowSaveDialog(WindowHandle parent, string title, string directory, string? defaultFileName, DialogFileFilter[]? allowedExtensions, SaveDialogOptions options);
     }
 }

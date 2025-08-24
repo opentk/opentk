@@ -732,6 +732,9 @@ namespace Bejeweled
             int mipHeight = image.Height;
             for (int i = 0; i < image.MipmapCount; i++)
             {
+                // FIXME: On macOS BC7 textures are not supported...
+                // so we need to decompress the data.
+
                 int dataLength = MultipleOfRoundingUp(mipWidth, 4) * MultipleOfRoundingUp(mipHeight, 4);
                 if (compressed)
                 {

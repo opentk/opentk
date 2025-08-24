@@ -11,7 +11,7 @@ namespace OpenTK.Backends.Tests
     [TestApp]
     internal class ModelView : ITestApp
     {
-        public string Name => "Model Viewer";
+        public static string Name => "Model Viewer";
 
         public WindowHandle Window;
         public OpenGLContextHandle Context;

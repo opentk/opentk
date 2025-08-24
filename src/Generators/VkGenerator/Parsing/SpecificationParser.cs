@@ -325,19 +325,19 @@ namespace VkGenerator.Parsing
                 // FIXME: Make these into static readonly variables instead of making them functions...
                 // - Noggin_bops 2025-07-07
                 case "VK_API_VERSION_1_0":
-                    return new Define(name, CSPrimitive.Ulong(true), false, 0, [], "return MAKE_API_VERSION(0, 1, 0, 0);");
+                    return new Define(name, CSPrimitive.Uint(true), false, 0, [], "return MAKE_API_VERSION(0, 1, 0, 0);");
                 case "VK_API_VERSION_1_1":
-                    return new Define(name, CSPrimitive.Ulong(true), false, 0, [], "return MAKE_API_VERSION(0, 1, 1, 0);");
+                    return new Define(name, CSPrimitive.Uint(true), false, 0, [], "return MAKE_API_VERSION(0, 1, 1, 0);");
                 case "VK_API_VERSION_1_2":
-                    return new Define(name, CSPrimitive.Ulong(true), false, 0, [], "return MAKE_API_VERSION(0, 1, 2, 0);");
+                    return new Define(name, CSPrimitive.Uint(true), false, 0, [], "return MAKE_API_VERSION(0, 1, 2, 0);");
                 case "VK_API_VERSION_1_3":
-                    return new Define(name, CSPrimitive.Ulong(true), false, 0, [], "return MAKE_API_VERSION(0, 1, 3, 0);");
+                    return new Define(name, CSPrimitive.Uint(true), false, 0, [], "return MAKE_API_VERSION(0, 1, 3, 0);");
                 case "VK_API_VERSION_1_4":
-                    return new Define(name, CSPrimitive.Ulong(true), false, 0, [], "return MAKE_API_VERSION(0, 1, 4, 0);");
+                    return new Define(name, CSPrimitive.Uint(true), false, 0, [], "return MAKE_API_VERSION(0, 1, 4, 0);");
                 case "VKSC_API_VERSION_1_0":
-                    return new Define(name, CSPrimitive.Ulong(true), false, 0, [], "return MAKE_API_VERSION(VKSC_API_VARIANT, 1, 0, 0);");
+                    return new Define(name, CSPrimitive.Uint(true), false, 0, [], "return MAKE_API_VERSION(VKSC_API_VARIANT, 1, 0, 0);");
                 case "VK_HEADER_VERSION_COMPLETE":
-                    return new Define(name, CSPrimitive.Ulong(true), false, 0, [], "return MAKE_API_VERSION(0, 1, 4, HEADER_VERSION);");
+                    return new Define(name, CSPrimitive.Uint(true), false, 0, [], "return MAKE_API_VERSION(0, 1, 4, HEADER_VERSION);");
 
                 case "VKSC_API_VARIANT":
                 case "VK_HEADER_VERSION":
