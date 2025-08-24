@@ -78,14 +78,12 @@ let testDir = binDir </> "test"
 // ---------
 
 let toolProjects =
-    !! "src/Generator/**/*.??proj"
+    !! "src/Generators/**/*.??proj"
 
 let releaseProjects =
     !! "src/**/*.??proj"
-    -- "src/Generator/**"
-    -- "src/VkGenerator/**"
-    -- "src/OpenAL/OpenALGenerator/**"
-    -- "src/OpenAL/OpenTK.OpenAL.Extensions/**"
+    -- "src/Generators/**/*.??proj"
+    -- "src/OpenAL/**"
 
 // Absolutely all test projects.
 let allTestProjects =
