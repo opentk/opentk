@@ -10,7 +10,6 @@ using System.Linq;
 using System.Threading;
 using System.Runtime.CompilerServices;
 using GeneratorBase;
-using Microsoft.VisualBasic;
 
 namespace GLGenerator
 {
