@@ -94,6 +94,7 @@ namespace GLGenerator
             writer.WriteLine($"// This file is auto generated, do not edit.");
             writer.WriteLine("using System;");
             writer.WriteLine("using System.Runtime.InteropServices;");
+            writer.WriteLine("using System.Runtime.CompilerServices;");
             writer.WriteLine("using OpenTK.Graphics;");
             writer.WriteLine();
             writer.WriteLine($"namespace {GraphicsNamespace}.{strings.Namespace}");
@@ -126,25 +127,29 @@ namespace GLGenerator
                 out bool _,
                 out string returnType);
 
-            string entryPoint = function.EntryPoint;
+            string funcPointer = $"_{function.EntryPoint}_fnptr";
 
-            writer.WriteLine($"/// <summary><b>[entry point: <c>{entryPoint}</c>]</b></summary>");
-            writer.WriteLine($"public static delegate* unmanaged<{delegateTypes}> _{entryPoint}_fnptr = &{entryPoint}_Lazy;");
+            writer.WriteLine($"/// <summary><b>[entry point: <c>{function.EntryPoint}</c>]</b></summary>");
+            writer.WriteLine($"public static delegate* unmanaged<{delegateTypes}> {funcPointer};");
 
-            writer.WriteLine($"[UnmanagedCallersOnly]");
-            writer.WriteLine($"private static {returnType} {entryPoint}_Lazy({signature})");
+            writer.WriteLine($"[MethodImpl(MethodImplOptions.NoInlining)]");
+            writer.WriteLine($"internal static {returnType} {function.EntryPoint}_Lazy({signature})");
             using (writer.CsScope())
             {
-                // Dotnet gurantees you can't get torn values when assigning functionpointers, assuming proper allignment which is default.
-                writer.WriteLine($"_{entryPoint}_fnptr = (delegate* unmanaged<{delegateTypes}>){strings.LoaderBindingsContext}.GetProcAddress(\"{function.EntryPoint}\");");
+                writer.WriteLine($"if ({funcPointer} == null)");
+                using (writer.Indent())
+                {
+                    // Dotnet gurantees you can't get torn values when assigning functionpointers, assuming proper allignment which is default.
+                    writer.WriteLine($"{funcPointer} = (delegate* unmanaged<{delegateTypes}>){strings.LoaderBindingsContext}.GetProcAddress(\"{function.EntryPoint}\");");
+                }
 
                 if (function.StrongReturnType is not CSVoid)
                 {
-                    writer.WriteLine($"return _{entryPoint}_fnptr({paramNames});");
+                    writer.WriteLine($"return {funcPointer}({paramNames});");
                 }
                 else
                 {
-                    writer.WriteLine($"_{entryPoint}_fnptr({paramNames});");
+                    writer.WriteLine($"{funcPointer}({paramNames});");
                 }
             }
 
@@ -309,16 +314,16 @@ namespace GLGenerator
                 if (function.StrongReturnType is CSBool8)
                 {
                     // HACK: We can't cast byte to bool, sigh...
-                    writer.WriteLine($"public static {function.StrongReturnType!.ToCSString()} {name}({signature}) => {apiName}Pointers._{entryPoint}_fnptr({paramNames}) != 0;");
+                    writer.WriteLine($"public static {function.StrongReturnType!.ToCSString()} {name}({signature}) => {apiName}Pointers.{entryPoint}_Lazy({paramNames}) != 0;");
                 }
                 else
                 {
-                    writer.WriteLine($"public static {function.StrongReturnType!.ToCSString()} {name}({signature}) => ({function.StrongReturnType!.ToCSString()}) {apiName}Pointers._{entryPoint}_fnptr({paramNames});");
+                    writer.WriteLine($"public static {function.StrongReturnType!.ToCSString()} {name}({signature}) => ({function.StrongReturnType!.ToCSString()}) {apiName}Pointers.{entryPoint}_Lazy({paramNames});");
                 }
             }
             else
             {
-                writer.WriteLine($"public static {returnType} {name}({signature}) => {apiName}Pointers._{entryPoint}_fnptr({paramNames});");
+                writer.WriteLine($"public static {returnType} {name}({signature}) => {apiName}Pointers.{entryPoint}_Lazy({paramNames});");
             }
 
             writer.WriteLine();
