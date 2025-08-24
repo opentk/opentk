@@ -46,28 +46,28 @@ namespace OpenTK.Graphics.Vulkan
         public const uint VKSC_API_VARIANT = unchecked((uint)1);
         /// <summary><b>[requires: v1.0]</b> </summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/latest/man/html/VK_API_VERSION_1_0.html" /></remarks>
-        public static ulong API_VERSION_1_0() { return MAKE_API_VERSION(0, 1, 0, 0); }
+        public static uint API_VERSION_1_0() { return MAKE_API_VERSION(0, 1, 0, 0); }
         /// <summary><b>[requires: v1.1]</b> </summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/latest/man/html/VK_API_VERSION_1_1.html" /></remarks>
-        public static ulong API_VERSION_1_1() { return MAKE_API_VERSION(0, 1, 1, 0); }
+        public static uint API_VERSION_1_1() { return MAKE_API_VERSION(0, 1, 1, 0); }
         /// <summary><b>[requires: v1.2]</b> </summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/latest/man/html/VK_API_VERSION_1_2.html" /></remarks>
-        public static ulong API_VERSION_1_2() { return MAKE_API_VERSION(0, 1, 2, 0); }
+        public static uint API_VERSION_1_2() { return MAKE_API_VERSION(0, 1, 2, 0); }
         /// <summary><b>[requires: v1.3]</b> </summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/latest/man/html/VK_API_VERSION_1_3.html" /></remarks>
-        public static ulong API_VERSION_1_3() { return MAKE_API_VERSION(0, 1, 3, 0); }
+        public static uint API_VERSION_1_3() { return MAKE_API_VERSION(0, 1, 3, 0); }
         /// <summary><b>[requires: v1.4]</b> </summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/latest/man/html/VK_API_VERSION_1_4.html" /></remarks>
-        public static ulong API_VERSION_1_4() { return MAKE_API_VERSION(0, 1, 4, 0); }
+        public static uint API_VERSION_1_4() { return MAKE_API_VERSION(0, 1, 4, 0); }
         /// <summary></summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/latest/man/html/VKSC_API_VERSION_1_0.html" /></remarks>
-        public static ulong VKSC_API_VERSION_1_0() { return MAKE_API_VERSION(VKSC_API_VARIANT, 1, 0, 0); }
+        public static uint VKSC_API_VERSION_1_0() { return MAKE_API_VERSION(VKSC_API_VARIANT, 1, 0, 0); }
         /// <summary><b>[requires: v1.0]</b> </summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/latest/man/html/VK_HEADER_VERSION.html" /></remarks>
         public const uint HEADER_VERSION = unchecked((uint)321);
         /// <summary><b>[requires: v1.0]</b> </summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/latest/man/html/VK_HEADER_VERSION_COMPLETE.html" /></remarks>
-        public static ulong HEADER_VERSION_COMPLETE() { return MAKE_API_VERSION(0, 1, 4, HEADER_VERSION); }
+        public static uint HEADER_VERSION_COMPLETE() { return MAKE_API_VERSION(0, 1, 4, HEADER_VERSION); }
         
         // Vulkan video macros
         

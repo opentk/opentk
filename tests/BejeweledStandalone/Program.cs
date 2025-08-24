@@ -166,7 +166,7 @@ namespace Bejeweled
                 Toolkit.Window.SetIcon(Window, icon);
 
                 // For macOS we set the dock icon as that is the closest thing to a window icon.
-                (Toolkit.Window as OpenTK.Platform.Native.macOS.MacOSWindowComponent)?.SetDockIcon(Window, icon);
+                (Toolkit.Window as OpenTK.Platform.Native.macOS.MacOSShellComponent)?.SetDockIcon(icon);
             }
 
             CursorHandle cursor;
@@ -232,7 +232,7 @@ namespace Bejeweled
 
             Toolkit.Window.SetMode(Window, WindowMode.Normal);
             Toolkit.Window.FocusWindow(Window);
-
+            
             Stopwatch watch = Stopwatch.StartNew();
             while (true)
             {
@@ -243,17 +243,6 @@ namespace Bejeweled
                 if (Toolkit.Window.IsWindowDestroyed(Window))
                 {
                     break;
-                }
-
-                if (Toolkit.Cursor is MacOSCursorComponent macOS)
-                {
-                    // FIXME: It's a little bit weird that we have to
-                    // set the cursor again after updating its animation?
-                    // - Noggin_bops 2024-11-02
-                    if (macOS.UpdateAnimation(cursor, dt))
-                    {
-                        Toolkit.Window.SetCursor(Window, cursor);
-                    }
                 }
 
                 Bejeweled.Update(dt);

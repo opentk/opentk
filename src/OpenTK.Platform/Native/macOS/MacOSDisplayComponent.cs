@@ -538,6 +538,13 @@ namespace OpenTK.Platform.Native.macOS
             //float factor = (float)objc_msgSend_nfloat(nsscreen.Screen, selBackingScaleFactor);
         }
 
+        /// <inheritdoc />
+        //public bool GetHDRInfo(DisplayHandle handle, out HdrInfo hdrInfo)
+        //{
+        //    hdrInfo = default;
+        //    return false;
+        //}
+
         /// <summary>
         /// Returns the <c>CGDirectDisplayID</c> associated with this display handle.
         /// </summary>

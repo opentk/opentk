@@ -854,6 +854,13 @@ namespace OpenTK.Platform.Native.X11
             scaleY = 1;
         }
 
+        /// <inheritdoc />
+        //public bool GetHDRInfo(DisplayHandle handle, out HdrInfo hdrInfo)
+        //{
+        //    hdrInfo = default;
+        //    return false;
+        //}
+
         /// <summary>
         /// Gets the RandR <c>RRCrtc</c> associated with the display handle.
         /// </summary>

@@ -73,11 +73,14 @@ namespace OpenTK.Platform.Native.Windows
 
         public bool UseDwmFlush { get; set; } = false;
 
-        public HGLRC(IntPtr hGlrc, IntPtr hdc, HGLRC? sharedContext)
+        public ContextValues ContextValues { get; private set; }
+
+        public HGLRC(IntPtr hGlrc, IntPtr hdc, HGLRC? sharedContext, ContextValues contextValues)
         {
             HGlrc = hGlrc;
             HDC = hdc;
             SharedContext = sharedContext;
+            ContextValues = contextValues;
         }
     }
 
@@ -137,13 +140,17 @@ namespace OpenTK.Platform.Native.Windows
 
         public Win32.RECT WorkArea { get; set; }
 
-        public int RefreshRate { get; set; }
+        public float RefreshRate { get; set; }
 
         public int BitsPerPixel { get; set; }
 
         public int DpiX { get; set; }
 
         public int DpiY { get; set; }
+
+        // FIXME: Can this change during the lifetime of the display??
+        public bool HasColorInfo { get; set; }
+        public DisplayColorInfo ColorInfo { get; set; }
     }
 
     internal class Joystick : JoystickHandle

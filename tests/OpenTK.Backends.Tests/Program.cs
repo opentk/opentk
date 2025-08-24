@@ -219,7 +219,7 @@ namespace OpenTK.Backends.Tests
                         // Using the icon UI to set the icon does change the taskbar icon...
                         // - Noggin_bops 2024-04-02
                         Toolkit.Window.SetIcon(Window, handle);
-                        (Toolkit.Window as MacOSWindowComponent)?.SetDockIcon(Window, handle);
+                        (Toolkit.Shell as MacOSShellComponent)?.SetDockIcon(handle);
 
                         // FIXME: Should we destroy the icon?
                         Toolkit.Icon?.Destroy(handle);
@@ -577,7 +577,7 @@ namespace OpenTK.Backends.Tests
                 {
                     if (args is CloseEventArgs close2)
                     {
-                        Console.WriteLine($"Closing window: '{Toolkit.Window.GetTitle(close2.Window)}'");
+                        Logger.LogInfo($"Closing window: '{Toolkit.Window.GetTitle(close2.Window)}'");
                         CloseApplicationWindow(close2.Window);
                         return;
                     }
@@ -690,7 +690,9 @@ namespace OpenTK.Backends.Tests
 
             if (args is CloseEventArgs close)
             {
-                Console.WriteLine("Closing main window!");
+                Logger.LogInfo("Closing main window!");
+                // FIXME: Function for getting the OpenGL context from a WindowHandle...
+                Toolkit.OpenGL.DestroyContext(Program.WindowContext);
                 Toolkit.Window.Destroy(close.Window);
             }
             else if (args is FocusEventArgs focus)
