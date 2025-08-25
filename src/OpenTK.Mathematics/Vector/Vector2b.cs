@@ -112,7 +112,7 @@ namespace OpenTK.Mathematics
         /// <returns>If all of the components of the vector were <see langword="true"/>.</returns>
         public readonly bool All()
         {
-            return X && Y;
+            return X & Y;
         }
 
         /// <summary>

@@ -1,70 +1,73 @@
-//
-// Box3i.cs
-//
-// Copyright (C) 2019 OpenTK
-//
-// This software may be modified and distributed under the terms
-// of the MIT license. See the LICENSE file for details.
-//
-
-using System;
-using System.Diagnostics.Contracts;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.InteropServices;
-using System.Xml.Serialization;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace OpenTK.Mathematics
 {
     /// <summary>
-    /// Defines an axis-aligned 3d box (rectangular prism).
+    /// Defines an axis-aligned 2d box (cube).
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
     [Serializable]
     public struct Box3i : IEquatable<Box3i>, IFormattable
     {
         /// <summary>
-        /// An empty box with Min (0, 0, 0) and Max (0, 0, 0).
+        /// An empty box with <c>Min = Vector3i.MaxValue</c> and <c>Max = Vector3i.MinValue</c>.
+        /// This box can be used with <see cref="Extend(Vector3i)"/> to create a bounding box without a special case for the first point.
         /// </summary>
-        public static readonly Box3i Empty = new Box3i(0, 0, 0, 0, 0, 0);
-
-        private Vector3i _min;
+        /// <example>
+        /// For example:
+        /// <code>
+        /// Vector3i[] points = GetPoints();
+        /// Box3i aabb = Box3i.Empty;
+        /// for (int i = 0; i &lt; points.Length; i++)
+        /// {
+        ///     aabb.Extend(points[i]):
+        /// }
+        /// </code>
+        /// Will calculate the bounding box of all the points in the array without needing a special case for the first point.
+        /// </example>
+        public static readonly Box3i Empty = new Box3i(Vector3i.MaxValue, Vector3i.MinValue);
 
         /// <summary>
-        /// Gets or sets the minimum boundary of the structure.
+        /// A box with a <c>Min = (0, 0, 0)</c> and <c>Max = (1, 1, 1)</c>.
         /// </summary>
-        public Vector3i Min
-        {
-            readonly get => _min;
-            set
-            {
-                _max = Vector3i.ComponentMax(_max, value);
-                _min = value;
-            }
-        }
-
-        private Vector3i _max;
+        public static readonly Box3i UnitCube = new Box3i(Vector3i.Zero, Vector3i.One);
 
         /// <summary>
-        /// Gets or sets the maximum boundary of the structure.
+        /// The minimum boundary of the box.
+        /// This field is not guaranteed to be less than <see cref="Max"/>.
         /// </summary>
-        public Vector3i Max
-        {
-            readonly get => _max;
-            set
-            {
-                _min = Vector3i.ComponentMin(_min, value);
-                _max = value;
-            }
-        }
+        /// <remarks>
+        /// A box with a minimum point greater than the maximum is not considered valid
+        /// except for a single configuration where <c>Min = Vector3i.PositiveInfinity</c> and <c>Max = Vector3i.NegativeInfinity</c> as is the case with <see cref="Empty"/>.
+        /// </remarks>
+        /// <seealso cref="Empty"/>
+        /// <seealso cref="IsEmpty"/>
+        public Vector3i Min;
+
+        /// <summary>
+        /// The maximum boundary of the box.
+        /// This field is not guaranteed to be greater than <see cref="Max"/>.
+        /// </summary>
+        /// <remarks>
+        /// A box with a minimum point greater than the maximum is not considered valid
+        /// except for a single configuration where <c>Min = Vector3i.PositiveInfinity</c> and <c>Max = Vector3i.NegativeInfinity</c> as is the case with <see cref="Empty"/>.
+        /// </remarks>
+        public Vector3i Max;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Box3i"/> struct.
         /// </summary>
-        /// <param name="min">The minimum point in 3D space this box encloses.</param>
-        /// <param name="max">The maximum point in 3D space this box encloses.</param>
+        /// <param name="min">The minimum point this box encloses.</param>
+        /// <param name="max">The maximum point this box encloses.</param>
         public Box3i(Vector3i min, Vector3i max)
         {
-            _min = Vector3i.ComponentMin(min, max);
-            _max = Vector3i.ComponentMax(min, max);
+            Min = min;
+            Max = max;
         }
 
         /// <summary>
@@ -77,358 +80,190 @@ namespace OpenTK.Mathematics
         /// <param name="maxY">The maximum Y value to be enclosed.</param>
         /// <param name="maxZ">The maximum Z value to be enclosed.</param>
         public Box3i(int minX, int minY, int minZ, int maxX, int maxY, int maxZ)
-            : this(new Vector3i(minX, minY, minZ), new Vector3i(maxX, maxY, maxZ))
         {
-        }
-
-        /// <summary>
-        /// Gets a vector describing the size of the Box3i structure.
-        /// </summary>
-        public readonly Vector3i CenteredSize
-        {
-            get => Max - Min;
-        }
-
-        /// <summary>
-        /// Gets or sets a vector describing half the size of the box.
-        /// </summary>
-        [XmlIgnore]
-        public Vector3i HalfSize
-        {
-            readonly get => CenteredSize / 2;
-            set
-            {
-                Vector3i center = new Vector3i((int)Center.X, (int)Center.Y, (int)Center.Z);
-                _min = center - value;
-                _max = center + value;
-            }
+            Min = (minX, minY, minZ);
+            Max = (maxX, maxY, maxZ);
         }
 
         /// <summary>
         /// Gets a vector describing the center of the box.
         /// </summary>
-        /// to avoid annoying off-by-one errors in box placement, no setter is provided for this property
-        [XmlIgnore]
         public readonly Vector3 Center
         {
-            get => _min + ((_max - _min).ToVector3() * 0.5f);
+             get => Min + HalfSize;
         }
 
-        // --
-
         /// <summary>
-        /// Gets or sets the width of the box.
+        /// Gets the size of the box.
         /// </summary>
-        public int Width
+        /// <remarks>
+        /// This function never returns negative values, so <see cref="Empty"/> will have a size of (0, 0).
+        /// </remarks>
+        public readonly Vector3i Size
         {
-            readonly get => _max.X - _min.X;
-            set => _max.X = _min.X + value;
+            get => Vector3i.ComponentMax(Vector3i.Zero, Max - Min);
         }
 
         /// <summary>
-        /// Gets or sets the height of the box.
+        /// Gets half the size of the box.
+        /// The distance from the center of the box to the edge of the box in X and Y.
         /// </summary>
-        public int Height
+        /// <remarks>
+        /// This function never returns negative values, so <see cref="Empty"/> will have a size of (0, 0).
+        /// </remarks>
+        public readonly Vector3 HalfSize
         {
-            readonly get => _max.Y - _min.Y;
-            set => _max.Y = _min.Y + value;
+            get => (Vector3)Size / 2.0f;
         }
 
         /// <summary>
-        /// Gets or sets the depth of the box.
+        /// The width of the box.
         /// </summary>
-        public int Depth
-        {
-            readonly get => _max.Z - _min.Z;
-            set => _max.Z = _min.Z + value;
-        }
+        public readonly int Width => Size.X;
 
         /// <summary>
-        /// Gets or sets the left location of the box.
+        /// The height of the box.
         /// </summary>
-        public int Left
-        {
-            readonly get => _min.X;
-            set => _min.X = value;
-        }
+        public readonly int Height => Size.Y;
 
         /// <summary>
-        /// Gets or sets the top location of the box.
+        /// The depth of the box.
         /// </summary>
-        public int Top
-        {
-            readonly get => _min.Y;
-            set => _min.Y = value;
-        }
+        public readonly int Depth => Size.Z;
 
         /// <summary>
-        /// Gets or sets the right location of the box.
+        /// The area of the box.
         /// </summary>
-        public int Right
-        {
-            readonly get => _max.X;
-            set => _max.X = value;
-        }
+        public readonly int Volume => Size.X * Size.Y * Size.Z;
 
         /// <summary>
-        /// Gets or sets the bottom location of the box.
+        /// The area of the box.
         /// </summary>
-        public int Bottom
-        {
-            readonly get => _max.Y;
-            set => _max.Y = value;
-        }
+        public readonly long LongVolume => (long)Size.X * (long)Size.Y * (long)Size.Z;
 
         /// <summary>
-        /// Gets or sets the front location of the box.
+        /// If this box is equal to <see cref="Empty"/>.
         /// </summary>
-        public int Front
-        {
-            readonly get => _min.Z;
-            set => _min.Z = value;
-        }
+        public readonly bool IsEmpty => this == Empty;
 
         /// <summary>
-        /// Gets or sets the back location of the box.
+        /// If this box is a point, i.e. its minimum point is equal to its maximum point.
         /// </summary>
-        public int Back
-        {
-            readonly get => _max.Z;
-            set => _max.Z = value;
-        }
+        public readonly bool IsPoint => Min == Max;
 
         /// <summary>
-        /// Gets or sets the X location of the box.
+        /// If this box has zero area.
         /// </summary>
-        public int X
-        {
-            readonly get => _min.X;
-            set => _min.X = value;
-        }
+        public readonly bool HasZeroArea => Volume == 0;
 
         /// <summary>
-        /// Gets or sets the Y location of the box.
+        /// Creates a box from a point and size.
         /// </summary>
-        public int Y
-        {
-            readonly get => _min.Y;
-            set => _min.Y = value;
-        }
-
-        /// <summary>
-        /// Gets or sets the Z location of the box.
-        /// </summary>
-        public int Z
-        {
-            readonly get => _min.Z;
-            set => _min.Z = value;
-        }
-
-        /// <summary>
-        /// Gets or sets the horizontal size.
-        /// </summary>
-        public int SizeX
-        {
-            readonly get => _max.X - _min.X;
-            set => _max.X = _min.X + value;
-        }
-
-        /// <summary>
-        /// Gets or sets the vertical size.
-        /// </summary>
-        public int SizeY
-        {
-            readonly get => _max.Y - _min.Y;
-            set => _max.Y = _min.Y + value;
-        }
-
-        /// <summary>
-        /// Gets or sets the vertical size.
-        /// </summary>
-        public int SizeZ
-        {
-            readonly get => _max.Z - _min.Z;
-            set => _max.Z = _min.Z + value;
-        }
-
-        /// <summary>
-        /// Gets or sets the size of the box.
-        /// </summary>
-        public Vector3i Size
-        {
-            readonly get => new Vector3i(_max.X - _min.X, _max.Y - _min.Y, _max.Z - _min.Z);
-            set
-            {
-                _max.X = _min.X + value.X;
-                _max.Y = _min.Y + value.Y;
-                _max.Z = _min.Z + value.Z;
-            }
-        }
-
-        /// <summary>
-        /// Gets the location of the box.
-        /// </summary>
-        public readonly Vector3i Location => _min;
-
-        /// <summary>
-        /// Gets a value indicating whether all values are zero.
-        /// </summary>
-        public readonly bool IsZero => _min.X == 0 && _min.Y == 0 && _min.Z == 0
-                           && _max.X == 0 && _max.Y == 0 && _max.Z == 0;
-
-        /// <summary>
-        /// Gets a box with a location 0,0,9 with the a size of 1.
-        /// </summary>
-        public static readonly Box3i UnitSquare = new Box3i(0, 0, 0, 1, 1, 1);
-
-        /// <summary>
-        /// Creates a box.
-        /// </summary>
-        /// <param name="location">The location of the box.</param>
+        /// <param name="point">The minimum point of the box.</param>
         /// <param name="size">The size of the box.</param>
-        /// <returns>A box.</returns>
-        public static Box3i FromSize(Vector3i location, Vector3i size)
+        /// <returns>The created box.</returns>
+        public static Box3i FromSize(Vector3i point, Vector3i size)
         {
-            return new Box3i(location, location + size);
+            return new Box3i(point, point + size);
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Box3"/> struct.
+        /// Creates a box from a minimum and maximum point.
         /// </summary>
         /// <param name="min">The minimum point on the XY plane this box encloses.</param>
         /// <param name="max">The maximum point on the XY plane this box encloses.</param>
-        /// <returns>A box.</returns>
+        /// <returns>The created box.</returns>
         public static Box3i FromPositions(Vector3i min, Vector3i max)
         {
             return new Box3i(min, max);
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Box3i"/> struct.
+        /// Creates a box from a center point and a half size.
         /// </summary>
-        /// <param name="minX">The minimum X value to be enclosed.</param>
-        /// <param name="minY">The minimum Y value to be enclosed.</param>
-        /// <param name="minZ">The minimum Z value to be enclosed.</param>
-        /// <param name="maxX">The maximum X value to be enclosed.</param>
-        /// <param name="maxY">The maximum Y value to be enclosed.</param>
-        /// <param name="maxZ">The maximum Z value to be enclosed.</param>
-        /// <returns>A box.</returns>
-        public static Box3i FromPositions(int minX, int minY, int minZ, int maxX, int maxY, int maxZ)
+        /// <param name="center">The center of the box.</param>
+        /// <param name="halfSize">The half size of the box.</param>
+        /// <returns>The created box.</returns>
+        public static Box3i FromPositionAndHalfSize(Vector3i center, Vector3i halfSize)
         {
-            return new Box3i(minX, minY, minZ, maxX, maxY, maxZ);
+            return new Box3i(center - halfSize, center + halfSize);
         }
 
         /// <summary>
-        /// Replaces this Box with the intersection of itself and the specified Box.
+        /// Returns the intersection of two boxes.
+        /// </summary>
+        /// <param name="a">The first box.</param>
+        /// <param name="b">The second box.</param>
+        /// <returns>The intersection of the two boxes.</returns>
+        public static Box3i Intersect(Box3i a, Box3i b)
+        {
+            return Intersect(in a, in b);
+        }
+
+        /// <summary>
+        /// Returns the intersection of two boxes.
+        /// </summary>
+        /// <param name="a">The first box.</param>
+        /// <param name="b">The second box.</param>
+        /// <returns>The intersection of the two boxes.</returns>
+        public static Box3i Intersect(in Box3i a, in Box3i b)
+        {
+            Vector3i.ComponentMax(in a.Min, in b.Min, out Vector3i min);
+            Vector3i.ComponentMin(in a.Max, in b.Max, out Vector3i max);
+            if (max.X >= min.X && max.Y >= min.Y && max.Z >= min.Z)
+            {
+                return new Box3i(min, max);
+            }
+            else
+            {
+                return Box3i.Empty;
+            }
+        }
+
+        /// <summary>
+        /// Replaces this box with the intersection of itself and the specified box.
         /// </summary>
         /// <param name="other">The Box with which to intersect.</param>
         public void Intersect(Box3i other)
         {
-            Box3i result = Intersect(other, this);
-
-            X = result.X;
-            Y = result.Y;
-            Z = result.Z;
-            Width = result.Width;
-            Height = result.Height;
-            Depth = result.Depth;
+            this = Intersect(in this, in other);
         }
 
         /// <summary>
-        /// Returns the intersection of two Boxes.
-        /// </summary>
-        /// <param name="a">The first box.</param>
-        /// <param name="b">The second box.</param>
-        /// <returns>The intersection of two Boxes.</returns>
-        public static Box3i Intersect(Box3i a, Box3i b)
-        {
-            int minX = a._min.X > b._min.X ? a._min.X : b._min.X;
-            int minY = a._min.Y > b._min.Y ? a._min.Y : b._min.Y;
-            int minZ = a._min.Z > b._min.Z ? a._min.Z : b._min.Z;
-            int maxX = a._max.X < b._max.X ? a._max.X : b._max.X;
-            int maxY = a._max.Y < b._max.Y ? a._max.Y : b._max.Y;
-            int maxZ = a._max.Z < b._max.Z ? a._max.Z : b._max.Z;
-
-            if (maxX >= minX && maxY >= minY && maxZ >= minZ)
-            {
-                return new Box3i(minX, minY, minZ, maxX, maxY, maxZ);
-            }
-
-            return Empty;
-        }
-
-        /// <summary>
-        /// Returns the intersection of itself and the specified Box.
+        /// Returns the intersection of itself and the specified box.
         /// </summary>
         /// <param name="other">The Box with which to intersect.</param>
-        /// <returns>The intersection of itself and the specified Box.</returns>
+        /// <returns>The intersection of itself and the specified box.</returns>
         public readonly Box3i Intersected(Box3i other)
         {
-            return Intersect(other, this);
+            return Intersect(this, other);
         }
 
         /// <summary>
-        /// Determines if this Box intersects with another Box.
+        /// Determines if this box intersects with another box.
         /// </summary>
-        /// <param name="other">The Box to test.</param>
-        /// <returns>This method returns true if there is any intersection, otherwise false.</returns>
+        /// <remarks>
+        /// Two boxes next to each other do not intersect, for detecting that case use <see cref="Touches(Box3i)"/>.
+        /// </remarks>
+        /// <param name="other">The box to test.</param>
+        /// <returns>This method returns <see langword="true"/> if there is any intersection, otherwise <see langword="false"/>.</returns>
         public readonly bool IntersectsWith(Box3i other)
         {
-            return other._min.X < _max.X
-                && _min.X < other._max.X
-                && other._min.Y < _max.Y
-                && _min.Y < other._max.Y
-                && other._min.Z < _max.Z
-                && _min.Z < other._max.Z;
+            return other.Min.X < Max.X && Min.X < other.Max.X &&
+                   other.Min.Y < Max.Y && Min.Y < other.Max.Y &&
+                   other.Min.Z < Max.Z && Min.Z < other.Max.Z;
         }
 
         /// <summary>
-        /// Determines if this Box intersects or touches with another Box.
+        /// Determines if this box intersects or touches with another box.
         /// </summary>
-        /// <param name="other">The Box to test.</param>
-        /// <returns>This method returns true if there is any intersection or touches, otherwise false.</returns>
-        public readonly bool TouchWith(Box3i other)
+        /// <param name="other">The box to test.</param>
+        /// <returns>This method returns <see langword="true"/> if there is any intersection or touches, otherwise <see langword="false"/>.</returns>
+        public readonly bool Touches(Box3i other)
         {
-            return other._min.X <= _max.X
-                && _min.X <= other._max.X
-                && other._min.Y <= _max.Y
-                && _min.Y <= other._max.Y
-                && other._min.Z <= _max.Z
-                && _min.Z <= other._max.Z;
-        }
-
-        /// <summary>
-        /// Gets a Box structure that contains the union of two Box structures.
-        /// </summary>
-        /// <param name="a">A Box to union.</param>
-        /// <param name="b">a box to union.</param>
-        /// <returns>A Box structure that bounds the union of the two Box structures.</returns>
-        public static Box3i Union(Box3i a, Box3i b)
-        {
-            int minX = a._min.X < b._min.X ? a._min.X : b._min.X;
-            int minY = a._min.Y < b._min.Y ? a._min.Y : b._min.Y;
-            int minZ = a._min.Z < b._min.Z ? a._min.Z : b._min.Z;
-            int maxX = a._max.X > b._max.X ? a._max.X : b._max.X;
-            int maxY = a._max.Y > b._max.Y ? a._max.Y : b._max.Y;
-            int maxZ = a._max.Z > b._max.Z ? a._max.Z : b._max.Z;
-
-            return new Box3i(minX, minY, minZ, maxX, maxY, maxZ);
-        }
-
-        // --
-
-        /// <summary>
-        /// Returns whether the box contains the specified point (borders inclusive).
-        /// </summary>
-        /// <param name="point">The point to query.</param>
-        /// <returns>Whether this box contains the point.</returns>
-        [Pure]
-        [Obsolete("This function excludes borders even though it's documentation says otherwise. Use ContainsInclusive and ContainsExclusive for the desired behaviour.")]
-        public readonly bool Contains(Vector3i point)
-        {
-            return _min.X < point.X && point.X < _max.X &&
-                   _min.Y < point.Y && point.Y < _max.Y &&
-                   _min.Z < point.Z && point.Z < _max.Z;
+            return other.Min.X <= Max.X && Min.X <= other.Max.X &&
+                   other.Min.Y <= Max.Y && Min.Y <= other.Max.Y &&
+                   other.Min.Z <= Max.Z && Min.Z <= other.Max.Z;
         }
 
         /// <summary>
@@ -436,12 +271,10 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <param name="point">The point to query.</param>
         /// <returns>Whether this box contains the point.</returns>
-        [Pure]
         public readonly bool ContainsInclusive(Vector3i point)
         {
-            return _min.X <= point.X && point.X <= _max.X &&
-                   _min.Y <= point.Y && point.Y <= _max.Y &&
-                   _min.Z <= point.Z && point.Z <= _max.Z;
+            return Min.X <= point.X && Min.Y <= point.Y && Min.Z <= point.Z &&
+                point.X <= Max.X && point.Y <= Max.Y && point.Z <= Max.Z;
         }
 
         /// <summary>
@@ -449,166 +282,220 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <param name="point">The point to query.</param>
         /// <returns>Whether this box contains the point.</returns>
-        [Pure]
         public readonly bool ContainsExclusive(Vector3i point)
         {
-            return _min.X < point.X && point.X < _max.X &&
-                   _min.Y < point.Y && point.Y < _max.Y &&
-                   _min.Z < point.Z && point.Z < _max.Z;
+            return Min.X < point.X && Min.Y < point.Y && Min.Z < point.Z &&
+                point.X < Max.X && point.Y < Max.Y && point.Z < Max.Z;
         }
 
         /// <summary>
-        /// Returns whether the box contains the specified point.
+        /// Returns whether the box <paramref name="other"/> is entirely contained within this box.
+        /// A box is considered to be able to contain itself.
         /// </summary>
-        /// <param name="point">The point to query.</param>
-        /// <param name="boundaryInclusive">
-        /// Whether points on the box boundary should be recognised as contained as well.
-        /// </param>
-        /// <returns>Whether this box contains the point.</returns>
-        [Pure]
-        public readonly bool Contains(Vector3i point, bool boundaryInclusive)
-        {
-            if (boundaryInclusive)
-            {
-                return ContainsInclusive(point);
-            }
-            else
-            {
-                return ContainsExclusive(point);
-            }
-        }
-
-        /// <summary>
-        /// Returns whether the box contains the specified box (borders inclusive).
-        /// </summary>
-        /// <param name="other">The box to query.</param>
-        /// <returns>Whether this box contains the other box.</returns>
-        [Pure]
+        /// <param name="other">The box to check.</param>
+        /// <returns><see langword="true"/> if the box <paramref name="other"/> is entirely contained within the this box; otherwise, <see langword="false"/>.</returns>
         public readonly bool Contains(Box3i other)
         {
-            return _max.X >= other._min.X && _min.X <= other._max.X &&
-                   _max.Y >= other._min.Y && _min.Y <= other._max.Y &&
-                   _max.Z >= other._min.Z && _min.Z <= other._max.Z;
+            return Min.X <= other.Min.X && Min.Y <= other.Min.Y && Min.Z <= other.Min.Z &&
+                Max.X >= other.Max.X && Max.Y >= other.Max.Y && Max.Z >= other.Max.Z;
         }
 
         /// <summary>
-        /// Returns the distance between the nearest edge and the specified point.
+        /// Returns the euclidian distance between the nearest point on an edge and the specified point.
+        /// </summary>
+        /// <remarks>
+        /// The distance to points inside the box is zero.
+        /// </remarks>
+        /// <param name="point">The point to find distance for.</param>
+        /// <returns>The distance between the specified point and the nearest edge.</returns>
+        public readonly float EuclidianDistanceToNearestEdge(Vector3i point)
+        {
+            Vector3i dist = Vector3i.ComponentMax(Vector3i.Zero, Vector3i.ComponentMax(Min - point, point - Max));
+            return dist.EuclideanLength;
+        }
+
+        /// <summary>
+        /// Returns the manhattan distance between the nearest point on an edge and the specified point.
+        /// </summary>
+        /// <remarks>
+        /// The distance to points inside the box is zero.
+        /// </remarks>
+        /// <param name="point">The point to find distance for.</param>
+        /// <returns>The distance between the specified point and the nearest edge.</returns>
+        public readonly int ManhattanDistanceToNearestEdge(Vector3i point)
+        {
+            Vector3i dist = Vector3i.ComponentMax(Vector3i.Zero, Vector3i.ComponentMax(Min - point, point - Max));
+            return dist.ManhattanLength;
+        }
+
+        /// <summary>
+        /// Returns the signed distance between the nearest edge and the specified point.
         /// </summary>
         /// <param name="point">The point to find distance for.</param>
         /// <returns>The distance between the specified point and the nearest edge.</returns>
-        [Pure]
-        public readonly float DistanceToNearestEdge(Vector3i point)
+        public readonly float SignedEuclidianDistanceToNearestEdge(Vector3 point)
         {
-            var dist = new Vector3(
-                Math.Max(0f, Math.Max(_min.X - point.X, point.X - _max.X)),
-                Math.Max(0f, Math.Max(_min.Y - point.Y, point.Y - _max.Y)),
-                Math.Max(0f, Math.Max(_min.Z - point.Z, point.Z - _max.Z)));
-            return dist.Length;
+            Vector3 d = Vector3.Abs(point - Center) - HalfSize;
+            return Vector3.ComponentMax(Vector3.Zero, d).Length + MathF.Min(MathF.Max(d.X, MathF.Max(d.Y, d.Z)), 0.0f);
         }
 
         /// <summary>
-        /// Translates this Box3i by the given amount.
+        /// Returns the nearest point in or on the edge of the box to the given point, <paramref name="point"/>.
+        /// </summary>
+        /// <param name="point">The point for which the nearest point in the box should be found.</param>
+        /// <returns>The nearest point on or on the edge of the box to the point, <paramref name="point"/>.</returns>
+        public readonly Vector3i NearestPointInBox(Vector3i point)
+        {
+            return Vector3i.ComponentMin(Max, Vector3i.ComponentMax(Min, point));
+        }
+
+        /// <summary>
+        /// Translates this box by the given distance.
         /// </summary>
         /// <param name="distance">The distance to translate the box.</param>
         public void Translate(Vector3i distance)
         {
-            _min += distance;
-            _max += distance;
+            Min += distance;
+            Max += distance;
         }
 
         /// <summary>
-        /// Returns a Box3i translated by the given amount.
+        /// Returns a box translated by the given distance.
         /// </summary>
         /// <param name="distance">The distance to translate the box.</param>
         /// <returns>The translated box.</returns>
-        [Pure]
         public readonly Box3i Translated(Vector3i distance)
         {
-            // create a local copy of this box
             Box3i box = this;
             box.Translate(distance);
             return box;
         }
 
         /// <summary>
-        /// Scales this Box3i by the given amount.
+        /// Scales this box by the given scale, <paramref name="scale"/>, and from the given anchor point, <paramref name="anchor"/>.
         /// </summary>
         /// <param name="scale">The scale to scale the box.</param>
         /// <param name="anchor">The anchor to scale the box from.</param>
         public void Scale(Vector3i scale, Vector3i anchor)
         {
-            _min = anchor + ((_min - anchor) * scale);
-            _max = anchor + ((_max - anchor) * scale);
+            Min = anchor + ((Min - anchor) * scale);
+            Max = anchor + ((Max - anchor) * scale);
         }
 
         /// <summary>
-        /// Returns a Box3i scaled by a given amount from an anchor point.
+        /// Returns a box scaled by the given scale, <paramref name="scale"/>, and from the given anchor point, <paramref name="anchor"/>.
         /// </summary>
         /// <param name="scale">The scale to scale the box.</param>
         /// <param name="anchor">The anchor to scale the box from.</param>
         /// <returns>The scaled box.</returns>
-        [Pure]
         public readonly Box3i Scaled(Vector3i scale, Vector3i anchor)
         {
-            // create a local copy of this box
             Box3i box = this;
             box.Scale(scale, anchor);
             return box;
         }
 
         /// <summary>
-        /// Inflates this Box3i by the given size in all directions. A negative size will shrink the box to a maximum of -HalfSize.
-        /// Use the <see cref="Extend"/> method for the point-encapsulation functionality in OpenTK version 4.8.1 and earlier.
+        /// Inflates this box by the given size in all directions.
+        /// A negative size will shrink the box to a maximum of -<see cref="HalfSize"/>.
         /// </summary>
         /// <param name="size">The size to inflate by.</param>
         public void Inflate(Vector3i size)
         {
-            size = Vector3i.ComponentMax(size, -HalfSize);
-            _min -= size;
-            _max += size;
+            size = Vector3i.ComponentMax(size, -(Size / 2));
+            Vector3i newMin = Min - size;
+            Vector3i newMax = Max + size;
+            Min = Vector3i.ComponentMin(newMin, newMax);
+            Max = Vector3i.ComponentMax(newMin, newMax);
         }
 
         /// <summary>
-        /// Inflates this Box3i by the given size in all directions. A negative size will shrink the box to a maximum of -HalfSize.
-        /// Use the <see cref="Extended"/> method for the point-encapsulation functionality in eOpenTK version 4.8.1 and earlier.
+        /// Returns a box inflated by the given size in all directions.
+        /// A negative size will shrink the box to a maximum of -<see cref="HalfSize"/>.
         /// </summary>
         /// <param name="size">The size to inflate by.</param>
         /// <returns>The inflated box.</returns>
-        [Pure]
         public readonly Box3i Inflated(Vector3i size)
         {
-            // create a local copy of this box
             Box3i box = this;
             box.Inflate(size);
             return box;
         }
 
         /// <summary>
-        /// Extend this Box3i to encapsulate a given point.
+        /// Extends this box to encapsulate a given point.
         /// </summary>
+        /// <remarks>
+        /// This can be used in combination with <see cref="Empty"/> to make an efficient bounding box calculation.
+        /// </remarks>
         /// <param name="point">The point to contain.</param>
+        /// <example>
+        /// For example:
+        /// <code>
+        /// Vector3i[] points = GetPoints();
+        /// Box3i aabb = Box3i.Empty;
+        /// for (int i = 0; i &lt; points.Length; i++)
+        /// {
+        ///     aabb.Extend(points[i]):
+        /// }
+        /// </code>
+        /// Will calculate the bounding box of all the points in the array without needing a special case for the first point.
+        /// </example>
         public void Extend(Vector3i point)
         {
-            _min = Vector3i.ComponentMin(_min, point);
-            _max = Vector3i.ComponentMax(_max, point);
+            Min = Vector3i.ComponentMin(Min, point);
+            Max = Vector3i.ComponentMax(Max, point);
         }
 
         /// <summary>
-        /// Extend this Box3i to encapsulate a given point.
+        /// Returns a box that is extended to encapsulate a given point.
         /// </summary>
+        /// <remarks>
+        /// This can be used in combination with <see cref="Empty"/> to make an efficient bounding box calculation.
+        /// </remarks>
         /// <param name="point">The point to contain.</param>
-        /// <returns>The inflated box.</returns>
-        [Pure]
+        /// <returns>The extended box.</returns>
+        /// <example>
+        /// For example:
+        /// <code>
+        /// Vector3i[] points = GetPoints();
+        /// Box3i aabb = Box3i.Empty;
+        /// for (int i = 0; i &lt; points.Length; i++)
+        /// {
+        ///     aabb = aabb.Extended(points[i]):
+        /// }
+        /// </code>
+        /// Will calculate the bounding box of all the points in the array without needing a special case for the first point.
+        /// </example>
         public readonly Box3i Extended(Vector3i point)
         {
-            // create a local copy of this box
             Box3i box = this;
             box.Extend(point);
             return box;
         }
 
+        /// <inheritdoc/>
+        public readonly override bool Equals(object obj)
+        {
+            return obj is Box3i box && Equals(box);
+        }
+
+        /// <inheritdoc/>
+        public readonly bool Equals(Box3i other)
+        {
+            return Min.Equals(other.Min) &&
+                   Max.Equals(other.Max);
+        }
+
+        /// <inheritdoc/>
+        public readonly override int GetHashCode()
+        {
+            return HashCode.Combine(Min, Max);
+        }
+
         /// <summary>
         /// Equality comparator.
+        /// Two boxes are considered equal if both the <see cref="Min"/> and <see cref="Max"/> fields are equal.
         /// </summary>
         /// <param name="left">The left operand.</param>
         /// <param name="right">The right operand.</param>
@@ -627,23 +514,22 @@ namespace OpenTK.Mathematics
             return !(left == right);
         }
 
-        /// <inheritdoc/>
-        public override readonly bool Equals(object obj)
+        /// <summary>
+        /// Converts this <see cref="Box3i"/> to a <see cref="Box3"/>.
+        /// </summary>
+        /// <param name="box">The box to cast.</param>
+        public static explicit operator Box3(Box3i box)
         {
-            return obj is Box3i && Equals((Box3i)obj);
+            return new Box3(box.Min, box.Max);
         }
 
-        /// <inheritdoc/>
-        public readonly bool Equals(Box3i other)
+        /// <summary>
+        /// Converts this <see cref="Box3i"/> to a <see cref="Box3d"/>.
+        /// </summary>
+        /// <param name="box">The box to cast.</param>
+        public static explicit operator Box3d(Box3i box)
         {
-            return _min.Equals(other._min) &&
-                   _max.Equals(other._max);
-        }
-
-        /// <inheritdoc/>
-        public override readonly int GetHashCode()
-        {
-            return HashCode.Combine(_min, _max);
+            return new Box3d(box.Min, box.Max);
         }
 
         /// <inheritdoc/>

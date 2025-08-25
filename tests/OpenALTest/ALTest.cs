@@ -249,7 +249,7 @@ namespace OpenALTest
                 Console.WriteLine($"Source latency 2: {offsets[0] / (float)(1 << 32)}; {offsets[1]}");
                 CheckALError(" ");
             }
-
+            
             while ((SourceState)AL.GetSourcei(alSource, SourceGetPNameI.SourceState) == SourceState.Playing)
             {
                 if (AL.IsExtensionPresent("AL_SOFT_source_latency"))
