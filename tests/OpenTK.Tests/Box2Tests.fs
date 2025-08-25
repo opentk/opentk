@@ -11,11 +11,9 @@ module Box2 =
         [<Property>]
         let ``Vector constructor sets all values accordingly`` (v1 : Vector2, v2 : Vector2) =
             let b = Box2(v1, v2)
-            let vMin = Vector2(Math.Min(v1.X, v2.X), Math.Min(v1.Y, v2.Y))
-            let vMax = Vector2(Math.Max(v1.X, v2.X), Math.Max(v1.Y, v2.Y))
 
-            Assert.Equal(vMin, b.Min)
-            Assert.Equal(vMax, b.Max)
+            Assert.Equal(v1, b.Min)
+            Assert.Equal(v2, b.Max)
 
         [<Property>]
         let ``Float constructor should be the same as creating vectors and using the vector constructor`` (f1 : float32, f2 : float32, f3 : float32, f4 : float32) =
@@ -31,72 +29,31 @@ module Box2 =
             Assert.True(b.Size.X * b.Size.Y >= (float32)0)
 
         [<Property>]
+        let ``The halfsize of a given box must be greater than or equal to 0`` (b : Box3) =
+            Assert.True(b.HalfSize.X * b.HalfSize.Y >= (float32)0)
+
+        [<Property>]
+        let ``The width and height of a given box must be greater than or equal to 0`` (b : Box3) =
+            Assert.True(b.Width >= (float32)0)
+            Assert.True(b.Height >= (float32)0)
+
+        [<Property>]
         let ``The size should follow max-min`` (b : Box2) =
-           Assert.Equal(b.Size, b.Max - b.Min)
+           Assert.Equal(b.Size, Vector2.ComponentMax(Vector2.Zero, b.Max - b.Min))
 
         [<Property>]
-        let ``The size should be equal to the set size`` (b1 : Box2, v1 : Vector2) =
-           let mutable b = b1
-           let v = new Vector2(Math.Abs(v1.X), Math.Abs(v1.Y))
-
-           b.Size <- v
-           
-           Assert.ApproximatelyEquivalent(v, b.Size)
-        
-        [<Property>]
-        let ``Changing the size should not change the center`` (b1 : Box2, v1 : Vector2) =
-           let mutable b = b1
-           let v = b.Center
-           
-           b.CenteredSize <- v1
-           
-           Assert.ApproximatelyEquivalent(v, b.Center)
-        
-        [<Property>]
-        let ``The halfsize should always be equal to half the size`` (b1 : Box2, v1 : Vector2) =
-            let mutable b = b1
-            
-            b.Size <- v1
-            
+        let ``The halfsize should always be equal to half the size`` (b1 : Box2) =
             Assert.Equal(b1.Size/(float32)2, b1.HalfSize)
-            Assert.Equal(b.Size/(float32)2, b.HalfSize)
-            
-        [<Property>]
-        let ``The halfsize should always be equal to half the size when using the halfSize setter`` (b1 : Box2, v1 : Vector2) =
-            let mutable b = b1
-            
-            b.HalfSize <- v1
-            
-            Assert.Equal(b1.Size/(float32)2, b1.HalfSize)
-            Assert.Equal(b.Size/(float32)2, b.HalfSize)
 
-    [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
-    module Properties =
         [<Property>]
-        let ``Using the properties should always result in a valid box (size >= 0)`` (v1 : Vector2, v2 : Vector2, v3 : Vector2, v4 : Vector2) =
-            let mutable b = Box2(v1, v2)
+        let ``Using the fields should always result in size >= 0`` (v1 : Vector3, v2 : Vector3, v3 : Vector3, v4 : Vector3) =
+            let mutable b = Box3(v1, v2)
 
             b.Min <- v3
             b.Max <- v4
 
             Assert.True(b.Size.X * b.Size.Y >= (float32)0)
 
-        [<Property>]
-        let ``Setting a min value higher than max moves the max`` (b1 : Box2, v1 : Vector2) =
-            let mutable b = b1
-
-            b.Min <- v1
-
-            Assert.Equal(b.Max, Vector2.ComponentMax(v1, b1.Max))
-
-        [<Property>]
-        let ``Setting a max value lower than min moves the min`` (b1 : Box2, v1 : Vector2) =
-            let mutable b = b1
-
-            b.Max <- v1
-
-            Assert.Equal(b.Min, Vector2.ComponentMin(v1, b1.Min))
-    
     [<Properties(Arbitrary = [|typeof<OpenTKGen>|])>]
     module Scale =
         [<Property>]
@@ -116,7 +73,7 @@ module Box2 =
             
         [<Property>]
         let ``Scaling from the center of a box should have the same result as multiplying the size`` (b1 : Box2, v1 : Vector2) =
-            let v2 = b1.Size * v1
+            let v2 = Vector2.ComponentMax(Vector2.Zero, b1.Size * v1)
 
             b1.Scale(v1, b1.Center)
 
@@ -125,7 +82,7 @@ module Box2 =
                 Assert.EpsilonFromValue4Digits(v1.Y)
             )
             
-            Assert.ApproximatelyEqualDelta(b1.Size, v2, epsilon)
+            Assert.ApproximatelyEqualDelta(v2, b1.Size, epsilon)
             
         [<Property>]
         let ``Box2.Scale is equivelant to Box2.Scaled`` (b1 : Box2, v1 : Vector2, v2 : Vector2) =
@@ -153,11 +110,10 @@ module Box2 =
             
     [<Properties(Arbitrary = [|typeof<OpenTKGen>|])>]
     module Inflate =
-        
         [<Property>]
         let ``Box2.Inflate produces the expected min and max changes`` (b1 : Box2, v1 : Vector2) =
             let size = Vector2.ComponentMax(v1, -b1.HalfSize);
-            let bx = Box2(b1.Min - size, b1.Max + size)
+            let bx = Box2.FromTwoPoints(b1.Min - size, b1.Max + size)
             let mutable b = b1
             b.Inflate(v1)
             Assert.Equal(b, bx)
@@ -178,8 +134,14 @@ module Box2 =
     [<Properties(Arbitrary = [|typeof<OpenTKGen>|])>]
     module Extend =
         [<Property>]
+        let ``After extending a box the point should be either on the edge of the box or the box shouldn't change size`` (b1 : Box2, v1 : Vector2) =
+            let v2 = b1.Size
+            b1.Extend(v1)
+            Assert.EitherEqual(b1.DistanceToNearestEdge(v1), (float32)0, v2, b1.Size)
+
+        [<Property>]
         let ``After extending the point should be enclosed in the box`` (b1 : Box2, v1 : Vector2) =
-            Assert.True(b1.Extended(v1).Contains(v1, true))
+            Assert.True(b1.Extended(v1).ContainsInclusive(v1))
 
         [<Property>]
         let ``Box2.Extend is equivalent to Box2.Extended`` (b1 : Box2, v1 : Vector2) =
@@ -207,18 +169,18 @@ module Box2 =
     module Contains =
         [<Property>]
         let ``Box2.Contains should only return true if the point is enclosed in the box (exclusive)`` (b1 : Box2, v1 : Vector2) =
-            let c = b1.Min.X < v1.X && v1.X < b1.Max.X && b1.Min.Y < v1.Y && v1.Y < b1.Max.Y
+            let c = b1.Min.X < v1.X && b1.Min.Y < v1.Y && v1.X < b1.Max.X && v1.Y < b1.Max.Y
             
             Assert.Equal(c, b1.ContainsExclusive(v1))
 
         let ``Box2.Contains should only return true if the point is enclosed in the box (inclusive)`` (b1 : Box2, v1 : Vector2) =
-            let c = b1.Min.X <= v1.X && v1.X <= b1.Max.X && b1.Min.Y <= v1.Y && v1.Y <= b1.Max.Y
+            let c = b1.Min.X <= v1.X && b1.Min.Y <= v1.Y && v1.X <= b1.Max.X && v1.Y <= b1.Max.Y
             
             Assert.Equal(c, b1.ContainsInclusive(v1))
 
         [<Property>]
-        let ``Box2.Contains should only return true if the other box is partly within in the box`` (b1 : Box2, b2 : Box2) =
-            let c = b1.Min.X <= b2.Max.X && b1.Max.X >= b2.Min.X && b1.Min.Y <= b2.Max.Y && b1.Max.Y >= b2.Min.Y
+        let ``Box2.Contains should only return true if the other box is completely within the box`` (b1 : Box2, b2 : Box2) =
+            let c = b1.Min.X <= b2.Min.X && b1.Min.Y <= b2.Min.Y && b1.Max.X >= b2.Max.X && b1.Max.Y >= b2.Max.Y
             
             Assert.Equal(c, b1.Contains(b2))
                 

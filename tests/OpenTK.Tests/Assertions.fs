@@ -139,3 +139,7 @@ type internal Assert =
     static member AllComponentsNan(v : Vector4) =
         if not (Single.IsNaN(v.X) && Single.IsNaN(v.Y) && Single.IsNaN(v.Z) && Single.IsNaN(v.W)) then
             raise <| Xunit.Sdk.EqualException.ForMismatchedValues(Vector4(Single.NaN, Single.NaN, Single.NaN, Single.NaN), v)
+
+    static member EitherEqual(expected1 : 'a, actual1 : 'a, expected2 : 'b, actual2 : 'b) =
+        if not (expected1 = actual1) && not (expected2 = actual2) then
+            raise <| Xunit.Sdk.EqualException.ForMismatchedValues((expected1, expected2), (actual1, actual2))

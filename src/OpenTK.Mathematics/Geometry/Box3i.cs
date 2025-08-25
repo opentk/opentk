@@ -94,6 +94,11 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
+        /// Gets the location of the box from a Location + Size perspective. Basically an alias for <see cref="Min"/>.
+        /// </summary>
+        public readonly Vector3i Location => Min;
+
+        /// <summary>
         /// Gets the size of the box.
         /// </summary>
         /// <remarks>

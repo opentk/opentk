@@ -92,6 +92,11 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
+        /// Gets the location of the box from a Location + Size perspective. Basically an alias for <see cref="Min"/>.
+        /// </summary>
+        public readonly Vector2i Location => Min;
+
+        /// <summary>
         /// Gets the size of the box.
         /// </summary>
         /// <remarks>
@@ -161,9 +166,22 @@ namespace OpenTK.Mathematics
         /// <param name="min">The minimum point on the XY plane this box encloses.</param>
         /// <param name="max">The maximum point on the XY plane this box encloses.</param>
         /// <returns>The created box.</returns>
-        public static Box2i FromPositions(Vector2i min, Vector2i max)
+        public static Box2i FromMinMax(Vector2i min, Vector2i max)
         {
             return new Box2i(min, max);
+        }
+
+        /// <summary>
+        /// Create a box from two unordered points, i.e. creates a box that contains two points.
+        /// </summary>
+        /// <param name="p1">The first point to contain.</param>
+        /// <param name="p2">The second point to contain.</param>
+        /// <returns>The created box.</returns>
+        public static Box2 FromTwoPoints(Vector2 p1, Vector2 p2)
+        {
+            Vector2 min = Vector2.ComponentMin(p1, p2);
+            Vector2 max = Vector2.ComponentMax(p1, p2);
+            return new Box2(min, max);
         }
 
         /// <summary>
@@ -172,7 +190,7 @@ namespace OpenTK.Mathematics
         /// <param name="center">The center of the box.</param>
         /// <param name="halfSize">The half size of the box.</param>
         /// <returns>The created box.</returns>
-        public static Box2i FromPositionAndHalfSize(Vector2i center, Vector2i halfSize)
+        public static Box2i FromCenterAndHalfSize(Vector2i center, Vector2i halfSize)
         {
             return new Box2i(center - halfSize, center + halfSize);
         }
