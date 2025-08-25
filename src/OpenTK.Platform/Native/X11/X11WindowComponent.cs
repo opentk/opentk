@@ -2690,9 +2690,9 @@ namespace OpenTK.Platform.Native.X11
             {
                 Box2i overlap = bounds.Intersected(rect.Bounds);
 
-                if (overlap.SizeX * overlap.SizeY > bestArea)
+                if (overlap.Size.X * overlap.Size.Y > bestArea)
                 {
-                    bestArea = overlap.SizeX * overlap.SizeY;
+                    bestArea = overlap.Size.X * overlap.Size.Y;
                     bestDisp = rect.Handle;
                 }
                 else if (bestArea <= 0)
@@ -2720,11 +2720,11 @@ namespace OpenTK.Platform.Native.X11
             {
                 return Math.Min(
                     Math.Min(
-                        a.DistanceToNearestEdge(b.Min), 
-                        a.DistanceToNearestEdge(b.Max)),
+                        a.EuclidianDistanceToNearestEdge(b.Min), 
+                        a.EuclidianDistanceToNearestEdge(b.Max)),
                     Math.Min(
-                        a.DistanceToNearestEdge((b.Min.X, b.Max.Y)), 
-                        a.DistanceToNearestEdge((b.Min.Y, b.Max.X))));
+                        a.EuclidianDistanceToNearestEdge((b.Min.X, b.Max.Y)), 
+                        a.EuclidianDistanceToNearestEdge((b.Min.Y, b.Max.X))));
             }
         }
 
@@ -3099,7 +3099,7 @@ namespace OpenTK.Platform.Native.X11
 
             // FIXME: Do we need to do this?
             Box2i bounds = X11DisplayComponent.GetBounds(xdisplay);
-            XMoveResizeWindow(X11.Display, xwindow.Window, bounds.X, bounds.Y, (uint)bounds.Width, (uint)bounds.Height);
+            XMoveResizeWindow(X11.Display, xwindow.Window, bounds.Min.X, bounds.Min.Y, (uint)bounds.Width, (uint)bounds.Height);
         }
 
         /// <inheritdoc/>
@@ -3173,7 +3173,7 @@ namespace OpenTK.Platform.Native.X11
 
             // FIXME: Do we need to do this?
             Box2i bounds = X11DisplayComponent.GetBounds(xdisplay);
-            XMoveResizeWindow(X11.Display, xwindow.Window, bounds.X, bounds.Y, (uint)bounds.Width, (uint)bounds.Height);
+            XMoveResizeWindow(X11.Display, xwindow.Window, bounds.Min.X, bounds.Min.Y, (uint)bounds.Width, (uint)bounds.Height);
         }
 
         /// <inheritdoc/>

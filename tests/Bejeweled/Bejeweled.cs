@@ -1335,8 +1335,8 @@ namespace Bejeweled
         {
             Box2i board = GetGemBoardBox();
             Toolkit.Window.GetFramebufferSize(Window, out Vector2i fbSize);
-            int y = (fbSize.Y - (board.Y + board.Height));
-            return new Vector4i(board.X, y, board.Width, board.Height);
+            int y = (fbSize.Y - (board.Min.Y + board.Height));
+            return new Vector4i(board.Min.X, y, board.Width, board.Height);
         }
 
         public bool TryClientPosToTile(Vector2 clientPos, out Vector2i tile)

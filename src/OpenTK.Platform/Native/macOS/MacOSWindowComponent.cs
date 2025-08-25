@@ -1974,9 +1974,9 @@ namespace OpenTK.Platform.Native.macOS
 
                 Box2 overlap = bounds.Intersected(windowBounds);
 
-                if (overlap.SizeX * overlap.SizeY > bestArea)
+                if (overlap.Size.X * overlap.Size.Y > bestArea)
                 {
-                    bestArea = overlap.SizeX * overlap.SizeY;
+                    bestArea = overlap.Size.X * overlap.Size.Y;
                     bestScreen = nsscreen;
                 }
                 else if (bestArea <= 0)

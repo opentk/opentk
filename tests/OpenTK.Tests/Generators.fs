@@ -224,14 +224,14 @@ module private Generators =
         vec2
         |> Arb.toGen
         |> Gen.two
-        |> Gen.map Box2
+        |> Gen.map Box2.FromTwoPoints
         |> Arb.fromGen
 
     let box3 =
         vec3
         |> Arb.toGen
         |> Gen.two
-        |> Gen.map Box3
+        |> Gen.map Box3.FromTwoPoints
         |> Arb.fromGen
 
     /// Magical value taken from FsCheck source.

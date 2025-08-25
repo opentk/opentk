@@ -21,10 +21,12 @@ SOFTWARE.
  */
 
 using System;
+using System.ComponentModel.Design;
 using System.Diagnostics.Contracts;
 using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using System.Runtime.Intrinsics;
 using System.Xml.Serialization;
 
 namespace OpenTK.Mathematics
@@ -469,10 +471,19 @@ namespace OpenTK.Mathematics
         /// <param name="b">Second operand.</param>
         /// <returns>The component-wise minimum.</returns>
         [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector2 ComponentMin(Vector2 a, Vector2 b)
         {
-            a.X = a.X < b.X ? a.X : b.X;
-            a.Y = a.Y < b.Y ? a.Y : b.Y;
+            if (System.Runtime.Intrinsics.X86.Sse.IsSupported)
+            {
+                a.X = System.Runtime.Intrinsics.X86.Sse.MinScalar(Vector128.CreateScalarUnsafe(a.X), Vector128.CreateScalarUnsafe(b.X)).ToScalar();
+                a.Y = System.Runtime.Intrinsics.X86.Sse.MinScalar(Vector128.CreateScalarUnsafe(a.Y), Vector128.CreateScalarUnsafe(b.Y)).ToScalar();
+            }
+            else
+            {
+                a.X = a.X < b.X ? a.X : b.X;
+                a.Y = a.Y < b.Y ? a.Y : b.Y;
+            }
             return a;
         }
 
@@ -482,10 +493,19 @@ namespace OpenTK.Mathematics
         /// <param name="a">First operand.</param>
         /// <param name="b">Second operand.</param>
         /// <param name="result">The component-wise minimum.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void ComponentMin(in Vector2 a, in Vector2 b, out Vector2 result)
         {
-            result.X = a.X < b.X ? a.X : b.X;
-            result.Y = a.Y < b.Y ? a.Y : b.Y;
+            if (System.Runtime.Intrinsics.X86.Sse.IsSupported)
+            {
+                result.X = System.Runtime.Intrinsics.X86.Sse.MinScalar(Vector128.CreateScalarUnsafe(a.X), Vector128.CreateScalarUnsafe(b.X)).ToScalar();
+                result.Y = System.Runtime.Intrinsics.X86.Sse.MinScalar(Vector128.CreateScalarUnsafe(a.Y), Vector128.CreateScalarUnsafe(b.Y)).ToScalar();
+            }
+            else
+            {
+                result.X = a.X < b.X ? a.X : b.X;
+                result.Y = a.Y < b.Y ? a.Y : b.Y;
+            }
         }
 
         /// <summary>
@@ -495,10 +515,19 @@ namespace OpenTK.Mathematics
         /// <param name="b">Second operand.</param>
         /// <returns>The component-wise maximum.</returns>
         [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector2 ComponentMax(Vector2 a, Vector2 b)
         {
-            a.X = a.X > b.X ? a.X : b.X;
-            a.Y = a.Y > b.Y ? a.Y : b.Y;
+            if (System.Runtime.Intrinsics.X86.Sse.IsSupported)
+            {
+                a.X = System.Runtime.Intrinsics.X86.Sse.MaxScalar(Vector128.CreateScalarUnsafe(a.X), Vector128.CreateScalarUnsafe(b.X)).ToScalar();
+                a.Y = System.Runtime.Intrinsics.X86.Sse.MaxScalar(Vector128.CreateScalarUnsafe(a.Y), Vector128.CreateScalarUnsafe(b.Y)).ToScalar();
+            }
+            else
+            {
+                a.X = a.X > b.X ? a.X : b.X;
+                a.Y = a.Y > b.Y ? a.Y : b.Y;
+            }
             return a;
         }
 
@@ -508,10 +537,19 @@ namespace OpenTK.Mathematics
         /// <param name="a">First operand.</param>
         /// <param name="b">Second operand.</param>
         /// <param name="result">The component-wise maximum.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void ComponentMax(in Vector2 a, in Vector2 b, out Vector2 result)
         {
-            result.X = a.X > b.X ? a.X : b.X;
-            result.Y = a.Y > b.Y ? a.Y : b.Y;
+            if (System.Runtime.Intrinsics.X86.Sse.IsSupported)
+            {
+                result.X = System.Runtime.Intrinsics.X86.Sse.MaxScalar(Vector128.CreateScalarUnsafe(a.X), Vector128.CreateScalarUnsafe(b.X)).ToScalar();
+                result.Y = System.Runtime.Intrinsics.X86.Sse.MaxScalar(Vector128.CreateScalarUnsafe(a.Y), Vector128.CreateScalarUnsafe(b.Y)).ToScalar();
+            }
+            else
+            {
+                result.X = a.X > b.X ? a.X : b.X;
+                result.Y = a.Y > b.Y ? a.Y : b.Y;
+            }
         }
 
         /// <summary>
