@@ -25,7 +25,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
                     return IntPtr.Zero;
                 }
 
-                return LoadLibrary("glfw", new Version(3, 3), assembly, path);
+                return LoadLibrary("glfw", new Version(3, 4), assembly, path);
             });
         }
 
