@@ -373,7 +373,7 @@ namespace OpenTK.Platform.Native.Windows
                             PublicName = monitor.DeviceString,
                             IsPrimary = adapter.StateFlags.HasFlag(DisplayDeviceStateFlags.PrimaryDevice),
                             Position = lpDevMode.dmPosition,
-                            RefreshRate = (int)lpDevMode.dmDisplayFrequency,
+                            RefreshRate = lpDevMode.dmDisplayFrequency,
                             BitsPerPixel = (int)lpDevMode.dmBitsPerPel,
                             Resolution = new DisplayResolution((int)lpDevMode.dmPelsWidth, (int)lpDevMode.dmPelsHeight),
                             DpiX = -1,
@@ -393,7 +393,7 @@ namespace OpenTK.Platform.Native.Windows
                         info.IsPrimary = adapter.StateFlags.HasFlag(DisplayDeviceStateFlags.PrimaryDevice);
 
                         info.Position = lpDevMode.dmPosition;
-                        info.RefreshRate = (int)lpDevMode.dmDisplayFrequency;
+                        info.RefreshRate = lpDevMode.dmDisplayFrequency;
                         info.BitsPerPixel = (int)lpDevMode.dmBitsPerPel;
                         info.Resolution = new DisplayResolution((int)lpDevMode.dmPelsWidth, (int)lpDevMode.dmPelsHeight);
                         info.WorkArea = workArea;
