@@ -27,12 +27,12 @@ namespace OpenTK.Mathematics
     public struct Vector2i : IEquatable<Vector2i>, IFormattable
     {
         /// <summary>
-        /// The X component of the Vector2i.
+        /// The X component of the vector.
         /// </summary>
         public int X;
 
         /// <summary>
-        /// The Y component of the Vector2i.
+        /// The Y component of the vector.
         /// </summary>
         public int Y;
 
@@ -49,8 +49,8 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Initializes a new instance of the <see cref="Vector2i"/> struct.
         /// </summary>
-        /// <param name="x">The X component of the Vector2i.</param>
-        /// <param name="y">The Y component of the Vector2i.</param>
+        /// <param name="x">The X component of the vector.</param>
+        /// <param name="y">The Y component of the vector.</param>
         public Vector2i(int x, int y)
         {
             X = x;

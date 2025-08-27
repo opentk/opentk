@@ -44,8 +44,8 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Initializes a new instance of the <see cref="Vector2b"/> struct.
         /// </summary>
-        /// <param name="x">The x component of the <see cref="Vector2b"/>.</param>
-        /// <param name="y">The y component of the <see cref="Vector2b"/>.</param>
+        /// <param name="x">The x component of the vector.</param>
+        /// <param name="y">The y component of the vector.</param>
         public Vector2b(bool x, bool y)
         {
             X = x;
@@ -55,7 +55,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Initializes a new instance of the <see cref="Vector2b"/> struct.
         /// </summary>
-        /// <param name="xy">The x, and y component of the <see cref="Vector2b"/>.</param>
+        /// <param name="xy">The x, and y component of the vector.</param>
         public Vector2b(Vector2b xy)
         {
             X = xy.X;

@@ -32,19 +32,19 @@ using System.Xml.Serialization;
 namespace OpenTK.Mathematics
 {
     /// <summary>
-    /// 2-component Vector of the Half type. Occupies 4 Byte total.
+    /// Represents a 2D vector using two half-precision floating-point numbers. Occupies 4 Byte total.
     /// </summary>
     [Serializable]
     [StructLayout(LayoutKind.Sequential)]
     public struct Vector2h : ISerializable, IEquatable<Vector2h>, IFormattable
     {
         /// <summary>
-        /// The X component of the Half2.
+        /// The X component of the vector.
         /// </summary>
         public Half X;
 
         /// <summary>
-        /// The Y component of the Half2.
+        /// The Y component of the vector.
         /// </summary>
         public Half Y;
 
@@ -71,8 +71,8 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Initializes a new instance of the <see cref="Vector2h"/> struct.
         /// </summary>
-        /// <param name="x">The X component of the vector.</param>
-        /// <param name="y">The Y component of the vector.</param>
+        /// <param name="x">The x component of the vector.</param>
+        /// <param name="y">The y component of the vector.</param>
         public Vector2h(Half x, Half y)
         {
             X = x;
@@ -82,8 +82,8 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Initializes a new instance of the <see cref="Vector2h"/> struct.
         /// </summary>
-        /// <param name="x">The X component of the vector.</param>
-        /// <param name="y">The Y component of the vector.</param>
+        /// <param name="x">The x component of the vector.</param>
+        /// <param name="y">The y component of the vector.</param>
         public Vector2h(float x, float y)
         {
             X = new Half(x);
@@ -93,8 +93,8 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Initializes a new instance of the <see cref="Vector2h"/> struct.
         /// </summary>
-        /// <param name="x">The X component of the vector.</param>
-        /// <param name="y">The Y component of the vector.</param>
+        /// <param name="x">The x component of the vector.</param>
+        /// <param name="y">The y component of the vector.</param>
         /// <param name="throwOnError">Enable checks that will throw if the conversion result is not meaningful.</param>
         public Vector2h(float x, float y, bool throwOnError)
         {
@@ -201,7 +201,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Returns this Half2 instance's contents as Vector2.
+        /// Returns this Vector2h instance's contents as Vector2.
         /// </summary>
         /// <returns>The vector.</returns>
         public readonly Vector2 ToVector2()
@@ -210,7 +210,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Returns this Half2 instance's contents as Vector2d.
+        /// Returns this Vector2h instance's contents as Vector2d.
         /// </summary>
         /// <returns>The vector.</returns>
         public readonly Vector2d ToVector2d()
@@ -286,7 +286,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// The size in bytes for an instance of the Half2 struct is 4.
+        /// The size in bytes for an instance of the Vector2h struct is 4.
         /// </summary>
         public static readonly int SizeInBytes = Unsafe.SizeOf<Vector2h>();
 
@@ -376,9 +376,9 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Returns the Half2 as an array of bytes.
+        /// Returns the Vector2h as an array of bytes.
         /// </summary>
-        /// <param name="h">The Half2 to convert.</param>
+        /// <param name="h">The Vector2h to convert.</param>
         /// <returns>The input as byte array.</returns>
         [Pure]
         public static byte[] GetBytes(Vector2h h)
@@ -396,11 +396,11 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Converts an array of bytes into Half2.
+        /// Converts an array of bytes into Vector2h.
         /// </summary>
-        /// <param name="value">A Half2 in it's byte[] representation.</param>
+        /// <param name="value">A Vector2h in it's byte[] representation.</param>
         /// <param name="startIndex">The starting position within value.</param>
-        /// <returns>A new Half2 instance.</returns>
+        /// <returns>A new Vector2h instance.</returns>
         [Pure]
         public static Vector2h FromBytes(byte[] value, int startIndex)
         {

@@ -37,12 +37,12 @@ namespace OpenTK.Mathematics
     public struct Vector2d : IEquatable<Vector2d>, IFormattable
     {
         /// <summary>
-        /// The X coordinate of this instance.
+        /// The X coordinate of the vector.
         /// </summary>
         public double X;
 
         /// <summary>
-        /// The Y coordinate of this instance.
+        /// The Y coordinate of the vector.
         /// </summary>
         public double Y;
 
@@ -94,8 +94,8 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Initializes a new instance of the <see cref="Vector2d"/> struct.
         /// </summary>
-        /// <param name="x">The X coordinate.</param>
-        /// <param name="y">The Y coordinate.</param>
+        /// <param name="x">The x component of the vector.</param>
+        /// <param name="y">The y component of the vector.</param>
         public Vector2d(double x, double y)
         {
             X = x;

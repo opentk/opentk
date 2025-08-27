@@ -11,7 +11,7 @@ using System.Xml.Serialization;
 namespace OpenTK.Mathematics
 {
     /// <summary>
-    /// Represents a 2D boolean vector.
+    /// Represents a 4D boolean vector.
     /// </summary>
     /// <remarks>
     /// As bools in C# are not blittable this type is not necessarily suitable for interoperation with unmanaged code.
@@ -55,10 +55,10 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Initializes a new instance of the <see cref="Vector4b"/> struct.
         /// </summary>
-        /// <param name="x">The x component of the <see cref="Vector4b"/>.</param>
-        /// <param name="y">The y component of the <see cref="Vector4b"/>.</param>
-        /// <param name="z">The z component of the <see cref="Vector4b"/>.</param>
-        /// <param name="w">The w component of the <see cref="Vector4b"/>.</param>
+        /// <param name="x">The x component of the vector.</param>
+        /// <param name="y">The y component of the vector.</param>
+        /// <param name="z">The z component of the vector.</param>
+        /// <param name="w">The w component of the vector.</param>
         public Vector4b(bool x, bool y, bool z, bool w)
         {
             X = x;
@@ -70,9 +70,9 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Initializes a new instance of the <see cref="Vector4b"/> struct.
         /// </summary>
-        /// <param name="xy">The x and y components of the <see cref="Vector4b"/>.</param>
-        /// <param name="z">The z component of the <see cref="Vector4b"/>.</param>
-        /// <param name="w">The w component of the <see cref="Vector4b"/>.</param>
+        /// <param name="xy">The x and y components of the vector.</param>
+        /// <param name="z">The z component of the vector.</param>
+        /// <param name="w">The w component of the vector.</param>
         public Vector4b(Vector2b xy, bool z = default, bool w = default)
         {
             X = xy.X;
@@ -84,8 +84,8 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Initializes a new instance of the <see cref="Vector4b"/> struct.
         /// </summary>
-        /// <param name="xyz">The x, y, and z components of the <see cref="Vector4b"/>.</param>
-        /// <param name="w">The w component of the <see cref="Vector4b"/>.</param>
+        /// <param name="xyz">The x, y, and z components of the vector.</param>
+        /// <param name="w">The w component of the vector.</param>
         public Vector4b(Vector3b xyz, bool w = default)
         {
             X = xyz.X;
@@ -97,7 +97,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Initializes a new instance of the <see cref="Vector4b"/> struct.
         /// </summary>
-        /// <param name="xyzw">The x, y, z, and w components of the <see cref="Vector4b"/>.</param>
+        /// <param name="xyzw">The x, y, z, and w components of the vector.</param>
         public Vector4b(Vector4b xyzw)
         {
             X = xyzw.X;

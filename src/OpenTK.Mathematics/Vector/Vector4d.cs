@@ -40,22 +40,22 @@ namespace OpenTK.Mathematics
     public struct Vector4d : IEquatable<Vector4d>, IFormattable
     {
         /// <summary>
-        /// The X component of the Vector4d.
+        /// The X component of the vector.
         /// </summary>
         public double X;
 
         /// <summary>
-        /// The Y component of the Vector4d.
+        /// The Y component of the vector.
         /// </summary>
         public double Y;
 
         /// <summary>
-        /// The Z component of the Vector4d.
+        /// The Z component of the vector.
         /// </summary>
         public double Z;
 
         /// <summary>
-        /// The W component of the Vector4d.
+        /// The W component of the vector.
         /// </summary>
         public double W;
 
@@ -119,10 +119,10 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Initializes a new instance of the <see cref="Vector4d"/> struct.
         /// </summary>
-        /// <param name="x">The x component of the Vector4d.</param>
-        /// <param name="y">The y component of the Vector4d.</param>
-        /// <param name="z">The z component of the Vector4d.</param>
-        /// <param name="w">The w component of the Vector4d.</param>
+        /// <param name="x">The x component of the vector.</param>
+        /// <param name="y">The y component of the vector.</param>
+        /// <param name="z">The z component of the vector.</param>
+        /// <param name="w">The w component of the vector.</param>
         public Vector4d(double x, double y, double z, double w)
         {
             X = x;
@@ -134,7 +134,10 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Initializes a new instance of the <see cref="Vector4d"/> struct.
         /// </summary>
-        /// <param name="v">The Vector2d to copy components from.</param>
+        /// <remarks>
+        /// <see cref="Z"/> and <see cref="W"/> are initialized to zero.
+        /// </remarks>
+        /// <param name="v">The vector to copy the x and y components from.</param>
         public Vector4d(Vector2d v)
         {
             X = v.X;
@@ -146,10 +149,11 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Initializes a new instance of the <see cref="Vector4d"/> struct.
         /// </summary>
-        /// <param name="v">The Vector3d to copy components from.</param>
         /// <remarks>
-        /// <seealso cref="Vector4d(Vector3d, double)"/>.
+        /// <see cref="W"/> is initialized to zero.
         /// </remarks>
+        /// <param name="v">The vector to copy the x, y, and z components from.</param>
+        /// <seealso cref="Vector4d(Vector3d, double)"/>.
         public Vector4d(Vector3d v)
         {
             X = v.X;
@@ -161,8 +165,8 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Initializes a new instance of the <see cref="Vector4d"/> struct.
         /// </summary>
-        /// <param name="v">The Vector3d to copy components from.</param>
-        /// <param name="w">The w component of the new Vector4.</param>
+        /// <param name="v">The vector to copy the x, y, and z components from.</param>
+        /// <param name="w">The w component of the new vector.</param>
         public Vector4d(Vector3d v, double w)
         {
             X = v.X;
@@ -174,7 +178,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Initializes a new instance of the <see cref="Vector4d"/> struct.
         /// </summary>
-        /// <param name="v">The Vector4d to copy components from.</param>
+        /// <param name="v">The vector to copy components from.</param>
         public Vector4d(Vector4d v)
         {
             X = v.X;

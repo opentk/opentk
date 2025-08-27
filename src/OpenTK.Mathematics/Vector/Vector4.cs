@@ -41,22 +41,22 @@ namespace OpenTK.Mathematics
     public struct Vector4 : IEquatable<Vector4>, IFormattable
     {
         /// <summary>
-        /// The X component of the Vector4.
+        /// The X component of the vector.
         /// </summary>
         public float X;
 
         /// <summary>
-        /// The Y component of the Vector4.
+        /// The Y component of the vector.
         /// </summary>
         public float Y;
 
         /// <summary>
-        /// The Z component of the Vector4.
+        /// The Z component of the vector.
         /// </summary>
         public float Z;
 
         /// <summary>
-        /// The W component of the Vector4.
+        /// The W component of the vector.
         /// </summary>
         public float W;
 
@@ -120,10 +120,10 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Initializes a new instance of the <see cref="Vector4"/> struct.
         /// </summary>
-        /// <param name="x">The x component of the Vector4.</param>
-        /// <param name="y">The y component of the Vector4.</param>
-        /// <param name="z">The z component of the Vector4.</param>
-        /// <param name="w">The w component of the Vector4.</param>
+        /// <param name="x">The x component of the vector.</param>
+        /// <param name="y">The y component of the vector.</param>
+        /// <param name="z">The z component of the vector.</param>
+        /// <param name="w">The w component of the vector.</param>
         public Vector4(float x, float y, float z, float w)
         {
             X = x;
@@ -135,7 +135,10 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Initializes a new instance of the <see cref="Vector4"/> struct.
         /// </summary>
-        /// <param name="v">The Vector2 to copy components from.</param>
+        /// <remarks>
+        /// <see cref="Z"/> and <see cref="W"/> are initialized to zero.
+        /// </remarks>
+        /// <param name="v">The vector to copy the x and y components from.</param>
         public Vector4(Vector2 v)
         {
             X = v.X;
@@ -147,10 +150,11 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Initializes a new instance of the <see cref="Vector4"/> struct.
         /// </summary>
-        /// <param name="v">The Vector3 to copy components from.</param>
         /// <remarks>
-        ///  .<seealso cref="Vector4(Vector3, float)"/>
+        /// <see cref="W"/> is initialized to zero.
         /// </remarks>
+        /// <param name="v">The vector to copy the x, y, and z components from.</param>
+        /// <seealso cref="Vector4(Vector3, float)"/>
         public Vector4(Vector3 v)
         {
             X = v.X;
@@ -162,8 +166,8 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Initializes a new instance of the <see cref="Vector4"/> struct.
         /// </summary>
-        /// <param name="v">The Vector3 to copy components from.</param>
-        /// <param name="w">The w component of the new Vector4.</param>
+        /// <param name="v">The vector to copy the x, y, and z components from.</param>
+        /// <param name="w">The w component of the new vector.</param>
         public Vector4(Vector3 v, float w)
         {
             X = v.X;
@@ -175,7 +179,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Initializes a new instance of the <see cref="Vector4"/> struct.
         /// </summary>
-        /// <param name="v">The Vector4 to copy components from.</param>
+        /// <param name="v">The vector to copy components from.</param>
         public Vector4(Vector4 v)
         {
             X = v.X;
