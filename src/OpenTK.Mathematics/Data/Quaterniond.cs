@@ -134,7 +134,7 @@ namespace OpenTK.Mathematics
         /// Convert the current quaternion to axis angle representation.
         /// </summary>
         /// <param name="axis">The resultant axis.</param>
-        /// <param name="angle">The resultant angle.</param>
+        /// <param name="angle">The resultant angle in radians.</param>
         public void ToAxisAngle(out Vector3d axis, out double angle)
         {
             var result = ToAxisAngle();
@@ -145,7 +145,10 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Convert this instance to an axis-angle representation.
         /// </summary>
-        /// <returns>A Vector4 that is the axis-angle representation of this quaternion.</returns>
+        /// <returns>
+        /// A Vector4d that is the axis-angle representation of this quaternion.
+        /// The <see cref="Vector4d.Xyz"/> represent the rotation axis and the <see cref="Vector4d.W"/> component represents the rotation in radians around that axis.
+        /// </returns>
         public Vector4d ToAxisAngle()
         {
             var q = this;
