@@ -32,29 +32,29 @@ using System.Xml.Serialization;
 namespace OpenTK.Mathematics
 {
     /// <summary>
-    /// 4-component Vector of the Half type. Occupies 8 Byte total.
+    /// Represents a 4D vector using four half-precision floating-point numbers. Occupies 8 Byte total.
     /// </summary>
     [Serializable]
     [StructLayout(LayoutKind.Sequential)]
     public struct Vector4h : ISerializable, IEquatable<Vector4h>, IFormattable
     {
         /// <summary>
-        /// The X component of the Half4.
+        /// The X component of the vector.
         /// </summary>
         public Half X;
 
         /// <summary>
-        /// The Y component of the Half4.
+        /// The Y component of the vector.
         /// </summary>
         public Half Y;
 
         /// <summary>
-        /// The Z component of the Half4.
+        /// The Z component of the vector.
         /// </summary>
         public Half Z;
 
         /// <summary>
-        /// The W component of the Half4.
+        /// The W component of the vector.
         /// </summary>
         public Half W;
 
@@ -90,10 +90,10 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Initializes a new instance of the <see cref="Vector4h"/> struct.
         /// </summary>
-        /// <param name="x">The X component of the vector.</param>
-        /// <param name="y">The Y component of the vector.</param>
-        /// <param name="z">The Z component of the vector.</param>
-        /// <param name="w">The W component of the vector.</param>
+        /// <param name="x">The x component of the vector.</param>
+        /// <param name="y">The y component of the vector.</param>
+        /// <param name="z">The z component of the vector.</param>
+        /// <param name="w">The w component of the vector.</param>
         public Vector4h(Half x, Half y, Half z, Half w)
         {
             X = x;
@@ -105,10 +105,10 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Initializes a new instance of the <see cref="Vector4h"/> struct.
         /// </summary>
-        /// <param name="x">The X component of the vector.</param>
-        /// <param name="y">The Y component of the vector.</param>
-        /// <param name="z">The Z component of the vector.</param>
-        /// <param name="w">The W component of the vector.</param>
+        /// <param name="x">The x component of the vector.</param>
+        /// <param name="y">The y component of the vector.</param>
+        /// <param name="z">The z component of the vector.</param>
+        /// <param name="w">The w component of the vector.</param>
         public Vector4h(float x, float y, float z, float w)
         {
             X = new Half(x);
@@ -120,10 +120,10 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Initializes a new instance of the <see cref="Vector4h"/> struct.
         /// </summary>
-        /// <param name="x">The X component of the vector.</param>
-        /// <param name="y">The Y component of the vector.</param>
-        /// <param name="z">The Z component of the vector.</param>
-        /// <param name="w">The W component of the vector.</param>
+        /// <param name="x">The x component of the vector.</param>
+        /// <param name="y">The y component of the vector.</param>
+        /// <param name="z">The z component of the vector.</param>
+        /// <param name="w">The w component of the vector.</param>
         /// <param name="throwOnError">Enable checks that will throw if the conversion result is not meaningful.</param>
         public Vector4h(float x, float y, float z, float w, bool throwOnError)
         {
@@ -1194,7 +1194,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Returns this Half4 instance's contents as Vector4.
+        /// Returns this Vector4h instance's contents as Vector4.
         /// </summary>
         /// <returns>The vector.</returns>
         public readonly Vector4 ToVector4()
@@ -1203,7 +1203,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Returns this Half4 instance's contents as Vector4d.
+        /// Returns this Vector4h instance's contents as Vector4d.
         /// </summary>
         /// <returns>The vector.</returns>
         public readonly Vector4d ToVector4d()
@@ -1212,7 +1212,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Converts OpenTK.Vector4 to OpenTK.Half4.
+        /// Converts OpenTK.Vector4 to OpenTK.Vector4h.
         /// </summary>
         /// <param name="v4f">The Vector4 to convert.</param>
         /// <returns>The resulting Half vector.</returns>
@@ -1223,7 +1223,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Converts OpenTK.Vector4d to OpenTK.Half4.
+        /// Converts OpenTK.Vector4d to OpenTK.Vector4h.
         /// </summary>
         /// <param name="v4d">The Vector4d to convert.</param>
         /// <returns>The resulting Half vector.</returns>
@@ -1398,9 +1398,9 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Returns the Half4 as an array of bytes.
+        /// Returns the Vector4h as an array of bytes.
         /// </summary>
-        /// <param name="h">The Half4 to convert.</param>
+        /// <param name="h">The Vector4h to convert.</param>
         /// <returns>The input as byte array.</returns>
         [Pure]
         public static byte[] GetBytes(Vector4h h)
@@ -1424,11 +1424,11 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Converts an array of bytes into Half4.
+        /// Converts an array of bytes into Vector4h.
         /// </summary>
-        /// <param name="value">A Half4 in it's byte[] representation.</param>
+        /// <param name="value">A Vector4h in it's byte[] representation.</param>
         /// <param name="startIndex">The starting position within value.</param>
-        /// <returns>A new Half4 instance.</returns>
+        /// <returns>A new Vector4h instance.</returns>
         [Pure]
         public static Vector4h FromBytes(byte[] value, int startIndex)
         {

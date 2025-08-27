@@ -929,13 +929,12 @@ namespace OpenTK.Mathematics
 
         /// <summary>
         /// Converts sRGB color values to RGB color values.
+        /// <para>
+        /// The <see cref="A"/> channel remains unchanged.
+        /// </para>
         /// </summary>
-        /// <returns>
-        /// Returns the converted color value.
-        /// </returns>
-        /// <param name="srgb">
-        /// Color value to convert in sRGB.
-        /// </param>
+        /// <param name="srgb">Color value to convert in sRGB.</param>
+        /// <returns>Returns the converted color value.</returns>
         [Pure]
         public static Color4 FromSrgb(Color4 srgb)
         {
@@ -973,11 +972,12 @@ namespace OpenTK.Mathematics
 
         /// <summary>
         /// Converts RGB color values to sRGB color values.
+        /// <para>
+        /// The <see cref="A"/> channel remains unchanged.
+        /// </para>
         /// </summary>
-        /// <returns>
-        /// Returns the converted color value.
-        /// </returns>
         /// <param name="rgb">Color value to convert.</param>
+        /// <returns>Returns the converted color value.</returns>
         [Pure]
         public static Color4 ToSrgb(Color4 rgb)
         {
@@ -1015,16 +1015,19 @@ namespace OpenTK.Mathematics
 
         /// <summary>
         /// Converts HSL color values to RGB color values.
+        /// <para>
+        /// The X element is Hue (H), the Y element is Saturation (S), the Z element is Lightness (L), and the W element is
+        /// Alpha (which is copied to the output's Alpha value).
+        /// Each has a range of 0.0 to 1.0.
+        /// </para>
         /// </summary>
-        /// <returns>
-        /// Returns the converted color value.
-        /// </returns>
         /// <param name="hsl">
         /// Color value to convert in hue, saturation, lightness (HSL).
         /// The X element is Hue (H), the Y element is Saturation (S), the Z element is Lightness (L), and the W element is
         /// Alpha (which is copied to the output's Alpha value).
         /// Each has a range of 0.0 to 1.0.
         /// </param>
+        /// <returns>Returns the converted color value.</returns>
         [Pure]
         public static Color4 FromHsl(Vector4 hsl)
         {
@@ -1092,13 +1095,13 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Converts RGB color values to HSL color values.
         /// </summary>
+        /// <param name="rgb">Color value to convert.</param>
         /// <returns>
         /// Returns the converted color value.
         /// The X element is Hue (H), the Y element is Saturation (S), the Z element is Lightness (L), and the W element is
         /// Alpha (a copy of the input's Alpha value).
         /// Each has a range of 0.0 to 1.0.
         /// </returns>
-        /// <param name="rgb">Color value to convert.</param>
         [Pure]
         public static Vector4 ToHsl(Color4 rgb)
         {
@@ -1147,16 +1150,19 @@ namespace OpenTK.Mathematics
 
         /// <summary>
         /// Converts HSV color values to RGB color values.
+        /// <para>
+        /// The X element is Hue (H), the Y element is Saturation (S), the Z element is Value (V), and the W element is Alpha
+        /// (which is copied to the output's Alpha value).
+        /// Each has a range of 0.0 to 1.0.
+        /// </para>
         /// </summary>
-        /// <returns>
-        /// Returns the converted color value.
-        /// </returns>
         /// <param name="hsv">
         /// Color value to convert in hue, saturation, value (HSV).
         /// The X element is Hue (H), the Y element is Saturation (S), the Z element is Value (V), and the W element is Alpha
         /// (which is copied to the output's Alpha value).
         /// Each has a range of 0.0 to 1.0.
         /// </param>
+        /// <returns>Returns the converted color value.</returns>
         [Pure]
         public static Color4 FromHsv(Vector4 hsv)
         {
@@ -1268,17 +1274,15 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Converts XYZ color values to RGB color values.
+        /// Converts XYZ color values to RGB color values. The W element is used as the output's Alpha value.
         /// </summary>
-        /// <returns>
-        /// Returns the converted color value.
-        /// </returns>
+        /// <remarks>Uses the CIE XYZ colorspace.</remarks>
         /// <param name="xyz">
         /// Color value to convert with the trisimulus values of X, Y, and Z in the corresponding element, and the W element
         /// with Alpha (which is copied to the output's Alpha value).
         /// Each has a range of 0.0 to 1.0.
         /// </param>
-        /// <remarks>Uses the CIE XYZ colorspace.</remarks>
+        /// <returns>Returns the converted color value.</returns>
         [Pure]
         public static Color4 FromXyz(Vector4 xyz)
         {
@@ -1291,13 +1295,13 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Converts RGB color values to XYZ color values.
         /// </summary>
+        /// <remarks>Uses the CIE XYZ colorspace.</remarks>
+        /// <param name="rgb">Color value to convert.</param>
         /// <returns>
         /// Returns the converted color value with the trisimulus values of X, Y, and Z in the corresponding element, and the W
         /// element with Alpha (a copy of the input's Alpha value).
         /// Each has a range of 0.0 to 1.0.
         /// </returns>
-        /// <param name="rgb">Color value to convert.</param>
-        /// <remarks>Uses the CIE XYZ colorspace.</remarks>
         [Pure]
         public static Vector4 ToXyz(Color4 rgb)
         {
@@ -1309,17 +1313,20 @@ namespace OpenTK.Mathematics
 
         /// <summary>
         /// Converts YCbCr color values to RGB color values.
+        /// <para>
+        /// The X element contains Luma (Y, 0.0 to 1.0), the Y element contains Blue-difference chroma (U, -0.5 to 0.5), the Z
+        /// element contains the Red-difference chroma (V, -0.5 to 0.5), and the W element contains the Alpha (which is copied
+        /// to the output's Alpha value).
+        /// </para>
         /// </summary>
-        /// <returns>
-        /// Returns the converted color value.
-        /// </returns>
+        /// <remarks>Converts using ITU-R BT.601/CCIR 601 W(r) = 0.299 W(b) = 0.114 U(max) = 0.436 V(max) = 0.615.</remarks>
         /// <param name="ycbcr">
         /// Color value to convert in Luma-Chrominance (YCbCr) aka YUV.
         /// The X element contains Luma (Y, 0.0 to 1.0), the Y element contains Blue-difference chroma (U, -0.5 to 0.5), the Z
         /// element contains the Red-difference chroma (V, -0.5 to 0.5), and the W element contains the Alpha (which is copied
         /// to the output's Alpha value).
         /// </param>
-        /// <remarks>Converts using ITU-R BT.601/CCIR 601 W(r) = 0.299 W(b) = 0.114 U(max) = 0.436 V(max) = 0.615.</remarks>
+        /// <returns>Returns the converted color value.</returns>
         [Pure]
         public static Color4 FromYcbcr(Vector4 ycbcr)
         {
@@ -1332,6 +1339,8 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Converts RGB color values to YUV color values.
         /// </summary>
+        /// <remarks>Converts using ITU-R BT.601/CCIR 601 W(r) = 0.299 W(b) = 0.114 U(max) = 0.436 V(max) = 0.615.</remarks>
+        /// <param name="rgb">Color value to convert.</param>
         /// <returns>
         /// Returns the converted color value in Luma-Chrominance (YCbCr) aka YUV.
         /// The X element contains Luma (Y, 0.0 to 1.0), the Y element contains Blue-difference chroma (U, -0.5 to 0.5), the Z
@@ -1339,8 +1348,6 @@ namespace OpenTK.Mathematics
         /// input's Alpha value).
         /// Each has a range of 0.0 to 1.0.
         /// </returns>
-        /// <param name="rgb">Color value to convert.</param>
-        /// <remarks>Converts using ITU-R BT.601/CCIR 601 W(r) = 0.299 W(b) = 0.114 U(max) = 0.436 V(max) = 0.615.</remarks>
         [Pure]
         public static Vector4 ToYcbcr(Color4 rgb)
         {
@@ -1352,16 +1359,19 @@ namespace OpenTK.Mathematics
 
         /// <summary>
         /// Converts HCY color values to RGB color values.
+        /// <para>
+        /// The X element is Hue (H), the Y element is Chroma (C), the Z element is luminance (Y), and the W element is Alpha
+        /// (which is copied to the output's Alpha value).
+        /// Each has a range of 0.0 to 1.0.
+        /// </para>
         /// </summary>
-        /// <returns>
-        /// Returns the converted color value.
-        /// </returns>
         /// <param name="hcy">
         /// Color value to convert in hue, chroma, luminance (HCY).
         /// The X element is Hue (H), the Y element is Chroma (C), the Z element is luminance (Y), and the W element is Alpha
         /// (which is copied to the output's Alpha value).
         /// Each has a range of 0.0 to 1.0.
         /// </param>
+        /// <returns>Returns the converted color value.</returns>
         [Pure]
         public static Color4 FromHcy(Vector4 hcy)
         {
@@ -1423,13 +1433,13 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Converts RGB color values to HCY color values.
         /// </summary>
+        /// <param name="rgb">Color value to convert.</param>
         /// <returns>
         /// Returns the converted color value.
         /// The X element is Hue (H), the Y element is Chroma (C), the Z element is luminance (Y), and the W element is Alpha
         /// (a copy of the input's Alpha value).
         /// Each has a range of 0.0 to 1.0.
         /// </returns>
-        /// <param name="rgb">Color value to convert.</param>
         [Pure]
         public static Vector4 ToHcy(Color4 rgb)
         {

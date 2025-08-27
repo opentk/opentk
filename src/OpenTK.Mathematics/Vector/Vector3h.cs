@@ -32,24 +32,24 @@ using System.Xml.Serialization;
 namespace OpenTK.Mathematics
 {
     /// <summary>
-    /// 3-component Vector of the Half type. Occupies 6 Byte total.
+    /// Represents a 3D vector using three half-precision floating-point numbers. Occupies 6 Byte total.
     /// </summary>
     [Serializable]
     [StructLayout(LayoutKind.Sequential)]
     public struct Vector3h : ISerializable, IEquatable<Vector3h>, IFormattable
     {
         /// <summary>
-        /// The X component of the Half3.
+        /// The X component of the vector.
         /// </summary>
         public Half X;
 
         /// <summary>
-        /// The Y component of the Half3.
+        /// The Y component of the vector.
         /// </summary>
         public Half Y;
 
         /// <summary>
-        /// The Z component of the Half3.
+        /// The Z component of the vector.
         /// </summary>
         public Half Z;
 
@@ -78,9 +78,9 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Initializes a new instance of the <see cref="Vector3h"/> struct.
         /// </summary>
-        /// <param name="x">The X component of the vector.</param>
-        /// <param name="y">The Y component of the vector.</param>
-        /// <param name="z">The Z component of the vector.</param>
+        /// <param name="x">The x component of the vector.</param>
+        /// <param name="y">The y component of the vector.</param>
+        /// <param name="z">The z component of the vector.</param>
         public Vector3h(Half x, Half y, Half z)
         {
             X = x;
@@ -90,11 +90,10 @@ namespace OpenTK.Mathematics
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Vector3h"/> struct.
-        /// The new Half3 instance will convert the 3 parameters into 16-bit half-precision floating-point.
         /// </summary>
-        /// <param name="x">The X component of the vector.</param>
-        /// <param name="y">The Y component of the vector.</param>
-        /// <param name="z">The Z component of the vector.</param>
+        /// <param name="x">The x component of the vector.</param>
+        /// <param name="y">The y component of the vector.</param>
+        /// <param name="z">The z component of the vector.</param>
         public Vector3h(float x, float y, float z)
         {
             X = new Half(x);
@@ -104,11 +103,10 @@ namespace OpenTK.Mathematics
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Vector3h"/> struct.
-        /// The new Half3 instance will convert the 3 parameters into 16-bit half-precision floating-point.
         /// </summary>
-        /// <param name="x">The X component of the vector.</param>
-        /// <param name="y">The Y component of the vector.</param>
-        /// <param name="z">The Z component of the vector.</param>
+        /// <param name="x">The x component of the vector.</param>
+        /// <param name="y">The y component of the vector.</param>
+        /// <param name="z">The z component of the vector.</param>
         /// <param name="throwOnError">Enable checks that will throw if the conversion result is not meaningful.</param>
         public Vector3h(float x, float y, float z, bool throwOnError)
         {
@@ -369,7 +367,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Returns this Half3 instance's contents as Vector3.
+        /// Returns this Vector3h instance's contents as Vector3.
         /// </summary>
         /// <returns>The vector.</returns>
         public readonly Vector3 ToVector3()
@@ -378,7 +376,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Returns this Half3 instance's contents as Vector3d.
+        /// Returns this Vector3h instance's contents as Vector3d.
         /// </summary>
         /// <returns>The vector.</returns>
         public readonly Vector3d ToVector3d()
@@ -454,7 +452,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// The size in bytes for an instance of the Half3 struct is 6.
+        /// The size in bytes for an instance of the Vector3h struct is 6.
         /// </summary>
         public static readonly int SizeInBytes = Unsafe.SizeOf<Vector3h>();
 
@@ -551,9 +549,9 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Returns the Half3 as an array of bytes.
+        /// Returns the Vector3h as an array of bytes.
         /// </summary>
-        /// <param name="h">The Half3 to convert.</param>
+        /// <param name="h">The Vector3h to convert.</param>
         /// <returns>The input as byte array.</returns>
         [Pure]
         public static byte[] GetBytes(Vector3h h)
@@ -574,11 +572,11 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Converts an array of bytes into Half3.
+        /// Converts an array of bytes into Vector3h.
         /// </summary>
-        /// <param name="value">A Half3 in it's byte[] representation.</param>
+        /// <param name="value">A Vector3h in it's byte[] representation.</param>
         /// <param name="startIndex">The starting position within value.</param>
-        /// <returns>A new Half3 instance.</returns>
+        /// <returns>A new Vector3h instance.</returns>
         [Pure]
         public static Vector3h FromBytes(byte[] value, int startIndex)
         {

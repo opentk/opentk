@@ -123,6 +123,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <param name="f">32-bit single-precision floating-point number.</param>
         /// <param name="throwOnError">Enable checks that will throw if the conversion result is not meaningful.</param>
+        /// <exception cref="ArithmeticException">Thrown if <paramref name="throwOnError"/> is <see langword="true"/> and the conversion is not meaningful.</exception>
         public Half(float f, bool throwOnError)
             : this(f)
         {

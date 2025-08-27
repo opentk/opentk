@@ -27,17 +27,17 @@ namespace OpenTK.Mathematics
     public struct Vector3i : IEquatable<Vector3i>, IFormattable
     {
         /// <summary>
-        /// The X component of the Vector3i.
+        /// The X component of the vector.
         /// </summary>
         public int X;
 
         /// <summary>
-        /// The Y component of the Vector3i.
+        /// The Y component of the vector.
         /// </summary>
         public int Y;
 
         /// <summary>
-        /// The Z component of the Vector3i.
+        /// The Z component of the vector.
         /// </summary>
         public int Z;
 
@@ -55,9 +55,9 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Initializes a new instance of the <see cref="Vector3i"/> struct.
         /// </summary>
-        /// <param name="x">The x component of the Vector3.</param>
-        /// <param name="y">The y component of the Vector3.</param>
-        /// <param name="z">The z component of the Vector3.</param>
+        /// <param name="x">The x component of the vector.</param>
+        /// <param name="y">The y component of the vector.</param>
+        /// <param name="z">The z component of the vector.</param>
         public Vector3i(int x, int y, int z)
         {
             X = x;
@@ -68,7 +68,10 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Initializes a new instance of the <see cref="Vector3i"/> struct.
         /// </summary>
-        /// <param name="v">The <see cref="Vector2i"/> to copy components from.</param>
+        /// <remarks>
+        /// <see cref="Z"/> is initialized to zero.
+        /// </remarks>
+        /// <param name="v">The <see cref="Vector2i"/> to copy the x and y components from.</param>
         public Vector3i(Vector2i v)
         {
             X = v.X;
@@ -79,8 +82,8 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Initializes a new instance of the <see cref="Vector3i"/> struct.
         /// </summary>
-        /// <param name="v">The <see cref="Vector2i"/> to copy components from.</param>
-        /// <param name="z">The z component of the new Vector3.</param>
+        /// <param name="v">The <see cref="Vector2i"/> to copy the x and y components from.</param>
+        /// <param name="z">The z component of the vector.</param>
         public Vector3i(Vector2i v, int z)
         {
             X = v.X;

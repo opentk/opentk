@@ -11,7 +11,7 @@ using System.Xml.Serialization;
 namespace OpenTK.Mathematics
 {
     /// <summary>
-    /// Represents a 2D boolean vector.
+    /// Represents a 3D boolean vector.
     /// </summary>
     /// <remarks>
     /// As bools in C# are not blittable this type is not necessarily suitable for interoperation with unmanaged code.
@@ -49,9 +49,9 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Initializes a new instance of the <see cref="Vector3b"/> struct.
         /// </summary>
-        /// <param name="x">The x component of the <see cref="Vector3b"/>.</param>
-        /// <param name="y">The y component of the <see cref="Vector3b"/>.</param>
-        /// <param name="z">The z component of the <see cref="Vector3b"/>.</param>
+        /// <param name="x">The x component of the vector.</param>
+        /// <param name="y">The y component of the vector.</param>
+        /// <param name="z">The z component of the vector.</param>
         public Vector3b(bool x, bool y, bool z)
         {
             X = x;
@@ -62,8 +62,8 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Initializes a new instance of the <see cref="Vector3b"/> struct.
         /// </summary>
-        /// <param name="xy">The x and y components of the Vector3b.</param>
-        /// <param name="z">The z component of the Vector3b.</param>
+        /// <param name="xy">The x and y components of the vector.</param>
+        /// <param name="z">The z component of the vector.</param>
         public Vector3b(Vector2b xy, bool z = default)
         {
             X = xy.X;
@@ -74,7 +74,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Initializes a new instance of the <see cref="Vector3b"/> struct.
         /// </summary>
-        /// <param name="xyz">The x, y, and z components of the <see cref="Vector3b"/>.</param>
+        /// <param name="xyz">The x, y, and z components of the vector.</param>
         public Vector3b(Vector3b xyz)
         {
             X = xyz.X;
@@ -85,7 +85,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Initializes a new instance of the <see cref="Vector3b"/> struct.
         /// </summary>
-        /// <param name="xyz">The x, y, and z components of the <see cref="Vector3b"/>.</param>
+        /// <param name="xyz">The x, y, and z components of the vector.</param>
         public Vector3b(Vector4b xyz)
         {
             X = xyz.X;

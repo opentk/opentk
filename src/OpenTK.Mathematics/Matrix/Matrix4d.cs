@@ -1246,7 +1246,7 @@ namespace OpenTK.Mathematics
         /// <exception cref="System.ArgumentOutOfRangeException">
         /// Thrown under the following conditions:
         ///  <list type="bullet">
-        ///  <item>fovy is zero, less than zero or larger than Math.PI</item>
+        ///  <item>fovy is zero, less than or equal to zero or larger than Math.PI</item>
         ///  <item>aspect is negative or zero</item>
         ///  <item>depthNear is negative or zero</item>
         ///  <item>depthFar is negative or zero</item>
@@ -1264,22 +1264,22 @@ namespace OpenTK.Mathematics
         {
             if (fovy <= 0 || fovy > Math.PI)
             {
-                throw new ArgumentOutOfRangeException(nameof(fovy));
+                throw new ArgumentOutOfRangeException(nameof(fovy), fovy, "fovy must be in the range (0, PI].");
             }
 
             if (aspect <= 0)
             {
-                throw new ArgumentOutOfRangeException(nameof(aspect));
+                throw new ArgumentOutOfRangeException(nameof(aspect), aspect, "aspect cannot be negative or zero.");
             }
 
             if (depthNear <= 0)
             {
-                throw new ArgumentOutOfRangeException(nameof(depthNear));
+                throw new ArgumentOutOfRangeException(nameof(depthNear), depthNear, "depthNear cannot be negative or zero.");
             }
 
             if (depthFar <= 0)
             {
-                throw new ArgumentOutOfRangeException(nameof(depthFar));
+                throw new ArgumentOutOfRangeException(nameof(depthFar), depthFar, "depthFar cannot be negative or zero.");
             }
 
             var maxY = depthNear * Math.Tan(0.5 * fovy);
@@ -1346,17 +1346,17 @@ namespace OpenTK.Mathematics
         {
             if (depthNear <= 0)
             {
-                throw new ArgumentOutOfRangeException(nameof(depthNear));
+                throw new ArgumentOutOfRangeException(nameof(depthNear), depthNear, "depthNear cannot be negative or zero.");
             }
 
             if (depthFar <= 0)
             {
-                throw new ArgumentOutOfRangeException(nameof(depthFar));
+                throw new ArgumentOutOfRangeException(nameof(depthFar), depthFar, "depthFar cannot be negative or zero.");
             }
 
             if (depthNear >= depthFar)
             {
-                throw new ArgumentOutOfRangeException(nameof(depthNear));
+                throw new ArgumentOutOfRangeException(nameof(depthNear), (depthNear, depthFar), "depthNear cannot be greater or equal to depthFar");
             }
 
             var x = 2.0 * depthNear / (right - left);
