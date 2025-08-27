@@ -624,7 +624,7 @@ namespace OpenTK.Platform.Native.Windows
             // manually convert all keypad scancodes to keypad keys.
             // FIXME: We probably want to do the non remappable character stuff from SDLLib.
             // This is mostly done for the keymap to work correctly
-            // - 2023-02-15 NogginBops
+            // - Noggin_bops 2023-02-15
             if (extended)
             {
                 switch (scancode)
