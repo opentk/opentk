@@ -1316,7 +1316,7 @@ namespace OpenTK.Compute.OpenCL
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueMapImage")]
         public static extern IntPtr EnqueueMapImage([In] CLCommandQueue commandQueue, [In] CLImage image,
             [In] bool blockingMap, [In] MapFlags flags,
-            [In] UIntPtr[] origin, [In] UIntPtr[] region, [In] UIntPtr rowPitch, [In] UIntPtr slicePitch,
+            [In] UIntPtr[] origin, [In] UIntPtr[] region, [Out] out UIntPtr rowPitch, [Out] out UIntPtr slicePitch,
             [In] uint numberOfEventsInWaitList,
             [In] CLEvent[] eventWaitList, [Out] out CLEvent @event, [Out] out CLResultCode resultCode);
 
