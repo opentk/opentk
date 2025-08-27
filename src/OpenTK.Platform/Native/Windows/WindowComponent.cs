@@ -1832,8 +1832,14 @@ namespace OpenTK.Platform.Native.Windows
                 devmode.dmFields = DM.PelsWidth | DM.PelsHeight | DM.BitsPerPel | DM.DisplayFrequency;
                 devmode.dmPelsWidth = (uint)videoMode.Width;
                 devmode.dmPelsHeight = (uint)videoMode.Height;
-                devmode.dmDisplayFrequency = (uint)videoMode.RefreshRate;
+                // Windows deals with refresh rates as both integers and rationals.
+                // So windows might use the integer refresh rate 60 Hz, while the rational value migth be 59.94 Hz.
+                // If we just cast here we would send 59 Hz which would cause an error to occur.
+                // Instead we round the value to the nearest integer, that way we hopefully avoid this issue.
+                // - Noggin_bops 2025-08-27
+                devmode.dmDisplayFrequency = (uint)float.Round(videoMode.RefreshRate);
                 devmode.dmBitsPerPel = (uint)videoMode.BitsPerPixel;
+                devmode.dmDriverExtra = 0;
 
                 DispChange result = Win32.ChangeDisplaySettingsExW(hmonitor.AdapterName, ref devmode, IntPtr.Zero, CDS.Fullscreen, IntPtr.Zero);
                 if (result != DispChange.Successful)

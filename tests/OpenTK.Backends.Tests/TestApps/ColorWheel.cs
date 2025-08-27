@@ -28,8 +28,26 @@ namespace OpenTK.Backends.Tests
             // FIXME: Handle resize?
         }
 
+        bool[] PrevKeyboardState = new bool[256];
+        bool[] KeyboardState = new bool[256];
         public bool Update(float deltaTime)
         {
+            Toolkit.Keyboard.GetKeyboardState(KeyboardState);
+            if (KeyboardState[(int)Scancode.F] && PrevKeyboardState[(int)Scancode.F] == false)
+            {
+                WindowMode mode = Toolkit.Window.GetMode(Window);
+                if (mode == WindowMode.ExclusiveFullscreen)
+                {
+                    Toolkit.Window.SetMode(Window, WindowMode.Normal);
+                }
+                else
+                {
+                    Toolkit.Window.SetMode(Window, WindowMode.ExclusiveFullscreen);
+                }
+            }
+
+
+            Array.Copy(KeyboardState, PrevKeyboardState, KeyboardState.Length);
             return false;
         }
 
