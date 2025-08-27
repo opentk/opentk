@@ -38,6 +38,8 @@ namespace OpenTK.Compute.OpenCL
         }
 
         public static implicit operator IntPtr(CLImage image) => image.Handle;
+
+        public static implicit operator CLMemoryObject(CLImage image) => new CLMemoryObject(image.Handle);
     }
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
 }
