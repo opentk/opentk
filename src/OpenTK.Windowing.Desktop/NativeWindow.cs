@@ -890,8 +890,27 @@ namespace OpenTK.Windowing.Desktop
             _autoIconify = settings.AutoIconify;
             GLFW.WindowHint(WindowHintBool.AutoIconify, settings.AutoIconify);
 
-            var monitor = settings.CurrentMonitor.ToUnsafePtr<GraphicsLibraryFramework.Monitor>();
+            var monitor = settings.CurrentMonitor.ToUnsafePtr<Monitor>();
             var modePtr = GLFW.GetVideoMode(monitor);
+            VideoMode defaultVideoMode = default;
+            if (modePtr == null)
+            {
+                // If we couldn't find any monitors then we create a default
+                // video mode with "reasonable" values and point to that
+                // mode instead of causing a access violation.
+                // - Noggin_bops 2025-08-27
+                defaultVideoMode = new VideoMode()
+                {
+                    Width = 800,
+                    Height = 600,
+                    RedBits = 8,
+                    GreenBits = 8,
+                    BlueBits = 8,
+                    RefreshRate = 60,
+                };
+                modePtr = &defaultVideoMode;
+            }
+
             GLFW.WindowHint(WindowHintInt.RedBits, settings.RedBits ?? modePtr->RedBits);
             GLFW.WindowHint(WindowHintInt.GreenBits, settings.GreenBits ?? modePtr->GreenBits);
             GLFW.WindowHint(WindowHintInt.BlueBits, settings.BlueBits ?? modePtr->BlueBits);
