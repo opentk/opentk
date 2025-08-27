@@ -5,7 +5,7 @@ description
 dependencies
     framework: netcoreapp3.1
         OpenTK.Core ~> #VERSION#
-        OpenTK.redist.glfw >= 3.4.0.44
+        OpenTK.redist.glfw >= 3.4.0.47
 files
     bin\Release\netcoreapp3.1\OpenTK.Windowing.GraphicsLibraryFramework.dll ==> lib\netcoreapp3.1
     bin\Release\netcoreapp3.1\OpenTK.Windowing.GraphicsLibraryFramework.xml ==> lib\netcoreapp3.1
