@@ -13,6 +13,7 @@ using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Runtime.Intrinsics;
+using System.Text.Json.Serialization;
 using System.Xml.Serialization;
 
 namespace OpenTK.Mathematics
@@ -25,6 +26,7 @@ namespace OpenTK.Mathematics
     /// </remarks>
     [Serializable]
     [StructLayout(LayoutKind.Sequential)]
+    [JsonConverter(typeof(MathJsonConverter<Vector4i, int>))]
     public struct Vector4i : IEquatable<Vector4i>, IFormattable,
                             IAdditionOperators<Vector4i, Vector4i, Vector4i>,
                             ISubtractionOperators<Vector4i, Vector4i, Vector4i>,
