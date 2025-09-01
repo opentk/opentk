@@ -473,7 +473,7 @@ namespace OpenTK.Compute.OpenCL
     /// <see href="https://registry.khronos.org/OpenCL/sdk/3.0/docs/man/html/clCreateCommandQueueWithProperties.html">clCreateCommandQueueWithProperties</see>.
     /// </remarks>
     [Flags]
-    internal enum CommandQueueProperties : ulong
+    public enum CommandQueueProperties : ulong
     {
         /// <summary>
         /// No options. Creates an in-order command queue on the host.

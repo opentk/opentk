@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Runtime.InteropServices;
 using OpenTK.Compute.Native;
 
@@ -1535,7 +1535,7 @@ namespace OpenTK.Compute.OpenCL
         [Obsolete("Deprecated in OpenCL 1.2, use CreateCommandQueueWithProperties.")]
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clCreateCommandQueue")]
         public static extern CLCommandQueue CreateCommandQueue([In] CLContext context, [In] CLDevice device,
-            [In] CommandQueueProperty properties,
+            [In] CommandQueueProperties properties,
             [Out] out CLResultCode resultCode);
 
         /// <summary>
