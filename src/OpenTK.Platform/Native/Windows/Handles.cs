@@ -75,10 +75,11 @@ namespace OpenTK.Platform.Native.Windows
 
         public ContextValues ContextValues { get; private set; }
 
-        public HGLRC(IntPtr hGlrc, IntPtr hdc, HGLRC? sharedContext, ContextValues contextValues)
+        public HGLRC(IntPtr hGlrc, IntPtr hdc, HWND hwnd, HGLRC? sharedContext, ContextValues contextValues)
         {
             HGlrc = hGlrc;
             HDC = hdc;
+            WindowHandle = hwnd;
             SharedContext = sharedContext;
             ContextValues = contextValues;
         }

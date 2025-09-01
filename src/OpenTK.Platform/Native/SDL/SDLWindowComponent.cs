@@ -1277,5 +1277,12 @@ namespace OpenTK.Platform.Native.SDL
             scaleX = pixelWidth / (float)width;
             scaleY = pixelHeight / (float)height;
         }
+
+        /// <inheritdoc/>
+        public OpenGLContextHandle? GetOpenGLContext(WindowHandle handle)
+        {
+            SDLWindow window = handle.As<SDLWindow>(this);
+            return window.OpenGLContextHandle;
+        }
     }
 }

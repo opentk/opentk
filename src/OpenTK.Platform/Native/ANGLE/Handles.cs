@@ -19,10 +19,11 @@ namespace OpenTK.Platform.Native.ANGLE
 
         public int SwapInterval = 0;
 
-        public ANGLEOpenGLContextHandle(EGLSurface eglSurface, EGLContext eglContext, ANGLEOpenGLContextHandle? sharedContext, ContextValues contextValues)
+        public ANGLEOpenGLContextHandle(EGLSurface eglSurface, EGLContext eglContext, WindowHandle window, ANGLEOpenGLContextHandle? sharedContext, ContextValues contextValues)
         {
             EglSurface = eglSurface;
             EglContext = eglContext;
+            WindowHandle = window;
             SharedContext = sharedContext;
             ContextValues = contextValues;
         }

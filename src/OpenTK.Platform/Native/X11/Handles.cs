@@ -113,6 +113,7 @@ namespace OpenTK.Platform.Native.X11
             GLXContext context,
             GLXWindow glxWindow,
             XWindow window,
+            XWindowHandle windowHandle,
             XOpenGLContextHandle? sharedContext,
             ContextValues contextValues)
         {
@@ -120,6 +121,7 @@ namespace OpenTK.Platform.Native.X11
             Context = context;
             GLXWindow = glxWindow;
             Window = window;
+            WindowHandle = windowHandle;
             SharedContext = sharedContext;
             ContextValues = contextValues;
         }

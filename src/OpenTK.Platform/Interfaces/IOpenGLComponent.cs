@@ -128,5 +128,12 @@ namespace OpenTK.Platform
         /// <param name="handle">Handle to the context.</param>
         /// <seealso cref="OpenGLGraphicsApiHints.SwapMethod"/>
         void SwapBuffers(OpenGLContextHandle handle);
+
+        /// <summary>
+        /// Gets the <see cref="WindowHandle"/> that was used to create this context, or <see langword="null"/> if this context wasn't created from a window.
+        /// </summary>
+        /// <param name="handle">Handle to the OpenGL context.</param>
+        /// <returns>The <see cref="WindowHandle"/> that was used to create this context, or <see langword="null"/> if this context wasn't created from a window.</returns>
+        WindowHandle? GetWindow(OpenGLContextHandle handle);
     }
 }

@@ -2347,6 +2347,13 @@ namespace OpenTK.Platform.Native.Windows
             scaleY = scale;
         }
 
+        /// <inheritdoc/>
+        public OpenGLContextHandle? GetOpenGLContext(WindowHandle handle)
+        {
+            HWND hwnd = handle.As<HWND>(this);
+            return hwnd.OpenGLContextHandle;
+        }
+
         /// <summary>
         /// Returns the underlying win32 <c>HWND</c> for the specified window.
         /// Modifying things about the window outside of OpenTK functions may cause inconsistent behaviour of OpenTK functions.

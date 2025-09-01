@@ -3882,6 +3882,13 @@ namespace OpenTK.Platform.Native.X11
             scaleY = 1;
         }
 
+        /// <inheritdoc/>
+        public OpenGLContextHandle? GetOpenGLContext(WindowHandle handle)
+        {
+            XWindowHandle xwindow = handle.As<XWindowHandle>(this);
+            return xwindow.OpenGLContextHandle;
+        }
+
         /// <summary>
         /// Returns the X11 <c>Display</c> used by OpenTK.
         /// </summary>
@@ -3905,5 +3912,6 @@ namespace OpenTK.Platform.Native.X11
             // - Noggin_bops 2024-03-06
             return (IntPtr)xwindow.Window.Id;
         }
+
     }
 }

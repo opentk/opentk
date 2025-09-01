@@ -2665,6 +2665,13 @@ namespace OpenTK.Platform.Native.macOS
             scaleY = (float)(frameBacking.size.y / frame.size.y);
         }
 
+        /// <inheritdoc/>
+        public OpenGLContextHandle? GetOpenGLContext(WindowHandle handle)
+        {
+            NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
+            return nswindow.Context;
+        }
+
         /// <summary>
         /// Returns the <c>NSWindow</c> used by the specified window handle.
         /// The Objective-C object returned is a subclass of <c>NSWindow</c> called <c>NSOpenTKWindow</c>.
