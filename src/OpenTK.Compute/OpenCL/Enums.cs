@@ -462,8 +462,42 @@ namespace OpenTK.Compute.OpenCL
         ContentUndefined = 1 << 1
     }
 
+    /// <summary>
+    /// Properties to be passed to <see cref="CL.CreateCommandQueue" />.
+    /// </summary>
+    /// <remarks>
+    /// Values taken from the OpenCL
+    /// <see href="https://github.com/KhronosGroup/OpenCL-Headers/blob/5d52989617e7ca7b8bb83d7306525dc9f58cdd46/CL/cl.h#L441-L447">headers</see>.
+    /// See also the OpenCL documentation of
+    /// <see href="https://registry.khronos.org/OpenCL/sdk/3.0/docs/man/html/clCreateCommandQueue.html">clCreateCommandQueue</see> and
+    /// <see href="https://registry.khronos.org/OpenCL/sdk/3.0/docs/man/html/clCreateCommandQueueWithProperties.html">clCreateCommandQueueWithProperties</see>.
+    /// </remarks>
     [Flags]
-    public enum CommandQueueProperty : ulong
+    public enum CommandQueueProperties : ulong
     {
+        /// <summary>
+        /// No options. Creates an in-order command queue on the host.
+        /// </summary>
+        None = 0,
+
+        /// <summary>
+        /// Enables out-of-order execution of the queued commands.
+        /// </summary>
+        OutOfOrderExecModeEnable = 1 << 0,
+
+        /// <summary>
+        /// Enables profiling.
+        /// </summary>
+        ProfilingEnable = 1 << 1,
+
+        /// <summary>
+        /// Indicates that this is an on-device queue. Only out-of-order device queues are supported, so <see cref="CommandQueueProperties.OutOfOrderExecModeEnable"/> must also be set.
+        /// </summary>
+        OnDevice = 1 << 2,
+
+        /// <summary>
+        /// Indicates that this is the default device queue. <see cref="CommandQueueProperties.OnDevice"/> must also be set.
+        /// </summary>
+        OnDeviceDefault = 1 << 3
     }
 }
