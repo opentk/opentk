@@ -65,7 +65,7 @@ namespace OpenTK.Platform
         /// <summary>
         /// Gets the mouse position as seen from the specified window.
         /// This function takes into consideration only the mouse events that the specified window has received and does not represent global state.
-        /// If the window has locked the cursor using <see cref="CursorCaptureMode.Locked"/>, this function will return virtual coordinates (unlike <see cref="GetGlobalPosition(out Vector2i)"/>).
+        /// If the window has locked the cursor using <see cref="CursorCaptureMode.Locked"/>, this function will return virtual coordinates (unlike <see cref="GetGlobalPosition(out Vector2)"/>).
         /// </summary>
         /// <param name="window">The window to get the mouse position for.</param>
         /// <param name="position">Coordinate of the mouse in client coordinates.</param>

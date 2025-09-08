@@ -13,6 +13,7 @@ using System.Text;
 using System.Runtime.CompilerServices;
 using OpenTK.Core.Utility;
 using ImGuiNET;
+using OpenTK.Audio.OpenAL.ALC;
 
 namespace Bejeweled
 {
@@ -312,9 +313,9 @@ namespace Bejeweled
             }
 
             int buffer = AL.GenBuffer();
-            AL.BufferData(buffer, ALFormat.Stereo16, ref samples[0], decoded * soundData.Channels * sizeof(short), soundData.SampleRate);
-            ALError error = AL.GetError();
-            if (error != ALError.NoError)
+            AL.BufferData(buffer, Format.FormatStereo16, ref samples[0], decoded * soundData.Channels * sizeof(short), soundData.SampleRate);
+            OpenTK.Audio.OpenAL.ErrorCode error = AL.GetError();
+            if (error != OpenTK.Audio.OpenAL.ErrorCode.NoError)
             {
                 Debug.Assert(false, $"ALError: {error}");
             }
@@ -344,7 +345,7 @@ namespace Bejeweled
                 {
                     foreach (Source source in effect.Sources)
                     {
-                        AL.Source(source.ALSource, ALSourcef.Gain, source.Gain * gain);
+                        AL.Sourcef(source.ALSource, SourcePNameF.Gain, source.Gain * gain);
                     }
                 }
                 else
@@ -381,7 +382,7 @@ namespace Bejeweled
             for (int i = Sources.Count - 1; i >= 0; i--)
             {
                 int source = Sources[i].ALSource;
-                if ((ALSourceState)AL.GetSource(source, ALGetSourcei.SourceState) == ALSourceState.Stopped)
+                if ((SourceState)AL.GetSourcei(source, SourceGetPNameI.SourceState) == SourceState.Stopped)
                 {
                     AL.DeleteSource(source);
                     Sources.RemoveAt(i);
@@ -392,16 +393,16 @@ namespace Bejeweled
         public void PlayOneShot(float gain, float pitch)
         {
             int source = AL.GenSource();
-            AL.Source(source, ALSourcei.Buffer, Clip.Buffer);
-            AL.Source(source, ALSourceb.Looping, false);
+            AL.Sourcei(source, SourcePNameI.Buffer, Clip.Buffer);
+            AL.Sourcei(source, SourcePNameI.Looping, 0);
 
-            AL.Source(source, ALSourcef.Gain, gain * SoundEffectGain);
-            AL.Source(source, ALSourcef.Pitch, pitch);
+            AL.Sourcef(source, SourcePNameF.Gain, gain * SoundEffectGain);
+            AL.Sourcef(source, SourcePNameF.Pitch, pitch);
 
             AL.SourcePlay(source);
 
-            ALError error = AL.GetError();
-            if (error != ALError.NoError)
+            OpenTK.Audio.OpenAL.ErrorCode error = AL.GetError();
+            if (error != OpenTK.Audio.OpenAL.ErrorCode.NoError)
             {
                 Debug.Assert(false, $"ALError: {error}");
             }
@@ -420,8 +421,8 @@ namespace Bejeweled
             Clip = clip;
             Source = AL.GenSource();
 
-            AL.Source(Source, ALSourcei.Buffer, clip.Buffer);
-            AL.Source(Source, ALSourceb.Looping, true);
+            AL.Sourcei(Source, SourcePNameI.Buffer, clip.Buffer);
+            AL.Sourcei(Source, SourcePNameI.Looping, 1);
         }
 
         public void Play()
@@ -441,7 +442,7 @@ namespace Bejeweled
 
         public void SetGain(float gain)
         {
-            AL.Source(Source, ALSourcef.Gain, gain);
+            AL.Sourcef(Source, SourcePNameF.Gain, gain);
         }
     }
 
@@ -483,7 +484,7 @@ namespace Bejeweled
                 int n = GL.GetInteger(GetPName.NumExtensions);
                 for (int i = 0; i < n; i++)
                 {
-                    string extension = GL.GetStringi(StringName.Extensions, (uint)i)!;
+                    string extension = GL.GetStringi(OpenTK.Graphics.OpenGL.StringName.Extensions, (uint)i)!;
                     if (extension == name) return true;
                 }
 
@@ -504,21 +505,21 @@ namespace Bejeweled
             {
                 case DDSImageFormat.BC5_UNORM:
                     // FIXME: Should it be unsigned or signed?
-                    internalFormat = (SizedInternalFormat)All.CompressedRgRgtc2;
+                    internalFormat = (SizedInternalFormat)OpenTK.Graphics.OpenGL.All.CompressedRgRgtc2;
                     compressed = true;
                     bytesPerPixel = 1;
                     blockSize = 16;
                     break;
                 case DDSImageFormat.BC7_UNORM:
                     // FIXME: Is this supposed to be sRGB?
-                    internalFormat = (SizedInternalFormat)All.CompressedRgbaBptcUnorm;
+                    internalFormat = (SizedInternalFormat)OpenTK.Graphics.OpenGL.All.CompressedRgbaBptcUnorm;
                     compressed = true;
                     bytesPerPixel = 1;
                     blockSize = 16;
                     break;
                 case DDSImageFormat.BC7_UNORM_SRGB:
                     // FIXME: Is this supposed to be sRGB?
-                    internalFormat = (SizedInternalFormat)All.CompressedSrgbAlphaBptcUnorm;
+                    internalFormat = (SizedInternalFormat)OpenTK.Graphics.OpenGL.All.CompressedSrgbAlphaBptcUnorm;
                     compressed = true;
                     bytesPerPixel = 1;
                     blockSize = 16;
@@ -527,7 +528,7 @@ namespace Bejeweled
                     // This is core since 4.2, but we'll just assume support in 4.1.
                     // FIXME: MacOS does not have support for this texture format...
                     // Maybe we can decompress this format if there is no support.
-                    internalFormat = (SizedInternalFormat)All.CompressedRgbBptcUnsignedFloat;
+                    internalFormat = (SizedInternalFormat)OpenTK.Graphics.OpenGL.All.CompressedRgbBptcUnsignedFloat;
                     compressed = true;
                     bytesPerPixel = 1;
                     blockSize = 16;
@@ -583,18 +584,18 @@ namespace Bejeweled
                             Span<byte> data = new Span<byte>(image.AllData, dataOffset, dataLength);
                             BC6H.DecompressBC6H(data, mipWidth, mipHeight, decompressed);
 
-                            GL.TexImage2D(faceTextureTarget, i, InternalFormat.Rgba16f, mipWidth, mipHeight, 0, PixelFormat.Rgba, PixelType.HalfFloat, decompressed);
+                            GL.TexImage2D(faceTextureTarget, i, OpenTK.Graphics.OpenGL.InternalFormat.Rgba16f, mipWidth, mipHeight, 0, PixelFormat.Rgba, PixelType.HalfFloat, decompressed);
                         }
                         else
                         {
-                            GL.TexImage2D(faceTextureTarget, i, InternalFormat.Rgba16f, mipWidth, mipHeight, 0, PixelFormat.Rgba, PixelType.HalfFloat, IntPtr.Zero);
+                            GL.TexImage2D(faceTextureTarget, i, OpenTK.Graphics.OpenGL.InternalFormat.Rgba16f, mipWidth, mipHeight, 0, PixelFormat.Rgba, PixelType.HalfFloat, IntPtr.Zero);
                         }
                     }
                     else if (compressed)
                     {
                         if (i < image.MipmapCount)
                         {
-                            GL.CompressedTexImage2D(faceTextureTarget, i, (InternalFormat)internalFormat, mipWidth, mipHeight, 0, dataLength, in image.AllData[dataOffset]);
+                            GL.CompressedTexImage2D(faceTextureTarget, i, (OpenTK.Graphics.OpenGL.InternalFormat)internalFormat, mipWidth, mipHeight, 0, dataLength, in image.AllData[dataOffset]);
                             //GL.CompressedTextureSubImage3D(texture, i, 0, 0, layer, mipWidth, mipHeight, 1, (PixelFormat)internalFormat, dataLength, (nint)Unsafe.AsPointer(ref image.AllData[dataOffset]));
                         }
                         else
@@ -603,14 +604,14 @@ namespace Bejeweled
                             // 2x2 and 1x1 level mips for block compressed formats,
                             // even though the spec accomodates this...
                             // - Noggin_bops 2024-06-12
-                            GL.CompressedTexImage2D(faceTextureTarget, i, (InternalFormat)internalFormat, mipWidth, mipHeight, 0, dataLength, IntPtr.Zero);
+                            GL.CompressedTexImage2D(faceTextureTarget, i, (OpenTK.Graphics.OpenGL.InternalFormat)internalFormat, mipWidth, mipHeight, 0, dataLength, IntPtr.Zero);
                         }
                     }
                     else
                     {
                         if (i < image.MipmapCount)
                         {
-                            GL.TexImage2D(faceTextureTarget, i, (InternalFormat)internalFormat, mipWidth, mipHeight, 0, pixelFormat, pixelType, (nint)Unsafe.AsPointer(ref image.AllData[dataOffset]));
+                            GL.TexImage2D(faceTextureTarget, i, (OpenTK.Graphics.OpenGL.InternalFormat)internalFormat, mipWidth, mipHeight, 0, pixelFormat, pixelType, (nint)Unsafe.AsPointer(ref image.AllData[dataOffset]));
                             //GL.TextureSubImage3D(texture, i, 0, 0, layer, mipWidth, mipHeight, 1, pixelFormat, pixelType, (nint)Unsafe.AsPointer(ref image.AllData[dataOffset]));
                         }
                         else
@@ -619,7 +620,7 @@ namespace Bejeweled
                             // 2x2 and 1x1 level mips for block compressed formats,
                             // even though the spec accomodates this...
                             // - Noggin_bops 2024-06-12
-                            GL.TexImage2D(faceTextureTarget, i, (InternalFormat)internalFormat, mipWidth, mipHeight, 0, pixelFormat, pixelType, IntPtr.Zero);
+                            GL.TexImage2D(faceTextureTarget, i, (OpenTK.Graphics.OpenGL.InternalFormat)internalFormat, mipWidth, mipHeight, 0, pixelFormat, pixelType, IntPtr.Zero);
                         }
                     }
 
@@ -681,19 +682,19 @@ namespace Bejeweled
             {
                 case DDSImageFormat.BC5_UNORM:
                     // FIXME: Should it be unsigned or signed?
-                    internalFormat = (SizedInternalFormat)All.CompressedRgRgtc2;
+                    internalFormat = (SizedInternalFormat)OpenTK.Graphics.OpenGL.All.CompressedRgRgtc2;
                     compressed = true;
                     bytesPerPixel = 1;
                     break;
                 case DDSImageFormat.BC7_UNORM:
                     // FIXME: Is this supposed to be sRGB?
-                    internalFormat = (SizedInternalFormat)All.CompressedRgbaBptcUnorm;
+                    internalFormat = (SizedInternalFormat)OpenTK.Graphics.OpenGL.All.CompressedRgbaBptcUnorm;
                     compressed = true;
                     bytesPerPixel = 1;
                     break;
                 case DDSImageFormat.BC7_UNORM_SRGB:
                     // FIXME: Is this supposed to be sRGB?
-                    internalFormat = (SizedInternalFormat)All.CompressedSrgbAlphaBptcUnorm;
+                    internalFormat = (SizedInternalFormat)OpenTK.Graphics.OpenGL.All.CompressedSrgbAlphaBptcUnorm;
                     compressed = true;
                     bytesPerPixel = 1;
                     break;
@@ -738,11 +739,11 @@ namespace Bejeweled
                 int dataLength = MultipleOfRoundingUp(mipWidth, 4) * MultipleOfRoundingUp(mipHeight, 4);
                 if (compressed)
                 {
-                    GL.CompressedTexImage2D(target, i, (InternalFormat)internalFormat, mipWidth, mipHeight, 0, dataLength, (nint)Unsafe.AsPointer(ref image.AllData[dataOffset]));
+                    GL.CompressedTexImage2D(target, i, (OpenTK.Graphics.OpenGL.InternalFormat)internalFormat, mipWidth, mipHeight, 0, dataLength, (nint)Unsafe.AsPointer(ref image.AllData[dataOffset]));
                 }
                 else
                 {
-                    GL.TexImage2D(target, i, (InternalFormat)internalFormat, mipWidth, mipHeight, 0, pixelFormat, pixelType, (nint)Unsafe.AsPointer(ref image.AllData[dataOffset]));
+                    GL.TexImage2D(target, i, (OpenTK.Graphics.OpenGL.InternalFormat)internalFormat, mipWidth, mipHeight, 0, pixelFormat, pixelType, (nint)Unsafe.AsPointer(ref image.AllData[dataOffset]));
                 }
                 dataOffset += dataLength;
                 mipWidth = Math.Max(1, mipWidth / 2);
@@ -786,13 +787,13 @@ namespace Bejeweled
 
             int normalTexture = GL.GenTexture();
             GL.BindTexture(TextureTarget.Texture2d, normalTexture);
-            GL.TexImage2D(TextureTarget.Texture2d, 0, InternalFormat.Rgba16, width, height, 0, PixelFormat.Rgba, PixelType.Float, IntPtr.Zero);
+            GL.TexImage2D(TextureTarget.Texture2d, 0, OpenTK.Graphics.OpenGL.InternalFormat.Rgba16, width, height, 0, PixelFormat.Rgba, PixelType.Float, IntPtr.Zero);
 
             GL.TexParameteri(TextureTarget.Texture2d, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Linear);
 
             int depthTexture = GL.GenTexture();
             GL.BindTexture(TextureTarget.Texture2d, depthTexture);
-            GL.TexImage2D(TextureTarget.Texture2d, 0, InternalFormat.DepthComponent16, width, height, 0, PixelFormat.DepthComponent, PixelType.Float, IntPtr.Zero);
+            GL.TexImage2D(TextureTarget.Texture2d, 0, OpenTK.Graphics.OpenGL.InternalFormat.DepthComponent16, width, height, 0, PixelFormat.DepthComponent, PixelType.Float, IntPtr.Zero);
 
             GL.TexParameteri(TextureTarget.Texture2d, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Linear);
 
@@ -817,11 +818,11 @@ namespace Bejeweled
 
             int normalTexture = GL.GenTexture();
             GL.BindTexture(TextureTarget.Texture2dMultisample, normalTexture);
-            GL.TexImage2DMultisample(TextureTarget.Texture2dMultisample, samples, InternalFormat.Rgba32f, width, height, true);
+            GL.TexImage2DMultisample(TextureTarget.Texture2dMultisample, samples, OpenTK.Graphics.OpenGL.InternalFormat.Rgba32f, width, height, true);
 
             int depthTexture = GL.GenTexture();
             GL.BindTexture(TextureTarget.Texture2dMultisample, depthTexture);
-            GL.TexImage2DMultisample(TextureTarget.Texture2dMultisample, samples, InternalFormat.DepthComponent32f, width, height, true);
+            GL.TexImage2DMultisample(TextureTarget.Texture2dMultisample, samples, OpenTK.Graphics.OpenGL.InternalFormat.DepthComponent32f, width, height, true);
 
             GL.BindFramebuffer(FramebufferTarget.Framebuffer, framebuffer);
             GL.FramebufferTexture2D(FramebufferTarget.Framebuffer, FramebufferAttachment.ColorAttachment0, TextureTarget.Texture2dMultisample, normalTexture, 0);
@@ -841,9 +842,9 @@ namespace Bejeweled
         public void ResizeNormalDepthFramebuffer(int newWidth, int newHeight)
         {
             GL.BindTexture(TextureTarget.Texture2d, ColorAttachement0);
-            GL.TexImage2D(TextureTarget.Texture2d, 0, InternalFormat.Rgba16Snorm, newWidth, newHeight, 0, PixelFormat.Rgba, PixelType.Float, IntPtr.Zero);
+            GL.TexImage2D(TextureTarget.Texture2d, 0, OpenTK.Graphics.OpenGL.InternalFormat.Rgba16Snorm, newWidth, newHeight, 0, PixelFormat.Rgba, PixelType.Float, IntPtr.Zero);
             GL.BindTexture(TextureTarget.Texture2d, DepthAttachement);
-            GL.TexImage2D(TextureTarget.Texture2d, 0, InternalFormat.DepthComponent16, newWidth, newHeight, 0, PixelFormat.DepthComponent, PixelType.Float, IntPtr.Zero);
+            GL.TexImage2D(TextureTarget.Texture2d, 0, OpenTK.Graphics.OpenGL.InternalFormat.DepthComponent16, newWidth, newHeight, 0, PixelFormat.DepthComponent, PixelType.Float, IntPtr.Zero);
 
             GL.BindFramebuffer(FramebufferTarget.Framebuffer, Handle);
             FramebufferStatus status = GL.CheckFramebufferStatus(FramebufferTarget.Framebuffer);
@@ -858,9 +859,9 @@ namespace Bejeweled
         public void ResizeDebugFramebufferMS(int newWidth, int newHeight, int samples)
         {
             GL.BindTexture(TextureTarget.Texture2dMultisample, ColorAttachement0);
-            GL.TexImage2DMultisample(TextureTarget.Texture2dMultisample, samples, InternalFormat.Rgba32f, newWidth, newHeight, true);
+            GL.TexImage2DMultisample(TextureTarget.Texture2dMultisample, samples, OpenTK.Graphics.OpenGL.InternalFormat.Rgba32f, newWidth, newHeight, true);
             GL.BindTexture(TextureTarget.Texture2dMultisample, DepthAttachement);
-            GL.TexImage2DMultisample(TextureTarget.Texture2dMultisample, samples, InternalFormat.DepthComponent32f, newWidth, newHeight, true);
+            GL.TexImage2DMultisample(TextureTarget.Texture2dMultisample, samples, OpenTK.Graphics.OpenGL.InternalFormat.DepthComponent32f, newWidth, newHeight, true);
 
             GL.BindFramebuffer(FramebufferTarget.Framebuffer, Handle);
             FramebufferStatus status = GL.CheckFramebufferStatus(FramebufferTarget.Framebuffer);
@@ -949,8 +950,8 @@ namespace Bejeweled
         WindowHandle Window;
         OpenGLContextHandle Context;
 
-        ALDevice ALDevice;
-        ALContext ALContext;
+        ALCDevice ALDevice;
+        ALCContext ALContext;
 
         private bool KHRDebugAvailable;
 
@@ -1071,6 +1072,46 @@ namespace Bejeweled
         internal const float ParticlePitchResetTime = 1.5f;
         internal int ParticlePitchCounter = 0;
 
+        public static ALCContextAttributes ALCGetContextAttributes(ALCDevice device)
+        {
+            int size = 0;
+            ALC.GetInteger(device, OpenTK.Audio.OpenAL.ALC.GetPNameIV.AttributesSize, 1, ref size);
+            int[] attributes = new int[size];
+            ALC.GetInteger(device, OpenTK.Audio.OpenAL.ALC.GetPNameIV.AllAttributes, size, attributes);
+            return ALCContextAttributes.FromArray(attributes);
+        }
+
+        public static unsafe List<string> ALCGetStringList(ALCDevice device, OpenTK.Audio.OpenAL.ALC.StringName name)
+        {
+            byte* result = ALC.GetString_(device, name);
+            return ALStringListToList(result);
+
+            static unsafe List<string> ALStringListToList(byte* alList)
+            {
+                if (alList == (byte*)0)
+                {
+                    return new List<string>();
+                }
+
+                var strings = new List<string>();
+
+                byte* currentPos = alList;
+                while (true)
+                {
+                    var currentString = Marshal.PtrToStringAnsi(new IntPtr(currentPos));
+                    if (string.IsNullOrEmpty(currentString))
+                    {
+                        break;
+                    }
+
+                    strings.Add(currentString);
+                    currentPos += currentString.Length + 1;
+                }
+
+                return strings;
+            }
+        }
+
         public unsafe void Initialize(WindowHandle window, OpenGLContextHandle context, bool useGLES, ILogger logger)
         {
             Debug.Assert(useGLES == false, "We don't support GLES for this demo yet.");
@@ -1087,17 +1128,17 @@ namespace Bejeweled
                 int n = GL.GetInteger(GetPName.NumExtensions);
                 for (int i = 0; i < n; i++)
                 {
-                    string extension = GL.GetStringi(StringName.Extensions, (uint)i)!;
+                    string extension = GL.GetStringi(OpenTK.Graphics.OpenGL.StringName.Extensions, (uint)i)!;
                     if (extension == name) return true;
                 }
 
                 return false;
             }
 
-            string version = GL.GetString(StringName.Version)!;
-            string glslVersion = GL.GetString(StringName.ShadingLanguageVersion)!;
-            string renderer = GL.GetString(StringName.Renderer)!;
-            string vendor = GL.GetString(StringName.Vendor)!;
+            string version = GL.GetString(OpenTK.Graphics.OpenGL.StringName.Version)!;
+            string glslVersion = GL.GetString(OpenTK.Graphics.OpenGL.StringName.ShadingLanguageVersion)!;
+            string renderer = GL.GetString(OpenTK.Graphics.OpenGL.StringName.Renderer)!;
+            string vendor = GL.GetString(OpenTK.Graphics.OpenGL.StringName.Vendor)!;
             Logger.LogInfo($"OpenGL version: {version}");
             Logger.LogInfo($"GLSL version: {glslVersion}");
             Logger.LogInfo($"Renderer: {renderer}");
@@ -1112,14 +1153,14 @@ namespace Bejeweled
                 // Enabling debug output before setting the callback is apprently
                 // needed to make certain (Mesa 23.2.1-1ubuntu3.1~22.04.2) linux drivers not segfault.
                 // - Noggin_bops 2024-06-16
-                GL.Enable(EnableCap.DebugOutput);
-                GL.Enable(EnableCap.DebugOutputSynchronous);
+                GL.Enable(OpenTK.Graphics.OpenGL.EnableCap.DebugOutput);
+                GL.Enable(OpenTK.Graphics.OpenGL.EnableCap.DebugOutputSynchronous);
                 GL.DebugMessageCallback(Bejeweled.DebugProcCallback, IntPtr.Zero);
             }
 
-            GL.Enable(EnableCap.FramebufferSrgb);
-            GL.Enable(EnableCap.DepthTest);
-            GL.Enable(EnableCap.TextureCubeMapSeamless);
+            GL.Enable(OpenTK.Graphics.OpenGL.EnableCap.FramebufferSrgb);
+            GL.Enable(OpenTK.Graphics.OpenGL.EnableCap.DepthTest);
+            GL.Enable(OpenTK.Graphics.OpenGL.EnableCap.TextureCubeMapSeamless);
 
             Toolkit.Window.GetFramebufferSize(Window, out Vector2i fbSize);
             nint oldImguiContext = ImGui.GetCurrentContext();
@@ -1193,11 +1234,11 @@ namespace Bejeweled
                 OpenALLibraryNameContainer.OverridePath = "win32-x64/soft_oal.dll";
             }
             
-            IEnumerable<string> devices = ALC.GetStringList(GetEnumerationStringList.DeviceSpecifier);
+            IEnumerable<string> devices = ALCGetStringList(ALCDevice.Null, OpenTK.Audio.OpenAL.ALC.StringName.DeviceSpecifier);
             Logger.LogDebug($"Devices: {string.Join(", ", devices)}");
 
             // Get the default device, then go though all devices and select the AL soft device if it exists.
-            string deviceName = ALC.GetString(ALDevice.Null, AlcGetString.DefaultDeviceSpecifier);
+            string deviceName = ALC.GetString(ALCDevice.Null, OpenTK.Audio.OpenAL.ALC.StringName.DefaultDeviceSpecifier)!;
             foreach (var d in devices)
             {
                 if (d.Contains("OpenAL Soft"))
@@ -1206,9 +1247,9 @@ namespace Bejeweled
                 }
             }
 
-            if (ALC.EnumerateAll.IsExtensionPresent())
+            if (ALC.IsExtensionPresent(ALCDevice.Null, "ALC_ENUMERATE_ALL_EXT"))
             {
-                IEnumerable<string> allDevices = ALC.EnumerateAll.GetStringList(GetEnumerateAllContextStringList.AllDevicesSpecifier);
+                IEnumerable<string> allDevices = ALCGetStringList(ALCDevice.Null, OpenTK.Audio.OpenAL.ALC.StringName.AllDevicesSpecifier);
                 Logger.LogDebug($"All Devices: {string.Join(", ", allDevices)}");
             }
 
@@ -1216,26 +1257,26 @@ namespace Bejeweled
             ALContext = ALC.CreateContext(ALDevice, (int[]?)null);
             ALC.MakeContextCurrent(ALContext);
 
-            ALC.GetInteger(ALDevice, AlcGetInteger.MajorVersion, 1, out int alcMajorVersion);
-            ALC.GetInteger(ALDevice, AlcGetInteger.MinorVersion, 1, out int alcMinorVersion);
-            string alcExts = ALC.GetString(ALDevice, AlcGetString.Extensions);
+            int alcMajorVersion = ALC.GetInteger(ALDevice, OpenTK.Audio.OpenAL.ALC.GetPNameIV.MajorVersion);
+            int alcMinorVersion = ALC.GetInteger(ALDevice, OpenTK.Audio.OpenAL.ALC.GetPNameIV.MinorVersion);
+            string alcExts = ALC.GetString(ALDevice, OpenTK.Audio.OpenAL.ALC.StringName.Extensions)!;
 
-            var attrs = ALC.GetContextAttributes(ALDevice);
+            var attrs = ALCGetContextAttributes(ALDevice);
             Logger.LogDebug($"Attributes: {attrs}");
 
-            string exts = AL.Get(ALGetString.Extensions);
-            string rend = AL.Get(ALGetString.Renderer);
-            string vend = AL.Get(ALGetString.Vendor);
-            string vers = AL.Get(ALGetString.Version);
+            string exts = AL.GetString(OpenTK.Audio.OpenAL.StringName.Extensions)!;
+            string rend = AL.GetString(OpenTK.Audio.OpenAL.StringName.Renderer)!;
+            string vend = AL.GetString(OpenTK.Audio.OpenAL.StringName.Vendor)!;
+            string vers = AL.GetString(OpenTK.Audio.OpenAL.StringName.Version)!;
 
             Logger.LogDebug($"Vendor: {vend}, \nVersion: {vers}, \nRenderer: {rend}, \nExtensions: {exts}, \nALC Version: {alcMajorVersion}.{alcMinorVersion}, \nALC Extensions: {alcExts}");
 
-            AL.DistanceModel(ALDistanceModel.None);
+            AL.DistanceModel(DistanceModel.None);
 
-            AL.Listener(ALListenerf.Gain, 1.0f);
+            AL.Listenerf(ListenerPNameF.Gain, 1.0f);
 
-            ALError error = AL.GetError();
-            if (error != ALError.NoError)
+            OpenTK.Audio.OpenAL.ErrorCode error = AL.GetError();
+            if (error != OpenTK.Audio.OpenAL.ErrorCode.NoError)
             {
                 Debug.Assert(false, $"ALError: {error}");
             }
@@ -2333,7 +2374,7 @@ namespace Bejeweled
 
         public void Deinitialize()
         {
-            ALC.MakeContextCurrent(ALContext.Null);
+            ALC.MakeContextCurrent(ALCContext.Null);
             ALC.DestroyContext(ALContext);
             ALC.CloseDevice(ALDevice);
         }
@@ -2429,7 +2470,7 @@ namespace Bejeweled
         }
 
         public readonly static GLDebugProc DebugProcCallback = Window_DebugProc;
-        private static void Window_DebugProc(DebugSource source, DebugType type, uint id, DebugSeverity severity, int length, IntPtr messagePtr, IntPtr userParam)
+        private static void Window_DebugProc(OpenTK.Graphics.OpenGL.DebugSource source, OpenTK.Graphics.OpenGL.DebugType type, uint id, OpenTK.Graphics.OpenGL.DebugSeverity severity, int length, IntPtr messagePtr, IntPtr userParam)
         {
             string message = Marshal.PtrToStringAnsi(messagePtr, length);
 
@@ -2437,15 +2478,15 @@ namespace Bejeweled
 
             switch (source)
             {
-                case DebugSource.DebugSourceApplication:
+                case OpenTK.Graphics.OpenGL.DebugSource.DebugSourceApplication:
                     showMessage = false;
                     break;
-                case DebugSource.DontCare:
-                case DebugSource.DebugSourceApi:
-                case DebugSource.DebugSourceWindowSystem:
-                case DebugSource.DebugSourceShaderCompiler:
-                case DebugSource.DebugSourceThirdParty:
-                case DebugSource.DebugSourceOther:
+                case OpenTK.Graphics.OpenGL.DebugSource.DontCare:
+                case OpenTK.Graphics.OpenGL.DebugSource.DebugSourceApi:
+                case OpenTK.Graphics.OpenGL.DebugSource.DebugSourceWindowSystem:
+                case OpenTK.Graphics.OpenGL.DebugSource.DebugSourceShaderCompiler:
+                case OpenTK.Graphics.OpenGL.DebugSource.DebugSourceThirdParty:
+                case OpenTK.Graphics.OpenGL.DebugSource.DebugSourceOther:
                 default:
                     showMessage = true;
                     break;
@@ -2455,19 +2496,19 @@ namespace Bejeweled
             {
                 switch (severity)
                 {
-                    case DebugSeverity.DontCare:
+                    case OpenTK.Graphics.OpenGL.DebugSeverity.DontCare:
                         Logger?.LogInfo($"[DontCare] [{source}] {message}");
                         break;
-                    case DebugSeverity.DebugSeverityNotification:
+                    case OpenTK.Graphics.OpenGL.DebugSeverity.DebugSeverityNotification:
                         //Logger?.LogDebug($"[{source}] {message}");
                         break;
-                    case DebugSeverity.DebugSeverityHigh:
+                    case OpenTK.Graphics.OpenGL.DebugSeverity.DebugSeverityHigh:
                         Logger?.LogError($"[{source}] {message}");
                         break;
-                    case DebugSeverity.DebugSeverityMedium:
+                    case OpenTK.Graphics.OpenGL.DebugSeverity.DebugSeverityMedium:
                         Logger?.LogWarning($"[{source}] {message}");
                         break;
-                    case DebugSeverity.DebugSeverityLow:
+                    case OpenTK.Graphics.OpenGL.DebugSeverity.DebugSeverityLow:
                         Logger?.LogInfo($"[{source}] {message}");
                         break;
                     default:

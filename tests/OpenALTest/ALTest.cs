@@ -1,20 +1,129 @@
-﻿using System;
+﻿using OpenTK.Audio;
+using OpenTK.Audio.OpenAL;
+using OpenTK.Audio.OpenAL.ALC;
+using OpenTK.Mathematics;
+using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 
-namespace OpenTK.Audio.OpenAL
+namespace OpenALTest
 {
     internal class ALTest
     {
+        public static ALCContextAttributes ALCGetContextAttributes(ALCDevice device)
+        {
+            int size = 0;
+            ALC.GetInteger(device, OpenTK.Audio.OpenAL.ALC.GetPNameIV.AttributesSize, 1, ref size);
+            int[] attributes = new int[size];
+            ALC.GetInteger(device, OpenTK.Audio.OpenAL.ALC.GetPNameIV.AllAttributes, size, attributes);
+            return ALCContextAttributes.FromArray(attributes);
+        }
+
+        public static unsafe List<string> ALCGetStringList(ALCDevice device, OpenTK.Audio.OpenAL.ALC.StringName name)
+        {
+            byte* result = ALC.GetString_(device, name);
+            return ALStringListToList(result);
+
+            static unsafe List<string> ALStringListToList(byte* alList)
+            {
+                if (alList == (byte*)0)
+                {
+                    return new List<string>();
+                }
+
+                var strings = new List<string>();
+
+                byte* currentPos = alList;
+                while (true)
+                {
+                    var currentString = Marshal.PtrToStringAnsi(new IntPtr(currentPos));
+                    if (string.IsNullOrEmpty(currentString))
+                    {
+                        break;
+                    }
+
+                    strings.Add(currentString);
+                    currentPos += currentString.Length + 1;
+                }
+
+                return strings;
+            }
+        }
+
+        public static unsafe int LoadEffect(ReverbProperties preset)
+        {
+            AL.GetError();
+            int effect = AL.EXT.GenEffect();
+            AL.EXT.Effecti(effect, EffectPNameI.EffectType, (int)EffectType.EffectEaxreverb);
+            var error = AL.GetError();
+            if (error == OpenTK.Audio.OpenAL.ErrorCode.NoError)
+            {
+                Console.WriteLine("Using EAX reverb.");
+
+                AL.EXT.Effectf(effect, EffectPNameF.EaxreverbDensity, preset.Density);
+                AL.EXT.Effectf(effect, EffectPNameF.EaxreverbDiffusion, preset.Diffusion);
+                AL.EXT.Effectf(effect, EffectPNameF.EaxreverbGain, preset.Gain);
+                AL.EXT.Effectf(effect, EffectPNameF.EaxreverbGainhf, preset.GainHF);
+                AL.EXT.Effectf(effect, EffectPNameF.EaxreverbGainlf, preset.GainLF);
+                AL.EXT.Effectf(effect, EffectPNameF.EaxreverbDecayTime, preset.DecayTime);
+                AL.EXT.Effectf(effect, EffectPNameF.EaxreverbDecayHfratio, preset.DecayHFRatio);
+                AL.EXT.Effectf(effect, EffectPNameF.EaxreverbDecayLfratio, preset.DecayLFRatio);
+                AL.EXT.Effectf(effect, EffectPNameF.EaxreverbReflectionsGain, preset.ReflectionsGain);
+                AL.EXT.Effectf(effect, EffectPNameF.EaxreverbReflectionsDelay, preset.ReflectionsDelay);
+                AL.EXT.Effectfv(effect, EffectPNameFV.EaxreverbReflectionsPan, ref Unsafe.AsRef(in preset.ReflectionsPan.X));
+                AL.EXT.Effectf(effect, EffectPNameF.EaxreverbLateReverbGain, preset.LateReverbGain);
+                AL.EXT.Effectf(effect, EffectPNameF.EaxreverbLateReverbDelay, preset.LateReverbDelay);
+                AL.EXT.Effectfv(effect, EffectPNameFV.EaxreverbLateReverbPan, ref Unsafe.AsRef(in preset.LateReverbPan.X));
+                AL.EXT.Effectf(effect, EffectPNameF.EaxreverbEchoTime, preset.EchoTime);
+                AL.EXT.Effectf(effect, EffectPNameF.EaxreverbEchoDepth, preset.EchoDepth);
+                AL.EXT.Effectf(effect, EffectPNameF.EaxreverbModulationTime, preset.ModulationTime);
+                AL.EXT.Effectf(effect, EffectPNameF.EaxreverbModulationDepth, preset.ModulationDepth);
+                AL.EXT.Effectf(effect, EffectPNameF.EaxreverbAirAbsorptionGainhf, preset.AirAbsorptionGainHF);
+                AL.EXT.Effectf(effect, EffectPNameF.EaxreverbHfreference, preset.HFReference);
+                AL.EXT.Effectf(effect, EffectPNameF.EaxreverbLfreference, preset.LFReference);
+                AL.EXT.Effectf(effect, EffectPNameF.EaxreverbRoomRolloffFactor, preset.RoomRolloffFactor);
+                AL.EXT.Effecti(effect, EffectPNameI.EaxreverbDecayHflimit, preset.DecayHFLimit);
+            }
+            else
+            {
+                Console.WriteLine("Using standard reverb.");
+                AL.EXT.Effecti(effect, EffectPNameI.EffectType, (int)EffectType.EffectReverb);
+
+                AL.EXT.Effectf(effect, EffectPNameF.ReverbDensity, preset.Density);
+                AL.EXT.Effectf(effect, EffectPNameF.ReverbDiffusion, preset.Diffusion);
+                AL.EXT.Effectf(effect, EffectPNameF.ReverbGain, preset.Gain);
+                AL.EXT.Effectf(effect, EffectPNameF.ReverbGainhf, preset.GainHF);
+                AL.EXT.Effectf(effect, EffectPNameF.ReverbDecayTime, preset.DecayTime);
+                AL.EXT.Effectf(effect, EffectPNameF.ReverbDecayHfratio, preset.DecayHFRatio);
+                AL.EXT.Effectf(effect, EffectPNameF.ReverbReflectionsGain, preset.ReflectionsGain);
+                AL.EXT.Effectf(effect, EffectPNameF.ReverbReflectionsDelay, preset.ReflectionsDelay);
+                AL.EXT.Effectf(effect, EffectPNameF.ReverbLateReverbGain, preset.LateReverbGain);
+                AL.EXT.Effectf(effect, EffectPNameF.ReverbLateReverbDelay, preset.LateReverbDelay);
+                AL.EXT.Effectf(effect, EffectPNameF.ReverbAirAbsorptionGainhf, preset.AirAbsorptionGainHF);
+                AL.EXT.Effectf(effect, EffectPNameF.ReverbRoomRolloffFactor, preset.RoomRolloffFactor);
+                AL.EXT.Effecti(effect, EffectPNameI.ReverbDecayHflimit, preset.DecayHFLimit);
+            }
+
+            error = AL.GetError();
+            if (error != OpenTK.Audio.OpenAL.ErrorCode.NoError)
+            {
+                Console.WriteLine($"Could not create effect, error: {error}");
+            }
+
+            return effect;
+        }
+
         public static void Main()
         {
             Console.WriteLine("Hello!");
-            var devices = ALC.GetStringList(GetEnumerationStringList.DeviceSpecifier);
+            var devices = ALCGetStringList(ALCDevice.Null, OpenTK.Audio.OpenAL.ALC.StringName.DeviceSpecifier);
             Console.WriteLine($"Devices: {string.Join(", ", devices)}");
 
             // Get the default device, then go though all devices and select the AL soft device if it exists.
-            string deviceName = ALC.GetString(ALDevice.Null, AlcGetString.DefaultDeviceSpecifier);
+            string deviceName = ALC.GetString(ALCDevice.Null, OpenTK.Audio.OpenAL.ALC.StringName.DefaultDeviceSpecifier);
             foreach (var d in devices)
             {
                 if (d.Contains("OpenAL Soft"))
@@ -22,64 +131,71 @@ namespace OpenTK.Audio.OpenAL
                     deviceName = d;
                 }
             }
-
-            var allDevices = ALC.EnumerateAll.GetStringList(GetEnumerateAllContextStringList.AllDevicesSpecifier);
+            
+            var allDevices = ALC.GetString(ALCDevice.Null, OpenTK.Audio.OpenAL.ALC.StringName.AllDevicesSpecifier);
             Console.WriteLine($"All Devices: {string.Join(", ", allDevices)}");
 
             var device = ALC.OpenDevice(deviceName);
             var context = ALC.CreateContext(device, (int[])null);
             ALC.MakeContextCurrent(context);
 
+            ALLoader.SetALCDevice(device);
+
             CheckALError("Start");
 
-            ALC.GetInteger(device, AlcGetInteger.MajorVersion, 1, out int alcMajorVersion);
-            ALC.GetInteger(device, AlcGetInteger.MinorVersion, 1, out int alcMinorVersion);
-            string alcExts = ALC.GetString(device, AlcGetString.Extensions);
+            int alcMajorVersion = 0, alcMinorVersion = 0;
+            ALC.GetInteger(device, OpenTK.Audio.OpenAL.ALC.GetPNameIV.MajorVersion, 1, ref alcMajorVersion);
+            ALC.GetInteger(device, OpenTK.Audio.OpenAL.ALC.GetPNameIV.MinorVersion, 1, ref alcMinorVersion);
+            string alcExts = ALC.GetString(device, OpenTK.Audio.OpenAL.ALC.StringName.Extensions);
 
-            var attrs = ALC.GetContextAttributes(device);
+            var attrs = ALCGetContextAttributes(device);
             Console.WriteLine($"Attributes: {attrs}");
 
-            string exts = AL.Get(ALGetString.Extensions);
-            string rend = AL.Get(ALGetString.Renderer);
-            string vend = AL.Get(ALGetString.Vendor);
-            string vers = AL.Get(ALGetString.Version);
+            string exts = AL.GetString(OpenTK.Audio.OpenAL.StringName.Extensions);
+            string rend = AL.GetString(OpenTK.Audio.OpenAL.StringName.Renderer);
+            string vend = AL.GetString(OpenTK.Audio.OpenAL.StringName.Vendor);
+            string vers = AL.GetString(OpenTK.Audio.OpenAL.StringName.Version);
 
             Console.WriteLine($"Vendor: {vend}, \nVersion: {vers}, \nRenderer: {rend}, \nExtensions: {exts}, \nALC Version: {alcMajorVersion}.{alcMinorVersion}, \nALC Extensions: {alcExts}");
 
             Console.WriteLine("Available devices: ");
-            var list = ALC.EnumerateAll.GetStringList(GetEnumerateAllContextStringList.AllDevicesSpecifier);
+            var list = ALCGetStringList(ALCDevice.Null, OpenTK.Audio.OpenAL.ALC.StringName.AllDevicesSpecifier);
             foreach (var item in list)
             {
                 Console.WriteLine("  " + item);
             }
 
             Console.WriteLine("Available capture devices: ");
-            list = ALC.GetStringList(GetEnumerationStringList.CaptureDeviceSpecifier);
+            list = ALCGetStringList(ALCDevice.Null, OpenTK.Audio.OpenAL.ALC.StringName.CaptureDeviceSpecifier);
             foreach (var item in list)
             {
                 Console.WriteLine("  " + item);
             }
             int auxSlot = 0;
-            if (ALC.EFX.IsExtensionPresent(device))
+            if (ALC.IsExtensionPresent(device, "ALC_EXT_EFX"))
             {
                 Console.WriteLine("EFX extension is present!!");
-                ALC.EFX.GenEffect(out int effect);
-                ALC.EFX.Effect(effect, EffectInteger.EffectType, (int)EffectType.Reverb);
-                ALC.EFX.GenAuxiliaryEffectSlot(out auxSlot);
-                ALC.EFX.AuxiliaryEffectSlot(auxSlot, EffectSlotInteger.Effect, effect);
+                int effect = LoadEffect(ReverbPresets.CastleHall);
+                AL.EXT.GenAuxiliaryEffectSlot(out auxSlot);
+                AL.EXT.AuxiliaryEffectSloti(auxSlot, AuxEffectSlotPNameI.EffectslotEffect, effect);
             }
 
             // Record a second of data
             CheckALError("Before record");
             short[] recording = new short[44100 * 4];
-            ALCaptureDevice captureDevice = ALC.CaptureOpenDevice(null, 44100, ALFormat.Mono16, 1024);
+            ALCDevice captureDevice = ALC.CaptureOpenDevice((string)null, 44100u, Format.FormatMono16, 1024);
             {
+                string defaultCaptureName = ALC.GetString(captureDevice, OpenTK.Audio.OpenAL.ALC.StringName.CaptureDefaultDeviceSpecifier);
+                string version = AL.GetString(OpenTK.Audio.OpenAL.StringName.Version);
+                string vendor = AL.GetString(OpenTK.Audio.OpenAL.StringName.Vendor);
+                string renderer = AL.GetString(OpenTK.Audio.OpenAL.StringName.Renderer);
+                Console.WriteLine($"Recording 4 seconds of audio from {defaultCaptureName} OpenAL version: {version} {vendor} {renderer}...");
                 ALC.CaptureStart(captureDevice);
 
                 int current = 0;
                 while (current < recording.Length)
                 {
-                    int samplesAvailable = ALC.GetInteger(captureDevice, AlcGetInteger.CaptureSamples);
+                    int samplesAvailable = ALC.GetInteger(captureDevice, OpenTK.Audio.OpenAL.ALC.GetPNameIV.CaptureSamples);
                     if (samplesAvailable > 512)
                     {
                         int samplesToRead = Math.Min(samplesAvailable, recording.Length - current);
@@ -99,53 +215,56 @@ namespace OpenTK.Audio.OpenAL
             // short[] sine = new short[44100 * 1];
             // FillSine(sine, 4400, 44100);
             // FillSine(recording, 440, 44100);
-            AL.BufferData(alBuffer, ALFormat.Mono16, ref recording[0], recording.Length * 2, 44100);
+            AL.BufferData(alBuffer, Format.FormatMono16, ref recording[0], recording.Length * 2, 44100);
             CheckALError("After data");
 
-            AL.Listener(ALListenerf.Gain, 0.1f);
+            AL.Listenerf(ListenerPNameF.Gain, 0.1f);
 
             AL.GenSource(out int alSource);
-            AL.Source(alSource, ALSourcef.Gain, 1f);
-            AL.Source(alSource, ALSourcei.Buffer, alBuffer);
-            if (ALC.EFX.IsExtensionPresent(device))
+            AL.Sourcef(alSource, SourcePNameF.Gain, 1f);
+            AL.Sourcei(alSource, SourcePNameI.Buffer, alBuffer);
+            if (ALC.IsExtensionPresent(device, "ALC_EXT_EFX"))
             {
-                ALC.EFX.Source(alSource, EFXSourceInteger3.AuxiliarySendFilter, auxSlot, 0, 0);
+                AL.Source3i(alSource, SourcePName3I.AuxiliarySendFilter, auxSlot, 0, 0);
             }
             AL.SourcePlay(alSource);
 
-            Console.WriteLine("Before Playing: " + AL.GetErrorString(AL.GetError()));
+            Console.WriteLine("Before Playing: " + AL.GetString((OpenTK.Audio.OpenAL.StringName)AL.GetError()));
 
-            if (ALC.DeviceClock.IsExtensionPresent(device))
+            if (ALC.IsExtensionPresent(device, "ALC_SOFT_device_clock"))
             {
                 long[] clockLatency = new long[2];
-                ALC.DeviceClock.GetInteger(device, GetInteger64.DeviceClock, clockLatency);
+                ALC.SOFT.GetInteger64vSOFT(device, GetPNameI64V.DeviceClockSoft, 2, clockLatency);
                 Console.WriteLine("Clock: " + clockLatency[0] + ", Latency: " + clockLatency[1]);
                 CheckALError(" ");
             }
 
-            if (AL.SourceLatency.IsExtensionPresent())
+            Span<long> offsets = stackalloc long[2];
+            if (AL.IsExtensionPresent("AL_SOFT_source_latency"))
             {
-                AL.SourceLatency.GetSource(alSource, SourceLatencyVector2d.SecOffsetLatency, out var values);
-                AL.SourceLatency.GetSource(alSource, SourceLatencyVector2i.SampleOffsetLatency, out var values1, out var values2, out var values3);
+                Vector2d values = default;
+                AL.SOFT.GetSourcedvSOFT(alSource, SourceGetPNameDV.SecOffsetLatencySoft, ref values.X);
+                AL.SOFT.GetSourcei64vSOFT(alSource, SourceGetPNameI64V.SampleOffsetLatencySoft, offsets);
                 Console.WriteLine("Source latency: " + values);
-                Console.WriteLine($"Source latency 2: {Convert.ToString(values1, 2)}, {values2}; {values3}");
+                Console.WriteLine($"Source latency 2: {offsets[0] / (float)(1 << 32)}; {offsets[1]}");
                 CheckALError(" ");
             }
 
-            while ((ALSourceState)AL.GetSource(alSource, ALGetSourcei.SourceState) == ALSourceState.Playing)
+            while ((SourceState)AL.GetSourcei(alSource, SourceGetPNameI.SourceState) == SourceState.Playing)
             {
-                if (AL.SourceLatency.IsExtensionPresent())
+                if (AL.IsExtensionPresent("AL_SOFT_source_latency"))
                 {
-                    AL.SourceLatency.GetSource(alSource, SourceLatencyVector2d.SecOffsetLatency, out var values);
-                    AL.SourceLatency.GetSource(alSource, SourceLatencyVector2i.SampleOffsetLatency, out var values1, out var values2, out var values3);
+                    Vector2d values = default;
+                    AL.SOFT.GetSourcedvSOFT(alSource, SourceGetPNameDV.SecOffsetLatencySoft, ref values.X);
+                    AL.SOFT.GetSourcei64vSOFT(alSource, SourceGetPNameI64V.SampleOffsetLatencySoft, offsets);
                     Console.WriteLine("Source latency: " + values);
-                    Console.WriteLine($"Source latency 2: {Convert.ToString(values1, 2)}, {values2}; {values3}");
+                    Console.WriteLine($"Source latency 2: {offsets[0] / (float)(1 << 32)}; {offsets[1]}");
                     CheckALError(" ");
                 }
-                if (ALC.DeviceClock.IsExtensionPresent(device))
+                if (ALC.IsExtensionPresent(device, "ALC_SOFT_device_clock"))
                 {
                     long[] clockLatency = new long[2];
-                    ALC.DeviceClock.GetInteger(device, GetInteger64.DeviceClock, 1, clockLatency);
+                    ALC.SOFT.GetInteger64vSOFT(device, OpenTK.Audio.OpenAL.ALC.GetPNameI64V.DeviceClockSoft, 1, clockLatency);
                     Console.WriteLine("Clock: " + clockLatency[0] + ", Latency: " + clockLatency[1]);
                     CheckALError(" ");
                 }
@@ -156,7 +275,7 @@ namespace OpenTK.Audio.OpenAL
             AL.SourceStop(alSource);
 
             // Test float32 format extension
-            if (AL.EXTFloat32.IsExtensionPresent()) {
+            if (AL.IsExtensionPresent("AL_EXT_float32")) {
                 Console.WriteLine("Testing float32 format extension with a sine wave...");
 
                 float[] sine = new float[44100 * 2];
@@ -166,16 +285,16 @@ namespace OpenTK.Audio.OpenAL
                 }
 
                 var buffer = AL.GenBuffer();
-                AL.EXTFloat32.BufferData(buffer, FloatBufferFormat.Mono, sine, 44100);
+                AL.BufferData(buffer, Format.FormatMonoFloat32, sine, sine.Length * sizeof(float), 44100);
 
-                AL.Listener(ALListenerf.Gain, 0.1f);
+                AL.Listenerf(ListenerPNameF.Gain, 0.1f);
 
-                AL.Source(alSource, ALSourcef.Gain, 1f);
-                AL.Source(alSource, ALSourcei.Buffer, buffer);
+                AL.Sourcef(alSource, SourcePNameF.Gain, 1f);
+                AL.Sourcei(alSource, SourcePNameI.Buffer, (int)buffer);
 
                 AL.SourcePlay(alSource);
 
-                while ((ALSourceState)AL.GetSource(alSource, ALGetSourcei.SourceState) == ALSourceState.Playing)
+                while ((SourceState)AL.GetSourcei(alSource, SourceGetPNameI.SourceState) == SourceState.Playing)
                 {
                     Thread.Sleep(10);
                 }
@@ -184,7 +303,7 @@ namespace OpenTK.Audio.OpenAL
             }
 
             // Test double format extension
-            if (AL.EXTDouble.IsExtensionPresent())
+            if (AL.IsExtensionPresent("AL_EXT_double"))
             {
                 Console.WriteLine("Testing float64 format extension with a saw wave...");
 
@@ -196,16 +315,16 @@ namespace OpenTK.Audio.OpenAL
                 }
 
                 var buffer = AL.GenBuffer();
-                AL.EXTDouble.BufferData(buffer, DoubleBufferFormat.Mono, saw, 44100);
+                AL.BufferData(buffer, Format.FormatMonoDoubleExt, saw, saw.Length * sizeof(double), 44100);
 
-                AL.Listener(ALListenerf.Gain, 0.1f);
+                AL.Listenerf(ListenerPNameF.Gain, 0.1f);
 
-                AL.Source(alSource, ALSourcef.Gain, 1f);
-                AL.Source(alSource, ALSourcei.Buffer, buffer);
+                AL.Sourcef(alSource, SourcePNameF.Gain, 1f);
+                AL.Sourcei(alSource, SourcePNameI.Buffer, (int)buffer);
 
                 AL.SourcePlay(alSource);
 
-                while ((ALSourceState)AL.GetSource(alSource, ALGetSourcei.SourceState) == ALSourceState.Playing)
+                while ((SourceState)AL.GetSourcei(alSource, SourceGetPNameI.SourceState) == SourceState.Playing)
                 {
                     Thread.Sleep(10);
                 }
@@ -215,18 +334,21 @@ namespace OpenTK.Audio.OpenAL
 
             Console.WriteLine("Goodbye!");
 
-            ALC.MakeContextCurrent(ALContext.Null);
+            ALC.MakeContextCurrent(ALCContext.Null);
             ALC.DestroyContext(context);
             ALC.CloseDevice(device);
         }
 
-        public static void CheckALError(string str)
+        public static bool CheckALError(string str)
         {
-            ALError error = AL.GetError();
-            if (error != ALError.NoError)
+            bool hadError = false;
+            var error = AL.GetError();
+            if (error != OpenTK.Audio.OpenAL.ErrorCode.NoError)
             {
-                Console.WriteLine($"ALError at '{str}': {AL.GetErrorString(error)}");
+                hadError = true;
+                Console.WriteLine($"ALError at '{str}': {AL.GetString((OpenTK.Audio.OpenAL.StringName)error)}");
             }
+            return hadError;
         }
 
         public static void FillSine(short[] buffer, float frequency, float sampleRate)

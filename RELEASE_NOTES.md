@@ -1,3 +1,36 @@
+## 5.0-pre.15
+
+* Optimize vector and matrix indexers so they are actually inlined correctly. (@BoyBaykiller)
+* Changed `Matrix4.Invert` to throw using a throw helper method. (@BoyBaykiller)
+* Remove unecessary aggressive inlining hint from internal functions `Matrix4.InvertSee3` and `Matrix4.InvertFallback`. (@BoyBaykiller)
+
+**OpenAL bindings changes**:
+
+* Introduces new generated bindings for the entire OpenAL API. (@NogginBops)
+
+**Vulkan bindings changes**:
+
+* Version constants are now correctly typed as `uint` again. (@NogginBops)
+
+**OpenGL bindings changes**:
+
+* Bindings have been modified to be more compatible with trimming, allowing most of the bindings to be trimmed where they wouldn't be able to before. (@BoyBaykiller)
+
+**PAL2 changes**:
+
+* Added `Toolkit.OpenGL.GetContextValues` to get the actually selected OpenGL context settings. (@NogginBops)
+* Add `defaultFileName` argument to `Toolkit.Dialog.OpenSaveDialog` to prefill/suggest a file name to the user. (@NogginBops)
+* Add `OpenGLGraphicsApiHints.Stereo` and `ContextValues.Stereo` to be able to enumerate and select context settings that allow stereoscopic rendering. (@NogginBops)
+
+win32:
+
+* Add `DisplayComponent.GetColorInfo` for getting display color volume and HDR info. (@NogginBops)
+
+x11:
+
+* Fix crash when unfocusing a window when using non-IME input (@NogginBops)
+* Fix issue where `ContextValues.DepthBits` and `ContextValues.StencilBits` where not set correctly causing enumeration to select context values that are not the requested values. (@NogginBops)
+
 ## 5.0-pre.14
 
 * Added generic math interfaces to all vector and matrix types. (@vovatrykoz)

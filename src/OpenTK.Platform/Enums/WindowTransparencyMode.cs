@@ -10,7 +10,7 @@ namespace OpenTK.Platform
     /// Represent possible transparency modes.
     /// </summary>
     /// <seealso cref="IWindowComponent.SetTransparencyMode(WindowHandle, WindowTransparencyMode, float)"/>
-    /// <seealso cref="IWindowComponent.GetTransparencyMode(WindowHandle)"/>
+    /// <seealso cref="IWindowComponent.GetTransparencyMode(WindowHandle, out float)"/>
     public enum WindowTransparencyMode
     {
         /// <summary>

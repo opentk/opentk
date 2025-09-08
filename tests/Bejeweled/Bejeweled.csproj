@@ -16,7 +16,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\OpenAL\OpenTK.Audio.OpenAL\OpenTK.Audio.OpenAL.csproj" />
+    <ProjectReference Include="..\..\src\OpenTK.Audio\OpenTK.Audio.csproj" />
     <ProjectReference Include="..\..\src\OpenTK.Graphics\OpenTK.Graphics.csproj" />
     <ProjectReference Include="..\..\src\OpenTK.Platform\OpenTK.Platform.csproj" />
   </ItemGroup>
