@@ -668,6 +668,7 @@ namespace OpenTK.Backends.Tests
                             config.GlyphMaxAdvanceX = float.PositiveInfinity;
                             config.RasterizerMultiply = 1;
                             config.EllipsisChar = 0xFFFF;
+                            config.RasterizerDensity = 1;
                             unsafe
                             {
                                 ImFontConfigPtr configPtr = new ImFontConfigPtr(&config);

@@ -167,8 +167,8 @@ namespace OpenTK.Backends.Tests
             {
                 Display disp = Displays[i];
 
-                Vector2 min = (disp.Bounds.Min / (Vector2)BoundingBox.Size) * (size - PADDING2V2) + PADDINGV2;
-                Vector2 max = (disp.Bounds.Max / (Vector2)BoundingBox.Size) * (size - PADDING2V2) + PADDINGV2;
+                Vector2 min = ((disp.Bounds.Min - BoundingBox.Min) / (Vector2)BoundingBox.Size) * (size - PADDING2V2) + PADDINGV2;
+                Vector2 max = ((disp.Bounds.Max - BoundingBox.Min) / (Vector2)BoundingBox.Size) * (size - PADDING2V2) + PADDINGV2;
 
                 const uint FILL_NORMAL = 0xAA997744;
                 const uint FILL_SELECTED = 0xAABF7022;
