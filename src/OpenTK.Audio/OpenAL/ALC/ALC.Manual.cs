@@ -9,6 +9,12 @@ namespace OpenTK.Audio.OpenAL.ALC
 {
     public static unsafe partial class ALC
     {
+        /// <inheritdoc cref="CreateContext(ALCDevice, int*)"/>
+        public static ALCContext CreateContext(ALCDevice device, ALCContextAttributes attributes)
+        {
+            return CreateContext(device, attributes.CreateAttributeArray());
+        }
+
         /// <inheritdoc cref="GetIntegerv(ALCDevice, GetPNameIV, int, int*)"/>
         public static unsafe int GetInteger(ALCDevice device, GetPNameIV name)
         {
@@ -35,7 +41,7 @@ namespace OpenTK.Audio.OpenAL.ALC
         /// Calls <see cref="ALC.GetString_(ALCDevice, StringName)"/> and parses a OpenAL format string list into a list of strings.
         /// </summary>
         /// <remarks>
-        /// This is most useful when called with <see cref="StringName.Extensions"/> to get a list of all supported extensions.
+        /// This is most useful when called with <see cref="StringName.AllDevicesSpecifier"/> to get a list of all devices.
         /// </remarks>
         /// <param name="device">The device to get the string list from.</param>
         /// <param name="name">The string list to receive.</param>

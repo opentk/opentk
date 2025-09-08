@@ -21,33 +21,33 @@ namespace OpenTK.Audio.OpenAL
     {
         /// <summary>
         /// Gets or sets the output buffer frequency in Hz.
-        /// This does not actually change any AL state. To apply these attributes see <see cref="ALC.CreateContext(ALCDevice, ALCContextAttributes)"/>.
+        /// This does not actually change any AL state. To apply these attributes see <see cref="ALC.ALC.CreateContext(ALCDevice, ALCContextAttributes)"/>.
         /// </summary>
         public int? Frequency { get; set; }
 
         /// <summary>
         /// Gets or sets the number of mono sources.
-        /// This does not actually change any AL state. To apply these attributes see <see cref="ALC.CreateContext(ALCDevice, ALCContextAttributes)"/>.
+        /// This does not actually change any AL state. To apply these attributes see <see cref="ALC.ALC.CreateContext(ALCDevice, ALCContextAttributes)"/>.
         /// Not guaranteed to get exact number of mono sources when creating a context.
         /// </summary>
         public int? MonoSources { get; set; }
 
         /// <summary>
         /// Gets or sets the number of stereo sources.
-        /// This does not actually change any AL state. To apply these attributes see <see cref="ALC.CreateContext(ALCDevice, ALCContextAttributes)"/>.
+        /// This does not actually change any AL state. To apply these attributes see <see cref="ALC.ALC.CreateContext(ALCDevice, ALCContextAttributes)"/>.
         /// Not guaranteed to get exact number of mono sources when creating a context.
         /// </summary>
         public int? StereoSources { get; set; }
 
         /// <summary>
         /// Gets or sets the refrash interval in Hz.
-        /// This does not actually change any AL state. To apply these attributes see <see cref="ALC.CreateContext(ALCDevice, ALCContextAttributes)"/>.
+        /// This does not actually change any AL state. To apply these attributes see <see cref="ALC.ALC.CreateContext(ALCDevice, ALCContextAttributes)"/>.
         /// </summary>
         public int? Refresh { get; set; }
 
         /// <summary>
         /// Gets or sets if the context is synchronous.
-        /// This does not actually change any AL state. To apply these attributes see <see cref="ALC.CreateContext(ALCDevice, ALCContextAttributes)"/>.
+        /// This does not actually change any AL state. To apply these attributes see <see cref="ALC.ALC.CreateContext(ALCDevice, ALCContextAttributes)"/>.
         /// </summary>
         public bool? Sync { get; set; }
 
@@ -84,7 +84,7 @@ namespace OpenTK.Audio.OpenAL
 
         /// <summary>
         /// Converts these context attributes to a <see cref="ALC.ALC.CreateContext(ALCDevice, int[])"/> compatible list.
-        /// Alternativly, consider using the more convenient <see cref="ALC.CreateContext(ALCDevice, ALCContextAttributes)"/> overload.
+        /// Alternativly, consider using the more convenient <see cref="ALC.ALC.CreateContext(ALCDevice, ALCContextAttributes)"/> overload.
         /// </summary>
         /// <returns>The attibute list in the form of a span.</returns>
         public int[] CreateAttributeArray()
@@ -188,12 +188,57 @@ namespace OpenTK.Audio.OpenAL
         /// <returns>The string representation of the attributes.</returns>
         public override string ToString()
         {
+            StringBuilder attributeString = new StringBuilder();
+            if (AdditionalAttributes.Length > 0)
+            {
+                attributeString.Append(", ");
+            }
+
+            for (int i = 0; i + 1 < AdditionalAttributes.Length; i += 2)
+            {
+                int key   = AdditionalAttributes[i + 0];
+                int value = AdditionalAttributes[i + 1];
+
+                string keyStr = $"{(ALC.ContextAttribute)key}";
+                string valueStr = value.ToString();
+                switch ((ALC.All)key)
+                {
+                    case ALC.All.MajorVersion:
+                    case ALC.All.MinorVersion:
+                    case ALC.All.EfxMajorVersion:
+                    case ALC.All.EfxMinorVersion:
+                    case ALC.All.MaxAmbisonicOrderSoft:
+                        keyStr = $"{(ALC.GetPNameIV)key}";
+                        break;
+                    case ALC.All.HrtfStatusSoft:
+                        keyStr = $"{(ALC.GetPNameIV)key}";
+                        valueStr = $"{(ALC.HRTFStatus)value}";
+                        break;
+                    case ALC.All.OutputModeSoft:
+                        valueStr = $"{(ALC.OutputMode)value}";
+                        break;
+                    default:
+                        break;
+                }
+
+                attributeString.Append($"{keyStr}: {valueStr}, ");
+            }
+
+            if (AdditionalAttributes.Length % 2 != 0)
+            {
+                attributeString.Append($"{AdditionalAttributes[^1]}");
+            }
+            else
+            {
+                attributeString.Length -= 2;
+            }
+
             return $"{GetOptionalString(nameof(Frequency), Frequency)}, " +
                 $"{GetOptionalString(nameof(MonoSources), MonoSources)}, " +
                 $"{GetOptionalString(nameof(StereoSources), StereoSources)}, " +
                 $"{GetOptionalString(nameof(Refresh), Refresh)}, " +
                 $"{GetOptionalString(nameof(Sync), Sync)}" +
-                $"{((AdditionalAttributes != null) ? ", " + string.Join(", ", AdditionalAttributes) : string.Empty)}";
+                $"{attributeString}";
         }
     }
 }

@@ -4,6 +4,8 @@ using OpenTK.Audio.OpenAL.ALC;
 using OpenTK.Mathematics;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -96,17 +98,30 @@ namespace OpenALTest
             Console.WriteLine($"All Devices: {string.Join(", ", allDevices)}");
 
             var device = ALC.OpenDevice(deviceName);
-            var context = ALC.CreateContext(device, null);
+
+            string[] extensions = ALC.GetString(device, OpenTK.Audio.OpenAL.ALC.StringName.Extensions).Split(" ");
+
+
+            ALCContextAttributes contextAttributes = new ALCContextAttributes();
+            if (extensions.Contains("ALC_SOFT_HRTF"))
+            {
+                // Enable HRTF if the extension is available.
+                contextAttributes.AdditionalAttributes = [ (int)OpenTK.Audio.OpenAL.ALC.ContextAttribute.HrtfSoft, 1 ];
+            }
+
+            var context = ALC.CreateContext(device, contextAttributes);
             ALC.MakeContextCurrent(context);
 
             ALLoader.SetALCDevice(device);
+
+            int numHRTFs = ALC.GetInteger(device, OpenTK.Audio.OpenAL.ALC.GetPNameIV.NumHrtfSpecifiersSoft);
 
             CheckALError("Start");
 
             int alcMajorVersion = 0, alcMinorVersion = 0;
             ALC.GetInteger(device, OpenTK.Audio.OpenAL.ALC.GetPNameIV.MajorVersion, 1, ref alcMajorVersion);
             ALC.GetInteger(device, OpenTK.Audio.OpenAL.ALC.GetPNameIV.MinorVersion, 1, ref alcMinorVersion);
-            string alcExts = ALC.GetString(device, OpenTK.Audio.OpenAL.ALC.StringName.Extensions);
+            
 
             var attrs = ALC.GetContextAttributes(device);
             Console.WriteLine($"Attributes: {attrs}");
@@ -116,7 +131,7 @@ namespace OpenALTest
             string vend = AL.GetString(OpenTK.Audio.OpenAL.StringName.Vendor);
             string vers = AL.GetString(OpenTK.Audio.OpenAL.StringName.Version);
 
-            Console.WriteLine($"Vendor: {vend}, \nVersion: {vers}, \nRenderer: {rend}, \nExtensions: {exts}, \nALC Version: {alcMajorVersion}.{alcMinorVersion}, \nALC Extensions: {alcExts}");
+            Console.WriteLine($"Vendor: {vend}, \nVersion: {vers}, \nRenderer: {rend}, \nExtensions: {exts}, \nALC Version: {alcMajorVersion}.{alcMinorVersion}, \nALC Extensions: {string.Join(", ", extensions)}");
 
             Console.WriteLine("Available devices: ");
             var list = ALC.GetStringList(ALCDevice.Null, OpenTK.Audio.OpenAL.ALC.StringName.AllDevicesSpecifier);
@@ -195,7 +210,7 @@ namespace OpenALTest
             {
                 long[] clockLatency = new long[2];
                 ALC.SOFT.GetInteger64vSOFT(device, GetPNameI64V.DeviceClockSoft, 2, clockLatency);
-                Console.WriteLine("Clock: " + clockLatency[0] + ", Latency: " + clockLatency[1]);
+                //Console.WriteLine("Clock: " + clockLatency[0] + ", Latency: " + clockLatency[1]);
                 CheckALError(" ");
             }
 
@@ -205,8 +220,8 @@ namespace OpenALTest
                 Vector2d values = default;
                 AL.SOFT.GetSourcedvSOFT(alSource, SourceGetPNameDV.SecOffsetLatencySoft, ref values.X);
                 AL.SOFT.GetSourcei64vSOFT(alSource, SourceGetPNameI64V.SampleOffsetLatencySoft, offsets);
-                Console.WriteLine("Source latency: " + values);
-                Console.WriteLine($"Source latency 2: {offsets[0] / (float)(1 << 32)}; {offsets[1]}");
+                //Console.WriteLine("Source latency: " + values);
+                //Console.WriteLine($"Source latency 2: {offsets[0] / (float)(1 << 32)}; {offsets[1]}");
                 CheckALError(" ");
             }
 
@@ -217,15 +232,15 @@ namespace OpenALTest
                     Vector2d values = default;
                     AL.SOFT.GetSourcedvSOFT(alSource, SourceGetPNameDV.SecOffsetLatencySoft, ref values.X);
                     AL.SOFT.GetSourcei64vSOFT(alSource, SourceGetPNameI64V.SampleOffsetLatencySoft, offsets);
-                    Console.WriteLine("Source latency: " + values);
-                    Console.WriteLine($"Source latency 2: {offsets[0] / (float)(1 << 32)}; {offsets[1]}");
+                    //Console.WriteLine("Source latency: " + values);
+                    //Console.WriteLine($"Source latency 2: {offsets[0] / (float)(1 << 32)}; {offsets[1]}");
                     CheckALError(" ");
                 }
                 if (ALC.IsExtensionPresent(device, "ALC_SOFT_device_clock"))
                 {
                     long[] clockLatency = new long[2];
                     ALC.SOFT.GetInteger64vSOFT(device, OpenTK.Audio.OpenAL.ALC.GetPNameI64V.DeviceClockSoft, 1, clockLatency);
-                    Console.WriteLine("Clock: " + clockLatency[0] + ", Latency: " + clockLatency[1]);
+                    //Console.WriteLine("Clock: " + clockLatency[0] + ", Latency: " + clockLatency[1]);
                     CheckALError(" ");
                 }
 
@@ -238,14 +253,16 @@ namespace OpenALTest
             if (AL.IsExtensionPresent("AL_EXT_float32")) {
                 Console.WriteLine("Testing float32 format extension with a sine wave...");
 
-                float[] sine = new float[44100 * 2];
+                const int SampleRate = 44100;
+                const int Frequency = 440;
+                float[] sine = new float[SampleRate * 4];
                 for (int i = 0; i < sine.Length; i++)
                 {
-                    sine[i] = MathF.Sin(440 * MathF.PI * 2 * (i / (float)sine.Length));
+                    sine[i] = MathF.Sin(Frequency * MathF.PI * 2 * (i / (float)SampleRate));
                 }
 
                 var buffer = AL.GenBuffer();
-                AL.BufferData(buffer, Format.MonoFloat32, sine, sine.Length * sizeof(float), 44100);
+                AL.BufferData(buffer, Format.MonoFloat32, sine, sine.Length * sizeof(float), SampleRate);
 
                 AL.Listenerf(ListenerPNameF.Gain, 0.1f);
 
@@ -254,12 +271,19 @@ namespace OpenALTest
 
                 AL.SourcePlay(alSource);
 
+                Stopwatch watch = Stopwatch.StartNew();
                 while ((SourceState)AL.GetSourcei(alSource, SourceGetPNameI.SourceState) == SourceState.Playing)
                 {
+                    float x = MathF.Cos((float)watch.Elapsed.TotalSeconds * MathF.PI * 1f);
+                    float y = MathF.Sin((float)watch.Elapsed.TotalSeconds * MathF.PI * 1f);
+                    float z = 0;
+
+                    AL.Source3f(alSource, SourcePName3F.Position, x, y, z);
                     Thread.Sleep(10);
                 }
 
                 AL.SourceStop(alSource);
+                AL.Source3f(alSource, SourcePName3F.Position, 0, 0, 0);
             }
 
             // Test double format extension
@@ -277,7 +301,7 @@ namespace OpenALTest
                 var buffer = AL.GenBuffer();
                 AL.BufferData(buffer, Format.MonoDoubleExt, saw, saw.Length * sizeof(double), 44100);
 
-                AL.Listenerf(ListenerPNameF.Gain, 0.1f);
+                AL.Listenerf(ListenerPNameF.Gain, 0.05f);
 
                 AL.Sourcef(alSource, SourcePNameF.Gain, 1f);
                 AL.Sourcei(alSource, SourcePNameI.Buffer, (int)buffer);

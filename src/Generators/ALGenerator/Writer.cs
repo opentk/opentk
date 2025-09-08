@@ -518,6 +518,9 @@ namespace ALGenerator
                 {
                     foreach (var member in group.Members)
                     {
+                        
+                        writer.WriteLine($"/// <remarks>[originally: {member.Name}]</remarks>");
+
                         // HACK: Some enums have a value of -1, and because
                         // we don't know the bitwidth of the enum here we can't cast
                         // the value correctly. This hack fixes this for -1 but doesn't

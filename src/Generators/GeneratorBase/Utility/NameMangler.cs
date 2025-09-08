@@ -22,14 +22,15 @@ namespace GeneratorBase.Utility
 
         public NameManglerSettings()
         {
-            ExtensionPrefixes = ["GL_"];
+            ExtensionPrefixes = [];
             ExtensionsWithoutPrefixes = [];
-            FunctionPrefix = "gl";
-            EnumPrefixes = new List<string> { "GL_" };
-            FunctionsWithoutPrefix = new HashSet<string>();
-            EnumsWithoutPrefix = new HashSet<string>();
-            EnumGroupNameTranslationTable = new Dictionary<string, string>();
+            FunctionPrefix = "";
+            EnumPrefixes = [];
+            FunctionsWithoutPrefix = [];
+            EnumsWithoutPrefix = [];
+            EnumGroupNameTranslationTable = [];
             DefinePrefix = "";
+            EnumAcronymsToKeepCapitalization = [];
         }
     }
 
