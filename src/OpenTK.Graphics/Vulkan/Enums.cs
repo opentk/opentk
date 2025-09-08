@@ -1920,7 +1920,7 @@ namespace OpenTK.Graphics.Vulkan
     public enum VkDisplaySurfaceStereoTypeNV : int
     {
         /// <summary>[requires: <b>VK_NV_display_stereo</b>] </summary>
-        DisplaySurfaceStereoTypeHdmi3dNv = 2,
+        DisplaySurfaceStereoTypeHdmi3DNv = 2,
         /// <summary>[requires: <b>VK_NV_display_stereo</b>] </summary>
         DisplaySurfaceStereoTypeInbandDisplayportNv = 3,
         /// <summary>[requires: <b>VK_NV_display_stereo</b>] </summary>
@@ -1991,7 +1991,7 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>v1.2</b>] Mesa open source project</summary>
         DriverIdMesaTurnip = 18,
         /// <summary>[requires: <b>v1.2</b>] Mesa open source project</summary>
-        DriverIdMesaV3dv = 19,
+        DriverIdMesaV3DV = 19,
         /// <summary>[requires: <b>v1.2</b>] Mesa open source project</summary>
         DriverIdMesaVenus = 22,
         /// <summary>[requires: <b>v1.2</b>] MoltenVK</summary>
@@ -2320,21 +2320,21 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>VK_ANDROID_external_memory_android_hardware_buffer</b>] </summary>
         ExternalMemoryHandleTypeAndroidHardwareBufferBitAndroid = 1024,
         /// <summary>[requires: <b>v1.1</b>] </summary>
-        ExternalMemoryHandleTypeD3d11TextureBit = 8,
+        ExternalMemoryHandleTypeD3D11TextureBit = 8,
         /// <summary>[requires: <b>VK_KHR_external_memory_capabilities</b>] </summary>
-        ExternalMemoryHandleTypeD3d11TextureBitKhr = 8,
+        ExternalMemoryHandleTypeD3D11TextureBitKhr = 8,
         /// <summary>[requires: <b>v1.1</b>] </summary>
-        ExternalMemoryHandleTypeD3d11TextureKmtBit = 16,
+        ExternalMemoryHandleTypeD3D11TextureKmtBit = 16,
         /// <summary>[requires: <b>VK_KHR_external_memory_capabilities</b>] </summary>
-        ExternalMemoryHandleTypeD3d11TextureKmtBitKhr = 16,
+        ExternalMemoryHandleTypeD3D11TextureKmtBitKhr = 16,
         /// <summary>[requires: <b>v1.1</b>] </summary>
-        ExternalMemoryHandleTypeD3d12HeapBit = 32,
+        ExternalMemoryHandleTypeD3D12HeapBit = 32,
         /// <summary>[requires: <b>VK_KHR_external_memory_capabilities</b>] </summary>
-        ExternalMemoryHandleTypeD3d12HeapBitKhr = 32,
+        ExternalMemoryHandleTypeD3D12HeapBitKhr = 32,
         /// <summary>[requires: <b>v1.1</b>] </summary>
-        ExternalMemoryHandleTypeD3d12ResourceBit = 64,
+        ExternalMemoryHandleTypeD3D12ResourceBit = 64,
         /// <summary>[requires: <b>VK_KHR_external_memory_capabilities</b>] </summary>
-        ExternalMemoryHandleTypeD3d12ResourceBitKhr = 64,
+        ExternalMemoryHandleTypeD3D12ResourceBitKhr = 64,
         /// <summary>[requires: <b>VK_EXT_external_memory_dma_buf</b>] </summary>
         ExternalMemoryHandleTypeDmaBufBitExt = 512,
         /// <summary>[requires: <b>VK_EXT_external_memory_host</b>] </summary>
@@ -2374,9 +2374,9 @@ namespace OpenTK.Graphics.Vulkan
     public enum VkExternalMemoryHandleTypeFlagBitsNV : uint
     {
         /// <summary>[requires: <b>VK_NV_external_memory_capabilities</b>] </summary>
-        ExternalMemoryHandleTypeD3d11ImageBitNv = 4,
+        ExternalMemoryHandleTypeD3D11ImageBitNv = 4,
         /// <summary>[requires: <b>VK_NV_external_memory_capabilities</b>] </summary>
-        ExternalMemoryHandleTypeD3d11ImageKmtBitNv = 8,
+        ExternalMemoryHandleTypeD3D11ImageKmtBitNv = 8,
         /// <summary>[requires: <b>VK_NV_external_memory_capabilities</b>] </summary>
         ExternalMemoryHandleTypeOpaqueWin32BitNv = 1,
         /// <summary>[requires: <b>VK_NV_external_memory_capabilities</b>] </summary>
@@ -2414,11 +2414,11 @@ namespace OpenTK.Graphics.Vulkan
     public enum VkExternalSemaphoreHandleTypeFlagBits : uint
     {
         /// <summary>[requires: <b>v1.1</b>] </summary>
-        ExternalSemaphoreHandleTypeD3d11FenceBit = 8,
+        ExternalSemaphoreHandleTypeD3D11FenceBit = 8,
         /// <summary>[requires: <b>v1.1</b>] </summary>
-        ExternalSemaphoreHandleTypeD3d12FenceBit = 8,
+        ExternalSemaphoreHandleTypeD3D12FenceBit = 8,
         /// <summary>[requires: <b>VK_KHR_external_semaphore_capabilities</b>] </summary>
-        ExternalSemaphoreHandleTypeD3d12FenceBitKhr = 8,
+        ExternalSemaphoreHandleTypeD3D12FenceBitKhr = 8,
         /// <summary>[requires: <b>v1.1</b>] </summary>
         ExternalSemaphoreHandleTypeOpaqueFdBit = 1,
         /// <summary>[requires: <b>VK_KHR_external_semaphore_capabilities</b>] </summary>
@@ -3770,11 +3770,11 @@ namespace OpenTK.Graphics.Vulkan
     public enum VkImageCreateFlagBits : uint
     {
         /// <summary>[requires: <b>v1.1</b>] The 3D image can be viewed as a 2D or 2D array image</summary>
-        ImageCreate2dArrayCompatibleBit = 32,
+        ImageCreate2DArrayCompatibleBit = 32,
         /// <summary>[requires: <b>VK_KHR_maintenance1</b>] </summary>
-        ImageCreate2dArrayCompatibleBitKhr = 32,
+        ImageCreate2DArrayCompatibleBitKhr = 32,
         /// <summary>[requires: <b>VK_EXT_image_2d_view_of_3d</b>] Image is created with a layout where individual slices are capable of being used as 2D images</summary>
-        ImageCreate2dViewCompatibleBitExt = 131072,
+        ImageCreate2DViewCompatibleBitExt = 131072,
         /// <summary>[requires: <b>v1.1</b>] </summary>
         ImageCreateAliasBit = 1024,
         /// <summary>[requires: <b>VK_KHR_bind_memory2</b>] </summary>
@@ -3949,9 +3949,9 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>v1.0</b>] </summary>
         ImageType1d = 0,
         /// <summary>[requires: <b>v1.0</b>] </summary>
-        ImageType2d = 1,
+        ImageType2D = 1,
         /// <summary>[requires: <b>v1.0</b>] </summary>
-        ImageType3d = 2,
+        ImageType3D = 2,
     }
     /// <summary><b>[requires: v1.0]</b> Used by <see cref="Vk.GetPhysicalDeviceExternalImageFormatPropertiesNV"/>, <see cref="Vk.GetPhysicalDeviceImageFormatProperties"/>, <see cref="Vk.GetPhysicalDeviceSparseImageFormatProperties"/>, ...</summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/latest/man/html/VkImageUsageFlagBits.html" /></remarks>
@@ -4034,11 +4034,11 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>v1.0</b>] </summary>
         ImageViewType1dArray = 4,
         /// <summary>[requires: <b>v1.0</b>] </summary>
-        ImageViewType2d = 1,
+        ImageViewType2D = 1,
         /// <summary>[requires: <b>v1.0</b>] </summary>
-        ImageViewType2dArray = 5,
+        ImageViewType2DArray = 5,
         /// <summary>[requires: <b>v1.0</b>] </summary>
-        ImageViewType3d = 2,
+        ImageViewType3D = 2,
         /// <summary>[requires: <b>v1.0</b>] </summary>
         ImageViewTypeCube = 3,
         /// <summary>[requires: <b>v1.0</b>] </summary>
@@ -4229,7 +4229,7 @@ namespace OpenTK.Graphics.Vulkan
     public enum VkLayeredDriverUnderlyingApiMSFT : int
     {
         /// <summary>[requires: <b>VK_MSFT_layered_driver</b>] </summary>
-        LayeredDriverUnderlyingApiD3d12Msft = 1,
+        LayeredDriverUnderlyingApiD3D12Msft = 1,
         /// <summary>[requires: <b>VK_MSFT_layered_driver</b>] </summary>
         LayeredDriverUnderlyingApiNoneMsft = 0,
     }
@@ -4899,7 +4899,7 @@ namespace OpenTK.Graphics.Vulkan
     public enum VkPhysicalDeviceLayeredApiKHR : int
     {
         /// <summary>[requires: <b>VK_KHR_maintenance7</b>] </summary>
-        PhysicalDeviceLayeredApiD3d12Khr = 1,
+        PhysicalDeviceLayeredApiD3D12Khr = 1,
         /// <summary>[requires: <b>VK_KHR_maintenance7</b>] </summary>
         PhysicalDeviceLayeredApiMetalKhr = 2,
         /// <summary>[requires: <b>VK_KHR_maintenance7</b>] </summary>
@@ -7012,7 +7012,7 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>VK_NV_cuda_kernel_launch</b>] </summary>
         StructureTypeCudaModuleCreateInfoNv = 1000307000,
         /// <summary>[requires: <b>VK_KHR_external_semaphore_win32</b>] </summary>
-        StructureTypeD3d12FenceSubmitInfoKhr = 1000078002,
+        StructureTypeD3D12FenceSubmitInfoKhr = 1000078002,
         /// <summary>[requires: <b>VK_ARM_data_graph</b>] </summary>
         StructureTypeDataGraphPipelineCompilerControlCreateInfoArm = 1000507010,
         /// <summary>[requires: <b>VK_ARM_data_graph</b>] </summary>
@@ -8042,7 +8042,7 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>VK_KHR_external_memory_capabilities | VK_KHR_external_semaphore_capabilities | VK_KHR_external_fence_capabilities</b>] </summary>
         StructureTypePhysicalDeviceIdPropertiesKhr = 1000071004,
         /// <summary>[requires: <b>VK_EXT_image_2d_view_of_3d</b>] </summary>
-        StructureTypePhysicalDeviceImage2dViewOf3dFeaturesExt = 1000393000,
+        StructureTypePhysicalDeviceImage2DViewOf3DFeaturesExt = 1000393000,
         /// <summary>[requires: <b>VK_MESA_image_alignment_control</b>] </summary>
         StructureTypePhysicalDeviceImageAlignmentControlFeaturesMesa = 1000575000,
         /// <summary>[requires: <b>VK_MESA_image_alignment_control</b>] </summary>
@@ -8070,7 +8070,7 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>VK_EXT_image_robustness</b>] </summary>
         StructureTypePhysicalDeviceImageRobustnessFeaturesExt = 1000335000,
         /// <summary>[requires: <b>VK_EXT_image_sliced_view_of_3d</b>] </summary>
-        StructureTypePhysicalDeviceImageSlicedViewOf3dFeaturesExt = 1000418000,
+        StructureTypePhysicalDeviceImageSlicedViewOf3DFeaturesExt = 1000418000,
         /// <summary>[requires: <b>VK_EXT_filter_cubic</b>] </summary>
         StructureTypePhysicalDeviceImageViewImageFormatInfoExt = 1000170000,
         /// <summary>[requires: <b>VK_EXT_image_view_min_lod</b>] </summary>

@@ -62,7 +62,8 @@ namespace VkGenerator
                 EnumPrefixes = ["VK_", "STD_"],
                 FunctionsWithoutPrefix = [],
                 EnumsWithoutPrefix = [],
-                DefinePrefix = "VK_"
+                DefinePrefix = "VK_",
+                EnumAcronymsToKeepCapitalization = [ "2D", "V3DV", "3D" ],
             };
 
             NameMangler mangler = new NameMangler(settings);
