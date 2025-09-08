@@ -13,46 +13,6 @@ namespace OpenALTest
 {
     internal class ALTest
     {
-        public static ALCContextAttributes ALCGetContextAttributes(ALCDevice device)
-        {
-            int size = 0;
-            ALC.GetInteger(device, OpenTK.Audio.OpenAL.ALC.GetPNameIV.AttributesSize, 1, ref size);
-            int[] attributes = new int[size];
-            ALC.GetInteger(device, OpenTK.Audio.OpenAL.ALC.GetPNameIV.AllAttributes, size, attributes);
-            return ALCContextAttributes.FromArray(attributes);
-        }
-
-        public static unsafe List<string> ALCGetStringList(ALCDevice device, OpenTK.Audio.OpenAL.ALC.StringName name)
-        {
-            byte* result = ALC.GetString_(device, name);
-            return ALStringListToList(result);
-
-            static unsafe List<string> ALStringListToList(byte* alList)
-            {
-                if (alList == (byte*)0)
-                {
-                    return new List<string>();
-                }
-
-                var strings = new List<string>();
-
-                byte* currentPos = alList;
-                while (true)
-                {
-                    var currentString = Marshal.PtrToStringAnsi(new IntPtr(currentPos));
-                    if (string.IsNullOrEmpty(currentString))
-                    {
-                        break;
-                    }
-
-                    strings.Add(currentString);
-                    currentPos += currentString.Length + 1;
-                }
-
-                return strings;
-            }
-        }
-
         public static unsafe int LoadEffect(ReverbProperties preset)
         {
             AL.GetError();
@@ -119,7 +79,7 @@ namespace OpenALTest
         public static void Main()
         {
             Console.WriteLine("Hello!");
-            var devices = ALCGetStringList(ALCDevice.Null, OpenTK.Audio.OpenAL.ALC.StringName.DeviceSpecifier);
+            var devices = ALC.GetStringList(ALCDevice.Null, OpenTK.Audio.OpenAL.ALC.StringName.DeviceSpecifier);
             Console.WriteLine($"Devices: {string.Join(", ", devices)}");
 
             // Get the default device, then go though all devices and select the AL soft device if it exists.
@@ -148,7 +108,7 @@ namespace OpenALTest
             ALC.GetInteger(device, OpenTK.Audio.OpenAL.ALC.GetPNameIV.MinorVersion, 1, ref alcMinorVersion);
             string alcExts = ALC.GetString(device, OpenTK.Audio.OpenAL.ALC.StringName.Extensions);
 
-            var attrs = ALCGetContextAttributes(device);
+            var attrs = ALC.GetContextAttributes(device);
             Console.WriteLine($"Attributes: {attrs}");
 
             string exts = AL.GetString(OpenTK.Audio.OpenAL.StringName.Extensions);
@@ -159,14 +119,14 @@ namespace OpenALTest
             Console.WriteLine($"Vendor: {vend}, \nVersion: {vers}, \nRenderer: {rend}, \nExtensions: {exts}, \nALC Version: {alcMajorVersion}.{alcMinorVersion}, \nALC Extensions: {alcExts}");
 
             Console.WriteLine("Available devices: ");
-            var list = ALCGetStringList(ALCDevice.Null, OpenTK.Audio.OpenAL.ALC.StringName.AllDevicesSpecifier);
+            var list = ALC.GetStringList(ALCDevice.Null, OpenTK.Audio.OpenAL.ALC.StringName.AllDevicesSpecifier);
             foreach (var item in list)
             {
                 Console.WriteLine("  " + item);
             }
 
             Console.WriteLine("Available capture devices: ");
-            list = ALCGetStringList(ALCDevice.Null, OpenTK.Audio.OpenAL.ALC.StringName.CaptureDeviceSpecifier);
+            list = ALC.GetStringList(ALCDevice.Null, OpenTK.Audio.OpenAL.ALC.StringName.CaptureDeviceSpecifier);
             foreach (var item in list)
             {
                 Console.WriteLine("  " + item);
