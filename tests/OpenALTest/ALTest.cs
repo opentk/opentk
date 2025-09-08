@@ -143,7 +143,7 @@ namespace OpenALTest
             // Record a second of data
             CheckALError("Before record");
             short[] recording = new short[44100 * 4];
-            ALCDevice captureDevice = ALC.CaptureOpenDevice((string)null, 44100u, Format.FormatMono16, 1024);
+            ALCDevice captureDevice = ALC.CaptureOpenDevice((string)null, 44100u, Format.Mono16, 1024);
             {
                 string defaultCaptureName = ALC.GetString(captureDevice, OpenTK.Audio.OpenAL.ALC.StringName.CaptureDefaultDeviceSpecifier);
                 string version = AL.GetString(OpenTK.Audio.OpenAL.StringName.Version);
@@ -175,7 +175,7 @@ namespace OpenALTest
             // short[] sine = new short[44100 * 1];
             // FillSine(sine, 4400, 44100);
             // FillSine(recording, 440, 44100);
-            AL.BufferData(alBuffer, Format.FormatMono16, ref recording[0], recording.Length * 2, 44100);
+            AL.BufferData(alBuffer, Format.Mono16, ref recording[0], recording.Length * 2, 44100);
             CheckALError("After data");
 
             AL.Listenerf(ListenerPNameF.Gain, 0.1f);
@@ -245,7 +245,7 @@ namespace OpenALTest
                 }
 
                 var buffer = AL.GenBuffer();
-                AL.BufferData(buffer, Format.FormatMonoFloat32, sine, sine.Length * sizeof(float), 44100);
+                AL.BufferData(buffer, Format.MonoFloat32, sine, sine.Length * sizeof(float), 44100);
 
                 AL.Listenerf(ListenerPNameF.Gain, 0.1f);
 
@@ -275,7 +275,7 @@ namespace OpenALTest
                 }
 
                 var buffer = AL.GenBuffer();
-                AL.BufferData(buffer, Format.FormatMonoDoubleExt, saw, saw.Length * sizeof(double), 44100);
+                AL.BufferData(buffer, Format.MonoDoubleExt, saw, saw.Length * sizeof(double), 44100);
 
                 AL.Listenerf(ListenerPNameF.Gain, 0.1f);
 

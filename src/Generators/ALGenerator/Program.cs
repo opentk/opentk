@@ -33,7 +33,10 @@ namespace ALGenerator
                     NameManglerSettings alSettings = new NameManglerSettings()
                     {
                         FunctionPrefix = "al",
-                        EnumPrefixes = new List<string> { "AL_", "ALC_" },
+                        // FIXME: This removes the "Format" prefix in the All enum as well...
+                        // Do we want that?
+                        // - Noggin_bops 2025-09-08
+                        EnumPrefixes = new List<string> { "AL_FORMAT_", "AL_", "ALC_" },
                         ExtensionPrefixes = ["AL_", "ALC_"],
                         ExtensionsWithoutPrefixes =
                         [
@@ -58,7 +61,8 @@ namespace ALGenerator
                             "EAXGetBufferMode",
                             "EAXSet",
                             "EAXGet",
-                        ]
+                        ],
+                        EnumAcronymsToKeepCapitalization = [ "UHJ", "MSADPCM", "IMA4", "IMA", "ADPCM", "ALAW", "MULAW", "SN3D", "N3D", "2D", "3D" ],
                     };
 
                     // Reading the gl.xml file and parsing it into data structures.

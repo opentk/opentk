@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using System;
+using System.Buffers;
 
 namespace GeneratorBase.Utility
 {
@@ -16,6 +17,8 @@ namespace GeneratorBase.Utility
         public string DefinePrefix { get; init; }
 
         public Dictionary<string, string> EnumGroupNameTranslationTable { get; init; }
+
+        public List<string> EnumAcronymsToKeepCapitalization { get; init; }
 
         public NameManglerSettings()
         {
@@ -214,7 +217,8 @@ namespace GeneratorBase.Utility
             return MangleCapsUnderscoreName(name);
         }
 
-        private static string MangleCapsUnderscoreName(string name)
+        // FIXME: Add support for keeping abbreviations capitalized.
+        private string MangleCapsUnderscoreName(string name)
         {
             var stringBuilder = new StringBuilder(name.Length);
             var nextUpper = true;
@@ -224,7 +228,22 @@ namespace GeneratorBase.Utility
             }
             for (var i = 0; i < name.Length; i++)
             {
-                var c = name[i];
+                bool appliedAcronym = false;
+                for (int a = 0; a < Settings.EnumAcronymsToKeepCapitalization?.Count; a++)
+                {
+                    string acronym = Settings.EnumAcronymsToKeepCapitalization[a];
+                    if (name.IndexOf(acronym, i, Math.Min(acronym.Length, name.Length - i), StringComparison.InvariantCultureIgnoreCase) == i)
+                    {
+                        stringBuilder.Append(acronym);
+                        i += acronym.Length - 1;
+                        appliedAcronym = true;
+                        break;
+                    }
+                }
+                if (appliedAcronym)
+                    continue;
+
+                char c = name[i];
                 if (c == '_')
                 {
                     nextUpper = true;

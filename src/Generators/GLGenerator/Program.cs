@@ -45,7 +45,8 @@ namespace GLGenerator
                             { "BufferPNameARB", "BufferPName" },
                             { "ProgramPropertyARB", "ProgramProperty" },
                             { "BlendEquationModeEXT", "BlendEquationMode" },
-                        }
+                        },
+                        EnumAcronymsToKeepCapitalization = [ "2D", "3dfx", "3D" ],
                     };
 
                     // Reading the gl.xml file and parsing it into data structures.
@@ -78,7 +79,8 @@ namespace GLGenerator
                             "ERROR_INVALID_PIXEL_TYPE_EXT",
                             "ERROR_INCOMPATIBLE_AFFINITY_MASKS_NV",
                             "ERROR_MISSING_AFFINITY_MASK_NV",
-                        }
+                        },
+                        EnumAcronymsToKeepCapitalization = ["2D", "3dfx", "3D"],
                     };
 
                     // Reading the gl.xml file and parsing it into data structures.
@@ -99,6 +101,7 @@ namespace GLGenerator
                         EnumsWithoutPrefix = new HashSet<string>()
                         {
                         },
+                        EnumAcronymsToKeepCapitalization = ["2D", "3dfx", "3D"],
                     };
 
                     List<string> glxIgnoreFunctions = new List<string>()
@@ -128,6 +131,7 @@ namespace GLGenerator
                         EnumsWithoutPrefix = new HashSet<string>()
                         {
                         },
+                        EnumAcronymsToKeepCapitalization = ["2D", "3dfx", "3D"],
                     };
 
                     List<string> eglIgnoreFunctions = new List<string>()
