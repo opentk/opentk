@@ -894,13 +894,13 @@
             <proto>void <name>alSourceQueueBuffers</name></proto>
             <param class="source"><ptype>ALuint</ptype> <name>source</name></param>
             <param><ptype>ALsizei</ptype> <name>nb</name></param>
-            <param len="nb">const <ptype>ALuint</ptype> *<name>buffers</name></param>
+            <param len="nb" class="buffer">const <ptype>ALuint</ptype> *<name>buffers</name></param>
         </command>
         <command>
             <proto>void <name>alSourceUnqueueBuffers</name></proto>
             <param class="source"><ptype>ALuint</ptype> <name>source</name></param>
             <param><ptype>ALsizei</ptype> <name>nb</name></param>
-            <param len="nb" class="buffer"><ptype>ALuint</ptype> *<name>buffer</name></param>
+            <param len="nb" class="buffer"><ptype>ALuint</ptype> *<name>buffers</name></param>
         </command>
         <command>
             <proto>void <name>alGenBuffers</name></proto>
@@ -1353,12 +1353,12 @@
         <command>
             <proto><ptype>ALboolean</ptype> <name>EAXSetBufferMode</name></proto>
             <param><ptype>ALsizei</ptype> <name>n</name></param>
-            <param len="n"><ptype>ALuint</ptype> *<name>buffers</name></param>
+            <param len="n" class="buffer"><ptype>ALuint</ptype> *<name>buffers</name></param>
             <param group="EAXBufferMode"><ptype>ALint</ptype> <name>value</name></param>
         </command>
         <command>
             <proto group="EAXBufferMode"><ptype>ALenum</ptype> <name>EAXGetBufferMode</name></proto>
-            <param><ptype>ALuint</ptype> <name>buffer</name></param>
+            <param class="buffer"><ptype>ALuint</ptype> <name>buffer</name></param>
             <param><ptype>ALint</ptype> *<name>pReserved</name></param>
         </command>
     </commands>

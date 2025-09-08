@@ -270,7 +270,7 @@ namespace OpenTK.Audio.OpenAL
         
         /// <summary> <b>[requires: v1.0]</b> <b>[entry point: <c>alSourceQueueBuffers</c>]</b><br/>  </summary>
         [OverloadResolutionPriority(-1)]
-        public static void SourceQueueBuffers(int source, int nb, uint* buffers) => ALPointers._alSourceQueueBuffers_fnptr(source, nb, buffers);
+        public static void SourceQueueBuffers(int source, int nb, int* buffers) => ALPointers._alSourceQueueBuffers_fnptr(source, nb, buffers);
         
         /// <summary> <b>[requires: v1.0]</b> <b>[entry point: <c>alSourceRewind</c>]</b><br/>  </summary>
         [OverloadResolutionPriority(-1)]
@@ -290,7 +290,7 @@ namespace OpenTK.Audio.OpenAL
         
         /// <summary> <b>[requires: v1.0]</b> <b>[entry point: <c>alSourceUnqueueBuffers</c>]</b><br/>  </summary>
         [OverloadResolutionPriority(-1)]
-        public static void SourceUnqueueBuffers(int source, int nb, int* buffer) => ALPointers._alSourceUnqueueBuffers_fnptr(source, nb, buffer);
+        public static void SourceUnqueueBuffers(int source, int nb, int* buffers) => ALPointers._alSourceUnqueueBuffers_fnptr(source, nb, buffers);
         
         /// <summary> <b>[requires: v1.0]</b> <b>[entry point: <c>alSpeedOfSound</c>]</b><br/>  </summary>
         [OverloadResolutionPriority(-1)]
@@ -307,7 +307,7 @@ namespace OpenTK.Audio.OpenAL
             /// <summary> <b>[requires: EAX-RAM | EAX3.0 | EAX3.0EMULATED | EAX4.0 | EAX4.0EMULATED | EAX5.0]</b> <b>[entry point: <c>EAXGetBufferMode</c>]</b><br/>  </summary>
             /// <remarks><see href="https://raw.githubusercontent.com/Raulshc/OpenAL-EXT-Repository/refs/heads/master/AL%20Extensions/EAX-RAM.txt"/><br/><see href="https://raw.githubusercontent.com/Raulshc/OpenAL-EXT-Repository/refs/heads/master/AL%20Extensions/EAX3.0.txt"/><br/><see href="https://raw.githubusercontent.com/Raulshc/OpenAL-EXT-Repository/refs/heads/master/AL%20Extensions/EAX3.0EMULATED.txt"/><br/><see href="https://raw.githubusercontent.com/Raulshc/OpenAL-EXT-Repository/refs/heads/master/AL%20Extensions/EAX4.0.txt"/><br/><see href="https://raw.githubusercontent.com/Raulshc/OpenAL-EXT-Repository/refs/heads/master/AL%20Extensions/EAX4.0EMULATED.txt"/><br/><see href="https://raw.githubusercontent.com/Raulshc/OpenAL-EXT-Repository/refs/heads/master/AL%20Extensions/EAX5.0.txt"/></remarks>
             [OverloadResolutionPriority(-1)]
-            public static EAXBufferMode EAXGetBufferMode(uint buffer, int* pReserved) => (EAXBufferMode) ALPointers._EAXGetBufferMode_fnptr(buffer, pReserved);
+            public static EAXBufferMode EAXGetBufferMode(int buffer, int* pReserved) => (EAXBufferMode) ALPointers._EAXGetBufferMode_fnptr(buffer, pReserved);
             
             /// <summary> <b>[requires: EAX | EAX2.0 | EAX3.0 | EAX3.0EMULATED | EAX4.0 | EAX4.0EMULATED | EAX5.0]</b> <b>[entry point: <c>EAXSet</c>]</b><br/>  </summary>
             /// <remarks><see href="https://raw.githubusercontent.com/Raulshc/OpenAL-EXT-Repository/refs/heads/master/AL%20Extensions/EAX.txt"/><br/><see href="https://raw.githubusercontent.com/Raulshc/OpenAL-EXT-Repository/refs/heads/master/AL%20Extensions/EAX2.0.txt"/><br/><see href="https://raw.githubusercontent.com/Raulshc/OpenAL-EXT-Repository/refs/heads/master/AL%20Extensions/EAX3.0.txt"/><br/><see href="https://raw.githubusercontent.com/Raulshc/OpenAL-EXT-Repository/refs/heads/master/AL%20Extensions/EAX3.0EMULATED.txt"/><br/><see href="https://raw.githubusercontent.com/Raulshc/OpenAL-EXT-Repository/refs/heads/master/AL%20Extensions/EAX4.0.txt"/><br/><see href="https://raw.githubusercontent.com/Raulshc/OpenAL-EXT-Repository/refs/heads/master/AL%20Extensions/EAX4.0EMULATED.txt"/><br/><see href="https://raw.githubusercontent.com/Raulshc/OpenAL-EXT-Repository/refs/heads/master/AL%20Extensions/EAX5.0.txt"/></remarks>
@@ -317,7 +317,7 @@ namespace OpenTK.Audio.OpenAL
             /// <summary> <b>[requires: EAX-RAM | EAX3.0 | EAX3.0EMULATED | EAX4.0 | EAX4.0EMULATED | EAX5.0]</b> <b>[entry point: <c>EAXSetBufferMode</c>]</b><br/>  </summary>
             /// <remarks><see href="https://raw.githubusercontent.com/Raulshc/OpenAL-EXT-Repository/refs/heads/master/AL%20Extensions/EAX-RAM.txt"/><br/><see href="https://raw.githubusercontent.com/Raulshc/OpenAL-EXT-Repository/refs/heads/master/AL%20Extensions/EAX3.0.txt"/><br/><see href="https://raw.githubusercontent.com/Raulshc/OpenAL-EXT-Repository/refs/heads/master/AL%20Extensions/EAX3.0EMULATED.txt"/><br/><see href="https://raw.githubusercontent.com/Raulshc/OpenAL-EXT-Repository/refs/heads/master/AL%20Extensions/EAX4.0.txt"/><br/><see href="https://raw.githubusercontent.com/Raulshc/OpenAL-EXT-Repository/refs/heads/master/AL%20Extensions/EAX4.0EMULATED.txt"/><br/><see href="https://raw.githubusercontent.com/Raulshc/OpenAL-EXT-Repository/refs/heads/master/AL%20Extensions/EAX5.0.txt"/></remarks>
             [OverloadResolutionPriority(-1)]
-            public static bool EAXSetBufferMode(int n, uint* buffers, int value) => ALPointers._EAXSetBufferMode_fnptr(n, buffers, value) != 0;
+            public static bool EAXSetBufferMode(int n, int* buffers, int value) => ALPointers._EAXSetBufferMode_fnptr(n, buffers, value) != 0;
             
         }
         /// <summary>EXT extensions.</summary>
@@ -521,7 +521,7 @@ namespace OpenTK.Audio.OpenAL
             /// <summary> <b>[requires: AL_EXT_direct_context]</b> <b>[entry point: <c>EAXGetBufferModeDirect</c>]</b><br/>  </summary>
             /// <remarks><see href="https://raw.githubusercontent.com/Raulshc/OpenAL-EXT-Repository/refs/heads/master/AL%20Extensions/AL_EXT_direct_context.txt"/></remarks>
             [OverloadResolutionPriority(-1)]
-            public static EAXBufferMode EAXGetBufferModeDirect(ALCContext context, uint buffer, int* pReserved) => (EAXBufferMode) ALPointers._EAXGetBufferModeDirect_fnptr((IntPtr)context, buffer, pReserved);
+            public static EAXBufferMode EAXGetBufferModeDirect(ALCContext context, int buffer, int* pReserved) => (EAXBufferMode) ALPointers._EAXGetBufferModeDirect_fnptr((IntPtr)context, buffer, pReserved);
             
             /// <summary> <b>[requires: AL_EXT_direct_context]</b> <b>[entry point: <c>EAXGetDirect</c>]</b><br/>  </summary>
             /// <remarks><see href="https://raw.githubusercontent.com/Raulshc/OpenAL-EXT-Repository/refs/heads/master/AL%20Extensions/AL_EXT_direct_context.txt"/></remarks>
@@ -531,7 +531,7 @@ namespace OpenTK.Audio.OpenAL
             /// <summary> <b>[requires: AL_EXT_direct_context]</b> <b>[entry point: <c>EAXSetBufferModeDirect</c>]</b><br/>  </summary>
             /// <remarks><see href="https://raw.githubusercontent.com/Raulshc/OpenAL-EXT-Repository/refs/heads/master/AL%20Extensions/AL_EXT_direct_context.txt"/></remarks>
             [OverloadResolutionPriority(-1)]
-            public static bool EAXSetBufferModeDirect(ALCContext context, int n, uint* buffers, int value) => ALPointers._EAXSetBufferModeDirect_fnptr((IntPtr)context, n, buffers, value) != 0;
+            public static bool EAXSetBufferModeDirect(ALCContext context, int n, int* buffers, int value) => ALPointers._EAXSetBufferModeDirect_fnptr((IntPtr)context, n, buffers, value) != 0;
             
             /// <summary> <b>[requires: AL_EXT_direct_context]</b> <b>[entry point: <c>EAXSetDirect</c>]</b><br/>  </summary>
             /// <remarks><see href="https://raw.githubusercontent.com/Raulshc/OpenAL-EXT-Repository/refs/heads/master/AL%20Extensions/AL_EXT_direct_context.txt"/></remarks>
@@ -1321,7 +1321,7 @@ namespace OpenTK.Audio.OpenAL
             /// <summary> <b>[requires: AL_EXT_direct_context]</b> <b>[entry point: <c>alSourceQueueBuffersDirect</c>]</b><br/>  </summary>
             /// <remarks><see href="https://raw.githubusercontent.com/Raulshc/OpenAL-EXT-Repository/refs/heads/master/AL%20Extensions/AL_EXT_direct_context.txt"/></remarks>
             [OverloadResolutionPriority(-1)]
-            public static void SourceQueueBuffersDirect(ALCContext context, int source, int nb, uint* buffers) => ALPointers._alSourceQueueBuffersDirect_fnptr((IntPtr)context, source, nb, buffers);
+            public static void SourceQueueBuffersDirect(ALCContext context, int source, int nb, int* buffers) => ALPointers._alSourceQueueBuffersDirect_fnptr((IntPtr)context, source, nb, buffers);
             
             /// <summary> <b>[requires: AL_EXT_SOURCE_NOTIFICATIONS]</b> <b>[entry point: <c>alSourceRemoveNotification</c>]</b><br/>  </summary>
             /// <remarks><see href="https://raw.githubusercontent.com/Raulshc/OpenAL-EXT-Repository/refs/heads/master/AL%20Extensions/AL_EXT_SOURCE_NOTIFICATIONS.txt"/></remarks>
@@ -1366,7 +1366,7 @@ namespace OpenTK.Audio.OpenAL
             /// <summary> <b>[requires: AL_EXT_direct_context]</b> <b>[entry point: <c>alSourceUnqueueBuffersDirect</c>]</b><br/>  </summary>
             /// <remarks><see href="https://raw.githubusercontent.com/Raulshc/OpenAL-EXT-Repository/refs/heads/master/AL%20Extensions/AL_EXT_direct_context.txt"/></remarks>
             [OverloadResolutionPriority(-1)]
-            public static void SourceUnqueueBuffersDirect(ALCContext context, int source, int nb, int* buffer) => ALPointers._alSourceUnqueueBuffersDirect_fnptr((IntPtr)context, source, nb, buffer);
+            public static void SourceUnqueueBuffersDirect(ALCContext context, int source, int nb, int* buffers) => ALPointers._alSourceUnqueueBuffersDirect_fnptr((IntPtr)context, source, nb, buffers);
             
             /// <summary> <b>[requires: AL_EXT_direct_context]</b> <b>[entry point: <c>alSpeedOfSoundDirect</c>]</b><br/>  </summary>
             /// <remarks><see href="https://raw.githubusercontent.com/Raulshc/OpenAL-EXT-Repository/refs/heads/master/AL%20Extensions/AL_EXT_direct_context.txt"/></remarks>
