@@ -136,7 +136,7 @@ namespace OpenALTest
             Console.WriteLine($"All Devices: {string.Join(", ", allDevices)}");
 
             var device = ALC.OpenDevice(deviceName);
-            var context = ALC.CreateContext(device, (int[])null);
+            var context = ALC.CreateContext(device, null);
             ALC.MakeContextCurrent(context);
 
             ALLoader.SetALCDevice(device);

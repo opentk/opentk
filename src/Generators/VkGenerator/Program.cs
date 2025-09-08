@@ -17,8 +17,12 @@ namespace VkGenerator
 
             Stopwatch watch = Stopwatch.StartNew();
 
+            // These prevent us to accidently generate wrong code because of
+            // locale dependent string functions.
             CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
             CultureInfo.CurrentUICulture = CultureInfo.InvariantCulture;
+            CultureInfo.DefaultThreadCurrentCulture = CultureInfo.InvariantCulture;
+            CultureInfo.DefaultThreadCurrentUICulture = CultureInfo.InvariantCulture;
 
             using FileStream specificationStream = Reader.ReadVKSpecFromGithub();
             using FileStream videoSpecificationStream = Reader.ReadVKVideoSpecFromGithub();

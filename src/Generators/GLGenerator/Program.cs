@@ -1,15 +1,16 @@
-﻿using System.Diagnostics;
-using System.IO;
-using System.Reflection;
+﻿using GeneratorBase;
 using GeneratorBase.Utility;
-using GLGenerator.Process;
 using GLGenerator.Parsing;
-using System.Collections.Generic;
+using GLGenerator.Process;
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Globalization;
+using System.IO;
 using System.Linq;
-using System.Threading;
+using System.Reflection;
 using System.Runtime.CompilerServices;
-using GeneratorBase;
+using System.Threading;
 
 namespace GLGenerator
 {
@@ -19,6 +20,14 @@ namespace GLGenerator
         {
             Stopwatch st = new Stopwatch();
             st.Start();
+
+            // These prevent us to accidently generate wrong code because of
+            // locale dependent string functions.
+            CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+            CultureInfo.CurrentUICulture = CultureInfo.InvariantCulture;
+            CultureInfo.DefaultThreadCurrentCulture = CultureInfo.InvariantCulture;
+            CultureInfo.DefaultThreadCurrentUICulture = CultureInfo.InvariantCulture;
+
             using (Logger.CreateLogger(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly()!.Location)!, "log.txt")))
             {
                 Specification glSpecification;
