@@ -45,7 +45,10 @@ namespace OpenTK.Platform.Native.Windows
         // A handle to a windowproc delegate so it doesn't get GC collected.
         private Win32.WNDPROC? WindowProc;
         private int _rawInputMessagesProcessedThisFrame = 0;
+        // TODO: This should probably be user configurable
         private const int MaxRawInputsPerFrame = 5;
+        private static IntPtr _rawInputBuffer = IntPtr.Zero;
+
         internal static readonly Dictionary<IntPtr, HWND> HWndDict = new Dictionary<IntPtr, HWND>();
 
         // This is the window we are currently capturing the cursor in. 
@@ -169,6 +172,9 @@ namespace OpenTK.Platform.Native.Windows
 
             // Delete the helper window
             Win32.DestroyWindow(HelperHWnd);
+
+            // Free the raw input buffer
+            Marshal.FreeHGlobal(_rawInputBuffer);
 
             // Unregister the OpenTK window class
             Win32.UnregisterClass(WindowComponent.CLASS_NAME, IntPtr.Zero);
@@ -1107,9 +1113,6 @@ namespace OpenTK.Platform.Native.Windows
         /// </summary>
         private void ProcessRawInputBuffer()
         {
-            if (_rawInputBuffer == IntPtr.Zero || FocusedHWnd == IntPtr.Zero)
-                return;
-
             if (_rawInputMessagesProcessedThisFrame >= MaxRawInputsPerFrame)
             {
                 return;
@@ -1117,7 +1120,6 @@ namespace OpenTK.Platform.Native.Windows
             uint rawInputHeaderSize = (uint)Marshal.SizeOf<Win32.RAWINPUTHEADER>();
             uint rawInputBufferSize = 0;
             uint fetchCount;
-            IntPtr rawInputBuffer;
             do
             {
                 uint queryCount = Win32.GetRawInputBuffer(IntPtr.Zero, ref rawInputBufferSize, rawInputHeaderSize);
@@ -1131,20 +1133,20 @@ namespace OpenTK.Platform.Native.Windows
                     return;
                 }
 
-                rawInputBuffer = Marshal.AllocHGlobal((int)rawInputBufferSize);
+                _rawInputBuffer = Marshal.AllocHGlobal((int)rawInputBufferSize);
 
-                fetchCount = Win32.GetRawInputBuffer(rawInputBuffer, ref rawInputBufferSize, rawInputHeaderSize);
+                fetchCount = Win32.GetRawInputBuffer(_rawInputBuffer, ref rawInputBufferSize, rawInputHeaderSize);
                 if (fetchCount == unchecked((uint)-1))
                 {
                     int error = Marshal.GetLastWin32Error();
-                    Marshal.FreeHGlobal(rawInputBuffer);
+                    Marshal.FreeHGlobal(_rawInputBuffer);
                     if (error == Win32.ERROR_INSUFFICIENT_BUFFER) continue;
                     throw new Win32Exception(error, "GetRawInputBuffer (fetch data) failed.");
                 }
                 else break;
             } while (true);
 
-            IntPtr currentRawInputPtr = rawInputBuffer;
+            IntPtr currentRawInputPtr = _rawInputBuffer;
 
             for (uint i = 0; i < fetchCount && _rawInputMessagesProcessedThisFrame < MaxRawInputsPerFrame; i++)
             {
@@ -1158,7 +1160,7 @@ namespace OpenTK.Platform.Native.Windows
                     {
                         if (rawMouse.lLastX != 0 || rawMouse.lLastY != 0)
                         {
-
+                            // TODO: I am not 100% confident that this will always be the correct window.
                             HWND windowHandle = HWndDict[FocusedHWnd];
                             EventQueue.Raise(windowHandle, PlatformEventType.RawMouseMove,
                                 new RawMouseMoveEventArgs(windowHandle, (rawMouse.lLastX, rawMouse.lLastY)));
@@ -1173,19 +1175,12 @@ namespace OpenTK.Platform.Native.Windows
                 currentRawInputPtr = (IntPtr)((long)currentRawInputPtr + rawInput.header.dwSize);
                 _rawInputMessagesProcessedThisFrame++;
             }
-
-            Marshal.FreeHGlobal(rawInputBuffer);
         }
 
-        private static IntPtr _rawInputBuffer = IntPtr.Zero;
-        private const int RawInputBufferSize = 64 * 1024; // 64 KB, should be plenty
         /// <inheritdoc/>
         public void ProcessEvents(bool waitForEvents)
         {
             this._rawInputMessagesProcessedThisFrame = 0;
-
-            if (_rawInputBuffer == IntPtr.Zero)
-                _rawInputBuffer = Marshal.AllocHGlobal(RawInputBufferSize);
 
             // Step 1: batch process all raw input events
             ProcessRawInputBuffer();
