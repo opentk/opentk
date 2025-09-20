@@ -1,4 +1,3 @@
-﻿using OpenTK.Platform;
 using OpenTK.Core.Utility;
 using OpenTK.Mathematics;
 using System;
@@ -7,10 +6,8 @@ using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading;
-using OpenTK.Graphics.Vulkan;
 using System.Runtime.InteropServices.Marshalling;
+using System.Text;
 
 namespace OpenTK.Platform.Native.Windows
 {
@@ -33,6 +30,10 @@ namespace OpenTK.Platform.Native.Windows
         /// The helper window used in part to load wgl extensions.
         /// </summary>
         public static IntPtr HelperHWnd { get; private set; }
+        /// <summary>
+        /// The currently focused window. <c>IntPtr.Zero</c> if none is focused
+        /// </summary>
+        public static IntPtr FocusedHWnd { get; private set; }
 
         internal static IntPtr DeviceNotificationHandle;
         internal static IntPtr SuspendResumeNotificationHandle;
@@ -43,7 +44,8 @@ namespace OpenTK.Platform.Native.Windows
 
         // A handle to a windowproc delegate so it doesn't get GC collected.
         private Win32.WNDPROC? WindowProc;
-
+        private int _rawInputMessagesProcessedThisFrame = 0;
+        private const int MaxRawInputsPerFrame = 5;
         internal static readonly Dictionary<IntPtr, HWND> HWndDict = new Dictionary<IntPtr, HWND>();
 
         // This is the window we are currently capturing the cursor in. 
@@ -233,22 +235,22 @@ namespace OpenTK.Platform.Native.Windows
                         return (IntPtr)1;
                     }
                     case WM.DEVICECHANGE:
-                    {
-                        DBT dbt = (DBT)wParam;
-                        switch (dbt)
                         {
-                            case DBT.DeviceArrival:
-                            case DBT.DeviceRemoveComplete:
-                                // FIXME: Implement joystick events!
-                                // JoystickComponent.UpdateJoysticks();
-                                break;
-                            default:
-                                break;
-                        }
+                            DBT dbt = (DBT)wParam;
+                            switch (dbt)
+                            {
+                                case DBT.DeviceArrival:
+                                case DBT.DeviceRemoveComplete:
+                                    // FIXME: Implement joystick events!
+                                    // JoystickComponent.UpdateJoysticks();
+                                    break;
+                                default:
+                                    break;
+                            }
 
-                        Console.WriteLine($"{uMsg} {(DBT)wParam} 0x{wParam.ToUInt64():X16}");
-                        return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
-                    }
+                            Console.WriteLine($"{uMsg} {(DBT)wParam} 0x{wParam.ToUInt64():X16}");
+                            return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
+                        }
                     case WM.CLIPBOARDUPDATE:
                     {
                         ClipboardFormat newFormat = ClipboardComponent.GetClipboardFormatInternal(Logger);
@@ -470,7 +472,7 @@ namespace OpenTK.Platform.Native.Windows
                 case WM.SETFOCUS:
                     {
                         HWND h = HWndDict[hWnd];
-
+                        FocusedHWnd = h.HWnd;
                         // Because windows removes our capture when we loose focus,
                         // we need to re-capture the mouse when we get focus again.
                         // - Noggin_bops 2023-01-16
@@ -485,6 +487,7 @@ namespace OpenTK.Platform.Native.Windows
                     }
                 case WM.KILLFOCUS:
                     {
+                        FocusedHWnd = IntPtr.Zero;
                         // This message can be sent after WM_CLOSE which means that the specificed window might not exist any more.
                         if (HWndDict.TryGetValue(hWnd, out HWND? h))
                         {
@@ -728,50 +731,6 @@ namespace OpenTK.Platform.Native.Windows
 
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                     }
-                case WM.INPUT:
-                    {
-                        Win32.RAWINPUT input = default;
-                        uint size = (uint)Marshal.SizeOf<Win32.RAWINPUTHEADER>();
-                        input.header.dwSize = size;
-                        uint ret = Win32.GetRawInputData(lParam, RID.Header, ref input, ref size, (uint)Marshal.SizeOf<Win32.RAWINPUTHEADER>());
-                        if (ret == 0xFFFF_FFFF)
-                        {
-                            throw new Win32Exception("GetRawInputData failed.");
-                        }
-
-                        if (input.header.dwType == RIM.TypeMouse)
-                        {
-                            ret = Win32.GetRawInputData(lParam, RID.Input, null, ref size, (uint)Marshal.SizeOf<Win32.RAWINPUTHEADER>());
-                            if (ret == 0xFFFF_FFFF)
-                            {
-                                throw new Win32Exception("GetRawInputData failed.");
-                            }
-
-                            ret = Win32.GetRawInputData(lParam, RID.Input, ref input, ref size, (uint)Marshal.SizeOf<Win32.RAWINPUTHEADER>());
-                            if (ret == 0xFFFF_FFFF)
-                            {
-                                throw new Win32Exception("GetRawInputData failed.");
-                            }
-
-                            ref Win32.RAWMOUSE mouse = ref input.data.mouse;
-
-                            if (mouse.usFlags == RawMouseFlags.MoveRelative)
-                            {
-                                if (mouse.lLastX != 0 || mouse.lLastY != 0)
-                                {
-                                    HWND h = HWndDict[hWnd];
-                                    EventQueue.Raise(h, PlatformEventType.RawMouseMove, new RawMouseMoveEventArgs(h, (mouse.lLastX, mouse.lLastY)));
-                                }
-                            }
-                            else
-                            {
-                                // FIXME: We don't want to spam this for every WM_INPUT message...
-                                Logger?.LogError("MOUSE_MOVE_ABSOLUTE not supported yet. This might happen when using remote desktop. Open an issue on the OpenTK github if this happens to you.");
-                            }
-                        }
-
-                        return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
-                    }
                 case WM.NCHITTEST:
                     {
                         int x = Win32.GET_X_LPARAM(lParam);
@@ -878,7 +837,7 @@ namespace OpenTK.Platform.Native.Windows
                         HWND h = HWndDict[hWnd];
 
                         Win32.GetWindowRect(hWnd, out Win32.RECT rect);
-                        
+
                         EventQueue.Raise(h, PlatformEventType.WindowMove, new WindowMoveEventArgs(h, new Vector2i(rect.left, rect.top), new Vector2i(x, y)));
 
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
@@ -1031,7 +990,7 @@ namespace OpenTK.Platform.Native.Windows
                 case WM.THEMECHANGED:
                     {
                         ShellComponent.CheckPreferredThemeChange();
-                        
+
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                     }
                 case WM.IME_COMPOSITION:
@@ -1143,21 +1102,131 @@ namespace OpenTK.Platform.Native.Windows
             }
         }
 
+        /// <summary>
+        /// Process all pending raw input events using GetRawInputBuffer.
+        /// </summary>
+        private void ProcessRawInputBuffer()
+        {
+            if (_rawInputBuffer == IntPtr.Zero || FocusedHWnd == IntPtr.Zero)
+                return;
+
+            if (_rawInputMessagesProcessedThisFrame >= MaxRawInputsPerFrame)
+            {
+                return;
+            }
+            uint rawInputHeaderSize = (uint)Marshal.SizeOf<Win32.RAWINPUTHEADER>();
+            uint rawInputBufferSize = 0;
+            uint fetchCount;
+            IntPtr rawInputBuffer;
+            do
+            {
+                uint queryCount = Win32.GetRawInputBuffer(IntPtr.Zero, ref rawInputBufferSize, rawInputHeaderSize);
+                if (queryCount == unchecked((uint)-1))
+                {
+                    throw new Win32Exception(Marshal.GetLastWin32Error(), "GetRawInputBuffer (query size) failed.");
+                }
+
+                if (rawInputBufferSize == 0)
+                {
+                    return;
+                }
+
+                rawInputBuffer = Marshal.AllocHGlobal((int)rawInputBufferSize);
+
+                fetchCount = Win32.GetRawInputBuffer(rawInputBuffer, ref rawInputBufferSize, rawInputHeaderSize);
+                if (fetchCount == unchecked((uint)-1))
+                {
+                    int error = Marshal.GetLastWin32Error();
+                    Marshal.FreeHGlobal(rawInputBuffer);
+                    if (error == Win32.ERROR_INSUFFICIENT_BUFFER) continue;
+                    throw new Win32Exception(error, "GetRawInputBuffer (fetch data) failed.");
+                }
+                else break;
+            } while (true);
+
+            IntPtr currentRawInputPtr = rawInputBuffer;
+
+            for (uint i = 0; i < fetchCount && _rawInputMessagesProcessedThisFrame < MaxRawInputsPerFrame; i++)
+            {
+                Win32.RAWINPUT rawInput = Marshal.PtrToStructure<Win32.RAWINPUT>(currentRawInputPtr);
+
+                if (rawInput.header.dwType == RIM.TypeMouse)
+                {
+                    ref Win32.RAWMOUSE rawMouse = ref rawInput.data.mouse;
+
+                    if (rawMouse.usFlags == RawMouseFlags.MoveRelative)
+                    {
+                        if (rawMouse.lLastX != 0 || rawMouse.lLastY != 0)
+                        {
+
+                            HWND windowHandle = HWndDict[FocusedHWnd];
+                            EventQueue.Raise(windowHandle, PlatformEventType.RawMouseMove,
+                                new RawMouseMoveEventArgs(windowHandle, (rawMouse.lLastX, rawMouse.lLastY)));
+                        }
+                    }
+                    else
+                    {
+                        Logger?.LogError("MOUSE_MOVE_ABSOLUTE not supported yet. This might happen when using remote desktop.");
+                    }
+                }
+
+                currentRawInputPtr = (IntPtr)((long)currentRawInputPtr + rawInput.header.dwSize);
+                _rawInputMessagesProcessedThisFrame++;
+            }
+
+            Marshal.FreeHGlobal(rawInputBuffer);
+        }
+
+        private static IntPtr _rawInputBuffer = IntPtr.Zero;
+        private const int RawInputBufferSize = 64 * 1024; // 64 KB, should be plenty
         /// <inheritdoc/>
         public void ProcessEvents(bool waitForEvents)
         {
+            this._rawInputMessagesProcessedThisFrame = 0;
+
+            if (_rawInputBuffer == IntPtr.Zero)
+                _rawInputBuffer = Marshal.AllocHGlobal(RawInputBufferSize);
+
+            // Step 1: batch process all raw input events
+            ProcessRawInputBuffer();
+
+            // Step 2: message pumping — skip WM_INPUT when focused, limit per frame
             if (waitForEvents)
             {
-                // Wait for one message then we go into the PeekMessage loop.
+                // Wait for one message to arrive, then translate/dispatch it.
                 int ret = Win32.GetMessage(out Win32.MSG lpMsg, IntPtr.Zero, 0, 0);
                 Win32.TranslateMessage(in lpMsg);
                 Win32.DispatchMessage(in lpMsg);
+                _rawInputMessagesProcessedThisFrame++;
             }
 
-            while (Win32.PeekMessage(out Win32.MSG lpMsg, IntPtr.Zero, 0, 0, PM.Remove))
+            while (_rawInputMessagesProcessedThisFrame < MaxRawInputsPerFrame)
             {
-                Win32.TranslateMessage(in lpMsg);
-                Win32.DispatchMessage(in lpMsg);
+                bool hasMessage;
+
+                if (FocusedHWnd == IntPtr.Zero)
+                {
+                    // Consume all messages to wake reliably
+                    hasMessage = Win32.PeekMessage(out Win32.MSG lpMsg, IntPtr.Zero, 0, 0, PM.Remove);
+                    if (!hasMessage) break;
+                    Win32.TranslateMessage(in lpMsg);
+                    Win32.DispatchMessage(in lpMsg);
+                }
+                else
+                {
+                    // peek all messages except WM.INPUT
+                    hasMessage = Win32.PeekMessage(out Win32.MSG lpMsg, IntPtr.Zero, 0, (uint)WM.INPUT - 1, PM.Remove);
+                    if (!hasMessage)
+                    {
+                        hasMessage = Win32.PeekMessage(out lpMsg, IntPtr.Zero, (uint)WM.INPUT + 1, uint.MaxValue, PM.Remove);
+                    }
+                    if (!hasMessage) break;
+
+                    Win32.TranslateMessage(in lpMsg);
+                    Win32.DispatchMessage(in lpMsg);
+                }
+
+                _rawInputMessagesProcessedThisFrame++;
             }
 
             if (CursorCapturingWindow != null && CursorCapturingWindow.CaptureMode == CursorCaptureMode.Locked)
@@ -1169,13 +1238,9 @@ namespace OpenTK.Platform.Native.Windows
                     Win32.ClientToScreen(CursorCapturingWindow.HWnd, ref p);
 
                     bool success = Win32.SetCursorPos(p.X, p.Y);
-                    if (success == false)
-                    {
+                    if (!success)
                         throw new Win32Exception();
-                    }
 
-                    // Set the last mouse position to the position we are moving to
-                    // to avoid generating a mouse move event.
                     CursorCapturingWindow.LastMousePosition = (size.X / 2, size.Y / 2);
                 }
             }
@@ -1861,7 +1926,7 @@ namespace OpenTK.Platform.Native.Windows
                 hwnd.FullscreenMonitor = hmonitor;
                 hwnd.ExclusiveFullscreen = true;
                 hwnd.PreviousBorderStyle = GetBorderStyle(hwnd);
-                
+
                 // FIXME: check if we need to remove the window decorations.
                 WindowStyles style = (WindowStyles)(uint)Win32.GetWindowLongPtr(hwnd.HWnd, GetGWLPIndex.Style);
                 Win32.SetWindowLongPtr(hwnd.HWnd, SetGWLPIndex.Style, new IntPtr((int)(style & ~WindowStyles.OverlappedWindow)));

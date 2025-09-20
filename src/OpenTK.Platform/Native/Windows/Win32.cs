@@ -1471,6 +1471,13 @@ namespace OpenTK.Platform.Native.Windows
         [DllImport("user32.dll")]
         internal static extern IntPtr /* LRESULT */ DefRawInputProc(IntPtr /* PRAWINPUT* */ paRawInput, int nInput, uint cbSizeHeader);
 
+        [DllImport("User32.dll", SetLastError = true)]
+        public static extern uint GetRawInputBuffer(
+            [Out, Optional] IntPtr pData,  // PRAWINPUT
+            ref uint pcbSize,
+            uint cbSizeHeader
+        );
+
         [DllImport("user32.dll", SetLastError = false)]
         internal static extern uint GetRawInputData(
            IntPtr /* HRAWINPUT */ hRawInput,
