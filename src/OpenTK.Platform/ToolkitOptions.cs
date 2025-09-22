@@ -1,4 +1,4 @@
-﻿using OpenTK.Core.Utility;
+using OpenTK.Core.Utility;
 using System;
 
 #nullable enable
@@ -96,6 +96,13 @@ namespace OpenTK.Platform
             /// Defaults to <see langword="true"/>.
             /// </summary>
             public bool IsDPIAware { get; set; } = true;
+
+            /// <summary>
+            /// The maximum number of raw input messages to process per call to <see cref="IWindowComponent.ProcessEvents(bool)"/>.
+            /// Negative values remove this limit.
+            /// Defaults to 5.
+            /// </summary>
+            public int MaxRawInputsPerFrame { get; set; } = 5;
         }
 
         /// <summary>

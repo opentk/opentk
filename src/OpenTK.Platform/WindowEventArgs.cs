@@ -429,7 +429,7 @@ namespace OpenTK.Platform
     /// <summary>
     /// This event is triggered when the mouse moves and raw mouse motion is enabled.
     /// </summary>
-    public class RawMouseMoveEventArgs : WindowEventArgs
+    public class RawMouseMoveEventArgs : EventArgs
     {
         /// <summary>
         /// The unscaled movement value of the mouse.
@@ -442,9 +442,8 @@ namespace OpenTK.Platform
         /// <summary>
         /// Initializes a new instance of the <see cref="RawMouseMoveEventArgs"/> class.
         /// </summary>
-        /// <param name="window">The window in which the mouse moved.</param>
         /// <param name="delta">The raw mouse delta.</param>
-        public RawMouseMoveEventArgs(WindowHandle window, Vector2 delta) : base(window)
+        public RawMouseMoveEventArgs(Vector2 delta)
         {
             Delta = delta;
         }
