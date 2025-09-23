@@ -99,10 +99,15 @@ namespace OpenTK.Platform
 
             /// <summary>
             /// The maximum number of raw input messages to process per call to <see cref="IWindowComponent.ProcessEvents(bool)"/>.
-            /// Negative values remove this limit.
             /// Defaults to 5.
             /// </summary>
-            public int MaxRawInputsPerFrame { get; set; } = 5;
+            public int MaxRawMouseMessagesPerFrame { get; set; } = 5;
+
+            /// <summary>
+            /// The maximum number of mouse move messages to process per call to <see cref="IWindowComponent.ProcessEvents(bool)"/>.
+            /// Defaults to 5.
+            /// </summary>
+            public int MaxMouseMoveMessagesPerFrame { get; set; } = 5;
         }
 
         /// <summary>
