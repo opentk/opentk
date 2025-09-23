@@ -8,6 +8,7 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.Marshalling;
 using System.Text;
+using System.Threading;
 
 namespace OpenTK.Platform.Native.Windows
 {
@@ -40,7 +41,8 @@ namespace OpenTK.Platform.Native.Windows
 
         // A handle to a windowproc delegate so it doesn't get GC collected.
         private Win32.WNDPROC? WindowProc;
-        private int _maxRawInputsPerFrame;
+        private int _maxMouseMoveMessagesPerFrame;
+        private int _maxRawMouseMessagesPerFrame;
         private unsafe Win32.RAWINPUT* _rawInputBuffer = null;
         private uint _rawInputBufferSize;
 
@@ -70,7 +72,8 @@ namespace OpenTK.Platform.Native.Windows
             // Set the WindowProc delegate so that we capture "this".
             // FIXME: Does this cause GC issues where "this" is circularly referenced?
             WindowProc = Win32WindowProc;
-            _maxRawInputsPerFrame = options.Windows.MaxRawInputsPerFrame;
+            _maxRawMouseMessagesPerFrame = options.Windows.MaxRawMouseMessagesPerFrame;
+            _maxMouseMoveMessagesPerFrame = options.Windows.MaxMouseMoveMessagesPerFrame;
             // FIXME: Maybe try extract the small icon too?
             // Get the exe path and extract the icon if possible, this will be the window default icon.
             IntPtr icon = IntPtr.Zero;
@@ -1105,63 +1108,50 @@ namespace OpenTK.Platform.Native.Windows
         }
 
         /// <summary>
-        /// Process all pending raw input events using GetRawInputBuffer.
+        /// Processes raw input events using GetRawInputBuffer.
         /// </summary>
         private void ProcessRawInputBuffer()
         {
-            var _rawInputMessagesProcessedThisFrame = 0;
-            if (_rawInputMessagesProcessedThisFrame >= _maxRawInputsPerFrame)
-            {
-                return;
-            }
-            uint rawInputHeaderSize = (uint)Marshal.SizeOf<Win32.RAWINPUTHEADER>();
-            uint rawInputBufferSize = 0;
-            uint fetchCount = 0;
             unsafe
             {
-                do
+                var rawInputMessagesProcessed = 0;
+                uint rawInputHeaderSize = (uint)Marshal.SizeOf<Win32.RAWINPUTHEADER>();
+                uint rawInputBufferSize = 0;
+                uint queryCountResult = Win32.GetRawInputBuffer(null, ref rawInputBufferSize, rawInputHeaderSize);
+                if (queryCountResult == unchecked((uint)-1))
                 {
-                    uint queryCount = Win32.GetRawInputBuffer(null, ref rawInputBufferSize, rawInputHeaderSize);
-                    if (queryCount == unchecked((uint)-1))
-                    {
-                        throw new Win32Exception(Marshal.GetLastWin32Error(), "GetRawInputBuffer (query size) failed.");
-                    }
+                    throw new Win32Exception(Marshal.GetLastWin32Error(), "GetRawInputBuffer (query size) failed.");
+                }
 
-                    if (rawInputBufferSize == 0)
+                //Slightly oversize the buffer to reduce chance of ERROR_INSUFFICIENT_BUFFER occurring
+                //GLFW uses this technique
+                rawInputBufferSize *= 2;
+                if (rawInputBufferSize > _rawInputBufferSize || _rawInputBuffer == null)
+                {
+                    if (_rawInputBuffer == null)
                     {
-                        break;
-                    }
-
-                    if (rawInputBufferSize > _rawInputBufferSize)
-                    {
-                        if (_rawInputBuffer == null)
-                        {
-                            _rawInputBuffer = (Win32.RAWINPUT*)NativeMemory.Alloc(rawInputBufferSize);
-                        }
-                        else
-                        {
-                            NativeMemory.Realloc(_rawInputBuffer, rawInputBufferSize);
-                        }
-                        
-                        _rawInputBufferSize = rawInputBufferSize;
-                    }
-
-                    fetchCount = Win32.GetRawInputBuffer(_rawInputBuffer, ref rawInputBufferSize, rawInputHeaderSize);
-                    if (fetchCount != unchecked((uint)-1))
-                    {
-                        break;
+                        _rawInputBuffer = (Win32.RAWINPUT*)NativeMemory.Alloc(rawInputBufferSize);
                     }
                     else
                     {
-                        int error = Marshal.GetLastWin32Error();
-                        if (error == Win32.ERROR_INSUFFICIENT_BUFFER) continue;
+                        _rawInputBuffer = (Win32.RAWINPUT*)NativeMemory.Realloc(_rawInputBuffer, rawInputBufferSize);
+                    }
+                    _rawInputBufferSize = rawInputBufferSize;
+                }
+
+                rawInputBufferSize = _rawInputBufferSize;
+                uint elementsRead = Win32.GetRawInputBuffer(_rawInputBuffer, ref rawInputBufferSize, rawInputHeaderSize);
+                if (elementsRead == unchecked((uint)-1))
+                {
+                    int error = Marshal.GetLastWin32Error();
+                    if (error != Win32.ERROR_INSUFFICIENT_BUFFER)
+                    {
                         throw new Win32Exception(error, "GetRawInputBuffer (fetch data) failed.");
                     }
-                } while (true);
-
+                }
 
                 Win32.RAWINPUT* currentRawInputPtr = _rawInputBuffer;
-                for (uint i = 0; i < fetchCount && _rawInputMessagesProcessedThisFrame < _maxRawInputsPerFrame; i++)
+                for (uint i = 0; i < elementsRead && rawInputMessagesProcessed < _maxRawMouseMessagesPerFrame; i++)
                 {
                     Win32.RAWINPUT rawInput = *currentRawInputPtr;
                     if (rawInput.header.dwType == RIM.TypeMouse)
@@ -1182,8 +1172,8 @@ namespace OpenTK.Platform.Native.Windows
                         }
                     }
 
-                    currentRawInputPtr = currentRawInputPtr++;
-                    _rawInputMessagesProcessedThisFrame++;
+                    currentRawInputPtr++;
+                    rawInputMessagesProcessed++;
                 }
             }
         }
@@ -1191,23 +1181,14 @@ namespace OpenTK.Platform.Native.Windows
         /// <inheritdoc/>
         public void ProcessEvents(bool waitForEvents)
         {
-
             ProcessRawInputBuffer();
-
             if (waitForEvents)
             {
-                // Wait for one message to arrive, then translate/dispatch it.
-                int ret = Win32.GetMessage(out Win32.MSG lpMsg, IntPtr.Zero, 0, 0);
-                Win32.TranslateMessage(in lpMsg);
-                Win32.DispatchMessage(in lpMsg);
+                ProcessEventsBlocking();
             }
-
-            //Process all messages except raw input
-            while (Win32.PeekMessage(out Win32.MSG lpMsg, IntPtr.Zero, 0, (uint)WM.INPUT - 1, PM.Remove)
-                || Win32.PeekMessage(out lpMsg, IntPtr.Zero, (uint)WM.INPUT + 1, 0, PM.Remove))
+            else
             {
-                Win32.TranslateMessage(in lpMsg);
-                Win32.DispatchMessage(in lpMsg);
+                ProcessEventsNonBlocking();
             }
 
             if (CursorCapturingWindow != null && CursorCapturingWindow.CaptureMode == CursorCaptureMode.Locked)
@@ -1225,6 +1206,55 @@ namespace OpenTK.Platform.Native.Windows
                     CursorCapturingWindow.LastMousePosition = (size.X / 2, size.Y / 2);
                 }
             }
+        }
+
+        /// <summary>
+        /// Process messages using GetMessage. Blocks until a message arrives.
+        /// </summary>
+        private void ProcessEventsBlocking()
+        {
+            //TODO: this should probably respect _maxMouseMoveMessagesPerFrame and not fetch raw input messages
+            //but i'm not sure how to best do that since it would require two or three calls to GetMessage
+
+            // Wait for one message to arrive, then translate/dispatch it.
+            int ret = Win32.GetMessage(out Win32.MSG lpMsg, IntPtr.Zero, 0, 0);
+            Win32.TranslateMessage(in lpMsg);
+            Win32.DispatchMessage(in lpMsg);
+        }
+
+        /// <summary>
+        /// Process messages using PeekMessage. Non blocking.
+        /// </summary>
+        private void ProcessEventsNonBlocking()
+        {
+            int mouseMoveMessages = 0;
+            bool hasMessages;
+            Win32.MSG lpMsg;
+            do
+            {
+                if (mouseMoveMessages < _maxMouseMoveMessagesPerFrame)
+                {
+                    //Process all messages except raw input
+                    hasMessages =
+                        Win32.PeekMessage(out lpMsg, IntPtr.Zero, 0, (uint)WM.INPUT - 1, PM.Remove) ||
+                        Win32.PeekMessage(out lpMsg, IntPtr.Zero, (uint)WM.INPUT + 1, 0, PM.Remove);
+                }
+                else
+                {
+                    //Process all messages except raw input and mouse move
+                    hasMessages = Win32.PeekMessage(out lpMsg, IntPtr.Zero, 0, (uint)WM.INPUT - 1, PM.Remove) ||
+                         Win32.PeekMessage(out lpMsg, IntPtr.Zero, (uint)WM.INPUT + 1, (uint)WM.MOUSEMOVE - 1, PM.Remove) ||
+                         Win32.PeekMessage(out lpMsg, IntPtr.Zero, (uint)WM.MOUSEMOVE + 1, 0, PM.Remove);
+                }
+
+                if(!hasMessages) break;
+                Win32.TranslateMessage(in lpMsg);
+                Win32.DispatchMessage(in lpMsg);
+                if (lpMsg.message == WM.MOUSEMOVE)
+                {
+                    mouseMoveMessages++;
+                }
+            } while (true);
         }
 
         /// <inheritdoc/>
