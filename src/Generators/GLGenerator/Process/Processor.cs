@@ -395,7 +395,8 @@ namespace GLGenerator.Process
                                 }
                                 else
                                 {
-                                    Debug.Assert(functionsByVendor.AddToNestedListIfNotPresent("", overloadedFunction));
+                                    bool added = functionsByVendor.AddToNestedListIfNotPresent("", overloadedFunction);
+                                    Debug.Assert(added);
                                     referenced = true;
                                 }
                             }
