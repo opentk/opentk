@@ -154,7 +154,7 @@ namespace OpenTK.Platform.Native.Windows
         public DisplayColorInfo ColorInfo { get; set; }
     }
 
-    internal class Joystick : JoystickHandle
+    internal class WinJoystick : JoystickHandle
     {
         public int XInputIndex;
 
@@ -162,11 +162,21 @@ namespace OpenTK.Platform.Native.Windows
         public Guid InstanceGuid;
         public string InstanceName;
 
-        public Joystick(DirectInput.IDirectInputDevice8 device, Guid instanceGuid, string instanceName)
+        public SdlGuid SdlGuid;
+
+        public JoyObject[] Objects;
+
+        public short[] Axes;
+        public bool[] Buttons;
+        public HatState[] Hats;
+
+        public WinJoystick(DirectInput.IDirectInputDevice8 device, Guid instanceGuid, string instanceName, SdlGuid sdlGuid, JoyObject[] objects)
         {
             Device = device;
             InstanceGuid = instanceGuid;
             InstanceName = instanceName;
+            SdlGuid = sdlGuid;
+            Objects = objects;
         }
     }
 }

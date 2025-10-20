@@ -1179,6 +1179,8 @@ namespace OpenTK.Platform.Native.Windows
                     CursorCapturingWindow.LastMousePosition = (size.X / 2, size.Y / 2);
                 }
             }
+
+            (Toolkit.Joystick as JoystickComponent)?.Update();
         }
 
         /// <inheritdoc/>

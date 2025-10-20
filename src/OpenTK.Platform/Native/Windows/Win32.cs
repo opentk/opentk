@@ -118,6 +118,17 @@ namespace OpenTK.Platform.Native.Windows
 
         internal const int LOCALE_NAME_MAX_LENGTH = 85;
 
+        internal const int SEVERITY_SUCCESS = 0;
+        internal const int SEVERITY_ERROR = 1;
+
+        internal const int FACILITY_WIN32 = 7;
+
+        internal const int ERROR_READ_FAULT = 30;
+        internal const int ERROR_INVALID_ACCESS = 12;
+        internal const int ERROR_BUSY = 170;
+
+        internal static int MAKE_HRESULT(int sev, int fac, int code) => sev << 31 | fac << 16 | code;
+
         // Usefull extension methods for dealing with span string buffers.
         internal static Span<char> SliceAtFirstNull(this Span<char> span)
         {

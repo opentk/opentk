@@ -19,9 +19,15 @@ namespace OpenTK.Backends.Tests
 
         public static System.Numerics.Vector2 ToNumerics(this Vector2 vec) => Unsafe.As<Vector2, System.Numerics.Vector2>(ref vec);
 
+        public static System.Numerics.Vector4 ToNumerics(this Vector4 vec) => Unsafe.As<Vector4, System.Numerics.Vector4>(ref vec);
+
         public static ReadOnlySpan<System.Numerics.Vector2> ToNumerics(this ReadOnlySpan<Vector2> vec) => MemoryMarshal.Cast<Vector2, System.Numerics.Vector2>(vec);
 
         public static Span<System.Numerics.Vector2> ToNumerics(this Span<Vector2> vec) => MemoryMarshal.Cast<Vector2, System.Numerics.Vector2>(vec);
+
+        public static System.Numerics.Vector4 ToNumerics(this Color4<Rgba> col) => ((Vector4)col).ToNumerics();
+
+        public static uint ToImGui(this Color4<Rgba> col) => ImGui.ColorConvertFloat4ToU32(((Vector4)col).ToNumerics());
 
         public static void ReadonlyCheckbox(string label, bool value, [CallerFilePath] string file = "", [CallerLineNumber] int line = 0)
         {

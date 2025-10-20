@@ -65,6 +65,7 @@ namespace OpenTK.Backends.Tests
             new DisplayComponentView(),
             new MouseComponentView(),
             new KeyboardComponentView(),
+            new JoystickComponentView(),
             new CursorComponentView(),
             new IconComponentView(),
             new ClipboardComponentView(),
@@ -187,9 +188,10 @@ namespace OpenTK.Backends.Tests
             Toolkit.Window.SetTitle(Window, "OpenTK PAL Test Application");
             Toolkit.Window.SetClientSize(Window, (800, 600));
             Toolkit.Window.SetMode(Window, WindowMode.Normal);
+            Toolkit.Window.SetBorderStyle(Window, WindowBorderStyle.ResizableBorder);
 
             Toolkit.Window.SetMinClientSize(Window, 700, null);
-            Toolkit.Window.SetMaxClientSize(Window, 900, null);
+            //Toolkit.Window.SetMaxClientSize(Window, 900, null);
 
             try
             {
@@ -379,6 +381,11 @@ namespace OpenTK.Backends.Tests
             {
                 float dt = (float)watch.Elapsed.TotalSeconds;
                 watch.Restart();
+
+                if (dt > (1.0f/60.0f))
+                {
+                    Logger?.LogWarning($"Slow performance, dt = {dt}");
+                }
 
                 // FIXME: Wait for events?
                 IsProcessingEvents = true;

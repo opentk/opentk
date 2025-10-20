@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 namespace OpenTK.Platform
 {
     /// <summary>
-    /// Handle to a joystick.
+    /// Handle to a gamepad.
     /// </summary>
-    public abstract class JoystickHandle : PalHandle
+    internal abstract class GamepadHandle : PalHandle
     {
     }
 }
