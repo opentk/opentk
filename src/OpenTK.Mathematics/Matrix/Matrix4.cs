@@ -1580,10 +1580,22 @@ namespace OpenTK.Mathematics
         /// <param name="right">The right operand of the multiplication.</param>
         /// <returns>A new instance that is the result of the multiplication.</returns>
         [Pure]
-        public static Matrix4 Mult(Matrix4 left, Matrix4 right)
+        public static unsafe Matrix4 Mult(Matrix4 left, Matrix4 right)
+#pragma warning disable SA1015
         {
-            Mult(in left, in right, out Matrix4 result);
+            Matrix4 result;
+
+            if (Sse.IsSupported)
+            {
+                MultSSE((Vector128<float>*)&left, (Vector128<float>*)&result);
+            }
+            else
+            {
+                Mult(in left, in right, out result);
+            }
+
             return result;
+#pragma warning restore SA1015
         }
 
         /// <summary>
@@ -1643,6 +1655,51 @@ namespace OpenTK.Mathematics
             result.Row3.Y = (leftM41 * rightM12) + (leftM42 * rightM22) + (leftM43 * rightM32) + (leftM44 * rightM42);
             result.Row3.Z = (leftM41 * rightM13) + (leftM42 * rightM23) + (leftM43 * rightM33) + (leftM44 * rightM43);
             result.Row3.W = (leftM41 * rightM14) + (leftM42 * rightM24) + (leftM43 * rightM34) + (leftM44 * rightM44);
+        }
+
+        // Matrix to matrix multiplication,
+        // calculated with the first iteration of SSE.
+        //
+        // This method is strictly designed
+        // to get similiar instructions as
+        // bunched as possible, to profit
+        // from the fact, that some architectures
+        // like alderlake have multiples of
+        // select SIMD processors like "_mm_loadu_ps" and "_mm_shuffle_ps
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#pragma warning disable SA1015
+        private static unsafe void MultSSE(Vector128<float>* mats, Vector128<float>* dst)
+        {
+            // Get a stack allocated array
+            // to store the multiplications at
+            Vector128<float>* mul = stackalloc Vector128<float>[3];
+
+            // Get a stack allocated array
+            // to store the shuffles at
+            Vector128<float>* shuffle = stackalloc Vector128<float>[4];
+
+            // The iterations of this loop
+            // boil down to the following:
+            //
+            // dst[i] = sum(matA[i][0] * matB[0], matA[i][1] * matB[1], matA[i][2] * matB[2], matA[i][3] * matB[3])
+            //
+            for (int i = 0; i < 4; i++)
+            {
+                shuffle[0] = Sse.Shuffle(mats[i], mats[i], 0);
+                shuffle[1] = Sse.Shuffle(mats[i], mats[i], 0b0101_0101);
+                shuffle[2] = Sse.Shuffle(mats[i], mats[i], 0b1010_1010);
+                shuffle[3] = Sse.Shuffle(mats[i], mats[i], 0b1111_1111);
+
+                dst[i] = Sse.Multiply(shuffle[0], mats[4]);
+                mul[0] = Sse.Multiply(shuffle[1], mats[5]);
+                mul[1] = Sse.Multiply(shuffle[2], mats[6]);
+                mul[2] = Sse.Multiply(shuffle[3], mats[7]);
+
+                dst[i] = Sse.Add(dst[i], mul[0]);
+                dst[i] = Sse.Add(dst[i], mul[1]);
+                dst[i] = Sse.Add(dst[i], mul[2]);
+            }
+#pragma warning restore SA1015
         }
 
         /// <summary>
