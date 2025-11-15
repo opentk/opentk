@@ -12,10 +12,11 @@ nuget:
 
 deploy:
   - provider: NuGet
+    server: https://ci.appveyor.com/nuget/opentk-ewqv6ys6uxum/api/v2/package
     symbol_server: https://ci.appveyor.com/nuget/opentk-ewqv6ys6uxum/api/v2/package
     api_key:
       secure: Rh0peS8dmnflnHfB5kTlsqsR1rmibtpZ2oeaWFH90iQ=
-    artifact: bin/nuget/*.nupkg
+    artifact: OpenTK Nuget Packages
 
 artifacts:
   - path: bin/nuget/*.nupkg
