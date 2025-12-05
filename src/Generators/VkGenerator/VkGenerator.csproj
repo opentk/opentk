@@ -13,4 +13,8 @@
     <ProjectReference Include="..\GeneratorBase\GeneratorBase.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="SpecificationFiles\" />
+  </ItemGroup>
+
 </Project>
