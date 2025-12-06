@@ -531,12 +531,23 @@ namespace OpenTK.Mathematics
         /// <param name="b">Second operand.</param>
         /// <returns>The component-wise minimum.</returns>
         [Pure]
-        public static Vector4 ComponentMin(Vector4 a, Vector4 b)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static unsafe Vector4 ComponentMin(Vector4 a, Vector4 b)
         {
-            a.X = a.X < b.X ? a.X : b.X;
-            a.Y = a.Y < b.Y ? a.Y : b.Y;
-            a.Z = a.Z < b.Z ? a.Z : b.Z;
-            a.W = a.W < b.W ? a.W : b.W;
+            if (System.Runtime.Intrinsics.X86.Sse.IsSupported)
+            {
+                Vector128<float> av = Vector128.Load(&a.X);
+                Vector128<float> bv = Vector128.Load(&b.X);
+                av = System.Runtime.Intrinsics.X86.Sse.Min(av, bv);
+                Vector128.Store(av, &a.X);
+            }
+            else
+            {
+                a.X = a.X < b.X ? a.X : b.X;
+                a.Y = a.Y < b.Y ? a.Y : b.Y;
+                a.Z = a.Z < b.Z ? a.Z : b.Z;
+                a.W = a.W < b.W ? a.W : b.W;
+            }
             return a;
         }
 
@@ -546,12 +557,23 @@ namespace OpenTK.Mathematics
         /// <param name="a">First operand.</param>
         /// <param name="b">Second operand.</param>
         /// <param name="result">The component-wise minimum.</param>
-        public static void ComponentMin(in Vector4 a, in Vector4 b, out Vector4 result)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static unsafe void ComponentMin(in Vector4 a, in Vector4 b, out Vector4 result)
         {
-            result.X = a.X < b.X ? a.X : b.X;
-            result.Y = a.Y < b.Y ? a.Y : b.Y;
-            result.Z = a.Z < b.Z ? a.Z : b.Z;
-            result.W = a.W < b.W ? a.W : b.W;
+            if (System.Runtime.Intrinsics.X86.Sse.IsSupported)
+            {
+                Vector128<float> av = Unsafe.BitCast<Vector4, Vector128<float>>(a);
+                Vector128<float> bv = Unsafe.BitCast<Vector4, Vector128<float>>(b);
+                av = System.Runtime.Intrinsics.X86.Sse.Min(av, bv);
+                result = Unsafe.BitCast<Vector128<float>, Vector4>(av);
+            }
+            else
+            {
+                result.X = a.X < b.X ? a.X : b.X;
+                result.Y = a.Y < b.Y ? a.Y : b.Y;
+                result.Z = a.Z < b.Z ? a.Z : b.Z;
+                result.W = a.W < b.W ? a.W : b.W;
+            }
         }
 
         /// <summary>
@@ -561,12 +583,23 @@ namespace OpenTK.Mathematics
         /// <param name="b">Second operand.</param>
         /// <returns>The component-wise maximum.</returns>
         [Pure]
-        public static Vector4 ComponentMax(Vector4 a, Vector4 b)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static unsafe Vector4 ComponentMax(Vector4 a, Vector4 b)
         {
-            a.X = a.X > b.X ? a.X : b.X;
-            a.Y = a.Y > b.Y ? a.Y : b.Y;
-            a.Z = a.Z > b.Z ? a.Z : b.Z;
-            a.W = a.W > b.W ? a.W : b.W;
+            if (System.Runtime.Intrinsics.X86.Sse.IsSupported)
+            {
+                Vector128<float> av = Vector128.Load(&a.X);
+                Vector128<float> bv = Vector128.Load(&b.X);
+                av = System.Runtime.Intrinsics.X86.Sse.Max(av, bv);
+                Vector128.Store(av, &a.X);
+            }
+            else
+            {
+                a.X = a.X > b.X ? a.X : b.X;
+                a.Y = a.Y > b.Y ? a.Y : b.Y;
+                a.Z = a.Z > b.Z ? a.Z : b.Z;
+                a.W = a.W > b.W ? a.W : b.W;
+            }
             return a;
         }
 
@@ -576,12 +609,23 @@ namespace OpenTK.Mathematics
         /// <param name="a">First operand.</param>
         /// <param name="b">Second operand.</param>
         /// <param name="result">The component-wise maximum.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void ComponentMax(in Vector4 a, in Vector4 b, out Vector4 result)
         {
-            result.X = a.X > b.X ? a.X : b.X;
-            result.Y = a.Y > b.Y ? a.Y : b.Y;
-            result.Z = a.Z > b.Z ? a.Z : b.Z;
-            result.W = a.W > b.W ? a.W : b.W;
+            if (System.Runtime.Intrinsics.X86.Sse.IsSupported)
+            {
+                Vector128<float> av = Unsafe.BitCast<Vector4, Vector128<float>>(a);
+                Vector128<float> bv = Unsafe.BitCast<Vector4, Vector128<float>>(b);
+                av = System.Runtime.Intrinsics.X86.Sse.Max(av, bv);
+                result = Unsafe.BitCast<Vector128<float>, Vector4>(av);
+            }
+            else
+            {
+                result.X = a.X > b.X ? a.X : b.X;
+                result.Y = a.Y > b.Y ? a.Y : b.Y;
+                result.Z = a.Z > b.Z ? a.Z : b.Z;
+                result.W = a.W > b.W ? a.W : b.W;
+            }
         }
 
         /// <summary>
