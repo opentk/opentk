@@ -166,6 +166,10 @@ namespace OpenTK.Platform.Native.Windows
 
         public JoyObject[] Objects;
 
+        public unsafe DirectInput.DIEFFECT* DIEffect;
+        public unsafe DirectInput.DIPERIODIC* DIPeriodic;
+        public DirectInput.IDirectInputEffect FFEffect;
+
         public short[] Axes;
         public bool[] Buttons;
         public HatState[] Hats;

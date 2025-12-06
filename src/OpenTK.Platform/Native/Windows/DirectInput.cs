@@ -33,6 +33,11 @@ namespace OpenTK.Platform.Native.Windows
         /// </summary>
         internal static readonly int DIERR_NOTACQUIRED = MAKE_HRESULT(SEVERITY_ERROR, FACILITY_WIN32, ERROR_INVALID_ACCESS);
 
+        /// <summary>
+        /// The operation cannot be performed unless the device is acquired in DISCL_EXCLUSIVE mode.
+        /// </summary>
+        internal const int DIERR_NOTEXCLUSIVEACQUIRED = unchecked((int)0x80040205);
+
         internal static void CheckHResult(int hresult)
         {
             Marshal.ThrowExceptionForHR(hresult);
@@ -429,6 +434,19 @@ namespace OpenTK.Platform.Native.Windows
             public fixed byte rgbButtons[32];
         }
 
+        internal static readonly Guid GUID_ConstantForce = new Guid(0x13541C20,0x8E33,0x11D0,0x9A,0xD0,0x00,0xA0,0xC9,0xA0,0x6E,0x35);
+        internal static readonly Guid GUID_RampForce =     new Guid(0x13541C21,0x8E33,0x11D0,0x9A,0xD0,0x00,0xA0,0xC9,0xA0,0x6E,0x35);
+        internal static readonly Guid GUID_Square =        new Guid(0x13541C22,0x8E33,0x11D0,0x9A,0xD0,0x00,0xA0,0xC9,0xA0,0x6E,0x35);
+        internal static readonly Guid GUID_Sine =          new Guid(0x13541C23,0x8E33,0x11D0,0x9A,0xD0,0x00,0xA0,0xC9,0xA0,0x6E,0x35);
+        internal static readonly Guid GUID_Triangle =      new Guid(0x13541C24,0x8E33,0x11D0,0x9A,0xD0,0x00,0xA0,0xC9,0xA0,0x6E,0x35);
+        internal static readonly Guid GUID_SawtoothUp =    new Guid(0x13541C25,0x8E33,0x11D0,0x9A,0xD0,0x00,0xA0,0xC9,0xA0,0x6E,0x35);
+        internal static readonly Guid GUID_SawtoothDown =  new Guid(0x13541C26,0x8E33,0x11D0,0x9A,0xD0,0x00,0xA0,0xC9,0xA0,0x6E,0x35);
+        internal static readonly Guid GUID_Spring =        new Guid(0x13541C27,0x8E33,0x11D0,0x9A,0xD0,0x00,0xA0,0xC9,0xA0,0x6E,0x35);
+        internal static readonly Guid GUID_Damper =        new Guid(0x13541C28,0x8E33,0x11D0,0x9A,0xD0,0x00,0xA0,0xC9,0xA0,0x6E,0x35);
+        internal static readonly Guid GUID_Inertia =       new Guid(0x13541C29,0x8E33,0x11D0,0x9A,0xD0,0x00,0xA0,0xC9,0xA0,0x6E,0x35);
+        internal static readonly Guid GUID_Friction =      new Guid(0x13541C2A,0x8E33,0x11D0,0x9A,0xD0,0x00,0xA0,0xC9,0xA0,0x6E,0x35);
+        internal static readonly Guid GUID_CustomForce =   new Guid(0x13541C2B,0x8E33,0x11D0,0x9A,0xD0,0x00,0xA0,0xC9,0xA0,0x6E,0x35);
+
         internal struct DIPERIODIC
         {
             public uint dwMagnitude;
@@ -440,7 +458,7 @@ namespace OpenTK.Platform.Native.Windows
         internal unsafe struct DIEFFECT
         {
             public uint dwSize;
-            public uint dwFlags;
+            public DIEFF dwFlags;
             public uint dwDuration;
             public uint dwSamplePeriod;
             public uint dwGain;
@@ -565,6 +583,8 @@ namespace OpenTK.Platform.Native.Windows
 
         internal unsafe struct IDirectInputDevice8
         {
+            public static readonly IDirectInputDevice8 Null = default;
+
             public struct _VTable
             {
                 public IntPtr QueryInterface;
@@ -590,7 +610,7 @@ namespace OpenTK.Platform.Native.Windows
                 public delegate* unmanaged<IDirectInputDevice8, delegate* unmanaged<DIEFFECTINFO*, IntPtr, int>, IntPtr, uint, int> EnumEffects;
                 public delegate* unmanaged<IDirectInputDevice8, DIEFFECTINFO*, ref Guid, int> GetEffectInfo;
                 public delegate* unmanaged<IDirectInputDevice8, out ushort, int> GetForceFeedbackState;
-                public delegate* unmanaged<IDirectInputDevice8, uint, int> SendForceFeedbackCommand;
+                public delegate* unmanaged<IDirectInputDevice8, DISFFC, int> SendForceFeedbackCommand;
                 public delegate* unmanaged<IDirectInputDevice8, delegate* unmanaged<IDirectInputEffect, IntPtr, int>, IntPtr, uint, int> EnumCreatedEffectObjects;
                 public delegate* unmanaged<IDirectInputDevice8, DIEFFESCAPE*, int> Escape;
                 public delegate* unmanaged<IDirectInputDevice8, int> Poll;
@@ -695,14 +715,26 @@ namespace OpenTK.Platform.Native.Windows
                 CheckHResult(result);
             }
 
+            public int CreateEffect(ref Guid guid, DIEFFECT* lpeff, out IDirectInputEffect ppdeff, IUnknown punkOuter)
+            {
+                return (*VTable)->CreateEffect(this, ref guid, lpeff, out ppdeff, punkOuter);
+            }
+
+            public int SendForceFeedbackCommand(DISFFC command)
+            {
+                return (*VTable)->SendForceFeedbackCommand(this, command);
+            }
+
             public int Poll()
             {
                 return (*VTable)->Poll(this);
             }
         }
 
-        internal unsafe struct IDirectInputEffect
+        internal unsafe struct IDirectInputEffect : IEquatable<IDirectInputEffect>
         {
+            public static readonly IDirectInputEffect Null = default;
+
             public struct _VTable
             {
                 public IntPtr QueryInterface;
@@ -712,7 +744,7 @@ namespace OpenTK.Platform.Native.Windows
                 public delegate* unmanaged<IDirectInputEffect, IntPtr /* HINSTANCE */, uint, ref Guid, int> Initialize;
                 public delegate* unmanaged<IDirectInputEffect, out Guid, int> GetEffectGuid;
                 public delegate* unmanaged<IDirectInputEffect, DIEFFECT*, uint, int> GetParameters;
-                public delegate* unmanaged<IDirectInputEffect, DIEFFECT*, uint, int> SetParameters;
+                public delegate* unmanaged<IDirectInputEffect, DIEFFECT*, DIEP, int> SetParameters;
                 public delegate* unmanaged<IDirectInputEffect, uint, uint, int> Start;
                 public delegate* unmanaged<IDirectInputEffect, int> Stop;
                 public delegate* unmanaged<IDirectInputEffect, out ushort, int> GetEffectStatus;
@@ -724,6 +756,43 @@ namespace OpenTK.Platform.Native.Windows
             public _VTable** VTable;
 
             public IntPtr Handle => (IntPtr)VTable;
+
+            public int Start(uint iterations, uint flags)
+            {
+                return (*VTable)->Start(this, iterations, flags);
+            }
+
+            public int SetParameters(DIEFFECT* lpeff, DIEP flags)
+            {
+                return (*VTable)->SetParameters(this, lpeff, flags);
+            }
+
+
+
+            public override bool Equals(object? obj)
+            {
+                return obj is IDirectInputEffect effect && Equals(effect);
+            }
+
+            public bool Equals(IDirectInputEffect other)
+            {
+                return EqualityComparer<IntPtr>.Default.Equals((IntPtr)VTable, (IntPtr)other.VTable);
+            }
+
+            public override int GetHashCode()
+            {
+                return HashCode.Combine((IntPtr)VTable);
+            }
+
+            public static bool operator ==(IDirectInputEffect left, IDirectInputEffect right)
+            {
+                return left.Equals(right);
+            }
+
+            public static bool operator !=(IDirectInputEffect left, IDirectInputEffect right)
+            {
+                return !(left == right);
+            }
         }
 
         internal static readonly Guid CLSID_DirectInput = new Guid(0x25E609E4, 0xB259, 0x11CF, 0xBF, 0xC7, 0x44, 0x45, 0x53, 0x54, 0x00, 0x00);

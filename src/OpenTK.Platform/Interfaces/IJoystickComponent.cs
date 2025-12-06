@@ -36,9 +36,11 @@ namespace OpenTK.Platform
         Throttle,
     }
 
+    [Flags]
     public enum JoystickCapabilities
     {
-        Rumble,
+        None = 0,
+        Rumble = 1,
     }
 
     /// <summary>

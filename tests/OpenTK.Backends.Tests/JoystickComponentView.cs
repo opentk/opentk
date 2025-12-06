@@ -1,8 +1,10 @@
-﻿using System;
-using System.Drawing;
-using ImGuiNET;
+﻿using ImGuiNET;
 using OpenTK.Mathematics;
 using OpenTK.Platform;
+using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Reflection.Metadata;
 
 namespace OpenTK.Backends.Tests
 {
@@ -12,9 +14,32 @@ namespace OpenTK.Backends.Tests
 
         public override bool IsVisible => Toolkit.Joystick != null;
 
+        public class JoystickData
+        {
+            public JoystickHandle Joystick;
+            public bool[] UseAxisForLFRumble;
+            public bool[] UseAxisForHFRumble;
+
+            public JoystickData(JoystickHandle joystick)
+            {
+                Joystick = joystick;
+                UseAxisForLFRumble = new bool[Toolkit.Joystick.GetNumberOfAxes(Joystick)];
+                UseAxisForHFRumble = new bool[Toolkit.Joystick.GetNumberOfAxes(Joystick)];
+            }
+        }
+        public List<JoystickData> Joysticks = new List<JoystickData>();
+
         public override void Initialize()
         {
             base.Initialize();
+
+            int nJoysticks = Toolkit.Joystick.GetJoystickCount();
+            for (int i = 0; i < nJoysticks; i++)
+            {
+                JoystickHandle joystick = Toolkit.Joystick.Open(i);
+
+                Joysticks.Add(new JoystickData(joystick));
+            }
         }
 
         private void DrawAxis(float x, float y, float deadzone)
@@ -48,7 +73,7 @@ namespace OpenTK.Backends.Tests
             ImGui.Dummy(new Vector2(RADIUS * 2, RADIUS * 2 + ImGui.GetTextLineHeightWithSpacing()).ToNumerics());
         }
 
-        private void DrawTrigger(string label, float t)
+        private void DrawTrigger(string label, float t, ref bool useForLFRumble, ref bool useForHFRumble)
         {
             const float WIDTH = 40;
             const float HEIGHT = 100;
@@ -73,6 +98,12 @@ namespace OpenTK.Backends.Tests
             Vector2 strSize = ImGui.CalcTextSize(str).ToOpenTK();
 
             draw_list.AddText((p + new Vector2(WIDTH / 2 - strSize.X / 2, HEIGHT + ImGui.GetStyle().ItemSpacing.Y)).ToNumerics(), ImGui.GetColorU32(ImGuiCol.Text), str);
+
+            ImGui.SetCursorScreenPos((p + new Vector2((WIDTH / 2) - (ImGui.GetFrameHeight() / 2) + (ImGui.GetFrameHeight() / 2), HEIGHT / 2 - ImGui.GetFrameHeight() / 2)).ToNumerics());
+            ImGui.Checkbox($"###{label}-useForLFRumble", ref useForLFRumble);
+            ImGui.SetCursorScreenPos((p + new Vector2((WIDTH / 2) - (ImGui.GetFrameHeight() / 2) - (ImGui.GetFrameHeight() / 2), HEIGHT / 2 - ImGui.GetFrameHeight() / 2)).ToNumerics());
+            ImGui.Checkbox($"###{label}-useForHFRumble", ref useForHFRumble);
+            ImGui.SetCursorScreenPos(p.ToNumerics());
 
             ImGui.Dummy(new Vector2(WIDTH, HEIGHT + ImGui.GetTextLineHeightWithSpacing()).ToNumerics());
         }
@@ -181,13 +212,19 @@ namespace OpenTK.Backends.Tests
             ImGui.Dummy(new Vector2(WIDTH, HEIGHT + ImGui.GetTextLineHeightWithSpacing()).ToNumerics());
         }
 
-        private void DrawJoystickState(int index, JoystickHandle joystick)
+        private void DrawJoystickState(int index, JoystickData joystickData)
         {
+            JoystickHandle joystick = joystickData.Joystick;
+
             Guid guid = Toolkit.Joystick.GetGuid(joystick);
             string name = Toolkit.Joystick.GetName(joystick);
             if (ImGui.BeginChild($"##{guid}-{index}", new System.Numerics.Vector2(), ImGuiChildFlags.Borders | ImGuiChildFlags.AutoResizeY, ImGuiWindowFlags.HorizontalScrollbar | ImGuiWindowFlags.AlwaysHorizontalScrollbar))
             {
                 ImGui.SeparatorText($"{name} ({guid})");
+
+                JoystickCapabilities capabilities = Toolkit.Joystick.GetCapabilities(joystick);
+
+                ImGui.Text($"Capabilities: {capabilities}");
 
                 if (Toolkit.Joystick.TryGetBatteryInfo(joystick, out GamepadBatteryInfo batteryInfo))
                 {
@@ -198,19 +235,27 @@ namespace OpenTK.Backends.Tests
                     ImGui.TextDisabled("Unable to get battery status.");
                 }
 
-                // FIXME: Make UI for linking axes with rumble?
-                //Toolkit.Joystick.SetRumble(joystick, leftTrigger, rightTrigger);
-
                 if (ImGui.BeginChild("##axes", new System.Numerics.Vector2(), ImGuiChildFlags.AutoResizeX | ImGuiChildFlags.AutoResizeY, ImGuiWindowFlags.NoScrollbar))
                 {
+                    float lfRumble = 0;
+                    float hfRumble = 0;
+
                     int nAxes = Toolkit.Joystick.GetNumberOfAxes(joystick);
                     for (int i = 0; i < nAxes; i++)
                     {
                         float value = Toolkit.Joystick.GetAxis(joystick, i);
-                        DrawTrigger($"{i}", value);
+                        DrawTrigger($"{i}", value, ref joystickData.UseAxisForLFRumble[i], ref joystickData.UseAxisForHFRumble[i]);
                         ImGui.SameLine();
+
+                        if (joystickData.UseAxisForLFRumble[i])
+                            lfRumble = Math.Max(lfRumble, value);
+
+                        if (joystickData.UseAxisForHFRumble[i])
+                            hfRumble = Math.Max(hfRumble, value);
                     }
                     ImGui.NewLine();
+
+                    Toolkit.Joystick.SetRumble(joystick, lfRumble, hfRumble);
                 }
                 ImGui.EndChild();
 
@@ -255,14 +300,10 @@ namespace OpenTK.Backends.Tests
 
             if (ImGui.BeginChild("##controller-container", new System.Numerics.Vector2(ImGui.GetContentRegionAvail().X, Math.Max(200, ImGui.GetContentRegionAvail().Y))))
             {
-                int nJoysticks = Toolkit.Joystick.GetJoystickCount();
-                for (int i = 0; i < nJoysticks; i++)
+                for (int i = 0; i < Joysticks.Count; i++)
                 {
-                    JoystickHandle handle = Toolkit.Joystick.Open(i);
-
-                    DrawJoystickState(i, handle);
-
-                    Toolkit.Joystick.Close(handle);
+                    JoystickData joystick = Joysticks[i];
+                    DrawJoystickState(i, joystick);
                 }
             }
             ImGui.EndChild();

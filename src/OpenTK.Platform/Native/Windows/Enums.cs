@@ -1,4 +1,8 @@
-﻿using System;
+﻿using OpenTK.Core;
+using OpenTK.Platform.Native.macOS;
+using System;
+using System.Collections.Generic;
+using System.Dynamic;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace OpenTK.Platform.Native.Windows
@@ -1700,6 +1704,146 @@ namespace OpenTK.Platform.Native.Windows
         /// and the Windows logo key will operate normally as long as that UI is present.
         /// </summary>
         NoWinKey = 0x00000010,
+    }
+
+    internal enum DISFFC
+    {
+        /// <summary>
+        /// The device's force-feedback system is to be put in its startup state.
+        /// All effects are removed from the device, are no longer valid, and must be re-created if they are to be used again.
+        /// The device's actuators are disabled.
+        /// </summary>
+        Reset = 0x00000001,
+        /// <summary>
+        /// Playback of any active effects is to be stopped.
+        /// All active effects are reset, but are still being maintained by the device and are still valid.
+        /// If the device is in a paused state, that state is lost.
+        /// This command is equivalent to calling the IDirectInputEffect::Stop method for each effect playing.
+        /// </summary>
+        StopAll = 0x00000002,
+        /// <summary>
+        /// Playback of all active effects is to be paused. This command also stops the clock-on effects so that they continue playing to their full duration when restarted.
+        /// While the device is paused, new effects cannot be started, and existing ones cannot be modified. Doing so can cause the subsequent DISFFC_CONTINUE command to fail to perform properly.
+        /// To abandon a pause and stop all effects, use the DISFFC_STOPALL or DISFCC_RESET commands.
+        /// </summary>
+        Pause = 0x00000004,
+        /// <summary>
+        /// Paused playback of all active effects is to be continued. It is an error to send this command when the device is not in a paused state.
+        /// </summary>
+        Continue = 0x00000008,
+        /// <summary>
+        /// The device's force-feedback actuators are to be enabled.
+        /// </summary>
+        SetActuatorsOn = 0x00000010,
+        /// <summary>
+        /// The device's force-feedback actuators are to be disabled.
+        /// While the actuators are off, effects continue to play but are ignored by the device.
+        /// Using the analogy of a sound playback device, they are muted, rather than paused.
+        /// </summary>
+        SetActuatorsOff = 0x00000020,
+    }
+
+    internal enum DIES : uint
+    {
+        /// <summary>
+        /// All other effects on the device should be stopped before the specified effect is played.
+        /// If this flag is omitted, the effect is mixed with existing effects already started on the device.
+        /// </summary>
+        DIES_SOLO = 0x00000001,
+        /// <summary>
+        /// Do not automatically download the effect.
+        /// </summary>
+        DIES_NODOWNLOAD = 0x80000000,
+    }
+
+    internal enum DIEP : uint
+    {
+        /// <summary>
+        /// The dwDuration member contains data.
+        /// </summary>
+        Duration = 0x00000001,
+        /// <summary>
+        /// The dwSamplePeriod member contains data.
+        /// </summary>
+        SamplePeriod = 0x00000002,
+        /// <summary>
+        /// The dwGain member contains data.
+        /// </summary>
+        Gain = 0x00000004,
+        /// <summary>
+        /// The dwTriggerButton member contains data.
+        /// </summary>
+        TriggerButton = 0x00000008,
+        /// <summary>
+        /// The dwTriggerRepeatInterval member contains data.
+        /// </summary>
+        TriggerRepeatInterval = 0x00000010,
+        /// <summary>
+        /// The cAxes and rgdwAxes members contain data.
+        /// </summary>
+        Axes = 0x00000020,
+        /// <summary>
+        /// The cAxes and rglDirection members contain data.
+        /// The dwFlags member specifies (with DIEFF_CARTESIAN or DIEFF_POLAR) the coordinate system in which the values should be interpreted.
+        /// </summary>
+        Direction = 0x00000040,
+        /// <summary>
+        /// The lpEnvelope member points to a DIENVELOPE structure that contains data.
+        /// To detach any existing envelope from the effect, pass this flag and set the lpEnvelope member to NULL.
+        /// </summary>
+        Envelope = 0x00000080,
+        /// <summary>
+        /// The lpvTypeSpecificParams and cbTypeSpecificParams members of the DIEFFECT structure contain the address and size of type-specific data for the effect.
+        /// </summary>
+        TypeSpecificParams = 0x00000100,
+        /// <summary>
+        /// The dwStartDelay member contains data.
+        /// </summary>
+        StartDelay = 0x00000200,
+        AllParamsDX5           = 0x000001FF,
+        AllParams               = 0x000003FF,
+        /// <summary>
+        /// The effect is to be started (or restarted if it is currently playing) after the parameters are updated.
+        /// By default, the play state of the effect is not altered.
+        /// </summary>
+        Start = 0x20000000,
+        /// <summary>
+        /// Suppress the stopping and restarting of the effect to change parameters. See Remarks.
+        /// </summary>
+        NoRestart = 0x40000000,
+        /// <summary>
+        /// Suppress the automatic IDirectInputEffect::Download that is normally performed after the parameters are updated. See Remarks.
+        /// </summary>
+        NoDownload = 0x80000000,
+    }
+
+    internal enum DIEB : uint
+    {
+        NoTrigger = 0xFFFFFFFF,
+    }
+
+    internal enum DIEFF : uint
+    {
+        /// <summary>
+        /// The values of dwTriggerButton and rgdwAxes are object identifiers as obtained by IDirectInputDevice8::EnumObjects.
+        /// </summary>
+        ObjectIDs = 0x00000001,
+        /// <summary>
+        /// The values of dwTriggerButton and rgdwAxes are data format offsets.
+        /// </summary>
+        ObjectOffsets = 0x00000002,
+        /// <summary>
+        /// The values of rglDirection are to be interpreted as Cartesian coordinates.
+        /// </summary>
+        Cartesian = 0x00000010,
+        /// <summary>
+        /// The values of rglDirection are to be interpreted as polar coordinates.
+        /// </summary>
+        Polar = 0x00000020,
+        /// <summary>
+        /// The values of rglDirection are to be interpreted as spherical coordinates.
+        /// </summary>
+        Spherical = 0x00000040,
     }
 
     internal enum DISPLAYCONFIG_TOPOLOGY_ID : uint

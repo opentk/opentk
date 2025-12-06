@@ -52,6 +52,12 @@ namespace OpenTK.Platform.Native.Windows
         Virtual = 0xFF,
     }
 
+    /// <summary>
+    /// Guid structure that is SDL compatible.
+    /// </summary>
+    /// <remarks>
+    /// The standard library <see cref="Guid"/> has mixed-endianness which makes it more complcated to generate SDL compatible guids.
+    /// </remarks>
     internal struct SdlGuid
     {
         public ushort Bus;
@@ -409,19 +415,7 @@ namespace OpenTK.Platform.Native.Windows
             // FIXME: Unititialize all of the data.
         }
 
-        /// <inheritdoc/>
-        public int GetJoystickCount()
-        {
-            return _joysticks.Count;
-        }
-
-        /// <inheritdoc/>
-        public JoystickHandle Open(int index)
-        {
-            return _joysticks[index];
-        }
-
-        public void Update()
+        internal void Update()
         {
             // FIXME: Only loop through the currently open joysticks?
             for (int joy = 0; joy < _joysticks.Count; joy++)
@@ -507,8 +501,22 @@ namespace OpenTK.Platform.Native.Windows
         }
 
         /// <inheritdoc/>
+        public int GetJoystickCount()
+        {
+            return _joysticks.Count;
+        }
+
+        /// <inheritdoc/>
+        public JoystickHandle Open(int index)
+        {
+            return _joysticks[index];
+        }
+
+        /// <inheritdoc/>
         public void Close(JoystickHandle joystick)
         {
+            WinJoystick winjoystick = joystick.As<WinJoystick>(this);
+            // FIXME: Deallocate resources...
         }
 
         /// <inheritdoc/>
@@ -630,21 +638,102 @@ namespace OpenTK.Platform.Native.Windows
         }
 
         /// <inheritdoc/>
-        public bool SetRumble(JoystickHandle joystick, float lowFrequencyIntensity, float highFrequencyIntensity)
+        public unsafe bool SetRumble(JoystickHandle joystick, float lowFrequencyIntensity, float highFrequencyIntensity)
         {
             WinJoystick winjoystick = joystick.As<WinJoystick>(this);
 
             lowFrequencyIntensity = Math.Clamp(lowFrequencyIntensity, 0, 1);
             highFrequencyIntensity = Math.Clamp(highFrequencyIntensity, 0, 1);
 
-            return false;
+            uint magnitude = (uint)float.Clamp((lowFrequencyIntensity + highFrequencyIntensity) * 0.5f * 10_000, 0, 10_000);
 
-            //XINPUT_VIBRATION vibration;
-            //vibration.wLeftMotorSpeed = (ushort)(lowFrequencyIntensity * ushort.MaxValue);
-            //vibration.wRightMotorSpeed = (ushort)(highFrequencyIntensity * ushort.MaxValue);
-            //
-            //uint result = XInputSetState((uint)winjoystick.XInputIndex, in vibration);
-            //return result == ERROR_SUCCESS;
+            winjoystick.Device.GetCapabilities(out DIDEVCAPS joystickCaps);
+            if (joystickCaps.dwFlags.HasFlag(DIDC.ForceFeedback) == false)
+                return false;
+
+            // FIXME: Check that FF is supported.
+
+            int result = winjoystick.Device.SendForceFeedbackCommand(DISFFC.Reset);
+            if (result == DIERR_INPUTLOST || result == DIERR_NOTEXCLUSIVEACQUIRED)
+            {
+                winjoystick.Device.Acquire();
+                result = winjoystick.Device.SendForceFeedbackCommand(DISFFC.Reset);
+            }
+            if (result < 0)
+            {
+                Logger?.LogError($"SendForceFeedbackCommand(Reset) failed with: {result}");
+                return false;
+            }
+
+            result = winjoystick.Device.SendForceFeedbackCommand(DISFFC.SetActuatorsOn);
+            if (result < 0)
+            {
+                Logger?.LogError($"SendForceFeedbackCommand(SetActuatorsOn) failed with: {result}");
+                return false;
+            }
+
+            if (winjoystick.FFEffect == IDirectInputEffect.Null)
+            {
+                winjoystick.DIEffect = (DIEFFECT*)NativeMemory.AllocZeroed((uint)sizeof(DIEFFECT));
+                winjoystick.DIPeriodic = (DIPERIODIC*)NativeMemory.AllocZeroed((uint)sizeof(DIPERIODIC));
+
+                winjoystick.DIEffect->dwSize = (uint)sizeof(DIEFFECT);
+                winjoystick.DIEffect->dwFlags = DIEFF.ObjectOffsets;
+                winjoystick.DIEffect->dwDuration = 60 * 1000 * 1000; // 1 minute
+                winjoystick.DIEffect->dwSamplePeriod = 0;
+                winjoystick.DIEffect->dwGain = 10000;
+                winjoystick.DIEffect->dwTriggerButton = (uint)DIEB.NoTrigger;
+                winjoystick.DIEffect->cAxes = 2;
+                winjoystick.DIEffect->rgdwAxes = (uint*)NativeMemory.AllocZeroed(2, sizeof(uint));
+                winjoystick.DIEffect->dwFlags |= DIEFF.Cartesian;
+                winjoystick.DIEffect->rglDirection = (int*)NativeMemory.AllocZeroed(2, sizeof(int));
+
+                winjoystick.DIPeriodic->dwMagnitude = magnitude;
+                winjoystick.DIPeriodic->lOffset = 0;
+                winjoystick.DIPeriodic->dwPhase = 0;
+                winjoystick.DIPeriodic->dwPeriod = 1_000_000; // 1 second
+
+                winjoystick.DIEffect->cbTypeSpecificParams = (uint)sizeof(DIPERIODIC);
+                winjoystick.DIEffect->lpvTypeSpecificParams = winjoystick.DIPeriodic;
+
+                result = winjoystick.Device.CreateEffect(ref Unsafe.AsRef(in GUID_Sine), winjoystick.DIEffect, out IDirectInputEffect diEffect, IUnknown.Null);
+                if (result < 0)
+                {
+                    Logger?.LogError($"CreateEffect failed with: {result}");
+                    return false;
+                }
+                winjoystick.FFEffect = diEffect;
+            }
+            else
+            {
+                winjoystick.DIPeriodic->dwMagnitude = magnitude;
+
+                result = winjoystick.FFEffect.SetParameters(winjoystick.DIEffect, DIEP.Duration | DIEP.TypeSpecificParams);
+                if (result == DIERR_INPUTLOST)
+                {
+                    winjoystick.Device.Acquire();
+                    result = winjoystick.FFEffect.SetParameters(winjoystick.DIEffect, DIEP.Duration | DIEP.TypeSpecificParams);
+                }
+                if (result < 0)
+                {
+                    Logger?.LogError($"IDirectInputEffect.SetParameters failed with: {result}");
+                    return false;
+                }
+            }
+
+            result = winjoystick.FFEffect.Start(1, 0);
+            if (result == DIERR_INPUTLOST || result == DIERR_NOTACQUIRED)
+            {
+                winjoystick.Device.Acquire();
+                result = winjoystick.FFEffect.Start(1, 0);
+            }
+            if (result < 0)
+            {
+                Logger?.LogError($"IDirectInputEffect.Start failed with: {result}");
+                return false;
+            }
+
+            return true;
         }
     }
 }
