@@ -7,22 +7,22 @@ namespace OpenTK.Graphics.Vulkan
     public static unsafe partial class Vk
     {
         /// <summary><b>[requires: v1.0]</b> 
-        /// <br/><b>[deprecated by: v1.0]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-version-macros" />
+        /// <br/><b>[deprecated by: v1.0]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#legacy-version-macros" />
         /// </summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/latest/man/html/VK_MAKE_VERSION.html" /></remarks>
         public static uint MAKE_VERSION(uint major, uint minor, uint patch) { return (major << 22) | (minor << 12) | (patch); }
         /// <summary><b>[requires: v1.0]</b> 
-        /// <br/><b>[deprecated by: v1.0]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-version-macros" />
+        /// <br/><b>[deprecated by: v1.0]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#legacy-version-macros" />
         /// </summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/latest/man/html/VK_VERSION_MAJOR.html" /></remarks>
         public static uint VERSION_MAJOR(uint version) { return (version >> 22); }
         /// <summary><b>[requires: v1.0]</b> 
-        /// <br/><b>[deprecated by: v1.0]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-version-macros" />
+        /// <br/><b>[deprecated by: v1.0]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#legacy-version-macros" />
         /// </summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/latest/man/html/VK_VERSION_MINOR.html" /></remarks>
         public static uint VERSION_MINOR(uint version) { return ((version >> 12) & 0x3FFU); }
         /// <summary><b>[requires: v1.0]</b> 
-        /// <br/><b>[deprecated by: v1.0]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-version-macros" />
+        /// <br/><b>[deprecated by: v1.0]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#legacy-version-macros" />
         /// </summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/latest/man/html/VK_VERSION_PATCH.html" /></remarks>
         public static uint VERSION_PATCH(uint version) { return (version & 0xFFFU); }
@@ -64,7 +64,7 @@ namespace OpenTK.Graphics.Vulkan
         public static uint VKSC_API_VERSION_1_0() { return MAKE_API_VERSION(VKSC_API_VARIANT, 1, 0, 0); }
         /// <summary><b>[requires: v1.0]</b> </summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/latest/man/html/VK_HEADER_VERSION.html" /></remarks>
-        public const uint HEADER_VERSION = unchecked((uint)321);
+        public const uint HEADER_VERSION = unchecked((uint)335);
         /// <summary><b>[requires: v1.0]</b> </summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/latest/man/html/VK_HEADER_VERSION_COMPLETE.html" /></remarks>
         public static uint HEADER_VERSION_COMPLETE() { return MAKE_API_VERSION(0, 1, 4, HEADER_VERSION); }

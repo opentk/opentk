@@ -205,7 +205,10 @@ namespace VkGenerator
                         {
                             if (member.Extension != null && member.VersionInfo != null)
                             {
-                                if (member.Extension.StartsWith("VK_VERSION") == false)
+                                if (member.Extension.StartsWith("VK_VERSION") == false &&
+                                    member.Extension.StartsWith("VK_BASE_VERSION") == false &&
+                                    member.Extension.StartsWith("VK_GRAPHICS_VERSION") == false &&
+                                    member.Extension.StartsWith("VK_COMPUTE_VERSION") == false)
                                     Debug.Assert(member.VersionInfo.Extensions.Any(e => e.Name == member.Extension));
                             }
 
