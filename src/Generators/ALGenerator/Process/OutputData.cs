@@ -21,14 +21,15 @@ namespace ALGenerator.Process
         */
 
         List<Pointers> Pointers,
-        List<Namespace> Namespaces);
+        List<Namespace> Namespaces,
+        Dictionary<string, EnumMemberDocumentation> EnumMemberDocumentation);
 
     // FIXME: Maybe change to API.. something? "namespace" is quite generic.
     internal record Namespace(
         OutputApi Name,
         List<VendorFunctions> VendorFunctions,
         List<EnumGroup> EnumGroups,
-        Dictionary<Function, FunctionDocumentation> Documentation);
+        Dictionary<Function, FunctionDocumentation> FunctionDocumentation);
 
     internal record Pointers(
         APIFile File,
@@ -38,7 +39,7 @@ namespace ALGenerator.Process
         string Name,
         string Purpose,
         ParameterDocumentation[] Parameters,
-        List<string> RefPagesLinks,
+        List<Link> RefPagesLinks,
         List<string> AddedIn,
         List<string>? RemovedIn
         );
