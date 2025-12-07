@@ -85,6 +85,14 @@ namespace ALGenerator
             return ReadFileFromGithub(url, filePath);
         }
 
+        internal static FileStream ReadALSOFTSpecFromGithub()
+        {
+            string url = "https://raw.githubusercontent.com/kcat/openal-soft/refs/heads/master/registry/xml/al.xml";
+            string filePath = Path.Combine(TempDirectory, "al_soft.xml");
+
+            return ReadFileFromGithub(url, filePath);
+        }
+
         private static FileStream CreateCache(string upstreamUrl, string filePath)
         {
             HttpWebRequest fileRequest = WebRequest.CreateHttp(upstreamUrl);

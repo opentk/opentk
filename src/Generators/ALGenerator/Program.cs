@@ -169,7 +169,12 @@ namespace ALGenerator
                 // Read the documentation folders and parse it into data structures.
                 //using DocumentationSource documentationSource = Reader.ReadDocumentationFromGithub();
                 //Documentation documentation = DocumentationParser.Parse(documentationSource);
-                Documentation documentation = new Documentation([]);
+                Documentation documentation;
+                {
+                    using FileStream alSOFTSpecificationStream = Reader.ReadALSOFTSpecFromGithub();
+
+                    documentation = DocumentationParser.Parse(alSOFTSpecificationStream);
+                }
 
                 // Processer/overloading
                 OutputData outputSpec = Processor.ProcessSpec(finalSpecification, documentation);

@@ -7286,6 +7286,8 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         MaxFramebufferHeight = 37654,
         MaxFramebufferLayers = 37655,
         MaxFramebufferSamples = 37656,
+        ClipOrigin = 37724,
+        ClipDepthMode = 37725,
         NumDeviceUuidsExt = 38294,
         DeviceUuidExt = 38295,
         DriverUuidExt = 38296,
