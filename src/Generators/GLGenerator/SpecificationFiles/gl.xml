@@ -6578,9 +6578,9 @@ typedef unsigned int GLhandleARB;
         <enum value="0x9359" name="GL_VIEWPORT_SWIZZLE_Y_NV"/>
         <enum value="0x935A" name="GL_VIEWPORT_SWIZZLE_Z_NV"/>
         <enum value="0x935B" name="GL_VIEWPORT_SWIZZLE_W_NV"/>
-        <enum value="0x935C" name="GL_CLIP_ORIGIN"/>
+        <enum value="0x935C" name="GL_CLIP_ORIGIN" group="GetPName"/>
         <enum value="0x935C" name="GL_CLIP_ORIGIN_EXT" alias="GL_CLIP_ORIGIN"/>
-        <enum value="0x935D" name="GL_CLIP_DEPTH_MODE"/>
+        <enum value="0x935D" name="GL_CLIP_DEPTH_MODE" group="GetPName"/>
         <enum value="0x935D" name="GL_CLIP_DEPTH_MODE_EXT" alias="GL_CLIP_DEPTH_MODE"/>
         <enum value="0x935E" name="GL_NEGATIVE_ONE_TO_ONE" group="ClipControlDepth"/>
         <enum value="0x935E" name="GL_NEGATIVE_ONE_TO_ONE_EXT" alias="GL_NEGATIVE_ONE_TO_ONE"/>
