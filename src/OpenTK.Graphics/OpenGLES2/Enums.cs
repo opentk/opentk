@@ -3437,6 +3437,8 @@ namespace OpenTK.Graphics.OpenGLES2
         MaxFramebufferHeight = 37654,
         MaxFramebufferLayers = 37655,
         MaxFramebufferSamples = 37656,
+        ClipOriginExt = 37724,
+        ClipDepthModeExt = 37725,
         NumDeviceUuidsExt = 38294,
         DeviceUuidExt = 38295,
         DriverUuidExt = 38296,
