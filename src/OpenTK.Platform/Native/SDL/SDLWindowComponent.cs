@@ -412,8 +412,7 @@ namespace OpenTK.Platform.Native.SDL
                     case SDL_EventType.SDL_KEYMAPCHANGED:
                         {
                             // FIXME: How should we deal with not having the proper information here?
-                            EventQueue.Raise(null, PlatformEventType.InputLanguageChanged, new InputLanguageChangedEventArgs(null, null, null, null));
-
+                            EventQueue.Raise(null, PlatformEventType.InputLanguageChanged, new InputLanguageChangedEventArgs(new InputLanguage(System.Globalization.CultureInfo.CurrentCulture, "unknown")));
                             break;
                         }
                     case SDL_EventType.SDL_KEYDOWN:

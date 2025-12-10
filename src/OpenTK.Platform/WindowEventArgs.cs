@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using OpenTK.Mathematics;
 
@@ -336,42 +336,17 @@ namespace OpenTK.Platform
     public class InputLanguageChangedEventArgs : EventArgs
     {
         /// <summary>
-        /// The new keyboard layout. This indicates how physical keys are mapped to virtual keys.
-        /// E.g. The difference between QWERTY and AZERTY.
+        /// The new input language + keyboard layout.
         /// </summary>
-        public string KeyboardLayout { get; private set; }
-
-        /// <summary>
-        /// The keyboard layout display name. This is the user facing name of the keyboard layout.
-        /// </summary>
-        public string KeyboardLayoutDisplayName { get; private set; }
-
-        /// <summary>
-        /// The input language. This is separate from keyboard layout.
-        /// This could be used for features such as spell checking.
-        ///
-        /// FIXME: In what fromat should the input language be sent in?.
-        /// </summary>
-        public string InputLanguage { get; private set; }
-
-        /// <summary>
-        /// Localized display name for the new input language.
-        /// </summary>
-        public string InputLanguageDisplayName { get; private set; }
+        public InputLanguage InputLanguage { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="InputLanguageChangedEventArgs"/> class.
         /// </summary>
-        /// <param name="keyboardLayout">The keyboard layout name of the new layout.</param>
-        /// <param name="keyboardLayoutDisplayName">The user facing keyboard layout name of the new layout.</param>
-        /// <param name="inputLanguage">The input language name of the new language.</param>
-        /// <param name="inputLanguageDisplayName">The user facing input language of the new language.</param>
-        public InputLanguageChangedEventArgs(string keyboardLayout, string keyboardLayoutDisplayName, string inputLanguage, string inputLanguageDisplayName)
+        /// <param name="inputLanguage">The new input language + keyboard layout.</param>
+        public InputLanguageChangedEventArgs(InputLanguage inputLanguage)
         {
-            KeyboardLayout = keyboardLayout;
-            KeyboardLayoutDisplayName = keyboardLayoutDisplayName;
             InputLanguage = inputLanguage;
-            InputLanguageDisplayName = inputLanguageDisplayName;
         }
     }
 

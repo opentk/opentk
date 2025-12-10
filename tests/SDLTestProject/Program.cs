@@ -281,27 +281,20 @@ void main()
             {
                 if (mouseDown.Button == MouseButton.Button1)
                 {
-                    for (int i = 0; i < 4; i++)
+                    for (int i = 0; i < JoystickComponent.GetJoystickCount(); i++)
                     {
-                        if (JoystickComponent.IsConnected(i))
+                        var stick = JoystickComponent.Open(i);
+
+                        if (JoystickComponent.TryGetBatteryInfo(stick, out GamepadBatteryInfo info))
                         {
-                            var stick = JoystickComponent.Open(i);
-
-                            if (JoystickComponent.TryGetBatteryInfo(stick, out GamepadBatteryInfo info))
-                            {
-                                Console.WriteLine($"Gamepad {i + 1}: {info.BatteryType} {info.ChargeLevel * 100}%");
-                            }
-                            else
-                            {
-                                Console.WriteLine($"Could not get battery info for gamepad {i + 1}");
-                            }
-
-                            JoystickComponent.Close(stick);
+                            Console.WriteLine($"Gamepad {i + 1}: {info.BatteryType} {info.ChargeLevel * 100}%");
                         }
                         else
                         {
-                            Console.WriteLine($"No controller connected for player {i + 1}");
+                            Console.WriteLine($"Could not get battery info for gamepad {i + 1}");
                         }
+
+                        JoystickComponent.Close(stick);
                     }
                 }
             }

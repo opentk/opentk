@@ -464,8 +464,8 @@ namespace OpenTK.Platform.Tests
             }
             else if (args is InputLanguageChangedEventArgs inputLanguageChange)
             {
-                Console.WriteLine($"New keyboard layout: {inputLanguageChange.KeyboardLayout}");
-                Console.WriteLine($"New input language: {inputLanguageChange.InputLanguage}, {inputLanguageChange.InputLanguageDisplayName}");
+                Console.WriteLine($"New keyboard layout: {inputLanguageChange.InputLanguage.LayoutName}");
+                Console.WriteLine($"New input language: {inputLanguageChange.InputLanguage.Culture.ThreeLetterISOLanguageName}");
             }
         }
     }

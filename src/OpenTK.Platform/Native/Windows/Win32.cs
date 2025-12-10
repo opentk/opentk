@@ -71,6 +71,12 @@ namespace OpenTK.Platform.Native.Windows
         internal const int LoWordMask = 0x0000_FFFF;
         internal const int HiWordMask = unchecked((int)0xFFFF_0000);
 
+        internal static ushort LOWORD(nint w) => LOWORD((int)w);
+        internal static ushort LOWORD(int w) => (ushort)(w & 0xFFFF);
+
+        internal static ushort HIWORD(nint w) => HIWORD((int)w);
+        internal static ushort HIWORD(int w) => (ushort)((w >> 16) & 0xFFFF);
+
         internal static int GET_X_LPARAM(IntPtr lParam) => (short)(lParam.ToInt64() & LoWordMask);
         internal static int GET_Y_LPARAM(IntPtr lParam) => (short)((lParam.ToInt64() >> 16) & LoWordMask);
 
@@ -90,6 +96,8 @@ namespace OpenTK.Platform.Native.Windows
         /// The data area passed to a system call is too small.
         /// </summary>
         internal const int ERROR_INSUFFICIENT_BUFFER = 0x7A;
+
+        internal const int ERROR_MORE_DATA = 0xEA;
 
         internal const int CCHDEVICENAME = 32;
         internal const int CCHFORMNAME = 32;
@@ -1070,6 +1078,9 @@ namespace OpenTK.Platform.Native.Windows
 
         [DllImport("shlwapi.dll", CharSet = CharSet.Auto, SetLastError = false)]
         internal static unsafe extern uint /* LWSTDAPI */ SHLoadIndirectString(char* pszSource, char* pszOutBuf, uint cchOutBuf, void** ppvReserved);
+
+        [DllImport("advapi32.dll", CharSet = CharSet.Auto, SetLastError = false)]
+        internal static unsafe extern uint /* LSTATUS */ RegLoadMUIString(IntPtr /* HKEY */ hKey, char* pszValue, char* pszOutBuf, uint cbOutBuf, out uint pcbData, uint flags, char* pszDirectory);
 
         [DllImport("user32.dll", SetLastError = true)]
         internal static extern int GetKeyboardLayoutList(int nBuff, IntPtr* lpList);

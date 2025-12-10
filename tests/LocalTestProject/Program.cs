@@ -36,9 +36,9 @@ namespace LocalTestProject
         {
             Toolkit.Init(new ToolkitOptions() { ApplicationName = "Pal2 test project", Logger = new ConsoleLogger(), FeatureFlags = ToolkitFlags.EnableOpenGL });
 
-            Console.WriteLine($"Current Keyboard Layout name: {Toolkit.Keyboard.GetActiveKeyboardLayout(null)}");
+            Console.WriteLine($"Current input language name: {Toolkit.Keyboard.GetActiveInputLanguage(null)}");
 
-            Console.WriteLine($"Available Keyboard Layouts:\n  {string.Join("\n  ", Toolkit.Keyboard.GetAvailableKeyboardLayouts())}");
+            Console.WriteLine($"Installed input languages:\n  {string.Join("\n  ", Toolkit.Keyboard.GetInstalledInputLanguages())}");
 
             {
                 PrimaryDisplayHandle = Toolkit.Display.OpenPrimary();
@@ -895,6 +895,8 @@ void main()
             float deltaTime = watch.ElapsedTicks / (float)Stopwatch.Frequency;
             watch.Restart();
 
+            // FIXME: Joystick & Gamepad api...
+            /*
             for (int i = 0; i < 4; i++)
             {
                 int player = i + 1;
@@ -965,6 +967,7 @@ void main()
 
                 Toolkit.Joystick.Close(handle);
             }
+            */
 
             time += deltaTime;
             frames++;
