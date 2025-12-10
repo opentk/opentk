@@ -292,10 +292,12 @@ namespace VkGenerator.Process
                     // FIXME: There are a bunch more empty enums like VkPipelineVertexInputStateCreateFlags etc
 
                     // VkQueryPoolCreateFlags, VkQueryPoolCreateFlagBits, VkDeviceCreateFlags, and VkDeviceCreateFlagBits have no members
+                    // VkPerformanceCounterDescriptionFlagBitsARM
                     if (enumName.Name != "VkQueryPoolCreateFlags" &&
                         enumName.Name != "VkQueryPoolCreateFlagBits" &&
                         enumName.Name != "VkDeviceCreateFlags" &&
-                        enumName.Name != "VkDeviceCreateFlagBits")
+                        enumName.Name != "VkDeviceCreateFlagBits" &&
+                        enumName.Name != "VkPerformanceCounterDescriptionFlagBitsARM")
                     {
                         Debug.Assert(typeMap.ContainsKey(enumName.Name));
                     }
@@ -904,6 +906,8 @@ namespace VkGenerator.Process
                             return CSPrimitive.IntPtr(opaque.Constant);//new CSStructPrimitive("ANativeWindow", opaque.Constant, CSPrimitive.IntPtr(true));
                         case "AHardwareBuffer":
                             return CSPrimitive.IntPtr(opaque.Constant);//return new CSStructPrimitive("AHardwareBuffer", opaque.Constant, CSPrimitive.IntPtr(true));
+                        case "OH_NativeBuffer":
+                            return CSPrimitive.IntPtr(opaque.Constant);//return new CSStructPrimitive("OH_NativeBuffer", opaque.Constant, CSPrimitive.IntPtr(true));
                         default:
                             throw new Exception($"Unknown opaque struct type {opaque.TypeName}.");
                     }
@@ -1165,6 +1169,8 @@ namespace VkGenerator.Process
                         "IOSurfaceRef" => CSPrimitive.IntPtr(@const),
 
                         "OHNativeWindow" => new CSStruct("OHNativeWindow", @const),
+                        "OHBufferHandle" => new CSStruct("OHBufferHandle", @const),
+                        "OH_NativeBuffer" => new CSOpaqueStruct("OH_NativeBuffer", @const),
 
                         /*
                         // From vk_video/vulkan_video_codec_h264std.h
@@ -1272,6 +1278,7 @@ namespace VkGenerator.Process
                     case "AHardwareBuffer":
                     case "NvSciSyncFence":
                     case "OHNativeWindow":
+                    case "OHBufferHandle":
                         return CSPrimitive.IntPtr(csPointer.Constant);
                     default:
                         return type;
