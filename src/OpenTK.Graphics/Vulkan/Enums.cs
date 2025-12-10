@@ -7182,7 +7182,7 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>VK_EXT_custom_resolve</b>] </summary>
         StructureTypeCustomResolveCreateInfoExt = 1000628002,
         /// <summary>[requires: <b>VK_KHR_external_semaphore_win32</b>] </summary>
-        StructureTypeD3d12FenceSubmitInfoKhr = 1000078002,
+        StructureTypeD3D12FenceSubmitInfoKhr = 1000078002,
         /// <summary>[requires: <b>VK_QCOM_data_graph_model</b>] </summary>
         StructureTypeDataGraphPipelineBuiltinModelCreateInfoQcom = 1000629001,
         /// <summary>[requires: <b>VK_ARM_data_graph</b>] </summary>
