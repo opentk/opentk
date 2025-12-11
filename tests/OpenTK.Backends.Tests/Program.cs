@@ -137,6 +137,7 @@ namespace OpenTK.Backends.Tests
                 Profile = OpenGLProfile.Core,
                 ForwardCompatibleFlag = true,
                 DebugFlag = true,
+                SupportTransparentFramebufferX11 = false,
                 Selector = static (options, requested, logger) => {
                     for (int i = 0; i < options.Count; i++)
                     {
@@ -762,6 +763,10 @@ namespace OpenTK.Backends.Tests
             else if (args is DisplayConnectionChangedEventArgs displayChanged)
             {
                 ((DisplayComponentView?)MainTabContainer[typeof(DisplayComponentView)])?.HandleConnectionChange(displayChanged);
+            }
+            else if (args is DisplayValuesChangedEventArgs displayValuesChanged)
+            {
+                ((DisplayComponentView?)MainTabContainer[typeof(DisplayComponentView)])?.UpdateDisplayValues(displayValuesChanged);
             }
             else if (args is ThemeChangeEventArgs themeChange)
             {

@@ -612,6 +612,9 @@ namespace OpenTK.Platform
     /// </summary>
     public class DisplayConnectionChangedEventArgs : EventArgs
     {
+        // FIXME: Some way to correlate DisplayHandles with their index?
+        // - Noggin_bops 2025-12-11
+
         /// <summary>
         /// A handle to the display that was connected or got disconnected.
         /// </summary>
@@ -632,6 +635,105 @@ namespace OpenTK.Platform
         {
             Display = display;
             Disconnected = disconnected;
+        }
+    }
+
+    /// <summary>
+    /// This event is triggered when any property of a display changes.
+    /// Video mode, position, resolution, etc.
+    /// </summary>
+    public class DisplayValuesChangedEventArgs : EventArgs
+    {
+        /// <summary>
+        /// The display index for the display whos values have changed.
+        /// </summary>
+        // FIXME: Do we want to send the display handle directly here? 
+        // How does that work with opening and closing display handles?
+        // - Noggin_bops 2025-12-11
+        public int DisplayIndex { get; internal set; }
+        
+        // FIXME: NameChanged?
+        // - Noggin_bops 2025-12-11
+
+        // PrimaryChanged? or is that it's own event?
+        // - Noggin_bops 2025-12-11
+
+        /// <summary>
+        /// <see langword="true"/> if the video mode bits per pixel value of the display changed, <see langword="false"/> otherwise.
+        /// </summary>
+        /// <remarks>
+        /// Get the new value by calling <see cref="IDisplayComponent.GetVideoMode(DisplayHandle, out VideoMode)"/> on the display with index <see cref="DisplayIndex"/>.
+        /// </remarks>
+        public bool BitsPerPixelChanged { get; internal set; }
+
+        /// <summary>
+        /// <see langword="true"/> if the resolution of the display changed, <see langword="false"/> otherwise.
+        /// </summary>
+        /// <remarks>
+        /// Get the new value by calling <see cref="IDisplayComponent.GetResolution(DisplayHandle, out int, out int)"/> on the display with index <see cref="DisplayIndex"/>.
+        /// </remarks>
+        public bool ResolutionChanged { get; internal set; }
+
+        /// <summary>
+        /// <see langword="true"/> if the refresh rate of the display changed, <see langword="false"/> otherwise.
+        /// </summary>
+        /// <remarks>
+        /// Get the new value by calling <see cref="IDisplayComponent.GetRefreshRate(DisplayHandle, out float)"/> on the display with index <see cref="DisplayIndex"/>.
+        /// </remarks>
+        public bool RefreshRateChanged { get; internal set; }
+
+        /// <summary>
+        /// <see langword="true"/> if the virtual position of the display changed, <see langword="false"/> otherwise.
+        /// </summary>
+        /// <remarks>
+        /// Get the new value by calling <see cref="IDisplayComponent.GetVirtualPosition(DisplayHandle, out int, out int)"/> on the display with index <see cref="DisplayIndex"/>.
+        /// </remarks>
+        public bool VirtualPositionChanged { get; internal set; }
+
+        /// <summary>
+        /// <see langword="true"/> if the work area of the display changed, <see langword="false"/> otherwise.
+        /// </summary>
+        /// <remarks>
+        /// Get the new value by calling <see cref="IDisplayComponent.GetWorkArea(DisplayHandle, out Box2i)"/> on the display with index <see cref="DisplayIndex"/>.
+        /// </remarks>
+        public bool WorkAreaChanged { get; internal set; }
+
+        /// <summary>
+        /// <see langword="true"/> if the scale factor of the display changed, <see langword="false"/> otherwise.
+        /// </summary>
+        /// <remarks>
+        /// Get the new value by calling <see cref="IDisplayComponent.GetDisplayScale(DisplayHandle, out float, out float)"/> on the display with index <see cref="DisplayIndex"/>.
+        /// </remarks>
+        public bool DisplayScaleChanged { get; internal set; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DisplayValuesChangedEventArgs"/> class with all changes set to <see langword="false"/>.
+        /// </summary>
+        /// <param name="displayIndex">The index of the display whoes values changed.</param>
+        public DisplayValuesChangedEventArgs(int displayIndex)
+        {
+            DisplayIndex = displayIndex;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DisplayValuesChangedEventArgs"/> class.
+        /// </summary>
+        /// <param name="displayIndex">The index of the display whoes values changed.</param>
+        /// <param name="bitsPerPixelChanged">The bits per pixel value of the video mode of the display has changed.</param>
+        /// <param name="virtualPositionChanged">The virtual position of the display has changed.</param>
+        /// <param name="resolutionChanged">The resolution of the display has changed.</param>
+        /// <param name="workAreaChanged">The work area of the display has changed.</param>
+        /// <param name="refreshRateChanged">The refresh rate of the display has changed.</param>
+        /// <param name="displayScaleChanged">The scale factor of the display has changed.</param>
+        public DisplayValuesChangedEventArgs(int displayIndex, bool bitsPerPixelChanged, bool virtualPositionChanged, bool resolutionChanged, bool workAreaChanged, bool refreshRateChanged, bool displayScaleChanged)
+        {
+            DisplayIndex = displayIndex;
+            BitsPerPixelChanged = bitsPerPixelChanged;
+            VirtualPositionChanged = virtualPositionChanged;
+            ResolutionChanged = resolutionChanged;
+            WorkAreaChanged = workAreaChanged;
+            RefreshRateChanged = refreshRateChanged;
+            DisplayScaleChanged = displayScaleChanged;
         }
     }
 

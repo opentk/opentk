@@ -140,6 +140,17 @@ namespace OpenTK.Platform.Native.X11
         /// </summary>
         public RRMode OldMode { get; set; } = RRMode.None;
 
+
+        /// <summary>Only updated in <see cref="X11DisplayComponent.UpdateDisplayValues()"/>.</summary>
+        public VideoMode VideoMode { get; set; }
+        /// <summary>Only updated in <see cref="X11DisplayComponent.UpdateDisplayValues()"/>.</summary>
+        public Vector2i VirtualPosition { get; set; }
+        /// <summary>Only updated in <see cref="X11DisplayComponent.UpdateDisplayValues()"/>.</summary>
+        public Box2i WorkArea { get; set; }
+        /// <summary>Only updated in <see cref="X11DisplayComponent.UpdateDisplayValues()"/>.</summary>
+        public Vector2 Scale { get; set; }
+
+
         public XDisplayHandle(RROutput output, RRCrtc crtc, string name)
         {
             Output = output;

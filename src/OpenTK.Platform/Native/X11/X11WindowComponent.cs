@@ -611,7 +611,8 @@ namespace OpenTK.Platform.Native.X11
                         }
                         else if (ea.Type >= (XEventType)(X11.XRandREventBase) && ea.Type <= (XEventType)(X11.XRandREventBase + RREventType.RRNotify))
                         {
-                            X11DisplayComponent.HandleXRREvent(ea, Logger);
+                            (Toolkit.Display as X11DisplayComponent)?.HandleXRREvent(ea);
+                            //X11DisplayComponent.HandleXRREvent(ea, Logger);
                         }
                         else
                         {
@@ -1549,6 +1550,12 @@ namespace OpenTK.Platform.Native.X11
             if (X11ShellComponent.GlibMainLoop != IntPtr.Zero)
             {
                 int wasEventsDispatched = LibGio.g_main_context_iteration(LibGio.g_main_context_default(), 0);
+            }
+
+            unsafe
+            {
+                //Logger?.LogInfo($"IM Locale: {Marshal.PtrToStringUTF8((nint)XLocaleOfIM(IM))}");
+                //Logger?.LogInfo($"CultureInfo: {System.Globalization.CultureInfo.CurrentCulture}");
             }
         }
 

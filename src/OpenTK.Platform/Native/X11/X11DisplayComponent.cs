@@ -347,6 +347,10 @@ namespace OpenTK.Platform.Native.X11
                             XRRFreeScreenResources(resources);
                         }
 
+                        // FIXME: Maybe don't send the initial value changes?
+                        // - Noggin_bops 2025-12-11
+                        UpdateDisplayValues();
+
                         Debug.Assert(_displays.Count > 0);
 
                         // Subscribe to events relating to connecting and disconnecting monitors.
@@ -375,16 +379,16 @@ namespace OpenTK.Platform.Native.X11
             _displays.Clear();
         }
 
-        internal static void HandleXRREvent(XEvent @event, ILogger? logger)
+        internal void HandleXRREvent(XEvent @event)
         {
             switch ((RREventType)(@event.Type - X11.XRandREventBase))
             {
                 case RREventType.RRScreenChangeNotify:
-                    logger?.LogInfo("RR Screen change notify.");
+                    Logger?.LogInfo("RR Screen change notify.");
                     break;
                 case RREventType.RRNotify:
                 {
-                    logger?.LogDebug($"RR Notify (subtype: {@event.RRNotify.SubType})");
+                    Logger?.LogDebug($"RR Notify (subtype: {@event.RRNotify.SubType})");
                     if (@event.RRNotify.SubType == RRNotifySubType.OutputChange)
                     {
                         XRROutputChangeNotifyEvent outputChanged = @event.RROutputChangeNotify;
@@ -423,7 +427,7 @@ namespace OpenTK.Platform.Native.X11
                                             return;
                                         }
 
-                                        string name = GetOutputName(outputChanged.Output, outputInfo, logger);
+                                        string name = GetOutputName(outputChanged.Output, outputInfo, Logger);
 
                                         handle = new XDisplayHandle(outputChanged.Output, outputInfo->crtc, name);
 
@@ -433,7 +437,7 @@ namespace OpenTK.Platform.Native.X11
                                             _displays.Add(handle);
 
                                         EventQueue.Raise(handle, PlatformEventType.DisplayConnectionChanged, new DisplayConnectionChangedEventArgs(handle, false));
-                                        logger?.LogDebug($"Connected display '{name}'!");
+                                        Logger?.LogDebug($"Connected display '{name}'!");
 
                                         XRRFreeOutputInfo(outputInfo);
                                         XRRFreeScreenResources(resources);
@@ -442,19 +446,23 @@ namespace OpenTK.Platform.Native.X11
                             }
                             else
                             {
-                                logger?.LogDebug("Connected already connected display!");
+                                Logger?.LogDebug("Connected already connected display!");
                                 // This display already existed.
                                 // FIXME: Update rotation?
                             }
+
+                            UpdateDisplayValues();
                         }
                         else if (outputChanged.Connection == Connection.Disconnected)
                         {
                             if (handle != null)
                             {
-                                logger?.LogDebug($"Disconnected display '{handle.Name}'!");
+                                Logger?.LogDebug($"Disconnected display '{handle.Name}'!");
                                 _displays.Remove(handle);
                                 EventQueue.Raise(handle, PlatformEventType.DisplayConnectionChanged, new DisplayConnectionChangedEventArgs(handle, true));
                             }
+
+                            UpdateDisplayValues();
                         }
                     }
                     break;
@@ -462,6 +470,61 @@ namespace OpenTK.Platform.Native.X11
                 default:
                     break;
             }
+        }
+
+        internal void UpdateDisplayValues()
+        {
+            Logger?.LogDebug($"Updating display values.");
+            for (int i = 0; i < _displays.Count; i++)
+            {
+                UpdateDisplayValues(i, _displays[i]);
+            }
+        }
+        private void UpdateDisplayValues(int displayIndex, XDisplayHandle display)
+        {
+            DisplayValuesChangedEventArgs valuesChanged = new DisplayValuesChangedEventArgs(displayIndex);
+
+            GetVideoMode(display, out VideoMode newVideoMode);
+            if (newVideoMode.Width != display.VideoMode.Width ||
+                newVideoMode.Height != display.VideoMode.Height)
+            {
+                valuesChanged.ResolutionChanged = true;
+            }
+
+            if (newVideoMode.RefreshRate != display.VideoMode.RefreshRate)
+            {
+                valuesChanged.RefreshRateChanged = true;
+            }
+
+            if (newVideoMode.BitsPerPixel != display.VideoMode.BitsPerPixel)
+            {
+                valuesChanged.BitsPerPixelChanged = true;
+            }
+
+            GetVirtualPosition(display, out int newX, out int newY);
+            if (newX != display.VirtualPosition.X || newY != display.VirtualPosition.Y)
+            {
+                valuesChanged.VirtualPositionChanged = true;
+            }
+
+            GetWorkArea(display, out Box2i newWorkArea);
+            if (newWorkArea != display.WorkArea)
+            {
+                valuesChanged.WorkAreaChanged = true;
+            }
+
+            GetDisplayScale(display, out float newScaleX, out float newScaleY);
+            if (newScaleX != display.Scale.X || newScaleY != display.Scale.Y)
+            {
+                valuesChanged.DisplayScaleChanged = true;
+            }
+
+            display.VideoMode = newVideoMode;
+            display.VirtualPosition = (newX, newY);
+            display.WorkArea = newWorkArea;
+            display.Scale = (newScaleX, newScaleY);
+
+            EventQueue.Raise(null, PlatformEventType.DisplayValuesChanged, valuesChanged);
         }
 
         /// <inheritdoc />
