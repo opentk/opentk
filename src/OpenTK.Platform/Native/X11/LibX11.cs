@@ -527,6 +527,9 @@ namespace OpenTK.Platform.Native.X11
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         internal static unsafe extern byte* XGetIMValues(XIM im, byte* key, IntPtr value, IntPtr sentinel);
 
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        internal static unsafe extern byte* XLocaleOfIM(XIM im);
+
         [StructLayout(LayoutKind.Sequential, Pack = 8)]
         internal unsafe struct XIMStyles
         {
@@ -622,5 +625,18 @@ namespace OpenTK.Platform.Native.X11
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         internal static unsafe extern int XSetTransientForHint(XDisplayPtr display, XWindow w, XWindow prop_window);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void XrmInitialize();
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        internal static unsafe extern XrmDatabase XrmGetStringDatabase(byte* data);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static unsafe extern bool XrmGetResource(XrmDatabase database, byte* str_name, byte* str_class, out byte* str_type_return, out XrmValue value_return);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        internal static unsafe extern void XrmDestroyDatabase(XrmDatabase database);
     }
 }

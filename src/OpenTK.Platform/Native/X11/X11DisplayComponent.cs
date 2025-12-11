@@ -842,16 +842,11 @@ namespace OpenTK.Platform.Native.X11
         /// <inheritdoc />
         public void GetDisplayScale(DisplayHandle handle, out float scaleX, out float scaleY)
         {
-            if (hasReportedDisplayScaleWarning == false)
-            {
-                Logger?.LogWarning("Display scale is always 1 on X11 atm.");
-                hasReportedDisplayScaleWarning = true;
-            }
-
-            // FIXME: We can read something like XrmGetResource "Xft.dpi" or use X11_XGetDefault(dpy, "Xft", "dpi")
-            // But the question is how do we get the scale factor from just the DPI?
-            scaleX = 1;
-            scaleY = 1;
+            // X11 only has a global scale factor, read it.
+            // - Noggin_bops 2025-12-11
+            float scale = X11WindowComponent.GetContentScale(Logger);
+            scaleX = scale;
+            scaleY = scale;
         }
 
         /// <inheritdoc />
