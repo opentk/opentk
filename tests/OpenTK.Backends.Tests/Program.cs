@@ -247,11 +247,11 @@ namespace OpenTK.Backends.Tests
                 if (Toolkit.Display != null)
                 {
                     DisplayHandle handle = Toolkit.Window.GetDisplay(Window);
-                    Toolkit.Display.GetDisplayScale(handle, out float scaleX, out float scaleY);
+                    Vector2 scaleXY = Toolkit.Display.GetDisplayScale(handle);
                     Toolkit.Display.Close(handle);
 
                     // FIXME: Should we only scale on Y? or something else?
-                    float scale = MathF.Max(scaleX, scaleY);
+                    float scale = MathF.Max(scaleXY.X, scaleXY.Y);
                     if (scale != 1)
                     {
                         // Update font size with scale.

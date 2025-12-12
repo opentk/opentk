@@ -70,13 +70,13 @@ namespace OpenTK.Backends.Tests
 
                 string name = Toolkit.Display.GetName(handle);
                 bool primary = Toolkit.Display.IsPrimary(handle);
-                Toolkit.Display.GetVirtualPosition(handle, out int x, out int y);
-                Toolkit.Display.GetResolution(handle, out int width, out int height);
-                Toolkit.Display.GetWorkArea(handle, out Box2i workArea);
-                Toolkit.Display.GetRefreshRate(handle, out float refreshRate);
-                Toolkit.Display.GetDisplayScale(handle, out float scaleX, out float scaleY);
+                Vector2i virtualPosition = Toolkit.Display.GetVirtualPosition(handle);
+                Vector2i resolution = Toolkit.Display.GetResolution(handle);
+                Box2i workArea = Toolkit.Display.GetWorkArea(handle);
+                float refreshRate = Toolkit.Display.GetRefreshRate(handle);
+                Vector2 scale = Toolkit.Display.GetDisplayScale(handle);
 
-                Display disp = new Display(i, name, primary, new Box2i(x, y, x + width, y + height), workArea, refreshRate, (scaleX, scaleY));
+                Display disp = new Display(i, name, primary, new Box2i(virtualPosition, virtualPosition + resolution), workArea, refreshRate, scale);
                 Displays.Add(disp);
 
                 BoundingBox.Extend(disp.Bounds.Min);
@@ -113,13 +113,13 @@ namespace OpenTK.Backends.Tests
 
                 string name = Toolkit.Display.GetName(handle);
                 bool primary = Toolkit.Display.IsPrimary(handle);
-                Toolkit.Display.GetVirtualPosition(handle, out int x, out int y);
-                Toolkit.Display.GetResolution(handle, out int width, out int height);
-                Toolkit.Display.GetWorkArea(handle, out Box2i workArea);
-                Toolkit.Display.GetRefreshRate(handle, out float refreshRate);
-                Toolkit.Display.GetDisplayScale(handle, out float scaleX, out float scaleY);
+                Vector2i virtualPosition = Toolkit.Display.GetVirtualPosition(handle);
+                Vector2i resolution = Toolkit.Display.GetResolution(handle);
+                Box2i workArea = Toolkit.Display.GetWorkArea(handle);
+                float refreshRate = Toolkit.Display.GetRefreshRate(handle);
+                Vector2 scale = Toolkit.Display.GetDisplayScale(handle);
 
-                Display disp = new Display(i, name, primary, new Box2i(x, y, x + width, y + height), workArea, refreshRate, (scaleX, scaleY));
+                Display disp = new Display(i, name, primary, new Box2i(virtualPosition, virtualPosition + resolution), workArea, refreshRate, scale);
                 Displays.Add(disp);
 
                 BoundingBox.Extend(disp.Bounds.Min);
@@ -136,7 +136,7 @@ namespace OpenTK.Backends.Tests
 
             Display display = Displays[valuesChanged.DisplayIndex];
             DisplayHandle handle = Toolkit.Display.Open(valuesChanged.DisplayIndex);
-            Toolkit.Display.GetVideoMode(handle, out VideoMode newVideoMode);
+            VideoMode newVideoMode = Toolkit.Display.GetVideoMode(handle);
 
             if (valuesChanged.RefreshRateChanged)
             {
@@ -145,26 +145,24 @@ namespace OpenTK.Backends.Tests
 
             if (valuesChanged.DisplayScaleChanged)
             {
-                Toolkit.Display.GetDisplayScale(handle, out float sx, out float sy);
-                display.Scale = (sx, sy);
+                display.Scale = Toolkit.Display.GetDisplayScale(handle);
             }
 
             if (valuesChanged.VirtualPositionChanged)
             {
-                Toolkit.Display.GetVirtualPosition(handle, out int x, out int y);
-                display.Bounds = Box2i.FromSize((x, y), display.Bounds.Size);
+                Vector2i virtualPosition = Toolkit.Display.GetVirtualPosition(handle);
+                display.Bounds = Box2i.FromSize(virtualPosition, display.Bounds.Size);
             }
 
             if (valuesChanged.ResolutionChanged)
             {
-                Toolkit.Display.GetResolution(handle, out int x, out int y);
-                display.Bounds = Box2i.FromSize(display.Bounds.Min, (x, y));
+                Vector2i resolution = Toolkit.Display.GetResolution(handle);
+                display.Bounds = Box2i.FromSize(display.Bounds.Min, resolution);
             }
 
             if (valuesChanged.WorkAreaChanged)
             {
-                Toolkit.Display.GetWorkArea(handle, out Box2i workArea);
-                display.WorkArea = workArea;
+                display.WorkArea = Toolkit.Display.GetWorkArea(handle);
             }
         }
 
@@ -348,7 +346,7 @@ namespace OpenTK.Backends.Tests
                     ImGui.Columns(1);
                 }
 
-                Toolkit.Display.GetVideoMode(handle, out VideoMode currentVideoMode);
+                VideoMode currentVideoMode = Toolkit.Display.GetVideoMode(handle);
                 ImGui.Text($"Video mode: {currentVideoMode}");
 
                 VideoMode[] modes = Toolkit.Display.GetSupportedVideoModes(handle);
@@ -370,7 +368,7 @@ namespace OpenTK.Backends.Tests
                 {
                     ImGui.SeparatorText("MacOS");
 
-                    macOSDisplayComponent.GetSafeArea(handle, out Box2i safeArea);
+                    Box2i safeArea = macOSDisplayComponent.GetSafeArea(handle);
                     macOSDisplayComponent.GetSafeLeftAuxArea(handle, out Box2i leftArea);
                     macOSDisplayComponent.GetSafeRightAuxArea(handle, out Box2i rightArea);
 

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using OpenTK.Mathematics;
 using OpenTK.Platform.Native.Windows;
 
@@ -72,9 +72,9 @@ namespace OpenTK.Platform
         /// Get the active video mode of a display.
         /// </summary>
         /// <param name="handle">Handle to a display.</param>
-        /// <param name="mode">Active video mode of display.</param>
+        /// <returns>The active video mode of display.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="handle"/> is null.</exception>
-        void GetVideoMode(DisplayHandle handle, out VideoMode mode);
+        VideoMode GetVideoMode(DisplayHandle handle);
 
         /// <summary>
         /// Get all supported video modes for a specific display.
@@ -88,43 +88,40 @@ namespace OpenTK.Platform
         /// Get the position of the display in the virtual desktop.
         /// </summary>
         /// <param name="handle">Handle to a display.</param>
-        /// <param name="x">Virtual X coordinate of the display.</param>
-        /// <param name="y">Virtual Y coordinate of the display.</param>
+        /// <returns>The virtual positition of the display.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="handle"/> is null.</exception>
         /// <exception cref="PalNotImplementedException">Driver cannot get display virtual position. See <see cref="CanGetVirtualPosition"/>.</exception>
-        void GetVirtualPosition(DisplayHandle handle, out int x, out int y);
+        Vector2i GetVirtualPosition(DisplayHandle handle);
 
         /// <summary>
         /// Get the resolution of the specified display.
         /// </summary>
         /// <param name="handle">Handle to a display.</param>
-        /// <param name="width">The horizontal resolution of the display.</param>
-        /// <param name="height">The vertical resolution of the display.</param>
+        /// <returns>The horizontal and vertical resolution of the display.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="handle"/> is null.</exception>
-        void GetResolution(DisplayHandle handle, out int width, out int height);
+        Vector2i GetResolution(DisplayHandle handle);
 
         /// <summary>
         /// Get the work area of this display.
         /// The work area is the area of the display that is not covered by task bars or menu bars.
         /// </summary>
         /// <param name="handle">Handle to a display.</param>
-        /// <param name="area">The work area of the display.</param>
-        void GetWorkArea(DisplayHandle handle, out Box2i area);
+        /// <returns>The work area of the display.</returns>
+        Box2i GetWorkArea(DisplayHandle handle);
 
         /// <summary>
         /// Get the refresh rate if the specified display.
         /// </summary>
         /// <param name="handle">Handle to a display.</param>
-        /// <param name="refreshRate">The refresh rate of the display.</param>
-        void GetRefreshRate(DisplayHandle handle, out float refreshRate);
+        /// <returns>The refresh rate of the display in Hz.</returns>
+        float GetRefreshRate(DisplayHandle handle);
 
         /// <summary>
         /// Get the scale of the display.
         /// </summary>
         /// <param name="handle">Handle to a display.</param>
-        /// <param name="scaleX">The X-axis scale of the monitor.</param>
-        /// <param name="scaleY">The Y-axis scale of the monitor.</param>
-        void GetDisplayScale(DisplayHandle handle, out float scaleX, out float scaleY);
+        /// <returns>The X-axis and Y-axis scale of the monitor.</returns>
+        Vector2 GetDisplayScale(DisplayHandle handle);
 
         // FIXME: Figure out the API for this...
         /// <summary>

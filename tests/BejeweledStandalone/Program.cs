@@ -146,7 +146,7 @@ namespace Bejeweled
             }
 
             DisplayHandle mainDisplay = Toolkit.Display.OpenPrimary();
-            Toolkit.Display.GetWorkArea(mainDisplay, out Box2i workArea);
+            Box2i workArea = Toolkit.Display.GetWorkArea(mainDisplay);
             int minWorkDimention = Math.Max(400, (int)(Math.Min(workArea.Height, workArea.Width) * 0.9f));
 
             Window = Toolkit.Window.Create(openglSettings);

@@ -490,7 +490,7 @@ namespace OpenTK.Platform.Native.Windows
         [DllImport("shell32.dll")]
         internal static extern void DragFinish(IntPtr /* HDROP */ hDrop);
 
-        internal struct RECT
+        internal struct RECT : IEquatable<RECT>
         {
             public int left;
             public int top;
@@ -507,6 +507,36 @@ namespace OpenTK.Platform.Native.Windows
                 this.top = top;
                 this.right = right;
                 this.bottom = bottom;
+            }
+
+            public override bool Equals(object? obj)
+            {
+                return obj is RECT rECT && Equals(rECT);
+            }
+
+            public bool Equals(RECT other)
+            {
+                return left == other.left &&
+                       top == other.top &&
+                       right == other.right &&
+                       bottom == other.bottom &&
+                       Width == other.Width &&
+                       Height == other.Height;
+            }
+
+            public override int GetHashCode()
+            {
+                return HashCode.Combine(left, top, right, bottom, Width, Height);
+            }
+
+            public static bool operator ==(RECT left, RECT right)
+            {
+                return left.Equals(right);
+            }
+
+            public static bool operator !=(RECT left, RECT right)
+            {
+                return !(left == right);
             }
         }
 
@@ -898,14 +928,40 @@ namespace OpenTK.Platform.Native.Windows
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = false)]
         internal static extern bool EnumDisplaySettings(string lpszDeviceName, uint iModeNum, [In, Out] ref DEVMODE lpDevMode);
 
-        internal struct POINTL
+        internal struct POINTL : IEquatable<POINTL>
         {
             public int X;
             public int Y;
 
+            public override bool Equals(object? obj)
+            {
+                return obj is POINTL pOINTL && Equals(pOINTL);
+            }
+
+            public bool Equals(POINTL other)
+            {
+                return X == other.X &&
+                       Y == other.Y;
+            }
+
+            public override int GetHashCode()
+            {
+                return HashCode.Combine(X, Y);
+            }
+
             public override string ToString()
             {
                 return $"({X}, {Y})";
+            }
+
+            public static bool operator ==(POINTL left, POINTL right)
+            {
+                return left.Equals(right);
+            }
+
+            public static bool operator !=(POINTL left, POINTL right)
+            {
+                return !(left == right);
             }
         }
 

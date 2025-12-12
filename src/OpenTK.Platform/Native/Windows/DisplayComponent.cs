@@ -390,13 +390,52 @@ namespace OpenTK.Platform.Native.Windows
                         Debug.Assert(info.DeviceName == monitor.DeviceName);
                         Debug.Assert(info.PublicName == monitor.DeviceString);
 
+                        // FIXME: Linear search for thing we've already found...
+                        DisplayValuesChangedEventArgs valuesChanged = new DisplayValuesChangedEventArgs(_displays.IndexOf(info));
+
+                        // FIXME: Some way to notify the user that a new monitor is the primary monitor...?
+                        // - Noggin_bops 2025-12-12
                         info.IsPrimary = adapter.StateFlags.HasFlag(DisplayDeviceStateFlags.PrimaryDevice);
 
+                        if (info.Position != lpDevMode.dmPosition)
+                        {
+                            valuesChanged.VirtualPositionChanged = true;
+                        }
+
+                        if (info.RefreshRate != lpDevMode.dmDisplayFrequency)
+                        {
+                            valuesChanged.RefreshRateChanged = true;
+                        }
+
+                        if (info.BitsPerPixel != (int)lpDevMode.dmBitsPerPel)
+                        {
+                            valuesChanged.BitsPerPixelChanged = true;
+                        }
+
+                        if (info.Resolution != new DisplayResolution((int)lpDevMode.dmPelsWidth, (int)lpDevMode.dmPelsHeight))
+                        {
+                            valuesChanged.ResolutionChanged = true;
+                        }
+
+                        if (info.WorkArea != workArea)
+                        {
+                            valuesChanged.WorkAreaChanged = true;
+                        }
+
+                        // FIXME: Do we have a way to check if the display scale has changed?
+                        // FIXME: Check if color info has changed.
+
                         info.Position = lpDevMode.dmPosition;
+                        // FIXME: This is not necessarily the correct refresh rate to compare against!
                         info.RefreshRate = lpDevMode.dmDisplayFrequency;
                         info.BitsPerPixel = (int)lpDevMode.dmBitsPerPel;
                         info.Resolution = new DisplayResolution((int)lpDevMode.dmPelsWidth, (int)lpDevMode.dmPelsHeight);
                         info.WorkArea = workArea;
+
+                        if (valuesChanged.AnythingChanged)
+                        {
+                            EventQueue.Raise(null, PlatformEventType.DisplayValuesChanged, valuesChanged);
+                        }
                     }
                 }
             }
@@ -694,11 +733,11 @@ namespace OpenTK.Platform.Native.Windows
         }
 
         /// <inheritdoc/>
-        public void GetVideoMode(DisplayHandle handle, out VideoMode mode)
+        public VideoMode GetVideoMode(DisplayHandle handle)
         {
             HMonitor hmonitor = handle.As<HMonitor>(this);
 
-            mode = new VideoMode(
+            return new VideoMode(
                 hmonitor.Resolution.ResolutionX,
                 hmonitor.Resolution.ResolutionY,
                 hmonitor.RefreshRate,
@@ -735,43 +774,36 @@ namespace OpenTK.Platform.Native.Windows
         }
 
         /// <inheritdoc/>
-        public void GetVirtualPosition(DisplayHandle handle, out int x, out int y)
+        public Vector2i GetVirtualPosition(DisplayHandle handle)
         {
             HMonitor hmonitor = handle.As<HMonitor>(this);
-
-            x = hmonitor.Position.X;
-            y = hmonitor.Position.Y;
+            return new Vector2i(hmonitor.Position.X, hmonitor.Position.Y);
         }
 
         /// <inheritdoc/>
-        public void GetResolution(DisplayHandle handle, out int width, out int height)
+        public Vector2i GetResolution(DisplayHandle handle)
         {
             HMonitor hmonitor = handle.As<HMonitor>(this);
-
-            width = hmonitor.Resolution.ResolutionX;
-            height = hmonitor.Resolution.ResolutionY;
+            return new Vector2i(hmonitor.Resolution.ResolutionX, hmonitor.Resolution.ResolutionY);
         }
 
         /// <inheritdoc/>
-        public void GetWorkArea(DisplayHandle handle, out Box2i area)
+        public Box2i GetWorkArea(DisplayHandle handle)
         {
             HMonitor hmonitor = handle.As<HMonitor>(this);
-
             Win32.RECT workArea = hmonitor.WorkArea;
-
-            area = new Box2i(workArea.left, workArea.top, workArea.right, workArea.bottom);
+            return new Box2i(workArea.left, workArea.top, workArea.right, workArea.bottom);
         }
 
         /// <inheritdoc/>
-        public void GetRefreshRate(DisplayHandle handle, out float refreshRate)
+        public float GetRefreshRate(DisplayHandle handle)
         {
             HMonitor hmonitor = handle.As<HMonitor>(this);
-
-            refreshRate = hmonitor.RefreshRate;
+            return hmonitor.RefreshRate;
         }
 
         /// <inheritdoc/>
-        public void GetDisplayScale(DisplayHandle handle, out float  scaleX, out float scaleY)
+        public Vector2 GetDisplayScale(DisplayHandle handle)
         {
             HMonitor hmonitor = handle.As<HMonitor>(this);
 
@@ -782,10 +814,9 @@ namespace OpenTK.Platform.Native.Windows
             }
 
             // This is the platform default DPI for windows.
-            const float DefaultDPI = 96;
+            const float DefaultDPI = 96.0f;
 
-            scaleX = dpiX / DefaultDPI;
-            scaleY = dpiY / DefaultDPI;
+            return new Vector2(dpiX / DefaultDPI, dpiY / DefaultDPI);
         }
 
         /// <summary>

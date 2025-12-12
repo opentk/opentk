@@ -131,17 +131,17 @@ namespace OpenTK.Platform.Tests
             {
                 var primary = Toolkit.Display.OpenPrimary();
                 string name = Toolkit.Display.GetName(primary);
-                Toolkit.Display.GetRefreshRate(primary, out float refreshRate);
-                Toolkit.Display.GetVirtualPosition(primary, out int x, out int y);
-                Toolkit.Display.GetResolution(primary, out int width, out int height);
-                Toolkit.Display.GetWorkArea(primary, out Box2i workArea);
-                Toolkit.Display.GetVideoMode(primary, out VideoMode videoMode);
+                float refreshRate = Toolkit.Display.GetRefreshRate(primary);
+                Vector2i virtualPosition = Toolkit.Display.GetVirtualPosition(primary);
+                Vector2i resolution = Toolkit.Display.GetResolution(primary);
+                Box2i workArea = Toolkit.Display.GetWorkArea(primary);
+                VideoMode videoMode = Toolkit.Display.GetVideoMode(primary);
                 VideoMode[] modes = Toolkit.Display.GetSupportedVideoModes(primary);
 
                 Console.WriteLine($"Primary display: {name}");
                 Console.WriteLine($"Refresh rate: {refreshRate}Hz");
-                Console.WriteLine($"Position: ({x},{y})");
-                Console.WriteLine($"Resolution: {width}x{height}");
+                Console.WriteLine($"Position: ({virtualPosition.X},{virtualPosition.Y})");
+                Console.WriteLine($"Resolution: {resolution.X}x{resolution.Y}");
                 Console.WriteLine($"Work area: {workArea.Location} {workArea.Size}");
                 Console.WriteLine($"Video mode: {videoMode}");
                 Console.WriteLine($"Supported video modes:");

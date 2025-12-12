@@ -133,7 +133,7 @@ namespace BejeweledStandalone
 
             WindowHandle splashWindow = Toolkit.Window.Create(openglHints);
             DisplayHandle display = Toolkit.Window.GetDisplay(splashWindow);
-            Toolkit.Display.GetWorkArea(display, out Box2i workArea);
+            Box2i workArea = Toolkit.Display.GetWorkArea(display);
             Toolkit.Window.SetClientBounds(splashWindow, (workArea.Width - 512) / 2, (workArea.Height - 512) / 2, 512, 512);
             Toolkit.Window.SetBorderStyle(splashWindow, WindowBorderStyle.Borderless);
             Toolkit.Window.SetAlwaysOnTop(splashWindow, true);

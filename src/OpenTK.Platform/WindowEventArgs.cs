@@ -707,6 +707,16 @@ namespace OpenTK.Platform
         public bool DisplayScaleChanged { get; internal set; }
 
         /// <summary>
+        /// <see langword="true"/> if the color info of display changed, <see langword="false"/> otherwise.
+        /// </summary>
+        /// <remarks>
+        /// Get the new color info by calling <see cref="Platform.Native.Windows.DisplayComponent.GetColorInfo(DisplayHandle, out Native.Windows.DisplayColorInfo)"/> on the display with index <see cref="DisplayIndex"/>.
+        /// </remarks>
+        public bool ColorInfoChanged { get; internal set; }
+
+        internal bool AnythingChanged => BitsPerPixelChanged || ResolutionChanged || RefreshRateChanged || VirtualPositionChanged || WorkAreaChanged || DisplayScaleChanged || ColorInfoChanged;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="DisplayValuesChangedEventArgs"/> class with all changes set to <see langword="false"/>.
         /// </summary>
         /// <param name="displayIndex">The index of the display whoes values changed.</param>
@@ -725,7 +735,7 @@ namespace OpenTK.Platform
         /// <param name="workAreaChanged">The work area of the display has changed.</param>
         /// <param name="refreshRateChanged">The refresh rate of the display has changed.</param>
         /// <param name="displayScaleChanged">The scale factor of the display has changed.</param>
-        public DisplayValuesChangedEventArgs(int displayIndex, bool bitsPerPixelChanged, bool virtualPositionChanged, bool resolutionChanged, bool workAreaChanged, bool refreshRateChanged, bool displayScaleChanged)
+        public DisplayValuesChangedEventArgs(int displayIndex, bool bitsPerPixelChanged, bool virtualPositionChanged, bool resolutionChanged, bool workAreaChanged, bool refreshRateChanged, bool displayScaleChanged, bool colorInfoChanged)
         {
             DisplayIndex = displayIndex;
             BitsPerPixelChanged = bitsPerPixelChanged;
@@ -734,6 +744,7 @@ namespace OpenTK.Platform
             WorkAreaChanged = workAreaChanged;
             RefreshRateChanged = refreshRateChanged;
             DisplayScaleChanged = displayScaleChanged;
+            ColorInfoChanged = colorInfoChanged;
         }
     }
 

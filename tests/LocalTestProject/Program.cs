@@ -43,11 +43,11 @@ namespace LocalTestProject
             {
                 PrimaryDisplayHandle = Toolkit.Display.OpenPrimary();
                 string name = Toolkit.Display.GetName(PrimaryDisplayHandle);
-                Toolkit.Display.GetVideoMode(PrimaryDisplayHandle, out VideoMode videoMode);
-                Toolkit.Display.GetDisplayScale(PrimaryDisplayHandle, out float scaleX, out float scaleY);
+                VideoMode videoMode = Toolkit.Display.GetVideoMode(PrimaryDisplayHandle);
+                Vector2 scale = Toolkit.Display.GetDisplayScale(PrimaryDisplayHandle);
                 Console.WriteLine($"Primary monitor name: {name}");
                 Console.WriteLine($"  {videoMode}");
-                Console.WriteLine($"  Scale: {scaleX}, {scaleY}");
+                Console.WriteLine($"  Scale: {scale.X}, {scale.Y}");
 
                 int modeCount = Toolkit.Display.GetSupportedVideoModes(PrimaryDisplayHandle).Length;
                 Console.WriteLine($"Primary monitor supports {modeCount} video modes.");
@@ -68,11 +68,11 @@ namespace LocalTestProject
                 DisplayHandle disp = Toolkit.Display.Open(i);
 
                 string name = Toolkit.Display.GetName(disp);
-                Toolkit.Display.GetVideoMode(disp, out VideoMode videoMode);
-                Toolkit.Display.GetDisplayScale(disp, out float scaleX, out float scaleY);
+                VideoMode videoMode = Toolkit.Display.GetVideoMode(disp);
+                Vector2 scale = Toolkit.Display.GetDisplayScale(disp);
                 Console.WriteLine($"Primary monitor name: {name}");
                 Console.WriteLine($"  {videoMode}");
-                Console.WriteLine($"  Scale: {scaleX}, {scaleY}");
+                Console.WriteLine($"  Scale: {scale.X}, {scale.Y}");
                 Console.WriteLine();
             }
             Console.WriteLine();
@@ -558,12 +558,12 @@ namespace LocalTestProject
                 {
                     DisplayHandle disp = Toolkit.Window.GetDisplay(WindowHandle);
                     bool isPrimary = Toolkit.Display.IsPrimary(disp);
-                    Toolkit.Display.GetResolution(disp, out int resX, out int resY);
-                    Toolkit.Display.GetRefreshRate(disp, out float refreshRate);
+                    Vector2i resolution = Toolkit.Display.GetResolution(disp);
+                    float refreshRate = Toolkit.Display.GetRefreshRate(disp);
 
                     string name = Toolkit.Display.GetName(disp);
                     
-                    Console.WriteLine($"Window is on monitor '{name}', primary: {isPrimary}, res: ({resX}x{resY}, refresh rate: {refreshRate:0.})");
+                    Console.WriteLine($"Window is on monitor '{name}', primary: {isPrimary}, res: ({resolution.X}x{resolution.Y}, refresh rate: {refreshRate:0.})");
                 }
                 else if (keyDown.Key == Key.S)
                 {
