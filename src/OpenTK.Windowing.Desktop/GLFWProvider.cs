@@ -82,7 +82,7 @@ namespace OpenTK.Windowing.Desktop
                         Thread.CurrentThread.IsThreadPoolThread == false &&
                         Thread.CurrentThread.IsAlive)
                     {
-                        MethodInfo correctEntryMethod = Assembly.GetEntryAssembly().EntryPoint;
+                        MethodInfo correctEntryMethod = Assembly.GetEntryAssembly()?.EntryPoint;
                         StackTrace trace = new StackTrace();
                         StackFrame[] frames = trace.GetFrames();
                         for (int i = frames.Length - 1; i >= 0; i--)
