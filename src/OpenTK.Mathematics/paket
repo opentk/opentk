@@ -3,12 +3,12 @@ id OpenTK.Mathematics
 description
     A basic mathematics library developed primarily for rendering in 3d and 2d.
 dependencies
-    framework: net8.0
+    framework: net10.0
         System.Runtime.CompilerServices.Unsafe >= 6.0.0
 files
-    bin\Release\net8.0\OpenTK.Mathematics.dll ==> lib\net8.0
-    bin\Release\net8.0\OpenTK.Mathematics.xml ==> lib\net8.0
-    bin\Release\net8.0\OpenTK.Mathematics.pdb ==> lib\net8.0
+    bin\Release\net10.0\OpenTK.Mathematics.dll ==> lib\net10.0
+    bin\Release\net10.0\OpenTK.Mathematics.xml ==> lib\net10.0
+    bin\Release\net10.0\OpenTK.Mathematics.pdb ==> lib\net10.0
     README.md ==> docs
     ..\..\.github\opentk-blue-hexagon.png ==> images
 

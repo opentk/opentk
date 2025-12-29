@@ -585,7 +585,6 @@ namespace OpenTK.Mathematics
             result = Vector128.MaxNative(a.AsVector128(), b.AsVector128()).AsVector4Otk();
         }
 
-
         /// <summary>
         /// Returns the Vector4 with the minimum magnitude. If the magnitudes are equal, the second vector
         /// is selected.
