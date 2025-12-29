@@ -71,6 +71,12 @@ namespace OpenTK.Platform.Native.Windows
         internal const int LoWordMask = 0x0000_FFFF;
         internal const int HiWordMask = unchecked((int)0xFFFF_0000);
 
+        internal static ushort LOWORD(nint w) => LOWORD((int)w);
+        internal static ushort LOWORD(int w) => (ushort)(w & 0xFFFF);
+
+        internal static ushort HIWORD(nint w) => HIWORD((int)w);
+        internal static ushort HIWORD(int w) => (ushort)((w >> 16) & 0xFFFF);
+
         internal static int GET_X_LPARAM(IntPtr lParam) => (short)(lParam.ToInt64() & LoWordMask);
         internal static int GET_Y_LPARAM(IntPtr lParam) => (short)((lParam.ToInt64() >> 16) & LoWordMask);
 
@@ -90,6 +96,8 @@ namespace OpenTK.Platform.Native.Windows
         /// The data area passed to a system call is too small.
         /// </summary>
         internal const int ERROR_INSUFFICIENT_BUFFER = 0x7A;
+
+        internal const int ERROR_MORE_DATA = 0xEA;
 
         internal const int CCHDEVICENAME = 32;
         internal const int CCHFORMNAME = 32;
@@ -117,6 +125,17 @@ namespace OpenTK.Platform.Native.Windows
         internal const IntPtr INVALID_HANDLE_VALUE = -1;
 
         internal const int LOCALE_NAME_MAX_LENGTH = 85;
+
+        internal const int SEVERITY_SUCCESS = 0;
+        internal const int SEVERITY_ERROR = 1;
+
+        internal const int FACILITY_WIN32 = 7;
+
+        internal const int ERROR_READ_FAULT = 30;
+        internal const int ERROR_INVALID_ACCESS = 12;
+        internal const int ERROR_BUSY = 170;
+
+        internal static int MAKE_HRESULT(int sev, int fac, int code) => sev << 31 | fac << 16 | code;
 
         // Usefull extension methods for dealing with span string buffers.
         internal static Span<char> SliceAtFirstNull(this Span<char> span)
@@ -471,7 +490,7 @@ namespace OpenTK.Platform.Native.Windows
         [DllImport("shell32.dll")]
         internal static extern void DragFinish(IntPtr /* HDROP */ hDrop);
 
-        internal struct RECT
+        internal struct RECT : IEquatable<RECT>
         {
             public int left;
             public int top;
@@ -488,6 +507,36 @@ namespace OpenTK.Platform.Native.Windows
                 this.top = top;
                 this.right = right;
                 this.bottom = bottom;
+            }
+
+            public override bool Equals(object? obj)
+            {
+                return obj is RECT rECT && Equals(rECT);
+            }
+
+            public bool Equals(RECT other)
+            {
+                return left == other.left &&
+                       top == other.top &&
+                       right == other.right &&
+                       bottom == other.bottom &&
+                       Width == other.Width &&
+                       Height == other.Height;
+            }
+
+            public override int GetHashCode()
+            {
+                return HashCode.Combine(left, top, right, bottom, Width, Height);
+            }
+
+            public static bool operator ==(RECT left, RECT right)
+            {
+                return left.Equals(right);
+            }
+
+            public static bool operator !=(RECT left, RECT right)
+            {
+                return !(left == right);
             }
         }
 
@@ -879,14 +928,40 @@ namespace OpenTK.Platform.Native.Windows
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = false)]
         internal static extern bool EnumDisplaySettings(string lpszDeviceName, uint iModeNum, [In, Out] ref DEVMODE lpDevMode);
 
-        internal struct POINTL
+        internal struct POINTL : IEquatable<POINTL>
         {
             public int X;
             public int Y;
 
+            public override bool Equals(object? obj)
+            {
+                return obj is POINTL pOINTL && Equals(pOINTL);
+            }
+
+            public bool Equals(POINTL other)
+            {
+                return X == other.X &&
+                       Y == other.Y;
+            }
+
+            public override int GetHashCode()
+            {
+                return HashCode.Combine(X, Y);
+            }
+
             public override string ToString()
             {
                 return $"({X}, {Y})";
+            }
+
+            public static bool operator ==(POINTL left, POINTL right)
+            {
+                return left.Equals(right);
+            }
+
+            public static bool operator !=(POINTL left, POINTL right)
+            {
+                return !(left == right);
             }
         }
 
@@ -1059,6 +1134,9 @@ namespace OpenTK.Platform.Native.Windows
 
         [DllImport("shlwapi.dll", CharSet = CharSet.Auto, SetLastError = false)]
         internal static unsafe extern uint /* LWSTDAPI */ SHLoadIndirectString(char* pszSource, char* pszOutBuf, uint cchOutBuf, void** ppvReserved);
+
+        [DllImport("advapi32.dll", CharSet = CharSet.Auto, SetLastError = false)]
+        internal static unsafe extern uint /* LSTATUS */ RegLoadMUIString(IntPtr /* HKEY */ hKey, char* pszValue, char* pszOutBuf, uint cbOutBuf, out uint pcbData, uint flags, char* pszDirectory);
 
         [DllImport("user32.dll", SetLastError = true)]
         internal static extern int GetKeyboardLayoutList(int nBuff, IntPtr* lpList);

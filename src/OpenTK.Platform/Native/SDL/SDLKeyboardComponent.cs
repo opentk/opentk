@@ -41,7 +41,6 @@ namespace OpenTK.Platform.Native.SDL
         /// <inheritdoc/>
         public bool SupportsIme => true;
 
-        /// <inheritdoc/>
         public string GetActiveKeyboardLayout(WindowHandle? handle)
         {
             // FIXME! Can we do something here?
@@ -49,10 +48,31 @@ namespace OpenTK.Platform.Native.SDL
             return "Unknown";
         }
 
-        /// <inheritdoc/>
         public string[] GetAvailableKeyboardLayouts()
         {
             throw new NotSupportedException("SDL 2 doesn't support getting keyboard layouts.");
+        }
+
+        /// <inheritdoc/>
+        public InputLanguage GetActiveInputLanguage(WindowHandle? handle)
+        {
+            // FIXME: Culture!
+            return new InputLanguage(System.Globalization.CultureInfo.CurrentCulture, GetActiveKeyboardLayout(handle));
+        }
+
+        /// <inheritdoc/>
+        public InputLanguage[] GetInstalledInputLanguages()
+        {
+            var layouts = GetAvailableKeyboardLayouts();
+
+            InputLanguage[] languages = new InputLanguage[layouts.Length];
+            for (int i = 0; i < layouts.Length; i++)
+            {
+                // FIXME: Culture!
+                languages[i] = new InputLanguage(System.Globalization.CultureInfo.CurrentCulture, layouts[i]);
+            }
+
+            return languages;
         }
 
         /// <inheritdoc/>

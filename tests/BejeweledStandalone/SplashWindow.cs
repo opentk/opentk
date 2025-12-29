@@ -98,16 +98,16 @@ namespace BejeweledStandalone
             ImageResult image = ImageResult.FromStream(File.OpenRead(path), ColorComponents.RedGreenBlueAlpha);
 
             int tex = GL.GenTexture();
-            GL.BindTexture(TextureTarget.Texture2d, tex);
+            GL.BindTexture(TextureTarget.Texture2D, tex);
 
-            GL.TexImage2D(TextureTarget.Texture2d, 0, InternalFormat.Srgb8Alpha8, image.Width, image.Height, 0, PixelFormat.Rgba, PixelType.UnsignedByte, image.Data);
-            GL.GenerateMipmap(TextureTarget.Texture2d);
+            GL.TexImage2D(TextureTarget.Texture2D, 0, InternalFormat.Srgb8Alpha8, image.Width, image.Height, 0, PixelFormat.Rgba, PixelType.UnsignedByte, image.Data);
+            GL.GenerateMipmap(TextureTarget.Texture2D);
 
-            GL.TexParameteri(TextureTarget.Texture2d, TextureParameterName.TextureWrapS, (int)TextureWrapMode.ClampToEdge);
-            GL.TexParameteri(TextureTarget.Texture2d, TextureParameterName.TextureWrapT, (int)TextureWrapMode.ClampToEdge);
+            GL.TexParameteri(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, (int)TextureWrapMode.ClampToEdge);
+            GL.TexParameteri(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (int)TextureWrapMode.ClampToEdge);
 
-            GL.TexParameteri(TextureTarget.Texture2d, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Linear);
-            GL.TexParameteri(TextureTarget.Texture2d, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.LinearMipmapLinear);
+            GL.TexParameteri(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Linear);
+            GL.TexParameteri(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.LinearMipmapLinear);
 
             return tex;
         }
@@ -133,7 +133,7 @@ namespace BejeweledStandalone
 
             WindowHandle splashWindow = Toolkit.Window.Create(openglHints);
             DisplayHandle display = Toolkit.Window.GetDisplay(splashWindow);
-            Toolkit.Display.GetWorkArea(display, out Box2i workArea);
+            Box2i workArea = Toolkit.Display.GetWorkArea(display);
             Toolkit.Window.SetClientBounds(splashWindow, (workArea.Width - 512) / 2, (workArea.Height - 512) / 2, 512, 512);
             Toolkit.Window.SetBorderStyle(splashWindow, WindowBorderStyle.Borderless);
             Toolkit.Window.SetAlwaysOnTop(splashWindow, true);
@@ -165,7 +165,7 @@ namespace BejeweledStandalone
 
             GL.Uniform1i(GL.GetUniformLocation(shader, "texImage"), 0);
             GL.ActiveTexture(TextureUnit.Texture0);
-            GL.BindTexture(TextureTarget.Texture2d, splashImage);
+            GL.BindTexture(TextureTarget.Texture2D, splashImage);
 
             Toolkit.Window.SetMode(splashWindow, WindowMode.Normal);
 

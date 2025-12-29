@@ -29,8 +29,11 @@ namespace OpenTK.Platform.Native.SDL
         private uint OpenTKUserEventID;
 
         /// <inheritdoc/>
-        public void Initialize(ToolkitOptions options)
+        public unsafe void Initialize(ToolkitOptions options)
         {
+            SDL_LogSetAllPriority(SDL_LogPriority.SDL_LOG_PRIORITY_VERBOSE);
+            SDL_LogSetOutputFunction(SDLLogFunctionInst, null);
+
             // Load SDLLib
             int result = SDL_Init(SDL_INIT.SDL_INIT_VIDEO | SDL_INIT.SDL_INIT_EVENTS | SDL_INIT.SDL_INIT_JOYSTICK | SDL_INIT.SDL_INIT_GAMECONTROLLER);
 
@@ -40,7 +43,17 @@ namespace OpenTK.Platform.Native.SDL
                 throw new PalException(this, $"SDL Error: {error}");
             }
 
+            SDL_GetVersion(out var version);
+            Logger?.LogInfo($"Initialized SDL backend with SDL version {version.major}.{version.minor}.{version.patch}");
+
             OpenTKUserEventID = SDL_RegisterEvents(1);
+        }
+
+        internal static unsafe SDL_LogOutputFunction SDLLogFunctionInst = SDLLogFunction;
+        internal static unsafe void SDLLogFunction(void* userdata, SDL_LogCategory category, SDL_LogPriority priority, /* const char* */ IntPtr message)
+        {
+            string msg = Marshal.PtrToStringUTF8(message)!;
+            Console.WriteLine(msg);
         }
 
         /// <inheritdoc/>
@@ -399,8 +412,7 @@ namespace OpenTK.Platform.Native.SDL
                     case SDL_EventType.SDL_KEYMAPCHANGED:
                         {
                             // FIXME: How should we deal with not having the proper information here?
-                            EventQueue.Raise(null, PlatformEventType.InputLanguageChanged, new InputLanguageChangedEventArgs(null, null, null, null));
-
+                            EventQueue.Raise(null, PlatformEventType.InputLanguageChanged, new InputLanguageChangedEventArgs(new InputLanguage(System.Globalization.CultureInfo.CurrentCulture, "unknown")));
                             break;
                         }
                     case SDL_EventType.SDL_KEYDOWN:
@@ -443,11 +455,29 @@ namespace OpenTK.Platform.Native.SDL
 
                             break;
                         }
+                    case SDL_EventType.SDL_JOYDEVICEADDED:
+                    case SDL_EventType.SDL_JOYDEVICEREMOVED:
+                        {
+                            SDL_JoyDeviceEvent joystickDeviceEvent = @event.JoyDeviceEvent;
+
+                            (Toolkit.Joystick as SDLJoystickComponent)?.JoystickAddedOrRemoved(joystickDeviceEvent);
+
+                            break;
+                        }
+                    case SDL_EventType.SDL_JOYAXISMOTION:
+                    case SDL_EventType.SDL_JOYBALLMOTION:
+                    case SDL_EventType.SDL_JOYBATTERYUPDATED:
+                    case SDL_EventType.SDL_JOYBUTTONDOWN:
+                    case SDL_EventType.SDL_JOYBUTTONUP:
+                    case SDL_EventType.SDL_JOYHATMOTION:
+                        break;
                     default:
                         Console.WriteLine($"SDL event type: {@event.Type}");
                         break;
                 }
             }
+
+            SDL_JoystickUpdate();
         }
 
         /// <inheritdoc/>
@@ -776,8 +806,8 @@ namespace OpenTK.Platform.Native.SDL
 
             SDL_GetWindowMaximumSize(window.Window, out w, out h);
 
-            width = w != 0 ? w : null;
-            height = h != 0 ? h : null;
+            width = w != int.MaxValue ? w : null;
+            height = h != int.MaxValue ? h : null;
         }
 
         /// <inheritdoc/>
@@ -787,7 +817,9 @@ namespace OpenTK.Platform.Native.SDL
 
             // FIXME: Is this client area or windowEvent??
 
-            SDL_SetWindowMaximumSize(window.Window, width ?? 0, height ?? 0);
+            SDL_SetWindowMaximumSize(window.Window, width ?? int.MaxValue, height ?? int.MaxValue);
+
+            var a = SDL_GetError();
         }
 
         /// <inheritdoc/>
@@ -809,6 +841,8 @@ namespace OpenTK.Platform.Native.SDL
             SDLWindow window = handle.As<SDLWindow>(this);
 
             SDL_SetWindowMinimumSize(window.Window, width ?? 0, height ?? 0);
+
+            var a = SDL_GetError();
         }
 
         /// <inheritdoc/>
@@ -1276,6 +1310,13 @@ namespace OpenTK.Platform.Native.SDL
 
             scaleX = pixelWidth / (float)width;
             scaleY = pixelHeight / (float)height;
+        }
+
+        /// <inheritdoc/>
+        public OpenGLContextHandle? GetOpenGLContext(WindowHandle handle)
+        {
+            SDLWindow window = handle.As<SDLWindow>(this);
+            return window.OpenGLContextHandle;
         }
     }
 }

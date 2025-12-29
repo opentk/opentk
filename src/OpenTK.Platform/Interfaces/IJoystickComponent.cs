@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OpenTK.Mathematics;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -7,80 +8,70 @@ using System.Threading.Tasks;
 
 namespace OpenTK.Platform
 {
+    [Flags]
+    public enum HatState : byte
+    {
+        Centered = 0,
+        Left = 0b0001,
+        Right = 0b0010,
+        Up = 0b0100,
+        Down = 0b1000,
+        LeftUp = Left | Up,
+        LeftDown = Left | Down,
+        RightUp = Right | Up,
+        RightDown = Right | Down,
+    }
+
+    public enum JoystickType
+    {
+        Unknown,
+        Gamepad,
+        Wheel,
+        ArcadeStick,
+        FlightStick,
+        DancePad,
+        Guitar,
+        DrumKit,
+        ArcadePad,
+        Throttle,
+    }
+
+    [Flags]
+    public enum JoystickCapabilities
+    {
+        None = 0,
+        Rumble = 1,
+    }
+
     /// <summary>
     /// Interface for interacting with joysticks.
     /// </summary>
     /// <seealso cref="Toolkit.Joystick"/>
     public interface IJoystickComponent : IPalComponent
     {
-        // FIXME: Should we have separate gamepad and joystick components?
-
-        // FIXME: Document the expectations for this API, and what all of the functions are supposed to do.
-
-        // FIXME: Add some way to query if joysticks are connected or not?
-
-        // FIXME: Get joystick from player index (and make index different from player index?)
-
-        // FIXME: Way to query/enumerate all of the joysticks currently connected.
-
-        /// <summary>
-        /// The recommended deadzone value for the left analog stick.
-        /// </summary>
-        public float LeftDeadzone { get; }
-
-        /// <summary>
-        /// The recommended deadzone value for the right analog stick.
-        /// </summary>
-        public float RightDeadzone { get; }
-
-        /// <summary>
-        /// The recommended threshold for considering the left or right trigger pressed.
-        /// </summary>
-        public float TriggerThreshold { get; }
-
-        /// <summary>
-        /// Checks wether a joystick with the specific index is present on the system or not.
-        /// </summary>
-        /// <param name="index">The index of the joystick.</param>
-        /// <returns>If a joystick with the specified index is connected.</returns>
-        public bool IsConnected(int index);
-
-        /// <summary>
-        /// Opens a handle to a specific joystick.
-        /// </summary>
-        /// <param name="index">The player index of the joystick to open.</param>
-        /// <returns>The opened joystick handle.</returns>
+        public int GetJoystickCount();
         public JoystickHandle Open(int index);
+        public void Close(JoystickHandle joystick);
 
-        /// <summary>
-        /// Closes a handle to a joystick.
-        /// </summary>
-        /// <param name="handle">The joystick handle.</param>
-        public void Close(JoystickHandle handle);
+        public Guid GetGuid(JoystickHandle joystick);
+        public string GetName(JoystickHandle joystick);
+        public bool TryGetBatteryInfo(JoystickHandle joystick, out GamepadBatteryInfo batteryInfo);
+        public JoystickCapabilities GetCapabilities(JoystickHandle joystick);
 
-        public Guid GetGuid(JoystickHandle handle);
+        public int GetNumberOfAxes(JoystickHandle joystick);
+        public float GetAxis(JoystickHandle joystick, int axis);
 
-        public string GetName(JoystickHandle handle);
+        public int GetNumberOfButtons(JoystickHandle joystick);
+        public bool GetButton(JoystickHandle joystick, int button);
 
-        /// <summary>
-        /// Gets the value of a specific joystick axis.
-        /// This value is in the range [-1, 1] for analog sticks, and [0, 1] for triggers.
-        /// </summary>
-        /// <param name="handle">A handle to a joystick.</param>
-        /// <param name="axis">The joystick axis to get.</param>
-        /// <returns>The joystick axis value.</returns>
-        public float GetAxis(JoystickHandle handle, JoystickAxis axis);
+        public int GetNumberOfHats(JoystickHandle joystick);
+        public HatState GetHat(JoystickHandle joystick, int hat);
 
-        /// <summary>
-        /// Get the pressed state of a specific joystick button.
-        /// </summary>
-        /// <param name="handle">A handle to a joystick.</param>
-        /// <param name="button">The joystick button to get.</param>
-        /// <returns>True if the specified button is pressed or false if the button is released.</returns>
-        public bool GetButton(JoystickHandle handle, JoystickButton button);
+        // FIXME: Maybe add a duration as that might be useful for some people...?
+        public bool SetRumble(JoystickHandle joystick, float lowFrequencyIntensity, float highFrequencyIntensity);
 
-        public bool SetVibration(JoystickHandle handle, float lowFreqIntensity, float highFreqIntensity);
-
-        public bool TryGetBatteryInfo(JoystickHandle handle, out GamepadBatteryInfo batteryInfo);
+        // FIXME: Maybe add this?
+        //public int GetNumberOfLEDs(JoystickHandle joystick);
+        //public void SetLED(JoystickHandle joystick, int index, Color3<Rgb> color);
     }
 }

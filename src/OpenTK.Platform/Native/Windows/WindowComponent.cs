@@ -1179,6 +1179,8 @@ namespace OpenTK.Platform.Native.Windows
                     CursorCapturingWindow.LastMousePosition = (size.X / 2, size.Y / 2);
                 }
             }
+
+            (Toolkit.Joystick as JoystickComponent)?.Update();
         }
 
         /// <inheritdoc/>
@@ -2351,6 +2353,13 @@ namespace OpenTK.Platform.Native.Windows
             float scale = dpi / (float)Win32.USER_DEFAULT_SCREEN_DPI;
             scaleX = scale;
             scaleY = scale;
+        }
+
+        /// <inheritdoc/>
+        public OpenGLContextHandle? GetOpenGLContext(WindowHandle handle)
+        {
+            HWND hwnd = handle.As<HWND>(this);
+            return hwnd.OpenGLContextHandle;
         }
 
         /// <summary>

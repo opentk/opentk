@@ -901,26 +901,26 @@ namespace OpenTK.Audio.OpenAL
                 SourcePlayv(n, sources_ptr);
             }
         }
-        /// <inheritdoc cref="SourceQueueBuffers(int, int, uint*)"/>
-        public static unsafe void SourceQueueBuffers(int source, int nb, ReadOnlySpan<uint> buffers)
+        /// <inheritdoc cref="SourceQueueBuffers(int, int, int*)"/>
+        public static unsafe void SourceQueueBuffers(int source, int nb, ReadOnlySpan<int> buffers)
         {
-            fixed (uint* buffers_ptr = buffers)
+            fixed (int* buffers_ptr = buffers)
             {
                 SourceQueueBuffers(source, nb, buffers_ptr);
             }
         }
-        /// <inheritdoc cref="SourceQueueBuffers(int, int, uint*)"/>
-        public static unsafe void SourceQueueBuffers(int source, int nb, uint[] buffers)
+        /// <inheritdoc cref="SourceQueueBuffers(int, int, int*)"/>
+        public static unsafe void SourceQueueBuffers(int source, int nb, int[] buffers)
         {
-            fixed (uint* buffers_ptr = buffers)
+            fixed (int* buffers_ptr = buffers)
             {
                 SourceQueueBuffers(source, nb, buffers_ptr);
             }
         }
-        /// <inheritdoc cref="SourceQueueBuffers(int, int, uint*)"/>
-        public static unsafe void SourceQueueBuffers(int source, int nb, ref readonly uint buffers)
+        /// <inheritdoc cref="SourceQueueBuffers(int, int, int*)"/>
+        public static unsafe void SourceQueueBuffers(int source, int nb, ref readonly int buffers)
         {
-            fixed (uint* buffers_ptr = &buffers)
+            fixed (int* buffers_ptr = &buffers)
             {
                 SourceQueueBuffers(source, nb, buffers_ptr);
             }
@@ -974,27 +974,27 @@ namespace OpenTK.Audio.OpenAL
             }
         }
         /// <inheritdoc cref="SourceUnqueueBuffers(int, int, int*)"/>
-        public static unsafe void SourceUnqueueBuffers(int source, int nb, Span<int> buffer)
+        public static unsafe void SourceUnqueueBuffers(int source, int nb, Span<int> buffers)
         {
-            fixed (int* buffer_ptr = buffer)
+            fixed (int* buffers_ptr = buffers)
             {
-                SourceUnqueueBuffers(source, nb, buffer_ptr);
+                SourceUnqueueBuffers(source, nb, buffers_ptr);
             }
         }
         /// <inheritdoc cref="SourceUnqueueBuffers(int, int, int*)"/>
-        public static unsafe void SourceUnqueueBuffers(int source, int nb, int[] buffer)
+        public static unsafe void SourceUnqueueBuffers(int source, int nb, int[] buffers)
         {
-            fixed (int* buffer_ptr = buffer)
+            fixed (int* buffers_ptr = buffers)
             {
-                SourceUnqueueBuffers(source, nb, buffer_ptr);
+                SourceUnqueueBuffers(source, nb, buffers_ptr);
             }
         }
         /// <inheritdoc cref="SourceUnqueueBuffers(int, int, int*)"/>
-        public static unsafe void SourceUnqueueBuffers(int source, int nb, ref int buffer)
+        public static unsafe void SourceUnqueueBuffers(int source, int nb, ref int buffers)
         {
-            fixed (int* buffer_ptr = &buffer)
+            fixed (int* buffers_ptr = &buffers)
             {
-                SourceUnqueueBuffers(source, nb, buffer_ptr);
+                SourceUnqueueBuffers(source, nb, buffers_ptr);
             }
         }
         public static unsafe partial class Creative
@@ -1050,8 +1050,8 @@ namespace OpenTK.Audio.OpenAL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="EAXGetBufferMode(uint, int*)"/>
-            public static unsafe EAXBufferMode EAXGetBufferMode(uint buffer, Span<int> pReserved)
+            /// <inheritdoc cref="EAXGetBufferMode(int, int*)"/>
+            public static unsafe EAXBufferMode EAXGetBufferMode(int buffer, Span<int> pReserved)
             {
                 EAXBufferMode returnValue;
                 fixed (int* pReserved_ptr = pReserved)
@@ -1060,8 +1060,8 @@ namespace OpenTK.Audio.OpenAL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="EAXGetBufferMode(uint, int*)"/>
-            public static unsafe EAXBufferMode EAXGetBufferMode(uint buffer, int[] pReserved)
+            /// <inheritdoc cref="EAXGetBufferMode(int, int*)"/>
+            public static unsafe EAXBufferMode EAXGetBufferMode(int buffer, int[] pReserved)
             {
                 EAXBufferMode returnValue;
                 fixed (int* pReserved_ptr = pReserved)
@@ -1070,8 +1070,8 @@ namespace OpenTK.Audio.OpenAL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="EAXGetBufferMode(uint, int*)"/>
-            public static unsafe EAXBufferMode EAXGetBufferMode(uint buffer, ref int pReserved)
+            /// <inheritdoc cref="EAXGetBufferMode(int, int*)"/>
+            public static unsafe EAXBufferMode EAXGetBufferMode(int buffer, ref int pReserved)
             {
                 EAXBufferMode returnValue;
                 fixed (int* pReserved_ptr = &pReserved)
@@ -1131,31 +1131,31 @@ namespace OpenTK.Audio.OpenAL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="EAXSetBufferMode(int, uint*, int)"/>
-            public static unsafe bool EAXSetBufferMode(int n, Span<uint> buffers, int value)
+            /// <inheritdoc cref="EAXSetBufferMode(int, int*, int)"/>
+            public static unsafe bool EAXSetBufferMode(int n, Span<int> buffers, int value)
             {
                 bool returnValue;
-                fixed (uint* buffers_ptr = buffers)
+                fixed (int* buffers_ptr = buffers)
                 {
                     returnValue = EAXSetBufferMode(n, buffers_ptr, value);
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="EAXSetBufferMode(int, uint*, int)"/>
-            public static unsafe bool EAXSetBufferMode(int n, uint[] buffers, int value)
+            /// <inheritdoc cref="EAXSetBufferMode(int, int*, int)"/>
+            public static unsafe bool EAXSetBufferMode(int n, int[] buffers, int value)
             {
                 bool returnValue;
-                fixed (uint* buffers_ptr = buffers)
+                fixed (int* buffers_ptr = buffers)
                 {
                     returnValue = EAXSetBufferMode(n, buffers_ptr, value);
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="EAXSetBufferMode(int, uint*, int)"/>
-            public static unsafe bool EAXSetBufferMode(int n, ref uint buffers, int value)
+            /// <inheritdoc cref="EAXSetBufferMode(int, int*, int)"/>
+            public static unsafe bool EAXSetBufferMode(int n, ref int buffers, int value)
             {
                 bool returnValue;
-                fixed (uint* buffers_ptr = &buffers)
+                fixed (int* buffers_ptr = &buffers)
                 {
                     returnValue = EAXSetBufferMode(n, buffers_ptr, value);
                 }
@@ -1814,8 +1814,8 @@ namespace OpenTK.Audio.OpenAL
                     DeleteSourcesDirect(context, n, sources_ptr);
                 }
             }
-            /// <inheritdoc cref="EAXGetBufferModeDirect(ALCContext, uint, int*)"/>
-            public static unsafe EAXBufferMode EAXGetBufferModeDirect(ALCContext context, uint buffer, Span<int> pReserved)
+            /// <inheritdoc cref="EAXGetBufferModeDirect(ALCContext, int, int*)"/>
+            public static unsafe EAXBufferMode EAXGetBufferModeDirect(ALCContext context, int buffer, Span<int> pReserved)
             {
                 EAXBufferMode returnValue;
                 fixed (int* pReserved_ptr = pReserved)
@@ -1824,8 +1824,8 @@ namespace OpenTK.Audio.OpenAL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="EAXGetBufferModeDirect(ALCContext, uint, int*)"/>
-            public static unsafe EAXBufferMode EAXGetBufferModeDirect(ALCContext context, uint buffer, int[] pReserved)
+            /// <inheritdoc cref="EAXGetBufferModeDirect(ALCContext, int, int*)"/>
+            public static unsafe EAXBufferMode EAXGetBufferModeDirect(ALCContext context, int buffer, int[] pReserved)
             {
                 EAXBufferMode returnValue;
                 fixed (int* pReserved_ptr = pReserved)
@@ -1834,8 +1834,8 @@ namespace OpenTK.Audio.OpenAL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="EAXGetBufferModeDirect(ALCContext, uint, int*)"/>
-            public static unsafe EAXBufferMode EAXGetBufferModeDirect(ALCContext context, uint buffer, ref int pReserved)
+            /// <inheritdoc cref="EAXGetBufferModeDirect(ALCContext, int, int*)"/>
+            public static unsafe EAXBufferMode EAXGetBufferModeDirect(ALCContext context, int buffer, ref int pReserved)
             {
                 EAXBufferMode returnValue;
                 fixed (int* pReserved_ptr = &pReserved)
@@ -1895,31 +1895,31 @@ namespace OpenTK.Audio.OpenAL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="EAXSetBufferModeDirect(ALCContext, int, uint*, int)"/>
-            public static unsafe bool EAXSetBufferModeDirect(ALCContext context, int n, Span<uint> buffers, int value)
+            /// <inheritdoc cref="EAXSetBufferModeDirect(ALCContext, int, int*, int)"/>
+            public static unsafe bool EAXSetBufferModeDirect(ALCContext context, int n, Span<int> buffers, int value)
             {
                 bool returnValue;
-                fixed (uint* buffers_ptr = buffers)
+                fixed (int* buffers_ptr = buffers)
                 {
                     returnValue = EAXSetBufferModeDirect(context, n, buffers_ptr, value);
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="EAXSetBufferModeDirect(ALCContext, int, uint*, int)"/>
-            public static unsafe bool EAXSetBufferModeDirect(ALCContext context, int n, uint[] buffers, int value)
+            /// <inheritdoc cref="EAXSetBufferModeDirect(ALCContext, int, int*, int)"/>
+            public static unsafe bool EAXSetBufferModeDirect(ALCContext context, int n, int[] buffers, int value)
             {
                 bool returnValue;
-                fixed (uint* buffers_ptr = buffers)
+                fixed (int* buffers_ptr = buffers)
                 {
                     returnValue = EAXSetBufferModeDirect(context, n, buffers_ptr, value);
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="EAXSetBufferModeDirect(ALCContext, int, uint*, int)"/>
-            public static unsafe bool EAXSetBufferModeDirect(ALCContext context, int n, ref uint buffers, int value)
+            /// <inheritdoc cref="EAXSetBufferModeDirect(ALCContext, int, int*, int)"/>
+            public static unsafe bool EAXSetBufferModeDirect(ALCContext context, int n, ref int buffers, int value)
             {
                 bool returnValue;
-                fixed (uint* buffers_ptr = &buffers)
+                fixed (int* buffers_ptr = &buffers)
                 {
                     returnValue = EAXSetBufferModeDirect(context, n, buffers_ptr, value);
                 }
@@ -4223,26 +4223,26 @@ namespace OpenTK.Audio.OpenAL
                     SourcePlayvDirect(context, n, sources_ptr);
                 }
             }
-            /// <inheritdoc cref="SourceQueueBuffersDirect(ALCContext, int, int, uint*)"/>
-            public static unsafe void SourceQueueBuffersDirect(ALCContext context, int source, int nb, ReadOnlySpan<uint> buffers)
+            /// <inheritdoc cref="SourceQueueBuffersDirect(ALCContext, int, int, int*)"/>
+            public static unsafe void SourceQueueBuffersDirect(ALCContext context, int source, int nb, ReadOnlySpan<int> buffers)
             {
-                fixed (uint* buffers_ptr = buffers)
+                fixed (int* buffers_ptr = buffers)
                 {
                     SourceQueueBuffersDirect(context, source, nb, buffers_ptr);
                 }
             }
-            /// <inheritdoc cref="SourceQueueBuffersDirect(ALCContext, int, int, uint*)"/>
-            public static unsafe void SourceQueueBuffersDirect(ALCContext context, int source, int nb, uint[] buffers)
+            /// <inheritdoc cref="SourceQueueBuffersDirect(ALCContext, int, int, int*)"/>
+            public static unsafe void SourceQueueBuffersDirect(ALCContext context, int source, int nb, int[] buffers)
             {
-                fixed (uint* buffers_ptr = buffers)
+                fixed (int* buffers_ptr = buffers)
                 {
                     SourceQueueBuffersDirect(context, source, nb, buffers_ptr);
                 }
             }
-            /// <inheritdoc cref="SourceQueueBuffersDirect(ALCContext, int, int, uint*)"/>
-            public static unsafe void SourceQueueBuffersDirect(ALCContext context, int source, int nb, ref readonly uint buffers)
+            /// <inheritdoc cref="SourceQueueBuffersDirect(ALCContext, int, int, int*)"/>
+            public static unsafe void SourceQueueBuffersDirect(ALCContext context, int source, int nb, ref readonly int buffers)
             {
-                fixed (uint* buffers_ptr = &buffers)
+                fixed (int* buffers_ptr = &buffers)
                 {
                     SourceQueueBuffersDirect(context, source, nb, buffers_ptr);
                 }
@@ -4362,27 +4362,27 @@ namespace OpenTK.Audio.OpenAL
                 }
             }
             /// <inheritdoc cref="SourceUnqueueBuffersDirect(ALCContext, int, int, int*)"/>
-            public static unsafe void SourceUnqueueBuffersDirect(ALCContext context, int source, int nb, Span<int> buffer)
+            public static unsafe void SourceUnqueueBuffersDirect(ALCContext context, int source, int nb, Span<int> buffers)
             {
-                fixed (int* buffer_ptr = buffer)
+                fixed (int* buffers_ptr = buffers)
                 {
-                    SourceUnqueueBuffersDirect(context, source, nb, buffer_ptr);
+                    SourceUnqueueBuffersDirect(context, source, nb, buffers_ptr);
                 }
             }
             /// <inheritdoc cref="SourceUnqueueBuffersDirect(ALCContext, int, int, int*)"/>
-            public static unsafe void SourceUnqueueBuffersDirect(ALCContext context, int source, int nb, int[] buffer)
+            public static unsafe void SourceUnqueueBuffersDirect(ALCContext context, int source, int nb, int[] buffers)
             {
-                fixed (int* buffer_ptr = buffer)
+                fixed (int* buffers_ptr = buffers)
                 {
-                    SourceUnqueueBuffersDirect(context, source, nb, buffer_ptr);
+                    SourceUnqueueBuffersDirect(context, source, nb, buffers_ptr);
                 }
             }
             /// <inheritdoc cref="SourceUnqueueBuffersDirect(ALCContext, int, int, int*)"/>
-            public static unsafe void SourceUnqueueBuffersDirect(ALCContext context, int source, int nb, ref int buffer)
+            public static unsafe void SourceUnqueueBuffersDirect(ALCContext context, int source, int nb, ref int buffers)
             {
-                fixed (int* buffer_ptr = &buffer)
+                fixed (int* buffers_ptr = &buffers)
                 {
-                    SourceUnqueueBuffersDirect(context, source, nb, buffer_ptr);
+                    SourceUnqueueBuffersDirect(context, source, nb, buffers_ptr);
                 }
             }
         }

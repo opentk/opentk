@@ -9,7 +9,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using static OpenTK.Platform.Native.SDL.SDL;
-using static System.Formats.Asn1.AsnWriter;
 
 namespace OpenTK.Platform.Native.SDL
 {
@@ -118,7 +117,7 @@ namespace OpenTK.Platform.Native.SDL
         }
 
         /// <inheritdoc/>
-        public void GetVideoMode(DisplayHandle handle, out VideoMode mode)
+        public VideoMode GetVideoMode(DisplayHandle handle)
         {
             SDLDisplay display = handle.As<SDLDisplay>(this);
 
@@ -130,7 +129,8 @@ namespace OpenTK.Platform.Native.SDL
             }
 
             int bpp = (int)SDL_BITSPERPIXEL(sdlMode.format);
-            mode = new VideoMode(sdlMode.w, sdlMode.h, sdlMode.refresh_rate, bpp);
+
+            return new VideoMode(sdlMode.w, sdlMode.h, sdlMode.refresh_rate, bpp);
         }
 
         /// <inheritdoc/>
@@ -157,7 +157,7 @@ namespace OpenTK.Platform.Native.SDL
         }
 
         /// <inheritdoc/>
-        public void GetVirtualPosition(DisplayHandle handle, out int x, out int y)
+        public Vector2i GetVirtualPosition(DisplayHandle handle)
         {
             SDLDisplay display = handle.As<SDLDisplay>(this);
 
@@ -168,12 +168,11 @@ namespace OpenTK.Platform.Native.SDL
                 throw new PalException(this, $"SDL 2 could not get the display bounds: {error}");
             }
 
-            x = rect.x;
-            y = rect.y;
+            return new Vector2i(rect.x, rect.y);
         }
 
         /// <inheritdoc/>
-        public void GetResolution(DisplayHandle handle, out int width, out int height)
+        public Vector2i GetResolution(DisplayHandle handle)
         {
             SDLDisplay display = handle.As<SDLDisplay>(this);
 
@@ -184,12 +183,11 @@ namespace OpenTK.Platform.Native.SDL
                 throw new PalException(this, $"SDL 2 could not get the display bounds: {error}");
             }
 
-            width = rect.w;
-            height = rect.h;
+            return new Vector2i(rect.w, rect.h);
         }
 
         /// <inheritdoc/>
-        public void GetWorkArea(DisplayHandle handle, out Box2i area)
+        public Box2i GetWorkArea(DisplayHandle handle)
         {
             SDLDisplay display = handle.As<SDLDisplay>(this);
 
@@ -200,11 +198,11 @@ namespace OpenTK.Platform.Native.SDL
                 throw new PalException(this, $"SDL 2 could not get the display bounds: {error}");
             }
 
-            area = new Box2i(rect.x, rect.y, rect.w, rect.h);
+            return new Box2i(rect.x, rect.y, rect.w, rect.h);
         }
 
         /// <inheritdoc/>
-        public void GetRefreshRate(DisplayHandle handle, out float refreshRate)
+        public float GetRefreshRate(DisplayHandle handle)
         {
             SDLDisplay display = handle.As<SDLDisplay>(this);
 
@@ -215,17 +213,17 @@ namespace OpenTK.Platform.Native.SDL
                 throw new PalException(this, $"SDL2 could not get current display mode: {error}");
             }
 
-            refreshRate = sdlMode.refresh_rate;
+            return sdlMode.refresh_rate;
         }
 
         /// <inheritdoc/>
-        public void GetDisplayScale(DisplayHandle handle, out float scaleX, out float scaleY)
+        public Vector2 GetDisplayScale(DisplayHandle handle)
         {
             SDLDisplay display = handle.As<SDLDisplay>(this);
 
             // FIXME: Should the default dpi be 96?
-            float dpiX = 96;
-            float dpiY = 96;
+            float dpiX = 96.0f;
+            float dpiY = 96.0f;
 
             int result = SDL_GetDisplayDPI(display.Index, out float ddpi, out float hdpi, out float vdpi);
             if (result < 0)
@@ -240,8 +238,7 @@ namespace OpenTK.Platform.Native.SDL
                 dpiY = vdpi;
             }
 
-            scaleX = dpiX / 96;
-            scaleY = dpiY / 96;
+            return new Vector2(dpiX / 96.0f, dpiY / 96.0f);
         }
 
         /// <inheritdoc />

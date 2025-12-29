@@ -65,6 +65,7 @@ namespace OpenTK.Backends.Tests
             new DisplayComponentView(),
             new MouseComponentView(),
             new KeyboardComponentView(),
+            new JoystickComponentView(),
             new CursorComponentView(),
             new IconComponentView(),
             new ClipboardComponentView(),
@@ -136,6 +137,7 @@ namespace OpenTK.Backends.Tests
                 Profile = OpenGLProfile.Core,
                 ForwardCompatibleFlag = true,
                 DebugFlag = true,
+                SupportTransparentFramebufferX11 = false,
                 Selector = static (options, requested, logger) => {
                     for (int i = 0; i < options.Count; i++)
                     {
@@ -187,9 +189,10 @@ namespace OpenTK.Backends.Tests
             Toolkit.Window.SetTitle(Window, "OpenTK PAL Test Application");
             Toolkit.Window.SetClientSize(Window, (800, 600));
             Toolkit.Window.SetMode(Window, WindowMode.Normal);
+            Toolkit.Window.SetBorderStyle(Window, WindowBorderStyle.ResizableBorder);
 
             Toolkit.Window.SetMinClientSize(Window, 700, null);
-            Toolkit.Window.SetMaxClientSize(Window, 900, null);
+            //Toolkit.Window.SetMaxClientSize(Window, 900, null);
 
             try
             {
@@ -244,11 +247,11 @@ namespace OpenTK.Backends.Tests
                 if (Toolkit.Display != null)
                 {
                     DisplayHandle handle = Toolkit.Window.GetDisplay(Window);
-                    Toolkit.Display.GetDisplayScale(handle, out float scaleX, out float scaleY);
+                    Vector2 scaleXY = Toolkit.Display.GetDisplayScale(handle);
                     Toolkit.Display.Close(handle);
 
                     // FIXME: Should we only scale on Y? or something else?
-                    float scale = MathF.Max(scaleX, scaleY);
+                    float scale = MathF.Max(scaleXY.X, scaleXY.Y);
                     if (scale != 1)
                     {
                         // Update font size with scale.
@@ -349,36 +352,15 @@ namespace OpenTK.Backends.Tests
 
             Stopwatch watch = Stopwatch.StartNew();
 
-            if (false){
-                WindowHandle handle = Toolkit.Window.Create(new OpenGLGraphicsApiHints()
-                {
-                    Version = new Version(4, 1),
-                    Profile = OpenGLProfile.Core,
-                    ForwardCompatibleFlag = true,
-                    DebugFlag = true,
-                    Multisamples = 16,
-                    sRGBFramebuffer = true,
-                    
-                });
-                Toolkit.Window.SetTitle(handle, $"Bejeweled");
-                Toolkit.Window.SetClientSize(handle, (1200, 1200));
-                (Toolkit.Shell as Platform.Native.Windows.ShellComponent)?.SetImmersiveDarkMode(handle, true);
-                Toolkit.Window.SetMode(handle, WindowMode.Normal);
-                Toolkit.Window.SetBorderStyle(handle, WindowBorderStyle.FixedBorder);
-                ApplicationWindow bejeweled = new ApplicationWindow(handle);
-                bejeweled.Context = Toolkit.OpenGL.CreateFromWindow(handle);
-                Toolkit.OpenGL.SetSwapInterval(1);
-                bejeweled.Application = new Bejeweled.Bejeweled();
-                Toolkit.OpenGL.SetCurrentContext(bejeweled.Context);
-                bejeweled.Application.Initialize(handle, bejeweled.Context, UsingGLES);
-                Toolkit.OpenGL.SetCurrentContext(WindowContext);
-                Program.ApplicationWindows.Add(bejeweled);
-            }
-
             while (true)
             {
                 float dt = (float)watch.Elapsed.TotalSeconds;
                 watch.Restart();
+
+                if (dt > ((1.0f/60.0f) + (1.0f/1000.0f)))
+                {
+                    Logger?.LogWarning($"Slow performance, dt = {dt}");
+                }
 
                 // FIXME: Wait for events?
                 IsProcessingEvents = true;
@@ -668,6 +650,7 @@ namespace OpenTK.Backends.Tests
                             config.GlyphMaxAdvanceX = float.PositiveInfinity;
                             config.RasterizerMultiply = 1;
                             config.EllipsisChar = 0xFFFF;
+                            config.RasterizerDensity = 1;
                             unsafe
                             {
                                 ImFontConfigPtr configPtr = new ImFontConfigPtr(&config);
@@ -780,6 +763,10 @@ namespace OpenTK.Backends.Tests
             else if (args is DisplayConnectionChangedEventArgs displayChanged)
             {
                 ((DisplayComponentView?)MainTabContainer[typeof(DisplayComponentView)])?.HandleConnectionChange(displayChanged);
+            }
+            else if (args is DisplayValuesChangedEventArgs displayValuesChanged)
+            {
+                ((DisplayComponentView?)MainTabContainer[typeof(DisplayComponentView)])?.UpdateDisplayValues(displayValuesChanged);
             }
             else if (args is ThemeChangeEventArgs themeChange)
             {

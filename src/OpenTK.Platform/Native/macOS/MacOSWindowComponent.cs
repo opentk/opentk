@@ -1401,8 +1401,8 @@ namespace OpenTK.Platform.Native.macOS
                     }
                 case NSEventType.ScrollWheel:
                     {
-                        float scrollX = objc_msgSend_float(@event, selScrollingDeltaX);
-                        float scrollY = objc_msgSend_float(@event, selScrollingDeltaY);
+                        float scrollX = (float)objc_msgSend_nfloat(@event, selScrollingDeltaX);
+                        float scrollY = (float)objc_msgSend_nfloat(@event, selScrollingDeltaY);
 
                         bool preciseScrollingDeltas = objc_msgSend_bool(@event, selHasPreciseScrollingDeltas);
 
@@ -2663,6 +2663,13 @@ namespace OpenTK.Platform.Native.macOS
 
             scaleX = (float)(frameBacking.size.x / frame.size.x);
             scaleY = (float)(frameBacking.size.y / frame.size.y);
+        }
+
+        /// <inheritdoc/>
+        public OpenGLContextHandle? GetOpenGLContext(WindowHandle handle)
+        {
+            NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
+            return nswindow.Context;
         }
 
         /// <summary>

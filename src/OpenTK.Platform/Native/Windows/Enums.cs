@@ -1,4 +1,8 @@
-﻿using System;
+﻿using OpenTK.Core;
+using OpenTK.Platform.Native.macOS;
+using System;
+using System.Collections.Generic;
+using System.Dynamic;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace OpenTK.Platform.Native.Windows
@@ -1345,6 +1349,8 @@ namespace OpenTK.Platform.Native.Windows
         ScreenPointer = 0x1A,
         Remote = 0x1B,
         Supplemental = 0x1C,
+
+        Hid = 0x00010000
     }
 
     internal enum DispChange : int
@@ -1525,40 +1531,138 @@ namespace OpenTK.Platform.Native.Windows
     // DIDFT_GETTYPE(n) = LOBYTE(n),
     // DIDFT_GETINSTANCE(n) = LOWORD((n) >> 8),
     // DIDFT_ENUMCOLLECTION(n) = ((WORD)(n) << 8),
+
+
+    [Flags]
     internal enum DIDFT : uint
     {
+        /// <summary>
+        /// All objects.
+        /// </summary>
         All = 0x00000000,
+        /// <summary>
+        /// A relative axis.
+        /// </summary>
         RelAxis = 0x00000001,
+        /// <summary>
+        /// An absolute axis.
+        /// </summary>
         AbsAxis = 0x00000002,
+        /// <summary>
+        /// An axis, either absolute or relative.
+        /// </summary>
         Axis = 0x00000003,
+        /// <summary>
+        /// A push button. A push button is reported as down when the user presses it, and as up when the user releases it.
+        /// </summary>
         PshButton = 0x00000004,
+        /// <summary>
+        /// A toggle button. A toggle button is reported as down when the user presses it and remains so until the user presses the button a second time.
+        /// </summary>
         TglButton = 0x00000008,
+        /// <summary>
+        /// A push button or a toggle button.
+        /// </summary>
         Button = 0x0000000C,
-        POV = 0x00000010,
+        /// <summary>
+        /// A point-of-view controller.
+        /// </summary>
+        Pov = 0x00000010,
+        /// <summary>
+        /// A HID link collection. HID link collections do not generate data of their own.
+        /// </summary>
         Collection = 0x00000040,
-        NoData = 0x00000080,
+        /// <summary>
+        /// An object that does not generate data.
+        /// </summary>
+        NoDdata = 0x00000080,
         AnyInstance = 0x00FFFF00,
         InstanceMask = AnyInstance,
-        
+        //MAKEINSTANCE(n) ((WORD)(n) << 8)
+        //GETTYPE(n)     LOBYTE(n)
+        //GETINSTANCE(n) LOWORD((n) >> 8)
+        /// <summary>
+        /// An object that contains a force-feedback actuator. In other words, forces can be applied to this object.
+        /// </summary>
         FFActuator = 0x01000000,
+        /// <summary>
+        /// An object that can be used to trigger force-feedback effects.
+        /// </summary>
         FFEffectTrigger = 0x02000000,
+        /// <summary>
+        /// An object that supports output. For details, see Remarks in IDirectInputDevice8::SendDeviceData.
+        /// </summary>
         Output = 0x10000000,
+        /// <summary>
+        /// An object of a type defined by the manufacturer.
+        /// </summary>
         VendorDefined = 0x04000000,
+        /// <summary>
+        /// Controls identified by a Human Interface Device (HID) usage alias.This flag applies only to HID-compliant USB devices.
+        /// </summary>
         Alias = 0x08000000,
         Optional = 0x80000000,
+        /// <summary>
+        /// An object that belongs to HID link collection number n.
+        /// </summary>
+        //ENUMCOLLECTION(n) ((WORD)(n) << 8)
+        /// <summary>
+        /// An object that does not belong to any HID link collection; in other words, an object for which the wCollectionNumber member of the DIDEVICEOBJECTINSTANCE structure is 0.
+        /// </summary>
         NoCollection = 0x00FFFF00,
     }
 
+    internal static class DIDFTExtensions
+    {
+        internal static DIDFT GetType2(this DIDFT didft)
+        {
+            return didft & (DIDFT)0xFF;
+        }
+
+        internal static ushort GetInstance(this DIDFT didft)
+        {
+            return (ushort)((uint)didft >> 8);
+        }
+    }
+
+    [Flags]
     internal enum DIDOI : uint
     {
+        /// <summary>
+        /// The object can have force-feedback effects applied to it.
+        /// </summary>
         FFActuator = 0x00000001,
+        /// <summary>
+        /// The object can trigger playback of force-feedback effects.
+        /// </summary>
         FFEffectTrigger = 0x00000002,
+        /// <summary>
+        /// The object does not return data until the IDirectInputDevice8 Interface method is called.
+        /// </summary>
         Polled = 0x00008000,
+        /// <summary>
+        /// The object reports position information.
+        /// </summary>
         AspectPosition = 0x00000100,
+        /// <summary>
+        /// The object reports velocity information.
+        /// </summary>
         AspectVelocity = 0x00000200,
+        /// <summary>
+        /// The object reports acceleration information.
+        /// </summary>
         AspectAccel = 0x00000300,
+        /// <summary>
+        /// The object reports force information.
+        /// </summary>
         AspectForce = 0x00000400,
+        /// <summary>
+        /// The bits that are used to report aspect information. An object can represent at most one aspect.
+        /// </summary>
         AspectMask = 0x00000F00,
+        /// <summary>
+        /// The pguid member of the DIOBJECTDATAFORMAT structure contains the desired usage page and usage in a packed DWORD. See DIMAKEUSAGEDWORD.
+        /// </summary>
         GuidUsage = 0x00010000,
     }
 
@@ -1566,6 +1670,180 @@ namespace OpenTK.Platform.Native.Windows
     {
         AbsAxis = 0x00000001,
         RelAxis = 0x00000002,
+    }
+
+    internal enum DISCL : uint
+    {
+        /// <summary>
+        /// The application requires exclusive access.
+        /// If exclusive access is granted, no other instance of the device can obtain exclusive access to the device while it is acquired.
+        /// However, nonexclusive access to the device is always permitted, even if another application has obtained exclusive access.
+        /// An application that acquires the mouse or keyboard device in exclusive mode should always unacquire the devices when it receives WM_ENTERSIZEMOVE and WM_ENTERMENULOOP messages.
+        /// Otherwise, the user cannot manipulate the menu or move and resize the window.
+        /// </summary>
+        Exclusive = 0x00000001,
+        /// <summary>
+        /// The application requires nonexclusive access.
+        /// Access to the device does not interfere with other applications that are accessing the same device.
+        /// </summary>
+        NonExclusive = 0x00000002,
+        /// <summary>
+        /// The application requires foreground access.
+        /// If foreground access is granted, the device is automatically unacquired when the associated window moves to the background.
+        /// </summary>
+        Foreground = 0x00000004,
+        /// <summary>
+        /// The application requires background access.
+        /// If background access is granted, the device can be acquired at any time, even when the associated window is not the active window.
+        /// </summary>
+        Background = 0x00000008,
+        /// <summary>
+        /// Disable the Windows logo key.
+        /// Setting this flag ensures that the user cannot inadvertently break out of the application.
+        /// Note, however, that DISCL_NOWINKEY has no effect when the default action mapping user interface (UI) is displayed,
+        /// and the Windows logo key will operate normally as long as that UI is present.
+        /// </summary>
+        NoWinKey = 0x00000010,
+    }
+
+    internal enum DISFFC
+    {
+        /// <summary>
+        /// The device's force-feedback system is to be put in its startup state.
+        /// All effects are removed from the device, are no longer valid, and must be re-created if they are to be used again.
+        /// The device's actuators are disabled.
+        /// </summary>
+        Reset = 0x00000001,
+        /// <summary>
+        /// Playback of any active effects is to be stopped.
+        /// All active effects are reset, but are still being maintained by the device and are still valid.
+        /// If the device is in a paused state, that state is lost.
+        /// This command is equivalent to calling the IDirectInputEffect::Stop method for each effect playing.
+        /// </summary>
+        StopAll = 0x00000002,
+        /// <summary>
+        /// Playback of all active effects is to be paused. This command also stops the clock-on effects so that they continue playing to their full duration when restarted.
+        /// While the device is paused, new effects cannot be started, and existing ones cannot be modified. Doing so can cause the subsequent DISFFC_CONTINUE command to fail to perform properly.
+        /// To abandon a pause and stop all effects, use the DISFFC_STOPALL or DISFCC_RESET commands.
+        /// </summary>
+        Pause = 0x00000004,
+        /// <summary>
+        /// Paused playback of all active effects is to be continued. It is an error to send this command when the device is not in a paused state.
+        /// </summary>
+        Continue = 0x00000008,
+        /// <summary>
+        /// The device's force-feedback actuators are to be enabled.
+        /// </summary>
+        SetActuatorsOn = 0x00000010,
+        /// <summary>
+        /// The device's force-feedback actuators are to be disabled.
+        /// While the actuators are off, effects continue to play but are ignored by the device.
+        /// Using the analogy of a sound playback device, they are muted, rather than paused.
+        /// </summary>
+        SetActuatorsOff = 0x00000020,
+    }
+
+    internal enum DIES : uint
+    {
+        /// <summary>
+        /// All other effects on the device should be stopped before the specified effect is played.
+        /// If this flag is omitted, the effect is mixed with existing effects already started on the device.
+        /// </summary>
+        DIES_SOLO = 0x00000001,
+        /// <summary>
+        /// Do not automatically download the effect.
+        /// </summary>
+        DIES_NODOWNLOAD = 0x80000000,
+    }
+
+    internal enum DIEP : uint
+    {
+        /// <summary>
+        /// The dwDuration member contains data.
+        /// </summary>
+        Duration = 0x00000001,
+        /// <summary>
+        /// The dwSamplePeriod member contains data.
+        /// </summary>
+        SamplePeriod = 0x00000002,
+        /// <summary>
+        /// The dwGain member contains data.
+        /// </summary>
+        Gain = 0x00000004,
+        /// <summary>
+        /// The dwTriggerButton member contains data.
+        /// </summary>
+        TriggerButton = 0x00000008,
+        /// <summary>
+        /// The dwTriggerRepeatInterval member contains data.
+        /// </summary>
+        TriggerRepeatInterval = 0x00000010,
+        /// <summary>
+        /// The cAxes and rgdwAxes members contain data.
+        /// </summary>
+        Axes = 0x00000020,
+        /// <summary>
+        /// The cAxes and rglDirection members contain data.
+        /// The dwFlags member specifies (with DIEFF_CARTESIAN or DIEFF_POLAR) the coordinate system in which the values should be interpreted.
+        /// </summary>
+        Direction = 0x00000040,
+        /// <summary>
+        /// The lpEnvelope member points to a DIENVELOPE structure that contains data.
+        /// To detach any existing envelope from the effect, pass this flag and set the lpEnvelope member to NULL.
+        /// </summary>
+        Envelope = 0x00000080,
+        /// <summary>
+        /// The lpvTypeSpecificParams and cbTypeSpecificParams members of the DIEFFECT structure contain the address and size of type-specific data for the effect.
+        /// </summary>
+        TypeSpecificParams = 0x00000100,
+        /// <summary>
+        /// The dwStartDelay member contains data.
+        /// </summary>
+        StartDelay = 0x00000200,
+        AllParamsDX5           = 0x000001FF,
+        AllParams               = 0x000003FF,
+        /// <summary>
+        /// The effect is to be started (or restarted if it is currently playing) after the parameters are updated.
+        /// By default, the play state of the effect is not altered.
+        /// </summary>
+        Start = 0x20000000,
+        /// <summary>
+        /// Suppress the stopping and restarting of the effect to change parameters. See Remarks.
+        /// </summary>
+        NoRestart = 0x40000000,
+        /// <summary>
+        /// Suppress the automatic IDirectInputEffect::Download that is normally performed after the parameters are updated. See Remarks.
+        /// </summary>
+        NoDownload = 0x80000000,
+    }
+
+    internal enum DIEB : uint
+    {
+        NoTrigger = 0xFFFFFFFF,
+    }
+
+    internal enum DIEFF : uint
+    {
+        /// <summary>
+        /// The values of dwTriggerButton and rgdwAxes are object identifiers as obtained by IDirectInputDevice8::EnumObjects.
+        /// </summary>
+        ObjectIDs = 0x00000001,
+        /// <summary>
+        /// The values of dwTriggerButton and rgdwAxes are data format offsets.
+        /// </summary>
+        ObjectOffsets = 0x00000002,
+        /// <summary>
+        /// The values of rglDirection are to be interpreted as Cartesian coordinates.
+        /// </summary>
+        Cartesian = 0x00000010,
+        /// <summary>
+        /// The values of rglDirection are to be interpreted as polar coordinates.
+        /// </summary>
+        Polar = 0x00000020,
+        /// <summary>
+        /// The values of rglDirection are to be interpreted as spherical coordinates.
+        /// </summary>
+        Spherical = 0x00000040,
     }
 
     internal enum DISPLAYCONFIG_TOPOLOGY_ID : uint

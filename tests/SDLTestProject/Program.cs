@@ -193,13 +193,13 @@ void main()
 
                 string name = DisplayComponent.GetName(handle);
                 bool isPrimary = DisplayComponent.IsPrimary(handle);
-                DisplayComponent.GetVideoMode(handle, out VideoMode mode);
+                VideoMode mode = DisplayComponent.GetVideoMode(handle);
                 VideoMode[] modes = DisplayComponent.GetSupportedVideoModes(handle);
-                DisplayComponent.GetVirtualPosition(handle, out int px, out int py);
-                DisplayComponent.GetResolution(handle, out int resx, out int resy);
-                DisplayComponent.GetWorkArea(handle, out Box2i workArea);
-                DisplayComponent.GetRefreshRate(handle, out float refreshRate);
-                DisplayComponent.GetDisplayScale(handle, out float scaleX, out float scaleY);
+                Vector2i virtualPosition = DisplayComponent.GetVirtualPosition(handle);
+                Vector2i resolution = DisplayComponent.GetResolution(handle);
+                Box2i workArea = DisplayComponent.GetWorkArea(handle);
+                float refreshRate = DisplayComponent.GetRefreshRate(handle);
+                Vector2 scale = DisplayComponent.GetDisplayScale(handle);
 
                 Console.WriteLine($"Display {i}: {name}{(isPrimary ? " (primary)" : "")}");
                 Console.WriteLine($"  Current Mode: {mode}");
@@ -208,10 +208,10 @@ void main()
                 {
                     Console.WriteLine($"    Mode {m}: {modes[m]}");
                 }
-                Console.WriteLine($"  Position: {new Vector2i(px, py)}, Resolution: {new Vector2i(resx, resy)}");
+                Console.WriteLine($"  Position: {virtualPosition}, Resolution: {resolution}");
                 Console.WriteLine($"  Work Area: {workArea}");
                 Console.WriteLine($"  Refresh rate: {refreshRate}");
-                Console.WriteLine($"  Scale X: {scaleX}, Scale Y: {scaleY}");
+                Console.WriteLine($"  Scale X: {scale.X}, Scale Y: {scale.Y}");
             }
 
             float[] vertices = new float[]
@@ -281,27 +281,20 @@ void main()
             {
                 if (mouseDown.Button == MouseButton.Button1)
                 {
-                    for (int i = 0; i < 4; i++)
+                    for (int i = 0; i < JoystickComponent.GetJoystickCount(); i++)
                     {
-                        if (JoystickComponent.IsConnected(i))
+                        var stick = JoystickComponent.Open(i);
+
+                        if (JoystickComponent.TryGetBatteryInfo(stick, out GamepadBatteryInfo info))
                         {
-                            var stick = JoystickComponent.Open(i);
-
-                            if (JoystickComponent.TryGetBatteryInfo(stick, out GamepadBatteryInfo info))
-                            {
-                                Console.WriteLine($"Gamepad {i + 1}: {info.BatteryType} {info.ChargeLevel * 100}%");
-                            }
-                            else
-                            {
-                                Console.WriteLine($"Could not get battery info for gamepad {i + 1}");
-                            }
-
-                            JoystickComponent.Close(stick);
+                            Console.WriteLine($"Gamepad {i + 1}: {info.BatteryType} {info.ChargeLevel * 100}%");
                         }
                         else
                         {
-                            Console.WriteLine($"No controller connected for player {i + 1}");
+                            Console.WriteLine($"Could not get battery info for gamepad {i + 1}");
                         }
+
+                        JoystickComponent.Close(stick);
                     }
                 }
             }

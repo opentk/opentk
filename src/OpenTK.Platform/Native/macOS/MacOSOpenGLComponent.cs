@@ -397,12 +397,13 @@ namespace OpenTK.Platform.Native.macOS
                 selInitWithFormatShareContext,
                 pixelFormat, share);
 
-            NSOpenGLContext nscontext = new NSOpenGLContext(context, nsShareContext, chosenValues);
+            NSOpenGLContext nscontext = new NSOpenGLContext(context, nswindow, nsShareContext, chosenValues);
 
             // We do this so the window component can implement SwapBuffers.
             // And so we can call [Context update] when the window resizes or moves
             // - Noggin_bops 2023-11-11
             nswindow.Context = nscontext;
+            nswindow.OpenGLContextHandle = nscontext;
 
             NSOpenGLContextDict.Add(nscontext.Context, nscontext);
 
@@ -433,6 +434,11 @@ namespace OpenTK.Platform.Native.macOS
             NSOpenGLContext nscontext = handle.As<NSOpenGLContext>(this);
 
             NSOpenGLContextDict.Remove(nscontext.Context);
+
+            if (nscontext.WindowHandle != null)
+            {
+                nscontext.WindowHandle.OpenGLContextHandle = null;
+            }
 
             objc_msgSend(nscontext.Context, selClearDrawable);
             objc_msgSend(nscontext.Context, Release);
@@ -530,6 +536,13 @@ namespace OpenTK.Platform.Native.macOS
         {
             NSOpenGLContext nscontext = handle.As<NSOpenGLContext>(this);
             objc_msgSend(nscontext.Context, selFlushBuffer);
+        }
+
+        /// <inheritdoc/>
+        public WindowHandle? GetWindow(OpenGLContextHandle handle)
+        {
+            NSOpenGLContext nscontext = handle.As<NSOpenGLContext>(this);
+            return nscontext.WindowHandle;
         }
 
         /// <summary>

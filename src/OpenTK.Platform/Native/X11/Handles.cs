@@ -113,6 +113,7 @@ namespace OpenTK.Platform.Native.X11
             GLXContext context,
             GLXWindow glxWindow,
             XWindow window,
+            XWindowHandle windowHandle,
             XOpenGLContextHandle? sharedContext,
             ContextValues contextValues)
         {
@@ -120,6 +121,7 @@ namespace OpenTK.Platform.Native.X11
             Context = context;
             GLXWindow = glxWindow;
             Window = window;
+            WindowHandle = windowHandle;
             SharedContext = sharedContext;
             ContextValues = contextValues;
         }
@@ -137,6 +139,17 @@ namespace OpenTK.Platform.Native.X11
         /// RRMode of the display before any window being fullscreened.
         /// </summary>
         public RRMode OldMode { get; set; } = RRMode.None;
+
+
+        /// <summary>Only updated in <see cref="X11DisplayComponent.UpdateDisplayValues()"/>.</summary>
+        public VideoMode VideoMode { get; set; }
+        /// <summary>Only updated in <see cref="X11DisplayComponent.UpdateDisplayValues()"/>.</summary>
+        public Vector2i VirtualPosition { get; set; }
+        /// <summary>Only updated in <see cref="X11DisplayComponent.UpdateDisplayValues()"/>.</summary>
+        public Box2i WorkArea { get; set; }
+        /// <summary>Only updated in <see cref="X11DisplayComponent.UpdateDisplayValues()"/>.</summary>
+        public Vector2 Scale { get; set; }
+
 
         public XDisplayHandle(RROutput output, RRCrtc crtc, string name)
         {

@@ -1,10 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net9.0</TargetFramework>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Deterministic>true</Deterministic>
     <Description>OpenAL bindings.</Description>
     <PackageIcon>icon.png</PackageIcon>
+    <LangVersion>13</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>

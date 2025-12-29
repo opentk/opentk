@@ -227,6 +227,7 @@ namespace ALGenerator
             using IndentedTextWriter writer = new IndentedTextWriter(stream);
             writer.WriteLine($"// This file is auto generated, do not edit.");
             writer.WriteLine("using System;");
+            writer.WriteLine("using System.Runtime.CompilerServices;");
             writer.WriteLine("using System.Runtime.InteropServices;");
             writer.WriteLine("using OpenTK.Audio;");
 
@@ -278,6 +279,10 @@ namespace ALGenerator
             {
                 WriteDocumentation(writer, function, documentation);
             }
+
+            // We want to generally prefer overloads, this will allow calls like
+            // ALC.OpenDevice(null) to work correctly without ambiguous overloads.
+            writer.WriteLine("[OverloadResolutionPriority(-1)]");
 
             if (handleAbiDifferenceForTypesafeHandles)
             {
@@ -513,6 +518,9 @@ namespace ALGenerator
                 {
                     foreach (var member in group.Members)
                     {
+                        
+                        writer.WriteLine($"/// <remarks>[originally: {member.Name}]</remarks>");
+
                         // HACK: Some enums have a value of -1, and because
                         // we don't know the bitwidth of the enum here we can't cast
                         // the value correctly. This hack fixes this for -1 but doesn't

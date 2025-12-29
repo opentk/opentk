@@ -17,13 +17,13 @@ namespace OpenTK.Graphics.Wgl
         ContextDebugBitArb = 1,
         FontPolygons = 1,
         FrontColorBufferBitArb = 1,
-        ImageBufferMinAccessI3d = 1,
+        ImageBufferMinAccessI3D = 1,
         SwapMainPlane = 1,
         AccessWriteDiscardNv = 2,
         BackColorBufferBitArb = 2,
         ContextCompatibilityProfileBitArb = 2,
         ContextForwardCompatibleBitArb = 2,
-        ImageBufferLockI3d = 2,
+        ImageBufferLockI3D = 2,
         SwapOverlay1 = 2,
         ContextEs2ProfileBitExt = 4,
         ContextEsProfileBitExt = 4,
@@ -41,7 +41,7 @@ namespace OpenTK.Graphics.Wgl
         SwapOverlay9 = 512,
         SwapOverlay10 = 1024,
         SwapOverlay11 = 2048,
-        Texture2d = 3553,
+        Texture2D = 3553,
         SwapOverlay12 = 4096,
         GpuVendorAmd = 7936,
         GpuRendererStringAmd = 7937,
@@ -166,26 +166,26 @@ namespace OpenTK.Graphics.Wgl
         SamplesExt = 8258,
         ErrorInvalidPixelTypeArb = 8259,
         ErrorInvalidPixelTypeExt = 8259,
-        GenlockSourceMultiviewI3d = 8260,
-        GenlockSourceExternalSyncI3d = 8261,
-        GenlockSourceExternalFieldI3d = 8262,
-        GenlockSourceExternalTtlI3d = 8263,
-        GenlockSourceDigitalSyncI3d = 8264,
-        GenlockSourceDigitalFieldI3d = 8265,
-        GenlockSourceEdgeFallingI3d = 8266,
-        GenlockSourceEdgeRisingI3d = 8267,
-        GenlockSourceEdgeBothI3d = 8268,
-        GammaTableSizeI3d = 8270,
-        GammaExcludeDesktopI3d = 8271,
-        DigitalVideoCursorAlphaFramebufferI3d = 8272,
-        DigitalVideoCursorAlphaValueI3d = 8273,
-        DigitalVideoCursorIncludedI3d = 8274,
-        DigitalVideoGammaCorrectedI3d = 8275,
+        GenlockSourceMultiviewI3D = 8260,
+        GenlockSourceExternalSyncI3D = 8261,
+        GenlockSourceExternalFieldI3D = 8262,
+        GenlockSourceExternalTtlI3D = 8263,
+        GenlockSourceDigitalSyncI3D = 8264,
+        GenlockSourceDigitalFieldI3D = 8265,
+        GenlockSourceEdgeFallingI3D = 8266,
+        GenlockSourceEdgeRisingI3D = 8267,
+        GenlockSourceEdgeBothI3D = 8268,
+        GammaTableSizeI3D = 8270,
+        GammaExcludeDesktopI3D = 8271,
+        DigitalVideoCursorAlphaFramebufferI3D = 8272,
+        DigitalVideoCursorAlphaValueI3D = 8273,
+        DigitalVideoCursorIncludedI3D = 8274,
+        DigitalVideoGammaCorrectedI3D = 8275,
         ErrorIncompatibleDeviceContextsArb = 8276,
-        StereoEmitterEnable3dl = 8277,
-        StereoEmitterDisable3dl = 8278,
-        StereoPolarityNormal3dl = 8279,
-        StereoPolarityInvert3dl = 8280,
+        StereoEmitterEnable3DL = 8277,
+        StereoEmitterDisable3DL = 8278,
+        StereoPolarityNormal3DL = 8279,
+        StereoPolarityInvert3DL = 8280,
         SampleBuffers3dfx = 8288,
         Samples3dfx = 8289,
         BindToTextureRgbArb = 8304,
@@ -198,7 +198,7 @@ namespace OpenTK.Graphics.Wgl
         NoTextureArb = 8311,
         TextureCubeMapArb = 8312,
         Texture1dArb = 8313,
-        Texture2dArb = 8314,
+        Texture2DArb = 8314,
         MipmapLevelArb = 8315,
         CubeMapFaceArb = 8316,
         TextureCubeMapPositiveXArb = 8317,
@@ -289,7 +289,7 @@ namespace OpenTK.Graphics.Wgl
         ContextOpenglNoErrorArb = 12723,
         SwapOverlay14 = 16384,
         SwapOverlay15 = 32768,
-        Texture3d = 32879,
+        Texture3D = 32879,
         LoseContextOnResetArb = 33362,
         ContextResetNotificationStrategyArb = 33366,
         NoResetNotificationArb = 33377,
@@ -401,10 +401,10 @@ namespace OpenTK.Graphics.Wgl
     ///<summary>Used in <see cref="Wgl.I3D.GetDigitalVideoParametersI3D" />, <see cref="Wgl.I3D.SetDigitalVideoParametersI3D" /></summary>
     public enum DigitalVideoAttribute : uint
     {
-        DigitalVideoCursorAlphaFramebufferI3d = 8272,
-        DigitalVideoCursorAlphaValueI3d = 8273,
-        DigitalVideoCursorIncludedI3d = 8274,
-        DigitalVideoGammaCorrectedI3d = 8275,
+        DigitalVideoCursorAlphaFramebufferI3D = 8272,
+        DigitalVideoCursorAlphaValueI3D = 8273,
+        DigitalVideoCursorIncludedI3D = 8274,
+        DigitalVideoGammaCorrectedI3D = 8275,
     }
     ///<summary>Used in <see cref="Wgl.NV.DXObjectAccessNV" />, <see cref="Wgl.NV.DXRegisterObjectNV" /></summary>
     [Flags]
@@ -423,8 +423,8 @@ namespace OpenTK.Graphics.Wgl
     ///<summary>Used in <see cref="Wgl.I3D.GetGammaTableParametersI3D" />, <see cref="Wgl.I3D.SetGammaTableParametersI3D" /></summary>
     public enum GammaTableAttribute : uint
     {
-        GammaTableSizeI3d = 8270,
-        GammaExcludeDesktopI3d = 8271,
+        GammaTableSizeI3D = 8270,
+        GammaExcludeDesktopI3D = 8271,
     }
     ///<summary>Used in <see cref="Wgl.AMD.GetGPUInfoAMD" /></summary>
     public enum GPUPropertyAMD : uint
@@ -443,8 +443,8 @@ namespace OpenTK.Graphics.Wgl
     [Flags]
     public enum ImageBufferMaskI3D : uint
     {
-        ImageBufferMinAccessI3d = 1,
-        ImageBufferLockI3d = 2,
+        ImageBufferMinAccessI3D = 1,
+        ImageBufferLockI3D = 2,
     }
     ///<summary>Used in <see cref="Wgl.SwapLayerBuffers" />, <see cref="Wgl.OML.SwapLayerBuffersMscOML" /></summary>
     [Flags]
@@ -486,8 +486,8 @@ namespace OpenTK.Graphics.Wgl
     public enum ObjectTypeDX : uint
     {
         None = 0,
-        Texture2d = 3553,
-        Texture3d = 32879,
+        Texture2D = 3553,
+        Texture3D = 32879,
         TextureRectangle = 34037,
         TextureCubeMap = 34067,
         Renderbuffer = 36161,
@@ -526,7 +526,7 @@ namespace OpenTK.Graphics.Wgl
         NoTextureArb = 8311,
         TextureCubeMapArb = 8312,
         Texture1dArb = 8313,
-        Texture2dArb = 8314,
+        Texture2DArb = 8314,
     }
     ///<summary>Used in <see cref="Wgl.ARB.ChoosePixelFormatARB" />, <see cref="Wgl.ARB.GetPixelFormatAttribfvARB" />, <see cref="Wgl.EXT.GetPixelFormatAttribfvEXT" />, ...</summary>
     public enum PixelFormatAttribute : uint
@@ -629,10 +629,10 @@ namespace OpenTK.Graphics.Wgl
     ///<summary>Used in <see cref="Wgl._3DL.SetStereoEmitterState3DL" /></summary>
     public enum StereoEmitterState : uint
     {
-        StereoEmitterEnable3dl = 8277,
-        StereoEmitterDisable3dl = 8278,
-        StereoPolarityNormal3dl = 8279,
-        StereoPolarityInvert3dl = 8280,
+        StereoEmitterEnable3DL = 8277,
+        StereoEmitterDisable3DL = 8278,
+        StereoPolarityNormal3DL = 8279,
+        StereoPolarityInvert3DL = 8280,
     }
     public enum SwapMethod : uint
     {

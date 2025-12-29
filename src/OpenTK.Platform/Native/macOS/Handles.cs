@@ -9,6 +9,8 @@ namespace OpenTK.Platform.Native.macOS
         public IntPtr Window { get; set; }
         public IntPtr View { get; set; }
 
+        // FIXME: Make this compatible with the EGL OpenGL component...
+        // - Noggin_bops 2025-09-01
         // This is used to implement SwapBuffers
         public NSOpenGLContext? Context { get; set; }
 
@@ -61,9 +63,10 @@ namespace OpenTK.Platform.Native.macOS
 
         public ContextValues ContextValues { get; private set; }
 
-        public NSOpenGLContext(IntPtr context, NSOpenGLContext? sharedContext, ContextValues contextValues)
+        public NSOpenGLContext(IntPtr context, NSWindowHandle window, NSOpenGLContext? sharedContext, ContextValues contextValues)
         {
             Context = context;
+            WindowHandle = window;
             SharedContext = sharedContext;
             ContextValues = contextValues;
         }

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using OpenTK.Platform;
@@ -443,7 +443,6 @@ namespace OpenTK.Platform.Native.X11
         /// <inheritdoc/>
         public bool SupportsIme => false;
 
-        /// <inheritdoc/>
         public unsafe string GetActiveKeyboardLayout(WindowHandle? handle)
         {
             XkbDescRec* desc = XkbGetMap(X11.Display, 0, XkbUseCoreKbd);
@@ -462,7 +461,6 @@ namespace OpenTK.Platform.Native.X11
             return symbols;
         }
 
-        /// <inheritdoc/>
         public unsafe string[] GetAvailableKeyboardLayouts()
         {
             XkbDescRec* desc = XkbGetMap(X11.Display, 0, XkbUseCoreKbd);
@@ -498,6 +496,28 @@ namespace OpenTK.Platform.Native.X11
             XkbFreeKeyboard(desc, 0, true);
 
             return groups.ToArray();
+        }
+
+        /// <inheritdoc/>
+        public InputLanguage GetActiveInputLanguage(WindowHandle? handle)
+        {
+            // FIXME: Culture!
+            return new InputLanguage(System.Globalization.CultureInfo.CurrentCulture, GetActiveKeyboardLayout(handle));
+        }
+
+        /// <inheritdoc/>
+        public InputLanguage[] GetInstalledInputLanguages()
+        {
+            var layouts = GetAvailableKeyboardLayouts();
+
+            InputLanguage[] languages = new InputLanguage[layouts.Length];
+            for (int i = 0; i < layouts.Length; i++)
+            {
+                // FIXME: Culture!
+                languages[i] = new InputLanguage(System.Globalization.CultureInfo.CurrentCulture, layouts[i]);
+            }
+
+            return languages;
         }
 
         /// <inheritdoc/>

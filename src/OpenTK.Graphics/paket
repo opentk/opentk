@@ -8,6 +8,7 @@ dependencies
         OpenTK.Mathematics ~> #VERSION#
 files
     bin\Release\net8.0\OpenTK.Graphics.dll ==> lib\net8.0
+    bin\Release\net8.0\OpenTK.Graphics.xml ==> lib\net8.0
     bin\Release\net8.0\OpenTK.Graphics.pdb ==> lib\net8.0
     README.md ==> docs
     ..\..\.github\opentk-blue-hexagon.png ==> images

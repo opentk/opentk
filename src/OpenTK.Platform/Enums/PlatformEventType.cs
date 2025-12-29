@@ -57,6 +57,7 @@ namespace OpenTK.Platform
         ThemeChange,
 
         DisplayConnectionChanged,
+        DisplayValuesChanged,
 
         PowerStateChange,
 

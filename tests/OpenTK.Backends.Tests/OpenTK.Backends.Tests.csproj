@@ -2,10 +2,10 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net9.0</TargetFramework>
     <Nullable>enable</Nullable>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <LangVersion>12.0</LangVersion>
+    <LangVersion>13.0</LangVersion>
     <!-- Uncomment this if not using the .res resource file. -->
     <!--<ApplicationIcon>Resources\opentk_logo_small.ico</ApplicationIcon>-->
 
@@ -47,7 +47,7 @@
     <PackageReference Include="StbImageSharp" Version="2.27.14" />
     <PackageReference Include="StbImageWriteSharp" Version="1.16.7" />
     <PackageReference Include="ImGui.NET" Version="1.91.6.1" />
-    <PackageReference Include="OpenTK.redist.SDL" Version="2.26.5-pre20230414185304" />
+    <PackageReference Include="OpenTK.redist.SDL" Version="2.32.10-pre20251019152107" />
   </ItemGroup>
 
   <ItemGroup>

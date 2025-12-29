@@ -36,18 +36,18 @@ namespace LocalTestProject
         {
             Toolkit.Init(new ToolkitOptions() { ApplicationName = "Pal2 test project", Logger = new ConsoleLogger(), FeatureFlags = ToolkitFlags.EnableOpenGL });
 
-            Console.WriteLine($"Current Keyboard Layout name: {Toolkit.Keyboard.GetActiveKeyboardLayout(null)}");
+            Console.WriteLine($"Current input language name: {Toolkit.Keyboard.GetActiveInputLanguage(null)}");
 
-            Console.WriteLine($"Available Keyboard Layouts:\n  {string.Join("\n  ", Toolkit.Keyboard.GetAvailableKeyboardLayouts())}");
+            Console.WriteLine($"Installed input languages:\n  {string.Join("\n  ", Toolkit.Keyboard.GetInstalledInputLanguages())}");
 
             {
                 PrimaryDisplayHandle = Toolkit.Display.OpenPrimary();
                 string name = Toolkit.Display.GetName(PrimaryDisplayHandle);
-                Toolkit.Display.GetVideoMode(PrimaryDisplayHandle, out VideoMode videoMode);
-                Toolkit.Display.GetDisplayScale(PrimaryDisplayHandle, out float scaleX, out float scaleY);
+                VideoMode videoMode = Toolkit.Display.GetVideoMode(PrimaryDisplayHandle);
+                Vector2 scale = Toolkit.Display.GetDisplayScale(PrimaryDisplayHandle);
                 Console.WriteLine($"Primary monitor name: {name}");
                 Console.WriteLine($"  {videoMode}");
-                Console.WriteLine($"  Scale: {scaleX}, {scaleY}");
+                Console.WriteLine($"  Scale: {scale.X}, {scale.Y}");
 
                 int modeCount = Toolkit.Display.GetSupportedVideoModes(PrimaryDisplayHandle).Length;
                 Console.WriteLine($"Primary monitor supports {modeCount} video modes.");
@@ -68,11 +68,11 @@ namespace LocalTestProject
                 DisplayHandle disp = Toolkit.Display.Open(i);
 
                 string name = Toolkit.Display.GetName(disp);
-                Toolkit.Display.GetVideoMode(disp, out VideoMode videoMode);
-                Toolkit.Display.GetDisplayScale(disp, out float scaleX, out float scaleY);
+                VideoMode videoMode = Toolkit.Display.GetVideoMode(disp);
+                Vector2 scale = Toolkit.Display.GetDisplayScale(disp);
                 Console.WriteLine($"Primary monitor name: {name}");
                 Console.WriteLine($"  {videoMode}");
-                Console.WriteLine($"  Scale: {scaleX}, {scaleY}");
+                Console.WriteLine($"  Scale: {scale.X}, {scale.Y}");
                 Console.WriteLine();
             }
             Console.WriteLine();
@@ -514,19 +514,19 @@ namespace LocalTestProject
                                 var tex = GL.GenTexture();
 
                                 GL.ActiveTexture(TextureUnit.Texture0);
-                                GL.BindTexture(TextureTarget.Texture2d, tex);
+                                GL.BindTexture(TextureTarget.Texture2D, tex);
 
-                                GL.TexImage2D(TextureTarget.Texture2d, 0, InternalFormat.Rgba8, bitmap.Width, bitmap.Height, 0, PixelFormat.Rgba, PixelType.UnsignedByte, bitmap.Data);
+                                GL.TexImage2D(TextureTarget.Texture2D, 0, InternalFormat.Rgba8, bitmap.Width, bitmap.Height, 0, PixelFormat.Rgba, PixelType.UnsignedByte, bitmap.Data);
 
-                                GL.GenerateMipmap(TextureTarget.Texture2d);
+                                GL.GenerateMipmap(TextureTarget.Texture2D);
 
-                                GL.TexParameteri(TextureTarget.Texture2d, TextureParameterName.TextureWrapS, (int)TextureWrapMode.ClampToEdge);
-                                GL.TexParameteri(TextureTarget.Texture2d, TextureParameterName.TextureWrapT, (int)TextureWrapMode.ClampToEdge);
+                                GL.TexParameteri(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, (int)TextureWrapMode.ClampToEdge);
+                                GL.TexParameteri(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (int)TextureWrapMode.ClampToEdge);
 
-                                GL.TexParameteri(TextureTarget.Texture2d, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Nearest);
-                                GL.TexParameteri(TextureTarget.Texture2d, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Nearest);
+                                GL.TexParameteri(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Nearest);
+                                GL.TexParameteri(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Nearest);
 
-                                GL.BindTexture(TextureTarget.Texture2d, 0);
+                                GL.BindTexture(TextureTarget.Texture2D, 0);
 
                                 if (clipboard_tex != 0)
                                 {
@@ -558,12 +558,12 @@ namespace LocalTestProject
                 {
                     DisplayHandle disp = Toolkit.Window.GetDisplay(WindowHandle);
                     bool isPrimary = Toolkit.Display.IsPrimary(disp);
-                    Toolkit.Display.GetResolution(disp, out int resX, out int resY);
-                    Toolkit.Display.GetRefreshRate(disp, out float refreshRate);
+                    Vector2i resolution = Toolkit.Display.GetResolution(disp);
+                    float refreshRate = Toolkit.Display.GetRefreshRate(disp);
 
                     string name = Toolkit.Display.GetName(disp);
                     
-                    Console.WriteLine($"Window is on monitor '{name}', primary: {isPrimary}, res: ({resX}x{resY}, refresh rate: {refreshRate:0.})");
+                    Console.WriteLine($"Window is on monitor '{name}', primary: {isPrimary}, res: ({resolution.X}x{resolution.Y}, refresh rate: {refreshRate:0.})");
                 }
                 else if (keyDown.Key == Key.S)
                 {
@@ -700,18 +700,18 @@ void main()
             int tex = GL.GenTexture();
 
             GL.ActiveTexture(TextureUnit.Texture0);
-            GL.BindTexture(TextureTarget.Texture2d, tex);
+            GL.BindTexture(TextureTarget.Texture2D, tex);
 
-            GL.TexImage2D(TextureTarget.Texture2d, 0, InternalFormat.Rgba8, width, height, 0, PixelFormat.Rgba, PixelType.UnsignedByte, data);
+            GL.TexImage2D(TextureTarget.Texture2D, 0, InternalFormat.Rgba8, width, height, 0, PixelFormat.Rgba, PixelType.UnsignedByte, data);
 
-            GL.GenerateMipmap(TextureTarget.Texture2d);
+            GL.GenerateMipmap(TextureTarget.Texture2D);
 
-            GL.TexParameteri(TextureTarget.Texture2d, TextureParameterName.TextureWrapS, (int)TextureWrapMode.ClampToEdge);
-            GL.TexParameteri(TextureTarget.Texture2d, TextureParameterName.TextureWrapT, (int)TextureWrapMode.ClampToEdge);
+            GL.TexParameteri(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, (int)TextureWrapMode.ClampToEdge);
+            GL.TexParameteri(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (int)TextureWrapMode.ClampToEdge);
 
-            GL.TexParameteri(TextureTarget.Texture2d, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Nearest);
+            GL.TexParameteri(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Nearest);
 
-            GL.BindTexture(TextureTarget.Texture2d, 0);
+            GL.BindTexture(TextureTarget.Texture2D, 0);
 
             return tex;
         }
@@ -729,18 +729,18 @@ void main()
             int tex = GL.GenTexture();
 
             GL.ActiveTexture(TextureUnit.Texture0);
-            GL.BindTexture(TextureTarget.Texture2d, tex);
+            GL.BindTexture(TextureTarget.Texture2D, tex);
 
-            GL.TexImage2D(TextureTarget.Texture2d, 0, InternalFormat.Rgba8, width, height, 0, PixelFormat.Rgba, PixelType.UnsignedByte, data);
+            GL.TexImage2D(TextureTarget.Texture2D, 0, InternalFormat.Rgba8, width, height, 0, PixelFormat.Rgba, PixelType.UnsignedByte, data);
 
-            GL.GenerateMipmap(TextureTarget.Texture2d);
+            GL.GenerateMipmap(TextureTarget.Texture2D);
 
-            GL.TexParameteri(TextureTarget.Texture2d, TextureParameterName.TextureWrapS, (int)TextureWrapMode.ClampToEdge);
-            GL.TexParameteri(TextureTarget.Texture2d, TextureParameterName.TextureWrapT, (int)TextureWrapMode.ClampToEdge);
+            GL.TexParameteri(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, (int)TextureWrapMode.ClampToEdge);
+            GL.TexParameteri(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (int)TextureWrapMode.ClampToEdge);
 
-            GL.TexParameteri(TextureTarget.Texture2d, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Nearest);
+            GL.TexParameteri(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Nearest);
 
-            GL.BindTexture(TextureTarget.Texture2d, 0);
+            GL.BindTexture(TextureTarget.Texture2D, 0);
 
             return tex;
         }
@@ -895,6 +895,8 @@ void main()
             float deltaTime = watch.ElapsedTicks / (float)Stopwatch.Frequency;
             watch.Restart();
 
+            // FIXME: Joystick & Gamepad api...
+            /*
             for (int i = 0; i < 4; i++)
             {
                 int player = i + 1;
@@ -965,6 +967,7 @@ void main()
 
                 Toolkit.Joystick.Close(handle);
             }
+            */
 
             time += deltaTime;
             frames++;
@@ -1003,7 +1006,7 @@ void main()
                 int tex = cursor_tex;
                 if (clipboard_tex != 0) tex = clipboard_tex;
 
-                GL.BindTexture(TextureTarget.Texture2d, tex);
+                GL.BindTexture(TextureTarget.Texture2D, tex);
 
                 GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
                 GL.Enable(EnableCap.Blend);
@@ -1028,7 +1031,7 @@ void main()
                 GL.Viewport(0, 0, fbSize.X, fbSize.Y);
 
                 GL.ActiveTexture(TextureUnit.Texture0);
-                GL.BindTexture(TextureTarget.Texture2d, icon_tex);
+                GL.BindTexture(TextureTarget.Texture2D, icon_tex);
 
                 GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
                 GL.Enable(EnableCap.Blend);

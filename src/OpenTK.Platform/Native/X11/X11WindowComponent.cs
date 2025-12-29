@@ -581,14 +581,20 @@ namespace OpenTK.Platform.Native.X11
                         }
                         break;
                 }
-
+                
                 if (XWindowDict.TryGetValue(ea.Any.Window, out XWindowHandle? xwindow) == false)
                 {
                     // If this was not for one our windows and it was filtered by XIM
                     // we don't process it.
                     if (filtered) continue;
 
-                    if (ea.Any.Window == X11.DefaultRootWindow)
+                    if (ea.Any.Window == XWindow.None && ea.Type == XEventType.KeymapNotify)
+                    {
+                        // FIXME: Do something with the keymap notify...
+
+                        
+                    }
+                    else if (ea.Any.Window == X11.DefaultRootWindow)
                     {
                         if (ea.Type == (XEventType)(X11.XFixesEventBase + XFixes.SelectionEvent.SetSelectionOwner))
                         {
@@ -605,7 +611,8 @@ namespace OpenTK.Platform.Native.X11
                         }
                         else if (ea.Type >= (XEventType)(X11.XRandREventBase) && ea.Type <= (XEventType)(X11.XRandREventBase + RREventType.RRNotify))
                         {
-                            X11DisplayComponent.HandleXRREvent(ea, Logger);
+                            (Toolkit.Display as X11DisplayComponent)?.HandleXRREvent(ea);
+                            //X11DisplayComponent.HandleXRREvent(ea, Logger);
                         }
                         else
                         {
@@ -1543,6 +1550,12 @@ namespace OpenTK.Platform.Native.X11
             if (X11ShellComponent.GlibMainLoop != IntPtr.Zero)
             {
                 int wasEventsDispatched = LibGio.g_main_context_iteration(LibGio.g_main_context_default(), 0);
+            }
+
+            unsafe
+            {
+                //Logger?.LogInfo($"IM Locale: {Marshal.PtrToStringUTF8((nint)XLocaleOfIM(IM))}");
+                //Logger?.LogInfo($"CultureInfo: {System.Globalization.CultureInfo.CurrentCulture}");
             }
         }
 
@@ -3870,16 +3883,76 @@ namespace OpenTK.Platform.Native.X11
 
         private static bool hasReportedScaleFactorWarning = false;
 
+        internal unsafe static float GetContentScale(ILogger? logger)
+        {
+            float scale = 0;
+
+            XrmInitialize();
+            int result = XGetWindowProperty(
+                    X11.Display, 
+                    X11.DefaultRootWindow, 
+                    X11.Atoms[KnownAtoms.RESOURCE_MANAGER], 
+                    0, 8192,
+                    false,
+                    X11.Atoms[KnownAtoms.STRING],
+                    out XAtom realType,
+                    out int realFormat,
+                    out long numberOfItems,
+                    out long remainingBytes,
+                    out nint resource_manager);
+            if (result != Success || numberOfItems == 0)
+            {
+                logger?.LogWarning("Wasn't able to read RESOURCE_MANAGER.");
+                if (resource_manager != IntPtr.Zero)
+                {
+                    XFree(resource_manager);
+                    resource_manager = 0;
+                }
+            }
+
+            if (resource_manager != 0)
+            {
+                XrmDatabase db = XrmGetStringDatabase((byte*)resource_manager);
+                if (XrmGetResource(db, Utils.AsPtr("Xft.dpi"u8), Utils.AsPtr("String"u8), out byte* type, out XrmValue value))
+                {
+                    if (value.Addr != null && type != null /* && strcmp(type, "String")*/)
+                    {
+                        int dpi = int.Parse(Marshal.PtrToStringUTF8((nint)value.Addr) ?? "96");
+                        scale = dpi / 96.0f;
+                    }
+                }
+                XrmDestroyDatabase(db);
+                XFree(resource_manager);
+            }
+
+            if (scale == 0)
+            {
+                if (hasReportedScaleFactorWarning == false) {
+                    logger?.LogWarning("Could not read RESOURCE_MANAGER, defaulting to 1 for scale.");
+                    hasReportedScaleFactorWarning = true;
+                }
+
+                scale = 1;
+            }
+
+            return scale;
+        }
+
         /// <inheritdoc/>
         public void GetScaleFactor(WindowHandle handle, out float scaleX, out float scaleY)
         {
-            if (hasReportedScaleFactorWarning == false) {
-                Logger?.LogWarning("Scale factor is always 1 on X11 atm.");
-                hasReportedScaleFactorWarning = true;
-            }
+            // X11 only has a global scale factor, read it.
+            // - Noggin_bops 2025-12-11
+            float scale = GetContentScale(Logger);
+            scaleX = scale;
+            scaleY = scale;
+        }
 
-            scaleX = 1;
-            scaleY = 1;
+        /// <inheritdoc/>
+        public OpenGLContextHandle? GetOpenGLContext(WindowHandle handle)
+        {
+            XWindowHandle xwindow = handle.As<XWindowHandle>(this);
+            return xwindow.OpenGLContextHandle;
         }
 
         /// <summary>
@@ -3905,5 +3978,6 @@ namespace OpenTK.Platform.Native.X11
             // - Noggin_bops 2024-03-06
             return (IntPtr)xwindow.Window.Id;
         }
+
     }
 }

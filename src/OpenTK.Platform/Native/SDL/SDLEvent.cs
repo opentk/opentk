@@ -46,6 +46,9 @@ namespace OpenTK.Platform.Native.SDL
         public SDL_ControllerDeviceEvent ControllerDeviceEvent;
 
         [FieldOffset(0)]
+        public SDL_JoyDeviceEvent JoyDeviceEvent;
+
+        [FieldOffset(0)]
         public SDL_UserEvent UserEvent;
     }
 
@@ -171,6 +174,13 @@ namespace OpenTK.Platform.Native.SDL
         public SDL_EventType type; /* ::SDL_CONTROLLERDEVICEADDED, ::SDL_CONTROLLERDEVICEREMOVED, or ::SDL_CONTROLLERDEVICEREMAPPED */
         public uint timestamp;     /* In milliseconds, populated using SDL_GetTicks() */
         public int which;          /* The joystick device index for the ADDED event, instance id for the REMOVED or REMAPPED event */
+    }
+
+    struct SDL_JoyDeviceEvent
+    {
+        public SDL_EventType type; /* SDL_JOYDEVICEADDED or SDL_JOYDEVICEREMOVED */
+        public uint timestamp;     /* In milliseconds, populated using SDL_GetTicks() */
+        public int which;          /* The joystick device index for the ADDED event, instance id for the REMOVED event */
     }
 
     internal struct SDL_UserEvent

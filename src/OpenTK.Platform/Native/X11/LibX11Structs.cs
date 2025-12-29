@@ -99,6 +99,12 @@ namespace OpenTK.Platform.Native.X11
         }
     }
 
+    internal unsafe struct XrmValue
+    {
+        public uint Size;
+        public byte* Addr;
+    }
+
     //[DebuggerDisplay("XID={(System.IntPtr)Id}")]
     internal readonly struct XAtom : IEquatable<XAtom>
     {

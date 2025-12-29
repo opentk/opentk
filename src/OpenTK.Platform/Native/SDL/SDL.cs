@@ -2,6 +2,7 @@
 using OpenTK.Platform.Native.X11;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlTypes;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Net;
@@ -42,7 +43,74 @@ namespace OpenTK.Platform.Native.SDL
             [DllImport(SDLLib, CallingConvention = CallingConvention.Cdecl)]
             static extern byte* SDL_GetError();
         }
-        
+
+        internal struct SDL_version
+        {
+            // major version
+            public byte major;
+            // minor version
+            public byte minor;
+            // update version
+            public byte patch;
+        }
+
+        [DllImport(SDLLib, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void SDL_GetVersion(out SDL_version ver);
+
+        internal enum SDL_LogPriority : int
+        {
+            SDL_LOG_PRIORITY_VERBOSE = 1,
+            SDL_LOG_PRIORITY_DEBUG,
+            SDL_LOG_PRIORITY_INFO,
+            SDL_LOG_PRIORITY_WARN,
+            SDL_LOG_PRIORITY_ERROR,
+            SDL_LOG_PRIORITY_CRITICAL,
+            SDL_NUM_LOG_PRIORITIES
+        }
+
+        internal enum SDL_LogCategory : int
+        {
+            SDL_LOG_CATEGORY_APPLICATION,
+            SDL_LOG_CATEGORY_ERROR,
+            SDL_LOG_CATEGORY_ASSERT,
+            SDL_LOG_CATEGORY_SYSTEM,
+            SDL_LOG_CATEGORY_AUDIO,
+            SDL_LOG_CATEGORY_VIDEO,
+            SDL_LOG_CATEGORY_RENDER,
+            SDL_LOG_CATEGORY_INPUT,
+            SDL_LOG_CATEGORY_TEST,
+
+            /* Reserved for future SDL library use */
+            SDL_LOG_CATEGORY_RESERVED1,
+            SDL_LOG_CATEGORY_RESERVED2,
+            SDL_LOG_CATEGORY_RESERVED3,
+            SDL_LOG_CATEGORY_RESERVED4,
+            SDL_LOG_CATEGORY_RESERVED5,
+            SDL_LOG_CATEGORY_RESERVED6,
+            SDL_LOG_CATEGORY_RESERVED7,
+            SDL_LOG_CATEGORY_RESERVED8,
+            SDL_LOG_CATEGORY_RESERVED9,
+            SDL_LOG_CATEGORY_RESERVED10,
+
+            /* Beyond this point is reserved for application use, e.g.
+               enum {
+                   MYAPP_CATEGORY_AWESOME1 = SDL_LOG_CATEGORY_CUSTOM,
+                   MYAPP_CATEGORY_AWESOME2,
+                   MYAPP_CATEGORY_AWESOME3,
+                   ...
+               };
+             */
+            SDL_LOG_CATEGORY_CUSTOM
+        }
+
+        [DllImport(SDLLib, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void SDL_LogSetAllPriority(SDL_LogPriority priority);
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        internal delegate void SDL_LogOutputFunction(void* userdata, SDL_LogCategory category, SDL_LogPriority priority, /* const char* */ IntPtr message);
+
+        [DllImport(SDLLib, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void SDL_LogSetOutputFunction(SDL_LogOutputFunction callback, void* userdata);
 
         internal unsafe struct SDL_WindowPtr : IEquatable<SDL_WindowPtr>
         {
@@ -602,9 +670,17 @@ namespace OpenTK.Platform.Native.SDL
         [DllImport(SDLLib, CallingConvention = CallingConvention.Cdecl)]
         internal static unsafe extern void SDL_JoystickUpdate();
 
+        [DllImport(SDLLib, CallingConvention = CallingConvention.Cdecl)]
+        internal static unsafe extern int SDL_JoystickEventState(int state);
+
         internal struct SDL_JoystickID : IEquatable<SDL_JoystickID>
         {
             public int ID;
+
+            public SDL_JoystickID(int id)
+            {
+                ID = id;
+            }
 
             public override bool Equals(object? obj)
             {
@@ -635,6 +711,8 @@ namespace OpenTK.Platform.Native.SDL
             {
                 return !(left == right);
             }
+
+            public static explicit operator SDL_JoystickID(int id) => new SDL_JoystickID(id);
         }
 
         [DllImport(SDLLib, CallingConvention = CallingConvention.Cdecl)]
@@ -653,6 +731,50 @@ namespace OpenTK.Platform.Native.SDL
 
         [DllImport(SDLLib, CallingConvention = CallingConvention.Cdecl)]
         internal static unsafe extern SDL_JoystickPowerLevel SDL_JoystickCurrentPowerLevel(SDL_Joystick* joystick);
+
+        [DllImport(SDLLib, CallingConvention = CallingConvention.Cdecl)]
+        internal static unsafe extern bool SDL_JoystickHasLED(SDL_Joystick* joystick);
+
+        [DllImport(SDLLib, CallingConvention = CallingConvention.Cdecl)]
+        internal static unsafe extern bool SDL_JoystickHasRumble(SDL_Joystick* joystick);
+
+        [DllImport(SDLLib, CallingConvention = CallingConvention.Cdecl)]
+        internal static unsafe extern bool SDL_JoystickHasRumbleTriggers(SDL_Joystick* joystick);
+
+        [DllImport(SDLLib, CallingConvention = CallingConvention.Cdecl)]
+        internal static unsafe extern int SDL_JoystickNumAxes(SDL_Joystick* joystick);
+
+        [DllImport(SDLLib, CallingConvention = CallingConvention.Cdecl)]
+        internal static unsafe extern short SDL_JoystickGetAxis(SDL_Joystick* joystick, int axis);
+
+        [DllImport(SDLLib, CallingConvention = CallingConvention.Cdecl)]
+        internal static unsafe extern int SDL_JoystickNumBalls(SDL_Joystick* joystick);
+
+        [DllImport(SDLLib, CallingConvention = CallingConvention.Cdecl)]
+        internal static unsafe extern int SDL_JoystickNumButtons(SDL_Joystick* joystick);
+
+        [DllImport(SDLLib, CallingConvention = CallingConvention.Cdecl)]
+        internal static unsafe extern byte SDL_JoystickGetButton(SDL_Joystick* joystick, int button);
+
+        [DllImport(SDLLib, CallingConvention = CallingConvention.Cdecl)]
+        internal static unsafe extern int SDL_JoystickNumHats(SDL_Joystick* joystick);
+
+        internal const int SDL_HAT_CENTERED    = 0x00;
+        internal const int SDL_HAT_UP          = 0x01;
+        internal const int SDL_HAT_RIGHT       = 0x02;
+        internal const int SDL_HAT_DOWN        = 0x04;
+        internal const int SDL_HAT_LEFT        = 0x08;
+        internal const int SDL_HAT_RIGHTUP     = SDL_HAT_RIGHT | SDL_HAT_UP;
+        internal const int SDL_HAT_RIGHTDOWN   = SDL_HAT_RIGHT | SDL_HAT_DOWN;
+        internal const int SDL_HAT_LEFTUP      = SDL_HAT_LEFT | SDL_HAT_UP;
+        internal const int SDL_HAT_LEFTDOWN    = SDL_HAT_LEFT | SDL_HAT_DOWN;
+
+        [DllImport(SDLLib, CallingConvention = CallingConvention.Cdecl)]
+        internal static unsafe extern byte SDL_JoystickGetHat(SDL_Joystick* joystick, int hat);
+
+        [DllImport(SDLLib, CallingConvention = CallingConvention.Cdecl)]
+        internal static unsafe extern int SDL_JoystickRumble(SDL_Joystick* joystick, ushort low_frequency_rumble, ushort high_frequency_rumble, uint duration_ms);
+
 
         [DllImport(SDLLib, CallingConvention = CallingConvention.Cdecl)]
         internal static extern SDL_Keymod SDL_GetModState();

@@ -7,6 +7,16 @@ version: 5.0.0.{build}
 
 clone_depth: 1 # we only care about the commit we are building
 
+# 9.0.104 has broken overload resolution, see: https://github.com/dotnet/roslyn/issues/75871
+# So we need to download 9.0.304 which fixes this.
+# - Noggin_bops 2025-10-07
+install:
+- ps: |
+    Invoke-WebRequest -Uri 'https://dot.net/v1/dotnet-install.ps1' -UseBasicParsing -OutFile "$env:temp\dotnet-install.ps1"
+    & $env:temp\dotnet-install.ps1 -Architecture x64 -Version '9.0.304' -InstallDir "$env:ProgramFiles\dotnet"
+before_build:
+  - cmd: dotnet --version
+
 nuget:
   project_feed: true
 

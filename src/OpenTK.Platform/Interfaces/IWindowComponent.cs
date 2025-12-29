@@ -582,5 +582,12 @@ namespace OpenTK.Platform
         /// <param name="scaleY">The y scale factor of the window.</param>
         /// <seealso cref="WindowScaleChangeEventArgs"/>
         void GetScaleFactor(WindowHandle handle, out float scaleX, out float scaleY);
+
+        /// <summary>
+        /// Returns the OpenGL context created from this window, or <see langword="null"/> if no OpenGL has been created for this window.
+        /// </summary>
+        /// <param name="handle">The window handle.</param>
+        /// <returns>The OpenGL context created from this window, or <see langword="null"/> if no OpenGL has been created for this window.</returns>
+        OpenGLContextHandle? GetOpenGLContext(WindowHandle handle);
     }
 }

@@ -9,6 +9,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
+using OpenTK.Platform.Native.Windows;
 
 namespace OpenTK.Platform.Native.ANGLE
 {
@@ -243,9 +244,10 @@ namespace OpenTK.Platform.Native.ANGLE
 
             EGLContext contextPtr = Egl.CreateContext(eglDisplay, selectedConfig, shareContext, context_attribs.ToArray());
 
-            ANGLEOpenGLContextHandle context = new ANGLEOpenGLContextHandle(eglSurface, contextPtr, shared, chosenValues);
-
+            ANGLEOpenGLContextHandle context = new ANGLEOpenGLContextHandle(eglSurface, contextPtr, handle, shared, chosenValues);
             ContextDict.Add(contextPtr, context);
+
+            handle.OpenGLContextHandle = context;
 
             return context;
         }
@@ -256,6 +258,11 @@ namespace OpenTK.Platform.Native.ANGLE
             ANGLEOpenGLContextHandle context = handle.As<ANGLEOpenGLContextHandle>(this);
 
             ContextDict.Remove(context.EglContext);
+
+            if (context.WindowHandle != null)
+            {
+                context.WindowHandle.OpenGLContextHandle = null;
+            }
 
             bool success = Egl.DestroyContext(eglDisplay, context.EglContext);
             if (success == false)
@@ -357,6 +364,13 @@ namespace OpenTK.Platform.Native.ANGLE
             {
                 Logger?.LogWarning($"Unable to swap buffers: {Egl.GetError()}");
             }
+        }
+
+        /// <inheritdoc/>
+        public WindowHandle? GetWindow(OpenGLContextHandle handle)
+        {
+            ANGLEOpenGLContextHandle context = handle.As<ANGLEOpenGLContextHandle>(this);
+            return context.WindowHandle;
         }
 
         /// <summary>

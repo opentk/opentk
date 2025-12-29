@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Diagnostics;
 using OpenTK.Platform;
 using OpenTK.Core.Utility;
@@ -347,6 +347,10 @@ namespace OpenTK.Platform.Native.X11
                             XRRFreeScreenResources(resources);
                         }
 
+                        // FIXME: Maybe don't send the initial value changes?
+                        // - Noggin_bops 2025-12-11
+                        UpdateDisplayValues();
+
                         Debug.Assert(_displays.Count > 0);
 
                         // Subscribe to events relating to connecting and disconnecting monitors.
@@ -375,16 +379,16 @@ namespace OpenTK.Platform.Native.X11
             _displays.Clear();
         }
 
-        internal static void HandleXRREvent(XEvent @event, ILogger? logger)
+        internal void HandleXRREvent(XEvent @event)
         {
             switch ((RREventType)(@event.Type - X11.XRandREventBase))
             {
                 case RREventType.RRScreenChangeNotify:
-                    logger?.LogInfo("RR Screen change notify.");
+                    Logger?.LogInfo("RR Screen change notify.");
                     break;
                 case RREventType.RRNotify:
                 {
-                    logger?.LogDebug($"RR Notify (subtype: {@event.RRNotify.SubType})");
+                    Logger?.LogDebug($"RR Notify (subtype: {@event.RRNotify.SubType})");
                     if (@event.RRNotify.SubType == RRNotifySubType.OutputChange)
                     {
                         XRROutputChangeNotifyEvent outputChanged = @event.RROutputChangeNotify;
@@ -423,7 +427,7 @@ namespace OpenTK.Platform.Native.X11
                                             return;
                                         }
 
-                                        string name = GetOutputName(outputChanged.Output, outputInfo, logger);
+                                        string name = GetOutputName(outputChanged.Output, outputInfo, Logger);
 
                                         handle = new XDisplayHandle(outputChanged.Output, outputInfo->crtc, name);
 
@@ -433,7 +437,7 @@ namespace OpenTK.Platform.Native.X11
                                             _displays.Add(handle);
 
                                         EventQueue.Raise(handle, PlatformEventType.DisplayConnectionChanged, new DisplayConnectionChangedEventArgs(handle, false));
-                                        logger?.LogDebug($"Connected display '{name}'!");
+                                        Logger?.LogDebug($"Connected display '{name}'!");
 
                                         XRRFreeOutputInfo(outputInfo);
                                         XRRFreeScreenResources(resources);
@@ -442,19 +446,23 @@ namespace OpenTK.Platform.Native.X11
                             }
                             else
                             {
-                                logger?.LogDebug("Connected already connected display!");
+                                Logger?.LogDebug("Connected already connected display!");
                                 // This display already existed.
                                 // FIXME: Update rotation?
                             }
+
+                            UpdateDisplayValues();
                         }
                         else if (outputChanged.Connection == Connection.Disconnected)
                         {
                             if (handle != null)
                             {
-                                logger?.LogDebug($"Disconnected display '{handle.Name}'!");
+                                Logger?.LogDebug($"Disconnected display '{handle.Name}'!");
                                 _displays.Remove(handle);
                                 EventQueue.Raise(handle, PlatformEventType.DisplayConnectionChanged, new DisplayConnectionChangedEventArgs(handle, true));
                             }
+
+                            UpdateDisplayValues();
                         }
                     }
                     break;
@@ -462,6 +470,61 @@ namespace OpenTK.Platform.Native.X11
                 default:
                     break;
             }
+        }
+
+        internal void UpdateDisplayValues()
+        {
+            Logger?.LogDebug($"Updating display values.");
+            for (int i = 0; i < _displays.Count; i++)
+            {
+                UpdateDisplayValues(i, _displays[i]);
+            }
+        }
+        private void UpdateDisplayValues(int displayIndex, XDisplayHandle display)
+        {
+            DisplayValuesChangedEventArgs valuesChanged = new DisplayValuesChangedEventArgs(displayIndex);
+
+            VideoMode newVideoMode = GetVideoMode(display);
+            if (newVideoMode.Width != display.VideoMode.Width ||
+                newVideoMode.Height != display.VideoMode.Height)
+            {
+                valuesChanged.ResolutionChanged = true;
+            }
+
+            if (newVideoMode.RefreshRate != display.VideoMode.RefreshRate)
+            {
+                valuesChanged.RefreshRateChanged = true;
+            }
+
+            if (newVideoMode.BitsPerPixel != display.VideoMode.BitsPerPixel)
+            {
+                valuesChanged.BitsPerPixelChanged = true;
+            }
+
+            Vector2i newVirtualPosition = GetVirtualPosition(display);
+            if (newVirtualPosition != display.VirtualPosition)
+            {
+                valuesChanged.VirtualPositionChanged = true;
+            }
+
+            Box2i newWorkArea = GetWorkArea(display);
+            if (newWorkArea != display.WorkArea)
+            {
+                valuesChanged.WorkAreaChanged = true;
+            }
+
+            Vector2 newScale = GetDisplayScale(display);
+            if (newScale != display.Scale)
+            {
+                valuesChanged.DisplayScaleChanged = true;
+            }
+
+            display.VideoMode = newVideoMode;
+            display.VirtualPosition = newVirtualPosition;
+            display.WorkArea = newWorkArea;
+            display.Scale = newScale;
+
+            EventQueue.Raise(null, PlatformEventType.DisplayValuesChanged, valuesChanged);
         }
 
         /// <inheritdoc />
@@ -510,9 +573,11 @@ namespace OpenTK.Platform.Native.X11
         }
 
         /// <inheritdoc />
-        public void GetVideoMode(DisplayHandle handle, out VideoMode mode)
+        public VideoMode GetVideoMode(DisplayHandle handle)
         {
             XDisplayHandle xdisplay = handle.As<XDisplayHandle>(this);
+
+            VideoMode mode;
 
             unsafe
             {
@@ -546,6 +611,8 @@ namespace OpenTK.Platform.Native.X11
 
                 XRRFreeScreenResources(resources);
             }
+
+            return mode;
         }
 
         internal static void GetVideoMode(IPalComponent comp, XDisplayHandle handle, out VideoMode mode)
@@ -618,8 +685,10 @@ namespace OpenTK.Platform.Native.X11
         }
 
         /// <inheritdoc />
-        public void GetVirtualPosition(DisplayHandle handle, out int x, out int y)
+        public Vector2i GetVirtualPosition(DisplayHandle handle)
         {
+            Vector2i virtualPosition;
+
             // FIXME: Should we get this every time or should we cache this?
             unsafe
             {
@@ -630,26 +699,30 @@ namespace OpenTK.Platform.Native.X11
 
                 if (crtcInfo != null)
                 {
-                    x = crtcInfo->x;
-                    y = crtcInfo->y;
+                    virtualPosition.X = crtcInfo->x;
+                    virtualPosition.Y = crtcInfo->y;
 
                     XRRFreeCrtcInfo(crtcInfo);
                 }
                 else
                 {
-                    x = 0;
-                    y = 0;
+                    virtualPosition.X = 0;
+                    virtualPosition.Y = 0;
                     Logger?.LogError($"GetCrtcInfo returned null, could not get virtual position for {xdisplay.Name} (crtc={xdisplay.Crtc})");
 
                 }
 
                 XRRFreeScreenResources(resources);
             }
+
+            return virtualPosition;
         }
 
         /// <inheritdoc />
-        public void GetResolution(DisplayHandle handle, out int width, out int  height)
+        public Vector2i GetResolution(DisplayHandle handle)
         {
+            Vector2i resolution;
+
             // FIXME: Should we get this every time or should we cache this?
             unsafe
             {
@@ -662,26 +735,30 @@ namespace OpenTK.Platform.Native.X11
                 {
                     // FIXME: Handle screen rotation!
                     // FIXME: Should we use crtc size or output size?
-                    width = (int)crtcInfo->width;
-                    height = (int)crtcInfo->height;
+                    resolution.X = (int)crtcInfo->width;
+                    resolution.Y = (int)crtcInfo->height;
 
                     XRRFreeCrtcInfo(crtcInfo);
                 }
                 else
                 {
-                    width = 0;
-                    height = 0;
+                    resolution.X = 0;
+                    resolution.Y = 0;
                     Logger?.LogError($"GetCrtcInfo returned null, could not get resolution for {xdisplay.Name} (crtc={xdisplay.Crtc})");
                 }
 
                 XRRFreeScreenResources(resources);
             }
+
+            return resolution;
         }
 
         /// <inheritdoc />
-        public void GetWorkArea(DisplayHandle handle, out Box2i area)
+        public Box2i GetWorkArea(DisplayHandle handle)
         {
             XDisplayHandle xdisplay = handle.As<XDisplayHandle>(this);
+
+            Box2i area;
 
             unsafe
             {
@@ -702,7 +779,7 @@ namespace OpenTK.Platform.Native.X11
                     area = default;
                     Logger?.LogError($"GetCrtcInfo returned null, could not get work area for {xdisplay.Name} (crtc={xdisplay.Crtc})");
                     XRRFreeScreenResources(resources);
-                    return;
+                    return area;
                 }
 
                 XRRFreeScreenResources(resources);
@@ -736,7 +813,7 @@ namespace OpenTK.Platform.Native.X11
                     {
                         XFree(workAreasPtr);
                     }
-                    return;
+                    return area;
                 }
 
                 result = XGetWindowProperty(
@@ -759,7 +836,7 @@ namespace OpenTK.Platform.Native.X11
                     {
                         XFree(desktopPtr);
                     }
-                    return;
+                    return area;
                 }
                 
                 if (items > 0)
@@ -790,11 +867,15 @@ namespace OpenTK.Platform.Native.X11
             {
                 Logger?.LogInfo("Could not get work area from _NET_WORKAREA. Reporting display area as work area.");
             }
+
+            return area;
         }
 
         /// <inheritdoc />
-        public void GetRefreshRate(DisplayHandle handle, out float refreshRate)
+        public float GetRefreshRate(DisplayHandle handle)
         {
+            float refreshRate;
+
             unsafe
             {
                 XDisplayHandle xdisplay = handle.As<XDisplayHandle>(this);
@@ -835,23 +916,19 @@ namespace OpenTK.Platform.Native.X11
 
                 XRRFreeScreenResources(resources);
             }
+
+            return refreshRate;
         }
 
         private static bool hasReportedDisplayScaleWarning = false;
 
         /// <inheritdoc />
-        public void GetDisplayScale(DisplayHandle handle, out float scaleX, out float scaleY)
+        public Vector2 GetDisplayScale(DisplayHandle handle)
         {
-            if (hasReportedDisplayScaleWarning == false)
-            {
-                Logger?.LogWarning("Display scale is always 1 on X11 atm.");
-                hasReportedDisplayScaleWarning = true;
-            }
-
-            // FIXME: We can read something like XrmGetResource "Xft.dpi" or use X11_XGetDefault(dpy, "Xft", "dpi")
-            // But the question is how do we get the scale factor from just the DPI?
-            scaleX = 1;
-            scaleY = 1;
+            // X11 only has a global scale factor, read it.
+            // - Noggin_bops 2025-12-11
+            float scale = X11WindowComponent.GetContentScale(Logger);
+            return new Vector2(scale, scale);
         }
 
         /// <inheritdoc />

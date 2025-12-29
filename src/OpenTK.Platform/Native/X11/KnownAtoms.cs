@@ -139,6 +139,10 @@ namespace OpenTK.Platform.Native.X11
 
         EDID,
 
+        // FIXME: We want to create this atom is it doesn't already exist...
+        // - Noggin_bops 2025-12-11
+        RESOURCE_MANAGER,
+
         // This Atom is apparently non-standard so there is no documentation to reference.
         // But it seems that if _NET_SUPPORTED lists this atom we could probably use it.
         // - Noggin_bops 2024-11-01
