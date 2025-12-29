@@ -26,7 +26,6 @@ using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Runtime.Intrinsics;
-using System.Runtime.Intrinsics.X86;
 using System.Xml.Serialization;
 
 namespace OpenTK.Mathematics
@@ -120,6 +119,26 @@ namespace OpenTK.Mathematics
         /// Defines the size of the Vector4 struct in bytes.
         /// </summary>
         public static readonly int SizeInBytes = Unsafe.SizeOf<Vector4>();
+
+        /// <summary>
+        /// Gets the additive identity of Vector4. Equivalent to Vector4.Zero.
+        /// </summary>
+        public static Vector4 AdditiveIdentity => Zero;
+
+        /// <summary>
+        /// Gets the multiplicative identity of Vector4. Equivalent to Vector4.One.
+        /// </summary>
+        public static Vector4 MultiplicativeIdentity => One;
+
+        /// <summary>
+        /// Gets the max value for Vector4. Equivalent to Vector4.PositiveInfinity.
+        /// </summary>
+        public static Vector4 MaxValue => PositiveInfinity;
+
+        /// <summary>
+        /// Gets the min value for Vector4. Equivalent to Vector4.NegativeInfinity.
+        /// </summary>
+        public static Vector4 MinValue => NegativeInfinity;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Vector4"/> struct.
@@ -242,26 +261,6 @@ namespace OpenTK.Mathematics
         /// <see cref="Length"/>
         /// <seealso cref="LengthFast"/>
         public readonly float LengthSquared => Dot(this, this);
-
-        /// <summary>
-        /// Gets the additive identity of Vector4. Equivalent to Vector4.Zero.
-        /// </summary>
-        public static Vector4 AdditiveIdentity => Zero;
-
-        /// <summary>
-        /// Gets the multiplicative identity of Vector4. Equivalent to Vector4.One.
-        /// </summary>
-        public static Vector4 MultiplicativeIdentity => One;
-
-        /// <summary>
-        /// Gets the max value for Vector4. Equivalent to Vector4.PositiveInfinity.
-        /// </summary>
-        public static Vector4 MaxValue => PositiveInfinity;
-
-        /// <summary>
-        /// Gets the min value for Vector4. Equivalent to Vector4.NegativeInfinity.
-        /// </summary>
-        public static Vector4 MinValue => NegativeInfinity;
 
         /// <summary>
         /// Returns a copy of the Vector4 scaled to unit length.
@@ -827,8 +826,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static float DistanceSquared(Vector4 vec1, Vector4 vec2)
         {
-            DistanceSquared(in vec1, in vec2, out float result);
-            return result;
+            return (vec1 - vec2).LengthSquared;
         }
 
         /// <summary>
@@ -839,7 +837,7 @@ namespace OpenTK.Mathematics
         /// <param name="result">The squared distance.</param>
         public static void DistanceSquared(in Vector4 vec1, in Vector4 vec2, out float result)
         {
-            result = DistanceSquared(vec1, vec2);
+            result = (vec1 - vec2).LengthSquared;
         }
 
         /// <summary>
@@ -1298,8 +1296,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector4 TransformRow(Vector4 vec, Matrix4 mat)
         {
-            TransformRow(in vec, in mat, out Vector4 result);
-            return result;
+            return (vec.X * mat.Row0) + (vec.Y * mat.Row1) + (vec.Z * mat.Row2) + (vec.W * mat.Row3);
         }
 
         /// <summary>
@@ -1354,8 +1351,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector4 TransformColumn(Matrix4 mat, Vector4 vec)
         {
-            TransformColumn(in mat, in vec, out Vector4 result);
-            return result;
+            return new Vector4(Dot(mat.Row0, vec), Dot(mat.Row1, vec), Dot(mat.Row2, vec), Dot(mat.Row3, vec));
         }
 
         /// <summary>
@@ -1378,8 +1374,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector2 TransformTwoDimensionsRow(Vector4 vec, Matrix4x2 mat)
         {
-            TransformTwoDimensionsRow(in vec, in mat, out Vector2 result);
-            return result;
+            return (vec.X * mat.Row0) + (vec.Y * mat.Row1) + (vec.Z * mat.Row2) + (vec.W * mat.Row3);
         }
 
         /// <summary>
@@ -1402,8 +1397,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector3 TransformThreeDimensionsRow(Vector4 vec, Matrix4x3 mat)
         {
-            TransformThreeDimensionsRow(in vec, in mat, out Vector3 result);
-            return result;
+            return (vec.X * mat.Row0) + (vec.Y * mat.Row1) + (vec.Z * mat.Row2) + (vec.W * mat.Row3);
         }
 
         /// <summary>
@@ -1426,8 +1420,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector2 TransformTwoDimensionsColumn(Matrix2x4 mat, Vector4 vec)
         {
-            TransformTwoDimensionsColumn(in mat, in vec, out Vector2 result);
-            return result;
+            return new Vector2(Dot(mat.Row0, vec), Dot(mat.Row1, vec));
         }
 
         /// <summary>
@@ -1450,8 +1443,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector3 TransformThreeDimensionsColumn(Matrix3x4 mat, Vector4 vec)
         {
-            TransformThreeDimensionsColumn(in mat, in vec, out Vector3 result);
-            return result;
+            return new Vector3(Dot(mat.Row0, vec), Dot(mat.Row1, vec), Dot(mat.Row2, vec));
         }
 
         /// <summary>
@@ -2564,8 +2556,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector2 operator *(Vector4 vec, Matrix4x2 mat)
         {
-            TransformTwoDimensionsRow(in vec, in mat, out Vector2 result);
-            return result;
+            return TransformTwoDimensionsRow(vec, mat);
         }
 
         /// <summary>
@@ -2577,8 +2568,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector3 operator *(Vector4 vec, Matrix4x3 mat)
         {
-            TransformThreeDimensionsRow(in vec, in mat, out Vector3 result);
-            return result;
+            return TransformThreeDimensionsRow(vec, mat);
         }
 
         /// <summary>
@@ -2590,8 +2580,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector4 operator *(Vector4 vec, Matrix4 mat)
         {
-            TransformRow(in vec, in mat, out Vector4 result);
-            return result;
+            return TransformRow(vec, mat);
         }
 
         /// <summary>
@@ -2708,7 +2697,8 @@ namespace OpenTK.Mathematics
         [Pure]
         public static implicit operator Vector4d(Vector4 vec)
         {
-            return new Vector4d(vec.X, vec.Y, vec.Z, vec.W);
+            var (lower, upper) = Vector128.Widen(vec.AsVector128());
+            return Vector256.Create(lower, upper).AsVector4dOtk();
         }
 
         /// <summary>
@@ -2730,7 +2720,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static explicit operator Vector4i(Vector4 vec)
         {
-            return new Vector4i((int)vec.X, (int)vec.Y, (int)vec.Z, (int)vec.W);
+            return Vector128.ConvertToInt32(vec.AsVector128()).AsVector4iOtk();
         }
 
         /// <summary>
@@ -2752,7 +2742,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static explicit operator Vector4(System.Numerics.Vector4 vec)
         {
-            return Unsafe.As<System.Numerics.Vector4, Vector4>(ref vec);
+            return Unsafe.BitCast<System.Numerics.Vector4, Vector4>(vec);
         }
 
         /// <summary>
@@ -2762,7 +2752,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static explicit operator System.Numerics.Vector4(Vector4 vec)
         {
-            return Unsafe.As<Vector4, System.Numerics.Vector4>(ref vec);
+            return Unsafe.BitCast<Vector4, System.Numerics.Vector4>(vec);
         }
 
         /// <inheritdoc/>
