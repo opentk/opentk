@@ -4,7 +4,6 @@ description
     A basic mathematics library developed primarily for rendering in 3d and 2d.
 dependencies
     framework: net10.0
-        System.Runtime.CompilerServices.Unsafe >= 6.0.0
 files
     bin\Release\net10.0\OpenTK.Mathematics.dll ==> lib\net10.0
     bin\Release\net10.0\OpenTK.Mathematics.xml ==> lib\net10.0
