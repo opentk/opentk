@@ -16,7 +16,6 @@
     </ItemGroup>
   
     <ItemGroup>
-      <PackageReference Include="System.Numerics.Vectors" Version="4.5.0" />
       <ProjectReference Include="../OpenTK.Core/OpenTK.Core.csproj" />
       <ProjectReference Include="../OpenTK.Mathematics/OpenTK.Mathematics.csproj" />
     </ItemGroup>
