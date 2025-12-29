@@ -228,7 +228,7 @@ module Box3 =
 
         [<Property>]
         let ``Box3.Contains should only return true if the other box is partly within in the box`` (b1 : Box3, b2 : Box3) =
-            let c = b1.Min.X <= b2.Max.X && b1.Max.X >= b2.Min.X && b1.Min.Y <= b2.Max.Y && b1.Max.Y >= b2.Min.Y && b1.Min.Z <= b2.Max.Z && b1.Max.Z >= b2.Min.Z
+            let c = b1.Min.X <= b2.Min.X && b1.Max.X >= b2.Max.X && b1.Min.Y <= b2.Min.Y && b1.Max.Y >= b2.Max.Y && b1.Min.Z <= b2.Min.Z && b1.Max.Z >= b2.Max.Z
             
             Assert.Equal(c, b1.Contains(b2))
                 
@@ -249,3 +249,11 @@ module Box3 =
         let ``Any box should be equal to itself`` (b1 : Box3) =
             Assert.Equal(b1, b1)
             Assert.True(b1.Equals(b1))
+
+    [<Properties(Arbitrary = [|typeof<OpenTKGen>|])>]
+    module Overlaps =
+        [<Property>]
+        let ``Box3.Overlaps should only return true if the other box is partly within in the box`` (b1 : Box3, b2 : Box3) =
+            let c = b1.Min.X <= b2.Max.X && b1.Max.X >= b2.Min.X && b1.Min.Y <= b2.Max.Y && b1.Max.Y >= b2.Min.Y && b1.Min.Z <= b2.Max.Z && b1.Max.Z >= b2.Min.Z
+    
+            Assert.Equal(c, b1.Overlaps(b2))

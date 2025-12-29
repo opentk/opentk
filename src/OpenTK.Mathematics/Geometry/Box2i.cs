@@ -173,15 +173,15 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Returns whether the box contains the specified box (borders inclusive).
+        /// Returns whether the box completely contains the specified box (borders inclusive).
         /// </summary>
         /// <param name="other">The box to query.</param>
-        /// <returns>Whether this box contains the other box.</returns>
+        /// <returns>Whether this box completely contains the other box.</returns>
         [Pure]
         public readonly bool Contains(Box2i other)
         {
-            return _max.X >= other._min.X && _min.X <= other._max.X &&
-                   _max.Y >= other._min.Y && _min.Y <= other._max.Y;
+            return _min.X <= other._min.X && other._max.X <= _max.X
+                && _min.Y <= other._min.Y && other._max.Y <= _max.Y;
         }
 
         /// <summary>
@@ -218,6 +218,18 @@ namespace OpenTK.Mathematics
                 Math.Max(0f, Math.Max(_min.X - point.X, point.X - _max.X)),
                 Math.Max(0f, Math.Max(_min.Y - point.Y, point.Y - _max.Y)));
             return dist.Length;
+        }
+
+        /// <summary>
+        /// Returns whether the box overlaps the specified box (borders inclusive).
+        /// </summary>
+        /// <param name="other">The box to query.</param>
+        /// <returns>Whether this box overlaps the other box.</returns>
+        [Pure]
+        public bool Overlaps(Box2i other)
+        {
+            return _max.X >= other._min.X && _min.X <= other._max.X &&
+                   _max.Y >= other._min.Y && _min.Y <= other._max.Y;
         }
 
         /// <summary>
