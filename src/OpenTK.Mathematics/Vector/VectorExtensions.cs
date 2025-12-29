@@ -153,7 +153,7 @@ namespace OpenTK.Mathematics
         /// <param name="vec">The vector to reinterpret.</param>
         /// <returns><paramref name="vec"/> reinterpreted as a new <see cref="Vector128{T}"/>.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Vector128<int> AsVector256Unsafe(this Vector2i vec)
+        public static Vector128<int> AsVector128Unsafe(this Vector2i vec)
         {
             Unsafe.SkipInit(out Vector128<int> result);
             Unsafe.WriteUnaligned(ref Unsafe.As<Vector128<int>, byte>(ref result), vec);
@@ -166,7 +166,7 @@ namespace OpenTK.Mathematics
         /// <param name="vec">The vector to reinterpret.</param>
         /// <returns><paramref name="vec"/> reinterpreted as a new <see cref="Vector128{T}"/>.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Vector128<int> AsVector256Unsafe(this Vector3i vec)
+        public static Vector128<int> AsVector128Unsafe(this Vector3i vec)
         {
             Unsafe.SkipInit(out Vector128<int> result);
             Unsafe.WriteUnaligned(ref Unsafe.As<Vector128<int>, byte>(ref result), vec);
@@ -174,7 +174,7 @@ namespace OpenTK.Mathematics
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Vector128<int> AsVector256(this Vector4i vec)
+        public static Vector128<int> AsVector128(this Vector4i vec)
         {
             return Unsafe.BitCast<Vector4i, Vector128<int>>(vec);
         }
@@ -235,6 +235,30 @@ namespace OpenTK.Mathematics
                     (int)vec4d.Y,
                     (int)vec4d.Z,
                     (int)vec4d.W);
+            }
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Vector256<double> ConvertToVector256Double(Vector128<int> vec)
+        {
+            if (Avx.IsSupported)
+            {
+                return Avx.ConvertToVector256Double(vec);
+            }
+            else if (AdvSimd.Arm64.IsSupported)
+            {
+                return Vector256.Create(
+                    AdvSimd.Arm64.ConvertToDouble(Vector128.WidenLower(vec)),
+                    AdvSimd.Arm64.ConvertToDouble(Vector128.WidenUpper(vec)));
+            }
+            else
+            {
+                var vec4i = Unsafe.BitCast<Vector128<int>, Vector4i>(vec);
+                return Vector256.Create(
+                    (double)vec4i.X,
+                    (double)vec4i.Y,
+                    (double)vec4i.Z,
+                    (double)vec4i.W);
             }
         }
     }
