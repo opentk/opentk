@@ -121,15 +121,32 @@ namespace OpenTK.Mathematics
         public static readonly int SizeInBytes = Unsafe.SizeOf<Vector4>();
 
         /// <summary>
+        /// Gets the additive identity of Vector4. Equivalent to Vector4.Zero.
+        /// </summary>
+        public static Vector4 AdditiveIdentity => Zero;
+
+        /// <summary>
+        /// Gets the multiplicative identity of Vector4. Equivalent to Vector4.One.
+        /// </summary>
+        public static Vector4 MultiplicativeIdentity => One;
+
+        /// <summary>
+        /// Gets the max value for Vector4. Equivalent to Vector4.PositiveInfinity.
+        /// </summary>
+        public static Vector4 MaxValue => PositiveInfinity;
+
+        /// <summary>
+        /// Gets the min value for Vector4. Equivalent to Vector4.NegativeInfinity.
+        /// </summary>
+        public static Vector4 MinValue => NegativeInfinity;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="Vector4"/> struct.
         /// </summary>
         /// <param name="value">The value that will initialize this instance.</param>
         public Vector4(float value)
         {
-            X = value;
-            Y = value;
-            Z = value;
-            W = value;
+            this = Vector128.Create(value).AsVector4Otk();
         }
 
         /// <summary>
@@ -141,10 +158,7 @@ namespace OpenTK.Mathematics
         /// <param name="w">The w component of the Vector4.</param>
         public Vector4(float x, float y, float z, float w)
         {
-            X = x;
-            Y = y;
-            Z = z;
-            W = w;
+            this = Vector128.Create(x, y, z, w).AsVector4Otk();
         }
 
         /// <summary>
@@ -155,10 +169,7 @@ namespace OpenTK.Mathematics
         /// <param name="w">The w component of the Vector4.</param>
         public Vector4(Vector2 xy, float z = default, float w = default)
         {
-            X = xy.X;
-            Y = xy.Y;
-            Z = z;
-            W = w;
+            this = Vector128.Create(xy.X, xy.Y, z, w).AsVector4Otk();
         }
 
         /// <summary>
@@ -168,10 +179,7 @@ namespace OpenTK.Mathematics
         /// <param name="w">The w component of the Vector4.</param>
         public Vector4(Vector3 xyz, float w = default)
         {
-            X = xyz.X;
-            Y = xyz.Y;
-            Z = xyz.Z;
-            W = w;
+            this = Vector128.Create(xyz.X, xyz.Y, xyz.Z, w).AsVector4Otk();
         }
 
         /// <summary>
@@ -214,12 +222,12 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <see cref="LengthFast"/>
         /// <seealso cref="LengthSquared"/>
-        public readonly float Length => MathF.Sqrt((X * X) + (Y * Y) + (Z * Z) + (W * W));
+        public readonly float Length => float.Sqrt(LengthSquared);
 
         /// <summary>
         /// Gets an approximation of 1 over the length (magnitude) of the vector.
         /// </summary>
-        public readonly float ReciprocalLengthFast => MathF.ReciprocalSqrtEstimate((X * X) + (Y * Y) + (Z * Z) + (W * W));
+        public readonly float ReciprocalLengthFast => float.ReciprocalSqrtEstimate(LengthSquared);
 
         /// <summary>
         /// Gets an approximation of the vector length (magnitude).
@@ -229,7 +237,7 @@ namespace OpenTK.Mathematics
         /// </remarks>
         /// <see cref="Length"/>
         /// <seealso cref="LengthSquared"/>
-        public readonly float LengthFast => 1.0f / MathF.ReciprocalSqrtEstimate((X * X) + (Y * Y) + (Z * Z) + (W * W));
+        public readonly float LengthFast => 1.0f / MathF.ReciprocalSqrtEstimate(LengthSquared);
 
         /// <summary>
         /// Gets the square of the vector length (magnitude).
@@ -240,27 +248,7 @@ namespace OpenTK.Mathematics
         /// </remarks>
         /// <see cref="Length"/>
         /// <seealso cref="LengthFast"/>
-        public readonly float LengthSquared => (X * X) + (Y * Y) + (Z * Z) + (W * W);
-
-        /// <summary>
-        /// Gets the additive identity of Vector4. Equivalent to Vector4.Zero.
-        /// </summary>
-        public static Vector4 AdditiveIdentity => Zero;
-
-        /// <summary>
-        /// Gets the multiplicative identity of Vector4. Equivalent to Vector4.One.
-        /// </summary>
-        public static Vector4 MultiplicativeIdentity => One;
-
-        /// <summary>
-        /// Gets the max value for Vector4. Equivalent to Vector4.PositiveInfinity.
-        /// </summary>
-        public static Vector4 MaxValue => PositiveInfinity;
-
-        /// <summary>
-        /// Gets the min value for Vector4. Equivalent to Vector4.NegativeInfinity.
-        /// </summary>
-        public static Vector4 MinValue => NegativeInfinity;
+        public readonly float LengthSquared => Dot(this, this);
 
         /// <summary>
         /// Returns a copy of the Vector4 scaled to unit length.
@@ -268,9 +256,7 @@ namespace OpenTK.Mathematics
         /// <returns>The normalized copy.</returns>
         public readonly Vector4 Normalized()
         {
-            Vector4 v = this;
-            v.Normalize();
-            return v;
+            return Normalize(this);
         }
 
         /// <summary>
@@ -278,11 +264,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         public void Normalize()
         {
-            float scale = 1.0f / Length;
-            X *= scale;
-            Y *= scale;
-            Z *= scale;
-            W *= scale;
+            this = Normalize(this);
         }
 
         /// <summary>
@@ -290,11 +272,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         public void NormalizeFast()
         {
-            float scale = MathF.ReciprocalSqrtEstimate((X * X) + (Y * Y) + (Z * Z) + (W * W));
-            X *= scale;
-            Y *= scale;
-            Z *= scale;
-            W *= scale;
+            this = NormalizeFast(this);
         }
 
         /// <summary>
@@ -303,12 +281,7 @@ namespace OpenTK.Mathematics
         /// <returns>The component-wise absolute value vector.</returns>
         public readonly Vector4 Abs()
         {
-            Vector4 result = this;
-            result.X = MathF.Abs(result.X);
-            result.Y = MathF.Abs(result.Y);
-            result.Z = MathF.Abs(result.Z);
-            result.W = MathF.Abs(result.W);
-            return result;
+            return Abs(this);
         }
 
         /// <summary>
@@ -371,8 +344,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector4 Add(Vector4 a, Vector4 b)
         {
-            Add(in a, in b, out a);
-            return a;
+            return (a.AsVector128() + b.AsVector128()).AsVector4Otk();
         }
 
         /// <summary>
@@ -383,10 +355,7 @@ namespace OpenTK.Mathematics
         /// <param name="result">Result of operation.</param>
         public static void Add(in Vector4 a, in Vector4 b, out Vector4 result)
         {
-            result.X = a.X + b.X;
-            result.Y = a.Y + b.Y;
-            result.Z = a.Z + b.Z;
-            result.W = a.W + b.W;
+            result = (a.AsVector128() + b.AsVector128()).AsVector4Otk();
         }
 
         /// <summary>
@@ -398,8 +367,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector4 Subtract(Vector4 a, Vector4 b)
         {
-            Subtract(in a, in b, out a);
-            return a;
+            return (a.AsVector128() - b.AsVector128()).AsVector4Otk();
         }
 
         /// <summary>
@@ -410,10 +378,7 @@ namespace OpenTK.Mathematics
         /// <param name="result">Result of subtraction.</param>
         public static void Subtract(in Vector4 a, in Vector4 b, out Vector4 result)
         {
-            result.X = a.X - b.X;
-            result.Y = a.Y - b.Y;
-            result.Z = a.Z - b.Z;
-            result.W = a.W - b.W;
+            result = (a.AsVector128() - b.AsVector128()).AsVector4Otk();
         }
 
         /// <summary>
@@ -425,8 +390,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector4 Multiply(Vector4 vector, float scale)
         {
-            Multiply(in vector, scale, out vector);
-            return vector;
+            return (vector.AsVector128() * Vector128.Create(scale)).AsVector4Otk();
         }
 
         /// <summary>
@@ -437,10 +401,7 @@ namespace OpenTK.Mathematics
         /// <param name="result">Result of the operation.</param>
         public static void Multiply(in Vector4 vector, float scale, out Vector4 result)
         {
-            result.X = vector.X * scale;
-            result.Y = vector.Y * scale;
-            result.Z = vector.Z * scale;
-            result.W = vector.W * scale;
+            result = (vector.AsVector128() * Vector128.Create(scale)).AsVector4Otk();
         }
 
         /// <summary>
@@ -452,8 +413,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector4 Multiply(Vector4 vector, Vector4 scale)
         {
-            Multiply(in vector, in scale, out vector);
-            return vector;
+            return (vector.AsVector128() * scale.AsVector128()).AsVector4Otk();
         }
 
         /// <summary>
@@ -464,10 +424,7 @@ namespace OpenTK.Mathematics
         /// <param name="result">Result of the operation.</param>
         public static void Multiply(in Vector4 vector, in Vector4 scale, out Vector4 result)
         {
-            result.X = vector.X * scale.X;
-            result.Y = vector.Y * scale.Y;
-            result.Z = vector.Z * scale.Z;
-            result.W = vector.W * scale.W;
+            result = (vector.AsVector128() * scale.AsVector128()).AsVector4Otk();
         }
 
         /// <summary>
@@ -479,8 +436,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector4 Divide(Vector4 vector, float scale)
         {
-            Divide(in vector, scale, out vector);
-            return vector;
+            return (vector.AsVector128() / Vector128.Create(scale)).AsVector4Otk();
         }
 
         /// <summary>
@@ -491,10 +447,7 @@ namespace OpenTK.Mathematics
         /// <param name="result">Result of the operation.</param>
         public static void Divide(in Vector4 vector, float scale, out Vector4 result)
         {
-            result.X = vector.X / scale;
-            result.Y = vector.Y / scale;
-            result.Z = vector.Z / scale;
-            result.W = vector.W / scale;
+            result = (vector.AsVector128() / Vector128.Create(scale)).AsVector4Otk();
         }
 
         /// <summary>
@@ -506,8 +459,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector4 Divide(Vector4 vector, Vector4 scale)
         {
-            Divide(in vector, in scale, out vector);
-            return vector;
+            return (vector.AsVector128() / scale.AsVector128()).AsVector4Otk();
         }
 
         /// <summary>
@@ -518,10 +470,7 @@ namespace OpenTK.Mathematics
         /// <param name="result">Result of the operation.</param>
         public static void Divide(in Vector4 vector, in Vector4 scale, out Vector4 result)
         {
-            result.X = vector.X / scale.X;
-            result.Y = vector.Y / scale.Y;
-            result.Z = vector.Z / scale.Z;
-            result.W = vector.W / scale.W;
+            result = (vector.AsVector128() / scale.AsVector128()).AsVector4Otk();
         }
 
         /// <summary>
@@ -533,11 +482,21 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector4 ComponentMin(Vector4 a, Vector4 b)
         {
-            a.X = a.X < b.X ? a.X : b.X;
-            a.Y = a.Y < b.Y ? a.Y : b.Y;
-            a.Z = a.Z < b.Z ? a.Z : b.Z;
-            a.W = a.W < b.W ? a.W : b.W;
-            return a;
+            return Vector128.Min(a.AsVector128(), b.AsVector128()).AsVector4Otk();
+        }
+
+        /// <summary>
+        /// Returns a vector created from the smallest of the corresponding components of the given vectors.
+        /// This version has platform dependent behaviour for <c>NaN</c> and <c>NegativeZero</c> but potentially faster than <see cref="ComponentMin(Vector4, Vector4)"/>.
+        /// </summary>
+        /// <param name="a">First operand.</param>
+        /// <param name="b">Second operand.</param>
+        /// <returns>The component-wise minimum.</returns>
+        [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static unsafe Vector4 ComponentMinNative(Vector4 a, Vector4 b)
+        {
+            return Vector128.MinNative(a.AsVector128(), b.AsVector128()).AsVector4Otk();
         }
 
         /// <summary>
@@ -548,10 +507,20 @@ namespace OpenTK.Mathematics
         /// <param name="result">The component-wise minimum.</param>
         public static void ComponentMin(in Vector4 a, in Vector4 b, out Vector4 result)
         {
-            result.X = a.X < b.X ? a.X : b.X;
-            result.Y = a.Y < b.Y ? a.Y : b.Y;
-            result.Z = a.Z < b.Z ? a.Z : b.Z;
-            result.W = a.W < b.W ? a.W : b.W;
+            result = Vector128.Min(a.AsVector128(), b.AsVector128()).AsVector4Otk();
+        }
+
+        /// <summary>
+        /// Returns a vector created from the smallest of the corresponding components of the given vectors.
+        /// This version has platform dependent behaviour for <c>NaN</c> and <c>NegativeZero</c> but potentially faster than <see cref="ComponentMin(in Vector4, in Vector4, out Vector4)"/>.
+        /// </summary>
+        /// <param name="a">First operand.</param>
+        /// <param name="b">Second operand.</param>
+        /// <param name="result">The component-wise minimum.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static unsafe void ComponentMinNative(in Vector4 a, in Vector4 b, out Vector4 result)
+        {
+            result = Vector128.MinNative(a.AsVector128(), b.AsVector128()).AsVector4Otk();
         }
 
         /// <summary>
@@ -563,11 +532,21 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector4 ComponentMax(Vector4 a, Vector4 b)
         {
-            a.X = a.X > b.X ? a.X : b.X;
-            a.Y = a.Y > b.Y ? a.Y : b.Y;
-            a.Z = a.Z > b.Z ? a.Z : b.Z;
-            a.W = a.W > b.W ? a.W : b.W;
-            return a;
+            return Vector128.Max(a.AsVector128(), b.AsVector128()).AsVector4Otk();
+        }
+
+        /// <summary>
+        /// Returns a vector created from the largest of the corresponding components of the given vectors.
+        /// This version has platform dependent behaviour for <c>NaN</c> and <c>NegativeZero</c> but potentially faster than <see cref="ComponentMax(Vector4, Vector4)"/>.
+        /// </summary>
+        /// <param name="a">First operand.</param>
+        /// <param name="b">Second operand.</param>
+        /// <returns>The component-wise maximum.</returns>
+        [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static unsafe Vector4 ComponentMaxNative(Vector4 a, Vector4 b)
+        {
+            return Vector128.MaxNative(a.AsVector128(), b.AsVector128()).AsVector4Otk();
         }
 
         /// <summary>
@@ -578,10 +557,19 @@ namespace OpenTK.Mathematics
         /// <param name="result">The component-wise maximum.</param>
         public static void ComponentMax(in Vector4 a, in Vector4 b, out Vector4 result)
         {
-            result.X = a.X > b.X ? a.X : b.X;
-            result.Y = a.Y > b.Y ? a.Y : b.Y;
-            result.Z = a.Z > b.Z ? a.Z : b.Z;
-            result.W = a.W > b.W ? a.W : b.W;
+            result = Vector128.Max(a.AsVector128(), b.AsVector128()).AsVector4Otk();
+        }
+
+        /// <summary>
+        /// Returns a vector created from the largest of the corresponding components of the given vectors.
+        /// This version has platform dependent behaviour for <c>NaN</c> and <c>NegativeZero</c> but potentially faster than <see cref="ComponentMax(in Vector4, in Vector4, out Vector4)"/>.
+        /// </summary>
+        /// <param name="a">First operand.</param>
+        /// <param name="b">Second operand.</param>
+        /// <param name="result">The component-wise maximum.</param>
+        public static void ComponentMaxNative(in Vector4 a, in Vector4 b, out Vector4 result)
+        {
+            result = Vector128.MaxNative(a.AsVector128(), b.AsVector128()).AsVector4Otk();
         }
 
         /// <summary>
@@ -644,11 +632,21 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector4 Clamp(Vector4 vec, Vector4 min, Vector4 max)
         {
-            vec.X = vec.X < min.X ? min.X : vec.X > max.X ? max.X : vec.X;
-            vec.Y = vec.Y < min.Y ? min.Y : vec.Y > max.Y ? max.Y : vec.Y;
-            vec.Z = vec.Z < min.Z ? min.Z : vec.Z > max.Z ? max.Z : vec.Z;
-            vec.W = vec.W < min.W ? min.W : vec.W > max.W ? max.W : vec.W;
-            return vec;
+            return Vector128.Clamp(vec.AsVector128(), min.AsVector128(), max.AsVector128()).AsVector4Otk();
+        }
+
+        /// <summary>
+        /// Clamp a vector to the given minimum and maximum vectors.
+        /// This version has platform dependent behaviour for <c>NaN</c> and <c>NegativeZero</c> but potentially faster than <see cref="Clamp(Vector4, Vector4, Vector4)"/>.
+        /// </summary>
+        /// <param name="vec">Input vector.</param>
+        /// <param name="min">Minimum vector.</param>
+        /// <param name="max">Maximum vector.</param>
+        /// <returns>The clamped vector.</returns>
+        [Pure]
+        public static Vector4 ClampNative(Vector4 vec, Vector4 min, Vector4 max)
+        {
+            return Vector128.ClampNative(vec.AsVector128(), min.AsVector128(), max.AsVector128()).AsVector4Otk();
         }
 
         /// <summary>
@@ -660,10 +658,20 @@ namespace OpenTK.Mathematics
         /// <param name="result">The clamped vector.</param>
         public static void Clamp(in Vector4 vec, in Vector4 min, in Vector4 max, out Vector4 result)
         {
-            result.X = vec.X < min.X ? min.X : vec.X > max.X ? max.X : vec.X;
-            result.Y = vec.Y < min.Y ? min.Y : vec.Y > max.Y ? max.Y : vec.Y;
-            result.Z = vec.Z < min.Z ? min.Z : vec.Z > max.Z ? max.Z : vec.Z;
-            result.W = vec.W < min.W ? min.W : vec.W > max.W ? max.W : vec.W;
+            result = Vector128.Clamp(vec.AsVector128(), min.AsVector128(), max.AsVector128()).AsVector4Otk();
+        }
+
+        /// <summary>
+        /// Clamp a vector to the given minimum and maximum vectors.
+        /// This version has platform dependent behaviour for <c>NaN</c> and <c>NegativeZero</c> but potentially faster than <see cref="Clamp(in Vector4, in Vector4, in Vector4, out Vector4)"/>.
+        /// </summary>
+        /// <param name="vec">Input vector.</param>
+        /// <param name="min">Minimum vector.</param>
+        /// <param name="max">Maximum vector.</param>
+        /// <param name="result">The clamped vector.</param>
+        public static void ClampNative(in Vector4 vec, in Vector4 min, in Vector4 max, out Vector4 result)
+        {
+            result = Vector128.ClampNative(vec.AsVector128(), min.AsVector128(), max.AsVector128()).AsVector4Otk();
         }
 
         /// <summary>
@@ -673,11 +681,7 @@ namespace OpenTK.Mathematics
         /// <returns>The component-wise absolute value vector.</returns>
         public static Vector4 Abs(Vector4 vec)
         {
-            vec.X = MathF.Abs(vec.X);
-            vec.Y = MathF.Abs(vec.Y);
-            vec.Z = MathF.Abs(vec.Z);
-            vec.W = MathF.Abs(vec.W);
-            return vec;
+            return Vector128.Abs(vec.AsVector128()).AsVector4Otk();
         }
 
         /// <summary>
@@ -687,10 +691,7 @@ namespace OpenTK.Mathematics
         /// <param name="result">The component-wise absolute value vector.</param>
         public static void Abs(in Vector4 vec, out Vector4 result)
         {
-            result.X = MathF.Abs(vec.X);
-            result.Y = MathF.Abs(vec.Y);
-            result.Z = MathF.Abs(vec.Z);
-            result.W = MathF.Abs(vec.W);
+            result = Vector128.Abs(vec.AsVector128()).AsVector4Otk();
         }
 
         /// <summary>
@@ -701,11 +702,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector4 Round(Vector4 vec)
         {
-            vec.X = MathF.Round(vec.X);
-            vec.Y = MathF.Round(vec.Y);
-            vec.Z = MathF.Round(vec.Z);
-            vec.W = MathF.Round(vec.W);
-            return vec;
+            return Vector128.Round(vec.AsVector128()).AsVector4Otk();
         }
 
         /// <summary>
@@ -715,10 +712,7 @@ namespace OpenTK.Mathematics
         /// <param name="result">The component-wise rounded vector.</param>
         public static void Round(in Vector4 vec, out Vector4 result)
         {
-            result.X = MathF.Round(vec.X);
-            result.Y = MathF.Round(vec.Y);
-            result.Z = MathF.Round(vec.Z);
-            result.W = MathF.Round(vec.W);
+            result = Vector128.Round(vec.AsVector128()).AsVector4Otk();
         }
 
         /// <summary>
@@ -731,11 +725,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector4 Round(Vector4 vec, MidpointRounding rounding)
         {
-            vec.X = MathF.Round(vec.X, rounding);
-            vec.Y = MathF.Round(vec.Y, rounding);
-            vec.Z = MathF.Round(vec.Z, rounding);
-            vec.W = MathF.Round(vec.W, rounding);
-            return vec;
+            return Vector128.Round(vec.AsVector128(), rounding).AsVector4Otk();
         }
 
         /// <summary>
@@ -747,10 +737,7 @@ namespace OpenTK.Mathematics
         /// <param name="result">The component-wise rounded vector.</param>
         public static void Round(in Vector4 vec, MidpointRounding rounding, out Vector4 result)
         {
-            result.X = MathF.Round(vec.X, rounding);
-            result.Y = MathF.Round(vec.Y, rounding);
-            result.Z = MathF.Round(vec.Z, rounding);
-            result.W = MathF.Round(vec.W, rounding);
+            result = Vector128.Round(vec.AsVector128(), rounding).AsVector4Otk();
         }
 
         /// <summary>
@@ -762,11 +749,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector4 Ceiling(Vector4 vec)
         {
-            vec.X = MathF.Ceiling(vec.X);
-            vec.Y = MathF.Ceiling(vec.Y);
-            vec.Z = MathF.Ceiling(vec.Z);
-            vec.W = MathF.Ceiling(vec.W);
-            return vec;
+            return Vector128.Ceiling(vec.AsVector128()).AsVector4Otk();
         }
 
         /// <summary>
@@ -777,10 +760,7 @@ namespace OpenTK.Mathematics
         /// <param name="result">The component-wise ceiling vector.</param>
         public static void Ceiling(in Vector4 vec, out Vector4 result)
         {
-            result.X = MathF.Ceiling(vec.X);
-            result.Y = MathF.Ceiling(vec.Y);
-            result.Z = MathF.Ceiling(vec.Z);
-            result.W = MathF.Ceiling(vec.W);
+            result = Vector128.Ceiling(vec.AsVector128()).AsVector4Otk();
         }
 
         /// <summary>
@@ -792,11 +772,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector4 Floor(Vector4 vec)
         {
-            vec.X = MathF.Floor(vec.X);
-            vec.Y = MathF.Floor(vec.Y);
-            vec.Z = MathF.Floor(vec.Z);
-            vec.W = MathF.Floor(vec.W);
-            return vec;
+            return Vector128.Floor(vec.AsVector128()).AsVector4Otk();
         }
 
         /// <summary>
@@ -807,10 +783,7 @@ namespace OpenTK.Mathematics
         /// <param name="result">The component-wise floored vector.</param>
         public static void Floor(in Vector4 vec, out Vector4 result)
         {
-            result.X = MathF.Floor(vec.X);
-            result.Y = MathF.Floor(vec.Y);
-            result.Z = MathF.Floor(vec.Z);
-            result.W = MathF.Floor(vec.W);
+            result = Vector128.Floor(vec.AsVector128()).AsVector4Otk();
         }
 
         /// <summary>
@@ -822,11 +795,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector4 Truncate(Vector4 vec)
         {
-            vec.X = MathF.Truncate(vec.X);
-            vec.Y = MathF.Truncate(vec.Y);
-            vec.Z = MathF.Truncate(vec.Z);
-            vec.W = MathF.Truncate(vec.W);
-            return vec;
+            return Vector128.Truncate(vec.AsVector128()).AsVector4Otk();
         }
 
         /// <summary>
@@ -837,10 +806,7 @@ namespace OpenTK.Mathematics
         /// <param name="result">The component-wise truncated vector.</param>
         public static void Truncate(in Vector4 vec, out Vector4 result)
         {
-            result.X = MathF.Truncate(vec.X);
-            result.Y = MathF.Truncate(vec.Y);
-            result.Z = MathF.Truncate(vec.Z);
-            result.W = MathF.Truncate(vec.W);
+            result = Vector128.Truncate(vec.AsVector128()).AsVector4Otk();
         }
 
         /// <summary>
@@ -852,8 +818,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static float Distance(Vector4 vec1, Vector4 vec2)
         {
-            Distance(in vec1, in vec2, out float result);
-            return result;
+            return (vec1 - vec2).Length;
         }
 
         /// <summary>
@@ -864,7 +829,7 @@ namespace OpenTK.Mathematics
         /// <param name="result">The distance.</param>
         public static void Distance(in Vector4 vec1, in Vector4 vec2, out float result)
         {
-            result = MathF.Sqrt(((vec2.X - vec1.X) * (vec2.X - vec1.X)) + ((vec2.Y - vec1.Y) * (vec2.Y - vec1.Y)) + ((vec2.Z - vec1.Z) * (vec2.Z - vec1.Z)) + ((vec2.W - vec1.W) * (vec2.W - vec1.W)));
+            result = (vec1 - vec2).Length;
         }
 
         /// <summary>
@@ -876,8 +841,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static float DistanceSquared(Vector4 vec1, Vector4 vec2)
         {
-            DistanceSquared(in vec1, in vec2, out float result);
-            return result;
+            return (vec1 - vec2).LengthSquared;
         }
 
         /// <summary>
@@ -888,7 +852,7 @@ namespace OpenTK.Mathematics
         /// <param name="result">The squared distance.</param>
         public static void DistanceSquared(in Vector4 vec1, in Vector4 vec2, out float result)
         {
-            result = ((vec2.X - vec1.X) * (vec2.X - vec1.X)) + ((vec2.Y - vec1.Y) * (vec2.Y - vec1.Y)) + ((vec2.Z - vec1.Z) * (vec2.Z - vec1.Z)) + ((vec2.W - vec1.W) * (vec2.W - vec1.W));
+            result = (vec1 - vec2).LengthSquared;
         }
 
         /// <summary>
@@ -899,12 +863,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector4 Normalize(Vector4 vec)
         {
-            float scale = 1.0f / vec.Length;
-            vec.X *= scale;
-            vec.Y *= scale;
-            vec.Z *= scale;
-            vec.W *= scale;
-            return vec;
+            return (vec.AsVector128() / vec.Length).AsVector4Otk();
         }
 
         /// <summary>
@@ -914,11 +873,7 @@ namespace OpenTK.Mathematics
         /// <param name="result">The normalized vector.</param>
         public static void Normalize(in Vector4 vec, out Vector4 result)
         {
-            float scale = 1.0f / vec.Length;
-            result.X = vec.X * scale;
-            result.Y = vec.Y * scale;
-            result.Z = vec.Z * scale;
-            result.W = vec.W * scale;
+            result = (vec.AsVector128() / vec.Length).AsVector4Otk();
         }
 
         /// <summary>
@@ -929,12 +884,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector4 NormalizeFast(Vector4 vec)
         {
-            float scale = MathF.ReciprocalSqrtEstimate((vec.X * vec.X) + (vec.Y * vec.Y) + (vec.Z * vec.Z) + (vec.W * vec.W));
-            vec.X *= scale;
-            vec.Y *= scale;
-            vec.Z *= scale;
-            vec.W *= scale;
-            return vec;
+            return (vec.AsVector128() * vec.ReciprocalLengthFast).AsVector4Otk();
         }
 
         /// <summary>
@@ -944,11 +894,7 @@ namespace OpenTK.Mathematics
         /// <param name="result">The normalized copy.</param>
         public static void NormalizeFast(in Vector4 vec, out Vector4 result)
         {
-            float scale = MathF.ReciprocalSqrtEstimate((vec.X * vec.X) + (vec.Y * vec.Y) + (vec.Z * vec.Z) + (vec.W * vec.W));
-            result.X = vec.X * scale;
-            result.Y = vec.Y * scale;
-            result.Z = vec.Z * scale;
-            result.W = vec.W * scale;
+            result = (vec.AsVector128() * vec.ReciprocalLengthFast).AsVector4Otk();
         }
 
         /// <summary>
@@ -960,7 +906,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static float Dot(Vector4 left, Vector4 right)
         {
-            return (left.X * right.X) + (left.Y * right.Y) + (left.Z * right.Z) + (left.W * right.W);
+            return Vector128.Dot(left.AsVector128(), right.AsVector128());
         }
 
         /// <summary>
@@ -971,7 +917,153 @@ namespace OpenTK.Mathematics
         /// <param name="result">The dot product of the two inputs.</param>
         public static void Dot(in Vector4 left, in Vector4 right, out float result)
         {
-            result = (left.X * right.X) + (left.Y * right.Y) + (left.Z * right.Z) + (left.W * right.W);
+            result = Vector128.Dot(left.AsVector128(), right.AsVector128());
+        }
+
+        /// <summary>
+        /// Computes the component-wise exponential.
+        /// </summary>
+        /// <param name="x">The vector to calculate the exponential of.</param>
+        /// <returns>The component-wise exponental.</returns>
+        public static Vector4 Exp(Vector4 x)
+        {
+            return Vector128.Exp(x.AsVector128()).AsVector4Otk();
+        }
+
+        /// <summary>
+        /// Computes the component-wise exponential.
+        /// </summary>
+        /// <param name="x">The vector to calculate the exponential of.</param>
+        /// <param name="result">The component-wise exponental.</param>
+        public static void Exp(in Vector4 x, out Vector4 result)
+        {
+            result = Vector128.Exp(x.AsVector128()).AsVector4Otk();
+        }
+
+        /// <summary>
+        /// Computes the component-wise natural logarithm.
+        /// </summary>
+        /// <param name="x">The vector to calculate the natural logarithm of.</param>
+        /// <returns>The component-wise natural logarithm.</returns>
+        public static Vector4 Log(Vector4 x)
+        {
+            return Vector128.Log(x.AsVector128()).AsVector4Otk();
+        }
+
+        /// <summary>
+        /// Computes the component-wise natural logarithm.
+        /// </summary>
+        /// <param name="x">The vector to calculate the natural logarithm of.</param>
+        /// <param name="result">The component-wise natural logarithm.</param>
+        public static void Log(in Vector4 x, out Vector4 result)
+        {
+            result = Vector128.Log(x.AsVector128()).AsVector4Otk();
+        }
+
+        /// <summary>
+        /// Computes the component-wise base-2 logarithm.
+        /// </summary>
+        /// <param name="x">The vector to calculate the base-2 logarithm of.</param>
+        /// <returns>The component-wise base-2 logarithm.</returns>
+        public static Vector4 Log2(Vector4 x)
+        {
+            return Vector128.Log2(x.AsVector128()).AsVector4Otk();
+        }
+
+        /// <summary>
+        /// Computes the component-wise base-2 logarithm.
+        /// </summary>
+        /// <param name="x">The vector to calculate the base-2 logarithm of.</param>
+        /// <param name="result">The component-wise base-2 logarithm.</param>
+        public static void Log2(in Vector4 x, out Vector4 result)
+        {
+            result = Vector128.Log2(x.AsVector128()).AsVector4Otk();
+        }
+
+        /// <summary>
+        /// Computes the component-wise power.
+        /// </summary>
+        /// <param name="x">The base.</param>
+        /// <param name="y">The exponent.</param>
+        /// <returns>Component-wise <paramref name="x"/> raised to the power of <paramref name="y"/>.</returns>
+        public static Vector4 Pow(Vector4 x, Vector4 y)
+        {
+            // FIXME: Proper SIMD implementation?
+            return new Vector4(
+                MathF.Pow(x.X, y.X),
+                MathF.Pow(x.Y, y.Y),
+                MathF.Pow(x.Z, y.Z),
+                MathF.Pow(x.W, y.W));
+        }
+
+        /// <summary>
+        /// Computes the component-wise power.
+        /// </summary>
+        /// <param name="x">The base.</param>
+        /// <param name="y">The exponent.</param>
+        /// <param name="result">Component-wise <paramref name="x"/> raised to the power of <paramref name="y"/>.</param>
+        public static void Pow(in Vector4 x, in Vector4 y, out Vector4 result)
+        {
+            // FIXME: Proper SIMD implementation?
+            result.X = MathF.Pow(x.X, y.X);
+            result.Y = MathF.Pow(x.Y, y.Y);
+            result.Z = MathF.Pow(x.Z, y.Z);
+            result.W = MathF.Pow(x.W, y.W);
+        }
+
+        /// <summary>
+        /// Computes the component-wise power.
+        /// </summary>
+        /// <param name="x">The base.</param>
+        /// <param name="y">The exponent.</param>
+        /// <returns>Component-wise <paramref name="x"/> raised to the power of <paramref name="y"/>.</returns>
+        public static Vector4 Pow(Vector4 x, float y)
+        {
+            // FIXME: Proper SIMD implementation?
+            return new Vector4(
+                MathF.Pow(x.X, y),
+                MathF.Pow(x.Y, y),
+                MathF.Pow(x.Z, y),
+                MathF.Pow(x.W, y));
+        }
+
+        /// <summary>
+        /// Computes the component-wise power.
+        /// </summary>
+        /// <param name="x">The base.</param>
+        /// <param name="y">The exponent.</param>
+        /// <param name="result">Component-wise <paramref name="x"/> raised to the power of <paramref name="y"/>.</param>
+        public static void Pow(in Vector4 x, in float y, out Vector4 result)
+        {
+            // FIXME: Proper SIMD implementation?
+            result.X = MathF.Pow(x.X, y);
+            result.Y = MathF.Pow(x.Y, y);
+            result.Z = MathF.Pow(x.Z, y);
+            result.W = MathF.Pow(x.W, y);
+        }
+
+        /// <summary>
+        /// Computes <c>x * y + z</c>, as a fused multiply add, only rounding once.
+        /// </summary>
+        /// <param name="x">The left multiplicand.</param>
+        /// <param name="y">The right multiplicand.</param>
+        /// <param name="z">The addend.</param>
+        /// <returns>Returns <c>x * y + z</c>.</returns>
+        public static Vector4 Fma(Vector4 x, Vector4 y, Vector4 z)
+        {
+            return Vector128.FusedMultiplyAdd(x.AsVector128(), y.AsVector128(), z.AsVector128()).AsVector4Otk();
+        }
+
+        /// <summary>
+        /// Computes <c>x * y + z</c>, as a fused multiply add, only rounding once.
+        /// </summary>
+        /// <param name="x">The left multiplicand.</param>
+        /// <param name="y">The right multiplicand.</param>
+        /// <param name="z">The addend.</param>
+        /// <param name="result"><c>x * y + z</c>.</param>
+        public static void Fma(in Vector4 x, in Vector4 y, in Vector4 z, out Vector4 result)
+        {
+            result = Vector128.FusedMultiplyAdd(x.AsVector128(), y.AsVector128(), z.AsVector128()).AsVector4Otk();
         }
 
         /// <summary>
@@ -1050,11 +1142,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector4 Lerp(Vector4 a, Vector4 b, float blend)
         {
-            a.X = (blend * (b.X - a.X)) + a.X;
-            a.Y = (blend * (b.Y - a.Y)) + a.Y;
-            a.Z = (blend * (b.Z - a.Z)) + a.Z;
-            a.W = (blend * (b.W - a.W)) + a.W;
-            return a;
+            return Vector128.Lerp(a.AsVector128(), b.AsVector128(), Vector128.Create(blend)).AsVector4Otk();
         }
 
         /// <summary>
@@ -1066,10 +1154,7 @@ namespace OpenTK.Mathematics
         /// <param name="result">a when blend=0, b when blend=1, and a linear combination otherwise.</param>
         public static void Lerp(in Vector4 a, in Vector4 b, float blend, out Vector4 result)
         {
-            result.X = (blend * (b.X - a.X)) + a.X;
-            result.Y = (blend * (b.Y - a.Y)) + a.Y;
-            result.Z = (blend * (b.Z - a.Z)) + a.Z;
-            result.W = (blend * (b.W - a.W)) + a.W;
+            result = Vector128.Lerp(a.AsVector128(), b.AsVector128(), Vector128.Create(blend)).AsVector4Otk();
         }
 
         /// <summary>
@@ -1082,11 +1167,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector4 Lerp(Vector4 a, Vector4 b, Vector4 blend)
         {
-            a.X = (blend.X * (b.X - a.X)) + a.X;
-            a.Y = (blend.Y * (b.Y - a.Y)) + a.Y;
-            a.Z = (blend.Z * (b.Z - a.Z)) + a.Z;
-            a.W = (blend.W * (b.W - a.W)) + a.W;
-            return a;
+            return Vector128.Lerp(a.AsVector128(), b.AsVector128(), blend.AsVector128()).AsVector4Otk();
         }
 
         /// <summary>
@@ -1098,10 +1179,7 @@ namespace OpenTK.Mathematics
         /// <param name="result">a when blend=0, b when blend=1, and a component-wise linear combination otherwise.</param>
         public static void Lerp(in Vector4 a, in Vector4 b, Vector4 blend, out Vector4 result)
         {
-            result.X = (blend.X * (b.X - a.X)) + a.X;
-            result.Y = (blend.Y * (b.Y - a.Y)) + a.Y;
-            result.Z = (blend.Z * (b.Z - a.Z)) + a.Z;
-            result.W = (blend.W * (b.W - a.W)) + a.W;
+            result = Vector128.Lerp(a.AsVector128(), b.AsVector128(), blend.AsVector128()).AsVector4Otk();
         }
 
         /// <summary>
@@ -1184,11 +1262,7 @@ namespace OpenTK.Mathematics
         /// <seealso cref="MathHelper.Elerp(float, float, float)"/>
         public static Vector4 Elerp(Vector4 a, Vector4 b, float t)
         {
-            a.X = MathF.Pow(a.X, 1 - t) * MathF.Pow(b.X, t);
-            a.Y = MathF.Pow(a.Y, 1 - t) * MathF.Pow(b.Y, t);
-            a.Z = MathF.Pow(a.Z, 1 - t) * MathF.Pow(b.Z, t);
-            a.W = MathF.Pow(a.W, 1 - t) * MathF.Pow(b.W, t);
-            return a;
+            return Pow(a, 1 - t) * Pow(b, t);
         }
 
         /// <summary>
@@ -1202,10 +1276,7 @@ namespace OpenTK.Mathematics
         /// <seealso cref="MathHelper.Elerp(float, float, float)"/>
         public static void Elerp(in Vector4 a, in Vector4 b, float t, out Vector4 result)
         {
-            result.X = MathF.Pow(a.X, 1 - t) * MathF.Pow(b.X, t);
-            result.Y = MathF.Pow(a.Y, 1 - t) * MathF.Pow(b.Y, t);
-            result.Z = MathF.Pow(a.Z, 1 - t) * MathF.Pow(b.Z, t);
-            result.W = MathF.Pow(a.W, 1 - t) * MathF.Pow(b.W, t);
+            result = Pow(a, 1 - t) * Pow(b, t);
         }
 
         /// <summary>
@@ -1220,8 +1291,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector4 BaryCentric(Vector4 a, Vector4 b, Vector4 c, float u, float v)
         {
-            BaryCentric(in a, in b, in c, u, v, out Vector4 result);
-            return result;
+            return Fma(c - a, new(v), Fma(b - a, new(u), a));
         }
 
         /// <summary>
@@ -1236,23 +1306,9 @@ namespace OpenTK.Mathematics
         /// Output Vector. a when u=v=0, b when u=1,v=0, c when u=0,v=1, and a linear combination of a,b,c
         /// otherwise.
         /// </param>
-        public static void BaryCentric
-        (
-            in Vector4 a,
-            in Vector4 b,
-            in Vector4 c,
-            float u,
-            float v,
-            out Vector4 result
-        )
+        public static void BaryCentric(in Vector4 a, in Vector4 b, in Vector4 c, float u, float v, out Vector4 result)
         {
-            Subtract(in b, in a, out Vector4 ab);
-            Multiply(in ab, u, out Vector4 abU);
-            Add(in a, in abU, out Vector4 uPos);
-
-            Subtract(in c, in a, out Vector4 ac);
-            Multiply(in ac, v, out Vector4 acV);
-            Add(in uPos, in acV, out result);
+            result = Fma(c - a, new(v), Fma(b - a, new(u), a));
         }
 
         /// <summary>
@@ -1264,8 +1320,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector4 TransformRow(Vector4 vec, Matrix4 mat)
         {
-            TransformRow(in vec, in mat, out Vector4 result);
-            return result;
+            return (vec.X * mat.Row0) + (vec.Y * mat.Row1) + (vec.Z * mat.Row2) + (vec.W * mat.Row3);
         }
 
         /// <summary>
@@ -1276,11 +1331,7 @@ namespace OpenTK.Mathematics
         /// <param name="result">The transformed vector.</param>
         public static void TransformRow(in Vector4 vec, in Matrix4 mat, out Vector4 result)
         {
-            result = new Vector4(
-                (vec.X * mat.Row0.X) + (vec.Y * mat.Row1.X) + (vec.Z * mat.Row2.X) + (vec.W * mat.Row3.X),
-                (vec.X * mat.Row0.Y) + (vec.Y * mat.Row1.Y) + (vec.Z * mat.Row2.Y) + (vec.W * mat.Row3.Y),
-                (vec.X * mat.Row0.Z) + (vec.Y * mat.Row1.Z) + (vec.Z * mat.Row2.Z) + (vec.W * mat.Row3.Z),
-                (vec.X * mat.Row0.W) + (vec.Y * mat.Row1.W) + (vec.Z * mat.Row2.W) + (vec.W * mat.Row3.W));
+            result = (vec.X * mat.Row0) + (vec.Y * mat.Row1) + (vec.Z * mat.Row2) + (vec.W * mat.Row3);
         }
 
         /// <summary>
@@ -1324,8 +1375,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector4 TransformColumn(Matrix4 mat, Vector4 vec)
         {
-            TransformColumn(in mat, in vec, out Vector4 result);
-            return result;
+            return new Vector4(Dot(mat.Row0, vec), Dot(mat.Row1, vec), Dot(mat.Row2, vec), Dot(mat.Row3, vec));
         }
 
         /// <summary>
@@ -1336,11 +1386,7 @@ namespace OpenTK.Mathematics
         /// <param name="result">The transformed vector.</param>
         public static void TransformColumn(in Matrix4 mat, in Vector4 vec, out Vector4 result)
         {
-            result = new Vector4(
-                (mat.Row0.X * vec.X) + (mat.Row0.Y * vec.Y) + (mat.Row0.Z * vec.Z) + (mat.Row0.W * vec.W),
-                (mat.Row1.X * vec.X) + (mat.Row1.Y * vec.Y) + (mat.Row1.Z * vec.Z) + (mat.Row1.W * vec.W),
-                (mat.Row2.X * vec.X) + (mat.Row2.Y * vec.Y) + (mat.Row2.Z * vec.Z) + (mat.Row2.W * vec.W),
-                (mat.Row3.X * vec.X) + (mat.Row3.Y * vec.Y) + (mat.Row3.Z * vec.Z) + (mat.Row3.W * vec.W));
+            result = new Vector4(Dot(mat.Row0, vec), Dot(mat.Row1, vec), Dot(mat.Row2, vec), Dot(mat.Row3, vec));
         }
 
         /// <summary>
@@ -1352,8 +1398,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector2 TransformTwoDimensionsRow(Vector4 vec, Matrix4x2 mat)
         {
-            TransformTwoDimensionsRow(in vec, in mat, out Vector2 result);
-            return result;
+            return (vec.X * mat.Row0) + (vec.Y * mat.Row1) + (vec.Z * mat.Row2) + (vec.W * mat.Row3);
         }
 
         /// <summary>
@@ -1364,10 +1409,7 @@ namespace OpenTK.Mathematics
         /// <param name="result">The transformed vector.</param>
         public static void TransformTwoDimensionsRow(in Vector4 vec, in Matrix4x2 mat, out Vector2 result)
         {
-            result = new Vector2(
-                (vec.X * mat.Row0.X) + (vec.Y * mat.Row1.X) + (vec.Z * mat.Row2.X) + (vec.W * mat.Row3.X),
-                (vec.X * mat.Row0.Y) + (vec.Y * mat.Row1.Y) + (vec.Z * mat.Row2.Y) + (vec.W * mat.Row3.Y)
-            );
+            result = (vec.X * mat.Row0) + (vec.Y * mat.Row1) + (vec.Z * mat.Row2) + (vec.W * mat.Row3);
         }
 
         /// <summary>
@@ -1379,8 +1421,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector3 TransformThreeDimensionsRow(Vector4 vec, Matrix4x3 mat)
         {
-            TransformThreeDimensionsRow(in vec, in mat, out Vector3 result);
-            return result;
+            return (vec.X * mat.Row0) + (vec.Y * mat.Row1) + (vec.Z * mat.Row2) + (vec.W * mat.Row3);
         }
 
         /// <summary>
@@ -1391,11 +1432,7 @@ namespace OpenTK.Mathematics
         /// <param name="result">The transformed vector.</param>
         public static void TransformThreeDimensionsRow(in Vector4 vec, in Matrix4x3 mat, out Vector3 result)
         {
-            result = new Vector3(
-                (vec.X * mat.Row0.X) + (vec.Y * mat.Row1.X) + (vec.Z * mat.Row2.X) + (vec.W * mat.Row3.X),
-                (vec.X * mat.Row0.Y) + (vec.Y * mat.Row1.Y) + (vec.Z * mat.Row2.Y) + (vec.W * mat.Row3.Y),
-                (vec.X * mat.Row0.Z) + (vec.Y * mat.Row1.Z) + (vec.Z * mat.Row2.Z) + (vec.W * mat.Row3.Z)
-            );
+            result = (vec.X * mat.Row0) + (vec.Y * mat.Row1) + (vec.Z * mat.Row2) + (vec.W * mat.Row3);
         }
 
         /// <summary>
@@ -1407,8 +1444,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector2 TransformTwoDimensionsColumn(Matrix2x4 mat, Vector4 vec)
         {
-            TransformTwoDimensionsColumn(in mat, in vec, out Vector2 result);
-            return result;
+            return new Vector2(Dot(mat.Row0, vec), Dot(mat.Row1, vec));
         }
 
         /// <summary>
@@ -1419,10 +1455,7 @@ namespace OpenTK.Mathematics
         /// <param name="result">The transformed vector.</param>
         public static void TransformTwoDimensionsColumn(in Matrix2x4 mat, in Vector4 vec, out Vector2 result)
         {
-            result = new Vector2(
-                (mat.Row0.X * vec.X) + (mat.Row0.Y * vec.Y) + (mat.Row0.Z * vec.Z) + (mat.Row0.W * vec.W),
-                (mat.Row1.X * vec.X) + (mat.Row1.Y * vec.Y) + (mat.Row1.Z * vec.Z) + (mat.Row1.W * vec.W)
-            );
+            result = new Vector2(Dot(mat.Row0, vec), Dot(mat.Row1, vec));
         }
 
         /// <summary>
@@ -1434,8 +1467,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector3 TransformThreeDimensionsColumn(Matrix3x4 mat, Vector4 vec)
         {
-            TransformThreeDimensionsColumn(in mat, in vec, out Vector3 result);
-            return result;
+            return new Vector3(Dot(mat.Row0, vec), Dot(mat.Row1, vec), Dot(mat.Row2, vec));
         }
 
         /// <summary>
@@ -1446,11 +1478,7 @@ namespace OpenTK.Mathematics
         /// <param name="result">The transformed vector.</param>
         public static void TransformThreeDimensionsColumn(in Matrix3x4 mat, in Vector4 vec, out Vector3 result)
         {
-            result = new Vector3(
-                (mat.Row0.X * vec.X) + (mat.Row0.Y * vec.Y) + (mat.Row0.Z * vec.Z) + (mat.Row0.W * vec.W),
-                (mat.Row1.X * vec.X) + (mat.Row1.Y * vec.Y) + (mat.Row1.Z * vec.Z) + (mat.Row1.W * vec.W),
-                (mat.Row2.X * vec.X) + (mat.Row2.Y * vec.Y) + (mat.Row2.Z * vec.Z) + (mat.Row2.W * vec.W)
-            );
+            result = new Vector3(Dot(mat.Row0, vec), Dot(mat.Row1, vec), Dot(mat.Row2, vec));
         }
 
         /// <summary>
@@ -2422,11 +2450,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector4 operator +(Vector4 left, float right)
         {
-            left.X += right;
-            left.Y += right;
-            left.Z += right;
-            left.W += right;
-            return left;
+            return (left.AsVector128() + Vector128.Create(right)).AsVector4Otk();
         }
 
         /// <summary>
@@ -2438,11 +2462,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector4 operator +(float left, Vector4 right)
         {
-            right.X += left;
-            right.Y += left;
-            right.Z += left;
-            right.W += left;
-            return right;
+            return (Vector128.Create(left) + right.AsVector128()).AsVector4Otk();
         }
 
         /// <summary>
@@ -2454,11 +2474,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector4 operator +(Vector4 left, Vector4 right)
         {
-            left.X += right.X;
-            left.Y += right.Y;
-            left.Z += right.Z;
-            left.W += right.W;
-            return left;
+            return (left.AsVector128() + right.AsVector128()).AsVector4Otk();
         }
 
         /// <summary>
@@ -2470,11 +2486,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector4 operator -(Vector4 left, float right)
         {
-            left.X -= right;
-            left.Y -= right;
-            left.Z -= right;
-            left.W -= right;
-            return left;
+            return (left.AsVector128() - Vector128.Create(right)).AsVector4Otk();
         }
 
         /// <summary>
@@ -2486,11 +2498,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector4 operator -(float left, Vector4 right)
         {
-            right.X = left - right.X;
-            right.Y = left - right.Y;
-            right.Z = left - right.Z;
-            right.W = left - right.W;
-            return right;
+            return (Vector128.Create(left) - right.AsVector128()).AsVector4Otk();
         }
 
         /// <summary>
@@ -2502,11 +2510,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector4 operator -(Vector4 left, Vector4 right)
         {
-            left.X -= right.X;
-            left.Y -= right.Y;
-            left.Z -= right.Z;
-            left.W -= right.W;
-            return left;
+            return (left.AsVector128() - right.AsVector128()).AsVector4Otk();
         }
 
         /// <summary>
@@ -2517,11 +2521,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector4 operator -(Vector4 vec)
         {
-            vec.X = -vec.X;
-            vec.Y = -vec.Y;
-            vec.Z = -vec.Z;
-            vec.W = -vec.W;
-            return vec;
+            return (-vec.AsVector128()).AsVector4Otk();
         }
 
         /// <summary>
@@ -2532,11 +2532,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector4 operator +(Vector4 vec)
         {
-            vec.X = +vec.X;
-            vec.Y = +vec.Y;
-            vec.Z = +vec.Z;
-            vec.W = +vec.W;
-            return vec;
+            return (+vec.AsVector128()).AsVector4Otk();
         }
 
         /// <summary>
@@ -2548,11 +2544,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector4 operator *(Vector4 vec, float scale)
         {
-            vec.X *= scale;
-            vec.Y *= scale;
-            vec.Z *= scale;
-            vec.W *= scale;
-            return vec;
+            return (vec.AsVector128() * scale).AsVector4Otk();
         }
 
         /// <summary>
@@ -2564,11 +2556,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector4 operator *(float scale, Vector4 vec)
         {
-            vec.X *= scale;
-            vec.Y *= scale;
-            vec.Z *= scale;
-            vec.W *= scale;
-            return vec;
+            return (scale * vec.AsVector128()).AsVector4Otk();
         }
 
         /// <summary>
@@ -2580,11 +2568,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector4 operator *(Vector4 vec, Vector4 scale)
         {
-            vec.X *= scale.X;
-            vec.Y *= scale.Y;
-            vec.Z *= scale.Z;
-            vec.W *= scale.W;
-            return vec;
+            return (vec.AsVector128() * scale.AsVector128()).AsVector4Otk();
         }
 
         /// <summary>
@@ -2596,8 +2580,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector2 operator *(Vector4 vec, Matrix4x2 mat)
         {
-            TransformTwoDimensionsRow(in vec, in mat, out Vector2 result);
-            return result;
+            return TransformTwoDimensionsRow(vec, mat);
         }
 
         /// <summary>
@@ -2609,8 +2592,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector3 operator *(Vector4 vec, Matrix4x3 mat)
         {
-            TransformThreeDimensionsRow(in vec, in mat, out Vector3 result);
-            return result;
+            return TransformThreeDimensionsRow(vec, mat);
         }
 
         /// <summary>
@@ -2622,8 +2604,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector4 operator *(Vector4 vec, Matrix4 mat)
         {
-            TransformRow(in vec, in mat, out Vector4 result);
-            return result;
+            return TransformRow(vec, mat);
         }
 
         /// <summary>
@@ -2635,11 +2616,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector4 operator /(Vector4 vec, float scale)
         {
-            vec.X /= scale;
-            vec.Y /= scale;
-            vec.Z /= scale;
-            vec.W /= scale;
-            return vec;
+            return (vec.AsVector128() / scale).AsVector4Otk();
         }
 
         /// <summary>
@@ -2651,11 +2628,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector4 operator /(float left, Vector4 right)
         {
-            right.X = left / right.X;
-            right.Y = left / right.Y;
-            right.Z = left / right.Z;
-            right.W = left / right.W;
-            return right;
+            return (Vector128.Create(left) / right.AsVector128()).AsVector4Otk();
         }
 
         /// <summary>
@@ -2667,11 +2640,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector4 operator /(Vector4 vec, Vector4 scale)
         {
-            vec.X /= scale.X;
-            vec.Y /= scale.Y;
-            vec.Z /= scale.Z;
-            vec.W /= scale.W;
-            return vec;
+            return (vec.AsVector128() / scale.AsVector128()).AsVector4Otk();
         }
 
         /// <summary>
@@ -2752,7 +2721,8 @@ namespace OpenTK.Mathematics
         [Pure]
         public static implicit operator Vector4d(Vector4 vec)
         {
-            return new Vector4d(vec.X, vec.Y, vec.Z, vec.W);
+            var (lower, upper) = Vector128.Widen(vec.AsVector128());
+            return Vector256.Create(lower, upper).AsVector4dOtk();
         }
 
         /// <summary>
@@ -2774,7 +2744,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static explicit operator Vector4i(Vector4 vec)
         {
-            return new Vector4i((int)vec.X, (int)vec.Y, (int)vec.Z, (int)vec.W);
+            return Vector128.ConvertToInt32(vec.AsVector128()).AsVector4iOtk();
         }
 
         /// <summary>
@@ -2796,7 +2766,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static explicit operator Vector4(System.Numerics.Vector4 vec)
         {
-            return Unsafe.As<System.Numerics.Vector4, Vector4>(ref vec);
+            return Unsafe.BitCast<System.Numerics.Vector4, Vector4>(vec);
         }
 
         /// <summary>
@@ -2806,7 +2776,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static explicit operator System.Numerics.Vector4(Vector4 vec)
         {
-            return Unsafe.As<Vector4, System.Numerics.Vector4>(ref vec);
+            return Unsafe.BitCast<Vector4, System.Numerics.Vector4>(vec);
         }
 
         /// <inheritdoc/>
@@ -2848,10 +2818,7 @@ namespace OpenTK.Mathematics
         /// <inheritdoc />
         public readonly bool Equals(Vector4 other)
         {
-            Vector128<float> thisVec = Vector128.LoadUnsafe(in X);
-            Vector128<float> otherVec = Vector128.LoadUnsafe(in other.X);
-
-            return thisVec == otherVec;
+            return this.AsVector128() == other.AsVector128();
         }
 
         /// <inheritdoc />

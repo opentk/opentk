@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-      <TargetFramework>net8.0</TargetFramework>
+      <TargetFramework>net10.0</TargetFramework>
       <Nullable>enable</Nullable>
       <RootNamespace>OpenTK.Graphics</RootNamespace>
       <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
@@ -16,7 +16,6 @@
     </ItemGroup>
   
     <ItemGroup>
-      <PackageReference Include="System.Numerics.Vectors" Version="4.5.0" />
       <ProjectReference Include="../OpenTK.Core/OpenTK.Core.csproj" />
       <ProjectReference Include="../OpenTK.Mathematics/OpenTK.Mathematics.csproj" />
     </ItemGroup>

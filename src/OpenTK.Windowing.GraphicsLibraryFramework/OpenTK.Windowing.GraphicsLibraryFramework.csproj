@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-      <TargetFrameworks>net8.0</TargetFrameworks>
+      <TargetFrameworks>net10.0</TargetFrameworks>
       <RootNamespace>OpenTK.Windowing.GraphicsLibraryFramework</RootNamespace>
       <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
       <PackageIcon>icon.png</PackageIcon>

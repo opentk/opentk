@@ -1,7 +1,7 @@
 source https://api.nuget.org/v3/index.json
 
 storage: none
-framework: net8.0
+framework: net10.0
 
 strategy: min
 

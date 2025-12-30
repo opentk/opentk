@@ -3,13 +3,13 @@ id OpenTK.Windowing.GraphicsLibraryFramework
 description
     GLFW bindings for C# from the C GLFW library.
 dependencies
-    framework: net8.0
+    framework: net10.0
         OpenTK.Core ~> #VERSION#
         OpenTK.redist.glfw >= 3.4.0.44
 files
-    bin\Release\net8.0\OpenTK.Windowing.GraphicsLibraryFramework.dll ==> lib\net8.0
-    bin\Release\net8.0\OpenTK.Windowing.GraphicsLibraryFramework.xml ==> lib\net8.0
-    bin\Release\net8.0\OpenTK.Windowing.GraphicsLibraryFramework.pdb ==> lib\net8.0
+    bin\Release\net10.0\OpenTK.Windowing.GraphicsLibraryFramework.dll ==> lib\net10.0
+    bin\Release\net10.0\OpenTK.Windowing.GraphicsLibraryFramework.xml ==> lib\net10.0
+    bin\Release\net10.0\OpenTK.Windowing.GraphicsLibraryFramework.pdb ==> lib\net10.0
     README.md ==> docs
     ..\..\.github\opentk-blue-hexagon.png ==> images
 
