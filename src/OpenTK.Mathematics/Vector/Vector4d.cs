@@ -146,10 +146,7 @@ namespace OpenTK.Mathematics
         /// <param name="value">The value that will initialize this instance.</param>
         public Vector4d(double value)
         {
-            X = value;
-            Y = value;
-            Z = value;
-            W = value;
+            this = Vector256.Create(value).AsVector4dOtk();
         }
 
         /// <summary>
@@ -161,10 +158,7 @@ namespace OpenTK.Mathematics
         /// <param name="w">The w component of the Vector4d.</param>
         public Vector4d(double x, double y, double z, double w)
         {
-            X = x;
-            Y = y;
-            Z = z;
-            W = w;
+            this = Vector256.Create(x, y, z, w).AsVector4dOtk();
         }
 
         /// <summary>
@@ -175,10 +169,7 @@ namespace OpenTK.Mathematics
         /// <param name="w">The w component of the Vector4d.</param>
         public Vector4d(Vector2d xy, double z = default, double w = default)
         {
-            X = xy.X;
-            Y = xy.Y;
-            Z = z;
-            W = w;
+            this = Vector256.Create(xy.X, xy.Y, z, w).AsVector4dOtk();
         }
 
         /// <summary>
@@ -188,10 +179,7 @@ namespace OpenTK.Mathematics
         /// <param name="w">The w component of the Vector4d.</param>
         public Vector4d(Vector3d xyz, double w = default)
         {
-            X = xyz.X;
-            Y = xyz.Y;
-            Z = xyz.Z;
-            W = w;
+            this = Vector256.Create(xyz.X, xyz.Y, xyz.Z, w).AsVector4dOtk();
         }
 
         /// <summary>
@@ -1020,6 +1008,30 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
+        /// Computes <c>x * y + z</c>, as a fused multiply add, only rounding once.
+        /// </summary>
+        /// <param name="x">The left multiplicand.</param>
+        /// <param name="y">The right multiplicand.</param>
+        /// <param name="z">The addend.</param>
+        /// <returns>Returns <c>x * y + z</c>.</returns>
+        public static Vector4d Fma(Vector4d x, Vector4d y, Vector4d z)
+        {
+            return Vector256.FusedMultiplyAdd(x.AsVector256(), y.AsVector256(), z.AsVector256()).AsVector4dOtk();
+        }
+
+        /// <summary>
+        /// Computes <c>x * y + z</c>, as a fused multiply add, only rounding once.
+        /// </summary>
+        /// <param name="x">The left multiplicand.</param>
+        /// <param name="y">The right multiplicand.</param>
+        /// <param name="z">The addend.</param>
+        /// <param name="result"><c>x * y + z</c>.</param>
+        public static void Fma(in Vector4d x, in Vector4d y, in Vector4d z, out Vector4d result)
+        {
+            result = Vector256.FusedMultiplyAdd(x.AsVector256(), y.AsVector256(), z.AsVector256()).AsVector4dOtk();
+        }
+
+        /// <summary>
         /// Component wise less than comparision of two vectors.
         /// </summary>
         /// <param name="left">The left vector.</param>
@@ -1244,8 +1256,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector4d BaryCentric(Vector4d a, Vector4d b, Vector4d c, double u, double v)
         {
-            BaryCentric(in a, in b, in c, u, v, out Vector4d result);
-            return result;
+            return Fma(c - a, new(v), Fma(b - a, new(u), a));
         }
 
         /// <summary>
@@ -1260,23 +1271,9 @@ namespace OpenTK.Mathematics
         /// Output Vector. a when u=v=0, b when u=1,v=0, c when u=0,v=1, and a linear combination of a,b,c
         /// otherwise.
         /// </param>
-        public static void BaryCentric
-        (
-            in Vector4d a,
-            in Vector4d b,
-            in Vector4d c,
-            double u,
-            double v,
-            out Vector4d result
-        )
+        public static void BaryCentric(in Vector4d a, in Vector4d b, in Vector4d c, double u, double v, out Vector4d result)
         {
-            Subtract(in b, in a, out Vector4d ab);
-            Multiply(in ab, u, out Vector4d abU);
-            Add(in a, in abU, out Vector4d uPos);
-
-            Subtract(in c, in a, out Vector4d ac);
-            Multiply(in ac, v, out Vector4d acV);
-            Add(in uPos, in acV, out result);
+            result = Fma(c - a, new(v), Fma(b - a, new(u), a));
         }
 
         /// <summary>

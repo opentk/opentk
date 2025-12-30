@@ -20,6 +20,9 @@ namespace LocalTest
     {
         static void Main(string[] args)
         {
+            Console.WriteLine(Vector3.Clamp((0, 1.5f, 3), (2, 2, 2), (1, 1, 1)));
+            Console.WriteLine(Vector4.Clamp((0, 1.5f, 3, 0), (2, 2, 2, 2), (1, 1, 1, 1)));
+
             Vector4d a = (0, 0, 0, 0);
             Vector4d b = (1, 2, 3, 4);
 

@@ -111,25 +111,25 @@ module Vector4 =
     module Length =
         //
         [<Property>]
-        let ``Length method follows the pythagorean theorem`` (x, y, z, w) =
+        let ``Length method follows the pythagorean theorem`` (x : float32, y : float32, z : float32, w : float32) =
             let v = Vector4(x, y, z, w)
-            let l = System.Math.Sqrt((float)(x * x + y * y + z * z + w * w))
+            let l = System.MathF.Sqrt((float32)(x * x + y * y + z * z + w * w))
 
-            Assert.Equal((float32)l, v.Length)
+            Assert.ApproximatelyEqualEpsilon((float32)l, v.Length)
 
         [<Property>]
-        let ``Fast length method is the same as one divided by the fast inverse square`` (x, y, z, w) =
+        let ``Fast length method is the same as one divided by the fast inverse square`` (x : float32, y : float32, z : float32, w : float32) =
             let v = Vector4(x, y, z, w)
             let l = 1.0f / MathF.ReciprocalSqrtEstimate(x * x + y * y + z * z + w * w)
 
-            Assert.Equal(l, v.LengthFast)
+            Assert.ApproximatelyEqualEpsilon(l, v.LengthFast)
 
         [<Property>]
-        let ``Length squared method returns each component squared and summed`` (x, y, z, w) =
+        let ``Length squared method returns each component squared and summed`` (x : float32, y : float32, z : float32, w : float32) =
             let v = Vector4(x, y, z, w)
-            let lsq = x * x + y * y + z * z + w * w
+            let lsq : float32 = x * x + y * y + z * z + w * w
 
-            Assert.Equal(lsq, v.LengthSquared)
+            Assert.ApproximatelyEqualEpsilon(lsq, v.LengthSquared)
 
     [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
     module Normalization =
@@ -327,7 +327,7 @@ module Vector4 =
 
         [<Property>]
         let ``Vector4-Matrix4 multiplication using right-handed notation is the same as vector/row multiplication and summation`` (a : Matrix4, b : Vector4) =
-            let res = a*b
+            let res = a * b
 
             let c1 = b.X * a.M11 + b.Y * a.M12 + b.Z * a.M13 + b.W * a.M14
             let c2 = b.X * a.M21 + b.Y * a.M22 + b.Z * a.M23 + b.W * a.M24
@@ -336,11 +336,11 @@ module Vector4 =
 
             let exp = Vector4(c1, c2, c3, c4)
 
-            Assert.Equal(exp, res)
+            Assert.ApproximatelyEqualEpsilon(exp, res)
 
         [<Property>]
         let ``Vector4-Matrix4 multiplication using left-handed notation is the same as vector/column multiplication and summation`` (a : Matrix4, b : Vector4) =
-            let res = b*a
+            let res = b * a
 
             let c1 = b.X * a.M11 + b.Y * a.M21 + b.Z * a.M31 + b.W * a.M41
             let c2 = b.X * a.M12 + b.Y * a.M22 + b.Z * a.M32 + b.W * a.M42
@@ -381,7 +381,7 @@ module Vector4 =
 
             let exp = Vector2(c1, c2)
 
-            Assert.Equal(exp, res)
+            Assert.ApproximatelyEqualEpsilon(exp, res)
 
         [<Property>]
         let ``Matrix2x4-Vector4 multiplication is consistent across overloads`` (a : Matrix2x4, b : Vector4) =
@@ -423,7 +423,7 @@ module Vector4 =
 
             let exp = Vector3(c1, c2, c3)
 
-            Assert.Equal(exp, res)
+            Assert.ApproximatelyEqualEpsilon(exp, res)
 
         [<Property>]
         let ``Matrix3x4-Vector4 multiplication is consistent across overloads`` (a : Matrix3x4, b : Vector4) =
@@ -734,10 +734,10 @@ module Vector4 =
 
             let blend = q
 
-            let rX = blend * (b.X - a.X) + a.X
-            let rY = blend * (b.Y - a.Y) + a.Y
-            let rZ = blend * (b.Z - a.Z) + a.Z
-            let rW = blend * (b.W - a.W) + a.W
+            let rX = Single.Lerp(a.X, b.X, blend) // blend * (b.X - a.X) + a.X
+            let rY = Single.Lerp(a.Y, b.Y, blend) // blend * (b.Y - a.Y) + a.Y
+            let rZ = Single.Lerp(a.Z, b.Z, blend) // blend * (b.Z - a.Z) + a.Z
+            let rW = Single.Lerp(a.W, b.W, blend) // blend * (b.W - a.W) + a.W
             let vExp = Vector4(rX, rY, rZ, rW)
 
             Assert.Equal(vExp, Vector4.Lerp(a, b, q))
@@ -760,13 +760,18 @@ module Vector4 =
 
         [<Property>]
         let ``Barycentric interpolation follows the barycentric formula`` (a : Vector4, b : Vector4, c : Vector4, u, v) =
+            let r = a + (b - a) * u + (c - a) * v
 
-            let r = a + u * (b - a) + v * (c - a)
-
-            Assert.Equal(r, Vector4.BaryCentric(a, b, c, u, v))
+            Assert.ApproximatelyEqualEpsilon(r, Vector4.BaryCentric(a, b, c, u, v))
 
             let vRes = Vector4.BaryCentric(&a, &b, &c, u, v)
-            Assert.Equal(r, vRes)
+            Assert.ApproximatelyEqualEpsilon(r, vRes)
+
+        [<Property>]
+        let ``Barycentric interpolation returns end points`` (a : Vector4, b : Vector4, c : Vector4) =
+            Assert.ApproximatelyEqualEpsilon(a, Vector4.BaryCentric(a, b, c, 0.0f, 0.0f))
+            Assert.ApproximatelyEqualEpsilon(b, Vector4.BaryCentric(a, b, c, 1.0f, 0.0f))
+            Assert.ApproximatelyEqualEpsilon(c, Vector4.BaryCentric(a, b, c, 0.0f, 1.0f))
 
         [<Property>]
         let ``Lerp returns enpoints`` (a : Vector4, b : Vector4) = 
@@ -795,12 +800,12 @@ module Vector4 =
         //
         [<Property>]
         let ``Dot product method follows the dot product formula`` (a : Vector4, b : Vector4) =
-            let dot = a.X * b.X + a.Y * b.Y + a.Z * b.Z + a.W * b.W
+            let dot : float32 = a.X * b.X + a.Y * b.Y + a.Z * b.Z + a.W * b.W
 
-            Assert.Equal(dot, Vector4.Dot(a, b));
+            Assert.ApproximatelyEqualEpsilon(dot, Vector4.Dot(a, b));
 
             let vRes = Vector4.Dot(&a, &b)
-            Assert.Equal(dot, vRes)
+            Assert.ApproximatelyEqualEpsilon(dot, vRes)
 
     [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
     module ``Magnitude min and max`` =
@@ -917,11 +922,11 @@ module Vector4 =
     module Clamping =
         //
         [<Property>]
-        let ``Clamping one vector between two other vectors clamps all components between corresponding components`` (a : Vector4, b : Vector4, w : Vector4) =
-            let expX = if w.X < a.X then a.X else if w.X > b.X then b.X else w.X
-            let expY = if w.Y < a.Y then a.Y else if w.Y > b.Y then b.Y else w.Y
-            let expZ = if w.Z < a.Z then a.Z else if w.Z > b.Z then b.Z else w.Z
-            let expW = if w.W < a.W then a.W else if w.W > b.W then b.W else w.W
+        let ``Clamping one vector between two other vectors clamps is the same as min(max(x, min), max)`` (a : Vector4, b : Vector4, w : Vector4) =
+            let expX = Single.Min(Single.Max(w.X, a.X), b.X)
+            let expY = Single.Min(Single.Max(w.Y, a.Y), b.Y)
+            let expZ = Single.Min(Single.Max(w.Z, a.Z), b.Z)
+            let expW = Single.Min(Single.Max(w.W, a.W), b.W)
 
             let res = Vector4.Clamp(w, a, b)
 
@@ -931,13 +936,41 @@ module Vector4 =
             Assert.Equal(expW, res.W)
 
         [<Property>]
-        let ``Clamping one vector between two other vectors by reference clamps all components between corresponding components`` (a : Vector4, b : Vector4, w : Vector4) =
-            let expX = if w.X < a.X then a.X else if w.X > b.X then b.X else w.X
-            let expY = if w.Y < a.Y then a.Y else if w.Y > b.Y then b.Y else w.Y
-            let expZ = if w.Z < a.Z then a.Z else if w.Z > b.Z then b.Z else w.Z
-            let expW = if w.W < a.W then a.W else if w.W > b.W then b.W else w.W
+        let ``Native clamping one vector between two other vectors clamps is the same as min(max(x, min), max)`` (a : Vector4, b : Vector4, w : Vector4) =
+            let expX = Single.MinNative(Single.MaxNative(w.X, a.X), b.X)
+            let expY = Single.MinNative(Single.MaxNative(w.Y, a.Y), b.Y)
+            let expZ = Single.MinNative(Single.MaxNative(w.Z, a.Z), b.Z)
+            let expW = Single.MinNative(Single.MaxNative(w.W, a.W), b.W)
+
+            let res = Vector4.ClampNative(w, a, b)
+
+            Assert.Equal(expX, res.X)
+            Assert.Equal(expY, res.Y)
+            Assert.Equal(expZ, res.Z)
+            Assert.Equal(expW, res.W)
+
+        [<Property>]
+        let ``Clamping one vector between two other vectors by reference is the same as min(max(x, min), max)`` (a : Vector4, b : Vector4, w : Vector4) =
+            let expX = Single.Min(Single.Max(w.X, a.X), b.X)
+            let expY = Single.Min(Single.Max(w.Y, a.Y), b.Y)
+            let expZ = Single.Min(Single.Max(w.Z, a.Z), b.Z)
+            let expW = Single.Min(Single.Max(w.W, a.W), b.W)
 
             let res = Vector4.Clamp(&w, &a, &b)
+
+            Assert.Equal(expX, res.X)
+            Assert.Equal(expY, res.Y)
+            Assert.Equal(expZ, res.Z)
+            Assert.Equal(expW, res.W)
+
+        [<Property>]
+        let ``Native clamping one vector between two other vectors by reference is the same as min(max(x, min), max)`` (a : Vector4, b : Vector4, w : Vector4) =
+            let expX = Single.MinNative(Single.MaxNative(w.X, a.X), b.X)
+            let expY = Single.MinNative(Single.MaxNative(w.Y, a.Y), b.Y)
+            let expZ = Single.MinNative(Single.MaxNative(w.Z, a.Z), b.Z)
+            let expW = Single.MinNative(Single.MaxNative(w.W, a.W), b.W)
+
+            let res = Vector4.ClampNative(&w, &a, &b)
 
             Assert.Equal(expX, res.X)
             Assert.Equal(expY, res.Y)

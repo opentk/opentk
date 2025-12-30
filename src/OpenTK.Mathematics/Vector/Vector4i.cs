@@ -122,10 +122,7 @@ namespace OpenTK.Mathematics
         /// <param name="value">The value that will initialize this instance.</param>
         public Vector4i(int value)
         {
-            X = value;
-            Y = value;
-            Z = value;
-            W = value;
+            this = Vector128.Create(value).AsVector4iOtk();
         }
 
         /// <summary>
@@ -137,10 +134,7 @@ namespace OpenTK.Mathematics
         /// <param name="w">The W component of the Vector4i.</param>
         public Vector4i(int x, int y, int z, int w)
         {
-            X = x;
-            Y = y;
-            Z = z;
-            W = w;
+            this = Vector128.Create(x, y, z, w).AsVector4iOtk();
         }
 
         /// <summary>
@@ -151,10 +145,7 @@ namespace OpenTK.Mathematics
         /// <param name="w">The w component of the Vector4i.</param>
         public Vector4i(Vector2i xy, int z = default, int w = default)
         {
-            X = xy.X;
-            Y = xy.Y;
-            Z = z;
-            W = w;
+            this = Vector128.Create(xy.X, xy.Y, z, w).AsVector4iOtk();
         }
 
         /// <summary>
@@ -164,10 +155,7 @@ namespace OpenTK.Mathematics
         /// <param name="w">The w component of the Vector4i.</param>
         public Vector4i(Vector3i xyz, int w = default)
         {
-            X = xyz.X;
-            Y = xyz.Y;
-            Z = xyz.Z;
-            W = w;
+            this = Vector128.Create(xyz.X, xyz.Y, xyz.Z, w).AsVector4iOtk();
         }
 
         /// <summary>

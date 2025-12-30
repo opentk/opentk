@@ -146,10 +146,7 @@ namespace OpenTK.Mathematics
         /// <param name="value">The value that will initialize this instance.</param>
         public Vector4(float value)
         {
-            X = value;
-            Y = value;
-            Z = value;
-            W = value;
+            this = Vector128.Create(value).AsVector4Otk();
         }
 
         /// <summary>
@@ -161,10 +158,7 @@ namespace OpenTK.Mathematics
         /// <param name="w">The w component of the Vector4.</param>
         public Vector4(float x, float y, float z, float w)
         {
-            X = x;
-            Y = y;
-            Z = z;
-            W = w;
+            this = Vector128.Create(x, y, z, w).AsVector4Otk();
         }
 
         /// <summary>
@@ -175,10 +169,7 @@ namespace OpenTK.Mathematics
         /// <param name="w">The w component of the Vector4.</param>
         public Vector4(Vector2 xy, float z = default, float w = default)
         {
-            X = xy.X;
-            Y = xy.Y;
-            Z = z;
-            W = w;
+            this = Vector128.Create(xy.X, xy.Y, z, w).AsVector4Otk();
         }
 
         /// <summary>
@@ -188,10 +179,7 @@ namespace OpenTK.Mathematics
         /// <param name="w">The w component of the Vector4.</param>
         public Vector4(Vector3 xyz, float w = default)
         {
-            X = xyz.X;
-            Y = xyz.Y;
-            Z = xyz.Z;
-            W = w;
+            this = Vector128.Create(xyz.X, xyz.Y, xyz.Z, w).AsVector4Otk();
         }
 
         /// <summary>
@@ -649,6 +637,20 @@ namespace OpenTK.Mathematics
 
         /// <summary>
         /// Clamp a vector to the given minimum and maximum vectors.
+        /// This version has platform dependent behaviour for <c>NaN</c> and <c>NegativeZero</c> but potentially faster than <see cref="Clamp(Vector4, Vector4, Vector4)"/>.
+        /// </summary>
+        /// <param name="vec">Input vector.</param>
+        /// <param name="min">Minimum vector.</param>
+        /// <param name="max">Maximum vector.</param>
+        /// <returns>The clamped vector.</returns>
+        [Pure]
+        public static Vector4 ClampNative(Vector4 vec, Vector4 min, Vector4 max)
+        {
+            return Vector128.ClampNative(vec.AsVector128(), min.AsVector128(), max.AsVector128()).AsVector4Otk();
+        }
+
+        /// <summary>
+        /// Clamp a vector to the given minimum and maximum vectors.
         /// </summary>
         /// <param name="vec">Input vector.</param>
         /// <param name="min">Minimum vector.</param>
@@ -657,6 +659,19 @@ namespace OpenTK.Mathematics
         public static void Clamp(in Vector4 vec, in Vector4 min, in Vector4 max, out Vector4 result)
         {
             result = Vector128.Clamp(vec.AsVector128(), min.AsVector128(), max.AsVector128()).AsVector4Otk();
+        }
+
+        /// <summary>
+        /// Clamp a vector to the given minimum and maximum vectors.
+        /// This version has platform dependent behaviour for <c>NaN</c> and <c>NegativeZero</c> but potentially faster than <see cref="Clamp(in Vector4, in Vector4, in Vector4, out Vector4)"/>.
+        /// </summary>
+        /// <param name="vec">Input vector.</param>
+        /// <param name="min">Minimum vector.</param>
+        /// <param name="max">Maximum vector.</param>
+        /// <param name="result">The clamped vector.</param>
+        public static void ClampNative(in Vector4 vec, in Vector4 min, in Vector4 max, out Vector4 result)
+        {
+            result = Vector128.ClampNative(vec.AsVector128(), min.AsVector128(), max.AsVector128()).AsVector4Otk();
         }
 
         /// <summary>
@@ -1028,6 +1043,30 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
+        /// Computes <c>x * y + z</c>, as a fused multiply add, only rounding once.
+        /// </summary>
+        /// <param name="x">The left multiplicand.</param>
+        /// <param name="y">The right multiplicand.</param>
+        /// <param name="z">The addend.</param>
+        /// <returns>Returns <c>x * y + z</c>.</returns>
+        public static Vector4 Fma(Vector4 x, Vector4 y, Vector4 z)
+        {
+            return Vector128.FusedMultiplyAdd(x.AsVector128(), y.AsVector128(), z.AsVector128()).AsVector4Otk();
+        }
+
+        /// <summary>
+        /// Computes <c>x * y + z</c>, as a fused multiply add, only rounding once.
+        /// </summary>
+        /// <param name="x">The left multiplicand.</param>
+        /// <param name="y">The right multiplicand.</param>
+        /// <param name="z">The addend.</param>
+        /// <param name="result"><c>x * y + z</c>.</param>
+        public static void Fma(in Vector4 x, in Vector4 y, in Vector4 z, out Vector4 result)
+        {
+            result = Vector128.FusedMultiplyAdd(x.AsVector128(), y.AsVector128(), z.AsVector128()).AsVector4Otk();
+        }
+
+        /// <summary>
         /// Component wise less than comparision of two vectors.
         /// </summary>
         /// <param name="left">The left vector.</param>
@@ -1252,8 +1291,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector4 BaryCentric(Vector4 a, Vector4 b, Vector4 c, float u, float v)
         {
-            BaryCentric(in a, in b, in c, u, v, out Vector4 result);
-            return result;
+            return Fma(c - a, new(v), Fma(b - a, new(u), a));
         }
 
         /// <summary>
@@ -1268,23 +1306,9 @@ namespace OpenTK.Mathematics
         /// Output Vector. a when u=v=0, b when u=1,v=0, c when u=0,v=1, and a linear combination of a,b,c
         /// otherwise.
         /// </param>
-        public static void BaryCentric
-        (
-            in Vector4 a,
-            in Vector4 b,
-            in Vector4 c,
-            float u,
-            float v,
-            out Vector4 result
-        )
+        public static void BaryCentric(in Vector4 a, in Vector4 b, in Vector4 c, float u, float v, out Vector4 result)
         {
-            Subtract(in b, in a, out Vector4 ab);
-            Multiply(in ab, u, out Vector4 abU);
-            Add(in a, in abU, out Vector4 uPos);
-
-            Subtract(in c, in a, out Vector4 ac);
-            Multiply(in ac, v, out Vector4 acV);
-            Add(in uPos, in acV, out result);
+            result = Fma(c - a, new(v), Fma(b - a, new(u), a));
         }
 
         /// <summary>
