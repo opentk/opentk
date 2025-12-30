@@ -8,7 +8,6 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.Marshalling;
 using System.Text;
-using System.Threading;
 
 namespace OpenTK.Platform.Native.Windows
 {
@@ -1123,8 +1122,8 @@ namespace OpenTK.Platform.Native.Windows
                     throw new Win32Exception(Marshal.GetLastWin32Error(), "GetRawInputBuffer (query size) failed.");
                 }
 
-                //Slightly oversize the buffer to reduce chance of ERROR_INSUFFICIENT_BUFFER occurring
-                //GLFW uses this technique
+                // Slightly oversize the buffer to reduce chance of ERROR_INSUFFICIENT_BUFFER occurring
+                // GLFW uses this technique
                 rawInputBufferSize *= 2;
                 if (rawInputBufferSize > _rawInputBufferSize || _rawInputBuffer == null)
                 {
