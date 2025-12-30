@@ -1,4 +1,4 @@
-﻿using OpenTK.Graphics.Vulkan;
+using OpenTK.Graphics.Vulkan;
 using OpenTK.Graphics.Wgl;
 using System;
 using System.Diagnostics.CodeAnalysis;
@@ -1470,6 +1470,13 @@ namespace OpenTK.Platform.Native.Windows
 
         [DllImport("user32.dll")]
         internal static extern IntPtr /* LRESULT */ DefRawInputProc(IntPtr /* PRAWINPUT* */ paRawInput, int nInput, uint cbSizeHeader);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern uint GetRawInputBuffer(
+            RAWINPUT* /* PRAWINPUT */ pData,  
+            ref uint pcbSize,
+            uint cbSizeHeader
+        );
 
         [DllImport("user32.dll", SetLastError = false)]
         internal static extern uint GetRawInputData(

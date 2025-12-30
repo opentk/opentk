@@ -1,4 +1,3 @@
-﻿using OpenTK.Platform;
 using OpenTK.Core.Utility;
 using OpenTK.Mathematics;
 using System;
@@ -7,10 +6,8 @@ using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading;
-using OpenTK.Graphics.Vulkan;
 using System.Runtime.InteropServices.Marshalling;
+using System.Text;
 
 namespace OpenTK.Platform.Native.Windows
 {
@@ -43,6 +40,10 @@ namespace OpenTK.Platform.Native.Windows
 
         // A handle to a windowproc delegate so it doesn't get GC collected.
         private Win32.WNDPROC? WindowProc;
+        private int _maxMouseMoveMessagesPerFrame;
+        private int _maxRawMouseMessagesPerFrame;
+        private unsafe Win32.RAWINPUT* _rawInputBuffer = null;
+        private uint _rawInputBufferSize;
 
         internal static readonly Dictionary<IntPtr, HWND> HWndDict = new Dictionary<IntPtr, HWND>();
 
@@ -70,7 +71,8 @@ namespace OpenTK.Platform.Native.Windows
             // Set the WindowProc delegate so that we capture "this".
             // FIXME: Does this cause GC issues where "this" is circularly referenced?
             WindowProc = Win32WindowProc;
-
+            _maxRawMouseMessagesPerFrame = options.Windows.MaxRawMouseMessagesPerFrame;
+            _maxMouseMoveMessagesPerFrame = options.Windows.MaxMouseMoveMessagesPerFrame;
             // FIXME: Maybe try extract the small icon too?
             // Get the exe path and extract the icon if possible, this will be the window default icon.
             IntPtr icon = IntPtr.Zero;
@@ -168,6 +170,12 @@ namespace OpenTK.Platform.Native.Windows
             // Delete the helper window
             Win32.DestroyWindow(HelperHWnd);
 
+            // Free the raw input buffer
+            unsafe
+            {
+                NativeMemory.Free(_rawInputBuffer);
+            }
+
             // Unregister the OpenTK window class
             Win32.UnregisterClass(WindowComponent.CLASS_NAME, IntPtr.Zero);
         }
@@ -216,51 +224,51 @@ namespace OpenTK.Platform.Native.Windows
                 switch (uMsg)
                 {
                     case WM.POWERBROADCAST:
-                    {
-                        // We are only interested in the messages sent to the helper window that we registered to get notifications.
-                        // - 2023-03-29 NogginBops
-                        PBT power = (PBT)wParam;
-
-                        if (power == PBT.APMSuspend)
                         {
-                            EventQueue.Raise(null, PlatformEventType.PowerStateChange, new PowerStateChangeEventArgs(true));
-                        }
-                        else if (power == PBT.APMResumeAutomatic)
-                        {
-                            EventQueue.Raise(null, PlatformEventType.PowerStateChange, new PowerStateChangeEventArgs(false));
-                        }
+                            // We are only interested in the messages sent to the helper window that we registered to get notifications.
+                            // - 2023-03-29 NogginBops
+                            PBT power = (PBT)wParam;
 
-                        return (IntPtr)1;
-                    }
+                            if (power == PBT.APMSuspend)
+                            {
+                                EventQueue.Raise(null, PlatformEventType.PowerStateChange, new PowerStateChangeEventArgs(true));
+                            }
+                            else if (power == PBT.APMResumeAutomatic)
+                            {
+                                EventQueue.Raise(null, PlatformEventType.PowerStateChange, new PowerStateChangeEventArgs(false));
+                            }
+
+                            return (IntPtr)1;
+                        }
                     case WM.DEVICECHANGE:
-                    {
-                        DBT dbt = (DBT)wParam;
-                        switch (dbt)
                         {
-                            case DBT.DeviceArrival:
-                            case DBT.DeviceRemoveComplete:
-                                // FIXME: Implement joystick events!
-                                // JoystickComponent.UpdateJoysticks();
-                                break;
-                            default:
-                                break;
+                            DBT dbt = (DBT)wParam;
+                            switch (dbt)
+                            {
+                                case DBT.DeviceArrival:
+                                case DBT.DeviceRemoveComplete:
+                                    // FIXME: Implement joystick events!
+                                    // JoystickComponent.UpdateJoysticks();
+                                    break;
+                                default:
+                                    break;
+                            }
+
+                            Console.WriteLine($"{uMsg} {(DBT)wParam} 0x{wParam.ToUInt64():X16}");
+                            return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                         }
-
-                        Console.WriteLine($"{uMsg} {(DBT)wParam} 0x{wParam.ToUInt64():X16}");
-                        return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
-                    }
                     case WM.CLIPBOARDUPDATE:
-                    {
-                        ClipboardFormat newFormat = ClipboardComponent.GetClipboardFormatInternal(Logger);
+                        {
+                            ClipboardFormat newFormat = ClipboardComponent.GetClipboardFormatInternal(Logger);
 
-                        EventQueue.Raise(null, PlatformEventType.ClipboardUpdate, new ClipboardUpdateEventArgs(newFormat));
+                            EventQueue.Raise(null, PlatformEventType.ClipboardUpdate, new ClipboardUpdateEventArgs(newFormat));
 
-                        return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
-                    }
+                            return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
+                        }
                     default:
-                    {
-                        return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
-                    }
+                        {
+                            return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
+                        }
                 }
             }
 
@@ -424,7 +432,7 @@ namespace OpenTK.Platform.Native.Windows
                             string str;
 
                             ulong chars = wParam.ToUInt64();
-                            
+
                             switch (chars)
                             {
                                 case 0x0A: // linefeed, SHIFT + ENTER
@@ -434,9 +442,9 @@ namespace OpenTK.Platform.Native.Windows
                                 case 0x08: // backspace
                                 case 0x09: // tab
                                 case 0x1B: // escape
-                                    // FIXME: For now we just send these to the user directly,
-                                    // but maybe we want something better?
-                                    // or we just formalize this?
+                                           // FIXME: For now we just send these to the user directly,
+                                           // but maybe we want something better?
+                                           // or we just formalize this?
                                 default:
                                     {
                                         // FIXME: Do we even need to handle this??
@@ -470,7 +478,6 @@ namespace OpenTK.Platform.Native.Windows
                 case WM.SETFOCUS:
                     {
                         HWND h = HWndDict[hWnd];
-
                         // Because windows removes our capture when we loose focus,
                         // we need to re-capture the mouse when we get focus again.
                         // - Noggin_bops 2023-01-16
@@ -537,7 +544,7 @@ namespace OpenTK.Platform.Native.Windows
                             {
                                 throw new Win32Exception();
                             }
-                            
+
                             EventQueue.Raise(h, PlatformEventType.MouseEnter, new MouseEnterEventArgs(h, true));
                         }
 
@@ -697,7 +704,7 @@ namespace OpenTK.Platform.Native.Windows
                 case WM.MOUSEWHEEL:
                     {
                         float delta = ((int)(wParam.ToUInt32() & Win32.HiWordMask) >> 16) / 120f;
-                        
+
                         bool success = Win32.SystemParametersInfo(SPI.GetWheelScrollLines, 0, out uint lines, SPIF.None);
                         if (success == false)
                         {
@@ -725,50 +732,6 @@ namespace OpenTK.Platform.Native.Windows
 
                         MouseComponent.RegisterMouseWheelDelta(h, (delta, 0));
                         EventQueue.Raise(h, PlatformEventType.Scroll, new ScrollEventArgs(h, new Vector2(delta, 0), new Vector2(delta * chars, 0)));
-
-                        return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
-                    }
-                case WM.INPUT:
-                    {
-                        Win32.RAWINPUT input = default;
-                        uint size = (uint)Marshal.SizeOf<Win32.RAWINPUTHEADER>();
-                        input.header.dwSize = size;
-                        uint ret = Win32.GetRawInputData(lParam, RID.Header, ref input, ref size, (uint)Marshal.SizeOf<Win32.RAWINPUTHEADER>());
-                        if (ret == 0xFFFF_FFFF)
-                        {
-                            throw new Win32Exception("GetRawInputData failed.");
-                        }
-
-                        if (input.header.dwType == RIM.TypeMouse)
-                        {
-                            ret = Win32.GetRawInputData(lParam, RID.Input, null, ref size, (uint)Marshal.SizeOf<Win32.RAWINPUTHEADER>());
-                            if (ret == 0xFFFF_FFFF)
-                            {
-                                throw new Win32Exception("GetRawInputData failed.");
-                            }
-
-                            ret = Win32.GetRawInputData(lParam, RID.Input, ref input, ref size, (uint)Marshal.SizeOf<Win32.RAWINPUTHEADER>());
-                            if (ret == 0xFFFF_FFFF)
-                            {
-                                throw new Win32Exception("GetRawInputData failed.");
-                            }
-
-                            ref Win32.RAWMOUSE mouse = ref input.data.mouse;
-
-                            if (mouse.usFlags == RawMouseFlags.MoveRelative)
-                            {
-                                if (mouse.lLastX != 0 || mouse.lLastY != 0)
-                                {
-                                    HWND h = HWndDict[hWnd];
-                                    EventQueue.Raise(h, PlatformEventType.RawMouseMove, new RawMouseMoveEventArgs(h, (mouse.lLastX, mouse.lLastY)));
-                                }
-                            }
-                            else
-                            {
-                                // FIXME: We don't want to spam this for every WM_INPUT message...
-                                Logger?.LogError("MOUSE_MOVE_ABSOLUTE not supported yet. This might happen when using remote desktop. Open an issue on the OpenTK github if this happens to you.");
-                            }
-                        }
 
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                     }
@@ -878,7 +841,7 @@ namespace OpenTK.Platform.Native.Windows
                         HWND h = HWndDict[hWnd];
 
                         Win32.GetWindowRect(hWnd, out Win32.RECT rect);
-                        
+
                         EventQueue.Raise(h, PlatformEventType.WindowMove, new WindowMoveEventArgs(h, new Vector2i(rect.left, rect.top), new Vector2i(x, y)));
 
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
@@ -1031,7 +994,7 @@ namespace OpenTK.Platform.Native.Windows
                 case WM.THEMECHANGED:
                     {
                         ShellComponent.CheckPreferredThemeChange();
-                        
+
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                     }
                 case WM.IME_COMPOSITION:
@@ -1143,21 +1106,88 @@ namespace OpenTK.Platform.Native.Windows
             }
         }
 
+        /// <summary>
+        /// Processes raw input events using GetRawInputBuffer.
+        /// </summary>
+        private void ProcessRawInputBuffer()
+        {
+            unsafe
+            {
+                var rawInputMessagesProcessed = 0;
+                uint rawInputHeaderSize = (uint)Marshal.SizeOf<Win32.RAWINPUTHEADER>();
+                uint rawInputBufferSize = 0;
+                uint queryCountResult = Win32.GetRawInputBuffer(null, ref rawInputBufferSize, rawInputHeaderSize);
+                if (queryCountResult == unchecked((uint)-1))
+                {
+                    throw new Win32Exception(Marshal.GetLastWin32Error(), "GetRawInputBuffer (query size) failed.");
+                }
+
+                // Slightly oversize the buffer to reduce chance of ERROR_INSUFFICIENT_BUFFER occurring
+                // GLFW uses this technique
+                rawInputBufferSize *= 2;
+                if (rawInputBufferSize > _rawInputBufferSize || _rawInputBuffer == null)
+                {
+                    if (_rawInputBuffer == null)
+                    {
+                        _rawInputBuffer = (Win32.RAWINPUT*)NativeMemory.Alloc(rawInputBufferSize);
+                    }
+                    else
+                    {
+                        _rawInputBuffer = (Win32.RAWINPUT*)NativeMemory.Realloc(_rawInputBuffer, rawInputBufferSize);
+                    }
+                    _rawInputBufferSize = rawInputBufferSize;
+                }
+
+                rawInputBufferSize = _rawInputBufferSize;
+                uint elementsRead = Win32.GetRawInputBuffer(_rawInputBuffer, ref rawInputBufferSize, rawInputHeaderSize);
+                if (elementsRead == unchecked((uint)-1))
+                {
+                    int error = Marshal.GetLastWin32Error();
+                    if (error != Win32.ERROR_INSUFFICIENT_BUFFER)
+                    {
+                        throw new Win32Exception(error, "GetRawInputBuffer (fetch data) failed.");
+                    }
+                }
+
+                Win32.RAWINPUT* currentRawInputPtr = _rawInputBuffer;
+                for (uint i = 0; i < elementsRead && rawInputMessagesProcessed < _maxRawMouseMessagesPerFrame; i++)
+                {
+                    Win32.RAWINPUT rawInput = *currentRawInputPtr;
+                    if (rawInput.header.dwType == RIM.TypeMouse)
+                    {
+                        ref Win32.RAWMOUSE rawMouse = ref rawInput.data.mouse;
+
+                        if (rawMouse.usFlags == RawMouseFlags.MoveRelative)
+                        {
+                            if (rawMouse.lLastX != 0 || rawMouse.lLastY != 0)
+                            {
+                                EventQueue.Raise(null, PlatformEventType.RawMouseMove,
+                                    new RawMouseMoveEventArgs((rawMouse.lLastX, rawMouse.lLastY)));
+                            }
+                        }
+                        else
+                        {
+                            Logger?.LogError("MOUSE_MOVE_ABSOLUTE not supported yet. This might happen when using remote desktop. Open an issue on the OpenTK github if this happens to you.");
+                        }
+                    }
+
+                    currentRawInputPtr++;
+                    rawInputMessagesProcessed++;
+                }
+            }
+        }
+
         /// <inheritdoc/>
         public void ProcessEvents(bool waitForEvents)
         {
+            ProcessRawInputBuffer();
             if (waitForEvents)
             {
-                // Wait for one message then we go into the PeekMessage loop.
-                int ret = Win32.GetMessage(out Win32.MSG lpMsg, IntPtr.Zero, 0, 0);
-                Win32.TranslateMessage(in lpMsg);
-                Win32.DispatchMessage(in lpMsg);
+                ProcessEventsBlocking();
             }
-
-            while (Win32.PeekMessage(out Win32.MSG lpMsg, IntPtr.Zero, 0, 0, PM.Remove))
+            else
             {
-                Win32.TranslateMessage(in lpMsg);
-                Win32.DispatchMessage(in lpMsg);
+                ProcessEventsNonBlocking();
             }
 
             if (CursorCapturingWindow != null && CursorCapturingWindow.CaptureMode == CursorCaptureMode.Locked)
@@ -1169,16 +1199,61 @@ namespace OpenTK.Platform.Native.Windows
                     Win32.ClientToScreen(CursorCapturingWindow.HWnd, ref p);
 
                     bool success = Win32.SetCursorPos(p.X, p.Y);
-                    if (success == false)
-                    {
+                    if (!success)
                         throw new Win32Exception();
-                    }
 
-                    // Set the last mouse position to the position we are moving to
-                    // to avoid generating a mouse move event.
                     CursorCapturingWindow.LastMousePosition = (size.X / 2, size.Y / 2);
                 }
             }
+        }
+
+        /// <summary>
+        /// Process messages using GetMessage. Blocks until a message arrives.
+        /// </summary>
+        private void ProcessEventsBlocking()
+        {
+            //TODO: this should probably respect _maxMouseMoveMessagesPerFrame and not fetch raw input messages
+            //but i'm not sure how to best do that since it would require two or three calls to GetMessage
+
+            // Wait for one message to arrive, then translate/dispatch it.
+            int ret = Win32.GetMessage(out Win32.MSG lpMsg, IntPtr.Zero, 0, 0);
+            Win32.TranslateMessage(in lpMsg);
+            Win32.DispatchMessage(in lpMsg);
+        }
+
+        /// <summary>
+        /// Process messages using PeekMessage. Non blocking.
+        /// </summary>
+        private void ProcessEventsNonBlocking()
+        {
+            int mouseMoveMessages = 0;
+            bool hasMessages;
+            Win32.MSG lpMsg;
+            do
+            {
+                if (mouseMoveMessages < _maxMouseMoveMessagesPerFrame)
+                {
+                    //Process all messages except raw input
+                    hasMessages =
+                        Win32.PeekMessage(out lpMsg, IntPtr.Zero, 0, (uint)WM.INPUT - 1, PM.Remove) ||
+                        Win32.PeekMessage(out lpMsg, IntPtr.Zero, (uint)WM.INPUT + 1, 0, PM.Remove);
+                }
+                else
+                {
+                    //Process all messages except raw input and mouse move
+                    hasMessages = Win32.PeekMessage(out lpMsg, IntPtr.Zero, 0, (uint)WM.INPUT - 1, PM.Remove) ||
+                         Win32.PeekMessage(out lpMsg, IntPtr.Zero, (uint)WM.INPUT + 1, (uint)WM.MOUSEMOVE - 1, PM.Remove) ||
+                         Win32.PeekMessage(out lpMsg, IntPtr.Zero, (uint)WM.MOUSEMOVE + 1, 0, PM.Remove);
+                }
+
+                if(!hasMessages) break;
+                Win32.TranslateMessage(in lpMsg);
+                Win32.DispatchMessage(in lpMsg);
+                if (lpMsg.message == WM.MOUSEMOVE)
+                {
+                    mouseMoveMessages++;
+                }
+            } while (true);
         }
 
         /// <inheritdoc/>
@@ -1861,7 +1936,7 @@ namespace OpenTK.Platform.Native.Windows
                 hwnd.FullscreenMonitor = hmonitor;
                 hwnd.ExclusiveFullscreen = true;
                 hwnd.PreviousBorderStyle = GetBorderStyle(hwnd);
-                
+
                 // FIXME: check if we need to remove the window decorations.
                 WindowStyles style = (WindowStyles)(uint)Win32.GetWindowLongPtr(hwnd.HWnd, GetGWLPIndex.Style);
                 Win32.SetWindowLongPtr(hwnd.HWnd, SetGWLPIndex.Style, new IntPtr((int)(style & ~WindowStyles.OverlappedWindow)));
