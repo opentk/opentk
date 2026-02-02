@@ -1700,6 +1700,8 @@ namespace OpenTK.Mathematics
                 dst[i] = Sse.Add(dst[i], mul[2]);
             }
 #pragma warning restore SA1015
+
+            // Hehe hoho I'm an useless piece of code
         }
 
         /// <summary>
