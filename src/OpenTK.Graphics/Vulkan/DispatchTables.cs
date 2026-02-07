@@ -44,6 +44,7 @@ namespace OpenTK.Graphics.Vulkan
             _vkCreateScreenSurfaceQNX_fnptr = (delegate* unmanaged<VkInstance, VkScreenSurfaceCreateInfoQNX*, VkAllocationCallbacks*, VkSurfaceKHR*, VkResult>)VKLoader.GetInstanceProcAddress(instance, "vkCreateScreenSurfaceQNX");
             _vkCreateStreamDescriptorSurfaceGGP_fnptr = (delegate* unmanaged<VkInstance, VkStreamDescriptorSurfaceCreateInfoGGP*, VkAllocationCallbacks*, VkSurfaceKHR*, VkResult>)VKLoader.GetInstanceProcAddress(instance, "vkCreateStreamDescriptorSurfaceGGP");
             _vkCreateSurfaceOHOS_fnptr = (delegate* unmanaged<VkInstance, VkSurfaceCreateInfoOHOS*, VkAllocationCallbacks*, VkSurfaceKHR*, VkResult>)VKLoader.GetInstanceProcAddress(instance, "vkCreateSurfaceOHOS");
+            _vkCreateUbmSurfaceSEC_fnptr = (delegate* unmanaged<VkInstance, VkUbmSurfaceCreateInfoSEC*, VkAllocationCallbacks*, VkSurfaceKHR*, VkResult>)VKLoader.GetInstanceProcAddress(instance, "vkCreateUbmSurfaceSEC");
             _vkCreateViSurfaceNN_fnptr = (delegate* unmanaged<VkInstance, VkViSurfaceCreateInfoNN*, VkAllocationCallbacks*, VkSurfaceKHR*, VkResult>)VKLoader.GetInstanceProcAddress(instance, "vkCreateViSurfaceNN");
             _vkCreateWaylandSurfaceKHR_fnptr = (delegate* unmanaged<VkInstance, VkWaylandSurfaceCreateInfoKHR*, VkAllocationCallbacks*, VkSurfaceKHR*, VkResult>)VKLoader.GetInstanceProcAddress(instance, "vkCreateWaylandSurfaceKHR");
             _vkCreateWin32SurfaceKHR_fnptr = (delegate* unmanaged<VkInstance, VkWin32SurfaceCreateInfoKHR*, VkAllocationCallbacks*, VkSurfaceKHR*, VkResult>)VKLoader.GetInstanceProcAddress(instance, "vkCreateWin32SurfaceKHR");
@@ -67,13 +68,14 @@ namespace OpenTK.Graphics.Vulkan
             _vkGetDisplayPlaneCapabilitiesKHR_fnptr = (delegate* unmanaged<VkPhysicalDevice, VkDisplayModeKHR, uint, VkDisplayPlaneCapabilitiesKHR*, VkResult>)VKLoader.GetInstanceProcAddress(instance, "vkGetDisplayPlaneCapabilitiesKHR");
             _vkGetDisplayPlaneSupportedDisplaysKHR_fnptr = (delegate* unmanaged<VkPhysicalDevice, uint, uint*, VkDisplayKHR*, VkResult>)VKLoader.GetInstanceProcAddress(instance, "vkGetDisplayPlaneSupportedDisplaysKHR");
             _vkGetDrmDisplayEXT_fnptr = (delegate* unmanaged<VkPhysicalDevice, int, uint, VkDisplayKHR*, VkResult>)VKLoader.GetInstanceProcAddress(instance, "vkGetDrmDisplayEXT");
-            _vkGetInstanceProcAddr_fnptr = (delegate* unmanaged<VkInstance, byte*, IntPtr>)VKLoader.GetInstanceProcAddress(instance, "vkGetInstanceProcAddr");
+            _vkGetInstanceProcAddr_fnptr = (delegate* unmanaged<VkInstance, byte*, delegate* unmanaged[Cdecl]<void>>)VKLoader.GetInstanceProcAddress(instance, "vkGetInstanceProcAddr");
             _vkGetPhysicalDeviceCalibrateableTimeDomainsEXT_fnptr = (delegate* unmanaged<VkPhysicalDevice, uint*, VkTimeDomainKHR*, VkResult>)VKLoader.GetInstanceProcAddress(instance, "vkGetPhysicalDeviceCalibrateableTimeDomainsEXT");
             _vkGetPhysicalDeviceCalibrateableTimeDomainsKHR_fnptr = (delegate* unmanaged<VkPhysicalDevice, uint*, VkTimeDomainKHR*, VkResult>)VKLoader.GetInstanceProcAddress(instance, "vkGetPhysicalDeviceCalibrateableTimeDomainsKHR");
             _vkGetPhysicalDeviceCooperativeMatrixFlexibleDimensionsPropertiesNV_fnptr = (delegate* unmanaged<VkPhysicalDevice, uint*, VkCooperativeMatrixFlexibleDimensionsPropertiesNV*, VkResult>)VKLoader.GetInstanceProcAddress(instance, "vkGetPhysicalDeviceCooperativeMatrixFlexibleDimensionsPropertiesNV");
             _vkGetPhysicalDeviceCooperativeMatrixPropertiesKHR_fnptr = (delegate* unmanaged<VkPhysicalDevice, uint*, VkCooperativeMatrixPropertiesKHR*, VkResult>)VKLoader.GetInstanceProcAddress(instance, "vkGetPhysicalDeviceCooperativeMatrixPropertiesKHR");
             _vkGetPhysicalDeviceCooperativeMatrixPropertiesNV_fnptr = (delegate* unmanaged<VkPhysicalDevice, uint*, VkCooperativeMatrixPropertiesNV*, VkResult>)VKLoader.GetInstanceProcAddress(instance, "vkGetPhysicalDeviceCooperativeMatrixPropertiesNV");
             _vkGetPhysicalDeviceCooperativeVectorPropertiesNV_fnptr = (delegate* unmanaged<VkPhysicalDevice, uint*, VkCooperativeVectorPropertiesNV*, VkResult>)VKLoader.GetInstanceProcAddress(instance, "vkGetPhysicalDeviceCooperativeVectorPropertiesNV");
+            _vkGetPhysicalDeviceDescriptorSizeEXT_fnptr = (delegate* unmanaged<VkPhysicalDevice, VkDescriptorType, ulong>)VKLoader.GetInstanceProcAddress(instance, "vkGetPhysicalDeviceDescriptorSizeEXT");
             _vkGetPhysicalDeviceDirectFBPresentationSupportEXT_fnptr = (delegate* unmanaged<VkPhysicalDevice, uint, IntPtr, int>)VKLoader.GetInstanceProcAddress(instance, "vkGetPhysicalDeviceDirectFBPresentationSupportEXT");
             _vkGetPhysicalDeviceDisplayPlaneProperties2KHR_fnptr = (delegate* unmanaged<VkPhysicalDevice, uint*, VkDisplayPlaneProperties2KHR*, VkResult>)VKLoader.GetInstanceProcAddress(instance, "vkGetPhysicalDeviceDisplayPlaneProperties2KHR");
             _vkGetPhysicalDeviceDisplayPlanePropertiesKHR_fnptr = (delegate* unmanaged<VkPhysicalDevice, uint*, VkDisplayPlanePropertiesKHR*, VkResult>)VKLoader.GetInstanceProcAddress(instance, "vkGetPhysicalDeviceDisplayPlanePropertiesKHR");
@@ -131,6 +133,7 @@ namespace OpenTK.Graphics.Vulkan
             _vkGetPhysicalDeviceSurfaceSupportKHR_fnptr = (delegate* unmanaged<VkPhysicalDevice, uint, VkSurfaceKHR, int*, VkResult>)VKLoader.GetInstanceProcAddress(instance, "vkGetPhysicalDeviceSurfaceSupportKHR");
             _vkGetPhysicalDeviceToolProperties_fnptr = (delegate* unmanaged<VkPhysicalDevice, uint*, VkPhysicalDeviceToolProperties*, VkResult>)VKLoader.GetInstanceProcAddress(instance, "vkGetPhysicalDeviceToolProperties");
             _vkGetPhysicalDeviceToolPropertiesEXT_fnptr = (delegate* unmanaged<VkPhysicalDevice, uint*, VkPhysicalDeviceToolProperties*, VkResult>)VKLoader.GetInstanceProcAddress(instance, "vkGetPhysicalDeviceToolPropertiesEXT");
+            _vkGetPhysicalDeviceUbmPresentationSupportSEC_fnptr = (delegate* unmanaged<VkPhysicalDevice, uint, IntPtr, int>)VKLoader.GetInstanceProcAddress(instance, "vkGetPhysicalDeviceUbmPresentationSupportSEC");
             _vkGetPhysicalDeviceVideoCapabilitiesKHR_fnptr = (delegate* unmanaged<VkPhysicalDevice, VkVideoProfileInfoKHR*, VkVideoCapabilitiesKHR*, VkResult>)VKLoader.GetInstanceProcAddress(instance, "vkGetPhysicalDeviceVideoCapabilitiesKHR");
             _vkGetPhysicalDeviceVideoEncodeQualityLevelPropertiesKHR_fnptr = (delegate* unmanaged<VkPhysicalDevice, VkPhysicalDeviceVideoEncodeQualityLevelInfoKHR*, VkVideoEncodeQualityLevelPropertiesKHR*, VkResult>)VKLoader.GetInstanceProcAddress(instance, "vkGetPhysicalDeviceVideoEncodeQualityLevelPropertiesKHR");
             _vkGetPhysicalDeviceVideoFormatPropertiesKHR_fnptr = (delegate* unmanaged<VkPhysicalDevice, VkPhysicalDeviceVideoFormatInfoKHR*, uint*, VkVideoFormatPropertiesKHR*, VkResult>)VKLoader.GetInstanceProcAddress(instance, "vkGetPhysicalDeviceVideoFormatPropertiesKHR");
@@ -144,696 +147,1122 @@ namespace OpenTK.Graphics.Vulkan
             _vkSubmitDebugUtilsMessageEXT_fnptr = (delegate* unmanaged<VkInstance, VkDebugUtilsMessageSeverityFlagBitsEXT, VkDebugUtilsMessageTypeFlagBitsEXT, VkDebugUtilsMessengerCallbackDataEXT*, void>)VKLoader.GetInstanceProcAddress(instance, "vkSubmitDebugUtilsMessageEXT");
         }
         /// <summary><b>[requires: VK_EXT_acquire_drm_display]</b> [instance command] </summary>
+        /// <param name="physicalDevice"></param>
+        /// <param name="drmFd"></param>
+        /// <param name="display"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkAcquireDrmDisplayEXT.html" /></remarks>
         public VkResult AcquireDrmDisplayEXT(VkPhysicalDevice physicalDevice, int drmFd, VkDisplayKHR display)
         {
             return _vkAcquireDrmDisplayEXT_fnptr(physicalDevice, drmFd, display);
         }
         /// <summary><b>[requires: VK_NV_acquire_winrt_display]</b> [instance command] </summary>
+        /// <param name="physicalDevice"></param>
+        /// <param name="display"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkAcquireWinrtDisplayNV.html" /></remarks>
         public VkResult AcquireWinrtDisplayNV(VkPhysicalDevice physicalDevice, VkDisplayKHR display)
         {
             return _vkAcquireWinrtDisplayNV_fnptr(physicalDevice, display);
         }
         /// <summary><b>[requires: VK_EXT_acquire_xlib_display]</b> [instance command] </summary>
+        /// <param name="physicalDevice"></param>
+        /// <param name="dpy"></param>
+        /// <param name="display"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkAcquireXlibDisplayEXT.html" /></remarks>
         public VkResult AcquireXlibDisplayEXT(VkPhysicalDevice physicalDevice, IntPtr dpy, VkDisplayKHR display)
         {
             return _vkAcquireXlibDisplayEXT_fnptr(physicalDevice, dpy, display);
         }
         /// <summary><b>[requires: VK_KHR_android_surface]</b> [instance command] </summary>
+        /// <param name="instance"></param>
+        /// <param name="pCreateInfo"></param>
+        /// <param name="pAllocator">[optional] </param>
+        /// <param name="pSurface"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateAndroidSurfaceKHR.html" /></remarks>
         public VkResult CreateAndroidSurfaceKHR(VkInstance instance, VkAndroidSurfaceCreateInfoKHR* pCreateInfo, VkAllocationCallbacks* pAllocator, VkSurfaceKHR* pSurface)
         {
             return _vkCreateAndroidSurfaceKHR_fnptr(instance, pCreateInfo, pAllocator, pSurface);
         }
         /// <summary><b>[requires: VK_EXT_debug_report]</b> [instance command] </summary>
+        /// <param name="instance"></param>
+        /// <param name="pCreateInfo"></param>
+        /// <param name="pAllocator">[optional] </param>
+        /// <param name="pCallback"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateDebugReportCallbackEXT.html" /></remarks>
         public VkResult CreateDebugReportCallbackEXT(VkInstance instance, VkDebugReportCallbackCreateInfoEXT* pCreateInfo, VkAllocationCallbacks* pAllocator, VkDebugReportCallbackEXT* pCallback)
         {
             return _vkCreateDebugReportCallbackEXT_fnptr(instance, pCreateInfo, pAllocator, pCallback);
         }
         /// <summary><b>[requires: VK_EXT_debug_utils]</b> [instance command] </summary>
+        /// <param name="instance"></param>
+        /// <param name="pCreateInfo"></param>
+        /// <param name="pAllocator">[optional] </param>
+        /// <param name="pMessenger"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateDebugUtilsMessengerEXT.html" /></remarks>
         public VkResult CreateDebugUtilsMessengerEXT(VkInstance instance, VkDebugUtilsMessengerCreateInfoEXT* pCreateInfo, VkAllocationCallbacks* pAllocator, VkDebugUtilsMessengerEXT* pMessenger)
         {
             return _vkCreateDebugUtilsMessengerEXT_fnptr(instance, pCreateInfo, pAllocator, pMessenger);
         }
         /// <summary><b>[requires: v1.0]</b> [instance command] </summary>
+        /// <param name="physicalDevice"></param>
+        /// <param name="pCreateInfo"></param>
+        /// <param name="pAllocator">[optional] </param>
+        /// <param name="pDevice"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateDevice.html" /></remarks>
         public VkResult CreateDevice(VkPhysicalDevice physicalDevice, VkDeviceCreateInfo* pCreateInfo, VkAllocationCallbacks* pAllocator, VkDevice* pDevice)
         {
             return _vkCreateDevice_fnptr(physicalDevice, pCreateInfo, pAllocator, pDevice);
         }
         /// <summary><b>[requires: VK_EXT_directfb_surface]</b> [instance command] </summary>
+        /// <param name="instance"></param>
+        /// <param name="pCreateInfo"></param>
+        /// <param name="pAllocator">[optional] </param>
+        /// <param name="pSurface"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateDirectFBSurfaceEXT.html" /></remarks>
         public VkResult CreateDirectFBSurfaceEXT(VkInstance instance, VkDirectFBSurfaceCreateInfoEXT* pCreateInfo, VkAllocationCallbacks* pAllocator, VkSurfaceKHR* pSurface)
         {
             return _vkCreateDirectFBSurfaceEXT_fnptr(instance, pCreateInfo, pAllocator, pSurface);
         }
         /// <summary><b>[requires: VK_KHR_display]</b> [instance command] </summary>
+        /// <param name="physicalDevice"></param>
+        /// <param name="display">[extern sync: always] </param>
+        /// <param name="pCreateInfo"></param>
+        /// <param name="pAllocator">[optional] </param>
+        /// <param name="pMode"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateDisplayModeKHR.html" /></remarks>
         public VkResult CreateDisplayModeKHR(VkPhysicalDevice physicalDevice, VkDisplayKHR display, VkDisplayModeCreateInfoKHR* pCreateInfo, VkAllocationCallbacks* pAllocator, VkDisplayModeKHR* pMode)
         {
             return _vkCreateDisplayModeKHR_fnptr(physicalDevice, display, pCreateInfo, pAllocator, pMode);
         }
         /// <summary><b>[requires: VK_KHR_display]</b> [instance command] </summary>
+        /// <param name="instance"></param>
+        /// <param name="pCreateInfo"></param>
+        /// <param name="pAllocator">[optional] </param>
+        /// <param name="pSurface"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateDisplayPlaneSurfaceKHR.html" /></remarks>
         public VkResult CreateDisplayPlaneSurfaceKHR(VkInstance instance, VkDisplaySurfaceCreateInfoKHR* pCreateInfo, VkAllocationCallbacks* pAllocator, VkSurfaceKHR* pSurface)
         {
             return _vkCreateDisplayPlaneSurfaceKHR_fnptr(instance, pCreateInfo, pAllocator, pSurface);
         }
         /// <summary><b>[requires: VK_EXT_headless_surface]</b> [instance command] </summary>
+        /// <param name="instance"></param>
+        /// <param name="pCreateInfo"></param>
+        /// <param name="pAllocator">[optional] </param>
+        /// <param name="pSurface"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateHeadlessSurfaceEXT.html" /></remarks>
         public VkResult CreateHeadlessSurfaceEXT(VkInstance instance, VkHeadlessSurfaceCreateInfoEXT* pCreateInfo, VkAllocationCallbacks* pAllocator, VkSurfaceKHR* pSurface)
         {
             return _vkCreateHeadlessSurfaceEXT_fnptr(instance, pCreateInfo, pAllocator, pSurface);
         }
         /// <summary><b>[requires: VK_FUCHSIA_imagepipe_surface]</b> [instance command] </summary>
+        /// <param name="instance"></param>
+        /// <param name="pCreateInfo"></param>
+        /// <param name="pAllocator">[optional] </param>
+        /// <param name="pSurface"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateImagePipeSurfaceFUCHSIA.html" /></remarks>
         public VkResult CreateImagePipeSurfaceFUCHSIA(VkInstance instance, VkImagePipeSurfaceCreateInfoFUCHSIA* pCreateInfo, VkAllocationCallbacks* pAllocator, VkSurfaceKHR* pSurface)
         {
             return _vkCreateImagePipeSurfaceFUCHSIA_fnptr(instance, pCreateInfo, pAllocator, pSurface);
         }
         /// <summary><b>[requires: VK_MVK_ios_surface]</b> [instance command] </summary>
+        /// <param name="instance"></param>
+        /// <param name="pCreateInfo"></param>
+        /// <param name="pAllocator">[optional] </param>
+        /// <param name="pSurface"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateIOSSurfaceMVK.html" /></remarks>
         public VkResult CreateIOSSurfaceMVK(VkInstance instance, VkIOSSurfaceCreateInfoMVK* pCreateInfo, VkAllocationCallbacks* pAllocator, VkSurfaceKHR* pSurface)
         {
             return _vkCreateIOSSurfaceMVK_fnptr(instance, pCreateInfo, pAllocator, pSurface);
         }
         /// <summary><b>[requires: VK_MVK_macos_surface]</b> [instance command] </summary>
+        /// <param name="instance"></param>
+        /// <param name="pCreateInfo"></param>
+        /// <param name="pAllocator">[optional] </param>
+        /// <param name="pSurface"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateMacOSSurfaceMVK.html" /></remarks>
         public VkResult CreateMacOSSurfaceMVK(VkInstance instance, VkMacOSSurfaceCreateInfoMVK* pCreateInfo, VkAllocationCallbacks* pAllocator, VkSurfaceKHR* pSurface)
         {
             return _vkCreateMacOSSurfaceMVK_fnptr(instance, pCreateInfo, pAllocator, pSurface);
         }
         /// <summary><b>[requires: VK_EXT_metal_surface]</b> [instance command] </summary>
+        /// <param name="instance"></param>
+        /// <param name="pCreateInfo"></param>
+        /// <param name="pAllocator">[optional] </param>
+        /// <param name="pSurface"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateMetalSurfaceEXT.html" /></remarks>
         public VkResult CreateMetalSurfaceEXT(VkInstance instance, VkMetalSurfaceCreateInfoEXT* pCreateInfo, VkAllocationCallbacks* pAllocator, VkSurfaceKHR* pSurface)
         {
             return _vkCreateMetalSurfaceEXT_fnptr(instance, pCreateInfo, pAllocator, pSurface);
         }
         /// <summary><b>[requires: VK_QNX_screen_surface]</b> [instance command] </summary>
+        /// <param name="instance"></param>
+        /// <param name="pCreateInfo"></param>
+        /// <param name="pAllocator">[optional] </param>
+        /// <param name="pSurface"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateScreenSurfaceQNX.html" /></remarks>
         public VkResult CreateScreenSurfaceQNX(VkInstance instance, VkScreenSurfaceCreateInfoQNX* pCreateInfo, VkAllocationCallbacks* pAllocator, VkSurfaceKHR* pSurface)
         {
             return _vkCreateScreenSurfaceQNX_fnptr(instance, pCreateInfo, pAllocator, pSurface);
         }
         /// <summary><b>[requires: VK_GGP_stream_descriptor_surface]</b> [instance command] </summary>
+        /// <param name="instance"></param>
+        /// <param name="pCreateInfo"></param>
+        /// <param name="pAllocator">[optional] </param>
+        /// <param name="pSurface"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateStreamDescriptorSurfaceGGP.html" /></remarks>
         public VkResult CreateStreamDescriptorSurfaceGGP(VkInstance instance, VkStreamDescriptorSurfaceCreateInfoGGP* pCreateInfo, VkAllocationCallbacks* pAllocator, VkSurfaceKHR* pSurface)
         {
             return _vkCreateStreamDescriptorSurfaceGGP_fnptr(instance, pCreateInfo, pAllocator, pSurface);
         }
         /// <summary><b>[requires: VK_OHOS_surface]</b> [instance command] </summary>
+        /// <param name="instance"></param>
+        /// <param name="pCreateInfo"></param>
+        /// <param name="pAllocator">[optional] </param>
+        /// <param name="pSurface"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateSurfaceOHOS.html" /></remarks>
         public VkResult CreateSurfaceOHOS(VkInstance instance, VkSurfaceCreateInfoOHOS* pCreateInfo, VkAllocationCallbacks* pAllocator, VkSurfaceKHR* pSurface)
         {
             return _vkCreateSurfaceOHOS_fnptr(instance, pCreateInfo, pAllocator, pSurface);
         }
+        /// <summary><b>[requires: VK_SEC_ubm_surface]</b> [instance command] </summary>
+        /// <param name="instance"></param>
+        /// <param name="pCreateInfo"></param>
+        /// <param name="pAllocator">[optional] </param>
+        /// <param name="pSurface"></param>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateUbmSurfaceSEC.html" /></remarks>
+        public VkResult CreateUbmSurfaceSEC(VkInstance instance, VkUbmSurfaceCreateInfoSEC* pCreateInfo, VkAllocationCallbacks* pAllocator, VkSurfaceKHR* pSurface)
+        {
+            return _vkCreateUbmSurfaceSEC_fnptr(instance, pCreateInfo, pAllocator, pSurface);
+        }
         /// <summary><b>[requires: VK_NN_vi_surface]</b> [instance command] </summary>
+        /// <param name="instance"></param>
+        /// <param name="pCreateInfo"></param>
+        /// <param name="pAllocator">[optional] </param>
+        /// <param name="pSurface"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateViSurfaceNN.html" /></remarks>
         public VkResult CreateViSurfaceNN(VkInstance instance, VkViSurfaceCreateInfoNN* pCreateInfo, VkAllocationCallbacks* pAllocator, VkSurfaceKHR* pSurface)
         {
             return _vkCreateViSurfaceNN_fnptr(instance, pCreateInfo, pAllocator, pSurface);
         }
         /// <summary><b>[requires: VK_KHR_wayland_surface]</b> [instance command] </summary>
+        /// <param name="instance"></param>
+        /// <param name="pCreateInfo"></param>
+        /// <param name="pAllocator">[optional] </param>
+        /// <param name="pSurface"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateWaylandSurfaceKHR.html" /></remarks>
         public VkResult CreateWaylandSurfaceKHR(VkInstance instance, VkWaylandSurfaceCreateInfoKHR* pCreateInfo, VkAllocationCallbacks* pAllocator, VkSurfaceKHR* pSurface)
         {
             return _vkCreateWaylandSurfaceKHR_fnptr(instance, pCreateInfo, pAllocator, pSurface);
         }
         /// <summary><b>[requires: VK_KHR_win32_surface]</b> [instance command] </summary>
+        /// <param name="instance"></param>
+        /// <param name="pCreateInfo"></param>
+        /// <param name="pAllocator">[optional] </param>
+        /// <param name="pSurface"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateWin32SurfaceKHR.html" /></remarks>
         public VkResult CreateWin32SurfaceKHR(VkInstance instance, VkWin32SurfaceCreateInfoKHR* pCreateInfo, VkAllocationCallbacks* pAllocator, VkSurfaceKHR* pSurface)
         {
             return _vkCreateWin32SurfaceKHR_fnptr(instance, pCreateInfo, pAllocator, pSurface);
         }
         /// <summary><b>[requires: VK_KHR_xcb_surface]</b> [instance command] </summary>
+        /// <param name="instance"></param>
+        /// <param name="pCreateInfo"></param>
+        /// <param name="pAllocator">[optional] </param>
+        /// <param name="pSurface"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateXcbSurfaceKHR.html" /></remarks>
         public VkResult CreateXcbSurfaceKHR(VkInstance instance, VkXcbSurfaceCreateInfoKHR* pCreateInfo, VkAllocationCallbacks* pAllocator, VkSurfaceKHR* pSurface)
         {
             return _vkCreateXcbSurfaceKHR_fnptr(instance, pCreateInfo, pAllocator, pSurface);
         }
         /// <summary><b>[requires: VK_KHR_xlib_surface]</b> [instance command] </summary>
+        /// <param name="instance"></param>
+        /// <param name="pCreateInfo"></param>
+        /// <param name="pAllocator">[optional] </param>
+        /// <param name="pSurface"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateXlibSurfaceKHR.html" /></remarks>
         public VkResult CreateXlibSurfaceKHR(VkInstance instance, VkXlibSurfaceCreateInfoKHR* pCreateInfo, VkAllocationCallbacks* pAllocator, VkSurfaceKHR* pSurface)
         {
             return _vkCreateXlibSurfaceKHR_fnptr(instance, pCreateInfo, pAllocator, pSurface);
         }
         /// <summary><b>[requires: VK_EXT_debug_report]</b> [instance command] </summary>
+        /// <param name="instance"></param>
+        /// <param name="flags"></param>
+        /// <param name="objectType"></param>
+        /// <param name="object"></param>
+        /// <param name="location"></param>
+        /// <param name="messageCode"></param>
+        /// <param name="pLayerPrefix"></param>
+        /// <param name="pMessage"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDebugReportMessageEXT.html" /></remarks>
         public void DebugReportMessageEXT(VkInstance instance, VkDebugReportFlagBitsEXT flags, VkDebugReportObjectTypeEXT objectType, ulong obj, nuint location, int messageCode, byte* pLayerPrefix, byte* pMessage)
         {
             _vkDebugReportMessageEXT_fnptr(instance, flags, objectType, obj, location, messageCode, pLayerPrefix, pMessage);
         }
         /// <summary><b>[requires: VK_EXT_debug_report]</b> [instance command] </summary>
+        /// <param name="instance"></param>
+        /// <param name="callback">[optional] [extern sync: always] </param>
+        /// <param name="pAllocator">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDestroyDebugReportCallbackEXT.html" /></remarks>
         public void DestroyDebugReportCallbackEXT(VkInstance instance, VkDebugReportCallbackEXT callback, VkAllocationCallbacks* pAllocator)
         {
             _vkDestroyDebugReportCallbackEXT_fnptr(instance, callback, pAllocator);
         }
         /// <summary><b>[requires: VK_EXT_debug_utils]</b> [instance command] </summary>
+        /// <param name="instance"></param>
+        /// <param name="messenger">[optional] [extern sync: always] </param>
+        /// <param name="pAllocator">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDestroyDebugUtilsMessengerEXT.html" /></remarks>
         public void DestroyDebugUtilsMessengerEXT(VkInstance instance, VkDebugUtilsMessengerEXT messenger, VkAllocationCallbacks* pAllocator)
         {
             _vkDestroyDebugUtilsMessengerEXT_fnptr(instance, messenger, pAllocator);
         }
         /// <summary><b>[requires: v1.0]</b> [instance command] </summary>
+        /// <param name="instance">[optional] [extern sync: always] </param>
+        /// <param name="pAllocator">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDestroyInstance.html" /></remarks>
         public void DestroyInstance(VkInstance instance, VkAllocationCallbacks* pAllocator)
         {
             _vkDestroyInstance_fnptr(instance, pAllocator);
         }
         /// <summary><b>[requires: VK_KHR_surface]</b> [instance command] </summary>
+        /// <param name="instance"></param>
+        /// <param name="surface">[optional] [extern sync: always] </param>
+        /// <param name="pAllocator">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDestroySurfaceKHR.html" /></remarks>
         public void DestroySurfaceKHR(VkInstance instance, VkSurfaceKHR surface, VkAllocationCallbacks* pAllocator)
         {
             _vkDestroySurfaceKHR_fnptr(instance, surface, pAllocator);
         }
         /// <summary><b>[requires: v1.0]</b> [instance command] </summary>
+        /// <param name="physicalDevice"></param>
+        /// <param name="pLayerName">[optional] </param>
+        /// <param name="pPropertyCount">[ptr required, value optional] </param>
+        /// <param name="pProperties">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkEnumerateDeviceExtensionProperties.html" /></remarks>
         public VkResult EnumerateDeviceExtensionProperties(VkPhysicalDevice physicalDevice, byte* pLayerName, uint* pPropertyCount, VkExtensionProperties* pProperties)
         {
             return _vkEnumerateDeviceExtensionProperties_fnptr(physicalDevice, pLayerName, pPropertyCount, pProperties);
         }
         /// <summary><b>[requires: v1.0]</b> [instance command] </summary>
+        /// <param name="physicalDevice"></param>
+        /// <param name="pPropertyCount">[ptr required, value optional] </param>
+        /// <param name="pProperties">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkEnumerateDeviceLayerProperties.html" /></remarks>
         public VkResult EnumerateDeviceLayerProperties(VkPhysicalDevice physicalDevice, uint* pPropertyCount, VkLayerProperties* pProperties)
         {
             return _vkEnumerateDeviceLayerProperties_fnptr(physicalDevice, pPropertyCount, pProperties);
         }
         /// <summary><b>[requires: v1.1]</b> [instance command] </summary>
+        /// <param name="instance"></param>
+        /// <param name="pPhysicalDeviceGroupCount">[ptr required, value optional] </param>
+        /// <param name="pPhysicalDeviceGroupProperties">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkEnumeratePhysicalDeviceGroups.html" /></remarks>
         public VkResult EnumeratePhysicalDeviceGroups(VkInstance instance, uint* pPhysicalDeviceGroupCount, VkPhysicalDeviceGroupProperties* pPhysicalDeviceGroupProperties)
         {
             return _vkEnumeratePhysicalDeviceGroups_fnptr(instance, pPhysicalDeviceGroupCount, pPhysicalDeviceGroupProperties);
         }
         /// <summary><b>[requires: VK_KHR_device_group_creation]</b> [instance command]  Alias of <see cref="EnumeratePhysicalDeviceGroups"/></summary>
+        /// <param name="instance"></param>
+        /// <param name="pPhysicalDeviceGroupCount">[ptr required, value optional] </param>
+        /// <param name="pPhysicalDeviceGroupProperties">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkEnumeratePhysicalDeviceGroupsKHR.html" /></remarks>
         public VkResult EnumeratePhysicalDeviceGroupsKHR(VkInstance instance, uint* pPhysicalDeviceGroupCount, VkPhysicalDeviceGroupProperties* pPhysicalDeviceGroupProperties)
         {
             return _vkEnumeratePhysicalDeviceGroupsKHR_fnptr(instance, pPhysicalDeviceGroupCount, pPhysicalDeviceGroupProperties);
         }
         /// <summary><b>[requires: VK_ARM_performance_counters_by_region]</b> [instance command] </summary>
+        /// <param name="physicalDevice"></param>
+        /// <param name="queueFamilyIndex"></param>
+        /// <param name="pCounterCount">[ptr required, value optional] </param>
+        /// <param name="pCounters">[optional] </param>
+        /// <param name="pCounterDescriptions">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkEnumeratePhysicalDeviceQueueFamilyPerformanceCountersByRegionARM.html" /></remarks>
         public VkResult EnumeratePhysicalDeviceQueueFamilyPerformanceCountersByRegionARM(VkPhysicalDevice physicalDevice, uint queueFamilyIndex, uint* pCounterCount, VkPerformanceCounterARM* pCounters, VkPerformanceCounterDescriptionARM* pCounterDescriptions)
         {
             return _vkEnumeratePhysicalDeviceQueueFamilyPerformanceCountersByRegionARM_fnptr(physicalDevice, queueFamilyIndex, pCounterCount, pCounters, pCounterDescriptions);
         }
         /// <summary><b>[requires: VK_KHR_performance_query]</b> [instance command] </summary>
+        /// <param name="physicalDevice"></param>
+        /// <param name="queueFamilyIndex"></param>
+        /// <param name="pCounterCount">[ptr required, value optional] </param>
+        /// <param name="pCounters">[optional] </param>
+        /// <param name="pCounterDescriptions">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkEnumeratePhysicalDeviceQueueFamilyPerformanceQueryCountersKHR.html" /></remarks>
         public VkResult EnumeratePhysicalDeviceQueueFamilyPerformanceQueryCountersKHR(VkPhysicalDevice physicalDevice, uint queueFamilyIndex, uint* pCounterCount, VkPerformanceCounterKHR* pCounters, VkPerformanceCounterDescriptionKHR* pCounterDescriptions)
         {
             return _vkEnumeratePhysicalDeviceQueueFamilyPerformanceQueryCountersKHR_fnptr(physicalDevice, queueFamilyIndex, pCounterCount, pCounters, pCounterDescriptions);
         }
         /// <summary><b>[requires: v1.0]</b> [instance command] </summary>
+        /// <param name="instance"></param>
+        /// <param name="pPhysicalDeviceCount">[ptr required, value optional] </param>
+        /// <param name="pPhysicalDevices">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkEnumeratePhysicalDevices.html" /></remarks>
         public VkResult EnumeratePhysicalDevices(VkInstance instance, uint* pPhysicalDeviceCount, VkPhysicalDevice* pPhysicalDevices)
         {
             return _vkEnumeratePhysicalDevices_fnptr(instance, pPhysicalDeviceCount, pPhysicalDevices);
         }
         /// <summary><b>[requires: VK_KHR_get_display_properties2]</b> [instance command] </summary>
+        /// <param name="physicalDevice"></param>
+        /// <param name="display"></param>
+        /// <param name="pPropertyCount">[ptr required, value optional] </param>
+        /// <param name="pProperties">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetDisplayModeProperties2KHR.html" /></remarks>
         public VkResult GetDisplayModeProperties2KHR(VkPhysicalDevice physicalDevice, VkDisplayKHR display, uint* pPropertyCount, VkDisplayModeProperties2KHR* pProperties)
         {
             return _vkGetDisplayModeProperties2KHR_fnptr(physicalDevice, display, pPropertyCount, pProperties);
         }
         /// <summary><b>[requires: VK_KHR_display]</b> [instance command] </summary>
+        /// <param name="physicalDevice"></param>
+        /// <param name="display"></param>
+        /// <param name="pPropertyCount">[ptr required, value optional] </param>
+        /// <param name="pProperties">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetDisplayModePropertiesKHR.html" /></remarks>
         public VkResult GetDisplayModePropertiesKHR(VkPhysicalDevice physicalDevice, VkDisplayKHR display, uint* pPropertyCount, VkDisplayModePropertiesKHR* pProperties)
         {
             return _vkGetDisplayModePropertiesKHR_fnptr(physicalDevice, display, pPropertyCount, pProperties);
         }
         /// <summary><b>[requires: VK_KHR_get_display_properties2]</b> [instance command] </summary>
+        /// <param name="physicalDevice"></param>
+        /// <param name="pDisplayPlaneInfo"></param>
+        /// <param name="pCapabilities"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetDisplayPlaneCapabilities2KHR.html" /></remarks>
         public VkResult GetDisplayPlaneCapabilities2KHR(VkPhysicalDevice physicalDevice, VkDisplayPlaneInfo2KHR* pDisplayPlaneInfo, VkDisplayPlaneCapabilities2KHR* pCapabilities)
         {
             return _vkGetDisplayPlaneCapabilities2KHR_fnptr(physicalDevice, pDisplayPlaneInfo, pCapabilities);
         }
         /// <summary><b>[requires: VK_KHR_display]</b> [instance command] </summary>
+        /// <param name="physicalDevice"></param>
+        /// <param name="mode">[extern sync: always] </param>
+        /// <param name="planeIndex"></param>
+        /// <param name="pCapabilities"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetDisplayPlaneCapabilitiesKHR.html" /></remarks>
         public VkResult GetDisplayPlaneCapabilitiesKHR(VkPhysicalDevice physicalDevice, VkDisplayModeKHR mode, uint planeIndex, VkDisplayPlaneCapabilitiesKHR* pCapabilities)
         {
             return _vkGetDisplayPlaneCapabilitiesKHR_fnptr(physicalDevice, mode, planeIndex, pCapabilities);
         }
         /// <summary><b>[requires: VK_KHR_display]</b> [instance command] </summary>
+        /// <param name="physicalDevice"></param>
+        /// <param name="planeIndex"></param>
+        /// <param name="pDisplayCount">[ptr required, value optional] </param>
+        /// <param name="pDisplays">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetDisplayPlaneSupportedDisplaysKHR.html" /></remarks>
         public VkResult GetDisplayPlaneSupportedDisplaysKHR(VkPhysicalDevice physicalDevice, uint planeIndex, uint* pDisplayCount, VkDisplayKHR* pDisplays)
         {
             return _vkGetDisplayPlaneSupportedDisplaysKHR_fnptr(physicalDevice, planeIndex, pDisplayCount, pDisplays);
         }
         /// <summary><b>[requires: VK_EXT_acquire_drm_display]</b> [instance command] </summary>
+        /// <param name="physicalDevice"></param>
+        /// <param name="drmFd"></param>
+        /// <param name="connectorId"></param>
+        /// <param name="display"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetDrmDisplayEXT.html" /></remarks>
         public VkResult GetDrmDisplayEXT(VkPhysicalDevice physicalDevice, int drmFd, uint connectorId, VkDisplayKHR* display)
         {
             return _vkGetDrmDisplayEXT_fnptr(physicalDevice, drmFd, connectorId, display);
         }
         /// <summary><b>[requires: v1.0]</b> [instance command] </summary>
+        /// <param name="instance">[optional] </param>
+        /// <param name="pName"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetInstanceProcAddr.html" /></remarks>
-        public IntPtr GetInstanceProcAddr(VkInstance instance, byte* pName)
+        public delegate* unmanaged[Cdecl]<void> GetInstanceProcAddr(VkInstance instance, byte* pName)
         {
             return _vkGetInstanceProcAddr_fnptr(instance, pName);
         }
         /// <summary><b>[requires: VK_EXT_calibrated_timestamps]</b> [instance command]  Alias of <see cref="GetPhysicalDeviceCalibrateableTimeDomainsKHR"/></summary>
+        /// <param name="physicalDevice"></param>
+        /// <param name="pTimeDomainCount">[ptr required, value optional] </param>
+        /// <param name="pTimeDomains">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceCalibrateableTimeDomainsEXT.html" /></remarks>
         public VkResult GetPhysicalDeviceCalibrateableTimeDomainsEXT(VkPhysicalDevice physicalDevice, uint* pTimeDomainCount, VkTimeDomainKHR* pTimeDomains)
         {
             return _vkGetPhysicalDeviceCalibrateableTimeDomainsEXT_fnptr(physicalDevice, pTimeDomainCount, pTimeDomains);
         }
         /// <summary><b>[requires: VK_KHR_calibrated_timestamps]</b> [instance command] </summary>
+        /// <param name="physicalDevice"></param>
+        /// <param name="pTimeDomainCount">[ptr required, value optional] </param>
+        /// <param name="pTimeDomains">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceCalibrateableTimeDomainsKHR.html" /></remarks>
         public VkResult GetPhysicalDeviceCalibrateableTimeDomainsKHR(VkPhysicalDevice physicalDevice, uint* pTimeDomainCount, VkTimeDomainKHR* pTimeDomains)
         {
             return _vkGetPhysicalDeviceCalibrateableTimeDomainsKHR_fnptr(physicalDevice, pTimeDomainCount, pTimeDomains);
         }
         /// <summary><b>[requires: VK_NV_cooperative_matrix2]</b> [instance command] </summary>
+        /// <param name="physicalDevice"></param>
+        /// <param name="pPropertyCount">[ptr required, value optional] </param>
+        /// <param name="pProperties">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceCooperativeMatrixFlexibleDimensionsPropertiesNV.html" /></remarks>
         public VkResult GetPhysicalDeviceCooperativeMatrixFlexibleDimensionsPropertiesNV(VkPhysicalDevice physicalDevice, uint* pPropertyCount, VkCooperativeMatrixFlexibleDimensionsPropertiesNV* pProperties)
         {
             return _vkGetPhysicalDeviceCooperativeMatrixFlexibleDimensionsPropertiesNV_fnptr(physicalDevice, pPropertyCount, pProperties);
         }
         /// <summary><b>[requires: VK_KHR_cooperative_matrix]</b> [instance command] </summary>
+        /// <param name="physicalDevice"></param>
+        /// <param name="pPropertyCount">[ptr required, value optional] </param>
+        /// <param name="pProperties">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceCooperativeMatrixPropertiesKHR.html" /></remarks>
         public VkResult GetPhysicalDeviceCooperativeMatrixPropertiesKHR(VkPhysicalDevice physicalDevice, uint* pPropertyCount, VkCooperativeMatrixPropertiesKHR* pProperties)
         {
             return _vkGetPhysicalDeviceCooperativeMatrixPropertiesKHR_fnptr(physicalDevice, pPropertyCount, pProperties);
         }
         /// <summary><b>[requires: VK_NV_cooperative_matrix]</b> [instance command] </summary>
+        /// <param name="physicalDevice"></param>
+        /// <param name="pPropertyCount">[ptr required, value optional] </param>
+        /// <param name="pProperties">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceCooperativeMatrixPropertiesNV.html" /></remarks>
         public VkResult GetPhysicalDeviceCooperativeMatrixPropertiesNV(VkPhysicalDevice physicalDevice, uint* pPropertyCount, VkCooperativeMatrixPropertiesNV* pProperties)
         {
             return _vkGetPhysicalDeviceCooperativeMatrixPropertiesNV_fnptr(physicalDevice, pPropertyCount, pProperties);
         }
         /// <summary><b>[requires: VK_NV_cooperative_vector]</b> [instance command] </summary>
+        /// <param name="physicalDevice"></param>
+        /// <param name="pPropertyCount">[ptr required, value optional] </param>
+        /// <param name="pProperties">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceCooperativeVectorPropertiesNV.html" /></remarks>
         public VkResult GetPhysicalDeviceCooperativeVectorPropertiesNV(VkPhysicalDevice physicalDevice, uint* pPropertyCount, VkCooperativeVectorPropertiesNV* pProperties)
         {
             return _vkGetPhysicalDeviceCooperativeVectorPropertiesNV_fnptr(physicalDevice, pPropertyCount, pProperties);
         }
+        /// <summary><b>[requires: VK_EXT_descriptor_heap]</b> [instance command] </summary>
+        /// <param name="physicalDevice"></param>
+        /// <param name="descriptorType"></param>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceDescriptorSizeEXT.html" /></remarks>
+        public ulong GetPhysicalDeviceDescriptorSizeEXT(VkPhysicalDevice physicalDevice, VkDescriptorType descriptorType)
+        {
+            return _vkGetPhysicalDeviceDescriptorSizeEXT_fnptr(physicalDevice, descriptorType);
+        }
         /// <summary><b>[requires: VK_EXT_directfb_surface]</b> [instance command] </summary>
+        /// <param name="physicalDevice"></param>
+        /// <param name="queueFamilyIndex"></param>
+        /// <param name="dfb"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceDirectFBPresentationSupportEXT.html" /></remarks>
         public int GetPhysicalDeviceDirectFBPresentationSupportEXT(VkPhysicalDevice physicalDevice, uint queueFamilyIndex, IntPtr dfb)
         {
             return _vkGetPhysicalDeviceDirectFBPresentationSupportEXT_fnptr(physicalDevice, queueFamilyIndex, dfb);
         }
         /// <summary><b>[requires: VK_KHR_get_display_properties2]</b> [instance command] </summary>
+        /// <param name="physicalDevice"></param>
+        /// <param name="pPropertyCount">[ptr required, value optional] </param>
+        /// <param name="pProperties">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceDisplayPlaneProperties2KHR.html" /></remarks>
         public VkResult GetPhysicalDeviceDisplayPlaneProperties2KHR(VkPhysicalDevice physicalDevice, uint* pPropertyCount, VkDisplayPlaneProperties2KHR* pProperties)
         {
             return _vkGetPhysicalDeviceDisplayPlaneProperties2KHR_fnptr(physicalDevice, pPropertyCount, pProperties);
         }
         /// <summary><b>[requires: VK_KHR_display]</b> [instance command] </summary>
+        /// <param name="physicalDevice"></param>
+        /// <param name="pPropertyCount">[ptr required, value optional] </param>
+        /// <param name="pProperties">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceDisplayPlanePropertiesKHR.html" /></remarks>
         public VkResult GetPhysicalDeviceDisplayPlanePropertiesKHR(VkPhysicalDevice physicalDevice, uint* pPropertyCount, VkDisplayPlanePropertiesKHR* pProperties)
         {
             return _vkGetPhysicalDeviceDisplayPlanePropertiesKHR_fnptr(physicalDevice, pPropertyCount, pProperties);
         }
         /// <summary><b>[requires: VK_KHR_get_display_properties2]</b> [instance command] </summary>
+        /// <param name="physicalDevice"></param>
+        /// <param name="pPropertyCount">[ptr required, value optional] </param>
+        /// <param name="pProperties">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceDisplayProperties2KHR.html" /></remarks>
         public VkResult GetPhysicalDeviceDisplayProperties2KHR(VkPhysicalDevice physicalDevice, uint* pPropertyCount, VkDisplayProperties2KHR* pProperties)
         {
             return _vkGetPhysicalDeviceDisplayProperties2KHR_fnptr(physicalDevice, pPropertyCount, pProperties);
         }
         /// <summary><b>[requires: VK_KHR_display]</b> [instance command] </summary>
+        /// <param name="physicalDevice"></param>
+        /// <param name="pPropertyCount">[ptr required, value optional] </param>
+        /// <param name="pProperties">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceDisplayPropertiesKHR.html" /></remarks>
         public VkResult GetPhysicalDeviceDisplayPropertiesKHR(VkPhysicalDevice physicalDevice, uint* pPropertyCount, VkDisplayPropertiesKHR* pProperties)
         {
             return _vkGetPhysicalDeviceDisplayPropertiesKHR_fnptr(physicalDevice, pPropertyCount, pProperties);
         }
         /// <summary><b>[requires: v1.1]</b> [instance command] </summary>
+        /// <param name="physicalDevice"></param>
+        /// <param name="pExternalBufferInfo"></param>
+        /// <param name="pExternalBufferProperties"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceExternalBufferProperties.html" /></remarks>
         public void GetPhysicalDeviceExternalBufferProperties(VkPhysicalDevice physicalDevice, VkPhysicalDeviceExternalBufferInfo* pExternalBufferInfo, VkExternalBufferProperties* pExternalBufferProperties)
         {
             _vkGetPhysicalDeviceExternalBufferProperties_fnptr(physicalDevice, pExternalBufferInfo, pExternalBufferProperties);
         }
         /// <summary><b>[requires: VK_KHR_external_memory_capabilities]</b> [instance command]  Alias of <see cref="GetPhysicalDeviceExternalBufferProperties"/></summary>
+        /// <param name="physicalDevice"></param>
+        /// <param name="pExternalBufferInfo"></param>
+        /// <param name="pExternalBufferProperties"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceExternalBufferPropertiesKHR.html" /></remarks>
         public void GetPhysicalDeviceExternalBufferPropertiesKHR(VkPhysicalDevice physicalDevice, VkPhysicalDeviceExternalBufferInfo* pExternalBufferInfo, VkExternalBufferProperties* pExternalBufferProperties)
         {
             _vkGetPhysicalDeviceExternalBufferPropertiesKHR_fnptr(physicalDevice, pExternalBufferInfo, pExternalBufferProperties);
         }
         /// <summary><b>[requires: v1.1]</b> [instance command] </summary>
+        /// <param name="physicalDevice"></param>
+        /// <param name="pExternalFenceInfo"></param>
+        /// <param name="pExternalFenceProperties"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceExternalFenceProperties.html" /></remarks>
         public void GetPhysicalDeviceExternalFenceProperties(VkPhysicalDevice physicalDevice, VkPhysicalDeviceExternalFenceInfo* pExternalFenceInfo, VkExternalFenceProperties* pExternalFenceProperties)
         {
             _vkGetPhysicalDeviceExternalFenceProperties_fnptr(physicalDevice, pExternalFenceInfo, pExternalFenceProperties);
         }
         /// <summary><b>[requires: VK_KHR_external_fence_capabilities]</b> [instance command]  Alias of <see cref="GetPhysicalDeviceExternalFenceProperties"/></summary>
+        /// <param name="physicalDevice"></param>
+        /// <param name="pExternalFenceInfo"></param>
+        /// <param name="pExternalFenceProperties"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceExternalFencePropertiesKHR.html" /></remarks>
         public void GetPhysicalDeviceExternalFencePropertiesKHR(VkPhysicalDevice physicalDevice, VkPhysicalDeviceExternalFenceInfo* pExternalFenceInfo, VkExternalFenceProperties* pExternalFenceProperties)
         {
             _vkGetPhysicalDeviceExternalFencePropertiesKHR_fnptr(physicalDevice, pExternalFenceInfo, pExternalFenceProperties);
         }
         /// <summary><b>[requires: VK_NV_external_memory_capabilities]</b> [instance command] </summary>
+        /// <param name="physicalDevice"></param>
+        /// <param name="format"></param>
+        /// <param name="type"></param>
+        /// <param name="tiling"></param>
+        /// <param name="usage"></param>
+        /// <param name="flags">[optional] </param>
+        /// <param name="externalHandleType">[optional] </param>
+        /// <param name="pExternalImageFormatProperties"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceExternalImageFormatPropertiesNV.html" /></remarks>
         public VkResult GetPhysicalDeviceExternalImageFormatPropertiesNV(VkPhysicalDevice physicalDevice, VkFormat format, VkImageType type, VkImageTiling tiling, VkImageUsageFlagBits usage, VkImageCreateFlagBits flags, VkExternalMemoryHandleTypeFlagBitsNV externalHandleType, VkExternalImageFormatPropertiesNV* pExternalImageFormatProperties)
         {
             return _vkGetPhysicalDeviceExternalImageFormatPropertiesNV_fnptr(physicalDevice, format, type, tiling, usage, flags, externalHandleType, pExternalImageFormatProperties);
         }
         /// <summary><b>[requires: VK_NV_external_memory_sci_buf]</b> [instance command] </summary>
+        /// <param name="physicalDevice"></param>
+        /// <param name="handleType"></param>
+        /// <param name="handle"></param>
+        /// <param name="pMemorySciBufProperties"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceExternalMemorySciBufPropertiesNV.html" /></remarks>
         public VkResult GetPhysicalDeviceExternalMemorySciBufPropertiesNV(VkPhysicalDevice physicalDevice, VkExternalMemoryHandleTypeFlagBits handleType, IntPtr handle, VkMemorySciBufPropertiesNV* pMemorySciBufProperties)
         {
             return _vkGetPhysicalDeviceExternalMemorySciBufPropertiesNV_fnptr(physicalDevice, handleType, handle, pMemorySciBufProperties);
         }
         /// <summary><b>[requires: v1.1]</b> [instance command] </summary>
+        /// <param name="physicalDevice"></param>
+        /// <param name="pExternalSemaphoreInfo"></param>
+        /// <param name="pExternalSemaphoreProperties"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceExternalSemaphoreProperties.html" /></remarks>
         public void GetPhysicalDeviceExternalSemaphoreProperties(VkPhysicalDevice physicalDevice, VkPhysicalDeviceExternalSemaphoreInfo* pExternalSemaphoreInfo, VkExternalSemaphoreProperties* pExternalSemaphoreProperties)
         {
             _vkGetPhysicalDeviceExternalSemaphoreProperties_fnptr(physicalDevice, pExternalSemaphoreInfo, pExternalSemaphoreProperties);
         }
         /// <summary><b>[requires: VK_KHR_external_semaphore_capabilities]</b> [instance command]  Alias of <see cref="GetPhysicalDeviceExternalSemaphoreProperties"/></summary>
+        /// <param name="physicalDevice"></param>
+        /// <param name="pExternalSemaphoreInfo"></param>
+        /// <param name="pExternalSemaphoreProperties"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceExternalSemaphorePropertiesKHR.html" /></remarks>
         public void GetPhysicalDeviceExternalSemaphorePropertiesKHR(VkPhysicalDevice physicalDevice, VkPhysicalDeviceExternalSemaphoreInfo* pExternalSemaphoreInfo, VkExternalSemaphoreProperties* pExternalSemaphoreProperties)
         {
             _vkGetPhysicalDeviceExternalSemaphorePropertiesKHR_fnptr(physicalDevice, pExternalSemaphoreInfo, pExternalSemaphoreProperties);
         }
         /// <summary><b>[requires: VK_ARM_tensors]</b> [instance command] </summary>
+        /// <param name="physicalDevice"></param>
+        /// <param name="pExternalTensorInfo"></param>
+        /// <param name="pExternalTensorProperties"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceExternalTensorPropertiesARM.html" /></remarks>
         public void GetPhysicalDeviceExternalTensorPropertiesARM(VkPhysicalDevice physicalDevice, VkPhysicalDeviceExternalTensorInfoARM* pExternalTensorInfo, VkExternalTensorPropertiesARM* pExternalTensorProperties)
         {
             _vkGetPhysicalDeviceExternalTensorPropertiesARM_fnptr(physicalDevice, pExternalTensorInfo, pExternalTensorProperties);
         }
         /// <summary><b>[requires: v1.0]</b> [instance command] </summary>
+        /// <param name="physicalDevice"></param>
+        /// <param name="pFeatures"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceFeatures.html" /></remarks>
         public void GetPhysicalDeviceFeatures(VkPhysicalDevice physicalDevice, VkPhysicalDeviceFeatures* pFeatures)
         {
             _vkGetPhysicalDeviceFeatures_fnptr(physicalDevice, pFeatures);
         }
         /// <summary><b>[requires: v1.1]</b> [instance command] </summary>
+        /// <param name="physicalDevice"></param>
+        /// <param name="pFeatures"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceFeatures2.html" /></remarks>
         public void GetPhysicalDeviceFeatures2(VkPhysicalDevice physicalDevice, VkPhysicalDeviceFeatures2* pFeatures)
         {
             _vkGetPhysicalDeviceFeatures2_fnptr(physicalDevice, pFeatures);
         }
         /// <summary><b>[requires: VK_KHR_get_physical_device_properties2]</b> [instance command]  Alias of <see cref="GetPhysicalDeviceFeatures2"/></summary>
+        /// <param name="physicalDevice"></param>
+        /// <param name="pFeatures"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceFeatures2KHR.html" /></remarks>
         public void GetPhysicalDeviceFeatures2KHR(VkPhysicalDevice physicalDevice, VkPhysicalDeviceFeatures2* pFeatures)
         {
             _vkGetPhysicalDeviceFeatures2KHR_fnptr(physicalDevice, pFeatures);
         }
         /// <summary><b>[requires: v1.0]</b> [instance command] </summary>
+        /// <param name="physicalDevice"></param>
+        /// <param name="format"></param>
+        /// <param name="pFormatProperties"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceFormatProperties.html" /></remarks>
         public void GetPhysicalDeviceFormatProperties(VkPhysicalDevice physicalDevice, VkFormat format, VkFormatProperties* pFormatProperties)
         {
             _vkGetPhysicalDeviceFormatProperties_fnptr(physicalDevice, format, pFormatProperties);
         }
         /// <summary><b>[requires: v1.1]</b> [instance command] </summary>
+        /// <param name="physicalDevice"></param>
+        /// <param name="format"></param>
+        /// <param name="pFormatProperties"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceFormatProperties2.html" /></remarks>
         public void GetPhysicalDeviceFormatProperties2(VkPhysicalDevice physicalDevice, VkFormat format, VkFormatProperties2* pFormatProperties)
         {
             _vkGetPhysicalDeviceFormatProperties2_fnptr(physicalDevice, format, pFormatProperties);
         }
         /// <summary><b>[requires: VK_KHR_get_physical_device_properties2]</b> [instance command]  Alias of <see cref="GetPhysicalDeviceFormatProperties2"/></summary>
+        /// <param name="physicalDevice"></param>
+        /// <param name="format"></param>
+        /// <param name="pFormatProperties"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceFormatProperties2KHR.html" /></remarks>
         public void GetPhysicalDeviceFormatProperties2KHR(VkPhysicalDevice physicalDevice, VkFormat format, VkFormatProperties2* pFormatProperties)
         {
             _vkGetPhysicalDeviceFormatProperties2KHR_fnptr(physicalDevice, format, pFormatProperties);
         }
         /// <summary><b>[requires: VK_KHR_fragment_shading_rate]</b> [instance command] </summary>
+        /// <param name="physicalDevice"></param>
+        /// <param name="pFragmentShadingRateCount">[ptr required, value optional] </param>
+        /// <param name="pFragmentShadingRates">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceFragmentShadingRatesKHR.html" /></remarks>
         public VkResult GetPhysicalDeviceFragmentShadingRatesKHR(VkPhysicalDevice physicalDevice, uint* pFragmentShadingRateCount, VkPhysicalDeviceFragmentShadingRateKHR* pFragmentShadingRates)
         {
             return _vkGetPhysicalDeviceFragmentShadingRatesKHR_fnptr(physicalDevice, pFragmentShadingRateCount, pFragmentShadingRates);
         }
         /// <summary><b>[requires: v1.0]</b> [instance command] </summary>
+        /// <param name="physicalDevice"></param>
+        /// <param name="format"></param>
+        /// <param name="type"></param>
+        /// <param name="tiling"></param>
+        /// <param name="usage"></param>
+        /// <param name="flags">[optional] </param>
+        /// <param name="pImageFormatProperties"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceImageFormatProperties.html" /></remarks>
         public VkResult GetPhysicalDeviceImageFormatProperties(VkPhysicalDevice physicalDevice, VkFormat format, VkImageType type, VkImageTiling tiling, VkImageUsageFlagBits usage, VkImageCreateFlagBits flags, VkImageFormatProperties* pImageFormatProperties)
         {
             return _vkGetPhysicalDeviceImageFormatProperties_fnptr(physicalDevice, format, type, tiling, usage, flags, pImageFormatProperties);
         }
         /// <summary><b>[requires: v1.1]</b> [instance command] </summary>
+        /// <param name="physicalDevice"></param>
+        /// <param name="pImageFormatInfo"></param>
+        /// <param name="pImageFormatProperties"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceImageFormatProperties2.html" /></remarks>
         public VkResult GetPhysicalDeviceImageFormatProperties2(VkPhysicalDevice physicalDevice, VkPhysicalDeviceImageFormatInfo2* pImageFormatInfo, VkImageFormatProperties2* pImageFormatProperties)
         {
             return _vkGetPhysicalDeviceImageFormatProperties2_fnptr(physicalDevice, pImageFormatInfo, pImageFormatProperties);
         }
         /// <summary><b>[requires: VK_KHR_get_physical_device_properties2]</b> [instance command]  Alias of <see cref="GetPhysicalDeviceImageFormatProperties2"/></summary>
+        /// <param name="physicalDevice"></param>
+        /// <param name="pImageFormatInfo"></param>
+        /// <param name="pImageFormatProperties"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceImageFormatProperties2KHR.html" /></remarks>
         public VkResult GetPhysicalDeviceImageFormatProperties2KHR(VkPhysicalDevice physicalDevice, VkPhysicalDeviceImageFormatInfo2* pImageFormatInfo, VkImageFormatProperties2* pImageFormatProperties)
         {
             return _vkGetPhysicalDeviceImageFormatProperties2KHR_fnptr(physicalDevice, pImageFormatInfo, pImageFormatProperties);
         }
         /// <summary><b>[requires: v1.0]</b> [instance command] </summary>
+        /// <param name="physicalDevice"></param>
+        /// <param name="pMemoryProperties"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceMemoryProperties.html" /></remarks>
         public void GetPhysicalDeviceMemoryProperties(VkPhysicalDevice physicalDevice, VkPhysicalDeviceMemoryProperties* pMemoryProperties)
         {
             _vkGetPhysicalDeviceMemoryProperties_fnptr(physicalDevice, pMemoryProperties);
         }
         /// <summary><b>[requires: v1.1]</b> [instance command] </summary>
+        /// <param name="physicalDevice"></param>
+        /// <param name="pMemoryProperties"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceMemoryProperties2.html" /></remarks>
         public void GetPhysicalDeviceMemoryProperties2(VkPhysicalDevice physicalDevice, VkPhysicalDeviceMemoryProperties2* pMemoryProperties)
         {
             _vkGetPhysicalDeviceMemoryProperties2_fnptr(physicalDevice, pMemoryProperties);
         }
         /// <summary><b>[requires: VK_KHR_get_physical_device_properties2]</b> [instance command]  Alias of <see cref="GetPhysicalDeviceMemoryProperties2"/></summary>
+        /// <param name="physicalDevice"></param>
+        /// <param name="pMemoryProperties"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceMemoryProperties2KHR.html" /></remarks>
         public void GetPhysicalDeviceMemoryProperties2KHR(VkPhysicalDevice physicalDevice, VkPhysicalDeviceMemoryProperties2* pMemoryProperties)
         {
             _vkGetPhysicalDeviceMemoryProperties2KHR_fnptr(physicalDevice, pMemoryProperties);
         }
         /// <summary><b>[requires: VK_EXT_sample_locations]</b> [instance command] </summary>
+        /// <param name="physicalDevice"></param>
+        /// <param name="samples"></param>
+        /// <param name="pMultisampleProperties"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceMultisamplePropertiesEXT.html" /></remarks>
         public void GetPhysicalDeviceMultisamplePropertiesEXT(VkPhysicalDevice physicalDevice, VkSampleCountFlagBits samples, VkMultisamplePropertiesEXT* pMultisampleProperties)
         {
             _vkGetPhysicalDeviceMultisamplePropertiesEXT_fnptr(physicalDevice, samples, pMultisampleProperties);
         }
         /// <summary><b>[requires: VK_NV_optical_flow]</b> [instance command] </summary>
+        /// <param name="physicalDevice"></param>
+        /// <param name="pOpticalFlowImageFormatInfo"></param>
+        /// <param name="pFormatCount">[ptr required, value optional] </param>
+        /// <param name="pImageFormatProperties">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceOpticalFlowImageFormatsNV.html" /></remarks>
         public VkResult GetPhysicalDeviceOpticalFlowImageFormatsNV(VkPhysicalDevice physicalDevice, VkOpticalFlowImageFormatInfoNV* pOpticalFlowImageFormatInfo, uint* pFormatCount, VkOpticalFlowImageFormatPropertiesNV* pImageFormatProperties)
         {
             return _vkGetPhysicalDeviceOpticalFlowImageFormatsNV_fnptr(physicalDevice, pOpticalFlowImageFormatInfo, pFormatCount, pImageFormatProperties);
         }
         /// <summary><b>[requires: VK_KHR_swapchain | VK_KHR_device_group]</b> [instance command] </summary>
+        /// <param name="physicalDevice"></param>
+        /// <param name="surface">[extern sync: always] </param>
+        /// <param name="pRectCount">[ptr required, value optional] </param>
+        /// <param name="pRects">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDevicePresentRectanglesKHR.html" /></remarks>
         public VkResult GetPhysicalDevicePresentRectanglesKHR(VkPhysicalDevice physicalDevice, VkSurfaceKHR surface, uint* pRectCount, VkRect2D* pRects)
         {
             return _vkGetPhysicalDevicePresentRectanglesKHR_fnptr(physicalDevice, surface, pRectCount, pRects);
         }
         /// <summary><b>[requires: v1.0]</b> [instance command] </summary>
+        /// <param name="physicalDevice"></param>
+        /// <param name="pProperties"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceProperties.html" /></remarks>
         public void GetPhysicalDeviceProperties(VkPhysicalDevice physicalDevice, VkPhysicalDeviceProperties* pProperties)
         {
             _vkGetPhysicalDeviceProperties_fnptr(physicalDevice, pProperties);
         }
         /// <summary><b>[requires: v1.1]</b> [instance command] </summary>
+        /// <param name="physicalDevice"></param>
+        /// <param name="pProperties"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceProperties2.html" /></remarks>
         public void GetPhysicalDeviceProperties2(VkPhysicalDevice physicalDevice, VkPhysicalDeviceProperties2* pProperties)
         {
             _vkGetPhysicalDeviceProperties2_fnptr(physicalDevice, pProperties);
         }
         /// <summary><b>[requires: VK_KHR_get_physical_device_properties2]</b> [instance command]  Alias of <see cref="GetPhysicalDeviceProperties2"/></summary>
+        /// <param name="physicalDevice"></param>
+        /// <param name="pProperties"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceProperties2KHR.html" /></remarks>
         public void GetPhysicalDeviceProperties2KHR(VkPhysicalDevice physicalDevice, VkPhysicalDeviceProperties2* pProperties)
         {
             _vkGetPhysicalDeviceProperties2KHR_fnptr(physicalDevice, pProperties);
         }
         /// <summary><b>[requires: VK_ARM_data_graph]</b> [instance command] </summary>
+        /// <param name="physicalDevice"></param>
+        /// <param name="pQueueFamilyDataGraphProcessingEngineInfo"></param>
+        /// <param name="pQueueFamilyDataGraphProcessingEngineProperties"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceQueueFamilyDataGraphProcessingEnginePropertiesARM.html" /></remarks>
         public void GetPhysicalDeviceQueueFamilyDataGraphProcessingEnginePropertiesARM(VkPhysicalDevice physicalDevice, VkPhysicalDeviceQueueFamilyDataGraphProcessingEngineInfoARM* pQueueFamilyDataGraphProcessingEngineInfo, VkQueueFamilyDataGraphProcessingEnginePropertiesARM* pQueueFamilyDataGraphProcessingEngineProperties)
         {
             _vkGetPhysicalDeviceQueueFamilyDataGraphProcessingEnginePropertiesARM_fnptr(physicalDevice, pQueueFamilyDataGraphProcessingEngineInfo, pQueueFamilyDataGraphProcessingEngineProperties);
         }
         /// <summary><b>[requires: VK_ARM_data_graph]</b> [instance command] </summary>
+        /// <param name="physicalDevice"></param>
+        /// <param name="queueFamilyIndex"></param>
+        /// <param name="pQueueFamilyDataGraphPropertyCount">[ptr required, value optional] </param>
+        /// <param name="pQueueFamilyDataGraphProperties">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceQueueFamilyDataGraphPropertiesARM.html" /></remarks>
         public VkResult GetPhysicalDeviceQueueFamilyDataGraphPropertiesARM(VkPhysicalDevice physicalDevice, uint queueFamilyIndex, uint* pQueueFamilyDataGraphPropertyCount, VkQueueFamilyDataGraphPropertiesARM* pQueueFamilyDataGraphProperties)
         {
             return _vkGetPhysicalDeviceQueueFamilyDataGraphPropertiesARM_fnptr(physicalDevice, queueFamilyIndex, pQueueFamilyDataGraphPropertyCount, pQueueFamilyDataGraphProperties);
         }
         /// <summary><b>[requires: VK_KHR_performance_query]</b> [instance command] </summary>
+        /// <param name="physicalDevice"></param>
+        /// <param name="pPerformanceQueryCreateInfo"></param>
+        /// <param name="pNumPasses"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceQueueFamilyPerformanceQueryPassesKHR.html" /></remarks>
         public void GetPhysicalDeviceQueueFamilyPerformanceQueryPassesKHR(VkPhysicalDevice physicalDevice, VkQueryPoolPerformanceCreateInfoKHR* pPerformanceQueryCreateInfo, uint* pNumPasses)
         {
             _vkGetPhysicalDeviceQueueFamilyPerformanceQueryPassesKHR_fnptr(physicalDevice, pPerformanceQueryCreateInfo, pNumPasses);
         }
         /// <summary><b>[requires: v1.0]</b> [instance command] </summary>
+        /// <param name="physicalDevice"></param>
+        /// <param name="pQueueFamilyPropertyCount">[ptr required, value optional] </param>
+        /// <param name="pQueueFamilyProperties">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceQueueFamilyProperties.html" /></remarks>
         public void GetPhysicalDeviceQueueFamilyProperties(VkPhysicalDevice physicalDevice, uint* pQueueFamilyPropertyCount, VkQueueFamilyProperties* pQueueFamilyProperties)
         {
             _vkGetPhysicalDeviceQueueFamilyProperties_fnptr(physicalDevice, pQueueFamilyPropertyCount, pQueueFamilyProperties);
         }
         /// <summary><b>[requires: v1.1]</b> [instance command] </summary>
+        /// <param name="physicalDevice"></param>
+        /// <param name="pQueueFamilyPropertyCount">[ptr required, value optional] </param>
+        /// <param name="pQueueFamilyProperties">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceQueueFamilyProperties2.html" /></remarks>
         public void GetPhysicalDeviceQueueFamilyProperties2(VkPhysicalDevice physicalDevice, uint* pQueueFamilyPropertyCount, VkQueueFamilyProperties2* pQueueFamilyProperties)
         {
             _vkGetPhysicalDeviceQueueFamilyProperties2_fnptr(physicalDevice, pQueueFamilyPropertyCount, pQueueFamilyProperties);
         }
         /// <summary><b>[requires: VK_KHR_get_physical_device_properties2]</b> [instance command]  Alias of <see cref="GetPhysicalDeviceQueueFamilyProperties2"/></summary>
+        /// <param name="physicalDevice"></param>
+        /// <param name="pQueueFamilyPropertyCount">[ptr required, value optional] </param>
+        /// <param name="pQueueFamilyProperties">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceQueueFamilyProperties2KHR.html" /></remarks>
         public void GetPhysicalDeviceQueueFamilyProperties2KHR(VkPhysicalDevice physicalDevice, uint* pQueueFamilyPropertyCount, VkQueueFamilyProperties2* pQueueFamilyProperties)
         {
             _vkGetPhysicalDeviceQueueFamilyProperties2KHR_fnptr(physicalDevice, pQueueFamilyPropertyCount, pQueueFamilyProperties);
         }
         /// <summary><b>[requires: VK_KHR_object_refresh]</b> [instance command] </summary>
+        /// <param name="physicalDevice"></param>
+        /// <param name="pRefreshableObjectTypeCount">[ptr required, value optional] </param>
+        /// <param name="pRefreshableObjectTypes">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceRefreshableObjectTypesKHR.html" /></remarks>
         public VkResult GetPhysicalDeviceRefreshableObjectTypesKHR(VkPhysicalDevice physicalDevice, uint* pRefreshableObjectTypeCount, VkObjectType* pRefreshableObjectTypes)
         {
             return _vkGetPhysicalDeviceRefreshableObjectTypesKHR_fnptr(physicalDevice, pRefreshableObjectTypeCount, pRefreshableObjectTypes);
         }
         /// <summary><b>[requires: VK_NV_external_memory_sci_buf]</b> [instance command] </summary>
+        /// <param name="physicalDevice"></param>
+        /// <param name="pAttributes"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceSciBufAttributesNV.html" /></remarks>
         public VkResult GetPhysicalDeviceSciBufAttributesNV(VkPhysicalDevice physicalDevice, IntPtr pAttributes)
         {
             return _vkGetPhysicalDeviceSciBufAttributesNV_fnptr(physicalDevice, pAttributes);
         }
         /// <summary><b>[requires: VK_NV_external_sci_sync | VK_NV_external_sci_sync2]</b> [instance command] </summary>
+        /// <param name="physicalDevice"></param>
+        /// <param name="pSciSyncAttributesInfo"></param>
+        /// <param name="pAttributes"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceSciSyncAttributesNV.html" /></remarks>
         public VkResult GetPhysicalDeviceSciSyncAttributesNV(VkPhysicalDevice physicalDevice, VkSciSyncAttributesInfoNV* pSciSyncAttributesInfo, IntPtr pAttributes)
         {
             return _vkGetPhysicalDeviceSciSyncAttributesNV_fnptr(physicalDevice, pSciSyncAttributesInfo, pAttributes);
         }
         /// <summary><b>[requires: VK_QNX_screen_surface]</b> [instance command] </summary>
+        /// <param name="physicalDevice"></param>
+        /// <param name="queueFamilyIndex"></param>
+        /// <param name="window"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceScreenPresentationSupportQNX.html" /></remarks>
         public int GetPhysicalDeviceScreenPresentationSupportQNX(VkPhysicalDevice physicalDevice, uint queueFamilyIndex, IntPtr* window)
         {
             return _vkGetPhysicalDeviceScreenPresentationSupportQNX_fnptr(physicalDevice, queueFamilyIndex, window);
         }
         /// <summary><b>[requires: v1.0]</b> [instance command] </summary>
+        /// <param name="physicalDevice"></param>
+        /// <param name="format"></param>
+        /// <param name="type"></param>
+        /// <param name="samples"></param>
+        /// <param name="usage"></param>
+        /// <param name="tiling"></param>
+        /// <param name="pPropertyCount">[ptr required, value optional] </param>
+        /// <param name="pProperties">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceSparseImageFormatProperties.html" /></remarks>
         public void GetPhysicalDeviceSparseImageFormatProperties(VkPhysicalDevice physicalDevice, VkFormat format, VkImageType type, VkSampleCountFlagBits samples, VkImageUsageFlagBits usage, VkImageTiling tiling, uint* pPropertyCount, VkSparseImageFormatProperties* pProperties)
         {
             _vkGetPhysicalDeviceSparseImageFormatProperties_fnptr(physicalDevice, format, type, samples, usage, tiling, pPropertyCount, pProperties);
         }
         /// <summary><b>[requires: v1.1]</b> [instance command] </summary>
+        /// <param name="physicalDevice"></param>
+        /// <param name="pFormatInfo"></param>
+        /// <param name="pPropertyCount">[ptr required, value optional] </param>
+        /// <param name="pProperties">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceSparseImageFormatProperties2.html" /></remarks>
         public void GetPhysicalDeviceSparseImageFormatProperties2(VkPhysicalDevice physicalDevice, VkPhysicalDeviceSparseImageFormatInfo2* pFormatInfo, uint* pPropertyCount, VkSparseImageFormatProperties2* pProperties)
         {
             _vkGetPhysicalDeviceSparseImageFormatProperties2_fnptr(physicalDevice, pFormatInfo, pPropertyCount, pProperties);
         }
         /// <summary><b>[requires: VK_KHR_get_physical_device_properties2]</b> [instance command]  Alias of <see cref="GetPhysicalDeviceSparseImageFormatProperties2"/></summary>
+        /// <param name="physicalDevice"></param>
+        /// <param name="pFormatInfo"></param>
+        /// <param name="pPropertyCount">[ptr required, value optional] </param>
+        /// <param name="pProperties">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceSparseImageFormatProperties2KHR.html" /></remarks>
         public void GetPhysicalDeviceSparseImageFormatProperties2KHR(VkPhysicalDevice physicalDevice, VkPhysicalDeviceSparseImageFormatInfo2* pFormatInfo, uint* pPropertyCount, VkSparseImageFormatProperties2* pProperties)
         {
             _vkGetPhysicalDeviceSparseImageFormatProperties2KHR_fnptr(physicalDevice, pFormatInfo, pPropertyCount, pProperties);
         }
         /// <summary><b>[requires: VK_NV_coverage_reduction_mode]</b> [instance command] </summary>
+        /// <param name="physicalDevice"></param>
+        /// <param name="pCombinationCount">[ptr required, value optional] </param>
+        /// <param name="pCombinations">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceSupportedFramebufferMixedSamplesCombinationsNV.html" /></remarks>
         public VkResult GetPhysicalDeviceSupportedFramebufferMixedSamplesCombinationsNV(VkPhysicalDevice physicalDevice, uint* pCombinationCount, VkFramebufferMixedSamplesCombinationNV* pCombinations)
         {
             return _vkGetPhysicalDeviceSupportedFramebufferMixedSamplesCombinationsNV_fnptr(physicalDevice, pCombinationCount, pCombinations);
         }
         /// <summary><b>[requires: VK_EXT_display_surface_counter]</b> [instance command] </summary>
+        /// <param name="physicalDevice"></param>
+        /// <param name="surface"></param>
+        /// <param name="pSurfaceCapabilities"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceSurfaceCapabilities2EXT.html" /></remarks>
         public VkResult GetPhysicalDeviceSurfaceCapabilities2EXT(VkPhysicalDevice physicalDevice, VkSurfaceKHR surface, VkSurfaceCapabilities2EXT* pSurfaceCapabilities)
         {
             return _vkGetPhysicalDeviceSurfaceCapabilities2EXT_fnptr(physicalDevice, surface, pSurfaceCapabilities);
         }
         /// <summary><b>[requires: VK_KHR_get_surface_capabilities2]</b> [instance command] </summary>
+        /// <param name="physicalDevice"></param>
+        /// <param name="pSurfaceInfo"></param>
+        /// <param name="pSurfaceCapabilities"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceSurfaceCapabilities2KHR.html" /></remarks>
         public VkResult GetPhysicalDeviceSurfaceCapabilities2KHR(VkPhysicalDevice physicalDevice, VkPhysicalDeviceSurfaceInfo2KHR* pSurfaceInfo, VkSurfaceCapabilities2KHR* pSurfaceCapabilities)
         {
             return _vkGetPhysicalDeviceSurfaceCapabilities2KHR_fnptr(physicalDevice, pSurfaceInfo, pSurfaceCapabilities);
         }
         /// <summary><b>[requires: VK_KHR_surface]</b> [instance command] </summary>
+        /// <param name="physicalDevice"></param>
+        /// <param name="surface"></param>
+        /// <param name="pSurfaceCapabilities"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceSurfaceCapabilitiesKHR.html" /></remarks>
         public VkResult GetPhysicalDeviceSurfaceCapabilitiesKHR(VkPhysicalDevice physicalDevice, VkSurfaceKHR surface, VkSurfaceCapabilitiesKHR* pSurfaceCapabilities)
         {
             return _vkGetPhysicalDeviceSurfaceCapabilitiesKHR_fnptr(physicalDevice, surface, pSurfaceCapabilities);
         }
         /// <summary><b>[requires: VK_KHR_get_surface_capabilities2]</b> [instance command] </summary>
+        /// <param name="physicalDevice"></param>
+        /// <param name="pSurfaceInfo"></param>
+        /// <param name="pSurfaceFormatCount">[ptr required, value optional] </param>
+        /// <param name="pSurfaceFormats">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceSurfaceFormats2KHR.html" /></remarks>
         public VkResult GetPhysicalDeviceSurfaceFormats2KHR(VkPhysicalDevice physicalDevice, VkPhysicalDeviceSurfaceInfo2KHR* pSurfaceInfo, uint* pSurfaceFormatCount, VkSurfaceFormat2KHR* pSurfaceFormats)
         {
             return _vkGetPhysicalDeviceSurfaceFormats2KHR_fnptr(physicalDevice, pSurfaceInfo, pSurfaceFormatCount, pSurfaceFormats);
         }
         /// <summary><b>[requires: VK_KHR_surface]</b> [instance command] </summary>
+        /// <param name="physicalDevice"></param>
+        /// <param name="surface">[optional] </param>
+        /// <param name="pSurfaceFormatCount">[ptr required, value optional] </param>
+        /// <param name="pSurfaceFormats">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceSurfaceFormatsKHR.html" /></remarks>
         public VkResult GetPhysicalDeviceSurfaceFormatsKHR(VkPhysicalDevice physicalDevice, VkSurfaceKHR surface, uint* pSurfaceFormatCount, VkSurfaceFormatKHR* pSurfaceFormats)
         {
             return _vkGetPhysicalDeviceSurfaceFormatsKHR_fnptr(physicalDevice, surface, pSurfaceFormatCount, pSurfaceFormats);
         }
         /// <summary><b>[requires: VK_EXT_full_screen_exclusive]</b> [instance command] </summary>
+        /// <param name="physicalDevice"></param>
+        /// <param name="pSurfaceInfo"></param>
+        /// <param name="pPresentModeCount">[ptr required, value optional] </param>
+        /// <param name="pPresentModes">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceSurfacePresentModes2EXT.html" /></remarks>
         public VkResult GetPhysicalDeviceSurfacePresentModes2EXT(VkPhysicalDevice physicalDevice, VkPhysicalDeviceSurfaceInfo2KHR* pSurfaceInfo, uint* pPresentModeCount, VkPresentModeKHR* pPresentModes)
         {
             return _vkGetPhysicalDeviceSurfacePresentModes2EXT_fnptr(physicalDevice, pSurfaceInfo, pPresentModeCount, pPresentModes);
         }
         /// <summary><b>[requires: VK_KHR_surface]</b> [instance command] </summary>
+        /// <param name="physicalDevice"></param>
+        /// <param name="surface">[optional] </param>
+        /// <param name="pPresentModeCount">[ptr required, value optional] </param>
+        /// <param name="pPresentModes">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceSurfacePresentModesKHR.html" /></remarks>
         public VkResult GetPhysicalDeviceSurfacePresentModesKHR(VkPhysicalDevice physicalDevice, VkSurfaceKHR surface, uint* pPresentModeCount, VkPresentModeKHR* pPresentModes)
         {
             return _vkGetPhysicalDeviceSurfacePresentModesKHR_fnptr(physicalDevice, surface, pPresentModeCount, pPresentModes);
         }
         /// <summary><b>[requires: VK_KHR_surface]</b> [instance command] </summary>
+        /// <param name="physicalDevice"></param>
+        /// <param name="queueFamilyIndex"></param>
+        /// <param name="surface"></param>
+        /// <param name="pSupported"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceSurfaceSupportKHR.html" /></remarks>
         public VkResult GetPhysicalDeviceSurfaceSupportKHR(VkPhysicalDevice physicalDevice, uint queueFamilyIndex, VkSurfaceKHR surface, int* pSupported)
         {
             return _vkGetPhysicalDeviceSurfaceSupportKHR_fnptr(physicalDevice, queueFamilyIndex, surface, pSupported);
         }
         /// <summary><b>[requires: v1.3]</b> [instance command] </summary>
+        /// <param name="physicalDevice"></param>
+        /// <param name="pToolCount">[ptr required, value optional] </param>
+        /// <param name="pToolProperties">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceToolProperties.html" /></remarks>
         public VkResult GetPhysicalDeviceToolProperties(VkPhysicalDevice physicalDevice, uint* pToolCount, VkPhysicalDeviceToolProperties* pToolProperties)
         {
             return _vkGetPhysicalDeviceToolProperties_fnptr(physicalDevice, pToolCount, pToolProperties);
         }
         /// <summary><b>[requires: VK_EXT_tooling_info]</b> [instance command]  Alias of <see cref="GetPhysicalDeviceToolProperties"/></summary>
+        /// <param name="physicalDevice"></param>
+        /// <param name="pToolCount">[ptr required, value optional] </param>
+        /// <param name="pToolProperties">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceToolPropertiesEXT.html" /></remarks>
         public VkResult GetPhysicalDeviceToolPropertiesEXT(VkPhysicalDevice physicalDevice, uint* pToolCount, VkPhysicalDeviceToolProperties* pToolProperties)
         {
             return _vkGetPhysicalDeviceToolPropertiesEXT_fnptr(physicalDevice, pToolCount, pToolProperties);
         }
+        /// <summary><b>[requires: VK_SEC_ubm_surface]</b> [instance command] </summary>
+        /// <param name="physicalDevice"></param>
+        /// <param name="queueFamilyIndex"></param>
+        /// <param name="ubm_device"></param>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceUbmPresentationSupportSEC.html" /></remarks>
+        public int GetPhysicalDeviceUbmPresentationSupportSEC(VkPhysicalDevice physicalDevice, uint queueFamilyIndex, IntPtr ubm_device)
+        {
+            return _vkGetPhysicalDeviceUbmPresentationSupportSEC_fnptr(physicalDevice, queueFamilyIndex, ubm_device);
+        }
         /// <summary><b>[requires: VK_KHR_video_queue]</b> [instance command] </summary>
+        /// <param name="physicalDevice"></param>
+        /// <param name="pVideoProfile"></param>
+        /// <param name="pCapabilities"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceVideoCapabilitiesKHR.html" /></remarks>
         public VkResult GetPhysicalDeviceVideoCapabilitiesKHR(VkPhysicalDevice physicalDevice, VkVideoProfileInfoKHR* pVideoProfile, VkVideoCapabilitiesKHR* pCapabilities)
         {
             return _vkGetPhysicalDeviceVideoCapabilitiesKHR_fnptr(physicalDevice, pVideoProfile, pCapabilities);
         }
         /// <summary><b>[requires: VK_KHR_video_encode_queue]</b> [instance command] </summary>
+        /// <param name="physicalDevice"></param>
+        /// <param name="pQualityLevelInfo"></param>
+        /// <param name="pQualityLevelProperties"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceVideoEncodeQualityLevelPropertiesKHR.html" /></remarks>
         public VkResult GetPhysicalDeviceVideoEncodeQualityLevelPropertiesKHR(VkPhysicalDevice physicalDevice, VkPhysicalDeviceVideoEncodeQualityLevelInfoKHR* pQualityLevelInfo, VkVideoEncodeQualityLevelPropertiesKHR* pQualityLevelProperties)
         {
             return _vkGetPhysicalDeviceVideoEncodeQualityLevelPropertiesKHR_fnptr(physicalDevice, pQualityLevelInfo, pQualityLevelProperties);
         }
         /// <summary><b>[requires: VK_KHR_video_queue]</b> [instance command] </summary>
+        /// <param name="physicalDevice"></param>
+        /// <param name="pVideoFormatInfo"></param>
+        /// <param name="pVideoFormatPropertyCount">[ptr required, value optional] </param>
+        /// <param name="pVideoFormatProperties">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceVideoFormatPropertiesKHR.html" /></remarks>
         public VkResult GetPhysicalDeviceVideoFormatPropertiesKHR(VkPhysicalDevice physicalDevice, VkPhysicalDeviceVideoFormatInfoKHR* pVideoFormatInfo, uint* pVideoFormatPropertyCount, VkVideoFormatPropertiesKHR* pVideoFormatProperties)
         {
             return _vkGetPhysicalDeviceVideoFormatPropertiesKHR_fnptr(physicalDevice, pVideoFormatInfo, pVideoFormatPropertyCount, pVideoFormatProperties);
         }
         /// <summary><b>[requires: VK_KHR_wayland_surface]</b> [instance command] </summary>
+        /// <param name="physicalDevice"></param>
+        /// <param name="queueFamilyIndex"></param>
+        /// <param name="display"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceWaylandPresentationSupportKHR.html" /></remarks>
         public int GetPhysicalDeviceWaylandPresentationSupportKHR(VkPhysicalDevice physicalDevice, uint queueFamilyIndex, IntPtr display)
         {
             return _vkGetPhysicalDeviceWaylandPresentationSupportKHR_fnptr(physicalDevice, queueFamilyIndex, display);
         }
         /// <summary><b>[requires: VK_KHR_win32_surface]</b> [instance command] </summary>
+        /// <param name="physicalDevice"></param>
+        /// <param name="queueFamilyIndex"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceWin32PresentationSupportKHR.html" /></remarks>
         public int GetPhysicalDeviceWin32PresentationSupportKHR(VkPhysicalDevice physicalDevice, uint queueFamilyIndex)
         {
             return _vkGetPhysicalDeviceWin32PresentationSupportKHR_fnptr(physicalDevice, queueFamilyIndex);
         }
         /// <summary><b>[requires: VK_KHR_xcb_surface]</b> [instance command] </summary>
+        /// <param name="physicalDevice"></param>
+        /// <param name="queueFamilyIndex"></param>
+        /// <param name="connection"></param>
+        /// <param name="visual_id"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceXcbPresentationSupportKHR.html" /></remarks>
         public int GetPhysicalDeviceXcbPresentationSupportKHR(VkPhysicalDevice physicalDevice, uint queueFamilyIndex, IntPtr connection, uint visual_id)
         {
             return _vkGetPhysicalDeviceXcbPresentationSupportKHR_fnptr(physicalDevice, queueFamilyIndex, connection, visual_id);
         }
         /// <summary><b>[requires: VK_KHR_xlib_surface]</b> [instance command] </summary>
+        /// <param name="physicalDevice"></param>
+        /// <param name="queueFamilyIndex"></param>
+        /// <param name="dpy"></param>
+        /// <param name="visualID"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceXlibPresentationSupportKHR.html" /></remarks>
         public int GetPhysicalDeviceXlibPresentationSupportKHR(VkPhysicalDevice physicalDevice, uint queueFamilyIndex, IntPtr dpy, nuint visualID)
         {
             return _vkGetPhysicalDeviceXlibPresentationSupportKHR_fnptr(physicalDevice, queueFamilyIndex, dpy, visualID);
         }
         /// <summary><b>[requires: VK_EXT_acquire_xlib_display]</b> [instance command] </summary>
+        /// <param name="physicalDevice"></param>
+        /// <param name="dpy"></param>
+        /// <param name="rrOutput"></param>
+        /// <param name="pDisplay"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetRandROutputDisplayEXT.html" /></remarks>
         public VkResult GetRandROutputDisplayEXT(VkPhysicalDevice physicalDevice, IntPtr dpy, nuint rrOutput, VkDisplayKHR* pDisplay)
         {
             return _vkGetRandROutputDisplayEXT_fnptr(physicalDevice, dpy, rrOutput, pDisplay);
         }
         /// <summary><b>[requires: VK_NV_acquire_winrt_display]</b> [instance command] </summary>
+        /// <param name="physicalDevice"></param>
+        /// <param name="deviceRelativeId"></param>
+        /// <param name="pDisplay"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetWinrtDisplayNV.html" /></remarks>
         public VkResult GetWinrtDisplayNV(VkPhysicalDevice physicalDevice, uint deviceRelativeId, VkDisplayKHR* pDisplay)
         {
             return _vkGetWinrtDisplayNV_fnptr(physicalDevice, deviceRelativeId, pDisplay);
         }
         /// <summary><b>[requires: VK_EXT_direct_mode_display]</b> [instance command] </summary>
+        /// <param name="physicalDevice"></param>
+        /// <param name="display"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkReleaseDisplayEXT.html" /></remarks>
         public VkResult ReleaseDisplayEXT(VkPhysicalDevice physicalDevice, VkDisplayKHR display)
         {
             return _vkReleaseDisplayEXT_fnptr(physicalDevice, display);
         }
         /// <summary><b>[requires: VK_EXT_debug_utils]</b> [instance command] </summary>
+        /// <param name="instance"></param>
+        /// <param name="messageSeverity"></param>
+        /// <param name="messageTypes"></param>
+        /// <param name="pCallbackData"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkSubmitDebugUtilsMessageEXT.html" /></remarks>
         public void SubmitDebugUtilsMessageEXT(VkInstance instance, VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity, VkDebugUtilsMessageTypeFlagBitsEXT messageTypes, VkDebugUtilsMessengerCallbackDataEXT* pCallbackData)
         {
@@ -857,6 +1286,7 @@ namespace OpenTK.Graphics.Vulkan
         public delegate* unmanaged<VkInstance, VkScreenSurfaceCreateInfoQNX*, VkAllocationCallbacks*, VkSurfaceKHR*, VkResult> _vkCreateScreenSurfaceQNX_fnptr;
         public delegate* unmanaged<VkInstance, VkStreamDescriptorSurfaceCreateInfoGGP*, VkAllocationCallbacks*, VkSurfaceKHR*, VkResult> _vkCreateStreamDescriptorSurfaceGGP_fnptr;
         public delegate* unmanaged<VkInstance, VkSurfaceCreateInfoOHOS*, VkAllocationCallbacks*, VkSurfaceKHR*, VkResult> _vkCreateSurfaceOHOS_fnptr;
+        public delegate* unmanaged<VkInstance, VkUbmSurfaceCreateInfoSEC*, VkAllocationCallbacks*, VkSurfaceKHR*, VkResult> _vkCreateUbmSurfaceSEC_fnptr;
         public delegate* unmanaged<VkInstance, VkViSurfaceCreateInfoNN*, VkAllocationCallbacks*, VkSurfaceKHR*, VkResult> _vkCreateViSurfaceNN_fnptr;
         public delegate* unmanaged<VkInstance, VkWaylandSurfaceCreateInfoKHR*, VkAllocationCallbacks*, VkSurfaceKHR*, VkResult> _vkCreateWaylandSurfaceKHR_fnptr;
         public delegate* unmanaged<VkInstance, VkWin32SurfaceCreateInfoKHR*, VkAllocationCallbacks*, VkSurfaceKHR*, VkResult> _vkCreateWin32SurfaceKHR_fnptr;
@@ -880,13 +1310,14 @@ namespace OpenTK.Graphics.Vulkan
         public delegate* unmanaged<VkPhysicalDevice, VkDisplayModeKHR, uint, VkDisplayPlaneCapabilitiesKHR*, VkResult> _vkGetDisplayPlaneCapabilitiesKHR_fnptr;
         public delegate* unmanaged<VkPhysicalDevice, uint, uint*, VkDisplayKHR*, VkResult> _vkGetDisplayPlaneSupportedDisplaysKHR_fnptr;
         public delegate* unmanaged<VkPhysicalDevice, int, uint, VkDisplayKHR*, VkResult> _vkGetDrmDisplayEXT_fnptr;
-        public delegate* unmanaged<VkInstance, byte*, IntPtr> _vkGetInstanceProcAddr_fnptr;
+        public delegate* unmanaged<VkInstance, byte*, delegate* unmanaged[Cdecl]<void>> _vkGetInstanceProcAddr_fnptr;
         public delegate* unmanaged<VkPhysicalDevice, uint*, VkTimeDomainKHR*, VkResult> _vkGetPhysicalDeviceCalibrateableTimeDomainsEXT_fnptr;
         public delegate* unmanaged<VkPhysicalDevice, uint*, VkTimeDomainKHR*, VkResult> _vkGetPhysicalDeviceCalibrateableTimeDomainsKHR_fnptr;
         public delegate* unmanaged<VkPhysicalDevice, uint*, VkCooperativeMatrixFlexibleDimensionsPropertiesNV*, VkResult> _vkGetPhysicalDeviceCooperativeMatrixFlexibleDimensionsPropertiesNV_fnptr;
         public delegate* unmanaged<VkPhysicalDevice, uint*, VkCooperativeMatrixPropertiesKHR*, VkResult> _vkGetPhysicalDeviceCooperativeMatrixPropertiesKHR_fnptr;
         public delegate* unmanaged<VkPhysicalDevice, uint*, VkCooperativeMatrixPropertiesNV*, VkResult> _vkGetPhysicalDeviceCooperativeMatrixPropertiesNV_fnptr;
         public delegate* unmanaged<VkPhysicalDevice, uint*, VkCooperativeVectorPropertiesNV*, VkResult> _vkGetPhysicalDeviceCooperativeVectorPropertiesNV_fnptr;
+        public delegate* unmanaged<VkPhysicalDevice, VkDescriptorType, ulong> _vkGetPhysicalDeviceDescriptorSizeEXT_fnptr;
         public delegate* unmanaged<VkPhysicalDevice, uint, IntPtr, int> _vkGetPhysicalDeviceDirectFBPresentationSupportEXT_fnptr;
         public delegate* unmanaged<VkPhysicalDevice, uint*, VkDisplayPlaneProperties2KHR*, VkResult> _vkGetPhysicalDeviceDisplayPlaneProperties2KHR_fnptr;
         public delegate* unmanaged<VkPhysicalDevice, uint*, VkDisplayPlanePropertiesKHR*, VkResult> _vkGetPhysicalDeviceDisplayPlanePropertiesKHR_fnptr;
@@ -944,6 +1375,7 @@ namespace OpenTK.Graphics.Vulkan
         public delegate* unmanaged<VkPhysicalDevice, uint, VkSurfaceKHR, int*, VkResult> _vkGetPhysicalDeviceSurfaceSupportKHR_fnptr;
         public delegate* unmanaged<VkPhysicalDevice, uint*, VkPhysicalDeviceToolProperties*, VkResult> _vkGetPhysicalDeviceToolProperties_fnptr;
         public delegate* unmanaged<VkPhysicalDevice, uint*, VkPhysicalDeviceToolProperties*, VkResult> _vkGetPhysicalDeviceToolPropertiesEXT_fnptr;
+        public delegate* unmanaged<VkPhysicalDevice, uint, IntPtr, int> _vkGetPhysicalDeviceUbmPresentationSupportSEC_fnptr;
         public delegate* unmanaged<VkPhysicalDevice, VkVideoProfileInfoKHR*, VkVideoCapabilitiesKHR*, VkResult> _vkGetPhysicalDeviceVideoCapabilitiesKHR_fnptr;
         public delegate* unmanaged<VkPhysicalDevice, VkPhysicalDeviceVideoEncodeQualityLevelInfoKHR*, VkVideoEncodeQualityLevelPropertiesKHR*, VkResult> _vkGetPhysicalDeviceVideoEncodeQualityLevelPropertiesKHR_fnptr;
         public delegate* unmanaged<VkPhysicalDevice, VkPhysicalDeviceVideoFormatInfoKHR*, uint*, VkVideoFormatPropertiesKHR*, VkResult> _vkGetPhysicalDeviceVideoFormatPropertiesKHR_fnptr;
@@ -1013,6 +1445,8 @@ namespace OpenTK.Graphics.Vulkan
             _vkCmdBindInvocationMaskHUAWEI_fnptr = (delegate* unmanaged<VkCommandBuffer, VkImageView, VkImageLayout, void>)VKLoader.GetDeviceProcAddr(device, "vkCmdBindInvocationMaskHUAWEI");
             _vkCmdBindPipeline_fnptr = (delegate* unmanaged<VkCommandBuffer, VkPipelineBindPoint, VkPipeline, void>)VKLoader.GetDeviceProcAddr(device, "vkCmdBindPipeline");
             _vkCmdBindPipelineShaderGroupNV_fnptr = (delegate* unmanaged<VkCommandBuffer, VkPipelineBindPoint, VkPipeline, uint, void>)VKLoader.GetDeviceProcAddr(device, "vkCmdBindPipelineShaderGroupNV");
+            _vkCmdBindResourceHeapEXT_fnptr = (delegate* unmanaged<VkCommandBuffer, VkBindHeapInfoEXT*, void>)VKLoader.GetDeviceProcAddr(device, "vkCmdBindResourceHeapEXT");
+            _vkCmdBindSamplerHeapEXT_fnptr = (delegate* unmanaged<VkCommandBuffer, VkBindHeapInfoEXT*, void>)VKLoader.GetDeviceProcAddr(device, "vkCmdBindSamplerHeapEXT");
             _vkCmdBindShadersEXT_fnptr = (delegate* unmanaged<VkCommandBuffer, uint, VkShaderStageFlagBits*, VkShaderEXT*, void>)VKLoader.GetDeviceProcAddr(device, "vkCmdBindShadersEXT");
             _vkCmdBindShadingRateImageNV_fnptr = (delegate* unmanaged<VkCommandBuffer, VkImageView, VkImageLayout, void>)VKLoader.GetDeviceProcAddr(device, "vkCmdBindShadingRateImageNV");
             _vkCmdBindTileMemoryQCOM_fnptr = (delegate* unmanaged<VkCommandBuffer, VkTileMemoryBindInfoQCOM*, void>)VKLoader.GetDeviceProcAddr(device, "vkCmdBindTileMemoryQCOM");
@@ -1132,6 +1566,7 @@ namespace OpenTK.Graphics.Vulkan
             _vkCmdPushConstants_fnptr = (delegate* unmanaged<VkCommandBuffer, VkPipelineLayout, VkShaderStageFlagBits, uint, uint, void*, void>)VKLoader.GetDeviceProcAddr(device, "vkCmdPushConstants");
             _vkCmdPushConstants2_fnptr = (delegate* unmanaged<VkCommandBuffer, VkPushConstantsInfo*, void>)VKLoader.GetDeviceProcAddr(device, "vkCmdPushConstants2");
             _vkCmdPushConstants2KHR_fnptr = (delegate* unmanaged<VkCommandBuffer, VkPushConstantsInfo*, void>)VKLoader.GetDeviceProcAddr(device, "vkCmdPushConstants2KHR");
+            _vkCmdPushDataEXT_fnptr = (delegate* unmanaged<VkCommandBuffer, VkPushDataInfoEXT*, void>)VKLoader.GetDeviceProcAddr(device, "vkCmdPushDataEXT");
             _vkCmdPushDescriptorSet_fnptr = (delegate* unmanaged<VkCommandBuffer, VkPipelineBindPoint, VkPipelineLayout, uint, uint, VkWriteDescriptorSet*, void>)VKLoader.GetDeviceProcAddr(device, "vkCmdPushDescriptorSet");
             _vkCmdPushDescriptorSet2_fnptr = (delegate* unmanaged<VkCommandBuffer, VkPushDescriptorSetInfo*, void>)VKLoader.GetDeviceProcAddr(device, "vkCmdPushDescriptorSet2");
             _vkCmdPushDescriptorSet2KHR_fnptr = (delegate* unmanaged<VkCommandBuffer, VkPushDescriptorSetInfo*, void>)VKLoader.GetDeviceProcAddr(device, "vkCmdPushDescriptorSet2KHR");
@@ -1159,6 +1594,7 @@ namespace OpenTK.Graphics.Vulkan
             _vkCmdSetColorBlendEquationEXT_fnptr = (delegate* unmanaged<VkCommandBuffer, uint, uint, VkColorBlendEquationEXT*, void>)VKLoader.GetDeviceProcAddr(device, "vkCmdSetColorBlendEquationEXT");
             _vkCmdSetColorWriteEnableEXT_fnptr = (delegate* unmanaged<VkCommandBuffer, uint, int*, void>)VKLoader.GetDeviceProcAddr(device, "vkCmdSetColorWriteEnableEXT");
             _vkCmdSetColorWriteMaskEXT_fnptr = (delegate* unmanaged<VkCommandBuffer, uint, uint, VkColorComponentFlagBits*, void>)VKLoader.GetDeviceProcAddr(device, "vkCmdSetColorWriteMaskEXT");
+            _vkCmdSetComputeOccupancyPriorityNV_fnptr = (delegate* unmanaged<VkCommandBuffer, VkComputeOccupancyPriorityParametersNV*, void>)VKLoader.GetDeviceProcAddr(device, "vkCmdSetComputeOccupancyPriorityNV");
             _vkCmdSetConservativeRasterizationModeEXT_fnptr = (delegate* unmanaged<VkCommandBuffer, VkConservativeRasterizationModeEXT, void>)VKLoader.GetDeviceProcAddr(device, "vkCmdSetConservativeRasterizationModeEXT");
             _vkCmdSetCoverageModulationModeNV_fnptr = (delegate* unmanaged<VkCommandBuffer, VkCoverageModulationModeNV, void>)VKLoader.GetDeviceProcAddr(device, "vkCmdSetCoverageModulationModeNV");
             _vkCmdSetCoverageModulationTableEnableNV_fnptr = (delegate* unmanaged<VkCommandBuffer, int, void>)VKLoader.GetDeviceProcAddr(device, "vkCmdSetCoverageModulationTableEnableNV");
@@ -1438,6 +1874,7 @@ namespace OpenTK.Graphics.Vulkan
             _vkGetDeviceAccelerationStructureCompatibilityKHR_fnptr = (delegate* unmanaged<VkDevice, VkAccelerationStructureVersionInfoKHR*, VkAccelerationStructureCompatibilityKHR*, void>)VKLoader.GetDeviceProcAddr(device, "vkGetDeviceAccelerationStructureCompatibilityKHR");
             _vkGetDeviceBufferMemoryRequirements_fnptr = (delegate* unmanaged<VkDevice, VkDeviceBufferMemoryRequirements*, VkMemoryRequirements2*, void>)VKLoader.GetDeviceProcAddr(device, "vkGetDeviceBufferMemoryRequirements");
             _vkGetDeviceBufferMemoryRequirementsKHR_fnptr = (delegate* unmanaged<VkDevice, VkDeviceBufferMemoryRequirements*, VkMemoryRequirements2*, void>)VKLoader.GetDeviceProcAddr(device, "vkGetDeviceBufferMemoryRequirementsKHR");
+            _vkGetDeviceCombinedImageSamplerIndexNVX_fnptr = (delegate* unmanaged<VkDevice, ulong, ulong, ulong>)VKLoader.GetDeviceProcAddr(device, "vkGetDeviceCombinedImageSamplerIndexNVX");
             _vkGetDeviceFaultInfoEXT_fnptr = (delegate* unmanaged<VkDevice, VkDeviceFaultCountsEXT*, VkDeviceFaultInfoEXT*, VkResult>)VKLoader.GetDeviceProcAddr(device, "vkGetDeviceFaultInfoEXT");
             _vkGetDeviceGroupPeerMemoryFeatures_fnptr = (delegate* unmanaged<VkDevice, uint, uint, uint, VkPeerMemoryFeatureFlagBits*, void>)VKLoader.GetDeviceProcAddr(device, "vkGetDeviceGroupPeerMemoryFeatures");
             _vkGetDeviceGroupPeerMemoryFeaturesKHR_fnptr = (delegate* unmanaged<VkDevice, uint, uint, uint, VkPeerMemoryFeatureFlagBits*, void>)VKLoader.GetDeviceProcAddr(device, "vkGetDeviceGroupPeerMemoryFeaturesKHR");
@@ -1454,7 +1891,7 @@ namespace OpenTK.Graphics.Vulkan
             _vkGetDeviceMemoryOpaqueCaptureAddress_fnptr = (delegate* unmanaged<VkDevice, VkDeviceMemoryOpaqueCaptureAddressInfo*, ulong>)VKLoader.GetDeviceProcAddr(device, "vkGetDeviceMemoryOpaqueCaptureAddress");
             _vkGetDeviceMemoryOpaqueCaptureAddressKHR_fnptr = (delegate* unmanaged<VkDevice, VkDeviceMemoryOpaqueCaptureAddressInfo*, ulong>)VKLoader.GetDeviceProcAddr(device, "vkGetDeviceMemoryOpaqueCaptureAddressKHR");
             _vkGetDeviceMicromapCompatibilityEXT_fnptr = (delegate* unmanaged<VkDevice, VkMicromapVersionInfoEXT*, VkAccelerationStructureCompatibilityKHR*, void>)VKLoader.GetDeviceProcAddr(device, "vkGetDeviceMicromapCompatibilityEXT");
-            _vkGetDeviceProcAddr_fnptr = (delegate* unmanaged<VkDevice, byte*, IntPtr>)VKLoader.GetDeviceProcAddr(device, "vkGetDeviceProcAddr");
+            _vkGetDeviceProcAddr_fnptr = (delegate* unmanaged<VkDevice, byte*, delegate* unmanaged[Cdecl]<void>>)VKLoader.GetDeviceProcAddr(device, "vkGetDeviceProcAddr");
             _vkGetDeviceQueue_fnptr = (delegate* unmanaged<VkDevice, uint, uint, VkQueue*, void>)VKLoader.GetDeviceProcAddr(device, "vkGetDeviceQueue");
             _vkGetDeviceQueue2_fnptr = (delegate* unmanaged<VkDevice, VkDeviceQueueInfo2*, VkQueue*, void>)VKLoader.GetDeviceProcAddr(device, "vkGetDeviceQueue2");
             _vkGetDeviceSubpassShadingMaxWorkgroupSizeHUAWEI_fnptr = (delegate* unmanaged<VkDevice, VkRenderPass, VkExtent2D*, VkResult>)VKLoader.GetDeviceProcAddr(device, "vkGetDeviceSubpassShadingMaxWorkgroupSizeHUAWEI");
@@ -1478,6 +1915,7 @@ namespace OpenTK.Graphics.Vulkan
             _vkGetImageMemoryRequirements_fnptr = (delegate* unmanaged<VkDevice, VkImage, VkMemoryRequirements*, void>)VKLoader.GetDeviceProcAddr(device, "vkGetImageMemoryRequirements");
             _vkGetImageMemoryRequirements2_fnptr = (delegate* unmanaged<VkDevice, VkImageMemoryRequirementsInfo2*, VkMemoryRequirements2*, void>)VKLoader.GetDeviceProcAddr(device, "vkGetImageMemoryRequirements2");
             _vkGetImageMemoryRequirements2KHR_fnptr = (delegate* unmanaged<VkDevice, VkImageMemoryRequirementsInfo2*, VkMemoryRequirements2*, void>)VKLoader.GetDeviceProcAddr(device, "vkGetImageMemoryRequirements2KHR");
+            _vkGetImageOpaqueCaptureDataEXT_fnptr = (delegate* unmanaged<VkDevice, uint, VkImage*, VkHostAddressRangeEXT*, VkResult>)VKLoader.GetDeviceProcAddr(device, "vkGetImageOpaqueCaptureDataEXT");
             _vkGetImageOpaqueCaptureDescriptorDataEXT_fnptr = (delegate* unmanaged<VkDevice, VkImageCaptureDescriptorDataInfoEXT*, void*, VkResult>)VKLoader.GetDeviceProcAddr(device, "vkGetImageOpaqueCaptureDescriptorDataEXT");
             _vkGetImageSparseMemoryRequirements_fnptr = (delegate* unmanaged<VkDevice, VkImage, uint*, VkSparseImageMemoryRequirements*, void>)VKLoader.GetDeviceProcAddr(device, "vkGetImageSparseMemoryRequirements");
             _vkGetImageSparseMemoryRequirements2_fnptr = (delegate* unmanaged<VkDevice, VkImageSparseMemoryRequirementsInfo2*, uint*, VkSparseImageMemoryRequirements2*, void>)VKLoader.GetDeviceProcAddr(device, "vkGetImageSparseMemoryRequirements2");
@@ -1554,6 +1992,7 @@ namespace OpenTK.Graphics.Vulkan
             _vkGetSwapchainTimeDomainPropertiesEXT_fnptr = (delegate* unmanaged<VkDevice, VkSwapchainKHR, VkSwapchainTimeDomainPropertiesEXT*, ulong*, VkResult>)VKLoader.GetDeviceProcAddr(device, "vkGetSwapchainTimeDomainPropertiesEXT");
             _vkGetSwapchainTimingPropertiesEXT_fnptr = (delegate* unmanaged<VkDevice, VkSwapchainKHR, VkSwapchainTimingPropertiesEXT*, ulong*, VkResult>)VKLoader.GetDeviceProcAddr(device, "vkGetSwapchainTimingPropertiesEXT");
             _vkGetTensorMemoryRequirementsARM_fnptr = (delegate* unmanaged<VkDevice, VkTensorMemoryRequirementsInfoARM*, VkMemoryRequirements2*, void>)VKLoader.GetDeviceProcAddr(device, "vkGetTensorMemoryRequirementsARM");
+            _vkGetTensorOpaqueCaptureDataARM_fnptr = (delegate* unmanaged<VkDevice, uint, VkTensorARM*, VkHostAddressRangeEXT*, VkResult>)VKLoader.GetDeviceProcAddr(device, "vkGetTensorOpaqueCaptureDataARM");
             _vkGetTensorOpaqueCaptureDescriptorDataARM_fnptr = (delegate* unmanaged<VkDevice, VkTensorCaptureDescriptorDataInfoARM*, void*, VkResult>)VKLoader.GetDeviceProcAddr(device, "vkGetTensorOpaqueCaptureDescriptorDataARM");
             _vkGetTensorViewOpaqueCaptureDescriptorDataARM_fnptr = (delegate* unmanaged<VkDevice, VkTensorViewCaptureDescriptorDataInfoARM*, void*, VkResult>)VKLoader.GetDeviceProcAddr(device, "vkGetTensorViewOpaqueCaptureDescriptorDataARM");
             _vkGetValidationCacheDataEXT_fnptr = (delegate* unmanaged<VkDevice, VkValidationCacheEXT, nuint*, void*, VkResult>)VKLoader.GetDeviceProcAddr(device, "vkGetValidationCacheDataEXT");
@@ -1587,6 +2026,7 @@ namespace OpenTK.Graphics.Vulkan
             _vkQueueSubmit2_fnptr = (delegate* unmanaged<VkQueue, uint, VkSubmitInfo2*, VkFence, VkResult>)VKLoader.GetDeviceProcAddr(device, "vkQueueSubmit2");
             _vkQueueSubmit2KHR_fnptr = (delegate* unmanaged<VkQueue, uint, VkSubmitInfo2*, VkFence, VkResult>)VKLoader.GetDeviceProcAddr(device, "vkQueueSubmit2KHR");
             _vkQueueWaitIdle_fnptr = (delegate* unmanaged<VkQueue, VkResult>)VKLoader.GetDeviceProcAddr(device, "vkQueueWaitIdle");
+            _vkRegisterCustomBorderColorEXT_fnptr = (delegate* unmanaged<VkDevice, VkSamplerCustomBorderColorCreateInfoEXT*, int, uint*, VkResult>)VKLoader.GetDeviceProcAddr(device, "vkRegisterCustomBorderColorEXT");
             _vkRegisterDeviceEventEXT_fnptr = (delegate* unmanaged<VkDevice, VkDeviceEventInfoEXT*, VkAllocationCallbacks*, VkFence*, VkResult>)VKLoader.GetDeviceProcAddr(device, "vkRegisterDeviceEventEXT");
             _vkRegisterDisplayEventEXT_fnptr = (delegate* unmanaged<VkDevice, VkDisplayKHR, VkDisplayEventInfoEXT*, VkAllocationCallbacks*, VkFence*, VkResult>)VKLoader.GetDeviceProcAddr(device, "vkRegisterDisplayEventEXT");
             _vkReleaseCapturedPipelineDataKHR_fnptr = (delegate* unmanaged<VkDevice, VkReleaseCapturedPipelineDataInfoKHR*, VkAllocationCallbacks*, VkResult>)VKLoader.GetDeviceProcAddr(device, "vkReleaseCapturedPipelineDataKHR");
@@ -1625,6 +2065,7 @@ namespace OpenTK.Graphics.Vulkan
             _vkUnmapMemory_fnptr = (delegate* unmanaged<VkDevice, VkDeviceMemory, void>)VKLoader.GetDeviceProcAddr(device, "vkUnmapMemory");
             _vkUnmapMemory2_fnptr = (delegate* unmanaged<VkDevice, VkMemoryUnmapInfo*, VkResult>)VKLoader.GetDeviceProcAddr(device, "vkUnmapMemory2");
             _vkUnmapMemory2KHR_fnptr = (delegate* unmanaged<VkDevice, VkMemoryUnmapInfo*, VkResult>)VKLoader.GetDeviceProcAddr(device, "vkUnmapMemory2KHR");
+            _vkUnregisterCustomBorderColorEXT_fnptr = (delegate* unmanaged<VkDevice, uint, void>)VKLoader.GetDeviceProcAddr(device, "vkUnregisterCustomBorderColorEXT");
             _vkUpdateDescriptorSets_fnptr = (delegate* unmanaged<VkDevice, uint, VkWriteDescriptorSet*, uint, VkCopyDescriptorSet*, void>)VKLoader.GetDeviceProcAddr(device, "vkUpdateDescriptorSets");
             _vkUpdateDescriptorSetWithTemplate_fnptr = (delegate* unmanaged<VkDevice, VkDescriptorSet, VkDescriptorUpdateTemplate, void*, void>)VKLoader.GetDeviceProcAddr(device, "vkUpdateDescriptorSetWithTemplate");
             _vkUpdateDescriptorSetWithTemplateKHR_fnptr = (delegate* unmanaged<VkDevice, VkDescriptorSet, VkDescriptorUpdateTemplate, void*, void>)VKLoader.GetDeviceProcAddr(device, "vkUpdateDescriptorSetWithTemplateKHR");
@@ -1638,4056 +2079,6432 @@ namespace OpenTK.Graphics.Vulkan
             _vkWaitSemaphoresKHR_fnptr = (delegate* unmanaged<VkDevice, VkSemaphoreWaitInfo*, ulong, VkResult>)VKLoader.GetDeviceProcAddr(device, "vkWaitSemaphoresKHR");
             _vkWriteAccelerationStructuresPropertiesKHR_fnptr = (delegate* unmanaged<VkDevice, uint, VkAccelerationStructureKHR*, VkQueryType, nuint, void*, nuint, VkResult>)VKLoader.GetDeviceProcAddr(device, "vkWriteAccelerationStructuresPropertiesKHR");
             _vkWriteMicromapsPropertiesEXT_fnptr = (delegate* unmanaged<VkDevice, uint, VkMicromapEXT*, VkQueryType, nuint, void*, nuint, VkResult>)VKLoader.GetDeviceProcAddr(device, "vkWriteMicromapsPropertiesEXT");
+            _vkWriteResourceDescriptorsEXT_fnptr = (delegate* unmanaged<VkDevice, uint, VkResourceDescriptorInfoEXT*, VkHostAddressRangeEXT*, VkResult>)VKLoader.GetDeviceProcAddr(device, "vkWriteResourceDescriptorsEXT");
+            _vkWriteSamplerDescriptorsEXT_fnptr = (delegate* unmanaged<VkDevice, uint, VkSamplerCreateInfo*, VkHostAddressRangeEXT*, VkResult>)VKLoader.GetDeviceProcAddr(device, "vkWriteSamplerDescriptorsEXT");
         }
         /// <summary><b>[requires: VK_EXT_full_screen_exclusive]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="swapchain"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkAcquireFullScreenExclusiveModeEXT.html" /></remarks>
         public VkResult AcquireFullScreenExclusiveModeEXT(VkDevice device, VkSwapchainKHR swapchain)
         {
             return _vkAcquireFullScreenExclusiveModeEXT_fnptr(device, swapchain);
         }
         /// <summary>[device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="image"></param>
+        /// <param name="nativeFenceFd"></param>
+        /// <param name="semaphore">[optional] </param>
+        /// <param name="fence">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkAcquireImageANDROID.html" /></remarks>
         public VkResult AcquireImageANDROID(VkDevice device, VkImage image, int nativeFenceFd, VkSemaphore semaphore, VkFence fence)
         {
             return _vkAcquireImageANDROID_fnptr(device, image, nativeFenceFd, semaphore, fence);
         }
-        /// <summary><b>[requires: VK_OHOS_native_buffer]</b> [device command] </summary>
+        /// <summary>[device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="image"></param>
+        /// <param name="nativeFenceFd"></param>
+        /// <param name="semaphore">[optional] </param>
+        /// <param name="fence">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkAcquireImageOHOS.html" /></remarks>
         public VkResult AcquireImageOHOS(VkDevice device, VkImage image, int nativeFenceFd, VkSemaphore semaphore, VkFence fence)
         {
             return _vkAcquireImageOHOS_fnptr(device, image, nativeFenceFd, semaphore, fence);
         }
         /// <summary><b>[requires: VK_KHR_swapchain | VK_KHR_device_group]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pAcquireInfo"></param>
+        /// <param name="pImageIndex"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkAcquireNextImage2KHR.html" /></remarks>
         public VkResult AcquireNextImage2KHR(VkDevice device, VkAcquireNextImageInfoKHR* pAcquireInfo, uint* pImageIndex)
         {
             return _vkAcquireNextImage2KHR_fnptr(device, pAcquireInfo, pImageIndex);
         }
         /// <summary><b>[requires: VK_KHR_swapchain]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="swapchain">[extern sync: always] </param>
+        /// <param name="timeout"></param>
+        /// <param name="semaphore">[optional] [extern sync: always] </param>
+        /// <param name="fence">[optional] [extern sync: always] </param>
+        /// <param name="pImageIndex"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkAcquireNextImageKHR.html" /></remarks>
         public VkResult AcquireNextImageKHR(VkDevice device, VkSwapchainKHR swapchain, ulong timeout, VkSemaphore semaphore, VkFence fence, uint* pImageIndex)
         {
             return _vkAcquireNextImageKHR_fnptr(device, swapchain, timeout, semaphore, fence, pImageIndex);
         }
         /// <summary><b>[requires: VK_INTEL_performance_query]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pAcquireInfo"></param>
+        /// <param name="pConfiguration"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkAcquirePerformanceConfigurationINTEL.html" /></remarks>
         public VkResult AcquirePerformanceConfigurationINTEL(VkDevice device, VkPerformanceConfigurationAcquireInfoINTEL* pAcquireInfo, VkPerformanceConfigurationINTEL* pConfiguration)
         {
             return _vkAcquirePerformanceConfigurationINTEL_fnptr(device, pAcquireInfo, pConfiguration);
         }
         /// <summary><b>[requires: VK_KHR_performance_query]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkAcquireProfilingLockKHR.html" /></remarks>
         public VkResult AcquireProfilingLockKHR(VkDevice device, VkAcquireProfilingLockInfoKHR* pInfo)
         {
             return _vkAcquireProfilingLockKHR_fnptr(device, pInfo);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pAllocateInfo"></param>
+        /// <param name="pCommandBuffers"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkAllocateCommandBuffers.html" /></remarks>
         public VkResult AllocateCommandBuffers(VkDevice device, VkCommandBufferAllocateInfo* pAllocateInfo, VkCommandBuffer* pCommandBuffers)
         {
             return _vkAllocateCommandBuffers_fnptr(device, pAllocateInfo, pCommandBuffers);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pAllocateInfo"></param>
+        /// <param name="pDescriptorSets"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkAllocateDescriptorSets.html" /></remarks>
         public VkResult AllocateDescriptorSets(VkDevice device, VkDescriptorSetAllocateInfo* pAllocateInfo, VkDescriptorSet* pDescriptorSets)
         {
             return _vkAllocateDescriptorSets_fnptr(device, pAllocateInfo, pDescriptorSets);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pAllocateInfo"></param>
+        /// <param name="pAllocator">[optional] </param>
+        /// <param name="pMemory"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkAllocateMemory.html" /></remarks>
         public VkResult AllocateMemory(VkDevice device, VkMemoryAllocateInfo* pAllocateInfo, VkAllocationCallbacks* pAllocator, VkDeviceMemory* pMemory)
         {
             return _vkAllocateMemory_fnptr(device, pAllocateInfo, pAllocator, pMemory);
         }
         /// <summary><b>[requires: VK_AMD_anti_lag]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pData"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkAntiLagUpdateAMD.html" /></remarks>
         public void AntiLagUpdateAMD(VkDevice device, VkAntiLagDataAMD* pData)
         {
             _vkAntiLagUpdateAMD_fnptr(device, pData);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="pBeginInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkBeginCommandBuffer.html" /></remarks>
         public VkResult BeginCommandBuffer(VkCommandBuffer commandBuffer, VkCommandBufferBeginInfo* pBeginInfo)
         {
             return _vkBeginCommandBuffer_fnptr(commandBuffer, pBeginInfo);
         }
         /// <summary><b>[requires: VK_NV_ray_tracing]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="bindInfoCount"></param>
+        /// <param name="pBindInfos"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkBindAccelerationStructureMemoryNV.html" /></remarks>
         public VkResult BindAccelerationStructureMemoryNV(VkDevice device, uint bindInfoCount, VkBindAccelerationStructureMemoryInfoNV* pBindInfos)
         {
             return _vkBindAccelerationStructureMemoryNV_fnptr(device, bindInfoCount, pBindInfos);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="buffer">[extern sync: always] </param>
+        /// <param name="memory"></param>
+        /// <param name="memoryOffset"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkBindBufferMemory.html" /></remarks>
         public VkResult BindBufferMemory(VkDevice device, VkBuffer buffer, VkDeviceMemory memory, ulong memoryOffset)
         {
             return _vkBindBufferMemory_fnptr(device, buffer, memory, memoryOffset);
         }
         /// <summary><b>[requires: v1.1]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="bindInfoCount"></param>
+        /// <param name="pBindInfos"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkBindBufferMemory2.html" /></remarks>
         public VkResult BindBufferMemory2(VkDevice device, uint bindInfoCount, VkBindBufferMemoryInfo* pBindInfos)
         {
             return _vkBindBufferMemory2_fnptr(device, bindInfoCount, pBindInfos);
         }
         /// <summary><b>[requires: VK_KHR_bind_memory2]</b> [device command]  Alias of <see cref="BindBufferMemory2"/></summary>
+        /// <param name="device"></param>
+        /// <param name="bindInfoCount"></param>
+        /// <param name="pBindInfos"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkBindBufferMemory2KHR.html" /></remarks>
         public VkResult BindBufferMemory2KHR(VkDevice device, uint bindInfoCount, VkBindBufferMemoryInfo* pBindInfos)
         {
             return _vkBindBufferMemory2KHR_fnptr(device, bindInfoCount, pBindInfos);
         }
         /// <summary><b>[requires: VK_ARM_data_graph]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="bindInfoCount"></param>
+        /// <param name="pBindInfos"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkBindDataGraphPipelineSessionMemoryARM.html" /></remarks>
         public VkResult BindDataGraphPipelineSessionMemoryARM(VkDevice device, uint bindInfoCount, VkBindDataGraphPipelineSessionMemoryInfoARM* pBindInfos)
         {
             return _vkBindDataGraphPipelineSessionMemoryARM_fnptr(device, bindInfoCount, pBindInfos);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="image">[extern sync: always] </param>
+        /// <param name="memory"></param>
+        /// <param name="memoryOffset"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkBindImageMemory.html" /></remarks>
         public VkResult BindImageMemory(VkDevice device, VkImage image, VkDeviceMemory memory, ulong memoryOffset)
         {
             return _vkBindImageMemory_fnptr(device, image, memory, memoryOffset);
         }
         /// <summary><b>[requires: v1.1]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="bindInfoCount"></param>
+        /// <param name="pBindInfos"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkBindImageMemory2.html" /></remarks>
         public VkResult BindImageMemory2(VkDevice device, uint bindInfoCount, VkBindImageMemoryInfo* pBindInfos)
         {
             return _vkBindImageMemory2_fnptr(device, bindInfoCount, pBindInfos);
         }
         /// <summary><b>[requires: VK_KHR_bind_memory2]</b> [device command]  Alias of <see cref="BindImageMemory2"/></summary>
+        /// <param name="device"></param>
+        /// <param name="bindInfoCount"></param>
+        /// <param name="pBindInfos"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkBindImageMemory2KHR.html" /></remarks>
         public VkResult BindImageMemory2KHR(VkDevice device, uint bindInfoCount, VkBindImageMemoryInfo* pBindInfos)
         {
             return _vkBindImageMemory2KHR_fnptr(device, bindInfoCount, pBindInfos);
         }
         /// <summary><b>[requires: VK_NV_optical_flow]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="session"></param>
+        /// <param name="bindingPoint"></param>
+        /// <param name="view">[optional] </param>
+        /// <param name="layout"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkBindOpticalFlowSessionImageNV.html" /></remarks>
         public VkResult BindOpticalFlowSessionImageNV(VkDevice device, VkOpticalFlowSessionNV session, VkOpticalFlowSessionBindingPointNV bindingPoint, VkImageView view, VkImageLayout layout)
         {
             return _vkBindOpticalFlowSessionImageNV_fnptr(device, session, bindingPoint, view, layout);
         }
         /// <summary><b>[requires: VK_ARM_tensors]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="bindInfoCount"></param>
+        /// <param name="pBindInfos"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkBindTensorMemoryARM.html" /></remarks>
         public VkResult BindTensorMemoryARM(VkDevice device, uint bindInfoCount, VkBindTensorMemoryInfoARM* pBindInfos)
         {
             return _vkBindTensorMemoryARM_fnptr(device, bindInfoCount, pBindInfos);
         }
         /// <summary><b>[requires: VK_KHR_video_queue]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="videoSession">[extern sync: always] </param>
+        /// <param name="bindSessionMemoryInfoCount"></param>
+        /// <param name="pBindSessionMemoryInfos"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkBindVideoSessionMemoryKHR.html" /></remarks>
         public VkResult BindVideoSessionMemoryKHR(VkDevice device, VkVideoSessionKHR videoSession, uint bindSessionMemoryInfoCount, VkBindVideoSessionMemoryInfoKHR* pBindSessionMemoryInfos)
         {
             return _vkBindVideoSessionMemoryKHR_fnptr(device, videoSession, bindSessionMemoryInfoCount, pBindSessionMemoryInfos);
         }
         /// <summary><b>[requires: VK_KHR_acceleration_structure]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="deferredOperation">[optional] </param>
+        /// <param name="infoCount"></param>
+        /// <param name="pInfos"></param>
+        /// <param name="ppBuildRangeInfos"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkBuildAccelerationStructuresKHR.html" /></remarks>
         public VkResult BuildAccelerationStructuresKHR(VkDevice device, VkDeferredOperationKHR deferredOperation, uint infoCount, VkAccelerationStructureBuildGeometryInfoKHR* pInfos, VkAccelerationStructureBuildRangeInfoKHR** ppBuildRangeInfos)
         {
             return _vkBuildAccelerationStructuresKHR_fnptr(device, deferredOperation, infoCount, pInfos, ppBuildRangeInfos);
         }
         /// <summary><b>[requires: VK_EXT_opacity_micromap]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="deferredOperation">[optional] </param>
+        /// <param name="infoCount"></param>
+        /// <param name="pInfos"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkBuildMicromapsEXT.html" /></remarks>
         public VkResult BuildMicromapsEXT(VkDevice device, VkDeferredOperationKHR deferredOperation, uint infoCount, VkMicromapBuildInfoEXT* pInfos)
         {
             return _vkBuildMicromapsEXT_fnptr(device, deferredOperation, infoCount, pInfos);
         }
         /// <summary><b>[requires: VK_EXT_conditional_rendering]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="pConditionalRenderingBegin"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdBeginConditionalRenderingEXT.html" /></remarks>
         public void CmdBeginConditionalRenderingEXT(VkCommandBuffer commandBuffer, VkConditionalRenderingBeginInfoEXT* pConditionalRenderingBegin)
         {
             _vkCmdBeginConditionalRenderingEXT_fnptr(commandBuffer, pConditionalRenderingBegin);
         }
         /// <summary><b>[requires: VK_EXT_custom_resolve]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="pBeginCustomResolveInfo">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdBeginCustomResolveEXT.html" /></remarks>
         public void CmdBeginCustomResolveEXT(VkCommandBuffer commandBuffer, VkBeginCustomResolveInfoEXT* pBeginCustomResolveInfo)
         {
             _vkCmdBeginCustomResolveEXT_fnptr(commandBuffer, pBeginCustomResolveInfo);
         }
         /// <summary><b>[requires: VK_EXT_debug_utils]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="pLabelInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdBeginDebugUtilsLabelEXT.html" /></remarks>
         public void CmdBeginDebugUtilsLabelEXT(VkCommandBuffer commandBuffer, VkDebugUtilsLabelEXT* pLabelInfo)
         {
             _vkCmdBeginDebugUtilsLabelEXT_fnptr(commandBuffer, pLabelInfo);
         }
         /// <summary><b>[requires: VK_QCOM_tile_shading]</b> [device command] </summary>
+        /// <param name="commandBuffer"></param>
+        /// <param name="pPerTileBeginInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdBeginPerTileExecutionQCOM.html" /></remarks>
         public void CmdBeginPerTileExecutionQCOM(VkCommandBuffer commandBuffer, VkPerTileBeginInfoQCOM* pPerTileBeginInfo)
         {
             _vkCmdBeginPerTileExecutionQCOM_fnptr(commandBuffer, pPerTileBeginInfo);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="queryPool"></param>
+        /// <param name="query"></param>
+        /// <param name="flags">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdBeginQuery.html" /></remarks>
         public void CmdBeginQuery(VkCommandBuffer commandBuffer, VkQueryPool queryPool, uint query, VkQueryControlFlagBits flags)
         {
             _vkCmdBeginQuery_fnptr(commandBuffer, queryPool, query, flags);
         }
         /// <summary><b>[requires: VK_EXT_transform_feedback]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="queryPool"></param>
+        /// <param name="query"></param>
+        /// <param name="flags">[optional] </param>
+        /// <param name="index"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdBeginQueryIndexedEXT.html" /></remarks>
         public void CmdBeginQueryIndexedEXT(VkCommandBuffer commandBuffer, VkQueryPool queryPool, uint query, VkQueryControlFlagBits flags, uint index)
         {
             _vkCmdBeginQueryIndexedEXT_fnptr(commandBuffer, queryPool, query, flags, index);
         }
         /// <summary><b>[requires: v1.3]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="pRenderingInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdBeginRendering.html" /></remarks>
         public void CmdBeginRendering(VkCommandBuffer commandBuffer, VkRenderingInfo* pRenderingInfo)
         {
             _vkCmdBeginRendering_fnptr(commandBuffer, pRenderingInfo);
         }
         /// <summary><b>[requires: VK_KHR_dynamic_rendering]</b> [device command]  Alias of <see cref="CmdBeginRendering"/></summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="pRenderingInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdBeginRenderingKHR.html" /></remarks>
         public void CmdBeginRenderingKHR(VkCommandBuffer commandBuffer, VkRenderingInfo* pRenderingInfo)
         {
             _vkCmdBeginRenderingKHR_fnptr(commandBuffer, pRenderingInfo);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="pRenderPassBegin"></param>
+        /// <param name="contents"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdBeginRenderPass.html" /></remarks>
         public void CmdBeginRenderPass(VkCommandBuffer commandBuffer, VkRenderPassBeginInfo* pRenderPassBegin, VkSubpassContents contents)
         {
             _vkCmdBeginRenderPass_fnptr(commandBuffer, pRenderPassBegin, contents);
         }
         /// <summary><b>[requires: v1.2]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="pRenderPassBegin"></param>
+        /// <param name="pSubpassBeginInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdBeginRenderPass2.html" /></remarks>
         public void CmdBeginRenderPass2(VkCommandBuffer commandBuffer, VkRenderPassBeginInfo* pRenderPassBegin, VkSubpassBeginInfo* pSubpassBeginInfo)
         {
             _vkCmdBeginRenderPass2_fnptr(commandBuffer, pRenderPassBegin, pSubpassBeginInfo);
         }
         /// <summary><b>[requires: VK_KHR_create_renderpass2]</b> [device command]  Alias of <see cref="CmdBeginRenderPass2"/></summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="pRenderPassBegin"></param>
+        /// <param name="pSubpassBeginInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdBeginRenderPass2KHR.html" /></remarks>
         public void CmdBeginRenderPass2KHR(VkCommandBuffer commandBuffer, VkRenderPassBeginInfo* pRenderPassBegin, VkSubpassBeginInfo* pSubpassBeginInfo)
         {
             _vkCmdBeginRenderPass2KHR_fnptr(commandBuffer, pRenderPassBegin, pSubpassBeginInfo);
         }
         /// <summary><b>[requires: VK_EXT_transform_feedback]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="firstCounterBuffer"></param>
+        /// <param name="counterBufferCount">[optional] </param>
+        /// <param name="pCounterBuffers"></param>
+        /// <param name="pCounterBufferOffsets">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdBeginTransformFeedbackEXT.html" /></remarks>
         public void CmdBeginTransformFeedbackEXT(VkCommandBuffer commandBuffer, uint firstCounterBuffer, uint counterBufferCount, VkBuffer* pCounterBuffers, ulong* pCounterBufferOffsets)
         {
             _vkCmdBeginTransformFeedbackEXT_fnptr(commandBuffer, firstCounterBuffer, counterBufferCount, pCounterBuffers, pCounterBufferOffsets);
         }
         /// <summary><b>[requires: VK_KHR_video_queue]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="pBeginInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdBeginVideoCodingKHR.html" /></remarks>
         public void CmdBeginVideoCodingKHR(VkCommandBuffer commandBuffer, VkVideoBeginCodingInfoKHR* pBeginInfo)
         {
             _vkCmdBeginVideoCodingKHR_fnptr(commandBuffer, pBeginInfo);
         }
         /// <summary><b>[requires: VK_KHR_maintenance6]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="pBindDescriptorBufferEmbeddedSamplersInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdBindDescriptorBufferEmbeddedSamplers2EXT.html" /></remarks>
         public void CmdBindDescriptorBufferEmbeddedSamplers2EXT(VkCommandBuffer commandBuffer, VkBindDescriptorBufferEmbeddedSamplersInfoEXT* pBindDescriptorBufferEmbeddedSamplersInfo)
         {
             _vkCmdBindDescriptorBufferEmbeddedSamplers2EXT_fnptr(commandBuffer, pBindDescriptorBufferEmbeddedSamplersInfo);
         }
         /// <summary><b>[requires: VK_EXT_descriptor_buffer]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="pipelineBindPoint"></param>
+        /// <param name="layout"></param>
+        /// <param name="set"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdBindDescriptorBufferEmbeddedSamplersEXT.html" /></remarks>
         public void CmdBindDescriptorBufferEmbeddedSamplersEXT(VkCommandBuffer commandBuffer, VkPipelineBindPoint pipelineBindPoint, VkPipelineLayout layout, uint set)
         {
             _vkCmdBindDescriptorBufferEmbeddedSamplersEXT_fnptr(commandBuffer, pipelineBindPoint, layout, set);
         }
         /// <summary><b>[requires: VK_EXT_descriptor_buffer]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="bufferCount"></param>
+        /// <param name="pBindingInfos"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdBindDescriptorBuffersEXT.html" /></remarks>
         public void CmdBindDescriptorBuffersEXT(VkCommandBuffer commandBuffer, uint bufferCount, VkDescriptorBufferBindingInfoEXT* pBindingInfos)
         {
             _vkCmdBindDescriptorBuffersEXT_fnptr(commandBuffer, bufferCount, pBindingInfos);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="pipelineBindPoint"></param>
+        /// <param name="layout"></param>
+        /// <param name="firstSet"></param>
+        /// <param name="descriptorSetCount"></param>
+        /// <param name="pDescriptorSets">[ptr required, value optional] </param>
+        /// <param name="dynamicOffsetCount">[optional] </param>
+        /// <param name="pDynamicOffsets"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdBindDescriptorSets.html" /></remarks>
         public void CmdBindDescriptorSets(VkCommandBuffer commandBuffer, VkPipelineBindPoint pipelineBindPoint, VkPipelineLayout layout, uint firstSet, uint descriptorSetCount, VkDescriptorSet* pDescriptorSets, uint dynamicOffsetCount, uint* pDynamicOffsets)
         {
             _vkCmdBindDescriptorSets_fnptr(commandBuffer, pipelineBindPoint, layout, firstSet, descriptorSetCount, pDescriptorSets, dynamicOffsetCount, pDynamicOffsets);
         }
         /// <summary><b>[requires: v1.4]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="pBindDescriptorSetsInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdBindDescriptorSets2.html" /></remarks>
         public void CmdBindDescriptorSets2(VkCommandBuffer commandBuffer, VkBindDescriptorSetsInfo* pBindDescriptorSetsInfo)
         {
             _vkCmdBindDescriptorSets2_fnptr(commandBuffer, pBindDescriptorSetsInfo);
         }
         /// <summary><b>[requires: VK_KHR_maintenance6]</b> [device command]  Alias of <see cref="CmdBindDescriptorSets2"/></summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="pBindDescriptorSetsInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdBindDescriptorSets2KHR.html" /></remarks>
         public void CmdBindDescriptorSets2KHR(VkCommandBuffer commandBuffer, VkBindDescriptorSetsInfo* pBindDescriptorSetsInfo)
         {
             _vkCmdBindDescriptorSets2KHR_fnptr(commandBuffer, pBindDescriptorSetsInfo);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="buffer">[optional] </param>
+        /// <param name="offset"></param>
+        /// <param name="indexType"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdBindIndexBuffer.html" /></remarks>
         public void CmdBindIndexBuffer(VkCommandBuffer commandBuffer, VkBuffer buffer, ulong offset, VkIndexType indexType)
         {
             _vkCmdBindIndexBuffer_fnptr(commandBuffer, buffer, offset, indexType);
         }
         /// <summary><b>[requires: v1.4]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="buffer">[optional] </param>
+        /// <param name="offset"></param>
+        /// <param name="size"></param>
+        /// <param name="indexType"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdBindIndexBuffer2.html" /></remarks>
         public void CmdBindIndexBuffer2(VkCommandBuffer commandBuffer, VkBuffer buffer, ulong offset, ulong size, VkIndexType indexType)
         {
             _vkCmdBindIndexBuffer2_fnptr(commandBuffer, buffer, offset, size, indexType);
         }
         /// <summary><b>[requires: VK_KHR_maintenance5]</b> [device command]  Alias of <see cref="CmdBindIndexBuffer2"/></summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="buffer">[optional] </param>
+        /// <param name="offset"></param>
+        /// <param name="size"></param>
+        /// <param name="indexType"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdBindIndexBuffer2KHR.html" /></remarks>
         public void CmdBindIndexBuffer2KHR(VkCommandBuffer commandBuffer, VkBuffer buffer, ulong offset, ulong size, VkIndexType indexType)
         {
             _vkCmdBindIndexBuffer2KHR_fnptr(commandBuffer, buffer, offset, size, indexType);
         }
         /// <summary><b>[requires: VK_HUAWEI_invocation_mask]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="imageView">[optional] </param>
+        /// <param name="imageLayout"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdBindInvocationMaskHUAWEI.html" /></remarks>
         public void CmdBindInvocationMaskHUAWEI(VkCommandBuffer commandBuffer, VkImageView imageView, VkImageLayout imageLayout)
         {
             _vkCmdBindInvocationMaskHUAWEI_fnptr(commandBuffer, imageView, imageLayout);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="pipelineBindPoint"></param>
+        /// <param name="pipeline"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdBindPipeline.html" /></remarks>
         public void CmdBindPipeline(VkCommandBuffer commandBuffer, VkPipelineBindPoint pipelineBindPoint, VkPipeline pipeline)
         {
             _vkCmdBindPipeline_fnptr(commandBuffer, pipelineBindPoint, pipeline);
         }
         /// <summary><b>[requires: VK_NV_device_generated_commands]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="pipelineBindPoint"></param>
+        /// <param name="pipeline"></param>
+        /// <param name="groupIndex"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdBindPipelineShaderGroupNV.html" /></remarks>
         public void CmdBindPipelineShaderGroupNV(VkCommandBuffer commandBuffer, VkPipelineBindPoint pipelineBindPoint, VkPipeline pipeline, uint groupIndex)
         {
             _vkCmdBindPipelineShaderGroupNV_fnptr(commandBuffer, pipelineBindPoint, pipeline, groupIndex);
         }
+        /// <summary><b>[requires: VK_EXT_descriptor_heap]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="pBindInfo"></param>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdBindResourceHeapEXT.html" /></remarks>
+        public void CmdBindResourceHeapEXT(VkCommandBuffer commandBuffer, VkBindHeapInfoEXT* pBindInfo)
+        {
+            _vkCmdBindResourceHeapEXT_fnptr(commandBuffer, pBindInfo);
+        }
+        /// <summary><b>[requires: VK_EXT_descriptor_heap]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="pBindInfo"></param>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdBindSamplerHeapEXT.html" /></remarks>
+        public void CmdBindSamplerHeapEXT(VkCommandBuffer commandBuffer, VkBindHeapInfoEXT* pBindInfo)
+        {
+            _vkCmdBindSamplerHeapEXT_fnptr(commandBuffer, pBindInfo);
+        }
         /// <summary><b>[requires: VK_EXT_shader_object]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="stageCount"></param>
+        /// <param name="pStages"></param>
+        /// <param name="pShaders">[ptr optional, value optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdBindShadersEXT.html" /></remarks>
         public void CmdBindShadersEXT(VkCommandBuffer commandBuffer, uint stageCount, VkShaderStageFlagBits* pStages, VkShaderEXT* pShaders)
         {
             _vkCmdBindShadersEXT_fnptr(commandBuffer, stageCount, pStages, pShaders);
         }
         /// <summary><b>[requires: VK_NV_shading_rate_image]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="imageView">[optional] </param>
+        /// <param name="imageLayout"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdBindShadingRateImageNV.html" /></remarks>
         public void CmdBindShadingRateImageNV(VkCommandBuffer commandBuffer, VkImageView imageView, VkImageLayout imageLayout)
         {
             _vkCmdBindShadingRateImageNV_fnptr(commandBuffer, imageView, imageLayout);
         }
         /// <summary><b>[requires: VK_QCOM_tile_memory_heap]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="pTileMemoryBindInfo">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdBindTileMemoryQCOM.html" /></remarks>
         public void CmdBindTileMemoryQCOM(VkCommandBuffer commandBuffer, VkTileMemoryBindInfoQCOM* pTileMemoryBindInfo)
         {
             _vkCmdBindTileMemoryQCOM_fnptr(commandBuffer, pTileMemoryBindInfo);
         }
         /// <summary><b>[requires: VK_EXT_transform_feedback]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="firstBinding"></param>
+        /// <param name="bindingCount"></param>
+        /// <param name="pBuffers"></param>
+        /// <param name="pOffsets"></param>
+        /// <param name="pSizes">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdBindTransformFeedbackBuffersEXT.html" /></remarks>
         public void CmdBindTransformFeedbackBuffersEXT(VkCommandBuffer commandBuffer, uint firstBinding, uint bindingCount, VkBuffer* pBuffers, ulong* pOffsets, ulong* pSizes)
         {
             _vkCmdBindTransformFeedbackBuffersEXT_fnptr(commandBuffer, firstBinding, bindingCount, pBuffers, pOffsets, pSizes);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="firstBinding"></param>
+        /// <param name="bindingCount"></param>
+        /// <param name="pBuffers">[ptr required, value optional] </param>
+        /// <param name="pOffsets"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdBindVertexBuffers.html" /></remarks>
         public void CmdBindVertexBuffers(VkCommandBuffer commandBuffer, uint firstBinding, uint bindingCount, VkBuffer* pBuffers, ulong* pOffsets)
         {
             _vkCmdBindVertexBuffers_fnptr(commandBuffer, firstBinding, bindingCount, pBuffers, pOffsets);
         }
         /// <summary><b>[requires: v1.3]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="firstBinding"></param>
+        /// <param name="bindingCount"></param>
+        /// <param name="pBuffers">[ptr required, value optional] </param>
+        /// <param name="pOffsets"></param>
+        /// <param name="pSizes">[optional] </param>
+        /// <param name="pStrides">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdBindVertexBuffers2.html" /></remarks>
         public void CmdBindVertexBuffers2(VkCommandBuffer commandBuffer, uint firstBinding, uint bindingCount, VkBuffer* pBuffers, ulong* pOffsets, ulong* pSizes, ulong* pStrides)
         {
             _vkCmdBindVertexBuffers2_fnptr(commandBuffer, firstBinding, bindingCount, pBuffers, pOffsets, pSizes, pStrides);
         }
         /// <summary><b>[requires: VK_EXT_extended_dynamic_state | VK_EXT_shader_object]</b> [device command]  Alias of <see cref="CmdBindVertexBuffers2"/></summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="firstBinding"></param>
+        /// <param name="bindingCount"></param>
+        /// <param name="pBuffers">[ptr required, value optional] </param>
+        /// <param name="pOffsets"></param>
+        /// <param name="pSizes">[optional] </param>
+        /// <param name="pStrides">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdBindVertexBuffers2EXT.html" /></remarks>
         public void CmdBindVertexBuffers2EXT(VkCommandBuffer commandBuffer, uint firstBinding, uint bindingCount, VkBuffer* pBuffers, ulong* pOffsets, ulong* pSizes, ulong* pStrides)
         {
             _vkCmdBindVertexBuffers2EXT_fnptr(commandBuffer, firstBinding, bindingCount, pBuffers, pOffsets, pSizes, pStrides);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="srcImage"></param>
+        /// <param name="srcImageLayout"></param>
+        /// <param name="dstImage"></param>
+        /// <param name="dstImageLayout"></param>
+        /// <param name="regionCount"></param>
+        /// <param name="pRegions"></param>
+        /// <param name="filter"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdBlitImage.html" /></remarks>
         public void CmdBlitImage(VkCommandBuffer commandBuffer, VkImage srcImage, VkImageLayout srcImageLayout, VkImage dstImage, VkImageLayout dstImageLayout, uint regionCount, VkImageBlit* pRegions, VkFilter filter)
         {
             _vkCmdBlitImage_fnptr(commandBuffer, srcImage, srcImageLayout, dstImage, dstImageLayout, regionCount, pRegions, filter);
         }
         /// <summary><b>[requires: v1.3]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="pBlitImageInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdBlitImage2.html" /></remarks>
         public void CmdBlitImage2(VkCommandBuffer commandBuffer, VkBlitImageInfo2* pBlitImageInfo)
         {
             _vkCmdBlitImage2_fnptr(commandBuffer, pBlitImageInfo);
         }
         /// <summary><b>[requires: VK_KHR_copy_commands2]</b> [device command]  Alias of <see cref="CmdBlitImage2"/></summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="pBlitImageInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdBlitImage2KHR.html" /></remarks>
         public void CmdBlitImage2KHR(VkCommandBuffer commandBuffer, VkBlitImageInfo2* pBlitImageInfo)
         {
             _vkCmdBlitImage2KHR_fnptr(commandBuffer, pBlitImageInfo);
         }
         /// <summary><b>[requires: VK_NV_ray_tracing]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="pInfo"></param>
+        /// <param name="instanceData">[optional] </param>
+        /// <param name="instanceOffset"></param>
+        /// <param name="update"></param>
+        /// <param name="dst"></param>
+        /// <param name="src">[optional] </param>
+        /// <param name="scratch"></param>
+        /// <param name="scratchOffset"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdBuildAccelerationStructureNV.html" /></remarks>
         public void CmdBuildAccelerationStructureNV(VkCommandBuffer commandBuffer, VkAccelerationStructureInfoNV* pInfo, VkBuffer instanceData, ulong instanceOffset, int update, VkAccelerationStructureNV dst, VkAccelerationStructureNV src, VkBuffer scratch, ulong scratchOffset)
         {
             _vkCmdBuildAccelerationStructureNV_fnptr(commandBuffer, pInfo, instanceData, instanceOffset, update, dst, src, scratch, scratchOffset);
         }
         /// <summary><b>[requires: VK_KHR_acceleration_structure]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="infoCount"></param>
+        /// <param name="pInfos"></param>
+        /// <param name="pIndirectDeviceAddresses"></param>
+        /// <param name="pIndirectStrides"></param>
+        /// <param name="ppMaxPrimitiveCounts"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdBuildAccelerationStructuresIndirectKHR.html" /></remarks>
         public void CmdBuildAccelerationStructuresIndirectKHR(VkCommandBuffer commandBuffer, uint infoCount, VkAccelerationStructureBuildGeometryInfoKHR* pInfos, ulong* pIndirectDeviceAddresses, uint* pIndirectStrides, uint** ppMaxPrimitiveCounts)
         {
             _vkCmdBuildAccelerationStructuresIndirectKHR_fnptr(commandBuffer, infoCount, pInfos, pIndirectDeviceAddresses, pIndirectStrides, ppMaxPrimitiveCounts);
         }
         /// <summary><b>[requires: VK_KHR_acceleration_structure]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="infoCount"></param>
+        /// <param name="pInfos"></param>
+        /// <param name="ppBuildRangeInfos"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdBuildAccelerationStructuresKHR.html" /></remarks>
         public void CmdBuildAccelerationStructuresKHR(VkCommandBuffer commandBuffer, uint infoCount, VkAccelerationStructureBuildGeometryInfoKHR* pInfos, VkAccelerationStructureBuildRangeInfoKHR** ppBuildRangeInfos)
         {
             _vkCmdBuildAccelerationStructuresKHR_fnptr(commandBuffer, infoCount, pInfos, ppBuildRangeInfos);
         }
         /// <summary><b>[requires: VK_NV_cluster_acceleration_structure]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="pCommandInfos"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdBuildClusterAccelerationStructureIndirectNV.html" /></remarks>
         public void CmdBuildClusterAccelerationStructureIndirectNV(VkCommandBuffer commandBuffer, VkClusterAccelerationStructureCommandsInfoNV* pCommandInfos)
         {
             _vkCmdBuildClusterAccelerationStructureIndirectNV_fnptr(commandBuffer, pCommandInfos);
         }
         /// <summary><b>[requires: VK_EXT_opacity_micromap]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="infoCount"></param>
+        /// <param name="pInfos"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdBuildMicromapsEXT.html" /></remarks>
         public void CmdBuildMicromapsEXT(VkCommandBuffer commandBuffer, uint infoCount, VkMicromapBuildInfoEXT* pInfos)
         {
             _vkCmdBuildMicromapsEXT_fnptr(commandBuffer, infoCount, pInfos);
         }
         /// <summary><b>[requires: VK_NV_partitioned_acceleration_structure]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="pBuildInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdBuildPartitionedAccelerationStructuresNV.html" /></remarks>
         public void CmdBuildPartitionedAccelerationStructuresNV(VkCommandBuffer commandBuffer, VkBuildPartitionedAccelerationStructureInfoNV* pBuildInfo)
         {
             _vkCmdBuildPartitionedAccelerationStructuresNV_fnptr(commandBuffer, pBuildInfo);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="attachmentCount"></param>
+        /// <param name="pAttachments"></param>
+        /// <param name="rectCount"></param>
+        /// <param name="pRects"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdClearAttachments.html" /></remarks>
         public void CmdClearAttachments(VkCommandBuffer commandBuffer, uint attachmentCount, VkClearAttachment* pAttachments, uint rectCount, VkClearRect* pRects)
         {
             _vkCmdClearAttachments_fnptr(commandBuffer, attachmentCount, pAttachments, rectCount, pRects);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="image"></param>
+        /// <param name="imageLayout"></param>
+        /// <param name="pColor"></param>
+        /// <param name="rangeCount"></param>
+        /// <param name="pRanges"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdClearColorImage.html" /></remarks>
         public void CmdClearColorImage(VkCommandBuffer commandBuffer, VkImage image, VkImageLayout imageLayout, VkClearColorValue* pColor, uint rangeCount, VkImageSubresourceRange* pRanges)
         {
             _vkCmdClearColorImage_fnptr(commandBuffer, image, imageLayout, pColor, rangeCount, pRanges);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="image"></param>
+        /// <param name="imageLayout"></param>
+        /// <param name="pDepthStencil"></param>
+        /// <param name="rangeCount"></param>
+        /// <param name="pRanges"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdClearDepthStencilImage.html" /></remarks>
         public void CmdClearDepthStencilImage(VkCommandBuffer commandBuffer, VkImage image, VkImageLayout imageLayout, VkClearDepthStencilValue* pDepthStencil, uint rangeCount, VkImageSubresourceRange* pRanges)
         {
             _vkCmdClearDepthStencilImage_fnptr(commandBuffer, image, imageLayout, pDepthStencil, rangeCount, pRanges);
         }
         /// <summary><b>[requires: VK_KHR_video_queue]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="pCodingControlInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdControlVideoCodingKHR.html" /></remarks>
         public void CmdControlVideoCodingKHR(VkCommandBuffer commandBuffer, VkVideoCodingControlInfoKHR* pCodingControlInfo)
         {
             _vkCmdControlVideoCodingKHR_fnptr(commandBuffer, pCodingControlInfo);
         }
         /// <summary><b>[requires: VK_NV_cooperative_vector]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="infoCount"></param>
+        /// <param name="pInfos"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdConvertCooperativeVectorMatrixNV.html" /></remarks>
         public void CmdConvertCooperativeVectorMatrixNV(VkCommandBuffer commandBuffer, uint infoCount, VkConvertCooperativeVectorMatrixInfoNV* pInfos)
         {
             _vkCmdConvertCooperativeVectorMatrixNV_fnptr(commandBuffer, infoCount, pInfos);
         }
         /// <summary><b>[requires: VK_KHR_acceleration_structure]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="pInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdCopyAccelerationStructureKHR.html" /></remarks>
         public void CmdCopyAccelerationStructureKHR(VkCommandBuffer commandBuffer, VkCopyAccelerationStructureInfoKHR* pInfo)
         {
             _vkCmdCopyAccelerationStructureKHR_fnptr(commandBuffer, pInfo);
         }
         /// <summary><b>[requires: VK_NV_ray_tracing]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="dst"></param>
+        /// <param name="src"></param>
+        /// <param name="mode"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdCopyAccelerationStructureNV.html" /></remarks>
         public void CmdCopyAccelerationStructureNV(VkCommandBuffer commandBuffer, VkAccelerationStructureNV dst, VkAccelerationStructureNV src, VkCopyAccelerationStructureModeKHR mode)
         {
             _vkCmdCopyAccelerationStructureNV_fnptr(commandBuffer, dst, src, mode);
         }
         /// <summary><b>[requires: VK_KHR_acceleration_structure]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="pInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdCopyAccelerationStructureToMemoryKHR.html" /></remarks>
         public void CmdCopyAccelerationStructureToMemoryKHR(VkCommandBuffer commandBuffer, VkCopyAccelerationStructureToMemoryInfoKHR* pInfo)
         {
             _vkCmdCopyAccelerationStructureToMemoryKHR_fnptr(commandBuffer, pInfo);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="srcBuffer"></param>
+        /// <param name="dstBuffer"></param>
+        /// <param name="regionCount"></param>
+        /// <param name="pRegions"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdCopyBuffer.html" /></remarks>
         public void CmdCopyBuffer(VkCommandBuffer commandBuffer, VkBuffer srcBuffer, VkBuffer dstBuffer, uint regionCount, VkBufferCopy* pRegions)
         {
             _vkCmdCopyBuffer_fnptr(commandBuffer, srcBuffer, dstBuffer, regionCount, pRegions);
         }
         /// <summary><b>[requires: v1.3]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="pCopyBufferInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdCopyBuffer2.html" /></remarks>
         public void CmdCopyBuffer2(VkCommandBuffer commandBuffer, VkCopyBufferInfo2* pCopyBufferInfo)
         {
             _vkCmdCopyBuffer2_fnptr(commandBuffer, pCopyBufferInfo);
         }
         /// <summary><b>[requires: VK_KHR_copy_commands2]</b> [device command]  Alias of <see cref="CmdCopyBuffer2"/></summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="pCopyBufferInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdCopyBuffer2KHR.html" /></remarks>
         public void CmdCopyBuffer2KHR(VkCommandBuffer commandBuffer, VkCopyBufferInfo2* pCopyBufferInfo)
         {
             _vkCmdCopyBuffer2KHR_fnptr(commandBuffer, pCopyBufferInfo);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="srcBuffer"></param>
+        /// <param name="dstImage"></param>
+        /// <param name="dstImageLayout"></param>
+        /// <param name="regionCount"></param>
+        /// <param name="pRegions"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdCopyBufferToImage.html" /></remarks>
         public void CmdCopyBufferToImage(VkCommandBuffer commandBuffer, VkBuffer srcBuffer, VkImage dstImage, VkImageLayout dstImageLayout, uint regionCount, VkBufferImageCopy* pRegions)
         {
             _vkCmdCopyBufferToImage_fnptr(commandBuffer, srcBuffer, dstImage, dstImageLayout, regionCount, pRegions);
         }
         /// <summary><b>[requires: v1.3]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="pCopyBufferToImageInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdCopyBufferToImage2.html" /></remarks>
         public void CmdCopyBufferToImage2(VkCommandBuffer commandBuffer, VkCopyBufferToImageInfo2* pCopyBufferToImageInfo)
         {
             _vkCmdCopyBufferToImage2_fnptr(commandBuffer, pCopyBufferToImageInfo);
         }
         /// <summary><b>[requires: VK_KHR_copy_commands2]</b> [device command]  Alias of <see cref="CmdCopyBufferToImage2"/></summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="pCopyBufferToImageInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdCopyBufferToImage2KHR.html" /></remarks>
         public void CmdCopyBufferToImage2KHR(VkCommandBuffer commandBuffer, VkCopyBufferToImageInfo2* pCopyBufferToImageInfo)
         {
             _vkCmdCopyBufferToImage2KHR_fnptr(commandBuffer, pCopyBufferToImageInfo);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="srcImage"></param>
+        /// <param name="srcImageLayout"></param>
+        /// <param name="dstImage"></param>
+        /// <param name="dstImageLayout"></param>
+        /// <param name="regionCount"></param>
+        /// <param name="pRegions"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdCopyImage.html" /></remarks>
         public void CmdCopyImage(VkCommandBuffer commandBuffer, VkImage srcImage, VkImageLayout srcImageLayout, VkImage dstImage, VkImageLayout dstImageLayout, uint regionCount, VkImageCopy* pRegions)
         {
             _vkCmdCopyImage_fnptr(commandBuffer, srcImage, srcImageLayout, dstImage, dstImageLayout, regionCount, pRegions);
         }
         /// <summary><b>[requires: v1.3]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="pCopyImageInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdCopyImage2.html" /></remarks>
         public void CmdCopyImage2(VkCommandBuffer commandBuffer, VkCopyImageInfo2* pCopyImageInfo)
         {
             _vkCmdCopyImage2_fnptr(commandBuffer, pCopyImageInfo);
         }
         /// <summary><b>[requires: VK_KHR_copy_commands2]</b> [device command]  Alias of <see cref="CmdCopyImage2"/></summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="pCopyImageInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdCopyImage2KHR.html" /></remarks>
         public void CmdCopyImage2KHR(VkCommandBuffer commandBuffer, VkCopyImageInfo2* pCopyImageInfo)
         {
             _vkCmdCopyImage2KHR_fnptr(commandBuffer, pCopyImageInfo);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="srcImage"></param>
+        /// <param name="srcImageLayout"></param>
+        /// <param name="dstBuffer"></param>
+        /// <param name="regionCount"></param>
+        /// <param name="pRegions"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdCopyImageToBuffer.html" /></remarks>
         public void CmdCopyImageToBuffer(VkCommandBuffer commandBuffer, VkImage srcImage, VkImageLayout srcImageLayout, VkBuffer dstBuffer, uint regionCount, VkBufferImageCopy* pRegions)
         {
             _vkCmdCopyImageToBuffer_fnptr(commandBuffer, srcImage, srcImageLayout, dstBuffer, regionCount, pRegions);
         }
         /// <summary><b>[requires: v1.3]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="pCopyImageToBufferInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdCopyImageToBuffer2.html" /></remarks>
         public void CmdCopyImageToBuffer2(VkCommandBuffer commandBuffer, VkCopyImageToBufferInfo2* pCopyImageToBufferInfo)
         {
             _vkCmdCopyImageToBuffer2_fnptr(commandBuffer, pCopyImageToBufferInfo);
         }
         /// <summary><b>[requires: VK_KHR_copy_commands2]</b> [device command]  Alias of <see cref="CmdCopyImageToBuffer2"/></summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="pCopyImageToBufferInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdCopyImageToBuffer2KHR.html" /></remarks>
         public void CmdCopyImageToBuffer2KHR(VkCommandBuffer commandBuffer, VkCopyImageToBufferInfo2* pCopyImageToBufferInfo)
         {
             _vkCmdCopyImageToBuffer2KHR_fnptr(commandBuffer, pCopyImageToBufferInfo);
         }
         /// <summary><b>[requires: VK_KHR_copy_memory_indirect]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="pCopyMemoryIndirectInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdCopyMemoryIndirectKHR.html" /></remarks>
         public void CmdCopyMemoryIndirectKHR(VkCommandBuffer commandBuffer, VkCopyMemoryIndirectInfoKHR* pCopyMemoryIndirectInfo)
         {
             _vkCmdCopyMemoryIndirectKHR_fnptr(commandBuffer, pCopyMemoryIndirectInfo);
         }
         /// <summary><b>[requires: VK_NV_copy_memory_indirect]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="copyBufferAddress"></param>
+        /// <param name="copyCount"></param>
+        /// <param name="stride"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdCopyMemoryIndirectNV.html" /></remarks>
         public void CmdCopyMemoryIndirectNV(VkCommandBuffer commandBuffer, ulong copyBufferAddress, uint copyCount, uint stride)
         {
             _vkCmdCopyMemoryIndirectNV_fnptr(commandBuffer, copyBufferAddress, copyCount, stride);
         }
         /// <summary><b>[requires: VK_KHR_acceleration_structure]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="pInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdCopyMemoryToAccelerationStructureKHR.html" /></remarks>
         public void CmdCopyMemoryToAccelerationStructureKHR(VkCommandBuffer commandBuffer, VkCopyMemoryToAccelerationStructureInfoKHR* pInfo)
         {
             _vkCmdCopyMemoryToAccelerationStructureKHR_fnptr(commandBuffer, pInfo);
         }
         /// <summary><b>[requires: VK_KHR_copy_memory_indirect]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="pCopyMemoryToImageIndirectInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdCopyMemoryToImageIndirectKHR.html" /></remarks>
         public void CmdCopyMemoryToImageIndirectKHR(VkCommandBuffer commandBuffer, VkCopyMemoryToImageIndirectInfoKHR* pCopyMemoryToImageIndirectInfo)
         {
             _vkCmdCopyMemoryToImageIndirectKHR_fnptr(commandBuffer, pCopyMemoryToImageIndirectInfo);
         }
         /// <summary><b>[requires: VK_NV_copy_memory_indirect]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="copyBufferAddress"></param>
+        /// <param name="copyCount"></param>
+        /// <param name="stride"></param>
+        /// <param name="dstImage"></param>
+        /// <param name="dstImageLayout"></param>
+        /// <param name="pImageSubresources"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdCopyMemoryToImageIndirectNV.html" /></remarks>
         public void CmdCopyMemoryToImageIndirectNV(VkCommandBuffer commandBuffer, ulong copyBufferAddress, uint copyCount, uint stride, VkImage dstImage, VkImageLayout dstImageLayout, VkImageSubresourceLayers* pImageSubresources)
         {
             _vkCmdCopyMemoryToImageIndirectNV_fnptr(commandBuffer, copyBufferAddress, copyCount, stride, dstImage, dstImageLayout, pImageSubresources);
         }
         /// <summary><b>[requires: VK_EXT_opacity_micromap]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="pInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdCopyMemoryToMicromapEXT.html" /></remarks>
         public void CmdCopyMemoryToMicromapEXT(VkCommandBuffer commandBuffer, VkCopyMemoryToMicromapInfoEXT* pInfo)
         {
             _vkCmdCopyMemoryToMicromapEXT_fnptr(commandBuffer, pInfo);
         }
         /// <summary><b>[requires: VK_EXT_opacity_micromap]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="pInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdCopyMicromapEXT.html" /></remarks>
         public void CmdCopyMicromapEXT(VkCommandBuffer commandBuffer, VkCopyMicromapInfoEXT* pInfo)
         {
             _vkCmdCopyMicromapEXT_fnptr(commandBuffer, pInfo);
         }
         /// <summary><b>[requires: VK_EXT_opacity_micromap]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="pInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdCopyMicromapToMemoryEXT.html" /></remarks>
         public void CmdCopyMicromapToMemoryEXT(VkCommandBuffer commandBuffer, VkCopyMicromapToMemoryInfoEXT* pInfo)
         {
             _vkCmdCopyMicromapToMemoryEXT_fnptr(commandBuffer, pInfo);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="queryPool"></param>
+        /// <param name="firstQuery"></param>
+        /// <param name="queryCount"></param>
+        /// <param name="dstBuffer"></param>
+        /// <param name="dstOffset"></param>
+        /// <param name="stride"></param>
+        /// <param name="flags">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdCopyQueryPoolResults.html" /></remarks>
         public void CmdCopyQueryPoolResults(VkCommandBuffer commandBuffer, VkQueryPool queryPool, uint firstQuery, uint queryCount, VkBuffer dstBuffer, ulong dstOffset, ulong stride, VkQueryResultFlagBits flags)
         {
             _vkCmdCopyQueryPoolResults_fnptr(commandBuffer, queryPool, firstQuery, queryCount, dstBuffer, dstOffset, stride, flags);
         }
         /// <summary><b>[requires: VK_ARM_tensors]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="pCopyTensorInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdCopyTensorARM.html" /></remarks>
         public void CmdCopyTensorARM(VkCommandBuffer commandBuffer, VkCopyTensorInfoARM* pCopyTensorInfo)
         {
             _vkCmdCopyTensorARM_fnptr(commandBuffer, pCopyTensorInfo);
         }
         /// <summary><b>[requires: VK_NV_cuda_kernel_launch]</b> [device command] </summary>
+        /// <param name="commandBuffer"></param>
+        /// <param name="pLaunchInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdCudaLaunchKernelNV.html" /></remarks>
         public void CmdCudaLaunchKernelNV(VkCommandBuffer commandBuffer, VkCudaLaunchInfoNV* pLaunchInfo)
         {
             _vkCmdCudaLaunchKernelNV_fnptr(commandBuffer, pLaunchInfo);
         }
         /// <summary><b>[requires: VK_NVX_binary_import]</b> [device command] </summary>
+        /// <param name="commandBuffer"></param>
+        /// <param name="pLaunchInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdCuLaunchKernelNVX.html" /></remarks>
         public void CmdCuLaunchKernelNVX(VkCommandBuffer commandBuffer, VkCuLaunchInfoNVX* pLaunchInfo)
         {
             _vkCmdCuLaunchKernelNVX_fnptr(commandBuffer, pLaunchInfo);
         }
         /// <summary><b>[requires: VK_EXT_debug_marker]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="pMarkerInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdDebugMarkerBeginEXT.html" /></remarks>
         public void CmdDebugMarkerBeginEXT(VkCommandBuffer commandBuffer, VkDebugMarkerMarkerInfoEXT* pMarkerInfo)
         {
             _vkCmdDebugMarkerBeginEXT_fnptr(commandBuffer, pMarkerInfo);
         }
         /// <summary><b>[requires: VK_EXT_debug_marker]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdDebugMarkerEndEXT.html" /></remarks>
         public void CmdDebugMarkerEndEXT(VkCommandBuffer commandBuffer)
         {
             _vkCmdDebugMarkerEndEXT_fnptr(commandBuffer);
         }
         /// <summary><b>[requires: VK_EXT_debug_marker]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="pMarkerInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdDebugMarkerInsertEXT.html" /></remarks>
         public void CmdDebugMarkerInsertEXT(VkCommandBuffer commandBuffer, VkDebugMarkerMarkerInfoEXT* pMarkerInfo)
         {
             _vkCmdDebugMarkerInsertEXT_fnptr(commandBuffer, pMarkerInfo);
         }
         /// <summary><b>[requires: VK_KHR_video_decode_queue]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="pDecodeInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdDecodeVideoKHR.html" /></remarks>
         public void CmdDecodeVideoKHR(VkCommandBuffer commandBuffer, VkVideoDecodeInfoKHR* pDecodeInfo)
         {
             _vkCmdDecodeVideoKHR_fnptr(commandBuffer, pDecodeInfo);
         }
         /// <summary><b>[requires: VK_EXT_memory_decompression]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="pDecompressMemoryInfoEXT"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdDecompressMemoryEXT.html" /></remarks>
         public void CmdDecompressMemoryEXT(VkCommandBuffer commandBuffer, VkDecompressMemoryInfoEXT* pDecompressMemoryInfoEXT)
         {
             _vkCmdDecompressMemoryEXT_fnptr(commandBuffer, pDecompressMemoryInfoEXT);
         }
         /// <summary><b>[requires: VK_EXT_memory_decompression]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="decompressionMethod"></param>
+        /// <param name="indirectCommandsAddress"></param>
+        /// <param name="indirectCommandsCountAddress"></param>
+        /// <param name="maxDecompressionCount"></param>
+        /// <param name="stride"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdDecompressMemoryIndirectCountEXT.html" /></remarks>
         public void CmdDecompressMemoryIndirectCountEXT(VkCommandBuffer commandBuffer, VkMemoryDecompressionMethodFlagBitsEXT decompressionMethod, ulong indirectCommandsAddress, ulong indirectCommandsCountAddress, uint maxDecompressionCount, uint stride)
         {
             _vkCmdDecompressMemoryIndirectCountEXT_fnptr(commandBuffer, decompressionMethod, indirectCommandsAddress, indirectCommandsCountAddress, maxDecompressionCount, stride);
         }
         /// <summary><b>[requires: VK_NV_memory_decompression]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="indirectCommandsAddress"></param>
+        /// <param name="indirectCommandsCountAddress"></param>
+        /// <param name="stride"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdDecompressMemoryIndirectCountNV.html" /></remarks>
         public void CmdDecompressMemoryIndirectCountNV(VkCommandBuffer commandBuffer, ulong indirectCommandsAddress, ulong indirectCommandsCountAddress, uint stride)
         {
             _vkCmdDecompressMemoryIndirectCountNV_fnptr(commandBuffer, indirectCommandsAddress, indirectCommandsCountAddress, stride);
         }
         /// <summary><b>[requires: VK_NV_memory_decompression]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="decompressRegionCount"></param>
+        /// <param name="pDecompressMemoryRegions"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdDecompressMemoryNV.html" /></remarks>
         public void CmdDecompressMemoryNV(VkCommandBuffer commandBuffer, uint decompressRegionCount, VkDecompressMemoryRegionNV* pDecompressMemoryRegions)
         {
             _vkCmdDecompressMemoryNV_fnptr(commandBuffer, decompressRegionCount, pDecompressMemoryRegions);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="groupCountX"></param>
+        /// <param name="groupCountY"></param>
+        /// <param name="groupCountZ"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdDispatch.html" /></remarks>
         public void CmdDispatch(VkCommandBuffer commandBuffer, uint groupCountX, uint groupCountY, uint groupCountZ)
         {
             _vkCmdDispatch_fnptr(commandBuffer, groupCountX, groupCountY, groupCountZ);
         }
         /// <summary><b>[requires: v1.1]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="baseGroupX"></param>
+        /// <param name="baseGroupY"></param>
+        /// <param name="baseGroupZ"></param>
+        /// <param name="groupCountX"></param>
+        /// <param name="groupCountY"></param>
+        /// <param name="groupCountZ"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdDispatchBase.html" /></remarks>
         public void CmdDispatchBase(VkCommandBuffer commandBuffer, uint baseGroupX, uint baseGroupY, uint baseGroupZ, uint groupCountX, uint groupCountY, uint groupCountZ)
         {
             _vkCmdDispatchBase_fnptr(commandBuffer, baseGroupX, baseGroupY, baseGroupZ, groupCountX, groupCountY, groupCountZ);
         }
         /// <summary><b>[requires: VK_KHR_device_group]</b> [device command]  Alias of <see cref="CmdDispatchBase"/></summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="baseGroupX"></param>
+        /// <param name="baseGroupY"></param>
+        /// <param name="baseGroupZ"></param>
+        /// <param name="groupCountX"></param>
+        /// <param name="groupCountY"></param>
+        /// <param name="groupCountZ"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdDispatchBaseKHR.html" /></remarks>
         public void CmdDispatchBaseKHR(VkCommandBuffer commandBuffer, uint baseGroupX, uint baseGroupY, uint baseGroupZ, uint groupCountX, uint groupCountY, uint groupCountZ)
         {
             _vkCmdDispatchBaseKHR_fnptr(commandBuffer, baseGroupX, baseGroupY, baseGroupZ, groupCountX, groupCountY, groupCountZ);
         }
         /// <summary><b>[requires: VK_ARM_data_graph]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="session"></param>
+        /// <param name="pInfo">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdDispatchDataGraphARM.html" /></remarks>
         public void CmdDispatchDataGraphARM(VkCommandBuffer commandBuffer, VkDataGraphPipelineSessionARM session, VkDataGraphPipelineDispatchInfoARM* pInfo)
         {
             _vkCmdDispatchDataGraphARM_fnptr(commandBuffer, session, pInfo);
         }
         /// <summary><b>[requires: VK_AMDX_shader_enqueue]</b> [device command] </summary>
+        /// <param name="commandBuffer"></param>
+        /// <param name="scratch"></param>
+        /// <param name="scratchSize"></param>
+        /// <param name="pCountInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdDispatchGraphAMDX.html" /></remarks>
         public void CmdDispatchGraphAMDX(VkCommandBuffer commandBuffer, ulong scratch, ulong scratchSize, VkDispatchGraphCountInfoAMDX* pCountInfo)
         {
             _vkCmdDispatchGraphAMDX_fnptr(commandBuffer, scratch, scratchSize, pCountInfo);
         }
         /// <summary><b>[requires: VK_AMDX_shader_enqueue]</b> [device command] </summary>
+        /// <param name="commandBuffer"></param>
+        /// <param name="scratch"></param>
+        /// <param name="scratchSize"></param>
+        /// <param name="pCountInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdDispatchGraphIndirectAMDX.html" /></remarks>
         public void CmdDispatchGraphIndirectAMDX(VkCommandBuffer commandBuffer, ulong scratch, ulong scratchSize, VkDispatchGraphCountInfoAMDX* pCountInfo)
         {
             _vkCmdDispatchGraphIndirectAMDX_fnptr(commandBuffer, scratch, scratchSize, pCountInfo);
         }
         /// <summary><b>[requires: VK_AMDX_shader_enqueue]</b> [device command] </summary>
+        /// <param name="commandBuffer"></param>
+        /// <param name="scratch"></param>
+        /// <param name="scratchSize"></param>
+        /// <param name="countInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdDispatchGraphIndirectCountAMDX.html" /></remarks>
         public void CmdDispatchGraphIndirectCountAMDX(VkCommandBuffer commandBuffer, ulong scratch, ulong scratchSize, ulong countInfo)
         {
             _vkCmdDispatchGraphIndirectCountAMDX_fnptr(commandBuffer, scratch, scratchSize, countInfo);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="buffer"></param>
+        /// <param name="offset"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdDispatchIndirect.html" /></remarks>
         public void CmdDispatchIndirect(VkCommandBuffer commandBuffer, VkBuffer buffer, ulong offset)
         {
             _vkCmdDispatchIndirect_fnptr(commandBuffer, buffer, offset);
         }
         /// <summary><b>[requires: VK_QCOM_tile_shading]</b> [device command] </summary>
+        /// <param name="commandBuffer"></param>
+        /// <param name="pDispatchTileInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdDispatchTileQCOM.html" /></remarks>
         public void CmdDispatchTileQCOM(VkCommandBuffer commandBuffer, VkDispatchTileInfoQCOM* pDispatchTileInfo)
         {
             _vkCmdDispatchTileQCOM_fnptr(commandBuffer, pDispatchTileInfo);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="vertexCount"></param>
+        /// <param name="instanceCount"></param>
+        /// <param name="firstVertex"></param>
+        /// <param name="firstInstance"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdDraw.html" /></remarks>
         public void CmdDraw(VkCommandBuffer commandBuffer, uint vertexCount, uint instanceCount, uint firstVertex, uint firstInstance)
         {
             _vkCmdDraw_fnptr(commandBuffer, vertexCount, instanceCount, firstVertex, firstInstance);
         }
         /// <summary><b>[requires: VK_HUAWEI_cluster_culling_shader]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="groupCountX"></param>
+        /// <param name="groupCountY"></param>
+        /// <param name="groupCountZ"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdDrawClusterHUAWEI.html" /></remarks>
         public void CmdDrawClusterHUAWEI(VkCommandBuffer commandBuffer, uint groupCountX, uint groupCountY, uint groupCountZ)
         {
             _vkCmdDrawClusterHUAWEI_fnptr(commandBuffer, groupCountX, groupCountY, groupCountZ);
         }
         /// <summary><b>[requires: VK_HUAWEI_cluster_culling_shader]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="buffer"></param>
+        /// <param name="offset"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdDrawClusterIndirectHUAWEI.html" /></remarks>
         public void CmdDrawClusterIndirectHUAWEI(VkCommandBuffer commandBuffer, VkBuffer buffer, ulong offset)
         {
             _vkCmdDrawClusterIndirectHUAWEI_fnptr(commandBuffer, buffer, offset);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="indexCount"></param>
+        /// <param name="instanceCount"></param>
+        /// <param name="firstIndex"></param>
+        /// <param name="vertexOffset"></param>
+        /// <param name="firstInstance"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdDrawIndexed.html" /></remarks>
         public void CmdDrawIndexed(VkCommandBuffer commandBuffer, uint indexCount, uint instanceCount, uint firstIndex, int vertexOffset, uint firstInstance)
         {
             _vkCmdDrawIndexed_fnptr(commandBuffer, indexCount, instanceCount, firstIndex, vertexOffset, firstInstance);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="buffer"></param>
+        /// <param name="offset"></param>
+        /// <param name="drawCount"></param>
+        /// <param name="stride"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdDrawIndexedIndirect.html" /></remarks>
         public void CmdDrawIndexedIndirect(VkCommandBuffer commandBuffer, VkBuffer buffer, ulong offset, uint drawCount, uint stride)
         {
             _vkCmdDrawIndexedIndirect_fnptr(commandBuffer, buffer, offset, drawCount, stride);
         }
         /// <summary><b>[requires: v1.2]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="buffer"></param>
+        /// <param name="offset"></param>
+        /// <param name="countBuffer"></param>
+        /// <param name="countBufferOffset"></param>
+        /// <param name="maxDrawCount"></param>
+        /// <param name="stride"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdDrawIndexedIndirectCount.html" /></remarks>
         public void CmdDrawIndexedIndirectCount(VkCommandBuffer commandBuffer, VkBuffer buffer, ulong offset, VkBuffer countBuffer, ulong countBufferOffset, uint maxDrawCount, uint stride)
         {
             _vkCmdDrawIndexedIndirectCount_fnptr(commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride);
         }
         /// <summary><b>[requires: VK_AMD_draw_indirect_count]</b> [device command]  Alias of <see cref="CmdDrawIndexedIndirectCount"/></summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="buffer"></param>
+        /// <param name="offset"></param>
+        /// <param name="countBuffer"></param>
+        /// <param name="countBufferOffset"></param>
+        /// <param name="maxDrawCount"></param>
+        /// <param name="stride"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdDrawIndexedIndirectCountAMD.html" /></remarks>
         public void CmdDrawIndexedIndirectCountAMD(VkCommandBuffer commandBuffer, VkBuffer buffer, ulong offset, VkBuffer countBuffer, ulong countBufferOffset, uint maxDrawCount, uint stride)
         {
             _vkCmdDrawIndexedIndirectCountAMD_fnptr(commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride);
         }
         /// <summary><b>[requires: VK_KHR_draw_indirect_count]</b> [device command]  Alias of <see cref="CmdDrawIndexedIndirectCount"/></summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="buffer"></param>
+        /// <param name="offset"></param>
+        /// <param name="countBuffer"></param>
+        /// <param name="countBufferOffset"></param>
+        /// <param name="maxDrawCount"></param>
+        /// <param name="stride"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdDrawIndexedIndirectCountKHR.html" /></remarks>
         public void CmdDrawIndexedIndirectCountKHR(VkCommandBuffer commandBuffer, VkBuffer buffer, ulong offset, VkBuffer countBuffer, ulong countBufferOffset, uint maxDrawCount, uint stride)
         {
             _vkCmdDrawIndexedIndirectCountKHR_fnptr(commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="buffer"></param>
+        /// <param name="offset"></param>
+        /// <param name="drawCount"></param>
+        /// <param name="stride"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdDrawIndirect.html" /></remarks>
         public void CmdDrawIndirect(VkCommandBuffer commandBuffer, VkBuffer buffer, ulong offset, uint drawCount, uint stride)
         {
             _vkCmdDrawIndirect_fnptr(commandBuffer, buffer, offset, drawCount, stride);
         }
         /// <summary><b>[requires: VK_EXT_transform_feedback]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="instanceCount"></param>
+        /// <param name="firstInstance"></param>
+        /// <param name="counterBuffer"></param>
+        /// <param name="counterBufferOffset"></param>
+        /// <param name="counterOffset"></param>
+        /// <param name="vertexStride"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdDrawIndirectByteCountEXT.html" /></remarks>
         public void CmdDrawIndirectByteCountEXT(VkCommandBuffer commandBuffer, uint instanceCount, uint firstInstance, VkBuffer counterBuffer, ulong counterBufferOffset, uint counterOffset, uint vertexStride)
         {
             _vkCmdDrawIndirectByteCountEXT_fnptr(commandBuffer, instanceCount, firstInstance, counterBuffer, counterBufferOffset, counterOffset, vertexStride);
         }
         /// <summary><b>[requires: v1.2]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="buffer"></param>
+        /// <param name="offset"></param>
+        /// <param name="countBuffer"></param>
+        /// <param name="countBufferOffset"></param>
+        /// <param name="maxDrawCount"></param>
+        /// <param name="stride"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdDrawIndirectCount.html" /></remarks>
         public void CmdDrawIndirectCount(VkCommandBuffer commandBuffer, VkBuffer buffer, ulong offset, VkBuffer countBuffer, ulong countBufferOffset, uint maxDrawCount, uint stride)
         {
             _vkCmdDrawIndirectCount_fnptr(commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride);
         }
         /// <summary><b>[requires: VK_AMD_draw_indirect_count]</b> [device command]  Alias of <see cref="CmdDrawIndirectCount"/></summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="buffer"></param>
+        /// <param name="offset"></param>
+        /// <param name="countBuffer"></param>
+        /// <param name="countBufferOffset"></param>
+        /// <param name="maxDrawCount"></param>
+        /// <param name="stride"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdDrawIndirectCountAMD.html" /></remarks>
         public void CmdDrawIndirectCountAMD(VkCommandBuffer commandBuffer, VkBuffer buffer, ulong offset, VkBuffer countBuffer, ulong countBufferOffset, uint maxDrawCount, uint stride)
         {
             _vkCmdDrawIndirectCountAMD_fnptr(commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride);
         }
         /// <summary><b>[requires: VK_KHR_draw_indirect_count]</b> [device command]  Alias of <see cref="CmdDrawIndirectCount"/></summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="buffer"></param>
+        /// <param name="offset"></param>
+        /// <param name="countBuffer"></param>
+        /// <param name="countBufferOffset"></param>
+        /// <param name="maxDrawCount"></param>
+        /// <param name="stride"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdDrawIndirectCountKHR.html" /></remarks>
         public void CmdDrawIndirectCountKHR(VkCommandBuffer commandBuffer, VkBuffer buffer, ulong offset, VkBuffer countBuffer, ulong countBufferOffset, uint maxDrawCount, uint stride)
         {
             _vkCmdDrawIndirectCountKHR_fnptr(commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride);
         }
         /// <summary><b>[requires: VK_EXT_mesh_shader]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="groupCountX"></param>
+        /// <param name="groupCountY"></param>
+        /// <param name="groupCountZ"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdDrawMeshTasksEXT.html" /></remarks>
         public void CmdDrawMeshTasksEXT(VkCommandBuffer commandBuffer, uint groupCountX, uint groupCountY, uint groupCountZ)
         {
             _vkCmdDrawMeshTasksEXT_fnptr(commandBuffer, groupCountX, groupCountY, groupCountZ);
         }
         /// <summary><b>[requires: VK_EXT_mesh_shader]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="buffer"></param>
+        /// <param name="offset"></param>
+        /// <param name="countBuffer"></param>
+        /// <param name="countBufferOffset"></param>
+        /// <param name="maxDrawCount"></param>
+        /// <param name="stride"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdDrawMeshTasksIndirectCountEXT.html" /></remarks>
         public void CmdDrawMeshTasksIndirectCountEXT(VkCommandBuffer commandBuffer, VkBuffer buffer, ulong offset, VkBuffer countBuffer, ulong countBufferOffset, uint maxDrawCount, uint stride)
         {
             _vkCmdDrawMeshTasksIndirectCountEXT_fnptr(commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride);
         }
         /// <summary><b>[requires: VK_NV_mesh_shader]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="buffer"></param>
+        /// <param name="offset"></param>
+        /// <param name="countBuffer"></param>
+        /// <param name="countBufferOffset"></param>
+        /// <param name="maxDrawCount"></param>
+        /// <param name="stride"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdDrawMeshTasksIndirectCountNV.html" /></remarks>
         public void CmdDrawMeshTasksIndirectCountNV(VkCommandBuffer commandBuffer, VkBuffer buffer, ulong offset, VkBuffer countBuffer, ulong countBufferOffset, uint maxDrawCount, uint stride)
         {
             _vkCmdDrawMeshTasksIndirectCountNV_fnptr(commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride);
         }
         /// <summary><b>[requires: VK_EXT_mesh_shader]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="buffer"></param>
+        /// <param name="offset"></param>
+        /// <param name="drawCount"></param>
+        /// <param name="stride"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdDrawMeshTasksIndirectEXT.html" /></remarks>
         public void CmdDrawMeshTasksIndirectEXT(VkCommandBuffer commandBuffer, VkBuffer buffer, ulong offset, uint drawCount, uint stride)
         {
             _vkCmdDrawMeshTasksIndirectEXT_fnptr(commandBuffer, buffer, offset, drawCount, stride);
         }
         /// <summary><b>[requires: VK_NV_mesh_shader]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="buffer"></param>
+        /// <param name="offset"></param>
+        /// <param name="drawCount"></param>
+        /// <param name="stride"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdDrawMeshTasksIndirectNV.html" /></remarks>
         public void CmdDrawMeshTasksIndirectNV(VkCommandBuffer commandBuffer, VkBuffer buffer, ulong offset, uint drawCount, uint stride)
         {
             _vkCmdDrawMeshTasksIndirectNV_fnptr(commandBuffer, buffer, offset, drawCount, stride);
         }
         /// <summary><b>[requires: VK_NV_mesh_shader]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="taskCount"></param>
+        /// <param name="firstTask"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdDrawMeshTasksNV.html" /></remarks>
         public void CmdDrawMeshTasksNV(VkCommandBuffer commandBuffer, uint taskCount, uint firstTask)
         {
             _vkCmdDrawMeshTasksNV_fnptr(commandBuffer, taskCount, firstTask);
         }
         /// <summary><b>[requires: VK_EXT_multi_draw]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="drawCount">[optional] </param>
+        /// <param name="pVertexInfo"></param>
+        /// <param name="instanceCount"></param>
+        /// <param name="firstInstance"></param>
+        /// <param name="stride"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdDrawMultiEXT.html" /></remarks>
         public void CmdDrawMultiEXT(VkCommandBuffer commandBuffer, uint drawCount, VkMultiDrawInfoEXT* pVertexInfo, uint instanceCount, uint firstInstance, uint stride)
         {
             _vkCmdDrawMultiEXT_fnptr(commandBuffer, drawCount, pVertexInfo, instanceCount, firstInstance, stride);
         }
         /// <summary><b>[requires: VK_EXT_multi_draw]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="drawCount">[optional] </param>
+        /// <param name="pIndexInfo"></param>
+        /// <param name="instanceCount"></param>
+        /// <param name="firstInstance"></param>
+        /// <param name="stride"></param>
+        /// <param name="pVertexOffset">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdDrawMultiIndexedEXT.html" /></remarks>
         public void CmdDrawMultiIndexedEXT(VkCommandBuffer commandBuffer, uint drawCount, VkMultiDrawIndexedInfoEXT* pIndexInfo, uint instanceCount, uint firstInstance, uint stride, int* pVertexOffset)
         {
             _vkCmdDrawMultiIndexedEXT_fnptr(commandBuffer, drawCount, pIndexInfo, instanceCount, firstInstance, stride, pVertexOffset);
         }
         /// <summary><b>[requires: VK_KHR_video_encode_queue]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="pEncodeInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdEncodeVideoKHR.html" /></remarks>
         public void CmdEncodeVideoKHR(VkCommandBuffer commandBuffer, VkVideoEncodeInfoKHR* pEncodeInfo)
         {
             _vkCmdEncodeVideoKHR_fnptr(commandBuffer, pEncodeInfo);
         }
         /// <summary><b>[requires: VK_EXT_conditional_rendering]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdEndConditionalRenderingEXT.html" /></remarks>
         public void CmdEndConditionalRenderingEXT(VkCommandBuffer commandBuffer)
         {
             _vkCmdEndConditionalRenderingEXT_fnptr(commandBuffer);
         }
         /// <summary><b>[requires: VK_EXT_debug_utils]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdEndDebugUtilsLabelEXT.html" /></remarks>
         public void CmdEndDebugUtilsLabelEXT(VkCommandBuffer commandBuffer)
         {
             _vkCmdEndDebugUtilsLabelEXT_fnptr(commandBuffer);
         }
         /// <summary><b>[requires: VK_QCOM_tile_shading]</b> [device command] </summary>
+        /// <param name="commandBuffer"></param>
+        /// <param name="pPerTileEndInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdEndPerTileExecutionQCOM.html" /></remarks>
         public void CmdEndPerTileExecutionQCOM(VkCommandBuffer commandBuffer, VkPerTileEndInfoQCOM* pPerTileEndInfo)
         {
             _vkCmdEndPerTileExecutionQCOM_fnptr(commandBuffer, pPerTileEndInfo);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="queryPool"></param>
+        /// <param name="query"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdEndQuery.html" /></remarks>
         public void CmdEndQuery(VkCommandBuffer commandBuffer, VkQueryPool queryPool, uint query)
         {
             _vkCmdEndQuery_fnptr(commandBuffer, queryPool, query);
         }
         /// <summary><b>[requires: VK_EXT_transform_feedback]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="queryPool"></param>
+        /// <param name="query"></param>
+        /// <param name="index"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdEndQueryIndexedEXT.html" /></remarks>
         public void CmdEndQueryIndexedEXT(VkCommandBuffer commandBuffer, VkQueryPool queryPool, uint query, uint index)
         {
             _vkCmdEndQueryIndexedEXT_fnptr(commandBuffer, queryPool, query, index);
         }
         /// <summary><b>[requires: v1.3]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdEndRendering.html" /></remarks>
         public void CmdEndRendering(VkCommandBuffer commandBuffer)
         {
             _vkCmdEndRendering_fnptr(commandBuffer);
         }
         /// <summary><b>[requires: VK_EXT_fragment_density_map_offset]</b> [device command]  Alias of <see cref="CmdEndRendering2KHR"/></summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="pRenderingEndInfo">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdEndRendering2EXT.html" /></remarks>
         public void CmdEndRendering2EXT(VkCommandBuffer commandBuffer, VkRenderingEndInfoKHR* pRenderingEndInfo)
         {
             _vkCmdEndRendering2EXT_fnptr(commandBuffer, pRenderingEndInfo);
         }
         /// <summary><b>[requires: VK_KHR_maintenance10]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="pRenderingEndInfo">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdEndRendering2KHR.html" /></remarks>
         public void CmdEndRendering2KHR(VkCommandBuffer commandBuffer, VkRenderingEndInfoKHR* pRenderingEndInfo)
         {
             _vkCmdEndRendering2KHR_fnptr(commandBuffer, pRenderingEndInfo);
         }
         /// <summary><b>[requires: VK_KHR_dynamic_rendering]</b> [device command]  Alias of <see cref="CmdEndRendering"/></summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdEndRenderingKHR.html" /></remarks>
         public void CmdEndRenderingKHR(VkCommandBuffer commandBuffer)
         {
             _vkCmdEndRenderingKHR_fnptr(commandBuffer);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdEndRenderPass.html" /></remarks>
         public void CmdEndRenderPass(VkCommandBuffer commandBuffer)
         {
             _vkCmdEndRenderPass_fnptr(commandBuffer);
         }
         /// <summary><b>[requires: v1.2]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="pSubpassEndInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdEndRenderPass2.html" /></remarks>
         public void CmdEndRenderPass2(VkCommandBuffer commandBuffer, VkSubpassEndInfo* pSubpassEndInfo)
         {
             _vkCmdEndRenderPass2_fnptr(commandBuffer, pSubpassEndInfo);
         }
         /// <summary><b>[requires: VK_KHR_create_renderpass2]</b> [device command]  Alias of <see cref="CmdEndRenderPass2"/></summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="pSubpassEndInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdEndRenderPass2KHR.html" /></remarks>
         public void CmdEndRenderPass2KHR(VkCommandBuffer commandBuffer, VkSubpassEndInfo* pSubpassEndInfo)
         {
             _vkCmdEndRenderPass2KHR_fnptr(commandBuffer, pSubpassEndInfo);
         }
         /// <summary><b>[requires: VK_EXT_transform_feedback]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="firstCounterBuffer"></param>
+        /// <param name="counterBufferCount">[optional] </param>
+        /// <param name="pCounterBuffers"></param>
+        /// <param name="pCounterBufferOffsets">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdEndTransformFeedbackEXT.html" /></remarks>
         public void CmdEndTransformFeedbackEXT(VkCommandBuffer commandBuffer, uint firstCounterBuffer, uint counterBufferCount, VkBuffer* pCounterBuffers, ulong* pCounterBufferOffsets)
         {
             _vkCmdEndTransformFeedbackEXT_fnptr(commandBuffer, firstCounterBuffer, counterBufferCount, pCounterBuffers, pCounterBufferOffsets);
         }
         /// <summary><b>[requires: VK_KHR_video_queue]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="pEndCodingInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdEndVideoCodingKHR.html" /></remarks>
         public void CmdEndVideoCodingKHR(VkCommandBuffer commandBuffer, VkVideoEndCodingInfoKHR* pEndCodingInfo)
         {
             _vkCmdEndVideoCodingKHR_fnptr(commandBuffer, pEndCodingInfo);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="commandBufferCount"></param>
+        /// <param name="pCommandBuffers"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdExecuteCommands.html" /></remarks>
         public void CmdExecuteCommands(VkCommandBuffer commandBuffer, uint commandBufferCount, VkCommandBuffer* pCommandBuffers)
         {
             _vkCmdExecuteCommands_fnptr(commandBuffer, commandBufferCount, pCommandBuffers);
         }
         /// <summary><b>[requires: VK_EXT_device_generated_commands]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="isPreprocessed"></param>
+        /// <param name="pGeneratedCommandsInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdExecuteGeneratedCommandsEXT.html" /></remarks>
         public void CmdExecuteGeneratedCommandsEXT(VkCommandBuffer commandBuffer, int isPreprocessed, VkGeneratedCommandsInfoEXT* pGeneratedCommandsInfo)
         {
             _vkCmdExecuteGeneratedCommandsEXT_fnptr(commandBuffer, isPreprocessed, pGeneratedCommandsInfo);
         }
         /// <summary><b>[requires: VK_NV_device_generated_commands]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="isPreprocessed"></param>
+        /// <param name="pGeneratedCommandsInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdExecuteGeneratedCommandsNV.html" /></remarks>
         public void CmdExecuteGeneratedCommandsNV(VkCommandBuffer commandBuffer, int isPreprocessed, VkGeneratedCommandsInfoNV* pGeneratedCommandsInfo)
         {
             _vkCmdExecuteGeneratedCommandsNV_fnptr(commandBuffer, isPreprocessed, pGeneratedCommandsInfo);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="dstBuffer"></param>
+        /// <param name="dstOffset"></param>
+        /// <param name="size"></param>
+        /// <param name="data"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdFillBuffer.html" /></remarks>
         public void CmdFillBuffer(VkCommandBuffer commandBuffer, VkBuffer dstBuffer, ulong dstOffset, ulong size, uint data)
         {
             _vkCmdFillBuffer_fnptr(commandBuffer, dstBuffer, dstOffset, size, data);
         }
         /// <summary><b>[requires: VK_AMDX_shader_enqueue]</b> [device command] </summary>
+        /// <param name="commandBuffer"></param>
+        /// <param name="executionGraph"></param>
+        /// <param name="scratch"></param>
+        /// <param name="scratchSize"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdInitializeGraphScratchMemoryAMDX.html" /></remarks>
         public void CmdInitializeGraphScratchMemoryAMDX(VkCommandBuffer commandBuffer, VkPipeline executionGraph, ulong scratch, ulong scratchSize)
         {
             _vkCmdInitializeGraphScratchMemoryAMDX_fnptr(commandBuffer, executionGraph, scratch, scratchSize);
         }
         /// <summary><b>[requires: VK_EXT_debug_utils]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="pLabelInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdInsertDebugUtilsLabelEXT.html" /></remarks>
         public void CmdInsertDebugUtilsLabelEXT(VkCommandBuffer commandBuffer, VkDebugUtilsLabelEXT* pLabelInfo)
         {
             _vkCmdInsertDebugUtilsLabelEXT_fnptr(commandBuffer, pLabelInfo);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="contents"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdNextSubpass.html" /></remarks>
         public void CmdNextSubpass(VkCommandBuffer commandBuffer, VkSubpassContents contents)
         {
             _vkCmdNextSubpass_fnptr(commandBuffer, contents);
         }
         /// <summary><b>[requires: v1.2]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="pSubpassBeginInfo"></param>
+        /// <param name="pSubpassEndInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdNextSubpass2.html" /></remarks>
         public void CmdNextSubpass2(VkCommandBuffer commandBuffer, VkSubpassBeginInfo* pSubpassBeginInfo, VkSubpassEndInfo* pSubpassEndInfo)
         {
             _vkCmdNextSubpass2_fnptr(commandBuffer, pSubpassBeginInfo, pSubpassEndInfo);
         }
         /// <summary><b>[requires: VK_KHR_create_renderpass2]</b> [device command]  Alias of <see cref="CmdNextSubpass2"/></summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="pSubpassBeginInfo"></param>
+        /// <param name="pSubpassEndInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdNextSubpass2KHR.html" /></remarks>
         public void CmdNextSubpass2KHR(VkCommandBuffer commandBuffer, VkSubpassBeginInfo* pSubpassBeginInfo, VkSubpassEndInfo* pSubpassEndInfo)
         {
             _vkCmdNextSubpass2KHR_fnptr(commandBuffer, pSubpassBeginInfo, pSubpassEndInfo);
         }
         /// <summary><b>[requires: VK_NV_optical_flow]</b> [device command] </summary>
+        /// <param name="commandBuffer"></param>
+        /// <param name="session"></param>
+        /// <param name="pExecuteInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdOpticalFlowExecuteNV.html" /></remarks>
         public void CmdOpticalFlowExecuteNV(VkCommandBuffer commandBuffer, VkOpticalFlowSessionNV session, VkOpticalFlowExecuteInfoNV* pExecuteInfo)
         {
             _vkCmdOpticalFlowExecuteNV_fnptr(commandBuffer, session, pExecuteInfo);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="srcStageMask">[optional] </param>
+        /// <param name="dstStageMask">[optional] </param>
+        /// <param name="dependencyFlags">[optional] </param>
+        /// <param name="memoryBarrierCount">[optional] </param>
+        /// <param name="pMemoryBarriers"></param>
+        /// <param name="bufferMemoryBarrierCount">[optional] </param>
+        /// <param name="pBufferMemoryBarriers"></param>
+        /// <param name="imageMemoryBarrierCount">[optional] </param>
+        /// <param name="pImageMemoryBarriers"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdPipelineBarrier.html" /></remarks>
         public void CmdPipelineBarrier(VkCommandBuffer commandBuffer, VkPipelineStageFlagBits srcStageMask, VkPipelineStageFlagBits dstStageMask, VkDependencyFlagBits dependencyFlags, uint memoryBarrierCount, VkMemoryBarrier* pMemoryBarriers, uint bufferMemoryBarrierCount, VkBufferMemoryBarrier* pBufferMemoryBarriers, uint imageMemoryBarrierCount, VkImageMemoryBarrier* pImageMemoryBarriers)
         {
             _vkCmdPipelineBarrier_fnptr(commandBuffer, srcStageMask, dstStageMask, dependencyFlags, memoryBarrierCount, pMemoryBarriers, bufferMemoryBarrierCount, pBufferMemoryBarriers, imageMemoryBarrierCount, pImageMemoryBarriers);
         }
         /// <summary><b>[requires: v1.3]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="pDependencyInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdPipelineBarrier2.html" /></remarks>
         public void CmdPipelineBarrier2(VkCommandBuffer commandBuffer, VkDependencyInfo* pDependencyInfo)
         {
             _vkCmdPipelineBarrier2_fnptr(commandBuffer, pDependencyInfo);
         }
         /// <summary><b>[requires: VK_KHR_synchronization2]</b> [device command]  Alias of <see cref="CmdPipelineBarrier2"/></summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="pDependencyInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdPipelineBarrier2KHR.html" /></remarks>
         public void CmdPipelineBarrier2KHR(VkCommandBuffer commandBuffer, VkDependencyInfo* pDependencyInfo)
         {
             _vkCmdPipelineBarrier2KHR_fnptr(commandBuffer, pDependencyInfo);
         }
         /// <summary><b>[requires: VK_EXT_device_generated_commands]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="pGeneratedCommandsInfo"></param>
+        /// <param name="stateCommandBuffer">[extern sync: always] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdPreprocessGeneratedCommandsEXT.html" /></remarks>
         public void CmdPreprocessGeneratedCommandsEXT(VkCommandBuffer commandBuffer, VkGeneratedCommandsInfoEXT* pGeneratedCommandsInfo, VkCommandBuffer stateCommandBuffer)
         {
             _vkCmdPreprocessGeneratedCommandsEXT_fnptr(commandBuffer, pGeneratedCommandsInfo, stateCommandBuffer);
         }
         /// <summary><b>[requires: VK_NV_device_generated_commands]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="pGeneratedCommandsInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdPreprocessGeneratedCommandsNV.html" /></remarks>
         public void CmdPreprocessGeneratedCommandsNV(VkCommandBuffer commandBuffer, VkGeneratedCommandsInfoNV* pGeneratedCommandsInfo)
         {
             _vkCmdPreprocessGeneratedCommandsNV_fnptr(commandBuffer, pGeneratedCommandsInfo);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="layout"></param>
+        /// <param name="stageFlags"></param>
+        /// <param name="offset"></param>
+        /// <param name="size"></param>
+        /// <param name="pValues"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdPushConstants.html" /></remarks>
         public void CmdPushConstants(VkCommandBuffer commandBuffer, VkPipelineLayout layout, VkShaderStageFlagBits stageFlags, uint offset, uint size, void* pValues)
         {
             _vkCmdPushConstants_fnptr(commandBuffer, layout, stageFlags, offset, size, pValues);
         }
         /// <summary><b>[requires: v1.4]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="pPushConstantsInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdPushConstants2.html" /></remarks>
         public void CmdPushConstants2(VkCommandBuffer commandBuffer, VkPushConstantsInfo* pPushConstantsInfo)
         {
             _vkCmdPushConstants2_fnptr(commandBuffer, pPushConstantsInfo);
         }
         /// <summary><b>[requires: VK_KHR_maintenance6]</b> [device command]  Alias of <see cref="CmdPushConstants2"/></summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="pPushConstantsInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdPushConstants2KHR.html" /></remarks>
         public void CmdPushConstants2KHR(VkCommandBuffer commandBuffer, VkPushConstantsInfo* pPushConstantsInfo)
         {
             _vkCmdPushConstants2KHR_fnptr(commandBuffer, pPushConstantsInfo);
         }
+        /// <summary><b>[requires: VK_EXT_descriptor_heap]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="pPushDataInfo"></param>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdPushDataEXT.html" /></remarks>
+        public void CmdPushDataEXT(VkCommandBuffer commandBuffer, VkPushDataInfoEXT* pPushDataInfo)
+        {
+            _vkCmdPushDataEXT_fnptr(commandBuffer, pPushDataInfo);
+        }
         /// <summary><b>[requires: v1.4]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="pipelineBindPoint"></param>
+        /// <param name="layout"></param>
+        /// <param name="set"></param>
+        /// <param name="descriptorWriteCount"></param>
+        /// <param name="pDescriptorWrites"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdPushDescriptorSet.html" /></remarks>
         public void CmdPushDescriptorSet(VkCommandBuffer commandBuffer, VkPipelineBindPoint pipelineBindPoint, VkPipelineLayout layout, uint set, uint descriptorWriteCount, VkWriteDescriptorSet* pDescriptorWrites)
         {
             _vkCmdPushDescriptorSet_fnptr(commandBuffer, pipelineBindPoint, layout, set, descriptorWriteCount, pDescriptorWrites);
         }
         /// <summary><b>[requires: v1.4]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="pPushDescriptorSetInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdPushDescriptorSet2.html" /></remarks>
         public void CmdPushDescriptorSet2(VkCommandBuffer commandBuffer, VkPushDescriptorSetInfo* pPushDescriptorSetInfo)
         {
             _vkCmdPushDescriptorSet2_fnptr(commandBuffer, pPushDescriptorSetInfo);
         }
         /// <summary><b>[requires: VK_KHR_maintenance6]</b> [device command]  Alias of <see cref="CmdPushDescriptorSet2"/></summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="pPushDescriptorSetInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdPushDescriptorSet2KHR.html" /></remarks>
         public void CmdPushDescriptorSet2KHR(VkCommandBuffer commandBuffer, VkPushDescriptorSetInfo* pPushDescriptorSetInfo)
         {
             _vkCmdPushDescriptorSet2KHR_fnptr(commandBuffer, pPushDescriptorSetInfo);
         }
         /// <summary><b>[requires: VK_KHR_push_descriptor]</b> [device command]  Alias of <see cref="CmdPushDescriptorSet"/></summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="pipelineBindPoint"></param>
+        /// <param name="layout"></param>
+        /// <param name="set"></param>
+        /// <param name="descriptorWriteCount"></param>
+        /// <param name="pDescriptorWrites"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdPushDescriptorSetKHR.html" /></remarks>
         public void CmdPushDescriptorSetKHR(VkCommandBuffer commandBuffer, VkPipelineBindPoint pipelineBindPoint, VkPipelineLayout layout, uint set, uint descriptorWriteCount, VkWriteDescriptorSet* pDescriptorWrites)
         {
             _vkCmdPushDescriptorSetKHR_fnptr(commandBuffer, pipelineBindPoint, layout, set, descriptorWriteCount, pDescriptorWrites);
         }
         /// <summary><b>[requires: v1.4]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="descriptorUpdateTemplate"></param>
+        /// <param name="layout"></param>
+        /// <param name="set"></param>
+        /// <param name="pData"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdPushDescriptorSetWithTemplate.html" /></remarks>
         public void CmdPushDescriptorSetWithTemplate(VkCommandBuffer commandBuffer, VkDescriptorUpdateTemplate descriptorUpdateTemplate, VkPipelineLayout layout, uint set, void* pData)
         {
             _vkCmdPushDescriptorSetWithTemplate_fnptr(commandBuffer, descriptorUpdateTemplate, layout, set, pData);
         }
         /// <summary><b>[requires: v1.4]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="pPushDescriptorSetWithTemplateInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdPushDescriptorSetWithTemplate2.html" /></remarks>
         public void CmdPushDescriptorSetWithTemplate2(VkCommandBuffer commandBuffer, VkPushDescriptorSetWithTemplateInfo* pPushDescriptorSetWithTemplateInfo)
         {
             _vkCmdPushDescriptorSetWithTemplate2_fnptr(commandBuffer, pPushDescriptorSetWithTemplateInfo);
         }
         /// <summary><b>[requires: VK_KHR_maintenance6]</b> [device command]  Alias of <see cref="CmdPushDescriptorSetWithTemplate2"/></summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="pPushDescriptorSetWithTemplateInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdPushDescriptorSetWithTemplate2KHR.html" /></remarks>
         public void CmdPushDescriptorSetWithTemplate2KHR(VkCommandBuffer commandBuffer, VkPushDescriptorSetWithTemplateInfo* pPushDescriptorSetWithTemplateInfo)
         {
             _vkCmdPushDescriptorSetWithTemplate2KHR_fnptr(commandBuffer, pPushDescriptorSetWithTemplateInfo);
         }
         /// <summary><b>[requires: VK_KHR_push_descriptor | VK_KHR_descriptor_update_template]</b> [device command]  Alias of <see cref="CmdPushDescriptorSetWithTemplate"/></summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="descriptorUpdateTemplate"></param>
+        /// <param name="layout"></param>
+        /// <param name="set"></param>
+        /// <param name="pData"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdPushDescriptorSetWithTemplateKHR.html" /></remarks>
         public void CmdPushDescriptorSetWithTemplateKHR(VkCommandBuffer commandBuffer, VkDescriptorUpdateTemplate descriptorUpdateTemplate, VkPipelineLayout layout, uint set, void* pData)
         {
             _vkCmdPushDescriptorSetWithTemplateKHR_fnptr(commandBuffer, descriptorUpdateTemplate, layout, set, pData);
         }
         /// <summary><b>[requires: VK_KHR_object_refresh]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="pRefreshObjects"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdRefreshObjectsKHR.html" /></remarks>
         public void CmdRefreshObjectsKHR(VkCommandBuffer commandBuffer, VkRefreshObjectListKHR* pRefreshObjects)
         {
             _vkCmdRefreshObjectsKHR_fnptr(commandBuffer, pRefreshObjects);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="event"></param>
+        /// <param name="stageMask">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdResetEvent.html" /></remarks>
         public void CmdResetEvent(VkCommandBuffer commandBuffer, VkEvent @event, VkPipelineStageFlagBits stageMask)
         {
             _vkCmdResetEvent_fnptr(commandBuffer, @event, stageMask);
         }
         /// <summary><b>[requires: v1.3]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="event"></param>
+        /// <param name="stageMask">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdResetEvent2.html" /></remarks>
         public void CmdResetEvent2(VkCommandBuffer commandBuffer, VkEvent @event, VkPipelineStageFlagBits2 stageMask)
         {
             _vkCmdResetEvent2_fnptr(commandBuffer, @event, stageMask);
         }
         /// <summary><b>[requires: VK_KHR_synchronization2]</b> [device command]  Alias of <see cref="CmdResetEvent2"/></summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="event"></param>
+        /// <param name="stageMask">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdResetEvent2KHR.html" /></remarks>
         public void CmdResetEvent2KHR(VkCommandBuffer commandBuffer, VkEvent @event, VkPipelineStageFlagBits2 stageMask)
         {
             _vkCmdResetEvent2KHR_fnptr(commandBuffer, @event, stageMask);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="queryPool"></param>
+        /// <param name="firstQuery"></param>
+        /// <param name="queryCount"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdResetQueryPool.html" /></remarks>
         public void CmdResetQueryPool(VkCommandBuffer commandBuffer, VkQueryPool queryPool, uint firstQuery, uint queryCount)
         {
             _vkCmdResetQueryPool_fnptr(commandBuffer, queryPool, firstQuery, queryCount);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="srcImage"></param>
+        /// <param name="srcImageLayout"></param>
+        /// <param name="dstImage"></param>
+        /// <param name="dstImageLayout"></param>
+        /// <param name="regionCount"></param>
+        /// <param name="pRegions"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdResolveImage.html" /></remarks>
         public void CmdResolveImage(VkCommandBuffer commandBuffer, VkImage srcImage, VkImageLayout srcImageLayout, VkImage dstImage, VkImageLayout dstImageLayout, uint regionCount, VkImageResolve* pRegions)
         {
             _vkCmdResolveImage_fnptr(commandBuffer, srcImage, srcImageLayout, dstImage, dstImageLayout, regionCount, pRegions);
         }
         /// <summary><b>[requires: v1.3]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="pResolveImageInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdResolveImage2.html" /></remarks>
         public void CmdResolveImage2(VkCommandBuffer commandBuffer, VkResolveImageInfo2* pResolveImageInfo)
         {
             _vkCmdResolveImage2_fnptr(commandBuffer, pResolveImageInfo);
         }
         /// <summary><b>[requires: VK_KHR_copy_commands2]</b> [device command]  Alias of <see cref="CmdResolveImage2"/></summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="pResolveImageInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdResolveImage2KHR.html" /></remarks>
         public void CmdResolveImage2KHR(VkCommandBuffer commandBuffer, VkResolveImageInfo2* pResolveImageInfo)
         {
             _vkCmdResolveImage2KHR_fnptr(commandBuffer, pResolveImageInfo);
         }
         /// <summary><b>[requires: VK_EXT_extended_dynamic_state3 | VK_EXT_shader_object]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="alphaToCoverageEnable"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetAlphaToCoverageEnableEXT.html" /></remarks>
         public void CmdSetAlphaToCoverageEnableEXT(VkCommandBuffer commandBuffer, int alphaToCoverageEnable)
         {
             _vkCmdSetAlphaToCoverageEnableEXT_fnptr(commandBuffer, alphaToCoverageEnable);
         }
         /// <summary><b>[requires: VK_EXT_extended_dynamic_state3 | VK_EXT_shader_object]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="alphaToOneEnable"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetAlphaToOneEnableEXT.html" /></remarks>
         public void CmdSetAlphaToOneEnableEXT(VkCommandBuffer commandBuffer, int alphaToOneEnable)
         {
             _vkCmdSetAlphaToOneEnableEXT_fnptr(commandBuffer, alphaToOneEnable);
         }
         /// <summary><b>[requires: VK_EXT_attachment_feedback_loop_dynamic_state]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="aspectMask">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetAttachmentFeedbackLoopEnableEXT.html" /></remarks>
         public void CmdSetAttachmentFeedbackLoopEnableEXT(VkCommandBuffer commandBuffer, VkImageAspectFlagBits aspectMask)
         {
             _vkCmdSetAttachmentFeedbackLoopEnableEXT_fnptr(commandBuffer, aspectMask);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="blendConstants"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetBlendConstants.html" /></remarks>
         public void CmdSetBlendConstants(VkCommandBuffer commandBuffer, float* blendConstants)
         {
             _vkCmdSetBlendConstants_fnptr(commandBuffer, blendConstants);
         }
         /// <summary><b>[requires: VK_NV_device_diagnostic_checkpoints]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="pCheckpointMarker"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetCheckpointNV.html" /></remarks>
         public void CmdSetCheckpointNV(VkCommandBuffer commandBuffer, void* pCheckpointMarker)
         {
             _vkCmdSetCheckpointNV_fnptr(commandBuffer, pCheckpointMarker);
         }
         /// <summary><b>[requires: VK_NV_shading_rate_image]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="sampleOrderType"></param>
+        /// <param name="customSampleOrderCount">[optional] </param>
+        /// <param name="pCustomSampleOrders"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetCoarseSampleOrderNV.html" /></remarks>
         public void CmdSetCoarseSampleOrderNV(VkCommandBuffer commandBuffer, VkCoarseSampleOrderTypeNV sampleOrderType, uint customSampleOrderCount, VkCoarseSampleOrderCustomNV* pCustomSampleOrders)
         {
             _vkCmdSetCoarseSampleOrderNV_fnptr(commandBuffer, sampleOrderType, customSampleOrderCount, pCustomSampleOrders);
         }
         /// <summary><b>[requires: VK_EXT_extended_dynamic_state3 | VK_EXT_shader_object]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="firstAttachment"></param>
+        /// <param name="attachmentCount"></param>
+        /// <param name="pColorBlendAdvanced"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetColorBlendAdvancedEXT.html" /></remarks>
         public void CmdSetColorBlendAdvancedEXT(VkCommandBuffer commandBuffer, uint firstAttachment, uint attachmentCount, VkColorBlendAdvancedEXT* pColorBlendAdvanced)
         {
             _vkCmdSetColorBlendAdvancedEXT_fnptr(commandBuffer, firstAttachment, attachmentCount, pColorBlendAdvanced);
         }
         /// <summary><b>[requires: VK_EXT_extended_dynamic_state3 | VK_EXT_shader_object]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="firstAttachment"></param>
+        /// <param name="attachmentCount"></param>
+        /// <param name="pColorBlendEnables"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetColorBlendEnableEXT.html" /></remarks>
         public void CmdSetColorBlendEnableEXT(VkCommandBuffer commandBuffer, uint firstAttachment, uint attachmentCount, int* pColorBlendEnables)
         {
             _vkCmdSetColorBlendEnableEXT_fnptr(commandBuffer, firstAttachment, attachmentCount, pColorBlendEnables);
         }
         /// <summary><b>[requires: VK_EXT_extended_dynamic_state3 | VK_EXT_shader_object]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="firstAttachment"></param>
+        /// <param name="attachmentCount"></param>
+        /// <param name="pColorBlendEquations"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetColorBlendEquationEXT.html" /></remarks>
         public void CmdSetColorBlendEquationEXT(VkCommandBuffer commandBuffer, uint firstAttachment, uint attachmentCount, VkColorBlendEquationEXT* pColorBlendEquations)
         {
             _vkCmdSetColorBlendEquationEXT_fnptr(commandBuffer, firstAttachment, attachmentCount, pColorBlendEquations);
         }
         /// <summary><b>[requires: VK_EXT_color_write_enable]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="attachmentCount"></param>
+        /// <param name="pColorWriteEnables"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetColorWriteEnableEXT.html" /></remarks>
         public void CmdSetColorWriteEnableEXT(VkCommandBuffer commandBuffer, uint attachmentCount, int* pColorWriteEnables)
         {
             _vkCmdSetColorWriteEnableEXT_fnptr(commandBuffer, attachmentCount, pColorWriteEnables);
         }
         /// <summary><b>[requires: VK_EXT_extended_dynamic_state3 | VK_EXT_shader_object]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="firstAttachment"></param>
+        /// <param name="attachmentCount"></param>
+        /// <param name="pColorWriteMasks">[ptr required, value optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetColorWriteMaskEXT.html" /></remarks>
         public void CmdSetColorWriteMaskEXT(VkCommandBuffer commandBuffer, uint firstAttachment, uint attachmentCount, VkColorComponentFlagBits* pColorWriteMasks)
         {
             _vkCmdSetColorWriteMaskEXT_fnptr(commandBuffer, firstAttachment, attachmentCount, pColorWriteMasks);
         }
+        /// <summary><b>[requires: VK_NV_compute_occupancy_priority]</b> [device command] </summary>
+        /// <param name="commandBuffer"></param>
+        /// <param name="pParameters"></param>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetComputeOccupancyPriorityNV.html" /></remarks>
+        public void CmdSetComputeOccupancyPriorityNV(VkCommandBuffer commandBuffer, VkComputeOccupancyPriorityParametersNV* pParameters)
+        {
+            _vkCmdSetComputeOccupancyPriorityNV_fnptr(commandBuffer, pParameters);
+        }
         /// <summary><b>[requires: VK_EXT_extended_dynamic_state3 | VK_EXT_shader_object]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="conservativeRasterizationMode"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetConservativeRasterizationModeEXT.html" /></remarks>
         public void CmdSetConservativeRasterizationModeEXT(VkCommandBuffer commandBuffer, VkConservativeRasterizationModeEXT conservativeRasterizationMode)
         {
             _vkCmdSetConservativeRasterizationModeEXT_fnptr(commandBuffer, conservativeRasterizationMode);
         }
         /// <summary><b>[requires: VK_EXT_extended_dynamic_state3 | VK_EXT_shader_object]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="coverageModulationMode"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetCoverageModulationModeNV.html" /></remarks>
         public void CmdSetCoverageModulationModeNV(VkCommandBuffer commandBuffer, VkCoverageModulationModeNV coverageModulationMode)
         {
             _vkCmdSetCoverageModulationModeNV_fnptr(commandBuffer, coverageModulationMode);
         }
         /// <summary><b>[requires: VK_EXT_extended_dynamic_state3 | VK_EXT_shader_object]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="coverageModulationTableEnable"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetCoverageModulationTableEnableNV.html" /></remarks>
         public void CmdSetCoverageModulationTableEnableNV(VkCommandBuffer commandBuffer, int coverageModulationTableEnable)
         {
             _vkCmdSetCoverageModulationTableEnableNV_fnptr(commandBuffer, coverageModulationTableEnable);
         }
         /// <summary><b>[requires: VK_EXT_extended_dynamic_state3 | VK_EXT_shader_object]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="coverageModulationTableCount"></param>
+        /// <param name="pCoverageModulationTable"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetCoverageModulationTableNV.html" /></remarks>
         public void CmdSetCoverageModulationTableNV(VkCommandBuffer commandBuffer, uint coverageModulationTableCount, float* pCoverageModulationTable)
         {
             _vkCmdSetCoverageModulationTableNV_fnptr(commandBuffer, coverageModulationTableCount, pCoverageModulationTable);
         }
         /// <summary><b>[requires: VK_EXT_extended_dynamic_state3 | VK_EXT_shader_object]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="coverageReductionMode"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetCoverageReductionModeNV.html" /></remarks>
         public void CmdSetCoverageReductionModeNV(VkCommandBuffer commandBuffer, VkCoverageReductionModeNV coverageReductionMode)
         {
             _vkCmdSetCoverageReductionModeNV_fnptr(commandBuffer, coverageReductionMode);
         }
         /// <summary><b>[requires: VK_EXT_extended_dynamic_state3 | VK_EXT_shader_object]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="coverageToColorEnable"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetCoverageToColorEnableNV.html" /></remarks>
         public void CmdSetCoverageToColorEnableNV(VkCommandBuffer commandBuffer, int coverageToColorEnable)
         {
             _vkCmdSetCoverageToColorEnableNV_fnptr(commandBuffer, coverageToColorEnable);
         }
         /// <summary><b>[requires: VK_EXT_extended_dynamic_state3 | VK_EXT_shader_object]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="coverageToColorLocation"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetCoverageToColorLocationNV.html" /></remarks>
         public void CmdSetCoverageToColorLocationNV(VkCommandBuffer commandBuffer, uint coverageToColorLocation)
         {
             _vkCmdSetCoverageToColorLocationNV_fnptr(commandBuffer, coverageToColorLocation);
         }
         /// <summary><b>[requires: v1.3]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="cullMode">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetCullMode.html" /></remarks>
         public void CmdSetCullMode(VkCommandBuffer commandBuffer, VkCullModeFlagBits cullMode)
         {
             _vkCmdSetCullMode_fnptr(commandBuffer, cullMode);
         }
         /// <summary><b>[requires: VK_EXT_extended_dynamic_state | VK_EXT_shader_object]</b> [device command]  Alias of <see cref="CmdSetCullMode"/></summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="cullMode">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetCullModeEXT.html" /></remarks>
         public void CmdSetCullModeEXT(VkCommandBuffer commandBuffer, VkCullModeFlagBits cullMode)
         {
             _vkCmdSetCullModeEXT_fnptr(commandBuffer, cullMode);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="depthBiasConstantFactor"></param>
+        /// <param name="depthBiasClamp"></param>
+        /// <param name="depthBiasSlopeFactor"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetDepthBias.html" /></remarks>
         public void CmdSetDepthBias(VkCommandBuffer commandBuffer, float depthBiasConstantFactor, float depthBiasClamp, float depthBiasSlopeFactor)
         {
             _vkCmdSetDepthBias_fnptr(commandBuffer, depthBiasConstantFactor, depthBiasClamp, depthBiasSlopeFactor);
         }
         /// <summary><b>[requires: VK_EXT_depth_bias_control]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="pDepthBiasInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetDepthBias2EXT.html" /></remarks>
         public void CmdSetDepthBias2EXT(VkCommandBuffer commandBuffer, VkDepthBiasInfoEXT* pDepthBiasInfo)
         {
             _vkCmdSetDepthBias2EXT_fnptr(commandBuffer, pDepthBiasInfo);
         }
         /// <summary><b>[requires: v1.3]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="depthBiasEnable"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetDepthBiasEnable.html" /></remarks>
         public void CmdSetDepthBiasEnable(VkCommandBuffer commandBuffer, int depthBiasEnable)
         {
             _vkCmdSetDepthBiasEnable_fnptr(commandBuffer, depthBiasEnable);
         }
         /// <summary><b>[requires: VK_EXT_extended_dynamic_state2 | VK_EXT_shader_object]</b> [device command]  Alias of <see cref="CmdSetDepthBiasEnable"/></summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="depthBiasEnable"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetDepthBiasEnableEXT.html" /></remarks>
         public void CmdSetDepthBiasEnableEXT(VkCommandBuffer commandBuffer, int depthBiasEnable)
         {
             _vkCmdSetDepthBiasEnableEXT_fnptr(commandBuffer, depthBiasEnable);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="minDepthBounds"></param>
+        /// <param name="maxDepthBounds"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetDepthBounds.html" /></remarks>
         public void CmdSetDepthBounds(VkCommandBuffer commandBuffer, float minDepthBounds, float maxDepthBounds)
         {
             _vkCmdSetDepthBounds_fnptr(commandBuffer, minDepthBounds, maxDepthBounds);
         }
         /// <summary><b>[requires: v1.3]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="depthBoundsTestEnable"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetDepthBoundsTestEnable.html" /></remarks>
         public void CmdSetDepthBoundsTestEnable(VkCommandBuffer commandBuffer, int depthBoundsTestEnable)
         {
             _vkCmdSetDepthBoundsTestEnable_fnptr(commandBuffer, depthBoundsTestEnable);
         }
         /// <summary><b>[requires: VK_EXT_extended_dynamic_state | VK_EXT_shader_object]</b> [device command]  Alias of <see cref="CmdSetDepthBoundsTestEnable"/></summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="depthBoundsTestEnable"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetDepthBoundsTestEnableEXT.html" /></remarks>
         public void CmdSetDepthBoundsTestEnableEXT(VkCommandBuffer commandBuffer, int depthBoundsTestEnable)
         {
             _vkCmdSetDepthBoundsTestEnableEXT_fnptr(commandBuffer, depthBoundsTestEnable);
         }
         /// <summary><b>[requires: VK_EXT_extended_dynamic_state3 | VK_EXT_shader_object]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="depthClampEnable"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetDepthClampEnableEXT.html" /></remarks>
         public void CmdSetDepthClampEnableEXT(VkCommandBuffer commandBuffer, int depthClampEnable)
         {
             _vkCmdSetDepthClampEnableEXT_fnptr(commandBuffer, depthClampEnable);
         }
         /// <summary><b>[requires: VK_EXT_shader_object | VK_EXT_depth_clamp_control]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="depthClampMode"></param>
+        /// <param name="pDepthClampRange">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetDepthClampRangeEXT.html" /></remarks>
         public void CmdSetDepthClampRangeEXT(VkCommandBuffer commandBuffer, VkDepthClampModeEXT depthClampMode, VkDepthClampRangeEXT* pDepthClampRange)
         {
             _vkCmdSetDepthClampRangeEXT_fnptr(commandBuffer, depthClampMode, pDepthClampRange);
         }
         /// <summary><b>[requires: VK_EXT_extended_dynamic_state3 | VK_EXT_shader_object]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="depthClipEnable"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetDepthClipEnableEXT.html" /></remarks>
         public void CmdSetDepthClipEnableEXT(VkCommandBuffer commandBuffer, int depthClipEnable)
         {
             _vkCmdSetDepthClipEnableEXT_fnptr(commandBuffer, depthClipEnable);
         }
         /// <summary><b>[requires: VK_EXT_extended_dynamic_state3 | VK_EXT_shader_object]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="negativeOneToOne"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetDepthClipNegativeOneToOneEXT.html" /></remarks>
         public void CmdSetDepthClipNegativeOneToOneEXT(VkCommandBuffer commandBuffer, int negativeOneToOne)
         {
             _vkCmdSetDepthClipNegativeOneToOneEXT_fnptr(commandBuffer, negativeOneToOne);
         }
         /// <summary><b>[requires: v1.3]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="depthCompareOp"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetDepthCompareOp.html" /></remarks>
         public void CmdSetDepthCompareOp(VkCommandBuffer commandBuffer, VkCompareOp depthCompareOp)
         {
             _vkCmdSetDepthCompareOp_fnptr(commandBuffer, depthCompareOp);
         }
         /// <summary><b>[requires: VK_EXT_extended_dynamic_state | VK_EXT_shader_object]</b> [device command]  Alias of <see cref="CmdSetDepthCompareOp"/></summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="depthCompareOp"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetDepthCompareOpEXT.html" /></remarks>
         public void CmdSetDepthCompareOpEXT(VkCommandBuffer commandBuffer, VkCompareOp depthCompareOp)
         {
             _vkCmdSetDepthCompareOpEXT_fnptr(commandBuffer, depthCompareOp);
         }
         /// <summary><b>[requires: v1.3]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="depthTestEnable"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetDepthTestEnable.html" /></remarks>
         public void CmdSetDepthTestEnable(VkCommandBuffer commandBuffer, int depthTestEnable)
         {
             _vkCmdSetDepthTestEnable_fnptr(commandBuffer, depthTestEnable);
         }
         /// <summary><b>[requires: VK_EXT_extended_dynamic_state | VK_EXT_shader_object]</b> [device command]  Alias of <see cref="CmdSetDepthTestEnable"/></summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="depthTestEnable"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetDepthTestEnableEXT.html" /></remarks>
         public void CmdSetDepthTestEnableEXT(VkCommandBuffer commandBuffer, int depthTestEnable)
         {
             _vkCmdSetDepthTestEnableEXT_fnptr(commandBuffer, depthTestEnable);
         }
         /// <summary><b>[requires: v1.3]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="depthWriteEnable"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetDepthWriteEnable.html" /></remarks>
         public void CmdSetDepthWriteEnable(VkCommandBuffer commandBuffer, int depthWriteEnable)
         {
             _vkCmdSetDepthWriteEnable_fnptr(commandBuffer, depthWriteEnable);
         }
         /// <summary><b>[requires: VK_EXT_extended_dynamic_state | VK_EXT_shader_object]</b> [device command]  Alias of <see cref="CmdSetDepthWriteEnable"/></summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="depthWriteEnable"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetDepthWriteEnableEXT.html" /></remarks>
         public void CmdSetDepthWriteEnableEXT(VkCommandBuffer commandBuffer, int depthWriteEnable)
         {
             _vkCmdSetDepthWriteEnableEXT_fnptr(commandBuffer, depthWriteEnable);
         }
         /// <summary><b>[requires: VK_KHR_maintenance6]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="pSetDescriptorBufferOffsetsInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetDescriptorBufferOffsets2EXT.html" /></remarks>
         public void CmdSetDescriptorBufferOffsets2EXT(VkCommandBuffer commandBuffer, VkSetDescriptorBufferOffsetsInfoEXT* pSetDescriptorBufferOffsetsInfo)
         {
             _vkCmdSetDescriptorBufferOffsets2EXT_fnptr(commandBuffer, pSetDescriptorBufferOffsetsInfo);
         }
         /// <summary><b>[requires: VK_EXT_descriptor_buffer]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="pipelineBindPoint"></param>
+        /// <param name="layout"></param>
+        /// <param name="firstSet"></param>
+        /// <param name="setCount"></param>
+        /// <param name="pBufferIndices"></param>
+        /// <param name="pOffsets"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetDescriptorBufferOffsetsEXT.html" /></remarks>
         public void CmdSetDescriptorBufferOffsetsEXT(VkCommandBuffer commandBuffer, VkPipelineBindPoint pipelineBindPoint, VkPipelineLayout layout, uint firstSet, uint setCount, uint* pBufferIndices, ulong* pOffsets)
         {
             _vkCmdSetDescriptorBufferOffsetsEXT_fnptr(commandBuffer, pipelineBindPoint, layout, firstSet, setCount, pBufferIndices, pOffsets);
         }
         /// <summary><b>[requires: v1.1]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="deviceMask"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetDeviceMask.html" /></remarks>
         public void CmdSetDeviceMask(VkCommandBuffer commandBuffer, uint deviceMask)
         {
             _vkCmdSetDeviceMask_fnptr(commandBuffer, deviceMask);
         }
         /// <summary><b>[requires: VK_KHR_device_group]</b> [device command]  Alias of <see cref="CmdSetDeviceMask"/></summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="deviceMask"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetDeviceMaskKHR.html" /></remarks>
         public void CmdSetDeviceMaskKHR(VkCommandBuffer commandBuffer, uint deviceMask)
         {
             _vkCmdSetDeviceMaskKHR_fnptr(commandBuffer, deviceMask);
         }
         /// <summary><b>[requires: VK_EXT_discard_rectangles]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="discardRectangleEnable"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetDiscardRectangleEnableEXT.html" /></remarks>
         public void CmdSetDiscardRectangleEnableEXT(VkCommandBuffer commandBuffer, int discardRectangleEnable)
         {
             _vkCmdSetDiscardRectangleEnableEXT_fnptr(commandBuffer, discardRectangleEnable);
         }
         /// <summary><b>[requires: VK_EXT_discard_rectangles]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="firstDiscardRectangle"></param>
+        /// <param name="discardRectangleCount"></param>
+        /// <param name="pDiscardRectangles"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetDiscardRectangleEXT.html" /></remarks>
         public void CmdSetDiscardRectangleEXT(VkCommandBuffer commandBuffer, uint firstDiscardRectangle, uint discardRectangleCount, VkRect2D* pDiscardRectangles)
         {
             _vkCmdSetDiscardRectangleEXT_fnptr(commandBuffer, firstDiscardRectangle, discardRectangleCount, pDiscardRectangles);
         }
         /// <summary><b>[requires: VK_EXT_discard_rectangles]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="discardRectangleMode"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetDiscardRectangleModeEXT.html" /></remarks>
         public void CmdSetDiscardRectangleModeEXT(VkCommandBuffer commandBuffer, VkDiscardRectangleModeEXT discardRectangleMode)
         {
             _vkCmdSetDiscardRectangleModeEXT_fnptr(commandBuffer, discardRectangleMode);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="event"></param>
+        /// <param name="stageMask">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetEvent.html" /></remarks>
         public void CmdSetEvent(VkCommandBuffer commandBuffer, VkEvent @event, VkPipelineStageFlagBits stageMask)
         {
             _vkCmdSetEvent_fnptr(commandBuffer, @event, stageMask);
         }
         /// <summary><b>[requires: v1.3]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="event"></param>
+        /// <param name="pDependencyInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetEvent2.html" /></remarks>
         public void CmdSetEvent2(VkCommandBuffer commandBuffer, VkEvent @event, VkDependencyInfo* pDependencyInfo)
         {
             _vkCmdSetEvent2_fnptr(commandBuffer, @event, pDependencyInfo);
         }
         /// <summary><b>[requires: VK_KHR_synchronization2]</b> [device command]  Alias of <see cref="CmdSetEvent2"/></summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="event"></param>
+        /// <param name="pDependencyInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetEvent2KHR.html" /></remarks>
         public void CmdSetEvent2KHR(VkCommandBuffer commandBuffer, VkEvent @event, VkDependencyInfo* pDependencyInfo)
         {
             _vkCmdSetEvent2KHR_fnptr(commandBuffer, @event, pDependencyInfo);
         }
         /// <summary><b>[requires: VK_NV_scissor_exclusive]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="firstExclusiveScissor"></param>
+        /// <param name="exclusiveScissorCount"></param>
+        /// <param name="pExclusiveScissorEnables"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetExclusiveScissorEnableNV.html" /></remarks>
         public void CmdSetExclusiveScissorEnableNV(VkCommandBuffer commandBuffer, uint firstExclusiveScissor, uint exclusiveScissorCount, int* pExclusiveScissorEnables)
         {
             _vkCmdSetExclusiveScissorEnableNV_fnptr(commandBuffer, firstExclusiveScissor, exclusiveScissorCount, pExclusiveScissorEnables);
         }
         /// <summary><b>[requires: VK_NV_scissor_exclusive]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="firstExclusiveScissor"></param>
+        /// <param name="exclusiveScissorCount"></param>
+        /// <param name="pExclusiveScissors"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetExclusiveScissorNV.html" /></remarks>
         public void CmdSetExclusiveScissorNV(VkCommandBuffer commandBuffer, uint firstExclusiveScissor, uint exclusiveScissorCount, VkRect2D* pExclusiveScissors)
         {
             _vkCmdSetExclusiveScissorNV_fnptr(commandBuffer, firstExclusiveScissor, exclusiveScissorCount, pExclusiveScissors);
         }
         /// <summary><b>[requires: VK_EXT_extended_dynamic_state3 | VK_EXT_shader_object]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="extraPrimitiveOverestimationSize"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetExtraPrimitiveOverestimationSizeEXT.html" /></remarks>
         public void CmdSetExtraPrimitiveOverestimationSizeEXT(VkCommandBuffer commandBuffer, float extraPrimitiveOverestimationSize)
         {
             _vkCmdSetExtraPrimitiveOverestimationSizeEXT_fnptr(commandBuffer, extraPrimitiveOverestimationSize);
         }
         /// <summary><b>[requires: VK_NV_fragment_shading_rate_enums]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="shadingRate"></param>
+        /// <param name="combinerOps"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetFragmentShadingRateEnumNV.html" /></remarks>
         public void CmdSetFragmentShadingRateEnumNV(VkCommandBuffer commandBuffer, VkFragmentShadingRateNV shadingRate, VkFragmentShadingRateCombinerOpKHR* combinerOps)
         {
             _vkCmdSetFragmentShadingRateEnumNV_fnptr(commandBuffer, shadingRate, combinerOps);
         }
         /// <summary><b>[requires: VK_KHR_fragment_shading_rate]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="pFragmentSize"></param>
+        /// <param name="combinerOps"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetFragmentShadingRateKHR.html" /></remarks>
         public void CmdSetFragmentShadingRateKHR(VkCommandBuffer commandBuffer, VkExtent2D* pFragmentSize, VkFragmentShadingRateCombinerOpKHR* combinerOps)
         {
             _vkCmdSetFragmentShadingRateKHR_fnptr(commandBuffer, pFragmentSize, combinerOps);
         }
         /// <summary><b>[requires: v1.3]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="frontFace"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetFrontFace.html" /></remarks>
         public void CmdSetFrontFace(VkCommandBuffer commandBuffer, VkFrontFace frontFace)
         {
             _vkCmdSetFrontFace_fnptr(commandBuffer, frontFace);
         }
         /// <summary><b>[requires: VK_EXT_extended_dynamic_state | VK_EXT_shader_object]</b> [device command]  Alias of <see cref="CmdSetFrontFace"/></summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="frontFace"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetFrontFaceEXT.html" /></remarks>
         public void CmdSetFrontFaceEXT(VkCommandBuffer commandBuffer, VkFrontFace frontFace)
         {
             _vkCmdSetFrontFaceEXT_fnptr(commandBuffer, frontFace);
         }
         /// <summary><b>[requires: VK_EXT_extended_dynamic_state3 | VK_EXT_shader_object]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="lineRasterizationMode"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetLineRasterizationModeEXT.html" /></remarks>
         public void CmdSetLineRasterizationModeEXT(VkCommandBuffer commandBuffer, VkLineRasterizationMode lineRasterizationMode)
         {
             _vkCmdSetLineRasterizationModeEXT_fnptr(commandBuffer, lineRasterizationMode);
         }
         /// <summary><b>[requires: v1.4]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="lineStippleFactor"></param>
+        /// <param name="lineStipplePattern"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetLineStipple.html" /></remarks>
         public void CmdSetLineStipple(VkCommandBuffer commandBuffer, uint lineStippleFactor, ushort lineStipplePattern)
         {
             _vkCmdSetLineStipple_fnptr(commandBuffer, lineStippleFactor, lineStipplePattern);
         }
         /// <summary><b>[requires: VK_EXT_extended_dynamic_state3 | VK_EXT_shader_object]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="stippledLineEnable"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetLineStippleEnableEXT.html" /></remarks>
         public void CmdSetLineStippleEnableEXT(VkCommandBuffer commandBuffer, int stippledLineEnable)
         {
             _vkCmdSetLineStippleEnableEXT_fnptr(commandBuffer, stippledLineEnable);
         }
         /// <summary><b>[requires: VK_EXT_line_rasterization]</b> [device command]  Alias of <see cref="CmdSetLineStipple"/></summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="lineStippleFactor"></param>
+        /// <param name="lineStipplePattern"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetLineStippleEXT.html" /></remarks>
         public void CmdSetLineStippleEXT(VkCommandBuffer commandBuffer, uint lineStippleFactor, ushort lineStipplePattern)
         {
             _vkCmdSetLineStippleEXT_fnptr(commandBuffer, lineStippleFactor, lineStipplePattern);
         }
         /// <summary><b>[requires: VK_KHR_line_rasterization]</b> [device command]  Alias of <see cref="CmdSetLineStipple"/></summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="lineStippleFactor"></param>
+        /// <param name="lineStipplePattern"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetLineStippleKHR.html" /></remarks>
         public void CmdSetLineStippleKHR(VkCommandBuffer commandBuffer, uint lineStippleFactor, ushort lineStipplePattern)
         {
             _vkCmdSetLineStippleKHR_fnptr(commandBuffer, lineStippleFactor, lineStipplePattern);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="lineWidth"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetLineWidth.html" /></remarks>
         public void CmdSetLineWidth(VkCommandBuffer commandBuffer, float lineWidth)
         {
             _vkCmdSetLineWidth_fnptr(commandBuffer, lineWidth);
         }
         /// <summary><b>[requires: VK_EXT_extended_dynamic_state3 | VK_EXT_shader_object]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="logicOpEnable"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetLogicOpEnableEXT.html" /></remarks>
         public void CmdSetLogicOpEnableEXT(VkCommandBuffer commandBuffer, int logicOpEnable)
         {
             _vkCmdSetLogicOpEnableEXT_fnptr(commandBuffer, logicOpEnable);
         }
         /// <summary><b>[requires: VK_EXT_extended_dynamic_state2 | VK_EXT_shader_object]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="logicOp"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetLogicOpEXT.html" /></remarks>
         public void CmdSetLogicOpEXT(VkCommandBuffer commandBuffer, VkLogicOp logicOp)
         {
             _vkCmdSetLogicOpEXT_fnptr(commandBuffer, logicOp);
         }
         /// <summary><b>[requires: VK_EXT_extended_dynamic_state2 | VK_EXT_shader_object]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="patchControlPoints"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetPatchControlPointsEXT.html" /></remarks>
         public void CmdSetPatchControlPointsEXT(VkCommandBuffer commandBuffer, uint patchControlPoints)
         {
             _vkCmdSetPatchControlPointsEXT_fnptr(commandBuffer, patchControlPoints);
         }
         /// <summary><b>[requires: VK_INTEL_performance_query]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="pMarkerInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetPerformanceMarkerINTEL.html" /></remarks>
         public VkResult CmdSetPerformanceMarkerINTEL(VkCommandBuffer commandBuffer, VkPerformanceMarkerInfoINTEL* pMarkerInfo)
         {
             return _vkCmdSetPerformanceMarkerINTEL_fnptr(commandBuffer, pMarkerInfo);
         }
         /// <summary><b>[requires: VK_INTEL_performance_query]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="pOverrideInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetPerformanceOverrideINTEL.html" /></remarks>
         public VkResult CmdSetPerformanceOverrideINTEL(VkCommandBuffer commandBuffer, VkPerformanceOverrideInfoINTEL* pOverrideInfo)
         {
             return _vkCmdSetPerformanceOverrideINTEL_fnptr(commandBuffer, pOverrideInfo);
         }
         /// <summary><b>[requires: VK_INTEL_performance_query]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="pMarkerInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetPerformanceStreamMarkerINTEL.html" /></remarks>
         public VkResult CmdSetPerformanceStreamMarkerINTEL(VkCommandBuffer commandBuffer, VkPerformanceStreamMarkerInfoINTEL* pMarkerInfo)
         {
             return _vkCmdSetPerformanceStreamMarkerINTEL_fnptr(commandBuffer, pMarkerInfo);
         }
         /// <summary><b>[requires: VK_EXT_extended_dynamic_state3 | VK_EXT_shader_object]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="polygonMode"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetPolygonModeEXT.html" /></remarks>
         public void CmdSetPolygonModeEXT(VkCommandBuffer commandBuffer, VkPolygonMode polygonMode)
         {
             _vkCmdSetPolygonModeEXT_fnptr(commandBuffer, polygonMode);
         }
         /// <summary><b>[requires: v1.3]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="primitiveRestartEnable"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetPrimitiveRestartEnable.html" /></remarks>
         public void CmdSetPrimitiveRestartEnable(VkCommandBuffer commandBuffer, int primitiveRestartEnable)
         {
             _vkCmdSetPrimitiveRestartEnable_fnptr(commandBuffer, primitiveRestartEnable);
         }
         /// <summary><b>[requires: VK_EXT_extended_dynamic_state2 | VK_EXT_shader_object]</b> [device command]  Alias of <see cref="CmdSetPrimitiveRestartEnable"/></summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="primitiveRestartEnable"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetPrimitiveRestartEnableEXT.html" /></remarks>
         public void CmdSetPrimitiveRestartEnableEXT(VkCommandBuffer commandBuffer, int primitiveRestartEnable)
         {
             _vkCmdSetPrimitiveRestartEnableEXT_fnptr(commandBuffer, primitiveRestartEnable);
         }
         /// <summary><b>[requires: v1.3]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="primitiveTopology"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetPrimitiveTopology.html" /></remarks>
         public void CmdSetPrimitiveTopology(VkCommandBuffer commandBuffer, VkPrimitiveTopology primitiveTopology)
         {
             _vkCmdSetPrimitiveTopology_fnptr(commandBuffer, primitiveTopology);
         }
         /// <summary><b>[requires: VK_EXT_extended_dynamic_state | VK_EXT_shader_object]</b> [device command]  Alias of <see cref="CmdSetPrimitiveTopology"/></summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="primitiveTopology"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetPrimitiveTopologyEXT.html" /></remarks>
         public void CmdSetPrimitiveTopologyEXT(VkCommandBuffer commandBuffer, VkPrimitiveTopology primitiveTopology)
         {
             _vkCmdSetPrimitiveTopologyEXT_fnptr(commandBuffer, primitiveTopology);
         }
         /// <summary><b>[requires: VK_EXT_extended_dynamic_state3 | VK_EXT_shader_object]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="provokingVertexMode"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetProvokingVertexModeEXT.html" /></remarks>
         public void CmdSetProvokingVertexModeEXT(VkCommandBuffer commandBuffer, VkProvokingVertexModeEXT provokingVertexMode)
         {
             _vkCmdSetProvokingVertexModeEXT_fnptr(commandBuffer, provokingVertexMode);
         }
         /// <summary><b>[requires: VK_EXT_extended_dynamic_state3 | VK_EXT_shader_object]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="rasterizationSamples"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetRasterizationSamplesEXT.html" /></remarks>
         public void CmdSetRasterizationSamplesEXT(VkCommandBuffer commandBuffer, VkSampleCountFlagBits rasterizationSamples)
         {
             _vkCmdSetRasterizationSamplesEXT_fnptr(commandBuffer, rasterizationSamples);
         }
         /// <summary><b>[requires: VK_EXT_extended_dynamic_state3 | VK_EXT_shader_object]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="rasterizationStream"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetRasterizationStreamEXT.html" /></remarks>
         public void CmdSetRasterizationStreamEXT(VkCommandBuffer commandBuffer, uint rasterizationStream)
         {
             _vkCmdSetRasterizationStreamEXT_fnptr(commandBuffer, rasterizationStream);
         }
         /// <summary><b>[requires: v1.3]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="rasterizerDiscardEnable"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetRasterizerDiscardEnable.html" /></remarks>
         public void CmdSetRasterizerDiscardEnable(VkCommandBuffer commandBuffer, int rasterizerDiscardEnable)
         {
             _vkCmdSetRasterizerDiscardEnable_fnptr(commandBuffer, rasterizerDiscardEnable);
         }
         /// <summary><b>[requires: VK_EXT_extended_dynamic_state2 | VK_EXT_shader_object]</b> [device command]  Alias of <see cref="CmdSetRasterizerDiscardEnable"/></summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="rasterizerDiscardEnable"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetRasterizerDiscardEnableEXT.html" /></remarks>
         public void CmdSetRasterizerDiscardEnableEXT(VkCommandBuffer commandBuffer, int rasterizerDiscardEnable)
         {
             _vkCmdSetRasterizerDiscardEnableEXT_fnptr(commandBuffer, rasterizerDiscardEnable);
         }
         /// <summary><b>[requires: VK_KHR_ray_tracing_pipeline]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="pipelineStackSize"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetRayTracingPipelineStackSizeKHR.html" /></remarks>
         public void CmdSetRayTracingPipelineStackSizeKHR(VkCommandBuffer commandBuffer, uint pipelineStackSize)
         {
             _vkCmdSetRayTracingPipelineStackSizeKHR_fnptr(commandBuffer, pipelineStackSize);
         }
         /// <summary><b>[requires: v1.4]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="pLocationInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetRenderingAttachmentLocations.html" /></remarks>
         public void CmdSetRenderingAttachmentLocations(VkCommandBuffer commandBuffer, VkRenderingAttachmentLocationInfo* pLocationInfo)
         {
             _vkCmdSetRenderingAttachmentLocations_fnptr(commandBuffer, pLocationInfo);
         }
         /// <summary><b>[requires: VK_KHR_dynamic_rendering_local_read]</b> [device command]  Alias of <see cref="CmdSetRenderingAttachmentLocations"/></summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="pLocationInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetRenderingAttachmentLocationsKHR.html" /></remarks>
         public void CmdSetRenderingAttachmentLocationsKHR(VkCommandBuffer commandBuffer, VkRenderingAttachmentLocationInfo* pLocationInfo)
         {
             _vkCmdSetRenderingAttachmentLocationsKHR_fnptr(commandBuffer, pLocationInfo);
         }
         /// <summary><b>[requires: v1.4]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="pInputAttachmentIndexInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetRenderingInputAttachmentIndices.html" /></remarks>
         public void CmdSetRenderingInputAttachmentIndices(VkCommandBuffer commandBuffer, VkRenderingInputAttachmentIndexInfo* pInputAttachmentIndexInfo)
         {
             _vkCmdSetRenderingInputAttachmentIndices_fnptr(commandBuffer, pInputAttachmentIndexInfo);
         }
         /// <summary><b>[requires: VK_KHR_dynamic_rendering_local_read]</b> [device command]  Alias of <see cref="CmdSetRenderingInputAttachmentIndices"/></summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="pInputAttachmentIndexInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetRenderingInputAttachmentIndicesKHR.html" /></remarks>
         public void CmdSetRenderingInputAttachmentIndicesKHR(VkCommandBuffer commandBuffer, VkRenderingInputAttachmentIndexInfo* pInputAttachmentIndexInfo)
         {
             _vkCmdSetRenderingInputAttachmentIndicesKHR_fnptr(commandBuffer, pInputAttachmentIndexInfo);
         }
         /// <summary><b>[requires: VK_EXT_extended_dynamic_state3 | VK_EXT_shader_object]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="representativeFragmentTestEnable"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetRepresentativeFragmentTestEnableNV.html" /></remarks>
         public void CmdSetRepresentativeFragmentTestEnableNV(VkCommandBuffer commandBuffer, int representativeFragmentTestEnable)
         {
             _vkCmdSetRepresentativeFragmentTestEnableNV_fnptr(commandBuffer, representativeFragmentTestEnable);
         }
         /// <summary><b>[requires: VK_EXT_extended_dynamic_state3 | VK_EXT_shader_object]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="sampleLocationsEnable"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetSampleLocationsEnableEXT.html" /></remarks>
         public void CmdSetSampleLocationsEnableEXT(VkCommandBuffer commandBuffer, int sampleLocationsEnable)
         {
             _vkCmdSetSampleLocationsEnableEXT_fnptr(commandBuffer, sampleLocationsEnable);
         }
         /// <summary><b>[requires: VK_EXT_sample_locations]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="pSampleLocationsInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetSampleLocationsEXT.html" /></remarks>
         public void CmdSetSampleLocationsEXT(VkCommandBuffer commandBuffer, VkSampleLocationsInfoEXT* pSampleLocationsInfo)
         {
             _vkCmdSetSampleLocationsEXT_fnptr(commandBuffer, pSampleLocationsInfo);
         }
         /// <summary><b>[requires: VK_EXT_extended_dynamic_state3 | VK_EXT_shader_object]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="samples"></param>
+        /// <param name="pSampleMask">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetSampleMaskEXT.html" /></remarks>
         public void CmdSetSampleMaskEXT(VkCommandBuffer commandBuffer, VkSampleCountFlagBits samples, uint* pSampleMask)
         {
             _vkCmdSetSampleMaskEXT_fnptr(commandBuffer, samples, pSampleMask);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="firstScissor"></param>
+        /// <param name="scissorCount"></param>
+        /// <param name="pScissors"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetScissor.html" /></remarks>
         public void CmdSetScissor(VkCommandBuffer commandBuffer, uint firstScissor, uint scissorCount, VkRect2D* pScissors)
         {
             _vkCmdSetScissor_fnptr(commandBuffer, firstScissor, scissorCount, pScissors);
         }
         /// <summary><b>[requires: v1.3]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="scissorCount"></param>
+        /// <param name="pScissors"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetScissorWithCount.html" /></remarks>
         public void CmdSetScissorWithCount(VkCommandBuffer commandBuffer, uint scissorCount, VkRect2D* pScissors)
         {
             _vkCmdSetScissorWithCount_fnptr(commandBuffer, scissorCount, pScissors);
         }
         /// <summary><b>[requires: VK_EXT_extended_dynamic_state | VK_EXT_shader_object]</b> [device command]  Alias of <see cref="CmdSetScissorWithCount"/></summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="scissorCount"></param>
+        /// <param name="pScissors"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetScissorWithCountEXT.html" /></remarks>
         public void CmdSetScissorWithCountEXT(VkCommandBuffer commandBuffer, uint scissorCount, VkRect2D* pScissors)
         {
             _vkCmdSetScissorWithCountEXT_fnptr(commandBuffer, scissorCount, pScissors);
         }
         /// <summary><b>[requires: VK_EXT_extended_dynamic_state3 | VK_EXT_shader_object]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="shadingRateImageEnable"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetShadingRateImageEnableNV.html" /></remarks>
         public void CmdSetShadingRateImageEnableNV(VkCommandBuffer commandBuffer, int shadingRateImageEnable)
         {
             _vkCmdSetShadingRateImageEnableNV_fnptr(commandBuffer, shadingRateImageEnable);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="faceMask"></param>
+        /// <param name="compareMask"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetStencilCompareMask.html" /></remarks>
         public void CmdSetStencilCompareMask(VkCommandBuffer commandBuffer, VkStencilFaceFlagBits faceMask, uint compareMask)
         {
             _vkCmdSetStencilCompareMask_fnptr(commandBuffer, faceMask, compareMask);
         }
         /// <summary><b>[requires: v1.3]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="faceMask"></param>
+        /// <param name="failOp"></param>
+        /// <param name="passOp"></param>
+        /// <param name="depthFailOp"></param>
+        /// <param name="compareOp"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetStencilOp.html" /></remarks>
         public void CmdSetStencilOp(VkCommandBuffer commandBuffer, VkStencilFaceFlagBits faceMask, VkStencilOp failOp, VkStencilOp passOp, VkStencilOp depthFailOp, VkCompareOp compareOp)
         {
             _vkCmdSetStencilOp_fnptr(commandBuffer, faceMask, failOp, passOp, depthFailOp, compareOp);
         }
         /// <summary><b>[requires: VK_EXT_extended_dynamic_state | VK_EXT_shader_object]</b> [device command]  Alias of <see cref="CmdSetStencilOp"/></summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="faceMask"></param>
+        /// <param name="failOp"></param>
+        /// <param name="passOp"></param>
+        /// <param name="depthFailOp"></param>
+        /// <param name="compareOp"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetStencilOpEXT.html" /></remarks>
         public void CmdSetStencilOpEXT(VkCommandBuffer commandBuffer, VkStencilFaceFlagBits faceMask, VkStencilOp failOp, VkStencilOp passOp, VkStencilOp depthFailOp, VkCompareOp compareOp)
         {
             _vkCmdSetStencilOpEXT_fnptr(commandBuffer, faceMask, failOp, passOp, depthFailOp, compareOp);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="faceMask"></param>
+        /// <param name="reference"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetStencilReference.html" /></remarks>
         public void CmdSetStencilReference(VkCommandBuffer commandBuffer, VkStencilFaceFlagBits faceMask, uint reference)
         {
             _vkCmdSetStencilReference_fnptr(commandBuffer, faceMask, reference);
         }
         /// <summary><b>[requires: v1.3]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="stencilTestEnable"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetStencilTestEnable.html" /></remarks>
         public void CmdSetStencilTestEnable(VkCommandBuffer commandBuffer, int stencilTestEnable)
         {
             _vkCmdSetStencilTestEnable_fnptr(commandBuffer, stencilTestEnable);
         }
         /// <summary><b>[requires: VK_EXT_extended_dynamic_state | VK_EXT_shader_object]</b> [device command]  Alias of <see cref="CmdSetStencilTestEnable"/></summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="stencilTestEnable"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetStencilTestEnableEXT.html" /></remarks>
         public void CmdSetStencilTestEnableEXT(VkCommandBuffer commandBuffer, int stencilTestEnable)
         {
             _vkCmdSetStencilTestEnableEXT_fnptr(commandBuffer, stencilTestEnable);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="faceMask"></param>
+        /// <param name="writeMask"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetStencilWriteMask.html" /></remarks>
         public void CmdSetStencilWriteMask(VkCommandBuffer commandBuffer, VkStencilFaceFlagBits faceMask, uint writeMask)
         {
             _vkCmdSetStencilWriteMask_fnptr(commandBuffer, faceMask, writeMask);
         }
         /// <summary><b>[requires: VK_EXT_extended_dynamic_state3 | VK_EXT_shader_object]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="domainOrigin"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetTessellationDomainOriginEXT.html" /></remarks>
         public void CmdSetTessellationDomainOriginEXT(VkCommandBuffer commandBuffer, VkTessellationDomainOrigin domainOrigin)
         {
             _vkCmdSetTessellationDomainOriginEXT_fnptr(commandBuffer, domainOrigin);
         }
         /// <summary><b>[requires: VK_EXT_vertex_input_dynamic_state | VK_EXT_shader_object]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="vertexBindingDescriptionCount">[optional] </param>
+        /// <param name="pVertexBindingDescriptions"></param>
+        /// <param name="vertexAttributeDescriptionCount">[optional] </param>
+        /// <param name="pVertexAttributeDescriptions"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetVertexInputEXT.html" /></remarks>
         public void CmdSetVertexInputEXT(VkCommandBuffer commandBuffer, uint vertexBindingDescriptionCount, VkVertexInputBindingDescription2EXT* pVertexBindingDescriptions, uint vertexAttributeDescriptionCount, VkVertexInputAttributeDescription2EXT* pVertexAttributeDescriptions)
         {
             _vkCmdSetVertexInputEXT_fnptr(commandBuffer, vertexBindingDescriptionCount, pVertexBindingDescriptions, vertexAttributeDescriptionCount, pVertexAttributeDescriptions);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="firstViewport"></param>
+        /// <param name="viewportCount"></param>
+        /// <param name="pViewports"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetViewport.html" /></remarks>
         public void CmdSetViewport(VkCommandBuffer commandBuffer, uint firstViewport, uint viewportCount, VkViewport* pViewports)
         {
             _vkCmdSetViewport_fnptr(commandBuffer, firstViewport, viewportCount, pViewports);
         }
         /// <summary><b>[requires: VK_NV_shading_rate_image]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="firstViewport"></param>
+        /// <param name="viewportCount"></param>
+        /// <param name="pShadingRatePalettes"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetViewportShadingRatePaletteNV.html" /></remarks>
         public void CmdSetViewportShadingRatePaletteNV(VkCommandBuffer commandBuffer, uint firstViewport, uint viewportCount, VkShadingRatePaletteNV* pShadingRatePalettes)
         {
             _vkCmdSetViewportShadingRatePaletteNV_fnptr(commandBuffer, firstViewport, viewportCount, pShadingRatePalettes);
         }
         /// <summary><b>[requires: VK_EXT_extended_dynamic_state3 | VK_EXT_shader_object]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="firstViewport"></param>
+        /// <param name="viewportCount"></param>
+        /// <param name="pViewportSwizzles"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetViewportSwizzleNV.html" /></remarks>
         public void CmdSetViewportSwizzleNV(VkCommandBuffer commandBuffer, uint firstViewport, uint viewportCount, VkViewportSwizzleNV* pViewportSwizzles)
         {
             _vkCmdSetViewportSwizzleNV_fnptr(commandBuffer, firstViewport, viewportCount, pViewportSwizzles);
         }
         /// <summary><b>[requires: v1.3]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="viewportCount"></param>
+        /// <param name="pViewports"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetViewportWithCount.html" /></remarks>
         public void CmdSetViewportWithCount(VkCommandBuffer commandBuffer, uint viewportCount, VkViewport* pViewports)
         {
             _vkCmdSetViewportWithCount_fnptr(commandBuffer, viewportCount, pViewports);
         }
         /// <summary><b>[requires: VK_EXT_extended_dynamic_state | VK_EXT_shader_object]</b> [device command]  Alias of <see cref="CmdSetViewportWithCount"/></summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="viewportCount"></param>
+        /// <param name="pViewports"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetViewportWithCountEXT.html" /></remarks>
         public void CmdSetViewportWithCountEXT(VkCommandBuffer commandBuffer, uint viewportCount, VkViewport* pViewports)
         {
             _vkCmdSetViewportWithCountEXT_fnptr(commandBuffer, viewportCount, pViewports);
         }
         /// <summary><b>[requires: VK_EXT_extended_dynamic_state3 | VK_EXT_shader_object]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="viewportWScalingEnable"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetViewportWScalingEnableNV.html" /></remarks>
         public void CmdSetViewportWScalingEnableNV(VkCommandBuffer commandBuffer, int viewportWScalingEnable)
         {
             _vkCmdSetViewportWScalingEnableNV_fnptr(commandBuffer, viewportWScalingEnable);
         }
         /// <summary><b>[requires: VK_NV_clip_space_w_scaling]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="firstViewport"></param>
+        /// <param name="viewportCount"></param>
+        /// <param name="pViewportWScalings"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetViewportWScalingNV.html" /></remarks>
         public void CmdSetViewportWScalingNV(VkCommandBuffer commandBuffer, uint firstViewport, uint viewportCount, VkViewportWScalingNV* pViewportWScalings)
         {
             _vkCmdSetViewportWScalingNV_fnptr(commandBuffer, firstViewport, viewportCount, pViewportWScalings);
         }
         /// <summary><b>[requires: VK_HUAWEI_subpass_shading]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSubpassShadingHUAWEI.html" /></remarks>
         public void CmdSubpassShadingHUAWEI(VkCommandBuffer commandBuffer)
         {
             _vkCmdSubpassShadingHUAWEI_fnptr(commandBuffer);
         }
         /// <summary><b>[requires: VK_KHR_ray_tracing_maintenance1]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="indirectDeviceAddress"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdTraceRaysIndirect2KHR.html" /></remarks>
         public void CmdTraceRaysIndirect2KHR(VkCommandBuffer commandBuffer, ulong indirectDeviceAddress)
         {
             _vkCmdTraceRaysIndirect2KHR_fnptr(commandBuffer, indirectDeviceAddress);
         }
         /// <summary><b>[requires: VK_KHR_ray_tracing_pipeline]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="pRaygenShaderBindingTable"></param>
+        /// <param name="pMissShaderBindingTable"></param>
+        /// <param name="pHitShaderBindingTable"></param>
+        /// <param name="pCallableShaderBindingTable"></param>
+        /// <param name="indirectDeviceAddress"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdTraceRaysIndirectKHR.html" /></remarks>
         public void CmdTraceRaysIndirectKHR(VkCommandBuffer commandBuffer, VkStridedDeviceAddressRegionKHR* pRaygenShaderBindingTable, VkStridedDeviceAddressRegionKHR* pMissShaderBindingTable, VkStridedDeviceAddressRegionKHR* pHitShaderBindingTable, VkStridedDeviceAddressRegionKHR* pCallableShaderBindingTable, ulong indirectDeviceAddress)
         {
             _vkCmdTraceRaysIndirectKHR_fnptr(commandBuffer, pRaygenShaderBindingTable, pMissShaderBindingTable, pHitShaderBindingTable, pCallableShaderBindingTable, indirectDeviceAddress);
         }
         /// <summary><b>[requires: VK_KHR_ray_tracing_pipeline]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="pRaygenShaderBindingTable"></param>
+        /// <param name="pMissShaderBindingTable"></param>
+        /// <param name="pHitShaderBindingTable"></param>
+        /// <param name="pCallableShaderBindingTable"></param>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
+        /// <param name="depth"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdTraceRaysKHR.html" /></remarks>
         public void CmdTraceRaysKHR(VkCommandBuffer commandBuffer, VkStridedDeviceAddressRegionKHR* pRaygenShaderBindingTable, VkStridedDeviceAddressRegionKHR* pMissShaderBindingTable, VkStridedDeviceAddressRegionKHR* pHitShaderBindingTable, VkStridedDeviceAddressRegionKHR* pCallableShaderBindingTable, uint width, uint height, uint depth)
         {
             _vkCmdTraceRaysKHR_fnptr(commandBuffer, pRaygenShaderBindingTable, pMissShaderBindingTable, pHitShaderBindingTable, pCallableShaderBindingTable, width, height, depth);
         }
         /// <summary><b>[requires: VK_NV_ray_tracing]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="raygenShaderBindingTableBuffer"></param>
+        /// <param name="raygenShaderBindingOffset"></param>
+        /// <param name="missShaderBindingTableBuffer">[optional] </param>
+        /// <param name="missShaderBindingOffset"></param>
+        /// <param name="missShaderBindingStride"></param>
+        /// <param name="hitShaderBindingTableBuffer">[optional] </param>
+        /// <param name="hitShaderBindingOffset"></param>
+        /// <param name="hitShaderBindingStride"></param>
+        /// <param name="callableShaderBindingTableBuffer">[optional] </param>
+        /// <param name="callableShaderBindingOffset"></param>
+        /// <param name="callableShaderBindingStride"></param>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
+        /// <param name="depth"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdTraceRaysNV.html" /></remarks>
         public void CmdTraceRaysNV(VkCommandBuffer commandBuffer, VkBuffer raygenShaderBindingTableBuffer, ulong raygenShaderBindingOffset, VkBuffer missShaderBindingTableBuffer, ulong missShaderBindingOffset, ulong missShaderBindingStride, VkBuffer hitShaderBindingTableBuffer, ulong hitShaderBindingOffset, ulong hitShaderBindingStride, VkBuffer callableShaderBindingTableBuffer, ulong callableShaderBindingOffset, ulong callableShaderBindingStride, uint width, uint height, uint depth)
         {
             _vkCmdTraceRaysNV_fnptr(commandBuffer, raygenShaderBindingTableBuffer, raygenShaderBindingOffset, missShaderBindingTableBuffer, missShaderBindingOffset, missShaderBindingStride, hitShaderBindingTableBuffer, hitShaderBindingOffset, hitShaderBindingStride, callableShaderBindingTableBuffer, callableShaderBindingOffset, callableShaderBindingStride, width, height, depth);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="dstBuffer"></param>
+        /// <param name="dstOffset"></param>
+        /// <param name="dataSize"></param>
+        /// <param name="pData"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdUpdateBuffer.html" /></remarks>
         public void CmdUpdateBuffer(VkCommandBuffer commandBuffer, VkBuffer dstBuffer, ulong dstOffset, ulong dataSize, void* pData)
         {
             _vkCmdUpdateBuffer_fnptr(commandBuffer, dstBuffer, dstOffset, dataSize, pData);
         }
         /// <summary><b>[requires: VK_NV_device_generated_commands_compute]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="pipelineBindPoint"></param>
+        /// <param name="pipeline"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdUpdatePipelineIndirectBufferNV.html" /></remarks>
         public void CmdUpdatePipelineIndirectBufferNV(VkCommandBuffer commandBuffer, VkPipelineBindPoint pipelineBindPoint, VkPipeline pipeline)
         {
             _vkCmdUpdatePipelineIndirectBufferNV_fnptr(commandBuffer, pipelineBindPoint, pipeline);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="eventCount"></param>
+        /// <param name="pEvents"></param>
+        /// <param name="srcStageMask">[optional] </param>
+        /// <param name="dstStageMask">[optional] </param>
+        /// <param name="memoryBarrierCount">[optional] </param>
+        /// <param name="pMemoryBarriers"></param>
+        /// <param name="bufferMemoryBarrierCount">[optional] </param>
+        /// <param name="pBufferMemoryBarriers"></param>
+        /// <param name="imageMemoryBarrierCount">[optional] </param>
+        /// <param name="pImageMemoryBarriers"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdWaitEvents.html" /></remarks>
         public void CmdWaitEvents(VkCommandBuffer commandBuffer, uint eventCount, VkEvent* pEvents, VkPipelineStageFlagBits srcStageMask, VkPipelineStageFlagBits dstStageMask, uint memoryBarrierCount, VkMemoryBarrier* pMemoryBarriers, uint bufferMemoryBarrierCount, VkBufferMemoryBarrier* pBufferMemoryBarriers, uint imageMemoryBarrierCount, VkImageMemoryBarrier* pImageMemoryBarriers)
         {
             _vkCmdWaitEvents_fnptr(commandBuffer, eventCount, pEvents, srcStageMask, dstStageMask, memoryBarrierCount, pMemoryBarriers, bufferMemoryBarrierCount, pBufferMemoryBarriers, imageMemoryBarrierCount, pImageMemoryBarriers);
         }
         /// <summary><b>[requires: v1.3]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="eventCount"></param>
+        /// <param name="pEvents"></param>
+        /// <param name="pDependencyInfos"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdWaitEvents2.html" /></remarks>
         public void CmdWaitEvents2(VkCommandBuffer commandBuffer, uint eventCount, VkEvent* pEvents, VkDependencyInfo* pDependencyInfos)
         {
             _vkCmdWaitEvents2_fnptr(commandBuffer, eventCount, pEvents, pDependencyInfos);
         }
         /// <summary><b>[requires: VK_KHR_synchronization2]</b> [device command]  Alias of <see cref="CmdWaitEvents2"/></summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="eventCount"></param>
+        /// <param name="pEvents"></param>
+        /// <param name="pDependencyInfos"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdWaitEvents2KHR.html" /></remarks>
         public void CmdWaitEvents2KHR(VkCommandBuffer commandBuffer, uint eventCount, VkEvent* pEvents, VkDependencyInfo* pDependencyInfos)
         {
             _vkCmdWaitEvents2KHR_fnptr(commandBuffer, eventCount, pEvents, pDependencyInfos);
         }
         /// <summary><b>[requires: VK_KHR_acceleration_structure]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="accelerationStructureCount"></param>
+        /// <param name="pAccelerationStructures"></param>
+        /// <param name="queryType"></param>
+        /// <param name="queryPool"></param>
+        /// <param name="firstQuery"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdWriteAccelerationStructuresPropertiesKHR.html" /></remarks>
         public void CmdWriteAccelerationStructuresPropertiesKHR(VkCommandBuffer commandBuffer, uint accelerationStructureCount, VkAccelerationStructureKHR* pAccelerationStructures, VkQueryType queryType, VkQueryPool queryPool, uint firstQuery)
         {
             _vkCmdWriteAccelerationStructuresPropertiesKHR_fnptr(commandBuffer, accelerationStructureCount, pAccelerationStructures, queryType, queryPool, firstQuery);
         }
         /// <summary><b>[requires: VK_NV_ray_tracing]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="accelerationStructureCount"></param>
+        /// <param name="pAccelerationStructures"></param>
+        /// <param name="queryType"></param>
+        /// <param name="queryPool"></param>
+        /// <param name="firstQuery"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdWriteAccelerationStructuresPropertiesNV.html" /></remarks>
         public void CmdWriteAccelerationStructuresPropertiesNV(VkCommandBuffer commandBuffer, uint accelerationStructureCount, VkAccelerationStructureNV* pAccelerationStructures, VkQueryType queryType, VkQueryPool queryPool, uint firstQuery)
         {
             _vkCmdWriteAccelerationStructuresPropertiesNV_fnptr(commandBuffer, accelerationStructureCount, pAccelerationStructures, queryType, queryPool, firstQuery);
         }
         /// <summary><b>[requires: VK_AMD_buffer_marker]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="stage">[optional] </param>
+        /// <param name="dstBuffer"></param>
+        /// <param name="dstOffset"></param>
+        /// <param name="marker"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdWriteBufferMarker2AMD.html" /></remarks>
         public void CmdWriteBufferMarker2AMD(VkCommandBuffer commandBuffer, VkPipelineStageFlagBits2 stage, VkBuffer dstBuffer, ulong dstOffset, uint marker)
         {
             _vkCmdWriteBufferMarker2AMD_fnptr(commandBuffer, stage, dstBuffer, dstOffset, marker);
         }
         /// <summary><b>[requires: VK_AMD_buffer_marker]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="pipelineStage">[optional] </param>
+        /// <param name="dstBuffer"></param>
+        /// <param name="dstOffset"></param>
+        /// <param name="marker"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdWriteBufferMarkerAMD.html" /></remarks>
         public void CmdWriteBufferMarkerAMD(VkCommandBuffer commandBuffer, VkPipelineStageFlagBits pipelineStage, VkBuffer dstBuffer, ulong dstOffset, uint marker)
         {
             _vkCmdWriteBufferMarkerAMD_fnptr(commandBuffer, pipelineStage, dstBuffer, dstOffset, marker);
         }
         /// <summary><b>[requires: VK_EXT_opacity_micromap]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="micromapCount"></param>
+        /// <param name="pMicromaps"></param>
+        /// <param name="queryType"></param>
+        /// <param name="queryPool"></param>
+        /// <param name="firstQuery"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdWriteMicromapsPropertiesEXT.html" /></remarks>
         public void CmdWriteMicromapsPropertiesEXT(VkCommandBuffer commandBuffer, uint micromapCount, VkMicromapEXT* pMicromaps, VkQueryType queryType, VkQueryPool queryPool, uint firstQuery)
         {
             _vkCmdWriteMicromapsPropertiesEXT_fnptr(commandBuffer, micromapCount, pMicromaps, queryType, queryPool, firstQuery);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="pipelineStage"></param>
+        /// <param name="queryPool"></param>
+        /// <param name="query"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdWriteTimestamp.html" /></remarks>
         public void CmdWriteTimestamp(VkCommandBuffer commandBuffer, VkPipelineStageFlagBits pipelineStage, VkQueryPool queryPool, uint query)
         {
             _vkCmdWriteTimestamp_fnptr(commandBuffer, pipelineStage, queryPool, query);
         }
         /// <summary><b>[requires: v1.3]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="stage">[optional] </param>
+        /// <param name="queryPool"></param>
+        /// <param name="query"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdWriteTimestamp2.html" /></remarks>
         public void CmdWriteTimestamp2(VkCommandBuffer commandBuffer, VkPipelineStageFlagBits2 stage, VkQueryPool queryPool, uint query)
         {
             _vkCmdWriteTimestamp2_fnptr(commandBuffer, stage, queryPool, query);
         }
         /// <summary><b>[requires: VK_KHR_synchronization2]</b> [device command]  Alias of <see cref="CmdWriteTimestamp2"/></summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="stage">[optional] </param>
+        /// <param name="queryPool"></param>
+        /// <param name="query"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdWriteTimestamp2KHR.html" /></remarks>
         public void CmdWriteTimestamp2KHR(VkCommandBuffer commandBuffer, VkPipelineStageFlagBits2 stage, VkQueryPool queryPool, uint query)
         {
             _vkCmdWriteTimestamp2KHR_fnptr(commandBuffer, stage, queryPool, query);
         }
         /// <summary><b>[requires: VK_NV_ray_tracing]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pipeline"></param>
+        /// <param name="shader"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCompileDeferredNV.html" /></remarks>
         public VkResult CompileDeferredNV(VkDevice device, VkPipeline pipeline, uint shader)
         {
             return _vkCompileDeferredNV_fnptr(device, pipeline, shader);
         }
         /// <summary><b>[requires: VK_NV_cooperative_vector]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkConvertCooperativeVectorMatrixNV.html" /></remarks>
         public VkResult ConvertCooperativeVectorMatrixNV(VkDevice device, VkConvertCooperativeVectorMatrixInfoNV* pInfo)
         {
             return _vkConvertCooperativeVectorMatrixNV_fnptr(device, pInfo);
         }
         /// <summary><b>[requires: VK_KHR_acceleration_structure]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="deferredOperation">[optional] </param>
+        /// <param name="pInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCopyAccelerationStructureKHR.html" /></remarks>
         public VkResult CopyAccelerationStructureKHR(VkDevice device, VkDeferredOperationKHR deferredOperation, VkCopyAccelerationStructureInfoKHR* pInfo)
         {
             return _vkCopyAccelerationStructureKHR_fnptr(device, deferredOperation, pInfo);
         }
         /// <summary><b>[requires: VK_KHR_acceleration_structure]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="deferredOperation">[optional] </param>
+        /// <param name="pInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCopyAccelerationStructureToMemoryKHR.html" /></remarks>
         public VkResult CopyAccelerationStructureToMemoryKHR(VkDevice device, VkDeferredOperationKHR deferredOperation, VkCopyAccelerationStructureToMemoryInfoKHR* pInfo)
         {
             return _vkCopyAccelerationStructureToMemoryKHR_fnptr(device, deferredOperation, pInfo);
         }
         /// <summary><b>[requires: v1.4]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pCopyImageToImageInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCopyImageToImage.html" /></remarks>
         public VkResult CopyImageToImage(VkDevice device, VkCopyImageToImageInfo* pCopyImageToImageInfo)
         {
             return _vkCopyImageToImage_fnptr(device, pCopyImageToImageInfo);
         }
         /// <summary><b>[requires: VK_EXT_host_image_copy]</b> [device command]  Alias of <see cref="CopyImageToImage"/></summary>
+        /// <param name="device"></param>
+        /// <param name="pCopyImageToImageInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCopyImageToImageEXT.html" /></remarks>
         public VkResult CopyImageToImageEXT(VkDevice device, VkCopyImageToImageInfo* pCopyImageToImageInfo)
         {
             return _vkCopyImageToImageEXT_fnptr(device, pCopyImageToImageInfo);
         }
         /// <summary><b>[requires: v1.4]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pCopyImageToMemoryInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCopyImageToMemory.html" /></remarks>
         public VkResult CopyImageToMemory(VkDevice device, VkCopyImageToMemoryInfo* pCopyImageToMemoryInfo)
         {
             return _vkCopyImageToMemory_fnptr(device, pCopyImageToMemoryInfo);
         }
         /// <summary><b>[requires: VK_EXT_host_image_copy]</b> [device command]  Alias of <see cref="CopyImageToMemory"/></summary>
+        /// <param name="device"></param>
+        /// <param name="pCopyImageToMemoryInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCopyImageToMemoryEXT.html" /></remarks>
         public VkResult CopyImageToMemoryEXT(VkDevice device, VkCopyImageToMemoryInfo* pCopyImageToMemoryInfo)
         {
             return _vkCopyImageToMemoryEXT_fnptr(device, pCopyImageToMemoryInfo);
         }
         /// <summary><b>[requires: VK_KHR_acceleration_structure]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="deferredOperation">[optional] </param>
+        /// <param name="pInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCopyMemoryToAccelerationStructureKHR.html" /></remarks>
         public VkResult CopyMemoryToAccelerationStructureKHR(VkDevice device, VkDeferredOperationKHR deferredOperation, VkCopyMemoryToAccelerationStructureInfoKHR* pInfo)
         {
             return _vkCopyMemoryToAccelerationStructureKHR_fnptr(device, deferredOperation, pInfo);
         }
         /// <summary><b>[requires: v1.4]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pCopyMemoryToImageInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCopyMemoryToImage.html" /></remarks>
         public VkResult CopyMemoryToImage(VkDevice device, VkCopyMemoryToImageInfo* pCopyMemoryToImageInfo)
         {
             return _vkCopyMemoryToImage_fnptr(device, pCopyMemoryToImageInfo);
         }
         /// <summary><b>[requires: VK_EXT_host_image_copy]</b> [device command]  Alias of <see cref="CopyMemoryToImage"/></summary>
+        /// <param name="device"></param>
+        /// <param name="pCopyMemoryToImageInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCopyMemoryToImageEXT.html" /></remarks>
         public VkResult CopyMemoryToImageEXT(VkDevice device, VkCopyMemoryToImageInfo* pCopyMemoryToImageInfo)
         {
             return _vkCopyMemoryToImageEXT_fnptr(device, pCopyMemoryToImageInfo);
         }
         /// <summary><b>[requires: VK_EXT_opacity_micromap]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="deferredOperation">[optional] </param>
+        /// <param name="pInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCopyMemoryToMicromapEXT.html" /></remarks>
         public VkResult CopyMemoryToMicromapEXT(VkDevice device, VkDeferredOperationKHR deferredOperation, VkCopyMemoryToMicromapInfoEXT* pInfo)
         {
             return _vkCopyMemoryToMicromapEXT_fnptr(device, deferredOperation, pInfo);
         }
         /// <summary><b>[requires: VK_EXT_opacity_micromap]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="deferredOperation">[optional] </param>
+        /// <param name="pInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCopyMicromapEXT.html" /></remarks>
         public VkResult CopyMicromapEXT(VkDevice device, VkDeferredOperationKHR deferredOperation, VkCopyMicromapInfoEXT* pInfo)
         {
             return _vkCopyMicromapEXT_fnptr(device, deferredOperation, pInfo);
         }
         /// <summary><b>[requires: VK_EXT_opacity_micromap]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="deferredOperation">[optional] </param>
+        /// <param name="pInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCopyMicromapToMemoryEXT.html" /></remarks>
         public VkResult CopyMicromapToMemoryEXT(VkDevice device, VkDeferredOperationKHR deferredOperation, VkCopyMicromapToMemoryInfoEXT* pInfo)
         {
             return _vkCopyMicromapToMemoryEXT_fnptr(device, deferredOperation, pInfo);
         }
         /// <summary><b>[requires: VK_KHR_acceleration_structure]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pCreateInfo"></param>
+        /// <param name="pAllocator">[optional] </param>
+        /// <param name="pAccelerationStructure"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateAccelerationStructureKHR.html" /></remarks>
         public VkResult CreateAccelerationStructureKHR(VkDevice device, VkAccelerationStructureCreateInfoKHR* pCreateInfo, VkAllocationCallbacks* pAllocator, VkAccelerationStructureKHR* pAccelerationStructure)
         {
             return _vkCreateAccelerationStructureKHR_fnptr(device, pCreateInfo, pAllocator, pAccelerationStructure);
         }
         /// <summary><b>[requires: VK_NV_ray_tracing]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pCreateInfo"></param>
+        /// <param name="pAllocator">[optional] </param>
+        /// <param name="pAccelerationStructure"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateAccelerationStructureNV.html" /></remarks>
         public VkResult CreateAccelerationStructureNV(VkDevice device, VkAccelerationStructureCreateInfoNV* pCreateInfo, VkAllocationCallbacks* pAllocator, VkAccelerationStructureNV* pAccelerationStructure)
         {
             return _vkCreateAccelerationStructureNV_fnptr(device, pCreateInfo, pAllocator, pAccelerationStructure);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pCreateInfo"></param>
+        /// <param name="pAllocator">[optional] </param>
+        /// <param name="pBuffer"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateBuffer.html" /></remarks>
         public VkResult CreateBuffer(VkDevice device, VkBufferCreateInfo* pCreateInfo, VkAllocationCallbacks* pAllocator, VkBuffer* pBuffer)
         {
             return _vkCreateBuffer_fnptr(device, pCreateInfo, pAllocator, pBuffer);
         }
         /// <summary><b>[requires: VK_FUCHSIA_buffer_collection]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pCreateInfo"></param>
+        /// <param name="pAllocator">[optional] </param>
+        /// <param name="pCollection"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateBufferCollectionFUCHSIA.html" /></remarks>
         public VkResult CreateBufferCollectionFUCHSIA(VkDevice device, VkBufferCollectionCreateInfoFUCHSIA* pCreateInfo, VkAllocationCallbacks* pAllocator, VkBufferCollectionFUCHSIA* pCollection)
         {
             return _vkCreateBufferCollectionFUCHSIA_fnptr(device, pCreateInfo, pAllocator, pCollection);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pCreateInfo"></param>
+        /// <param name="pAllocator">[optional] </param>
+        /// <param name="pView"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateBufferView.html" /></remarks>
         public VkResult CreateBufferView(VkDevice device, VkBufferViewCreateInfo* pCreateInfo, VkAllocationCallbacks* pAllocator, VkBufferView* pView)
         {
             return _vkCreateBufferView_fnptr(device, pCreateInfo, pAllocator, pView);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pCreateInfo"></param>
+        /// <param name="pAllocator">[optional] </param>
+        /// <param name="pCommandPool"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateCommandPool.html" /></remarks>
         public VkResult CreateCommandPool(VkDevice device, VkCommandPoolCreateInfo* pCreateInfo, VkAllocationCallbacks* pAllocator, VkCommandPool* pCommandPool)
         {
             return _vkCreateCommandPool_fnptr(device, pCreateInfo, pAllocator, pCommandPool);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pipelineCache">[optional] [extern sync: maybe] </param>
+        /// <param name="createInfoCount"></param>
+        /// <param name="pCreateInfos"></param>
+        /// <param name="pAllocator">[optional] </param>
+        /// <param name="pPipelines"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateComputePipelines.html" /></remarks>
         public VkResult CreateComputePipelines(VkDevice device, VkPipelineCache pipelineCache, uint createInfoCount, VkComputePipelineCreateInfo* pCreateInfos, VkAllocationCallbacks* pAllocator, VkPipeline* pPipelines)
         {
             return _vkCreateComputePipelines_fnptr(device, pipelineCache, createInfoCount, pCreateInfos, pAllocator, pPipelines);
         }
         /// <summary><b>[requires: VK_NV_cuda_kernel_launch]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pCreateInfo"></param>
+        /// <param name="pAllocator">[optional] </param>
+        /// <param name="pFunction"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateCudaFunctionNV.html" /></remarks>
         public VkResult CreateCudaFunctionNV(VkDevice device, VkCudaFunctionCreateInfoNV* pCreateInfo, VkAllocationCallbacks* pAllocator, VkCudaFunctionNV* pFunction)
         {
             return _vkCreateCudaFunctionNV_fnptr(device, pCreateInfo, pAllocator, pFunction);
         }
         /// <summary><b>[requires: VK_NV_cuda_kernel_launch]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pCreateInfo"></param>
+        /// <param name="pAllocator">[optional] </param>
+        /// <param name="pModule"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateCudaModuleNV.html" /></remarks>
         public VkResult CreateCudaModuleNV(VkDevice device, VkCudaModuleCreateInfoNV* pCreateInfo, VkAllocationCallbacks* pAllocator, VkCudaModuleNV* pModule)
         {
             return _vkCreateCudaModuleNV_fnptr(device, pCreateInfo, pAllocator, pModule);
         }
         /// <summary><b>[requires: VK_NVX_binary_import]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pCreateInfo"></param>
+        /// <param name="pAllocator">[optional] </param>
+        /// <param name="pFunction"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateCuFunctionNVX.html" /></remarks>
         public VkResult CreateCuFunctionNVX(VkDevice device, VkCuFunctionCreateInfoNVX* pCreateInfo, VkAllocationCallbacks* pAllocator, VkCuFunctionNVX* pFunction)
         {
             return _vkCreateCuFunctionNVX_fnptr(device, pCreateInfo, pAllocator, pFunction);
         }
         /// <summary><b>[requires: VK_NVX_binary_import]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pCreateInfo"></param>
+        /// <param name="pAllocator">[optional] </param>
+        /// <param name="pModule"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateCuModuleNVX.html" /></remarks>
         public VkResult CreateCuModuleNVX(VkDevice device, VkCuModuleCreateInfoNVX* pCreateInfo, VkAllocationCallbacks* pAllocator, VkCuModuleNVX* pModule)
         {
             return _vkCreateCuModuleNVX_fnptr(device, pCreateInfo, pAllocator, pModule);
         }
         /// <summary><b>[requires: VK_ARM_data_graph]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="deferredOperation">[optional] </param>
+        /// <param name="pipelineCache">[optional] </param>
+        /// <param name="createInfoCount"></param>
+        /// <param name="pCreateInfos"></param>
+        /// <param name="pAllocator">[optional] </param>
+        /// <param name="pPipelines"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateDataGraphPipelinesARM.html" /></remarks>
         public VkResult CreateDataGraphPipelinesARM(VkDevice device, VkDeferredOperationKHR deferredOperation, VkPipelineCache pipelineCache, uint createInfoCount, VkDataGraphPipelineCreateInfoARM* pCreateInfos, VkAllocationCallbacks* pAllocator, VkPipeline* pPipelines)
         {
             return _vkCreateDataGraphPipelinesARM_fnptr(device, deferredOperation, pipelineCache, createInfoCount, pCreateInfos, pAllocator, pPipelines);
         }
         /// <summary><b>[requires: VK_ARM_data_graph]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pCreateInfo"></param>
+        /// <param name="pAllocator">[optional] </param>
+        /// <param name="pSession"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateDataGraphPipelineSessionARM.html" /></remarks>
         public VkResult CreateDataGraphPipelineSessionARM(VkDevice device, VkDataGraphPipelineSessionCreateInfoARM* pCreateInfo, VkAllocationCallbacks* pAllocator, VkDataGraphPipelineSessionARM* pSession)
         {
             return _vkCreateDataGraphPipelineSessionARM_fnptr(device, pCreateInfo, pAllocator, pSession);
         }
         /// <summary><b>[requires: VK_KHR_deferred_host_operations]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pAllocator">[optional] </param>
+        /// <param name="pDeferredOperation"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateDeferredOperationKHR.html" /></remarks>
         public VkResult CreateDeferredOperationKHR(VkDevice device, VkAllocationCallbacks* pAllocator, VkDeferredOperationKHR* pDeferredOperation)
         {
             return _vkCreateDeferredOperationKHR_fnptr(device, pAllocator, pDeferredOperation);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pCreateInfo"></param>
+        /// <param name="pAllocator">[optional] </param>
+        /// <param name="pDescriptorPool"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateDescriptorPool.html" /></remarks>
         public VkResult CreateDescriptorPool(VkDevice device, VkDescriptorPoolCreateInfo* pCreateInfo, VkAllocationCallbacks* pAllocator, VkDescriptorPool* pDescriptorPool)
         {
             return _vkCreateDescriptorPool_fnptr(device, pCreateInfo, pAllocator, pDescriptorPool);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pCreateInfo"></param>
+        /// <param name="pAllocator">[optional] </param>
+        /// <param name="pSetLayout"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateDescriptorSetLayout.html" /></remarks>
         public VkResult CreateDescriptorSetLayout(VkDevice device, VkDescriptorSetLayoutCreateInfo* pCreateInfo, VkAllocationCallbacks* pAllocator, VkDescriptorSetLayout* pSetLayout)
         {
             return _vkCreateDescriptorSetLayout_fnptr(device, pCreateInfo, pAllocator, pSetLayout);
         }
         /// <summary><b>[requires: v1.1]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pCreateInfo"></param>
+        /// <param name="pAllocator">[optional] </param>
+        /// <param name="pDescriptorUpdateTemplate"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateDescriptorUpdateTemplate.html" /></remarks>
         public VkResult CreateDescriptorUpdateTemplate(VkDevice device, VkDescriptorUpdateTemplateCreateInfo* pCreateInfo, VkAllocationCallbacks* pAllocator, VkDescriptorUpdateTemplate* pDescriptorUpdateTemplate)
         {
             return _vkCreateDescriptorUpdateTemplate_fnptr(device, pCreateInfo, pAllocator, pDescriptorUpdateTemplate);
         }
         /// <summary><b>[requires: VK_KHR_descriptor_update_template]</b> [device command]  Alias of <see cref="CreateDescriptorUpdateTemplate"/></summary>
+        /// <param name="device"></param>
+        /// <param name="pCreateInfo"></param>
+        /// <param name="pAllocator">[optional] </param>
+        /// <param name="pDescriptorUpdateTemplate"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateDescriptorUpdateTemplateKHR.html" /></remarks>
         public VkResult CreateDescriptorUpdateTemplateKHR(VkDevice device, VkDescriptorUpdateTemplateCreateInfo* pCreateInfo, VkAllocationCallbacks* pAllocator, VkDescriptorUpdateTemplate* pDescriptorUpdateTemplate)
         {
             return _vkCreateDescriptorUpdateTemplateKHR_fnptr(device, pCreateInfo, pAllocator, pDescriptorUpdateTemplate);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pCreateInfo"></param>
+        /// <param name="pAllocator">[optional] </param>
+        /// <param name="pEvent"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateEvent.html" /></remarks>
         public VkResult CreateEvent(VkDevice device, VkEventCreateInfo* pCreateInfo, VkAllocationCallbacks* pAllocator, VkEvent* pEvent)
         {
             return _vkCreateEvent_fnptr(device, pCreateInfo, pAllocator, pEvent);
         }
         /// <summary><b>[requires: VK_AMDX_shader_enqueue]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pipelineCache">[optional] [extern sync: maybe] </param>
+        /// <param name="createInfoCount"></param>
+        /// <param name="pCreateInfos"></param>
+        /// <param name="pAllocator">[optional] </param>
+        /// <param name="pPipelines"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateExecutionGraphPipelinesAMDX.html" /></remarks>
         public VkResult CreateExecutionGraphPipelinesAMDX(VkDevice device, VkPipelineCache pipelineCache, uint createInfoCount, VkExecutionGraphPipelineCreateInfoAMDX* pCreateInfos, VkAllocationCallbacks* pAllocator, VkPipeline* pPipelines)
         {
             return _vkCreateExecutionGraphPipelinesAMDX_fnptr(device, pipelineCache, createInfoCount, pCreateInfos, pAllocator, pPipelines);
         }
         /// <summary><b>[requires: VK_NV_external_compute_queue]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pCreateInfo"></param>
+        /// <param name="pAllocator">[optional] </param>
+        /// <param name="pExternalQueue"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateExternalComputeQueueNV.html" /></remarks>
         public VkResult CreateExternalComputeQueueNV(VkDevice device, VkExternalComputeQueueCreateInfoNV* pCreateInfo, VkAllocationCallbacks* pAllocator, VkExternalComputeQueueNV* pExternalQueue)
         {
             return _vkCreateExternalComputeQueueNV_fnptr(device, pCreateInfo, pAllocator, pExternalQueue);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pCreateInfo"></param>
+        /// <param name="pAllocator">[optional] </param>
+        /// <param name="pFence"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateFence.html" /></remarks>
         public VkResult CreateFence(VkDevice device, VkFenceCreateInfo* pCreateInfo, VkAllocationCallbacks* pAllocator, VkFence* pFence)
         {
             return _vkCreateFence_fnptr(device, pCreateInfo, pAllocator, pFence);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pCreateInfo"></param>
+        /// <param name="pAllocator">[optional] </param>
+        /// <param name="pFramebuffer"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateFramebuffer.html" /></remarks>
         public VkResult CreateFramebuffer(VkDevice device, VkFramebufferCreateInfo* pCreateInfo, VkAllocationCallbacks* pAllocator, VkFramebuffer* pFramebuffer)
         {
             return _vkCreateFramebuffer_fnptr(device, pCreateInfo, pAllocator, pFramebuffer);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pipelineCache">[optional] [extern sync: maybe] </param>
+        /// <param name="createInfoCount"></param>
+        /// <param name="pCreateInfos"></param>
+        /// <param name="pAllocator">[optional] </param>
+        /// <param name="pPipelines"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateGraphicsPipelines.html" /></remarks>
         public VkResult CreateGraphicsPipelines(VkDevice device, VkPipelineCache pipelineCache, uint createInfoCount, VkGraphicsPipelineCreateInfo* pCreateInfos, VkAllocationCallbacks* pAllocator, VkPipeline* pPipelines)
         {
             return _vkCreateGraphicsPipelines_fnptr(device, pipelineCache, createInfoCount, pCreateInfos, pAllocator, pPipelines);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pCreateInfo"></param>
+        /// <param name="pAllocator">[optional] </param>
+        /// <param name="pImage"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateImage.html" /></remarks>
         public VkResult CreateImage(VkDevice device, VkImageCreateInfo* pCreateInfo, VkAllocationCallbacks* pAllocator, VkImage* pImage)
         {
             return _vkCreateImage_fnptr(device, pCreateInfo, pAllocator, pImage);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pCreateInfo"></param>
+        /// <param name="pAllocator">[optional] </param>
+        /// <param name="pView"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateImageView.html" /></remarks>
         public VkResult CreateImageView(VkDevice device, VkImageViewCreateInfo* pCreateInfo, VkAllocationCallbacks* pAllocator, VkImageView* pView)
         {
             return _vkCreateImageView_fnptr(device, pCreateInfo, pAllocator, pView);
         }
         /// <summary><b>[requires: VK_EXT_device_generated_commands]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pCreateInfo"></param>
+        /// <param name="pAllocator">[optional] </param>
+        /// <param name="pIndirectCommandsLayout"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateIndirectCommandsLayoutEXT.html" /></remarks>
         public VkResult CreateIndirectCommandsLayoutEXT(VkDevice device, VkIndirectCommandsLayoutCreateInfoEXT* pCreateInfo, VkAllocationCallbacks* pAllocator, VkIndirectCommandsLayoutEXT* pIndirectCommandsLayout)
         {
             return _vkCreateIndirectCommandsLayoutEXT_fnptr(device, pCreateInfo, pAllocator, pIndirectCommandsLayout);
         }
         /// <summary><b>[requires: VK_NV_device_generated_commands]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pCreateInfo"></param>
+        /// <param name="pAllocator">[optional] </param>
+        /// <param name="pIndirectCommandsLayout"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateIndirectCommandsLayoutNV.html" /></remarks>
         public VkResult CreateIndirectCommandsLayoutNV(VkDevice device, VkIndirectCommandsLayoutCreateInfoNV* pCreateInfo, VkAllocationCallbacks* pAllocator, VkIndirectCommandsLayoutNV* pIndirectCommandsLayout)
         {
             return _vkCreateIndirectCommandsLayoutNV_fnptr(device, pCreateInfo, pAllocator, pIndirectCommandsLayout);
         }
         /// <summary><b>[requires: VK_EXT_device_generated_commands]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pCreateInfo"></param>
+        /// <param name="pAllocator">[optional] </param>
+        /// <param name="pIndirectExecutionSet"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateIndirectExecutionSetEXT.html" /></remarks>
         public VkResult CreateIndirectExecutionSetEXT(VkDevice device, VkIndirectExecutionSetCreateInfoEXT* pCreateInfo, VkAllocationCallbacks* pAllocator, VkIndirectExecutionSetEXT* pIndirectExecutionSet)
         {
             return _vkCreateIndirectExecutionSetEXT_fnptr(device, pCreateInfo, pAllocator, pIndirectExecutionSet);
         }
         /// <summary><b>[requires: VK_EXT_opacity_micromap]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pCreateInfo"></param>
+        /// <param name="pAllocator">[optional] </param>
+        /// <param name="pMicromap"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateMicromapEXT.html" /></remarks>
         public VkResult CreateMicromapEXT(VkDevice device, VkMicromapCreateInfoEXT* pCreateInfo, VkAllocationCallbacks* pAllocator, VkMicromapEXT* pMicromap)
         {
             return _vkCreateMicromapEXT_fnptr(device, pCreateInfo, pAllocator, pMicromap);
         }
         /// <summary><b>[requires: VK_NV_optical_flow]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pCreateInfo"></param>
+        /// <param name="pAllocator">[optional] </param>
+        /// <param name="pSession"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateOpticalFlowSessionNV.html" /></remarks>
         public VkResult CreateOpticalFlowSessionNV(VkDevice device, VkOpticalFlowSessionCreateInfoNV* pCreateInfo, VkAllocationCallbacks* pAllocator, VkOpticalFlowSessionNV* pSession)
         {
             return _vkCreateOpticalFlowSessionNV_fnptr(device, pCreateInfo, pAllocator, pSession);
         }
         /// <summary><b>[requires: VK_KHR_pipeline_binary]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pCreateInfo"></param>
+        /// <param name="pAllocator">[optional] </param>
+        /// <param name="pBinaries"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreatePipelineBinariesKHR.html" /></remarks>
         public VkResult CreatePipelineBinariesKHR(VkDevice device, VkPipelineBinaryCreateInfoKHR* pCreateInfo, VkAllocationCallbacks* pAllocator, VkPipelineBinaryHandlesInfoKHR* pBinaries)
         {
             return _vkCreatePipelineBinariesKHR_fnptr(device, pCreateInfo, pAllocator, pBinaries);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pCreateInfo"></param>
+        /// <param name="pAllocator">[optional] </param>
+        /// <param name="pPipelineCache"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreatePipelineCache.html" /></remarks>
         public VkResult CreatePipelineCache(VkDevice device, VkPipelineCacheCreateInfo* pCreateInfo, VkAllocationCallbacks* pAllocator, VkPipelineCache* pPipelineCache)
         {
             return _vkCreatePipelineCache_fnptr(device, pCreateInfo, pAllocator, pPipelineCache);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pCreateInfo"></param>
+        /// <param name="pAllocator">[optional] </param>
+        /// <param name="pPipelineLayout"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreatePipelineLayout.html" /></remarks>
         public VkResult CreatePipelineLayout(VkDevice device, VkPipelineLayoutCreateInfo* pCreateInfo, VkAllocationCallbacks* pAllocator, VkPipelineLayout* pPipelineLayout)
         {
             return _vkCreatePipelineLayout_fnptr(device, pCreateInfo, pAllocator, pPipelineLayout);
         }
         /// <summary><b>[requires: v1.3]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pCreateInfo"></param>
+        /// <param name="pAllocator">[optional] </param>
+        /// <param name="pPrivateDataSlot"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreatePrivateDataSlot.html" /></remarks>
         public VkResult CreatePrivateDataSlot(VkDevice device, VkPrivateDataSlotCreateInfo* pCreateInfo, VkAllocationCallbacks* pAllocator, VkPrivateDataSlot* pPrivateDataSlot)
         {
             return _vkCreatePrivateDataSlot_fnptr(device, pCreateInfo, pAllocator, pPrivateDataSlot);
         }
         /// <summary><b>[requires: VK_EXT_private_data]</b> [device command]  Alias of <see cref="CreatePrivateDataSlot"/></summary>
+        /// <param name="device"></param>
+        /// <param name="pCreateInfo"></param>
+        /// <param name="pAllocator">[optional] </param>
+        /// <param name="pPrivateDataSlot"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreatePrivateDataSlotEXT.html" /></remarks>
         public VkResult CreatePrivateDataSlotEXT(VkDevice device, VkPrivateDataSlotCreateInfo* pCreateInfo, VkAllocationCallbacks* pAllocator, VkPrivateDataSlot* pPrivateDataSlot)
         {
             return _vkCreatePrivateDataSlotEXT_fnptr(device, pCreateInfo, pAllocator, pPrivateDataSlot);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pCreateInfo"></param>
+        /// <param name="pAllocator">[optional] </param>
+        /// <param name="pQueryPool"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateQueryPool.html" /></remarks>
         public VkResult CreateQueryPool(VkDevice device, VkQueryPoolCreateInfo* pCreateInfo, VkAllocationCallbacks* pAllocator, VkQueryPool* pQueryPool)
         {
             return _vkCreateQueryPool_fnptr(device, pCreateInfo, pAllocator, pQueryPool);
         }
         /// <summary><b>[requires: VK_KHR_ray_tracing_pipeline]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="deferredOperation">[optional] </param>
+        /// <param name="pipelineCache">[optional] [extern sync: maybe] </param>
+        /// <param name="createInfoCount"></param>
+        /// <param name="pCreateInfos"></param>
+        /// <param name="pAllocator">[optional] </param>
+        /// <param name="pPipelines"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateRayTracingPipelinesKHR.html" /></remarks>
         public VkResult CreateRayTracingPipelinesKHR(VkDevice device, VkDeferredOperationKHR deferredOperation, VkPipelineCache pipelineCache, uint createInfoCount, VkRayTracingPipelineCreateInfoKHR* pCreateInfos, VkAllocationCallbacks* pAllocator, VkPipeline* pPipelines)
         {
             return _vkCreateRayTracingPipelinesKHR_fnptr(device, deferredOperation, pipelineCache, createInfoCount, pCreateInfos, pAllocator, pPipelines);
         }
         /// <summary><b>[requires: VK_NV_ray_tracing]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pipelineCache">[optional] [extern sync: maybe] </param>
+        /// <param name="createInfoCount"></param>
+        /// <param name="pCreateInfos"></param>
+        /// <param name="pAllocator">[optional] </param>
+        /// <param name="pPipelines"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateRayTracingPipelinesNV.html" /></remarks>
         public VkResult CreateRayTracingPipelinesNV(VkDevice device, VkPipelineCache pipelineCache, uint createInfoCount, VkRayTracingPipelineCreateInfoNV* pCreateInfos, VkAllocationCallbacks* pAllocator, VkPipeline* pPipelines)
         {
             return _vkCreateRayTracingPipelinesNV_fnptr(device, pipelineCache, createInfoCount, pCreateInfos, pAllocator, pPipelines);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pCreateInfo"></param>
+        /// <param name="pAllocator">[optional] </param>
+        /// <param name="pRenderPass"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateRenderPass.html" /></remarks>
         public VkResult CreateRenderPass(VkDevice device, VkRenderPassCreateInfo* pCreateInfo, VkAllocationCallbacks* pAllocator, VkRenderPass* pRenderPass)
         {
             return _vkCreateRenderPass_fnptr(device, pCreateInfo, pAllocator, pRenderPass);
         }
         /// <summary><b>[requires: v1.2]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pCreateInfo"></param>
+        /// <param name="pAllocator">[optional] </param>
+        /// <param name="pRenderPass"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateRenderPass2.html" /></remarks>
         public VkResult CreateRenderPass2(VkDevice device, VkRenderPassCreateInfo2* pCreateInfo, VkAllocationCallbacks* pAllocator, VkRenderPass* pRenderPass)
         {
             return _vkCreateRenderPass2_fnptr(device, pCreateInfo, pAllocator, pRenderPass);
         }
         /// <summary><b>[requires: VK_KHR_create_renderpass2]</b> [device command]  Alias of <see cref="CreateRenderPass2"/></summary>
+        /// <param name="device"></param>
+        /// <param name="pCreateInfo"></param>
+        /// <param name="pAllocator">[optional] </param>
+        /// <param name="pRenderPass"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateRenderPass2KHR.html" /></remarks>
         public VkResult CreateRenderPass2KHR(VkDevice device, VkRenderPassCreateInfo2* pCreateInfo, VkAllocationCallbacks* pAllocator, VkRenderPass* pRenderPass)
         {
             return _vkCreateRenderPass2KHR_fnptr(device, pCreateInfo, pAllocator, pRenderPass);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pCreateInfo"></param>
+        /// <param name="pAllocator">[optional] </param>
+        /// <param name="pSampler"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateSampler.html" /></remarks>
         public VkResult CreateSampler(VkDevice device, VkSamplerCreateInfo* pCreateInfo, VkAllocationCallbacks* pAllocator, VkSampler* pSampler)
         {
             return _vkCreateSampler_fnptr(device, pCreateInfo, pAllocator, pSampler);
         }
         /// <summary><b>[requires: v1.1]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pCreateInfo"></param>
+        /// <param name="pAllocator">[optional] </param>
+        /// <param name="pYcbcrConversion"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateSamplerYcbcrConversion.html" /></remarks>
         public VkResult CreateSamplerYcbcrConversion(VkDevice device, VkSamplerYcbcrConversionCreateInfo* pCreateInfo, VkAllocationCallbacks* pAllocator, VkSamplerYcbcrConversion* pYcbcrConversion)
         {
             return _vkCreateSamplerYcbcrConversion_fnptr(device, pCreateInfo, pAllocator, pYcbcrConversion);
         }
         /// <summary><b>[requires: VK_KHR_sampler_ycbcr_conversion]</b> [device command]  Alias of <see cref="CreateSamplerYcbcrConversion"/></summary>
+        /// <param name="device"></param>
+        /// <param name="pCreateInfo"></param>
+        /// <param name="pAllocator">[optional] </param>
+        /// <param name="pYcbcrConversion"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateSamplerYcbcrConversionKHR.html" /></remarks>
         public VkResult CreateSamplerYcbcrConversionKHR(VkDevice device, VkSamplerYcbcrConversionCreateInfo* pCreateInfo, VkAllocationCallbacks* pAllocator, VkSamplerYcbcrConversion* pYcbcrConversion)
         {
             return _vkCreateSamplerYcbcrConversionKHR_fnptr(device, pCreateInfo, pAllocator, pYcbcrConversion);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pCreateInfo"></param>
+        /// <param name="pAllocator">[optional] </param>
+        /// <param name="pSemaphore"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateSemaphore.html" /></remarks>
         public VkResult CreateSemaphore(VkDevice device, VkSemaphoreCreateInfo* pCreateInfo, VkAllocationCallbacks* pAllocator, VkSemaphore* pSemaphore)
         {
             return _vkCreateSemaphore_fnptr(device, pCreateInfo, pAllocator, pSemaphore);
         }
         /// <summary><b>[requires: VK_NV_external_sci_sync2]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pCreateInfo"></param>
+        /// <param name="pAllocator">[optional] </param>
+        /// <param name="pSemaphorePool"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateSemaphoreSciSyncPoolNV.html" /></remarks>
         public VkResult CreateSemaphoreSciSyncPoolNV(VkDevice device, VkSemaphoreSciSyncPoolCreateInfoNV* pCreateInfo, VkAllocationCallbacks* pAllocator, VkSemaphoreSciSyncPoolNV* pSemaphorePool)
         {
             return _vkCreateSemaphoreSciSyncPoolNV_fnptr(device, pCreateInfo, pAllocator, pSemaphorePool);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pCreateInfo"></param>
+        /// <param name="pAllocator">[optional] </param>
+        /// <param name="pShaderModule"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateShaderModule.html" /></remarks>
         public VkResult CreateShaderModule(VkDevice device, VkShaderModuleCreateInfo* pCreateInfo, VkAllocationCallbacks* pAllocator, VkShaderModule* pShaderModule)
         {
             return _vkCreateShaderModule_fnptr(device, pCreateInfo, pAllocator, pShaderModule);
         }
         /// <summary><b>[requires: VK_EXT_shader_object]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="createInfoCount"></param>
+        /// <param name="pCreateInfos"></param>
+        /// <param name="pAllocator">[optional] </param>
+        /// <param name="pShaders"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateShadersEXT.html" /></remarks>
         public VkResult CreateShadersEXT(VkDevice device, uint createInfoCount, VkShaderCreateInfoEXT* pCreateInfos, VkAllocationCallbacks* pAllocator, VkShaderEXT* pShaders)
         {
             return _vkCreateShadersEXT_fnptr(device, createInfoCount, pCreateInfos, pAllocator, pShaders);
         }
         /// <summary><b>[requires: VK_KHR_display_swapchain]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="swapchainCount"></param>
+        /// <param name="pCreateInfos"></param>
+        /// <param name="pAllocator">[optional] </param>
+        /// <param name="pSwapchains"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateSharedSwapchainsKHR.html" /></remarks>
         public VkResult CreateSharedSwapchainsKHR(VkDevice device, uint swapchainCount, VkSwapchainCreateInfoKHR* pCreateInfos, VkAllocationCallbacks* pAllocator, VkSwapchainKHR* pSwapchains)
         {
             return _vkCreateSharedSwapchainsKHR_fnptr(device, swapchainCount, pCreateInfos, pAllocator, pSwapchains);
         }
         /// <summary><b>[requires: VK_KHR_swapchain]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pCreateInfo"></param>
+        /// <param name="pAllocator">[optional] </param>
+        /// <param name="pSwapchain"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateSwapchainKHR.html" /></remarks>
         public VkResult CreateSwapchainKHR(VkDevice device, VkSwapchainCreateInfoKHR* pCreateInfo, VkAllocationCallbacks* pAllocator, VkSwapchainKHR* pSwapchain)
         {
             return _vkCreateSwapchainKHR_fnptr(device, pCreateInfo, pAllocator, pSwapchain);
         }
         /// <summary><b>[requires: VK_ARM_tensors]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pCreateInfo"></param>
+        /// <param name="pAllocator">[optional] </param>
+        /// <param name="pTensor"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateTensorARM.html" /></remarks>
         public VkResult CreateTensorARM(VkDevice device, VkTensorCreateInfoARM* pCreateInfo, VkAllocationCallbacks* pAllocator, VkTensorARM* pTensor)
         {
             return _vkCreateTensorARM_fnptr(device, pCreateInfo, pAllocator, pTensor);
         }
         /// <summary><b>[requires: VK_ARM_tensors]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pCreateInfo"></param>
+        /// <param name="pAllocator">[optional] </param>
+        /// <param name="pView"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateTensorViewARM.html" /></remarks>
         public VkResult CreateTensorViewARM(VkDevice device, VkTensorViewCreateInfoARM* pCreateInfo, VkAllocationCallbacks* pAllocator, VkTensorViewARM* pView)
         {
             return _vkCreateTensorViewARM_fnptr(device, pCreateInfo, pAllocator, pView);
         }
         /// <summary><b>[requires: VK_EXT_validation_cache]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pCreateInfo"></param>
+        /// <param name="pAllocator">[optional] </param>
+        /// <param name="pValidationCache"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateValidationCacheEXT.html" /></remarks>
         public VkResult CreateValidationCacheEXT(VkDevice device, VkValidationCacheCreateInfoEXT* pCreateInfo, VkAllocationCallbacks* pAllocator, VkValidationCacheEXT* pValidationCache)
         {
             return _vkCreateValidationCacheEXT_fnptr(device, pCreateInfo, pAllocator, pValidationCache);
         }
         /// <summary><b>[requires: VK_KHR_video_queue]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pCreateInfo"></param>
+        /// <param name="pAllocator">[optional] </param>
+        /// <param name="pVideoSession"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateVideoSessionKHR.html" /></remarks>
         public VkResult CreateVideoSessionKHR(VkDevice device, VkVideoSessionCreateInfoKHR* pCreateInfo, VkAllocationCallbacks* pAllocator, VkVideoSessionKHR* pVideoSession)
         {
             return _vkCreateVideoSessionKHR_fnptr(device, pCreateInfo, pAllocator, pVideoSession);
         }
         /// <summary><b>[requires: VK_KHR_video_queue]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pCreateInfo"></param>
+        /// <param name="pAllocator">[optional] </param>
+        /// <param name="pVideoSessionParameters"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateVideoSessionParametersKHR.html" /></remarks>
         public VkResult CreateVideoSessionParametersKHR(VkDevice device, VkVideoSessionParametersCreateInfoKHR* pCreateInfo, VkAllocationCallbacks* pAllocator, VkVideoSessionParametersKHR* pVideoSessionParameters)
         {
             return _vkCreateVideoSessionParametersKHR_fnptr(device, pCreateInfo, pAllocator, pVideoSessionParameters);
         }
         /// <summary><b>[requires: VK_EXT_debug_marker]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pNameInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDebugMarkerSetObjectNameEXT.html" /></remarks>
         public VkResult DebugMarkerSetObjectNameEXT(VkDevice device, VkDebugMarkerObjectNameInfoEXT* pNameInfo)
         {
             return _vkDebugMarkerSetObjectNameEXT_fnptr(device, pNameInfo);
         }
         /// <summary><b>[requires: VK_EXT_debug_marker]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pTagInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDebugMarkerSetObjectTagEXT.html" /></remarks>
         public VkResult DebugMarkerSetObjectTagEXT(VkDevice device, VkDebugMarkerObjectTagInfoEXT* pTagInfo)
         {
             return _vkDebugMarkerSetObjectTagEXT_fnptr(device, pTagInfo);
         }
         /// <summary><b>[requires: VK_KHR_deferred_host_operations]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="operation"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDeferredOperationJoinKHR.html" /></remarks>
         public VkResult DeferredOperationJoinKHR(VkDevice device, VkDeferredOperationKHR operation)
         {
             return _vkDeferredOperationJoinKHR_fnptr(device, operation);
         }
         /// <summary><b>[requires: VK_KHR_acceleration_structure]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="accelerationStructure">[optional] [extern sync: always] </param>
+        /// <param name="pAllocator">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDestroyAccelerationStructureKHR.html" /></remarks>
         public void DestroyAccelerationStructureKHR(VkDevice device, VkAccelerationStructureKHR accelerationStructure, VkAllocationCallbacks* pAllocator)
         {
             _vkDestroyAccelerationStructureKHR_fnptr(device, accelerationStructure, pAllocator);
         }
         /// <summary><b>[requires: VK_NV_ray_tracing]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="accelerationStructure">[optional] [extern sync: always] </param>
+        /// <param name="pAllocator">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDestroyAccelerationStructureNV.html" /></remarks>
         public void DestroyAccelerationStructureNV(VkDevice device, VkAccelerationStructureNV accelerationStructure, VkAllocationCallbacks* pAllocator)
         {
             _vkDestroyAccelerationStructureNV_fnptr(device, accelerationStructure, pAllocator);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="buffer">[optional] [extern sync: always] </param>
+        /// <param name="pAllocator">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDestroyBuffer.html" /></remarks>
         public void DestroyBuffer(VkDevice device, VkBuffer buffer, VkAllocationCallbacks* pAllocator)
         {
             _vkDestroyBuffer_fnptr(device, buffer, pAllocator);
         }
         /// <summary><b>[requires: VK_FUCHSIA_buffer_collection]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="collection"></param>
+        /// <param name="pAllocator">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDestroyBufferCollectionFUCHSIA.html" /></remarks>
         public void DestroyBufferCollectionFUCHSIA(VkDevice device, VkBufferCollectionFUCHSIA collection, VkAllocationCallbacks* pAllocator)
         {
             _vkDestroyBufferCollectionFUCHSIA_fnptr(device, collection, pAllocator);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="bufferView">[optional] [extern sync: always] </param>
+        /// <param name="pAllocator">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDestroyBufferView.html" /></remarks>
         public void DestroyBufferView(VkDevice device, VkBufferView bufferView, VkAllocationCallbacks* pAllocator)
         {
             _vkDestroyBufferView_fnptr(device, bufferView, pAllocator);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="commandPool">[optional] [extern sync: always] </param>
+        /// <param name="pAllocator">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDestroyCommandPool.html" /></remarks>
         public void DestroyCommandPool(VkDevice device, VkCommandPool commandPool, VkAllocationCallbacks* pAllocator)
         {
             _vkDestroyCommandPool_fnptr(device, commandPool, pAllocator);
         }
         /// <summary><b>[requires: VK_NV_cuda_kernel_launch]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="function"></param>
+        /// <param name="pAllocator">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDestroyCudaFunctionNV.html" /></remarks>
         public void DestroyCudaFunctionNV(VkDevice device, VkCudaFunctionNV function, VkAllocationCallbacks* pAllocator)
         {
             _vkDestroyCudaFunctionNV_fnptr(device, function, pAllocator);
         }
         /// <summary><b>[requires: VK_NV_cuda_kernel_launch]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="module"></param>
+        /// <param name="pAllocator">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDestroyCudaModuleNV.html" /></remarks>
         public void DestroyCudaModuleNV(VkDevice device, VkCudaModuleNV module, VkAllocationCallbacks* pAllocator)
         {
             _vkDestroyCudaModuleNV_fnptr(device, module, pAllocator);
         }
         /// <summary><b>[requires: VK_NVX_binary_import]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="function"></param>
+        /// <param name="pAllocator">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDestroyCuFunctionNVX.html" /></remarks>
         public void DestroyCuFunctionNVX(VkDevice device, VkCuFunctionNVX function, VkAllocationCallbacks* pAllocator)
         {
             _vkDestroyCuFunctionNVX_fnptr(device, function, pAllocator);
         }
         /// <summary><b>[requires: VK_NVX_binary_import]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="module"></param>
+        /// <param name="pAllocator">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDestroyCuModuleNVX.html" /></remarks>
         public void DestroyCuModuleNVX(VkDevice device, VkCuModuleNVX module, VkAllocationCallbacks* pAllocator)
         {
             _vkDestroyCuModuleNVX_fnptr(device, module, pAllocator);
         }
         /// <summary><b>[requires: VK_ARM_data_graph]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="session">[extern sync: always] </param>
+        /// <param name="pAllocator">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDestroyDataGraphPipelineSessionARM.html" /></remarks>
         public void DestroyDataGraphPipelineSessionARM(VkDevice device, VkDataGraphPipelineSessionARM session, VkAllocationCallbacks* pAllocator)
         {
             _vkDestroyDataGraphPipelineSessionARM_fnptr(device, session, pAllocator);
         }
         /// <summary><b>[requires: VK_KHR_deferred_host_operations]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="operation">[optional] [extern sync: always] </param>
+        /// <param name="pAllocator">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDestroyDeferredOperationKHR.html" /></remarks>
         public void DestroyDeferredOperationKHR(VkDevice device, VkDeferredOperationKHR operation, VkAllocationCallbacks* pAllocator)
         {
             _vkDestroyDeferredOperationKHR_fnptr(device, operation, pAllocator);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="descriptorPool">[optional] [extern sync: always] </param>
+        /// <param name="pAllocator">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDestroyDescriptorPool.html" /></remarks>
         public void DestroyDescriptorPool(VkDevice device, VkDescriptorPool descriptorPool, VkAllocationCallbacks* pAllocator)
         {
             _vkDestroyDescriptorPool_fnptr(device, descriptorPool, pAllocator);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="descriptorSetLayout">[optional] [extern sync: always] </param>
+        /// <param name="pAllocator">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDestroyDescriptorSetLayout.html" /></remarks>
         public void DestroyDescriptorSetLayout(VkDevice device, VkDescriptorSetLayout descriptorSetLayout, VkAllocationCallbacks* pAllocator)
         {
             _vkDestroyDescriptorSetLayout_fnptr(device, descriptorSetLayout, pAllocator);
         }
         /// <summary><b>[requires: v1.1]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="descriptorUpdateTemplate">[optional] [extern sync: always] </param>
+        /// <param name="pAllocator">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDestroyDescriptorUpdateTemplate.html" /></remarks>
         public void DestroyDescriptorUpdateTemplate(VkDevice device, VkDescriptorUpdateTemplate descriptorUpdateTemplate, VkAllocationCallbacks* pAllocator)
         {
             _vkDestroyDescriptorUpdateTemplate_fnptr(device, descriptorUpdateTemplate, pAllocator);
         }
         /// <summary><b>[requires: VK_KHR_descriptor_update_template]</b> [device command]  Alias of <see cref="DestroyDescriptorUpdateTemplate"/></summary>
+        /// <param name="device"></param>
+        /// <param name="descriptorUpdateTemplate">[optional] [extern sync: always] </param>
+        /// <param name="pAllocator">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDestroyDescriptorUpdateTemplateKHR.html" /></remarks>
         public void DestroyDescriptorUpdateTemplateKHR(VkDevice device, VkDescriptorUpdateTemplate descriptorUpdateTemplate, VkAllocationCallbacks* pAllocator)
         {
             _vkDestroyDescriptorUpdateTemplateKHR_fnptr(device, descriptorUpdateTemplate, pAllocator);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="device">[optional] [extern sync: always] </param>
+        /// <param name="pAllocator">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDestroyDevice.html" /></remarks>
         public void DestroyDevice(VkDevice device, VkAllocationCallbacks* pAllocator)
         {
             _vkDestroyDevice_fnptr(device, pAllocator);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="event">[optional] [extern sync: always] </param>
+        /// <param name="pAllocator">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDestroyEvent.html" /></remarks>
         public void DestroyEvent(VkDevice device, VkEvent @event, VkAllocationCallbacks* pAllocator)
         {
             _vkDestroyEvent_fnptr(device, @event, pAllocator);
         }
         /// <summary><b>[requires: VK_NV_external_compute_queue]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="externalQueue"></param>
+        /// <param name="pAllocator">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDestroyExternalComputeQueueNV.html" /></remarks>
         public void DestroyExternalComputeQueueNV(VkDevice device, VkExternalComputeQueueNV externalQueue, VkAllocationCallbacks* pAllocator)
         {
             _vkDestroyExternalComputeQueueNV_fnptr(device, externalQueue, pAllocator);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="fence">[optional] [extern sync: always] </param>
+        /// <param name="pAllocator">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDestroyFence.html" /></remarks>
         public void DestroyFence(VkDevice device, VkFence fence, VkAllocationCallbacks* pAllocator)
         {
             _vkDestroyFence_fnptr(device, fence, pAllocator);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="framebuffer">[optional] [extern sync: always] </param>
+        /// <param name="pAllocator">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDestroyFramebuffer.html" /></remarks>
         public void DestroyFramebuffer(VkDevice device, VkFramebuffer framebuffer, VkAllocationCallbacks* pAllocator)
         {
             _vkDestroyFramebuffer_fnptr(device, framebuffer, pAllocator);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="image">[optional] [extern sync: always] </param>
+        /// <param name="pAllocator">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDestroyImage.html" /></remarks>
         public void DestroyImage(VkDevice device, VkImage image, VkAllocationCallbacks* pAllocator)
         {
             _vkDestroyImage_fnptr(device, image, pAllocator);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="imageView">[optional] [extern sync: always] </param>
+        /// <param name="pAllocator">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDestroyImageView.html" /></remarks>
         public void DestroyImageView(VkDevice device, VkImageView imageView, VkAllocationCallbacks* pAllocator)
         {
             _vkDestroyImageView_fnptr(device, imageView, pAllocator);
         }
         /// <summary><b>[requires: VK_EXT_device_generated_commands]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="indirectCommandsLayout">[optional] [extern sync: always] </param>
+        /// <param name="pAllocator">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDestroyIndirectCommandsLayoutEXT.html" /></remarks>
         public void DestroyIndirectCommandsLayoutEXT(VkDevice device, VkIndirectCommandsLayoutEXT indirectCommandsLayout, VkAllocationCallbacks* pAllocator)
         {
             _vkDestroyIndirectCommandsLayoutEXT_fnptr(device, indirectCommandsLayout, pAllocator);
         }
         /// <summary><b>[requires: VK_NV_device_generated_commands]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="indirectCommandsLayout">[optional] [extern sync: always] </param>
+        /// <param name="pAllocator">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDestroyIndirectCommandsLayoutNV.html" /></remarks>
         public void DestroyIndirectCommandsLayoutNV(VkDevice device, VkIndirectCommandsLayoutNV indirectCommandsLayout, VkAllocationCallbacks* pAllocator)
         {
             _vkDestroyIndirectCommandsLayoutNV_fnptr(device, indirectCommandsLayout, pAllocator);
         }
         /// <summary><b>[requires: VK_EXT_device_generated_commands]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="indirectExecutionSet">[optional] [extern sync: always] </param>
+        /// <param name="pAllocator">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDestroyIndirectExecutionSetEXT.html" /></remarks>
         public void DestroyIndirectExecutionSetEXT(VkDevice device, VkIndirectExecutionSetEXT indirectExecutionSet, VkAllocationCallbacks* pAllocator)
         {
             _vkDestroyIndirectExecutionSetEXT_fnptr(device, indirectExecutionSet, pAllocator);
         }
         /// <summary><b>[requires: VK_EXT_opacity_micromap]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="micromap">[optional] [extern sync: always] </param>
+        /// <param name="pAllocator">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDestroyMicromapEXT.html" /></remarks>
         public void DestroyMicromapEXT(VkDevice device, VkMicromapEXT micromap, VkAllocationCallbacks* pAllocator)
         {
             _vkDestroyMicromapEXT_fnptr(device, micromap, pAllocator);
         }
         /// <summary><b>[requires: VK_NV_optical_flow]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="session"></param>
+        /// <param name="pAllocator">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDestroyOpticalFlowSessionNV.html" /></remarks>
         public void DestroyOpticalFlowSessionNV(VkDevice device, VkOpticalFlowSessionNV session, VkAllocationCallbacks* pAllocator)
         {
             _vkDestroyOpticalFlowSessionNV_fnptr(device, session, pAllocator);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pipeline">[optional] [extern sync: always] </param>
+        /// <param name="pAllocator">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDestroyPipeline.html" /></remarks>
         public void DestroyPipeline(VkDevice device, VkPipeline pipeline, VkAllocationCallbacks* pAllocator)
         {
             _vkDestroyPipeline_fnptr(device, pipeline, pAllocator);
         }
         /// <summary><b>[requires: VK_KHR_pipeline_binary]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pipelineBinary">[optional] [extern sync: always] </param>
+        /// <param name="pAllocator">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDestroyPipelineBinaryKHR.html" /></remarks>
         public void DestroyPipelineBinaryKHR(VkDevice device, VkPipelineBinaryKHR pipelineBinary, VkAllocationCallbacks* pAllocator)
         {
             _vkDestroyPipelineBinaryKHR_fnptr(device, pipelineBinary, pAllocator);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pipelineCache">[optional] [extern sync: always] </param>
+        /// <param name="pAllocator">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDestroyPipelineCache.html" /></remarks>
         public void DestroyPipelineCache(VkDevice device, VkPipelineCache pipelineCache, VkAllocationCallbacks* pAllocator)
         {
             _vkDestroyPipelineCache_fnptr(device, pipelineCache, pAllocator);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pipelineLayout">[optional] [extern sync: always] </param>
+        /// <param name="pAllocator">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDestroyPipelineLayout.html" /></remarks>
         public void DestroyPipelineLayout(VkDevice device, VkPipelineLayout pipelineLayout, VkAllocationCallbacks* pAllocator)
         {
             _vkDestroyPipelineLayout_fnptr(device, pipelineLayout, pAllocator);
         }
         /// <summary><b>[requires: v1.3]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="privateDataSlot">[optional] [extern sync: always] </param>
+        /// <param name="pAllocator">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDestroyPrivateDataSlot.html" /></remarks>
         public void DestroyPrivateDataSlot(VkDevice device, VkPrivateDataSlot privateDataSlot, VkAllocationCallbacks* pAllocator)
         {
             _vkDestroyPrivateDataSlot_fnptr(device, privateDataSlot, pAllocator);
         }
         /// <summary><b>[requires: VK_EXT_private_data]</b> [device command]  Alias of <see cref="DestroyPrivateDataSlot"/></summary>
+        /// <param name="device"></param>
+        /// <param name="privateDataSlot">[optional] [extern sync: always] </param>
+        /// <param name="pAllocator">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDestroyPrivateDataSlotEXT.html" /></remarks>
         public void DestroyPrivateDataSlotEXT(VkDevice device, VkPrivateDataSlot privateDataSlot, VkAllocationCallbacks* pAllocator)
         {
             _vkDestroyPrivateDataSlotEXT_fnptr(device, privateDataSlot, pAllocator);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="queryPool">[optional] [extern sync: always] </param>
+        /// <param name="pAllocator">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDestroyQueryPool.html" /></remarks>
         public void DestroyQueryPool(VkDevice device, VkQueryPool queryPool, VkAllocationCallbacks* pAllocator)
         {
             _vkDestroyQueryPool_fnptr(device, queryPool, pAllocator);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="renderPass">[optional] [extern sync: always] </param>
+        /// <param name="pAllocator">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDestroyRenderPass.html" /></remarks>
         public void DestroyRenderPass(VkDevice device, VkRenderPass renderPass, VkAllocationCallbacks* pAllocator)
         {
             _vkDestroyRenderPass_fnptr(device, renderPass, pAllocator);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="sampler">[optional] [extern sync: always] </param>
+        /// <param name="pAllocator">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDestroySampler.html" /></remarks>
         public void DestroySampler(VkDevice device, VkSampler sampler, VkAllocationCallbacks* pAllocator)
         {
             _vkDestroySampler_fnptr(device, sampler, pAllocator);
         }
         /// <summary><b>[requires: v1.1]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="ycbcrConversion">[optional] [extern sync: always] </param>
+        /// <param name="pAllocator">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDestroySamplerYcbcrConversion.html" /></remarks>
         public void DestroySamplerYcbcrConversion(VkDevice device, VkSamplerYcbcrConversion ycbcrConversion, VkAllocationCallbacks* pAllocator)
         {
             _vkDestroySamplerYcbcrConversion_fnptr(device, ycbcrConversion, pAllocator);
         }
         /// <summary><b>[requires: VK_KHR_sampler_ycbcr_conversion]</b> [device command]  Alias of <see cref="DestroySamplerYcbcrConversion"/></summary>
+        /// <param name="device"></param>
+        /// <param name="ycbcrConversion">[optional] [extern sync: always] </param>
+        /// <param name="pAllocator">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDestroySamplerYcbcrConversionKHR.html" /></remarks>
         public void DestroySamplerYcbcrConversionKHR(VkDevice device, VkSamplerYcbcrConversion ycbcrConversion, VkAllocationCallbacks* pAllocator)
         {
             _vkDestroySamplerYcbcrConversionKHR_fnptr(device, ycbcrConversion, pAllocator);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="semaphore">[optional] [extern sync: always] </param>
+        /// <param name="pAllocator">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDestroySemaphore.html" /></remarks>
         public void DestroySemaphore(VkDevice device, VkSemaphore semaphore, VkAllocationCallbacks* pAllocator)
         {
             _vkDestroySemaphore_fnptr(device, semaphore, pAllocator);
         }
         /// <summary><b>[requires: VK_NV_external_sci_sync2]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="semaphorePool">[optional] [extern sync: always] </param>
+        /// <param name="pAllocator">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDestroySemaphoreSciSyncPoolNV.html" /></remarks>
         public void DestroySemaphoreSciSyncPoolNV(VkDevice device, VkSemaphoreSciSyncPoolNV semaphorePool, VkAllocationCallbacks* pAllocator)
         {
             _vkDestroySemaphoreSciSyncPoolNV_fnptr(device, semaphorePool, pAllocator);
         }
         /// <summary><b>[requires: VK_EXT_shader_object]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="shader">[optional] [extern sync: always] </param>
+        /// <param name="pAllocator">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDestroyShaderEXT.html" /></remarks>
         public void DestroyShaderEXT(VkDevice device, VkShaderEXT shader, VkAllocationCallbacks* pAllocator)
         {
             _vkDestroyShaderEXT_fnptr(device, shader, pAllocator);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="shaderModule">[optional] [extern sync: always] </param>
+        /// <param name="pAllocator">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDestroyShaderModule.html" /></remarks>
         public void DestroyShaderModule(VkDevice device, VkShaderModule shaderModule, VkAllocationCallbacks* pAllocator)
         {
             _vkDestroyShaderModule_fnptr(device, shaderModule, pAllocator);
         }
         /// <summary><b>[requires: VK_KHR_swapchain]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="swapchain">[optional] [extern sync: always] </param>
+        /// <param name="pAllocator">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDestroySwapchainKHR.html" /></remarks>
         public void DestroySwapchainKHR(VkDevice device, VkSwapchainKHR swapchain, VkAllocationCallbacks* pAllocator)
         {
             _vkDestroySwapchainKHR_fnptr(device, swapchain, pAllocator);
         }
         /// <summary><b>[requires: VK_ARM_tensors]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="tensor">[optional] [extern sync: always] </param>
+        /// <param name="pAllocator">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDestroyTensorARM.html" /></remarks>
         public void DestroyTensorARM(VkDevice device, VkTensorARM tensor, VkAllocationCallbacks* pAllocator)
         {
             _vkDestroyTensorARM_fnptr(device, tensor, pAllocator);
         }
         /// <summary><b>[requires: VK_ARM_tensors]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="tensorView">[optional] [extern sync: always] </param>
+        /// <param name="pAllocator">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDestroyTensorViewARM.html" /></remarks>
         public void DestroyTensorViewARM(VkDevice device, VkTensorViewARM tensorView, VkAllocationCallbacks* pAllocator)
         {
             _vkDestroyTensorViewARM_fnptr(device, tensorView, pAllocator);
         }
         /// <summary><b>[requires: VK_EXT_validation_cache]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="validationCache">[optional] [extern sync: always] </param>
+        /// <param name="pAllocator">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDestroyValidationCacheEXT.html" /></remarks>
         public void DestroyValidationCacheEXT(VkDevice device, VkValidationCacheEXT validationCache, VkAllocationCallbacks* pAllocator)
         {
             _vkDestroyValidationCacheEXT_fnptr(device, validationCache, pAllocator);
         }
         /// <summary><b>[requires: VK_KHR_video_queue]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="videoSession">[optional] [extern sync: always] </param>
+        /// <param name="pAllocator">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDestroyVideoSessionKHR.html" /></remarks>
         public void DestroyVideoSessionKHR(VkDevice device, VkVideoSessionKHR videoSession, VkAllocationCallbacks* pAllocator)
         {
             _vkDestroyVideoSessionKHR_fnptr(device, videoSession, pAllocator);
         }
         /// <summary><b>[requires: VK_KHR_video_queue]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="videoSessionParameters">[optional] [extern sync: always] </param>
+        /// <param name="pAllocator">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDestroyVideoSessionParametersKHR.html" /></remarks>
         public void DestroyVideoSessionParametersKHR(VkDevice device, VkVideoSessionParametersKHR videoSessionParameters, VkAllocationCallbacks* pAllocator)
         {
             _vkDestroyVideoSessionParametersKHR_fnptr(device, videoSessionParameters, pAllocator);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="device"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDeviceWaitIdle.html" /></remarks>
         public VkResult DeviceWaitIdle(VkDevice device)
         {
             return _vkDeviceWaitIdle_fnptr(device);
         }
         /// <summary><b>[requires: VK_EXT_display_control]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="display"></param>
+        /// <param name="pDisplayPowerInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDisplayPowerControlEXT.html" /></remarks>
         public VkResult DisplayPowerControlEXT(VkDevice device, VkDisplayKHR display, VkDisplayPowerInfoEXT* pDisplayPowerInfo)
         {
             return _vkDisplayPowerControlEXT_fnptr(device, display, pDisplayPowerInfo);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkEndCommandBuffer.html" /></remarks>
         public VkResult EndCommandBuffer(VkCommandBuffer commandBuffer)
         {
             return _vkEndCommandBuffer_fnptr(commandBuffer);
         }
         /// <summary><b>[requires: VK_EXT_metal_objects]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pMetalObjectsInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkExportMetalObjectsEXT.html" /></remarks>
         public void ExportMetalObjectsEXT(VkDevice device, VkExportMetalObjectsInfoEXT* pMetalObjectsInfo)
         {
             _vkExportMetalObjectsEXT_fnptr(device, pMetalObjectsInfo);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="memoryRangeCount"></param>
+        /// <param name="pMemoryRanges"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkFlushMappedMemoryRanges.html" /></remarks>
         public VkResult FlushMappedMemoryRanges(VkDevice device, uint memoryRangeCount, VkMappedMemoryRange* pMemoryRanges)
         {
             return _vkFlushMappedMemoryRanges_fnptr(device, memoryRangeCount, pMemoryRanges);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="commandPool">[extern sync: always] </param>
+        /// <param name="commandBufferCount"></param>
+        /// <param name="pCommandBuffers">[extern sync: always] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkFreeCommandBuffers.html" /></remarks>
         public void FreeCommandBuffers(VkDevice device, VkCommandPool commandPool, uint commandBufferCount, VkCommandBuffer* pCommandBuffers)
         {
             _vkFreeCommandBuffers_fnptr(device, commandPool, commandBufferCount, pCommandBuffers);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="descriptorPool">[extern sync: always] </param>
+        /// <param name="descriptorSetCount"></param>
+        /// <param name="pDescriptorSets">[extern sync: always] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkFreeDescriptorSets.html" /></remarks>
         public VkResult FreeDescriptorSets(VkDevice device, VkDescriptorPool descriptorPool, uint descriptorSetCount, VkDescriptorSet* pDescriptorSets)
         {
             return _vkFreeDescriptorSets_fnptr(device, descriptorPool, descriptorSetCount, pDescriptorSets);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="memory">[optional] [extern sync: always] </param>
+        /// <param name="pAllocator">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkFreeMemory.html" /></remarks>
         public void FreeMemory(VkDevice device, VkDeviceMemory memory, VkAllocationCallbacks* pAllocator)
         {
             _vkFreeMemory_fnptr(device, memory, pAllocator);
         }
         /// <summary><b>[requires: VK_KHR_acceleration_structure]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="buildType"></param>
+        /// <param name="pBuildInfo"></param>
+        /// <param name="pMaxPrimitiveCounts">[optional] </param>
+        /// <param name="pSizeInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetAccelerationStructureBuildSizesKHR.html" /></remarks>
         public void GetAccelerationStructureBuildSizesKHR(VkDevice device, VkAccelerationStructureBuildTypeKHR buildType, VkAccelerationStructureBuildGeometryInfoKHR* pBuildInfo, uint* pMaxPrimitiveCounts, VkAccelerationStructureBuildSizesInfoKHR* pSizeInfo)
         {
             _vkGetAccelerationStructureBuildSizesKHR_fnptr(device, buildType, pBuildInfo, pMaxPrimitiveCounts, pSizeInfo);
         }
         /// <summary><b>[requires: VK_KHR_acceleration_structure]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetAccelerationStructureDeviceAddressKHR.html" /></remarks>
         public ulong GetAccelerationStructureDeviceAddressKHR(VkDevice device, VkAccelerationStructureDeviceAddressInfoKHR* pInfo)
         {
             return _vkGetAccelerationStructureDeviceAddressKHR_fnptr(device, pInfo);
         }
         /// <summary><b>[requires: VK_NV_ray_tracing]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="accelerationStructure"></param>
+        /// <param name="dataSize"></param>
+        /// <param name="pData"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetAccelerationStructureHandleNV.html" /></remarks>
         public VkResult GetAccelerationStructureHandleNV(VkDevice device, VkAccelerationStructureNV accelerationStructure, nuint dataSize, void* pData)
         {
             return _vkGetAccelerationStructureHandleNV_fnptr(device, accelerationStructure, dataSize, pData);
         }
         /// <summary><b>[requires: VK_NV_ray_tracing]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pInfo"></param>
+        /// <param name="pMemoryRequirements"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetAccelerationStructureMemoryRequirementsNV.html" /></remarks>
         public void GetAccelerationStructureMemoryRequirementsNV(VkDevice device, VkAccelerationStructureMemoryRequirementsInfoNV* pInfo, VkMemoryRequirements2* pMemoryRequirements)
         {
             _vkGetAccelerationStructureMemoryRequirementsNV_fnptr(device, pInfo, pMemoryRequirements);
         }
         /// <summary><b>[requires: VK_EXT_descriptor_buffer]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pInfo"></param>
+        /// <param name="pData"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetAccelerationStructureOpaqueCaptureDescriptorDataEXT.html" /></remarks>
         public VkResult GetAccelerationStructureOpaqueCaptureDescriptorDataEXT(VkDevice device, VkAccelerationStructureCaptureDescriptorDataInfoEXT* pInfo, void* pData)
         {
             return _vkGetAccelerationStructureOpaqueCaptureDescriptorDataEXT_fnptr(device, pInfo, pData);
         }
         /// <summary><b>[requires: VK_ANDROID_external_memory_android_hardware_buffer]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="buffer"></param>
+        /// <param name="pProperties"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetAndroidHardwareBufferPropertiesANDROID.html" /></remarks>
         public VkResult GetAndroidHardwareBufferPropertiesANDROID(VkDevice device, IntPtr buffer, VkAndroidHardwareBufferPropertiesANDROID* pProperties)
         {
             return _vkGetAndroidHardwareBufferPropertiesANDROID_fnptr(device, buffer, pProperties);
         }
         /// <summary><b>[requires: VK_FUCHSIA_buffer_collection]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="collection"></param>
+        /// <param name="pProperties"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetBufferCollectionPropertiesFUCHSIA.html" /></remarks>
         public VkResult GetBufferCollectionPropertiesFUCHSIA(VkDevice device, VkBufferCollectionFUCHSIA collection, VkBufferCollectionPropertiesFUCHSIA* pProperties)
         {
             return _vkGetBufferCollectionPropertiesFUCHSIA_fnptr(device, collection, pProperties);
         }
         /// <summary><b>[requires: v1.2]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetBufferDeviceAddress.html" /></remarks>
         public ulong GetBufferDeviceAddress(VkDevice device, VkBufferDeviceAddressInfo* pInfo)
         {
             return _vkGetBufferDeviceAddress_fnptr(device, pInfo);
         }
         /// <summary><b>[requires: VK_EXT_buffer_device_address]</b> [device command]  Alias of <see cref="GetBufferDeviceAddress"/></summary>
+        /// <param name="device"></param>
+        /// <param name="pInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetBufferDeviceAddressEXT.html" /></remarks>
         public ulong GetBufferDeviceAddressEXT(VkDevice device, VkBufferDeviceAddressInfo* pInfo)
         {
             return _vkGetBufferDeviceAddressEXT_fnptr(device, pInfo);
         }
         /// <summary><b>[requires: VK_KHR_buffer_device_address]</b> [device command]  Alias of <see cref="GetBufferDeviceAddress"/></summary>
+        /// <param name="device"></param>
+        /// <param name="pInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetBufferDeviceAddressKHR.html" /></remarks>
         public ulong GetBufferDeviceAddressKHR(VkDevice device, VkBufferDeviceAddressInfo* pInfo)
         {
             return _vkGetBufferDeviceAddressKHR_fnptr(device, pInfo);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="buffer"></param>
+        /// <param name="pMemoryRequirements"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetBufferMemoryRequirements.html" /></remarks>
         public void GetBufferMemoryRequirements(VkDevice device, VkBuffer buffer, VkMemoryRequirements* pMemoryRequirements)
         {
             _vkGetBufferMemoryRequirements_fnptr(device, buffer, pMemoryRequirements);
         }
         /// <summary><b>[requires: v1.1]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pInfo"></param>
+        /// <param name="pMemoryRequirements"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetBufferMemoryRequirements2.html" /></remarks>
         public void GetBufferMemoryRequirements2(VkDevice device, VkBufferMemoryRequirementsInfo2* pInfo, VkMemoryRequirements2* pMemoryRequirements)
         {
             _vkGetBufferMemoryRequirements2_fnptr(device, pInfo, pMemoryRequirements);
         }
         /// <summary><b>[requires: VK_KHR_get_memory_requirements2]</b> [device command]  Alias of <see cref="GetBufferMemoryRequirements2"/></summary>
+        /// <param name="device"></param>
+        /// <param name="pInfo"></param>
+        /// <param name="pMemoryRequirements"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetBufferMemoryRequirements2KHR.html" /></remarks>
         public void GetBufferMemoryRequirements2KHR(VkDevice device, VkBufferMemoryRequirementsInfo2* pInfo, VkMemoryRequirements2* pMemoryRequirements)
         {
             _vkGetBufferMemoryRequirements2KHR_fnptr(device, pInfo, pMemoryRequirements);
         }
         /// <summary><b>[requires: v1.2]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetBufferOpaqueCaptureAddress.html" /></remarks>
         public ulong GetBufferOpaqueCaptureAddress(VkDevice device, VkBufferDeviceAddressInfo* pInfo)
         {
             return _vkGetBufferOpaqueCaptureAddress_fnptr(device, pInfo);
         }
         /// <summary><b>[requires: VK_KHR_buffer_device_address]</b> [device command]  Alias of <see cref="GetBufferOpaqueCaptureAddress"/></summary>
+        /// <param name="device"></param>
+        /// <param name="pInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetBufferOpaqueCaptureAddressKHR.html" /></remarks>
         public ulong GetBufferOpaqueCaptureAddressKHR(VkDevice device, VkBufferDeviceAddressInfo* pInfo)
         {
             return _vkGetBufferOpaqueCaptureAddressKHR_fnptr(device, pInfo);
         }
         /// <summary><b>[requires: VK_EXT_descriptor_buffer]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pInfo"></param>
+        /// <param name="pData"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetBufferOpaqueCaptureDescriptorDataEXT.html" /></remarks>
         public VkResult GetBufferOpaqueCaptureDescriptorDataEXT(VkDevice device, VkBufferCaptureDescriptorDataInfoEXT* pInfo, void* pData)
         {
             return _vkGetBufferOpaqueCaptureDescriptorDataEXT_fnptr(device, pInfo, pData);
         }
         /// <summary><b>[requires: VK_EXT_calibrated_timestamps]</b> [device command]  Alias of <see cref="GetCalibratedTimestampsKHR"/></summary>
+        /// <param name="device"></param>
+        /// <param name="timestampCount"></param>
+        /// <param name="pTimestampInfos"></param>
+        /// <param name="pTimestamps"></param>
+        /// <param name="pMaxDeviation"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetCalibratedTimestampsEXT.html" /></remarks>
         public VkResult GetCalibratedTimestampsEXT(VkDevice device, uint timestampCount, VkCalibratedTimestampInfoKHR* pTimestampInfos, ulong* pTimestamps, ulong* pMaxDeviation)
         {
             return _vkGetCalibratedTimestampsEXT_fnptr(device, timestampCount, pTimestampInfos, pTimestamps, pMaxDeviation);
         }
         /// <summary><b>[requires: VK_KHR_calibrated_timestamps]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="timestampCount"></param>
+        /// <param name="pTimestampInfos"></param>
+        /// <param name="pTimestamps"></param>
+        /// <param name="pMaxDeviation"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetCalibratedTimestampsKHR.html" /></remarks>
         public VkResult GetCalibratedTimestampsKHR(VkDevice device, uint timestampCount, VkCalibratedTimestampInfoKHR* pTimestampInfos, ulong* pTimestamps, ulong* pMaxDeviation)
         {
             return _vkGetCalibratedTimestampsKHR_fnptr(device, timestampCount, pTimestampInfos, pTimestamps, pMaxDeviation);
         }
         /// <summary><b>[requires: VK_NV_cluster_acceleration_structure]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pInfo"></param>
+        /// <param name="pSizeInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetClusterAccelerationStructureBuildSizesNV.html" /></remarks>
         public void GetClusterAccelerationStructureBuildSizesNV(VkDevice device, VkClusterAccelerationStructureInputInfoNV* pInfo, VkAccelerationStructureBuildSizesInfoKHR* pSizeInfo)
         {
             _vkGetClusterAccelerationStructureBuildSizesNV_fnptr(device, pInfo, pSizeInfo);
         }
         /// <summary>[device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="commandPool">[extern sync: always] </param>
+        /// <param name="commandBuffer">[optional] [extern sync: always] </param>
+        /// <param name="pConsumption"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetCommandPoolMemoryConsumption.html" /></remarks>
         public void GetCommandPoolMemoryConsumption(VkDevice device, VkCommandPool commandPool, VkCommandBuffer commandBuffer, VkCommandPoolMemoryConsumption* pConsumption)
         {
             _vkGetCommandPoolMemoryConsumption_fnptr(device, commandPool, commandBuffer, pConsumption);
         }
         /// <summary><b>[requires: VK_NV_cuda_kernel_launch]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="module"></param>
+        /// <param name="pCacheSize">[ptr required, value optional] </param>
+        /// <param name="pCacheData">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetCudaModuleCacheNV.html" /></remarks>
         public VkResult GetCudaModuleCacheNV(VkDevice device, VkCudaModuleNV module, nuint* pCacheSize, void* pCacheData)
         {
             return _vkGetCudaModuleCacheNV_fnptr(device, module, pCacheSize, pCacheData);
         }
         /// <summary><b>[requires: VK_ARM_data_graph]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pPipelineInfo"></param>
+        /// <param name="pPropertiesCount">[ptr required, value optional] </param>
+        /// <param name="pProperties">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetDataGraphPipelineAvailablePropertiesARM.html" /></remarks>
         public VkResult GetDataGraphPipelineAvailablePropertiesARM(VkDevice device, VkDataGraphPipelineInfoARM* pPipelineInfo, uint* pPropertiesCount, VkDataGraphPipelinePropertyARM* pProperties)
         {
             return _vkGetDataGraphPipelineAvailablePropertiesARM_fnptr(device, pPipelineInfo, pPropertiesCount, pProperties);
         }
         /// <summary><b>[requires: VK_ARM_data_graph]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pPipelineInfo"></param>
+        /// <param name="propertiesCount"></param>
+        /// <param name="pProperties"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetDataGraphPipelinePropertiesARM.html" /></remarks>
         public VkResult GetDataGraphPipelinePropertiesARM(VkDevice device, VkDataGraphPipelineInfoARM* pPipelineInfo, uint propertiesCount, VkDataGraphPipelinePropertyQueryResultARM* pProperties)
         {
             return _vkGetDataGraphPipelinePropertiesARM_fnptr(device, pPipelineInfo, propertiesCount, pProperties);
         }
         /// <summary><b>[requires: VK_ARM_data_graph]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pInfo"></param>
+        /// <param name="pBindPointRequirementCount">[ptr required, value optional] </param>
+        /// <param name="pBindPointRequirements">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetDataGraphPipelineSessionBindPointRequirementsARM.html" /></remarks>
         public VkResult GetDataGraphPipelineSessionBindPointRequirementsARM(VkDevice device, VkDataGraphPipelineSessionBindPointRequirementsInfoARM* pInfo, uint* pBindPointRequirementCount, VkDataGraphPipelineSessionBindPointRequirementARM* pBindPointRequirements)
         {
             return _vkGetDataGraphPipelineSessionBindPointRequirementsARM_fnptr(device, pInfo, pBindPointRequirementCount, pBindPointRequirements);
         }
         /// <summary><b>[requires: VK_ARM_data_graph]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pInfo"></param>
+        /// <param name="pMemoryRequirements"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetDataGraphPipelineSessionMemoryRequirementsARM.html" /></remarks>
         public void GetDataGraphPipelineSessionMemoryRequirementsARM(VkDevice device, VkDataGraphPipelineSessionMemoryRequirementsInfoARM* pInfo, VkMemoryRequirements2* pMemoryRequirements)
         {
             _vkGetDataGraphPipelineSessionMemoryRequirementsARM_fnptr(device, pInfo, pMemoryRequirements);
         }
         /// <summary><b>[requires: VK_KHR_deferred_host_operations]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="operation"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetDeferredOperationMaxConcurrencyKHR.html" /></remarks>
         public uint GetDeferredOperationMaxConcurrencyKHR(VkDevice device, VkDeferredOperationKHR operation)
         {
             return _vkGetDeferredOperationMaxConcurrencyKHR_fnptr(device, operation);
         }
         /// <summary><b>[requires: VK_KHR_deferred_host_operations]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="operation"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetDeferredOperationResultKHR.html" /></remarks>
         public VkResult GetDeferredOperationResultKHR(VkDevice device, VkDeferredOperationKHR operation)
         {
             return _vkGetDeferredOperationResultKHR_fnptr(device, operation);
         }
         /// <summary><b>[requires: VK_EXT_descriptor_buffer]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pDescriptorInfo"></param>
+        /// <param name="dataSize"></param>
+        /// <param name="pDescriptor"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetDescriptorEXT.html" /></remarks>
         public void GetDescriptorEXT(VkDevice device, VkDescriptorGetInfoEXT* pDescriptorInfo, nuint dataSize, void* pDescriptor)
         {
             _vkGetDescriptorEXT_fnptr(device, pDescriptorInfo, dataSize, pDescriptor);
         }
         /// <summary><b>[requires: VK_VALVE_descriptor_set_host_mapping]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="descriptorSet"></param>
+        /// <param name="ppData"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetDescriptorSetHostMappingVALVE.html" /></remarks>
         public void GetDescriptorSetHostMappingVALVE(VkDevice device, VkDescriptorSet descriptorSet, void** ppData)
         {
             _vkGetDescriptorSetHostMappingVALVE_fnptr(device, descriptorSet, ppData);
         }
         /// <summary><b>[requires: VK_EXT_descriptor_buffer]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="layout"></param>
+        /// <param name="binding"></param>
+        /// <param name="pOffset"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetDescriptorSetLayoutBindingOffsetEXT.html" /></remarks>
         public void GetDescriptorSetLayoutBindingOffsetEXT(VkDevice device, VkDescriptorSetLayout layout, uint binding, ulong* pOffset)
         {
             _vkGetDescriptorSetLayoutBindingOffsetEXT_fnptr(device, layout, binding, pOffset);
         }
         /// <summary><b>[requires: VK_VALVE_descriptor_set_host_mapping]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pBindingReference"></param>
+        /// <param name="pHostMapping"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetDescriptorSetLayoutHostMappingInfoVALVE.html" /></remarks>
         public void GetDescriptorSetLayoutHostMappingInfoVALVE(VkDevice device, VkDescriptorSetBindingReferenceVALVE* pBindingReference, VkDescriptorSetLayoutHostMappingInfoVALVE* pHostMapping)
         {
             _vkGetDescriptorSetLayoutHostMappingInfoVALVE_fnptr(device, pBindingReference, pHostMapping);
         }
         /// <summary><b>[requires: VK_EXT_descriptor_buffer]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="layout"></param>
+        /// <param name="pLayoutSizeInBytes"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetDescriptorSetLayoutSizeEXT.html" /></remarks>
         public void GetDescriptorSetLayoutSizeEXT(VkDevice device, VkDescriptorSetLayout layout, ulong* pLayoutSizeInBytes)
         {
             _vkGetDescriptorSetLayoutSizeEXT_fnptr(device, layout, pLayoutSizeInBytes);
         }
         /// <summary><b>[requires: v1.1]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pCreateInfo"></param>
+        /// <param name="pSupport"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetDescriptorSetLayoutSupport.html" /></remarks>
         public void GetDescriptorSetLayoutSupport(VkDevice device, VkDescriptorSetLayoutCreateInfo* pCreateInfo, VkDescriptorSetLayoutSupport* pSupport)
         {
             _vkGetDescriptorSetLayoutSupport_fnptr(device, pCreateInfo, pSupport);
         }
         /// <summary><b>[requires: VK_KHR_maintenance3]</b> [device command]  Alias of <see cref="GetDescriptorSetLayoutSupport"/></summary>
+        /// <param name="device"></param>
+        /// <param name="pCreateInfo"></param>
+        /// <param name="pSupport"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetDescriptorSetLayoutSupportKHR.html" /></remarks>
         public void GetDescriptorSetLayoutSupportKHR(VkDevice device, VkDescriptorSetLayoutCreateInfo* pCreateInfo, VkDescriptorSetLayoutSupport* pSupport)
         {
             _vkGetDescriptorSetLayoutSupportKHR_fnptr(device, pCreateInfo, pSupport);
         }
         /// <summary><b>[requires: VK_KHR_acceleration_structure]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pVersionInfo"></param>
+        /// <param name="pCompatibility"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetDeviceAccelerationStructureCompatibilityKHR.html" /></remarks>
         public void GetDeviceAccelerationStructureCompatibilityKHR(VkDevice device, VkAccelerationStructureVersionInfoKHR* pVersionInfo, VkAccelerationStructureCompatibilityKHR* pCompatibility)
         {
             _vkGetDeviceAccelerationStructureCompatibilityKHR_fnptr(device, pVersionInfo, pCompatibility);
         }
         /// <summary><b>[requires: v1.3]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pInfo"></param>
+        /// <param name="pMemoryRequirements"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetDeviceBufferMemoryRequirements.html" /></remarks>
         public void GetDeviceBufferMemoryRequirements(VkDevice device, VkDeviceBufferMemoryRequirements* pInfo, VkMemoryRequirements2* pMemoryRequirements)
         {
             _vkGetDeviceBufferMemoryRequirements_fnptr(device, pInfo, pMemoryRequirements);
         }
         /// <summary><b>[requires: VK_KHR_maintenance4]</b> [device command]  Alias of <see cref="GetDeviceBufferMemoryRequirements"/></summary>
+        /// <param name="device"></param>
+        /// <param name="pInfo"></param>
+        /// <param name="pMemoryRequirements"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetDeviceBufferMemoryRequirementsKHR.html" /></remarks>
         public void GetDeviceBufferMemoryRequirementsKHR(VkDevice device, VkDeviceBufferMemoryRequirements* pInfo, VkMemoryRequirements2* pMemoryRequirements)
         {
             _vkGetDeviceBufferMemoryRequirementsKHR_fnptr(device, pInfo, pMemoryRequirements);
         }
+        /// <summary><b>[requires: VK_NVX_image_view_handle]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="imageViewIndex"></param>
+        /// <param name="samplerIndex"></param>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetDeviceCombinedImageSamplerIndexNVX.html" /></remarks>
+        public ulong GetDeviceCombinedImageSamplerIndexNVX(VkDevice device, ulong imageViewIndex, ulong samplerIndex)
+        {
+            return _vkGetDeviceCombinedImageSamplerIndexNVX_fnptr(device, imageViewIndex, samplerIndex);
+        }
         /// <summary><b>[requires: VK_EXT_device_fault]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pFaultCounts"></param>
+        /// <param name="pFaultInfo">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetDeviceFaultInfoEXT.html" /></remarks>
         public VkResult GetDeviceFaultInfoEXT(VkDevice device, VkDeviceFaultCountsEXT* pFaultCounts, VkDeviceFaultInfoEXT* pFaultInfo)
         {
             return _vkGetDeviceFaultInfoEXT_fnptr(device, pFaultCounts, pFaultInfo);
         }
         /// <summary><b>[requires: v1.1]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="heapIndex"></param>
+        /// <param name="localDeviceIndex"></param>
+        /// <param name="remoteDeviceIndex"></param>
+        /// <param name="pPeerMemoryFeatures"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetDeviceGroupPeerMemoryFeatures.html" /></remarks>
         public void GetDeviceGroupPeerMemoryFeatures(VkDevice device, uint heapIndex, uint localDeviceIndex, uint remoteDeviceIndex, VkPeerMemoryFeatureFlagBits* pPeerMemoryFeatures)
         {
             _vkGetDeviceGroupPeerMemoryFeatures_fnptr(device, heapIndex, localDeviceIndex, remoteDeviceIndex, pPeerMemoryFeatures);
         }
         /// <summary><b>[requires: VK_KHR_device_group]</b> [device command]  Alias of <see cref="GetDeviceGroupPeerMemoryFeatures"/></summary>
+        /// <param name="device"></param>
+        /// <param name="heapIndex"></param>
+        /// <param name="localDeviceIndex"></param>
+        /// <param name="remoteDeviceIndex"></param>
+        /// <param name="pPeerMemoryFeatures"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetDeviceGroupPeerMemoryFeaturesKHR.html" /></remarks>
         public void GetDeviceGroupPeerMemoryFeaturesKHR(VkDevice device, uint heapIndex, uint localDeviceIndex, uint remoteDeviceIndex, VkPeerMemoryFeatureFlagBits* pPeerMemoryFeatures)
         {
             _vkGetDeviceGroupPeerMemoryFeaturesKHR_fnptr(device, heapIndex, localDeviceIndex, remoteDeviceIndex, pPeerMemoryFeatures);
         }
         /// <summary><b>[requires: VK_KHR_swapchain | VK_KHR_device_group]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pDeviceGroupPresentCapabilities"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetDeviceGroupPresentCapabilitiesKHR.html" /></remarks>
         public VkResult GetDeviceGroupPresentCapabilitiesKHR(VkDevice device, VkDeviceGroupPresentCapabilitiesKHR* pDeviceGroupPresentCapabilities)
         {
             return _vkGetDeviceGroupPresentCapabilitiesKHR_fnptr(device, pDeviceGroupPresentCapabilities);
         }
         /// <summary><b>[requires: VK_EXT_full_screen_exclusive]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pSurfaceInfo"></param>
+        /// <param name="pModes">[ptr required, value optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetDeviceGroupSurfacePresentModes2EXT.html" /></remarks>
         public VkResult GetDeviceGroupSurfacePresentModes2EXT(VkDevice device, VkPhysicalDeviceSurfaceInfo2KHR* pSurfaceInfo, VkDeviceGroupPresentModeFlagBitsKHR* pModes)
         {
             return _vkGetDeviceGroupSurfacePresentModes2EXT_fnptr(device, pSurfaceInfo, pModes);
         }
         /// <summary><b>[requires: VK_KHR_swapchain | VK_KHR_device_group]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="surface">[extern sync: always] </param>
+        /// <param name="pModes">[ptr required, value optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetDeviceGroupSurfacePresentModesKHR.html" /></remarks>
         public VkResult GetDeviceGroupSurfacePresentModesKHR(VkDevice device, VkSurfaceKHR surface, VkDeviceGroupPresentModeFlagBitsKHR* pModes)
         {
             return _vkGetDeviceGroupSurfacePresentModesKHR_fnptr(device, surface, pModes);
         }
         /// <summary><b>[requires: v1.3]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pInfo"></param>
+        /// <param name="pMemoryRequirements"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetDeviceImageMemoryRequirements.html" /></remarks>
         public void GetDeviceImageMemoryRequirements(VkDevice device, VkDeviceImageMemoryRequirements* pInfo, VkMemoryRequirements2* pMemoryRequirements)
         {
             _vkGetDeviceImageMemoryRequirements_fnptr(device, pInfo, pMemoryRequirements);
         }
         /// <summary><b>[requires: VK_KHR_maintenance4]</b> [device command]  Alias of <see cref="GetDeviceImageMemoryRequirements"/></summary>
+        /// <param name="device"></param>
+        /// <param name="pInfo"></param>
+        /// <param name="pMemoryRequirements"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetDeviceImageMemoryRequirementsKHR.html" /></remarks>
         public void GetDeviceImageMemoryRequirementsKHR(VkDevice device, VkDeviceImageMemoryRequirements* pInfo, VkMemoryRequirements2* pMemoryRequirements)
         {
             _vkGetDeviceImageMemoryRequirementsKHR_fnptr(device, pInfo, pMemoryRequirements);
         }
         /// <summary><b>[requires: v1.3]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pInfo"></param>
+        /// <param name="pSparseMemoryRequirementCount">[ptr required, value optional] </param>
+        /// <param name="pSparseMemoryRequirements">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetDeviceImageSparseMemoryRequirements.html" /></remarks>
         public void GetDeviceImageSparseMemoryRequirements(VkDevice device, VkDeviceImageMemoryRequirements* pInfo, uint* pSparseMemoryRequirementCount, VkSparseImageMemoryRequirements2* pSparseMemoryRequirements)
         {
             _vkGetDeviceImageSparseMemoryRequirements_fnptr(device, pInfo, pSparseMemoryRequirementCount, pSparseMemoryRequirements);
         }
         /// <summary><b>[requires: VK_KHR_maintenance4]</b> [device command]  Alias of <see cref="GetDeviceImageSparseMemoryRequirements"/></summary>
+        /// <param name="device"></param>
+        /// <param name="pInfo"></param>
+        /// <param name="pSparseMemoryRequirementCount">[ptr required, value optional] </param>
+        /// <param name="pSparseMemoryRequirements">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetDeviceImageSparseMemoryRequirementsKHR.html" /></remarks>
         public void GetDeviceImageSparseMemoryRequirementsKHR(VkDevice device, VkDeviceImageMemoryRequirements* pInfo, uint* pSparseMemoryRequirementCount, VkSparseImageMemoryRequirements2* pSparseMemoryRequirements)
         {
             _vkGetDeviceImageSparseMemoryRequirementsKHR_fnptr(device, pInfo, pSparseMemoryRequirementCount, pSparseMemoryRequirements);
         }
         /// <summary><b>[requires: v1.4]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pInfo"></param>
+        /// <param name="pLayout"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetDeviceImageSubresourceLayout.html" /></remarks>
         public void GetDeviceImageSubresourceLayout(VkDevice device, VkDeviceImageSubresourceInfo* pInfo, VkSubresourceLayout2* pLayout)
         {
             _vkGetDeviceImageSubresourceLayout_fnptr(device, pInfo, pLayout);
         }
         /// <summary><b>[requires: VK_KHR_maintenance5]</b> [device command]  Alias of <see cref="GetDeviceImageSubresourceLayout"/></summary>
+        /// <param name="device"></param>
+        /// <param name="pInfo"></param>
+        /// <param name="pLayout"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetDeviceImageSubresourceLayoutKHR.html" /></remarks>
         public void GetDeviceImageSubresourceLayoutKHR(VkDevice device, VkDeviceImageSubresourceInfo* pInfo, VkSubresourceLayout2* pLayout)
         {
             _vkGetDeviceImageSubresourceLayoutKHR_fnptr(device, pInfo, pLayout);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="memory"></param>
+        /// <param name="pCommittedMemoryInBytes"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetDeviceMemoryCommitment.html" /></remarks>
         public void GetDeviceMemoryCommitment(VkDevice device, VkDeviceMemory memory, ulong* pCommittedMemoryInBytes)
         {
             _vkGetDeviceMemoryCommitment_fnptr(device, memory, pCommittedMemoryInBytes);
         }
         /// <summary><b>[requires: v1.2]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetDeviceMemoryOpaqueCaptureAddress.html" /></remarks>
         public ulong GetDeviceMemoryOpaqueCaptureAddress(VkDevice device, VkDeviceMemoryOpaqueCaptureAddressInfo* pInfo)
         {
             return _vkGetDeviceMemoryOpaqueCaptureAddress_fnptr(device, pInfo);
         }
         /// <summary><b>[requires: VK_KHR_buffer_device_address]</b> [device command]  Alias of <see cref="GetDeviceMemoryOpaqueCaptureAddress"/></summary>
+        /// <param name="device"></param>
+        /// <param name="pInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetDeviceMemoryOpaqueCaptureAddressKHR.html" /></remarks>
         public ulong GetDeviceMemoryOpaqueCaptureAddressKHR(VkDevice device, VkDeviceMemoryOpaqueCaptureAddressInfo* pInfo)
         {
             return _vkGetDeviceMemoryOpaqueCaptureAddressKHR_fnptr(device, pInfo);
         }
         /// <summary><b>[requires: VK_EXT_opacity_micromap]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pVersionInfo"></param>
+        /// <param name="pCompatibility"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetDeviceMicromapCompatibilityEXT.html" /></remarks>
         public void GetDeviceMicromapCompatibilityEXT(VkDevice device, VkMicromapVersionInfoEXT* pVersionInfo, VkAccelerationStructureCompatibilityKHR* pCompatibility)
         {
             _vkGetDeviceMicromapCompatibilityEXT_fnptr(device, pVersionInfo, pCompatibility);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pName"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetDeviceProcAddr.html" /></remarks>
-        public IntPtr GetDeviceProcAddr(VkDevice device, byte* pName)
+        public delegate* unmanaged[Cdecl]<void> GetDeviceProcAddr(VkDevice device, byte* pName)
         {
             return _vkGetDeviceProcAddr_fnptr(device, pName);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="queueFamilyIndex"></param>
+        /// <param name="queueIndex"></param>
+        /// <param name="pQueue"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetDeviceQueue.html" /></remarks>
         public void GetDeviceQueue(VkDevice device, uint queueFamilyIndex, uint queueIndex, VkQueue* pQueue)
         {
             _vkGetDeviceQueue_fnptr(device, queueFamilyIndex, queueIndex, pQueue);
         }
         /// <summary><b>[requires: v1.1]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pQueueInfo"></param>
+        /// <param name="pQueue"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetDeviceQueue2.html" /></remarks>
         public void GetDeviceQueue2(VkDevice device, VkDeviceQueueInfo2* pQueueInfo, VkQueue* pQueue)
         {
             _vkGetDeviceQueue2_fnptr(device, pQueueInfo, pQueue);
         }
         /// <summary><b>[requires: VK_HUAWEI_subpass_shading]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="renderpass"></param>
+        /// <param name="pMaxWorkgroupSize"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetDeviceSubpassShadingMaxWorkgroupSizeHUAWEI.html" /></remarks>
         public VkResult GetDeviceSubpassShadingMaxWorkgroupSizeHUAWEI(VkDevice device, VkRenderPass renderpass, VkExtent2D* pMaxWorkgroupSize)
         {
             return _vkGetDeviceSubpassShadingMaxWorkgroupSizeHUAWEI_fnptr(device, renderpass, pMaxWorkgroupSize);
         }
         /// <summary><b>[requires: VK_ARM_tensors]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pInfo"></param>
+        /// <param name="pMemoryRequirements"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetDeviceTensorMemoryRequirementsARM.html" /></remarks>
         public void GetDeviceTensorMemoryRequirementsARM(VkDevice device, VkDeviceTensorMemoryRequirementsARM* pInfo, VkMemoryRequirements2* pMemoryRequirements)
         {
             _vkGetDeviceTensorMemoryRequirementsARM_fnptr(device, pInfo, pMemoryRequirements);
         }
         /// <summary><b>[requires: VK_QCOM_tile_properties]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pRenderingInfo"></param>
+        /// <param name="pProperties"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetDynamicRenderingTilePropertiesQCOM.html" /></remarks>
         public VkResult GetDynamicRenderingTilePropertiesQCOM(VkDevice device, VkRenderingInfo* pRenderingInfo, VkTilePropertiesQCOM* pProperties)
         {
             return _vkGetDynamicRenderingTilePropertiesQCOM_fnptr(device, pRenderingInfo, pProperties);
         }
         /// <summary><b>[requires: VK_KHR_video_encode_queue]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pVideoSessionParametersInfo"></param>
+        /// <param name="pFeedbackInfo">[optional] </param>
+        /// <param name="pDataSize">[ptr required, value optional] </param>
+        /// <param name="pData">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetEncodedVideoSessionParametersKHR.html" /></remarks>
         public VkResult GetEncodedVideoSessionParametersKHR(VkDevice device, VkVideoEncodeSessionParametersGetInfoKHR* pVideoSessionParametersInfo, VkVideoEncodeSessionParametersFeedbackInfoKHR* pFeedbackInfo, nuint* pDataSize, void* pData)
         {
             return _vkGetEncodedVideoSessionParametersKHR_fnptr(device, pVideoSessionParametersInfo, pFeedbackInfo, pDataSize, pData);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="event"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetEventStatus.html" /></remarks>
         public VkResult GetEventStatus(VkDevice device, VkEvent @event)
         {
             return _vkGetEventStatus_fnptr(device, @event);
         }
         /// <summary><b>[requires: VK_AMDX_shader_enqueue]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="executionGraph"></param>
+        /// <param name="pNodeInfo"></param>
+        /// <param name="pNodeIndex"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetExecutionGraphPipelineNodeIndexAMDX.html" /></remarks>
         public VkResult GetExecutionGraphPipelineNodeIndexAMDX(VkDevice device, VkPipeline executionGraph, VkPipelineShaderStageNodeCreateInfoAMDX* pNodeInfo, uint* pNodeIndex)
         {
             return _vkGetExecutionGraphPipelineNodeIndexAMDX_fnptr(device, executionGraph, pNodeInfo, pNodeIndex);
         }
         /// <summary><b>[requires: VK_AMDX_shader_enqueue]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="executionGraph"></param>
+        /// <param name="pSizeInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetExecutionGraphPipelineScratchSizeAMDX.html" /></remarks>
         public VkResult GetExecutionGraphPipelineScratchSizeAMDX(VkDevice device, VkPipeline executionGraph, VkExecutionGraphPipelineScratchSizeAMDX* pSizeInfo)
         {
             return _vkGetExecutionGraphPipelineScratchSizeAMDX_fnptr(device, executionGraph, pSizeInfo);
         }
         /// <summary><b>[requires: VK_NV_external_compute_queue]</b> [device command] </summary>
+        /// <param name="externalQueue"></param>
+        /// <param name="params"></param>
+        /// <param name="pData"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetExternalComputeQueueDataNV.html" /></remarks>
         public void GetExternalComputeQueueDataNV(VkExternalComputeQueueNV externalQueue, VkExternalComputeQueueDataParamsNV* parameters, void* pData)
         {
             _vkGetExternalComputeQueueDataNV_fnptr(externalQueue, parameters, pData);
         }
         /// <summary>[device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="faultQueryBehavior"></param>
+        /// <param name="pUnrecordedFaults"></param>
+        /// <param name="pFaultCount">[ptr required, value optional] </param>
+        /// <param name="pFaults">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetFaultData.html" /></remarks>
         public VkResult GetFaultData(VkDevice device, VkFaultQueryBehavior faultQueryBehavior, int* pUnrecordedFaults, uint* pFaultCount, VkFaultData* pFaults)
         {
             return _vkGetFaultData_fnptr(device, faultQueryBehavior, pUnrecordedFaults, pFaultCount, pFaults);
         }
         /// <summary><b>[requires: VK_KHR_external_fence_fd]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pGetFdInfo"></param>
+        /// <param name="pFd"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetFenceFdKHR.html" /></remarks>
         public VkResult GetFenceFdKHR(VkDevice device, VkFenceGetFdInfoKHR* pGetFdInfo, int* pFd)
         {
             return _vkGetFenceFdKHR_fnptr(device, pGetFdInfo, pFd);
         }
         /// <summary><b>[requires: VK_NV_external_sci_sync | VK_NV_external_sci_sync2]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pGetSciSyncHandleInfo"></param>
+        /// <param name="pHandle"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetFenceSciSyncFenceNV.html" /></remarks>
         public VkResult GetFenceSciSyncFenceNV(VkDevice device, VkFenceGetSciSyncInfoNV* pGetSciSyncHandleInfo, void* pHandle)
         {
             return _vkGetFenceSciSyncFenceNV_fnptr(device, pGetSciSyncHandleInfo, pHandle);
         }
         /// <summary><b>[requires: VK_NV_external_sci_sync | VK_NV_external_sci_sync2]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pGetSciSyncHandleInfo"></param>
+        /// <param name="pHandle"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetFenceSciSyncObjNV.html" /></remarks>
         public VkResult GetFenceSciSyncObjNV(VkDevice device, VkFenceGetSciSyncInfoNV* pGetSciSyncHandleInfo, void* pHandle)
         {
             return _vkGetFenceSciSyncObjNV_fnptr(device, pGetSciSyncHandleInfo, pHandle);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="fence"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetFenceStatus.html" /></remarks>
         public VkResult GetFenceStatus(VkDevice device, VkFence fence)
         {
             return _vkGetFenceStatus_fnptr(device, fence);
         }
         /// <summary><b>[requires: VK_KHR_external_fence_win32]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pGetWin32HandleInfo"></param>
+        /// <param name="pHandle"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetFenceWin32HandleKHR.html" /></remarks>
         public VkResult GetFenceWin32HandleKHR(VkDevice device, VkFenceGetWin32HandleInfoKHR* pGetWin32HandleInfo, IntPtr* pHandle)
         {
             return _vkGetFenceWin32HandleKHR_fnptr(device, pGetWin32HandleInfo, pHandle);
         }
         /// <summary><b>[requires: VK_QCOM_tile_properties]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="framebuffer"></param>
+        /// <param name="pPropertiesCount">[ptr required, value optional] </param>
+        /// <param name="pProperties">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetFramebufferTilePropertiesQCOM.html" /></remarks>
         public VkResult GetFramebufferTilePropertiesQCOM(VkDevice device, VkFramebuffer framebuffer, uint* pPropertiesCount, VkTilePropertiesQCOM* pProperties)
         {
             return _vkGetFramebufferTilePropertiesQCOM_fnptr(device, framebuffer, pPropertiesCount, pProperties);
         }
         /// <summary><b>[requires: VK_EXT_device_generated_commands]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pInfo"></param>
+        /// <param name="pMemoryRequirements"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetGeneratedCommandsMemoryRequirementsEXT.html" /></remarks>
         public void GetGeneratedCommandsMemoryRequirementsEXT(VkDevice device, VkGeneratedCommandsMemoryRequirementsInfoEXT* pInfo, VkMemoryRequirements2* pMemoryRequirements)
         {
             _vkGetGeneratedCommandsMemoryRequirementsEXT_fnptr(device, pInfo, pMemoryRequirements);
         }
         /// <summary><b>[requires: VK_NV_device_generated_commands]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pInfo"></param>
+        /// <param name="pMemoryRequirements"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetGeneratedCommandsMemoryRequirementsNV.html" /></remarks>
         public void GetGeneratedCommandsMemoryRequirementsNV(VkDevice device, VkGeneratedCommandsMemoryRequirementsInfoNV* pInfo, VkMemoryRequirements2* pMemoryRequirements)
         {
             _vkGetGeneratedCommandsMemoryRequirementsNV_fnptr(device, pInfo, pMemoryRequirements);
         }
         /// <summary><b>[requires: VK_EXT_image_drm_format_modifier]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="image"></param>
+        /// <param name="pProperties"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetImageDrmFormatModifierPropertiesEXT.html" /></remarks>
         public VkResult GetImageDrmFormatModifierPropertiesEXT(VkDevice device, VkImage image, VkImageDrmFormatModifierPropertiesEXT* pProperties)
         {
             return _vkGetImageDrmFormatModifierPropertiesEXT_fnptr(device, image, pProperties);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="image"></param>
+        /// <param name="pMemoryRequirements"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetImageMemoryRequirements.html" /></remarks>
         public void GetImageMemoryRequirements(VkDevice device, VkImage image, VkMemoryRequirements* pMemoryRequirements)
         {
             _vkGetImageMemoryRequirements_fnptr(device, image, pMemoryRequirements);
         }
         /// <summary><b>[requires: v1.1]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pInfo"></param>
+        /// <param name="pMemoryRequirements"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetImageMemoryRequirements2.html" /></remarks>
         public void GetImageMemoryRequirements2(VkDevice device, VkImageMemoryRequirementsInfo2* pInfo, VkMemoryRequirements2* pMemoryRequirements)
         {
             _vkGetImageMemoryRequirements2_fnptr(device, pInfo, pMemoryRequirements);
         }
         /// <summary><b>[requires: VK_KHR_get_memory_requirements2]</b> [device command]  Alias of <see cref="GetImageMemoryRequirements2"/></summary>
+        /// <param name="device"></param>
+        /// <param name="pInfo"></param>
+        /// <param name="pMemoryRequirements"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetImageMemoryRequirements2KHR.html" /></remarks>
         public void GetImageMemoryRequirements2KHR(VkDevice device, VkImageMemoryRequirementsInfo2* pInfo, VkMemoryRequirements2* pMemoryRequirements)
         {
             _vkGetImageMemoryRequirements2KHR_fnptr(device, pInfo, pMemoryRequirements);
         }
+        /// <summary><b>[requires: VK_EXT_descriptor_heap]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="imageCount"></param>
+        /// <param name="pImages"></param>
+        /// <param name="pDatas"></param>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetImageOpaqueCaptureDataEXT.html" /></remarks>
+        public VkResult GetImageOpaqueCaptureDataEXT(VkDevice device, uint imageCount, VkImage* pImages, VkHostAddressRangeEXT* pDatas)
+        {
+            return _vkGetImageOpaqueCaptureDataEXT_fnptr(device, imageCount, pImages, pDatas);
+        }
         /// <summary><b>[requires: VK_EXT_descriptor_buffer]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pInfo"></param>
+        /// <param name="pData"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetImageOpaqueCaptureDescriptorDataEXT.html" /></remarks>
         public VkResult GetImageOpaqueCaptureDescriptorDataEXT(VkDevice device, VkImageCaptureDescriptorDataInfoEXT* pInfo, void* pData)
         {
             return _vkGetImageOpaqueCaptureDescriptorDataEXT_fnptr(device, pInfo, pData);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="image"></param>
+        /// <param name="pSparseMemoryRequirementCount">[ptr required, value optional] </param>
+        /// <param name="pSparseMemoryRequirements">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetImageSparseMemoryRequirements.html" /></remarks>
         public void GetImageSparseMemoryRequirements(VkDevice device, VkImage image, uint* pSparseMemoryRequirementCount, VkSparseImageMemoryRequirements* pSparseMemoryRequirements)
         {
             _vkGetImageSparseMemoryRequirements_fnptr(device, image, pSparseMemoryRequirementCount, pSparseMemoryRequirements);
         }
         /// <summary><b>[requires: v1.1]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pInfo"></param>
+        /// <param name="pSparseMemoryRequirementCount">[ptr required, value optional] </param>
+        /// <param name="pSparseMemoryRequirements">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetImageSparseMemoryRequirements2.html" /></remarks>
         public void GetImageSparseMemoryRequirements2(VkDevice device, VkImageSparseMemoryRequirementsInfo2* pInfo, uint* pSparseMemoryRequirementCount, VkSparseImageMemoryRequirements2* pSparseMemoryRequirements)
         {
             _vkGetImageSparseMemoryRequirements2_fnptr(device, pInfo, pSparseMemoryRequirementCount, pSparseMemoryRequirements);
         }
         /// <summary><b>[requires: VK_KHR_get_memory_requirements2]</b> [device command]  Alias of <see cref="GetImageSparseMemoryRequirements2"/></summary>
+        /// <param name="device"></param>
+        /// <param name="pInfo"></param>
+        /// <param name="pSparseMemoryRequirementCount">[ptr required, value optional] </param>
+        /// <param name="pSparseMemoryRequirements">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetImageSparseMemoryRequirements2KHR.html" /></remarks>
         public void GetImageSparseMemoryRequirements2KHR(VkDevice device, VkImageSparseMemoryRequirementsInfo2* pInfo, uint* pSparseMemoryRequirementCount, VkSparseImageMemoryRequirements2* pSparseMemoryRequirements)
         {
             _vkGetImageSparseMemoryRequirements2KHR_fnptr(device, pInfo, pSparseMemoryRequirementCount, pSparseMemoryRequirements);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="image"></param>
+        /// <param name="pSubresource"></param>
+        /// <param name="pLayout"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetImageSubresourceLayout.html" /></remarks>
         public void GetImageSubresourceLayout(VkDevice device, VkImage image, VkImageSubresource* pSubresource, VkSubresourceLayout* pLayout)
         {
             _vkGetImageSubresourceLayout_fnptr(device, image, pSubresource, pLayout);
         }
         /// <summary><b>[requires: v1.4]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="image"></param>
+        /// <param name="pSubresource"></param>
+        /// <param name="pLayout"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetImageSubresourceLayout2.html" /></remarks>
         public void GetImageSubresourceLayout2(VkDevice device, VkImage image, VkImageSubresource2* pSubresource, VkSubresourceLayout2* pLayout)
         {
             _vkGetImageSubresourceLayout2_fnptr(device, image, pSubresource, pLayout);
         }
         /// <summary><b>[requires: VK_EXT_host_image_copy | VK_EXT_image_compression_control]</b> [device command]  Alias of <see cref="GetImageSubresourceLayout2"/></summary>
+        /// <param name="device"></param>
+        /// <param name="image"></param>
+        /// <param name="pSubresource"></param>
+        /// <param name="pLayout"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetImageSubresourceLayout2EXT.html" /></remarks>
         public void GetImageSubresourceLayout2EXT(VkDevice device, VkImage image, VkImageSubresource2* pSubresource, VkSubresourceLayout2* pLayout)
         {
             _vkGetImageSubresourceLayout2EXT_fnptr(device, image, pSubresource, pLayout);
         }
         /// <summary><b>[requires: VK_KHR_maintenance5]</b> [device command]  Alias of <see cref="GetImageSubresourceLayout2"/></summary>
+        /// <param name="device"></param>
+        /// <param name="image"></param>
+        /// <param name="pSubresource"></param>
+        /// <param name="pLayout"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetImageSubresourceLayout2KHR.html" /></remarks>
         public void GetImageSubresourceLayout2KHR(VkDevice device, VkImage image, VkImageSubresource2* pSubresource, VkSubresourceLayout2* pLayout)
         {
             _vkGetImageSubresourceLayout2KHR_fnptr(device, image, pSubresource, pLayout);
         }
         /// <summary><b>[requires: VK_NVX_image_view_handle]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="imageView"></param>
+        /// <param name="pProperties"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetImageViewAddressNVX.html" /></remarks>
         public VkResult GetImageViewAddressNVX(VkDevice device, VkImageView imageView, VkImageViewAddressPropertiesNVX* pProperties)
         {
             return _vkGetImageViewAddressNVX_fnptr(device, imageView, pProperties);
         }
         /// <summary><b>[requires: VK_NVX_image_view_handle]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetImageViewHandle64NVX.html" /></remarks>
         public ulong GetImageViewHandle64NVX(VkDevice device, VkImageViewHandleInfoNVX* pInfo)
         {
             return _vkGetImageViewHandle64NVX_fnptr(device, pInfo);
         }
         /// <summary><b>[requires: VK_NVX_image_view_handle]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetImageViewHandleNVX.html" /></remarks>
         public uint GetImageViewHandleNVX(VkDevice device, VkImageViewHandleInfoNVX* pInfo)
         {
             return _vkGetImageViewHandleNVX_fnptr(device, pInfo);
         }
         /// <summary><b>[requires: VK_EXT_descriptor_buffer]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pInfo"></param>
+        /// <param name="pData"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetImageViewOpaqueCaptureDescriptorDataEXT.html" /></remarks>
         public VkResult GetImageViewOpaqueCaptureDescriptorDataEXT(VkDevice device, VkImageViewCaptureDescriptorDataInfoEXT* pInfo, void* pData)
         {
             return _vkGetImageViewOpaqueCaptureDescriptorDataEXT_fnptr(device, pInfo, pData);
         }
         /// <summary><b>[requires: VK_NV_low_latency2]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="swapchain"></param>
+        /// <param name="pLatencyMarkerInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetLatencyTimingsNV.html" /></remarks>
         public void GetLatencyTimingsNV(VkDevice device, VkSwapchainKHR swapchain, VkGetLatencyMarkerInfoNV* pLatencyMarkerInfo)
         {
             _vkGetLatencyTimingsNV_fnptr(device, swapchain, pLatencyMarkerInfo);
         }
         /// <summary><b>[requires: VK_ANDROID_external_memory_android_hardware_buffer]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pInfo"></param>
+        /// <param name="pBuffer"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetMemoryAndroidHardwareBufferANDROID.html" /></remarks>
         public VkResult GetMemoryAndroidHardwareBufferANDROID(VkDevice device, VkMemoryGetAndroidHardwareBufferInfoANDROID* pInfo, IntPtr* pBuffer)
         {
             return _vkGetMemoryAndroidHardwareBufferANDROID_fnptr(device, pInfo, pBuffer);
         }
         /// <summary><b>[requires: VK_KHR_external_memory_fd]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pGetFdInfo"></param>
+        /// <param name="pFd"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetMemoryFdKHR.html" /></remarks>
         public VkResult GetMemoryFdKHR(VkDevice device, VkMemoryGetFdInfoKHR* pGetFdInfo, int* pFd)
         {
             return _vkGetMemoryFdKHR_fnptr(device, pGetFdInfo, pFd);
         }
         /// <summary><b>[requires: VK_KHR_external_memory_fd]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="handleType"></param>
+        /// <param name="fd"></param>
+        /// <param name="pMemoryFdProperties"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetMemoryFdPropertiesKHR.html" /></remarks>
         public VkResult GetMemoryFdPropertiesKHR(VkDevice device, VkExternalMemoryHandleTypeFlagBits handleType, int fd, VkMemoryFdPropertiesKHR* pMemoryFdProperties)
         {
             return _vkGetMemoryFdPropertiesKHR_fnptr(device, handleType, fd, pMemoryFdProperties);
         }
         /// <summary><b>[requires: VK_EXT_external_memory_host]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="handleType"></param>
+        /// <param name="pHostPointer"></param>
+        /// <param name="pMemoryHostPointerProperties"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetMemoryHostPointerPropertiesEXT.html" /></remarks>
         public VkResult GetMemoryHostPointerPropertiesEXT(VkDevice device, VkExternalMemoryHandleTypeFlagBits handleType, void* pHostPointer, VkMemoryHostPointerPropertiesEXT* pMemoryHostPointerProperties)
         {
             return _vkGetMemoryHostPointerPropertiesEXT_fnptr(device, handleType, pHostPointer, pMemoryHostPointerProperties);
         }
         /// <summary><b>[requires: VK_EXT_external_memory_metal]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pGetMetalHandleInfo"></param>
+        /// <param name="pHandle"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetMemoryMetalHandleEXT.html" /></remarks>
         public VkResult GetMemoryMetalHandleEXT(VkDevice device, VkMemoryGetMetalHandleInfoEXT* pGetMetalHandleInfo, void** pHandle)
         {
             return _vkGetMemoryMetalHandleEXT_fnptr(device, pGetMetalHandleInfo, pHandle);
         }
         /// <summary><b>[requires: VK_EXT_external_memory_metal]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="handleType"></param>
+        /// <param name="pHandle"></param>
+        /// <param name="pMemoryMetalHandleProperties"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetMemoryMetalHandlePropertiesEXT.html" /></remarks>
         public VkResult GetMemoryMetalHandlePropertiesEXT(VkDevice device, VkExternalMemoryHandleTypeFlagBits handleType, void* pHandle, VkMemoryMetalHandlePropertiesEXT* pMemoryMetalHandleProperties)
         {
             return _vkGetMemoryMetalHandlePropertiesEXT_fnptr(device, handleType, pHandle, pMemoryMetalHandleProperties);
         }
         /// <summary><b>[requires: VK_OHOS_external_memory]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pInfo"></param>
+        /// <param name="pBuffer"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetMemoryNativeBufferOHOS.html" /></remarks>
         public VkResult GetMemoryNativeBufferOHOS(VkDevice device, VkMemoryGetNativeBufferInfoOHOS* pInfo, IntPtr* pBuffer)
         {
             return _vkGetMemoryNativeBufferOHOS_fnptr(device, pInfo, pBuffer);
         }
         /// <summary><b>[requires: VK_NV_external_memory_rdma]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pMemoryGetRemoteAddressInfo"></param>
+        /// <param name="pAddress"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetMemoryRemoteAddressNV.html" /></remarks>
         public VkResult GetMemoryRemoteAddressNV(VkDevice device, VkMemoryGetRemoteAddressInfoNV* pMemoryGetRemoteAddressInfo, void** pAddress)
         {
             return _vkGetMemoryRemoteAddressNV_fnptr(device, pMemoryGetRemoteAddressInfo, pAddress);
         }
         /// <summary><b>[requires: VK_NV_external_memory_sci_buf]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pGetSciBufInfo"></param>
+        /// <param name="pHandle"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetMemorySciBufNV.html" /></remarks>
         public VkResult GetMemorySciBufNV(VkDevice device, VkMemoryGetSciBufInfoNV* pGetSciBufInfo, IntPtr* pHandle)
         {
             return _vkGetMemorySciBufNV_fnptr(device, pGetSciBufInfo, pHandle);
         }
         /// <summary><b>[requires: VK_KHR_external_memory_win32]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pGetWin32HandleInfo"></param>
+        /// <param name="pHandle"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetMemoryWin32HandleKHR.html" /></remarks>
         public VkResult GetMemoryWin32HandleKHR(VkDevice device, VkMemoryGetWin32HandleInfoKHR* pGetWin32HandleInfo, IntPtr* pHandle)
         {
             return _vkGetMemoryWin32HandleKHR_fnptr(device, pGetWin32HandleInfo, pHandle);
         }
         /// <summary><b>[requires: VK_NV_external_memory_win32]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="memory"></param>
+        /// <param name="handleType"></param>
+        /// <param name="pHandle"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetMemoryWin32HandleNV.html" /></remarks>
         public VkResult GetMemoryWin32HandleNV(VkDevice device, VkDeviceMemory memory, VkExternalMemoryHandleTypeFlagBitsNV handleType, IntPtr* pHandle)
         {
             return _vkGetMemoryWin32HandleNV_fnptr(device, memory, handleType, pHandle);
         }
         /// <summary><b>[requires: VK_KHR_external_memory_win32]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="handleType"></param>
+        /// <param name="handle"></param>
+        /// <param name="pMemoryWin32HandleProperties"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetMemoryWin32HandlePropertiesKHR.html" /></remarks>
         public VkResult GetMemoryWin32HandlePropertiesKHR(VkDevice device, VkExternalMemoryHandleTypeFlagBits handleType, IntPtr handle, VkMemoryWin32HandlePropertiesKHR* pMemoryWin32HandleProperties)
         {
             return _vkGetMemoryWin32HandlePropertiesKHR_fnptr(device, handleType, handle, pMemoryWin32HandleProperties);
         }
         /// <summary><b>[requires: VK_FUCHSIA_external_memory]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pGetZirconHandleInfo"></param>
+        /// <param name="pZirconHandle"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetMemoryZirconHandleFUCHSIA.html" /></remarks>
         public VkResult GetMemoryZirconHandleFUCHSIA(VkDevice device, VkMemoryGetZirconHandleInfoFUCHSIA* pGetZirconHandleInfo, int* pZirconHandle)
         {
             return _vkGetMemoryZirconHandleFUCHSIA_fnptr(device, pGetZirconHandleInfo, pZirconHandle);
         }
         /// <summary><b>[requires: VK_FUCHSIA_external_memory]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="handleType"></param>
+        /// <param name="zirconHandle"></param>
+        /// <param name="pMemoryZirconHandleProperties"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetMemoryZirconHandlePropertiesFUCHSIA.html" /></remarks>
         public VkResult GetMemoryZirconHandlePropertiesFUCHSIA(VkDevice device, VkExternalMemoryHandleTypeFlagBits handleType, int zirconHandle, VkMemoryZirconHandlePropertiesFUCHSIA* pMemoryZirconHandleProperties)
         {
             return _vkGetMemoryZirconHandlePropertiesFUCHSIA_fnptr(device, handleType, zirconHandle, pMemoryZirconHandleProperties);
         }
         /// <summary><b>[requires: VK_EXT_opacity_micromap]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="buildType"></param>
+        /// <param name="pBuildInfo"></param>
+        /// <param name="pSizeInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetMicromapBuildSizesEXT.html" /></remarks>
         public void GetMicromapBuildSizesEXT(VkDevice device, VkAccelerationStructureBuildTypeKHR buildType, VkMicromapBuildInfoEXT* pBuildInfo, VkMicromapBuildSizesInfoEXT* pSizeInfo)
         {
             _vkGetMicromapBuildSizesEXT_fnptr(device, buildType, pBuildInfo, pSizeInfo);
         }
         /// <summary><b>[requires: VK_OHOS_external_memory]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="buffer"></param>
+        /// <param name="pProperties"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetNativeBufferPropertiesOHOS.html" /></remarks>
         public VkResult GetNativeBufferPropertiesOHOS(VkDevice device, IntPtr buffer, VkNativeBufferPropertiesOHOS* pProperties)
         {
             return _vkGetNativeBufferPropertiesOHOS_fnptr(device, buffer, pProperties);
         }
         /// <summary><b>[requires: VK_NV_partitioned_acceleration_structure]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pInfo"></param>
+        /// <param name="pSizeInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPartitionedAccelerationStructuresBuildSizesNV.html" /></remarks>
         public void GetPartitionedAccelerationStructuresBuildSizesNV(VkDevice device, VkPartitionedAccelerationStructureInstancesInputNV* pInfo, VkAccelerationStructureBuildSizesInfoKHR* pSizeInfo)
         {
             _vkGetPartitionedAccelerationStructuresBuildSizesNV_fnptr(device, pInfo, pSizeInfo);
         }
         /// <summary><b>[requires: VK_EXT_present_timing]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pPastPresentationTimingInfo"></param>
+        /// <param name="pPastPresentationTimingProperties"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPastPresentationTimingEXT.html" /></remarks>
         public VkResult GetPastPresentationTimingEXT(VkDevice device, VkPastPresentationTimingInfoEXT* pPastPresentationTimingInfo, VkPastPresentationTimingPropertiesEXT* pPastPresentationTimingProperties)
         {
             return _vkGetPastPresentationTimingEXT_fnptr(device, pPastPresentationTimingInfo, pPastPresentationTimingProperties);
         }
         /// <summary><b>[requires: VK_GOOGLE_display_timing]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="swapchain">[extern sync: always] </param>
+        /// <param name="pPresentationTimingCount">[ptr required, value optional] </param>
+        /// <param name="pPresentationTimings">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPastPresentationTimingGOOGLE.html" /></remarks>
         public VkResult GetPastPresentationTimingGOOGLE(VkDevice device, VkSwapchainKHR swapchain, uint* pPresentationTimingCount, VkPastPresentationTimingGOOGLE* pPresentationTimings)
         {
             return _vkGetPastPresentationTimingGOOGLE_fnptr(device, swapchain, pPresentationTimingCount, pPresentationTimings);
         }
         /// <summary><b>[requires: VK_INTEL_performance_query]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="parameter"></param>
+        /// <param name="pValue"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPerformanceParameterINTEL.html" /></remarks>
         public VkResult GetPerformanceParameterINTEL(VkDevice device, VkPerformanceParameterTypeINTEL parameter, VkPerformanceValueINTEL* pValue)
         {
             return _vkGetPerformanceParameterINTEL_fnptr(device, parameter, pValue);
         }
         /// <summary><b>[requires: VK_KHR_pipeline_binary]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pInfo"></param>
+        /// <param name="pPipelineBinaryKey"></param>
+        /// <param name="pPipelineBinaryDataSize">[ptr required, value optional] </param>
+        /// <param name="pPipelineBinaryData">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPipelineBinaryDataKHR.html" /></remarks>
         public VkResult GetPipelineBinaryDataKHR(VkDevice device, VkPipelineBinaryDataInfoKHR* pInfo, VkPipelineBinaryKeyKHR* pPipelineBinaryKey, nuint* pPipelineBinaryDataSize, void* pPipelineBinaryData)
         {
             return _vkGetPipelineBinaryDataKHR_fnptr(device, pInfo, pPipelineBinaryKey, pPipelineBinaryDataSize, pPipelineBinaryData);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pipelineCache"></param>
+        /// <param name="pDataSize">[ptr required, value optional] </param>
+        /// <param name="pData">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPipelineCacheData.html" /></remarks>
         public VkResult GetPipelineCacheData(VkDevice device, VkPipelineCache pipelineCache, nuint* pDataSize, void* pData)
         {
             return _vkGetPipelineCacheData_fnptr(device, pipelineCache, pDataSize, pData);
         }
         /// <summary><b>[requires: VK_KHR_pipeline_executable_properties]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pExecutableInfo"></param>
+        /// <param name="pInternalRepresentationCount">[ptr required, value optional] </param>
+        /// <param name="pInternalRepresentations">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPipelineExecutableInternalRepresentationsKHR.html" /></remarks>
         public VkResult GetPipelineExecutableInternalRepresentationsKHR(VkDevice device, VkPipelineExecutableInfoKHR* pExecutableInfo, uint* pInternalRepresentationCount, VkPipelineExecutableInternalRepresentationKHR* pInternalRepresentations)
         {
             return _vkGetPipelineExecutableInternalRepresentationsKHR_fnptr(device, pExecutableInfo, pInternalRepresentationCount, pInternalRepresentations);
         }
         /// <summary><b>[requires: VK_KHR_pipeline_executable_properties]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pPipelineInfo"></param>
+        /// <param name="pExecutableCount">[ptr required, value optional] </param>
+        /// <param name="pProperties">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPipelineExecutablePropertiesKHR.html" /></remarks>
         public VkResult GetPipelineExecutablePropertiesKHR(VkDevice device, VkPipelineInfoKHR* pPipelineInfo, uint* pExecutableCount, VkPipelineExecutablePropertiesKHR* pProperties)
         {
             return _vkGetPipelineExecutablePropertiesKHR_fnptr(device, pPipelineInfo, pExecutableCount, pProperties);
         }
         /// <summary><b>[requires: VK_KHR_pipeline_executable_properties]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pExecutableInfo"></param>
+        /// <param name="pStatisticCount">[ptr required, value optional] </param>
+        /// <param name="pStatistics">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPipelineExecutableStatisticsKHR.html" /></remarks>
         public VkResult GetPipelineExecutableStatisticsKHR(VkDevice device, VkPipelineExecutableInfoKHR* pExecutableInfo, uint* pStatisticCount, VkPipelineExecutableStatisticKHR* pStatistics)
         {
             return _vkGetPipelineExecutableStatisticsKHR_fnptr(device, pExecutableInfo, pStatisticCount, pStatistics);
         }
         /// <summary><b>[requires: VK_NV_device_generated_commands_compute]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPipelineIndirectDeviceAddressNV.html" /></remarks>
         public ulong GetPipelineIndirectDeviceAddressNV(VkDevice device, VkPipelineIndirectDeviceAddressInfoNV* pInfo)
         {
             return _vkGetPipelineIndirectDeviceAddressNV_fnptr(device, pInfo);
         }
         /// <summary><b>[requires: VK_NV_device_generated_commands_compute]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pCreateInfo"></param>
+        /// <param name="pMemoryRequirements"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPipelineIndirectMemoryRequirementsNV.html" /></remarks>
         public void GetPipelineIndirectMemoryRequirementsNV(VkDevice device, VkComputePipelineCreateInfo* pCreateInfo, VkMemoryRequirements2* pMemoryRequirements)
         {
             _vkGetPipelineIndirectMemoryRequirementsNV_fnptr(device, pCreateInfo, pMemoryRequirements);
         }
         /// <summary><b>[requires: VK_KHR_pipeline_binary]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pPipelineCreateInfo">[optional] </param>
+        /// <param name="pPipelineKey"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPipelineKeyKHR.html" /></remarks>
         public VkResult GetPipelineKeyKHR(VkDevice device, VkPipelineCreateInfoKHR* pPipelineCreateInfo, VkPipelineBinaryKeyKHR* pPipelineKey)
         {
             return _vkGetPipelineKeyKHR_fnptr(device, pPipelineCreateInfo, pPipelineKey);
         }
         /// <summary><b>[requires: VK_EXT_pipeline_properties]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pPipelineInfo"></param>
+        /// <param name="pPipelineProperties"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPipelinePropertiesEXT.html" /></remarks>
         public VkResult GetPipelinePropertiesEXT(VkDevice device, VkPipelineInfoKHR* pPipelineInfo, VkBaseOutStructure* pPipelineProperties)
         {
             return _vkGetPipelinePropertiesEXT_fnptr(device, pPipelineInfo, pPipelineProperties);
         }
         /// <summary><b>[requires: v1.3]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="objectType"></param>
+        /// <param name="objectHandle"></param>
+        /// <param name="privateDataSlot"></param>
+        /// <param name="pData"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPrivateData.html" /></remarks>
         public void GetPrivateData(VkDevice device, VkObjectType objectType, ulong objectHandle, VkPrivateDataSlot privateDataSlot, ulong* pData)
         {
             _vkGetPrivateData_fnptr(device, objectType, objectHandle, privateDataSlot, pData);
         }
         /// <summary><b>[requires: VK_EXT_private_data]</b> [device command]  Alias of <see cref="GetPrivateData"/></summary>
+        /// <param name="device"></param>
+        /// <param name="objectType"></param>
+        /// <param name="objectHandle"></param>
+        /// <param name="privateDataSlot"></param>
+        /// <param name="pData"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPrivateDataEXT.html" /></remarks>
         public void GetPrivateDataEXT(VkDevice device, VkObjectType objectType, ulong objectHandle, VkPrivateDataSlot privateDataSlot, ulong* pData)
         {
             _vkGetPrivateDataEXT_fnptr(device, objectType, objectHandle, privateDataSlot, pData);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="queryPool"></param>
+        /// <param name="firstQuery"></param>
+        /// <param name="queryCount"></param>
+        /// <param name="dataSize"></param>
+        /// <param name="pData"></param>
+        /// <param name="stride"></param>
+        /// <param name="flags">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetQueryPoolResults.html" /></remarks>
         public VkResult GetQueryPoolResults(VkDevice device, VkQueryPool queryPool, uint firstQuery, uint queryCount, nuint dataSize, void* pData, ulong stride, VkQueryResultFlagBits flags)
         {
             return _vkGetQueryPoolResults_fnptr(device, queryPool, firstQuery, queryCount, dataSize, pData, stride, flags);
         }
         /// <summary><b>[requires: VK_NV_device_diagnostic_checkpoints]</b> [device command] </summary>
+        /// <param name="queue"></param>
+        /// <param name="pCheckpointDataCount">[ptr required, value optional] </param>
+        /// <param name="pCheckpointData">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetQueueCheckpointData2NV.html" /></remarks>
         public void GetQueueCheckpointData2NV(VkQueue queue, uint* pCheckpointDataCount, VkCheckpointData2NV* pCheckpointData)
         {
             _vkGetQueueCheckpointData2NV_fnptr(queue, pCheckpointDataCount, pCheckpointData);
         }
         /// <summary><b>[requires: VK_NV_device_diagnostic_checkpoints]</b> [device command] </summary>
+        /// <param name="queue"></param>
+        /// <param name="pCheckpointDataCount">[ptr required, value optional] </param>
+        /// <param name="pCheckpointData">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetQueueCheckpointDataNV.html" /></remarks>
         public void GetQueueCheckpointDataNV(VkQueue queue, uint* pCheckpointDataCount, VkCheckpointDataNV* pCheckpointData)
         {
             _vkGetQueueCheckpointDataNV_fnptr(queue, pCheckpointDataCount, pCheckpointData);
         }
         /// <summary><b>[requires: VK_KHR_ray_tracing_pipeline]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pipeline"></param>
+        /// <param name="firstGroup"></param>
+        /// <param name="groupCount"></param>
+        /// <param name="dataSize"></param>
+        /// <param name="pData"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetRayTracingCaptureReplayShaderGroupHandlesKHR.html" /></remarks>
         public VkResult GetRayTracingCaptureReplayShaderGroupHandlesKHR(VkDevice device, VkPipeline pipeline, uint firstGroup, uint groupCount, nuint dataSize, void* pData)
         {
             return _vkGetRayTracingCaptureReplayShaderGroupHandlesKHR_fnptr(device, pipeline, firstGroup, groupCount, dataSize, pData);
         }
         /// <summary><b>[requires: VK_KHR_ray_tracing_pipeline]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pipeline"></param>
+        /// <param name="firstGroup"></param>
+        /// <param name="groupCount"></param>
+        /// <param name="dataSize"></param>
+        /// <param name="pData"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetRayTracingShaderGroupHandlesKHR.html" /></remarks>
         public VkResult GetRayTracingShaderGroupHandlesKHR(VkDevice device, VkPipeline pipeline, uint firstGroup, uint groupCount, nuint dataSize, void* pData)
         {
             return _vkGetRayTracingShaderGroupHandlesKHR_fnptr(device, pipeline, firstGroup, groupCount, dataSize, pData);
         }
         /// <summary><b>[requires: VK_NV_ray_tracing]</b> [device command]  Alias of <see cref="GetRayTracingShaderGroupHandlesKHR"/></summary>
+        /// <param name="device"></param>
+        /// <param name="pipeline"></param>
+        /// <param name="firstGroup"></param>
+        /// <param name="groupCount"></param>
+        /// <param name="dataSize"></param>
+        /// <param name="pData"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetRayTracingShaderGroupHandlesNV.html" /></remarks>
         public VkResult GetRayTracingShaderGroupHandlesNV(VkDevice device, VkPipeline pipeline, uint firstGroup, uint groupCount, nuint dataSize, void* pData)
         {
             return _vkGetRayTracingShaderGroupHandlesNV_fnptr(device, pipeline, firstGroup, groupCount, dataSize, pData);
         }
         /// <summary><b>[requires: VK_KHR_ray_tracing_pipeline]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pipeline"></param>
+        /// <param name="group"></param>
+        /// <param name="groupShader"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetRayTracingShaderGroupStackSizeKHR.html" /></remarks>
         public ulong GetRayTracingShaderGroupStackSizeKHR(VkDevice device, VkPipeline pipeline, uint group, VkShaderGroupShaderKHR groupShader)
         {
             return _vkGetRayTracingShaderGroupStackSizeKHR_fnptr(device, pipeline, group, groupShader);
         }
         /// <summary><b>[requires: VK_GOOGLE_display_timing]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="swapchain">[extern sync: always] </param>
+        /// <param name="pDisplayTimingProperties"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetRefreshCycleDurationGOOGLE.html" /></remarks>
         public VkResult GetRefreshCycleDurationGOOGLE(VkDevice device, VkSwapchainKHR swapchain, VkRefreshCycleDurationGOOGLE* pDisplayTimingProperties)
         {
             return _vkGetRefreshCycleDurationGOOGLE_fnptr(device, swapchain, pDisplayTimingProperties);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="renderPass"></param>
+        /// <param name="pGranularity"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetRenderAreaGranularity.html" /></remarks>
         public void GetRenderAreaGranularity(VkDevice device, VkRenderPass renderPass, VkExtent2D* pGranularity)
         {
             _vkGetRenderAreaGranularity_fnptr(device, renderPass, pGranularity);
         }
         /// <summary><b>[requires: v1.4]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pRenderingAreaInfo"></param>
+        /// <param name="pGranularity"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetRenderingAreaGranularity.html" /></remarks>
         public void GetRenderingAreaGranularity(VkDevice device, VkRenderingAreaInfo* pRenderingAreaInfo, VkExtent2D* pGranularity)
         {
             _vkGetRenderingAreaGranularity_fnptr(device, pRenderingAreaInfo, pGranularity);
         }
         /// <summary><b>[requires: VK_KHR_maintenance5]</b> [device command]  Alias of <see cref="GetRenderingAreaGranularity"/></summary>
+        /// <param name="device"></param>
+        /// <param name="pRenderingAreaInfo"></param>
+        /// <param name="pGranularity"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetRenderingAreaGranularityKHR.html" /></remarks>
         public void GetRenderingAreaGranularityKHR(VkDevice device, VkRenderingAreaInfo* pRenderingAreaInfo, VkExtent2D* pGranularity)
         {
             _vkGetRenderingAreaGranularityKHR_fnptr(device, pRenderingAreaInfo, pGranularity);
         }
         /// <summary><b>[requires: VK_EXT_descriptor_buffer]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pInfo"></param>
+        /// <param name="pData"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetSamplerOpaqueCaptureDescriptorDataEXT.html" /></remarks>
         public VkResult GetSamplerOpaqueCaptureDescriptorDataEXT(VkDevice device, VkSamplerCaptureDescriptorDataInfoEXT* pInfo, void* pData)
         {
             return _vkGetSamplerOpaqueCaptureDescriptorDataEXT_fnptr(device, pInfo, pData);
         }
         /// <summary><b>[requires: VK_QNX_external_memory_screen_buffer]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="buffer"></param>
+        /// <param name="pProperties"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetScreenBufferPropertiesQNX.html" /></remarks>
         public VkResult GetScreenBufferPropertiesQNX(VkDevice device, IntPtr* buffer, VkScreenBufferPropertiesQNX* pProperties)
         {
             return _vkGetScreenBufferPropertiesQNX_fnptr(device, buffer, pProperties);
         }
         /// <summary><b>[requires: v1.2]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="semaphore"></param>
+        /// <param name="pValue"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetSemaphoreCounterValue.html" /></remarks>
         public VkResult GetSemaphoreCounterValue(VkDevice device, VkSemaphore semaphore, ulong* pValue)
         {
             return _vkGetSemaphoreCounterValue_fnptr(device, semaphore, pValue);
         }
         /// <summary><b>[requires: VK_KHR_timeline_semaphore]</b> [device command]  Alias of <see cref="GetSemaphoreCounterValue"/></summary>
+        /// <param name="device"></param>
+        /// <param name="semaphore"></param>
+        /// <param name="pValue"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetSemaphoreCounterValueKHR.html" /></remarks>
         public VkResult GetSemaphoreCounterValueKHR(VkDevice device, VkSemaphore semaphore, ulong* pValue)
         {
             return _vkGetSemaphoreCounterValueKHR_fnptr(device, semaphore, pValue);
         }
         /// <summary><b>[requires: VK_KHR_external_semaphore_fd]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pGetFdInfo"></param>
+        /// <param name="pFd"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetSemaphoreFdKHR.html" /></remarks>
         public VkResult GetSemaphoreFdKHR(VkDevice device, VkSemaphoreGetFdInfoKHR* pGetFdInfo, int* pFd)
         {
             return _vkGetSemaphoreFdKHR_fnptr(device, pGetFdInfo, pFd);
         }
         /// <summary><b>[requires: VK_NV_external_sci_sync]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pGetSciSyncInfo"></param>
+        /// <param name="pHandle"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetSemaphoreSciSyncObjNV.html" /></remarks>
         public VkResult GetSemaphoreSciSyncObjNV(VkDevice device, VkSemaphoreGetSciSyncInfoNV* pGetSciSyncInfo, void* pHandle)
         {
             return _vkGetSemaphoreSciSyncObjNV_fnptr(device, pGetSciSyncInfo, pHandle);
         }
         /// <summary><b>[requires: VK_KHR_external_semaphore_win32]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pGetWin32HandleInfo"></param>
+        /// <param name="pHandle"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetSemaphoreWin32HandleKHR.html" /></remarks>
         public VkResult GetSemaphoreWin32HandleKHR(VkDevice device, VkSemaphoreGetWin32HandleInfoKHR* pGetWin32HandleInfo, IntPtr* pHandle)
         {
             return _vkGetSemaphoreWin32HandleKHR_fnptr(device, pGetWin32HandleInfo, pHandle);
         }
         /// <summary><b>[requires: VK_FUCHSIA_external_semaphore]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pGetZirconHandleInfo"></param>
+        /// <param name="pZirconHandle"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetSemaphoreZirconHandleFUCHSIA.html" /></remarks>
         public VkResult GetSemaphoreZirconHandleFUCHSIA(VkDevice device, VkSemaphoreGetZirconHandleInfoFUCHSIA* pGetZirconHandleInfo, int* pZirconHandle)
         {
             return _vkGetSemaphoreZirconHandleFUCHSIA_fnptr(device, pGetZirconHandleInfo, pZirconHandle);
         }
         /// <summary><b>[requires: VK_EXT_shader_object]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="shader"></param>
+        /// <param name="pDataSize">[ptr required, value optional] </param>
+        /// <param name="pData">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetShaderBinaryDataEXT.html" /></remarks>
         public VkResult GetShaderBinaryDataEXT(VkDevice device, VkShaderEXT shader, nuint* pDataSize, void* pData)
         {
             return _vkGetShaderBinaryDataEXT_fnptr(device, shader, pDataSize, pData);
         }
         /// <summary><b>[requires: VK_AMD_shader_info]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pipeline"></param>
+        /// <param name="shaderStage"></param>
+        /// <param name="infoType"></param>
+        /// <param name="pInfoSize">[ptr required, value optional] </param>
+        /// <param name="pInfo">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetShaderInfoAMD.html" /></remarks>
         public VkResult GetShaderInfoAMD(VkDevice device, VkPipeline pipeline, VkShaderStageFlagBits shaderStage, VkShaderInfoTypeAMD infoType, nuint* pInfoSize, void* pInfo)
         {
             return _vkGetShaderInfoAMD_fnptr(device, pipeline, shaderStage, infoType, pInfoSize, pInfo);
         }
         /// <summary><b>[requires: VK_EXT_shader_module_identifier]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pCreateInfo"></param>
+        /// <param name="pIdentifier"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetShaderModuleCreateInfoIdentifierEXT.html" /></remarks>
         public void GetShaderModuleCreateInfoIdentifierEXT(VkDevice device, VkShaderModuleCreateInfo* pCreateInfo, VkShaderModuleIdentifierEXT* pIdentifier)
         {
             _vkGetShaderModuleCreateInfoIdentifierEXT_fnptr(device, pCreateInfo, pIdentifier);
         }
         /// <summary><b>[requires: VK_EXT_shader_module_identifier]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="shaderModule"></param>
+        /// <param name="pIdentifier"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetShaderModuleIdentifierEXT.html" /></remarks>
         public void GetShaderModuleIdentifierEXT(VkDevice device, VkShaderModule shaderModule, VkShaderModuleIdentifierEXT* pIdentifier)
         {
             _vkGetShaderModuleIdentifierEXT_fnptr(device, shaderModule, pIdentifier);
         }
         /// <summary><b>[requires: VK_EXT_display_control]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="swapchain"></param>
+        /// <param name="counter"></param>
+        /// <param name="pCounterValue"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetSwapchainCounterEXT.html" /></remarks>
         public VkResult GetSwapchainCounterEXT(VkDevice device, VkSwapchainKHR swapchain, VkSurfaceCounterFlagBitsEXT counter, ulong* pCounterValue)
         {
             return _vkGetSwapchainCounterEXT_fnptr(device, swapchain, counter, pCounterValue);
         }
         /// <summary>[device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="format"></param>
+        /// <param name="imageUsage"></param>
+        /// <param name="swapchainImageUsage"></param>
+        /// <param name="grallocConsumerUsage"></param>
+        /// <param name="grallocProducerUsage"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetSwapchainGrallocUsage2ANDROID.html" /></remarks>
         public VkResult GetSwapchainGrallocUsage2ANDROID(VkDevice device, VkFormat format, VkImageUsageFlagBits imageUsage, VkSwapchainImageUsageFlagBitsANDROID swapchainImageUsage, ulong* grallocConsumerUsage, ulong* grallocProducerUsage)
         {
             return _vkGetSwapchainGrallocUsage2ANDROID_fnptr(device, format, imageUsage, swapchainImageUsage, grallocConsumerUsage, grallocProducerUsage);
         }
         /// <summary>[device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="format"></param>
+        /// <param name="imageUsage"></param>
+        /// <param name="grallocUsage"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetSwapchainGrallocUsageANDROID.html" /></remarks>
         public VkResult GetSwapchainGrallocUsageANDROID(VkDevice device, VkFormat format, VkImageUsageFlagBits imageUsage, int* grallocUsage)
         {
             return _vkGetSwapchainGrallocUsageANDROID_fnptr(device, format, imageUsage, grallocUsage);
         }
-        /// <summary><b>[requires: VK_OHOS_native_buffer]</b> [device command] </summary>
+        /// <summary>[device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="format"></param>
+        /// <param name="imageUsage"></param>
+        /// <param name="grallocUsage"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetSwapchainGrallocUsageOHOS.html" /></remarks>
         public VkResult GetSwapchainGrallocUsageOHOS(VkDevice device, VkFormat format, VkImageUsageFlagBits imageUsage, ulong* grallocUsage)
         {
             return _vkGetSwapchainGrallocUsageOHOS_fnptr(device, format, imageUsage, grallocUsage);
         }
         /// <summary><b>[requires: VK_KHR_swapchain]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="swapchain"></param>
+        /// <param name="pSwapchainImageCount">[ptr required, value optional] </param>
+        /// <param name="pSwapchainImages">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetSwapchainImagesKHR.html" /></remarks>
         public VkResult GetSwapchainImagesKHR(VkDevice device, VkSwapchainKHR swapchain, uint* pSwapchainImageCount, VkImage* pSwapchainImages)
         {
             return _vkGetSwapchainImagesKHR_fnptr(device, swapchain, pSwapchainImageCount, pSwapchainImages);
         }
         /// <summary><b>[requires: VK_KHR_shared_presentable_image]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="swapchain">[extern sync: always] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetSwapchainStatusKHR.html" /></remarks>
         public VkResult GetSwapchainStatusKHR(VkDevice device, VkSwapchainKHR swapchain)
         {
             return _vkGetSwapchainStatusKHR_fnptr(device, swapchain);
         }
         /// <summary><b>[requires: VK_EXT_present_timing]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="swapchain">[extern sync: always] </param>
+        /// <param name="pSwapchainTimeDomainProperties"></param>
+        /// <param name="pTimeDomainsCounter">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetSwapchainTimeDomainPropertiesEXT.html" /></remarks>
         public VkResult GetSwapchainTimeDomainPropertiesEXT(VkDevice device, VkSwapchainKHR swapchain, VkSwapchainTimeDomainPropertiesEXT* pSwapchainTimeDomainProperties, ulong* pTimeDomainsCounter)
         {
             return _vkGetSwapchainTimeDomainPropertiesEXT_fnptr(device, swapchain, pSwapchainTimeDomainProperties, pTimeDomainsCounter);
         }
         /// <summary><b>[requires: VK_EXT_present_timing]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="swapchain">[extern sync: always] </param>
+        /// <param name="pSwapchainTimingProperties"></param>
+        /// <param name="pSwapchainTimingPropertiesCounter">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetSwapchainTimingPropertiesEXT.html" /></remarks>
         public VkResult GetSwapchainTimingPropertiesEXT(VkDevice device, VkSwapchainKHR swapchain, VkSwapchainTimingPropertiesEXT* pSwapchainTimingProperties, ulong* pSwapchainTimingPropertiesCounter)
         {
             return _vkGetSwapchainTimingPropertiesEXT_fnptr(device, swapchain, pSwapchainTimingProperties, pSwapchainTimingPropertiesCounter);
         }
         /// <summary><b>[requires: VK_ARM_tensors]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pInfo"></param>
+        /// <param name="pMemoryRequirements"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetTensorMemoryRequirementsARM.html" /></remarks>
         public void GetTensorMemoryRequirementsARM(VkDevice device, VkTensorMemoryRequirementsInfoARM* pInfo, VkMemoryRequirements2* pMemoryRequirements)
         {
             _vkGetTensorMemoryRequirementsARM_fnptr(device, pInfo, pMemoryRequirements);
         }
+        /// <summary><b>[requires: VK_EXT_descriptor_heap]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="tensorCount"></param>
+        /// <param name="pTensors"></param>
+        /// <param name="pDatas"></param>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetTensorOpaqueCaptureDataARM.html" /></remarks>
+        public VkResult GetTensorOpaqueCaptureDataARM(VkDevice device, uint tensorCount, VkTensorARM* pTensors, VkHostAddressRangeEXT* pDatas)
+        {
+            return _vkGetTensorOpaqueCaptureDataARM_fnptr(device, tensorCount, pTensors, pDatas);
+        }
         /// <summary><b>[requires: VK_ARM_tensors]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pInfo"></param>
+        /// <param name="pData"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetTensorOpaqueCaptureDescriptorDataARM.html" /></remarks>
         public VkResult GetTensorOpaqueCaptureDescriptorDataARM(VkDevice device, VkTensorCaptureDescriptorDataInfoARM* pInfo, void* pData)
         {
             return _vkGetTensorOpaqueCaptureDescriptorDataARM_fnptr(device, pInfo, pData);
         }
         /// <summary><b>[requires: VK_ARM_tensors]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pInfo"></param>
+        /// <param name="pData"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetTensorViewOpaqueCaptureDescriptorDataARM.html" /></remarks>
         public VkResult GetTensorViewOpaqueCaptureDescriptorDataARM(VkDevice device, VkTensorViewCaptureDescriptorDataInfoARM* pInfo, void* pData)
         {
             return _vkGetTensorViewOpaqueCaptureDescriptorDataARM_fnptr(device, pInfo, pData);
         }
         /// <summary><b>[requires: VK_EXT_validation_cache]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="validationCache"></param>
+        /// <param name="pDataSize">[ptr required, value optional] </param>
+        /// <param name="pData">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetValidationCacheDataEXT.html" /></remarks>
         public VkResult GetValidationCacheDataEXT(VkDevice device, VkValidationCacheEXT validationCache, nuint* pDataSize, void* pData)
         {
             return _vkGetValidationCacheDataEXT_fnptr(device, validationCache, pDataSize, pData);
         }
         /// <summary><b>[requires: VK_KHR_video_queue]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="videoSession"></param>
+        /// <param name="pMemoryRequirementsCount">[ptr required, value optional] </param>
+        /// <param name="pMemoryRequirements">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetVideoSessionMemoryRequirementsKHR.html" /></remarks>
         public VkResult GetVideoSessionMemoryRequirementsKHR(VkDevice device, VkVideoSessionKHR videoSession, uint* pMemoryRequirementsCount, VkVideoSessionMemoryRequirementsKHR* pMemoryRequirements)
         {
             return _vkGetVideoSessionMemoryRequirementsKHR_fnptr(device, videoSession, pMemoryRequirementsCount, pMemoryRequirements);
         }
         /// <summary><b>[requires: VK_KHR_external_fence_fd]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pImportFenceFdInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkImportFenceFdKHR.html" /></remarks>
         public VkResult ImportFenceFdKHR(VkDevice device, VkImportFenceFdInfoKHR* pImportFenceFdInfo)
         {
             return _vkImportFenceFdKHR_fnptr(device, pImportFenceFdInfo);
         }
         /// <summary><b>[requires: VK_NV_external_sci_sync | VK_NV_external_sci_sync2]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pImportFenceSciSyncInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkImportFenceSciSyncFenceNV.html" /></remarks>
         public VkResult ImportFenceSciSyncFenceNV(VkDevice device, VkImportFenceSciSyncInfoNV* pImportFenceSciSyncInfo)
         {
             return _vkImportFenceSciSyncFenceNV_fnptr(device, pImportFenceSciSyncInfo);
         }
         /// <summary><b>[requires: VK_NV_external_sci_sync | VK_NV_external_sci_sync2]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pImportFenceSciSyncInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkImportFenceSciSyncObjNV.html" /></remarks>
         public VkResult ImportFenceSciSyncObjNV(VkDevice device, VkImportFenceSciSyncInfoNV* pImportFenceSciSyncInfo)
         {
             return _vkImportFenceSciSyncObjNV_fnptr(device, pImportFenceSciSyncInfo);
         }
         /// <summary><b>[requires: VK_KHR_external_fence_win32]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pImportFenceWin32HandleInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkImportFenceWin32HandleKHR.html" /></remarks>
         public VkResult ImportFenceWin32HandleKHR(VkDevice device, VkImportFenceWin32HandleInfoKHR* pImportFenceWin32HandleInfo)
         {
             return _vkImportFenceWin32HandleKHR_fnptr(device, pImportFenceWin32HandleInfo);
         }
         /// <summary><b>[requires: VK_KHR_external_semaphore_fd]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pImportSemaphoreFdInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkImportSemaphoreFdKHR.html" /></remarks>
         public VkResult ImportSemaphoreFdKHR(VkDevice device, VkImportSemaphoreFdInfoKHR* pImportSemaphoreFdInfo)
         {
             return _vkImportSemaphoreFdKHR_fnptr(device, pImportSemaphoreFdInfo);
         }
         /// <summary><b>[requires: VK_NV_external_sci_sync]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pImportSemaphoreSciSyncInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkImportSemaphoreSciSyncObjNV.html" /></remarks>
         public VkResult ImportSemaphoreSciSyncObjNV(VkDevice device, VkImportSemaphoreSciSyncInfoNV* pImportSemaphoreSciSyncInfo)
         {
             return _vkImportSemaphoreSciSyncObjNV_fnptr(device, pImportSemaphoreSciSyncInfo);
         }
         /// <summary><b>[requires: VK_KHR_external_semaphore_win32]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pImportSemaphoreWin32HandleInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkImportSemaphoreWin32HandleKHR.html" /></remarks>
         public VkResult ImportSemaphoreWin32HandleKHR(VkDevice device, VkImportSemaphoreWin32HandleInfoKHR* pImportSemaphoreWin32HandleInfo)
         {
             return _vkImportSemaphoreWin32HandleKHR_fnptr(device, pImportSemaphoreWin32HandleInfo);
         }
         /// <summary><b>[requires: VK_FUCHSIA_external_semaphore]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pImportSemaphoreZirconHandleInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkImportSemaphoreZirconHandleFUCHSIA.html" /></remarks>
         public VkResult ImportSemaphoreZirconHandleFUCHSIA(VkDevice device, VkImportSemaphoreZirconHandleInfoFUCHSIA* pImportSemaphoreZirconHandleInfo)
         {
             return _vkImportSemaphoreZirconHandleFUCHSIA_fnptr(device, pImportSemaphoreZirconHandleInfo);
         }
         /// <summary><b>[requires: VK_INTEL_performance_query]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pInitializeInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkInitializePerformanceApiINTEL.html" /></remarks>
         public VkResult InitializePerformanceApiINTEL(VkDevice device, VkInitializePerformanceApiInfoINTEL* pInitializeInfo)
         {
             return _vkInitializePerformanceApiINTEL_fnptr(device, pInitializeInfo);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="memoryRangeCount"></param>
+        /// <param name="pMemoryRanges"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkInvalidateMappedMemoryRanges.html" /></remarks>
         public VkResult InvalidateMappedMemoryRanges(VkDevice device, uint memoryRangeCount, VkMappedMemoryRange* pMemoryRanges)
         {
             return _vkInvalidateMappedMemoryRanges_fnptr(device, memoryRangeCount, pMemoryRanges);
         }
         /// <summary><b>[requires: VK_NV_low_latency2]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="swapchain"></param>
+        /// <param name="pSleepInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkLatencySleepNV.html" /></remarks>
         public VkResult LatencySleepNV(VkDevice device, VkSwapchainKHR swapchain, VkLatencySleepInfoNV* pSleepInfo)
         {
             return _vkLatencySleepNV_fnptr(device, swapchain, pSleepInfo);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="memory">[extern sync: always] </param>
+        /// <param name="offset"></param>
+        /// <param name="size"></param>
+        /// <param name="flags">[optional] </param>
+        /// <param name="ppData">[ptr required, value optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkMapMemory.html" /></remarks>
         public VkResult MapMemory(VkDevice device, VkDeviceMemory memory, ulong offset, ulong size, VkMemoryMapFlagBits flags, void** ppData)
         {
             return _vkMapMemory_fnptr(device, memory, offset, size, flags, ppData);
         }
         /// <summary><b>[requires: v1.4]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pMemoryMapInfo"></param>
+        /// <param name="ppData">[ptr required, value optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkMapMemory2.html" /></remarks>
         public VkResult MapMemory2(VkDevice device, VkMemoryMapInfo* pMemoryMapInfo, void** ppData)
         {
             return _vkMapMemory2_fnptr(device, pMemoryMapInfo, ppData);
         }
         /// <summary><b>[requires: VK_KHR_map_memory2]</b> [device command]  Alias of <see cref="MapMemory2"/></summary>
+        /// <param name="device"></param>
+        /// <param name="pMemoryMapInfo"></param>
+        /// <param name="ppData">[ptr required, value optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkMapMemory2KHR.html" /></remarks>
         public VkResult MapMemory2KHR(VkDevice device, VkMemoryMapInfo* pMemoryMapInfo, void** ppData)
         {
             return _vkMapMemory2KHR_fnptr(device, pMemoryMapInfo, ppData);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="dstCache">[extern sync: maybe] </param>
+        /// <param name="srcCacheCount"></param>
+        /// <param name="pSrcCaches"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkMergePipelineCaches.html" /></remarks>
         public VkResult MergePipelineCaches(VkDevice device, VkPipelineCache dstCache, uint srcCacheCount, VkPipelineCache* pSrcCaches)
         {
             return _vkMergePipelineCaches_fnptr(device, dstCache, srcCacheCount, pSrcCaches);
         }
         /// <summary><b>[requires: VK_EXT_validation_cache]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="dstCache">[extern sync: always] </param>
+        /// <param name="srcCacheCount"></param>
+        /// <param name="pSrcCaches"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkMergeValidationCachesEXT.html" /></remarks>
         public VkResult MergeValidationCachesEXT(VkDevice device, VkValidationCacheEXT dstCache, uint srcCacheCount, VkValidationCacheEXT* pSrcCaches)
         {
             return _vkMergeValidationCachesEXT_fnptr(device, dstCache, srcCacheCount, pSrcCaches);
         }
         /// <summary><b>[requires: VK_EXT_debug_utils]</b> [device command] </summary>
+        /// <param name="queue">[extern sync: maybe] </param>
+        /// <param name="pLabelInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkQueueBeginDebugUtilsLabelEXT.html" /></remarks>
         public void QueueBeginDebugUtilsLabelEXT(VkQueue queue, VkDebugUtilsLabelEXT* pLabelInfo)
         {
             _vkQueueBeginDebugUtilsLabelEXT_fnptr(queue, pLabelInfo);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="queue">[extern sync: maybe] </param>
+        /// <param name="bindInfoCount">[optional] </param>
+        /// <param name="pBindInfo"></param>
+        /// <param name="fence">[optional] [extern sync: always] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkQueueBindSparse.html" /></remarks>
         public VkResult QueueBindSparse(VkQueue queue, uint bindInfoCount, VkBindSparseInfo* pBindInfo, VkFence fence)
         {
             return _vkQueueBindSparse_fnptr(queue, bindInfoCount, pBindInfo, fence);
         }
         /// <summary><b>[requires: VK_EXT_debug_utils]</b> [device command] </summary>
+        /// <param name="queue">[extern sync: maybe] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkQueueEndDebugUtilsLabelEXT.html" /></remarks>
         public void QueueEndDebugUtilsLabelEXT(VkQueue queue)
         {
             _vkQueueEndDebugUtilsLabelEXT_fnptr(queue);
         }
         /// <summary><b>[requires: VK_EXT_debug_utils]</b> [device command] </summary>
+        /// <param name="queue">[extern sync: maybe] </param>
+        /// <param name="pLabelInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkQueueInsertDebugUtilsLabelEXT.html" /></remarks>
         public void QueueInsertDebugUtilsLabelEXT(VkQueue queue, VkDebugUtilsLabelEXT* pLabelInfo)
         {
             _vkQueueInsertDebugUtilsLabelEXT_fnptr(queue, pLabelInfo);
         }
         /// <summary><b>[requires: VK_NV_low_latency2]</b> [device command] </summary>
+        /// <param name="queue"></param>
+        /// <param name="pQueueTypeInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkQueueNotifyOutOfBandNV.html" /></remarks>
         public void QueueNotifyOutOfBandNV(VkQueue queue, VkOutOfBandQueueTypeInfoNV* pQueueTypeInfo)
         {
             _vkQueueNotifyOutOfBandNV_fnptr(queue, pQueueTypeInfo);
         }
         /// <summary><b>[requires: VK_KHR_swapchain]</b> [device command] </summary>
+        /// <param name="queue">[extern sync: maybe] </param>
+        /// <param name="pPresentInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkQueuePresentKHR.html" /></remarks>
         public VkResult QueuePresentKHR(VkQueue queue, VkPresentInfoKHR* pPresentInfo)
         {
             return _vkQueuePresentKHR_fnptr(queue, pPresentInfo);
         }
         /// <summary><b>[requires: VK_INTEL_performance_query]</b> [device command] </summary>
+        /// <param name="queue">[extern sync: maybe] </param>
+        /// <param name="configuration"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkQueueSetPerformanceConfigurationINTEL.html" /></remarks>
         public VkResult QueueSetPerformanceConfigurationINTEL(VkQueue queue, VkPerformanceConfigurationINTEL configuration)
         {
             return _vkQueueSetPerformanceConfigurationINTEL_fnptr(queue, configuration);
         }
         /// <summary>[device command] </summary>
+        /// <param name="queue"></param>
+        /// <param name="waitSemaphoreCount"></param>
+        /// <param name="pWaitSemaphores"></param>
+        /// <param name="image"></param>
+        /// <param name="pNativeFenceFd"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkQueueSignalReleaseImageANDROID.html" /></remarks>
         public VkResult QueueSignalReleaseImageANDROID(VkQueue queue, uint waitSemaphoreCount, VkSemaphore* pWaitSemaphores, VkImage image, int* pNativeFenceFd)
         {
             return _vkQueueSignalReleaseImageANDROID_fnptr(queue, waitSemaphoreCount, pWaitSemaphores, image, pNativeFenceFd);
         }
-        /// <summary><b>[requires: VK_OHOS_native_buffer]</b> [device command] </summary>
+        /// <summary>[device command] </summary>
+        /// <param name="queue"></param>
+        /// <param name="waitSemaphoreCount"></param>
+        /// <param name="pWaitSemaphores"></param>
+        /// <param name="image"></param>
+        /// <param name="pNativeFenceFd"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkQueueSignalReleaseImageOHOS.html" /></remarks>
         public VkResult QueueSignalReleaseImageOHOS(VkQueue queue, uint waitSemaphoreCount, VkSemaphore* pWaitSemaphores, VkImage image, int* pNativeFenceFd)
         {
             return _vkQueueSignalReleaseImageOHOS_fnptr(queue, waitSemaphoreCount, pWaitSemaphores, image, pNativeFenceFd);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="queue">[extern sync: maybe] </param>
+        /// <param name="submitCount">[optional] </param>
+        /// <param name="pSubmits"></param>
+        /// <param name="fence">[optional] [extern sync: always] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkQueueSubmit.html" /></remarks>
         public VkResult QueueSubmit(VkQueue queue, uint submitCount, VkSubmitInfo* pSubmits, VkFence fence)
         {
             return _vkQueueSubmit_fnptr(queue, submitCount, pSubmits, fence);
         }
         /// <summary><b>[requires: v1.3]</b> [device command] </summary>
+        /// <param name="queue">[extern sync: maybe] </param>
+        /// <param name="submitCount">[optional] </param>
+        /// <param name="pSubmits"></param>
+        /// <param name="fence">[optional] [extern sync: always] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkQueueSubmit2.html" /></remarks>
         public VkResult QueueSubmit2(VkQueue queue, uint submitCount, VkSubmitInfo2* pSubmits, VkFence fence)
         {
             return _vkQueueSubmit2_fnptr(queue, submitCount, pSubmits, fence);
         }
         /// <summary><b>[requires: VK_KHR_synchronization2]</b> [device command]  Alias of <see cref="QueueSubmit2"/></summary>
+        /// <param name="queue">[extern sync: maybe] </param>
+        /// <param name="submitCount">[optional] </param>
+        /// <param name="pSubmits"></param>
+        /// <param name="fence">[optional] [extern sync: always] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkQueueSubmit2KHR.html" /></remarks>
         public VkResult QueueSubmit2KHR(VkQueue queue, uint submitCount, VkSubmitInfo2* pSubmits, VkFence fence)
         {
             return _vkQueueSubmit2KHR_fnptr(queue, submitCount, pSubmits, fence);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="queue">[extern sync: maybe] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkQueueWaitIdle.html" /></remarks>
         public VkResult QueueWaitIdle(VkQueue queue)
         {
             return _vkQueueWaitIdle_fnptr(queue);
         }
+        /// <summary><b>[requires: VK_EXT_descriptor_heap]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pBorderColor"></param>
+        /// <param name="requestIndex"></param>
+        /// <param name="pIndex"></param>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkRegisterCustomBorderColorEXT.html" /></remarks>
+        public VkResult RegisterCustomBorderColorEXT(VkDevice device, VkSamplerCustomBorderColorCreateInfoEXT* pBorderColor, int requestIndex, uint* pIndex)
+        {
+            return _vkRegisterCustomBorderColorEXT_fnptr(device, pBorderColor, requestIndex, pIndex);
+        }
         /// <summary><b>[requires: VK_EXT_display_control]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pDeviceEventInfo"></param>
+        /// <param name="pAllocator">[optional] </param>
+        /// <param name="pFence"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkRegisterDeviceEventEXT.html" /></remarks>
         public VkResult RegisterDeviceEventEXT(VkDevice device, VkDeviceEventInfoEXT* pDeviceEventInfo, VkAllocationCallbacks* pAllocator, VkFence* pFence)
         {
             return _vkRegisterDeviceEventEXT_fnptr(device, pDeviceEventInfo, pAllocator, pFence);
         }
         /// <summary><b>[requires: VK_EXT_display_control]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="display"></param>
+        /// <param name="pDisplayEventInfo"></param>
+        /// <param name="pAllocator">[optional] </param>
+        /// <param name="pFence"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkRegisterDisplayEventEXT.html" /></remarks>
         public VkResult RegisterDisplayEventEXT(VkDevice device, VkDisplayKHR display, VkDisplayEventInfoEXT* pDisplayEventInfo, VkAllocationCallbacks* pAllocator, VkFence* pFence)
         {
             return _vkRegisterDisplayEventEXT_fnptr(device, display, pDisplayEventInfo, pAllocator, pFence);
         }
         /// <summary><b>[requires: VK_KHR_pipeline_binary]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pInfo"></param>
+        /// <param name="pAllocator">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkReleaseCapturedPipelineDataKHR.html" /></remarks>
         public VkResult ReleaseCapturedPipelineDataKHR(VkDevice device, VkReleaseCapturedPipelineDataInfoKHR* pInfo, VkAllocationCallbacks* pAllocator)
         {
             return _vkReleaseCapturedPipelineDataKHR_fnptr(device, pInfo, pAllocator);
         }
         /// <summary><b>[requires: VK_EXT_full_screen_exclusive]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="swapchain"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkReleaseFullScreenExclusiveModeEXT.html" /></remarks>
         public VkResult ReleaseFullScreenExclusiveModeEXT(VkDevice device, VkSwapchainKHR swapchain)
         {
             return _vkReleaseFullScreenExclusiveModeEXT_fnptr(device, swapchain);
         }
         /// <summary><b>[requires: VK_INTEL_performance_query]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="configuration">[optional] [extern sync: always] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkReleasePerformanceConfigurationINTEL.html" /></remarks>
         public VkResult ReleasePerformanceConfigurationINTEL(VkDevice device, VkPerformanceConfigurationINTEL configuration)
         {
             return _vkReleasePerformanceConfigurationINTEL_fnptr(device, configuration);
         }
         /// <summary><b>[requires: VK_KHR_performance_query]</b> [device command] </summary>
+        /// <param name="device"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkReleaseProfilingLockKHR.html" /></remarks>
         public void ReleaseProfilingLockKHR(VkDevice device)
         {
             _vkReleaseProfilingLockKHR_fnptr(device);
         }
         /// <summary><b>[requires: VK_EXT_swapchain_maintenance1]</b> [device command]  Alias of <see cref="ReleaseSwapchainImagesKHR"/></summary>
+        /// <param name="device"></param>
+        /// <param name="pReleaseInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkReleaseSwapchainImagesEXT.html" /></remarks>
         public VkResult ReleaseSwapchainImagesEXT(VkDevice device, VkReleaseSwapchainImagesInfoKHR* pReleaseInfo)
         {
             return _vkReleaseSwapchainImagesEXT_fnptr(device, pReleaseInfo);
         }
         /// <summary><b>[requires: VK_KHR_swapchain_maintenance1]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pReleaseInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkReleaseSwapchainImagesKHR.html" /></remarks>
         public VkResult ReleaseSwapchainImagesKHR(VkDevice device, VkReleaseSwapchainImagesInfoKHR* pReleaseInfo)
         {
             return _vkReleaseSwapchainImagesKHR_fnptr(device, pReleaseInfo);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="commandBuffer">[extern sync: always] </param>
+        /// <param name="flags">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkResetCommandBuffer.html" /></remarks>
         public VkResult ResetCommandBuffer(VkCommandBuffer commandBuffer, VkCommandBufferResetFlagBits flags)
         {
             return _vkResetCommandBuffer_fnptr(commandBuffer, flags);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="commandPool">[extern sync: always] </param>
+        /// <param name="flags">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkResetCommandPool.html" /></remarks>
         public VkResult ResetCommandPool(VkDevice device, VkCommandPool commandPool, VkCommandPoolResetFlagBits flags)
         {
             return _vkResetCommandPool_fnptr(device, commandPool, flags);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="descriptorPool">[extern sync: always] </param>
+        /// <param name="flags">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkResetDescriptorPool.html" /></remarks>
         public VkResult ResetDescriptorPool(VkDevice device, VkDescriptorPool descriptorPool, VkDescriptorPoolResetFlags flags)
         {
             return _vkResetDescriptorPool_fnptr(device, descriptorPool, flags);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="event">[extern sync: always] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkResetEvent.html" /></remarks>
         public VkResult ResetEvent(VkDevice device, VkEvent @event)
         {
             return _vkResetEvent_fnptr(device, @event);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="fenceCount"></param>
+        /// <param name="pFences">[extern sync: always] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkResetFences.html" /></remarks>
         public VkResult ResetFences(VkDevice device, uint fenceCount, VkFence* pFences)
         {
             return _vkResetFences_fnptr(device, fenceCount, pFences);
         }
         /// <summary><b>[requires: v1.2]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="queryPool"></param>
+        /// <param name="firstQuery"></param>
+        /// <param name="queryCount"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkResetQueryPool.html" /></remarks>
         public void ResetQueryPool(VkDevice device, VkQueryPool queryPool, uint firstQuery, uint queryCount)
         {
             _vkResetQueryPool_fnptr(device, queryPool, firstQuery, queryCount);
         }
         /// <summary><b>[requires: VK_EXT_host_query_reset]</b> [device command]  Alias of <see cref="ResetQueryPool"/></summary>
+        /// <param name="device"></param>
+        /// <param name="queryPool"></param>
+        /// <param name="firstQuery"></param>
+        /// <param name="queryCount"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkResetQueryPoolEXT.html" /></remarks>
         public void ResetQueryPoolEXT(VkDevice device, VkQueryPool queryPool, uint firstQuery, uint queryCount)
         {
             _vkResetQueryPoolEXT_fnptr(device, queryPool, firstQuery, queryCount);
         }
         /// <summary><b>[requires: VK_FUCHSIA_buffer_collection]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="collection"></param>
+        /// <param name="pBufferConstraintsInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkSetBufferCollectionBufferConstraintsFUCHSIA.html" /></remarks>
         public VkResult SetBufferCollectionBufferConstraintsFUCHSIA(VkDevice device, VkBufferCollectionFUCHSIA collection, VkBufferConstraintsInfoFUCHSIA* pBufferConstraintsInfo)
         {
             return _vkSetBufferCollectionBufferConstraintsFUCHSIA_fnptr(device, collection, pBufferConstraintsInfo);
         }
         /// <summary><b>[requires: VK_FUCHSIA_buffer_collection]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="collection"></param>
+        /// <param name="pImageConstraintsInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkSetBufferCollectionImageConstraintsFUCHSIA.html" /></remarks>
         public VkResult SetBufferCollectionImageConstraintsFUCHSIA(VkDevice device, VkBufferCollectionFUCHSIA collection, VkImageConstraintsInfoFUCHSIA* pImageConstraintsInfo)
         {
             return _vkSetBufferCollectionImageConstraintsFUCHSIA_fnptr(device, collection, pImageConstraintsInfo);
         }
         /// <summary><b>[requires: VK_EXT_debug_utils]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pNameInfo">[extern sync: pNameInfo->objectHandle] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkSetDebugUtilsObjectNameEXT.html" /></remarks>
         public VkResult SetDebugUtilsObjectNameEXT(VkDevice device, VkDebugUtilsObjectNameInfoEXT* pNameInfo)
         {
             return _vkSetDebugUtilsObjectNameEXT_fnptr(device, pNameInfo);
         }
         /// <summary><b>[requires: VK_EXT_debug_utils]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pTagInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkSetDebugUtilsObjectTagEXT.html" /></remarks>
         public VkResult SetDebugUtilsObjectTagEXT(VkDevice device, VkDebugUtilsObjectTagInfoEXT* pTagInfo)
         {
             return _vkSetDebugUtilsObjectTagEXT_fnptr(device, pTagInfo);
         }
         /// <summary><b>[requires: VK_EXT_pageable_device_local_memory]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="memory"></param>
+        /// <param name="priority"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkSetDeviceMemoryPriorityEXT.html" /></remarks>
         public void SetDeviceMemoryPriorityEXT(VkDevice device, VkDeviceMemory memory, float priority)
         {
             _vkSetDeviceMemoryPriorityEXT_fnptr(device, memory, priority);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="event">[extern sync: always] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkSetEvent.html" /></remarks>
         public VkResult SetEvent(VkDevice device, VkEvent @event)
         {
             return _vkSetEvent_fnptr(device, @event);
         }
         /// <summary><b>[requires: VK_EXT_hdr_metadata]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="swapchainCount"></param>
+        /// <param name="pSwapchains"></param>
+        /// <param name="pMetadata"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkSetHdrMetadataEXT.html" /></remarks>
         public void SetHdrMetadataEXT(VkDevice device, uint swapchainCount, VkSwapchainKHR* pSwapchains, VkHdrMetadataEXT* pMetadata)
         {
             _vkSetHdrMetadataEXT_fnptr(device, swapchainCount, pSwapchains, pMetadata);
         }
         /// <summary><b>[requires: VK_NV_low_latency2]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="swapchain"></param>
+        /// <param name="pLatencyMarkerInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkSetLatencyMarkerNV.html" /></remarks>
         public void SetLatencyMarkerNV(VkDevice device, VkSwapchainKHR swapchain, VkSetLatencyMarkerInfoNV* pLatencyMarkerInfo)
         {
             _vkSetLatencyMarkerNV_fnptr(device, swapchain, pLatencyMarkerInfo);
         }
         /// <summary><b>[requires: VK_NV_low_latency2]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="swapchain"></param>
+        /// <param name="pSleepModeInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkSetLatencySleepModeNV.html" /></remarks>
         public VkResult SetLatencySleepModeNV(VkDevice device, VkSwapchainKHR swapchain, VkLatencySleepModeInfoNV* pSleepModeInfo)
         {
             return _vkSetLatencySleepModeNV_fnptr(device, swapchain, pSleepModeInfo);
         }
         /// <summary><b>[requires: VK_AMD_display_native_hdr]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="swapChain"></param>
+        /// <param name="localDimmingEnable"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkSetLocalDimmingAMD.html" /></remarks>
         public void SetLocalDimmingAMD(VkDevice device, VkSwapchainKHR swapChain, int localDimmingEnable)
         {
             _vkSetLocalDimmingAMD_fnptr(device, swapChain, localDimmingEnable);
         }
         /// <summary><b>[requires: v1.3]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="objectType"></param>
+        /// <param name="objectHandle"></param>
+        /// <param name="privateDataSlot"></param>
+        /// <param name="data"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkSetPrivateData.html" /></remarks>
         public VkResult SetPrivateData(VkDevice device, VkObjectType objectType, ulong objectHandle, VkPrivateDataSlot privateDataSlot, ulong data)
         {
             return _vkSetPrivateData_fnptr(device, objectType, objectHandle, privateDataSlot, data);
         }
         /// <summary><b>[requires: VK_EXT_private_data]</b> [device command]  Alias of <see cref="SetPrivateData"/></summary>
+        /// <param name="device"></param>
+        /// <param name="objectType"></param>
+        /// <param name="objectHandle"></param>
+        /// <param name="privateDataSlot"></param>
+        /// <param name="data"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkSetPrivateDataEXT.html" /></remarks>
         public VkResult SetPrivateDataEXT(VkDevice device, VkObjectType objectType, ulong objectHandle, VkPrivateDataSlot privateDataSlot, ulong data)
         {
             return _vkSetPrivateDataEXT_fnptr(device, objectType, objectHandle, privateDataSlot, data);
         }
         /// <summary><b>[requires: VK_EXT_present_timing]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="swapchain">[extern sync: always] </param>
+        /// <param name="size"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkSetSwapchainPresentTimingQueueSizeEXT.html" /></remarks>
         public VkResult SetSwapchainPresentTimingQueueSizeEXT(VkDevice device, VkSwapchainKHR swapchain, uint size)
         {
             return _vkSetSwapchainPresentTimingQueueSizeEXT_fnptr(device, swapchain, size);
         }
         /// <summary><b>[requires: v1.2]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pSignalInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkSignalSemaphore.html" /></remarks>
         public VkResult SignalSemaphore(VkDevice device, VkSemaphoreSignalInfo* pSignalInfo)
         {
             return _vkSignalSemaphore_fnptr(device, pSignalInfo);
         }
         /// <summary><b>[requires: VK_KHR_timeline_semaphore]</b> [device command]  Alias of <see cref="SignalSemaphore"/></summary>
+        /// <param name="device"></param>
+        /// <param name="pSignalInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkSignalSemaphoreKHR.html" /></remarks>
         public VkResult SignalSemaphoreKHR(VkDevice device, VkSemaphoreSignalInfo* pSignalInfo)
         {
             return _vkSignalSemaphoreKHR_fnptr(device, pSignalInfo);
         }
         /// <summary><b>[requires: v1.4]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="transitionCount"></param>
+        /// <param name="pTransitions"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkTransitionImageLayout.html" /></remarks>
         public VkResult TransitionImageLayout(VkDevice device, uint transitionCount, VkHostImageLayoutTransitionInfo* pTransitions)
         {
             return _vkTransitionImageLayout_fnptr(device, transitionCount, pTransitions);
         }
         /// <summary><b>[requires: VK_EXT_host_image_copy]</b> [device command]  Alias of <see cref="TransitionImageLayout"/></summary>
+        /// <param name="device"></param>
+        /// <param name="transitionCount"></param>
+        /// <param name="pTransitions"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkTransitionImageLayoutEXT.html" /></remarks>
         public VkResult TransitionImageLayoutEXT(VkDevice device, uint transitionCount, VkHostImageLayoutTransitionInfo* pTransitions)
         {
             return _vkTransitionImageLayoutEXT_fnptr(device, transitionCount, pTransitions);
         }
         /// <summary><b>[requires: v1.1]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="commandPool">[extern sync: always] </param>
+        /// <param name="flags">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkTrimCommandPool.html" /></remarks>
         public void TrimCommandPool(VkDevice device, VkCommandPool commandPool, VkCommandPoolTrimFlags flags)
         {
             _vkTrimCommandPool_fnptr(device, commandPool, flags);
         }
         /// <summary><b>[requires: VK_KHR_maintenance1]</b> [device command]  Alias of <see cref="TrimCommandPool"/></summary>
+        /// <param name="device"></param>
+        /// <param name="commandPool">[extern sync: always] </param>
+        /// <param name="flags">[optional] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkTrimCommandPoolKHR.html" /></remarks>
         public void TrimCommandPoolKHR(VkDevice device, VkCommandPool commandPool, VkCommandPoolTrimFlags flags)
         {
             _vkTrimCommandPoolKHR_fnptr(device, commandPool, flags);
         }
         /// <summary><b>[requires: VK_INTEL_performance_query]</b> [device command] </summary>
+        /// <param name="device"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkUninitializePerformanceApiINTEL.html" /></remarks>
         public void UninitializePerformanceApiINTEL(VkDevice device)
         {
             _vkUninitializePerformanceApiINTEL_fnptr(device);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="memory">[extern sync: always] </param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkUnmapMemory.html" /></remarks>
         public void UnmapMemory(VkDevice device, VkDeviceMemory memory)
         {
             _vkUnmapMemory_fnptr(device, memory);
         }
         /// <summary><b>[requires: v1.4]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pMemoryUnmapInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkUnmapMemory2.html" /></remarks>
         public VkResult UnmapMemory2(VkDevice device, VkMemoryUnmapInfo* pMemoryUnmapInfo)
         {
             return _vkUnmapMemory2_fnptr(device, pMemoryUnmapInfo);
         }
         /// <summary><b>[requires: VK_KHR_map_memory2]</b> [device command]  Alias of <see cref="UnmapMemory2"/></summary>
+        /// <param name="device"></param>
+        /// <param name="pMemoryUnmapInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkUnmapMemory2KHR.html" /></remarks>
         public VkResult UnmapMemory2KHR(VkDevice device, VkMemoryUnmapInfo* pMemoryUnmapInfo)
         {
             return _vkUnmapMemory2KHR_fnptr(device, pMemoryUnmapInfo);
         }
+        /// <summary><b>[requires: VK_EXT_descriptor_heap]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="index"></param>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkUnregisterCustomBorderColorEXT.html" /></remarks>
+        public void UnregisterCustomBorderColorEXT(VkDevice device, uint index)
+        {
+            _vkUnregisterCustomBorderColorEXT_fnptr(device, index);
+        }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="descriptorWriteCount">[optional] </param>
+        /// <param name="pDescriptorWrites">[extern sync: maybe pDescriptorWrites[].dstSet] </param>
+        /// <param name="descriptorCopyCount">[optional] </param>
+        /// <param name="pDescriptorCopies"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkUpdateDescriptorSets.html" /></remarks>
         public void UpdateDescriptorSets(VkDevice device, uint descriptorWriteCount, VkWriteDescriptorSet* pDescriptorWrites, uint descriptorCopyCount, VkCopyDescriptorSet* pDescriptorCopies)
         {
             _vkUpdateDescriptorSets_fnptr(device, descriptorWriteCount, pDescriptorWrites, descriptorCopyCount, pDescriptorCopies);
         }
         /// <summary><b>[requires: v1.1]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="descriptorSet">[extern sync: maybe] </param>
+        /// <param name="descriptorUpdateTemplate"></param>
+        /// <param name="pData"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkUpdateDescriptorSetWithTemplate.html" /></remarks>
         public void UpdateDescriptorSetWithTemplate(VkDevice device, VkDescriptorSet descriptorSet, VkDescriptorUpdateTemplate descriptorUpdateTemplate, void* pData)
         {
             _vkUpdateDescriptorSetWithTemplate_fnptr(device, descriptorSet, descriptorUpdateTemplate, pData);
         }
         /// <summary><b>[requires: VK_KHR_descriptor_update_template]</b> [device command]  Alias of <see cref="UpdateDescriptorSetWithTemplate"/></summary>
+        /// <param name="device"></param>
+        /// <param name="descriptorSet">[extern sync: maybe] </param>
+        /// <param name="descriptorUpdateTemplate"></param>
+        /// <param name="pData"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkUpdateDescriptorSetWithTemplateKHR.html" /></remarks>
         public void UpdateDescriptorSetWithTemplateKHR(VkDevice device, VkDescriptorSet descriptorSet, VkDescriptorUpdateTemplate descriptorUpdateTemplate, void* pData)
         {
             _vkUpdateDescriptorSetWithTemplateKHR_fnptr(device, descriptorSet, descriptorUpdateTemplate, pData);
         }
         /// <summary><b>[requires: VK_EXT_device_generated_commands]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="indirectExecutionSet">[extern sync: always] </param>
+        /// <param name="executionSetWriteCount"></param>
+        /// <param name="pExecutionSetWrites"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkUpdateIndirectExecutionSetPipelineEXT.html" /></remarks>
         public void UpdateIndirectExecutionSetPipelineEXT(VkDevice device, VkIndirectExecutionSetEXT indirectExecutionSet, uint executionSetWriteCount, VkWriteIndirectExecutionSetPipelineEXT* pExecutionSetWrites)
         {
             _vkUpdateIndirectExecutionSetPipelineEXT_fnptr(device, indirectExecutionSet, executionSetWriteCount, pExecutionSetWrites);
         }
         /// <summary><b>[requires: VK_EXT_device_generated_commands]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="indirectExecutionSet">[extern sync: always] </param>
+        /// <param name="executionSetWriteCount"></param>
+        /// <param name="pExecutionSetWrites"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkUpdateIndirectExecutionSetShaderEXT.html" /></remarks>
         public void UpdateIndirectExecutionSetShaderEXT(VkDevice device, VkIndirectExecutionSetEXT indirectExecutionSet, uint executionSetWriteCount, VkWriteIndirectExecutionSetShaderEXT* pExecutionSetWrites)
         {
             _vkUpdateIndirectExecutionSetShaderEXT_fnptr(device, indirectExecutionSet, executionSetWriteCount, pExecutionSetWrites);
         }
         /// <summary><b>[requires: VK_KHR_video_queue]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="videoSessionParameters"></param>
+        /// <param name="pUpdateInfo"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkUpdateVideoSessionParametersKHR.html" /></remarks>
         public VkResult UpdateVideoSessionParametersKHR(VkDevice device, VkVideoSessionParametersKHR videoSessionParameters, VkVideoSessionParametersUpdateInfoKHR* pUpdateInfo)
         {
             return _vkUpdateVideoSessionParametersKHR_fnptr(device, videoSessionParameters, pUpdateInfo);
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="fenceCount"></param>
+        /// <param name="pFences"></param>
+        /// <param name="waitAll"></param>
+        /// <param name="timeout"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkWaitForFences.html" /></remarks>
         public VkResult WaitForFences(VkDevice device, uint fenceCount, VkFence* pFences, int waitAll, ulong timeout)
         {
             return _vkWaitForFences_fnptr(device, fenceCount, pFences, waitAll, timeout);
         }
         /// <summary><b>[requires: VK_KHR_present_wait2]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="swapchain">[extern sync: always] </param>
+        /// <param name="pPresentWait2Info"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkWaitForPresent2KHR.html" /></remarks>
         public VkResult WaitForPresent2KHR(VkDevice device, VkSwapchainKHR swapchain, VkPresentWait2InfoKHR* pPresentWait2Info)
         {
             return _vkWaitForPresent2KHR_fnptr(device, swapchain, pPresentWait2Info);
         }
         /// <summary><b>[requires: VK_KHR_present_wait]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="swapchain">[extern sync: always] </param>
+        /// <param name="presentId"></param>
+        /// <param name="timeout"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkWaitForPresentKHR.html" /></remarks>
         public VkResult WaitForPresentKHR(VkDevice device, VkSwapchainKHR swapchain, ulong presentId, ulong timeout)
         {
             return _vkWaitForPresentKHR_fnptr(device, swapchain, presentId, timeout);
         }
         /// <summary><b>[requires: v1.2]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="pWaitInfo"></param>
+        /// <param name="timeout"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkWaitSemaphores.html" /></remarks>
         public VkResult WaitSemaphores(VkDevice device, VkSemaphoreWaitInfo* pWaitInfo, ulong timeout)
         {
             return _vkWaitSemaphores_fnptr(device, pWaitInfo, timeout);
         }
         /// <summary><b>[requires: VK_KHR_timeline_semaphore]</b> [device command]  Alias of <see cref="WaitSemaphores"/></summary>
+        /// <param name="device"></param>
+        /// <param name="pWaitInfo"></param>
+        /// <param name="timeout"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkWaitSemaphoresKHR.html" /></remarks>
         public VkResult WaitSemaphoresKHR(VkDevice device, VkSemaphoreWaitInfo* pWaitInfo, ulong timeout)
         {
             return _vkWaitSemaphoresKHR_fnptr(device, pWaitInfo, timeout);
         }
         /// <summary><b>[requires: VK_KHR_acceleration_structure]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="accelerationStructureCount"></param>
+        /// <param name="pAccelerationStructures"></param>
+        /// <param name="queryType"></param>
+        /// <param name="dataSize"></param>
+        /// <param name="pData"></param>
+        /// <param name="stride"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkWriteAccelerationStructuresPropertiesKHR.html" /></remarks>
         public VkResult WriteAccelerationStructuresPropertiesKHR(VkDevice device, uint accelerationStructureCount, VkAccelerationStructureKHR* pAccelerationStructures, VkQueryType queryType, nuint dataSize, void* pData, nuint stride)
         {
             return _vkWriteAccelerationStructuresPropertiesKHR_fnptr(device, accelerationStructureCount, pAccelerationStructures, queryType, dataSize, pData, stride);
         }
         /// <summary><b>[requires: VK_EXT_opacity_micromap]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="micromapCount"></param>
+        /// <param name="pMicromaps"></param>
+        /// <param name="queryType"></param>
+        /// <param name="dataSize"></param>
+        /// <param name="pData"></param>
+        /// <param name="stride"></param>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkWriteMicromapsPropertiesEXT.html" /></remarks>
         public VkResult WriteMicromapsPropertiesEXT(VkDevice device, uint micromapCount, VkMicromapEXT* pMicromaps, VkQueryType queryType, nuint dataSize, void* pData, nuint stride)
         {
             return _vkWriteMicromapsPropertiesEXT_fnptr(device, micromapCount, pMicromaps, queryType, dataSize, pData, stride);
+        }
+        /// <summary><b>[requires: VK_EXT_descriptor_heap]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="resourceCount"></param>
+        /// <param name="pResources"></param>
+        /// <param name="pDescriptors"></param>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkWriteResourceDescriptorsEXT.html" /></remarks>
+        public VkResult WriteResourceDescriptorsEXT(VkDevice device, uint resourceCount, VkResourceDescriptorInfoEXT* pResources, VkHostAddressRangeEXT* pDescriptors)
+        {
+            return _vkWriteResourceDescriptorsEXT_fnptr(device, resourceCount, pResources, pDescriptors);
+        }
+        /// <summary><b>[requires: VK_EXT_descriptor_heap]</b> [device command] </summary>
+        /// <param name="device"></param>
+        /// <param name="samplerCount"></param>
+        /// <param name="pSamplers"></param>
+        /// <param name="pDescriptors"></param>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkWriteSamplerDescriptorsEXT.html" /></remarks>
+        public VkResult WriteSamplerDescriptorsEXT(VkDevice device, uint samplerCount, VkSamplerCreateInfo* pSamplers, VkHostAddressRangeEXT* pDescriptors)
+        {
+            return _vkWriteSamplerDescriptorsEXT_fnptr(device, samplerCount, pSamplers, pDescriptors);
         }
         public delegate* unmanaged<VkDevice, VkSwapchainKHR, VkResult> _vkAcquireFullScreenExclusiveModeEXT_fnptr;
         public delegate* unmanaged<VkDevice, VkImage, int, VkSemaphore, VkFence, VkResult> _vkAcquireImageANDROID_fnptr;
@@ -5739,6 +8556,8 @@ namespace OpenTK.Graphics.Vulkan
         public delegate* unmanaged<VkCommandBuffer, VkImageView, VkImageLayout, void> _vkCmdBindInvocationMaskHUAWEI_fnptr;
         public delegate* unmanaged<VkCommandBuffer, VkPipelineBindPoint, VkPipeline, void> _vkCmdBindPipeline_fnptr;
         public delegate* unmanaged<VkCommandBuffer, VkPipelineBindPoint, VkPipeline, uint, void> _vkCmdBindPipelineShaderGroupNV_fnptr;
+        public delegate* unmanaged<VkCommandBuffer, VkBindHeapInfoEXT*, void> _vkCmdBindResourceHeapEXT_fnptr;
+        public delegate* unmanaged<VkCommandBuffer, VkBindHeapInfoEXT*, void> _vkCmdBindSamplerHeapEXT_fnptr;
         public delegate* unmanaged<VkCommandBuffer, uint, VkShaderStageFlagBits*, VkShaderEXT*, void> _vkCmdBindShadersEXT_fnptr;
         public delegate* unmanaged<VkCommandBuffer, VkImageView, VkImageLayout, void> _vkCmdBindShadingRateImageNV_fnptr;
         public delegate* unmanaged<VkCommandBuffer, VkTileMemoryBindInfoQCOM*, void> _vkCmdBindTileMemoryQCOM_fnptr;
@@ -5858,6 +8677,7 @@ namespace OpenTK.Graphics.Vulkan
         public delegate* unmanaged<VkCommandBuffer, VkPipelineLayout, VkShaderStageFlagBits, uint, uint, void*, void> _vkCmdPushConstants_fnptr;
         public delegate* unmanaged<VkCommandBuffer, VkPushConstantsInfo*, void> _vkCmdPushConstants2_fnptr;
         public delegate* unmanaged<VkCommandBuffer, VkPushConstantsInfo*, void> _vkCmdPushConstants2KHR_fnptr;
+        public delegate* unmanaged<VkCommandBuffer, VkPushDataInfoEXT*, void> _vkCmdPushDataEXT_fnptr;
         public delegate* unmanaged<VkCommandBuffer, VkPipelineBindPoint, VkPipelineLayout, uint, uint, VkWriteDescriptorSet*, void> _vkCmdPushDescriptorSet_fnptr;
         public delegate* unmanaged<VkCommandBuffer, VkPushDescriptorSetInfo*, void> _vkCmdPushDescriptorSet2_fnptr;
         public delegate* unmanaged<VkCommandBuffer, VkPushDescriptorSetInfo*, void> _vkCmdPushDescriptorSet2KHR_fnptr;
@@ -5885,6 +8705,7 @@ namespace OpenTK.Graphics.Vulkan
         public delegate* unmanaged<VkCommandBuffer, uint, uint, VkColorBlendEquationEXT*, void> _vkCmdSetColorBlendEquationEXT_fnptr;
         public delegate* unmanaged<VkCommandBuffer, uint, int*, void> _vkCmdSetColorWriteEnableEXT_fnptr;
         public delegate* unmanaged<VkCommandBuffer, uint, uint, VkColorComponentFlagBits*, void> _vkCmdSetColorWriteMaskEXT_fnptr;
+        public delegate* unmanaged<VkCommandBuffer, VkComputeOccupancyPriorityParametersNV*, void> _vkCmdSetComputeOccupancyPriorityNV_fnptr;
         public delegate* unmanaged<VkCommandBuffer, VkConservativeRasterizationModeEXT, void> _vkCmdSetConservativeRasterizationModeEXT_fnptr;
         public delegate* unmanaged<VkCommandBuffer, VkCoverageModulationModeNV, void> _vkCmdSetCoverageModulationModeNV_fnptr;
         public delegate* unmanaged<VkCommandBuffer, int, void> _vkCmdSetCoverageModulationTableEnableNV_fnptr;
@@ -6164,6 +8985,7 @@ namespace OpenTK.Graphics.Vulkan
         public delegate* unmanaged<VkDevice, VkAccelerationStructureVersionInfoKHR*, VkAccelerationStructureCompatibilityKHR*, void> _vkGetDeviceAccelerationStructureCompatibilityKHR_fnptr;
         public delegate* unmanaged<VkDevice, VkDeviceBufferMemoryRequirements*, VkMemoryRequirements2*, void> _vkGetDeviceBufferMemoryRequirements_fnptr;
         public delegate* unmanaged<VkDevice, VkDeviceBufferMemoryRequirements*, VkMemoryRequirements2*, void> _vkGetDeviceBufferMemoryRequirementsKHR_fnptr;
+        public delegate* unmanaged<VkDevice, ulong, ulong, ulong> _vkGetDeviceCombinedImageSamplerIndexNVX_fnptr;
         public delegate* unmanaged<VkDevice, VkDeviceFaultCountsEXT*, VkDeviceFaultInfoEXT*, VkResult> _vkGetDeviceFaultInfoEXT_fnptr;
         public delegate* unmanaged<VkDevice, uint, uint, uint, VkPeerMemoryFeatureFlagBits*, void> _vkGetDeviceGroupPeerMemoryFeatures_fnptr;
         public delegate* unmanaged<VkDevice, uint, uint, uint, VkPeerMemoryFeatureFlagBits*, void> _vkGetDeviceGroupPeerMemoryFeaturesKHR_fnptr;
@@ -6180,7 +9002,7 @@ namespace OpenTK.Graphics.Vulkan
         public delegate* unmanaged<VkDevice, VkDeviceMemoryOpaqueCaptureAddressInfo*, ulong> _vkGetDeviceMemoryOpaqueCaptureAddress_fnptr;
         public delegate* unmanaged<VkDevice, VkDeviceMemoryOpaqueCaptureAddressInfo*, ulong> _vkGetDeviceMemoryOpaqueCaptureAddressKHR_fnptr;
         public delegate* unmanaged<VkDevice, VkMicromapVersionInfoEXT*, VkAccelerationStructureCompatibilityKHR*, void> _vkGetDeviceMicromapCompatibilityEXT_fnptr;
-        public delegate* unmanaged<VkDevice, byte*, IntPtr> _vkGetDeviceProcAddr_fnptr;
+        public delegate* unmanaged<VkDevice, byte*, delegate* unmanaged[Cdecl]<void>> _vkGetDeviceProcAddr_fnptr;
         public delegate* unmanaged<VkDevice, uint, uint, VkQueue*, void> _vkGetDeviceQueue_fnptr;
         public delegate* unmanaged<VkDevice, VkDeviceQueueInfo2*, VkQueue*, void> _vkGetDeviceQueue2_fnptr;
         public delegate* unmanaged<VkDevice, VkRenderPass, VkExtent2D*, VkResult> _vkGetDeviceSubpassShadingMaxWorkgroupSizeHUAWEI_fnptr;
@@ -6204,6 +9026,7 @@ namespace OpenTK.Graphics.Vulkan
         public delegate* unmanaged<VkDevice, VkImage, VkMemoryRequirements*, void> _vkGetImageMemoryRequirements_fnptr;
         public delegate* unmanaged<VkDevice, VkImageMemoryRequirementsInfo2*, VkMemoryRequirements2*, void> _vkGetImageMemoryRequirements2_fnptr;
         public delegate* unmanaged<VkDevice, VkImageMemoryRequirementsInfo2*, VkMemoryRequirements2*, void> _vkGetImageMemoryRequirements2KHR_fnptr;
+        public delegate* unmanaged<VkDevice, uint, VkImage*, VkHostAddressRangeEXT*, VkResult> _vkGetImageOpaqueCaptureDataEXT_fnptr;
         public delegate* unmanaged<VkDevice, VkImageCaptureDescriptorDataInfoEXT*, void*, VkResult> _vkGetImageOpaqueCaptureDescriptorDataEXT_fnptr;
         public delegate* unmanaged<VkDevice, VkImage, uint*, VkSparseImageMemoryRequirements*, void> _vkGetImageSparseMemoryRequirements_fnptr;
         public delegate* unmanaged<VkDevice, VkImageSparseMemoryRequirementsInfo2*, uint*, VkSparseImageMemoryRequirements2*, void> _vkGetImageSparseMemoryRequirements2_fnptr;
@@ -6280,6 +9103,7 @@ namespace OpenTK.Graphics.Vulkan
         public delegate* unmanaged<VkDevice, VkSwapchainKHR, VkSwapchainTimeDomainPropertiesEXT*, ulong*, VkResult> _vkGetSwapchainTimeDomainPropertiesEXT_fnptr;
         public delegate* unmanaged<VkDevice, VkSwapchainKHR, VkSwapchainTimingPropertiesEXT*, ulong*, VkResult> _vkGetSwapchainTimingPropertiesEXT_fnptr;
         public delegate* unmanaged<VkDevice, VkTensorMemoryRequirementsInfoARM*, VkMemoryRequirements2*, void> _vkGetTensorMemoryRequirementsARM_fnptr;
+        public delegate* unmanaged<VkDevice, uint, VkTensorARM*, VkHostAddressRangeEXT*, VkResult> _vkGetTensorOpaqueCaptureDataARM_fnptr;
         public delegate* unmanaged<VkDevice, VkTensorCaptureDescriptorDataInfoARM*, void*, VkResult> _vkGetTensorOpaqueCaptureDescriptorDataARM_fnptr;
         public delegate* unmanaged<VkDevice, VkTensorViewCaptureDescriptorDataInfoARM*, void*, VkResult> _vkGetTensorViewOpaqueCaptureDescriptorDataARM_fnptr;
         public delegate* unmanaged<VkDevice, VkValidationCacheEXT, nuint*, void*, VkResult> _vkGetValidationCacheDataEXT_fnptr;
@@ -6313,6 +9137,7 @@ namespace OpenTK.Graphics.Vulkan
         public delegate* unmanaged<VkQueue, uint, VkSubmitInfo2*, VkFence, VkResult> _vkQueueSubmit2_fnptr;
         public delegate* unmanaged<VkQueue, uint, VkSubmitInfo2*, VkFence, VkResult> _vkQueueSubmit2KHR_fnptr;
         public delegate* unmanaged<VkQueue, VkResult> _vkQueueWaitIdle_fnptr;
+        public delegate* unmanaged<VkDevice, VkSamplerCustomBorderColorCreateInfoEXT*, int, uint*, VkResult> _vkRegisterCustomBorderColorEXT_fnptr;
         public delegate* unmanaged<VkDevice, VkDeviceEventInfoEXT*, VkAllocationCallbacks*, VkFence*, VkResult> _vkRegisterDeviceEventEXT_fnptr;
         public delegate* unmanaged<VkDevice, VkDisplayKHR, VkDisplayEventInfoEXT*, VkAllocationCallbacks*, VkFence*, VkResult> _vkRegisterDisplayEventEXT_fnptr;
         public delegate* unmanaged<VkDevice, VkReleaseCapturedPipelineDataInfoKHR*, VkAllocationCallbacks*, VkResult> _vkReleaseCapturedPipelineDataKHR_fnptr;
@@ -6351,6 +9176,7 @@ namespace OpenTK.Graphics.Vulkan
         public delegate* unmanaged<VkDevice, VkDeviceMemory, void> _vkUnmapMemory_fnptr;
         public delegate* unmanaged<VkDevice, VkMemoryUnmapInfo*, VkResult> _vkUnmapMemory2_fnptr;
         public delegate* unmanaged<VkDevice, VkMemoryUnmapInfo*, VkResult> _vkUnmapMemory2KHR_fnptr;
+        public delegate* unmanaged<VkDevice, uint, void> _vkUnregisterCustomBorderColorEXT_fnptr;
         public delegate* unmanaged<VkDevice, uint, VkWriteDescriptorSet*, uint, VkCopyDescriptorSet*, void> _vkUpdateDescriptorSets_fnptr;
         public delegate* unmanaged<VkDevice, VkDescriptorSet, VkDescriptorUpdateTemplate, void*, void> _vkUpdateDescriptorSetWithTemplate_fnptr;
         public delegate* unmanaged<VkDevice, VkDescriptorSet, VkDescriptorUpdateTemplate, void*, void> _vkUpdateDescriptorSetWithTemplateKHR_fnptr;
@@ -6364,6 +9190,8 @@ namespace OpenTK.Graphics.Vulkan
         public delegate* unmanaged<VkDevice, VkSemaphoreWaitInfo*, ulong, VkResult> _vkWaitSemaphoresKHR_fnptr;
         public delegate* unmanaged<VkDevice, uint, VkAccelerationStructureKHR*, VkQueryType, nuint, void*, nuint, VkResult> _vkWriteAccelerationStructuresPropertiesKHR_fnptr;
         public delegate* unmanaged<VkDevice, uint, VkMicromapEXT*, VkQueryType, nuint, void*, nuint, VkResult> _vkWriteMicromapsPropertiesEXT_fnptr;
+        public delegate* unmanaged<VkDevice, uint, VkResourceDescriptorInfoEXT*, VkHostAddressRangeEXT*, VkResult> _vkWriteResourceDescriptorsEXT_fnptr;
+        public delegate* unmanaged<VkDevice, uint, VkSamplerCreateInfo*, VkHostAddressRangeEXT*, VkResult> _vkWriteSamplerDescriptorsEXT_fnptr;
     }
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
 }

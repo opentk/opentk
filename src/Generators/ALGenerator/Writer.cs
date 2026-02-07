@@ -48,11 +48,11 @@ namespace ALGenerator
 
             foreach (Namespace @namespace in data.Namespaces)
             {
-                WriteNamespace(outputProjectPath, @namespace);
+                WriteNamespace(outputProjectPath, @namespace, data.EnumMemberDocumentation);
             }
         }
 
-        public static void WriteNamespace(string outputProjectPath, Namespace @namespace)
+        public static void WriteNamespace(string outputProjectPath, Namespace @namespace, Dictionary<string, EnumMemberDocumentation> enumMemberDocumentation)
         {
             // FIXME: Fix function pointers so we can merge this.
             FileStrings strings = @namespace.Name switch
@@ -65,10 +65,10 @@ namespace ALGenerator
             string directoryPath = Path.Combine(outputProjectPath, Path.Combine(strings.Namespace.Split('.')));
             if (Directory.Exists(directoryPath) == false) Directory.CreateDirectory(directoryPath);
             
-            WriteNativeFunctions(directoryPath, strings, @namespace.VendorFunctions, @namespace.Documentation);
+            WriteNativeFunctions(directoryPath, strings, @namespace.VendorFunctions, @namespace.FunctionDocumentation);
             WriteOverloads(directoryPath, strings, @namespace.VendorFunctions);
 
-            WriteEnums(directoryPath, strings, @namespace.EnumGroups);
+            WriteEnums(directoryPath, strings, @namespace.EnumGroups, enumMemberDocumentation);
         }
 
         // FIXME: Maybe we should nest this 
@@ -465,11 +465,48 @@ namespace ALGenerator
 
             if (documentation.RefPagesLinks.Count > 0)
             {
-                writer.WriteLine($"/// <remarks>{string.Join("<br/>", documentation.RefPagesLinks.Select(url => $"<see href=\"{url}\"/>"))}</remarks>");
+                writer.WriteLine($"/// <remarks>{string.Join("<br/>", documentation.RefPagesLinks.Select(url => url.DisplayString != null ? $"<see href=\"{url.Url}\">{url.DisplayString}</see>" : $"<see href=\"{url.Url}\"/>"))}</remarks>");
             }
         }
 
-        private static void WriteEnums(string directoryPath, FileStrings strings, List<EnumGroup> enumGroups)
+        private static void WriteEnumMemberDocumentation(IndentedTextWriter writer, EnumGroupMember member, EnumMemberDocumentation? documentation)
+        {
+            if (documentation != null)
+            {
+                if (documentation.PropertyInfo != null || documentation.Comment != null || documentation.Comment2 != null)
+                {
+                    writer.WriteLine($"/// <summary>");
+                    if (documentation.PropertyInfo != null)
+                    {
+                        writer.Write($"/// <b>[property on: {string.Join(", ", documentation.PropertyInfo.PropertyOn)}]");
+                        // FIXME: Our own range syntax.
+                        if (documentation.PropertyInfo.Range != null)
+                            writer.Write($"[range: {documentation.PropertyInfo.Range} ]");
+                        // FIXME: Resolve our own name for the default value if the default value is a proper enum?
+                        // FIXME: AL_TRUE -> true, AL_FALSE -> false
+                        if (documentation.PropertyInfo.Default != null)
+                            writer.Write($"[default value: {documentation.PropertyInfo.Default}]");
+                        writer.WriteLine($"</b><br/>");
+                    }
+
+                    if (documentation.Comment != null)
+                        writer.WriteLine($"/// {documentation.Comment}");
+
+                    foreach (var line in documentation.Comment2?.Split("\n").Select(s => s.TrimEnd()) ?? [])
+                    {
+                        writer.WriteLine($"/// {line}");
+                    }
+
+                    writer.WriteLine("/// </summary>");
+                }
+                else
+                {
+
+                }
+            }
+        }
+
+        private static void WriteEnums(string directoryPath, FileStrings strings, List<EnumGroup> enumGroups, Dictionary<string, EnumMemberDocumentation> enumMemberDocumentation)
         {
             using StreamWriter stream = File.CreateText(Path.Combine(directoryPath, $"{strings.FileNamePrefix}.Enums.cs"));
             using IndentedTextWriter writer = new IndentedTextWriter(stream);
@@ -483,7 +520,7 @@ namespace ALGenerator
                 writer.WriteLineNoTabs("#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member");
                 // FIXME: Maybe we want to fix this?
                 writer.WriteLineNoTabs("#pragma warning disable CS0419 // Ambiguous reference in cref attribute");
-                WriteEnumGroups(writer, strings.ApiName, enumGroups);
+                WriteEnumGroups(writer, strings.ApiName, enumGroups, enumMemberDocumentation);
                 writer.WriteLineNoTabs("#pragma warning restore CA1069 // Enums values should not be duplicated");
                 writer.WriteLineNoTabs("#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member");
                 // FIXME: Maybe we want to fix this?
@@ -491,7 +528,7 @@ namespace ALGenerator
             }
         }
 
-        private static void WriteEnumGroups(IndentedTextWriter writer, string apiName, List<EnumGroup> enumGroups)
+        private static void WriteEnumGroups(IndentedTextWriter writer, string apiName, List<EnumGroup> enumGroups, Dictionary<string, EnumMemberDocumentation> enumMemberDocumentation)
         {
             foreach (var group in enumGroups)
             {
@@ -513,6 +550,9 @@ namespace ALGenerator
                 {
                     foreach (var member in group.Members)
                     {
+                        enumMemberDocumentation.TryGetValue(member.Name, out var documentation);
+                        WriteEnumMemberDocumentation(writer, member, documentation);
+
                         // HACK: Some enums have a value of -1, and because
                         // we don't know the bitwidth of the enum here we can't cast
                         // the value correctly. This hack fixes this for -1 but doesn't

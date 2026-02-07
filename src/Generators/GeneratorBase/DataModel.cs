@@ -199,8 +199,8 @@ namespace GeneratorBase
         public string[] Kinds { get; init; }
 
         // Vulkan
-        public bool Optional { get; init; }
-        public bool ExternSync { get; init; }
+        public bool[] Optional { get; init; }
+        public ExternSyncInfo ExternSync { get; init; }
     }
 
     public record class EnumType : IReferable
@@ -241,6 +241,20 @@ namespace GeneratorBase
         public VersionInfo? VersionInfo { get; set; }
     }
 
+    public record class FunctionPoiner : IReferable
+    {
+        // We don't need function pointer aliases yet. - Noggin_bops 2026-02-07
+        // public string? Alias { get; init; }
+
+        public required string Name { get; init; }
+        public required List<Parameter> Parameters { get; init; }
+        public required string ReturnType { get; init; }
+
+        public List<Function> ReferencedBy { get; init; } = [];
+
+        public BaseCSType? StrongReturnType { get; set; }
+        public VersionInfo? VersionInfo { get; set; }
+    }
 
     public enum ConstantType
     {
@@ -361,6 +375,46 @@ namespace GeneratorBase
         Instance,
         /// <summary>This command is a device command.</summary>
         Device,
+    }
+
+    public enum ExternSyncType
+    {
+        None,
+        Always,
+        Maybe,
+        Subtype,
+        SubtypeMaybe,
+    }
+
+    public struct ExternSyncInfo
+    {
+        public ExternSyncType Type;
+        public string? Subtype;
+
+        public ExternSyncInfo(ExternSyncType type, string? subtype)
+        {
+            Type = type;
+            Subtype = subtype;
+        }
+
+        public override string ToString()
+        {
+            switch (Type)
+            {
+                case ExternSyncType.None:
+                    return "none";
+                case ExternSyncType.Always:
+                    return "always";
+                case ExternSyncType.Maybe:
+                    return "maybe";
+                case ExternSyncType.Subtype:
+                    return Subtype;
+                case ExternSyncType.SubtypeMaybe:
+                    return $"maybe {Subtype}";
+                default:
+                    throw new Exception();
+            }
+        }
     }
 
     #endregion

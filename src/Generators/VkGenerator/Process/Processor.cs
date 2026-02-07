@@ -1,14 +1,8 @@
-﻿using Microsoft.VisualBasic;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using VkGenerator.Parsing;
+﻿using GeneratorBase;
 using GeneratorBase.Utility;
 using GeneratorBase.Utility.Extensions;
-using GeneratorBase;
+using System.Diagnostics;
+using VkGenerator.Parsing;
 
 namespace VkGenerator.Process
 {
@@ -386,6 +380,37 @@ namespace VkGenerator.Process
             Debug.Assert(video.BitmaskNames.Count == 0);
 
             Debug.Assert(video.Handles.Count == 0);
+
+            // To construct the function pointer types we need the strong struct and enum references
+            // so we resolve them here once we've built the type map.
+            // There is an extra complication that function pointers can reference other function pointers
+            // that have already been defined, so we need to add each resolved function pointer to the typeMap
+            // before resolving the next function pointer.
+            // - Noggin_bops 2026-02-07
+            foreach (FunctionPoiner fnPtr in data.FunctionPointers)
+            {
+                fnPtr.StrongReturnType = ParseType(fnPtr.ReturnType, typeMap, data.Constants, out IReferable? reference);
+                fnPtr.StrongReturnType = ReplaceOpaqueStructPointers(fnPtr.StrongReturnType);
+                fnPtr.StrongReturnType = ReplaceFixedSizeArraysWithPointers(fnPtr.StrongReturnType);
+
+                // FIXME: Make function pointers be able to reference things.
+                //reference?.MarkReferencedBy(fnPtr);
+
+                List<BaseCSType> parameterTypes = new List<BaseCSType>();
+                foreach (Parameter param in fnPtr.Parameters)
+                {
+                    param.StrongType = ParseType(param.Type, typeMap, data.Constants, out reference);
+                    param.StrongType = ReplaceOpaqueStructPointers(param.StrongType);
+                    param.StrongType = ReplaceFixedSizeArraysWithPointers(param.StrongType);
+
+                    // FIXME: Make function pointers be able to reference things.
+                    //reference?.MarkReferencedBy(fnPtr);
+
+                    parameterTypes.Add(param.StrongType);
+                }
+
+                typeMap.Add(fnPtr.Name, new TypeEntry(new CSFunctionPointer(fnPtr.Name, true, fnPtr.StrongReturnType!, parameterTypes), fnPtr));
+            }
 
             return typeMap;
         }
@@ -908,6 +933,11 @@ namespace VkGenerator.Process
                             return CSPrimitive.IntPtr(opaque.Constant);//return new CSStructPrimitive("AHardwareBuffer", opaque.Constant, CSPrimitive.IntPtr(true));
                         case "OH_NativeBuffer":
                             return CSPrimitive.IntPtr(opaque.Constant);//return new CSStructPrimitive("OH_NativeBuffer", opaque.Constant, CSPrimitive.IntPtr(true));
+                        case "ubm_device":
+                        case "ubm_surface":
+                            // I can't find the definitions for these structs. They are supposed to be defined in ubm.h but I can't find these headers anywhere...
+                            // - Noggin_bops 2026-02-07
+                            return CSPrimitive.IntPtr(opaque.Constant);
                         default:
                             throw new Exception($"Unknown opaque struct type {opaque.TypeName}.");
                     }
@@ -998,6 +1028,10 @@ namespace VkGenerator.Process
                     {
                         return csPrimitive;
                     }
+                    else if (csMapType.CSType is CSFunctionPointer cSFunctionPointer)
+                    {
+                        return cSFunctionPointer;
+                    }
                     else
                     {
                         throw new Exception();
@@ -1023,87 +1057,6 @@ namespace VkGenerator.Process
 
                         "float" => CSPrimitive.Float(@const),
                         "double" => CSPrimitive.Double(@const),
-
-                        // FIXME: These should be possible to resolve automatically..?
-                        "PFN_vkInternalAllocationNotification" => new CSFunctionPointer("VkInternalAllocationNotification", @const,
-                            new CSVoid(true),
-                            [
-                                new CSPointer(new CSVoid(false), false),
-                                CSPrimitive.Nuint(true),
-                                new CSEnum("VkInternalAllocationType", CSPrimitive.Uint(true), true),
-                                new CSEnum("VkSystemAllocationScope", CSPrimitive.Uint(true), true),
-                            ]),
-                        "PFN_vkInternalFreeNotification" => new CSFunctionPointer("VkInternalFreeNotification", @const,
-                            new CSVoid(true),
-                            [
-                                new CSPointer(new CSVoid(false), false),
-                                CSPrimitive.Nuint(true),
-                                new CSEnum("VkInternalAllocationType", CSPrimitive.Uint(true), true),
-                                new CSEnum("VkSystemAllocationScope", CSPrimitive.Uint(true), true),
-                            ]),
-                        "PFN_vkReallocationFunction" => new CSFunctionPointer("VkReallocationFunction", @const,
-                            new CSPointer(new CSVoid(true), true),
-                            [
-                                new CSPointer(new CSVoid(false), false),
-                                new CSPointer(new CSVoid(false), false),
-                                CSPrimitive.Nuint(true),
-                                CSPrimitive.Nuint(true),
-                                new CSEnum("VkSystemAllocationScope", CSPrimitive.Uint(true), true),
-                            ]),
-                        "PFN_vkAllocationFunction" => new CSFunctionPointer("VkAllocationFunction", @const,
-                            new CSPointer(new CSVoid(true), true),
-                            [
-                                new CSPointer(new CSVoid(false), false),
-                                CSPrimitive.Nuint(true),
-                                CSPrimitive.Nuint(true),
-                                new CSEnum("VkSystemAllocationScope", CSPrimitive.Uint(true), true),
-                            ]),
-                        "PFN_vkFreeFunction" => new CSFunctionPointer("VkFreeFunction", @const,
-                            new CSVoid(true),
-                            [
-                                new CSPointer(new CSVoid(false), false),
-                                new CSPointer(new CSVoid(false), false),
-                            ]),
-                        "PFN_vkVoidFunction" => new CSOpaqueFunctionPointer("VkVoidFunction", @const),
-                        "PFN_vkDebugReportCallbackEXT" => new CSFunctionPointer("VkDebugReportCallbackEXT", @const,
-                            new CSBool32(true),
-                            [
-                                new CSEnum("VkDebugReportFlagBitsEXT", CSPrimitive.Uint(true), true),
-                                new CSEnum("VkDebugReportObjectTypeEXT", CSPrimitive.Uint(true), true),
-                                CSPrimitive.Ulong(true),
-                                CSPrimitive.Nuint(true),
-                                CSPrimitive.Int(true),
-                                new CSPointer(new CSChar8(true), true),
-                                new CSPointer(new CSChar8(true), true),
-                                new CSPointer(new CSVoid(false), false),
-                            ]),
-                        "PFN_vkDebugUtilsMessengerCallbackEXT" => new CSFunctionPointer("VkDebugUtilsMessengerCallbackEXT", @const,
-                            new CSBool32(true),
-                            [
-                                new CSEnum("VkDebugUtilsMessageSeverityFlagBitsEXT", CSPrimitive.Uint(true), true),
-                                new CSEnum("VkDebugUtilsMessageTypeFlagBitsEXT", CSPrimitive.Uint(true), true),
-                                new CSPointer(new CSStruct("VkDebugUtilsMessengerCallbackDataEXT", true), true),
-                                new CSPointer(new CSVoid(false), false),
-                            ]),
-                        "PFN_vkFaultCallbackFunction" => new CSFunctionPointer("VkFaultCallbackFunction", @const,
-                            new CSVoid(true),
-                            [
-                                new CSBool32(true),
-                                CSPrimitive.Uint(true),
-                                new CSPointer(new CSStruct("VkFaultData", true), true),
-                            ]),
-                        "PFN_vkDeviceMemoryReportCallbackEXT" => new CSFunctionPointer("VkDeviceMemoryReportCallbackEXT", @const,
-                            new CSVoid(true),
-                            [
-                                new CSPointer(new CSStruct("VkDeviceMemoryReportCallbackDataEXT", true), true),
-                                new CSPointer(new CSVoid(false), false),
-                            ]),
-                        "PFN_vkGetInstanceProcAddrLUNARG" => new CSFunctionPointer("VkGetInstanceProcAddrLUNARG", @const,
-                            new CSOpaqueFunctionPointer("VkVoidFunction", true),
-                            [
-                                new CSStruct("VkInstance", true),
-                                new CSPointer(new CSChar8(true), true),
-                            ]),
 
                         "VkSampleMask" => CSPrimitive.Uint(@const),
                         "VkBool32" => new CSBool32(@const),
@@ -1171,6 +1124,11 @@ namespace VkGenerator.Process
                         "OHNativeWindow" => new CSStruct("OHNativeWindow", @const),
                         "OHBufferHandle" => new CSStruct("OHBufferHandle", @const),
                         "OH_NativeBuffer" => new CSOpaqueStruct("OH_NativeBuffer", @const),
+
+                        // I can't find the definitions for these structs. They are supposed to be defined in ubm.h but I can't find these headers anywhere...
+                        // - Noggin_bops 2026-02-07
+                        "ubm_device" => new CSOpaqueStruct("ubm_device", @const),
+                        "ubm_surface" => new CSOpaqueStruct("ubm_surface", @const),
 
                         /*
                         // From vk_video/vulkan_video_codec_h264std.h

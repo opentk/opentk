@@ -46,6 +46,15 @@ namespace OpenTK.Graphics.OpenGLES2
         }
 
         /// <summary>
+        /// This is a convenience function that calls <see cref="GL.GetShaderi(int, ShaderParameterName, out int)"/> followed by <see cref="GL.GetShaderInfoLog(int, int, out int, out string)"/>.
+        /// </summary>
+        public static string GetShaderInfoLog(int shader)
+        {
+            GetShaderInfoLog(shader, out string info);
+            return info;
+        }
+
+        /// <summary>
         /// This is a convenience function that calls <see cref="GL.GetProgrami(int, ProgramProperty, out int)"/> followed by <see cref="GL.GetProgramInfoLog(int, int, out int, out string)"/>.
         /// </summary>
         public static void GetProgramInfoLog(int program, out string info)
@@ -59,6 +68,15 @@ namespace OpenTK.Graphics.OpenGLES2
             {
                 GL.GetProgramInfoLog(program, length, out length, out info);
             }
+        }
+
+        /// <summary>
+        /// This is a convenience function that calls <see cref="GL.GetProgrami(int, ProgramProperty, out int)"/> followed by <see cref="GL.GetProgramInfoLog(int, int, out int, out string)"/>.
+        /// </summary>
+        public static string GetProgramInfoLog(int program)
+        {
+            GetProgramInfoLog(program, out string info);
+            return info;
         }
 
         /// <inheritdoc cref="CreateShaderProgramv(ShaderType, int, byte**)"/>

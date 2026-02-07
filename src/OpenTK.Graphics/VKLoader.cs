@@ -47,7 +47,7 @@ namespace OpenTK.Graphics
                 throw new EntryPointNotFoundException("Could not load vkGetInstanceProcAddr.");
             }
 
-            VkPointers._vkGetInstanceProcAddr_fnptr = (delegate* unmanaged<VkInstance, byte*, IntPtr>)vkGetInstanceProcAddrFnptr;
+            VkPointers._vkGetInstanceProcAddr_fnptr = (delegate* unmanaged<VkInstance, byte*, delegate* unmanaged[Cdecl]<void>>)vkGetInstanceProcAddrFnptr;
         }
 
         public static void SetInstance(VkInstance instance)
@@ -64,7 +64,7 @@ namespace OpenTK.Graphics
         {
             //Vulkan.VkPointers._GetInstanceProcAddr_fnptr =
             IntPtr data = Marshal.StringToCoTaskMemAnsi(name);
-            IntPtr fnptr = Vk.GetInstanceProcAddr(instance, (byte*)data);
+            IntPtr fnptr = (IntPtr)Vk.GetInstanceProcAddr(instance, (byte*)data);
             Marshal.FreeCoTaskMem(data);
 
             if (fnptr == 0)
@@ -78,7 +78,7 @@ namespace OpenTK.Graphics
         public static IntPtr GetDeviceProcAddr(VkDevice device, string name)
         {
             IntPtr data = Marshal.StringToCoTaskMemAnsi(name);
-            IntPtr fnptr = Vk.GetDeviceProcAddr(device, (byte*)data);
+            IntPtr fnptr = (IntPtr)Vk.GetDeviceProcAddr(device, (byte*)data);
             Marshal.FreeCoTaskMem(data);
 
             return fnptr;

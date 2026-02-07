@@ -21,7 +21,7 @@ namespace ALGenerator.Process
 
         internal record OverloadedFunction(
             Function NativeFunction,
-            Dictionary<OutputApi, CommandDocumentation> Documentation,
+            CommandDocumentation? Documentation,
             Overload[] Overloads,
             bool ChangeNativeName);
 
@@ -54,7 +54,7 @@ namespace ALGenerator.Process
             Dictionary<string, OverloadedFunction> allFunctions = new Dictionary<string, OverloadedFunction>(spec.Functions.Count);
             foreach (Function nativeFunction in spec.Functions)
             {
-                Dictionary<OutputApi, CommandDocumentation> functionDocumentation = MakeDocumentationForNativeFunction(nativeFunction, docs);
+                CommandDocumentation functionDocumentation = MakeDocumentationForNativeFunction(nativeFunction, docs);
                 OverloadedFunction overloadedFunction = GenerateOverloads(nativeFunction, functionDocumentation);
 
                 allFunctions.Add(nativeFunction.EntryPoint, overloadedFunction);
@@ -388,10 +388,28 @@ namespace ALGenerator.Process
                         {
                             FunctionReference func = functions.Find(f => f.EntryPoint == function.NativeFunction.EntryPoint) ?? throw new Exception($"Could not find function {function.NativeFunction.EntryPoint}!");
 
+                            List<Link> urls = [];
+                            if (function.Documentation?.RefPagesLink != null)
+                            {
+                                urls.Add(function.Documentation.RefPagesLink);
+                            }
+
                             List<string> addedIn = new List<string>();
                             if (func.VersionInfo.Version != null)
                             {
                                 addedIn.Add($"v{func.VersionInfo.Version.Major}.{func.VersionInfo.Version.Minor}");
+
+                                if (function.Documentation?.RefPagesLink == null)
+                                {
+                                    // We use a google docs link to be able to link directly to a readable PDF
+                                    // so the user doesn't get prompted to download the PDF.
+                                    // - Noggin_bops 2025-12-07
+                                    const string googleDocsPdfViewerLink = "https://docs.google.com/viewer?url={0}";
+                                    const string al1_1Reflink = "https://raw.githubusercontent.com/Raulshc/OpenAL-EXT-Repository/master/Specification/spec%201.1/OpenAL1-1Spec.pdf";
+
+                                    urls.Add(new Link(string.Format(googleDocsPdfViewerLink, al1_1Reflink), "OpenAL 1.1 specification"));
+                                }
+                                
                             }
 
                             foreach (var extension in func.VersionInfo.Extensions)
@@ -413,35 +431,39 @@ namespace ALGenerator.Process
                                 removedIn.Add($"v{removedInV.Major}.{removedInV.Minor}");
                             }
 
-                            List<string> extensionURLs = [];
                             foreach (var extension in func.VersionInfo.Extensions)
                             {
-                                string ext = NameMangler.MaybeRemoveStart(extension.Name, "GL_");
+                                string ext = extension.Name;
 
-                                // FIXME: This does not work super well here as there are
-                                // ALC extensions like ALC_EXT_EFX that have many functions
-                                // added to the AL api, which means we will choose the wrong
-                                // api string in the url here.
-                                // - Noggin_bops 2025-08-10
-                                string apiString = api switch
+                                string? apiString;
+                                if (extension.Name.StartsWith("AL_") || extension.Name.StartsWith("EAX"))
                                 {
-                                    InputAPI.AL => "AL%20Extensions",
-                                    InputAPI.ALC => "ALC%20Extensions",
-                                    _ => throw new Exception()
-                                };
+                                    apiString = "AL%20Extensions";
+                                }
+                                else if (extension.Name.StartsWith("ALC_"))
+                                {
+                                    apiString = "ALC%20Extensions";
+                                }
+                                else
+                                {
+                                    apiString = null;
+                                    Logger.Warning($"Unable to figure out the reflink for the '{extension.Name}' extension.");
+                                }
 
-                                string url = $"https://raw.githubusercontent.com/Raulshc/OpenAL-EXT-Repository/refs/heads/master/{apiString}/{ext}.txt";
-                                extensionURLs.Add(url);
+                                if (apiString != null)
+                                {
+                                    string url = $"https://raw.githubusercontent.com/Raulshc/OpenAL-EXT-Repository/refs/heads/master/{apiString}/{ext}.txt";
+                                    urls.Add(new Link(url, $"{ext}.txt"));
+                                }
                             }
 
-                            if (function.Documentation.TryGetValue(outAPI, out CommandDocumentation? commandDocumentation))
+                            if (function.Documentation != null)
                             {
-                                // FIXME: Added and removed information.
                                 documentation[function.NativeFunction] = new FunctionDocumentation(
-                                    commandDocumentation.Name,
-                                    commandDocumentation.Purpose,
-                                    commandDocumentation.Parameters,
-                                    [commandDocumentation.RefPagesLink, .. extensionURLs],
+                                    function.Documentation.Name,
+                                    function.Documentation.Purpose,
+                                    function.Documentation.Parameters,
+                                    urls,
                                     addedIn,
                                     removedIn
                                     );
@@ -456,8 +478,7 @@ namespace ALGenerator.Process
                                         function.NativeFunction.EntryPoint,
                                         "",
                                         Array.Empty<ParameterDocumentation>(),
-                                        // TODO: Is it possible to get the functionRef spec file and link to it here?
-                                        extensionURLs,
+                                        urls,
                                         addedIn,
                                         removedIn);
                                 }
@@ -468,8 +489,7 @@ namespace ALGenerator.Process
                                         function.NativeFunction.EntryPoint,
                                         "",
                                         Array.Empty<ParameterDocumentation>(),
-                                        // TODO: Is it possible to get the extension spec file and link to it here?
-                                        extensionURLs,
+                                        urls,
                                         addedIn,
                                         removedIn);
                                 }
@@ -614,7 +634,7 @@ namespace ALGenerator.Process
             pointers.Add(CreatePointersList(APIFile.AL, outputNamespaces));
             pointers.Add(CreatePointersList(APIFile.ALC, outputNamespaces));
 
-            return new OutputData(pointers, outputNamespaces);
+            return new OutputData(pointers, outputNamespaces, docs.EnumDocs);
 
             Pointers CreatePointersList(APIFile file, List<Namespace> namespaces)
             {
@@ -659,32 +679,10 @@ namespace ALGenerator.Process
             }
         }
 
-        internal static Dictionary<OutputApi, CommandDocumentation> MakeDocumentationForNativeFunction(Function function, Documentation documentation)
+        internal static CommandDocumentation? MakeDocumentationForNativeFunction(Function function, Documentation documentation)
         {
-            Dictionary<OutputApi, CommandDocumentation> commandDocs = new Dictionary<OutputApi, CommandDocumentation>();
-
-            foreach (var (version, versionDocumentation) in documentation.VersionDocumentation)
-            {
-                if (versionDocumentation.Commands.TryGetValue(function.EntryPoint, out CommandDocumentation? commandDoc))
-                {
-                    if (function.Parameters.Count != commandDoc.Parameters.Length)
-                    {
-                        Logger.Warning($"Function {function.EntryPoint} has differnet number of parameters than the parsed documentation. (gl.xml:{function.Parameters.Count}, documentation:{commandDoc.Parameters.Length})");
-                    }
-
-                    for (int i = 0; i < Math.Min(function.Parameters.Count, commandDoc.Parameters.Length); i++)
-                    {
-                        if (function.Parameters[i].OriginalName != commandDoc.Parameters[i].Name)
-                        {
-                            Logger.Warning($"[{version}][{function.EntryPoint}] Function parameter '{function.Parameters[i].OriginalName}' doesn't have the same name in the documentation. ('{commandDoc.Parameters[i].Name}')");
-                        }
-                    }
-
-                    commandDocs.Add(version, commandDoc);
-                }
-            }
-
-            return commandDocs;
+            documentation.CommandDocs.TryGetValue(function.EntryPoint, out CommandDocumentation? docs);
+            return docs;
         }
 
         public static readonly IOverloader[] Overloaders = [
@@ -709,7 +707,7 @@ namespace ALGenerator.Process
             ];
 
         // Maybe we can do the return type overloading in a post processing step?
-        internal static OverloadedFunction GenerateOverloads(Function nativeFunction, Dictionary<OutputApi, CommandDocumentation> functionDocumentation)
+        internal static OverloadedFunction GenerateOverloads(Function nativeFunction, CommandDocumentation functionDocumentation)
         {
             List<Overload> overloads = new List<Overload>
             {

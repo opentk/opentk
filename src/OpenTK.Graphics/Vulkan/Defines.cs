@@ -64,7 +64,7 @@ namespace OpenTK.Graphics.Vulkan
         public static uint VKSC_API_VERSION_1_0() { return MAKE_API_VERSION(VKSC_API_VARIANT, 1, 0, 0); }
         /// <summary><b>[requires: v1.0]</b> </summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/latest/man/html/VK_HEADER_VERSION.html" /></remarks>
-        public const uint HEADER_VERSION = unchecked((uint)335);
+        public const uint HEADER_VERSION = unchecked((uint)343);
         /// <summary><b>[requires: v1.0]</b> </summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/latest/man/html/VK_HEADER_VERSION_COMPLETE.html" /></remarks>
         public static uint HEADER_VERSION_COMPLETE() { return MAKE_API_VERSION(0, 1, 4, HEADER_VERSION); }

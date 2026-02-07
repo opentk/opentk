@@ -74,7 +74,9 @@ namespace OpenTK.Graphics.Vulkan
         public static explicit operator ulong(VkBufferCollectionFUCHSIA handle) => handle.Handle;
         public static explicit operator VkBufferCollectionFUCHSIA(ulong handle) => new VkBufferCollectionFUCHSIA(handle);
     }
-    /// <summary><b>[requires: v1.0]</b> Used by <see cref="Vk.CreateBufferView"/>, <see cref="Vk.DestroyBufferView"/></summary>
+    /// <summary><b>[requires: v1.0]</b> 
+    /// <br/><b>[deprecated by: VK_EXT_descriptor_heap]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#legacy-resource-objects" />
+    /// Used by <see cref="Vk.CreateBufferView"/>, <see cref="Vk.DestroyBufferView"/></summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkBufferView.html" /></remarks>
     [DebuggerDisplay("VkBufferView\\{{Handle}\\}")]
     public unsafe struct VkBufferView : IEquatable<VkBufferView>
@@ -97,16 +99,16 @@ namespace OpenTK.Graphics.Vulkan
     public unsafe struct VkCommandBuffer : IEquatable<VkCommandBuffer>
     {
         public static VkCommandBuffer Zero => new VkCommandBuffer(0);
-        public ulong Handle;
-        public VkCommandBuffer(ulong handle) => Handle = handle;
+        public nint Handle;
+        public VkCommandBuffer(nint handle) => Handle = handle;
         public override bool Equals(object? obj) => obj is VkCommandBuffer instance && Equals(instance);
         public bool Equals(VkCommandBuffer other) => Handle.Equals(other.Handle);
         public override int GetHashCode() => HashCode.Combine(Handle);
         public override string? ToString() => Handle.ToString();
         public static bool operator ==(VkCommandBuffer left, VkCommandBuffer right) => left.Equals(right);
         public static bool operator !=(VkCommandBuffer left, VkCommandBuffer right) => !(left == right);
-        public static explicit operator ulong(VkCommandBuffer handle) => handle.Handle;
-        public static explicit operator VkCommandBuffer(ulong handle) => new VkCommandBuffer(handle);
+        public static explicit operator nint(VkCommandBuffer handle) => handle.Handle;
+        public static explicit operator VkCommandBuffer(nint handle) => new VkCommandBuffer(handle);
     }
     /// <summary><b>[requires: v1.0]</b> Used by <see cref="Vk.CreateCommandPool"/>, <see cref="Vk.DestroyCommandPool"/>, <see cref="Vk.FreeCommandBuffers"/>, ...</summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkCommandPool.html" /></remarks>
@@ -261,7 +263,9 @@ namespace OpenTK.Graphics.Vulkan
         public static explicit operator ulong(VkDeferredOperationKHR handle) => handle.Handle;
         public static explicit operator VkDeferredOperationKHR(ulong handle) => new VkDeferredOperationKHR(handle);
     }
-    /// <summary><b>[requires: v1.0]</b> Used by <see cref="Vk.CreateDescriptorPool"/>, <see cref="Vk.DestroyDescriptorPool"/>, <see cref="Vk.FreeDescriptorSets"/>, ...</summary>
+    /// <summary><b>[requires: v1.0]</b> 
+    /// <br/><b>[deprecated by: VK_EXT_descriptor_heap]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#legacy-descriptor-sets" />
+    /// Used by <see cref="Vk.CreateDescriptorPool"/>, <see cref="Vk.DestroyDescriptorPool"/>, <see cref="Vk.FreeDescriptorSets"/>, ...</summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDescriptorPool.html" /></remarks>
     [DebuggerDisplay("VkDescriptorPool\\{{Handle}\\}")]
     public unsafe struct VkDescriptorPool : IEquatable<VkDescriptorPool>
@@ -278,7 +282,9 @@ namespace OpenTK.Graphics.Vulkan
         public static explicit operator ulong(VkDescriptorPool handle) => handle.Handle;
         public static explicit operator VkDescriptorPool(ulong handle) => new VkDescriptorPool(handle);
     }
-    /// <summary><b>[requires: v1.0]</b> Used by <see cref="Vk.AllocateDescriptorSets"/>, <see cref="Vk.CmdBindDescriptorSets"/>, <see cref="Vk.FreeDescriptorSets"/>, ...</summary>
+    /// <summary><b>[requires: v1.0]</b> 
+    /// <br/><b>[deprecated by: VK_EXT_descriptor_heap]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#legacy-descriptor-sets" />
+    /// Used by <see cref="Vk.AllocateDescriptorSets"/>, <see cref="Vk.CmdBindDescriptorSets"/>, <see cref="Vk.FreeDescriptorSets"/>, ...</summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDescriptorSet.html" /></remarks>
     [DebuggerDisplay("VkDescriptorSet\\{{Handle}\\}")]
     public unsafe struct VkDescriptorSet : IEquatable<VkDescriptorSet>
@@ -295,7 +301,9 @@ namespace OpenTK.Graphics.Vulkan
         public static explicit operator ulong(VkDescriptorSet handle) => handle.Handle;
         public static explicit operator VkDescriptorSet(ulong handle) => new VkDescriptorSet(handle);
     }
-    /// <summary><b>[requires: v1.0]</b> Used by <see cref="Vk.CreateDescriptorSetLayout"/>, <see cref="Vk.DestroyDescriptorSetLayout"/>, <see cref="Vk.GetDescriptorSetLayoutBindingOffsetEXT"/>, ...</summary>
+    /// <summary><b>[requires: v1.0]</b> 
+    /// <br/><b>[deprecated by: VK_EXT_descriptor_heap]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#legacy-descriptor-sets" />
+    /// Used by <see cref="Vk.CreateDescriptorSetLayout"/>, <see cref="Vk.DestroyDescriptorSetLayout"/>, <see cref="Vk.GetDescriptorSetLayoutBindingOffsetEXT"/>, ...</summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDescriptorSetLayout.html" /></remarks>
     [DebuggerDisplay("VkDescriptorSetLayout\\{{Handle}\\}")]
     public unsafe struct VkDescriptorSetLayout : IEquatable<VkDescriptorSetLayout>
@@ -352,16 +360,16 @@ namespace OpenTK.Graphics.Vulkan
     public unsafe struct VkDevice : IEquatable<VkDevice>
     {
         public static VkDevice Zero => new VkDevice(0);
-        public ulong Handle;
-        public VkDevice(ulong handle) => Handle = handle;
+        public nint Handle;
+        public VkDevice(nint handle) => Handle = handle;
         public override bool Equals(object? obj) => obj is VkDevice instance && Equals(instance);
         public bool Equals(VkDevice other) => Handle.Equals(other.Handle);
         public override int GetHashCode() => HashCode.Combine(Handle);
         public override string? ToString() => Handle.ToString();
         public static bool operator ==(VkDevice left, VkDevice right) => left.Equals(right);
         public static bool operator !=(VkDevice left, VkDevice right) => !(left == right);
-        public static explicit operator ulong(VkDevice handle) => handle.Handle;
-        public static explicit operator VkDevice(ulong handle) => new VkDevice(handle);
+        public static explicit operator nint(VkDevice handle) => handle.Handle;
+        public static explicit operator VkDevice(nint handle) => new VkDevice(handle);
     }
     /// <summary><b>[requires: v1.0]</b> Used by <see cref="Vk.AllocateMemory"/>, <see cref="Vk.BindBufferMemory"/>, <see cref="Vk.BindImageMemory"/>, ...</summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDeviceMemory.html" /></remarks>
@@ -437,16 +445,16 @@ namespace OpenTK.Graphics.Vulkan
     public unsafe struct VkExternalComputeQueueNV : IEquatable<VkExternalComputeQueueNV>
     {
         public static VkExternalComputeQueueNV Zero => new VkExternalComputeQueueNV(0);
-        public ulong Handle;
-        public VkExternalComputeQueueNV(ulong handle) => Handle = handle;
+        public nint Handle;
+        public VkExternalComputeQueueNV(nint handle) => Handle = handle;
         public override bool Equals(object? obj) => obj is VkExternalComputeQueueNV instance && Equals(instance);
         public bool Equals(VkExternalComputeQueueNV other) => Handle.Equals(other.Handle);
         public override int GetHashCode() => HashCode.Combine(Handle);
         public override string? ToString() => Handle.ToString();
         public static bool operator ==(VkExternalComputeQueueNV left, VkExternalComputeQueueNV right) => left.Equals(right);
         public static bool operator !=(VkExternalComputeQueueNV left, VkExternalComputeQueueNV right) => !(left == right);
-        public static explicit operator ulong(VkExternalComputeQueueNV handle) => handle.Handle;
-        public static explicit operator VkExternalComputeQueueNV(ulong handle) => new VkExternalComputeQueueNV(handle);
+        public static explicit operator nint(VkExternalComputeQueueNV handle) => handle.Handle;
+        public static explicit operator VkExternalComputeQueueNV(nint handle) => new VkExternalComputeQueueNV(handle);
     }
     /// <summary><b>[requires: v1.0]</b> Used by <see cref="Vk.AcquireImageANDROID"/>, <see cref="Vk.AcquireImageOHOS"/>, <see cref="Vk.AcquireNextImageKHR"/>, ...</summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkFence.html" /></remarks>
@@ -576,16 +584,16 @@ namespace OpenTK.Graphics.Vulkan
     public unsafe struct VkInstance : IEquatable<VkInstance>
     {
         public static VkInstance Zero => new VkInstance(0);
-        public ulong Handle;
-        public VkInstance(ulong handle) => Handle = handle;
+        public nint Handle;
+        public VkInstance(nint handle) => Handle = handle;
         public override bool Equals(object? obj) => obj is VkInstance instance && Equals(instance);
         public bool Equals(VkInstance other) => Handle.Equals(other.Handle);
         public override int GetHashCode() => HashCode.Combine(Handle);
         public override string? ToString() => Handle.ToString();
         public static bool operator ==(VkInstance left, VkInstance right) => left.Equals(right);
         public static bool operator !=(VkInstance left, VkInstance right) => !(left == right);
-        public static explicit operator ulong(VkInstance handle) => handle.Handle;
-        public static explicit operator VkInstance(ulong handle) => new VkInstance(handle);
+        public static explicit operator nint(VkInstance handle) => handle.Handle;
+        public static explicit operator VkInstance(nint handle) => new VkInstance(handle);
     }
     /// <summary><b>[requires: VK_EXT_opacity_micromap]</b> Used by <see cref="Vk.CmdWriteMicromapsPropertiesEXT"/>, <see cref="Vk.CreateMicromapEXT"/>, <see cref="Vk.DestroyMicromapEXT"/>, ...</summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkMicromapEXT.html" /></remarks>
@@ -644,16 +652,16 @@ namespace OpenTK.Graphics.Vulkan
     public unsafe struct VkPhysicalDevice : IEquatable<VkPhysicalDevice>
     {
         public static VkPhysicalDevice Zero => new VkPhysicalDevice(0);
-        public ulong Handle;
-        public VkPhysicalDevice(ulong handle) => Handle = handle;
+        public nint Handle;
+        public VkPhysicalDevice(nint handle) => Handle = handle;
         public override bool Equals(object? obj) => obj is VkPhysicalDevice instance && Equals(instance);
         public bool Equals(VkPhysicalDevice other) => Handle.Equals(other.Handle);
         public override int GetHashCode() => HashCode.Combine(Handle);
         public override string? ToString() => Handle.ToString();
         public static bool operator ==(VkPhysicalDevice left, VkPhysicalDevice right) => left.Equals(right);
         public static bool operator !=(VkPhysicalDevice left, VkPhysicalDevice right) => !(left == right);
-        public static explicit operator ulong(VkPhysicalDevice handle) => handle.Handle;
-        public static explicit operator VkPhysicalDevice(ulong handle) => new VkPhysicalDevice(handle);
+        public static explicit operator nint(VkPhysicalDevice handle) => handle.Handle;
+        public static explicit operator VkPhysicalDevice(nint handle) => new VkPhysicalDevice(handle);
     }
     /// <summary><b>[requires: v1.0]</b> Used by <see cref="Vk.CmdBindPipeline"/>, <see cref="Vk.CmdBindPipelineShaderGroupNV"/>, <see cref="Vk.CmdInitializeGraphScratchMemoryAMDX"/>, ...</summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPipeline.html" /></remarks>
@@ -706,7 +714,9 @@ namespace OpenTK.Graphics.Vulkan
         public static explicit operator ulong(VkPipelineCache handle) => handle.Handle;
         public static explicit operator VkPipelineCache(ulong handle) => new VkPipelineCache(handle);
     }
-    /// <summary><b>[requires: v1.0]</b> Used by <see cref="Vk.CmdBindDescriptorBufferEmbeddedSamplersEXT"/>, <see cref="Vk.CmdBindDescriptorSets"/>, <see cref="Vk.CmdPushConstants"/>, ...</summary>
+    /// <summary><b>[requires: v1.0]</b> 
+    /// <br/><b>[deprecated by: VK_EXT_descriptor_heap]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#legacy-descriptor-sets" />
+    /// Used by <see cref="Vk.CmdBindDescriptorBufferEmbeddedSamplersEXT"/>, <see cref="Vk.CmdBindDescriptorSets"/>, <see cref="Vk.CmdPushConstants"/>, ...</summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPipelineLayout.html" /></remarks>
     [DebuggerDisplay("VkPipelineLayout\\{{Handle}\\}")]
     public unsafe struct VkPipelineLayout : IEquatable<VkPipelineLayout>
@@ -780,16 +790,16 @@ namespace OpenTK.Graphics.Vulkan
     public unsafe struct VkQueue : IEquatable<VkQueue>
     {
         public static VkQueue Zero => new VkQueue(0);
-        public ulong Handle;
-        public VkQueue(ulong handle) => Handle = handle;
+        public nint Handle;
+        public VkQueue(nint handle) => Handle = handle;
         public override bool Equals(object? obj) => obj is VkQueue instance && Equals(instance);
         public bool Equals(VkQueue other) => Handle.Equals(other.Handle);
         public override int GetHashCode() => HashCode.Combine(Handle);
         public override string? ToString() => Handle.ToString();
         public static bool operator ==(VkQueue left, VkQueue right) => left.Equals(right);
         public static bool operator !=(VkQueue left, VkQueue right) => !(left == right);
-        public static explicit operator ulong(VkQueue handle) => handle.Handle;
-        public static explicit operator VkQueue(ulong handle) => new VkQueue(handle);
+        public static explicit operator nint(VkQueue handle) => handle.Handle;
+        public static explicit operator VkQueue(nint handle) => new VkQueue(handle);
     }
     /// <summary><b>[requires: v1.0]</b> 
     /// <br/><b>[deprecated by: v1.4]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#legacy-dynamicrendering" />
@@ -811,7 +821,9 @@ namespace OpenTK.Graphics.Vulkan
         public static explicit operator ulong(VkRenderPass handle) => handle.Handle;
         public static explicit operator VkRenderPass(ulong handle) => new VkRenderPass(handle);
     }
-    /// <summary><b>[requires: v1.0]</b> Used by <see cref="Vk.CreateSampler"/>, <see cref="Vk.DestroySampler"/></summary>
+    /// <summary><b>[requires: v1.0]</b> 
+    /// <br/><b>[deprecated by: VK_EXT_descriptor_heap]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#legacy-resource-objects" />
+    /// Used by <see cref="Vk.CreateSampler"/>, <see cref="Vk.DestroySampler"/></summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkSampler.html" /></remarks>
     [DebuggerDisplay("VkSampler\\{{Handle}\\}")]
     public unsafe struct VkSampler : IEquatable<VkSampler>
@@ -964,7 +976,7 @@ namespace OpenTK.Graphics.Vulkan
         public static explicit operator ulong(VkSwapchainKHR handle) => handle.Handle;
         public static explicit operator VkSwapchainKHR(ulong handle) => new VkSwapchainKHR(handle);
     }
-    /// <summary><b>[requires: VK_ARM_tensors]</b> Used by <see cref="Vk.CreateTensorARM"/>, <see cref="Vk.DestroyTensorARM"/></summary>
+    /// <summary><b>[requires: VK_EXT_descriptor_heap | VK_ARM_tensors]</b> Used by <see cref="Vk.CreateTensorARM"/>, <see cref="Vk.DestroyTensorARM"/>, <see cref="Vk.GetTensorOpaqueCaptureDataARM"/></summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkTensorARM.html" /></remarks>
     [DebuggerDisplay("VkTensorARM\\{{Handle}\\}")]
     public unsafe struct VkTensorARM : IEquatable<VkTensorARM>

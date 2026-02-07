@@ -25,6 +25,7 @@ namespace VkGenerator.Parsing
             Dictionary<string, Constant> Constants,
             List<HandleType> Handles,
             List<Function> Commands,
+            List<FunctionPoiner> FunctionPointers,
             List<Feature> Features,
             List<Extension> Extensions);
 
@@ -35,6 +36,7 @@ namespace VkGenerator.Parsing
         List<BitmaskName> BitmaskNames,
         List<BaseType> BaseTypes,
         List<HandleType> HandleTypes,
+        List<FunctionPoiner> FunctionPointerTypes,
         List<ExternalType> ExternalTypes
         );
 
@@ -61,6 +63,23 @@ namespace VkGenerator.Parsing
 
     public record ExternalType(string Name, string? HeaderFile);
 
+    [Flags]
+    public enum LimitType
+    {
+        None = 0,
+        Min = 1 << 0,
+        Max = 1 << 1,
+        Not = 1 << 2,
+        PowerOfTwo = 1 << 3,
+        Multiple = 1 << 4,
+        Bits = 1 << 5,
+        Bitmask = 1 << 6,
+        Range = 1 << 7,
+        Struct = 1 << 8,
+        Exact = 1 << 9,
+        NoAuto = 1 << 10,
+    }
+
     public record StructType(string Name, List<StructMember> Members, bool Union, string? Comment, string? Alias) : IStruct
     {
         List<IStructMember> IStruct.Members => Members.Cast<IStructMember>().ToList();
@@ -69,7 +88,20 @@ namespace VkGenerator.Parsing
 
         public List<Function> ReferencedBy { get; } = [];
     }
-    public record StructMember(string Type, string Name, string? Values) : IStructMember
+    public record StructMember(
+            string Type,
+            string Name,
+            string? Length,
+            string? AltLength,
+            string? Stride,
+            ExternSyncInfo ExternSync,
+            bool[] Optional,
+            string? Values,
+            LimitType LimitType,
+            string? ObjectType,
+            string? FeatureLink,
+            string? Comment
+        ) : IStructMember
     {
         public BaseCSType? StrongType { get; set; }
     };
@@ -109,6 +141,7 @@ namespace VkGenerator.Parsing
                 constantsMap,
                 typeData.HandleTypes,
                 commands,
+                typeData.FunctionPointerTypes,
                 features,
                 extensions);
         }
@@ -142,6 +175,7 @@ namespace VkGenerator.Parsing
                 constantsMap,
                 typeData.HandleTypes,
                 new List<Function>(),
+                typeData.FunctionPointerTypes,
                 features,
                 extensions);
         }
@@ -156,6 +190,7 @@ namespace VkGenerator.Parsing
             List<BitmaskName> bitmaskNames = new List<BitmaskName>();
             List<BaseType> baseTypes = new List<BaseType>();
             List<HandleType> handleTypes = new List<HandleType>();
+            List<FunctionPoiner> functionPointerTypes = new List<FunctionPoiner>();
             List<ExternalType> externalTypes = new List<ExternalType>();
 
             foreach (XElement type in xelement.Elements("type"))
@@ -170,6 +205,13 @@ namespace VkGenerator.Parsing
                 string? alias = type.Attribute("alias")?.Value;
                 bool returnedonly = type.Attribute("returnedonly")?.Value == "true";
                 string? comment = type.Attribute("comment")?.Value;
+                if (comment == null)
+                {
+                    if (type.Elements("comment").Count() == 1)
+                    {
+                        comment = type.Element("comment")!.Value;
+                    }
+                }
 
                 // FIXME: For now we don't deal with vulkansc
                 if (api == "vulkansc")
@@ -239,7 +281,36 @@ namespace VkGenerator.Parsing
                 }
                 else if (category == "funcpointer")
                 {
-                    // FIXME
+                    XElement proto = type.Element("proto") ?? throw new Exception();
+                    string fnptrName = proto.Element("name")?.Value ?? throw new Exception();
+                    string returnTypeStr = proto.Element("type")?.Value ?? throw new Exception();
+
+                    List<Parameter> parameters = new List<Parameter>();
+                    foreach (XElement param in type.Elements("param"))
+                    {
+                        // FIXME: We don't do vulkansc for now...
+                        if (param.Attribute("api")?.Value.Split(',').Contains("vulkansc") ?? false)
+                            continue;
+
+                        string paramName = param.Element("name")?.Value ?? throw new Exception();
+                        string paramTypeStr = param.GetXmlText(element => element.Name != "name" && element.Name != "comment" ? element.Value : string.Empty);
+                        bool[] optional = param.Attribute("optional")?.Value?.Split(',').Select(s => bool.Parse(s)).ToArray() ?? [];
+                        ExternSyncInfo externsync = ParseExternSync(param.Attribute("externsync")?.Value);
+                        string? len = param.Attribute("len")?.Value;
+
+                        parameters.Add(new Parameter()
+                        {
+                            Name = paramName,
+                            OriginalName = paramName,
+                            Type = paramTypeStr,
+                            Length = len,
+
+                            Optional = optional,
+                            ExternSync = externsync,
+                        });
+                    }
+
+                    functionPointerTypes.Add( new FunctionPoiner() { Name = fnptrName, Parameters = parameters, ReturnType = returnTypeStr });
                 }
                 else
                 {
@@ -251,7 +322,7 @@ namespace VkGenerator.Parsing
                 }
             }
 
-            return new TypeData(defines, structs, enumNames, bitmaskNames, baseTypes, handleTypes, externalTypes);
+            return new TypeData(defines, structs, enumNames, bitmaskNames, baseTypes, handleTypes, functionPointerTypes, externalTypes);
         }
 
         internal enum TypeSuffix
@@ -390,14 +461,21 @@ namespace VkGenerator.Parsing
 
                 string? values = member.Attribute("values")?.Value;
 
-                bool optional = member.Attribute("optional")?.Value == "true";
+                bool[] optional = member.Attribute("optional")?.Value?.Split(',').Select(s => bool.Parse(s)).ToArray() ?? [];
                 string? len = member.Attribute("len")?.Value;
-                string? limittype = member.Attribute("limittype")?.Value;
+                string? altLen = member.Attribute("altlen")?.Value;
+                string? stride = member.Attribute("stride")?.Value;
+                LimitType limitType = ParseLimitType(member.Attribute("limittype")?.Value);
+                string? objectType = member.Attribute("objecttype")?.Value;
+                string? featureLink = member.Attribute("featurelink")?.Value;
 
                 string? typeStr = member.GetXmlText(element => (element.Name != "name" && element.Name != "comment") ? element.Value : string.Empty).Trim();
                 string name = member.Element("name")!.Value;
+                string? comment = member.Element("comment")?.Value;
 
-                members.Add(new StructMember(typeStr, name, values));
+                ExternSyncInfo externsync = ParseExternSync(member.Attribute("externsync")?.Value);
+
+                members.Add(new StructMember(typeStr, name, len, altLen, stride, externsync, optional, values, limitType, objectType, featureLink, comment));
             }
 
             return members;
@@ -441,7 +519,7 @@ namespace VkGenerator.Parsing
                             };
 
                             string value = @const.Attribute("value")?.Value ?? throw new Exception();
-                            value = value.TrimStart('(').TrimEnd(')', 'U', 'L', 'F');
+                            value = value.TrimStart('(').TrimEnd(')', 'U', 'L', 'F', 'f');
 
                             bool invert = value.StartsWith('~');
                             if (invert)
@@ -640,13 +718,13 @@ namespace VkGenerator.Parsing
                     foreach (XElement param in command.Elements("param"))
                     {
                         // FIXME: We don't do vulkansc for now...
-                        if (param.Attribute("api")?.Value == "vulkansc")
+                        if (param.Attribute("api")?.Value.Split(',').Contains("vulkansc") ?? false)
                             continue;
 
                         string paramName = param.Element("name")?.Value ?? throw new Exception();
                         string paramTypeStr = param.GetXmlText(element => element.Name != "name" && element.Name != "comment" ? element.Value : string.Empty);
-                        bool optional = param.Attribute("optional")?.Value == "true";
-                        bool externsync = param.Attribute("externsync")?.Value == "true";
+                        bool[] optional = param.Attribute("optional")?.Value?.Split(',').Select(s => bool.Parse(s)).ToArray() ?? [];
+                        ExternSyncInfo externsync = ParseExternSync(param.Attribute("externsync")?.Value);
                         string? len = param.Attribute("len")?.Value;
 
                         parameters.Add(new Parameter()
@@ -1043,6 +1121,48 @@ namespace VkGenerator.Parsing
 
                 ReasonLink = explanationlink,
             };
+        }
+
+        public static ExternSyncInfo ParseExternSync(string? externSync)
+        {
+            if (string.IsNullOrEmpty(externSync))
+                return new ExternSyncInfo(ExternSyncType.None, null);
+
+            if (externSync == "true")
+                return new ExternSyncInfo(ExternSyncType.Always, null);
+            else if (externSync == "maybe")
+                return new ExternSyncInfo(ExternSyncType.Maybe, null);
+            else if (externSync.StartsWith("maybe:"))
+                return new ExternSyncInfo(ExternSyncType.SubtypeMaybe, NameMangler.RemoveStart(externSync, "maybe:"));
+            else
+                return new ExternSyncInfo(ExternSyncType.Subtype, externSync);
+        }
+
+        public static LimitType ParseLimitType(string? limitType)
+        {
+            //'min', 'max', 'not', 'pot', 'mul', 'bits', bitmask', 'range', 'struct', 'exact', 'noauto'
+            if (limitType == null) return LimitType.None;
+
+            LimitType res = LimitType.None;
+            foreach (var limit in limitType.Split(','))
+            {
+                switch (limit)
+                {
+                    case "min": res |= LimitType.Min; break;
+                    case "max": res |= LimitType.Max; break;
+                    case "not": res |= LimitType.Not; break;
+                    case "pot": res |= LimitType.PowerOfTwo; break;
+                    case "mul": res |= LimitType.Multiple; break;
+                    case "bits": res |= LimitType.Bits; break;
+                    case "bitmask": res |= LimitType.Bitmask; break;
+                    case "range": res |= LimitType.Range; break;
+                    case "struct": res |= LimitType.Struct; break;
+                    case "exact": res |= LimitType.Exact; break;
+                    case "noauto": res |= LimitType.NoAuto; break;
+                    default: throw new Exception();
+                }
+            }
+            return res;
         }
 
         public static List<Extension> ParseVideoExtensions(XElement root)

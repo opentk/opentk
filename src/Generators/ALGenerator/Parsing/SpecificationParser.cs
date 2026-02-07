@@ -88,10 +88,8 @@ namespace ALGenerator.Parsing
 
             static List<FunctionReference> MakeFunctionReferences(List<Feature> features, List<Extension> extensions, ALAPI api)
             {
-                //List<FunctionReference> functions = new List<FunctionReference>();
                 Dictionary<string, FunctionReference> entryPointToReference = new Dictionary<string, FunctionReference>();
 
-                // FIXME: If we want to generate the compatibility thing we want to remove all of the 
                 foreach (var feature in features)
                 {
                     foreach (var requires in feature.RequireTags)
