@@ -38,7 +38,7 @@ namespace OpenTK.Graphics.Vulkan
         {
             return VkPointers._vkAcquireImageANDROID_fnptr(device, image, nativeFenceFd, semaphore, fence);
         }
-        /// <summary><b>[requires: VK_OHOS_native_buffer]</b> [device command] </summary>
+        /// <summary>[device command] </summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkAcquireImageOHOS.html" /></remarks>
         public static VkResult AcquireImageOHOS(VkDevice device, VkImage image, int nativeFenceFd, VkSemaphore semaphore, VkFence fence)
         {
@@ -337,6 +337,18 @@ namespace OpenTK.Graphics.Vulkan
         public static void CmdBindPipelineShaderGroupNV(VkCommandBuffer commandBuffer, VkPipelineBindPoint pipelineBindPoint, VkPipeline pipeline, uint groupIndex)
         {
             VkPointers._vkCmdBindPipelineShaderGroupNV_fnptr(commandBuffer, pipelineBindPoint, pipeline, groupIndex);
+        }
+        /// <summary><b>[requires: VK_EXT_descriptor_heap]</b> [device command] </summary>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdBindResourceHeapEXT.html" /></remarks>
+        public static void CmdBindResourceHeapEXT(VkCommandBuffer commandBuffer, VkBindHeapInfoEXT* pBindInfo)
+        {
+            VkPointers._vkCmdBindResourceHeapEXT_fnptr(commandBuffer, pBindInfo);
+        }
+        /// <summary><b>[requires: VK_EXT_descriptor_heap]</b> [device command] </summary>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdBindSamplerHeapEXT.html" /></remarks>
+        public static void CmdBindSamplerHeapEXT(VkCommandBuffer commandBuffer, VkBindHeapInfoEXT* pBindInfo)
+        {
+            VkPointers._vkCmdBindSamplerHeapEXT_fnptr(commandBuffer, pBindInfo);
         }
         /// <summary><b>[requires: VK_EXT_shader_object]</b> [device command] </summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdBindShadersEXT.html" /></remarks>
@@ -1052,6 +1064,12 @@ namespace OpenTK.Graphics.Vulkan
         {
             VkPointers._vkCmdPushConstants2KHR_fnptr(commandBuffer, pPushConstantsInfo);
         }
+        /// <summary><b>[requires: VK_EXT_descriptor_heap]</b> [device command] </summary>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdPushDataEXT.html" /></remarks>
+        public static void CmdPushDataEXT(VkCommandBuffer commandBuffer, VkPushDataInfoEXT* pPushDataInfo)
+        {
+            VkPointers._vkCmdPushDataEXT_fnptr(commandBuffer, pPushDataInfo);
+        }
         /// <summary><b>[requires: v1.4]</b> [device command] </summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdPushDescriptorSet.html" /></remarks>
         public static void CmdPushDescriptorSet(VkCommandBuffer commandBuffer, VkPipelineBindPoint pipelineBindPoint, VkPipelineLayout layout, uint set, uint descriptorWriteCount, VkWriteDescriptorSet* pDescriptorWrites)
@@ -1213,6 +1231,12 @@ namespace OpenTK.Graphics.Vulkan
         public static void CmdSetColorWriteMaskEXT(VkCommandBuffer commandBuffer, uint firstAttachment, uint attachmentCount, VkColorComponentFlagBits* pColorWriteMasks)
         {
             VkPointers._vkCmdSetColorWriteMaskEXT_fnptr(commandBuffer, firstAttachment, attachmentCount, pColorWriteMasks);
+        }
+        /// <summary><b>[requires: VK_NV_compute_occupancy_priority]</b> [device command] </summary>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetComputeOccupancyPriorityNV.html" /></remarks>
+        public static void CmdSetComputeOccupancyPriorityNV(VkCommandBuffer commandBuffer, VkComputeOccupancyPriorityParametersNV* pParameters)
+        {
+            VkPointers._vkCmdSetComputeOccupancyPriorityNV_fnptr(commandBuffer, pParameters);
         }
         /// <summary><b>[requires: VK_EXT_extended_dynamic_state3 | VK_EXT_shader_object]</b> [device command] </summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetConservativeRasterizationModeEXT.html" /></remarks>
@@ -2384,6 +2408,12 @@ namespace OpenTK.Graphics.Vulkan
         {
             return VkPointers._vkCreateTensorViewARM_fnptr(device, pCreateInfo, pAllocator, pView);
         }
+        /// <summary><b>[requires: VK_SEC_ubm_surface]</b> [instance command] </summary>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateUbmSurfaceSEC.html" /></remarks>
+        public static VkResult CreateUbmSurfaceSEC(VkInstance instance, VkUbmSurfaceCreateInfoSEC* pCreateInfo, VkAllocationCallbacks* pAllocator, VkSurfaceKHR* pSurface)
+        {
+            return VkPointers._vkCreateUbmSurfaceSEC_fnptr(instance, pCreateInfo, pAllocator, pSurface);
+        }
         /// <summary><b>[requires: VK_EXT_validation_cache]</b> [device command] </summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateValidationCacheEXT.html" /></remarks>
         public static VkResult CreateValidationCacheEXT(VkDevice device, VkValidationCacheCreateInfoEXT* pCreateInfo, VkAllocationCallbacks* pAllocator, VkValidationCacheEXT* pValidationCache)
@@ -3104,6 +3134,12 @@ namespace OpenTK.Graphics.Vulkan
         {
             VkPointers._vkGetDeviceBufferMemoryRequirementsKHR_fnptr(device, pInfo, pMemoryRequirements);
         }
+        /// <summary><b>[requires: VK_NVX_image_view_handle]</b> [device command] </summary>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetDeviceCombinedImageSamplerIndexNVX.html" /></remarks>
+        public static ulong GetDeviceCombinedImageSamplerIndexNVX(VkDevice device, ulong imageViewIndex, ulong samplerIndex)
+        {
+            return VkPointers._vkGetDeviceCombinedImageSamplerIndexNVX_fnptr(device, imageViewIndex, samplerIndex);
+        }
         /// <summary><b>[requires: VK_EXT_device_fault]</b> [device command] </summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetDeviceFaultInfoEXT.html" /></remarks>
         public static VkResult GetDeviceFaultInfoEXT(VkDevice device, VkDeviceFaultCountsEXT* pFaultCounts, VkDeviceFaultInfoEXT* pFaultInfo)
@@ -3202,7 +3238,7 @@ namespace OpenTK.Graphics.Vulkan
         }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetDeviceProcAddr.html" /></remarks>
-        public static IntPtr GetDeviceProcAddr(VkDevice device, byte* pName)
+        public static delegate* unmanaged[Cdecl]<void> GetDeviceProcAddr(VkDevice device, byte* pName)
         {
             return VkPointers._vkGetDeviceProcAddr_fnptr(device, pName);
         }
@@ -3380,6 +3416,12 @@ namespace OpenTK.Graphics.Vulkan
         {
             VkPointers._vkGetImageMemoryRequirements2KHR_fnptr(device, pInfo, pMemoryRequirements);
         }
+        /// <summary><b>[requires: VK_EXT_descriptor_heap]</b> [device command] </summary>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetImageOpaqueCaptureDataEXT.html" /></remarks>
+        public static VkResult GetImageOpaqueCaptureDataEXT(VkDevice device, uint imageCount, VkImage* pImages, VkHostAddressRangeEXT* pDatas)
+        {
+            return VkPointers._vkGetImageOpaqueCaptureDataEXT_fnptr(device, imageCount, pImages, pDatas);
+        }
         /// <summary><b>[requires: VK_EXT_descriptor_buffer]</b> [device command] </summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetImageOpaqueCaptureDescriptorDataEXT.html" /></remarks>
         public static VkResult GetImageOpaqueCaptureDescriptorDataEXT(VkDevice device, VkImageCaptureDescriptorDataInfoEXT* pInfo, void* pData)
@@ -3454,7 +3496,7 @@ namespace OpenTK.Graphics.Vulkan
         }
         /// <summary><b>[requires: v1.0]</b> [instance command] </summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetInstanceProcAddr.html" /></remarks>
-        public static IntPtr GetInstanceProcAddr(VkInstance instance, byte* pName)
+        public static delegate* unmanaged[Cdecl]<void> GetInstanceProcAddr(VkInstance instance, byte* pName)
         {
             return VkPointers._vkGetInstanceProcAddr_fnptr(instance, pName);
         }
@@ -3619,6 +3661,12 @@ namespace OpenTK.Graphics.Vulkan
         public static VkResult GetPhysicalDeviceCooperativeVectorPropertiesNV(VkPhysicalDevice physicalDevice, uint* pPropertyCount, VkCooperativeVectorPropertiesNV* pProperties)
         {
             return VkPointers._vkGetPhysicalDeviceCooperativeVectorPropertiesNV_fnptr(physicalDevice, pPropertyCount, pProperties);
+        }
+        /// <summary><b>[requires: VK_EXT_descriptor_heap]</b> [instance command] </summary>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceDescriptorSizeEXT.html" /></remarks>
+        public static ulong GetPhysicalDeviceDescriptorSizeEXT(VkPhysicalDevice physicalDevice, VkDescriptorType descriptorType)
+        {
+            return VkPointers._vkGetPhysicalDeviceDescriptorSizeEXT_fnptr(physicalDevice, descriptorType);
         }
         /// <summary><b>[requires: VK_EXT_directfb_surface]</b> [instance command] </summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceDirectFBPresentationSupportEXT.html" /></remarks>
@@ -3962,6 +4010,12 @@ namespace OpenTK.Graphics.Vulkan
         {
             return VkPointers._vkGetPhysicalDeviceToolPropertiesEXT_fnptr(physicalDevice, pToolCount, pToolProperties);
         }
+        /// <summary><b>[requires: VK_SEC_ubm_surface]</b> [instance command] </summary>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceUbmPresentationSupportSEC.html" /></remarks>
+        public static int GetPhysicalDeviceUbmPresentationSupportSEC(VkPhysicalDevice physicalDevice, uint queueFamilyIndex, IntPtr ubm_device)
+        {
+            return VkPointers._vkGetPhysicalDeviceUbmPresentationSupportSEC_fnptr(physicalDevice, queueFamilyIndex, ubm_device);
+        }
         /// <summary><b>[requires: VK_KHR_video_queue]</b> [instance command] </summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceVideoCapabilitiesKHR.html" /></remarks>
         public static VkResult GetPhysicalDeviceVideoCapabilitiesKHR(VkPhysicalDevice physicalDevice, VkVideoProfileInfoKHR* pVideoProfile, VkVideoCapabilitiesKHR* pCapabilities)
@@ -4232,7 +4286,7 @@ namespace OpenTK.Graphics.Vulkan
         {
             return VkPointers._vkGetSwapchainGrallocUsageANDROID_fnptr(device, format, imageUsage, grallocUsage);
         }
-        /// <summary><b>[requires: VK_OHOS_native_buffer]</b> [device command] </summary>
+        /// <summary>[device command] </summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetSwapchainGrallocUsageOHOS.html" /></remarks>
         public static VkResult GetSwapchainGrallocUsageOHOS(VkDevice device, VkFormat format, VkImageUsageFlagBits imageUsage, ulong* grallocUsage)
         {
@@ -4267,6 +4321,12 @@ namespace OpenTK.Graphics.Vulkan
         public static void GetTensorMemoryRequirementsARM(VkDevice device, VkTensorMemoryRequirementsInfoARM* pInfo, VkMemoryRequirements2* pMemoryRequirements)
         {
             VkPointers._vkGetTensorMemoryRequirementsARM_fnptr(device, pInfo, pMemoryRequirements);
+        }
+        /// <summary><b>[requires: VK_EXT_descriptor_heap]</b> [device command] </summary>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetTensorOpaqueCaptureDataARM.html" /></remarks>
+        public static VkResult GetTensorOpaqueCaptureDataARM(VkDevice device, uint tensorCount, VkTensorARM* pTensors, VkHostAddressRangeEXT* pDatas)
+        {
+            return VkPointers._vkGetTensorOpaqueCaptureDataARM_fnptr(device, tensorCount, pTensors, pDatas);
         }
         /// <summary><b>[requires: VK_ARM_tensors]</b> [device command] </summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetTensorOpaqueCaptureDescriptorDataARM.html" /></remarks>
@@ -4442,7 +4502,7 @@ namespace OpenTK.Graphics.Vulkan
         {
             return VkPointers._vkQueueSignalReleaseImageANDROID_fnptr(queue, waitSemaphoreCount, pWaitSemaphores, image, pNativeFenceFd);
         }
-        /// <summary><b>[requires: VK_OHOS_native_buffer]</b> [device command] </summary>
+        /// <summary>[device command] </summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkQueueSignalReleaseImageOHOS.html" /></remarks>
         public static VkResult QueueSignalReleaseImageOHOS(VkQueue queue, uint waitSemaphoreCount, VkSemaphore* pWaitSemaphores, VkImage image, int* pNativeFenceFd)
         {
@@ -4471,6 +4531,12 @@ namespace OpenTK.Graphics.Vulkan
         public static VkResult QueueWaitIdle(VkQueue queue)
         {
             return VkPointers._vkQueueWaitIdle_fnptr(queue);
+        }
+        /// <summary><b>[requires: VK_EXT_descriptor_heap]</b> [device command] </summary>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkRegisterCustomBorderColorEXT.html" /></remarks>
+        public static VkResult RegisterCustomBorderColorEXT(VkDevice device, VkSamplerCustomBorderColorCreateInfoEXT* pBorderColor, int requestIndex, uint* pIndex)
+        {
+            return VkPointers._vkRegisterCustomBorderColorEXT_fnptr(device, pBorderColor, requestIndex, pIndex);
         }
         /// <summary><b>[requires: VK_EXT_display_control]</b> [device command] </summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkRegisterDeviceEventEXT.html" /></remarks>
@@ -4712,6 +4778,12 @@ namespace OpenTK.Graphics.Vulkan
         {
             return VkPointers._vkUnmapMemory2KHR_fnptr(device, pMemoryUnmapInfo);
         }
+        /// <summary><b>[requires: VK_EXT_descriptor_heap]</b> [device command] </summary>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkUnregisterCustomBorderColorEXT.html" /></remarks>
+        public static void UnregisterCustomBorderColorEXT(VkDevice device, uint index)
+        {
+            VkPointers._vkUnregisterCustomBorderColorEXT_fnptr(device, index);
+        }
         /// <summary><b>[requires: v1.0]</b> [device command] </summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkUpdateDescriptorSets.html" /></remarks>
         public static void UpdateDescriptorSets(VkDevice device, uint descriptorWriteCount, VkWriteDescriptorSet* pDescriptorWrites, uint descriptorCopyCount, VkCopyDescriptorSet* pDescriptorCopies)
@@ -4789,6 +4861,18 @@ namespace OpenTK.Graphics.Vulkan
         public static VkResult WriteMicromapsPropertiesEXT(VkDevice device, uint micromapCount, VkMicromapEXT* pMicromaps, VkQueryType queryType, nuint dataSize, void* pData, nuint stride)
         {
             return VkPointers._vkWriteMicromapsPropertiesEXT_fnptr(device, micromapCount, pMicromaps, queryType, dataSize, pData, stride);
+        }
+        /// <summary><b>[requires: VK_EXT_descriptor_heap]</b> [device command] </summary>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkWriteResourceDescriptorsEXT.html" /></remarks>
+        public static VkResult WriteResourceDescriptorsEXT(VkDevice device, uint resourceCount, VkResourceDescriptorInfoEXT* pResources, VkHostAddressRangeEXT* pDescriptors)
+        {
+            return VkPointers._vkWriteResourceDescriptorsEXT_fnptr(device, resourceCount, pResources, pDescriptors);
+        }
+        /// <summary><b>[requires: VK_EXT_descriptor_heap]</b> [device command] </summary>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkWriteSamplerDescriptorsEXT.html" /></remarks>
+        public static VkResult WriteSamplerDescriptorsEXT(VkDevice device, uint samplerCount, VkSamplerCreateInfo* pSamplers, VkHostAddressRangeEXT* pDescriptors)
+        {
+            return VkPointers._vkWriteSamplerDescriptorsEXT_fnptr(device, samplerCount, pSamplers, pDescriptors);
         }
     }
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member

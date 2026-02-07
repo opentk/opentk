@@ -25,6 +25,7 @@ namespace VkGenerator.Parsing
             Dictionary<string, Constant> Constants,
             List<HandleType> Handles,
             List<Function> Commands,
+            List<FunctionPoiner> FunctionPointers,
             List<Feature> Features,
             List<Extension> Extensions);
 
@@ -35,6 +36,7 @@ namespace VkGenerator.Parsing
         List<BitmaskName> BitmaskNames,
         List<BaseType> BaseTypes,
         List<HandleType> HandleTypes,
+        List<FunctionPoiner> FunctionPointerTypes,
         List<ExternalType> ExternalTypes
         );
 
@@ -109,6 +111,7 @@ namespace VkGenerator.Parsing
                 constantsMap,
                 typeData.HandleTypes,
                 commands,
+                typeData.FunctionPointerTypes,
                 features,
                 extensions);
         }
@@ -142,6 +145,7 @@ namespace VkGenerator.Parsing
                 constantsMap,
                 typeData.HandleTypes,
                 new List<Function>(),
+                typeData.FunctionPointerTypes,
                 features,
                 extensions);
         }
@@ -156,6 +160,7 @@ namespace VkGenerator.Parsing
             List<BitmaskName> bitmaskNames = new List<BitmaskName>();
             List<BaseType> baseTypes = new List<BaseType>();
             List<HandleType> handleTypes = new List<HandleType>();
+            List<FunctionPoiner> functionPointerTypes = new List<FunctionPoiner>();
             List<ExternalType> externalTypes = new List<ExternalType>();
 
             foreach (XElement type in xelement.Elements("type"))
@@ -239,7 +244,36 @@ namespace VkGenerator.Parsing
                 }
                 else if (category == "funcpointer")
                 {
-                    // FIXME
+                    XElement proto = type.Element("proto") ?? throw new Exception();
+                    string fnptrName = proto.Element("name")?.Value ?? throw new Exception();
+                    string returnTypeStr = proto.Element("type")?.Value ?? throw new Exception();
+
+                    List<Parameter> parameters = new List<Parameter>();
+                    foreach (XElement param in type.Elements("param"))
+                    {
+                        // FIXME: We don't do vulkansc for now...
+                        if (param.Attribute("api")?.Value.Split(',').Contains("vulkansc") ?? false)
+                            continue;
+
+                        string paramName = param.Element("name")?.Value ?? throw new Exception();
+                        string paramTypeStr = param.GetXmlText(element => element.Name != "name" && element.Name != "comment" ? element.Value : string.Empty);
+                        bool optional = param.Attribute("optional")?.Value == "true";
+                        bool externsync = param.Attribute("externsync")?.Value == "true";
+                        string? len = param.Attribute("len")?.Value;
+
+                        parameters.Add(new Parameter()
+                        {
+                            Name = paramName,
+                            OriginalName = paramName,
+                            Type = paramTypeStr,
+                            Length = len,
+
+                            Optional = optional,
+                            ExternSync = externsync,
+                        });
+                    }
+
+                    functionPointerTypes.Add( new FunctionPoiner() { Name = fnptrName, Parameters = parameters, ReturnType = returnTypeStr });
                 }
                 else
                 {
@@ -251,7 +285,7 @@ namespace VkGenerator.Parsing
                 }
             }
 
-            return new TypeData(defines, structs, enumNames, bitmaskNames, baseTypes, handleTypes, externalTypes);
+            return new TypeData(defines, structs, enumNames, bitmaskNames, baseTypes, handleTypes, functionPointerTypes, externalTypes);
         }
 
         internal enum TypeSuffix
@@ -441,7 +475,7 @@ namespace VkGenerator.Parsing
                             };
 
                             string value = @const.Attribute("value")?.Value ?? throw new Exception();
-                            value = value.TrimStart('(').TrimEnd(')', 'U', 'L', 'F');
+                            value = value.TrimStart('(').TrimEnd(')', 'U', 'L', 'F', 'f');
 
                             bool invert = value.StartsWith('~');
                             if (invert)
@@ -640,7 +674,7 @@ namespace VkGenerator.Parsing
                     foreach (XElement param in command.Elements("param"))
                     {
                         // FIXME: We don't do vulkansc for now...
-                        if (param.Attribute("api")?.Value == "vulkansc")
+                        if (param.Attribute("api")?.Value.Split(',').Contains("vulkansc") ?? false)
                             continue;
 
                         string paramName = param.Element("name")?.Value ?? throw new Exception();

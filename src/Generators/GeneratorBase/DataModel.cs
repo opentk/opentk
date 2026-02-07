@@ -241,6 +241,20 @@ namespace GeneratorBase
         public VersionInfo? VersionInfo { get; set; }
     }
 
+    public record class FunctionPoiner : IReferable
+    {
+        // We don't need function pointer aliases yet. - Noggin_bops 2026-02-07
+        // public string? Alias { get; init; }
+
+        public required string Name { get; init; }
+        public required List<Parameter> Parameters { get; init; }
+        public required string ReturnType { get; init; }
+
+        public List<Function> ReferencedBy { get; init; } = [];
+
+        public BaseCSType? StrongReturnType { get; set; }
+        public VersionInfo? VersionInfo { get; set; }
+    }
 
     public enum ConstantType
     {

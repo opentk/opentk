@@ -25,7 +25,7 @@ namespace OpenTK.Graphics.Vulkan
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_MAX_MEMORY_HEAPS.html" /></remarks>
         public const uint MaxMemoryHeaps = 16;
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_LOD_CLAMP_NONE.html" /></remarks>
-        public const float LodClampNone = 1000;
+        public const float LodClampNone = 1000f;
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_REMAINING_MIP_LEVELS.html" /></remarks>
         public const uint RemainingMipLevels = 4294967295;
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_REMAINING_ARRAY_LAYERS.html" /></remarks>
@@ -78,6 +78,12 @@ namespace OpenTK.Graphics.Vulkan
         public const uint MaxPhysicalDeviceDataGraphOperationSetNameSizeArm = 128;
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_DATA_GRAPH_MODEL_TOOLCHAIN_VERSION_LENGTH_QCOM.html" /></remarks>
         public const uint DataGraphModelToolchainVersionLengthQcom = 3;
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_COMPUTE_OCCUPANCY_PRIORITY_LOW_NV.html" /></remarks>
+        public const float ComputeOccupancyPriorityLowNv = 0.25f;
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_COMPUTE_OCCUPANCY_PRIORITY_NORMAL_NV.html" /></remarks>
+        public const float ComputeOccupancyPriorityNormalNv = 0.5f;
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_COMPUTE_OCCUPANCY_PRIORITY_HIGH_NV.html" /></remarks>
+        public const float ComputeOccupancyPriorityHighNv = 0.75f;
         /// <summary>[from: <b>VK_KHR_surface</b>]</summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_SURFACE_SPEC_VERSION.html" /></remarks>
         public const uint KhrSurfaceSpecVersion = 25;
@@ -224,7 +230,7 @@ namespace OpenTK.Graphics.Vulkan
         public const string NvxBinaryImportExtensionName = "VK_NVX_binary_import";
         /// <summary>[from: <b>VK_NVX_image_view_handle</b>]</summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_NVX_IMAGE_VIEW_HANDLE_SPEC_VERSION.html" /></remarks>
-        public const uint NvxImageViewHandleSpecVersion = 3;
+        public const uint NvxImageViewHandleSpecVersion = 4;
         /// <summary>[from: <b>VK_NVX_image_view_handle</b>]</summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_NVX_IMAGE_VIEW_HANDLE_EXTENSION_NAME.html" /></remarks>
         public const string NvxImageViewHandleExtensionName = "VK_NVX_image_view_handle";
@@ -750,6 +756,12 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[from: <b>VK_AMDX_shader_enqueue</b>]</summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_AMDX_SHADER_ENQUEUE_EXTENSION_NAME.html" /></remarks>
         public const string AmdxShaderEnqueueExtensionName = "VK_AMDX_shader_enqueue";
+        /// <summary>[from: <b>VK_EXT_descriptor_heap</b>]</summary>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_DESCRIPTOR_HEAP_SPEC_VERSION.html" /></remarks>
+        public const uint ExtDescriptorHeapSpecVersion = 1;
+        /// <summary>[from: <b>VK_EXT_descriptor_heap</b>]</summary>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_DESCRIPTOR_HEAP_EXTENSION_NAME.html" /></remarks>
+        public const string ExtDescriptorHeapExtensionName = "VK_EXT_descriptor_heap";
         /// <summary>[from: <b>VK_AMD_mixed_attachment_samples</b>]</summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_AMD_MIXED_ATTACHMENT_SAMPLES_SPEC_VERSION.html" /></remarks>
         public const uint AmdMixedAttachmentSamplesSpecVersion = 1;
@@ -942,6 +954,12 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[from: <b>VK_QCOM_render_pass_shader_resolve</b>]</summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_QCOM_RENDER_PASS_SHADER_RESOLVE_EXTENSION_NAME.html" /></remarks>
         public const string QcomRenderPassShaderResolveExtensionName = "VK_QCOM_render_pass_shader_resolve";
+        /// <summary>[from: <b>VK_QCOM_cooperative_matrix_conversion</b>]</summary>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_QCOM_COOPERATIVE_MATRIX_CONVERSION_SPEC_VERSION.html" /></remarks>
+        public const uint QcomCooperativeMatrixConversionSpecVersion = 1;
+        /// <summary>[from: <b>VK_QCOM_cooperative_matrix_conversion</b>]</summary>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_QCOM_COOPERATIVE_MATRIX_CONVERSION_EXTENSION_NAME.html" /></remarks>
+        public const string QcomCooperativeMatrixConversionExtensionName = "VK_QCOM_cooperative_matrix_conversion";
         /// <summary>[from: <b>VK_EXT_global_priority</b>]</summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_GLOBAL_PRIORITY_SPEC_VERSION.html" /></remarks>
         public const uint ExtGlobalPrioritySpecVersion = 2;
@@ -1166,7 +1184,7 @@ namespace OpenTK.Graphics.Vulkan
         public const string ExtMetalSurfaceExtensionName = "VK_EXT_metal_surface";
         /// <summary>[from: <b>VK_EXT_fragment_density_map</b>]</summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_FRAGMENT_DENSITY_MAP_SPEC_VERSION.html" /></remarks>
-        public const uint ExtFragmentDensityMapSpecVersion = 2;
+        public const uint ExtFragmentDensityMapSpecVersion = 3;
         /// <summary>[from: <b>VK_EXT_fragment_density_map</b>]</summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_FRAGMENT_DENSITY_MAP_EXTENSION_NAME.html" /></remarks>
         public const string ExtFragmentDensityMapExtensionName = "VK_EXT_fragment_density_map";
@@ -1494,6 +1512,12 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[from: <b>VK_EXT_custom_border_color</b>]</summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_CUSTOM_BORDER_COLOR_EXTENSION_NAME.html" /></remarks>
         public const string ExtCustomBorderColorExtensionName = "VK_EXT_custom_border_color";
+        /// <summary>[from: <b>VK_EXT_texture_compression_astc_3d</b>]</summary>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_TEXTURE_COMPRESSION_ASTC_3D_SPEC_VERSION.html" /></remarks>
+        public const uint ExtTextureCompressionAstc3dSpecVersion = 1;
+        /// <summary>[from: <b>VK_EXT_texture_compression_astc_3d</b>]</summary>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_TEXTURE_COMPRESSION_ASTC_3D_EXTENSION_NAME.html" /></remarks>
+        public const string ExtTextureCompressionAstc3dExtensionName = "VK_EXT_texture_compression_astc_3d";
         /// <summary>[from: <b>VK_GOOGLE_user_type</b>]</summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_GOOGLE_USER_TYPE_SPEC_VERSION.html" /></remarks>
         public const uint GoogleUserTypeSpecVersion = 1;
@@ -2114,7 +2138,7 @@ namespace OpenTK.Graphics.Vulkan
         public const string LunargDirectDriverLoadingExtensionName = "VK_LUNARG_direct_driver_loading";
         /// <summary>[from: <b>VK_ARM_tensors</b>]</summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_ARM_TENSORS_SPEC_VERSION.html" /></remarks>
-        public const uint ArmTensorsSpecVersion = 1;
+        public const uint ArmTensorsSpecVersion = 2;
         /// <summary>[from: <b>VK_ARM_tensors</b>]</summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_ARM_TENSORS_EXTENSION_NAME.html" /></remarks>
         public const string ArmTensorsExtensionName = "VK_ARM_tensors";
@@ -2292,6 +2316,12 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[from: <b>VK_EXT_dynamic_rendering_unused_attachments</b>]</summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_DYNAMIC_RENDERING_UNUSED_ATTACHMENTS_EXTENSION_NAME.html" /></remarks>
         public const string ExtDynamicRenderingUnusedAttachmentsExtensionName = "VK_EXT_dynamic_rendering_unused_attachments";
+        /// <summary>[from: <b>VK_KHR_internally_synchronized_queues</b>]</summary>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_INTERNALLY_SYNCHRONIZED_QUEUES_SPEC_VERSION.html" /></remarks>
+        public const uint KhrInternallySynchronizedQueuesSpecVersion = 1;
+        /// <summary>[from: <b>VK_KHR_internally_synchronized_queues</b>]</summary>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_INTERNALLY_SYNCHRONIZED_QUEUES_EXTENSION_NAME.html" /></remarks>
+        public const string KhrInternallySynchronizedQueuesExtensionName = "VK_KHR_internally_synchronized_queues";
         /// <summary>[from: <b>VK_NV_low_latency2</b>]</summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_NV_LOW_LATENCY_2_SPEC_VERSION.html" /></remarks>
         public const uint NvLowLatency2SpecVersion = 2;
@@ -2580,6 +2610,12 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[from: <b>VK_KHR_shader_fma</b>]</summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_SHADER_FMA_EXTENSION_NAME.html" /></remarks>
         public const string KhrShaderFmaExtensionName = "VK_KHR_shader_fma";
+        /// <summary>[from: <b>VK_NV_push_constant_bank</b>]</summary>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_NV_PUSH_CONSTANT_BANK_SPEC_VERSION.html" /></remarks>
+        public const uint NvPushConstantBankSpecVersion = 1;
+        /// <summary>[from: <b>VK_NV_push_constant_bank</b>]</summary>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_NV_PUSH_CONSTANT_BANK_EXTENSION_NAME.html" /></remarks>
+        public const string NvPushConstantBankExtensionName = "VK_NV_push_constant_bank";
         /// <summary>[from: <b>VK_EXT_ray_tracing_invocation_reorder</b>]</summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_RAY_TRACING_INVOCATION_REORDER_SPEC_VERSION.html" /></remarks>
         public const uint ExtRayTracingInvocationReorderSpecVersion = 1;
@@ -2610,12 +2646,6 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[from: <b>VK_OHOS_surface</b>]</summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_OHOS_SURFACE_EXTENSION_NAME.html" /></remarks>
         public const string OhosSurfaceExtensionName = "VK_OHOS_surface";
-        /// <summary>[from: <b>VK_OHOS_native_buffer</b>]</summary>
-        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_OHOS_NATIVE_BUFFER_SPEC_VERSION.html" /></remarks>
-        public const uint OhosNativeBufferSpecVersion = 1;
-        /// <summary>[from: <b>VK_OHOS_native_buffer</b>]</summary>
-        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_OHOS_NATIVE_BUFFER_EXTENSION_NAME.html" /></remarks>
-        public const string OhosNativeBufferExtensionName = "VK_OHOS_native_buffer";
         /// <summary>[from: <b>VK_HUAWEI_hdr_vivid</b>]</summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_HUAWEI_HDR_VIVID_SPEC_VERSION.html" /></remarks>
         public const uint HuaweiHdrVividSpecVersion = 1;
@@ -2724,6 +2754,12 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[from: <b>VK_KHR_maintenance10</b>]</summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_MAINTENANCE_10_EXTENSION_NAME.html" /></remarks>
         public const string KhrMaintenance10ExtensionName = "VK_KHR_maintenance10";
+        /// <summary>[from: <b>VK_EXT_shader_long_vector</b>]</summary>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_SHADER_LONG_VECTOR_SPEC_VERSION.html" /></remarks>
+        public const uint ExtShaderLongVectorSpecVersion = 1;
+        /// <summary>[from: <b>VK_EXT_shader_long_vector</b>]</summary>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_SHADER_LONG_VECTOR_EXTENSION_NAME.html" /></remarks>
+        public const string ExtShaderLongVectorExtensionName = "VK_EXT_shader_long_vector";
         /// <summary>[from: <b>VK_SEC_pipeline_cache_incremental_mode</b>]</summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_SEC_PIPELINE_CACHE_INCREMENTAL_MODE_SPEC_VERSION.html" /></remarks>
         public const uint SecPipelineCacheIncrementalModeSpecVersion = 1;
@@ -2736,6 +2772,24 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[from: <b>VK_EXT_shader_uniform_buffer_unsized_array</b>]</summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_SHADER_UNIFORM_BUFFER_UNSIZED_ARRAY_EXTENSION_NAME.html" /></remarks>
         public const string ExtShaderUniformBufferUnsizedArrayExtensionName = "VK_EXT_shader_uniform_buffer_unsized_array";
+        /// <summary>[from: <b>VK_NV_compute_occupancy_priority</b>]</summary>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_NV_COMPUTE_OCCUPANCY_PRIORITY_SPEC_VERSION.html" /></remarks>
+        public const uint NvComputeOccupancyPrioritySpecVersion = 1;
+        /// <summary>[from: <b>VK_NV_compute_occupancy_priority</b>]</summary>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_NV_COMPUTE_OCCUPANCY_PRIORITY_EXTENSION_NAME.html" /></remarks>
+        public const string NvComputeOccupancyPriorityExtensionName = "VK_NV_compute_occupancy_priority";
+        /// <summary>[from: <b>VK_EXT_shader_subgroup_partitioned</b>]</summary>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_SHADER_SUBGROUP_PARTITIONED_SPEC_VERSION.html" /></remarks>
+        public const uint ExtShaderSubgroupPartitionedSpecVersion = 1;
+        /// <summary>[from: <b>VK_EXT_shader_subgroup_partitioned</b>]</summary>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_SHADER_SUBGROUP_PARTITIONED_EXTENSION_NAME.html" /></remarks>
+        public const string ExtShaderSubgroupPartitionedExtensionName = "VK_EXT_shader_subgroup_partitioned";
+        /// <summary>[from: <b>VK_SEC_ubm_surface</b>]</summary>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_SEC_UBM_SURFACE_SPEC_VERSION.html" /></remarks>
+        public const uint SecUbmSurfaceSpecVersion = 1;
+        /// <summary>[from: <b>VK_SEC_ubm_surface</b>]</summary>
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_SEC_UBM_SURFACE_EXTENSION_NAME.html" /></remarks>
+        public const string SecUbmSurfaceExtensionName = "VK_SEC_ubm_surface";
     }
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
 }

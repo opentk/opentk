@@ -128,7 +128,9 @@ namespace OpenTK.Graphics.Vulkan
             this.buildScratchSize = buildScratchSize;
         }
     }
-    /// <summary><b>[requires: VK_EXT_descriptor_buffer]</b> Used by <see cref="Vk.GetAccelerationStructureOpaqueCaptureDescriptorDataEXT"/></summary>
+    /// <summary><b>[requires: VK_EXT_descriptor_buffer]</b> 
+    /// <br/><b>[deprecated by: VK_EXT_descriptor_heap]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#legacy-descriptor-sets" />
+    /// Used by <see cref="Vk.GetAccelerationStructureOpaqueCaptureDescriptorDataEXT"/></summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkAccelerationStructureCaptureDescriptorDataInfoEXT.html" /></remarks>
     public unsafe struct VkAccelerationStructureCaptureDescriptorDataInfoEXT
     {
@@ -744,13 +746,13 @@ namespace OpenTK.Graphics.Vulkan
     public unsafe struct VkAllocationCallbacks
     {
         public void* pUserData;
-        public delegate* unmanaged[Cdecl]<void*, nuint, nuint, VkSystemAllocationScope, void*> pfnAllocation;
-        public delegate* unmanaged[Cdecl]<void*, void*, nuint, nuint, VkSystemAllocationScope, void*> pfnReallocation;
+        public delegate* unmanaged[Cdecl]<void*, nuint, nuint, VkSystemAllocationScope, void> pfnAllocation;
+        public delegate* unmanaged[Cdecl]<void*, void*, nuint, nuint, VkSystemAllocationScope, void> pfnReallocation;
         public delegate* unmanaged[Cdecl]<void*, void*, void> pfnFree;
         public delegate* unmanaged[Cdecl]<void*, nuint, VkInternalAllocationType, VkSystemAllocationScope, void> pfnInternalAllocation;
         public delegate* unmanaged[Cdecl]<void*, nuint, VkInternalAllocationType, VkSystemAllocationScope, void> pfnInternalFree;
         public VkAllocationCallbacks() { }
-        public VkAllocationCallbacks(void* pUserData, delegate* unmanaged[Cdecl]<void*, nuint, nuint, VkSystemAllocationScope, void*> pfnAllocation, delegate* unmanaged[Cdecl]<void*, void*, nuint, nuint, VkSystemAllocationScope, void*> pfnReallocation, delegate* unmanaged[Cdecl]<void*, void*, void> pfnFree, delegate* unmanaged[Cdecl]<void*, nuint, VkInternalAllocationType, VkSystemAllocationScope, void> pfnInternalAllocation, delegate* unmanaged[Cdecl]<void*, nuint, VkInternalAllocationType, VkSystemAllocationScope, void> pfnInternalFree)
+        public VkAllocationCallbacks(void* pUserData, delegate* unmanaged[Cdecl]<void*, nuint, nuint, VkSystemAllocationScope, void> pfnAllocation, delegate* unmanaged[Cdecl]<void*, void*, nuint, nuint, VkSystemAllocationScope, void> pfnReallocation, delegate* unmanaged[Cdecl]<void*, void*, void> pfnFree, delegate* unmanaged[Cdecl]<void*, nuint, VkInternalAllocationType, VkSystemAllocationScope, void> pfnInternalAllocation, delegate* unmanaged[Cdecl]<void*, nuint, VkInternalAllocationType, VkSystemAllocationScope, void> pfnInternalFree)
         {
             this.pUserData = pUserData;
             this.pfnAllocation = pfnAllocation;
@@ -1497,6 +1499,25 @@ namespace OpenTK.Graphics.Vulkan
             this.pDynamicOffsets = pDynamicOffsets;
         }
     }
+    /// <summary><b>[requires: VK_EXT_descriptor_heap]</b> Used by <see cref="Vk.CmdBindResourceHeapEXT"/>, <see cref="Vk.CmdBindSamplerHeapEXT"/></summary>
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkBindHeapInfoEXT.html" /></remarks>
+    public unsafe struct VkBindHeapInfoEXT
+    {
+        public VkStructureType sType = VkStructureType.StructureTypeBindHeapInfoExt;
+        public void* pNext;
+        public VkDeviceAddressRangeEXT heapRange;
+        public ulong reservedRangeOffset;
+        public ulong reservedRangeSize;
+        public VkBindHeapInfoEXT() { }
+        public VkBindHeapInfoEXT(VkStructureType sType, void* pNext, VkDeviceAddressRangeEXT heapRange, ulong reservedRangeOffset, ulong reservedRangeSize)
+        {
+            this.sType = sType;
+            this.pNext = pNext;
+            this.heapRange = heapRange;
+            this.reservedRangeOffset = reservedRangeOffset;
+            this.reservedRangeSize = reservedRangeSize;
+        }
+    }
     /// <summary><b>[requires: v1.1]</b> </summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkBindImageMemoryDeviceGroupInfo.html" /></remarks>
     public unsafe struct VkBindImageMemoryDeviceGroupInfo
@@ -1878,7 +1899,9 @@ namespace OpenTK.Graphics.Vulkan
             this.filter = filter;
         }
     }
-    /// <summary><b>[requires: VK_EXT_descriptor_buffer]</b> Used by <see cref="Vk.GetBufferOpaqueCaptureDescriptorDataEXT"/></summary>
+    /// <summary><b>[requires: VK_EXT_descriptor_buffer]</b> 
+    /// <br/><b>[deprecated by: VK_EXT_descriptor_heap]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#legacy-descriptor-sets" />
+    /// Used by <see cref="Vk.GetBufferOpaqueCaptureDescriptorDataEXT"/></summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkBufferCaptureDescriptorDataInfoEXT.html" /></remarks>
     public unsafe struct VkBufferCaptureDescriptorDataInfoEXT
     {
@@ -3022,6 +3045,23 @@ namespace OpenTK.Graphics.Vulkan
             this.conditionalRenderingEnable = conditionalRenderingEnable;
         }
     }
+    /// <summary><b>[requires: VK_EXT_descriptor_heap]</b> </summary>
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkCommandBufferInheritanceDescriptorHeapInfoEXT.html" /></remarks>
+    public unsafe struct VkCommandBufferInheritanceDescriptorHeapInfoEXT
+    {
+        public VkStructureType sType = VkStructureType.StructureTypeCommandBufferInheritanceDescriptorHeapInfoExt;
+        public void* pNext;
+        public VkBindHeapInfoEXT* pSamplerHeapBindInfo;
+        public VkBindHeapInfoEXT* pResourceHeapBindInfo;
+        public VkCommandBufferInheritanceDescriptorHeapInfoEXT() { }
+        public VkCommandBufferInheritanceDescriptorHeapInfoEXT(VkStructureType sType, void* pNext, VkBindHeapInfoEXT* pSamplerHeapBindInfo, VkBindHeapInfoEXT* pResourceHeapBindInfo)
+        {
+            this.sType = sType;
+            this.pNext = pNext;
+            this.pSamplerHeapBindInfo = pSamplerHeapBindInfo;
+            this.pResourceHeapBindInfo = pResourceHeapBindInfo;
+        }
+    }
     /// <summary><b>[requires: v1.0]</b> </summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkCommandBufferInheritanceInfo.html" /></remarks>
     public unsafe struct VkCommandBufferInheritanceInfo
@@ -3239,6 +3279,23 @@ namespace OpenTK.Graphics.Vulkan
             this.g = g;
             this.b = b;
             this.a = a;
+        }
+    }
+    /// <summary><b>[requires: VK_NV_compute_occupancy_priority]</b> Used by <see cref="Vk.CmdSetComputeOccupancyPriorityNV"/></summary>
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkComputeOccupancyPriorityParametersNV.html" /></remarks>
+    public unsafe struct VkComputeOccupancyPriorityParametersNV
+    {
+        public VkStructureType sType = VkStructureType.StructureTypeComputeOccupancyPriorityParametersNv;
+        public void* pNext;
+        public float occupancyPriority;
+        public float occupancyThrottling;
+        public VkComputeOccupancyPriorityParametersNV() { }
+        public VkComputeOccupancyPriorityParametersNV(VkStructureType sType, void* pNext, float occupancyPriority, float occupancyThrottling)
+        {
+            this.sType = sType;
+            this.pNext = pNext;
+            this.occupancyPriority = occupancyPriority;
+            this.occupancyThrottling = occupancyThrottling;
         }
     }
     /// <summary><b>[requires: v1.0]</b> Used by <see cref="Vk.CreateComputePipelines"/>, <see cref="Vk.GetPipelineIndirectMemoryRequirementsNV"/></summary>
@@ -3632,7 +3689,9 @@ namespace OpenTK.Graphics.Vulkan
             this.transform = transform;
         }
     }
-    /// <summary><b>[requires: v1.0]</b> Used by <see cref="Vk.UpdateDescriptorSets"/></summary>
+    /// <summary><b>[requires: v1.0]</b> 
+    /// <br/><b>[deprecated by: VK_EXT_descriptor_heap]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#legacy-descriptor-sets" />
+    /// Used by <see cref="Vk.UpdateDescriptorSets"/></summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkCopyDescriptorSet.html" /></remarks>
     public unsafe struct VkCopyDescriptorSet
     {
@@ -4985,7 +5044,9 @@ namespace OpenTK.Graphics.Vulkan
             this.maxDepthClamp = maxDepthClamp;
         }
     }
-    /// <summary><b>[requires: VK_EXT_descriptor_buffer]</b> </summary>
+    /// <summary><b>[requires: VK_EXT_descriptor_buffer]</b> 
+    /// <br/><b>[deprecated by: VK_EXT_descriptor_heap]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#legacy-descriptor-sets" />
+    /// </summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDescriptorAddressInfoEXT.html" /></remarks>
     public unsafe struct VkDescriptorAddressInfoEXT
     {
@@ -5004,7 +5065,9 @@ namespace OpenTK.Graphics.Vulkan
             this.format = format;
         }
     }
-    /// <summary><b>[requires: VK_EXT_descriptor_buffer]</b> Used by <see cref="Vk.CmdBindDescriptorBuffersEXT"/></summary>
+    /// <summary><b>[requires: VK_EXT_descriptor_buffer]</b> 
+    /// <br/><b>[deprecated by: VK_EXT_descriptor_heap]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#legacy-descriptor-sets" />
+    /// Used by <see cref="Vk.CmdBindDescriptorBuffersEXT"/></summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDescriptorBufferBindingInfoEXT.html" /></remarks>
     public unsafe struct VkDescriptorBufferBindingInfoEXT
     {
@@ -5021,7 +5084,9 @@ namespace OpenTK.Graphics.Vulkan
             this.usage = usage;
         }
     }
-    /// <summary><b>[requires: VK_EXT_descriptor_buffer]</b> </summary>
+    /// <summary><b>[requires: VK_EXT_descriptor_buffer]</b> 
+    /// <br/><b>[deprecated by: VK_EXT_descriptor_heap]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#legacy-descriptor-sets" />
+    /// </summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDescriptorBufferBindingPushDescriptorBufferHandleEXT.html" /></remarks>
     public unsafe struct VkDescriptorBufferBindingPushDescriptorBufferHandleEXT
     {
@@ -5036,7 +5101,9 @@ namespace OpenTK.Graphics.Vulkan
             this.buffer = buffer;
         }
     }
-    /// <summary><b>[requires: v1.0]</b> </summary>
+    /// <summary><b>[requires: v1.0]</b> 
+    /// <br/><b>[deprecated by: VK_EXT_descriptor_heap]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#legacy-descriptor-sets" />
+    /// </summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDescriptorBufferInfo.html" /></remarks>
     public unsafe struct VkDescriptorBufferInfo
     {
@@ -5051,7 +5118,9 @@ namespace OpenTK.Graphics.Vulkan
             this.range = range;
         }
     }
-    /// <summary><b>[requires: VK_EXT_descriptor_buffer]</b> </summary>
+    /// <summary><b>[requires: VK_EXT_descriptor_buffer]</b> 
+    /// <br/><b>[deprecated by: VK_EXT_descriptor_heap]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#legacy-descriptor-sets" />
+    /// </summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDescriptorDataEXT.html" /></remarks>
     [StructLayout(LayoutKind.Explicit)]
     public unsafe struct VkDescriptorDataEXT
@@ -5078,7 +5147,9 @@ namespace OpenTK.Graphics.Vulkan
         public ulong accelerationStructure;
         public VkDescriptorDataEXT() { }
     }
-    /// <summary><b>[requires: VK_EXT_descriptor_buffer]</b> Used by <see cref="Vk.GetDescriptorEXT"/></summary>
+    /// <summary><b>[requires: VK_EXT_descriptor_buffer]</b> 
+    /// <br/><b>[deprecated by: VK_EXT_descriptor_heap]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#legacy-descriptor-sets" />
+    /// Used by <see cref="Vk.GetDescriptorEXT"/></summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDescriptorGetInfoEXT.html" /></remarks>
     public unsafe struct VkDescriptorGetInfoEXT
     {
@@ -5110,7 +5181,9 @@ namespace OpenTK.Graphics.Vulkan
             this.tensorView = tensorView;
         }
     }
-    /// <summary><b>[requires: v1.0]</b> </summary>
+    /// <summary><b>[requires: v1.0]</b> 
+    /// <br/><b>[deprecated by: VK_EXT_descriptor_heap]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#legacy-descriptor-sets" />
+    /// </summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDescriptorImageInfo.html" /></remarks>
     public unsafe struct VkDescriptorImageInfo
     {
@@ -5125,7 +5198,203 @@ namespace OpenTK.Graphics.Vulkan
             this.imageLayout = imageLayout;
         }
     }
-    /// <summary><b>[requires: v1.0]</b> Used by <see cref="Vk.CreateDescriptorPool"/></summary>
+    /// <summary><b>[requires: VK_EXT_descriptor_heap]</b> </summary>
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDescriptorMappingSourceConstantOffsetEXT.html" /></remarks>
+    public unsafe struct VkDescriptorMappingSourceConstantOffsetEXT
+    {
+        public uint heapOffset;
+        public uint heapArrayStride;
+        public VkSamplerCreateInfo* pEmbeddedSampler;
+        public uint samplerHeapOffset;
+        public uint samplerHeapArrayStride;
+        public VkDescriptorMappingSourceConstantOffsetEXT() { }
+        public VkDescriptorMappingSourceConstantOffsetEXT(uint heapOffset, uint heapArrayStride, VkSamplerCreateInfo* pEmbeddedSampler, uint samplerHeapOffset, uint samplerHeapArrayStride)
+        {
+            this.heapOffset = heapOffset;
+            this.heapArrayStride = heapArrayStride;
+            this.pEmbeddedSampler = pEmbeddedSampler;
+            this.samplerHeapOffset = samplerHeapOffset;
+            this.samplerHeapArrayStride = samplerHeapArrayStride;
+        }
+    }
+    /// <summary><b>[requires: VK_EXT_descriptor_heap]</b> </summary>
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDescriptorMappingSourceDataEXT.html" /></remarks>
+    [StructLayout(LayoutKind.Explicit)]
+    public unsafe struct VkDescriptorMappingSourceDataEXT
+    {
+        [FieldOffset(0)]
+        public VkDescriptorMappingSourceConstantOffsetEXT constantOffset;
+        [FieldOffset(0)]
+        public VkDescriptorMappingSourcePushIndexEXT pushIndex;
+        [FieldOffset(0)]
+        public VkDescriptorMappingSourceIndirectIndexEXT indirectIndex;
+        [FieldOffset(0)]
+        public VkDescriptorMappingSourceIndirectIndexArrayEXT indirectIndexArray;
+        [FieldOffset(0)]
+        public VkDescriptorMappingSourceHeapDataEXT heapData;
+        [FieldOffset(0)]
+        public uint pushDataOffset;
+        [FieldOffset(0)]
+        public uint pushAddressOffset;
+        [FieldOffset(0)]
+        public VkDescriptorMappingSourceIndirectAddressEXT indirectAddress;
+        [FieldOffset(0)]
+        public VkDescriptorMappingSourceShaderRecordIndexEXT shaderRecordIndex;
+        [FieldOffset(0)]
+        public uint shaderRecordDataOffset;
+        [FieldOffset(0)]
+        public uint shaderRecordAddressOffset;
+        public VkDescriptorMappingSourceDataEXT() { }
+    }
+    /// <summary><b>[requires: VK_EXT_descriptor_heap]</b> </summary>
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDescriptorMappingSourceHeapDataEXT.html" /></remarks>
+    public unsafe struct VkDescriptorMappingSourceHeapDataEXT
+    {
+        public uint heapOffset;
+        public uint pushOffset;
+        public VkDescriptorMappingSourceHeapDataEXT() { }
+        public VkDescriptorMappingSourceHeapDataEXT(uint heapOffset, uint pushOffset)
+        {
+            this.heapOffset = heapOffset;
+            this.pushOffset = pushOffset;
+        }
+    }
+    /// <summary><b>[requires: VK_EXT_descriptor_heap]</b> </summary>
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDescriptorMappingSourceIndirectAddressEXT.html" /></remarks>
+    public unsafe struct VkDescriptorMappingSourceIndirectAddressEXT
+    {
+        public uint pushOffset;
+        public uint addressOffset;
+        public VkDescriptorMappingSourceIndirectAddressEXT() { }
+        public VkDescriptorMappingSourceIndirectAddressEXT(uint pushOffset, uint addressOffset)
+        {
+            this.pushOffset = pushOffset;
+            this.addressOffset = addressOffset;
+        }
+    }
+    /// <summary><b>[requires: VK_EXT_descriptor_heap]</b> </summary>
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDescriptorMappingSourceIndirectIndexArrayEXT.html" /></remarks>
+    public unsafe struct VkDescriptorMappingSourceIndirectIndexArrayEXT
+    {
+        public uint heapOffset;
+        public uint pushOffset;
+        public uint addressOffset;
+        public uint heapIndexStride;
+        public VkSamplerCreateInfo* pEmbeddedSampler;
+        public int useCombinedImageSamplerIndex;
+        public uint samplerHeapOffset;
+        public uint samplerPushOffset;
+        public uint samplerAddressOffset;
+        public uint samplerHeapIndexStride;
+        public VkDescriptorMappingSourceIndirectIndexArrayEXT() { }
+        public VkDescriptorMappingSourceIndirectIndexArrayEXT(uint heapOffset, uint pushOffset, uint addressOffset, uint heapIndexStride, VkSamplerCreateInfo* pEmbeddedSampler, int useCombinedImageSamplerIndex, uint samplerHeapOffset, uint samplerPushOffset, uint samplerAddressOffset, uint samplerHeapIndexStride)
+        {
+            this.heapOffset = heapOffset;
+            this.pushOffset = pushOffset;
+            this.addressOffset = addressOffset;
+            this.heapIndexStride = heapIndexStride;
+            this.pEmbeddedSampler = pEmbeddedSampler;
+            this.useCombinedImageSamplerIndex = useCombinedImageSamplerIndex;
+            this.samplerHeapOffset = samplerHeapOffset;
+            this.samplerPushOffset = samplerPushOffset;
+            this.samplerAddressOffset = samplerAddressOffset;
+            this.samplerHeapIndexStride = samplerHeapIndexStride;
+        }
+    }
+    /// <summary><b>[requires: VK_EXT_descriptor_heap]</b> </summary>
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDescriptorMappingSourceIndirectIndexEXT.html" /></remarks>
+    public unsafe struct VkDescriptorMappingSourceIndirectIndexEXT
+    {
+        public uint heapOffset;
+        public uint pushOffset;
+        public uint addressOffset;
+        public uint heapIndexStride;
+        public uint heapArrayStride;
+        public VkSamplerCreateInfo* pEmbeddedSampler;
+        public int useCombinedImageSamplerIndex;
+        public uint samplerHeapOffset;
+        public uint samplerPushOffset;
+        public uint samplerAddressOffset;
+        public uint samplerHeapIndexStride;
+        public uint samplerHeapArrayStride;
+        public VkDescriptorMappingSourceIndirectIndexEXT() { }
+        public VkDescriptorMappingSourceIndirectIndexEXT(uint heapOffset, uint pushOffset, uint addressOffset, uint heapIndexStride, uint heapArrayStride, VkSamplerCreateInfo* pEmbeddedSampler, int useCombinedImageSamplerIndex, uint samplerHeapOffset, uint samplerPushOffset, uint samplerAddressOffset, uint samplerHeapIndexStride, uint samplerHeapArrayStride)
+        {
+            this.heapOffset = heapOffset;
+            this.pushOffset = pushOffset;
+            this.addressOffset = addressOffset;
+            this.heapIndexStride = heapIndexStride;
+            this.heapArrayStride = heapArrayStride;
+            this.pEmbeddedSampler = pEmbeddedSampler;
+            this.useCombinedImageSamplerIndex = useCombinedImageSamplerIndex;
+            this.samplerHeapOffset = samplerHeapOffset;
+            this.samplerPushOffset = samplerPushOffset;
+            this.samplerAddressOffset = samplerAddressOffset;
+            this.samplerHeapIndexStride = samplerHeapIndexStride;
+            this.samplerHeapArrayStride = samplerHeapArrayStride;
+        }
+    }
+    /// <summary><b>[requires: VK_EXT_descriptor_heap]</b> </summary>
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDescriptorMappingSourcePushIndexEXT.html" /></remarks>
+    public unsafe struct VkDescriptorMappingSourcePushIndexEXT
+    {
+        public uint heapOffset;
+        public uint pushOffset;
+        public uint heapIndexStride;
+        public uint heapArrayStride;
+        public VkSamplerCreateInfo* pEmbeddedSampler;
+        public int useCombinedImageSamplerIndex;
+        public uint samplerHeapOffset;
+        public uint samplerPushOffset;
+        public uint samplerHeapIndexStride;
+        public uint samplerHeapArrayStride;
+        public VkDescriptorMappingSourcePushIndexEXT() { }
+        public VkDescriptorMappingSourcePushIndexEXT(uint heapOffset, uint pushOffset, uint heapIndexStride, uint heapArrayStride, VkSamplerCreateInfo* pEmbeddedSampler, int useCombinedImageSamplerIndex, uint samplerHeapOffset, uint samplerPushOffset, uint samplerHeapIndexStride, uint samplerHeapArrayStride)
+        {
+            this.heapOffset = heapOffset;
+            this.pushOffset = pushOffset;
+            this.heapIndexStride = heapIndexStride;
+            this.heapArrayStride = heapArrayStride;
+            this.pEmbeddedSampler = pEmbeddedSampler;
+            this.useCombinedImageSamplerIndex = useCombinedImageSamplerIndex;
+            this.samplerHeapOffset = samplerHeapOffset;
+            this.samplerPushOffset = samplerPushOffset;
+            this.samplerHeapIndexStride = samplerHeapIndexStride;
+            this.samplerHeapArrayStride = samplerHeapArrayStride;
+        }
+    }
+    /// <summary><b>[requires: VK_EXT_descriptor_heap]</b> </summary>
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDescriptorMappingSourceShaderRecordIndexEXT.html" /></remarks>
+    public unsafe struct VkDescriptorMappingSourceShaderRecordIndexEXT
+    {
+        public uint heapOffset;
+        public uint shaderRecordOffset;
+        public uint heapIndexStride;
+        public uint heapArrayStride;
+        public VkSamplerCreateInfo* pEmbeddedSampler;
+        public int useCombinedImageSamplerIndex;
+        public uint samplerHeapOffset;
+        public uint samplerShaderRecordOffset;
+        public uint samplerHeapIndexStride;
+        public uint samplerHeapArrayStride;
+        public VkDescriptorMappingSourceShaderRecordIndexEXT() { }
+        public VkDescriptorMappingSourceShaderRecordIndexEXT(uint heapOffset, uint shaderRecordOffset, uint heapIndexStride, uint heapArrayStride, VkSamplerCreateInfo* pEmbeddedSampler, int useCombinedImageSamplerIndex, uint samplerHeapOffset, uint samplerShaderRecordOffset, uint samplerHeapIndexStride, uint samplerHeapArrayStride)
+        {
+            this.heapOffset = heapOffset;
+            this.shaderRecordOffset = shaderRecordOffset;
+            this.heapIndexStride = heapIndexStride;
+            this.heapArrayStride = heapArrayStride;
+            this.pEmbeddedSampler = pEmbeddedSampler;
+            this.useCombinedImageSamplerIndex = useCombinedImageSamplerIndex;
+            this.samplerHeapOffset = samplerHeapOffset;
+            this.samplerShaderRecordOffset = samplerShaderRecordOffset;
+            this.samplerHeapIndexStride = samplerHeapIndexStride;
+            this.samplerHeapArrayStride = samplerHeapArrayStride;
+        }
+    }
+    /// <summary><b>[requires: v1.0]</b> 
+    /// <br/><b>[deprecated by: VK_EXT_descriptor_heap]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#legacy-descriptor-sets" />
+    /// Used by <see cref="Vk.CreateDescriptorPool"/></summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDescriptorPoolCreateInfo.html" /></remarks>
     public unsafe struct VkDescriptorPoolCreateInfo
     {
@@ -5146,7 +5415,9 @@ namespace OpenTK.Graphics.Vulkan
             this.pPoolSizes = pPoolSizes;
         }
     }
-    /// <summary><b>[requires: v1.3]</b> </summary>
+    /// <summary><b>[requires: v1.3]</b> 
+    /// <br/><b>[deprecated by: VK_EXT_descriptor_heap]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#legacy-descriptor-sets" />
+    /// </summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDescriptorPoolInlineUniformBlockCreateInfo.html" /></remarks>
     public unsafe struct VkDescriptorPoolInlineUniformBlockCreateInfo
     {
@@ -5176,7 +5447,9 @@ namespace OpenTK.Graphics.Vulkan
             this.maxInlineUniformBlockBindings = maxInlineUniformBlockBindings;
         }
     }
-    /// <summary><b>[requires: v1.0]</b> </summary>
+    /// <summary><b>[requires: v1.0]</b> 
+    /// <br/><b>[deprecated by: VK_EXT_descriptor_heap]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#legacy-descriptor-sets" />
+    /// </summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDescriptorPoolSize.html" /></remarks>
     public unsafe struct VkDescriptorPoolSize
     {
@@ -5189,7 +5462,9 @@ namespace OpenTK.Graphics.Vulkan
             this.descriptorCount = descriptorCount;
         }
     }
-    /// <summary><b>[requires: v1.0]</b> Used by <see cref="Vk.AllocateDescriptorSets"/></summary>
+    /// <summary><b>[requires: v1.0]</b> 
+    /// <br/><b>[deprecated by: VK_EXT_descriptor_heap]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#legacy-descriptor-sets" />
+    /// Used by <see cref="Vk.AllocateDescriptorSets"/></summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDescriptorSetAllocateInfo.html" /></remarks>
     public unsafe struct VkDescriptorSetAllocateInfo
     {
@@ -5206,6 +5481,31 @@ namespace OpenTK.Graphics.Vulkan
             this.descriptorPool = descriptorPool;
             this.descriptorSetCount = descriptorSetCount;
             this.pSetLayouts = pSetLayouts;
+        }
+    }
+    /// <summary><b>[requires: VK_EXT_descriptor_heap]</b> </summary>
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDescriptorSetAndBindingMappingEXT.html" /></remarks>
+    public unsafe struct VkDescriptorSetAndBindingMappingEXT
+    {
+        public VkStructureType sType = VkStructureType.StructureTypeDescriptorSetAndBindingMappingExt;
+        public void* pNext;
+        public uint descriptorSet;
+        public uint firstBinding;
+        public uint bindingCount;
+        public VkSpirvResourceTypeFlagBitsEXT resourceMask;
+        public VkDescriptorMappingSourceEXT source;
+        public VkDescriptorMappingSourceDataEXT sourceData;
+        public VkDescriptorSetAndBindingMappingEXT() { }
+        public VkDescriptorSetAndBindingMappingEXT(VkStructureType sType, void* pNext, uint descriptorSet, uint firstBinding, uint bindingCount, VkSpirvResourceTypeFlagBitsEXT resourceMask, VkDescriptorMappingSourceEXT source, VkDescriptorMappingSourceDataEXT sourceData)
+        {
+            this.sType = sType;
+            this.pNext = pNext;
+            this.descriptorSet = descriptorSet;
+            this.firstBinding = firstBinding;
+            this.bindingCount = bindingCount;
+            this.resourceMask = resourceMask;
+            this.source = source;
+            this.sourceData = sourceData;
         }
     }
     /// <summary><b>[requires: VK_VALVE_descriptor_set_host_mapping]</b> Used by <see cref="Vk.GetDescriptorSetLayoutHostMappingInfoVALVE"/></summary>
@@ -5225,7 +5525,9 @@ namespace OpenTK.Graphics.Vulkan
             this.binding = binding;
         }
     }
-    /// <summary><b>[requires: v1.0]</b> </summary>
+    /// <summary><b>[requires: v1.0]</b> 
+    /// <br/><b>[deprecated by: VK_EXT_descriptor_heap]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#legacy-descriptor-sets" />
+    /// </summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDescriptorSetLayoutBinding.html" /></remarks>
     public unsafe struct VkDescriptorSetLayoutBinding
     {
@@ -5244,7 +5546,9 @@ namespace OpenTK.Graphics.Vulkan
             this.pImmutableSamplers = pImmutableSamplers;
         }
     }
-    /// <summary><b>[requires: v1.2]</b> </summary>
+    /// <summary><b>[requires: v1.2]</b> 
+    /// <br/><b>[deprecated by: VK_EXT_descriptor_heap]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#legacy-descriptor-sets" />
+    /// </summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDescriptorSetLayoutBindingFlagsCreateInfo.html" /></remarks>
     public unsafe struct VkDescriptorSetLayoutBindingFlagsCreateInfo
     {
@@ -5278,7 +5582,9 @@ namespace OpenTK.Graphics.Vulkan
             this.pBindingFlags = pBindingFlags;
         }
     }
-    /// <summary><b>[requires: v1.0]</b> Used by <see cref="Vk.CreateDescriptorSetLayout"/>, <see cref="Vk.GetDescriptorSetLayoutSupport"/>, <see cref="Vk.GetDescriptorSetLayoutSupportKHR"/></summary>
+    /// <summary><b>[requires: v1.0]</b> 
+    /// <br/><b>[deprecated by: VK_EXT_descriptor_heap]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#legacy-descriptor-sets" />
+    /// Used by <see cref="Vk.CreateDescriptorSetLayout"/>, <see cref="Vk.GetDescriptorSetLayoutSupport"/>, <see cref="Vk.GetDescriptorSetLayoutSupportKHR"/></summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDescriptorSetLayoutCreateInfo.html" /></remarks>
     public unsafe struct VkDescriptorSetLayoutCreateInfo
     {
@@ -5344,7 +5650,9 @@ namespace OpenTK.Graphics.Vulkan
             this.supported = supported;
         }
     }
-    /// <summary><b>[requires: v1.2]</b> </summary>
+    /// <summary><b>[requires: v1.2]</b> 
+    /// <br/><b>[deprecated by: VK_EXT_descriptor_heap]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#legacy-descriptor-sets" />
+    /// </summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDescriptorSetVariableDescriptorCountAllocateInfo.html" /></remarks>
     public unsafe struct VkDescriptorSetVariableDescriptorCountAllocateInfo
     {
@@ -5527,6 +5835,19 @@ namespace OpenTK.Graphics.Vulkan
             this.baseAddress = baseAddress;
             this.size = size;
             this.bindingType = bindingType;
+        }
+    }
+    /// <summary><b>[requires: VK_EXT_descriptor_heap]</b> </summary>
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDeviceAddressRangeEXT.html" /></remarks>
+    public unsafe struct VkDeviceAddressRangeEXT
+    {
+        public ulong address;
+        public ulong size;
+        public VkDeviceAddressRangeEXT() { }
+        public VkDeviceAddressRangeEXT(ulong address, ulong size)
+        {
+            this.address = address;
+            this.size = size;
         }
     }
     /// <summary><b>[requires: v1.3]</b> Used by <see cref="Vk.GetDeviceBufferMemoryRequirements"/>, <see cref="Vk.GetDeviceBufferMemoryRequirementsKHR"/></summary>
@@ -6399,9 +6720,9 @@ namespace OpenTK.Graphics.Vulkan
         public VkStructureType sType = VkStructureType.StructureTypeDirectDriverLoadingInfoLunarg;
         public void* pNext;
         public VkDirectDriverLoadingFlagsLUNARG flags;
-        public delegate* unmanaged[Cdecl]<VkInstance, byte*, IntPtr> pfnGetInstanceProcAddr;
+        public delegate* unmanaged[Cdecl]<VkInstance, byte*, delegate* unmanaged[Cdecl]<void>> pfnGetInstanceProcAddr;
         public VkDirectDriverLoadingInfoLUNARG() { }
-        public VkDirectDriverLoadingInfoLUNARG(VkStructureType sType, void* pNext, VkDirectDriverLoadingFlagsLUNARG flags, delegate* unmanaged[Cdecl]<VkInstance, byte*, IntPtr> pfnGetInstanceProcAddr)
+        public VkDirectDriverLoadingInfoLUNARG(VkStructureType sType, void* pNext, VkDirectDriverLoadingFlagsLUNARG flags, delegate* unmanaged[Cdecl]<VkInstance, byte*, delegate* unmanaged[Cdecl]<void>> pfnGetInstanceProcAddr)
         {
             this.sType = sType;
             this.pNext = pNext;
@@ -8642,6 +8963,32 @@ namespace OpenTK.Graphics.Vulkan
             this.flags = flags;
         }
     }
+    /// <summary><b>[requires: VK_EXT_descriptor_heap]</b> </summary>
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkHostAddressRangeConstEXT.html" /></remarks>
+    public unsafe struct VkHostAddressRangeConstEXT
+    {
+        public void* address;
+        public nuint size;
+        public VkHostAddressRangeConstEXT() { }
+        public VkHostAddressRangeConstEXT(void* address, nuint size)
+        {
+            this.address = address;
+            this.size = size;
+        }
+    }
+    /// <summary><b>[requires: VK_EXT_descriptor_heap]</b> Used by <see cref="Vk.GetImageOpaqueCaptureDataEXT"/>, <see cref="Vk.GetTensorOpaqueCaptureDataARM"/>, <see cref="Vk.WriteResourceDescriptorsEXT"/>, ...</summary>
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkHostAddressRangeEXT.html" /></remarks>
+    public unsafe struct VkHostAddressRangeEXT
+    {
+        public void* address;
+        public nuint size;
+        public VkHostAddressRangeEXT() { }
+        public VkHostAddressRangeEXT(void* address, nuint size)
+        {
+            this.address = address;
+            this.size = size;
+        }
+    }
     /// <summary><b>[requires: v1.4]</b> </summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkHostImageCopyDevicePerformanceQuery.html" /></remarks>
     public unsafe struct VkHostImageCopyDevicePerformanceQuery
@@ -8797,7 +9144,9 @@ namespace OpenTK.Graphics.Vulkan
         public dstOffsetsInlineArray1 dstOffsets;
         public VkImageBlit2KHR() { }
     }
-    /// <summary><b>[requires: VK_EXT_descriptor_buffer]</b> Used by <see cref="Vk.GetImageOpaqueCaptureDescriptorDataEXT"/></summary>
+    /// <summary><b>[requires: VK_EXT_descriptor_buffer]</b> 
+    /// <br/><b>[deprecated by: VK_EXT_descriptor_heap]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#legacy-descriptor-sets" />
+    /// Used by <see cref="Vk.GetImageOpaqueCaptureDescriptorDataEXT"/></summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkImageCaptureDescriptorDataInfoEXT.html" /></remarks>
     public unsafe struct VkImageCaptureDescriptorDataInfoEXT
     {
@@ -8971,6 +9320,23 @@ namespace OpenTK.Graphics.Vulkan
             this.queueFamilyIndexCount = queueFamilyIndexCount;
             this.pQueueFamilyIndices = pQueueFamilyIndices;
             this.initialLayout = initialLayout;
+        }
+    }
+    /// <summary><b>[requires: VK_EXT_descriptor_heap]</b> </summary>
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkImageDescriptorInfoEXT.html" /></remarks>
+    public unsafe struct VkImageDescriptorInfoEXT
+    {
+        public VkStructureType sType = VkStructureType.StructureTypeImageDescriptorInfoExt;
+        public void* pNext;
+        public VkImageViewCreateInfo* pView;
+        public VkImageLayout layout;
+        public VkImageDescriptorInfoEXT() { }
+        public VkImageDescriptorInfoEXT(VkStructureType sType, void* pNext, VkImageViewCreateInfo* pView, VkImageLayout layout)
+        {
+            this.sType = sType;
+            this.pNext = pNext;
+            this.pView = pView;
+            this.layout = layout;
         }
     }
     /// <summary><b>[requires: VK_EXT_image_drm_format_modifier]</b> </summary>
@@ -9622,7 +9988,9 @@ namespace OpenTK.Graphics.Vulkan
             this.decodeMode = decodeMode;
         }
     }
-    /// <summary><b>[requires: VK_EXT_descriptor_buffer]</b> Used by <see cref="Vk.GetImageViewOpaqueCaptureDescriptorDataEXT"/></summary>
+    /// <summary><b>[requires: VK_EXT_descriptor_buffer]</b> 
+    /// <br/><b>[deprecated by: VK_EXT_descriptor_heap]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#legacy-descriptor-sets" />
+    /// Used by <see cref="Vk.GetImageViewOpaqueCaptureDescriptorDataEXT"/></summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkImageViewCaptureDescriptorDataInfoEXT.html" /></remarks>
     public unsafe struct VkImageViewCaptureDescriptorDataInfoEXT
     {
@@ -10226,6 +10594,23 @@ namespace OpenTK.Graphics.Vulkan
             this.pTokens = pTokens;
             this.streamCount = streamCount;
             this.pStreamStrides = pStreamStrides;
+        }
+    }
+    /// <summary><b>[requires: VK_EXT_descriptor_heap]</b> </summary>
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkIndirectCommandsLayoutPushDataTokenNV.html" /></remarks>
+    public unsafe struct VkIndirectCommandsLayoutPushDataTokenNV
+    {
+        public VkStructureType sType = VkStructureType.StructureTypeIndirectCommandsLayoutPushDataTokenNv;
+        public void* pNext;
+        public uint pushDataOffset;
+        public uint pushDataSize;
+        public VkIndirectCommandsLayoutPushDataTokenNV() { }
+        public VkIndirectCommandsLayoutPushDataTokenNV(VkStructureType sType, void* pNext, uint pushDataOffset, uint pushDataSize)
+        {
+            this.sType = sType;
+            this.pNext = pNext;
+            this.pushDataOffset = pushDataOffset;
+            this.pushDataSize = pushDataSize;
         }
     }
     /// <summary><b>[requires: VK_EXT_device_generated_commands]</b> </summary>
@@ -11638,7 +12023,9 @@ namespace OpenTK.Graphics.Vulkan
             this.pPerViewRenderAreas = pPerViewRenderAreas;
         }
     }
-    /// <summary><b>[requires: VK_EXT_mutable_descriptor_type]</b> </summary>
+    /// <summary><b>[requires: VK_EXT_mutable_descriptor_type]</b> 
+    /// <br/><b>[deprecated by: VK_EXT_descriptor_heap]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#legacy-descriptor-sets" />
+    /// </summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkMutableDescriptorTypeCreateInfoEXT.html" /></remarks>
     public unsafe struct VkMutableDescriptorTypeCreateInfoEXT
     {
@@ -11672,7 +12059,9 @@ namespace OpenTK.Graphics.Vulkan
             this.pMutableDescriptorTypeLists = pMutableDescriptorTypeLists;
         }
     }
-    /// <summary><b>[requires: VK_EXT_mutable_descriptor_type]</b> </summary>
+    /// <summary><b>[requires: VK_EXT_mutable_descriptor_type]</b> 
+    /// <br/><b>[deprecated by: VK_EXT_descriptor_heap]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#legacy-descriptor-sets" />
+    /// </summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkMutableDescriptorTypeListEXT.html" /></remarks>
     public unsafe struct VkMutableDescriptorTypeListEXT
     {
@@ -11750,11 +12139,11 @@ namespace OpenTK.Graphics.Vulkan
             this.suggestedYChromaOffset = suggestedYChromaOffset;
         }
     }
-    /// <summary><b>[requires: VK_OHOS_native_buffer]</b> </summary>
+    /// <summary></summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkNativeBufferOHOS.html" /></remarks>
     public unsafe struct VkNativeBufferOHOS
     {
-        public VkStructureType sType = VkStructureType.StructureTypeNativeBufferOhos;
+        public VkStructureType sType;
         public void* pNext;
         public IntPtr handle;
         public VkNativeBufferOHOS() { }
@@ -11838,7 +12227,24 @@ namespace OpenTK.Graphics.Vulkan
             this.z = z;
         }
     }
-    /// <summary><b>[requires: VK_EXT_descriptor_buffer]</b> </summary>
+    /// <summary><b>[requires: VK_EXT_descriptor_heap]</b> </summary>
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkOpaqueCaptureDataCreateInfoEXT.html" /></remarks>
+    public unsafe struct VkOpaqueCaptureDataCreateInfoEXT
+    {
+        public VkStructureType sType = VkStructureType.StructureTypeOpaqueCaptureDataCreateInfoExt;
+        public void* pNext;
+        public VkHostAddressRangeConstEXT* pData;
+        public VkOpaqueCaptureDataCreateInfoEXT() { }
+        public VkOpaqueCaptureDataCreateInfoEXT(VkStructureType sType, void* pNext, VkHostAddressRangeConstEXT* pData)
+        {
+            this.sType = sType;
+            this.pNext = pNext;
+            this.pData = pData;
+        }
+    }
+    /// <summary><b>[requires: VK_EXT_descriptor_buffer]</b> 
+    /// <br/><b>[deprecated by: VK_EXT_descriptor_heap]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#legacy-descriptor-sets" />
+    /// </summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkOpaqueCaptureDescriptorDataCreateInfoEXT.html" /></remarks>
     public unsafe struct VkOpaqueCaptureDescriptorDataCreateInfoEXT
     {
@@ -12870,6 +13276,21 @@ namespace OpenTK.Graphics.Vulkan
             this.commandBufferInheritance = commandBufferInheritance;
         }
     }
+    /// <summary><b>[requires: VK_NV_compute_occupancy_priority]</b> </summary>
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceComputeOccupancyPriorityFeaturesNV.html" /></remarks>
+    public unsafe struct VkPhysicalDeviceComputeOccupancyPriorityFeaturesNV
+    {
+        public VkStructureType sType = VkStructureType.StructureTypePhysicalDeviceComputeOccupancyPriorityFeaturesNv;
+        public void* pNext;
+        public int computeOccupancyPriority;
+        public VkPhysicalDeviceComputeOccupancyPriorityFeaturesNV() { }
+        public VkPhysicalDeviceComputeOccupancyPriorityFeaturesNV(VkStructureType sType, void* pNext, int computeOccupancyPriority)
+        {
+            this.sType = sType;
+            this.pNext = pNext;
+            this.computeOccupancyPriority = computeOccupancyPriority;
+        }
+    }
     /// <summary><b>[requires: VK_KHR_compute_shader_derivatives]</b> </summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceComputeShaderDerivativesFeaturesKHR.html" /></remarks>
     public unsafe struct VkPhysicalDeviceComputeShaderDerivativesFeaturesKHR
@@ -13011,6 +13432,21 @@ namespace OpenTK.Graphics.Vulkan
             this.cooperativeMatrixWorkgroupScopeMaxWorkgroupSize = cooperativeMatrixWorkgroupScopeMaxWorkgroupSize;
             this.cooperativeMatrixFlexibleDimensionsMaxDimension = cooperativeMatrixFlexibleDimensionsMaxDimension;
             this.cooperativeMatrixWorkgroupScopeReservedSharedMemory = cooperativeMatrixWorkgroupScopeReservedSharedMemory;
+        }
+    }
+    /// <summary><b>[requires: VK_QCOM_cooperative_matrix_conversion]</b> </summary>
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceCooperativeMatrixConversionFeaturesQCOM.html" /></remarks>
+    public unsafe struct VkPhysicalDeviceCooperativeMatrixConversionFeaturesQCOM
+    {
+        public VkStructureType sType = VkStructureType.StructureTypePhysicalDeviceCooperativeMatrixConversionFeaturesQcom;
+        public void* pNext;
+        public int cooperativeMatrixConversion;
+        public VkPhysicalDeviceCooperativeMatrixConversionFeaturesQCOM() { }
+        public VkPhysicalDeviceCooperativeMatrixConversionFeaturesQCOM(VkStructureType sType, void* pNext, int cooperativeMatrixConversion)
+        {
+            this.sType = sType;
+            this.pNext = pNext;
+            this.cooperativeMatrixConversion = cooperativeMatrixConversion;
         }
     }
     /// <summary><b>[requires: VK_KHR_cooperative_matrix]</b> </summary>
@@ -13549,7 +13985,9 @@ namespace OpenTK.Graphics.Vulkan
             this.independentResolve = independentResolve;
         }
     }
-    /// <summary><b>[requires: VK_EXT_descriptor_buffer]</b> </summary>
+    /// <summary><b>[requires: VK_EXT_descriptor_buffer]</b> 
+    /// <br/><b>[deprecated by: VK_EXT_descriptor_heap]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#legacy-descriptor-sets" />
+    /// </summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceDescriptorBufferDensityMapPropertiesEXT.html" /></remarks>
     public unsafe struct VkPhysicalDeviceDescriptorBufferDensityMapPropertiesEXT
     {
@@ -13564,7 +14002,9 @@ namespace OpenTK.Graphics.Vulkan
             this.combinedImageSamplerDensityMapDescriptorSize = combinedImageSamplerDensityMapDescriptorSize;
         }
     }
-    /// <summary><b>[requires: VK_EXT_descriptor_buffer]</b> </summary>
+    /// <summary><b>[requires: VK_EXT_descriptor_buffer]</b> 
+    /// <br/><b>[deprecated by: VK_EXT_descriptor_heap]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#legacy-descriptor-sets" />
+    /// </summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceDescriptorBufferFeaturesEXT.html" /></remarks>
     public unsafe struct VkPhysicalDeviceDescriptorBufferFeaturesEXT
     {
@@ -13585,7 +14025,9 @@ namespace OpenTK.Graphics.Vulkan
             this.descriptorBufferPushDescriptors = descriptorBufferPushDescriptors;
         }
     }
-    /// <summary><b>[requires: VK_EXT_descriptor_buffer]</b> </summary>
+    /// <summary><b>[requires: VK_EXT_descriptor_buffer]</b> 
+    /// <br/><b>[deprecated by: VK_EXT_descriptor_heap]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#legacy-descriptor-sets" />
+    /// </summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceDescriptorBufferPropertiesEXT.html" /></remarks>
     public unsafe struct VkPhysicalDeviceDescriptorBufferPropertiesEXT
     {
@@ -13698,6 +14140,93 @@ namespace OpenTK.Graphics.Vulkan
             this.tensorDescriptorSize = tensorDescriptorSize;
         }
     }
+    /// <summary><b>[requires: VK_EXT_descriptor_heap]</b> </summary>
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceDescriptorHeapFeaturesEXT.html" /></remarks>
+    public unsafe struct VkPhysicalDeviceDescriptorHeapFeaturesEXT
+    {
+        public VkStructureType sType = VkStructureType.StructureTypePhysicalDeviceDescriptorHeapFeaturesExt;
+        public void* pNext;
+        public int descriptorHeap;
+        public int descriptorHeapCaptureReplay;
+        public VkPhysicalDeviceDescriptorHeapFeaturesEXT() { }
+        public VkPhysicalDeviceDescriptorHeapFeaturesEXT(VkStructureType sType, void* pNext, int descriptorHeap, int descriptorHeapCaptureReplay)
+        {
+            this.sType = sType;
+            this.pNext = pNext;
+            this.descriptorHeap = descriptorHeap;
+            this.descriptorHeapCaptureReplay = descriptorHeapCaptureReplay;
+        }
+    }
+    /// <summary><b>[requires: VK_EXT_descriptor_heap]</b> </summary>
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceDescriptorHeapPropertiesEXT.html" /></remarks>
+    public unsafe struct VkPhysicalDeviceDescriptorHeapPropertiesEXT
+    {
+        public VkStructureType sType = VkStructureType.StructureTypePhysicalDeviceDescriptorHeapPropertiesExt;
+        public void* pNext;
+        public ulong samplerHeapAlignment;
+        public ulong resourceHeapAlignment;
+        public ulong maxSamplerHeapSize;
+        public ulong maxResourceHeapSize;
+        public ulong minSamplerHeapReservedRange;
+        public ulong minSamplerHeapReservedRangeWithEmbedded;
+        public ulong minResourceHeapReservedRange;
+        public ulong samplerDescriptorSize;
+        public ulong imageDescriptorSize;
+        public ulong bufferDescriptorSize;
+        public ulong samplerDescriptorAlignment;
+        public ulong imageDescriptorAlignment;
+        public ulong bufferDescriptorAlignment;
+        public ulong maxPushDataSize;
+        public nuint imageCaptureReplayOpaqueDataSize;
+        public uint maxDescriptorHeapEmbeddedSamplers;
+        public uint samplerYcbcrConversionCount;
+        public int sparseDescriptorHeaps;
+        public int protectedDescriptorHeaps;
+        public VkPhysicalDeviceDescriptorHeapPropertiesEXT() { }
+        public VkPhysicalDeviceDescriptorHeapPropertiesEXT(VkStructureType sType, void* pNext, ulong samplerHeapAlignment, ulong resourceHeapAlignment, ulong maxSamplerHeapSize, ulong maxResourceHeapSize, ulong minSamplerHeapReservedRange, ulong minSamplerHeapReservedRangeWithEmbedded, ulong minResourceHeapReservedRange, ulong samplerDescriptorSize, ulong imageDescriptorSize, ulong bufferDescriptorSize, ulong samplerDescriptorAlignment, ulong imageDescriptorAlignment, ulong bufferDescriptorAlignment, ulong maxPushDataSize, nuint imageCaptureReplayOpaqueDataSize, uint maxDescriptorHeapEmbeddedSamplers, uint samplerYcbcrConversionCount, int sparseDescriptorHeaps, int protectedDescriptorHeaps)
+        {
+            this.sType = sType;
+            this.pNext = pNext;
+            this.samplerHeapAlignment = samplerHeapAlignment;
+            this.resourceHeapAlignment = resourceHeapAlignment;
+            this.maxSamplerHeapSize = maxSamplerHeapSize;
+            this.maxResourceHeapSize = maxResourceHeapSize;
+            this.minSamplerHeapReservedRange = minSamplerHeapReservedRange;
+            this.minSamplerHeapReservedRangeWithEmbedded = minSamplerHeapReservedRangeWithEmbedded;
+            this.minResourceHeapReservedRange = minResourceHeapReservedRange;
+            this.samplerDescriptorSize = samplerDescriptorSize;
+            this.imageDescriptorSize = imageDescriptorSize;
+            this.bufferDescriptorSize = bufferDescriptorSize;
+            this.samplerDescriptorAlignment = samplerDescriptorAlignment;
+            this.imageDescriptorAlignment = imageDescriptorAlignment;
+            this.bufferDescriptorAlignment = bufferDescriptorAlignment;
+            this.maxPushDataSize = maxPushDataSize;
+            this.imageCaptureReplayOpaqueDataSize = imageCaptureReplayOpaqueDataSize;
+            this.maxDescriptorHeapEmbeddedSamplers = maxDescriptorHeapEmbeddedSamplers;
+            this.samplerYcbcrConversionCount = samplerYcbcrConversionCount;
+            this.sparseDescriptorHeaps = sparseDescriptorHeaps;
+            this.protectedDescriptorHeaps = protectedDescriptorHeaps;
+        }
+    }
+    /// <summary><b>[requires: VK_EXT_descriptor_heap]</b> </summary>
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceDescriptorHeapTensorPropertiesARM.html" /></remarks>
+    public unsafe struct VkPhysicalDeviceDescriptorHeapTensorPropertiesARM
+    {
+        public VkStructureType sType = VkStructureType.StructureTypePhysicalDeviceDescriptorHeapTensorPropertiesArm;
+        public void* pNext;
+        public ulong tensorDescriptorSize;
+        public ulong tensorDescriptorAlignment;
+        public nuint tensorCaptureReplayOpaqueDataSize;
+        public VkPhysicalDeviceDescriptorHeapTensorPropertiesARM() { }
+        public VkPhysicalDeviceDescriptorHeapTensorPropertiesARM(VkStructureType sType, void* pNext, ulong tensorDescriptorSize, ulong tensorDescriptorAlignment, nuint tensorCaptureReplayOpaqueDataSize)
+        {
+            this.sType = sType;
+            this.pNext = pNext;
+            this.tensorDescriptorSize = tensorDescriptorSize;
+            this.tensorDescriptorAlignment = tensorDescriptorAlignment;
+            this.tensorCaptureReplayOpaqueDataSize = tensorCaptureReplayOpaqueDataSize;
+        }
+    }
     /// <summary><b>[requires: v1.2]</b> </summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceDescriptorIndexingFeatures.html" /></remarks>
     public unsafe struct VkPhysicalDeviceDescriptorIndexingFeatures
@@ -13751,7 +14280,9 @@ namespace OpenTK.Graphics.Vulkan
             this.runtimeDescriptorArray = runtimeDescriptorArray;
         }
     }
-    /// <summary><b>[requires: VK_EXT_descriptor_indexing]</b> </summary>
+    /// <summary><b>[requires: VK_EXT_descriptor_indexing]</b> 
+    /// <br/><b>[deprecated by: VK_EXT_descriptor_heap]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#legacy-descriptor-sets" />
+    /// </summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceDescriptorIndexingFeaturesEXT.html" /></remarks>
     public unsafe struct VkPhysicalDeviceDescriptorIndexingFeaturesEXT
     {
@@ -13863,7 +14394,9 @@ namespace OpenTK.Graphics.Vulkan
             this.maxDescriptorSetUpdateAfterBindInputAttachments = maxDescriptorSetUpdateAfterBindInputAttachments;
         }
     }
-    /// <summary><b>[requires: VK_EXT_descriptor_indexing]</b> </summary>
+    /// <summary><b>[requires: VK_EXT_descriptor_indexing]</b> 
+    /// <br/><b>[deprecated by: VK_EXT_descriptor_heap]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#legacy-descriptor-sets" />
+    /// </summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceDescriptorIndexingPropertiesEXT.html" /></remarks>
     public unsafe struct VkPhysicalDeviceDescriptorIndexingPropertiesEXT
     {
@@ -16068,7 +16601,9 @@ namespace OpenTK.Graphics.Vulkan
             this.descriptorBindingInlineUniformBlockUpdateAfterBind = descriptorBindingInlineUniformBlockUpdateAfterBind;
         }
     }
-    /// <summary><b>[requires: VK_EXT_inline_uniform_block]</b> </summary>
+    /// <summary><b>[requires: VK_EXT_inline_uniform_block]</b> 
+    /// <br/><b>[deprecated by: VK_EXT_descriptor_heap]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#legacy-descriptor-sets" />
+    /// </summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceInlineUniformBlockFeaturesEXT.html" /></remarks>
     public unsafe struct VkPhysicalDeviceInlineUniformBlockFeaturesEXT
     {
@@ -16108,7 +16643,9 @@ namespace OpenTK.Graphics.Vulkan
             this.maxDescriptorSetUpdateAfterBindInlineUniformBlocks = maxDescriptorSetUpdateAfterBindInlineUniformBlocks;
         }
     }
-    /// <summary><b>[requires: VK_EXT_inline_uniform_block]</b> </summary>
+    /// <summary><b>[requires: VK_EXT_inline_uniform_block]</b> 
+    /// <br/><b>[deprecated by: VK_EXT_descriptor_heap]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#legacy-descriptor-sets" />
+    /// </summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceInlineUniformBlockPropertiesEXT.html" /></remarks>
     public unsafe struct VkPhysicalDeviceInlineUniformBlockPropertiesEXT
     {
@@ -16129,6 +16666,21 @@ namespace OpenTK.Graphics.Vulkan
             this.maxPerStageDescriptorUpdateAfterBindInlineUniformBlocks = maxPerStageDescriptorUpdateAfterBindInlineUniformBlocks;
             this.maxDescriptorSetInlineUniformBlocks = maxDescriptorSetInlineUniformBlocks;
             this.maxDescriptorSetUpdateAfterBindInlineUniformBlocks = maxDescriptorSetUpdateAfterBindInlineUniformBlocks;
+        }
+    }
+    /// <summary><b>[requires: VK_KHR_internally_synchronized_queues]</b> </summary>
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceInternallySynchronizedQueuesFeaturesKHR.html" /></remarks>
+    public unsafe struct VkPhysicalDeviceInternallySynchronizedQueuesFeaturesKHR
+    {
+        public VkStructureType sType = VkStructureType.StructureTypePhysicalDeviceInternallySynchronizedQueuesFeaturesKhr;
+        public void* pNext;
+        public int internallySynchronizedQueues;
+        public VkPhysicalDeviceInternallySynchronizedQueuesFeaturesKHR() { }
+        public VkPhysicalDeviceInternallySynchronizedQueuesFeaturesKHR(VkStructureType sType, void* pNext, int internallySynchronizedQueues)
+        {
+            this.sType = sType;
+            this.pNext = pNext;
+            this.internallySynchronizedQueues = internallySynchronizedQueues;
         }
     }
     /// <summary><b>[requires: VK_HUAWEI_invocation_mask]</b> </summary>
@@ -17301,7 +17853,9 @@ namespace OpenTK.Graphics.Vulkan
             this.maxMultiviewInstanceIndex = maxMultiviewInstanceIndex;
         }
     }
-    /// <summary><b>[requires: VK_EXT_mutable_descriptor_type]</b> </summary>
+    /// <summary><b>[requires: VK_EXT_mutable_descriptor_type]</b> 
+    /// <br/><b>[deprecated by: VK_EXT_descriptor_heap]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#legacy-descriptor-sets" />
+    /// </summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceMutableDescriptorTypeFeaturesEXT.html" /></remarks>
     public unsafe struct VkPhysicalDeviceMutableDescriptorTypeFeaturesEXT
     {
@@ -17967,11 +18521,11 @@ namespace OpenTK.Graphics.Vulkan
             this.sharedImage = sharedImage;
         }
     }
-    /// <summary><b>[requires: VK_OHOS_native_buffer]</b> </summary>
+    /// <summary></summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPhysicalDevicePresentationPropertiesOHOS.html" /></remarks>
     public unsafe struct VkPhysicalDevicePresentationPropertiesOHOS
     {
-        public VkStructureType sType = VkStructureType.StructureTypePhysicalDevicePresentationPropertiesOhos;
+        public VkStructureType sType;
         public void* pNext;
         public int sharedImage;
         public VkPhysicalDevicePresentationPropertiesOHOS() { }
@@ -18299,6 +18853,42 @@ namespace OpenTK.Graphics.Vulkan
             this.pNext = pNext;
             this.provokingVertexModePerPipeline = provokingVertexModePerPipeline;
             this.transformFeedbackPreservesTriangleFanProvokingVertex = transformFeedbackPreservesTriangleFanProvokingVertex;
+        }
+    }
+    /// <summary><b>[requires: VK_NV_push_constant_bank]</b> </summary>
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPhysicalDevicePushConstantBankFeaturesNV.html" /></remarks>
+    public unsafe struct VkPhysicalDevicePushConstantBankFeaturesNV
+    {
+        public VkStructureType sType = VkStructureType.StructureTypePhysicalDevicePushConstantBankFeaturesNv;
+        public void* pNext;
+        public int pushConstantBank;
+        public VkPhysicalDevicePushConstantBankFeaturesNV() { }
+        public VkPhysicalDevicePushConstantBankFeaturesNV(VkStructureType sType, void* pNext, int pushConstantBank)
+        {
+            this.sType = sType;
+            this.pNext = pNext;
+            this.pushConstantBank = pushConstantBank;
+        }
+    }
+    /// <summary><b>[requires: VK_NV_push_constant_bank]</b> </summary>
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPhysicalDevicePushConstantBankPropertiesNV.html" /></remarks>
+    public unsafe struct VkPhysicalDevicePushConstantBankPropertiesNV
+    {
+        public VkStructureType sType = VkStructureType.StructureTypePhysicalDevicePushConstantBankPropertiesNv;
+        public void* pNext;
+        public uint maxGraphicsPushConstantBanks;
+        public uint maxComputePushConstantBanks;
+        public uint maxGraphicsPushDataBanks;
+        public uint maxComputePushDataBanks;
+        public VkPhysicalDevicePushConstantBankPropertiesNV() { }
+        public VkPhysicalDevicePushConstantBankPropertiesNV(VkStructureType sType, void* pNext, uint maxGraphicsPushConstantBanks, uint maxComputePushConstantBanks, uint maxGraphicsPushDataBanks, uint maxComputePushDataBanks)
+        {
+            this.sType = sType;
+            this.pNext = pNext;
+            this.maxGraphicsPushConstantBanks = maxGraphicsPushConstantBanks;
+            this.maxComputePushConstantBanks = maxComputePushConstantBanks;
+            this.maxGraphicsPushDataBanks = maxGraphicsPushDataBanks;
+            this.maxComputePushDataBanks = maxComputePushDataBanks;
         }
     }
     /// <summary><b>[requires: v1.4]</b> </summary>
@@ -19701,6 +20291,36 @@ namespace OpenTK.Graphics.Vulkan
             this.shaderIntegerFunctions2 = shaderIntegerFunctions2;
         }
     }
+    /// <summary><b>[requires: VK_EXT_shader_long_vector]</b> </summary>
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceShaderLongVectorFeaturesEXT.html" /></remarks>
+    public unsafe struct VkPhysicalDeviceShaderLongVectorFeaturesEXT
+    {
+        public VkStructureType sType = VkStructureType.StructureTypePhysicalDeviceShaderLongVectorFeaturesExt;
+        public void* pNext;
+        public int longVector;
+        public VkPhysicalDeviceShaderLongVectorFeaturesEXT() { }
+        public VkPhysicalDeviceShaderLongVectorFeaturesEXT(VkStructureType sType, void* pNext, int longVector)
+        {
+            this.sType = sType;
+            this.pNext = pNext;
+            this.longVector = longVector;
+        }
+    }
+    /// <summary><b>[requires: VK_EXT_shader_long_vector]</b> </summary>
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceShaderLongVectorPropertiesEXT.html" /></remarks>
+    public unsafe struct VkPhysicalDeviceShaderLongVectorPropertiesEXT
+    {
+        public VkStructureType sType = VkStructureType.StructureTypePhysicalDeviceShaderLongVectorPropertiesExt;
+        public void* pNext;
+        public uint maxVectorComponents;
+        public VkPhysicalDeviceShaderLongVectorPropertiesEXT() { }
+        public VkPhysicalDeviceShaderLongVectorPropertiesEXT(VkStructureType sType, void* pNext, uint maxVectorComponents)
+        {
+            this.sType = sType;
+            this.pNext = pNext;
+            this.maxVectorComponents = maxVectorComponents;
+        }
+    }
     /// <summary><b>[requires: VK_KHR_shader_maximal_reconvergence]</b> </summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceShaderMaximalReconvergenceFeaturesKHR.html" /></remarks>
     public unsafe struct VkPhysicalDeviceShaderMaximalReconvergenceFeaturesKHR
@@ -19870,6 +20490,21 @@ namespace OpenTK.Graphics.Vulkan
             this.sType = sType;
             this.pNext = pNext;
             this.shaderSubgroupExtendedTypes = shaderSubgroupExtendedTypes;
+        }
+    }
+    /// <summary><b>[requires: VK_EXT_shader_subgroup_partitioned]</b> </summary>
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceShaderSubgroupPartitionedFeaturesEXT.html" /></remarks>
+    public unsafe struct VkPhysicalDeviceShaderSubgroupPartitionedFeaturesEXT
+    {
+        public VkStructureType sType = VkStructureType.StructureTypePhysicalDeviceShaderSubgroupPartitionedFeaturesExt;
+        public void* pNext;
+        public int shaderSubgroupPartitioned;
+        public VkPhysicalDeviceShaderSubgroupPartitionedFeaturesEXT() { }
+        public VkPhysicalDeviceShaderSubgroupPartitionedFeaturesEXT(VkStructureType sType, void* pNext, int shaderSubgroupPartitioned)
+        {
+            this.sType = sType;
+            this.pNext = pNext;
+            this.shaderSubgroupPartitioned = shaderSubgroupPartitioned;
         }
     }
     /// <summary><b>[requires: v1.4]</b> </summary>
@@ -20456,6 +21091,21 @@ namespace OpenTK.Graphics.Vulkan
             this.storageTexelBufferOffsetSingleTexelAlignment = storageTexelBufferOffsetSingleTexelAlignment;
             this.uniformTexelBufferOffsetAlignmentBytes = uniformTexelBufferOffsetAlignmentBytes;
             this.uniformTexelBufferOffsetSingleTexelAlignment = uniformTexelBufferOffsetSingleTexelAlignment;
+        }
+    }
+    /// <summary><b>[requires: VK_EXT_texture_compression_astc_3d]</b> </summary>
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceTextureCompressionASTC3DFeaturesEXT.html" /></remarks>
+    public unsafe struct VkPhysicalDeviceTextureCompressionASTC3DFeaturesEXT
+    {
+        public VkStructureType sType = VkStructureType.StructureTypePhysicalDeviceTextureCompressionAstc3dFeaturesExt;
+        public void* pNext;
+        public int textureCompressionASTC_3D;
+        public VkPhysicalDeviceTextureCompressionASTC3DFeaturesEXT() { }
+        public VkPhysicalDeviceTextureCompressionASTC3DFeaturesEXT(VkStructureType sType, void* pNext, int textureCompressionASTC_3D)
+        {
+            this.sType = sType;
+            this.pNext = pNext;
+            this.textureCompressionASTC_3D = textureCompressionASTC_3D;
         }
     }
     /// <summary><b>[requires: v1.3]</b> </summary>
@@ -22573,7 +23223,9 @@ namespace OpenTK.Graphics.Vulkan
             this.primitiveRestartEnable = primitiveRestartEnable;
         }
     }
-    /// <summary><b>[requires: v1.0]</b> Used by <see cref="Vk.CreatePipelineLayout"/></summary>
+    /// <summary><b>[requires: v1.0]</b> 
+    /// <br/><b>[deprecated by: VK_EXT_descriptor_heap]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#legacy-descriptor-sets" />
+    /// Used by <see cref="Vk.CreatePipelineLayout"/></summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPipelineLayoutCreateInfo.html" /></remarks>
     public unsafe struct VkPipelineLayoutCreateInfo
     {
@@ -23598,7 +24250,24 @@ namespace OpenTK.Graphics.Vulkan
             this.protectedSubmit = protectedSubmit;
         }
     }
-    /// <summary><b>[requires: v1.0]</b> </summary>
+    /// <summary><b>[requires: VK_NV_push_constant_bank]</b> </summary>
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPushConstantBankInfoNV.html" /></remarks>
+    public unsafe struct VkPushConstantBankInfoNV
+    {
+        public VkStructureType sType = VkStructureType.StructureTypePushConstantBankInfoNv;
+        public void* pNext;
+        public uint bank;
+        public VkPushConstantBankInfoNV() { }
+        public VkPushConstantBankInfoNV(VkStructureType sType, void* pNext, uint bank)
+        {
+            this.sType = sType;
+            this.pNext = pNext;
+            this.bank = bank;
+        }
+    }
+    /// <summary><b>[requires: v1.0]</b> 
+    /// <br/><b>[deprecated by: VK_EXT_descriptor_heap]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#legacy-descriptor-sets" />
+    /// </summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPushConstantRange.html" /></remarks>
     public unsafe struct VkPushConstantRange
     {
@@ -23657,6 +24326,23 @@ namespace OpenTK.Graphics.Vulkan
             this.offset = offset;
             this.size = size;
             this.pValues = pValues;
+        }
+    }
+    /// <summary><b>[requires: VK_EXT_descriptor_heap]</b> Used by <see cref="Vk.CmdPushDataEXT"/></summary>
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPushDataInfoEXT.html" /></remarks>
+    public unsafe struct VkPushDataInfoEXT
+    {
+        public VkStructureType sType = VkStructureType.StructureTypePushDataInfoExt;
+        public void* pNext;
+        public uint offset;
+        public VkHostAddressRangeConstEXT data;
+        public VkPushDataInfoEXT() { }
+        public VkPushDataInfoEXT(VkStructureType sType, void* pNext, uint offset, VkHostAddressRangeConstEXT data)
+        {
+            this.sType = sType;
+            this.pNext = pNext;
+            this.offset = offset;
+            this.data = data;
         }
     }
     /// <summary><b>[requires: v1.4]</b> Used by <see cref="Vk.CmdPushDescriptorSet2"/>, <see cref="Vk.CmdPushDescriptorSet2KHR"/></summary>
@@ -25200,6 +25886,38 @@ namespace OpenTK.Graphics.Vulkan
             this.stencilResolveMode = stencilResolveMode;
         }
     }
+    /// <summary><b>[requires: VK_EXT_descriptor_heap]</b> </summary>
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkResourceDescriptorDataEXT.html" /></remarks>
+    [StructLayout(LayoutKind.Explicit)]
+    public unsafe struct VkResourceDescriptorDataEXT
+    {
+        [FieldOffset(0)]
+        public VkImageDescriptorInfoEXT* pImage;
+        [FieldOffset(0)]
+        public VkTexelBufferDescriptorInfoEXT* pTexelBuffer;
+        [FieldOffset(0)]
+        public VkDeviceAddressRangeEXT* pAddressRange;
+        [FieldOffset(0)]
+        public VkTensorViewCreateInfoARM* pTensorARM;
+        public VkResourceDescriptorDataEXT() { }
+    }
+    /// <summary><b>[requires: VK_EXT_descriptor_heap]</b> Used by <see cref="Vk.WriteResourceDescriptorsEXT"/></summary>
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkResourceDescriptorInfoEXT.html" /></remarks>
+    public unsafe struct VkResourceDescriptorInfoEXT
+    {
+        public VkStructureType sType = VkStructureType.StructureTypeResourceDescriptorInfoExt;
+        public void* pNext;
+        public VkDescriptorType type;
+        public VkResourceDescriptorDataEXT data;
+        public VkResourceDescriptorInfoEXT() { }
+        public VkResourceDescriptorInfoEXT(VkStructureType sType, void* pNext, VkDescriptorType type, VkResourceDescriptorDataEXT data)
+        {
+            this.sType = sType;
+            this.pNext = pNext;
+            this.type = type;
+            this.data = data;
+        }
+    }
     /// <summary><b>[requires: VK_EXT_sample_locations]</b> </summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkSampleLocationEXT.html" /></remarks>
     public unsafe struct VkSampleLocationEXT
@@ -25268,7 +25986,9 @@ namespace OpenTK.Graphics.Vulkan
             this.srgb = srgb;
         }
     }
-    /// <summary><b>[requires: VK_EXT_descriptor_buffer]</b> Used by <see cref="Vk.GetSamplerOpaqueCaptureDescriptorDataEXT"/></summary>
+    /// <summary><b>[requires: VK_EXT_descriptor_buffer]</b> 
+    /// <br/><b>[deprecated by: VK_EXT_descriptor_heap]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#legacy-descriptor-sets" />
+    /// Used by <see cref="Vk.GetSamplerOpaqueCaptureDescriptorDataEXT"/></summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkSamplerCaptureDescriptorDataInfoEXT.html" /></remarks>
     public unsafe struct VkSamplerCaptureDescriptorDataInfoEXT
     {
@@ -25283,7 +26003,7 @@ namespace OpenTK.Graphics.Vulkan
             this.sampler = sampler;
         }
     }
-    /// <summary><b>[requires: v1.0]</b> Used by <see cref="Vk.CreateSampler"/></summary>
+    /// <summary><b>[requires: v1.0]</b> Used by <see cref="Vk.CreateSampler"/>, <see cref="Vk.WriteSamplerDescriptorsEXT"/></summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkSamplerCreateInfo.html" /></remarks>
     public unsafe struct VkSamplerCreateInfo
     {
@@ -25343,7 +26063,7 @@ namespace OpenTK.Graphics.Vulkan
             this.cubicWeights = cubicWeights;
         }
     }
-    /// <summary><b>[requires: VK_EXT_custom_border_color]</b> </summary>
+    /// <summary><b>[requires: VK_EXT_custom_border_color]</b> Used by <see cref="Vk.RegisterCustomBorderColorEXT"/></summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkSamplerCustomBorderColorCreateInfoEXT.html" /></remarks>
     public unsafe struct VkSamplerCustomBorderColorCreateInfoEXT
     {
@@ -25358,6 +26078,21 @@ namespace OpenTK.Graphics.Vulkan
             this.pNext = pNext;
             this.customBorderColor = customBorderColor;
             this.format = format;
+        }
+    }
+    /// <summary><b>[requires: VK_EXT_descriptor_heap]</b> </summary>
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkSamplerCustomBorderColorIndexCreateInfoEXT.html" /></remarks>
+    public unsafe struct VkSamplerCustomBorderColorIndexCreateInfoEXT
+    {
+        public VkStructureType sType = VkStructureType.StructureTypeSamplerCustomBorderColorIndexCreateInfoExt;
+        public void* pNext;
+        public uint index;
+        public VkSamplerCustomBorderColorIndexCreateInfoEXT() { }
+        public VkSamplerCustomBorderColorIndexCreateInfoEXT(VkStructureType sType, void* pNext, uint index)
+        {
+            this.sType = sType;
+            this.pNext = pNext;
+            this.index = index;
         }
     }
     /// <summary><b>[requires: v1.2]</b> </summary>
@@ -25981,6 +26716,23 @@ namespace OpenTK.Graphics.Vulkan
             this.pushConstantRangeCount = pushConstantRangeCount;
             this.pPushConstantRanges = pPushConstantRanges;
             this.pSpecializationInfo = pSpecializationInfo;
+        }
+    }
+    /// <summary><b>[requires: VK_EXT_descriptor_heap]</b> </summary>
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkShaderDescriptorSetAndBindingMappingInfoEXT.html" /></remarks>
+    public unsafe struct VkShaderDescriptorSetAndBindingMappingInfoEXT
+    {
+        public VkStructureType sType = VkStructureType.StructureTypeShaderDescriptorSetAndBindingMappingInfoExt;
+        public void* pNext;
+        public uint mappingCount;
+        public VkDescriptorSetAndBindingMappingEXT* pMappings;
+        public VkShaderDescriptorSetAndBindingMappingInfoEXT() { }
+        public VkShaderDescriptorSetAndBindingMappingInfoEXT(VkStructureType sType, void* pNext, uint mappingCount, VkDescriptorSetAndBindingMappingEXT* pMappings)
+        {
+            this.sType = sType;
+            this.pNext = pNext;
+            this.mappingCount = mappingCount;
+            this.pMappings = pMappings;
         }
     }
     /// <summary><b>[requires: v1.0]</b> Used by <see cref="Vk.CreateShaderModule"/>, <see cref="Vk.GetShaderModuleCreateInfoIdentifierEXT"/></summary>
@@ -26965,6 +27717,21 @@ namespace OpenTK.Graphics.Vulkan
             this.subresourceLayout = subresourceLayout;
         }
     }
+    /// <summary><b>[requires: VK_EXT_descriptor_heap]</b> </summary>
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkSubsampledImageFormatPropertiesEXT.html" /></remarks>
+    public unsafe struct VkSubsampledImageFormatPropertiesEXT
+    {
+        public VkStructureType sType = VkStructureType.StructureTypeSubsampledImageFormatPropertiesExt;
+        public void* pNext;
+        public uint subsampledImageDescriptorCount;
+        public VkSubsampledImageFormatPropertiesEXT() { }
+        public VkSubsampledImageFormatPropertiesEXT(VkStructureType sType, void* pNext, uint subsampledImageDescriptorCount)
+        {
+            this.sType = sType;
+            this.pNext = pNext;
+            this.subsampledImageDescriptorCount = subsampledImageDescriptorCount;
+        }
+    }
     /// <summary><b>[requires: VK_EXT_display_surface_counter]</b> Used by <see cref="Vk.GetPhysicalDeviceSurfaceCapabilities2EXT"/></summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkSurfaceCapabilities2EXT.html" /></remarks>
     public unsafe struct VkSurfaceCapabilities2EXT
@@ -27413,11 +28180,11 @@ namespace OpenTK.Graphics.Vulkan
             this.usage = usage;
         }
     }
-    /// <summary><b>[requires: VK_OHOS_native_buffer]</b> </summary>
+    /// <summary></summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkSwapchainImageCreateInfoOHOS.html" /></remarks>
     public unsafe struct VkSwapchainImageCreateInfoOHOS
     {
-        public VkStructureType sType = VkStructureType.StructureTypeSwapchainImageCreateInfoOhos;
+        public VkStructureType sType;
         public void* pNext;
         public VkSwapchainImageUsageFlagBitsOHOS usage;
         public VkSwapchainImageCreateInfoOHOS() { }
@@ -27824,7 +28591,7 @@ namespace OpenTK.Graphics.Vulkan
             this.tensorView = tensorView;
         }
     }
-    /// <summary><b>[requires: VK_ARM_tensors]</b> Used by <see cref="Vk.CreateTensorViewARM"/></summary>
+    /// <summary><b>[requires: VK_EXT_descriptor_heap | VK_ARM_tensors]</b> Used by <see cref="Vk.CreateTensorViewARM"/></summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkTensorViewCreateInfoARM.html" /></remarks>
     public unsafe struct VkTensorViewCreateInfoARM
     {
@@ -27841,6 +28608,23 @@ namespace OpenTK.Graphics.Vulkan
             this.flags = flags;
             this.tensor = tensor;
             this.format = format;
+        }
+    }
+    /// <summary><b>[requires: VK_EXT_descriptor_heap]</b> </summary>
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkTexelBufferDescriptorInfoEXT.html" /></remarks>
+    public unsafe struct VkTexelBufferDescriptorInfoEXT
+    {
+        public VkStructureType sType = VkStructureType.StructureTypeTexelBufferDescriptorInfoExt;
+        public void* pNext;
+        public VkFormat format;
+        public VkDeviceAddressRangeEXT addressRange;
+        public VkTexelBufferDescriptorInfoEXT() { }
+        public VkTexelBufferDescriptorInfoEXT(VkStructureType sType, void* pNext, VkFormat format, VkDeviceAddressRangeEXT addressRange)
+        {
+            this.sType = sType;
+            this.pNext = pNext;
+            this.format = format;
+            this.addressRange = addressRange;
         }
     }
     /// <summary><b>[requires: VK_AMD_texture_gather_bias_lod]</b> </summary>
@@ -28038,6 +28822,25 @@ namespace OpenTK.Graphics.Vulkan
         public VkTransformMatrixNV(Matrix4x3 matrix)
         {
             this.matrix = matrix;
+        }
+    }
+    /// <summary><b>[requires: VK_SEC_ubm_surface]</b> Used by <see cref="Vk.CreateUbmSurfaceSEC"/></summary>
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkUbmSurfaceCreateInfoSEC.html" /></remarks>
+    public unsafe struct VkUbmSurfaceCreateInfoSEC
+    {
+        public VkStructureType sType = VkStructureType.StructureTypeUbmSurfaceCreateInfoSec;
+        public void* pNext;
+        public VkUbmSurfaceCreateFlagsSEC flags;
+        public IntPtr ubm_device;
+        public IntPtr ubm_surface;
+        public VkUbmSurfaceCreateInfoSEC() { }
+        public VkUbmSurfaceCreateInfoSEC(VkStructureType sType, void* pNext, VkUbmSurfaceCreateFlagsSEC flags, IntPtr ubm_device, IntPtr ubm_surface)
+        {
+            this.sType = sType;
+            this.pNext = pNext;
+            this.flags = flags;
+            this.ubm_device = ubm_device;
+            this.ubm_surface = ubm_surface;
         }
     }
     /// <summary><b>[requires: VK_EXT_validation_cache]</b> Used by <see cref="Vk.CreateValidationCacheEXT"/></summary>
@@ -30522,7 +31325,9 @@ namespace OpenTK.Graphics.Vulkan
             this.hwnd = hwnd;
         }
     }
-    /// <summary><b>[requires: v1.0]</b> Used by <see cref="Vk.CmdPushDescriptorSet"/>, <see cref="Vk.CmdPushDescriptorSetKHR"/>, <see cref="Vk.UpdateDescriptorSets"/></summary>
+    /// <summary><b>[requires: v1.0]</b> 
+    /// <br/><b>[deprecated by: VK_EXT_descriptor_heap]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#legacy-descriptor-sets" />
+    /// Used by <see cref="Vk.CmdPushDescriptorSet"/>, <see cref="Vk.CmdPushDescriptorSetKHR"/>, <see cref="Vk.UpdateDescriptorSets"/></summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkWriteDescriptorSet.html" /></remarks>
     public unsafe struct VkWriteDescriptorSet
     {
@@ -30551,7 +31356,9 @@ namespace OpenTK.Graphics.Vulkan
             this.pTexelBufferView = pTexelBufferView;
         }
     }
-    /// <summary><b>[requires: VK_KHR_acceleration_structure]</b> </summary>
+    /// <summary><b>[requires: VK_KHR_acceleration_structure]</b> 
+    /// <br/><b>[deprecated by: VK_EXT_descriptor_heap]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#legacy-descriptor-sets" />
+    /// </summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkWriteDescriptorSetAccelerationStructureKHR.html" /></remarks>
     public unsafe struct VkWriteDescriptorSetAccelerationStructureKHR
     {
@@ -30585,7 +31392,9 @@ namespace OpenTK.Graphics.Vulkan
             this.pAccelerationStructures = pAccelerationStructures;
         }
     }
-    /// <summary><b>[requires: v1.3]</b> </summary>
+    /// <summary><b>[requires: v1.3]</b> 
+    /// <br/><b>[deprecated by: VK_EXT_descriptor_heap]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#legacy-descriptor-sets" />
+    /// </summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkWriteDescriptorSetInlineUniformBlock.html" /></remarks>
     public unsafe struct VkWriteDescriptorSetInlineUniformBlock
     {

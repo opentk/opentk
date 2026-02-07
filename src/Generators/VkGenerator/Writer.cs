@@ -172,6 +172,7 @@ namespace VkGenerator
                                 "VkVideoEncodeFlagBitsKHR",
                                 "VkImageFormatConstraintsFlagBitsFUCHSIA",
                                 "VkWaylandSurfaceCreateFlagBitsKHR",
+                                "VkSwapchainImageUsageFlagBitsOHOS",
                             ];
 
                         if (exceptedNames.Contains(@enum.Name) == false)
@@ -262,7 +263,8 @@ namespace VkGenerator
                                                 ("VkFaultType", "VK_FAULT_TYPE_SYSTEM"),
                                                 ("VkFaultType", "VK_FAULT_TYPE_PHYSICAL_DEVICE"),
                                                 ("VkFaultType", "VK_FAULT_TYPE_COMMAND_BUFFER_FULL"),
-                                                ("VkFaultType", "VK_FAULT_TYPE_INVALID_API_USAGE")
+                                                ("VkFaultType", "VK_FAULT_TYPE_INVALID_API_USAGE"),
+                                                ("VkSwapchainImageUsageFlagBitsOHOS", "VK_SWAPCHAIN_IMAGE_USAGE_SHARED_BIT_OHOS"),
                                             ];
 
                                     if (exceptedNames.Contains((@enum.Name, member.Name)) == false)
@@ -357,6 +359,9 @@ namespace VkGenerator
                                 "VkCommandPoolMemoryReservationCreateInfo",
                                 "VkCommandPoolMemoryConsumption",
                                 "VkPhysicalDeviceVulkanSC10Features",
+                                "VkNativeBufferOHOS",
+                                "VkPhysicalDevicePresentationPropertiesOHOS",
+                                "VkSwapchainImageCreateInfoOHOS",
                             ];
 
                         if (exceptedNames.Contains(@struct.Name) == false)
@@ -535,12 +540,15 @@ namespace VkGenerator
                     // This is a list of the known commands that fullfill either of these criteria.
                     // - Noggin_bops 2024-09-24
                     ReadOnlySpan<string> exceptedNames = [
-                        "vkGetSwapchainGrallocUsageANDROID",
+                                    "vkGetSwapchainGrallocUsageANDROID",
                                     "vkGetSwapchainGrallocUsage2ANDROID",
                                     "vkAcquireImageANDROID",
                                     "vkQueueSignalReleaseImageANDROID",
                                     "vkGetFaultData",
                                     "vkGetCommandPoolMemoryConsumption",
+                                    "vkAcquireImageOHOS",
+                                    "vkGetSwapchainGrallocUsageOHOS",
+                                    "vkQueueSignalReleaseImageOHOS"
                                 ];
 
                     if (exceptedNames.Contains(command.Name) == false)
@@ -862,7 +870,7 @@ namespace VkGenerator
                                 writer.WriteLine($"public const ulong {nameMangler.MangleConstantName(name)} = {(ulong)constant.IntValue};");
                                 break;
                             case ConstantType.Float:
-                                writer.WriteLine($"public const float {nameMangler.MangleConstantName(name)} = {(int)constant.FloatValue};");
+                                writer.WriteLine($"public const float {nameMangler.MangleConstantName(name)} = {constant.FloatValue}f;");
                                 break;
                             case ConstantType.String:
                                 // FIXME: Should expose these are string and/or ReadOnlySpan<byte>?

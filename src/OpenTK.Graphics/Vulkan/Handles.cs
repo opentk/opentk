@@ -74,7 +74,9 @@ namespace OpenTK.Graphics.Vulkan
         public static explicit operator ulong(VkBufferCollectionFUCHSIA handle) => handle.Handle;
         public static explicit operator VkBufferCollectionFUCHSIA(ulong handle) => new VkBufferCollectionFUCHSIA(handle);
     }
-    /// <summary><b>[requires: v1.0]</b> Used by <see cref="Vk.CreateBufferView"/>, <see cref="Vk.DestroyBufferView"/></summary>
+    /// <summary><b>[requires: v1.0]</b> 
+    /// <br/><b>[deprecated by: VK_EXT_descriptor_heap]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#legacy-resource-objects" />
+    /// Used by <see cref="Vk.CreateBufferView"/>, <see cref="Vk.DestroyBufferView"/></summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkBufferView.html" /></remarks>
     [DebuggerDisplay("VkBufferView\\{{Handle}\\}")]
     public unsafe struct VkBufferView : IEquatable<VkBufferView>
@@ -261,7 +263,9 @@ namespace OpenTK.Graphics.Vulkan
         public static explicit operator ulong(VkDeferredOperationKHR handle) => handle.Handle;
         public static explicit operator VkDeferredOperationKHR(ulong handle) => new VkDeferredOperationKHR(handle);
     }
-    /// <summary><b>[requires: v1.0]</b> Used by <see cref="Vk.CreateDescriptorPool"/>, <see cref="Vk.DestroyDescriptorPool"/>, <see cref="Vk.FreeDescriptorSets"/>, ...</summary>
+    /// <summary><b>[requires: v1.0]</b> 
+    /// <br/><b>[deprecated by: VK_EXT_descriptor_heap]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#legacy-descriptor-sets" />
+    /// Used by <see cref="Vk.CreateDescriptorPool"/>, <see cref="Vk.DestroyDescriptorPool"/>, <see cref="Vk.FreeDescriptorSets"/>, ...</summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDescriptorPool.html" /></remarks>
     [DebuggerDisplay("VkDescriptorPool\\{{Handle}\\}")]
     public unsafe struct VkDescriptorPool : IEquatable<VkDescriptorPool>
@@ -278,7 +282,9 @@ namespace OpenTK.Graphics.Vulkan
         public static explicit operator ulong(VkDescriptorPool handle) => handle.Handle;
         public static explicit operator VkDescriptorPool(ulong handle) => new VkDescriptorPool(handle);
     }
-    /// <summary><b>[requires: v1.0]</b> Used by <see cref="Vk.AllocateDescriptorSets"/>, <see cref="Vk.CmdBindDescriptorSets"/>, <see cref="Vk.FreeDescriptorSets"/>, ...</summary>
+    /// <summary><b>[requires: v1.0]</b> 
+    /// <br/><b>[deprecated by: VK_EXT_descriptor_heap]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#legacy-descriptor-sets" />
+    /// Used by <see cref="Vk.AllocateDescriptorSets"/>, <see cref="Vk.CmdBindDescriptorSets"/>, <see cref="Vk.FreeDescriptorSets"/>, ...</summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDescriptorSet.html" /></remarks>
     [DebuggerDisplay("VkDescriptorSet\\{{Handle}\\}")]
     public unsafe struct VkDescriptorSet : IEquatable<VkDescriptorSet>
@@ -295,7 +301,9 @@ namespace OpenTK.Graphics.Vulkan
         public static explicit operator ulong(VkDescriptorSet handle) => handle.Handle;
         public static explicit operator VkDescriptorSet(ulong handle) => new VkDescriptorSet(handle);
     }
-    /// <summary><b>[requires: v1.0]</b> Used by <see cref="Vk.CreateDescriptorSetLayout"/>, <see cref="Vk.DestroyDescriptorSetLayout"/>, <see cref="Vk.GetDescriptorSetLayoutBindingOffsetEXT"/>, ...</summary>
+    /// <summary><b>[requires: v1.0]</b> 
+    /// <br/><b>[deprecated by: VK_EXT_descriptor_heap]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#legacy-descriptor-sets" />
+    /// Used by <see cref="Vk.CreateDescriptorSetLayout"/>, <see cref="Vk.DestroyDescriptorSetLayout"/>, <see cref="Vk.GetDescriptorSetLayoutBindingOffsetEXT"/>, ...</summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDescriptorSetLayout.html" /></remarks>
     [DebuggerDisplay("VkDescriptorSetLayout\\{{Handle}\\}")]
     public unsafe struct VkDescriptorSetLayout : IEquatable<VkDescriptorSetLayout>
@@ -706,7 +714,9 @@ namespace OpenTK.Graphics.Vulkan
         public static explicit operator ulong(VkPipelineCache handle) => handle.Handle;
         public static explicit operator VkPipelineCache(ulong handle) => new VkPipelineCache(handle);
     }
-    /// <summary><b>[requires: v1.0]</b> Used by <see cref="Vk.CmdBindDescriptorBufferEmbeddedSamplersEXT"/>, <see cref="Vk.CmdBindDescriptorSets"/>, <see cref="Vk.CmdPushConstants"/>, ...</summary>
+    /// <summary><b>[requires: v1.0]</b> 
+    /// <br/><b>[deprecated by: VK_EXT_descriptor_heap]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#legacy-descriptor-sets" />
+    /// Used by <see cref="Vk.CmdBindDescriptorBufferEmbeddedSamplersEXT"/>, <see cref="Vk.CmdBindDescriptorSets"/>, <see cref="Vk.CmdPushConstants"/>, ...</summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPipelineLayout.html" /></remarks>
     [DebuggerDisplay("VkPipelineLayout\\{{Handle}\\}")]
     public unsafe struct VkPipelineLayout : IEquatable<VkPipelineLayout>
@@ -811,7 +821,9 @@ namespace OpenTK.Graphics.Vulkan
         public static explicit operator ulong(VkRenderPass handle) => handle.Handle;
         public static explicit operator VkRenderPass(ulong handle) => new VkRenderPass(handle);
     }
-    /// <summary><b>[requires: v1.0]</b> Used by <see cref="Vk.CreateSampler"/>, <see cref="Vk.DestroySampler"/></summary>
+    /// <summary><b>[requires: v1.0]</b> 
+    /// <br/><b>[deprecated by: VK_EXT_descriptor_heap]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#legacy-resource-objects" />
+    /// Used by <see cref="Vk.CreateSampler"/>, <see cref="Vk.DestroySampler"/></summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkSampler.html" /></remarks>
     [DebuggerDisplay("VkSampler\\{{Handle}\\}")]
     public unsafe struct VkSampler : IEquatable<VkSampler>
@@ -964,7 +976,7 @@ namespace OpenTK.Graphics.Vulkan
         public static explicit operator ulong(VkSwapchainKHR handle) => handle.Handle;
         public static explicit operator VkSwapchainKHR(ulong handle) => new VkSwapchainKHR(handle);
     }
-    /// <summary><b>[requires: VK_ARM_tensors]</b> Used by <see cref="Vk.CreateTensorARM"/>, <see cref="Vk.DestroyTensorARM"/></summary>
+    /// <summary><b>[requires: VK_EXT_descriptor_heap | VK_ARM_tensors]</b> Used by <see cref="Vk.CreateTensorARM"/>, <see cref="Vk.DestroyTensorARM"/>, <see cref="Vk.GetTensorOpaqueCaptureDataARM"/></summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkTensorARM.html" /></remarks>
     [DebuggerDisplay("VkTensorARM\\{{Handle}\\}")]
     public unsafe struct VkTensorARM : IEquatable<VkTensorARM>
