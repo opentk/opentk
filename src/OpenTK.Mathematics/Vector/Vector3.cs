@@ -25,6 +25,7 @@ using System.Diagnostics.Contracts;
 using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using System.Runtime.Intrinsics;
 using System.Xml.Serialization;
 
 namespace OpenTK.Mathematics
@@ -68,6 +69,66 @@ namespace OpenTK.Mathematics
         /// The Z component of the Vector3.
         /// </summary>
         public float Z;
+
+        /// <summary>
+        /// Defines a unit-length Vector3 that points towards the X-axis.
+        /// </summary>
+        public static readonly Vector3 UnitX = new Vector3(1, 0, 0);
+
+        /// <summary>
+        /// Defines a unit-length Vector3 that points towards the Y-axis.
+        /// </summary>
+        public static readonly Vector3 UnitY = new Vector3(0, 1, 0);
+
+        /// <summary>
+        /// Defines a unit-length Vector3 that points towards the Z-axis.
+        /// </summary>
+        public static readonly Vector3 UnitZ = new Vector3(0, 0, 1);
+
+        /// <summary>
+        /// Defines an instance with all components set to 0.
+        /// </summary>
+        public static readonly Vector3 Zero = new Vector3(0, 0, 0);
+
+        /// <summary>
+        /// Defines an instance with all components set to 1.
+        /// </summary>
+        public static readonly Vector3 One = new Vector3(1, 1, 1);
+
+        /// <summary>
+        /// Defines an instance with all components set to positive infinity.
+        /// </summary>
+        public static readonly Vector3 PositiveInfinity = new Vector3(float.PositiveInfinity, float.PositiveInfinity, float.PositiveInfinity);
+
+        /// <summary>
+        /// Defines an instance with all components set to negative infinity.
+        /// </summary>
+        public static readonly Vector3 NegativeInfinity = new Vector3(float.NegativeInfinity, float.NegativeInfinity, float.NegativeInfinity);
+
+        /// <summary>
+        /// Defines the size of the Vector3 struct in bytes.
+        /// </summary>
+        public static readonly int SizeInBytes = Marshal.SizeOf<Vector3>();
+
+        /// <summary>
+        /// Gets the additive identity of Vector3. Equivalent to Vector3.Zero.
+        /// </summary>
+        public static Vector3 AdditiveIdentity => Zero;
+
+        /// <summary>
+        /// Gets the multiplicative identity of Vector3. Equivalent to Vector3.One.
+        /// </summary>
+        public static Vector3 MultiplicativeIdentity => One;
+
+        /// <summary>
+        /// Gets the max value for Vector3. Equivalent to Vector3.PositiveInfinity.
+        /// </summary>
+        public static Vector3 MaxValue => PositiveInfinity;
+
+        /// <summary>
+        /// Gets the min value for Vector3. Equivalent to Vector3.NegativeInfinity.
+        /// </summary>
+        public static Vector3 MinValue => NegativeInfinity;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Vector3"/> struct.
@@ -145,12 +206,12 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <see cref="LengthFast"/>
         /// <seealso cref="LengthSquared"/>
-        public readonly float Length => MathF.Sqrt((X * X) + (Y * Y) + (Z * Z));
+        public readonly float Length => MathF.Sqrt(LengthSquared);
 
         /// <summary>
         /// Gets an approximation of 1 over the length (magnitude) of the vector.
         /// </summary>
-        public readonly float ReciprocalLengthFast => MathF.ReciprocalSqrtEstimate((X * X) + (Y * Y) + (Z * Z));
+        public readonly float ReciprocalLengthFast => MathF.ReciprocalSqrtEstimate(LengthSquared);
 
         /// <summary>
         /// Gets an approximation of the vector length (magnitude).
@@ -160,7 +221,7 @@ namespace OpenTK.Mathematics
         /// </remarks>
         /// <see cref="Length"/>
         /// <seealso cref="LengthSquared"/>
-        public readonly float LengthFast => 1.0f / MathF.ReciprocalSqrtEstimate((X * X) + (Y * Y) + (Z * Z));
+        public readonly float LengthFast => 1.0f / MathF.ReciprocalSqrtEstimate(LengthSquared);
 
         /// <summary>
         /// Gets the square of the vector length (magnitude).
@@ -171,27 +232,7 @@ namespace OpenTK.Mathematics
         /// </remarks>
         /// <see cref="Length"/>
         /// <seealso cref="LengthFast"/>
-        public readonly float LengthSquared => (X * X) + (Y * Y) + (Z * Z);
-
-        /// <summary>
-        /// Gets the additive identity of Vector3. Equivalent to Vector3.Zero.
-        /// </summary>
-        public static Vector3 AdditiveIdentity => Zero;
-
-        /// <summary>
-        /// Gets the multiplicative identity of Vector3. Equivalent to Vector3.One.
-        /// </summary>
-        public static Vector3 MultiplicativeIdentity => One;
-
-        /// <summary>
-        /// Gets the max value for Vector3. Equivalent to Vector3.PositiveInfinity.
-        /// </summary>
-        public static Vector3 MaxValue => PositiveInfinity;
-
-        /// <summary>
-        /// Gets the min value for Vector3. Equivalent to Vector3.NegativeInfinity.
-        /// </summary>
-        public static Vector3 MinValue => NegativeInfinity;
+        public readonly float LengthSquared => Dot(this, this);
 
         /// <summary>
         /// Returns a copy of the Vector3 scaled to unit length.
@@ -199,9 +240,7 @@ namespace OpenTK.Mathematics
         /// <returns>The normalized copy.</returns>
         public readonly Vector3 Normalized()
         {
-            Vector3 v = this;
-            v.Normalize();
-            return v;
+            return Normalize(this);
         }
 
         /// <summary>
@@ -209,10 +248,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         public void Normalize()
         {
-            float scale = 1.0f / Length;
-            X *= scale;
-            Y *= scale;
-            Z *= scale;
+            this = Normalize(this);
         }
 
         /// <summary>
@@ -220,10 +256,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         public void NormalizeFast()
         {
-            float scale = MathF.ReciprocalSqrtEstimate((X * X) + (Y * Y) + (Z * Z));
-            X *= scale;
-            Y *= scale;
-            Z *= scale;
+            this = NormalizeFast(this);
         }
 
         /// <summary>
@@ -232,11 +265,7 @@ namespace OpenTK.Mathematics
         /// <returns>The component-wise absolute value vector.</returns>
         public readonly Vector3 Abs()
         {
-            Vector3 result = this;
-            result.X = MathF.Abs(result.X);
-            result.Y = MathF.Abs(result.Y);
-            result.Z = MathF.Abs(result.Z);
-            return result;
+            return Abs(this);
         }
 
         /// <summary>
@@ -291,46 +320,6 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Defines a unit-length Vector3 that points towards the X-axis.
-        /// </summary>
-        public static readonly Vector3 UnitX = new Vector3(1, 0, 0);
-
-        /// <summary>
-        /// Defines a unit-length Vector3 that points towards the Y-axis.
-        /// </summary>
-        public static readonly Vector3 UnitY = new Vector3(0, 1, 0);
-
-        /// <summary>
-        /// Defines a unit-length Vector3 that points towards the Z-axis.
-        /// </summary>
-        public static readonly Vector3 UnitZ = new Vector3(0, 0, 1);
-
-        /// <summary>
-        /// Defines an instance with all components set to 0.
-        /// </summary>
-        public static readonly Vector3 Zero = new Vector3(0, 0, 0);
-
-        /// <summary>
-        /// Defines an instance with all components set to 1.
-        /// </summary>
-        public static readonly Vector3 One = new Vector3(1, 1, 1);
-
-        /// <summary>
-        /// Defines an instance with all components set to positive infinity.
-        /// </summary>
-        public static readonly Vector3 PositiveInfinity = new Vector3(float.PositiveInfinity, float.PositiveInfinity, float.PositiveInfinity);
-
-        /// <summary>
-        /// Defines an instance with all components set to negative infinity.
-        /// </summary>
-        public static readonly Vector3 NegativeInfinity = new Vector3(float.NegativeInfinity, float.NegativeInfinity, float.NegativeInfinity);
-
-        /// <summary>
-        /// Defines the size of the Vector3 struct in bytes.
-        /// </summary>
-        public static readonly int SizeInBytes = Marshal.SizeOf<Vector3>();
-
-        /// <summary>
         /// Adds two vectors.
         /// </summary>
         /// <param name="a">Left operand.</param>
@@ -339,8 +328,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector3 Add(Vector3 a, Vector3 b)
         {
-            Add(in a, in b, out a);
-            return a;
+            return (a.AsVector128Unsafe() + b.AsVector128Unsafe()).AsVector3Otk();
         }
 
         /// <summary>
@@ -351,9 +339,7 @@ namespace OpenTK.Mathematics
         /// <param name="result">Result of operation.</param>
         public static void Add(in Vector3 a, in Vector3 b, out Vector3 result)
         {
-            result.X = a.X + b.X;
-            result.Y = a.Y + b.Y;
-            result.Z = a.Z + b.Z;
+            result = (a.AsVector128Unsafe() + b.AsVector128Unsafe()).AsVector3Otk();
         }
 
         /// <summary>
@@ -365,8 +351,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector3 Subtract(Vector3 a, Vector3 b)
         {
-            Subtract(in a, in b, out a);
-            return a;
+            return (a.AsVector128Unsafe() - b.AsVector128Unsafe()).AsVector3Otk();
         }
 
         /// <summary>
@@ -377,9 +362,7 @@ namespace OpenTK.Mathematics
         /// <param name="result">Result of subtraction.</param>
         public static void Subtract(in Vector3 a, in Vector3 b, out Vector3 result)
         {
-            result.X = a.X - b.X;
-            result.Y = a.Y - b.Y;
-            result.Z = a.Z - b.Z;
+            result = (a.AsVector128Unsafe() - b.AsVector128Unsafe()).AsVector3Otk();
         }
 
         /// <summary>
@@ -391,8 +374,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector3 Multiply(Vector3 vector, float scale)
         {
-            Multiply(in vector, scale, out vector);
-            return vector;
+            return (vector.AsVector128Unsafe() * Vector128.Create(scale)).AsVector3Otk();
         }
 
         /// <summary>
@@ -403,9 +385,7 @@ namespace OpenTK.Mathematics
         /// <param name="result">Result of the operation.</param>
         public static void Multiply(in Vector3 vector, float scale, out Vector3 result)
         {
-            result.X = vector.X * scale;
-            result.Y = vector.Y * scale;
-            result.Z = vector.Z * scale;
+            result = (vector.AsVector128Unsafe() * Vector128.Create(scale)).AsVector3Otk();
         }
 
         /// <summary>
@@ -417,8 +397,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector3 Multiply(Vector3 vector, Vector3 scale)
         {
-            Multiply(in vector, in scale, out vector);
-            return vector;
+            return (vector.AsVector128Unsafe() * scale.AsVector128Unsafe()).AsVector3Otk();
         }
 
         /// <summary>
@@ -429,9 +408,7 @@ namespace OpenTK.Mathematics
         /// <param name="result">Result of the operation.</param>
         public static void Multiply(in Vector3 vector, in Vector3 scale, out Vector3 result)
         {
-            result.X = vector.X * scale.X;
-            result.Y = vector.Y * scale.Y;
-            result.Z = vector.Z * scale.Z;
+            result = (vector.AsVector128Unsafe() * scale.AsVector128Unsafe()).AsVector3Otk();
         }
 
         /// <summary>
@@ -443,8 +420,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector3 Divide(Vector3 vector, float scale)
         {
-            Divide(in vector, scale, out vector);
-            return vector;
+            return (vector.AsVector128Unsafe() / Vector128.Create(scale)).AsVector3Otk();
         }
 
         /// <summary>
@@ -455,9 +431,7 @@ namespace OpenTK.Mathematics
         /// <param name="result">Result of the operation.</param>
         public static void Divide(in Vector3 vector, float scale, out Vector3 result)
         {
-            result.X = vector.X / scale;
-            result.Y = vector.Y / scale;
-            result.Z = vector.Z / scale;
+            result = (vector.AsVector128Unsafe() / Vector128.Create(scale)).AsVector3Otk();
         }
 
         /// <summary>
@@ -469,8 +443,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector3 Divide(Vector3 vector, Vector3 scale)
         {
-            Divide(in vector, in scale, out vector);
-            return vector;
+            return (vector.AsVector128Unsafe() / scale.AsVector128Unsafe()).AsVector3Otk();
         }
 
         /// <summary>
@@ -481,9 +454,7 @@ namespace OpenTK.Mathematics
         /// <param name="result">Result of the operation.</param>
         public static void Divide(in Vector3 vector, in Vector3 scale, out Vector3 result)
         {
-            result.X = vector.X / scale.X;
-            result.Y = vector.Y / scale.Y;
-            result.Z = vector.Z / scale.Z;
+            result = (vector.AsVector128Unsafe() / scale.AsVector128Unsafe()).AsVector3Otk();
         }
 
         /// <summary>
@@ -495,10 +466,20 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector3 ComponentMin(Vector3 a, Vector3 b)
         {
-            a.X = a.X < b.X ? a.X : b.X;
-            a.Y = a.Y < b.Y ? a.Y : b.Y;
-            a.Z = a.Z < b.Z ? a.Z : b.Z;
-            return a;
+            return Vector128.Min(a.AsVector128Unsafe(), b.AsVector128Unsafe()).AsVector3Otk();
+        }
+
+        /// <summary>
+        /// Returns a vector created from the smallest of the corresponding components of the given vectors.
+        /// This version has platform dependent behaviour for <c>NaN</c> and <c>NegativeZero</c> but potentially faster than <see cref="ComponentMin(Vector3, Vector3)"/>.
+        /// </summary>
+        /// <param name="a">First operand.</param>
+        /// <param name="b">Second operand.</param>
+        /// <returns>The component-wise minimum.</returns>
+        [Pure]
+        public static Vector3 ComponentMinNative(Vector3 a, Vector3 b)
+        {
+            return Vector128.MinNative(a.AsVector128Unsafe(), b.AsVector128Unsafe()).AsVector3Otk();
         }
 
         /// <summary>
@@ -509,9 +490,19 @@ namespace OpenTK.Mathematics
         /// <param name="result">The component-wise minimum.</param>
         public static void ComponentMin(in Vector3 a, in Vector3 b, out Vector3 result)
         {
-            result.X = a.X < b.X ? a.X : b.X;
-            result.Y = a.Y < b.Y ? a.Y : b.Y;
-            result.Z = a.Z < b.Z ? a.Z : b.Z;
+            result = Vector128.Min(a.AsVector128Unsafe(), b.AsVector128Unsafe()).AsVector3Otk();
+        }
+
+        /// <summary>
+        /// Returns a vector created from the smallest of the corresponding components of the given vectors.
+        /// This version has platform dependent behaviour for <c>NaN</c> and <c>NegativeZero</c> but potentially faster than <see cref="ComponentMin(in Vector3, in Vector3, out Vector3)"/>.
+        /// </summary>
+        /// <param name="a">First operand.</param>
+        /// <param name="b">Second operand.</param>
+        /// <param name="result">The component-wise minimum.</param>
+        public static void ComponentMinNative(in Vector3 a, in Vector3 b, out Vector3 result)
+        {
+            result = Vector128.MinNative(a.AsVector128Unsafe(), b.AsVector128Unsafe()).AsVector3Otk();
         }
 
         /// <summary>
@@ -523,10 +514,20 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector3 ComponentMax(Vector3 a, Vector3 b)
         {
-            a.X = a.X > b.X ? a.X : b.X;
-            a.Y = a.Y > b.Y ? a.Y : b.Y;
-            a.Z = a.Z > b.Z ? a.Z : b.Z;
-            return a;
+            return Vector128.Max(a.AsVector128Unsafe(), b.AsVector128Unsafe()).AsVector3Otk();
+        }
+
+        /// <summary>
+        /// Returns a vector created from the largest of the corresponding components of the given vectors.
+        /// This version has platform dependent behaviour for <c>NaN</c> and <c>NegativeZero</c> but potentially faster than <see cref="ComponentMax(Vector3, Vector3)"/>.
+        /// </summary>
+        /// <param name="a">First operand.</param>
+        /// <param name="b">Second operand.</param>
+        /// <returns>The component-wise maximum.</returns>
+        [Pure]
+        public static Vector3 ComponentMaxNative(Vector3 a, Vector3 b)
+        {
+            return Vector128.MaxNative(a.AsVector128Unsafe(), b.AsVector128Unsafe()).AsVector3Otk();
         }
 
         /// <summary>
@@ -537,9 +538,19 @@ namespace OpenTK.Mathematics
         /// <param name="result">The component-wise maximum.</param>
         public static void ComponentMax(in Vector3 a, in Vector3 b, out Vector3 result)
         {
-            result.X = a.X > b.X ? a.X : b.X;
-            result.Y = a.Y > b.Y ? a.Y : b.Y;
-            result.Z = a.Z > b.Z ? a.Z : b.Z;
+            result = Vector128.Max(a.AsVector128Unsafe(), b.AsVector128Unsafe()).AsVector3Otk();
+        }
+
+        /// <summary>
+        /// Returns a vector created from the largest of the corresponding components of the given vectors.
+        /// This version has platform dependent behaviour for <c>NaN</c> and <c>NegativeZero</c> but potentially faster than <see cref="ComponentMax(in Vector3, in Vector3, out Vector3)"/>.
+        /// </summary>
+        /// <param name="a">First operand.</param>
+        /// <param name="b">Second operand.</param>
+        /// <param name="result">The component-wise maximum.</param>
+        public static void ComponentMaxNative(in Vector3 a, in Vector3 b, out Vector3 result)
+        {
+            result = Vector128.MaxNative(a.AsVector128Unsafe(), b.AsVector128Unsafe()).AsVector3Otk();
         }
 
         /// <summary>
@@ -602,10 +613,21 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector3 Clamp(Vector3 vec, Vector3 min, Vector3 max)
         {
-            vec.X = vec.X < min.X ? min.X : vec.X > max.X ? max.X : vec.X;
-            vec.Y = vec.Y < min.Y ? min.Y : vec.Y > max.Y ? max.Y : vec.Y;
-            vec.Z = vec.Z < min.Z ? min.Z : vec.Z > max.Z ? max.Z : vec.Z;
-            return vec;
+            return Vector128.Clamp(vec.AsVector128Unsafe(), min.AsVector128Unsafe(), max.AsVector128Unsafe()).AsVector3Otk();
+        }
+
+        /// <summary>
+        /// Clamp a vector to the given minimum and maximum vectors.
+        /// This version has platform dependent behaviour for <c>NaN</c> and <c>NegativeZero</c> but potentially faster than <see cref="Clamp(Vector3, Vector3, Vector3)"/>.
+        /// </summary>
+        /// <param name="vec">Input vector.</param>
+        /// <param name="min">Minimum vector.</param>
+        /// <param name="max">Maximum vector.</param>
+        /// <returns>The clamped vector.</returns>
+        [Pure]
+        public static Vector3 ClampNative(Vector3 vec, Vector3 min, Vector3 max)
+        {
+            return Vector128.ClampNative(vec.AsVector128Unsafe(), min.AsVector128Unsafe(), max.AsVector128Unsafe()).AsVector3Otk();
         }
 
         /// <summary>
@@ -617,9 +639,20 @@ namespace OpenTK.Mathematics
         /// <param name="result">The clamped vector.</param>
         public static void Clamp(in Vector3 vec, in Vector3 min, in Vector3 max, out Vector3 result)
         {
-            result.X = vec.X < min.X ? min.X : vec.X > max.X ? max.X : vec.X;
-            result.Y = vec.Y < min.Y ? min.Y : vec.Y > max.Y ? max.Y : vec.Y;
-            result.Z = vec.Z < min.Z ? min.Z : vec.Z > max.Z ? max.Z : vec.Z;
+            result = Vector128.Clamp(vec.AsVector128Unsafe(), min.AsVector128Unsafe(), max.AsVector128Unsafe()).AsVector3Otk();
+        }
+
+        /// <summary>
+        /// Clamp a vector to the given minimum and maximum vectors.
+        /// This version has platform dependent behaviour for <c>NaN</c> and <c>NegativeZero</c> but potentially faster than <see cref="Clamp(in Vector3, in Vector3, in Vector3, out Vector3)"/>.
+        /// </summary>
+        /// <param name="vec">Input vector.</param>
+        /// <param name="min">Minimum vector.</param>
+        /// <param name="max">Maximum vector.</param>
+        /// <param name="result">The clamped vector.</param>
+        public static void ClampNative(in Vector3 vec, in Vector3 min, in Vector3 max, out Vector3 result)
+        {
+            result = Vector128.ClampNative(vec.AsVector128Unsafe(), min.AsVector128Unsafe(), max.AsVector128Unsafe()).AsVector3Otk();
         }
 
         /// <summary>
@@ -630,10 +663,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector3 Abs(Vector3 vec)
         {
-            vec.X = MathF.Abs(vec.X);
-            vec.Y = MathF.Abs(vec.Y);
-            vec.Z = MathF.Abs(vec.Z);
-            return vec;
+            return Vector128.Abs(vec.AsVector128Unsafe()).AsVector3Otk();
         }
 
         /// <summary>
@@ -643,9 +673,7 @@ namespace OpenTK.Mathematics
         /// <param name="result">The component-wise absolute value vector.</param>
         public static void Abs(in Vector3 vec, out Vector3 result)
         {
-            result.X = MathF.Abs(vec.X);
-            result.Y = MathF.Abs(vec.Y);
-            result.Z = MathF.Abs(vec.Z);
+            result = Vector128.Abs(vec.AsVector128Unsafe()).AsVector3Otk();
         }
 
         /// <summary>
@@ -656,10 +684,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector3 Round(Vector3 vec)
         {
-            vec.X = MathF.Round(vec.X);
-            vec.Y = MathF.Round(vec.Y);
-            vec.Z = MathF.Round(vec.Z);
-            return vec;
+            return Vector128.Round(vec.AsVector128Unsafe()).AsVector3Otk();
         }
 
         /// <summary>
@@ -669,9 +694,7 @@ namespace OpenTK.Mathematics
         /// <param name="result">The component-wise rounded vector.</param>
         public static void Round(in Vector3 vec, out Vector3 result)
         {
-            result.X = MathF.Round(vec.X);
-            result.Y = MathF.Round(vec.Y);
-            result.Z = MathF.Round(vec.Z);
+            result = Vector128.Round(vec.AsVector128Unsafe()).AsVector3Otk();
         }
 
         /// <summary>
@@ -684,10 +707,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector3 Round(Vector3 vec, MidpointRounding rounding)
         {
-            vec.X = MathF.Round(vec.X, rounding);
-            vec.Y = MathF.Round(vec.Y, rounding);
-            vec.Z = MathF.Round(vec.Z, rounding);
-            return vec;
+            return Vector128.Round(vec.AsVector128Unsafe(), rounding).AsVector3Otk();
         }
 
         /// <summary>
@@ -699,9 +719,7 @@ namespace OpenTK.Mathematics
         /// <param name="result">The component-wise rounded vector.</param>
         public static void Round(in Vector3 vec, MidpointRounding rounding, out Vector3 result)
         {
-            result.X = MathF.Round(vec.X, rounding);
-            result.Y = MathF.Round(vec.Y, rounding);
-            result.Z = MathF.Round(vec.Z, rounding);
+            result = Vector128.Round(vec.AsVector128Unsafe(), rounding).AsVector3Otk();
         }
 
         /// <summary>
@@ -713,10 +731,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector3 Ceiling(Vector3 vec)
         {
-            vec.X = MathF.Ceiling(vec.X);
-            vec.Y = MathF.Ceiling(vec.Y);
-            vec.Z = MathF.Ceiling(vec.Z);
-            return vec;
+            return Vector128.Ceiling(vec.AsVector128Unsafe()).AsVector3Otk();
         }
 
         /// <summary>
@@ -727,9 +742,7 @@ namespace OpenTK.Mathematics
         /// <param name="result">The component-wise ceiling vector.</param>
         public static void Ceiling(in Vector3 vec, out Vector3 result)
         {
-            result.X = MathF.Ceiling(vec.X);
-            result.Y = MathF.Ceiling(vec.Y);
-            result.Z = MathF.Ceiling(vec.Z);
+            result = Vector128.Ceiling(vec.AsVector128Unsafe()).AsVector3Otk();
         }
 
         /// <summary>
@@ -741,10 +754,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector3 Floor(Vector3 vec)
         {
-            vec.X = MathF.Floor(vec.X);
-            vec.Y = MathF.Floor(vec.Y);
-            vec.Z = MathF.Floor(vec.Z);
-            return vec;
+            return Vector128.Floor(vec.AsVector128Unsafe()).AsVector3Otk();
         }
 
         /// <summary>
@@ -755,9 +765,7 @@ namespace OpenTK.Mathematics
         /// <param name="result">The component-wise floored vector.</param>
         public static void Floor(in Vector3 vec, out Vector3 result)
         {
-            result.X = MathF.Floor(vec.X);
-            result.Y = MathF.Floor(vec.Y);
-            result.Z = MathF.Floor(vec.Z);
+            result = Vector128.Floor(vec.AsVector128Unsafe()).AsVector3Otk();
         }
 
         /// <summary>
@@ -769,10 +777,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector3 Truncate(Vector3 vec)
         {
-            vec.X = MathF.Truncate(vec.X);
-            vec.Y = MathF.Truncate(vec.Y);
-            vec.Z = MathF.Truncate(vec.Z);
-            return vec;
+            return Vector128.Truncate(vec.AsVector128Unsafe()).AsVector3Otk();
         }
 
         /// <summary>
@@ -783,9 +788,7 @@ namespace OpenTK.Mathematics
         /// <param name="result">The component-wise truncated vector.</param>
         public static void Truncate(in Vector3 vec, out Vector3 result)
         {
-            result.X = MathF.Truncate(vec.X);
-            result.Y = MathF.Truncate(vec.Y);
-            result.Z = MathF.Truncate(vec.Z);
+            result = Vector128.Truncate(vec.AsVector128Unsafe()).AsVector3Otk();
         }
 
         /// <summary>
@@ -797,8 +800,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static float Distance(Vector3 vec1, Vector3 vec2)
         {
-            Distance(in vec1, in vec2, out float result);
-            return result;
+            return (vec1 - vec2).Length;
         }
 
         /// <summary>
@@ -809,7 +811,7 @@ namespace OpenTK.Mathematics
         /// <param name="result">The distance.</param>
         public static void Distance(in Vector3 vec1, in Vector3 vec2, out float result)
         {
-            result = MathF.Sqrt(((vec2.X - vec1.X) * (vec2.X - vec1.X)) + ((vec2.Y - vec1.Y) * (vec2.Y - vec1.Y)) + ((vec2.Z - vec1.Z) * (vec2.Z - vec1.Z)));
+            result = (vec1 - vec2).Length;
         }
 
         /// <summary>
@@ -821,8 +823,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static float DistanceSquared(Vector3 vec1, Vector3 vec2)
         {
-            DistanceSquared(in vec1, in vec2, out float result);
-            return result;
+            return (vec1 - vec2).LengthSquared;
         }
 
         /// <summary>
@@ -833,7 +834,7 @@ namespace OpenTK.Mathematics
         /// <param name="result">The squared distance.</param>
         public static void DistanceSquared(in Vector3 vec1, in Vector3 vec2, out float result)
         {
-            result = ((vec2.X - vec1.X) * (vec2.X - vec1.X)) + ((vec2.Y - vec1.Y) * (vec2.Y - vec1.Y)) + ((vec2.Z - vec1.Z) * (vec2.Z - vec1.Z));
+            result = (vec1 - vec2).LengthSquared;
         }
 
         /// <summary>
@@ -844,11 +845,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector3 Normalize(Vector3 vec)
         {
-            float scale = 1.0f / vec.Length;
-            vec.X *= scale;
-            vec.Y *= scale;
-            vec.Z *= scale;
-            return vec;
+            return (vec.AsVector128Unsafe() / vec.Length).AsVector3Otk();
         }
 
         /// <summary>
@@ -858,10 +855,7 @@ namespace OpenTK.Mathematics
         /// <param name="result">The normalized vector.</param>
         public static void Normalize(in Vector3 vec, out Vector3 result)
         {
-            float scale = 1.0f / vec.Length;
-            result.X = vec.X * scale;
-            result.Y = vec.Y * scale;
-            result.Z = vec.Z * scale;
+            result = (vec.AsVector128Unsafe() / vec.Length).AsVector3Otk();
         }
 
         /// <summary>
@@ -872,11 +866,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector3 NormalizeFast(Vector3 vec)
         {
-            float scale = MathF.ReciprocalSqrtEstimate((vec.X * vec.X) + (vec.Y * vec.Y) + (vec.Z * vec.Z));
-            vec.X *= scale;
-            vec.Y *= scale;
-            vec.Z *= scale;
-            return vec;
+            return (vec.AsVector128Unsafe() * vec.ReciprocalLengthFast).AsVector3Otk();
         }
 
         /// <summary>
@@ -886,10 +876,7 @@ namespace OpenTK.Mathematics
         /// <param name="result">The normalized vector.</param>
         public static void NormalizeFast(in Vector3 vec, out Vector3 result)
         {
-            float scale = MathF.ReciprocalSqrtEstimate((vec.X * vec.X) + (vec.Y * vec.Y) + (vec.Z * vec.Z));
-            result.X = vec.X * scale;
-            result.Y = vec.Y * scale;
-            result.Z = vec.Z * scale;
+            result = (vec.AsVector128Unsafe() * vec.ReciprocalLengthFast).AsVector3Otk();
         }
 
         /// <summary>
@@ -901,7 +888,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static float Dot(Vector3 left, Vector3 right)
         {
-            return (left.X * right.X) + (left.Y * right.Y) + (left.Z * right.Z);
+            return Vector128.Dot(left.AsVector128(), right.AsVector128());
         }
 
         /// <summary>
@@ -912,7 +899,7 @@ namespace OpenTK.Mathematics
         /// <param name="result">The dot product of the two inputs.</param>
         public static void Dot(in Vector3 left, in Vector3 right, out float result)
         {
-            result = (left.X * right.X) + (left.Y * right.Y) + (left.Z * right.Z);
+            result = Vector128.Dot(left.AsVector128(), right.AsVector128());
         }
 
         /// <summary>
@@ -924,8 +911,13 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector3 Cross(Vector3 left, Vector3 right)
         {
-            Cross(in left, in right, out Vector3 result);
-            return result;
+            var vleft = left.AsVector128Unsafe();
+            var vright = right.AsVector128Unsafe();
+
+            var temp1 = Vector128.Shuffle(vleft, Vector128.Create(1, 2, 0, 0)) * Vector128.Shuffle(vright, Vector128.Create(2, 0, 1, 0));
+            var temp2 = Vector128.Shuffle(vleft, Vector128.Create(2, 0, 1, 0)) * Vector128.Shuffle(vright, Vector128.Create(1, 2, 0, 0));
+
+            return (temp1 - temp2).AsVector3Otk();
         }
 
         /// <summary>
@@ -936,9 +928,155 @@ namespace OpenTK.Mathematics
         /// <param name="result">The cross product of the two inputs.</param>
         public static void Cross(in Vector3 left, in Vector3 right, out Vector3 result)
         {
-            result.X = (left.Y * right.Z) - (left.Z * right.Y);
-            result.Y = (left.Z * right.X) - (left.X * right.Z);
-            result.Z = (left.X * right.Y) - (left.Y * right.X);
+            var vleft = left.AsVector128Unsafe();
+            var vright = right.AsVector128Unsafe();
+
+            var temp1 = Vector128.Shuffle(vleft, Vector128.Create(1, 2, 0, 0)) * Vector128.Shuffle(vright, Vector128.Create(2, 0, 1, 0));
+            var temp2 = Vector128.Shuffle(vleft, Vector128.Create(2, 0, 1, 0)) * Vector128.Shuffle(vright, Vector128.Create(1, 2, 0, 0));
+
+            result = (temp1 - temp2).AsVector3Otk();
+        }
+
+        /// <summary>
+        /// Computes the component-wise exponential.
+        /// </summary>
+        /// <param name="vec">The vector to calculate the exponential of.</param>
+        /// <returns>The component-wise exponental.</returns>
+        public static Vector3 Exp(Vector3 vec)
+        {
+            return Vector128.Exp(vec.AsVector128Unsafe()).AsVector3Otk();
+        }
+
+        /// <summary>
+        /// Computes the component-wise exponential.
+        /// </summary>
+        /// <param name="vec">The vector to calculate the exponential of.</param>
+        /// <param name="result">The component-wise exponental.</param>
+        public static void Exp(in Vector3 vec, out Vector3 result)
+        {
+            result = Vector128.Exp(vec.AsVector128Unsafe()).AsVector3Otk();
+        }
+
+        /// <summary>
+        /// Computes the component-wise natural logarithm.
+        /// </summary>
+        /// <param name="vec">The vector to calculate the natural logarithm of.</param>
+        /// <returns>The component-wise natural logarithm.</returns>
+        public static Vector3 Log(Vector3 vec)
+        {
+            return Vector128.Log(vec.AsVector128Unsafe()).AsVector3Otk();
+        }
+
+        /// <summary>
+        /// Computes the component-wise natural logarithm.
+        /// </summary>
+        /// <param name="vec">The vector to calculate the natural logarithm of.</param>
+        /// <param name="result">The component-wise natural logarithm.</param>
+        public static void Log(in Vector3 vec, out Vector3 result)
+        {
+            result = Vector128.Log(vec.AsVector128Unsafe()).AsVector3Otk();
+        }
+
+        /// <summary>
+        /// Computes the component-wise base-2 logarithm.
+        /// </summary>
+        /// <param name="vec">The vector to calculate the base-2 logarithm of.</param>
+        /// <returns>The component-wise base-2 logarithm.</returns>
+        public static Vector3 Log2(Vector3 vec)
+        {
+            return Vector128.Log2(vec.AsVector128Unsafe()).AsVector3Otk();
+        }
+
+        /// <summary>
+        /// Computes the component-wise base-2 logarithm.
+        /// </summary>
+        /// <param name="vec">The vector to calculate the base-2 logarithm of.</param>
+        /// <param name="result">The component-wise base-2 logarithm.</param>
+        public static void Log2(in Vector3 vec, out Vector3 result)
+        {
+            result = Vector128.Log2(vec.AsVector128Unsafe()).AsVector3Otk();
+        }
+
+        /// <summary>
+        /// Computes the component-wise power.
+        /// </summary>
+        /// <param name="x">The base.</param>
+        /// <param name="y">The exponent.</param>
+        /// <returns>Component-wise <paramref name="x"/> raised to the power of <paramref name="y"/>.</returns>
+        public static Vector3 Pow(Vector3 x, Vector3 y)
+        {
+            // FIXME: Proper SIMD implementation?
+            return new Vector3(
+                MathF.Pow(x.X, y.X),
+                MathF.Pow(x.Y, y.Y),
+                MathF.Pow(x.Z, y.Z));
+        }
+
+        /// <summary>
+        /// Computes the component-wise power.
+        /// </summary>
+        /// <param name="x">The base.</param>
+        /// <param name="y">The exponent.</param>
+        /// <param name="result">Component-wise <paramref name="x"/> raised to the power of <paramref name="y"/>.</param>
+        public static void Pow(in Vector3 x, in Vector3 y, out Vector3 result)
+        {
+            // FIXME: Proper SIMD implementation?
+            result.X = MathF.Pow(x.X, y.X);
+            result.Y = MathF.Pow(x.Y, y.Y);
+            result.Z = MathF.Pow(x.Z, y.Z);
+        }
+
+        /// <summary>
+        /// Computes the component-wise power.
+        /// </summary>
+        /// <param name="x">The base.</param>
+        /// <param name="y">The exponent.</param>
+        /// <returns>Component-wise <paramref name="x"/> raised to the power of <paramref name="y"/>.</returns>
+        public static Vector3 Pow(Vector3 x, float y)
+        {
+            // FIXME: Proper SIMD implementation?
+            return new Vector3(
+                MathF.Pow(x.X, y),
+                MathF.Pow(x.Y, y),
+                MathF.Pow(x.Z, y));
+        }
+
+        /// <summary>
+        /// Computes the component-wise power.
+        /// </summary>
+        /// <param name="x">The base.</param>
+        /// <param name="y">The exponent.</param>
+        /// <param name="result">Component-wise <paramref name="x"/> raised to the power of <paramref name="y"/>.</param>
+        public static void Pow(in Vector3 x, in float y, out Vector3 result)
+        {
+            // FIXME: Proper SIMD implementation?
+            result.X = MathF.Pow(x.X, y);
+            result.Y = MathF.Pow(x.Y, y);
+            result.Z = MathF.Pow(x.Z, y);
+        }
+
+        /// <summary>
+        /// Computes <c>x * y + z</c>, as a fused multiply add, only rounding once.
+        /// </summary>
+        /// <param name="x">The left multiplicand.</param>
+        /// <param name="y">The right multiplicand.</param>
+        /// <param name="z">The addend.</param>
+        /// <returns>Returns <c>x * y + z</c>.</returns>
+        public static Vector3 Fma(Vector3 x, Vector3 y, Vector3 z)
+        {
+            return Vector128.FusedMultiplyAdd(x.AsVector128Unsafe(), y.AsVector128Unsafe(), z.AsVector128Unsafe()).AsVector3Otk();
+        }
+
+        /// <summary>
+        /// Computes <c>x * y + z</c>, as a fused multiply add, only rounding once.
+        /// </summary>
+        /// <param name="x">The left multiplicand.</param>
+        /// <param name="y">The right multiplicand.</param>
+        /// <param name="z">The addend.</param>
+        /// <param name="result"><c>x * y + z</c>.</param>
+        public static void Fma(in Vector3 x, in Vector3 y, in Vector3 z, out Vector3 result)
+        {
+            result = Vector128.FusedMultiplyAdd(x.AsVector128Unsafe(), y.AsVector128Unsafe(), z.AsVector128Unsafe()).AsVector3Otk();
         }
 
         /// <summary>
@@ -1017,10 +1155,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector3 Lerp(Vector3 a, Vector3 b, float blend)
         {
-            a.X = (blend * (b.X - a.X)) + a.X;
-            a.Y = (blend * (b.Y - a.Y)) + a.Y;
-            a.Z = (blend * (b.Z - a.Z)) + a.Z;
-            return a;
+            return Vector128.Lerp(a.AsVector128Unsafe(), b.AsVector128Unsafe(), Vector128.Create(blend)).AsVector3Otk();
         }
 
         /// <summary>
@@ -1032,9 +1167,7 @@ namespace OpenTK.Mathematics
         /// <param name="result">a when blend=0, b when blend=1, and a linear combination otherwise.</param>
         public static void Lerp(in Vector3 a, in Vector3 b, float blend, out Vector3 result)
         {
-            result.X = (blend * (b.X - a.X)) + a.X;
-            result.Y = (blend * (b.Y - a.Y)) + a.Y;
-            result.Z = (blend * (b.Z - a.Z)) + a.Z;
+            result = Vector128.Lerp(a.AsVector128Unsafe(), b.AsVector128Unsafe(), Vector128.Create(blend)).AsVector3Otk();
         }
 
         /// <summary>
@@ -1047,10 +1180,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector3 Lerp(Vector3 a, Vector3 b, Vector3 blend)
         {
-            a.X = (blend.X * (b.X - a.X)) + a.X;
-            a.Y = (blend.Y * (b.Y - a.Y)) + a.Y;
-            a.Z = (blend.Z * (b.Z - a.Z)) + a.Z;
-            return a;
+            return Vector128.Lerp(a.AsVector128Unsafe(), b.AsVector128Unsafe(), blend.AsVector128Unsafe()).AsVector3Otk();
         }
 
         /// <summary>
@@ -1062,9 +1192,7 @@ namespace OpenTK.Mathematics
         /// <param name="result">a when blend=0, b when blend=1, and a component-wise linear combination otherwise.</param>
         public static void Lerp(in Vector3 a, in Vector3 b, Vector3 blend, out Vector3 result)
         {
-            result.X = (blend.X * (b.X - a.X)) + a.X;
-            result.Y = (blend.Y * (b.Y - a.Y)) + a.Y;
-            result.Z = (blend.Z * (b.Z - a.Z)) + a.Z;
+            result = Vector128.Lerp(a.AsVector128Unsafe(), b.AsVector128Unsafe(), blend.AsVector128Unsafe()).AsVector3Otk();
         }
 
         /// <summary>
@@ -1148,11 +1276,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector3 Elerp(Vector3 a, Vector3 b, float t)
         {
-            a.X = MathF.Pow(a.X, 1 - t) * MathF.Pow(b.X, t);
-            a.Y = MathF.Pow(a.Y, 1 - t) * MathF.Pow(b.Y, t);
-            a.Z = MathF.Pow(a.Z, 1 - t) * MathF.Pow(b.Z, t);
-
-            return a;
+            return Pow(a, 1 - t) * Pow(b, t);
         }
 
         /// <summary>
@@ -1166,9 +1290,7 @@ namespace OpenTK.Mathematics
         /// <seealso cref="MathHelper.Elerp(float, float, float)"/>
         public static void Elerp(in Vector3 a, in Vector3 b, float t, out Vector3 result)
         {
-            result.X = MathF.Pow(a.X, 1 - t) * MathF.Pow(b.X, t);
-            result.Y = MathF.Pow(a.Y, 1 - t) * MathF.Pow(b.Y, t);
-            result.Z = MathF.Pow(a.Z, 1 - t) * MathF.Pow(b.Z, t);
+            result = Pow(a, 1 - t) * Pow(b, t);
         }
 
         /// <summary>
@@ -1183,8 +1305,16 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector3 BaryCentric(Vector3 a, Vector3 b, Vector3 c, float u, float v)
         {
-            BaryCentric(in a, in b, in c, u, v, out Vector3 result);
-            return result;
+            // The JIT doesn't deal with intermediate results casting back to Vector3 from Vector128
+            // so to avoid a ton of copies we just bitcast to S.N. types that the JIT has special
+            // knowledge about and is able to never cast back to Vector3 from SIMD registers
+            // during the calculations and only do this conversion at the very end.
+            // - Noggin_bops 2025-12-31
+            System.Numerics.Vector3 sna = Unsafe.BitCast<Vector3, System.Numerics.Vector3>(a);
+            System.Numerics.Vector3 snb = Unsafe.BitCast<Vector3, System.Numerics.Vector3>(b);
+            System.Numerics.Vector3 snc = Unsafe.BitCast<Vector3, System.Numerics.Vector3>(c);
+            return Unsafe.BitCast<System.Numerics.Vector3, Vector3>(
+                System.Numerics.Vector3.FusedMultiplyAdd(snc - sna, new(v), System.Numerics.Vector3.FusedMultiplyAdd(snb - sna, new(u), sna)));
         }
 
         /// <summary>
@@ -1195,28 +1325,20 @@ namespace OpenTK.Mathematics
         /// <param name="c">Third input Vector.</param>
         /// <param name="u">First Barycentric Coordinate.</param>
         /// <param name="v">Second Barycentric Coordinate.</param>
-        /// <param name="result">
-        /// Output Vector. a when u=v=0, b when u=1,v=0, c when u=0,v=1, and a linear combination of a,b,c
-        /// otherwise.
-        /// </param>
+        /// <param name="result">Output Vector. a when u=v=0, b when u=1,v=0, c when u=0,v=1, and a linear combination of a,b,c otherwise.</param>
         [Pure]
-        public static void BaryCentric
-        (
-            in Vector3 a,
-            in Vector3 b,
-            in Vector3 c,
-            float u,
-            float v,
-            out Vector3 result
-        )
+        public static void BaryCentric(in Vector3 a, in Vector3 b, in Vector3 c, float u, float v, out Vector3 result)
         {
-            Subtract(in b, in a, out Vector3 ab);
-            Multiply(in ab, u, out Vector3 abU);
-            Add(in a, in abU, out Vector3 uPos);
-
-            Subtract(in c, in a, out Vector3 ac);
-            Multiply(in ac, v, out Vector3 acV);
-            Add(in uPos, in acV, out result);
+            // The JIT doesn't deal with intermediate results casting back to Vector3 from Vector128
+            // so to avoid a ton of copies we just bitcast to S.N. types that the JIT has special
+            // knowledge about and is able to never cast back to Vector3 from SIMD registers
+            // during the calculations and only do this conversion at the very end.
+            // - Noggin_bops 2025-12-31
+            System.Numerics.Vector3 sna = Unsafe.BitCast<Vector3, System.Numerics.Vector3>(a);
+            System.Numerics.Vector3 snb = Unsafe.BitCast<Vector3, System.Numerics.Vector3>(b);
+            System.Numerics.Vector3 snc = Unsafe.BitCast<Vector3, System.Numerics.Vector3>(c);
+            result = Unsafe.BitCast<System.Numerics.Vector3, Vector3>(
+                System.Numerics.Vector3.FusedMultiplyAdd(snc - sna, new(v), System.Numerics.Vector3.FusedMultiplyAdd(snb - sna, new(u), sna)));
         }
 
         /// <summary>
@@ -1229,8 +1351,9 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector3 TransformVector(Vector3 vec, Matrix4 mat)
         {
-            TransformVector(in vec, in mat, out Vector3 result);
-            return result;
+            return ((vec.AsVector128Unsafe() * mat.Row0.AsVector128()) +
+                     (vec.AsVector128Unsafe() * mat.Row1.AsVector128()) +
+                     (vec.AsVector128Unsafe() * mat.Row2.AsVector128())).AsVector3Otk();
         }
 
         /// <summary>
@@ -1242,17 +1365,9 @@ namespace OpenTK.Mathematics
         /// <param name="result">The transformed vector.</param>
         public static void TransformVector(in Vector3 vec, in Matrix4 mat, out Vector3 result)
         {
-            result.X = (vec.X * mat.Row0.X) +
-                       (vec.Y * mat.Row1.X) +
-                       (vec.Z * mat.Row2.X);
-
-            result.Y = (vec.X * mat.Row0.Y) +
-                       (vec.Y * mat.Row1.Y) +
-                       (vec.Z * mat.Row2.Y);
-
-            result.Z = (vec.X * mat.Row0.Z) +
-                       (vec.Y * mat.Row1.Z) +
-                       (vec.Z * mat.Row2.Z);
+            result = ((vec.AsVector128Unsafe() * mat.Row0.AsVector128()) +
+                     (vec.AsVector128Unsafe() * mat.Row1.AsVector128()) +
+                     (vec.AsVector128Unsafe() * mat.Row2.AsVector128())).AsVector3Otk();
         }
 
         /// <summary>
@@ -1268,8 +1383,8 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector3 TransformNormal(Vector3 norm, Matrix4 mat)
         {
-            TransformNormal(in norm, in mat, out Vector3 result);
-            return result;
+            Matrix4 inverse = Matrix4.Invert(mat);
+            return TransformNormalInverse(norm, inverse);
         }
 
         /// <summary>
@@ -1285,7 +1400,7 @@ namespace OpenTK.Mathematics
         public static void TransformNormal(in Vector3 norm, in Matrix4 mat, out Vector3 result)
         {
             Matrix4 inverse = Matrix4.Invert(mat);
-            TransformNormalInverse(in norm, in inverse, out result);
+            result = TransformNormalInverse(norm, inverse);
         }
 
         /// <summary>
@@ -1301,8 +1416,16 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector3 TransformNormalInverse(Vector3 norm, Matrix4 invMat)
         {
-            TransformNormalInverse(in norm, in invMat, out Vector3 result);
-            return result;
+            // This seems to be the easiest way to convince the JIT to produce
+            // any kind of reasonable code for this as it does tons of needless
+            // copying of data to the stack and back...
+            // - Noggin_bops 2025-12-31
+            System.Numerics.Vector3 snNorm = Unsafe.BitCast<Vector3, System.Numerics.Vector3>(norm);
+            System.Numerics.Matrix4x4 snInvMat = Unsafe.BitCast<Matrix4, System.Numerics.Matrix4x4>(invMat);
+            return new System.Numerics.Vector3(
+                System.Numerics.Vector3.Dot(snNorm, snInvMat.GetRow(0).AsVector3()),
+                System.Numerics.Vector3.Dot(snNorm, snInvMat.GetRow(1).AsVector3()),
+                System.Numerics.Vector3.Dot(snNorm, snInvMat.GetRow(2).AsVector3())).AsVector128Unsafe().AsVector3Otk();
         }
 
         /// <summary>
@@ -1317,17 +1440,16 @@ namespace OpenTK.Mathematics
         /// <param name="result">The transformed normal.</param>
         public static void TransformNormalInverse(in Vector3 norm, in Matrix4 invMat, out Vector3 result)
         {
-            result.X = (norm.X * invMat.Row0.X) +
-                       (norm.Y * invMat.Row0.Y) +
-                       (norm.Z * invMat.Row0.Z);
-
-            result.Y = (norm.X * invMat.Row1.X) +
-                       (norm.Y * invMat.Row1.Y) +
-                       (norm.Z * invMat.Row1.Z);
-
-            result.Z = (norm.X * invMat.Row2.X) +
-                       (norm.Y * invMat.Row2.Y) +
-                       (norm.Z * invMat.Row2.Z);
+            // This seems to be the easiest way to convince the JIT to produce
+            // any kind of reasonable code for this as it does tons of needless
+            // copying of data to the stack and back...
+            // - Noggin_bops 2025-12-31
+            System.Numerics.Vector3 snNorm = Unsafe.BitCast<Vector3, System.Numerics.Vector3>(norm);
+            System.Numerics.Matrix4x4 snInvMat = Unsafe.BitCast<Matrix4, System.Numerics.Matrix4x4>(invMat);
+            result = new System.Numerics.Vector3(
+                System.Numerics.Vector3.Dot(snNorm, snInvMat.GetRow(0).AsVector3()),
+                System.Numerics.Vector3.Dot(snNorm, snInvMat.GetRow(1).AsVector3()),
+                System.Numerics.Vector3.Dot(snNorm, snInvMat.GetRow(2).AsVector3())).AsVector128Unsafe().AsVector3Otk();
         }
 
         /// <summary>
@@ -1339,8 +1461,10 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector3 TransformPosition(Vector3 pos, Matrix4 mat)
         {
-            TransformPosition(in pos, in mat, out Vector3 result);
-            return result;
+            return ((Vector128.Create(pos.X) * mat.Row0.AsVector128()) +
+                    (Vector128.Create(pos.Y) * mat.Row1.AsVector128()) +
+                    (Vector128.Create(pos.Z) * mat.Row2.AsVector128()) +
+                    mat.Row3.AsVector128()).AsVector3Otk();
         }
 
         /// <summary>
@@ -1351,20 +1475,10 @@ namespace OpenTK.Mathematics
         /// <param name="result">The transformed position.</param>
         public static void TransformPosition(in Vector3 pos, in Matrix4 mat, out Vector3 result)
         {
-            result.X = (pos.X * mat.Row0.X) +
-                       (pos.Y * mat.Row1.X) +
-                       (pos.Z * mat.Row2.X) +
-                       mat.Row3.X;
-
-            result.Y = (pos.X * mat.Row0.Y) +
-                       (pos.Y * mat.Row1.Y) +
-                       (pos.Z * mat.Row2.Y) +
-                       mat.Row3.Y;
-
-            result.Z = (pos.X * mat.Row0.Z) +
-                       (pos.Y * mat.Row1.Z) +
-                       (pos.Z * mat.Row2.Z) +
-                       mat.Row3.Z;
+            result = ((Vector128.Create(pos.X) * mat.Row0.AsVector128()) +
+                      (Vector128.Create(pos.Y) * mat.Row1.AsVector128()) +
+                      (Vector128.Create(pos.Z) * mat.Row2.AsVector128()) +
+                      mat.Row3.AsVector128()).AsVector3Otk();
         }
 
         /// <summary>
@@ -1376,8 +1490,9 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector3 TransformRow(Vector3 vec, Matrix3 mat)
         {
-            TransformRow(in vec, in mat, out Vector3 result);
-            return result;
+            return ((vec.AsVector128Unsafe() * mat.Row0.AsVector128Unsafe()) +
+                    (vec.AsVector128Unsafe() * mat.Row1.AsVector128Unsafe()) +
+                    (vec.AsVector128Unsafe() * mat.Row2.AsVector128Unsafe())).AsVector3Otk();
         }
 
         /// <summary>
@@ -1388,113 +1503,58 @@ namespace OpenTK.Mathematics
         /// <param name="result">The transformed vector.</param>
         public static void TransformRow(in Vector3 vec, in Matrix3 mat, out Vector3 result)
         {
-            result.X = (vec.X * mat.Row0.X) + (vec.Y * mat.Row1.X) + (vec.Z * mat.Row2.X);
-            result.Y = (vec.X * mat.Row0.Y) + (vec.Y * mat.Row1.Y) + (vec.Z * mat.Row2.Y);
-            result.Z = (vec.X * mat.Row0.Z) + (vec.Y * mat.Row1.Z) + (vec.Z * mat.Row2.Z);
+            result = ((vec.AsVector128Unsafe() * mat.Row0.AsVector128Unsafe()) +
+                      (vec.AsVector128Unsafe() * mat.Row1.AsVector128Unsafe()) +
+                      (vec.AsVector128Unsafe() * mat.Row2.AsVector128Unsafe())).AsVector3Otk();
         }
 
         /// <summary>
-        /// Transform a 3-dimensional vector into a 2-dimensional vector using the given 3x2 Matrix.
-        /// </summary>
-        /// <param name="vec">The vector to transform.</param>
-        /// <param name="mat">The desired transformation.</param>
-        /// <returns>The transformed vector.</returns>
-        [Pure]
-        public static Vector2 TransformTwoDimensionsRow(Vector3 vec, Matrix3x2 mat)
-        {
-            TransformTwoDimensionsRow(in vec, in mat, out Vector2 result);
-            return result;
-        }
-
-        /// <summary>
-        /// Transform a 3-dimensional vector into a 2-dimensional vector using the given 3x2 Matrix.
-        /// </summary>
-        /// <param name="vec">The vector to transform.</param>
-        /// <param name="mat">The desired transformation.</param>
-        /// <param name="result">The transformed vector.</param>
-        public static void TransformTwoDimensionsRow(in Vector3 vec, in Matrix3x2 mat, out Vector2 result)
-        {
-            result.X = (vec.X * mat.Row0.X) + (vec.Y * mat.Row1.X) + (vec.Z * mat.Row2.X);
-            result.Y = (vec.X * mat.Row0.Y) + (vec.Y * mat.Row1.Y) + (vec.Z * mat.Row2.Y);
-        }
-
-        /// <summary>
-        /// Transform a 3-dimensional vector into a 2-dimensional vector using the given 2x3 Matrix.
+        /// Transform a Vector by the given Matrix using right-handed notation.
         /// </summary>
         /// <param name="mat">The desired transformation.</param>
         /// <param name="vec">The vector to transform.</param>
         /// <returns>The transformed vector.</returns>
         [Pure]
-        public static Vector2 TransformTwoDimensionsColumn(Matrix2x3 mat, Vector3 vec)
+        public static Vector3 TransformColumn(Matrix3 mat, Vector3 vec)
         {
-            TransformTwoDimensionsColumn(in mat, in vec, out Vector2 result);
-            return result;
+            // This seems to be the easiest way to convince the JIT to produce
+            // any kind of reasonable code for this as it does tons of needless
+            // copying of data to the stack and back...
+            // - Noggin_bops 2025-12-31
+            System.Numerics.Vector3 snRow0 = Unsafe.BitCast<Vector3, System.Numerics.Vector3>(mat.Row0);
+            System.Numerics.Vector3 snRow1 = Unsafe.BitCast<Vector3, System.Numerics.Vector3>(mat.Row1);
+            System.Numerics.Vector3 snRow2 = Unsafe.BitCast<Vector3, System.Numerics.Vector3>(mat.Row2);
+
+            System.Numerics.Vector3 snVec = Unsafe.BitCast<Vector3, System.Numerics.Vector3>(vec);
+
+            return new Vector3(
+                System.Numerics.Vector3.Dot(snRow0, snVec),
+                System.Numerics.Vector3.Dot(snRow1, snVec),
+                System.Numerics.Vector3.Dot(snRow2, snVec));
         }
 
         /// <summary>
-        /// Transform a 3-dimensional vector into a 2-dimensional vector using the given 2x3 Matrix.
+        /// Transform a Vector by the given Matrix using right-handed notation.
         /// </summary>
         /// <param name="mat">The desired transformation.</param>
         /// <param name="vec">The vector to transform.</param>
         /// <param name="result">The transformed vector.</param>
-        public static void TransformTwoDimensionsColumn(in Matrix2x3 mat, in Vector3 vec, out Vector2 result)
+        public static void TransformColumn(in Matrix3 mat, in Vector3 vec, out Vector3 result)
         {
-            result.X = (mat.Row0.X * vec.X) + (mat.Row0.Y * vec.Y) + (mat.Row0.Z * vec.Z);
-            result.Y = (mat.Row1.X * vec.X) + (mat.Row1.Y * vec.Y) + (mat.Row1.Z * vec.Z);
-        }
+            // This seems to be the easiest way to convince the JIT to produce
+            // any kind of reasonable code for this as it does tons of needless
+            // copying of data to the stack and back...
+            // - Noggin_bops 2025-12-31
+            System.Numerics.Vector3 snRow0 = Unsafe.BitCast<Vector3, System.Numerics.Vector3>(mat.Row0);
+            System.Numerics.Vector3 snRow1 = Unsafe.BitCast<Vector3, System.Numerics.Vector3>(mat.Row1);
+            System.Numerics.Vector3 snRow2 = Unsafe.BitCast<Vector3, System.Numerics.Vector3>(mat.Row2);
 
-        /// <summary>
-        /// Transform a 3-dimensional vector into a 4-dimensional vector using the given 3x4 Matrix.
-        /// </summary>
-        /// <param name="vec">The vector to transform.</param>
-        /// <param name="mat">The desired transformation.</param>
-        /// <returns>The transformed vector.</returns>
-        [Pure]
-        public static Vector4 TransformFourDimensionsRow(Vector3 vec, Matrix3x4 mat)
-        {
-            TransformFourDimensionsRow(in vec, in mat, out Vector4 result);
-            return result;
-        }
+            System.Numerics.Vector3 snVec = Unsafe.BitCast<Vector3, System.Numerics.Vector3>(vec);
 
-        /// <summary>
-        /// Transform a 3-dimensional vector into a 4-dimensional vector using the given 3x4 Matrix.
-        /// </summary>
-        /// <param name="vec">The vector to transform.</param>
-        /// <param name="mat">The desired transformation.</param>
-        /// <param name="result">The transformed vector.</param>
-        public static void TransformFourDimensionsRow(in Vector3 vec, in Matrix3x4 mat, out Vector4 result)
-        {
-            result.X = (vec.X * mat.Row0.X) + (vec.Y * mat.Row1.X) + (vec.Z * mat.Row2.X);
-            result.Y = (vec.X * mat.Row0.Y) + (vec.Y * mat.Row1.Y) + (vec.Z * mat.Row2.Y);
-            result.Z = (vec.X * mat.Row0.Z) + (vec.Y * mat.Row1.Z) + (vec.Z * mat.Row2.Z);
-            result.W = (vec.X * mat.Row0.W) + (vec.Y * mat.Row1.W) + (vec.Z * mat.Row2.W);
-        }
-
-        /// <summary>
-        /// Transform a 3-dimensional vector into a 4-dimensional vector using the given 4x3 Matrix.
-        /// </summary>
-        /// <param name="mat">The desired transformation.</param>
-        /// <param name="vec">The vector to transform.</param>
-        /// <returns>The transformed vector.</returns>
-        [Pure]
-        public static Vector4 TransformFourDimensionsColumn(Matrix4x3 mat, Vector3 vec)
-        {
-            TransformFourDimensionsColumn(in mat, in vec, out Vector4 result);
-            return result;
-        }
-
-        /// <summary>
-        /// Transform a 3-dimensional vector into a 4-dimensional vector using the given 4x3 Matrix.
-        /// </summary>
-        /// <param name="mat">The desired transformation.</param>
-        /// <param name="vec">The vector to transform.</param>
-        /// <param name="result">The transformed vector.</param>
-        public static void TransformFourDimensionsColumn(in Matrix4x3 mat, in Vector3 vec, out Vector4 result)
-        {
-            result.X = (mat.Row0.X * vec.X) + (mat.Row0.Y * vec.Y) + (mat.Row0.Z * vec.Z);
-            result.Y = (mat.Row1.X * vec.X) + (mat.Row1.Y * vec.Y) + (mat.Row1.Z * vec.Z);
-            result.Z = (mat.Row2.X * vec.X) + (mat.Row2.Y * vec.Y) + (mat.Row2.Z * vec.Z);
-            result.W = (mat.Row3.X * vec.X) + (mat.Row3.Y * vec.Y) + (mat.Row3.Z * vec.Z);
+            result = new Vector3(
+                System.Numerics.Vector3.Dot(snRow0, snVec),
+                System.Numerics.Vector3.Dot(snRow1, snVec),
+                System.Numerics.Vector3.Dot(snRow2, snVec));
         }
 
         /// <summary>
@@ -1530,29 +1590,107 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Transform a Vector by the given Matrix using right-handed notation.
+        /// Transform a 3-dimensional vector into a 2-dimensional vector using the given 3x2 Matrix.
+        /// </summary>
+        /// <param name="vec">The vector to transform.</param>
+        /// <param name="mat">The desired transformation.</param>
+        /// <returns>The transformed vector.</returns>
+        [Pure]
+        public static Vector2 TransformTwoDimensionsRow(Vector3 vec, Matrix3x2 mat)
+        {
+            return (vec.X * mat.Row0) + (vec.Y * mat.Row1) + (vec.Z * mat.Row2);
+        }
+
+        /// <summary>
+        /// Transform a 3-dimensional vector into a 2-dimensional vector using the given 3x2 Matrix.
+        /// </summary>
+        /// <param name="vec">The vector to transform.</param>
+        /// <param name="mat">The desired transformation.</param>
+        /// <param name="result">The transformed vector.</param>
+        public static void TransformTwoDimensionsRow(in Vector3 vec, in Matrix3x2 mat, out Vector2 result)
+        {
+            result = (vec.X * mat.Row0) + (vec.Y * mat.Row1) + (vec.Z * mat.Row2);
+        }
+
+        /// <summary>
+        /// Transform a 3-dimensional vector into a 4-dimensional vector using the given 3x4 Matrix.
+        /// </summary>
+        /// <param name="vec">The vector to transform.</param>
+        /// <param name="mat">The desired transformation.</param>
+        /// <returns>The transformed vector.</returns>
+        [Pure]
+        public static Vector4 TransformFourDimensionsRow(Vector3 vec, Matrix3x4 mat)
+        {
+            return (vec.X * mat.Row0) + (vec.Y * mat.Row1) + (vec.Z * mat.Row2);
+        }
+
+        /// <summary>
+        /// Transform a 3-dimensional vector into a 4-dimensional vector using the given 3x4 Matrix.
+        /// </summary>
+        /// <param name="vec">The vector to transform.</param>
+        /// <param name="mat">The desired transformation.</param>
+        /// <param name="result">The transformed vector.</param>
+        public static void TransformFourDimensionsRow(in Vector3 vec, in Matrix3x4 mat, out Vector4 result)
+        {
+            result = (vec.X * mat.Row0) + (vec.Y * mat.Row1) + (vec.Z * mat.Row2);
+        }
+
+        /// <summary>
+        /// Transform a 3-dimensional vector into a 2-dimensional vector using the given 2x3 Matrix.
         /// </summary>
         /// <param name="mat">The desired transformation.</param>
         /// <param name="vec">The vector to transform.</param>
         /// <returns>The transformed vector.</returns>
         [Pure]
-        public static Vector3 TransformColumn(Matrix3 mat, Vector3 vec)
+        public static Vector2 TransformTwoDimensionsColumn(Matrix2x3 mat, Vector3 vec)
         {
-            TransformColumn(in mat, in vec, out Vector3 result);
-            return result;
+            return new Vector2(
+                Vector128.Dot(mat.Row0.AsVector128(), vec.AsVector128()),
+                Vector128.Dot(mat.Row1.AsVector128(), vec.AsVector128()));
         }
 
         /// <summary>
-        /// Transform a Vector by the given Matrix using right-handed notation.
+        /// Transform a 3-dimensional vector into a 2-dimensional vector using the given 2x3 Matrix.
         /// </summary>
         /// <param name="mat">The desired transformation.</param>
         /// <param name="vec">The vector to transform.</param>
         /// <param name="result">The transformed vector.</param>
-        public static void TransformColumn(in Matrix3 mat, in Vector3 vec, out Vector3 result)
+        public static void TransformTwoDimensionsColumn(in Matrix2x3 mat, in Vector3 vec, out Vector2 result)
         {
-            result.X = (mat.Row0.X * vec.X) + (mat.Row0.Y * vec.Y) + (mat.Row0.Z * vec.Z);
-            result.Y = (mat.Row1.X * vec.X) + (mat.Row1.Y * vec.Y) + (mat.Row1.Z * vec.Z);
-            result.Z = (mat.Row2.X * vec.X) + (mat.Row2.Y * vec.Y) + (mat.Row2.Z * vec.Z);
+            result = new Vector2(
+                Vector128.Dot(mat.Row0.AsVector128(), vec.AsVector128()),
+                Vector128.Dot(mat.Row1.AsVector128(), vec.AsVector128()));
+        }
+
+        /// <summary>
+        /// Transform a 3-dimensional vector into a 4-dimensional vector using the given 4x3 Matrix.
+        /// </summary>
+        /// <param name="mat">The desired transformation.</param>
+        /// <param name="vec">The vector to transform.</param>
+        /// <returns>The transformed vector.</returns>
+        [Pure]
+        public static Vector4 TransformFourDimensionsColumn(Matrix4x3 mat, Vector3 vec)
+        {
+            return new Vector4(
+                Vector128.Dot(mat.Row0.AsVector128(), vec.AsVector128()),
+                Vector128.Dot(mat.Row1.AsVector128(), vec.AsVector128()),
+                Vector128.Dot(mat.Row2.AsVector128(), vec.AsVector128()),
+                Vector128.Dot(mat.Row3.AsVector128(), vec.AsVector128()));
+        }
+
+        /// <summary>
+        /// Transform a 3-dimensional vector into a 4-dimensional vector using the given 4x3 Matrix.
+        /// </summary>
+        /// <param name="mat">The desired transformation.</param>
+        /// <param name="vec">The vector to transform.</param>
+        /// <param name="result">The transformed vector.</param>
+        public static void TransformFourDimensionsColumn(in Matrix4x3 mat, in Vector3 vec, out Vector4 result)
+        {
+            result = new Vector4(
+                Vector128.Dot(mat.Row0.AsVector128(), vec.AsVector128()),
+                Vector128.Dot(mat.Row1.AsVector128(), vec.AsVector128()),
+                Vector128.Dot(mat.Row2.AsVector128(), vec.AsVector128()),
+                Vector128.Dot(mat.Row3.AsVector128(), vec.AsVector128()));
         }
 
         /// <summary>
@@ -1564,8 +1702,11 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector3 TransformPerspective(Vector3 vec, Matrix4 mat)
         {
-            TransformPerspective(in vec, in mat, out Vector3 result);
-            return result;
+            var v = ((Vector128.Create(vec.X) * mat.Row0.AsVector128()) +
+                     (Vector128.Create(vec.Y) * mat.Row1.AsVector128()) +
+                     (Vector128.Create(vec.Z) * mat.Row2.AsVector128()) +
+                      mat.Row3.AsVector128()).AsVector4Otk();
+            return (v / v.W).AsVector128().AsVector3Otk();
         }
 
         /// <summary>
@@ -1576,11 +1717,11 @@ namespace OpenTK.Mathematics
         /// <param name="result">The transformed vector.</param>
         public static void TransformPerspective(in Vector3 vec, in Matrix4 mat, out Vector3 result)
         {
-            Vector4 v = new Vector4(vec.X, vec.Y, vec.Z, 1);
-            Vector4.TransformRow(in v, in mat, out v);
-            result.X = v.X / v.W;
-            result.Y = v.Y / v.W;
-            result.Z = v.Z / v.W;
+            var v = ((Vector128.Create(vec.X) * mat.Row0.AsVector128()) +
+                     (Vector128.Create(vec.Y) * mat.Row1.AsVector128()) +
+                     (Vector128.Create(vec.Z) * mat.Row2.AsVector128()) +
+                      mat.Row3.AsVector128()).AsVector4Otk();
+            result = (v / v.W).AsVector128().AsVector3Otk();
         }
 
         /// <summary>
@@ -1593,8 +1734,13 @@ namespace OpenTK.Mathematics
         [Pure]
         public static float CalculateAngle(Vector3 first, Vector3 second)
         {
-            CalculateAngle(in first, in second, out float result);
-            return result;
+            var vfirst = first.AsVector128();
+            var vsecond = second.AsVector128();
+
+            // denom = first.Length * second.Length = sqrt(first.LengthSquared * second.LengthSquared)
+            var denom = float.Sqrt(Vector128.Dot(vfirst, vfirst) * Vector128.Dot(vsecond, vsecond));
+
+            return float.Acos(float.Clamp(Vector128.Dot(vfirst, vsecond) / denom, -1.0f, 1.0f));
         }
 
         /// <summary>
@@ -1606,8 +1752,13 @@ namespace OpenTK.Mathematics
         /// <remarks>Note that the returned angle is never bigger than the constant Pi.</remarks>
         public static void CalculateAngle(in Vector3 first, in Vector3 second, out float result)
         {
-            Dot(in first, in second, out float temp);
-            result = MathF.Acos(Math.Clamp(temp / (first.Length * second.Length), -1.0f, 1.0f));
+            var vfirst = first.AsVector128();
+            var vsecond = second.AsVector128();
+
+            // denom = first.Length * second.Length = sqrt(first.LengthSquared * second.LengthSquared)
+            var denom = float.Sqrt(Vector128.Dot(vfirst, vfirst) * Vector128.Dot(vsecond, vsecond));
+
+            result = float.Acos(float.Clamp(Vector128.Dot(vfirst, vsecond) / denom, -1.0f, 1.0f));
         }
 
         /// <summary>
@@ -1627,17 +1778,7 @@ namespace OpenTK.Mathematics
         /// Project(vector, -1, -1, 2, 2, -1, 1, worldViewProjection).
         /// </remarks>
         [Pure]
-        public static Vector3 Project
-        (
-            Vector3 vector,
-            float x,
-            float y,
-            float width,
-            float height,
-            float minZ,
-            float maxZ,
-            Matrix4 worldViewProjection
-        )
+        public static Vector3 Project(Vector3 vector, float x, float y, float width, float height, float minZ, float maxZ, Matrix4 worldViewProjection)
         {
             Vector4 result;
 
@@ -1691,17 +1832,7 @@ namespace OpenTK.Mathematics
         /// Project(vector, -1, -1, 2, 2, -1, 1, inverseWorldViewProjection).
         /// </remarks>
         [Pure]
-        public static Vector3 Unproject
-        (
-            Vector3 vector,
-            float x,
-            float y,
-            float width,
-            float height,
-            float minZ,
-            float maxZ,
-            Matrix4 inverseWorldViewProjection
-        )
+        public static Vector3 Unproject(Vector3 vector, float x, float y, float width, float height, float minZ, float maxZ, Matrix4 inverseWorldViewProjection)
         {
             float tempX = ((vector.X - x) / width * 2.0f) - 1.0f;
             float tempY = ((vector.Y - y) / height * 2.0f) - 1.0f;
@@ -1905,10 +2036,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector3 operator +(Vector3 left, float right)
         {
-            left.X += right;
-            left.Y += right;
-            left.Z += right;
-            return left;
+            return (left.AsVector128Unsafe() + Vector128.Create(right)).AsVector3Otk();
         }
 
         /// <summary>
@@ -1920,10 +2048,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector3 operator +(float left, Vector3 right)
         {
-            right.X += left;
-            right.Y += left;
-            right.Z += left;
-            return right;
+            return (Vector128.Create(left) + right.AsVector128Unsafe()).AsVector3Otk();
         }
 
         /// <summary>
@@ -1935,10 +2060,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector3 operator +(Vector3 left, Vector3 right)
         {
-            left.X += right.X;
-            left.Y += right.Y;
-            left.Z += right.Z;
-            return left;
+            return (left.AsVector128Unsafe() + right.AsVector128Unsafe()).AsVector3Otk();
         }
 
         /// <summary>
@@ -1950,10 +2072,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector3 operator -(Vector3 left, float right)
         {
-            left.X -= right;
-            left.Y -= right;
-            left.Z -= right;
-            return left;
+            return (left.AsVector128Unsafe() - Vector128.Create(right)).AsVector3Otk();
         }
 
         /// <summary>
@@ -1965,10 +2084,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector3 operator -(float left, Vector3 right)
         {
-            right.X = left - right.X;
-            right.Y = left - right.Y;
-            right.Z = left - right.Z;
-            return right;
+            return (Vector128.Create(left) - right.AsVector128Unsafe()).AsVector3Otk();
         }
 
         /// <summary>
@@ -1980,10 +2096,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector3 operator -(Vector3 left, Vector3 right)
         {
-            left.X -= right.X;
-            left.Y -= right.Y;
-            left.Z -= right.Z;
-            return left;
+            return (left.AsVector128Unsafe() - right.AsVector128Unsafe()).AsVector3Otk();
         }
 
         /// <summary>
@@ -1994,10 +2107,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector3 operator -(Vector3 vec)
         {
-            vec.X = -vec.X;
-            vec.Y = -vec.Y;
-            vec.Z = -vec.Z;
-            return vec;
+            return (-vec.AsVector128Unsafe()).AsVector3Otk();
         }
 
         /// <summary>
@@ -2008,10 +2118,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector3 operator +(Vector3 vec)
         {
-            vec.X = +vec.X;
-            vec.Y = +vec.Y;
-            vec.Z = +vec.Z;
-            return vec;
+            return (+vec.AsVector128Unsafe()).AsVector3Otk();
         }
 
         /// <summary>
@@ -2023,10 +2130,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector3 operator *(Vector3 vec, float scale)
         {
-            vec.X *= scale;
-            vec.Y *= scale;
-            vec.Z *= scale;
-            return vec;
+            return (vec.AsVector128Unsafe() * Vector128.Create(scale)).AsVector3Otk();
         }
 
         /// <summary>
@@ -2038,10 +2142,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector3 operator *(float scale, Vector3 vec)
         {
-            vec.X *= scale;
-            vec.Y *= scale;
-            vec.Z *= scale;
-            return vec;
+            return (Vector128.Create(scale) * vec.AsVector128Unsafe()).AsVector3Otk();
         }
 
         /// <summary>
@@ -2053,10 +2154,8 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector3 operator *(Vector3 vec, Vector3 scale)
         {
-            vec.X *= scale.X;
-            vec.Y *= scale.Y;
-            vec.Z *= scale.Z;
-            return vec;
+            return (vec.AsSNVector3() * scale.AsSNVector3()).AsVector3Otk();
+            return (vec.AsVector128Unsafe() * scale.AsVector128Unsafe()).AsVector3Otk();
         }
 
         /// <summary>
@@ -2068,8 +2167,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector2 operator *(Vector3 vec, Matrix3x2 mat)
         {
-            TransformTwoDimensionsRow(in vec, in mat, out Vector2 result);
-            return result;
+            return TransformTwoDimensionsRow(vec, mat);
         }
 
         /// <summary>
@@ -2081,8 +2179,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector3 operator *(Vector3 vec, Matrix3 mat)
         {
-            TransformRow(in vec, in mat, out Vector3 result);
-            return result;
+            return TransformRow(vec, mat);
         }
 
         /// <summary>
@@ -2094,8 +2191,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector4 operator *(Vector3 vec, Matrix3x4 mat)
         {
-            TransformFourDimensionsRow(in vec, in mat, out Vector4 result);
-            return result;
+            return TransformFourDimensionsRow(vec, mat);
         }
 
         /// <summary>
@@ -2107,10 +2203,8 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector3 operator /(Vector3 vec, float scale)
         {
-            vec.X /= scale;
-            vec.Y /= scale;
-            vec.Z /= scale;
-            return vec;
+            return (vec.AsSNVector3() / scale).AsVector3Otk();
+            return (vec.AsVector128Unsafe() / Vector128.Create(scale)).AsVector3Otk();
         }
 
         /// <summary>
@@ -2122,10 +2216,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector3 operator /(float left, Vector3 right)
         {
-            right.X = left / right.X;
-            right.Y = left / right.Y;
-            right.Z = left / right.Z;
-            return right;
+            return (Vector128.Create(left) / right.AsVector128Unsafe()).AsVector3Otk();
         }
 
         /// <summary>
@@ -2137,10 +2228,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector3 operator /(Vector3 vec, Vector3 scale)
         {
-            vec.X /= scale.X;
-            vec.Y /= scale.Y;
-            vec.Z /= scale.Z;
-            return vec;
+            return (vec.AsVector128Unsafe() / scale.AsVector128Unsafe()).AsVector3Otk();
         }
 
         /// <summary>
@@ -2316,9 +2404,7 @@ namespace OpenTK.Mathematics
         /// <inheritdoc />
         public readonly bool Equals(Vector3 other)
         {
-            return X == other.X &&
-                   Y == other.Y &&
-                   Z == other.Z;
+            return this.AsVector128() == other.AsVector128();
         }
 
         /// <inheritdoc />

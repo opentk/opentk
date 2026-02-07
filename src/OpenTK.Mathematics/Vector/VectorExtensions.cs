@@ -30,11 +30,31 @@ namespace OpenTK.Mathematics
         /// <param name="vec">The vector to reinterpret.</param>
         /// <returns><paramref name="vec"/> reinterpreted as a new <see cref="Vector128{T}"/>.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Vector128<float> AsVector128Unsafe(this Vector3 vec)
+        public static unsafe Vector128<float> AsVector128Unsafe(this in Vector3 vec)
         {
-            Unsafe.SkipInit(out Vector128<float> result);
-            Unsafe.WriteUnaligned(ref Unsafe.As<Vector128<float>, byte>(ref result), vec);
-            return result;
+            return Unsafe.As<Vector3, System.Numerics.Vector3>(ref Unsafe.AsRef(in vec)).AsVector128Unsafe();
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static unsafe System.Numerics.Vector3 AsSNVector3(this in Vector3 vec)
+        {
+            return Unsafe.BitCast<Vector3, System.Numerics.Vector3>(vec);
+        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static unsafe Vector3 AsVector3Otk(this in System.Numerics.Vector3 vec)
+        {
+            return Unsafe.BitCast<System.Numerics.Vector3, Vector3>(vec);
+        }
+
+        /// <summary>
+        /// Reinterprets this <see cref="Vector3"/> as a <see cref="Vector128{T}"/> with the new elements zeroed.
+        /// </summary>
+        /// <param name="vec">The vector to reinterpret.</param>
+        /// <returns><paramref name="vec"/> reinterpreted as a new <see cref="Vector128{T}"/>.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Vector128<float> AsVector128(this in Vector3 vec)
+        {
+            return System.Numerics.Vector4.Create(Unsafe.As<Vector3, System.Numerics.Vector3>(ref Unsafe.AsRef(in vec)), 0).AsVector128();
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -63,8 +83,7 @@ namespace OpenTK.Mathematics
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector3 AsVector3Otk(this Vector128<float> vec)
         {
-            ref byte address = ref Unsafe.As<Vector128<float>, byte>(ref vec);
-            return Unsafe.ReadUnaligned<Vector3>(ref address);
+            return Unsafe.BitCast<System.Numerics.Vector3, Vector3>(vec.AsVector3());
         }
 
         /// <summary>Reinterprets a <see cref="Vector128{T}"/> as a new <see cref="Vector4"/>.</summary>

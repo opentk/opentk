@@ -923,61 +923,61 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Computes the component-wise exponential.
         /// </summary>
-        /// <param name="x">The vector to calculate the exponential of.</param>
+        /// <param name="vec">The vector to calculate the exponential of.</param>
         /// <returns>The component-wise exponental.</returns>
-        public static Vector4 Exp(Vector4 x)
+        public static Vector4 Exp(Vector4 vec)
         {
-            return Vector128.Exp(x.AsVector128()).AsVector4Otk();
+            return Vector128.Exp(vec.AsVector128()).AsVector4Otk();
         }
 
         /// <summary>
         /// Computes the component-wise exponential.
         /// </summary>
-        /// <param name="x">The vector to calculate the exponential of.</param>
+        /// <param name="vec">The vector to calculate the exponential of.</param>
         /// <param name="result">The component-wise exponental.</param>
-        public static void Exp(in Vector4 x, out Vector4 result)
+        public static void Exp(in Vector4 vec, out Vector4 result)
         {
-            result = Vector128.Exp(x.AsVector128()).AsVector4Otk();
+            result = Vector128.Exp(vec.AsVector128()).AsVector4Otk();
         }
 
         /// <summary>
         /// Computes the component-wise natural logarithm.
         /// </summary>
-        /// <param name="x">The vector to calculate the natural logarithm of.</param>
+        /// <param name="vec">The vector to calculate the natural logarithm of.</param>
         /// <returns>The component-wise natural logarithm.</returns>
-        public static Vector4 Log(Vector4 x)
+        public static Vector4 Log(Vector4 vec)
         {
-            return Vector128.Log(x.AsVector128()).AsVector4Otk();
+            return Vector128.Log(vec.AsVector128()).AsVector4Otk();
         }
 
         /// <summary>
         /// Computes the component-wise natural logarithm.
         /// </summary>
-        /// <param name="x">The vector to calculate the natural logarithm of.</param>
+        /// <param name="vec">The vector to calculate the natural logarithm of.</param>
         /// <param name="result">The component-wise natural logarithm.</param>
-        public static void Log(in Vector4 x, out Vector4 result)
+        public static void Log(in Vector4 vec, out Vector4 result)
         {
-            result = Vector128.Log(x.AsVector128()).AsVector4Otk();
+            result = Vector128.Log(vec.AsVector128()).AsVector4Otk();
         }
 
         /// <summary>
         /// Computes the component-wise base-2 logarithm.
         /// </summary>
-        /// <param name="x">The vector to calculate the base-2 logarithm of.</param>
+        /// <param name="vec">The vector to calculate the base-2 logarithm of.</param>
         /// <returns>The component-wise base-2 logarithm.</returns>
-        public static Vector4 Log2(Vector4 x)
+        public static Vector4 Log2(Vector4 vec)
         {
-            return Vector128.Log2(x.AsVector128()).AsVector4Otk();
+            return Vector128.Log2(vec.AsVector128()).AsVector4Otk();
         }
 
         /// <summary>
         /// Computes the component-wise base-2 logarithm.
         /// </summary>
-        /// <param name="x">The vector to calculate the base-2 logarithm of.</param>
+        /// <param name="vec">The vector to calculate the base-2 logarithm of.</param>
         /// <param name="result">The component-wise base-2 logarithm.</param>
-        public static void Log2(in Vector4 x, out Vector4 result)
+        public static void Log2(in Vector4 vec, out Vector4 result)
         {
-            result = Vector128.Log2(x.AsVector128()).AsVector4Otk();
+            result = Vector128.Log2(vec.AsVector128()).AsVector4Otk();
         }
 
         /// <summary>
@@ -1302,10 +1302,7 @@ namespace OpenTK.Mathematics
         /// <param name="c">Third input Vector.</param>
         /// <param name="u">First Barycentric Coordinate.</param>
         /// <param name="v">Second Barycentric Coordinate.</param>
-        /// <param name="result">
-        /// Output Vector. a when u=v=0, b when u=1,v=0, c when u=0,v=1, and a linear combination of a,b,c
-        /// otherwise.
-        /// </param>
+        /// <param name="result">Output Vector. a when u=v=0, b when u=1,v=0, c when u=0,v=1, and a linear combination of a,b,c otherwise.</param>
         public static void BaryCentric(in Vector4 a, in Vector4 b, in Vector4 c, float u, float v, out Vector4 result)
         {
             result = Fma(c - a, new(v), Fma(b - a, new(u), a));
@@ -1332,6 +1329,29 @@ namespace OpenTK.Mathematics
         public static void TransformRow(in Vector4 vec, in Matrix4 mat, out Vector4 result)
         {
             result = (vec.X * mat.Row0) + (vec.Y * mat.Row1) + (vec.Z * mat.Row2) + (vec.W * mat.Row3);
+        }
+
+        /// <summary>
+        /// Transform a Vector by the given Matrix using right-handed notation.
+        /// </summary>
+        /// <param name="mat">The desired transformation.</param>
+        /// <param name="vec">The vector to transform.</param>
+        /// <returns>The transformed vector.</returns>
+        [Pure]
+        public static Vector4 TransformColumn(Matrix4 mat, Vector4 vec)
+        {
+            return new Vector4(Dot(mat.Row0, vec), Dot(mat.Row1, vec), Dot(mat.Row2, vec), Dot(mat.Row3, vec));
+        }
+
+        /// <summary>
+        /// Transform a Vector by the given Matrix using right-handed notation.
+        /// </summary>
+        /// <param name="mat">The desired transformation.</param>
+        /// <param name="vec">The vector to transform.</param>
+        /// <param name="result">The transformed vector.</param>
+        public static void TransformColumn(in Matrix4 mat, in Vector4 vec, out Vector4 result)
+        {
+            result = new Vector4(Dot(mat.Row0, vec), Dot(mat.Row1, vec), Dot(mat.Row2, vec), Dot(mat.Row3, vec));
         }
 
         /// <summary>
@@ -1367,29 +1387,6 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Transform a Vector by the given Matrix using right-handed notation.
-        /// </summary>
-        /// <param name="mat">The desired transformation.</param>
-        /// <param name="vec">The vector to transform.</param>
-        /// <returns>The transformed vector.</returns>
-        [Pure]
-        public static Vector4 TransformColumn(Matrix4 mat, Vector4 vec)
-        {
-            return new Vector4(Dot(mat.Row0, vec), Dot(mat.Row1, vec), Dot(mat.Row2, vec), Dot(mat.Row3, vec));
-        }
-
-        /// <summary>
-        /// Transform a Vector by the given Matrix using right-handed notation.
-        /// </summary>
-        /// <param name="mat">The desired transformation.</param>
-        /// <param name="vec">The vector to transform.</param>
-        /// <param name="result">The transformed vector.</param>
-        public static void TransformColumn(in Matrix4 mat, in Vector4 vec, out Vector4 result)
-        {
-            result = new Vector4(Dot(mat.Row0, vec), Dot(mat.Row1, vec), Dot(mat.Row2, vec), Dot(mat.Row3, vec));
-        }
-
-        /// <summary>
         /// Transform a 4-dimensional vector into a 2-dimensional vector using the given 4x2 Matrix.
         /// </summary>
         /// <param name="vec">The vector to transform.</param>
@@ -1421,7 +1418,11 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector3 TransformThreeDimensionsRow(Vector4 vec, Matrix4x3 mat)
         {
-            return (vec.X * mat.Row0) + (vec.Y * mat.Row1) + (vec.Z * mat.Row2) + (vec.W * mat.Row3);
+            return
+                ((Vector128.Create(vec.X) * mat.Row0.AsVector128Unsafe()) +
+                 (Vector128.Create(vec.Y) * mat.Row1.AsVector128Unsafe()) +
+                 (Vector128.Create(vec.Z) * mat.Row2.AsVector128Unsafe()) +
+                 (Vector128.Create(vec.W) * mat.Row3.AsVector128Unsafe())).AsVector3Otk();
         }
 
         /// <summary>
@@ -1432,7 +1433,11 @@ namespace OpenTK.Mathematics
         /// <param name="result">The transformed vector.</param>
         public static void TransformThreeDimensionsRow(in Vector4 vec, in Matrix4x3 mat, out Vector3 result)
         {
-            result = (vec.X * mat.Row0) + (vec.Y * mat.Row1) + (vec.Z * mat.Row2) + (vec.W * mat.Row3);
+            result = 
+                ((Vector128.Create(vec.X) * mat.Row0.AsVector128Unsafe()) +
+                 (Vector128.Create(vec.Y) * mat.Row1.AsVector128Unsafe()) +
+                 (Vector128.Create(vec.Z) * mat.Row2.AsVector128Unsafe()) +
+                 (Vector128.Create(vec.W) * mat.Row3.AsVector128Unsafe())).AsVector3Otk();
         }
 
         /// <summary>

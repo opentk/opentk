@@ -888,21 +888,21 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Computes the component-wise exponential.
         /// </summary>
-        /// <param name="x">The vector to calculate the exponential of.</param>
+        /// <param name="vec">The vector to calculate the exponential of.</param>
         /// <returns>The component-wise exponental.</returns>
-        public static Vector4d Exp(Vector4d x)
+        public static Vector4d Exp(Vector4d vec)
         {
-            return Vector256.Exp(x.AsVector256()).AsVector4dOtk();
+            return Vector256.Exp(vec.AsVector256()).AsVector4dOtk();
         }
 
         /// <summary>
         /// Computes the component-wise exponential.
         /// </summary>
-        /// <param name="x">The vector to calculate the exponential of.</param>
+        /// <param name="vec">The vector to calculate the exponential of.</param>
         /// <param name="result">The component-wise exponental.</param>
-        public static void Exp(in Vector4d x, out Vector4d result)
+        public static void Exp(in Vector4d vec, out Vector4d result)
         {
-            result = Vector256.Exp(x.AsVector256()).AsVector4dOtk();
+            result = Vector256.Exp(vec.AsVector256()).AsVector4dOtk();
         }
 
         /// <summary>
@@ -910,9 +910,9 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <param name="x">The vector to calculate the natural logarithm of.</param>
         /// <returns>The component-wise natural logarithm.</returns>
-        public static Vector4d Log(Vector4d x)
+        public static Vector4d Log(Vector4d vec)
         {
-            return Vector256.Log(x.AsVector256()).AsVector4dOtk();
+            return Vector256.Log(vec.AsVector256()).AsVector4dOtk();
         }
 
         /// <summary>
@@ -928,21 +928,21 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Computes the component-wise base-2 logarithm.
         /// </summary>
-        /// <param name="x">The vector to calculate the base-2 logarithm of.</param>
+        /// <param name="vec">The vector to calculate the base-2 logarithm of.</param>
         /// <returns>The component-wise base-2 logarithm.</returns>
-        public static Vector4d Log2(Vector4d x)
+        public static Vector4d Log2(Vector4d vec)
         {
-            return Vector256.Log2(x.AsVector256()).AsVector4dOtk();
+            return Vector256.Log2(vec.AsVector256()).AsVector4dOtk();
         }
 
         /// <summary>
         /// Computes the component-wise base-2 logarithm.
         /// </summary>
-        /// <param name="x">The vector to calculate the base-2 logarithm of.</param>
+        /// <param name="vec">The vector to calculate the base-2 logarithm of.</param>
         /// <param name="result">The component-wise base-2 logarithm.</param>
-        public static void Log2(in Vector4d x, out Vector4d result)
+        public static void Log2(in Vector4d vec, out Vector4d result)
         {
-            result = Vector256.Log2(x.AsVector256()).AsVector4dOtk();
+            result = Vector256.Log2(vec.AsVector256()).AsVector4dOtk();
         }
 
         /// <summary>
