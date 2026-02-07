@@ -199,8 +199,8 @@ namespace GeneratorBase
         public string[] Kinds { get; init; }
 
         // Vulkan
-        public bool Optional { get; init; }
-        public bool ExternSync { get; init; }
+        public bool[] Optional { get; init; }
+        public ExternSyncInfo ExternSync { get; init; }
     }
 
     public record class EnumType : IReferable
@@ -375,6 +375,46 @@ namespace GeneratorBase
         Instance,
         /// <summary>This command is a device command.</summary>
         Device,
+    }
+
+    public enum ExternSyncType
+    {
+        None,
+        Always,
+        Maybe,
+        Subtype,
+        SubtypeMaybe,
+    }
+
+    public struct ExternSyncInfo
+    {
+        public ExternSyncType Type;
+        public string? Subtype;
+
+        public ExternSyncInfo(ExternSyncType type, string? subtype)
+        {
+            Type = type;
+            Subtype = subtype;
+        }
+
+        public override string ToString()
+        {
+            switch (Type)
+            {
+                case ExternSyncType.None:
+                    return "none";
+                case ExternSyncType.Always:
+                    return "always";
+                case ExternSyncType.Maybe:
+                    return "maybe";
+                case ExternSyncType.Subtype:
+                    return Subtype;
+                case ExternSyncType.SubtypeMaybe:
+                    return $"maybe {Subtype}";
+                default:
+                    throw new Exception();
+            }
+        }
     }
 
     #endregion

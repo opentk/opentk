@@ -1,4 +1,7 @@
-﻿using System;
+﻿using GeneratorBase;
+using GeneratorBase.Utility;
+using GeneratorBase.Utility.Extensions;
+using System;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -7,9 +10,6 @@ using System.Reflection;
 using System.Text;
 using VkGenerator.Parsing;
 using VkGenerator.Process;
-using GeneratorBase.Utility;
-using GeneratorBase.Utility.Extensions;
-using GeneratorBase;
 
 namespace VkGenerator
 {
@@ -579,6 +579,32 @@ namespace VkGenerator
                     writer.Write($" Alias of <see cref=\"{nameMangler.MangleFunctionName(command.Alias)}\"/>");
                 }
                 writer.WriteLine("</summary>");
+
+                foreach (Parameter parameter in command.Parameters)
+                {
+                    writer.Write($"/// <param name=\"{parameter.Name}\">");
+                    if (parameter.Optional.Length > 0)
+                    {
+                        if (parameter.Optional.Length == 1)
+                        {
+                            writer.Write($"[optional] ");
+                        }
+                        else if (parameter.Optional.Length == 2)
+                        {
+                            static string GetStr(bool opt) => opt ? "optional" : "required";
+                            writer.Write($"[ptr {GetStr(parameter.Optional[0])}, value {GetStr(parameter.Optional[1])}] ");
+                        }
+                        else
+                        {
+                            throw new Exception();
+                        }
+                    }
+                    if (parameter.ExternSync.Type != ExternSyncType.None)
+                    {
+                        writer.Write($"[extern sync: {parameter.ExternSync}] ");
+                    }
+                    writer.WriteLine($"</param>");
+                }
             }
 
             writer.WriteLine($"/// <remarks><see href=\"https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/{entryPoint}.html\" /></remarks>");
@@ -1037,6 +1063,20 @@ namespace VkGenerator
                 bool canWriteSimpleCtor = (@struct.Union == false);
                 foreach (StructMember member in @struct.Members)
                 {
+                    static void WriteMemeberDocs(IndentedTextWriter writer, StructMember member)
+                    {
+                        writer.Write("/// <summary>");
+                        if (member.ExternSync.Type != ExternSyncType.None)
+                        {
+                            writer.Write($"[extern sync: {member.ExternSync}] ");
+                        }
+                        if (string.IsNullOrEmpty(member.Comment) == false)
+                        {
+                            writer.Write(member.Comment);
+                        }
+                        writer.WriteLine("</summary>");
+                    }
+
                     // FIXME: What do we do with these?
                     if (member.StrongType is CSNotSupportedType notSupported)
                     {
@@ -1069,6 +1109,10 @@ namespace VkGenerator
                                     //writer.WriteLine($"public {member.Name}InlineArray{level} element;");
                                 }
 
+                                if (level == 1)
+                                {
+                                    WriteMemeberDocs(writer, member);
+                                }
                                 if (union)
                                 {
                                     writer.WriteLine($"[FieldOffset(0)]");
@@ -1085,6 +1129,10 @@ namespace VkGenerator
                                     writer.WriteLine($"public {csFixedSizeArray.BaseType.ToCSString()} element;");
                                 }
 
+                                if (level == 1)
+                                {
+                                    WriteMemeberDocs(writer, member);
+                                }
                                 if (union)
                                 {
                                     writer.WriteLine($"[FieldOffset(0)]");
@@ -1093,6 +1141,10 @@ namespace VkGenerator
                             }
                             else
                             {
+                                if (level == 1)
+                                {
+                                    WriteMemeberDocs(writer, member);
+                                }
                                 if (union)
                                 {
                                     writer.WriteLine($"[FieldOffset(0)]");
@@ -1110,11 +1162,13 @@ namespace VkGenerator
                         EnumMember? enumMember = Processor.FindEnumMember(enums, member.Values);
                         if (enumMember == null)
                         {
-                            Console.WriteLine($"Could't find sType '{member.Values}' for {@struct.Name}");
+                            Logger.Warning($"Could't find sType '{member.Values}' for {@struct.Name}");
+                            WriteMemeberDocs(writer, member);
                             writer.WriteLine($"public {member.StrongType!.ToCSString()} {nameMangler.MangleStructMemberName(member.Name)};");
                         }
                         else
                         {
+                            WriteMemeberDocs(writer, member);
                             writer.WriteLine($"public {member.StrongType!.ToCSString()} {nameMangler.MangleStructMemberName(member.Name)} = VkStructureType.{nameMangler.MangleEnumName(member.Values)};");
                         }
                     }
@@ -1146,6 +1200,7 @@ namespace VkGenerator
 
                                 int size = actualWidth;
                                 int offset = underlyingBitwidth - bitsLeft;
+                                WriteMemeberDocs(writer, member);
                                 writer.WriteLine($"public {csBitfield.UnderlyingType.ToCSString()} {nameMangler.MangleStructMemberName(member.Name)}");
                                 using (writer.CsScope())
                                 {
@@ -1169,6 +1224,7 @@ namespace VkGenerator
                     }
                     else
                     {
+                        WriteMemeberDocs(writer, member);
                         if (@struct.Union)
                         {
                             writer.WriteLine($"[FieldOffset(0)]");
