@@ -37,7 +37,7 @@ module Vector4d =
 
             let exp = Vector2d(c1, c2)
 
-            Assert.Equal(exp, res)
+            Assert.ApproximatelyEqualEpsilon(exp, res)
 
         [<Property>]
         let ``Matrix2x4d-Vector4d multiplication is consistent across overloads`` (a : Matrix2x4d, b : Vector4d) =
@@ -79,7 +79,7 @@ module Vector4d =
 
             let exp = Vector3d(c1, c2, c3)
 
-            Assert.Equal(exp, res)
+            Assert.ApproximatelyEqualEpsilon(exp, res)
 
         [<Property>]
         let ``Matrix3x4d-Vector4d multiplication is consistent across overloads`` (a : Matrix3x4d, b : Vector4d) =

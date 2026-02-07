@@ -60,124 +60,6 @@ namespace OpenTK.Mathematics
         public int W;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Vector4i"/> struct.
-        /// </summary>
-        /// <param name="value">The value that will initialize this instance.</param>
-        public Vector4i(int value)
-        {
-            X = value;
-            Y = value;
-            Z = value;
-            W = value;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Vector4i"/> struct.
-        /// </summary>
-        /// <param name="x">The X component of the Vector4i.</param>
-        /// <param name="y">The Y component of the Vector4i.</param>
-        /// <param name="z">The Z component of the Vector4i.</param>
-        /// <param name="w">The W component of the Vector4i.</param>
-        public Vector4i(int x, int y, int z, int w)
-        {
-            X = x;
-            Y = y;
-            Z = z;
-            W = w;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Vector4i"/> struct.
-        /// </summary>
-        /// <param name="xy">The x and y components of the Vector4i.</param>
-        /// <param name="z">The z component of the Vector4i.</param>
-        /// <param name="w">The w component of the Vector4i.</param>
-        public Vector4i(Vector2i xy, int z = default, int w = default)
-        {
-            X = xy.X;
-            Y = xy.Y;
-            Z = z;
-            W = w;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Vector4i"/> struct.
-        /// </summary>
-        /// <param name="xyz">The x, y and z components of the Vector4i.</param>
-        /// <param name="w">The w component of the Vector4i.</param>
-        public Vector4i(Vector3i xyz, int w = default)
-        {
-            X = xyz.X;
-            Y = xyz.Y;
-            Z = xyz.Z;
-            W = w;
-        }
-
-        /// <summary>
-        /// Gets or sets the value at the index of the vector.
-        /// </summary>
-        /// <param name="index">The index of the component from the vector.</param>
-        /// <exception cref="IndexOutOfRangeException">Thrown if the index is less than 0 or greater than 3.</exception>
-        public int this[int index]
-        {
-            readonly get
-            {
-                if (((uint)index) >= 4)
-                {
-                    MathHelper.ThrowOutOfRangeException("You tried to access this vector at index: {0}", index);
-                }
-
-                return GetElementUnsafe(in this, index);
-            }
-
-            set
-            {
-                if (((uint)index) >= 4)
-                {
-                    MathHelper.ThrowOutOfRangeException("You tried to set this vector at index: {0}", index);
-                }
-
-                GetElementUnsafe(in this, index) = value;
-            }
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static ref int GetElementUnsafe(in Vector4i v, int index)
-        {
-            ref int address = ref Unsafe.AsRef(in v.X);
-            return ref Unsafe.Add(ref address, index);
-        }
-
-        /// <summary>
-        /// Gets the manhattan length of the vector.
-        /// </summary>
-        public readonly int ManhattanLength => Math.Abs(X) + Math.Abs(Y) + Math.Abs(Z) + Math.Abs(W);
-
-        /// <summary>
-        /// Gets the squared euclidean length of the vector.
-        /// </summary>
-        public readonly int EuclideanLengthSquared => (X * X) + (Y * Y) + (Z * Z) + (W * W);
-
-        /// <summary>
-        /// Gets the euclidean length of the vector.
-        /// </summary>
-        public readonly float EuclideanLength => MathF.Sqrt((X * X) + (Y * Y) + (Z * Z) + (W * W));
-
-        /// <summary>
-        /// Returns a new vector that is the component-wise absolute value of the vector.
-        /// </summary>
-        /// <returns>The component-wise absolute value vector.</returns>
-        public readonly Vector4i Abs()
-        {
-            Vector4i result = this;
-            result.X = Math.Abs(result.X);
-            result.Y = Math.Abs(result.Y);
-            result.Z = Math.Abs(result.Z);
-            result.W = Math.Abs(result.W);
-            return result;
-        }
-
-        /// <summary>
         /// Defines a unit-length <see cref="Vector4i"/> that points towards the X-axis.
         /// </summary>
         public static readonly Vector4i UnitX = new Vector4i(1, 0, 0, 0);
@@ -235,6 +117,114 @@ namespace OpenTK.Mathematics
         public static Vector4i MinValue => new Vector4i(int.MinValue, int.MinValue, int.MinValue, int.MinValue);
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="Vector4i"/> struct.
+        /// </summary>
+        /// <param name="value">The value that will initialize this instance.</param>
+        public Vector4i(int value)
+        {
+            this = Vector128.Create(value).AsVector4iOtk();
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Vector4i"/> struct.
+        /// </summary>
+        /// <param name="x">The X component of the Vector4i.</param>
+        /// <param name="y">The Y component of the Vector4i.</param>
+        /// <param name="z">The Z component of the Vector4i.</param>
+        /// <param name="w">The W component of the Vector4i.</param>
+        public Vector4i(int x, int y, int z, int w)
+        {
+            this = Vector128.Create(x, y, z, w).AsVector4iOtk();
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Vector4i"/> struct.
+        /// </summary>
+        /// <param name="xy">The x and y components of the Vector4i.</param>
+        /// <param name="z">The z component of the Vector4i.</param>
+        /// <param name="w">The w component of the Vector4i.</param>
+        public Vector4i(Vector2i xy, int z = default, int w = default)
+        {
+            this = Vector128.Create(xy.X, xy.Y, z, w).AsVector4iOtk();
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Vector4i"/> struct.
+        /// </summary>
+        /// <param name="xyz">The x, y and z components of the Vector4i.</param>
+        /// <param name="w">The w component of the Vector4i.</param>
+        public Vector4i(Vector3i xyz, int w = default)
+        {
+            this = Vector128.Create(xyz.X, xyz.Y, xyz.Z, w).AsVector4iOtk();
+        }
+
+        /// <summary>
+        /// Gets or sets the value at the index of the vector.
+        /// </summary>
+        /// <param name="index">The index of the component from the vector.</param>
+        /// <exception cref="IndexOutOfRangeException">Thrown if the index is less than 0 or greater than 3.</exception>
+        public int this[int index]
+        {
+            readonly get
+            {
+                if (((uint)index) >= 4)
+                {
+                    MathHelper.ThrowOutOfRangeException("You tried to access this vector at index: {0}", index);
+                }
+
+                return GetElementUnsafe(in this, index);
+            }
+
+            set
+            {
+                if (((uint)index) >= 4)
+                {
+                    MathHelper.ThrowOutOfRangeException("You tried to set this vector at index: {0}", index);
+                }
+
+                GetElementUnsafe(in this, index) = value;
+            }
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static ref int GetElementUnsafe(in Vector4i v, int index)
+        {
+            ref int address = ref Unsafe.AsRef(in v.X);
+            return ref Unsafe.Add(ref address, index);
+        }
+
+        /// <summary>
+        /// Gets the manhattan length of the vector.
+        /// </summary>
+        public readonly int ManhattanLength
+        {
+            get
+            {
+                var a = Abs(this);
+                return Sum(a);
+            }
+        }
+
+        /// <summary>
+        /// Gets the squared euclidean length of the vector.
+        /// </summary>
+        public readonly int EuclideanLengthSquared => Dot(this, this);
+
+        /// <summary>
+        /// Gets the euclidean length of the vector.
+        /// </summary>
+        public readonly float EuclideanLength => MathF.Sqrt(EuclideanLengthSquared);
+
+        /// <summary>
+        /// Returns a new vector that is the component-wise absolute value of the vector.
+        /// </summary>
+        /// <returns>The component-wise absolute value vector.</returns>
+        public readonly Vector4i Abs()
+        {
+            return Abs(this);
+        }
+
+        /// <summary>
         /// Adds two vectors.
         /// </summary>
         /// <param name="a">Left operand.</param>
@@ -243,8 +233,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector4i Add(Vector4i a, Vector4i b)
         {
-            Add(in a, in b, out a);
-            return a;
+            return (a.AsVector128() + b.AsVector128()).AsVector4iOtk();
         }
 
         /// <summary>
@@ -255,10 +244,7 @@ namespace OpenTK.Mathematics
         /// <param name="result">Result of operation.</param>
         public static void Add(in Vector4i a, in Vector4i b, out Vector4i result)
         {
-            result.X = a.X + b.X;
-            result.Y = a.Y + b.Y;
-            result.Z = a.Z + b.Z;
-            result.W = a.W + b.W;
+            result = (a.AsVector128() + b.AsVector128()).AsVector4iOtk();
         }
 
         /// <summary>
@@ -270,8 +256,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector4i Subtract(Vector4i a, Vector4i b)
         {
-            Subtract(in a, in b, out a);
-            return a;
+            return (a.AsVector128() - b.AsVector128()).AsVector4iOtk();
         }
 
         /// <summary>
@@ -282,10 +267,7 @@ namespace OpenTK.Mathematics
         /// <param name="result">Result of subtraction.</param>
         public static void Subtract(in Vector4i a, in Vector4i b, out Vector4i result)
         {
-            result.X = a.X - b.X;
-            result.Y = a.Y - b.Y;
-            result.Z = a.Z - b.Z;
-            result.W = a.W - b.W;
+            result = (a.AsVector128() - b.AsVector128()).AsVector4iOtk();
         }
 
         /// <summary>
@@ -297,8 +279,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector4i Multiply(Vector4i vector, int scale)
         {
-            Multiply(in vector, scale, out vector);
-            return vector;
+            return (vector.AsVector128() * scale).AsVector4iOtk();
         }
 
         /// <summary>
@@ -309,10 +290,7 @@ namespace OpenTK.Mathematics
         /// <param name="result">Result of the operation.</param>
         public static void Multiply(in Vector4i vector, int scale, out Vector4i result)
         {
-            result.X = vector.X * scale;
-            result.Y = vector.Y * scale;
-            result.Z = vector.Z * scale;
-            result.W = vector.W * scale;
+            result = (vector.AsVector128() * scale).AsVector4iOtk();
         }
 
         /// <summary>
@@ -324,8 +302,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector4i Multiply(Vector4i vector, Vector4i scale)
         {
-            Multiply(in vector, in scale, out vector);
-            return vector;
+            return (vector.AsVector128() * scale.AsVector128()).AsVector4iOtk();
         }
 
         /// <summary>
@@ -336,10 +313,7 @@ namespace OpenTK.Mathematics
         /// <param name="result">Result of the operation.</param>
         public static void Multiply(in Vector4i vector, in Vector4i scale, out Vector4i result)
         {
-            result.X = vector.X * scale.X;
-            result.Y = vector.Y * scale.Y;
-            result.Z = vector.Z * scale.Z;
-            result.W = vector.W * scale.W;
+            result = (vector.AsVector128() * scale.AsVector128()).AsVector4iOtk();
         }
 
         /// <summary>
@@ -351,8 +325,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector4i Divide(Vector4i vector, int scale)
         {
-            Divide(in vector, scale, out vector);
-            return vector;
+            return (vector.AsVector128() / scale).AsVector4iOtk();
         }
 
         /// <summary>
@@ -363,10 +336,7 @@ namespace OpenTK.Mathematics
         /// <param name="result">Result of the operation.</param>
         public static void Divide(in Vector4i vector, int scale, out Vector4i result)
         {
-            result.X = vector.X / scale;
-            result.Y = vector.Y / scale;
-            result.Z = vector.Z / scale;
-            result.W = vector.W / scale;
+            result = (vector.AsVector128() / scale).AsVector4iOtk();
         }
 
         /// <summary>
@@ -378,8 +348,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector4i Divide(Vector4i vector, Vector4i scale)
         {
-            Divide(in vector, in scale, out vector);
-            return vector;
+            return (vector.AsVector128() / scale.AsVector128()).AsVector4iOtk();
         }
 
         /// <summary>
@@ -390,10 +359,7 @@ namespace OpenTK.Mathematics
         /// <param name="result">Result of the operation.</param>
         public static void Divide(in Vector4i vector, in Vector4i scale, out Vector4i result)
         {
-            result.X = vector.X / scale.X;
-            result.Y = vector.Y / scale.Y;
-            result.Z = vector.Z / scale.Z;
-            result.W = vector.W / scale.W;
+            result = (vector.AsVector128() / scale.AsVector128()).AsVector4iOtk();
         }
 
         /// <summary>
@@ -405,12 +371,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector4i ComponentMin(Vector4i a, Vector4i b)
         {
-            Vector4i result;
-            result.X = Math.Min(a.X, b.X);
-            result.Y = Math.Min(a.Y, b.Y);
-            result.Z = Math.Min(a.Z, b.Z);
-            result.W = Math.Min(a.W, b.W);
-            return result;
+            return Vector128.Min(a.AsVector128(), b.AsVector128()).AsVector4iOtk();
         }
 
         /// <summary>
@@ -421,10 +382,7 @@ namespace OpenTK.Mathematics
         /// <param name="result">The component-wise minimum.</param>
         public static void ComponentMin(in Vector4i a, in Vector4i b, out Vector4i result)
         {
-            result.X = Math.Min(a.X, b.X);
-            result.Y = Math.Min(a.Y, b.Y);
-            result.Z = Math.Min(a.Z, b.Z);
-            result.W = Math.Min(a.W, b.W);
+            result = Vector128.Min(a.AsVector128(), b.AsVector128()).AsVector4iOtk();
         }
 
         /// <summary>
@@ -436,12 +394,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector4i ComponentMax(Vector4i a, Vector4i b)
         {
-            Vector4i result;
-            result.X = Math.Max(a.X, b.X);
-            result.Y = Math.Max(a.Y, b.Y);
-            result.Z = Math.Max(a.Z, b.Z);
-            result.W = Math.Max(a.W, b.W);
-            return result;
+            return Vector128.Max(a.AsVector128(), b.AsVector128()).AsVector4iOtk();
         }
 
         /// <summary>
@@ -452,10 +405,7 @@ namespace OpenTK.Mathematics
         /// <param name="result">The component-wise maximum.</param>
         public static void ComponentMax(in Vector4i a, in Vector4i b, out Vector4i result)
         {
-            result.X = Math.Max(a.X, b.X);
-            result.Y = Math.Max(a.Y, b.Y);
-            result.Z = Math.Max(a.Z, b.Z);
-            result.W = Math.Max(a.W, b.W);
+            result = Vector128.Max(a.AsVector128(), b.AsVector128()).AsVector4iOtk();
         }
 
         /// <summary>
@@ -468,12 +418,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector4i Clamp(Vector4i vec, Vector4i min, Vector4i max)
         {
-            Vector4i result;
-            result.X = Math.Clamp(vec.X, min.X, max.X);
-            result.Y = Math.Clamp(vec.Y, min.Y, max.Y);
-            result.Z = Math.Clamp(vec.Z, min.Z, max.Z);
-            result.W = Math.Clamp(vec.W, min.W, max.W);
-            return result;
+            return Vector128.Clamp(vec.AsVector128(), min.AsVector128(), max.AsVector128()).AsVector4iOtk();
         }
 
         /// <summary>
@@ -485,10 +430,7 @@ namespace OpenTK.Mathematics
         /// <param name="result">The clamped vector.</param>
         public static void Clamp(in Vector4i vec, in Vector4i min, in Vector4i max, out Vector4i result)
         {
-            result.X = Math.Clamp(vec.X, min.X, max.X);
-            result.Y = Math.Clamp(vec.Y, min.Y, max.Y);
-            result.Z = Math.Clamp(vec.Z, min.Z, max.Z);
-            result.W = Math.Clamp(vec.W, min.W, max.W);
+            result = Vector128.Clamp(vec.AsVector128(), min.AsVector128(), max.AsVector128()).AsVector4iOtk();
         }
 
         /// <summary>
@@ -498,11 +440,7 @@ namespace OpenTK.Mathematics
         /// <returns>The component-wise absolute value vector.</returns>
         public static Vector4i Abs(Vector4i vec)
         {
-            vec.X = Math.Abs(vec.X);
-            vec.Y = Math.Abs(vec.Y);
-            vec.Z = Math.Abs(vec.Z);
-            vec.W = Math.Abs(vec.W);
-            return vec;
+            return Vector128.Abs(vec.AsVector128()).AsVector4iOtk();
         }
 
         /// <summary>
@@ -512,10 +450,49 @@ namespace OpenTK.Mathematics
         /// <param name="result">The component-wise absolute value vector.</param>
         public static void Abs(in Vector4i vec, out Vector4i result)
         {
-            result.X = Math.Abs(vec.X);
-            result.Y = Math.Abs(vec.Y);
-            result.Z = Math.Abs(vec.Z);
-            result.W = Math.Abs(vec.W);
+            result = Vector128.Abs(vec.AsVector128()).AsVector4iOtk();
+        }
+
+        /// <summary>
+        /// Calculate the dot product of two vectors.
+        /// </summary>
+        /// <param name="left">First operand.</param>
+        /// <param name="right">Second operand.</param>
+        /// <returns>The dot product of the two inputs.</returns>
+        public static int Dot(Vector4i left, Vector4i right)
+        {
+            return Vector128.Dot(left.AsVector128(), right.AsVector128());
+        }
+
+        /// <summary>
+        /// Calculate the dot product of two vectors.
+        /// </summary>
+        /// <param name="left">First operand.</param>
+        /// <param name="right">Second operand.</param>
+        /// <returns>The dot product of the two inputs.</returns>
+        public static int Dot(in Vector4i left, in Vector4i right)
+        {
+            return Vector128.Dot(left.AsVector128(), right.AsVector128());
+        }
+
+        /// <summary>
+        /// Calculate the sum of the elements of the vector.
+        /// </summary>
+        /// <param name="vec">The vector whose elements will be summed.</param>
+        /// <returns>The sum of the components.</returns>
+        public static int Sum(Vector4i vec)
+        {
+            return Vector128.Sum(vec.AsVector128());
+        }
+
+        /// <summary>
+        /// Calculate the sum of the elements of the vector.
+        /// </summary>
+        /// <param name="vec">The vector whose elements will be summed.</param>
+        /// <returns>The sum of the components.</returns>
+        public static int Sum(in Vector4i vec)
+        {
+            return Vector128.Sum(vec.AsVector128());
         }
 
         /// <summary>
@@ -1545,28 +1522,6 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Gets a <see cref="Vector4"/> object with the same component values as the <see cref="Vector4i"/> instance.
-        /// </summary>
-        /// <returns>The resulting <see cref="Vector4"/> instance.</returns>
-        public readonly Vector4 ToVector4()
-        {
-            return new Vector4(X, Y, Z, W);
-        }
-
-        /// <summary>
-        /// Gets a <see cref="Vector4"/> object with the same component values as the <see cref="Vector4i"/> instance.
-        /// </summary>
-        /// <param name="input">The given <see cref="Vector4i"/> to convert.</param>
-        /// <param name="result">The resulting <see cref="Vector4"/>.</param>
-        public static void ToVector4(in Vector4i input, out Vector4 result)
-        {
-            result.X = input.X;
-            result.Y = input.Y;
-            result.Z = input.Z;
-            result.W = input.W;
-        }
-
-        /// <summary>
         /// Adds a scalar to an instance.
         /// </summary>
         /// <param name="left">The instance.</param>
@@ -1575,11 +1530,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector4i operator +(Vector4i left, int right)
         {
-            left.X += right;
-            left.Y += right;
-            left.Z += right;
-            left.W += right;
-            return left;
+            return (left.AsVector128() + Vector128.Create(right)).AsVector4iOtk();
         }
 
         /// <summary>
@@ -1591,11 +1542,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector4i operator +(int left, Vector4i right)
         {
-            right.X += left;
-            right.Y += left;
-            right.Z += left;
-            right.W += left;
-            return right;
+            return (Vector128.Create(left) + right.AsVector128()).AsVector4iOtk();
         }
 
         /// <summary>
@@ -1607,11 +1554,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector4i operator +(Vector4i left, Vector4i right)
         {
-            left.X += right.X;
-            left.Y += right.Y;
-            left.Z += right.Z;
-            left.W += right.W;
-            return left;
+            return (left.AsVector128() + right.AsVector128()).AsVector4iOtk();
         }
 
         /// <summary>
@@ -1623,11 +1566,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector4i operator -(Vector4i left, int right)
         {
-            left.X -= right;
-            left.Y -= right;
-            left.Z -= right;
-            left.W -= right;
-            return left;
+            return (left.AsVector128() - Vector128.Create(right)).AsVector4iOtk();
         }
 
         /// <summary>
@@ -1639,11 +1578,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector4i operator -(int left, Vector4i right)
         {
-            right.X = left - right.X;
-            right.Y = left - right.Y;
-            right.Z = left - right.Z;
-            right.W = left - right.W;
-            return right;
+            return (Vector128.Create(left) - right.AsVector128()).AsVector4iOtk();
         }
 
         /// <summary>
@@ -1655,11 +1590,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector4i operator -(Vector4i left, Vector4i right)
         {
-            left.X -= right.X;
-            left.Y -= right.Y;
-            left.Z -= right.Z;
-            left.W -= right.W;
-            return left;
+            return (left.AsVector128() - right.AsVector128()).AsVector4iOtk();
         }
 
         /// <summary>
@@ -1670,11 +1601,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector4i operator -(Vector4i vec)
         {
-            vec.X = -vec.X;
-            vec.Y = -vec.Y;
-            vec.Z = -vec.Z;
-            vec.W = -vec.W;
-            return vec;
+            return (-vec.AsVector128()).AsVector4iOtk();
         }
 
         /// <summary>
@@ -1685,11 +1612,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector4i operator +(Vector4i vec)
         {
-            vec.X = +vec.X;
-            vec.Y = +vec.Y;
-            vec.Z = +vec.Z;
-            vec.W = +vec.W;
-            return vec;
+            return (+vec.AsVector128()).AsVector4iOtk();
         }
 
         /// <summary>
@@ -1701,11 +1624,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector4i operator *(Vector4i vec, int scale)
         {
-            vec.X *= scale;
-            vec.Y *= scale;
-            vec.Z *= scale;
-            vec.W *= scale;
-            return vec;
+            return (vec.AsVector128() * Vector128.Create(scale)).AsVector4iOtk();
         }
 
         /// <summary>
@@ -1717,11 +1636,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector4i operator *(int scale, Vector4i vec)
         {
-            vec.X *= scale;
-            vec.Y *= scale;
-            vec.Z *= scale;
-            vec.W *= scale;
-            return vec;
+            return (Vector128.Create(scale) * vec.AsVector128()).AsVector4iOtk();
         }
 
         /// <summary>
@@ -1733,11 +1648,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector4i operator *(Vector4i vec, Vector4i scale)
         {
-            vec.X *= scale.X;
-            vec.Y *= scale.Y;
-            vec.Z *= scale.Z;
-            vec.W *= scale.W;
-            return vec;
+            return (vec.AsVector128() * scale.AsVector128()).AsVector4iOtk();
         }
 
         /// <summary>
@@ -1749,11 +1660,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector4i operator /(Vector4i vec, int scale)
         {
-            vec.X /= scale;
-            vec.Y /= scale;
-            vec.Z /= scale;
-            vec.W /= scale;
-            return vec;
+            return (vec.AsVector128() / Vector128.Create(scale)).AsVector4iOtk();
         }
 
         /// <summary>
@@ -1765,11 +1672,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector4i operator /(int left, Vector4i right)
         {
-            right.X = left / right.X;
-            right.Y = left / right.Y;
-            right.Z = left / right.Z;
-            right.W = left / right.W;
-            return right;
+            return (Vector128.Create(left) / right.AsVector128()).AsVector4iOtk();
         }
 
         /// <summary>
@@ -1781,11 +1684,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector4i operator /(Vector4i vec, Vector4i scale)
         {
-            vec.X /= scale.X;
-            vec.Y /= scale.Y;
-            vec.Z /= scale.Z;
-            vec.W /= scale.W;
-            return vec;
+            return (vec.AsVector128() / scale.AsVector128()).AsVector4iOtk();
         }
 
         /// <summary>
@@ -1866,7 +1765,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static implicit operator Vector4(Vector4i vec)
         {
-            return new Vector4(vec.X, vec.Y, vec.Z, vec.W);
+            return Vector128.ConvertToSingle(vec.AsVector128()).AsVector4Otk();
         }
 
         /// <summary>
@@ -1877,7 +1776,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static implicit operator Vector4d(Vector4i vec)
         {
-            return new Vector4d(vec.X, vec.Y, vec.Z, vec.W);
+            return VectorExtensions.ConvertToVector256Double(vec.AsVector128()).AsVector4dOtk();
         }
 
         /// <summary>
@@ -1942,10 +1841,7 @@ namespace OpenTK.Mathematics
         /// <inheritdoc />
         public readonly bool Equals(Vector4i other)
         {
-            Vector128<int> thisVec = Vector128.LoadUnsafe(in X);
-            Vector128<int> otherVec = Vector128.LoadUnsafe(in other.X);
-
-            return thisVec == otherVec;
+            return this.AsVector128() == other.AsVector128();
         }
 
         /// <inheritdoc />

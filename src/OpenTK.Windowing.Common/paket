@@ -3,13 +3,13 @@ id OpenTK.Windowing.Common
 description
     Common functionality for OpenTK.Windowing.* packages.
 dependencies
-    framework: net8.0
+    framework: net10.0
         OpenTK.Core ~> #VERSION#
         OpenTK.Mathematics ~> #VERSION#
 files
-    bin\Release\net8.0\OpenTK.Windowing.Common.dll ==> lib\net8.0
-    bin\Release\net8.0\OpenTK.Windowing.Common.xml ==> lib\net8.0
-    bin\Release\net8.0\OpenTK.Windowing.Common.pdb ==> lib\net8.0
+    bin\Release\net10.0\OpenTK.Windowing.Common.dll ==> lib\net10.0
+    bin\Release\net10.0\OpenTK.Windowing.Common.xml ==> lib\net10.0
+    bin\Release\net10.0\OpenTK.Windowing.Common.pdb ==> lib\net10.0
     README.md ==> docs
     ..\..\.github\opentk-blue-hexagon.png ==> images
 

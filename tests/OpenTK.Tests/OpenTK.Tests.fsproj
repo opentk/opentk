@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
     <!--<LangVersion>preview</LangVersion>-->
     <Deterministic>true</Deterministic>
     <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
@@ -8,6 +8,8 @@
     <!-- - Noggin_bops 2024-11-27 -->
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>../../OpenTK.snk</AssemblyOriginatorKeyFile>
+    <FSharpPreferNetFrameworkTools>False</FSharpPreferNetFrameworkTools>
+    <FSharpPrefer64BitTools>True</FSharpPrefer64BitTools>
   </PropertyGroup>
   <PropertyGroup>
     <IsPackable>false</IsPackable>
