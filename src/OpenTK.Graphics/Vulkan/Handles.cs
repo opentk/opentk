@@ -97,16 +97,16 @@ namespace OpenTK.Graphics.Vulkan
     public unsafe struct VkCommandBuffer : IEquatable<VkCommandBuffer>
     {
         public static VkCommandBuffer Zero => new VkCommandBuffer(0);
-        public ulong Handle;
-        public VkCommandBuffer(ulong handle) => Handle = handle;
+        public nint Handle;
+        public VkCommandBuffer(nint handle) => Handle = handle;
         public override bool Equals(object? obj) => obj is VkCommandBuffer instance && Equals(instance);
         public bool Equals(VkCommandBuffer other) => Handle.Equals(other.Handle);
         public override int GetHashCode() => HashCode.Combine(Handle);
         public override string? ToString() => Handle.ToString();
         public static bool operator ==(VkCommandBuffer left, VkCommandBuffer right) => left.Equals(right);
         public static bool operator !=(VkCommandBuffer left, VkCommandBuffer right) => !(left == right);
-        public static explicit operator ulong(VkCommandBuffer handle) => handle.Handle;
-        public static explicit operator VkCommandBuffer(ulong handle) => new VkCommandBuffer(handle);
+        public static explicit operator nint(VkCommandBuffer handle) => handle.Handle;
+        public static explicit operator VkCommandBuffer(nint handle) => new VkCommandBuffer(handle);
     }
     /// <summary><b>[requires: v1.0]</b> Used by <see cref="Vk.CreateCommandPool"/>, <see cref="Vk.DestroyCommandPool"/>, <see cref="Vk.FreeCommandBuffers"/>, ...</summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkCommandPool.html" /></remarks>
@@ -352,16 +352,16 @@ namespace OpenTK.Graphics.Vulkan
     public unsafe struct VkDevice : IEquatable<VkDevice>
     {
         public static VkDevice Zero => new VkDevice(0);
-        public ulong Handle;
-        public VkDevice(ulong handle) => Handle = handle;
+        public nint Handle;
+        public VkDevice(nint handle) => Handle = handle;
         public override bool Equals(object? obj) => obj is VkDevice instance && Equals(instance);
         public bool Equals(VkDevice other) => Handle.Equals(other.Handle);
         public override int GetHashCode() => HashCode.Combine(Handle);
         public override string? ToString() => Handle.ToString();
         public static bool operator ==(VkDevice left, VkDevice right) => left.Equals(right);
         public static bool operator !=(VkDevice left, VkDevice right) => !(left == right);
-        public static explicit operator ulong(VkDevice handle) => handle.Handle;
-        public static explicit operator VkDevice(ulong handle) => new VkDevice(handle);
+        public static explicit operator nint(VkDevice handle) => handle.Handle;
+        public static explicit operator VkDevice(nint handle) => new VkDevice(handle);
     }
     /// <summary><b>[requires: v1.0]</b> Used by <see cref="Vk.AllocateMemory"/>, <see cref="Vk.BindBufferMemory"/>, <see cref="Vk.BindImageMemory"/>, ...</summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDeviceMemory.html" /></remarks>
@@ -437,16 +437,16 @@ namespace OpenTK.Graphics.Vulkan
     public unsafe struct VkExternalComputeQueueNV : IEquatable<VkExternalComputeQueueNV>
     {
         public static VkExternalComputeQueueNV Zero => new VkExternalComputeQueueNV(0);
-        public ulong Handle;
-        public VkExternalComputeQueueNV(ulong handle) => Handle = handle;
+        public nint Handle;
+        public VkExternalComputeQueueNV(nint handle) => Handle = handle;
         public override bool Equals(object? obj) => obj is VkExternalComputeQueueNV instance && Equals(instance);
         public bool Equals(VkExternalComputeQueueNV other) => Handle.Equals(other.Handle);
         public override int GetHashCode() => HashCode.Combine(Handle);
         public override string? ToString() => Handle.ToString();
         public static bool operator ==(VkExternalComputeQueueNV left, VkExternalComputeQueueNV right) => left.Equals(right);
         public static bool operator !=(VkExternalComputeQueueNV left, VkExternalComputeQueueNV right) => !(left == right);
-        public static explicit operator ulong(VkExternalComputeQueueNV handle) => handle.Handle;
-        public static explicit operator VkExternalComputeQueueNV(ulong handle) => new VkExternalComputeQueueNV(handle);
+        public static explicit operator nint(VkExternalComputeQueueNV handle) => handle.Handle;
+        public static explicit operator VkExternalComputeQueueNV(nint handle) => new VkExternalComputeQueueNV(handle);
     }
     /// <summary><b>[requires: v1.0]</b> Used by <see cref="Vk.AcquireImageANDROID"/>, <see cref="Vk.AcquireImageOHOS"/>, <see cref="Vk.AcquireNextImageKHR"/>, ...</summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkFence.html" /></remarks>
@@ -576,16 +576,16 @@ namespace OpenTK.Graphics.Vulkan
     public unsafe struct VkInstance : IEquatable<VkInstance>
     {
         public static VkInstance Zero => new VkInstance(0);
-        public ulong Handle;
-        public VkInstance(ulong handle) => Handle = handle;
+        public nint Handle;
+        public VkInstance(nint handle) => Handle = handle;
         public override bool Equals(object? obj) => obj is VkInstance instance && Equals(instance);
         public bool Equals(VkInstance other) => Handle.Equals(other.Handle);
         public override int GetHashCode() => HashCode.Combine(Handle);
         public override string? ToString() => Handle.ToString();
         public static bool operator ==(VkInstance left, VkInstance right) => left.Equals(right);
         public static bool operator !=(VkInstance left, VkInstance right) => !(left == right);
-        public static explicit operator ulong(VkInstance handle) => handle.Handle;
-        public static explicit operator VkInstance(ulong handle) => new VkInstance(handle);
+        public static explicit operator nint(VkInstance handle) => handle.Handle;
+        public static explicit operator VkInstance(nint handle) => new VkInstance(handle);
     }
     /// <summary><b>[requires: VK_EXT_opacity_micromap]</b> Used by <see cref="Vk.CmdWriteMicromapsPropertiesEXT"/>, <see cref="Vk.CreateMicromapEXT"/>, <see cref="Vk.DestroyMicromapEXT"/>, ...</summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkMicromapEXT.html" /></remarks>
@@ -644,16 +644,16 @@ namespace OpenTK.Graphics.Vulkan
     public unsafe struct VkPhysicalDevice : IEquatable<VkPhysicalDevice>
     {
         public static VkPhysicalDevice Zero => new VkPhysicalDevice(0);
-        public ulong Handle;
-        public VkPhysicalDevice(ulong handle) => Handle = handle;
+        public nint Handle;
+        public VkPhysicalDevice(nint handle) => Handle = handle;
         public override bool Equals(object? obj) => obj is VkPhysicalDevice instance && Equals(instance);
         public bool Equals(VkPhysicalDevice other) => Handle.Equals(other.Handle);
         public override int GetHashCode() => HashCode.Combine(Handle);
         public override string? ToString() => Handle.ToString();
         public static bool operator ==(VkPhysicalDevice left, VkPhysicalDevice right) => left.Equals(right);
         public static bool operator !=(VkPhysicalDevice left, VkPhysicalDevice right) => !(left == right);
-        public static explicit operator ulong(VkPhysicalDevice handle) => handle.Handle;
-        public static explicit operator VkPhysicalDevice(ulong handle) => new VkPhysicalDevice(handle);
+        public static explicit operator nint(VkPhysicalDevice handle) => handle.Handle;
+        public static explicit operator VkPhysicalDevice(nint handle) => new VkPhysicalDevice(handle);
     }
     /// <summary><b>[requires: v1.0]</b> Used by <see cref="Vk.CmdBindPipeline"/>, <see cref="Vk.CmdBindPipelineShaderGroupNV"/>, <see cref="Vk.CmdInitializeGraphScratchMemoryAMDX"/>, ...</summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPipeline.html" /></remarks>
@@ -780,16 +780,16 @@ namespace OpenTK.Graphics.Vulkan
     public unsafe struct VkQueue : IEquatable<VkQueue>
     {
         public static VkQueue Zero => new VkQueue(0);
-        public ulong Handle;
-        public VkQueue(ulong handle) => Handle = handle;
+        public nint Handle;
+        public VkQueue(nint handle) => Handle = handle;
         public override bool Equals(object? obj) => obj is VkQueue instance && Equals(instance);
         public bool Equals(VkQueue other) => Handle.Equals(other.Handle);
         public override int GetHashCode() => HashCode.Combine(Handle);
         public override string? ToString() => Handle.ToString();
         public static bool operator ==(VkQueue left, VkQueue right) => left.Equals(right);
         public static bool operator !=(VkQueue left, VkQueue right) => !(left == right);
-        public static explicit operator ulong(VkQueue handle) => handle.Handle;
-        public static explicit operator VkQueue(ulong handle) => new VkQueue(handle);
+        public static explicit operator nint(VkQueue handle) => handle.Handle;
+        public static explicit operator VkQueue(nint handle) => new VkQueue(handle);
     }
     /// <summary><b>[requires: v1.0]</b> 
     /// <br/><b>[deprecated by: v1.4]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#legacy-dynamicrendering" />

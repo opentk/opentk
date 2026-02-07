@@ -441,17 +441,23 @@ namespace VkGenerator
                     writer.WriteLine($"public unsafe struct {handle.Name} : IEquatable<{handle.Name}>");
                     using (writer.CsScope())
                     {
+                        string type = handle.Type switch
+                        {
+                            "VK_DEFINE_HANDLE" => "nint",
+                            "VK_DEFINE_NON_DISPATCHABLE_HANDLE" => "ulong",
+                            _ => throw new Exception($"Unknown handle type {handle.Type}"),
+                        };
                         writer.WriteLine($"public static {handle.Name} Zero => new {handle.Name}(0);");
-                        writer.WriteLine($"public ulong Handle;");
-                        writer.WriteLine($"public {handle.Name}(ulong handle) => Handle = handle;");
+                        writer.WriteLine($"public {type} Handle;");
+                        writer.WriteLine($"public {handle.Name}({type} handle) => Handle = handle;");
                         writer.WriteLine($"public override bool Equals(object? obj) => obj is {handle.Name} instance && Equals(instance);");
                         writer.WriteLine($"public bool Equals({handle.Name} other) => Handle.Equals(other.Handle);");
                         writer.WriteLine($"public override int GetHashCode() => HashCode.Combine(Handle);");
                         writer.WriteLine($"public override string? ToString() => Handle.ToString();");
                         writer.WriteLine($"public static bool operator ==({handle.Name} left, {handle.Name} right) => left.Equals(right);");
                         writer.WriteLine($"public static bool operator !=({handle.Name} left, {handle.Name} right) => !(left == right);");
-                        writer.WriteLine($"public static explicit operator ulong({handle.Name} handle) => handle.Handle;");
-                        writer.WriteLine($"public static explicit operator {handle.Name}(ulong handle) => new {handle.Name}(handle);");
+                        writer.WriteLine($"public static explicit operator {type}({handle.Name} handle) => handle.Handle;");
+                        writer.WriteLine($"public static explicit operator {handle.Name}({type} handle) => new {handle.Name}(handle);");
                     }
                 }
 
