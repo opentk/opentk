@@ -5929,6 +5929,36 @@ namespace OpenTK.Platform.Native.Windows
         OpenLink = 0x00000008
     }
 
+    [Flags]
+    internal enum RegNotifyChange : uint
+    {
+        /// <summary>
+        /// Notify the caller if a subkey is added or deleted.
+        /// </summary>
+        Name = 0x00000001,
+
+        /// <summary>
+        /// Notify the caller of changes to the attributes of the key, such as the security descriptor information.
+        /// </summary>
+        Attributes = 0x00000002,
+
+        /// <summary>
+        /// Notify the caller of changes to a value of the key. This can include adding or deleting a value, or changing an existing value.
+        /// </summary>
+        LastSet = 0x00000004,
+
+        /// <summary>
+        /// Notify the caller of changes to the security descriptor of the key.
+        /// </summary>
+        Security = 0x00000008,
+
+        /// <summary>
+        /// Indicates that the lifetime of the registration must not be tied to the lifetime of the thread issuing the RegNotifyChangeKeyValue call.
+        /// Note  This flag value is only supported in Windows 8 and later.
+        /// </summary>
+        ThreadAgnostic = 0x10000000,
+    }
+
     /// <remarks>Sometimes called REGSAM.</remarks>
     [Flags]
     internal enum AccessMask : uint
@@ -6650,6 +6680,31 @@ namespace OpenTK.Platform.Native.Windows
         Noname = 0xFC,
         PA1 = 0xFD,
         OEMClear = 0xFE
+    }
+
+    internal enum WaitResult : uint
+    {
+        /// <summary>
+        /// The specified object is a mutex object that was not released by the thread that owned the mutex object before the owning thread terminated.
+        /// Ownership of the mutex object is granted to the calling thread and the mutex state is set to nonsignaled.
+        /// If the mutex was protecting persistent state information, you should check it for consistency.
+        /// </summary>
+        Abandoned = 0x00000080,
+
+        /// <summary>
+        /// The state of the specified object is signaled.
+        /// </summary>
+        Object0 = 0x00000000,
+
+        /// <summary>
+        /// The time-out interval elapsed, and the object's state is nonsignaled.
+        /// </summary>
+        Timeout = 0x00000102,
+
+        /// <summary>
+        /// The function has failed. To get extended error information, call GetLastError.
+        /// </summary>
+        Failed = 0xFFFFFFFF,
     }
 
     /// <summary>

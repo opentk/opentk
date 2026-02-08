@@ -49,6 +49,7 @@ namespace OpenTK.Platform.Native.macOS
         internal static readonly SEL selKeyCode = sel_registerName("keyCode"u8);
         internal static readonly SEL selARepeat = sel_registerName("isARepeat"u8);
         internal static readonly SEL selModifierFlags = sel_registerName("modifierFlags"u8);
+        internal static readonly SEL selClickCount = sel_registerName("clickCount"u8);
 
 
         internal static readonly SEL selInitWithContentRect_styleMask_backing_defer = sel_registerName("initWithContentRect:styleMask:backing:defer:"u8);
@@ -1314,11 +1315,18 @@ namespace OpenTK.Platform.Native.macOS
                             default: throw new PalException(this, $"Unknown mouse button: {button}");
                         }
 
+                        CGPoint point = objc_msgSend_CGPoint(@event, selLocationInWindow);
+                        CGRect bounds = objc_msgSend_CGRect(nswindow.View, selBounds);
+                        // FIXME: Coordinate space
+                        CGPoint pos = new CGPoint(point.x, bounds.size.y - point.y);
+
                         ModifierFlags modifierFlags = (ModifierFlags)((UIntPtr)objc_msgSend_IntPtr(@event, selModifierFlags)).ToUInt64();
                         KeyModifier modifiers = MacOSKeyboardComponent.ToKeyModifiers(modifierFlags);
 
+                        int clickCount = (int)objc_msgSend_IntPtr(@event, selClickCount);
+
                         MacOSMouseComponent.RegisterButtonState(nswindow, mouseButton, true);
-                        EventQueue.Raise(nswindow, PlatformEventType.MouseDown, new MouseButtonDownEventArgs(nswindow, mouseButton, modifiers));
+                        EventQueue.Raise(nswindow, PlatformEventType.MouseDown, new MouseButtonDownEventArgs(nswindow, (Vector2)pos, mouseButton, modifiers, clickCount));
 
                         objc_msgSend(nsApplication, selSendEvent, @event);
                         break;
@@ -1349,11 +1357,18 @@ namespace OpenTK.Platform.Native.macOS
                             default: throw new PalException(this, $"Unknown mouse button: {button}");
                         }
 
+                        CGPoint point = objc_msgSend_CGPoint(@event, selLocationInWindow);
+                        CGRect bounds = objc_msgSend_CGRect(nswindow.View, selBounds);
+                        // FIXME: Coordinate space
+                        CGPoint pos = new CGPoint(point.x, bounds.size.y - point.y);
+
                         ModifierFlags modifierFlags = (ModifierFlags)((UIntPtr)objc_msgSend_IntPtr(@event, selModifierFlags)).ToUInt64();
                         KeyModifier modifiers = MacOSKeyboardComponent.ToKeyModifiers(modifierFlags);
 
+                        int clickCount = (int)objc_msgSend_IntPtr(@event, selClickCount);
+
                         MacOSMouseComponent.RegisterButtonState(nswindow, mouseButton, false);
-                        EventQueue.Raise(nswindow, PlatformEventType.MouseUp, new MouseButtonUpEventArgs(nswindow, mouseButton, modifiers));
+                        EventQueue.Raise(nswindow, PlatformEventType.MouseUp, new MouseButtonUpEventArgs(nswindow, (Vector2)pos, mouseButton, modifiers, clickCount));
 
                         // FIXME: If the mouse is outside of the window after a drag we want to send a mouse exit event here
 
@@ -1372,9 +1387,7 @@ namespace OpenTK.Platform.Native.macOS
                         }
 
                         CGPoint point = objc_msgSend_CGPoint(@event, selLocationInWindow);
-
                         CGRect bounds = objc_msgSend_CGRect(nswindow.View, selBounds);
-
                         // FIXME: Coordinate space
                         CGPoint pos = new CGPoint(point.x, bounds.size.y - point.y);
 

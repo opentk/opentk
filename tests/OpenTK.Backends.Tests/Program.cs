@@ -406,6 +406,9 @@ namespace OpenTK.Backends.Tests
                 }
             }
 
+            // Calling Uninit is not necessary when exiting the application.
+            // We call it here to test the implementation.
+            // - Noggin_bops 2026-02-08
             Toolkit.Uninit();
         }
 

@@ -435,6 +435,11 @@ namespace OpenTK.Platform
     public class MouseButtonDownEventArgs : WindowEventArgs
     {
         /// <summary>
+        /// The position where the mouse was pressed, in client coordinates.
+        /// </summary>
+        public Vector2 ClientPosition { get; private set; }
+
+        /// <summary>
         /// The mouse button that was pressed.
         /// </summary>
         public MouseButton Button { get; private set; }
@@ -445,15 +450,26 @@ namespace OpenTK.Platform
         public KeyModifier Modifiers { get; private set; }
 
         /// <summary>
+        /// The number of times this button has been clicked in a row in a small area and time limit.
+        /// 1 for single-click, 2 for double-click, etc.
+        /// </summary>
+        /// <remarks>The details of counting multi-clicks follows the platform conventions.</remarks>
+        public int Clicks { get; private set; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="MouseButtonDownEventArgs"/> class.
         /// </summary>
         /// <param name="window">The window that was clicked on.</param>
+        /// <param name="clientPosition">The coordinate in client coordinates where the mouse was pressed.</param>
         /// <param name="button">The mouse button that was pressed.</param>
         /// <param name="modifiers">The modifiers that where active when the mouse button was pressed.</param>
-        public MouseButtonDownEventArgs(WindowHandle window, MouseButton button, KeyModifier modifiers) : base(window)
+        /// <param name="clicks">The click count for this event, single-click, double-click, etc.</param>
+        public MouseButtonDownEventArgs(WindowHandle window, Vector2 clientPosition, MouseButton button, KeyModifier modifiers, int clicks) : base(window)
         {
+            ClientPosition = clientPosition;
             Button = button;
             Modifiers = modifiers;
+            Clicks = clicks;
         }
     }
 
@@ -462,6 +478,11 @@ namespace OpenTK.Platform
     /// </summary>
     public class MouseButtonUpEventArgs : WindowEventArgs
     {
+        /// <summary>
+        /// The position where the mouse was released, in client coordinates.
+        /// </summary>
+        public Vector2 ClientPosition { get; private set; }
+
         /// <summary>
         /// The mouse button that was released.
         /// </summary>
@@ -473,15 +494,26 @@ namespace OpenTK.Platform
         public KeyModifier Modifiers { get; private set; }
 
         /// <summary>
+        /// The number of times this button has been clicked in a row in a small area and time limit.
+        /// 1 for single-click, 2 for double-click, etc.
+        /// </summary>
+        /// <remarks>The details of counting multi-clicks follows the platform conventions.</remarks>
+        public int Clicks { get; private set; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="MouseButtonUpEventArgs"/> class.
         /// </summary>
         /// <param name="window">The window that had input focus when the mouse is released.</param>
+        /// <param name="clientPosition">The coordinate in client coordinates where the mouse was pressed.</param>
         /// <param name="button">The button that was released.</param>
         /// <param name="modifiers">The modifiers that where active when the mouse button was released.</param>
-        public MouseButtonUpEventArgs(WindowHandle window, MouseButton button, KeyModifier modifiers) : base(window)
+        /// <param name="clicks">The click count for this event, single-click, double-click, etc.</param>
+        public MouseButtonUpEventArgs(WindowHandle window, Vector2 clientPosition, MouseButton button, KeyModifier modifiers, int clicks) : base(window)
         {
+            ClientPosition = clientPosition;
             Button = button;
             Modifiers = modifiers;
+            Clicks = clicks;
         }
     }
 

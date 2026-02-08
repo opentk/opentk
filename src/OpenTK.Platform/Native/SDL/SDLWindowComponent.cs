@@ -304,11 +304,11 @@ namespace OpenTK.Platform.Native.SDL
 
                             if (buttonEvent.type == SDL_EventType.SDL_MOUSEBUTTONDOWN)
                             {
-                                EventQueue.Raise(sdlWindow, PlatformEventType.MouseDown, new MouseButtonDownEventArgs(sdlWindow, button, modifiers));
+                                EventQueue.Raise(sdlWindow, PlatformEventType.MouseDown, new MouseButtonDownEventArgs(sdlWindow, (buttonEvent.x, buttonEvent.y), button, modifiers, buttonEvent.clicks));
                             }
                             else
                             {
-                                EventQueue.Raise(sdlWindow, PlatformEventType.MouseUp, new MouseButtonUpEventArgs(sdlWindow, button, modifiers));
+                                EventQueue.Raise(sdlWindow, PlatformEventType.MouseUp, new MouseButtonUpEventArgs(sdlWindow, (buttonEvent.x, buttonEvent.y), button, modifiers, buttonEvent.clicks));
                             }
 
                             break;

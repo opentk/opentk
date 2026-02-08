@@ -1031,7 +1031,7 @@ namespace OpenTK.Platform.Native.X11
                                 KeyModifier modifiers = X11KeyboardComponent.ModifiersFromState(buttonPressed.state);
 
                                 X11MouseComponent.RegisterButtonState(xwindow, button, true);
-                                EventQueue.Raise(xwindow, PlatformEventType.MouseDown, new MouseButtonDownEventArgs(xwindow, button, modifiers));
+                                EventQueue.Raise(xwindow, PlatformEventType.MouseDown, new MouseButtonDownEventArgs(xwindow, (buttonPressed.x, buttonPressed.y), button, modifiers, 1));
                             }
 
                             break;
@@ -1060,7 +1060,7 @@ namespace OpenTK.Platform.Native.X11
                             KeyModifier modifiers = X11KeyboardComponent.ModifiersFromState(buttonReleased.state);
 
                             X11MouseComponent.RegisterButtonState(xwindow, button, false);
-                            EventQueue.Raise(xwindow, PlatformEventType.MouseUp, new MouseButtonUpEventArgs(xwindow, button, modifiers));
+                            EventQueue.Raise(xwindow, PlatformEventType.MouseUp, new MouseButtonUpEventArgs(xwindow, (buttonReleased.x, buttonReleased.y), button, modifiers, 1));
 
                             break;
                         }

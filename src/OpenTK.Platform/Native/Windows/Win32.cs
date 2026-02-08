@@ -5,7 +5,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
-using static OpenTK.Platform.Native.Windows.Win32;
 
 namespace OpenTK.Platform.Native.Windows
 {
@@ -1132,6 +1131,14 @@ namespace OpenTK.Platform.Native.Windows
             }
         }
 
+        [DllImport("advapi32.dll", SetLastError = false)]
+        internal static extern int /* LSTATUS */ RegNotifyChangeKeyValue(
+            IntPtr /* HKEY */ hKey,
+            [MarshalAs(UnmanagedType.Bool)] bool bWatchSubtree,
+            RegNotifyChange dwNotifyFilter,
+            IntPtr /* HANDLE */ hEvent,
+            [MarshalAs(UnmanagedType.Bool)] bool fAsynchronous);
+
         [DllImport("shlwapi.dll", CharSet = CharSet.Auto, SetLastError = false)]
         internal static unsafe extern uint /* LWSTDAPI */ SHLoadIndirectString(char* pszSource, char* pszOutBuf, uint cchOutBuf, void** ppvReserved);
 
@@ -2151,6 +2158,27 @@ namespace OpenTK.Platform.Native.Windows
 
         [DllImport("user32.dll", SetLastError = false)]
         internal static extern int DisplayConfigGetDeviceInfo(ref DISPLAYCONFIG_SDR_WHITE_LEVEL requestPacket);
+
+        [DllImport("user32.dll", SetLastError = false)]
+        internal static extern uint GetDoubleClickTime();
+
+        [DllImport("kernel32.dll", CharSet =  CharSet.Auto, SetLastError = true)]
+        internal static extern IntPtr /* HANDLE */ CreateEvent(
+            SECURITY_ATTRIBUTES* lpEventAttributes,
+            [MarshalAs(UnmanagedType.Bool)] bool bManualReset,
+            [MarshalAs(UnmanagedType.Bool)] bool bInitialState,
+            string? lpName);
+
+        [DllImport("kernel32.dll", SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static extern bool ResetEvent(IntPtr /* HANDLE */ hEvent);
+
+        [DllImport("kernel32.dll", SetLastError = true)]
+        internal static extern WaitResult WaitForSingleObject(IntPtr /* HANDLE */ hHandle, uint dwMilliseconds);
+
+        [DllImport("kernel32.dll", SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static extern bool CloseHandle(IntPtr /* HANDLE */ hObject);
     }
 #pragma warning restore CS0649 // Field 'field' is never assigned to, and will always have its default value 'value'
 }

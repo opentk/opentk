@@ -55,6 +55,8 @@ namespace OpenTK.Platform.Native.Windows
 
         public bool FramebufferTransparencyEnabled { get; set; } = false;
 
+        public DoubleClickCounter ClickCounter { get; set; } = new DoubleClickCounter();
+        
         public HWND(IntPtr hWnd, GraphicsApiHints hints) : base(hints)
         {
             HWnd = hWnd;

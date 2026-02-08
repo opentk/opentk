@@ -100,6 +100,9 @@ namespace OpenTK.Backends.Tests
                     FilteredEvents.Add(@event);
                 }
             }
+
+            if (SelectedEventIndex >= FilteredEvents.Count)
+                SelectedEventIndex = -1;
         }
 
         private bool FilterEvent(EventArgs @event)
@@ -119,7 +122,7 @@ namespace OpenTK.Backends.Tests
             return false;
         }
 
-        bool useClipper = false;
+        bool followNewEvents = false;
         public override void Paint(double deltaTime)
         {
             if (ImGuiUtils.ToggleButton("Mouse events", ref ShowMouseEvents))
@@ -133,7 +136,7 @@ namespace OpenTK.Backends.Tests
                 Toolkit.Window.PostUserEvent(new CustomEventArgs(CustomDataInt));
             }
 
-            ImGui.Checkbox("Use clipper", ref useClipper);
+            ImGui.Checkbox("Follow new events", ref followNewEvents);
 
             if (ImGui.BeginListBox("Events", new System.Numerics.Vector2(ImGui.GetColumnWidth(), ImGui.GetTextLineHeightWithSpacing() * 12.25f)))
             {
@@ -161,6 +164,9 @@ namespace OpenTK.Backends.Tests
                         }
                     }
                 }
+
+                if (followNewEvents)
+                    ImGui.SetScrollHereY();
 
                 ImGui.EndListBox();
             }
