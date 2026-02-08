@@ -694,7 +694,7 @@ namespace OpenTK.Platform
         /// <see langword="true"/> if the video mode bits per pixel value of the display changed, <see langword="false"/> otherwise.
         /// </summary>
         /// <remarks>
-        /// Get the new value by calling <see cref="IDisplayComponent.GetVideoMode(DisplayHandle, out VideoMode)"/> on the display with index <see cref="DisplayIndex"/>.
+        /// Get the new value by calling <see cref="IDisplayComponent.GetVideoMode(DisplayHandle)"/> on the display with index <see cref="DisplayIndex"/>.
         /// </remarks>
         public bool BitsPerPixelChanged { get; internal set; }
 
@@ -702,7 +702,7 @@ namespace OpenTK.Platform
         /// <see langword="true"/> if the resolution of the display changed, <see langword="false"/> otherwise.
         /// </summary>
         /// <remarks>
-        /// Get the new value by calling <see cref="IDisplayComponent.GetResolution(DisplayHandle, out int, out int)"/> on the display with index <see cref="DisplayIndex"/>.
+        /// Get the new value by calling <see cref="IDisplayComponent.GetResolution(DisplayHandle)"/> on the display with index <see cref="DisplayIndex"/>.
         /// </remarks>
         public bool ResolutionChanged { get; internal set; }
 
@@ -710,7 +710,7 @@ namespace OpenTK.Platform
         /// <see langword="true"/> if the refresh rate of the display changed, <see langword="false"/> otherwise.
         /// </summary>
         /// <remarks>
-        /// Get the new value by calling <see cref="IDisplayComponent.GetRefreshRate(DisplayHandle, out float)"/> on the display with index <see cref="DisplayIndex"/>.
+        /// Get the new value by calling <see cref="IDisplayComponent.GetRefreshRate(DisplayHandle)"/> on the display with index <see cref="DisplayIndex"/>.
         /// </remarks>
         public bool RefreshRateChanged { get; internal set; }
 
@@ -718,7 +718,7 @@ namespace OpenTK.Platform
         /// <see langword="true"/> if the virtual position of the display changed, <see langword="false"/> otherwise.
         /// </summary>
         /// <remarks>
-        /// Get the new value by calling <see cref="IDisplayComponent.GetVirtualPosition(DisplayHandle, out int, out int)"/> on the display with index <see cref="DisplayIndex"/>.
+        /// Get the new value by calling <see cref="IDisplayComponent.GetVirtualPosition(DisplayHandle)"/> on the display with index <see cref="DisplayIndex"/>.
         /// </remarks>
         public bool VirtualPositionChanged { get; internal set; }
 
@@ -726,7 +726,7 @@ namespace OpenTK.Platform
         /// <see langword="true"/> if the work area of the display changed, <see langword="false"/> otherwise.
         /// </summary>
         /// <remarks>
-        /// Get the new value by calling <see cref="IDisplayComponent.GetWorkArea(DisplayHandle, out Box2i)"/> on the display with index <see cref="DisplayIndex"/>.
+        /// Get the new value by calling <see cref="IDisplayComponent.GetWorkArea(DisplayHandle)"/> on the display with index <see cref="DisplayIndex"/>.
         /// </remarks>
         public bool WorkAreaChanged { get; internal set; }
 
@@ -734,7 +734,7 @@ namespace OpenTK.Platform
         /// <see langword="true"/> if the scale factor of the display changed, <see langword="false"/> otherwise.
         /// </summary>
         /// <remarks>
-        /// Get the new value by calling <see cref="IDisplayComponent.GetDisplayScale(DisplayHandle, out float, out float)"/> on the display with index <see cref="DisplayIndex"/>.
+        /// Get the new value by calling <see cref="IDisplayComponent.GetDisplayScale(DisplayHandle)"/> on the display with index <see cref="DisplayIndex"/>.
         /// </remarks>
         public bool DisplayScaleChanged { get; internal set; }
 
@@ -767,6 +767,7 @@ namespace OpenTK.Platform
         /// <param name="workAreaChanged">The work area of the display has changed.</param>
         /// <param name="refreshRateChanged">The refresh rate of the display has changed.</param>
         /// <param name="displayScaleChanged">The scale factor of the display has changed.</param>
+        /// <param name="colorInfoChanged">The color info of the display has changed.</param>
         public DisplayValuesChangedEventArgs(int displayIndex, bool bitsPerPixelChanged, bool virtualPositionChanged, bool resolutionChanged, bool workAreaChanged, bool refreshRateChanged, bool displayScaleChanged, bool colorInfoChanged)
         {
             DisplayIndex = displayIndex;

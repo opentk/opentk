@@ -17,7 +17,7 @@ namespace OpenTK.Platform
         // FIXME: Ability to query HDR support?
 
         /// <summary>
-        /// True if the driver can get the virtual position of the display using <see cref="GetVirtualPosition(DisplayHandle, out int, out int)"/>.
+        /// True if the driver can get the virtual position of the display using <see cref="GetVirtualPosition(DisplayHandle)"/>.
         /// </summary>
         bool CanGetVirtualPosition { get; }
 
