@@ -232,7 +232,8 @@ namespace LocalTestProject
                 Console.WriteLine($"Width: {curW}, Height: {curH}");
             }
 
-            for (int i = 0; i < 4; i++)
+            int noJoysticks = Toolkit.Joystick.GetJoystickCount();
+            for (int i = 0; i < noJoysticks; i++)
             {
                 var handle = Toolkit.Joystick.Open(i);
 
@@ -316,7 +317,7 @@ namespace LocalTestProject
                 {
                     Toolkit.Keyboard.BeginIme(WindowHandle);
 
-                    Toolkit.Keyboard.SetImeRectangle(WindowHandle, (int)MousePos.X, (int)MousePos.Y, 0, 0);
+                    Toolkit.Keyboard.SetImeRectangle(WindowHandle, mouseButtonDownArgs.ClientPosition.X, mouseButtonDownArgs.ClientPosition.Y, 0, 0);
 
                     Toolkit.Keyboard.EndIme(WindowHandle);
                 }
