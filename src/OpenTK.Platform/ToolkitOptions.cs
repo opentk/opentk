@@ -107,7 +107,7 @@ namespace OpenTK.Platform
             /// VSCode leaks a bunch of envrionment variables that mess with dynamic library resolution.
             /// If the environment variable <c>SNAP_NAME</c> is set to <c>code</c> and this variable is set to true,
             /// we will remove a bunch of environment variables that vscode leaks into the C# process.
-            /// This means that if you want to set these variables yourself while running if VSCode 
+            /// This means that if you want to set these variables yourself while running in VSCode 
             /// for whatever reason then you need to disable this.
             /// Defaults to <see langword="true"/>.
             /// </summary>
