@@ -36,6 +36,7 @@ namespace OpenTK.Core.Utility
 
             ConsoleColor color = level switch
             {
+                LogLevel.Debug => ConsoleColor.DarkGray,
                 LogLevel.Warning => ConsoleColor.Yellow,
                 LogLevel.Error => ConsoleColor.Red,
 

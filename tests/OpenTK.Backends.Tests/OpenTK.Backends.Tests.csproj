@@ -40,7 +40,7 @@
   <Target Name="RC file" BeforeTargets="PreBuildEvent" Condition="Exists('C:\Program Files (x86)\Windows Kits\10\bin\10.0.22000.0\x64\rc.exe')">
     <Message Importance="High" Text="Compiling resource file" />
     <Exec Command="&quot;C:\Program Files (x86)\Windows Kits\10\bin\10.0.22000.0\x64\rc.exe&quot; icons.rc" />
-    <Message Importance="high" Text="Publishing: '$(_IsPublishing)', Platform: '$(Platform)', OS: '$(OS)'"/>
+    <Message Importance="high" Text="Publishing: '$(_IsPublishing)', Platform: '$(Platform)', OS: '$(OS)'" />
   </Target>
 
   <ItemGroup>

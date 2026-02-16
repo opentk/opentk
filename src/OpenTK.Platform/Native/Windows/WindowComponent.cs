@@ -1286,11 +1286,11 @@ namespace OpenTK.Platform.Native.Windows
                     Logger?.LogDebug($"New double click settings: Interval: {doubleClickInterval}, Width: {doubleClickWidth}, Height: {doubleClickHeight}");
                     foreach (var (_, hwnd) in HWndDict)
                     {
-                        hwnd.ClickCounter.DoubleClickInterval = doubleClickInterval;
+                        hwnd.ClickCounter.DoubleClickInfo.Interval = doubleClickInterval;
                         if (doubleClickWidth != null)
-                            hwnd.ClickCounter.DoubleClickWidth = doubleClickWidth.Value;
+                            hwnd.ClickCounter.DoubleClickInfo.Distance.X = doubleClickWidth.Value;
                         if (doubleClickHeight != null)
-                            hwnd.ClickCounter.DoubleClickWidth = doubleClickHeight.Value;
+                            hwnd.ClickCounter.DoubleClickInfo.Distance.Y = doubleClickHeight.Value;
                     }
                 }
                 else if (waitResult == WaitResult.Failed)
@@ -1354,7 +1354,7 @@ namespace OpenTK.Platform.Native.Windows
             hcursor.Mode = HCursor.CursorMode.SystemCursor;
             SetCursor(hwnd, hcursor);
 
-            hwnd.ClickCounter.DoubleClickInterval = Win32.GetDoubleClickTime();
+            hwnd.ClickCounter.DoubleClickInfo.Interval = Win32.GetDoubleClickTime();
 #pragma warning disable CA1416 // Validate platform compatibility
             if (MouseSettingsRegistryKey != null)
             {
@@ -1362,13 +1362,13 @@ namespace OpenTK.Platform.Native.Windows
                 int.TryParse(widthStr, out int widthPx))
                 {
                     // FIXME: Convert to client space coordinates instead of pixels...
-                    hwnd.ClickCounter.DoubleClickWidth = widthPx;
+                    hwnd.ClickCounter.DoubleClickInfo.Distance.X = widthPx;
                 }
                 if (MouseSettingsRegistryKey.GetValue("DoubleClickHeight") is string heightStr &&
                     int.TryParse(heightStr, out int heightPx))
                 {
                     // FIXME: Convert to client space coordinates instead of pixels...
-                    hwnd.ClickCounter.DoubleClickHeight = heightPx;
+                    hwnd.ClickCounter.DoubleClickInfo.Distance.Y = heightPx;
                 }
             }
             else

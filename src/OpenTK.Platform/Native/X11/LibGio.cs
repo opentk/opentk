@@ -11,6 +11,10 @@ namespace OpenTK.Platform.Native
         // - Noggin_bops 2024-07-22
         private const string Gio = "Gio";
 
+
+        [DllImport(Gio, CallingConvention = CallingConvention.Cdecl)]
+        internal static unsafe extern byte* /* const gchar* */ glib_check_version(uint required_major, uint required_minor, uint required_micro);
+
         [DllImport(Gio, CallingConvention = CallingConvention.Cdecl)]
         internal static extern IntPtr /* GMainContext* */ g_main_context_default();
 
@@ -110,6 +114,15 @@ namespace OpenTK.Platform.Native
         internal static unsafe ulong g_signal_connect(
                                 IntPtr /* gpointer */ instance,
                                 byte* /* const gchar* */ detailed_signal,
+                                delegate* unmanaged<IntPtr, byte*, IntPtr, void> /* GCallback */ c_handler,
+                                IntPtr /* gpoiner */ data)
+        {
+            return g_signal_connect_data(instance, detailed_signal, (IntPtr)c_handler, data, IntPtr.Zero, 0);
+        }
+
+        internal static unsafe ulong g_signal_connect(
+                                IntPtr /* gpointer */ instance,
+                                byte* /* const gchar* */ detailed_signal,
                                 IntPtr /* GCallback */ c_handler,
                                 IntPtr /* gpoiner */ data)
         {
@@ -137,5 +150,55 @@ namespace OpenTK.Platform.Native
         [DllImport(Gio, CallingConvention = CallingConvention.Cdecl)]
         internal static extern void g_object_unref(IntPtr /* GObject* */ @object);
 
+        [DllImport(Gio, CallingConvention = CallingConvention.Cdecl)]
+        internal static unsafe extern IntPtr /* GSettings* */ g_settings_new(byte* /* const gchar* */ schema_id);
+
+        [DllImport(Gio, CallingConvention = CallingConvention.Cdecl)]
+        internal static unsafe extern IntPtr /* GSettings* */ g_settings_new_full(IntPtr /* GSettingsSchema* */ schema, IntPtr /* GSettingsBackend* */ backend, byte* /* const gchar* */ path);
+
+        [DllImport(Gio, CallingConvention = CallingConvention.Cdecl)]
+        internal static unsafe extern int g_settings_get_int(IntPtr /* GSettings* */ settings, byte* /* const gchar* */ key);
+
+        [DllImport(Gio, CallingConvention = CallingConvention.Cdecl)]
+        internal static unsafe extern double g_settings_get_double(IntPtr /* GSettings* */ settings, byte* /* const gchar* */ key);
+
+        [DllImport(Gio, CallingConvention = CallingConvention.Cdecl)]
+        internal static unsafe extern byte** g_settings_schema_list_keys(IntPtr /* GSettingsSchema* */ settings);
+
+        [DllImport(Gio, CallingConvention = CallingConvention.Cdecl)]
+        internal static unsafe extern byte* /* const gchar* */ g_settings_schema_get_path(IntPtr /* GSettingsSchema* */ schema);
+
+        [DllImport(Gio, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern IntPtr /* GSettingsSchemaSource* */ g_settings_schema_source_get_default();
+
+        [DllImport(Gio, CallingConvention = CallingConvention.Cdecl)]
+        internal static unsafe extern IntPtr /* GSettingsSchema* */ g_settings_schema_source_lookup(IntPtr /* GSettingsSchemaSource* */ source, byte* /* const gchar* */ schema_id, int /* gboolean */ recursive);
+
+        [DllImport(Gio, CallingConvention = CallingConvention.Cdecl)]
+        internal static unsafe extern void g_strfreev(byte** /* gchar** */ str_array);
+
+        [DllImport(Gio, CallingConvention = CallingConvention.Cdecl)]
+        internal static unsafe extern void g_object_get_property(IntPtr /* GObject* */ @object, byte* /* const gchar* */ property_name, GValue* value);
+
+        [DllImport(Gio, CallingConvention = CallingConvention.Cdecl)]
+        internal static unsafe extern void g_object_get(IntPtr /* GObject* */ @object, byte* /* const gchar* */ first_property_name, out IntPtr value, byte* @null);
+
+        [DllImport(Gio, CallingConvention = CallingConvention.Cdecl)]
+        internal static unsafe extern IntPtr /* GObject* */ g_value_get_object(GValue* /* const GValue* */ value);
+
+        [DllImport(Gio, CallingConvention = CallingConvention.Cdecl)]
+        internal static unsafe extern IntPtr g_value_get_pointer(GValue* /* const GValue* */ value);
+
+
+        [DllImport(Gio, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern nint /* GType */ g_value_get_gtype(ref readonly GValue /* const GValue* */ value);
+
+        [DllImport(Gio, CallingConvention = CallingConvention.Cdecl)]
+        internal static unsafe extern byte* /* gchar* */ g_strdup_value_contents(ref readonly GValue /* const GValue* */ value);
+        
+        
+
+        [DllImport(Gio, CallingConvention = CallingConvention.Cdecl)]
+        internal static unsafe extern byte* /* const gchar* */ g_type_name(nint /* GType */ type);
     }
 }

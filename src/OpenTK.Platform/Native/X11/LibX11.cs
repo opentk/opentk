@@ -638,5 +638,28 @@ namespace OpenTK.Platform.Native.X11
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         internal static unsafe extern void XrmDestroyDatabase(XrmDatabase database);
+
+
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void XGetScreenSaver(XDisplayPtr display, out int timeout_return, out int interval_return, out int prefer_blanking_return, out int allow_exposures_return);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void XSetScreenSaver(XDisplayPtr display, int timeout, int interval, int prefer_blanking, int allow_exposures);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void XForceScreenSaver(XDisplayPtr display, ForceScreenSaverMode mode);
+
+        internal enum ForceScreenSaverMode : int
+        {
+            ScreenSaverReset = 0,
+            ScreenSaverActive = 1
+        }
+        
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void XActivateScreenSaver(XDisplayPtr display);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void XResetScreenSaver(XDisplayPtr display);
     }
 }

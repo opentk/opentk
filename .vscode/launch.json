@@ -5,7 +5,7 @@
             "name": "C#: OpenTK.Backends.Tests Debug",
             "type": "dotnet",
             "request": "launch",
-            "projectPath": "${workspaceFolder}/tests/OpenTK.Backends.Tests/OpenTK.Backends.Tests.csproj"
+            "projectPath": "${workspaceFolder}/tests/OpenTK.Backends.Tests/OpenTK.Backends.Tests.csproj",
         },
 
 

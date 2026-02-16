@@ -70,6 +70,8 @@ namespace OpenTK.Platform.Native.X11
 
         internal XCursorHandle? Cursor { get; set; }
 
+        internal DoubleClickCounter ClickCounter { get; set; } = new DoubleClickCounter();
+
         public XWindowHandle(
             XDisplayPtr display,
             XWindow window,

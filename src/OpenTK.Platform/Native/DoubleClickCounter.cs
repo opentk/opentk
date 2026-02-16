@@ -10,17 +10,9 @@ namespace OpenTK.Platform.Native
     internal class DoubleClickCounter
     {
         /// <summary>
-        /// The time in milliseconds before a double click will no longer be registered.
+        /// The parameters for detecting a double-click. Interval and spatial constraints.
         /// </summary>
-        public ulong DoubleClickInterval = 500;
-        /// <summary>
-        /// The vertical distance in client coordinates the mouse can move before it a double click will no longer be registered.
-        /// </summary>
-        public float DoubleClickHeight = 4;
-        /// <summary>
-        /// The horizontal distance in client coordinates the mouse can move before it a double click will no longer be registered.
-        /// </summary>
-        public float DoubleClickWidth = 4;
+        public DoubleClickInfo DoubleClickInfo;
 
         internal MouseButton LastButton;
         internal ulong LastTime;
@@ -42,12 +34,12 @@ namespace OpenTK.Platform.Native
             }
 
             Vector2 diff = Vector2.Abs(position - LastPosition);
-            if (diff.X > DoubleClickWidth || diff.Y > DoubleClickHeight)
+            if (diff.X > DoubleClickInfo.Distance.X || diff.Y > DoubleClickInfo.Distance.Y)
             {
                 Count = 0;
             }
 
-            if (time > (LastTime + DoubleClickInterval))
+            if (time > (LastTime + DoubleClickInfo.Interval))
             {
                 Count = 0;
             }
@@ -62,7 +54,7 @@ namespace OpenTK.Platform.Native
 
         public override string ToString()
         {
-            return $"Interval: {DoubleClickInterval}ms, Spatial: {(DoubleClickWidth, DoubleClickHeight)}, Button: {LastButton}, Last time: {LastTime}, Pos: {LastPosition}, Count: {Count}";
+            return $"{DoubleClickInfo}, Button: {LastButton}, Last time: {LastTime}, Pos: {LastPosition}, Count: {Count}";
         }
     }
 }

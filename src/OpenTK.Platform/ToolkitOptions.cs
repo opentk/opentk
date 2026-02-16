@@ -103,6 +103,42 @@ namespace OpenTK.Platform
         /// </summary>
         public sealed class X11Options
         {
+            /// <summary>
+            /// VSCode leaks a bunch of envrionment variables that mess with dynamic library resolution.
+            /// If the environment variable <c>SNAP_NAME</c> is set to <c>code</c> and this variable is set to true,
+            /// we will remove a bunch of environment variables that vscode leaks into the C# process.
+            /// This means that if you want to set these variables yourself while running if VSCode 
+            /// for whatever reason then you need to disable this.
+            /// Defaults to <see langword="true"/>.
+            /// </summary>
+            /// <remarks>
+            /// Specifically all variables that have a <c>_VSCODE_SNAP_ORIG</c> version will be reset to their original values.
+            /// But additionally the following environment variables will be removed:
+            /// <list type="bullet">
+            /// <item><c>GTK_PATH</c></item>
+            /// <item><c>GIO_MODULE_DIR</c></item>
+            /// <item><c>GTK_EXE_PREFIX</c></item>
+            /// <item><c>GIO_LAUNCHED_DESKTOP_FILE</c></item>
+            /// <item><c>GIO_LAUNCHED_DESKTOP_FILE_PID</c></item>
+            /// <item><c>GTK_IM_MODULE_FILE</c></item>
+            /// <item><c>GDK_PIXBUF_MODULEDIR</c></item>
+            /// <item><c>GDK_PIXBUF_MODULE_FILE</c></item>
+            /// <item><c>GSETTINGS_SCHEMA_DIR</c></item>
+            /// <item><c>XDG_DATA_HOME</c></item>
+            /// </list>
+            /// After <see cref="Toolkit.Uninit"/> these environment variables will be reset to their original values.
+            /// <para>
+            /// If this setting ever bites you, I'm sorry.
+            /// </para>
+            /// </remarks>
+            public bool DealWithVSCodeEnvironmentVariablePollution { get; set; } = true;
+
+            /// <summary>
+            /// If this option is set to true, the custom dll resolver used to load native dependencies
+            /// will print out to the <see cref="ToolkitOptions.Logger"/> debug information about exact
+            /// paths for loaded <c>.so</c> files. Can be useful when debugging library resolution issues.
+            /// </summary>
+            public bool PrintLibraryPathResolutionDebug { get; set; } = false;
         }
 
         /// <summary>

@@ -1,18 +1,15 @@
-﻿using OpenTK.Platform;
-using OpenTK.Core.Utility;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Net.NetworkInformation;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
-using static OpenTK.Platform.Native.X11.XScreenSaver;
-using static OpenTK.Platform.Native.X11.LibX11;
 using OpenTK.Core;
+using OpenTK.Core.Native;
+using OpenTK.Core.Utility;
+using static OpenTK.Platform.Native.X11.LibX11;
+using static OpenTK.Platform.Native.X11.XScreenSaver;
 
 namespace OpenTK.Platform.Native.X11
 {
@@ -27,6 +24,13 @@ namespace OpenTK.Platform.Native.X11
         /// <inheritdoc/>
         public ILogger? Logger { get; set; }
 
+        internal GCHandle ComponentGCHandle;
+
+        internal bool HasMITScreenSaver = false;
+        internal Version MITScreenSaverVersion;
+        internal bool HasScreenSaverSuspend = false;
+        internal bool IsSuspendingScreenSaver = false;
+
         internal IntPtr PortalDesktop;
 
         internal ulong PortalDesktopGSignal;
@@ -40,6 +44,11 @@ namespace OpenTK.Platform.Native.X11
 
         internal IntPtr GPowerProfileMoniforInstance;
 
+        internal static IntPtr GSettingsPtr;
+        internal static ulong GSettingsDoubleClickSignal;
+        internal bool GSettingsHasDoubleClickProperty = false;
+        
+
         // FIXME: Make this non-static by sending this object through a GCHandle
         // to the dbus callback.
         internal static ThemeInfo CurrentTheme;
@@ -47,6 +56,40 @@ namespace OpenTK.Platform.Native.X11
         /// <inheritdoc/>
         public unsafe void Initialize(ToolkitOptions options)
         {
+            ComponentGCHandle = GCHandle.Alloc(this, GCHandleType.Normal);
+
+            if (X11.Extensions.Contains("MIT-SCREEN-SAVER"))
+            {
+                if (XScreenSaverQueryExtension(X11.Display, out int a, out int b))
+                {
+                    if (XScreenSaverQueryVersion(X11.Display, out int major, out int minor) == 1)
+                    {
+                        HasMITScreenSaver = true;
+                        MITScreenSaverVersion = new Version(major, minor);
+                        if (major > 1 || (major == 1 && minor >= 1))
+                        {
+                            HasScreenSaverSuspend = true;
+                        }
+                        else
+                        {
+                            Logger?.LogWarning($"XScreenSaver 1.1 is required to enable/disable screen saver. Using version: {major}.{minor}");
+                        }
+                    }
+                    else
+                    {
+                        Logger?.LogWarning($"XScreenSaverQueryVersion failed, cannot enable/disable screen saver.");
+                    }
+                }
+                else
+                {
+                    Logger?.LogWarning("XScreenSaverQueryExtension failed, cannot enable/disable screen saver.");
+                }
+            }
+            else
+            {
+                Logger?.LogWarning("Cannot enable/disable screen saver because XScreenSaver() can't be found.");
+            }
+
             GlibMainLoop = LibGio.g_main_loop_new(IntPtr.Zero, 0);
 
             GPowerProfileMoniforInstance = LibGio.g_power_profile_monitor_dup_default();
@@ -105,6 +148,35 @@ namespace OpenTK.Platform.Native.X11
             {
                 CurrentTheme.HighContrast = false;
             }
+
+            unsafe
+            {
+                GSettingsPtr = LibGio.g_settings_new(Utils.AsPtr("org.gnome.desktop.peripherals.mouse"u8));
+                if (GSettingsPtr != 0)
+                {
+                    LibGio.g_object_get(GSettingsPtr, Utils.AsPtr("settings-schema"u8), out IntPtr schema, null);
+                    var keysPtr = LibGio.g_settings_schema_list_keys(schema);
+                    uint kcount;
+                    for (kcount = 0; keysPtr[kcount] != null; kcount++) { }
+                    string[] keys = MarshalTk.StringArrayPtrToStringArrayUTF8((nint)keysPtr, kcount);
+                    GSettingsHasDoubleClickProperty = keys.Contains("double-click");
+                    if (GSettingsHasDoubleClickProperty)
+                    {
+                        GSettingsDoubleClickSignal = LibGio.g_signal_connect(GSettingsPtr, Utils.AsPtr("changed::double-click"u8), &gsettings_double_click_time_changed_cb, (nint)ComponentGCHandle);
+                        Logger?.LogDebug($"Double click signal: {GSettingsDoubleClickSignal}");
+                    }
+                    else
+                    {
+                        Logger?.LogWarning($"gsettings schema 'org.gnome.desktop.peripherals.mouse' doesn't contain the key 'double-click', will use the default double-click interval of {400}ms.");
+                    }
+                    LibGio.g_strfreev(keysPtr);
+                }
+                else
+                {
+                    Logger?.LogWarning($"Could not open gsettings schema 'org.gnome.desktop.peripherals.mouse', will not be able to get user configured double-click interval.");
+                }
+            }
+        
         }
 
         /// <inheritdoc/>
@@ -119,8 +191,19 @@ namespace OpenTK.Platform.Native.X11
 
             LibGio.g_object_unref(GPowerProfileMoniforInstance);
 
+            if (GSettingsPtr != 0)
+            {
+                if (GSettingsDoubleClickSignal != 0)
+                {
+                    LibGio.g_signal_handler_disconnect(GSettingsPtr, GSettingsDoubleClickSignal);
+                }
+                LibGio.g_object_unref(GSettingsPtr);
+            }
+
             LibGio.g_main_loop_quit(GlibMainLoop);
             LibGio.g_main_loop_unref(GlibMainLoop);
+
+            ComponentGCHandle.Free();
         }
 
         private unsafe struct SettingsChangedParameters {
@@ -186,49 +269,49 @@ namespace OpenTK.Platform.Native.X11
             LibGio.g_variant_unref(args.Value);
         }
 
-
-        /// <inheritdoc/>
-        public void AllowScreenSaver(bool allow, string? disableReason)
+        [UnmanagedCallersOnly]
+        private static unsafe void gsettings_double_click_time_changed_cb(IntPtr /* GSettings* */ self, byte* key, IntPtr userData)
         {
-            if (X11.Extensions.Contains("MIT-SCREEN-SAVER"))
+            GCHandle componentHandle = (GCHandle)userData;
+            X11ShellComponent? x11shell = (X11ShellComponent?)componentHandle.Target;
+            if (x11shell != null)
             {
-                if (XScreenSaverQueryExtension(X11.Display, out _, out _) == false)
-                {
-                    Logger?.LogWarning("XScreenSaverQueryExtension failed, cannot enable/disable screen saver.");
-                    return;
-                }
+                ulong newInterval = (ulong)LibGio.g_settings_get_int(self, Utils.AsPtr("double-click"u8));
+                x11shell.Logger?.LogDebug($"Double click interval changed: {newInterval}");
 
-                if (XScreenSaverQueryVersion(X11.Display, out int major, out int minor) != 1)
+                // FIXME: Move the updating of this to X11WindowComponent?
+                foreach (var window in X11WindowComponent.XWindowDict.Values)
                 {
-                    Logger?.LogWarning("XScreenSaverQueryVersion failed, cannot enable/disable screen saver.");
-                    return;
+                    window.ClickCounter.DoubleClickInfo.Interval = newInterval;
                 }
-
-                if (major > 1 || (major == 1 && minor >= 1))
-                {
-                    XScreenSaverSuspend(X11.Display, !allow);
-                }
-                else
-                {
-                    Logger?.LogWarning($"XScreenSaver 1.1 is required to enable/disable screen saver. Using version: {major}.{minor}");
-                }
-            }
-            else
-            {
-                Logger?.LogWarning("Cannot enable/disable screen saver because XScreenSaver() can't be found.");
             }
         }
 
         /// <inheritdoc/>
-        public unsafe bool IsScreenSaverAllowed()
+        public void AllowScreenSaver(bool allow, string? disableReason)
         {
-            XScreenSaverInfo* ssInfo = XScreenSaverAllocInfo();
-            XStatus status = XScreenSaverQueryInfo(X11.Display, (XDrawable)X11.DefaultRootWindow, ssInfo);
+            if (HasScreenSaverSuspend)
+            {
+                // FIXME: This doesn't seem to work 100%...
+                // With XScreenSaver this doesn't work and the screen saver will start anyway.
+                // SDL deals with this in two ways:
+                // 1. By calling XResetScreenSaver regularly.
+                // 2. By sending a d-bus message to simulate user activity regularly.
+                // We should probably experiment with these solutions.
+                // But it could also be some kind of configuration issue
+                // - Noggin_bops 2026-02-15
 
-            bool ssIsAllowed = ssInfo->state != ScreenSaverState.Disabled;
-            XFree(ssInfo);
+                XScreenSaverSuspend(X11.Display, !allow);
+                XResetScreenSaver(X11.Display);
 
-            return ssIsAllowed;
+                IsSuspendingScreenSaver = !allow;
+            }
+        }
+
+        /// <inheritdoc/>
+        public bool IsScreenSaverAllowed()
+        {
+            return !IsSuspendingScreenSaver;
         }
 
         /// <inheritdoc/>
@@ -483,6 +566,28 @@ namespace OpenTK.Platform.Native.X11
             info.TotalPhysicalMemory = (long)sysInfo.totalram;
             info.AvailablePhysicalMemory = (long)sysInfo.freeram;
 
+            return info;
+        }
+
+        /// <summary>
+        /// Gets parameters used to detect double-clicks. This is informed by the user settings on the operating system.
+        /// </summary>
+        /// <returns>The double-click parameters.</returns>
+        public unsafe DoubleClickInfo GetDoubleClickInfo()
+        {
+            DoubleClickInfo info;
+            if (GSettingsPtr != 0 && GSettingsHasDoubleClickProperty)
+            {
+                info.Interval = (ulong)LibGio.g_settings_get_int(GSettingsPtr, Utils.AsPtr("double-click"u8));
+                info.Distance = (5, 5);
+            }
+            else
+            {
+                // By default gnome uses a 400ms interval for double-clicks.
+                // - Noggin_bops 2026-02-13
+                info.Interval = 400;
+                info.Distance = (5, 5);
+            }
             return info;
         }
     }

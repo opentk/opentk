@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
@@ -15,6 +16,8 @@ namespace OpenTK.Platform.Native
             NativeLibrary.SetDllImportResolver(Assembly.GetExecutingAssembly(), DllImportResolver);
         }
 
+        public static bool PrintDllResolutionPathInfo = false;
+
         /// <summary>
         /// Called to trigger the static constructor.
         /// </summary>
@@ -27,7 +30,21 @@ namespace OpenTK.Platform.Native
                 foreach(string name in names)
                 {
                     if (NativeLibrary.TryLoad(name, assembly, searchPath, out IntPtr lib))
+                    {
+                        if (PrintDllResolutionPathInfo)
+                        {
+                            unsafe
+                            {
+                                byte* namebuf = (byte*)NativeMemory.AllocZeroed(1024);
+                                X11.Libc.dlinfo((void*)lib, 6, (void*)namebuf);
+                                string? path = Marshal.PtrToStringUTF8((nint)namebuf);
+                                NativeMemory.Free(namebuf);
+                                Toolkit.Shell?.Logger?.LogDebug($"Loaded library: {libraryName}, Loading Assembly: {assembly.FullName}, DllImportSearchPath: {searchPath?.ToString() ?? "null"}, Resolved path: {Path.Combine(path ?? "", name)}");
+                            }
+                        }
+                        
                         return lib;
+                    }
                 }
 
                 throw new DllNotFoundException($"Could not find any of these libraries '{string.Join(", ", names)}' (this load is intercepted, specified in DllImport as '{libraryName}'). Either this library is not installed or this is an OpenTK library resolution bug.");
