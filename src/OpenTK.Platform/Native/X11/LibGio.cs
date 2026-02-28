@@ -52,6 +52,10 @@ namespace OpenTK.Platform.Native
                                 GError **error);
 
         [DllImport(Gio, CallingConvention = CallingConvention.Cdecl)]
+        internal static unsafe extern IntPtr /* GVariant* */ g_dbus_proxy_get_cached_property (IntPtr /* GDBusProxy* */ proxy, byte* /* const gchar* */ property_name);
+
+
+        [DllImport(Gio, CallingConvention = CallingConvention.Cdecl)]
         internal static unsafe extern IntPtr /* GVariant* */ g_variant_new(byte* /* const gchar* */ format_string, /* ... */ byte* str1);
 
         [DllImport(Gio, CallingConvention = CallingConvention.Cdecl)]
@@ -70,6 +74,9 @@ namespace OpenTK.Platform.Native
         internal static unsafe extern IntPtr /* GVariant* */ g_variant_ref(IntPtr /* GVariant* */ value);
 
         [DllImport(Gio, CallingConvention = CallingConvention.Cdecl)]
+        internal static unsafe extern IntPtr /* GVariant* */ g_variant_ref_sink(IntPtr /* GVariant* */ value);
+
+        [DllImport(Gio, CallingConvention = CallingConvention.Cdecl)]
         internal static unsafe extern void g_variant_unref(IntPtr /* GVariant* */ value);
 
         [DllImport(Gio, CallingConvention = CallingConvention.Cdecl)]
@@ -83,6 +90,12 @@ namespace OpenTK.Platform.Native
 
         [DllImport(Gio, CallingConvention = CallingConvention.Cdecl)]
         internal static extern uint g_variant_get_uint32(IntPtr /* GVariant* */ value);
+
+        [DllImport(Gio, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern long g_variant_get_int64(IntPtr /* GVariant* */ value);
+
+        [DllImport(Gio, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern double g_variant_get_double(IntPtr /* GVariant* */ value);
 
         [DllImport(Gio, CallingConvention = CallingConvention.Cdecl)]
         internal static extern int /* gboolean */ g_variant_get_boolean(IntPtr /* GVariant* */ value);

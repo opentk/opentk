@@ -44,6 +44,9 @@ namespace OpenTK.Platform.Native.X11
 
         internal IntPtr GPowerProfileMoniforInstance;
 
+        internal IntPtr UPower;
+        internal IntPtr UPowerDisplayDevice;
+
         internal static IntPtr GSettingsPtr;
         internal static ulong GSettingsDoubleClickSignal;
         internal bool GSettingsHasDoubleClickProperty = false;
@@ -97,9 +100,9 @@ namespace OpenTK.Platform.Native.X11
             // We take a ref to this GVariant so that it's not a "floating reference" anymore.
             // This means we can reuse this GVariant in calls to g_dbus_proxy_call_sync.
             // - Noggin_bops 2024-07-22
-            GVariant_org_freedesktop_appearance_color_scheme = LibGio.g_variant_ref(LibGio.g_variant_new(Utils.AsPtr("(ss)"u8), Utils.AsPtr("org.freedesktop.appearance"u8), Utils.AsPtr("color-scheme"u8)));
+            GVariant_org_freedesktop_appearance_color_scheme = LibGio.g_variant_ref_sink(LibGio.g_variant_new(Utils.AsPtr("(ss)"u8), Utils.AsPtr("org.freedesktop.appearance"u8), Utils.AsPtr("color-scheme"u8)));
 
-            GVariant_org_gnome_desktop_a11y_interface_high_contrast = LibGio.g_variant_ref(LibGio.g_variant_new(Utils.AsPtr("(ss)"u8), Utils.AsPtr("org.gnome.desktop.a11y.interface"u8), Utils.AsPtr("high-contrast"u8)));
+            GVariant_org_gnome_desktop_a11y_interface_high_contrast = LibGio.g_variant_ref_sink(LibGio.g_variant_new(Utils.AsPtr("(ss)"u8), Utils.AsPtr("org.gnome.desktop.a11y.interface"u8), Utils.AsPtr("high-contrast"u8)));
             
             GError* error = null;
             PortalDesktop = LibGio.g_dbus_proxy_new_for_bus_sync(
@@ -177,11 +180,43 @@ namespace OpenTK.Platform.Native.X11
                 }
             }
         
+            UPower = LibGio.g_dbus_proxy_new_for_bus_sync(
+                GBusType.G_BUS_TYPE_SYSTEM,
+                GDBusProxyFlags.G_DBUS_PROXY_FLAGS_NONE,
+                IntPtr.Zero,
+                Utils.AsPtr("org.freedesktop.UPower"u8),
+                Utils.AsPtr("/org/freedesktop/UPower"u8),
+                Utils.AsPtr("org.freedesktop.UPower"u8),
+                IntPtr.Zero,
+                &error);
+            if (error != null)
+            {
+                Logger?.LogWarning($"Could not open UPower: {Marshal.PtrToStringUTF8((IntPtr)error->message)}");
+                LibGio.g_clear_error(&error);
+            }
+
+            UPowerDisplayDevice = LibGio.g_dbus_proxy_new_for_bus_sync(
+                GBusType.G_BUS_TYPE_SYSTEM,
+                GDBusProxyFlags.G_DBUS_PROXY_FLAGS_NONE,
+                IntPtr.Zero,
+                Utils.AsPtr("org.freedesktop.UPower"u8),
+                Utils.AsPtr("/org/freedesktop/UPower/devices/DisplayDevice"u8),
+                Utils.AsPtr("org.freedesktop.UPower.Device"u8),
+                IntPtr.Zero,
+                &error);
+            if (error != null)
+            {
+                Logger?.LogWarning($"Could not open UPower display device: {Marshal.PtrToStringUTF8((IntPtr)error->message)}");
+                LibGio.g_clear_error(&error);
+            }
         }
 
         /// <inheritdoc/>
         public void Uninitialize()
         {
+            LibGio.g_object_unref(UPowerDisplayDevice);
+            LibGio.g_object_unref(UPower);
+
             LibGio.g_signal_handler_disconnect(PortalDesktop, PortalDesktopGSignal);
 
             LibGio.g_object_unref(PortalDesktop);
@@ -287,6 +322,38 @@ namespace OpenTK.Platform.Native.X11
             }
         }
 
+        private static unsafe bool GetDbusBoolProperty(IntPtr dbusproxy, ReadOnlySpan<byte> name)
+        {
+            IntPtr var = LibGio.g_dbus_proxy_get_cached_property(dbusproxy, Utils.AsPtr(name));
+            bool val = LibGio.g_variant_get_boolean(var) != 0;
+            LibGio.g_variant_unref(var);
+            return val;
+        }
+
+        private static unsafe uint GetDbusUIntProperty(IntPtr dbusproxy, ReadOnlySpan<byte> name)
+        {
+            IntPtr var = LibGio.g_dbus_proxy_get_cached_property(dbusproxy, Utils.AsPtr(name));
+            uint val = LibGio.g_variant_get_uint32(var);
+            LibGio.g_variant_unref(var);
+            return val;
+        }
+
+        private static unsafe long GetDbusLongProperty(IntPtr dbusproxy, ReadOnlySpan<byte> name)
+        {
+            IntPtr var = LibGio.g_dbus_proxy_get_cached_property(dbusproxy, Utils.AsPtr(name));
+            long val = LibGio.g_variant_get_int64(var);
+            LibGio.g_variant_unref(var);
+            return val;
+        }
+
+        private static unsafe double GetDbusDoubleProperty(IntPtr dbusproxy, ReadOnlySpan<byte> name)
+        {
+            IntPtr var = LibGio.g_dbus_proxy_get_cached_property(dbusproxy, Utils.AsPtr(name));
+            double val = LibGio.g_variant_get_double(var);
+            LibGio.g_variant_unref(var);
+            return val;
+        }
+
         /// <inheritdoc/>
         public void AllowScreenSaver(bool allow, string? disableReason)
         {
@@ -317,138 +384,161 @@ namespace OpenTK.Platform.Native.X11
         /// <inheritdoc/>
         public BatteryStatus GetBatteryInfo(out BatteryInfo batteryInfo)
         {
-            bool setAC = false;
-            bool onAC = false;
-            foreach (string dir in Directory.EnumerateDirectories("/sys/class/power_supply/"))
+            if (UPowerDisplayDevice != IntPtr.Zero)
             {
-                string? type = ReadPowerFile(dir, "type");
-                if (type == "Mains\n")
-                {
-                    string? online = ReadPowerFile(dir, "online");
-                    onAC = (online == "1\n");
-                    setAC = true;
-                    break;
-                }
-            }
+                bool onBattery = GetDbusBoolProperty(UPower, "OnBattery"u8);
+                bool isPresent = GetDbusBoolProperty(UPowerDisplayDevice, "IsPresent"u8);
+                uint state = GetDbusUIntProperty(UPowerDisplayDevice, "State"u8);
+                double percent = GetDbusDoubleProperty(UPowerDisplayDevice, "Percentage"u8);
 
-            bool setBattery = false;
-            bool charging = false;
-            float? batteryPercent = null;
-            float? batteryTime = null;
-            foreach (string dir in Directory.EnumerateDirectories("/sys/class/power_supply/"))
-            {
-                string? type = ReadPowerFile(dir, "type");
-                if (type != null && type == "Battery\n")
-                {
-                    // This is a battery.
+                long timeToEmpty = GetDbusLongProperty(UPowerDisplayDevice, "TimeToEmpty"u8);
+                //long timeToFull = GetDbusLongProperty(UPowerDisplayDevice, "TimeToFull"u8);
 
-                    // We don't care about device batteries.
-                    string? scope = ReadPowerFile(dir, "scope");
-                    if (scope != null && scope == "Device\n")
-                        continue;
+                bool powerSaver = LibGio.g_power_profile_monitor_get_power_saver_enabled(GPowerProfileMoniforInstance) != 0;
 
-                    setBattery = true;
+                batteryInfo.OnAC = !onBattery;
+                batteryInfo.Charging = state == 1; // See: https://upower.freedesktop.org/docs/Device.html
+                batteryInfo.PowerSaver = powerSaver;
+                batteryInfo.BatteryPercent = (float)percent;
+                batteryInfo.BatteryTime = timeToEmpty == 0 ? null : timeToEmpty;
 
-                    string? status = ReadPowerFile(dir, "status");
-                    switch (status)
-                    {
-                        case "Charging\n":
-                            charging = true;
-                            break;
-                        case "Discharging\n":
-                            break;
-                        case "Not charging\n":
-                            break;
-                        case "Full\n":
-                            break;
-                        default: 
-                            // We couldn't read the status or the status is not one that we recognize.
-                            break;
-                    }
-
-                    string? capacityStr = ReadPowerFile(dir, "capacity");
-                    if (int.TryParse(capacityStr, out int capacity))
-                    {
-                        // FIXME: Maybe clamp to 0% - 100%?
-                        batteryPercent = capacity;
-                    }
-
-                    string? energyNowStr = ReadPowerFile(dir, "energy_now");
-                    string? energyFullStr = ReadPowerFile(dir, "energy_full");
-                    if (energyNowStr != null && energyFullStr != null &&
-                        int.TryParse(energyNowStr, out int energyNow) &&
-                        int.TryParse(energyFullStr, out int energyFull))
-                    {
-                        batteryPercent = (energyNow / (float)energyFull) * 100;
-                    }
-
-                    string? chargeNowStr = ReadPowerFile(dir, "charge_now");
-                    string? chargeFullStr = ReadPowerFile(dir, "charge_full");
-                    if (chargeNowStr != null && chargeFullStr != null &&
-                        int.TryParse(chargeNowStr, out int chargeNow) &&
-                        int.TryParse(chargeFullStr, out int chargeFull))
-                    {
-                        batteryPercent = (chargeNow / (float)chargeFull) * 100;
-                    }
-
-                    string? timeToEmptyNowStr = ReadPowerFile(dir, "time_to_empty_now");
-                    if (timeToEmptyNowStr != null && 
-                        int.TryParse(timeToEmptyNowStr, out int timeToEmptyNow))
-                    {
-                        batteryTime = timeToEmptyNow;
-                    }
-
-                    // FIXME: In the case of multiple batteries, pick the highest time to empty
-                    // And highest battery percentage?
-
-                    // FIXME: Consider the case of multiple batteries.
-                    setBattery = true;
-                }
-            }
-
-            // FIXME: We can listen to GPowerProfileMonitor::notify::power-saver-enabled signal to get an event
-            // when this setting changes.
-            // - Noggin_bops 2024-07-22
-            bool powerSaver = LibGio.g_power_profile_monitor_get_power_saver_enabled(GPowerProfileMoniforInstance) != 0;
-
-            if (setBattery == false)
-            {
-                batteryInfo = default;
-                return BatteryStatus.NoSystemBattery;
+                return isPresent ? BatteryStatus.HasSystemBattery : BatteryStatus.NoSystemBattery;
             }
             else
             {
-                batteryInfo.OnAC = onAC;
-                batteryInfo.Charging = charging;
-                batteryInfo.PowerSaver = powerSaver;
-                batteryInfo.BatteryPercent = batteryPercent;
-                batteryInfo.BatteryTime = batteryTime;
-                return BatteryStatus.HasSystemBattery;
-            }
-
-            static string? ReadPowerFile(string name, string key)
-            {
-                string path = Path.Combine("/sys/class/power_supply/",  name, key);
-                // Relying on exceptions here is *really* slow, so we
-                // just check if the file exists before we try to read it.
-                // The try-catch is to prevent a crash if the file
-                // gets removed between Exists and ReadAllText.
-                // - Noggin_bops 2024-02-25
-                if (File.Exists(path))
+                bool setAC = false;
+                bool onAC = false;
+                foreach (string dir in Directory.EnumerateDirectories("/sys/class/power_supply/"))
                 {
-                    try 
+                    string? type = ReadPowerFile(dir, "type");
+                    if (type == "Mains\n")
                     {
-                        return File.ReadAllText(path);
+                        string? online = ReadPowerFile(dir, "online");
+                        onAC = (online == "1\n");
+                        setAC = true;
+                        break;
                     }
-                    // FIXME: Are there some exceptions we should let through?
-                    catch
+                }
+
+                bool setBattery = false;
+                bool charging = false;
+                float? batteryPercent = null;
+                float? batteryTime = null;
+                foreach (string dir in Directory.EnumerateDirectories("/sys/class/power_supply/"))
+                {
+                    string? type = ReadPowerFile(dir, "type");
+                    if (type != null && type == "Battery\n")
                     {
-                        return null;
+                        // This is a battery.
+
+                        // We don't care about device batteries.
+                        string? scope = ReadPowerFile(dir, "scope");
+                        if (scope != null && scope == "Device\n")
+                            continue;
+
+                        setBattery = true;
+
+                        string? status = ReadPowerFile(dir, "status");
+                        switch (status)
+                        {
+                            case "Charging\n":
+                                charging = true;
+                                break;
+                            case "Discharging\n":
+                                break;
+                            case "Not charging\n":
+                                break;
+                            case "Full\n":
+                                break;
+                            default: 
+                                // We couldn't read the status or the status is not one that we recognize.
+                                break;
+                        }
+
+                        string? capacityStr = ReadPowerFile(dir, "capacity");
+                        if (int.TryParse(capacityStr, out int capacity))
+                        {
+                            // FIXME: Maybe clamp to 0% - 100%?
+                            batteryPercent = capacity;
+                        }
+
+                        string? energyNowStr = ReadPowerFile(dir, "energy_now");
+                        string? energyFullStr = ReadPowerFile(dir, "energy_full");
+                        if (energyNowStr != null && energyFullStr != null &&
+                            int.TryParse(energyNowStr, out int energyNow) &&
+                            int.TryParse(energyFullStr, out int energyFull))
+                        {
+                            batteryPercent = (energyNow / (float)energyFull) * 100;
+                        }
+
+                        string? chargeNowStr = ReadPowerFile(dir, "charge_now");
+                        string? chargeFullStr = ReadPowerFile(dir, "charge_full");
+                        if (chargeNowStr != null && chargeFullStr != null &&
+                            int.TryParse(chargeNowStr, out int chargeNow) &&
+                            int.TryParse(chargeFullStr, out int chargeFull))
+                        {
+                            batteryPercent = (chargeNow / (float)chargeFull) * 100;
+                        }
+
+                        string? timeToEmptyNowStr = ReadPowerFile(dir, "time_to_empty_now");
+                        if (timeToEmptyNowStr != null && 
+                            int.TryParse(timeToEmptyNowStr, out int timeToEmptyNow))
+                        {
+                            batteryTime = timeToEmptyNow;
+                        }
+
+                        // FIXME: In the case of multiple batteries, pick the highest time to empty
+                        // And highest battery percentage?
+
+                        // FIXME: Consider the case of multiple batteries.
+                        setBattery = true;
                     }
+                }
+
+                // FIXME: We can listen to GPowerProfileMonitor::notify::power-saver-enabled signal to get an event
+                // when this setting changes.
+                // - Noggin_bops 2024-07-22
+                bool powerSaver = LibGio.g_power_profile_monitor_get_power_saver_enabled(GPowerProfileMoniforInstance) != 0;
+
+                if (setBattery == false)
+                {
+                    batteryInfo = default;
+                    return BatteryStatus.NoSystemBattery;
                 }
                 else
                 {
-                    return null;
+                    batteryInfo.OnAC = onAC;
+                    batteryInfo.Charging = charging;
+                    batteryInfo.PowerSaver = powerSaver;
+                    batteryInfo.BatteryPercent = batteryPercent;
+                    batteryInfo.BatteryTime = batteryTime;
+                    return BatteryStatus.HasSystemBattery;
+                }
+
+                static string? ReadPowerFile(string name, string key)
+                {
+                    string path = Path.Combine("/sys/class/power_supply/",  name, key);
+                    // Relying on exceptions here is *really* slow, so we
+                    // just check if the file exists before we try to read it.
+                    // The try-catch is to prevent a crash if the file
+                    // gets removed between Exists and ReadAllText.
+                    // - Noggin_bops 2024-02-25
+                    if (File.Exists(path))
+                    {
+                        try 
+                        {
+                            return File.ReadAllText(path);
+                        }
+                        // FIXME: Are there some exceptions we should let through?
+                        catch
+                        {
+                            return null;
+                        }
+                    }
+                    else
+                    {
+                        return null;
+                    }
                 }
             }
         }
