@@ -3,11 +3,11 @@ id OpenTK.Input
 description
     Hid/Controller input library.
 dependencies
-    framework: net8.0
+    framework: net10.0
 files
-    bin\Release\net8.0\OpenTK.Input.dll ==> lib\net8.0
-    bin\Release\net8.0\OpenTK.Input.xml ==> lib\net8.0
-    bin\Release\net8.0\OpenTK.Input.pdb ==> lib\net8.0
+    bin\Release\net10.0\OpenTK.Input.dll ==> lib\net10.0
+    bin\Release\net10.0\OpenTK.Input.xml ==> lib\net10.0
+    bin\Release\net10.0\OpenTK.Input.pdb ==> lib\net10.0
     README.md ==> docs
     ..\..\.github\opentk-blue-hexagon.png ==> images
 
