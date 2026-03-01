@@ -133,6 +133,12 @@ namespace OpenTK.Platform.Native
                 "libX11.so.0",
             },
 
+            ["XkbRegistry"] = new string[]
+            {
+              "libxkbregistry.so",
+              "libxkbregistry.so.0"  
+            },
+
             ["XI2"] = new string[]
             {
                 "libxcb-xinput.so.0",

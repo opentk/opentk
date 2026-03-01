@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using OpenTK.Platform;
 using OpenTK.Core.Utility;
 using static OpenTK.Platform.Native.X11.LibX11;
 using static OpenTK.Platform.Native.X11.LibXkb;
-using System.Runtime.CompilerServices;
-using OpenTK.Mathematics;
 using System.Text;
 using OpenTK.Core;
+using System.Globalization;
 
 namespace OpenTK.Platform.Native.X11
 {
@@ -27,6 +25,9 @@ namespace OpenTK.Platform.Native.X11
 
         private static bool[] KeyboardState = new bool[256];
 
+        internal IntPtr GSettingsPtr;
+        internal Dictionary<string, List<CultureInfo>> XkbLayoutLookup = new Dictionary<string, List<CultureInfo>>();
+
         internal GCHandle ComponentGCHandle;
 
         /// <inheritdoc/>
@@ -36,7 +37,7 @@ namespace OpenTK.Platform.Native.X11
 
             int major = 1;
             int minor = 0;
-            if (XkbQueryExtension(X11.Display, out int opcode, out int @event, out int error, ref major, ref minor) == false)
+            if (XkbQueryExtension(X11.Display, out int opcode, out int base_event, out int base_error, ref major, ref minor) == false)
             {
                 // FIXME:
                 throw new Exception("Xkb extension not available.");
@@ -53,6 +54,55 @@ namespace OpenTK.Platform.Native.X11
             }
 
             UpdateKeymap();
+
+            {
+                var rxkbc = LibXkbRegistry.rxkb_context_new(rxkb_context_flags.NoFlags);
+
+                bool success = LibXkbRegistry.rxkb_context_parse_default_ruleset(rxkbc);
+                if (success == false)
+                {
+                    Logger?.LogWarning("rxkb could not load default ruleset.");
+                }
+
+                IntPtr layout = LibXkbRegistry.rxkb_layout_first(rxkbc);
+                if (layout != 0)
+                {
+                    do
+                    {
+                        string? name = Marshal.PtrToStringUTF8((nint)LibXkbRegistry.rxkb_layout_get_name(layout));
+                        string? variant = Marshal.PtrToStringUTF8((nint)LibXkbRegistry.rxkb_layout_get_variant(layout));
+
+                        string fullName = $"{name}{(variant != null ? $"+{variant}" : "")}";
+                        Logger?.LogDebug($"name: {fullName}");
+
+                        List<CultureInfo> cultures = new List<CultureInfo>();
+                        IntPtr iso639 = LibXkbRegistry.rxkb_layout_get_iso639_first(layout);
+                        if (iso639 != 0)
+                        {
+                            do
+                            {
+                                string? code = Marshal.PtrToStringUTF8((nint)LibXkbRegistry.rxkb_iso639_code_get_code(iso639));
+                                //var culture = new CultureInfo(code!);
+                                var culture = CultureInfo.GetCultureInfo(code!);
+                                Logger?.LogDebug($" - {code} {culture.DisplayName}");
+
+                                cultures.Add(culture);
+
+                            } while((iso639 = LibXkbRegistry.rxkb_iso639_code_next(iso639)) != 0);
+                        }
+
+                        XkbLayoutLookup.Add(fullName, cultures);
+                    } while((layout = LibXkbRegistry.rxkb_layout_next(layout)) != 0);
+                }
+
+                LibXkbRegistry.rxkb_context_unref(rxkbc);
+            }
+
+            GSettingsPtr = LibGio.g_settings_new(Utils.AsPtr("org.gnome.desktop.input-sources"u8));
+            if (GSettingsPtr == 0)
+            {
+                Logger?.LogWarning($"Could not open gsettings schema 'org.gnome.desktop.input-sources', will not be able to get accurate keyboard layout information.");
+            }
         }
 
         /// <inheritdoc/>
@@ -60,6 +110,8 @@ namespace OpenTK.Platform.Native.X11
         {
             // FIXME: Can we reset detectable auto-repeat?
             // - Noggin_bops 2025-07-09
+
+            LibGio.g_object_unref(GSettingsPtr);
         }
 
         internal static KeyModifier ModifiersFromState(uint state)
@@ -441,12 +493,31 @@ namespace OpenTK.Platform.Native.X11
         public bool SupportsLayouts => false;
 
         /// <inheritdoc/>
-        public bool SupportsIme => false;
+        public bool SupportsIme => true;
 
         public unsafe string GetActiveKeyboardLayout(WindowHandle? handle)
         {
+            if (GSettingsPtr != 0)
+            {
+                IntPtr sources = LibGio.g_settings_get_value(GSettingsPtr, Utils.AsPtr("mru-sources"u8));
+
+                nuint n = LibGio.g_variant_n_children(sources);
+                if (n > 0)
+                {
+                    IntPtr source = LibGio.g_variant_get_child_value(sources, 0);
+                    IntPtr valueVar = LibGio.g_variant_get_child_value(source, 1);
+                    string value = Encoding.UTF8.GetString(LibGio.g_variant_get_string(valueVar));
+                    LibGio.g_variant_unref(valueVar);
+                    LibGio.g_variant_unref(source);
+                    LibGio.g_variant_unref(sources);
+                    return value;
+                }
+
+                LibGio.g_variant_unref(sources);
+            }
+
             XkbDescRec* desc = XkbGetMap(X11.Display, 0, XkbUseCoreKbd);
-            XStatus status = XkbGetNames(X11.Display, XkbSymbolsNameMask, desc);
+            XStatus status = XkbGetNames(X11.Display, XkbSymbolsNameMask | XkbAllNamesMask, desc);
             if (status != Success)
             {
                 Logger?.LogError($"XkbGetNames failed with status: {status}");
@@ -461,41 +532,70 @@ namespace OpenTK.Platform.Native.X11
             return symbols;
         }
 
+        // Keyboard layouts do not necessarily imply the language beeing written.
+        // For example, I'm writing this using a keyboard layout meant for Swedish
+        // but the text I'm writing is English. For multi-lingual users it would be
+        // very inconvenient to change input language when switching between languages
+        // so it's not possible to accurately get the input language.
+        // Keyboard layouts are more concerned with the alphabet of the language written
+        // but as languages share alphabets a single keyboard layout can imply a 
+        // number of different languages being written.
+        // - Noggin_bops 2026-03-02
         public unsafe string[] GetAvailableKeyboardLayouts()
         {
-            XkbDescRec* desc = XkbGetMap(X11.Display, 0, XkbUseCoreKbd);
-            XStatus status = XkbGetNames(X11.Display, XkbGroupNamesMask, desc);
-            if (status != Success)
+            if (GSettingsPtr != 0)
             {
-                Logger?.LogError($"XkbGetNames failed with status: {status}");
-                XkbFreeKeyboard(desc, 0, true);
-                return Array.Empty<string>();
+                IntPtr sources = LibGio.g_settings_get_value(GSettingsPtr, Utils.AsPtr("sources"u8));
+                nuint n = LibGio.g_variant_n_children(sources);
+
+                string[] result = new string[n];
+                for (nuint i = 0; i < n; i++)
+                {
+                    IntPtr source = LibGio.g_variant_get_child_value(sources, i);
+
+                    IntPtr valueVar = LibGio.g_variant_get_child_value(source, 1);
+
+                    string value = Encoding.UTF8.GetString(LibGio.g_variant_get_string(valueVar));
+
+                    result[i] = value;
+
+                    LibGio.g_variant_unref(valueVar);
+                    LibGio.g_variant_unref(source);
+                }
+                LibGio.g_variant_unref(sources);
+
+                return result;
             }
+            else
+            {
+                XkbDescRec* desc = XkbGetMap(X11.Display, 0, XkbUseCoreKbd);
+                XStatus status = XkbGetNames(X11.Display, XkbGroupNamesMask, desc);
+                if (status != Success)
+                {
+                    Logger?.LogError($"XkbGetNames failed with status: {status}");
+                    XkbFreeKeyboard(desc, 0, true);
+                    return Array.Empty<string>();
+                }
 
-            // FIXME: Xkb can't give us more than 4 layouts simultaniously.
-            // This isn't great if the user has more than 4 layouts defined (possible in GNOME)
-            // as we won't list all of those languages.
-            // It seems like there is no api available through xkb that we can use to get this info...
-            // - Noggin_bops 2024-12-12
-            // It's unclear how input language and keyboard layout is connected here.
-            // - Noggin_bops 2024-12-12
-            // FIXME: It seems we are getting "English (UK)" even though I don't have that
-            // switching option setup. We want to represent possible options, so we should
-            // have some way to detect that that isn't a valid option.
-            // - Noggin_bops 2024-12-12
-            List<string> groups = new List<string>(4);
-            if (desc->names->groups.groups0 != XAtom.None)
-                groups.Add(desc->names->groups.groups0.ToString());
-            if (desc->names->groups.groups1 != XAtom.None)
-                groups.Add(desc->names->groups.groups1.ToString());
-            if (desc->names->groups.groups2 != XAtom.None)
-                groups.Add(desc->names->groups.groups2.ToString());
-            if (desc->names->groups.groups3 != XAtom.None)
-                groups.Add(desc->names->groups.groups3.ToString());
+                
+                // FIXME: It seems we are getting "English (UK)" even though I don't have that
+                // switching option setup. We want to represent possible options, so we should
+                // have some way to detect that that isn't a valid option.
+                // - Noggin_bops 2024-12-12
+                List<string> groups = new List<string>(4);
+                if (desc->names->groups.groups0 != XAtom.None)
+                    groups.Add(desc->names->groups.groups0.ToString());
+                if (desc->names->groups.groups1 != XAtom.None)
+                    groups.Add(desc->names->groups.groups1.ToString());
+                if (desc->names->groups.groups2 != XAtom.None)
+                    groups.Add(desc->names->groups.groups2.ToString());
+                if (desc->names->groups.groups3 != XAtom.None)
+                    groups.Add(desc->names->groups.groups3.ToString());
 
-            XkbFreeKeyboard(desc, 0, true);
+                XkbFreeKeyboard(desc, 0, true);
 
-            return groups.ToArray();
+                return groups.ToArray();
+            }
         }
 
         /// <inheritdoc/>
