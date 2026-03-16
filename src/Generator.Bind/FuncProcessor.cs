@@ -1011,7 +1011,8 @@ namespace Bind
                     bool is_candidate = true;
                     is_candidate &=
                         name.StartsWith("Get") || name.StartsWith("Gen") ||
-                        name.StartsWith("Delete") || name.StartsWith("New");
+                        name.StartsWith("Delete") || name.StartsWith("New") ||
+                        name.StartsWith("Create");
                     is_candidate &= p.Pointer > 0;
                     // if there is a specific count set, such as "4", then this function
                     // returns a vector of specific dimensions and it would be wrong
