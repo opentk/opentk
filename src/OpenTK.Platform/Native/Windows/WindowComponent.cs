@@ -2091,7 +2091,7 @@ namespace OpenTK.Platform.Native.Windows
         };
 
         /// <inheritdoc/>
-        public unsafe void SetBorderStyle(WindowHandle handle, WindowBorderStyle style)
+        public void SetBorderStyle(WindowHandle handle, WindowBorderStyle style)
         {
             HWND hwnd = handle.As<HWND>(this);
 
@@ -2139,7 +2139,7 @@ namespace OpenTK.Platform.Native.Windows
                     throw new InvalidEnumArgumentException(nameof(style), (int)style, style.GetType());
             }
 
-            Win32.SetWindowPos(hwnd.HWnd, IntPtr.Zero, 0, 0, 0, 0, SetWindowPosFlags.NoMove | SetWindowPosFlags.NoSize | SetWindowPosFlags.NoZOrder | SetWindowPosFlags.FrameChanged);
+            Win32.SetWindowPos(hwnd.HWnd, IntPtr.Zero, 0, 0, 0, 0, SetWindowPosFlags.NoMove | SetWindowPosFlags.NoSize | SetWindowPosFlags.NoZOrder | SetWindowPosFlags.NoOwnerZOrder | SetWindowPosFlags.NoActivate | SetWindowPosFlags.FrameChanged);
         }
 
         /// <inheritdoc/>
