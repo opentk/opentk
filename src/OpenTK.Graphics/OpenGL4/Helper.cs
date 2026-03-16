@@ -70,24 +70,66 @@ namespace OpenTK.Graphics.OpenGL4
 #pragma warning disable 1572
 #pragma warning disable 1573
 
+        /// <summary>
+        /// [requires: v1.0]
+        /// Specify clear values for the color buffers.
+        /// </summary>
+        /// <param name="color">The color to set as the clear value.</param>
         public static void ClearColor(Color color)
         {
             GL.ClearColor(color.R / 255.0f, color.G / 255.0f, color.B / 255.0f, color.A / 255.0f);
         }
 
+        /// <summary>
+        /// [requires: v1.0]
+        /// Specify clear values for the color buffers.
+        /// </summary>
+        /// <param name="color">The color to set as the clear value.</param>
         public static void ClearColor(Color4 color)
         {
             GL.ClearColor(color.R, color.G, color.B, color.A);
         }
 
+        /// <summary>
+        /// [requires: v1.4 or ARB_imaging|VERSION_1_4]
+        /// Set the blend color.
+        /// </summary>
+        /// <param name="color">The blend color to set.</param>
         public static void BlendColor(Color color)
         {
             GL.BlendColor(color.R / 255.0f, color.G / 255.0f, color.B / 255.0f, color.A / 255.0f);
         }
 
+        /// <summary>
+        /// [requires: v1.4 or ARB_imaging|VERSION_1_4]
+        /// Set the blend color.
+        /// </summary>
+        /// <param name="color">The blend color to set.</param>
         public static void BlendColor(Color4 color)
         {
             GL.BlendColor(color.R, color.G, color.B, color.A);
+        }
+
+        /// <summary>
+        /// [requires: v3.0]
+        /// Clear individual buffers of the currently bound draw framebuffer
+        /// </summary>
+        /// <param name="buffer">Specify the buffer to clear.</param>
+        /// <param name="drawbuffer">Specify a particular draw buffer to clear.</param>
+        /// <param name="color">[length: COMPSIZE(buffer)] For color buffers, a pointer to a four-element vector specifying R, G, B and A values to clear the buffer to. For depth buffers, a pointer to a single depth value to clear the buffer to. For stencil buffers, a pointer to a single stencil value to clear the buffer to.</param>
+        public static void ClearBuffer(ClearBuffer buffer, int drawbuffer, Color4 color)
+        {
+            GL.ClearBuffer(buffer, drawbuffer, ref color.R);
+        }
+
+        /// <summary>[requires: v4.5 or ARB_direct_state_access|VERSION_4_5]</summary>
+        /// <param name="framebuffer"></param>
+        /// <param name="buffer"></param>
+        /// <param name="drawbuffer"></param>
+        /// <param name="color">[length: COMPSIZE(buffer)]</param>
+        public static void ClearNamedFramebuffer(int framebuffer, ClearBuffer buffer, int drawbuffer, Color4 color)
+        {
+            GL.ClearNamedFramebuffer(framebuffer, buffer, drawbuffer, ref color.R);
         }
 
         /// <summary>

@@ -94,6 +94,18 @@ namespace OpenTK.Graphics.ES30
             GL.BlendColor(color.R, color.G, color.B, color.A);
         }
 
+        /// <summary>
+        /// [requires: v3.0]
+        /// Clear individual buffers of the currently bound draw framebuffer
+        /// </summary>
+        /// <param name="buffer">Specify the buffer to clear.</param>
+        /// <param name="drawbuffer">Specify a particular draw buffer to clear.</param>
+        /// <param name="color">[length: COMPSIZE(buffer)] For color buffers, a pointer to a four-element vector specifying R, G, B and A values to clear the buffer to. For depth buffers, a pointer to a single depth value to clear the buffer to. For stencil buffers, a pointer to a single stencil value to clear the buffer to.</param>
+        public static void ClearBuffer(ClearBuffer buffer, int drawbuffer, Color4 color)
+        {
+            GL.ClearBuffer(buffer, drawbuffer, ref color.R);
+        }
+
         public static void Uniform2(int location, ref Vector2 vector)
         {
             GL.Uniform2(location, vector.X, vector.Y);

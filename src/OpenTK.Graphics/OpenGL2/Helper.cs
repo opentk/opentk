@@ -180,6 +180,28 @@ namespace OpenTK.Graphics.OpenGL
         }
 
         /// <summary>
+        /// [requires: v3.0]
+        /// Clear individual buffers of the currently bound draw framebuffer
+        /// </summary>
+        /// <param name="buffer">Specify the buffer to clear.</param>
+        /// <param name="drawbuffer">Specify a particular draw buffer to clear.</param>
+        /// <param name="color">[length: COMPSIZE(buffer)] For color buffers, a pointer to a four-element vector specifying R, G, B and A values to clear the buffer to. For depth buffers, a pointer to a single depth value to clear the buffer to. For stencil buffers, a pointer to a single stencil value to clear the buffer to.</param>
+        public static void ClearBuffer(ClearBuffer buffer, int drawbuffer, Color4 color)
+        {
+            GL.ClearBuffer(buffer, drawbuffer, ref color.R);
+        }
+
+        /// <summary>[requires: v4.5 or ARB_direct_state_access|VERSION_4_5]</summary>
+        /// <param name="framebuffer"></param>
+        /// <param name="buffer"></param>
+        /// <param name="drawbuffer"></param>
+        /// <param name="color">[length: COMPSIZE(buffer)]</param>
+        public static void ClearNamedFramebuffer(int framebuffer, ClearBuffer buffer, int drawbuffer, Color4 color)
+        {
+            GL.ClearNamedFramebuffer(framebuffer, buffer, drawbuffer, ref color.R);
+        }
+
+        /// <summary>
         /// [requires: v1.0][deprecated: v3.2]
         /// Specify material parameters for the lighting model.
         /// </summary>
