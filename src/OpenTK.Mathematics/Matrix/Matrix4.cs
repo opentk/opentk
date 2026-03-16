@@ -28,6 +28,7 @@ SOFTWARE.
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
+using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 #if NETCOREAPP3_1_OR_GREATER
@@ -1582,7 +1583,20 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Matrix4 Mult(Matrix4 left, Matrix4 right)
         {
+            Matrix4 result;
+
+#if NETCOREAPP3_1_OR_GREATER
+            if (Sse.IsSupported)
+            {
+                MultSSE1(in left, in right, out result);
+            }
+            else
+            {
+                Mult(in left, in right, out result);
+            }
+#else
             Mult(in left, in right, out Matrix4 result);
+#endif
             return result;
         }
 
@@ -1644,6 +1658,155 @@ namespace OpenTK.Mathematics
             result.Row3.Z = (leftM41 * rightM13) + (leftM42 * rightM23) + (leftM43 * rightM33) + (leftM44 * rightM43);
             result.Row3.W = (leftM41 * rightM14) + (leftM42 * rightM24) + (leftM43 * rightM34) + (leftM44 * rightM44);
         }
+
+#if NETCOREAPP3_1_OR_GREATER
+        /// <summary>
+        /// Multiplies two instances (With SSE1 intrinsics).
+        /// </summary>
+        /// <param name="left">The left operand of the multiplication.</param>
+        /// <param name="right">The right operand of the multiplication.</param>
+        /// <param name="result" >A new instance that is the result of the multiplication.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static unsafe void MultSSE1(in Matrix4 left, in Matrix4 right, out Matrix4 result)
+        {
+#pragma warning disable SA1015
+
+            // The following xmm registers
+            // will save the shuffles
+            Vector128<float> aSeq0;
+            Vector128<float> aSeq1;
+            Vector128<float> aSeq2;
+            Vector128<float> aSeq3;
+
+            fixed (Vector4* ptr = &left.Row0)
+            {
+                aSeq0 = Sse.Shuffle(*(Vector128<float>*)ptr, *(Vector128<float>*)ptr, 0b0000_0000);
+
+                aSeq1 = Sse.Shuffle(*(Vector128<float>*)ptr, *(Vector128<float>*)ptr, 0b0101_0101);
+
+                aSeq2 = Sse.Shuffle(*(Vector128<float>*)ptr, *(Vector128<float>*)ptr, 0b1010_1010);
+
+                aSeq3 = Sse.Shuffle(*(Vector128<float>*)ptr, *(Vector128<float>*)ptr, 0b1111_1111);
+            }
+
+            // The following xmm registers
+            // will save the multiplications
+            Vector128<float> muls0;
+            Vector128<float> muls1;
+            Vector128<float> muls2;
+
+            // Equivalent of aRow0 * matrixB
+            fixed (Vector4* resultPtr = &result.Row0)
+            fixed (Vector4* rightPtr = &right.Row0)
+            {
+                *(Vector128<float>*)resultPtr = Sse.Multiply(aSeq0, *(Vector128<float>*)rightPtr);
+
+                muls0 = Sse.Multiply(aSeq1, *(Vector128<float>*)&rightPtr[1]);
+
+                muls1 = Sse.Multiply(aSeq2, *(Vector128<float>*)&rightPtr[2]);
+
+                muls2 = Sse.Multiply(aSeq3, *(Vector128<float>*)&rightPtr[3]);
+
+                *(Vector128<float>*)resultPtr = Sse.Add(*(Vector128<float>*)resultPtr, muls0);
+
+                *(Vector128<float>*)resultPtr = Sse.Add(*(Vector128<float>*)resultPtr, muls1);
+
+                *(Vector128<float>*)resultPtr = Sse.Add(*(Vector128<float>*)resultPtr, muls2);
+            }
+
+            fixed (Vector4* ptr = &left.Row1)
+            {
+                aSeq0 = Sse.Shuffle(*(Vector128<float>*)ptr, *(Vector128<float>*)ptr, 0b0000_0000);
+
+                aSeq1 = Sse.Shuffle(*(Vector128<float>*)ptr, *(Vector128<float>*)ptr, 0b0101_0101);
+
+                aSeq2 = Sse.Shuffle(*(Vector128<float>*)ptr, *(Vector128<float>*)ptr, 0b1010_1010);
+
+                aSeq3 = Sse.Shuffle(*(Vector128<float>*)ptr, *(Vector128<float>*)ptr, 0b1111_1111);
+            }
+
+            // Equivalent of aRow1 * matrixB
+            fixed (Vector4* resultPtr = &result.Row1)
+            fixed (Vector4* rightPtr = &right.Row0)
+            {
+                *(Vector128<float>*)resultPtr = Sse.Multiply(aSeq0, *(Vector128<float>*)rightPtr);
+
+                muls0 = Sse.Multiply(aSeq1, *(Vector128<float>*)&rightPtr[1]);
+
+                muls1 = Sse.Multiply(aSeq2, *(Vector128<float>*)&rightPtr[2]);
+
+                muls2 = Sse.Multiply(aSeq3, *(Vector128<float>*)&rightPtr[3]);
+
+                *(Vector128<float>*)resultPtr = Sse.Add(*(Vector128<float>*)resultPtr, muls0);
+
+                *(Vector128<float>*)resultPtr = Sse.Add(*(Vector128<float>*)resultPtr, muls1);
+
+                *(Vector128<float>*)resultPtr = Sse.Add(*(Vector128<float>*)resultPtr, muls2);
+            }
+
+            fixed (Vector4* ptr = &left.Row2)
+            {
+                aSeq0 = Sse.Shuffle(*(Vector128<float>*)ptr, *(Vector128<float>*)ptr, 0b0000_0000);
+
+                aSeq1 = Sse.Shuffle(*(Vector128<float>*)ptr, *(Vector128<float>*)ptr, 0b0101_0101);
+
+                aSeq2 = Sse.Shuffle(*(Vector128<float>*)ptr, *(Vector128<float>*)ptr, 0b1010_1010);
+
+                aSeq3 = Sse.Shuffle(*(Vector128<float>*)ptr, *(Vector128<float>*)ptr, 0b1111_1111);
+            }
+
+            // Equivalent of aRow2 * matrixB
+            fixed (Vector4* resultPtr = &result.Row2)
+            fixed (Vector4* rightPtr = &right.Row0)
+            {
+                *(Vector128<float>*)resultPtr = Sse.Multiply(aSeq0, *(Vector128<float>*)rightPtr);
+
+                muls0 = Sse.Multiply(aSeq1, *(Vector128<float>*)&rightPtr[1]);
+
+                muls1 = Sse.Multiply(aSeq2, *(Vector128<float>*)&rightPtr[2]);
+
+                muls2 = Sse.Multiply(aSeq3, *(Vector128<float>*)&rightPtr[3]);
+
+                *(Vector128<float>*)resultPtr = Sse.Add(*(Vector128<float>*)resultPtr, muls0);
+
+                *(Vector128<float>*)resultPtr = Sse.Add(*(Vector128<float>*)resultPtr, muls1);
+
+                *(Vector128<float>*)resultPtr = Sse.Add(*(Vector128<float>*)resultPtr, muls2);
+            }
+
+            fixed (Vector4* ptr = &left.Row3)
+            {
+                aSeq0 = Sse.Shuffle(*(Vector128<float>*)ptr, *(Vector128<float>*)ptr, 0b0000_0000);
+
+                aSeq1 = Sse.Shuffle(*(Vector128<float>*)ptr, *(Vector128<float>*)ptr, 0b0101_0101);
+
+                aSeq2 = Sse.Shuffle(*(Vector128<float>*)ptr, *(Vector128<float>*)ptr, 0b1010_1010);
+
+                aSeq3 = Sse.Shuffle(*(Vector128<float>*)ptr, *(Vector128<float>*)ptr, 0b1111_1111);
+            }
+
+            // Equivalent of aRow0 * matrixB
+            fixed (Vector4* resultPtr = &result.Row3)
+            fixed (Vector4* rightPtr = &right.Row0)
+            {
+                *(Vector128<float>*)resultPtr = Sse.Multiply(aSeq0, *(Vector128<float>*)rightPtr);
+
+                muls0 = Sse.Multiply(aSeq1, *(Vector128<float>*)&rightPtr[1]);
+
+                muls1 = Sse.Multiply(aSeq2, *(Vector128<float>*)&rightPtr[2]);
+
+                muls2 = Sse.Multiply(aSeq3, *(Vector128<float>*)&rightPtr[3]);
+
+                *(Vector128<float>*)resultPtr = Sse.Add(*(Vector128<float>*)resultPtr, muls0);
+
+                *(Vector128<float>*)resultPtr = Sse.Add(*(Vector128<float>*)resultPtr, muls1);
+
+                *(Vector128<float>*)resultPtr = Sse.Add(*(Vector128<float>*)resultPtr, muls2);
+            }
+
+#pragma warning restore SA1015
+        }
+#endif
 
         /// <summary>
         /// Multiplies an instance by a scalar.
