@@ -10,7 +10,7 @@
     <ItemGroup>
       <ProjectReference Include="..\OpenTK.Core\OpenTK.Core.csproj" />
       <ProjectReference Include="..\OpenTK.Windowing.Common\OpenTK.Windowing.Common.csproj" />
-      <PackageReference Include="OpenTK.redist.glfw" Version="3.4.0.44" />
+      <PackageReference Include="OpenTK.redist.glfw" Version="3.4.0.47" />
     </ItemGroup>
 
     <Import Project="..\..\props\common.props" />
