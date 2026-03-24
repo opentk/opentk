@@ -143,6 +143,8 @@ namespace OpenTK.Platform.Native.Windows
 
         public Win32.RECT WorkArea { get; set; }
 
+        public List<VideoMode> SupportedVideoModes { get; set; } = new List<VideoMode>();
+
         public float RefreshRate { get; set; }
 
         public int BitsPerPixel { get; set; }

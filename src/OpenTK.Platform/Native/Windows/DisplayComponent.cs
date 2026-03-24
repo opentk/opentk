@@ -13,7 +13,6 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.Marshalling;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace OpenTK.Platform.Native.Windows
 {
@@ -437,11 +436,36 @@ namespace OpenTK.Platform.Native.Windows
                             EventQueue.Raise(null, PlatformEventType.DisplayValuesChanged, valuesChanged);
                         }
                     }
+
+                    // Update supported video modes
+                    {
+                        info.SupportedVideoModes.Clear();
+
+                        int modeIndex = 0;
+                        do
+                        {
+                            // FIXME: What do we do with duplicated video modes?
+                            // For now we keep them, but there is no possibility of
+                            // differentiating them.
+                            // Should we decide or should we pass platform specific info to the user?
+
+                            // Most duplicated come from each video mode having three different dmDisplayFixedOutput version.
+                            // Default, centered, and streched. We could either add this destinction or just ignore non-default modes.
+                            // - noggin_bops 2026-03-24
+
+                            const DM RequiredFields = DM.PelsWidth | DM.PelsHeight | DM.DisplayFrequency;
+
+                            if ((lpDevMode.dmFields & RequiredFields) != RequiredFields)
+                                throw new Win32Exception($"Adapter setting {modeIndex - 1} didn't have all required fields set. dmFields={lpDevMode.dmFields}, requiredFields={RequiredFields}");
+
+                            info.SupportedVideoModes.Add(new VideoMode((int)lpDevMode.dmPelsWidth, (int)lpDevMode.dmPelsHeight, lpDevMode.dmDisplayFrequency, (int)lpDevMode.dmBitsPerPel));
+
+                            lpDevMode.dmSize = (ushort)Marshal.SizeOf<Win32.DEVMODE>();
+                        }
+                        while (Win32.EnumDisplaySettings(info.AdapterName, (uint)modeIndex++, ref lpDevMode));
+                    }
                 }
             }
-
-            // Console.WriteLine();
-            // Console.WriteLine();
 
             unsafe {
                 foreach (var display in newDisplays)
@@ -749,28 +773,9 @@ namespace OpenTK.Platform.Native.Windows
         {
             HMonitor hmonitor = handle.As<HMonitor>(this);
 
-            // Unfortunately we don't know the size of the array we are going to create in advance
-            List<VideoMode> modes = new List<VideoMode>(32);
-
-            int modeIndex = 0;
-            Win32.DEVMODE lpDevMode = default;
-            lpDevMode.dmSize = (ushort)Marshal.SizeOf<Win32.DEVMODE>();
-            while (Win32.EnumDisplaySettings(hmonitor.AdapterName, (uint)modeIndex++, ref lpDevMode))
-            {
-                // FIXME: What do we do with duplicated video modes?
-                // For now we keep them, but there is no possibility of
-                // differentiating them.
-                // Should we decide or should we pass platform specific info to the user?
-
-                const DM RequiredFields = DM.PelsWidth | DM.PelsHeight | DM.DisplayFrequency;
-
-                if ((lpDevMode.dmFields & RequiredFields) != RequiredFields)
-                    throw new PalException(this, $"Adapter setting {modeIndex - 1} didn't have all required fields set. dmFields={lpDevMode.dmFields}, requiredFields={RequiredFields}");
-
-                modes.Add(new VideoMode((int)lpDevMode.dmPelsWidth, (int)lpDevMode.dmPelsHeight, lpDevMode.dmDisplayFrequency, (int)lpDevMode.dmBitsPerPel));
-            }
-
-            return modes.ToArray();
+            VideoMode[] modes = new VideoMode[hmonitor.SupportedVideoModes.Count];
+            hmonitor.SupportedVideoModes.CopyTo(modes);
+            return modes;
         }
 
         /// <inheritdoc/>

@@ -1016,15 +1016,11 @@ namespace OpenTK.Platform.Native.Windows
                     }
                 case WM.DISPLAYCHANGE:
                     {
-                        // FIXME: We should not only look for changes in resolution and connectivity, we should also look for
-                        // changes in position etc.
-                        // Should we just expose an event that tells users that there might have been some changes to displays?
-                        // - Noggin_bops 2023-09-05
-
-                        Console.WriteLine($"{uMsg} Bit depth: {wParam.ToUInt64()}, ResX: {(lParam.ToInt64() & Win32.HiWordMask) >> 16}, ResY: {lParam.ToInt64() & Win32.LoWordMask}");
+                        Logger?.LogDebug($"{uMsg} Bit depth: {wParam.ToUInt64()}, ResX: {(lParam.ToInt64() & Win32.HiWordMask) >> 16}, ResY: {lParam.ToInt64() & Win32.LoWordMask}");
 
                         // FIXME: Some other way of notifying the DisplayComponent that things have changed.
                         DisplayComponent.UpdateMonitors(true, Logger);
+
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                     }
                 case WM.DPICHANGED:

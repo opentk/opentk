@@ -46,8 +46,6 @@ namespace OpenTK.Backends.Tests
 
         private List<Display> Displays = new List<Display>();
 
-        private Box2i BoundingBox = Box2i.Empty;
-
         private int SelectedDisplay = -1;
 
         private const int Granularity = 3;
@@ -79,9 +77,6 @@ namespace OpenTK.Backends.Tests
                 Display disp = new Display(i, name, primary, new Box2i(virtualPosition, virtualPosition + resolution), workArea, refreshRate, scale);
                 Displays.Add(disp);
 
-                BoundingBox.Extend(disp.Bounds.Min);
-                BoundingBox.Extend(disp.Bounds.Max);
-
                 Toolkit.Display.Close(handle);
             }
         }
@@ -103,7 +98,6 @@ namespace OpenTK.Backends.Tests
             }
 
             // FIXME: For now we just recreate the entire list of displays.
-            BoundingBox = Box2i.Empty;
             Displays.Clear();
             
             int displays = Toolkit.Display.GetDisplayCount();
@@ -121,9 +115,6 @@ namespace OpenTK.Backends.Tests
 
                 Display disp = new Display(i, name, primary, new Box2i(virtualPosition, virtualPosition + resolution), workArea, refreshRate, scale);
                 Displays.Add(disp);
-
-                BoundingBox.Extend(disp.Bounds.Min);
-                BoundingBox.Extend(disp.Bounds.Max);
 
                 Toolkit.Display.Close(handle);
             }
@@ -164,6 +155,8 @@ namespace OpenTK.Backends.Tests
             {
                 display.WorkArea = Toolkit.Display.GetWorkArea(handle);
             }
+
+            Displays[valuesChanged.DisplayIndex] = display;
         }
 
         public override void Paint(double deltaTime)
@@ -179,7 +172,14 @@ namespace OpenTK.Backends.Tests
             ImDrawListPtr draw_list = ImGui.GetWindowDrawList();
             Vector2 p = ImGui.GetCursorScreenPos().ToOpenTK();
 
-            float targetAspect = BoundingBox.Width / (float)BoundingBox.Height;
+            Box2i boundingBox = Box2i.Empty;
+            for (int i = 0; i < Displays.Count; i++)
+            {
+                boundingBox.Extend(Displays[i].Bounds.Min);
+                boundingBox.Extend(Displays[i].Bounds.Max);
+            }
+
+            float targetAspect = boundingBox.Width / (float)boundingBox.Height;
 
             // FIXME: We want the content size of the window, ie the size between the tabs and the end of the window.
             // Does that give us that?
@@ -208,8 +208,8 @@ namespace OpenTK.Backends.Tests
             {
                 Display disp = Displays[i];
 
-                Vector2 min = ((disp.Bounds.Min - BoundingBox.Min) / (Vector2)BoundingBox.Size) * (size - PADDING2V2) + PADDINGV2;
-                Vector2 max = ((disp.Bounds.Max - BoundingBox.Min) / (Vector2)BoundingBox.Size) * (size - PADDING2V2) + PADDINGV2;
+                Vector2 min = ((disp.Bounds.Min - boundingBox.Min) / (Vector2)boundingBox.Size) * (size - PADDING2V2) + PADDINGV2;
+                Vector2 max = ((disp.Bounds.Max - boundingBox.Min) / (Vector2)boundingBox.Size) * (size - PADDING2V2) + PADDINGV2;
 
                 const uint FILL_NORMAL = 0xAA997744;
                 const uint FILL_SELECTED = 0xAABF7022;
@@ -356,7 +356,7 @@ namespace OpenTK.Backends.Tests
                     ImGui.BeginDisabled();
                     for (int i = 0; i < modes.Length; i++)
                     {
-                        ImGui.Selectable(modes[i].ToString());
+                        ImGui.Selectable($"{modes[i].ToString()}##{i}");
                     }
                     ImGui.EndDisabled();
 
