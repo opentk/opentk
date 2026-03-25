@@ -9,6 +9,13 @@ namespace OpenTK.Platform.Native
         public int code;
         public byte* message;
     }
+
+    internal struct GValue
+    {
+        public nint Type;
+        public nint Data0;
+        public nint Data1;
+    }
 #pragma warning restore CS0649
 
 }

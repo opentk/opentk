@@ -280,103 +280,142 @@ namespace OpenTK.Platform.Native.macOS
 
         internal static CGRect objc_msgSend_CGRect(IntPtr receiver, SEL selector)
         {
-            objc_msgSend_CGRect(out CGRect rect, receiver, selector);
-            return rect;
+            switch (RuntimeInformation.ProcessArchitecture)
+            {
+                case Architecture.X86:
+                case Architecture.X64:
+                    {
+                        objc_msgSend_CGRect(out CGRect rect, receiver, selector);
+                        return rect;
 
-            [DllImport(FoundationFramework, EntryPoint = "objc_msgSend_stret")]
-            static extern void objc_msgSend_CGRect(out CGRect rect, IntPtr receiver, SEL selector);
+                        [DllImport(FoundationFramework, EntryPoint = "objc_msgSend_stret")]
+                        static extern void objc_msgSend_CGRect(out CGRect rect, IntPtr receiver, SEL selector);
+                    }
+                case Architecture.Arm64:
+                    {
+                        return objc_msgSend_CGRect(receiver, selector);
+
+                        [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
+                        static extern CGRect objc_msgSend_CGRect(IntPtr receiver, SEL selector);
+                    }
+                case Architecture.Arm:
+                case Architecture.Wasm:
+                case Architecture.S390x:
+                case Architecture.LoongArch64:
+                case Architecture.Armv6:
+                case Architecture.Ppc64le:
+                default:
+                    throw new PlatformNotSupportedException($"We don't support {RuntimeInformation.ProcessArchitecture} yet, please open an issue at https://github.com/opentk/opentk");
+            }
         }
 
         internal static CGRect objc_msgSend_CGRect(IntPtr receiver, SEL selector, CGRect rect1)
         {
-            objc_msgSend_CGRect(out CGRect rect, receiver, selector, rect1);
-            return rect;
+            switch (RuntimeInformation.ProcessArchitecture)
+            {
+                case Architecture.X86:
+                case Architecture.X64:
+                    {
+                        objc_msgSend_CGRect(out CGRect rect, receiver, selector, rect1);
+                        return rect;
 
-            [DllImport(FoundationFramework, EntryPoint = "objc_msgSend_stret")]
-            static extern void objc_msgSend_CGRect(out CGRect rect, IntPtr receiver, SEL selector, CGRect rect1);
+                        [DllImport(FoundationFramework, EntryPoint = "objc_msgSend_stret")]
+                        static extern void objc_msgSend_CGRect(out CGRect rect, IntPtr receiver, SEL selector, CGRect rect1);
+                    }
+                case Architecture.Arm64:
+                    {
+                        return objc_msgSend_CGRect(receiver, selector, rect1);
+
+                        [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
+                        static extern CGRect objc_msgSend_CGRect(IntPtr receiver, SEL selector, CGRect rect1);
+                    }
+                case Architecture.Arm:
+                case Architecture.Wasm:
+                case Architecture.S390x:
+                case Architecture.LoongArch64:
+                case Architecture.Armv6:
+                case Architecture.Ppc64le:
+                default:
+                    throw new PlatformNotSupportedException($"We don't support {RuntimeInformation.ProcessArchitecture} yet, please open an issue at https://github.com/opentk/opentk");
+            }
         }
 
         internal static CGRect objc_msgSend_CGRect(IntPtr receiver, SEL selector, CGRect rect1, IntPtr value1)
         {
-            objc_msgSend_CGRect(out CGRect rect, receiver, selector, rect1, value1);
-            return rect;
+            switch (RuntimeInformation.ProcessArchitecture)
+            {
+                case Architecture.X86:
+                case Architecture.X64:
+                    {
+                        objc_msgSend_CGRect(out CGRect rect, receiver, selector, rect1, value1);
+                        return rect;
 
-            [DllImport(FoundationFramework, EntryPoint = "objc_msgSend_stret")]
-            static extern void objc_msgSend_CGRect(out CGRect rect, IntPtr receiver, SEL selector, CGRect rect1, IntPtr value1);
+                        [DllImport(FoundationFramework, EntryPoint = "objc_msgSend_stret")]
+                        static extern void objc_msgSend_CGRect(out CGRect rect, IntPtr receiver, SEL selector, CGRect rect1, IntPtr value1);
+                    }
+                case Architecture.Arm64:
+                    {
+                        return objc_msgSend_CGRect(receiver, selector, rect1, value1);
+
+                        [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
+                        static extern CGRect objc_msgSend_CGRect(IntPtr receiver, SEL selector, CGRect rect1, IntPtr value1);
+                    }
+                case Architecture.Arm:
+                case Architecture.Wasm:
+                case Architecture.S390x:
+                case Architecture.LoongArch64:
+                case Architecture.Armv6:
+                case Architecture.Ppc64le:
+                default:
+                    throw new PlatformNotSupportedException($"We don't support {RuntimeInformation.ProcessArchitecture} yet, please open an issue at https://github.com/opentk/opentk");
+            }
         }
 
-        // FIXME: What happens on ARM?
-        // NSPoint doesn't use the _stret version of msgSend (on x86_64?) for some reason..?
-        // This document touches lightly on when to use _stret:
-        // https://learn.microsoft.com/en-us/xamarin/ios/internals/objective-c-selectors
+        // sizeof(CGPoint) = 2 x 8 = 16 on x64 and 2 x 4 = 8 on x86 which can be passed through registers on X86, X64, and ARM64.
+        // See: https://learn.microsoft.com/en-us/xamarin/ios/internals/objective-c-selectors
         [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
         internal static extern CGPoint objc_msgSend_CGPoint(IntPtr receiver, SEL selector);
 
-        // NSPoint doesn't use the _stret version of msgSend (on x86_64?) for some reason..?
+        // sizeof(CGPoint) = 2 x 8 = 16 on x64 and 2 x 4 = 8 on x86 which can be passed through registers on X86, X64, and ARM64.
+        // See: https://learn.microsoft.com/en-us/xamarin/ios/internals/objective-c-selectors
         [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
         internal static extern CGPoint objc_msgSend_CGPoint(IntPtr receiver, SEL selector, CGPoint point1);
 
-        // NSPoint doesn't use the _stret version of msgSend (on x86_64?) for some reason..?
+        // sizeof(CGPoint) = 2 x 8 = 16 on x64 and 2 x 4 = 8 on x86 which can be passed through registers on X86, X64, and ARM64.
+        // See: https://learn.microsoft.com/en-us/xamarin/ios/internals/objective-c-selectors
         [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
         internal static extern CGPoint objc_msgSend_CGPoint(IntPtr receiver, SEL selector, CGPoint point1, IntPtr ptr);
 
-
-        // NSPoint doesn't use the _stret version of msgSend (on x86_64?) for some reason..?
+        // sizeof(NSSize) = 2 x 8 = 16 on x64 and 2 x 4 = 8 on x86 which can be passed through registers on X86, X64, and ARM64.
+        // See: https://learn.microsoft.com/en-us/xamarin/ios/internals/objective-c-selectors
         [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
         internal static extern NSSize objc_msgSend_NSSize(IntPtr receiver, SEL selector);
-
-        // FIXME: Should we even consider 32bit macos?
-        internal static float objc_msgSend_float(IntPtr receiver, SEL selector)
-        {
-            if (RuntimeInformation.ProcessArchitecture == Architecture.X86)
-            {
-                return objc_msgSend_fret(receiver, selector);
-            }
-            else if (RuntimeInformation.ProcessArchitecture == Architecture.X64)
-            {
-                // For x64 any struct smaller than 16 bytes is put into registers.
-                // https://stackoverflow.com/a/39290251
-                return (float)objc_msgSend_float(receiver, selector);
-            }
-            else
-            {
-                // FIXME: What do we do with ARM? Do we only need to consider 64bit?
-                // This is likely a good place to start: https://stackoverflow.com/a/39290251
-                return (float)objc_msgSend_float(receiver, selector);
-            }
-
-            [DllImport(FoundationFramework, EntryPoint = "objc_msgSend_fret")]
-            static extern float objc_msgSend_fret(IntPtr receiver, SEL selector);
-
-            [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
-            static extern double objc_msgSend_float(IntPtr receiver, SEL selector);
-        }
 
         // FIXME: Should we even consider 32-bit macos?
         internal static NFloat objc_msgSend_nfloat(IntPtr receiver, SEL selector)
         {
             if (RuntimeInformation.ProcessArchitecture == Architecture.X86)
             {
-                return objc_msgSend_fret(receiver, selector);
+                return objc_msgSend_fpret(receiver, selector);
             }
             else if (RuntimeInformation.ProcessArchitecture == Architecture.X64)
             {
                 // For x64 any struct smaller than 16 bytes is put into registers.
                 // https://stackoverflow.com/a/39290251
-                return (NFloat)objc_msgSend_float(receiver, selector);
+                return (NFloat)objc_msgSend_double(receiver, selector);
             }
             else
             {
                 // FIXME: What do we do with ARM? Do we only need to consider 64bit?
                 // This is likely a good place to start: https://stackoverflow.com/a/39290251
-                return (NFloat)objc_msgSend_float(receiver, selector);
+                return (NFloat)objc_msgSend_double(receiver, selector);
             }
 
-            [DllImport(FoundationFramework, EntryPoint = "objc_msgSend_fret")]
-            static extern NFloat objc_msgSend_fret(IntPtr receiver, SEL selector);
+            [DllImport(FoundationFramework, EntryPoint = "objc_msgSend_fpret")]
+            static extern float objc_msgSend_fpret(IntPtr receiver, SEL selector);
 
             [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
-            static extern double objc_msgSend_float(IntPtr receiver, SEL selector);
+            static extern double objc_msgSend_double(IntPtr receiver, SEL selector);
         }
 
         // FIXME: Should we even consider 32-bit macos?
@@ -384,35 +423,57 @@ namespace OpenTK.Platform.Native.macOS
         {
             if (RuntimeInformation.ProcessArchitecture == Architecture.X86)
             {
-                return objc_msgSend_fret(receiver, selector);
+                return objc_msgSend_fpret(receiver, selector);
             }
             else if (RuntimeInformation.ProcessArchitecture == Architecture.X64)
             {
                 // For x64 any struct smaller than 16 bytes is put into registers.
                 // https://stackoverflow.com/a/39290251
-                return (NFloat)objc_msgSend_float(receiver, selector);
+                return (NFloat)objc_msgSend_double(receiver, selector);
             }
             else
             {
                 // FIXME: What do we do with ARM? Do we only need to consider 64bit?
                 // This is likely a good place to start: https://stackoverflow.com/a/39290251
-                return (NFloat)objc_msgSend_float(receiver, selector);
+                return (NFloat)objc_msgSend_double(receiver, selector);
             }
 
-            [DllImport(FoundationFramework, EntryPoint = "objc_msgSend_fret")]
-            static extern double objc_msgSend_fret(IntPtr receiver, SEL selector);
+            [DllImport(FoundationFramework, EntryPoint = "objc_msgSend_fpret")]
+            static extern double objc_msgSend_fpret(IntPtr receiver, SEL selector);
 
             [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
-            static extern double objc_msgSend_float(IntPtr receiver, SEL selector);
+            static extern double objc_msgSend_double(IntPtr receiver, SEL selector);
         }
 
         internal static NSEdgeInsets objc_msgSend_NSEdgeInsets(IntPtr receiver, SEL selector)
         {
-            objc_msgSend_NSEdgeInsets(out NSEdgeInsets insets, receiver, selector);
-            return insets;
+            switch (RuntimeInformation.ProcessArchitecture)
+            {
+                case Architecture.X86:
+                case Architecture.X64:
+                    {
+                        objc_msgSend_NSEdgeInsets(out NSEdgeInsets insets, receiver, selector);
+                        return insets;
 
-            [DllImport(FoundationFramework, EntryPoint = "objc_msgSend_stret")]
-            static extern void objc_msgSend_NSEdgeInsets(out NSEdgeInsets @struct, IntPtr receiver, SEL selector);
+                        [DllImport(FoundationFramework, EntryPoint = "objc_msgSend_stret")]
+                        static extern void objc_msgSend_NSEdgeInsets(out NSEdgeInsets @struct, IntPtr receiver, SEL selector);
+                    }
+                case Architecture.Arm64:
+                    {
+                        return objc_msgSend_NSEdgeInsets(receiver, selector);
+
+                        [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
+                        static extern NSEdgeInsets objc_msgSend_NSEdgeInsets(IntPtr receiver, SEL selector);
+                    }
+                case Architecture.Arm:
+                case Architecture.Armv6:
+                case Architecture.S390x:
+                case Architecture.LoongArch64:
+                case Architecture.Wasm:
+                case Architecture.Ppc64le:
+                default:
+                    throw new PlatformNotSupportedException($"We don't support {RuntimeInformation.ProcessArchitecture} yet, please open an issue at https://github.com/opentk/opentk");
+            }
         }
 
 

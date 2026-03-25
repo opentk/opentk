@@ -520,7 +520,7 @@ namespace OpenTK.Platform.Native.macOS
             /// </summary>
             Indeterminate,
             /// <summary>
-            /// The application is processing data. Use <paramref name="completion"/> to indicate current progress.
+            /// The application is processing data. Use <paramref name="completion"/> parameter to indicate current progress.
             /// </summary>
             Normal,
 

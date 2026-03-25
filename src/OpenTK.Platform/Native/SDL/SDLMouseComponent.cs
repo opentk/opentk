@@ -49,6 +49,9 @@ namespace OpenTK.Platform.Native.SDL
         /// <inheritdoc/>
         public void GetPosition(WindowHandle window, out Vector2 position)
         {
+            // FIXME:
+            GetGlobalPosition(out position);
+            return;
             throw new NotImplementedException();
         }
 
@@ -121,7 +124,31 @@ namespace OpenTK.Platform.Native.SDL
         /// <inheritdoc/>
         public void GetMouseState(WindowHandle window, out MouseState state)
         {
-            throw new NotImplementedException();
+            // FIXME: This returns the state for the currently focused window
+            // and not the specified window...
+            uint buttons = SDL_GetMouseState(out int x, out int y);
+
+            const int SDL_BUTTON_LMASK = 1 << 0;
+            const int SDL_BUTTON_MMASK = 1 << 1;
+            const int SDL_BUTTON_RMASK = 1 << 2;
+            const int SDL_BUTTON_X1MASK = 1 << 3;
+            const int SDL_BUTTON_X2MASK = 1 << 4;
+
+            state.Position = (x, y);
+
+            state.Scroll = ScrollPosition;
+
+            state.PressedButtons = default;
+            if ((buttons & SDL_BUTTON_LMASK) != 0)
+                state.PressedButtons |= MouseButtonFlags.Button1;
+            if ((buttons & SDL_BUTTON_RMASK) != 0)
+                state.PressedButtons |= MouseButtonFlags.Button2;
+            if ((buttons & SDL_BUTTON_MMASK) != 0)
+                state.PressedButtons |= MouseButtonFlags.Button3;
+            if ((buttons & SDL_BUTTON_X1MASK) != 0)
+                state.PressedButtons |= MouseButtonFlags.Button4;
+            if ((buttons & SDL_BUTTON_X2MASK) != 0)
+                state.PressedButtons |= MouseButtonFlags.Button5;
         }
 
         /// <inheritdoc/>

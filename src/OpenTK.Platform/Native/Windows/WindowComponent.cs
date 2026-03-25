@@ -1,4 +1,4 @@
-﻿using OpenTK.Platform;
+﻿using Microsoft.Win32;
 using OpenTK.Core.Utility;
 using OpenTK.Mathematics;
 using System;
@@ -7,10 +7,9 @@ using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading;
-using OpenTK.Graphics.Vulkan;
 using System.Runtime.InteropServices.Marshalling;
+using System.Security.AccessControl;
+using System.Text;
 
 namespace OpenTK.Platform.Native.Windows
 {
@@ -36,6 +35,9 @@ namespace OpenTK.Platform.Native.Windows
 
         internal static IntPtr DeviceNotificationHandle;
         internal static IntPtr SuspendResumeNotificationHandle;
+
+        internal static RegistryKey? MouseSettingsRegistryKey;
+        internal static IntPtr RegistryMouseSettingsChangedEvent;
 
         internal static uint TaskbarButtonCreatedMessage;
 
@@ -143,6 +145,31 @@ namespace OpenTK.Platform.Native.Windows
                 throw new Win32Exception();
             }
 
+#pragma warning disable CA1416 // Validate platform compatibility
+            MouseSettingsRegistryKey = Registry.CurrentUser.OpenSubKey(@"Control Panel\Mouse", RegistryRights.ReadKey | RegistryRights.Notify);
+            if (MouseSettingsRegistryKey != null)
+            {
+                unsafe
+                {
+                    RegistryMouseSettingsChangedEvent = Win32.CreateEvent(null, true, false, null);
+                    if (RegistryMouseSettingsChangedEvent == 0)
+                    {
+                        throw new Win32Exception();
+                    }
+                    int result = Win32.RegNotifyChangeKeyValue(MouseSettingsRegistryKey.Handle.DangerousGetHandle(), false, RegNotifyChange.LastSet, RegistryMouseSettingsChangedEvent, true);
+                    if (result != Win32.ERROR_SUCCESS)
+                    {
+                        throw new Win32Exception(result);
+                    }
+                }
+            }
+            else
+            {
+                Logger?.LogWarning("Could not open the 'Computer\\HKEY_CURRENT_USER\\Control Panel\\Mouse' registry key. Can't register registry change callbacks for user configured double click settings.");
+            }
+#pragma warning restore CA1416 // Validate platform compatibility
+
+
             TaskbarButtonCreatedMessage = Win32.RegisterWindowMessage("TaskbarButtonCreated");
 
             OpenTKUserEventMessage = Win32.RegisterWindowMessage("OpenTKUserEvent");
@@ -161,9 +188,33 @@ namespace OpenTK.Platform.Native.Windows
             }
 
             // Unregister the helper window from notifications.
-            Win32.UnregisterDeviceNotification(DeviceNotificationHandle);
-            Win32.UnregisterSuspendResumeNotification(SuspendResumeNotificationHandle);
-            Win32.RemoveClipboardFormatListener(HelperHWnd);
+            bool success = Win32.UnregisterDeviceNotification(DeviceNotificationHandle);
+            if (success == false)
+            {
+                throw new Win32Exception();
+            }
+            success = Win32.UnregisterSuspendResumeNotification(SuspendResumeNotificationHandle);
+            if (success == false)
+            {
+                throw new Win32Exception();
+            }
+            success = Win32.RemoveClipboardFormatListener(HelperHWnd);
+            if (success == false)
+            {
+                throw new Win32Exception();
+            }
+
+            if (RegistryMouseSettingsChangedEvent != 0)
+            {
+                success = Win32.CloseHandle(RegistryMouseSettingsChangedEvent);
+                if (success == false)
+                {
+                    throw new Win32Exception();
+                }
+            }
+#pragma warning disable CA1416 // Validate platform compatibility
+            MouseSettingsRegistryKey?.Dispose();
+#pragma warning restore CA1416 // Validate platform compatibility
 
             // Delete the helper window
             Win32.DestroyWindow(HelperHWnd);
@@ -623,11 +674,19 @@ namespace OpenTK.Platform.Native.Windows
                             // FIXME: Keep track of which buttons we are pressing?
                             Win32.SetCapture(hWnd);
 
-                            KeyModifier modifiers = KeyboardComponent.GetKeyboardModifiersInternal();
+                            // FIXME: Virtual mouse position??
+                            int x = Win32.GET_X_LPARAM(lParam);
+                            int y = Win32.GET_Y_LPARAM(lParam);
 
+                            KeyModifier modifiers = KeyboardComponent.GetKeyboardModifiersInternal();
+                            
                             HWND h = HWndDict[hWnd];
+                            int time = Win32.GetMessageTime();
+                            int clicks = h.ClickCounter.CountClicks((ulong)time, (x, y), button.Value);
+                            Logger?.LogDebug($"{h.ClickCounter}");
+
                             MouseComponent.RegisterButtonState(h, button.Value, true);
-                            EventQueue.Raise(h, PlatformEventType.MouseDown, new MouseButtonDownEventArgs(h, button.Value, modifiers));
+                            EventQueue.Raise(h, PlatformEventType.MouseDown, new MouseButtonDownEventArgs(h, (x, y), button.Value, modifiers, clicks));
                         }
 
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
@@ -685,11 +744,18 @@ namespace OpenTK.Platform.Native.Windows
                                 throw new Win32Exception();
                             }
 
+                            // FIXME: Virtual mouse position??
+                            int x = Win32.GET_X_LPARAM(lParam);
+                            int y = Win32.GET_Y_LPARAM(lParam);
+
                             KeyModifier modifiers = KeyboardComponent.GetKeyboardModifiersInternal();
+
+                            // FIXME: Get the click count for this button when it was pressed?
+                            int clicks = 1;
 
                             HWND h = HWndDict[hWnd];
                             MouseComponent.RegisterButtonState(h, button.Value, false);
-                            EventQueue.Raise(h, PlatformEventType.MouseUp, new MouseButtonUpEventArgs(h, button.Value, modifiers));
+                            EventQueue.Raise(h, PlatformEventType.MouseUp, new MouseButtonUpEventArgs(h, (x, y), button.Value, modifiers, clicks));
                         }
 
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
@@ -950,15 +1016,11 @@ namespace OpenTK.Platform.Native.Windows
                     }
                 case WM.DISPLAYCHANGE:
                     {
-                        // FIXME: We should not only look for changes in resolution and connectivity, we should also look for
-                        // changes in position etc.
-                        // Should we just expose an event that tells users that there might have been some changes to displays?
-                        // - Noggin_bops 2023-09-05
-
-                        Console.WriteLine($"{uMsg} Bit depth: {wParam.ToUInt64()}, ResX: {(lParam.ToInt64() & Win32.HiWordMask) >> 16}, ResY: {lParam.ToInt64() & Win32.LoWordMask}");
+                        Logger?.LogDebug($"{uMsg} Bit depth: {wParam.ToUInt64()}, ResX: {(lParam.ToInt64() & Win32.HiWordMask) >> 16}, ResY: {lParam.ToInt64() & Win32.LoWordMask}");
 
                         // FIXME: Some other way of notifying the DisplayComponent that things have changed.
                         DisplayComponent.UpdateMonitors(true, Logger);
+
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                     }
                 case WM.DPICHANGED:
@@ -1179,6 +1241,61 @@ namespace OpenTK.Platform.Native.Windows
                     CursorCapturingWindow.LastMousePosition = (size.X / 2, size.Y / 2);
                 }
             }
+
+            if (RegistryMouseSettingsChangedEvent != 0)
+            {
+                WaitResult waitResult = Win32.WaitForSingleObject(RegistryMouseSettingsChangedEvent, 0);
+                if (waitResult == WaitResult.Object0)
+                {
+                    bool success = Win32.ResetEvent(RegistryMouseSettingsChangedEvent);
+                    if (success == false)
+                    {
+                        throw new Win32Exception();
+                    }
+
+    #pragma warning disable CA1416 // Validate platform compatibility
+                    int result = Win32.RegNotifyChangeKeyValue(MouseSettingsRegistryKey!.Handle.DangerousGetHandle(), false, RegNotifyChange.LastSet, RegistryMouseSettingsChangedEvent, true);
+                    if (result != Win32.ERROR_SUCCESS)
+                    {
+                        throw new Win32Exception(result);
+                    }
+
+                    // We want to re-read all of the settings.
+                    ulong doubleClickInterval = Win32.GetDoubleClickTime();
+                    float? doubleClickWidth = null;
+                    float? doubleClickHeight = null;
+
+                    if (MouseSettingsRegistryKey.GetValue("DoubleClickWidth") is string widthStr &&
+                    int.TryParse(widthStr, out int widthPx))
+                    {
+                        // FIXME: Convert to client space coordinates instead of pixels...
+                        doubleClickWidth = widthPx;
+                    }
+                    if (MouseSettingsRegistryKey.GetValue("DoubleClickHeight") is string heightStr &&
+                        int.TryParse(heightStr, out int heightPx))
+                    {
+                        // FIXME: Convert to client space coordinates instead of pixels...
+                        doubleClickHeight = heightPx;
+                    }
+    #pragma warning restore CA1416 // Validate platform compatibility
+
+                    Logger?.LogDebug($"New double click settings: Interval: {doubleClickInterval}, Width: {doubleClickWidth}, Height: {doubleClickHeight}");
+                    foreach (var (_, hwnd) in HWndDict)
+                    {
+                        hwnd.ClickCounter.DoubleClickInfo.Interval = doubleClickInterval;
+                        if (doubleClickWidth != null)
+                            hwnd.ClickCounter.DoubleClickInfo.Distance.X = doubleClickWidth.Value;
+                        if (doubleClickHeight != null)
+                            hwnd.ClickCounter.DoubleClickInfo.Distance.Y = doubleClickHeight.Value;
+                    }
+                }
+                else if (waitResult == WaitResult.Failed)
+                {
+                    throw new Win32Exception();
+                }
+            }
+
+            (Toolkit.Joystick as JoystickComponent)?.Update();
         }
 
         /// <inheritdoc/>
@@ -1232,6 +1349,29 @@ namespace OpenTK.Platform.Native.Windows
             hcursor.Cursor = Win32.LoadImage(IntPtr.Zero, OCR.Normal, ImageType.Cursor, 0, 0, LR.Shared | LR.DefaultSize);
             hcursor.Mode = HCursor.CursorMode.SystemCursor;
             SetCursor(hwnd, hcursor);
+
+            hwnd.ClickCounter.DoubleClickInfo.Interval = Win32.GetDoubleClickTime();
+#pragma warning disable CA1416 // Validate platform compatibility
+            if (MouseSettingsRegistryKey != null)
+            {
+                if (MouseSettingsRegistryKey.GetValue("DoubleClickWidth") is string widthStr &&
+                int.TryParse(widthStr, out int widthPx))
+                {
+                    // FIXME: Convert to client space coordinates instead of pixels...
+                    hwnd.ClickCounter.DoubleClickInfo.Distance.X = widthPx;
+                }
+                if (MouseSettingsRegistryKey.GetValue("DoubleClickHeight") is string heightStr &&
+                    int.TryParse(heightStr, out int heightPx))
+                {
+                    // FIXME: Convert to client space coordinates instead of pixels...
+                    hwnd.ClickCounter.DoubleClickInfo.Distance.Y = heightPx;
+                }
+            }
+            else
+            {
+                Logger?.LogWarning("Could not open the 'Computer\\HKEY_CURRENT_USER\\Control Panel\\Mouse' registry key. Can't get user configured double click settings, will use defaults.");
+            }
+#pragma warning restore CA1416 // Validate platform compatibility
 
             HWndDict.Add(hwnd.HWnd, hwnd);
 
@@ -1947,7 +2087,7 @@ namespace OpenTK.Platform.Native.Windows
         };
 
         /// <inheritdoc/>
-        public unsafe void SetBorderStyle(WindowHandle handle, WindowBorderStyle style)
+        public void SetBorderStyle(WindowHandle handle, WindowBorderStyle style)
         {
             HWND hwnd = handle.As<HWND>(this);
 
@@ -1995,7 +2135,7 @@ namespace OpenTK.Platform.Native.Windows
                     throw new InvalidEnumArgumentException(nameof(style), (int)style, style.GetType());
             }
 
-            Win32.SetWindowPos(hwnd.HWnd, IntPtr.Zero, 0, 0, 0, 0, SetWindowPosFlags.NoMove | SetWindowPosFlags.NoSize | SetWindowPosFlags.NoZOrder | SetWindowPosFlags.FrameChanged);
+            Win32.SetWindowPos(hwnd.HWnd, IntPtr.Zero, 0, 0, 0, 0, SetWindowPosFlags.NoMove | SetWindowPosFlags.NoSize | SetWindowPosFlags.NoZOrder | SetWindowPosFlags.NoOwnerZOrder | SetWindowPosFlags.NoActivate | SetWindowPosFlags.FrameChanged);
         }
 
         /// <inheritdoc/>
@@ -2351,6 +2491,13 @@ namespace OpenTK.Platform.Native.Windows
             float scale = dpi / (float)Win32.USER_DEFAULT_SCREEN_DPI;
             scaleX = scale;
             scaleY = scale;
+        }
+
+        /// <inheritdoc/>
+        public OpenGLContextHandle? GetOpenGLContext(WindowHandle handle)
+        {
+            HWND hwnd = handle.As<HWND>(this);
+            return hwnd.OpenGLContextHandle;
         }
 
         /// <summary>

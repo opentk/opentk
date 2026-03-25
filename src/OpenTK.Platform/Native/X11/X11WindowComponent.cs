@@ -7,14 +7,14 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
+using OpenTK.Core;
 using OpenTK.Core.Utility;
 using OpenTK.Mathematics;
+using OpenTK.Platform.Native.X11.XI2;
+using OpenTK.Platform.Native.X11.XRandR;
 using static OpenTK.Platform.Native.X11.GLX;
 using static OpenTK.Platform.Native.X11.LibX11;
 using static OpenTK.Platform.Native.X11.XI2.XI2;
-using OpenTK.Platform.Native.X11.XRandR;
-using OpenTK.Platform.Native.X11.XI2;
-using OpenTK.Core;
 
 namespace OpenTK.Platform.Native.X11
 {
@@ -36,8 +36,9 @@ namespace OpenTK.Platform.Native.X11
             StringBuilder errorMessage = new StringBuilder(1024);
             XGetErrorText(X11.Display, (int)error_event->error_code, errorMessage, errorMessage.Capacity);
 
-            Logger?.LogError($"Error: {errorMessage}, Type: {error_event->type}, S: {error_event->serial}, Error code: {error_event->error_code}, Request code: {error_event->request_code}, Minor code: {error_event->minor_code}");
-            
+            StackTrace trace = new StackTrace();
+            Logger?.LogError($"Error: {errorMessage}, Type: {error_event->type}, S: {error_event->serial}, Error code: {error_event->error_code}, Request code: {error_event->request_code}, Minor code: {error_event->minor_code}\n{trace}");
+
             return (int)error_event->error_code;
         }
 
@@ -59,15 +60,119 @@ namespace OpenTK.Platform.Native.X11
 
         internal bool IsOnXWayland = false;
 
+        private unsafe struct EnvironmentVariableOverride
+        {
+            public string NameStr;
+            public string? ValueStr;
+            public string? OriginalStr;
+            public byte* NamePtr;
+            public byte* EnvStringPtr;
+            public byte* OriginalPtr;
+        }
+        private List<EnvironmentVariableOverride> EnvironmentVariableOverrides = new List<EnvironmentVariableOverride>();
+        private unsafe void UndoVSCodeEnvironmentPollution()
+        {
+            var env = Environment.GetEnvironmentVariables();
+            // FIXME: Maybe add a buch of snap variables here...
+            ReadOnlySpan<(string Name, string? Value)> envList = [
+                ("GTK_PATH", null),
+                ("GIO_MODULE_DIR", null),
+                ("GTK_EXE_PREFIX", null),
+                ("GIO_LAUNCHED_DESKTOP_FILE", null),
+                ("GIO_LAUNCHED_DESKTOP_FILE_PID", null),
+                ("GTK_IM_MODULE_FILE", null),
+                ("GDK_PIXBUF_MODULEDIR", null),
+                ("GDK_PIXBUF_MODULE_FILE", null),
+                ("GSETTINGS_SCHEMA_DIR", null),
+                ("XDG_DATA_HOME", null)
+            ];
+            foreach (var (name, value) in envList)
+            {
+                string nameStr = name;
+                string? origStr = (string?)env[name];
+
+                byte* namePtr = (byte*)Marshal.StringToCoTaskMemUTF8(nameStr);
+                byte* newEnvStrPtr = value != null ? (byte*)Marshal.StringToCoTaskMemUTF8($"{name}={value}") : null;
+                byte* originalPtr = Libc.getenv(namePtr);
+
+                EnvironmentVariableOverride @override;
+                @override.NameStr = nameStr;
+                @override.ValueStr = value;
+                @override.OriginalStr = origStr;
+                @override.NamePtr = namePtr;
+                @override.EnvStringPtr = newEnvStrPtr;
+                @override.OriginalPtr = originalPtr;
+
+                if (newEnvStrPtr != null)
+                    Libc.putenv(newEnvStrPtr);
+                else
+                    Libc.unsetenv(@override.NamePtr);
+                Environment.SetEnvironmentVariable(nameStr, value);
+                EnvironmentVariableOverrides.Add(@override);
+            }
+
+            foreach (string name in env.Keys.Cast<string>())
+            {
+                if (name.EndsWith("_VSCODE_SNAP_ORIG"))
+                {
+                    string newName = name.Remove(name.Length - "_VSCODE_SNAP_ORIG".Length);
+                    string value = (string)env[name]!;
+                    string? originalStr = (string?)env[newName];
+
+                    byte* newNamePtr = (byte*)Marshal.StringToCoTaskMemUTF8(newName);
+                    byte* newEnvStrPtr = (byte*)Marshal.StringToCoTaskMemUTF8($"{newName}={value}");
+                    byte* originalPtr = Libc.getenv(newNamePtr);
+
+                    EnvironmentVariableOverride @override;
+                    @override.NameStr = newName;
+                    @override.ValueStr = value;
+                    @override.OriginalStr = originalStr;
+                    @override.NamePtr = newNamePtr;
+                    @override.EnvStringPtr = newEnvStrPtr;
+                    @override.OriginalPtr = originalPtr;
+
+                    // FIXME: Check for ENOMEM
+                    Libc.putenv(newEnvStrPtr);
+
+                    Environment.SetEnvironmentVariable(newName, value);
+                    EnvironmentVariableOverrides.Add(@override);
+                }
+            }
+        }
+        private unsafe void RedoVSCodeEnvironmentPollution()
+        {
+            for (int i = 0; i < EnvironmentVariableOverrides.Count; i++)
+            {
+                var @override = EnvironmentVariableOverrides[i];
+                // FIXME: Check for ENOMEM
+                Libc.putenv(@override.OriginalPtr);
+                Environment.SetEnvironmentVariable(@override.NameStr, @override.OriginalStr);
+
+                Marshal.FreeCoTaskMem((nint)@override.NamePtr);
+                if (@override.EnvStringPtr != null)
+                    Marshal.FreeCoTaskMem((nint)@override.EnvStringPtr);
+            }
+            EnvironmentVariableOverrides.Clear();
+        }
 
         /// <inheritdoc/>
         public unsafe void Initialize(ToolkitOptions options)
         {
+            // FIXME: Maybe a better way to get this setting into the DllResolver?
+            DllResolver.PrintDllResolutionPathInfo = options.X11.PrintLibraryPathResolutionDebug;
+
+            if (options.X11.DealWithVSCodeEnvironmentVariablePollution &&
+                Environment.GetEnvironmentVariable("SNAP_NAME") == "code")
+            {
+                Logger?.LogInfo($"Detected running inside VSCode snap instance. Removing environment variable pollution. See {nameof(ToolkitOptions)}.{nameof(ToolkitOptions.X11)}.{nameof(ToolkitOptions.X11.DealWithVSCodeEnvironmentVariablePollution)} if you need to disable this.");
+                UndoVSCodeEnvironmentPollution();
+            }
+
             ComponentGCHandle = GCHandle.Alloc(this, GCHandleType.Normal);
 
             ErrorHandler = XErrorHandler;
             XSetErrorHandler(ErrorHandler);
-
+            
             // Later on we can replace this with a hint.
             string? displayName = null;
             X11.Display = XOpenDisplay(displayName);
@@ -405,6 +510,11 @@ namespace OpenTK.Platform.Native.X11
             XCloseDisplay(X11.Display);
 
             ComponentGCHandle.Free();
+
+            if (EnvironmentVariableOverrides.Count > 0)
+            {
+                RedoVSCodeEnvironmentPollution();
+            }
         }
 
         /// <inheritdoc/>
@@ -581,14 +691,20 @@ namespace OpenTK.Platform.Native.X11
                         }
                         break;
                 }
-
+                
                 if (XWindowDict.TryGetValue(ea.Any.Window, out XWindowHandle? xwindow) == false)
                 {
                     // If this was not for one our windows and it was filtered by XIM
                     // we don't process it.
                     if (filtered) continue;
 
-                    if (ea.Any.Window == X11.DefaultRootWindow)
+                    if (ea.Any.Window == XWindow.None && ea.Type == XEventType.KeymapNotify)
+                    {
+                        // FIXME: Do something with the keymap notify...
+
+                        
+                    }
+                    else if (ea.Any.Window == X11.DefaultRootWindow)
                     {
                         if (ea.Type == (XEventType)(X11.XFixesEventBase + XFixes.SelectionEvent.SetSelectionOwner))
                         {
@@ -605,7 +721,8 @@ namespace OpenTK.Platform.Native.X11
                         }
                         else if (ea.Type >= (XEventType)(X11.XRandREventBase) && ea.Type <= (XEventType)(X11.XRandREventBase + RREventType.RRNotify))
                         {
-                            X11DisplayComponent.HandleXRREvent(ea, Logger);
+                            (Toolkit.Display as X11DisplayComponent)?.HandleXRREvent(ea);
+                            //X11DisplayComponent.HandleXRREvent(ea, Logger);
                         }
                         else
                         {
@@ -1023,8 +1140,11 @@ namespace OpenTK.Platform.Native.X11
 
                                 KeyModifier modifiers = X11KeyboardComponent.ModifiersFromState(buttonPressed.state);
 
+                                int clicks = xwindow.ClickCounter.CountClicks(buttonPressed.time.Value, (buttonPressed.x, buttonPressed.y), button);
+                                Logger?.LogDebug($"{xwindow.ClickCounter}");
+
                                 X11MouseComponent.RegisterButtonState(xwindow, button, true);
-                                EventQueue.Raise(xwindow, PlatformEventType.MouseDown, new MouseButtonDownEventArgs(xwindow, button, modifiers));
+                                EventQueue.Raise(xwindow, PlatformEventType.MouseDown, new MouseButtonDownEventArgs(xwindow, (buttonPressed.x, buttonPressed.y), button, modifiers, clicks));
                             }
 
                             break;
@@ -1052,8 +1172,11 @@ namespace OpenTK.Platform.Native.X11
 
                             KeyModifier modifiers = X11KeyboardComponent.ModifiersFromState(buttonReleased.state);
 
+                            // FIXME: Get the click count for this button when it was pressed?
+                            int clicks = 1;
+
                             X11MouseComponent.RegisterButtonState(xwindow, button, false);
-                            EventQueue.Raise(xwindow, PlatformEventType.MouseUp, new MouseButtonUpEventArgs(xwindow, button, modifiers));
+                            EventQueue.Raise(xwindow, PlatformEventType.MouseUp, new MouseButtonUpEventArgs(xwindow, (buttonReleased.x, buttonReleased.y), button, modifiers, clicks));
 
                             break;
                         }
@@ -1544,6 +1667,12 @@ namespace OpenTK.Platform.Native.X11
             {
                 int wasEventsDispatched = LibGio.g_main_context_iteration(LibGio.g_main_context_default(), 0);
             }
+
+            unsafe
+            {
+                //Logger?.LogInfo($"IM Locale: {Marshal.PtrToStringUTF8((nint)XLocaleOfIM(IM))}");
+                //Logger?.LogInfo($"CultureInfo: {System.Globalization.CultureInfo.CurrentCulture}");
+            }
         }
 
         /// <inheritdoc/>
@@ -1882,7 +2011,8 @@ namespace OpenTK.Platform.Native.X11
                 XFree(wmHints);
             }
 
-            unsafe {
+            unsafe
+            {
                 XClassHint* classHints = XAllocClassHint();
                 // FIXME: Add a way to select two separate strings for these.
                 classHints->res_name = (byte*)Marshal.StringToCoTaskMemUTF8(ApplicationName);
@@ -1894,7 +2024,8 @@ namespace OpenTK.Platform.Native.X11
 
             if (X11.XI2Available)
             {
-                unsafe {
+                unsafe
+                {
                     XIEventMask eventmask;
                     eventmask.deviceid = (int)DeviceID.XIAllMasterDevices;
                     eventmask.mask_len = XIMaskLen(XI2EventType.LASTEVENT);
@@ -1945,7 +2076,8 @@ namespace OpenTK.Platform.Native.X11
 
             XEventMask filterMask = default;
             XIC ic;
-            unsafe {
+            unsafe 
+            {
                 XIMCallback start = new XIMCallback((IntPtr)window.Id, &PreeditStartCallback);
                 XIMCallback done  = new XIMCallback((IntPtr)window.Id, &PreeditDoneCallback);
                 XIMCallback draw  = new XIMCallback((IntPtr)window.Id, &PreeditDrawCallback);
@@ -2012,6 +2144,11 @@ namespace OpenTK.Platform.Native.X11
                     filterMask);
 
             XWindowHandle handle = new XWindowHandle(X11.Display, window, hints, chosenConfig, chosenValues, visualSupportsFramebufferTransparency, map, ic);
+
+            unsafe
+            {
+                handle.ClickCounter.DoubleClickInfo = ((X11ShellComponent)Toolkit.Shell).GetDoubleClickInfo();
+            }
 
             XWindowDict.Add(handle.Window, handle);
 
@@ -3870,16 +4007,76 @@ namespace OpenTK.Platform.Native.X11
 
         private static bool hasReportedScaleFactorWarning = false;
 
+        internal unsafe static float GetContentScale(ILogger? logger)
+        {
+            float scale = 0;
+
+            XrmInitialize();
+            int result = XGetWindowProperty(
+                    X11.Display, 
+                    X11.DefaultRootWindow, 
+                    X11.Atoms[KnownAtoms.RESOURCE_MANAGER], 
+                    0, 8192,
+                    false,
+                    X11.Atoms[KnownAtoms.STRING],
+                    out XAtom realType,
+                    out int realFormat,
+                    out long numberOfItems,
+                    out long remainingBytes,
+                    out nint resource_manager);
+            if (result != Success || numberOfItems == 0)
+            {
+                logger?.LogWarning("Wasn't able to read RESOURCE_MANAGER.");
+                if (resource_manager != IntPtr.Zero)
+                {
+                    XFree(resource_manager);
+                    resource_manager = 0;
+                }
+            }
+
+            if (resource_manager != 0)
+            {
+                XrmDatabase db = XrmGetStringDatabase((byte*)resource_manager);
+                if (XrmGetResource(db, Utils.AsPtr("Xft.dpi"u8), Utils.AsPtr("String"u8), out byte* type, out XrmValue value))
+                {
+                    if (value.Addr != null && type != null /* && strcmp(type, "String")*/)
+                    {
+                        int dpi = int.Parse(Marshal.PtrToStringUTF8((nint)value.Addr) ?? "96");
+                        scale = dpi / 96.0f;
+                    }
+                }
+                XrmDestroyDatabase(db);
+                XFree(resource_manager);
+            }
+
+            if (scale == 0)
+            {
+                if (hasReportedScaleFactorWarning == false) {
+                    logger?.LogWarning("Could not read RESOURCE_MANAGER, defaulting to 1 for scale.");
+                    hasReportedScaleFactorWarning = true;
+                }
+
+                scale = 1;
+            }
+
+            return scale;
+        }
+
         /// <inheritdoc/>
         public void GetScaleFactor(WindowHandle handle, out float scaleX, out float scaleY)
         {
-            if (hasReportedScaleFactorWarning == false) {
-                Logger?.LogWarning("Scale factor is always 1 on X11 atm.");
-                hasReportedScaleFactorWarning = true;
-            }
+            // X11 only has a global scale factor, read it.
+            // - Noggin_bops 2025-12-11
+            float scale = GetContentScale(Logger);
+            scaleX = scale;
+            scaleY = scale;
+        }
 
-            scaleX = 1;
-            scaleY = 1;
+        /// <inheritdoc/>
+        public OpenGLContextHandle? GetOpenGLContext(WindowHandle handle)
+        {
+            XWindowHandle xwindow = handle.As<XWindowHandle>(this);
+            return xwindow.OpenGLContextHandle;
         }
 
         /// <summary>
@@ -3905,5 +4102,6 @@ namespace OpenTK.Platform.Native.X11
             // - Noggin_bops 2024-03-06
             return (IntPtr)xwindow.Window.Id;
         }
+
     }
 }

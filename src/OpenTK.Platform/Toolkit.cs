@@ -33,6 +33,7 @@ namespace OpenTK.Platform
         private static IWindowComponent? _windowComponent;
         private static IShellComponent? _shellComponent;
         private static IJoystickComponent? _joystickComponent;
+        private static IGamepadComponent? _gamepadComponent;
         private static IDialogComponent? _dialogComponent;
         private static IVulkanComponent? _vulkanComponent;
 
@@ -123,6 +124,12 @@ namespace OpenTK.Platform
             (Initialized ? null! : ThrowNotInitialized<IJoystickComponent>());
 
         /// <summary>
+        /// Interface for getting gamepad input.
+        /// </summary>
+        public static IGamepadComponent Gamepad => _gamepadComponent ??
+            (Initialized ? null! : ThrowNotInitialized<IGamepadComponent>());
+
+        /// <summary>
         /// Interface for opening system dialogs such as file open dialogs.
         /// </summary>
         public static IDialogComponent Dialog => _dialogComponent ??
@@ -183,6 +190,7 @@ namespace OpenTK.Platform
             try { _iconComponent = PlatformComponents.CreateIconComponent(); } catch (NotSupportedException) { }
             try { _clipboardComponent = PlatformComponents.CreateClipboardComponent(); } catch (NotSupportedException) { }
             try { _joystickComponent = PlatformComponents.CreateJoystickComponent(); } catch (NotSupportedException) { }
+            try { _gamepadComponent = PlatformComponents.CreateGamepadComponent(); } catch (NotSupportedException) { }
             try { _dialogComponent = PlatformComponents.CreateDialogComponent(); } catch (NotSupportedException) { }
             if (EnableVulkan)
             {
@@ -211,6 +219,8 @@ namespace OpenTK.Platform
                 _clipboardComponent.Logger = options.Logger;
             if (_joystickComponent != null)
                 _joystickComponent.Logger = options.Logger;
+            if (_gamepadComponent != null)
+                _gamepadComponent.Logger = options.Logger;
             if (_dialogComponent != null)
                 _dialogComponent.Logger = options.Logger;
             if (_vulkanComponent != null)
@@ -227,6 +237,7 @@ namespace OpenTK.Platform
             _iconComponent?.Initialize(options);
             _clipboardComponent?.Initialize(options);
             _joystickComponent?.Initialize(options);
+            _gamepadComponent?.Initialize(options);
             _dialogComponent?.Initialize(options);
             _vulkanComponent?.Initialize(options);
 

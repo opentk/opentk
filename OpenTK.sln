@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.1.32210.238
+# Visual Studio Version 18
+VisualStudioVersion = 18.4.11612.150 stable
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "project", "project", "{5EEEC96B-BD2F-45B0-935D-19E9E6D7D969}"
 	ProjectSection(SolutionItems) = preProject
@@ -14,8 +14,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "project", "project", "{5EEE
 		stylecop.json = stylecop.json
 		stylecop.ruleset = stylecop.ruleset
 	EndProjectSection
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTK.Input", "src\OpenTK.Input\OpenTK.Input.csproj", "{FD2151DE-0663-4100-9AB5-D1E22CF2144D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTK.Mathematics", "src\OpenTK.Mathematics\OpenTK.Mathematics.csproj", "{517AC4BF-6AF5-415D-B11C-FC6FE6710336}"
 EndProject
@@ -110,10 +108,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{FD2151DE-0663-4100-9AB5-D1E22CF2144D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FD2151DE-0663-4100-9AB5-D1E22CF2144D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FD2151DE-0663-4100-9AB5-D1E22CF2144D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FD2151DE-0663-4100-9AB5-D1E22CF2144D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{517AC4BF-6AF5-415D-B11C-FC6FE6710336}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{517AC4BF-6AF5-415D-B11C-FC6FE6710336}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{517AC4BF-6AF5-415D-B11C-FC6FE6710336}.Release|Any CPU.ActiveCfg = Release|Any CPU

@@ -313,7 +313,7 @@ namespace Bejeweled
             }
 
             int buffer = AL.GenBuffer();
-            AL.BufferData(buffer, Format.FormatStereo16, ref samples[0], decoded * soundData.Channels * sizeof(short), soundData.SampleRate);
+            AL.BufferData(buffer, Format.Stereo16, ref samples[0], decoded * soundData.Channels * sizeof(short), soundData.SampleRate);
             OpenTK.Audio.OpenAL.ErrorCode error = AL.GetError();
             if (error != OpenTK.Audio.OpenAL.ErrorCode.NoError)
             {
@@ -671,7 +671,7 @@ namespace Bejeweled
             Debug.Assert(image.Type == DDSImageType.Texture2D);
 
             int depth = 1;
-            TextureTarget target = TextureTarget.Texture2d;
+            TextureTarget target = TextureTarget.Texture2D;
 
             int bytesPerPixel;
             SizedInternalFormat internalFormat;
@@ -786,20 +786,20 @@ namespace Bejeweled
             int framebuffer = GL.GenFramebuffer();
 
             int normalTexture = GL.GenTexture();
-            GL.BindTexture(TextureTarget.Texture2d, normalTexture);
-            GL.TexImage2D(TextureTarget.Texture2d, 0, OpenTK.Graphics.OpenGL.InternalFormat.Rgba16, width, height, 0, PixelFormat.Rgba, PixelType.Float, IntPtr.Zero);
+            GL.BindTexture(TextureTarget.Texture2D, normalTexture);
+            GL.TexImage2D(TextureTarget.Texture2D, 0, OpenTK.Graphics.OpenGL.InternalFormat.Rgba16, width, height, 0, PixelFormat.Rgba, PixelType.Float, IntPtr.Zero);
 
-            GL.TexParameteri(TextureTarget.Texture2d, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Linear);
+            GL.TexParameteri(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Linear);
 
             int depthTexture = GL.GenTexture();
-            GL.BindTexture(TextureTarget.Texture2d, depthTexture);
-            GL.TexImage2D(TextureTarget.Texture2d, 0, OpenTK.Graphics.OpenGL.InternalFormat.DepthComponent16, width, height, 0, PixelFormat.DepthComponent, PixelType.Float, IntPtr.Zero);
+            GL.BindTexture(TextureTarget.Texture2D, depthTexture);
+            GL.TexImage2D(TextureTarget.Texture2D, 0, OpenTK.Graphics.OpenGL.InternalFormat.DepthComponent16, width, height, 0, PixelFormat.DepthComponent, PixelType.Float, IntPtr.Zero);
 
-            GL.TexParameteri(TextureTarget.Texture2d, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Linear);
+            GL.TexParameteri(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Linear);
 
             GL.BindFramebuffer(FramebufferTarget.Framebuffer, framebuffer);
-            GL.FramebufferTexture2D(FramebufferTarget.Framebuffer, FramebufferAttachment.ColorAttachment0, TextureTarget.Texture2d, normalTexture, 0);
-            GL.FramebufferTexture2D(FramebufferTarget.Framebuffer, FramebufferAttachment.DepthAttachment, TextureTarget.Texture2d, depthTexture, 0);
+            GL.FramebufferTexture2D(FramebufferTarget.Framebuffer, FramebufferAttachment.ColorAttachment0, TextureTarget.Texture2D, normalTexture, 0);
+            GL.FramebufferTexture2D(FramebufferTarget.Framebuffer, FramebufferAttachment.DepthAttachment, TextureTarget.Texture2D, depthTexture, 0);
 
             FramebufferStatus status = GL.CheckFramebufferStatus(FramebufferTarget.Framebuffer);
             if (status != FramebufferStatus.FramebufferComplete)
@@ -817,16 +817,16 @@ namespace Bejeweled
             int framebuffer = GL.GenFramebuffer();
 
             int normalTexture = GL.GenTexture();
-            GL.BindTexture(TextureTarget.Texture2dMultisample, normalTexture);
-            GL.TexImage2DMultisample(TextureTarget.Texture2dMultisample, samples, OpenTK.Graphics.OpenGL.InternalFormat.Rgba32f, width, height, true);
+            GL.BindTexture(TextureTarget.Texture2DMultisample, normalTexture);
+            GL.TexImage2DMultisample(TextureTarget.Texture2DMultisample, samples, OpenTK.Graphics.OpenGL.InternalFormat.Rgba32f, width, height, true);
 
             int depthTexture = GL.GenTexture();
-            GL.BindTexture(TextureTarget.Texture2dMultisample, depthTexture);
-            GL.TexImage2DMultisample(TextureTarget.Texture2dMultisample, samples, OpenTK.Graphics.OpenGL.InternalFormat.DepthComponent32f, width, height, true);
+            GL.BindTexture(TextureTarget.Texture2DMultisample, depthTexture);
+            GL.TexImage2DMultisample(TextureTarget.Texture2DMultisample, samples, OpenTK.Graphics.OpenGL.InternalFormat.DepthComponent32f, width, height, true);
 
             GL.BindFramebuffer(FramebufferTarget.Framebuffer, framebuffer);
-            GL.FramebufferTexture2D(FramebufferTarget.Framebuffer, FramebufferAttachment.ColorAttachment0, TextureTarget.Texture2dMultisample, normalTexture, 0);
-            GL.FramebufferTexture2D(FramebufferTarget.Framebuffer, FramebufferAttachment.DepthAttachment, TextureTarget.Texture2dMultisample, depthTexture, 0);
+            GL.FramebufferTexture2D(FramebufferTarget.Framebuffer, FramebufferAttachment.ColorAttachment0, TextureTarget.Texture2DMultisample, normalTexture, 0);
+            GL.FramebufferTexture2D(FramebufferTarget.Framebuffer, FramebufferAttachment.DepthAttachment, TextureTarget.Texture2DMultisample, depthTexture, 0);
 
             FramebufferStatus status = GL.CheckFramebufferStatus(FramebufferTarget.Framebuffer);
             if (status != FramebufferStatus.FramebufferComplete)
@@ -841,10 +841,10 @@ namespace Bejeweled
 
         public void ResizeNormalDepthFramebuffer(int newWidth, int newHeight)
         {
-            GL.BindTexture(TextureTarget.Texture2d, ColorAttachement0);
-            GL.TexImage2D(TextureTarget.Texture2d, 0, OpenTK.Graphics.OpenGL.InternalFormat.Rgba16Snorm, newWidth, newHeight, 0, PixelFormat.Rgba, PixelType.Float, IntPtr.Zero);
-            GL.BindTexture(TextureTarget.Texture2d, DepthAttachement);
-            GL.TexImage2D(TextureTarget.Texture2d, 0, OpenTK.Graphics.OpenGL.InternalFormat.DepthComponent16, newWidth, newHeight, 0, PixelFormat.DepthComponent, PixelType.Float, IntPtr.Zero);
+            GL.BindTexture(TextureTarget.Texture2D, ColorAttachement0);
+            GL.TexImage2D(TextureTarget.Texture2D, 0, OpenTK.Graphics.OpenGL.InternalFormat.Rgba16Snorm, newWidth, newHeight, 0, PixelFormat.Rgba, PixelType.Float, IntPtr.Zero);
+            GL.BindTexture(TextureTarget.Texture2D, DepthAttachement);
+            GL.TexImage2D(TextureTarget.Texture2D, 0, OpenTK.Graphics.OpenGL.InternalFormat.DepthComponent16, newWidth, newHeight, 0, PixelFormat.DepthComponent, PixelType.Float, IntPtr.Zero);
 
             GL.BindFramebuffer(FramebufferTarget.Framebuffer, Handle);
             FramebufferStatus status = GL.CheckFramebufferStatus(FramebufferTarget.Framebuffer);
@@ -858,10 +858,10 @@ namespace Bejeweled
 
         public void ResizeDebugFramebufferMS(int newWidth, int newHeight, int samples)
         {
-            GL.BindTexture(TextureTarget.Texture2dMultisample, ColorAttachement0);
-            GL.TexImage2DMultisample(TextureTarget.Texture2dMultisample, samples, OpenTK.Graphics.OpenGL.InternalFormat.Rgba32f, newWidth, newHeight, true);
-            GL.BindTexture(TextureTarget.Texture2dMultisample, DepthAttachement);
-            GL.TexImage2DMultisample(TextureTarget.Texture2dMultisample, samples, OpenTK.Graphics.OpenGL.InternalFormat.DepthComponent32f, newWidth, newHeight, true);
+            GL.BindTexture(TextureTarget.Texture2DMultisample, ColorAttachement0);
+            GL.TexImage2DMultisample(TextureTarget.Texture2DMultisample, samples, OpenTK.Graphics.OpenGL.InternalFormat.Rgba32f, newWidth, newHeight, true);
+            GL.BindTexture(TextureTarget.Texture2DMultisample, DepthAttachement);
+            GL.TexImage2DMultisample(TextureTarget.Texture2DMultisample, samples, OpenTK.Graphics.OpenGL.InternalFormat.DepthComponent32f, newWidth, newHeight, true);
 
             GL.BindFramebuffer(FramebufferTarget.Framebuffer, Handle);
             FramebufferStatus status = GL.CheckFramebufferStatus(FramebufferTarget.Framebuffer);
@@ -2261,15 +2261,15 @@ namespace Bejeweled
 
                 GL.Uniform1i(GemShader.UniformLocationBRDFLUT, 3);
                 GL.ActiveTexture(TextureUnit.Texture3);
-                GL.BindTexture(TextureTarget.Texture2d, BrdfLUT.Handle);
+                GL.BindTexture(TextureTarget.Texture2D, BrdfLUT.Handle);
 
                 GL.Uniform1i(GemShader.UniformLocationBackfaceNormals, 4);
                 GL.ActiveTexture(TextureUnit.Texture4);
-                GL.BindTexture(TextureTarget.Texture2d, RefractionInfoFramebuffer.ColorAttachement0);
+                GL.BindTexture(TextureTarget.Texture2D, RefractionInfoFramebuffer.ColorAttachement0);
 
                 GL.Uniform1i(GemShader.UniformLocationBackfaceDepth, 5);
                 GL.ActiveTexture(TextureUnit.Texture5);
-                GL.BindTexture(TextureTarget.Texture2d, RefractionInfoFramebuffer.DepthAttachement);
+                GL.BindTexture(TextureTarget.Texture2D, RefractionInfoFramebuffer.DepthAttachement);
 
                 GL.Uniform1f(GemShader.UniformLocationDepthScale, FarPlane - NearPlane);
 

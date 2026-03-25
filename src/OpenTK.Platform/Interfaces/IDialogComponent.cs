@@ -58,7 +58,7 @@ namespace OpenTK.Platform
         /// </returns>
         /// <seealso cref="DialogFileFilter"/>
         /// <seealso cref="OpenDialogOptions"/>
-        /// <seealso cref="ShowSaveDialog(WindowHandle, string, string, DialogFileFilter[], SaveDialogOptions)"/>
+        /// <seealso cref="ShowSaveDialog(WindowHandle, string, string, string?, DialogFileFilter[], SaveDialogOptions)"/>
         /// <seealso cref="CanTargetFolders"/>
         public unsafe List<string>? ShowOpenDialog(WindowHandle parent, string title, string directory, DialogFileFilter[]? allowedExtensions, OpenDialogOptions options);
 

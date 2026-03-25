@@ -3,7 +3,7 @@
   <metadata>
     <id>OpenTK</id>
 
-    <version>5</version>
+    <version>@version@</version>
 
     <copyright>@copyright@</copyright>
     <tags>@tags@</tags>
@@ -13,10 +13,10 @@
     <projectUrl>https://github.com/opentk/opentk</projectUrl>
     <license type="expression">MIT</license>
     <iconUrl>https://api.nuget.org/v3-flatcontainer/opentk/3.1.0/icon</iconUrl>
-    <icon>icon.png</icon>
+    <icon>images/opentk-blue-hexagon.png</icon>
     @dependencies@
   </metadata>
   <files>
-      <file src="..\documentation\icon.png" target="" />
+      <file src="..\.github\opentk-blue-hexagon.png" target="images" />
   </files>
 </package>

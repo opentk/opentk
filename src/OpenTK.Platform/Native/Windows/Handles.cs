@@ -55,6 +55,8 @@ namespace OpenTK.Platform.Native.Windows
 
         public bool FramebufferTransparencyEnabled { get; set; } = false;
 
+        public DoubleClickCounter ClickCounter { get; set; } = new DoubleClickCounter();
+        
         public HWND(IntPtr hWnd, GraphicsApiHints hints) : base(hints)
         {
             HWnd = hWnd;
@@ -75,10 +77,11 @@ namespace OpenTK.Platform.Native.Windows
 
         public ContextValues ContextValues { get; private set; }
 
-        public HGLRC(IntPtr hGlrc, IntPtr hdc, HGLRC? sharedContext, ContextValues contextValues)
+        public HGLRC(IntPtr hGlrc, IntPtr hdc, HWND hwnd, HGLRC? sharedContext, ContextValues contextValues)
         {
             HGlrc = hGlrc;
             HDC = hdc;
+            WindowHandle = hwnd;
             SharedContext = sharedContext;
             ContextValues = contextValues;
         }
@@ -140,6 +143,8 @@ namespace OpenTK.Platform.Native.Windows
 
         public Win32.RECT WorkArea { get; set; }
 
+        public List<VideoMode> SupportedVideoModes { get; set; } = new List<VideoMode>();
+
         public float RefreshRate { get; set; }
 
         public int BitsPerPixel { get; set; }
@@ -153,7 +158,7 @@ namespace OpenTK.Platform.Native.Windows
         public DisplayColorInfo ColorInfo { get; set; }
     }
 
-    internal class Joystick : JoystickHandle
+    internal class WinJoystick : JoystickHandle
     {
         public int XInputIndex;
 
@@ -161,11 +166,25 @@ namespace OpenTK.Platform.Native.Windows
         public Guid InstanceGuid;
         public string InstanceName;
 
-        public Joystick(DirectInput.IDirectInputDevice8 device, Guid instanceGuid, string instanceName)
+        public SdlGuid SdlGuid;
+
+        public JoyObject[] Objects;
+
+        public unsafe DirectInput.DIEFFECT* DIEffect;
+        public unsafe DirectInput.DIPERIODIC* DIPeriodic;
+        public DirectInput.IDirectInputEffect FFEffect;
+
+        public short[] Axes;
+        public bool[] Buttons;
+        public HatState[] Hats;
+
+        public WinJoystick(DirectInput.IDirectInputDevice8 device, Guid instanceGuid, string instanceName, SdlGuid sdlGuid, JoyObject[] objects)
         {
             Device = device;
             InstanceGuid = instanceGuid;
             InstanceName = instanceName;
+            SdlGuid = sdlGuid;
+            Objects = objects;
         }
     }
 }

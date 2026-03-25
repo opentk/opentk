@@ -1,17 +1,11 @@
-﻿using OpenTK.Platform;
+﻿using Microsoft.Win32;
 using OpenTK.Core.Utility;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Linq;
+using System.Globalization;
 using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
 using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Xml;
-using System.Xml.XPath;
 
 namespace OpenTK.Platform.Native.Windows
 {
@@ -126,10 +120,10 @@ namespace OpenTK.Platform.Native.Windows
                 StringBuilder displayName = new StringBuilder(length);
                 Win32.GetLocaleInfoEx(localeName, LCType.SLocalizedDisplayName, displayName, displayName.Capacity);
 
-                string layoutName = Instance.GetHKLLayoutName(hKL);
-                string layoutDisplayName = Instance.LayoutDisplayNameFromKeyboardLayoutName(layoutName);
+                CultureInfo culture = GetCultureInfoFromHKL(hKL);
+                string layoutName = GetKeyboardLayoutDisplayNameFromHKL(hKL);
 
-                EventQueue.Raise(handle, PlatformEventType.InputLanguageChanged, new InputLanguageChangedEventArgs(layoutName, layoutDisplayName, localeName.ToString(), displayName.ToString()));
+                EventQueue.Raise(handle, PlatformEventType.InputLanguageChanged, new InputLanguageChangedEventArgs(new InputLanguage(culture, layoutName)));
             }
         }
 
@@ -147,91 +141,173 @@ namespace OpenTK.Platform.Native.Windows
         /// <inheritdoc/>
         public bool SupportsIme => true;
 
-        private string LayoutDisplayNameFromKeyboardLayoutName(string layoutName)
+        private const string KeyboardLayoutsRegistryPath = @"SYSTEM\CurrentControlSet\Control\Keyboard Layouts";
+        private const string UserProfileRegistryPath = @"Control Panel\International\User Profile";
+
+#pragma warning disable CA1416 // Validate platform compatibility
+        /// <summary>
+        /// Returns the equivalent of <see cref="Win32.GetKeyboardLayout(uint)"/> but for a specific HKL.
+        /// </summary>
+        internal static string GetKeyboardLayoutIDFromHKL(IntPtr /* HKL */ hKL)
         {
-            const string LAYOUTS_REGISTRY_PATH = @"SYSTEM\CurrentControlSet\Control\Keyboard Layouts";
+            // Because windows is that way it is, getting the keyboard layout name from a HKL directly is not possible.
+            // So we need to do some cursed registry navigation to emulate a function that should just be part of the windows API.
+            // This is what WinForms also does: https://github.com/dotnet/winforms/blob/ceb6911e4d55882220e82c3868784a8c94681687/src/System.Windows.Forms/System/Windows/Forms/Input/InputLanguage.cs#L125
+            // - Noggin_bops 2025-12-10
 
-            int status;
-
-            status = Win32.RegOpenKeyEx((UIntPtr)PredefinedKeys.HKEY_LOCAL_MACHINE, LAYOUTS_REGISTRY_PATH, 0, AccessMask.KeyRead, out UIntPtr layoutsKey);
-            if (status != 0)
+            int device = Win32.HIWORD(hKL);
+            if ((device & 0xF000) == 0xF000)
             {
-                throw new Exception($"RegOpenKeyEx (\"HKEY_LOCAL_MACHINE\\{LAYOUTS_REGISTRY_PATH}\") error: 0x{status:X8}");
-            }
-
-            status = Win32.RegOpenKeyEx(layoutsKey, layoutName, 0, AccessMask.KeyRead, out UIntPtr layoutKey);
-            if (status != 0)
-            {
-                throw new Exception($"RegOpenKeyEx (\"{layoutName}\") error: 0x{status:X8}");
-            }
-
-            // Read the "Layout Text" to get the layout name
-            uint dataSize = 0;
-            status = Win32.RegGetValue(layoutKey, null, "Layout Display Name", RRF.TypeRegSZ, out RegValueType _, Span<byte>.Empty, ref dataSize);
-            if (status != 0)
-            {
-                throw new Exception($"RegGetValue (\"Layout Display Name\") error: 0x{status:X8}");
-            }
-
-            // FIXME: Maybe not allocate on the stack if it's too big?
-            Span<char> data = stackalloc char[(int)(dataSize / sizeof(char))];
-            status = Win32.RegGetValue(layoutKey, null, "Layout Display Name", RRF.TypeRegSZ, out RegValueType _, data, ref dataSize);
-            if (status != 0)
-            {
-                throw new Exception($"RegGetValue (\"Layout Display Name\") error: 0x{status:X8}");
-            }
-
-            // We use the same size as Winforms does and hope that that isn't a problem...
-            // https://github.com/dotnet/winforms/blob/d2160cfd081d5a34be03a2bd9c7ce9cbdcc38c09/src/System.Windows.Forms/src/System/Windows/Forms/InputLanguage.cs#L258
-            // - Noggin_bops 2023-04-18
-            Span<char> buffer = stackalloc char[512];
-            unsafe
-            {
-                fixed (char* source = data)
-                fixed (char* bufferPtr = buffer)
+                int layoutId = device & 0x0FFF;
+                using RegistryKey? key = Registry.LocalMachine.OpenSubKey(KeyboardLayoutsRegistryPath);
+                if (key is not null)
                 {
-                    int result = (int)Win32.SHLoadIndirectString(source, bufferPtr, (uint)buffer.Length, null);
-                    Marshal.ThrowExceptionForHR(result);
+                    // Match keyboard layout by layout id
+                    foreach (string subKeyName in key.GetSubKeyNames())
+                    {
+                        using RegistryKey? subKey = key.OpenSubKey(subKeyName);
+                        if (subKey is not null
+                            && subKey.GetValue("Layout Id") is string subKeyLayoutId
+                            && Convert.ToInt32(subKeyLayoutId, 16) == layoutId)
+                        {
+                            Debug.Assert(subKeyName.Length == 8, $"unexpected key length in registry: {subKey.Name}");
+                            return subKeyName.ToUpperInvariant();
+                        }
+                    }
+                }
+
+                return $"{device:X8}";
+            }
+            else
+            {
+                if (device == 0)
+                {
+                    device = Win32.LOWORD(hKL);
+                }
+
+                return $"{device:X8}";
+            }
+        }
+
+        internal static string GetKeyboardLayoutDisplayNameFromHKL(IntPtr /* HKL */ hKL)
+        {
+            // Because windows is that way it is, getting the keyboard layout name from a HKL directly is not possible.
+            // So we need to do some cursed registry navigation to emulate a function that should just be part of the windows API.
+            // This is what WinForms also does: https://github.com/dotnet/winforms/blob/ceb6911e4d55882220e82c3868784a8c94681687/src/System.Windows.Forms/System/Windows/Forms/Input/InputLanguage.cs#L105
+            // - Noggin_bops 2025-12-10
+
+            // https://learn.microsoft.com/windows/win32/intl/using-registry-string-redirection#create-resources-for-keyboard-layout-strings
+            string layoutID = GetKeyboardLayoutIDFromHKL(hKL);
+            using RegistryKey? key = Registry.LocalMachine.OpenSubKey($@"{KeyboardLayoutsRegistryPath}\{layoutID}");
+            // FIXME: WinForms uses a SR.resx file here to get the name of an unknown keyboard layout, maybe we should consider something similar?
+            // - Noggin_bops 2025-12-10 
+            return GetMUIString(key, "Layout Display Name", "Layout Text") ?? "Unknown layout";
+
+            static string? GetMUIString(RegistryKey? key, string keyName, string fallbackKeyName)
+            {
+                return key is not null
+                    ? RegLoadMUIString(key, keyName, out string localizedValue)
+                        ? localizedValue
+                        : key.GetValue(fallbackKeyName) is string value
+                            ? value
+                            : null
+                    : null;
+
+                [SkipLocalsInit]
+                static unsafe bool RegLoadMUIString(RegistryKey key, string keyName, out string localizedValue)
+                {
+                    ReadOnlySpan<char> buffer = stackalloc char[128];
+
+                    fixed(char* pszValue = keyName)
+                    {
+                        while (true)
+                        {
+                            fixed (char* pszOutBuf = buffer)
+                            {
+                                var errorCode = Win32.RegLoadMUIString(
+                                    key.Handle.DangerousGetHandle(),
+                                    pszValue,
+                                    pszOutBuf,
+                                    (uint)(buffer.Length * sizeof(char)),
+                                    out uint bytes,
+                                    0,
+                                    null);
+
+                                // The buffer is too small. Try again with a larger buffer.
+                                if (errorCode == Win32.ERROR_MORE_DATA)
+                                {
+                                    buffer = new char[(int)(bytes / sizeof(char))];
+                                    continue;
+                                }
+
+                                localizedValue = errorCode == Win32.ERROR_SUCCESS
+                                    ? buffer[..Math.Max((int)(bytes / sizeof(char)) - 1, 0)].ToString()
+                                    : string.Empty;
+
+                                return errorCode == Win32.ERROR_SUCCESS;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        /// <remarks>
+        /// This function returns a read-only <see cref="CultureInfo"/>.
+        /// </remarks>
+        internal static CultureInfo GetCultureInfoFromHKL(IntPtr /* HKL */ hKL)
+        {
+            // Because windows is that way it is, getting the keyboard layout tag (BPC 47) from a HKL directly is not possible.
+            // So we need to do some cursed registry navigation to emulate a function that should just be part of the windows API.
+            // This is what WinForms also does: https://github.com/dotnet/winforms/blob/ceb6911e4d55882220e82c3868784a8c94681687/src/System.Windows.Forms/System/Windows/Forms/Input/InputLanguage.cs#L189
+            // - Noggin_bops 2025-12-10
+
+            int langId = Win32.LOWORD(hKL);
+
+            const int LOCALE_TRANSIENT_KEYBOARD1 = 0x2000;
+            const int LOCALE_TRANSIENT_KEYBOARD2 = 0x2400;
+            const int LOCALE_TRANSIENT_KEYBOARD3 = 0x2800;
+            const int LOCALE_TRANSIENT_KEYBOARD4 = 0x2c00;
+
+            if (langId == LOCALE_TRANSIENT_KEYBOARD1 ||
+                langId == LOCALE_TRANSIENT_KEYBOARD2 ||
+                langId == LOCALE_TRANSIENT_KEYBOARD3 ||
+                langId == LOCALE_TRANSIENT_KEYBOARD4)
+            {
+                using RegistryKey? key = Registry.CurrentUser.OpenSubKey(UserProfileRegistryPath);
+                if (key is not null && key.GetValue("Languages") is string[] languages)
+                {
+                    foreach (string language in languages)
+                    {
+                        using RegistryKey? subKey = key.OpenSubKey(language);
+                        if (subKey is not null
+                            && subKey.GetValue("TransientLangId") is int transientLangId
+                            && transientLangId == langId)
+                        {
+                            return CultureInfo.GetCultureInfo(language);
+                        }
+                    }
                 }
             }
 
-            buffer = buffer.SliceAtFirstNull();
-            string displayName = new string(buffer);
-
-            return displayName;
+            return CultureInfo.GetCultureInfo(langId);
         }
-
-        private string GetHKLLayoutName(IntPtr hKL)
-        {
-            // FIXME: Maybe error check?
-            IntPtr oldLayout = Win32.ActivateKeyboardLayout(hKL, 0);
-
-            StringBuilder builder = new StringBuilder();
-            builder.EnsureCapacity(Win32.KL_NAMELENGTH);
-            Win32.GetKeyboardLayoutName(builder);
-
-            Win32.ActivateKeyboardLayout(oldLayout, 0);
-
-            return builder.ToString();
-        }
+#pragma warning restore CA1416 // Validate platform compatibility
 
         /// <inheritdoc/>
-        public string GetActiveKeyboardLayout(WindowHandle? handle = null)
+        public InputLanguage GetActiveInputLanguage(WindowHandle? handle = null)
         {
             // FIXME: The window doesn't matter here??
             // Can window have differing layouts?
 
-            StringBuilder builder = new StringBuilder();
-            builder.EnsureCapacity(Win32.KL_NAMELENGTH);
-            Win32.GetKeyboardLayoutName(builder);
-            string layoutName = builder.ToString();
-
-            return LayoutDisplayNameFromKeyboardLayoutName(layoutName);
+            IntPtr hkl = Win32.GetKeyboardLayout(0);
+            CultureInfo culture = GetCultureInfoFromHKL(hkl);
+            string layoutName = GetKeyboardLayoutDisplayNameFromHKL(hkl);
+            return new InputLanguage(culture, layoutName);
         }
 
         /// <inheritdoc/>
-        /// <remarks>This function is expensive and should be cached if possible.</remarks>
-        public string[] GetAvailableKeyboardLayouts()
+        public InputLanguage[] GetInstalledInputLanguages()
         {
             int count = Win32.GetKeyboardLayoutList(0, Span<IntPtr>.Empty);
             Span<IntPtr> layouts = stackalloc IntPtr[count];
@@ -242,23 +318,15 @@ namespace OpenTK.Platform.Native.Windows
                 throw new Win32Exception();
             }
 
-            IntPtr oldLayout = Win32.GetKeyboardLayout(0);
-
-            string[] result = new string[count];
+            InputLanguage[] languages = new InputLanguage[count];
             for (int i = 0; i < layouts.Length; i++)
             {
-                Win32.ActivateKeyboardLayout(layouts[i], 0);
-
-                StringBuilder builder = new StringBuilder();
-                builder.EnsureCapacity(Win32.KL_NAMELENGTH);
-                Win32.GetKeyboardLayoutName(builder);
-                string layoutName = builder.ToString();
-
-                result[i] = LayoutDisplayNameFromKeyboardLayoutName(layoutName);
+                CultureInfo culture = GetCultureInfoFromHKL(layouts[i]);
+                string layoutName = GetKeyboardLayoutDisplayNameFromHKL(layouts[i]);
+                languages[i] = new InputLanguage(culture, layoutName);
             }
-            Win32.ActivateKeyboardLayout(oldLayout, 0);
 
-            return result;
+            return languages;
         }
 
         /// <inheritdoc/>

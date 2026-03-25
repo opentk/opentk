@@ -573,7 +573,7 @@ namespace VulkanTestProject
                 imgViewCreate.pNext = null;
                 imgViewCreate.flags = 0;
                 imgViewCreate.image = swapchainImages[i];
-                imgViewCreate.viewType = VkImageViewType.ImageViewType2d;
+                imgViewCreate.viewType = VkImageViewType.ImageViewType2D;
                 imgViewCreate.format = SwapchainFormat.format;
                 imgViewCreate.components.r = VkComponentSwizzle.ComponentSwizzleIdentity;
                 imgViewCreate.components.g = VkComponentSwizzle.ComponentSwizzleIdentity;
@@ -956,7 +956,7 @@ namespace VulkanTestProject
                 imgViewCreate.pNext = null;
                 imgViewCreate.flags = 0;
                 imgViewCreate.image = swapchainImages[i];
-                imgViewCreate.viewType = VkImageViewType.ImageViewType2d;
+                imgViewCreate.viewType = VkImageViewType.ImageViewType2D;
                 imgViewCreate.format = SwapchainFormat.format;
                 imgViewCreate.components.r = VkComponentSwizzle.ComponentSwizzleIdentity;
                 imgViewCreate.components.g = VkComponentSwizzle.ComponentSwizzleIdentity;

@@ -21,7 +21,7 @@ namespace OpenTK.Platform.Native.X11
         {
             public XWindow window;         /* screen saver window */
             public ScreenSaverState state; /* ScreenSaver{Off,On,Disabled} */
-            public int kind;               /* ScreenSaver{Blanked,Internal,External}*/
+            public ScreenSaverKind kind;   /* ScreenSaver{Blanked,Internal,External}*/
             public ulong til_or_since;     /* milliseconds */
             public ulong idle;             /* milliseconds */
             public ulong eventMask;        /* events */
@@ -45,7 +45,7 @@ namespace OpenTK.Platform.Native.X11
         internal static unsafe extern XScreenSaverInfo* XScreenSaverAllocInfo();
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
-        internal static unsafe extern XStatus XScreenSaverQueryInfo(XDisplayPtr dpy, XDrawable drawable, XScreenSaverInfo* saver_info);
+        internal static unsafe extern int /* Status */ XScreenSaverQueryInfo(XDisplayPtr dpy, XDrawable drawable, XScreenSaverInfo* saver_info);
 
         /// <summary>Available in XScreenSaver 1.1 and later.</summary>
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]

@@ -5,6 +5,7 @@ using GeneratorBase.Utility;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -17,6 +18,14 @@ namespace ALGenerator
         {
             Stopwatch st = new Stopwatch();
             st.Start();
+            
+            // These prevent us to accidently generate wrong code because of
+            // locale dependent string functions.
+            CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+            CultureInfo.CurrentUICulture = CultureInfo.InvariantCulture;
+            CultureInfo.DefaultThreadCurrentCulture = CultureInfo.InvariantCulture;
+            CultureInfo.DefaultThreadCurrentUICulture = CultureInfo.InvariantCulture;
+
             using (Logger.CreateLogger(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly()!.Location)!, "log.txt")))
             {
                 Specification alSpecification;
@@ -24,7 +33,10 @@ namespace ALGenerator
                     NameManglerSettings alSettings = new NameManglerSettings()
                     {
                         FunctionPrefix = "al",
-                        EnumPrefixes = new List<string> { "AL_", "ALC_" },
+                        // FIXME: This removes the "Format" prefix in the All enum as well...
+                        // Do we want that?
+                        // - Noggin_bops 2025-09-08
+                        EnumPrefixes = new List<string> { "AL_FORMAT_", "AL_", "ALC_" },
                         ExtensionPrefixes = ["AL_", "ALC_"],
                         ExtensionsWithoutPrefixes =
                         [
@@ -49,7 +61,8 @@ namespace ALGenerator
                             "EAXGetBufferMode",
                             "EAXSet",
                             "EAXGet",
-                        ]
+                        ],
+                        EnumAcronymsToKeepCapitalization = [ "UHJ", "MSADPCM", "IMA4", "IMA", "ADPCM", "ALAW", "MULAW", "SN3D", "N3D", "2D", "3D" ],
                     };
 
                     // Reading the gl.xml file and parsing it into data structures.

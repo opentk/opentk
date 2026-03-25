@@ -41,9 +41,7 @@ let description =
     https://github.com/opentk/LearnOpenTK
 
     We have a very active discord server, if you need help, want to help, or are just curious, come join us!
-    https://discord.gg/6HqD48s
-
-    "
+    https://discord.gg/6HqD48s"
 
 let tags = "OpenTK OpenGL OpenGLES GLES OpenAL OpenCL C# F# .NET Mono Vector Math Game Graphics Sound"
 
@@ -101,11 +99,8 @@ let ciTestProjects =
 // Lazily install DotNet SDK in the correct version if not available
 let install =
     lazy
-        (if (DotNet.getVersion id).StartsWith "6" then id
-         else DotNet.install (fun options -> { options with Channel = DotNet.CliChannel.Version 6 0 }))
-
-// Define general properties across various commands (with arguments)
-let inline withWorkDir wd = DotNet.Options.lift install.Value >> DotNet.Options.withWorkingDirectory wd
+        (if (DotNet.getVersion id).StartsWith "10" then id
+         else DotNet.install (fun options -> { options with Channel = DotNet.CliChannel.Version 10 0 }))
 
 // Set general properties without arguments
 let inline dotnetSimple arg = DotNet.Options.lift install.Value arg
@@ -116,27 +111,12 @@ module DotNet =
 
     let runWithDefaultOptions framework projFile args = run id framework projFile args
 
-let pathToSpec = "src" </> "gl.xml"
-
-//let specSource = "https://raw.githubusercontent.com/frederikja163/OpenGL-Registry/master/xml/gl.xml"
-
-//let bindingsOutputPath =
-//    ""
-
 let asArgs args = args |> List.map (fun ( x: string) -> sprintf "\"%s\"" x) |> String.concat " "
-
-
-//Target.create "UpdateSpec" (fun _ ->
-//    Trace.log " --- Updating spec --- "
-//    specSource
-//    |> Fake.Net.Http.downloadFile ("src" </> "gl.xml")
-//    |> Trace.logfn "Saved spec at %s"
-//    ())
 
 Target.create "GenerateBindings" (fun _ ->
     Trace.log " --- Generating bindings --- "
     let releaseProjects = releaseProjects.And "src/OpenTK.Graphics/*.csproj"
-    let framework = "net8.0"
+    let framework = "net10.0"
     let projFile = "src/Generator/Generator.csproj"
 
     let args = [  ] |> asArgs
@@ -148,15 +128,9 @@ Target.create "GenerateBindings" (fun _ ->
 
 Target.create "Restore" (fun _ -> DotNet.restore dotnetSimple solutionFile |> ignore)
 
-// Generate assembly info files with the right version & up-to-date information
-Target.create "AssemblyInfo" (fun _ ->
-    //TODO: Create and update the Directory.Build.props file with the version information taken from the releaseNotes value.
-    // see https://docs.microsoft.com/en-us/visualstudio/msbuild/customize-your-build?view=vs-2019#directorybuildprops-and-directorybuildtargets
-    Trace.traceError "Unimplemented.")
-
 Target.create "Build"( fun _ ->
     let setOptions a =
-        let customParams = sprintf "/p:ContinuousIntegrationBuild=true /p:DontGenBindings=true /p:PackageVersion=%s /p:ProductVersion=%s /p:Version=%s" release.AssemblyVersion release.NugetVersion release.AssemblyVersion
+        let customParams = sprintf "/p:ContinuousIntegrationBuild=true /p:PackageVersion=%s /p:ProductVersion=%s /p:Version=%s" release.AssemblyVersion release.NugetVersion release.AssemblyVersion
         DotNet.Options.withCustomParams (Some customParams) (dotnetSimple a)
 
     for proj in releaseProjects do
@@ -166,20 +140,8 @@ Target.create "Build"( fun _ ->
 Target.create "BuildTest" <| fun _ ->
     !!"tests/**/*.??proj"
     |> Seq.map(fun proj ->
-        DotNet.runWithDefaultOptions "net8.0" proj "" |> string)
+        DotNet.runWithDefaultOptions "net10.0" proj "" |> string)
     |> Trace.logItems "TestBuild-Output: "
-
-// Copies binaries from default VS location to expected bin folder
-// This preserves subdirectories.
-Target.create "CopyBinaries" (fun _ ->
-    releaseProjects
-    |> Seq.map
-        (fun f ->
-        ((System.IO.Path.GetDirectoryName f) @@ "bin/Release/net8.0",
-         "bin" @@ (System.IO.Path.GetFileNameWithoutExtension f)))
-    |> Seq.iter (fun (fromDir, toDir) -> Shell.copyDir toDir fromDir (fun _ -> true)))
-
-open System.IO
 
 let runTests tests =
     let setDotNetOptions (projectDirectory: string): DotNet.TestOptions -> DotNet.TestOptions =
@@ -207,7 +169,6 @@ Target.create "RunAllTests" (fun _ ->
     // Looks overkill for only one csproj but just add 2 or 3 csproj and this will scale a lot better
     runTests allTestProjects)
 
-
 Target.create "CreateNuGetPackage" (fun _ ->
     Directory.CreateDirectory nugetDir |> ignore
     let notes = release.Notes |> List.reduce (fun s1 s2 -> s1 + "\n" + s2)
@@ -216,22 +177,18 @@ Target.create "CreateNuGetPackage" (fun _ ->
         Trace.logf "Creating nuget package for Project: %s\n" proj
 
         let dir = Path.GetDirectoryName proj
-        let templatePath = Path.Combine(dir, "paket")
-        let oldTmplCont = File.ReadAllText templatePath
-        let newTmplCont = oldTmplCont.Insert(oldTmplCont.Length, sprintf "\nversion \n\t%s\nauthors \n\t%s\nowners \n\t%s\n"
-                release.NugetVersion
-                (authors |> List.reduce (fun s a -> s + " " + a))
-                (authors |> List.reduce (fun s a -> s + " " + a))).Replace("#VERSION#", release.NugetVersion)
-        File.WriteAllText(templatePath + ".template", newTmplCont)
-        let setParams (p:Paket.PaketPackParams) =
-            { p with
-                ToolType = ToolType.CreateLocalTool()
-                ReleaseNotes = notes
-                OutputPath = Path.GetFullPath(nugetDir)
-                WorkingDir = dir
-                Version = release.NugetVersion
+        let setOptions(options: DotNet.PackOptions) = 
+            { options with 
+                    MSBuildParams = { options.MSBuildParams with  Properties = [("Version", release.NugetVersion); ("PackageReleaseNotes", notes);] }
+                    OutputPath = Some(Path.GetFullPath(nugetDir))
+                    Common.WorkingDirectory = dir
+                    // We've already built all of the projects so no need to restore or build.
+                    NoRestore = true
+                    NoBuild = true
+                    NoLogo = true
             }
-        Paket.pack setParams
+        
+        DotNet.pack setOptions proj
     )
 
 Target.create "CreateMetaPackage" (fun _ ->
@@ -253,7 +210,6 @@ Target.create "CreateMetaPackage" (fun _ ->
             Copyright = copyright
             WorkingDir = binDir
             OutputPath = nugetDir
-//                AccessKey = myAccessKey
             Publish = false
             ReleaseNotes = notes
             Tags = tags
@@ -305,7 +261,7 @@ Target.create "ReleaseOnNuGet" (fun _ ->
                 PushParams =
                     { opts.PushParams with
                         ApiKey = Some apiKey
-                        Source = Some "nuget.org" } })))
+                        Source = Some "nuget.org" } })));
 
 Target.create "ReleaseOnAll" ignore
 
@@ -319,13 +275,6 @@ open Fake.Core.TargetOperators
 
 let dependencies = [
     "Restore"
-      ==> "AssemblyInfo"
-      //==> "UpdateSpec"
-      //==> "UpdateBindingsRewrite"
-      // We don't auto generate the bindings every build now
-      // as this causes generation timestamps to unecessarily update.
-      // - Noggin_bops 2024-03-07
-      //==> "GenerateBindings"
       ==> "Build"
       //==> "RunAllTests"
       ==> "All"
