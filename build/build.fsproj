@@ -18,7 +18,6 @@
     <PackageReference Include="Fake.DotNet.AssemblyInfoFile" Version="6.1.4" />
     <PackageReference Include="Fake.DotNet.Cli" Version="6.1.4" />
     <PackageReference Include="Fake.DotNet.NuGet" Version="6.1.4" />
-    <PackageReference Include="Fake.DotNet.Paket" Version="6.1.4" />
     <PackageReference Include="Fake.IO.FileSystem" Version="6.1.4" />
     <PackageReference Include="Fake.Tools.Git" Version="6.1.4" />
     

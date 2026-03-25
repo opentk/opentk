@@ -6,7 +6,6 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <GenerateDocumentationFile>False</GenerateDocumentationFile>
-    <LangVersion>13</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>

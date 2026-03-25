@@ -5,9 +5,8 @@
     <TargetFramework>net10.0</TargetFramework>
     <StartupObject>OpenALTest.ALTest</StartupObject>
     <SignAssembly>False</SignAssembly>
-    <AssemblyOriginatorKeyFile>../../OpenTK.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>$(OpenTKSolutionRoot)/OpenTK.snk</AssemblyOriginatorKeyFile>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <LangVersion>13</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>

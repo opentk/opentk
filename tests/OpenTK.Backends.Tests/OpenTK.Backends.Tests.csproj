@@ -5,7 +5,6 @@
     <TargetFramework>net10.0</TargetFramework>
     <Nullable>enable</Nullable>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <LangVersion>13.0</LangVersion>
     <!-- Uncomment this if not using the .res resource file. -->
     <!--<ApplicationIcon>Resources\opentk_logo_small.ico</ApplicationIcon>-->
 

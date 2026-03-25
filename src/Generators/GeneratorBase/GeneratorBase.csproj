@@ -4,7 +4,6 @@
     <TargetFramework>net10.0</TargetFramework>
     <Nullable>enable</Nullable>
     <GenerateDocumentationFile>False</GenerateDocumentationFile>
-    <LangVersion>13</LangVersion>
   </PropertyGroup>
 
 </Project>

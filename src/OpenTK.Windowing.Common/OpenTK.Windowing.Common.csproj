@@ -1,22 +1,27 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net10.0</TargetFramework>
-    <RootNamespace>OpenTK.Windowing.Common</RootNamespace>
+    <OutputType>Library</OutputType>
+    <TargetFrameworks>net10.0</TargetFrameworks>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <PackageIcon>icon.png</PackageIcon>
+    <Deterministic>true</Deterministic>
     <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>../../OpenTK.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>$(OpenTKSolutionRoot)/OpenTK.snk</AssemblyOriginatorKeyFile>
+    <PackageIcon>images/opentk-blue-hexagon.png</PackageIcon>
+    <PackageReadmeFile>docs/README.md</PackageReadmeFile>
+
+    <Description>Common functionality for OpenTK.Windowing.* packages.</Description>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="..\..\documentation\icon.png" Pack="true" PackagePath=""/>
+    <None Include="$(OpenTKSolutionRoot)\.github\opentk-blue-hexagon.png" Pack="true" PackagePath="images" Visible="false"/>
+    <None Include="README.md" Pack="true" PackagePath="docs"/>
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\OpenTK.Core\OpenTK.Core.csproj" />
-    <ProjectReference Include="..\OpenTK.Mathematics\OpenTK.Mathematics.csproj" />
+    <ProjectReference Include="$(OpenTKSolutionRoot)\src\OpenTK.Core\OpenTK.Core.csproj" />
+    <ProjectReference Include="$(OpenTKSolutionRoot)\src\OpenTK.Mathematics\OpenTK.Mathematics.csproj" />
   </ItemGroup>
 
-  <Import Project="..\..\props\nuget-common.props" />
-  <Import Project="..\..\props\stylecop.props" />
+  <Import Project="$(OpenTKSolutionRoot)\props\nuget-common.props" />
+  <Import Project="$(OpenTKSolutionRoot)\props\stylecop.props" />
 </Project>
