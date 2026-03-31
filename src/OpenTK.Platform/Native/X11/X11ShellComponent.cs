@@ -286,7 +286,7 @@ namespace OpenTK.Platform.Native.X11
                 if (newTheme != CurrentTheme.Theme)
                 {
                     CurrentTheme.Theme = newTheme;
-                    EventQueue.Raise(null, PlatformEventType.ThemeChange, new ThemeChangeEventArgs(CurrentTheme));
+                    Toolkit.Event.RaiseEvent(new ThemeChangeEventArgs(CurrentTheme));
                 }
             }
             else if (@namespace.SequenceEqual("org.gnome.desktop.a11y.interface"u8) &&
@@ -296,7 +296,7 @@ namespace OpenTK.Platform.Native.X11
                 if (CurrentTheme.HighContrast != highContrast)
                 {
                     CurrentTheme.HighContrast = highContrast;
-                    EventQueue.Raise(null, PlatformEventType.ThemeChange, new ThemeChangeEventArgs(CurrentTheme));
+                    Toolkit.Event.RaiseEvent(new ThemeChangeEventArgs(CurrentTheme));
                 }
             }
 

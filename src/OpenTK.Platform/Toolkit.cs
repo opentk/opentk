@@ -1,4 +1,5 @@
-﻿using OpenTK.Platform;
+﻿using OpenTK.Mathematics;
+using OpenTK.Platform;
 using OpenTK.Platform.Native;
 using OpenTK.Platform.Native.Windows;
 using System;
@@ -6,11 +7,18 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace OpenTK.Platform
 {
+    /// <summary>
+    /// An event handler delegate for platform events.
+    /// </summary>
+    /// <param name="args">Information associated with the event, if any.</param>
+    public delegate void PlatformEventHandler(EventArgs args);
+
     /// <summary>
     /// Provides static access to all OpenTK platform abstraction interfaces.
     /// This is the main way to access the OpenTK PAL2 api.
@@ -303,6 +311,44 @@ namespace OpenTK.Platform
         private static T ThrowFeatureNotEnabled<T>(string featureName, ToolkitFlags flag) where T : IPalComponent
         {
             throw new InvalidOperationException($"You need to enable {featureName} by adding {nameof(ToolkitFlags)}.{flag} to {nameof(ToolkitOptions)}.{nameof(ToolkitOptions.FeatureFlags)} before you can use {featureName}.");
+        }
+
+        /// <summary>
+        /// Event component for interacting with platform events.
+        /// </summary>
+        public static class Event
+        {
+            /// <summary>
+            /// Invoked when an event is raised.
+            /// </summary>
+            public static event PlatformEventHandler? EventRaised;
+
+            /// <summary>
+            /// Raise an event without notifying waiters.
+            /// </summary>
+            /// <param name="args">The event to raise.</param>
+            public static void RaiseEvent(EventArgs args)
+            {
+                EventRaised?.Invoke(args);
+            }
+
+            /// <summary>
+            /// Raise an event and notify anyone waiting for events.
+            /// </summary>
+            /// <param name="args">The event to raise.</param>
+            public static void RaiseEventNotify(EventArgs args)
+            {
+                Toolkit.Window.PostUserEvent(args);
+            }
+
+            /// <summary>
+            /// Process platform events and send them to the <see cref="EventRaised"/> callback.
+            /// </summary>
+            /// <param name="waitForEvents">Specifies if this function should wait for events or return immediately if there are no events.</param>
+            public static void ProcessEvents(bool waitForEvents)
+            {
+                Toolkit.Window.ProcessEvents(waitForEvents);
+            }
         }
     }
 }

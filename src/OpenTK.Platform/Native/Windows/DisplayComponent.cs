@@ -433,7 +433,7 @@ namespace OpenTK.Platform.Native.Windows
 
                         if (valuesChanged.AnythingChanged)
                         {
-                            EventQueue.Raise(null, PlatformEventType.DisplayValuesChanged, valuesChanged);
+                            Toolkit.Event.RaiseEvent(valuesChanged);
                         }
                     }
 
@@ -592,7 +592,7 @@ namespace OpenTK.Platform.Native.Windows
 
                 if (sendEvents)
                 {
-                    EventQueue.Raise(removed, PlatformEventType.DisplayConnectionChanged, new DisplayConnectionChangedEventArgs(removed, true));
+                    Toolkit.Event.RaiseEvent(new DisplayConnectionChangedEventArgs(removed, true));
                     logger?.LogDebug($"Removed: {removed.DeviceName} (WasPrimary: {removed.IsPrimary}, Refresh: {removed.RefreshRate}, Res: {removed.Resolution})");
                 }
             }
@@ -603,7 +603,7 @@ namespace OpenTK.Platform.Native.Windows
 
                 if (sendEvents)
                 {
-                    EventQueue.Raise(connected, PlatformEventType.DisplayConnectionChanged, new DisplayConnectionChangedEventArgs(connected, false));
+                    Toolkit.Event.RaiseEvent(new DisplayConnectionChangedEventArgs(connected, false));
                     logger?.LogDebug($"Connected: {connected.DeviceName} (IsPrimary: {connected.IsPrimary}, Refresh: {connected.RefreshRate}, Res: {connected.Resolution})");
                 }
             }

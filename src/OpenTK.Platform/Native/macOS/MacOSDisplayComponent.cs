@@ -165,7 +165,7 @@ namespace OpenTK.Platform.Native.macOS
                 _displays.Remove(removed);
                 if (sendEvents)
                 {
-                    EventQueue.Raise(removed, PlatformEventType.DisplayConnectionChanged, new DisplayConnectionChangedEventArgs(removed, true));
+                    Toolkit.Event.RaiseEvent(new DisplayConnectionChangedEventArgs(removed, true));
                 }
             }
 
@@ -174,7 +174,7 @@ namespace OpenTK.Platform.Native.macOS
                 _displays.Add(connected);
                 if (sendEvents)
                 {
-                    EventQueue.Raise(connected, PlatformEventType.DisplayConnectionChanged, new DisplayConnectionChangedEventArgs(connected, false));
+                    Toolkit.Event.RaiseEvent(new DisplayConnectionChangedEventArgs(connected, false));
                 }
             }
 

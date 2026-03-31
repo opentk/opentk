@@ -132,7 +132,7 @@ namespace LocalTestProject
             Console.WriteLine($"Mode: {mode}");
 
             // Subscribe to all events
-            EventQueue.EventRaised += EventQueue_EventRaised;
+            Toolkit.Event.EventRaised += EventQueue_EventRaised;
 
             Toolkit.OpenGL.SetCurrentContext(WindowContext);
             GLLoader.LoadBindings(Toolkit.OpenGL.GetBindingsContext(WindowContext));
@@ -291,12 +291,10 @@ namespace LocalTestProject
         static List<Scancode> vks = new List<Scancode>();
 
         static Vector2 MousePos = (0, 0);
-        private static void EventQueue_EventRaised(PalHandle? handle, PlatformEventType type, EventArgs args)
+        private static void EventQueue_EventRaised(EventArgs args)
         {
-            if (type == PlatformEventType.MouseMove)
+            if (args is MouseMoveEventArgs mouseMoveArgs)
             {
-                MouseMoveEventArgs mouseMoveArgs = (MouseMoveEventArgs)args;
-
                 //Console.WriteLine($"Delta X: {mouseMoveArgs.DeltaX}, DeltaY: {mouseMoveArgs.DeltaY}");
 
                 MousePos = mouseMoveArgs.ClientPosition;
@@ -307,10 +305,8 @@ namespace LocalTestProject
                     Toolkit.Window.SetTitle(WindowHandle, $"({client.X},{client.Y})");
                 }
             }
-            else if (type == PlatformEventType.MouseDown)
+            else if (args is MouseButtonUpEventArgs mouseButtonDownArgs)
             {
-                MouseButtonDownEventArgs mouseButtonDownArgs = (MouseButtonDownEventArgs)args;
-
                 Console.WriteLine($"Pressed Mouse Button: {mouseButtonDownArgs.Button}");
 
                 if (mouseButtonDownArgs.Button == MouseButton.Button1)
@@ -322,22 +318,16 @@ namespace LocalTestProject
                     Toolkit.Keyboard.EndIme(WindowHandle);
                 }
             }
-            else if (type == PlatformEventType.MouseUp)
+            else if (args is MouseButtonUpEventArgs mouseButtonUpArgs)
             {
-                MouseButtonUpEventArgs mouseButtonUpArgs = (MouseButtonUpEventArgs)args;
-
                 Console.WriteLine($"Released Mouse Button: {mouseButtonUpArgs.Button}");
             }
-            else if (type == PlatformEventType.Close)
+            else if (args is CloseEventArgs closeArgs)
             {
-                CloseEventArgs closeArgs = (CloseEventArgs)args;
-
                 Toolkit.Window.Destroy(closeArgs.Window);
             }
-            else if (type == PlatformEventType.Focus)
+            else if (args is FocusEventArgs focus)
             {
-                FocusEventArgs focus = (FocusEventArgs)args;
-
                 if (focus.GotFocus)
                 {
                     Console.WriteLine("Got focus");
@@ -347,20 +337,16 @@ namespace LocalTestProject
                     Console.WriteLine("Lost focus");
                 }
             }
-            else if (type == PlatformEventType.TextInput)
+            else if (args is TextInputEventArgs input )
             {
-                TextInputEventArgs input = (TextInputEventArgs)args;
-
                 Console.WriteLine($"Input: {input.Text}");
 
                 Console.WriteLine($"Scancodes: {string.Join(", ", vks)}");
                 
                 vks.Clear();
             }
-            else if (type == PlatformEventType.MouseEnter)
+            else if (args is MouseEnterEventArgs enter)
             {
-                MouseEnterEventArgs enter = (MouseEnterEventArgs)args;
-
                 if (enter.Entered)
                 {
                     Console.WriteLine($"Mouse entered.");
@@ -370,16 +356,12 @@ namespace LocalTestProject
                     Console.WriteLine("Mouse exited.");
                 }
             }
-            else if (type == PlatformEventType.FileDrop)
+            else if (args is FileDropEventArgs fileDrop)
             {
-                FileDropEventArgs fileDrop = (FileDropEventArgs)args;
-
                 Console.WriteLine($"Files dropped! Position: {fileDrop.Position}, Paths: {string.Join(", ", fileDrop.FilePaths)}");
             }
-            else if (type == PlatformEventType.KeyDown)
+            else if (args is KeyDownEventArgs keyDown)
             {
-                KeyDownEventArgs keyDown = (KeyDownEventArgs)args;
-
                 Console.WriteLine($"keyDown: {keyDown.Key}");
 
                 if (keyDown.IsRepeat == false)
@@ -602,34 +584,24 @@ namespace LocalTestProject
                     Console.WriteLine($"After: {style}, Result: {Toolkit.Window.GetBorderStyle(WindowHandle)}");
                 }
             }
-            else if (type == PlatformEventType.KeyUp)
+            else if (args is KeyUpEventArgs keyUp)
             {
-                KeyUpEventArgs keyUp = (KeyUpEventArgs)args;
-
                 Console.WriteLine($"keyUp: {keyUp.Key}");
             }
-            else if (type == PlatformEventType.WindowMove)
+            else if (args is WindowMoveEventArgs move)
             {
-                WindowMoveEventArgs move = (WindowMoveEventArgs)args;
-
                 Console.WriteLine($"Window '{Toolkit.Window.GetTitle(move.Window)}' at client pos: ({move.ClientAreaPosition}), window pos: {move.WindowPosition}");
             }
-            else if (type == PlatformEventType.WindowResize)
+            else if (args is WindowResizeEventArgs resize)
             {
-                WindowResizeEventArgs resize = (WindowResizeEventArgs)args;
-
                 Console.WriteLine($"Window '{Toolkit.Window.GetTitle(resize.Window)}' new size: ({resize.NewSize})");
             }
-            else if (type == PlatformEventType.WindowModeChange)
+            else if (args is WindowModeChangeEventArgs modeChange)
             {
-                WindowModeChangeEventArgs modeChange = (WindowModeChangeEventArgs)args;
-
                 Console.WriteLine($"Window '{Toolkit.Window.GetTitle(modeChange.Window)}' new mode: ({modeChange.NewMode})");
             }
-            else if (type == PlatformEventType.PowerStateChange)
+            else if (args is PowerStateChangeEventArgs powerStateChange)
             {
-                PowerStateChangeEventArgs powerStateChange = (PowerStateChangeEventArgs)args;
-
                 if (powerStateChange.GoingToSleep)
                 {
                     Console.WriteLine("Going to sleep?");
@@ -639,9 +611,8 @@ namespace LocalTestProject
                     Console.WriteLine("Waking up?");
                 }
             }
-            else if (type == PlatformEventType.ClipboardUpdate)
+            else if (args is ClipboardUpdateEventArgs clipboardUpdate)
             {
-                ClipboardUpdateEventArgs clipboardUpdate = (ClipboardUpdateEventArgs)args;
                 Console.WriteLine($"Clipboard update! New format: {clipboardUpdate.NewFormat}");
             }
         }

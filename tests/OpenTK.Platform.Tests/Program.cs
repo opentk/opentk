@@ -71,7 +71,7 @@ namespace OpenTK.Platform.Tests
 
         static void Main()
         {
-            EventQueue.EventRaised += EventQueue_EventRaised;
+            Toolkit.Event.EventRaised += EventQueue_EventRaised;
 
             Toolkit.Init(new ToolkitOptions() { ApplicationName = "OpenTK.Platform.Tests", Logger = new ConsoleLogger(), FeatureFlags = ToolkitFlags.EnableOpenGL });
 
@@ -309,7 +309,7 @@ namespace OpenTK.Platform.Tests
 
         static WindowBorderStyle borderStyle = WindowBorderStyle.ResizableBorder;
 
-        private static void EventQueue_EventRaised(PalHandle? handle, PlatformEventType type, EventArgs args)
+        private static void EventQueue_EventRaised(EventArgs args)
         {
             //Console.WriteLine(type);
 

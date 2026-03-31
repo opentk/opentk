@@ -436,7 +436,7 @@ namespace OpenTK.Platform.Native.X11
                                         else
                                             _displays.Add(handle);
 
-                                        EventQueue.Raise(handle, PlatformEventType.DisplayConnectionChanged, new DisplayConnectionChangedEventArgs(handle, false));
+                                        Toolkit.Event.RaiseEvent(new DisplayConnectionChangedEventArgs(handle, false));
                                         Logger?.LogDebug($"Connected display '{name}'!");
 
                                         XRRFreeOutputInfo(outputInfo);
@@ -459,7 +459,7 @@ namespace OpenTK.Platform.Native.X11
                             {
                                 Logger?.LogDebug($"Disconnected display '{handle.Name}'!");
                                 _displays.Remove(handle);
-                                EventQueue.Raise(handle, PlatformEventType.DisplayConnectionChanged, new DisplayConnectionChangedEventArgs(handle, true));
+                                Toolkit.Event.RaiseEvent(new DisplayConnectionChangedEventArgs(handle, true));
                             }
 
                             UpdateDisplayValues();
@@ -524,7 +524,7 @@ namespace OpenTK.Platform.Native.X11
             display.WorkArea = newWorkArea;
             display.Scale = newScale;
 
-            EventQueue.Raise(null, PlatformEventType.DisplayValuesChanged, valuesChanged);
+            Toolkit.Event.RaiseEvent(valuesChanged);
         }
 
         /// <inheritdoc />

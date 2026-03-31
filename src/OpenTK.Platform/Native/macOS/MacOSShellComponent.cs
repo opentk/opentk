@@ -434,7 +434,7 @@ namespace OpenTK.Platform.Native.macOS
 
             if (theme != LastTheme)
             {
-                EventQueue.Raise(null, PlatformEventType.ThemeChange, new ThemeChangeEventArgs(theme));
+                Toolkit.Event.RaiseEvent(new ThemeChangeEventArgs(theme));
                 LastTheme = theme;
             }
         }

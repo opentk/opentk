@@ -146,7 +146,7 @@ namespace OpenTK.Backends.Tests
                             {
                                 // Send the close event, this will close the window.
                                 WindowHandle handle = Program.ApplicationWindows[i - 1].Window;
-                                EventQueue.Raise(handle, PlatformEventType.Close, new CloseEventArgs(handle));
+                                Toolkit.Event.RaiseEvent(new CloseEventArgs(handle));
 
                                 if (selectedWindow == i)
                                 {

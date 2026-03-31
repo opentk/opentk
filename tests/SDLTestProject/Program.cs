@@ -184,7 +184,7 @@ void main()
 
             GLLoader.LoadBindings(OpenGLComponent.GetBindingsContext(ContextHandle));
 
-            EventQueue.EventRaised += EventQueue_EventRaised;
+            Toolkit.Event.EventRaised += EventQueue_EventRaised;
 
             int noDisp = DisplayComponent.GetDisplayCount();
             for (int i = 0; i < noDisp; i++)
@@ -267,7 +267,7 @@ void main()
         }
 
         static float hiddenTimer = 0f;
-        private static void EventQueue_EventRaised(PalHandle? handle, PlatformEventType type, EventArgs args)
+        private static void EventQueue_EventRaised(EventArgs args)
         {
             if (args is CloseEventArgs close)
             {

@@ -1183,7 +1183,7 @@ namespace Bejeweled
                 }
             }
             ImGuiController.RecreateFontDeviceTexture();
-            EventQueue.EventRaised += EventQueue_EventRaised;
+            Toolkit.Event.EventRaised += EventQueue_EventRaised;
             
             UIBaseDrawlist = new ImDrawListPtr((ImDrawList*)NativeMemory.AllocZeroed((nuint)sizeof(ImDrawList)));
             UIBaseDrawlist._Data = ImGui.GetDrawListSharedData();
@@ -2413,7 +2413,7 @@ namespace Bejeweled
             }
         }
 
-        private void EventQueue_EventRaised(PalHandle? handle, PlatformEventType type, EventArgs args)
+        private void EventQueue_EventRaised(EventArgs args)
         {
             nint oldImguiContext = ImGui.GetCurrentContext();
             ImGui.SetCurrentContext(ImGuiController.Context);

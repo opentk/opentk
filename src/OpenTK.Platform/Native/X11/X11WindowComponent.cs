@@ -716,7 +716,7 @@ namespace OpenTK.Platform.Native.X11
                             {
                                 ClipboardFormat format = X11ClipboardComponent.GetSelectionFormat(X11.Atoms[KnownAtoms.CLIPBOARD], X11ClipboardComponent.OpenTKSelection, Logger);
 
-                                EventQueue.Raise(null, PlatformEventType.ClipboardUpdate, new ClipboardUpdateEventArgs(format));
+                                Toolkit.Event.RaiseEvent(new ClipboardUpdateEventArgs(format));
                             }
                         }
                         else if (ea.Type >= (XEventType)(X11.XRandREventBase) && ea.Type <= (XEventType)(X11.XRandREventBase + RREventType.RRNotify))
@@ -748,14 +748,7 @@ namespace OpenTK.Platform.Native.X11
                                 IntPtr ptr = (IntPtr)(ea.ClientMessage.l[1] << 32 | (ea.ClientMessage.l[0] & 0xFFFFFFFF));
                                 GCHandle handle = GCHandle.FromIntPtr(ptr);
                                 EventArgs args = (EventArgs)handle.Target!;
-                                if (args is WindowEventArgs windowArgs)
-                                {
-                                    EventQueue.Raise(windowArgs.Window, PlatformEventType.UserMessage, windowArgs);
-                                }
-                                else
-                                {
-                                    EventQueue.Raise(null, PlatformEventType.UserMessage, args);
-                                }
+                                Toolkit.Event.RaiseEvent(args);
                                 handle.Free();
                             }
                         }
@@ -795,7 +788,7 @@ namespace OpenTK.Platform.Native.X11
 
                                 if (clientMessage.Format == 32 && clientMessage.l[0] == (long)X11.Atoms[KnownAtoms.WM_DELETE_WINDOW].Id)
                                 {
-                                    EventQueue.Raise(xwindow, PlatformEventType.Close, new CloseEventArgs(xwindow));
+                                    Toolkit.Event.RaiseEvent(new CloseEventArgs(xwindow));
                                 }
                                 else if (clientMessage.Format == 32 && clientMessage.l[0] == (long)X11.Atoms[KnownAtoms._NET_WM_PING].Id)
                                 {
@@ -868,7 +861,7 @@ namespace OpenTK.Platform.Native.X11
                                     int root_x = (int)(clientMessage.l[2] >> 16);
                                     int root_y = (int)(clientMessage.l[2] & 0xFFFF);
                                     // FIXME: Global or local coordinates?
-                                    //EventQueue.Raise(xwindow, PlatformEventType.DropLocation, new DropLocationEventArgs((root_x, root_y)));
+                                    //Toolkit.Event.RaiseEvent(new DropLocationEventArgs((root_x, root_y)));
 
                                     XWindow source = new XWindow((ulong)clientMessage.l[0]);
 
@@ -961,7 +954,7 @@ namespace OpenTK.Platform.Native.X11
                                                 }
 
                                                 // FIXME: Get the last XdndPosition location!
-                                                EventQueue.Raise(xwindow, PlatformEventType.FileDrop, new FileDropEventArgs(xwindow, files, (0, 0)));
+                                                Toolkit.Event.RaiseEvent(new FileDropEventArgs(xwindow, files, (0, 0)));
                                             }
                                         }
                                         else
@@ -1023,7 +1016,7 @@ namespace OpenTK.Platform.Native.X11
 
                                 X11MouseComponent.RegisterMouseWheelDelta(xwindow, (xdelta, ydelta));
                                 // FIXME: Scrolling distance? Are there scrolling settings on linux/x11?
-                                EventQueue.Raise(xwindow, PlatformEventType.Scroll, new ScrollEventArgs(xwindow, (xdelta, ydelta), (xdelta, ydelta)));
+                                Toolkit.Event.RaiseEvent(new ScrollEventArgs(xwindow, (xdelta, ydelta), (xdelta, ydelta)));
                             }
                             else
                             {
@@ -1144,7 +1137,7 @@ namespace OpenTK.Platform.Native.X11
                                 Logger?.LogDebug($"{xwindow.ClickCounter}");
 
                                 X11MouseComponent.RegisterButtonState(xwindow, button, true);
-                                EventQueue.Raise(xwindow, PlatformEventType.MouseDown, new MouseButtonDownEventArgs(xwindow, (buttonPressed.x, buttonPressed.y), button, modifiers, clicks));
+                                Toolkit.Event.RaiseEvent(new MouseButtonDownEventArgs(xwindow, (buttonPressed.x, buttonPressed.y), button, modifiers, clicks));
                             }
 
                             break;
@@ -1176,7 +1169,7 @@ namespace OpenTK.Platform.Native.X11
                             int clicks = 1;
 
                             X11MouseComponent.RegisterButtonState(xwindow, button, false);
-                            EventQueue.Raise(xwindow, PlatformEventType.MouseUp, new MouseButtonUpEventArgs(xwindow, (buttonReleased.x, buttonReleased.y), button, modifiers, clicks));
+                            Toolkit.Event.RaiseEvent(new MouseButtonUpEventArgs(xwindow, (buttonReleased.x, buttonReleased.y), button, modifiers, clicks));
 
                             break;
                         }
@@ -1235,7 +1228,7 @@ namespace OpenTK.Platform.Native.X11
 
                                     if (filtered == false)
                                     {
-                                        EventQueue.Raise(xwindow, PlatformEventType.KeyDown, new KeyDownEventArgs(xwindow, key, scancode, isRepeat, modifiers));
+                                        Toolkit.Event.RaiseEvent(new KeyDownEventArgs(xwindow, key, scancode, isRepeat, modifiers));
 
                                         string? result = null;
                                         if (xwindow.IC.Value == 0)
@@ -1268,7 +1261,7 @@ namespace OpenTK.Platform.Native.X11
                                             result = new string((sbyte*)str, 0, charsWritten, Encoding.UTF8);
                                         }
 
-                                        EventQueue.Raise(xwindow, PlatformEventType.TextInput, new TextInputEventArgs(xwindow, result));
+                                        Toolkit.Event.RaiseEvent(new TextInputEventArgs(xwindow, result));
                                     }
                                 }
                             }
@@ -1293,7 +1286,7 @@ namespace OpenTK.Platform.Native.X11
 
                                 bool changed = X11KeyboardComponent.KeyStateChanged(scancode, false);
 
-                                EventQueue.Raise(xwindow, PlatformEventType.KeyUp, new KeyUpEventArgs(xwindow, key, scancode, modifiers));
+                                Toolkit.Event.RaiseEvent(new KeyUpEventArgs(xwindow, key, scancode, modifiers));
                             }
 
                             break;
@@ -1309,12 +1302,12 @@ namespace OpenTK.Platform.Native.X11
                                 if (delta != (0, 0))
                                 {
                                     xwindow.VirtualCursorPosition += delta;
-                                    EventQueue.Raise(xwindow, PlatformEventType.MouseMove, new MouseMoveEventArgs(xwindow, xwindow.VirtualCursorPosition));
+                                    Toolkit.Event.RaiseEvent(new MouseMoveEventArgs(xwindow, xwindow.VirtualCursorPosition));
                                 }
                             }
                             else
                             {
-                                EventQueue.Raise(xwindow, PlatformEventType.MouseMove, new MouseMoveEventArgs(xwindow, new Vector2(motion.x, motion.y)));
+                                Toolkit.Event.RaiseEvent(new MouseMoveEventArgs(xwindow, new Vector2(motion.x, motion.y)));
                             }
 
                             xwindow.LastMousePosition = (motion.x, motion.y);
@@ -1325,7 +1318,7 @@ namespace OpenTK.Platform.Native.X11
                         {
                             XCrossingEvent enter = ea.Enter;
 
-                            EventQueue.Raise(xwindow, PlatformEventType.MouseEnter, new MouseEnterEventArgs(xwindow, true));
+                            Toolkit.Event.RaiseEvent(new MouseEnterEventArgs(xwindow, true));
 
                             // If we are supposed to confine the cursor to the window
                             // we reapply the cursor grab here. 
@@ -1345,7 +1338,7 @@ namespace OpenTK.Platform.Native.X11
                         {
                             XCrossingEvent leave = ea.Leave;
 
-                            EventQueue.Raise(xwindow, PlatformEventType.MouseEnter, new MouseEnterEventArgs(xwindow, false));
+                            Toolkit.Event.RaiseEvent(new MouseEnterEventArgs(xwindow, false));
 
                             break;
                         }
@@ -1383,7 +1376,7 @@ namespace OpenTK.Platform.Native.X11
                                 XSetICFocus(xwindow.IC);
                             }
 
-                            EventQueue.Raise(xwindow, PlatformEventType.Focus, new FocusEventArgs(xwindow, true));
+                            Toolkit.Event.RaiseEvent(new FocusEventArgs(xwindow, true));
 
                             break;
                         }
@@ -1417,7 +1410,7 @@ namespace OpenTK.Platform.Native.X11
                                 XUnsetICFocus(xwindow.IC);
                             }
 
-                            EventQueue.Raise(xwindow, PlatformEventType.Focus, new FocusEventArgs(xwindow, false));
+                            Toolkit.Event.RaiseEvent(new FocusEventArgs(xwindow, false));
 
                             break;
                         }
@@ -1435,7 +1428,7 @@ namespace OpenTK.Platform.Native.X11
                             {
                                 XWindowHandle xwindow = XWindowDict[ea.Unmap.window];
 
-                                EventQueue.Raise(xwindow, PlatformEventType.WindowModeChange, new WindowModeChangeEventArgs(xwindow, WindowMode.Minimized));
+                                Toolkit.Event.RaiseEvent(new WindowModeChangeEventArgs(xwindow, WindowMode.Minimized));
                             }
 
                             break;
@@ -1496,14 +1489,14 @@ namespace OpenTK.Platform.Native.X11
                                         int state = *(int*)contents;
                                         if (state == NormalState)
                                         {
-                                            EventQueue.Raise(xwindow, PlatformEventType.WindowModeChange, new WindowModeChangeEventArgs(xwindow, WindowMode.Normal));
+                                            Toolkit.Event.RaiseEvent(new WindowModeChangeEventArgs(xwindow, WindowMode.Normal));
                                         }
                                         else if (state == IconicState)
                                         {
                                             // When minimizing we remove maximized flags from WM so that we properly detect them when
                                             // going back.
                                             xwindow.WMState &= ~(WMState.MaximizedHorz | WMState.MaximizedVert);
-                                            EventQueue.Raise(xwindow, PlatformEventType.WindowModeChange, new WindowModeChangeEventArgs(xwindow, WindowMode.Minimized));
+                                            Toolkit.Event.RaiseEvent(new WindowModeChangeEventArgs(xwindow, WindowMode.Minimized));
                                         }
                                     }
                                 }
@@ -1529,7 +1522,7 @@ namespace OpenTK.Platform.Native.X11
                                     if (state.HasFlag(WMState.Fullscreen))
                                     {
                                         // FIXME: Differentiate exclusive fullscreen from windowed fullscreen?
-                                        EventQueue.Raise(xwindow, PlatformEventType.WindowModeChange, new WindowModeChangeEventArgs(xwindow, WindowMode.ExclusiveFullscreen));
+                                        Toolkit.Event.RaiseEvent(new WindowModeChangeEventArgs(xwindow, WindowMode.ExclusiveFullscreen));
                                         break;
                                     }
                                 }
@@ -1540,11 +1533,11 @@ namespace OpenTK.Platform.Native.X11
                                     {
                                         // FIXME: We want to check if this is actually just us being minimized.
                                         // In that case we don't want to set the mode to hidden.
-                                        EventQueue.Raise(xwindow, PlatformEventType.WindowModeChange, new WindowModeChangeEventArgs(xwindow, WindowMode.Hidden));
+                                        Toolkit.Event.RaiseEvent(new WindowModeChangeEventArgs(xwindow, WindowMode.Hidden));
                                     }
                                     else
                                     {
-                                        EventQueue.Raise(xwindow, PlatformEventType.WindowModeChange, new WindowModeChangeEventArgs(xwindow, WindowMode.Normal));
+                                        Toolkit.Event.RaiseEvent(new WindowModeChangeEventArgs(xwindow, WindowMode.Normal));
                                     }
                                 }
 
@@ -1553,11 +1546,11 @@ namespace OpenTK.Platform.Native.X11
                                 {
                                     if (state.HasFlag(WMState.MaximizedHorz) && state.HasFlag(WMState.MaximizedVert))
                                     {
-                                        EventQueue.Raise(xwindow, PlatformEventType.WindowModeChange, new WindowModeChangeEventArgs(xwindow, WindowMode.Maximized));
+                                        Toolkit.Event.RaiseEvent(new WindowModeChangeEventArgs(xwindow, WindowMode.Maximized));
                                     }
                                     else
                                     {
-                                        EventQueue.Raise(xwindow, PlatformEventType.WindowModeChange, new WindowModeChangeEventArgs(xwindow, WindowMode.Normal));
+                                        Toolkit.Event.RaiseEvent(new WindowModeChangeEventArgs(xwindow, WindowMode.Normal));
                                     }
                                 }
                             }
@@ -1592,9 +1585,9 @@ namespace OpenTK.Platform.Native.X11
                                     size.Y += top + bottom;
                                 }
 
-                                EventQueue.Raise(xwindow, PlatformEventType.WindowResize, new WindowResizeEventArgs(xwindow, size, clientSize));
+                                Toolkit.Event.RaiseEvent(new WindowResizeEventArgs(xwindow, size, clientSize));
 
-                                EventQueue.Raise(xwindow, PlatformEventType.WindowFramebufferResize, new WindowFramebufferResizeEventArgs(xwindow, clientSize));
+                                Toolkit.Event.RaiseEvent(new WindowFramebufferResizeEventArgs(xwindow, clientSize));
                             }
 
                             if (configure.x != xwindow.X ||
@@ -1606,7 +1599,7 @@ namespace OpenTK.Platform.Native.X11
                                 // FIXME: The coordinates from the event are relative to the parent window. So if we are reparented this will report wrong coordinates.
 
                                 // FIXME: Calculate the proper window location, the coordinates reported are for the client area of the window.
-                                EventQueue.Raise(xwindow, PlatformEventType.WindowMove, new WindowMoveEventArgs(xwindow, (xwindow.X, xwindow.Y), (xwindow.X, xwindow.Y)));
+                                Toolkit.Event.RaiseEvent(new WindowMoveEventArgs(xwindow, (xwindow.X, xwindow.Y), (xwindow.X, xwindow.Y)));
                             }
 
                             // On Ubuntu 24.04 specifying opaque region values outside of the client
@@ -2182,7 +2175,7 @@ namespace OpenTK.Platform.Native.X11
                     xwindow.PreeditText.Insert(data->chg_first, Marshal.PtrToStringUTF8((IntPtr)data->text->@string));
                 }
 
-                EventQueue.Raise(xwindow, PlatformEventType.TextEditing, new TextEditingEventArgs(xwindow, xwindow.PreeditText.ToString(), data->caret, data->chg_length));
+                Toolkit.Event.RaiseEvent(new TextEditingEventArgs(xwindow, xwindow.PreeditText.ToString(), data->caret, data->chg_length));
 
                 Toolkit.Window.Logger?.LogDebug($"Text Editing '{xwindow.PreeditText}'");
             }

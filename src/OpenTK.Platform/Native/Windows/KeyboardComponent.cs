@@ -123,7 +123,7 @@ namespace OpenTK.Platform.Native.Windows
                 CultureInfo culture = GetCultureInfoFromHKL(hKL);
                 string layoutName = GetKeyboardLayoutDisplayNameFromHKL(hKL);
 
-                EventQueue.Raise(handle, PlatformEventType.InputLanguageChanged, new InputLanguageChangedEventArgs(new InputLanguage(culture, layoutName)));
+                Toolkit.Event.RaiseEvent(new InputLanguageChangedEventArgs(new InputLanguage(culture, layoutName)));
             }
         }
 

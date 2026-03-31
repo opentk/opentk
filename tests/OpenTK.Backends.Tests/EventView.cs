@@ -54,10 +54,10 @@ namespace OpenTK.Backends.Tests
 
         public override void Initialize()
         {
-            EventQueue.EventRaised += EventView_EventRaised;
+            Toolkit.Event.EventRaised += EventView_EventRaised;
         }
 
-        private void EventView_EventRaised(PalHandle? handle, PlatformEventType type, EventArgs args)
+        private void EventView_EventRaised(EventArgs args)
         {
             Events.Add(args);
             if (FilterEvent(args) == false)

@@ -135,7 +135,7 @@ namespace OpenTK.Platform.Native.Windows
 
             if (theme != LastTheme)
             {
-                EventQueue.Raise(null, PlatformEventType.ThemeChange, new ThemeChangeEventArgs(theme));
+                Toolkit.Event.RaiseEvent(new ThemeChangeEventArgs(theme));
 
                 LastTheme = theme;
             }
