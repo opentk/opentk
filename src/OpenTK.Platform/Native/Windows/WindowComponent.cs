@@ -1329,7 +1329,7 @@ namespace OpenTK.Platform.Native.Windows
                     Win32.ClientToScreen(CursorCapturingWindow.HWnd, ref p);
 
                     bool success = Win32.SetCursorPos(p.X, p.Y);
-                    if (!success)
+                    if (success == false)
                         throw new Win32Exception();
 
                     CursorCapturingWindow.LastMousePosition = (size.X / 2, size.Y / 2);
