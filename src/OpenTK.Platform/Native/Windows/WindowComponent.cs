@@ -1282,6 +1282,10 @@ namespace OpenTK.Platform.Native.Windows
                     {
                         if (rawMouse.lLastX != 0 || rawMouse.lLastY != 0)
                         {
+                            // FIXME: This doesn't wake the main thread if it's waiting on events...
+                            // For now we don't disable legacy mouse events so this is fine,
+                            // but eventually we might and then this will matter.
+                            // - Noggin_bops 2026-04-01
                             RawMouseInputQueue.Add((rawMouse.lLastX, rawMouse.lLastY));
                         }
                     }
