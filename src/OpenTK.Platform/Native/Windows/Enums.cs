@@ -1218,7 +1218,7 @@ namespace OpenTK.Platform.Native.Windows
 
         /// <summary>
         /// Owner-display format.
-        /// The clipboard owner must display and update the clipboard viewer window, and receive the WM_ASKCBFORMATNAME, WM_HSCROLLCLIPBOARD, WM_PAINTCLIPBOARD, WM_SIZECLIPBOARD, and WM_VSCROLLCLIPBOARD messages.
+        /// The clipboard owner must display and update the clipboard viewer window, and receive the <see cref="WM.ASKCBFORMATNAME"/> <see cref="WM.HSCROLLCLIPBOARD"/> <see cref="WM.PAINTCLIPBOARD"/> <see cref="WM.SIZECLIPBOARD"/> and WM_VSCROLLCLIPBOARD messages.
         /// The hMem parameter must be NULL.
         /// </summary>
         OwnerDisplay = 0x0080,
@@ -5951,7 +5951,7 @@ namespace OpenTK.Platform.Native.Windows
         EraseNow = 512,
 
         /// <summary>
-        /// Causes the affected windows (as specified by the RDW_ALLCHILDREN and RDW_NOCHILDREN flags) to receive WM_NCPAINT, WM_ERASEBKGND, and WM_PAINT
+        /// Causes the affected windows (as specified by the RDW_ALLCHILDREN and RDW_NOCHILDREN flags) to receive <see cref="WM.NCPAINT"/> <see cref="WM.ERASEBKGND"/> and WM_PAINT
         /// messages, if necessary, before the function returns.
         /// </summary>
         UpdateNow = 256,
@@ -6902,7 +6902,7 @@ namespace OpenTK.Platform.Native.Windows
 
         /// <summary>
         /// The WM_UNICHAR message is posted to the window with the keyboard focus when a WM_KEYDOWN message is translated by the TranslateMessage function. The WM_UNICHAR message contains the character code of the key that was pressed.
-        /// The WM_UNICHAR message is equivalent to WM_CHAR, but it uses Unicode Transformation Format (UTF)-32, whereas WM_CHAR uses UTF-16. It is designed to send or post Unicode characters to ANSI windows and it can can handle Unicode Supplementary Plane characters.
+        /// The WM_UNICHAR message is equivalent to <see cref="WM.CHAR"/> but it uses Unicode Transformation Format (UTF)-32, whereas WM_CHAR uses UTF-16. It is designed to send or post Unicode characters to ANSI windows and it can can handle Unicode Supplementary Plane characters.
         /// </summary>
         UNICHAR = 0x0109,
 
@@ -7969,5 +7969,76 @@ namespace OpenTK.Platform.Native.Windows
         /// </summary>
         SetMinPosition = 0x0001
 
+    }
+
+    [Flags]
+    internal enum QS
+    {
+        /// <summary>
+        /// A <see cref="WM.KEYUP"/>, <see cref="WM.KEYDOWN"/> <see cref="WM.SYSKEYUP"/> or <see cref="WM.SYSKEYDOWN"/> message is in the queue.
+        /// </summary>
+        Key = 0x0001,
+        /// <summary>
+        /// A <see cref="WM.MOUSEMOVE"/> message is in the queue.
+        /// </summary>
+        MouseMove = 0x0002,
+        /// <summary>
+        /// A mouse-button message (<see cref="WM.LBUTTONUP"/> <see cref="WM.RBUTTONDOWN"/> and so on).
+        /// </summary>
+        MouseButton = 0x0004,
+        /// <summary>
+        /// A posted message (other than those listed here) is in the queue. For more information, see PostMessage.
+        /// This value is cleared when you call GetMessage or PeekMessage, whether or not you are filtering messages.
+        /// </summary>
+        PostMessage = 0x0008,
+        /// <summary>
+        /// A <see cref="WM.TIMER"/> message is in the queue.
+        /// </summary>
+        Timer = 0x0010,
+        /// <summary>
+        /// A <see cref="WM.PAINT"/> message is in the queue.
+        /// </summary>
+        Paint = 0x0020,
+        /// <summary>
+        /// A message sent by another thread or application is in the queue. For more information, see SendMessage.
+        /// </summary>
+        SendMessage = 0x0040,
+        /// <summary>
+        /// A <see cref="WM.HOTKEY"/> message is in the queue.
+        /// </summary>
+        HotKey = 0x0080,
+        /// <summary>
+        /// A posted message (other than those listed here) is in the queue. For more information, see PostMessage.
+        /// This value is cleared when you call GetMessage or PeekMessage without filtering messages.
+        /// </summary>
+        AllPostMessage = 0x0100,
+        /// <summary>
+        /// Windows XP and newer: A raw input message is in the queue. For more information, see Raw Input.
+        /// </summary>
+        RawInput = 0x0400,
+        /// <summary>
+        /// Windows 8 and newer: A touch input message is in the queue. For more information, see Touch Input.
+        /// </summary>
+        Touch = 0x0800,
+        /// <summary>
+        /// Windows 8 and newer: A pointer input message is in the queue. For more information, see Pointer Input.
+        /// </summary>
+        Pointer = 0x1000,
+        /// <summary>
+        /// A <see cref="WM.MOUSEMOVE"/> message or mouse-button message (<see cref="WM.LBUTTONUP"/> <see cref="WM.RBUTTONDOWN"/> and so on).
+        /// </summary>
+        Mouse = (MouseMove | MouseButton),
+        /// <summary>
+        /// An input message is in the queue.
+        /// </summary>
+        Input = (Mouse | Key | RawInput | Touch | Pointer),
+        /// <summary>
+        /// An input, <see cref="WM.TIMER"/> <see cref="WM.PAINT"/> <see cref="WM.HOTKEY"/> or posted message is in the queue.
+        /// </summary>
+        AllEvents = (Input | PostMessage | Timer | Paint | HotKey),
+        /// <summary>
+        /// Any message is in the queue.
+        /// </summary>
+        AllInput = (Input | PostMessage | Timer | Paint | HotKey | SendMessage),
     }
 }

@@ -95,7 +95,9 @@ namespace OpenTK.Backends.Tests
                 }
                 else
                 {
-                    ImGui.TextUnformatted($"{@event.GetType().Name} - {Toolkit.Window.GetTitle(windowEvent.Window)}");
+                    if (Toolkit.Window.IsWindowDestroyed(windowEvent.Window))
+                        ImGui.TextUnformatted($"{@event.GetType().Name} - <destroyed window>");
+                    else ImGui.TextUnformatted($"{@event.GetType().Name} - {Toolkit.Window.GetTitle(windowEvent.Window)}");
                 }
             }
             else

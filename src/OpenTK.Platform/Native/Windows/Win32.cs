@@ -1,11 +1,8 @@
-using OpenTK.Graphics.Vulkan;
-using OpenTK.Graphics.Wgl;
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
-using static OpenTK.Platform.Native.Windows.Win32;
 
 namespace OpenTK.Platform.Native.Windows
 {
@@ -108,6 +105,10 @@ namespace OpenTK.Platform.Native.Windows
         internal const int E_ACCESSDENIED = unchecked((int)0x80070005);
         internal const int E_OUTOFMEMORY = unchecked((int)0x8007000E);
         internal const int E_FAIL = unchecked((int)0x80004005);
+
+        internal const uint WAIT_OBJECT_0 = 0x00000000;
+
+        internal const uint INFINITE = 0xFFFFFFFF;
 
         internal const IntPtr TD_WARNING_ICON         = unchecked((ushort)-1);
         internal const IntPtr TD_ERROR_ICON           = unchecked((ushort)-2);
@@ -1548,7 +1549,8 @@ namespace OpenTK.Platform.Native.Windows
             public fixed byte bRawData[1];
         }
 
-        internal unsafe struct RAWINPUT
+        // FIXME: Handle WOW64 layout correctly.
+        internal struct RAWINPUT
         {
             public RAWINPUTHEADER header;
             public DUMMYUNIONNAME data;
@@ -2080,6 +2082,31 @@ namespace OpenTK.Platform.Native.Windows
 
         [DllImport("user32.dll", SetLastError = false)]
         internal static extern int DisplayConfigGetDeviceInfo(ref DISPLAYCONFIG_SDR_WHITE_LEVEL requestPacket);
+
+        internal static uint MsgWaitForMultipleObjects(uint nCount, ReadOnlySpan<IntPtr> /* const HANDLE* */ pHandles, [MarshalAs(UnmanagedType.Bool)] bool fWaitAll, uint dwMilliseconds, QS dwWakeMask)
+        {
+            fixed (IntPtr* handles = pHandles)
+            {
+                return MsgWaitForMultipleObjects(nCount, handles, fWaitAll, dwMilliseconds, dwWakeMask);
+            }
+
+            [DllImport("user32.dll", SetLastError = true)]
+            static extern uint MsgWaitForMultipleObjects(uint nCount, IntPtr* /* const HANDLE* */ pHandles, [MarshalAs(UnmanagedType.Bool)] bool fWaitAll, uint dwMilliseconds, QS dwWakeMask);
+        }
+
+        internal static uint WaitForMultipleObjects(uint nCount, ReadOnlySpan<IntPtr> /* const HANDLE* */ pHandles, [MarshalAs(UnmanagedType.Bool)] bool fWaitAll, uint dwMilliseconds)
+        {
+            fixed (IntPtr* handles = pHandles)
+            {
+                return WaitForMultipleObjects(nCount, handles, fWaitAll, dwMilliseconds);
+            }
+
+            [DllImport("kernel32.dll", SetLastError = true)]
+            static extern uint WaitForMultipleObjects(uint nCount, IntPtr* /* const HANDLE* */ lpHandles, [MarshalAs(UnmanagedType.Bool)] bool bWaitAll, uint dwMilliseconds);
+        }
+
+        [DllImport("user32.dll", SetLastError = false)]
+        internal static extern uint GetQueueStatus(QS flags);
     }
 #pragma warning restore CS0649 // Field 'field' is never assigned to, and will always have its default value 'value'
 }

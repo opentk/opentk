@@ -786,6 +786,16 @@ namespace OpenTK.Backends.Tests
                 // FIXME: Actually change imgui theme?
                 Logger.LogInfo($"Theme changed: {themeChange.NewTheme}.");
             }
+            else if (args is RawMouseMoveEventArgs rawMouseMove)
+            {
+                for (int i = 0; i < ApplicationWindows.Count; i++)
+                {
+                    if (Toolkit.Mouse.IsRawMouseMotionEnabled(ApplicationWindows[i].Window))
+                    {
+                        ApplicationWindows[i].Application?.HandleEvent(rawMouseMove);
+                    }
+                }
+            }
         }
 
         internal static IPalComponent? GetComponent(PalComponents component)

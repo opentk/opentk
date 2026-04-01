@@ -166,18 +166,7 @@ namespace OpenTK.Platform.Native.Windows
         {
             HWND hwnd = handle.As<HWND>(this);
 
-            Win32.RAWINPUTDEVICE device;
-            device.usUsagePage = HIDUsagePage.Generic;
-            device.usUsage = (ushort)HIDUsageGeneric.Mouse;
-            // FIXME: InputSink? ExInputSink?
-            device.dwFlags = enabled ? 0 : RIDEV.Remove;
-            device.hwndTarget = enabled ? hwnd.HWnd : 0;
-
-            bool success = Win32.RegisterRawInputDevices(device, 1, (uint)Marshal.SizeOf<Win32.RAWINPUTDEVICE>());
-            if (success == false)
-            {
-                throw new Win32Exception();
-            }
+            (Toolkit.Window as WindowComponent)?.EnableRawInput(enabled);
 
             hwnd.RawMouseMotionEnabled = enabled;
         }
