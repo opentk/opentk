@@ -346,7 +346,7 @@ namespace OpenTK.Graphics.Vulkan
         public static explicit operator ulong(VkDescriptorUpdateTemplateKHR handle) => handle.Handle;
         public static explicit operator VkDescriptorUpdateTemplateKHR(ulong handle) => new VkDescriptorUpdateTemplateKHR(handle);
     }
-    /// <summary><b>[requires: v1.0]</b> Used by <see cref="Vk.AcquireFullScreenExclusiveModeEXT"/>, <see cref="Vk.AcquireImageANDROID"/>, <see cref="Vk.AcquireNextImage2KHR"/>, ...</summary>
+    /// <summary><b>[requires: v1.0]</b> Used by <see cref="Vk.AcquireFullScreenExclusiveModeEXT"/>, <see cref="Vk.AcquireImageANDROID"/>, <see cref="Vk.AcquireImageOHOS"/>, ...</summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDevice.html" /></remarks>
     [DebuggerDisplay("VkDevice\\{{Handle}\\}")]
     public unsafe struct VkDevice : IEquatable<VkDevice>
@@ -448,7 +448,7 @@ namespace OpenTK.Graphics.Vulkan
         public static explicit operator ulong(VkExternalComputeQueueNV handle) => handle.Handle;
         public static explicit operator VkExternalComputeQueueNV(ulong handle) => new VkExternalComputeQueueNV(handle);
     }
-    /// <summary><b>[requires: v1.0]</b> Used by <see cref="Vk.AcquireImageANDROID"/>, <see cref="Vk.AcquireNextImageKHR"/>, <see cref="Vk.CreateFence"/>, ...</summary>
+    /// <summary><b>[requires: v1.0]</b> Used by <see cref="Vk.AcquireImageANDROID"/>, <see cref="Vk.AcquireImageOHOS"/>, <see cref="Vk.AcquireNextImageKHR"/>, ...</summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkFence.html" /></remarks>
     [DebuggerDisplay("VkFence\\{{Handle}\\}")]
     public unsafe struct VkFence : IEquatable<VkFence>
@@ -466,8 +466,8 @@ namespace OpenTK.Graphics.Vulkan
         public static explicit operator VkFence(ulong handle) => new VkFence(handle);
     }
     /// <summary><b>[requires: v1.0]</b> 
-    /// <br/><b>[deprecated by: v1.4]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-dynamicrendering" />
-    /// <br/><b>[deprecated by: VK_KHR_dynamic_rendering_local_read]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-dynamicrendering" />
+    /// <br/><b>[deprecated by: v1.4]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#legacy-dynamicrendering" />
+    /// <br/><b>[deprecated by: VK_KHR_dynamic_rendering_local_read]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#legacy-dynamicrendering" />
     /// Used by <see cref="Vk.CreateFramebuffer"/>, <see cref="Vk.DestroyFramebuffer"/>, <see cref="Vk.GetFramebufferTilePropertiesQCOM"/></summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkFramebuffer.html" /></remarks>
     [DebuggerDisplay("VkFramebuffer\\{{Handle}\\}")]
@@ -485,7 +485,7 @@ namespace OpenTK.Graphics.Vulkan
         public static explicit operator ulong(VkFramebuffer handle) => handle.Handle;
         public static explicit operator VkFramebuffer(ulong handle) => new VkFramebuffer(handle);
     }
-    /// <summary><b>[requires: v1.0]</b> Used by <see cref="Vk.AcquireImageANDROID"/>, <see cref="Vk.BindImageMemory"/>, <see cref="Vk.CmdBlitImage"/>, ...</summary>
+    /// <summary><b>[requires: v1.0]</b> Used by <see cref="Vk.AcquireImageANDROID"/>, <see cref="Vk.AcquireImageOHOS"/>, <see cref="Vk.BindImageMemory"/>, ...</summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkImage.html" /></remarks>
     [DebuggerDisplay("VkImage\\{{Handle}\\}")]
     public unsafe struct VkImage : IEquatable<VkImage>
@@ -792,8 +792,8 @@ namespace OpenTK.Graphics.Vulkan
         public static explicit operator VkQueue(ulong handle) => new VkQueue(handle);
     }
     /// <summary><b>[requires: v1.0]</b> 
-    /// <br/><b>[deprecated by: v1.4]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-dynamicrendering" />
-    /// <br/><b>[deprecated by: VK_KHR_dynamic_rendering_local_read]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#deprecation-dynamicrendering" />
+    /// <br/><b>[deprecated by: v1.4]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#legacy-dynamicrendering" />
+    /// <br/><b>[deprecated by: VK_KHR_dynamic_rendering_local_read]</b> see: <see href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#legacy-dynamicrendering" />
     /// Used by <see cref="Vk.CreateRenderPass"/>, <see cref="Vk.CreateRenderPass2"/>, <see cref="Vk.CreateRenderPass2KHR"/>, ...</summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkRenderPass.html" /></remarks>
     [DebuggerDisplay("VkRenderPass\\{{Handle}\\}")]
@@ -862,7 +862,7 @@ namespace OpenTK.Graphics.Vulkan
         public static explicit operator ulong(VkSamplerYcbcrConversionKHR handle) => handle.Handle;
         public static explicit operator VkSamplerYcbcrConversionKHR(ulong handle) => new VkSamplerYcbcrConversionKHR(handle);
     }
-    /// <summary><b>[requires: v1.0]</b> Used by <see cref="Vk.AcquireImageANDROID"/>, <see cref="Vk.AcquireNextImageKHR"/>, <see cref="Vk.CreateSemaphore"/>, ...</summary>
+    /// <summary><b>[requires: v1.0]</b> Used by <see cref="Vk.AcquireImageANDROID"/>, <see cref="Vk.AcquireImageOHOS"/>, <see cref="Vk.AcquireNextImageKHR"/>, ...</summary>
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkSemaphore.html" /></remarks>
     [DebuggerDisplay("VkSemaphore\\{{Handle}\\}")]
     public unsafe struct VkSemaphore : IEquatable<VkSemaphore>

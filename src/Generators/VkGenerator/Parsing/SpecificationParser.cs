@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
@@ -684,6 +685,7 @@ namespace VkGenerator.Parsing
                 string[] apis = feature.Attribute("api")?.Value.Split(',') ?? Array.Empty<string>();
                 if (apis.Contains("vulkan"))
                 {
+                    string apiType = feature.Attribute("apitype")?.Value ?? "public";
                     string name = feature.Attribute("name")?.Value ?? throw new Exception();
                     string number = feature.Attribute("number")?.Value ?? throw new Exception();
                     string? depends = feature.Attribute("depends")?.Value;
