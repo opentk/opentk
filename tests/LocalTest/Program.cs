@@ -34,7 +34,7 @@ namespace LocalTest
 
             NativeWindowSettings nwSettings = new NativeWindowSettings()
             {
-                API = ContextAPI.NoAPI,
+                API = ContextAPI.OpenGL,
                 //APIVersion = new Version(3, 3),
                 AutoLoadBindings = true,
                 Flags = 0,

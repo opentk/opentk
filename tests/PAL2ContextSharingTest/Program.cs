@@ -133,7 +133,7 @@ void main()
             Toolkit.Window.SetClientSize(WindowHandle2, (800, 600));
             Toolkit.Window.SetMode(WindowHandle2, WindowMode.Normal);
 
-            EventQueue.EventRaised += EventQueue_EventRaised;
+            Toolkit.Event.EventRaised += EventQueue_EventRaised;
 
             while (true)
             {
@@ -159,7 +159,7 @@ void main()
             Toolkit.Window.ProcessEvents(false);
         }
 
-        private static void EventQueue_EventRaised(PalHandle? handle, PlatformEventType type, EventArgs args)
+        private static void EventQueue_EventRaised(EventArgs args)
         {
             if (args is CloseEventArgs close)
             {

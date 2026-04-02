@@ -1,26 +1,26 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-    <PropertyGroup>
-        <TargetFramework>net8.0</TargetFramework>
-        <RootNamespace>OpenTK.Compute</RootNamespace>
-        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-        <SignAssembly>true</SignAssembly>
-        <AssemblyOriginatorKeyFile>../../OpenTK.snk</AssemblyOriginatorKeyFile>
-        <LangVersion>9</LangVersion>
-        <PackageIcon>icon.png</PackageIcon>
-    </PropertyGroup>
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <TargetFrameworks>net10.0</TargetFrameworks>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Deterministic>true</Deterministic>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>$(OpenTKSolutionRoot)/OpenTK.snk</AssemblyOriginatorKeyFile>
+    <PackageIcon>images/opentk-blue-hexagon.png</PackageIcon>
+    <PackageReadmeFile>docs/README.md</PackageReadmeFile>
+    <IsTrimmable>true</IsTrimmable>
+    <Description>OpenCL bindings for dotnet.</Description>
+  </PropertyGroup>
 
-    <ItemGroup>
-      <None Include="..\..\documentation\icon.png" Pack="true" PackagePath=""/>
-    </ItemGroup>
+  <ItemGroup>
+    <None Include="$(OpenTKSolutionRoot)\.github\opentk-blue-hexagon.png" Pack="true" PackagePath="images" Visible="false"/>
+    <None Include="README.md" Pack="true" PackagePath="docs"/>
+  </ItemGroup>
 
-    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-      <DocumentationFile>bin\Release\OpenTK.Compute.xml</DocumentationFile>
-    </PropertyGroup>
-
-    <PropertyGroup>
-      <NoWarn>1591</NoWarn>
-    </PropertyGroup>
-    
-    <Import Project="..\..\props\nuget-common.props" />
-    <Import Project="..\..\props\stylecop.props" />
+  <PropertyGroup>
+    <NoWarn>1591</NoWarn>
+  </PropertyGroup>
+  
+  <Import Project="$(OpenTKSolutionRoot)\props\nuget-common.props" />
+  <Import Project="$(OpenTKSolutionRoot)\props\stylecop.props" />
 </Project>

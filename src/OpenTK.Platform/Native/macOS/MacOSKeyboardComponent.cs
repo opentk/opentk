@@ -34,18 +34,38 @@ namespace OpenTK.Platform.Native.macOS
         /// <inheritdoc/>
         public bool SupportsIme => false;
 
-        /// <inheritdoc/>
         public string GetActiveKeyboardLayout(WindowHandle? handle)
         {
             // FIXME:
             return "Unknown";
         }
 
-        /// <inheritdoc/>
         public string[] GetAvailableKeyboardLayouts()
         {
             // FIXME:
             return Array.Empty<string>();
+        }
+
+        /// <inheritdoc/>
+        public InputLanguage GetActiveInputLanguage(WindowHandle? handle)
+        {
+            // FIXME: Culture!
+            return new InputLanguage(System.Globalization.CultureInfo.CurrentCulture, GetActiveKeyboardLayout(handle));
+        }
+
+        /// <inheritdoc/>
+        public InputLanguage[] GetInstalledInputLanguages()
+        {
+            var layouts = GetAvailableKeyboardLayouts();
+
+            InputLanguage[] languages = new InputLanguage[layouts.Length];
+            for (int i = 0; i < layouts.Length; i++)
+            {
+                // FIXME: Culture!
+                languages[i] = new InputLanguage(System.Globalization.CultureInfo.CurrentCulture, layouts[i]);
+            }
+
+            return languages;
         }
 
         internal static bool KeyStateChanged(Scancode code, bool pressed)

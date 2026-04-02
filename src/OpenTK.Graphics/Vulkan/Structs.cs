@@ -4300,7 +4300,7 @@ namespace OpenTK.Graphics.Vulkan
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkD3D12FenceSubmitInfoKHR.html" /></remarks>
     public unsafe struct VkD3D12FenceSubmitInfoKHR
     {
-        public VkStructureType sType = VkStructureType.StructureTypeD3d12FenceSubmitInfoKhr;
+        public VkStructureType sType = VkStructureType.StructureTypeD3D12FenceSubmitInfoKhr;
         public void* pNext;
         public uint waitSemaphoreValuesCount;
         public ulong* pWaitSemaphoreValues;
@@ -15676,7 +15676,7 @@ namespace OpenTK.Graphics.Vulkan
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceImage2DViewOf3DFeaturesEXT.html" /></remarks>
     public unsafe struct VkPhysicalDeviceImage2DViewOf3DFeaturesEXT
     {
-        public VkStructureType sType = VkStructureType.StructureTypePhysicalDeviceImage2dViewOf3dFeaturesExt;
+        public VkStructureType sType = VkStructureType.StructureTypePhysicalDeviceImage2DViewOf3DFeaturesExt;
         public void* pNext;
         public int image2DViewOf3D;
         public int sampler2DViewOf3D;
@@ -15950,7 +15950,7 @@ namespace OpenTK.Graphics.Vulkan
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceImageSlicedViewOf3DFeaturesEXT.html" /></remarks>
     public unsafe struct VkPhysicalDeviceImageSlicedViewOf3DFeaturesEXT
     {
-        public VkStructureType sType = VkStructureType.StructureTypePhysicalDeviceImageSlicedViewOf3dFeaturesExt;
+        public VkStructureType sType = VkStructureType.StructureTypePhysicalDeviceImageSlicedViewOf3DFeaturesExt;
         public void* pNext;
         public int imageSlicedViewOf3D;
         public VkPhysicalDeviceImageSlicedViewOf3DFeaturesEXT() { }

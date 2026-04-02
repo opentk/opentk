@@ -1,30 +1,33 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-    <PropertyGroup>
-      <TargetFramework>net8.0</TargetFramework>
-      <Nullable>enable</Nullable>
-      <RootNamespace>OpenTK.Graphics</RootNamespace>
-      <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-      <PackageIcon>icon.png</PackageIcon>
-      <IsTrimmable>true</IsTrimmable>
-      <SignAssembly>true</SignAssembly>
-      <AssemblyOriginatorKeyFile>../../OpenTK.snk</AssemblyOriginatorKeyFile>
-      <DelaySign>true</DelaySign>
-    </PropertyGroup>
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <TargetFrameworks>net10.0</TargetFrameworks>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Deterministic>true</Deterministic>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>$(OpenTKSolutionRoot)/OpenTK.snk</AssemblyOriginatorKeyFile>
+    <PackageIcon>images/opentk-blue-hexagon.png</PackageIcon>
+    <PackageReadmeFile>docs/README.md</PackageReadmeFile>
+    <IsTrimmable>true</IsTrimmable>
+    <Nullable>enable</Nullable>
+    <DelaySign>true</DelaySign>
+    <Description>OpenGL and OpenGL ES bindings for dotnet.</Description>
+  </PropertyGroup>
 
-    <ItemGroup>
-      <None Include="..\..\documentation\icon.png" Pack="true" PackagePath="" />
-    </ItemGroup>
-  
-    <ItemGroup>
-      <PackageReference Include="System.Numerics.Vectors" Version="4.5.0" />
-      <ProjectReference Include="../OpenTK.Core/OpenTK.Core.csproj" />
-      <ProjectReference Include="../OpenTK.Mathematics/OpenTK.Mathematics.csproj" />
-    </ItemGroup>
+  <ItemGroup>
+    <None Include="$(OpenTKSolutionRoot)\.github\opentk-blue-hexagon.png" Pack="true" PackagePath="images" Visible="false"/>
+    <None Include="README.md" Pack="true" PackagePath="docs"/>
+  </ItemGroup>
 
-  <Import Project="..\..\props\nuget-common.props" />
+  <ItemGroup>
+    <ProjectReference Include="../OpenTK.Core/OpenTK.Core.csproj" />
+    <ProjectReference Include="../OpenTK.Mathematics/OpenTK.Mathematics.csproj" />
+  </ItemGroup>
+
+  <Import Project="$(OpenTKSolutionRoot)\props\nuget-common.props" />
   <!-- 
   We skip stylecop for OpenTK.Graphics as there is a bunch of generated code that would trigger tons of warnings. 
   - Noggin_bops 2024-08-06
   -->
-  <!--<Import Project="..\..\props\stylecop.props" />-->
+  <!--<Import Project="$(OpenTKSolutionRoot)\props\stylecop.props" />-->
 </Project>

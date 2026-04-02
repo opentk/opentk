@@ -135,7 +135,7 @@ namespace OpenTK.Platform.Native.Windows
 
             if (theme != LastTheme)
             {
-                EventQueue.Raise(null, PlatformEventType.ThemeChange, new ThemeChangeEventArgs(theme));
+                Toolkit.Event.RaiseEvent(new ThemeChangeEventArgs(theme));
 
                 LastTheme = theme;
             }
@@ -345,7 +345,7 @@ namespace OpenTK.Platform.Native.Windows
             /// </summary>
             Indeterminate,
             /// <summary>
-            /// The application is processing data. Use <paramref name="completion"/> to indicate current progress.
+            /// The application is processing data. Use <c>completion</c> parameter of <see cref="SetProgressStatus(WindowHandle, ProgressMode, float)"/> to indicate current progress.
             /// </summary>
             Normal,
 

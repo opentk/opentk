@@ -49,6 +49,7 @@ namespace OpenTK.Platform.Native.macOS
         internal static readonly SEL selKeyCode = sel_registerName("keyCode"u8);
         internal static readonly SEL selARepeat = sel_registerName("isARepeat"u8);
         internal static readonly SEL selModifierFlags = sel_registerName("modifierFlags"u8);
+        internal static readonly SEL selClickCount = sel_registerName("clickCount"u8);
 
 
         internal static readonly SEL selInitWithContentRect_styleMask_backing_defer = sel_registerName("initWithContentRect:styleMask:backing:defer:"u8);
@@ -434,7 +435,7 @@ namespace OpenTK.Platform.Native.macOS
             GetComponentFromWindow(self).Logger?.LogInfo("On quit!");
 
             // FIXME: Send an event for this?
-            //EventQueue.Raise(null, 0, new ApplicationExitEventArgs());
+            //Toolkit.Event.RaiseEvent(new ApplicationExitEventArgs());
 
             // Actually quit.
             objc_msgSend(nsApplication, selTerminate, nsApplication);
@@ -446,7 +447,7 @@ namespace OpenTK.Platform.Native.macOS
         {
             if (NSWindowDict.TryGetValue(window, out NSWindowHandle? nswindow))
             {
-                EventQueue.Raise(nswindow, PlatformEventType.Close, new CloseEventArgs(nswindow));
+                Toolkit.Event.RaiseEvent(new CloseEventArgs(nswindow));
 
                 // Let the user handle closing the window.
                 return (sbyte)NO;
@@ -473,11 +474,11 @@ namespace OpenTK.Platform.Native.macOS
                 bool zoomed = objc_msgSend_bool(window, selIsZoomed);
                 if (zoomed)
                 {
-                    EventQueue.Raise(nswindow, PlatformEventType.WindowModeChange, new WindowModeChangeEventArgs(nswindow, WindowMode.Maximized));
+                    Toolkit.Event.RaiseEvent(new WindowModeChangeEventArgs(nswindow, WindowMode.Maximized));
                 }
                 else
                 {
-                    EventQueue.Raise(nswindow, PlatformEventType.WindowModeChange, new WindowModeChangeEventArgs(nswindow, WindowMode.Normal));
+                    Toolkit.Event.RaiseEvent(new WindowModeChangeEventArgs(nswindow, WindowMode.Normal));
                 }
             }
         }
@@ -502,7 +503,7 @@ namespace OpenTK.Platform.Native.macOS
                     CG.CGAssociateMouseAndMouseCursorPosition(true);
                 }
 
-                EventQueue.Raise(nswindow, PlatformEventType.Focus, new FocusEventArgs(nswindow, true));
+                Toolkit.Event.RaiseEvent(new FocusEventArgs(nswindow, true));
             }
             else
             {
@@ -517,7 +518,7 @@ namespace OpenTK.Platform.Native.macOS
             IntPtr window = objc_msgSend_IntPtr(notification, selObject);
             if (NSWindowDict.TryGetValue(window, out NSWindowHandle? nswindow))
             {
-                EventQueue.Raise(nswindow, PlatformEventType.Focus, new FocusEventArgs(nswindow, false));
+                Toolkit.Event.RaiseEvent(new FocusEventArgs(nswindow, false));
             }
             else
             {
@@ -551,10 +552,10 @@ namespace OpenTK.Platform.Native.macOS
                 // FIXME: Do not cast to int?
                 Vector2i newSize = new Vector2i((int)bounds.size.x, (int)bounds.size.y);
                 Vector2i newClientSize = new Vector2i((int)clientBounds.size.x, (int)clientBounds.size.y);
-                EventQueue.Raise(nswindow, PlatformEventType.WindowResize, new WindowResizeEventArgs(nswindow, newSize, newClientSize));
+                Toolkit.Event.RaiseEvent(new WindowResizeEventArgs(nswindow, newSize, newClientSize));
 
                 // FIXME: Do we need to send this event when the pixel scale changes?
-                EventQueue.Raise(nswindow, PlatformEventType.WindowFramebufferResize, new WindowFramebufferResizeEventArgs(nswindow, ((int)backing.size.x, (int)backing.size.y)));
+                Toolkit.Event.RaiseEvent(new WindowFramebufferResizeEventArgs(nswindow, ((int)backing.size.x, (int)backing.size.y)));
             }
             else
             {
@@ -590,7 +591,7 @@ namespace OpenTK.Platform.Native.macOS
                 // FIXME: Do not cast to int?
                 Vector2i windowPosition = new Vector2i((int)windowFrame.size.x, (int)windowFrame.size.y);
                 Vector2i viewPosition = new Vector2i((int)viewFrame.size.x, (int)viewFrame.size.y);
-                EventQueue.Raise(nswindow, PlatformEventType.WindowMove, new WindowMoveEventArgs(nswindow, windowPosition, viewPosition));
+                Toolkit.Event.RaiseEvent(new WindowMoveEventArgs(nswindow, windowPosition, viewPosition));
             }
             else
             {
@@ -605,7 +606,7 @@ namespace OpenTK.Platform.Native.macOS
             IntPtr window = objc_msgSend_IntPtr(notification, selObject);
             if (NSWindowDict.TryGetValue(window, out NSWindowHandle? nswindow))
             {
-                EventQueue.Raise(nswindow, PlatformEventType.WindowModeChange, new WindowModeChangeEventArgs(nswindow, WindowMode.Minimized));
+                Toolkit.Event.RaiseEvent(new WindowModeChangeEventArgs(nswindow, WindowMode.Minimized));
             }
             else
             {
@@ -620,7 +621,7 @@ namespace OpenTK.Platform.Native.macOS
             IntPtr window = objc_msgSend_IntPtr(notification, selObject);
             if (NSWindowDict.TryGetValue(window, out NSWindowHandle? nswindow))
             {
-                EventQueue.Raise(nswindow, PlatformEventType.WindowModeChange, new WindowModeChangeEventArgs(nswindow, WindowMode.Normal));
+                Toolkit.Event.RaiseEvent(new WindowModeChangeEventArgs(nswindow, WindowMode.Normal));
             }
             else
             {
@@ -636,7 +637,7 @@ namespace OpenTK.Platform.Native.macOS
             if (NSWindowDict.TryGetValue(window, out NSWindowHandle? nswindow))
             {
                 // FIXME: Exclusive or Windowed fullscreen? Should we differentiate on mac?
-                EventQueue.Raise(nswindow, PlatformEventType.WindowModeChange, new WindowModeChangeEventArgs(nswindow, WindowMode.WindowedFullscreen));
+                Toolkit.Event.RaiseEvent(new WindowModeChangeEventArgs(nswindow, WindowMode.WindowedFullscreen));
             }
             else
             {
@@ -651,7 +652,7 @@ namespace OpenTK.Platform.Native.macOS
             IntPtr window = objc_msgSend_IntPtr(notification, selObject);
             if (NSWindowDict.TryGetValue(window, out NSWindowHandle? nswindow))
             {
-                EventQueue.Raise(nswindow, PlatformEventType.WindowModeChange, new WindowModeChangeEventArgs(nswindow, WindowMode.Normal));
+                Toolkit.Event.RaiseEvent(new WindowModeChangeEventArgs(nswindow, WindowMode.Normal));
             }
             else
             {
@@ -687,13 +688,13 @@ namespace OpenTK.Platform.Native.macOS
                 float scaleX = (float)(frameBacking.size.x / frame.size.x);
                 float scaleY = (float)(frameBacking.size.y / frame.size.y);
 
-                EventQueue.Raise(nswindow, PlatformEventType.WindowScaleChange, new WindowScaleChangeEventArgs(nswindow, scaleX, scaleY));
+                Toolkit.Event.RaiseEvent(new WindowScaleChangeEventArgs(nswindow, scaleX, scaleY));
 
                 CGRect bounds = objc_msgSend_CGRect(nswindow.View, selBounds);
                 CGRect boundsBacking = objc_msgSend_CGRect(nswindow.View, selConvertRectToBacking, bounds);
 
                 Vector2i framebufferSize = ((int)boundsBacking.size.x, (int)boundsBacking.size.y);
-                EventQueue.Raise(nswindow, PlatformEventType.WindowFramebufferResize, new WindowFramebufferResizeEventArgs(nswindow, framebufferSize));
+                Toolkit.Event.RaiseEvent(new WindowFramebufferResizeEventArgs(nswindow, framebufferSize));
             }
             else
             {
@@ -739,7 +740,7 @@ namespace OpenTK.Platform.Native.macOS
 
             GetComponentFromView(view).Logger?.LogDebug("sendPendingKey");
 
-            EventQueue.Raise(nswindow, PlatformEventType.KeyDown, new KeyDownEventArgs(nswindow, key, scancode, isRepeat, modifier));
+            Toolkit.Event.RaiseEvent(new KeyDownEventArgs(nswindow, key, scancode, isRepeat, modifier));
 
             objc_msgSend(view, selClearPendingKey);
         }
@@ -803,7 +804,7 @@ namespace OpenTK.Platform.Native.macOS
                 return;
             }
 
-            EventQueue.Raise(nswindow, PlatformEventType.MouseEnter, new MouseEnterEventArgs(nswindow, true));
+            Toolkit.Event.RaiseEvent(new MouseEnterEventArgs(nswindow, true));
         }
 
         private static unsafe readonly delegate* unmanaged[Cdecl]<IntPtr, SEL, IntPtr, void> NSOtkView_MouseExitedInst = &NSOtkView_MouseExited;
@@ -817,7 +818,7 @@ namespace OpenTK.Platform.Native.macOS
                 return;
             }
 
-            EventQueue.Raise(nswindow, PlatformEventType.MouseEnter, new MouseEnterEventArgs(nswindow, false));
+            Toolkit.Event.RaiseEvent(new MouseEnterEventArgs(nswindow, false));
         }
 
         private static unsafe readonly delegate* unmanaged[Cdecl]<IntPtr, SEL, IntPtr, void> NSOtkView_KeyDownInst = &NSOtkView_KeyDown;
@@ -973,7 +974,7 @@ namespace OpenTK.Platform.Native.macOS
             // - Noggin_bops 2024-01-26
             objc_msgSend(view, selSendPendingKey);
 
-            EventQueue.Raise(nswindow, PlatformEventType.TextInput, new TextInputEventArgs(nswindow, str));
+            Toolkit.Event.RaiseEvent(new TextInputEventArgs(nswindow, str));
         }
 
         private static unsafe readonly delegate* unmanaged[Cdecl]<IntPtr, SEL, CGPoint, nuint> NSOtkView_NSTextInputClient_CharacterIndexForPointInst = &NSOtkView_NSTextInputClient_CharacterIndexForPoint;
@@ -1084,7 +1085,7 @@ namespace OpenTK.Platform.Native.macOS
                 }
 
                 Vector2i position = (Vector2i)CG.FlipYCoordinate(location);
-                EventQueue.Raise(nswindow, PlatformEventType.FileDrop, new FileDropEventArgs(nswindow, files, position));
+                Toolkit.Event.RaiseEvent(new FileDropEventArgs(nswindow, files, position));
             }
             else
             {
@@ -1256,15 +1257,10 @@ namespace OpenTK.Platform.Native.macOS
                         CursorAnimationPrevTime = currTime;
                         UpdateCursorAnimations(deltaTime);
                     }
-                    else if (args is WindowEventArgs windowArgs)
-                    {
-                        raisedEvent = true;
-                        EventQueue.Raise(windowArgs.Window, PlatformEventType.UserMessage, windowArgs);
-                    }
                     else
                     {
                         raisedEvent = true;
-                        EventQueue.Raise(null, PlatformEventType.UserMessage, args);
+                        Toolkit.Event.RaiseEvent(args);
                     }
                     handle.Free();
                 }
@@ -1314,11 +1310,18 @@ namespace OpenTK.Platform.Native.macOS
                             default: throw new PalException(this, $"Unknown mouse button: {button}");
                         }
 
+                        CGPoint point = objc_msgSend_CGPoint(@event, selLocationInWindow);
+                        CGRect bounds = objc_msgSend_CGRect(nswindow.View, selBounds);
+                        // FIXME: Coordinate space
+                        CGPoint pos = new CGPoint(point.x, bounds.size.y - point.y);
+
                         ModifierFlags modifierFlags = (ModifierFlags)((UIntPtr)objc_msgSend_IntPtr(@event, selModifierFlags)).ToUInt64();
                         KeyModifier modifiers = MacOSKeyboardComponent.ToKeyModifiers(modifierFlags);
 
+                        int clickCount = (int)objc_msgSend_IntPtr(@event, selClickCount);
+
                         MacOSMouseComponent.RegisterButtonState(nswindow, mouseButton, true);
-                        EventQueue.Raise(nswindow, PlatformEventType.MouseDown, new MouseButtonDownEventArgs(nswindow, mouseButton, modifiers));
+                        Toolkit.Event.RaiseEvent(new MouseButtonDownEventArgs(nswindow, (Vector2)pos, mouseButton, modifiers, clickCount));
 
                         objc_msgSend(nsApplication, selSendEvent, @event);
                         break;
@@ -1349,11 +1352,18 @@ namespace OpenTK.Platform.Native.macOS
                             default: throw new PalException(this, $"Unknown mouse button: {button}");
                         }
 
+                        CGPoint point = objc_msgSend_CGPoint(@event, selLocationInWindow);
+                        CGRect bounds = objc_msgSend_CGRect(nswindow.View, selBounds);
+                        // FIXME: Coordinate space
+                        CGPoint pos = new CGPoint(point.x, bounds.size.y - point.y);
+
                         ModifierFlags modifierFlags = (ModifierFlags)((UIntPtr)objc_msgSend_IntPtr(@event, selModifierFlags)).ToUInt64();
                         KeyModifier modifiers = MacOSKeyboardComponent.ToKeyModifiers(modifierFlags);
 
+                        int clickCount = (int)objc_msgSend_IntPtr(@event, selClickCount);
+
                         MacOSMouseComponent.RegisterButtonState(nswindow, mouseButton, false);
-                        EventQueue.Raise(nswindow, PlatformEventType.MouseUp, new MouseButtonUpEventArgs(nswindow, mouseButton, modifiers));
+                        Toolkit.Event.RaiseEvent(new MouseButtonUpEventArgs(nswindow, (Vector2)pos, mouseButton, modifiers, clickCount));
 
                         // FIXME: If the mouse is outside of the window after a drag we want to send a mouse exit event here
 
@@ -1372,9 +1382,7 @@ namespace OpenTK.Platform.Native.macOS
                         }
 
                         CGPoint point = objc_msgSend_CGPoint(@event, selLocationInWindow);
-
                         CGRect bounds = objc_msgSend_CGRect(nswindow.View, selBounds);
-
                         // FIXME: Coordinate space
                         CGPoint pos = new CGPoint(point.x, bounds.size.y - point.y);
 
@@ -1386,12 +1394,12 @@ namespace OpenTK.Platform.Native.macOS
 
                             nswindow.VirtualCursorPosition += new CGPoint(dx, dy);
 
-                            EventQueue.Raise(nswindow, PlatformEventType.MouseMove, new MouseMoveEventArgs(nswindow, (Vector2)nswindow.VirtualCursorPosition));
+                            Toolkit.Event.RaiseEvent(new MouseMoveEventArgs(nswindow, (Vector2)nswindow.VirtualCursorPosition));
                         }
                         else
                         {
                             // Do normal mouse events
-                            EventQueue.Raise(nswindow, PlatformEventType.MouseMove, new MouseMoveEventArgs(nswindow, (Vector2)pos));
+                            Toolkit.Event.RaiseEvent(new MouseMoveEventArgs(nswindow, (Vector2)pos));
 
                             objc_msgSend(nsApplication, selSendEvent, @event);
                         }
@@ -1401,8 +1409,8 @@ namespace OpenTK.Platform.Native.macOS
                     }
                 case NSEventType.ScrollWheel:
                     {
-                        float scrollX = objc_msgSend_float(@event, selScrollingDeltaX);
-                        float scrollY = objc_msgSend_float(@event, selScrollingDeltaY);
+                        float scrollX = (float)objc_msgSend_nfloat(@event, selScrollingDeltaX);
+                        float scrollY = (float)objc_msgSend_nfloat(@event, selScrollingDeltaY);
 
                         bool preciseScrollingDeltas = objc_msgSend_bool(@event, selHasPreciseScrollingDeltas);
 
@@ -1419,7 +1427,7 @@ namespace OpenTK.Platform.Native.macOS
                         }
 
                         MacOSMouseComponent.RegisterMouseWheelDelta(nswindow, delta);
-                        EventQueue.Raise(nswindow, PlatformEventType.Scroll, new ScrollEventArgs(nswindow, delta, distance));
+                        Toolkit.Event.RaiseEvent(new ScrollEventArgs(nswindow, delta, distance));
 
                         objc_msgSend(nsApplication, selSendEvent, @event);
                         break;
@@ -1457,7 +1465,7 @@ namespace OpenTK.Platform.Native.macOS
                         }
                         else
                         {
-                            EventQueue.Raise(nswindow, PlatformEventType.KeyDown, new KeyDownEventArgs(nswindow, key, scancode, isRepeat, modifiers));    
+                            Toolkit.Event.RaiseEvent(new KeyDownEventArgs(nswindow, key, scancode, isRepeat, modifiers));    
                         }
 
                         objc_msgSend(nsApplication, selSendEvent, @event);
@@ -1477,7 +1485,7 @@ namespace OpenTK.Platform.Native.macOS
 
                         // FIXME: This conversion is temporary.
                         Key key = MacOSKeyboardComponent.GetKeyFromScancodeInternal(scancode);
-                        EventQueue.Raise(nswindow, PlatformEventType.KeyUp, new KeyUpEventArgs(nswindow, key, scancode, modifiers));
+                        Toolkit.Event.RaiseEvent(new KeyUpEventArgs(nswindow, key, scancode, modifiers));
 
                         objc_msgSend(nsApplication, selSendEvent, @event);
                         break;
@@ -1512,11 +1520,11 @@ namespace OpenTK.Platform.Native.macOS
                             {
                                 if (pressed)
                                 {
-                                    EventQueue.Raise(nswindow, PlatformEventType.KeyDown, new KeyDownEventArgs(nswindow, key, scancode, false, modifiers));
+                                    Toolkit.Event.RaiseEvent(new KeyDownEventArgs(nswindow, key, scancode, false, modifiers));
                                 }
                                 else
                                 {
-                                    EventQueue.Raise(nswindow, PlatformEventType.KeyUp, new KeyUpEventArgs(nswindow, key, scancode, modifiers));
+                                    Toolkit.Event.RaiseEvent(new KeyUpEventArgs(nswindow, key, scancode, modifiers));
                                 }
                             }
                         }
@@ -1552,7 +1560,7 @@ namespace OpenTK.Platform.Native.macOS
                 if (currTime >= clipboardUpdateTime)
                 {
                     ClipboardFormat format = MacOSClipboardComponent.GetClipboardFormatInternal(Logger);
-                    EventQueue.Raise(null, PlatformEventType.ClipboardUpdate, new ClipboardUpdateEventArgs(format));
+                    Toolkit.Event.RaiseEvent(new ClipboardUpdateEventArgs(format));
 
                     clipboardUpdateTime = long.MaxValue;
                 }
@@ -2663,6 +2671,13 @@ namespace OpenTK.Platform.Native.macOS
 
             scaleX = (float)(frameBacking.size.x / frame.size.x);
             scaleY = (float)(frameBacking.size.y / frame.size.y);
+        }
+
+        /// <inheritdoc/>
+        public OpenGLContextHandle? GetOpenGLContext(WindowHandle handle)
+        {
+            NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
+            return nswindow.Context;
         }
 
         /// <summary>

@@ -87,11 +87,13 @@ namespace OpenTK.Platform.Native.SDL
 
     internal unsafe class SDLJoystick : JoystickHandle
     {
-        public SDL_GameController* GameController { get; internal set; }
+        public SDL_Joystick* Joystick { get; internal set; }
+        public SDL_JoystickID InstanceID { get; internal set; }
 
-        public SDLJoystick(SDL_GameController* gameController)
+        public SDLJoystick(SDL_Joystick* joystick, SDL_JoystickID instanceID)
         {
-            GameController = gameController;
+            Joystick = joystick;
+            InstanceID = instanceID;
         }
     }
 }

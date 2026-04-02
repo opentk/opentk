@@ -29,8 +29,11 @@ namespace OpenTK.Platform.Native.SDL
         private uint OpenTKUserEventID;
 
         /// <inheritdoc/>
-        public void Initialize(ToolkitOptions options)
+        public unsafe void Initialize(ToolkitOptions options)
         {
+            SDL_LogSetAllPriority(SDL_LogPriority.SDL_LOG_PRIORITY_VERBOSE);
+            SDL_LogSetOutputFunction(SDLLogFunctionInst, null);
+
             // Load SDLLib
             int result = SDL_Init(SDL_INIT.SDL_INIT_VIDEO | SDL_INIT.SDL_INIT_EVENTS | SDL_INIT.SDL_INIT_JOYSTICK | SDL_INIT.SDL_INIT_GAMECONTROLLER);
 
@@ -40,7 +43,17 @@ namespace OpenTK.Platform.Native.SDL
                 throw new PalException(this, $"SDL Error: {error}");
             }
 
+            SDL_GetVersion(out var version);
+            Logger?.LogInfo($"Initialized SDL backend with SDL version {version.major}.{version.minor}.{version.patch}");
+
             OpenTKUserEventID = SDL_RegisterEvents(1);
+        }
+
+        internal static unsafe SDL_LogOutputFunction SDLLogFunctionInst = SDLLogFunction;
+        internal static unsafe void SDLLogFunction(void* userdata, SDL_LogCategory category, SDL_LogPriority priority, /* const char* */ IntPtr message)
+        {
+            string msg = Marshal.PtrToStringUTF8(message)!;
+            Console.WriteLine(msg);
         }
 
         /// <inheritdoc/>
@@ -88,14 +101,7 @@ namespace OpenTK.Platform.Native.SDL
                 {
                     GCHandle handle = GCHandle.FromIntPtr(@event.UserEvent.data1);
                     EventArgs args = (EventArgs)handle.Target!;
-                    if (args is WindowEventArgs windowArgs)
-                    {
-                        EventQueue.Raise(windowArgs.Window, PlatformEventType.UserMessage, windowArgs);
-                    }
-                    else
-                    {
-                        EventQueue.Raise(null, PlatformEventType.UserMessage, args);
-                    }
+                    Toolkit.Event.RaiseEvent(args);
                     handle.Free();
                     continue;
                 }
@@ -118,14 +124,14 @@ namespace OpenTK.Platform.Native.SDL
                                     {
                                         // FIXME: Don't create a new object here!! Get the object from the SDLDisplayComponent instead!
                                         SDLDisplay display = new SDLDisplay((int)displayEvent.display);
-                                        EventQueue.Raise(display, PlatformEventType.DisplayConnectionChanged, new DisplayConnectionChangedEventArgs(display, false));
+                                        Toolkit.Event.RaiseEvent(new DisplayConnectionChangedEventArgs(display, false));
                                         break;
                                     }
                                 case SDL_DisplayEventID.SDL_DISPLAYEVENT_DISCONNECTED:
                                     {
                                         // FIXME: Don't create a new object here!! Get the object from the SDLDisplayComponent instead!
                                         SDLDisplay display = new SDLDisplay((int)displayEvent.display);
-                                        EventQueue.Raise(display, PlatformEventType.DisplayConnectionChanged, new DisplayConnectionChangedEventArgs(display, true));
+                                        Toolkit.Event.RaiseEvent(new DisplayConnectionChangedEventArgs(display, true));
                                         break;
                                     }
                                 case SDL_DisplayEventID.SDL_DISPLAYEVENT_MOVED:
@@ -151,12 +157,12 @@ namespace OpenTK.Platform.Native.SDL
                                 case SDL_WindowEventID.SDL_WINDOWEVENT_SHOWN:
                                     {
                                         Debug.Assert(GetMode(sdlWindow) == WindowMode.Normal);
-                                        EventQueue.Raise(sdlWindow, PlatformEventType.WindowModeChange, new WindowModeChangeEventArgs(sdlWindow, WindowMode.Normal));
+                                        Toolkit.Event.RaiseEvent(new WindowModeChangeEventArgs(sdlWindow, WindowMode.Normal));
                                     }
                                     break;
                                 case SDL_WindowEventID.SDL_WINDOWEVENT_HIDDEN:
                                     {
-                                        EventQueue.Raise(sdlWindow, PlatformEventType.WindowModeChange, new WindowModeChangeEventArgs(sdlWindow, WindowMode.Hidden));
+                                        Toolkit.Event.RaiseEvent(new WindowModeChangeEventArgs(sdlWindow, WindowMode.Hidden));
 
                                         break;
                                     }
@@ -167,7 +173,7 @@ namespace OpenTK.Platform.Native.SDL
                                         Vector2i newPosition = new Vector2i(windowEvent.data1, windowEvent.data2);
 
                                         // FIXME: Client area position!
-                                        EventQueue.Raise(sdlWindow, PlatformEventType.WindowMove, new WindowMoveEventArgs(sdlWindow, newPosition, default));
+                                        Toolkit.Event.RaiseEvent(new WindowMoveEventArgs(sdlWindow, newPosition, default));
 
                                         break;
                                     }
@@ -178,51 +184,51 @@ namespace OpenTK.Platform.Native.SDL
                                         Vector2i newClientSize = new Vector2i(windowEvent.data1, windowEvent.data2);
                                         Vector2i newSize = new Vector2i(newClientSize.X + left + right, newClientSize.Y + top + bottom);
 
-                                        EventQueue.Raise(sdlWindow, PlatformEventType.WindowResize, new WindowResizeEventArgs(sdlWindow, newSize, newClientSize));
+                                        Toolkit.Event.RaiseEvent(new WindowResizeEventArgs(sdlWindow, newSize, newClientSize));
 
                                         SDL_GetWindowSizeInPixels(sdlWindow.Window, out int framebufferWidth, out int framebufferHeight);
-                                        EventQueue.Raise(sdlWindow, PlatformEventType.WindowFramebufferResize, new WindowFramebufferResizeEventArgs(sdlWindow, (framebufferWidth, framebufferHeight)));
+                                        Toolkit.Event.RaiseEvent(new WindowFramebufferResizeEventArgs(sdlWindow, (framebufferWidth, framebufferHeight)));
 
                                         break;
                                     }
                                 case SDL_WindowEventID.SDL_WINDOWEVENT_MINIMIZED:
                                     {
-                                        EventQueue.Raise(sdlWindow, PlatformEventType.WindowModeChange, new WindowModeChangeEventArgs(sdlWindow, WindowMode.Minimized));
+                                        Toolkit.Event.RaiseEvent(new WindowModeChangeEventArgs(sdlWindow, WindowMode.Minimized));
                                         break;
                                     }
                                 case SDL_WindowEventID.SDL_WINDOWEVENT_MAXIMIZED:
                                     {
-                                        EventQueue.Raise(sdlWindow, PlatformEventType.WindowModeChange, new WindowModeChangeEventArgs(sdlWindow, WindowMode.Maximized));
+                                        Toolkit.Event.RaiseEvent(new WindowModeChangeEventArgs(sdlWindow, WindowMode.Maximized));
                                         break;
                                     }
                                 case SDL_WindowEventID.SDL_WINDOWEVENT_RESTORED:
                                     {
-                                        EventQueue.Raise(sdlWindow, PlatformEventType.WindowModeChange, new WindowModeChangeEventArgs(sdlWindow, WindowMode.Normal));
+                                        Toolkit.Event.RaiseEvent(new WindowModeChangeEventArgs(sdlWindow, WindowMode.Normal));
                                         break;
                                     }
                                 case SDL_WindowEventID.SDL_WINDOWEVENT_ENTER:
                                     {
-                                        EventQueue.Raise(sdlWindow, PlatformEventType.MouseEnter, new MouseEnterEventArgs(sdlWindow, true));
+                                        Toolkit.Event.RaiseEvent(new MouseEnterEventArgs(sdlWindow, true));
                                         break;
                                     }
                                 case SDL_WindowEventID.SDL_WINDOWEVENT_LEAVE:
                                     {
-                                        EventQueue.Raise(sdlWindow, PlatformEventType.MouseEnter, new MouseEnterEventArgs(sdlWindow, false));
+                                        Toolkit.Event.RaiseEvent(new MouseEnterEventArgs(sdlWindow, false));
                                         break;
                                     }
                                 case SDL_WindowEventID.SDL_WINDOWEVENT_FOCUS_GAINED:
                                     {
-                                        EventQueue.Raise(sdlWindow, PlatformEventType.Focus, new FocusEventArgs(sdlWindow, true));
+                                        Toolkit.Event.RaiseEvent(new FocusEventArgs(sdlWindow, true));
                                         break;
                                     }
                                 case SDL_WindowEventID.SDL_WINDOWEVENT_FOCUS_LOST:
                                     {
-                                        EventQueue.Raise(sdlWindow, PlatformEventType.Focus, new FocusEventArgs(sdlWindow, false));
+                                        Toolkit.Event.RaiseEvent(new FocusEventArgs(sdlWindow, false));
                                         break;
                                     }
                                 case SDL_WindowEventID.SDL_WINDOWEVENT_CLOSE:
                                     {
-                                        EventQueue.Raise(sdlWindow, PlatformEventType.Close, new CloseEventArgs(sdlWindow));
+                                        Toolkit.Event.RaiseEvent(new CloseEventArgs(sdlWindow));
 
                                         break;
                                     }
@@ -256,7 +262,7 @@ namespace OpenTK.Platform.Native.SDL
                             SDL_MouseMotionEvent mouseMotion = @event.MouseMotion;
                             SDLWindow sdlWindow = WindowDict[mouseMotion.windowID];
 
-                            EventQueue.Raise(sdlWindow, PlatformEventType.MouseMove, new MouseMoveEventArgs(sdlWindow, new Vector2(mouseMotion.x, mouseMotion.y)));
+                            Toolkit.Event.RaiseEvent(new MouseMoveEventArgs(sdlWindow, new Vector2(mouseMotion.x, mouseMotion.y)));
 
                             break;
                         }
@@ -291,11 +297,11 @@ namespace OpenTK.Platform.Native.SDL
 
                             if (buttonEvent.type == SDL_EventType.SDL_MOUSEBUTTONDOWN)
                             {
-                                EventQueue.Raise(sdlWindow, PlatformEventType.MouseDown, new MouseButtonDownEventArgs(sdlWindow, button, modifiers));
+                                Toolkit.Event.RaiseEvent(new MouseButtonDownEventArgs(sdlWindow, (buttonEvent.x, buttonEvent.y), button, modifiers, buttonEvent.clicks));
                             }
                             else
                             {
-                                EventQueue.Raise(sdlWindow, PlatformEventType.MouseUp, new MouseButtonUpEventArgs(sdlWindow, button, modifiers));
+                                Toolkit.Event.RaiseEvent(new MouseButtonUpEventArgs(sdlWindow, (buttonEvent.x, buttonEvent.y), button, modifiers, buttonEvent.clicks));
                             }
 
                             break;
@@ -315,7 +321,7 @@ namespace OpenTK.Platform.Native.SDL
 
                             // FIXME: should we use the precise values instead?
                             SDLMouseComponent.RegisterMouseWheelDelta(scroll);
-                            EventQueue.Raise(sdlWindow, PlatformEventType.Scroll, new ScrollEventArgs(sdlWindow, scroll, distance));
+                            Toolkit.Event.RaiseEvent(new ScrollEventArgs(sdlWindow, scroll, distance));
 
                             break;
                         }
@@ -326,7 +332,7 @@ namespace OpenTK.Platform.Native.SDL
                             if (SDL_HasClipboardText() == 1) newFormat = ClipboardFormat.Text;
                             else newFormat = ClipboardFormat.None;
 
-                            EventQueue.Raise(null, PlatformEventType.ClipboardUpdate, new ClipboardUpdateEventArgs(newFormat));
+                            Toolkit.Event.RaiseEvent(new ClipboardUpdateEventArgs(newFormat));
 
                             break;
                         }
@@ -353,7 +359,7 @@ namespace OpenTK.Platform.Native.SDL
                                 // The documentation says SDL_GetGlobalMouseState might be slower than SDL_GetMouseState.
                                 SDL_GetGlobalMouseState(out int mouseX, out int mouseY);
 
-                                EventQueue.Raise(sdlWindow, PlatformEventType.FileDrop, new FileDropEventArgs(sdlWindow, drops.ToList(), new Vector2i(mouseX, mouseY)));
+                                Toolkit.Event.RaiseEvent(new FileDropEventArgs(sdlWindow, drops.ToList(), new Vector2i(mouseX, mouseY)));
                             }
                             break;
                         }
@@ -370,7 +376,7 @@ namespace OpenTK.Platform.Native.SDL
                             
                             string input = Encoding.UTF8.GetString(span);
 
-                            EventQueue.Raise(sdlWindow, PlatformEventType.TextInput, new TextInputEventArgs(sdlWindow, input));
+                            Toolkit.Event.RaiseEvent(new TextInputEventArgs(sdlWindow, input));
 
                             break;
                         }
@@ -392,15 +398,14 @@ namespace OpenTK.Platform.Native.SDL
 
                             string candidate = Encoding.UTF8.GetString(span);
 
-                            EventQueue.Raise(sdlWindow, PlatformEventType.TextEditing, new TextEditingEventArgs(sdlWindow, candidate, textEditingEvent.start, textEditingEvent.length));
+                            Toolkit.Event.RaiseEvent(new TextEditingEventArgs(sdlWindow, candidate, textEditingEvent.start, textEditingEvent.length));
 
                             break;
                         }
                     case SDL_EventType.SDL_KEYMAPCHANGED:
                         {
                             // FIXME: How should we deal with not having the proper information here?
-                            EventQueue.Raise(null, PlatformEventType.InputLanguageChanged, new InputLanguageChangedEventArgs(null, null, null, null));
-
+                            Toolkit.Event.RaiseEvent(new InputLanguageChangedEventArgs(new InputLanguage(System.Globalization.CultureInfo.CurrentCulture, "unknown")));
                             break;
                         }
                     case SDL_EventType.SDL_KEYDOWN:
@@ -425,11 +430,11 @@ namespace OpenTK.Platform.Native.SDL
 
                             if (keyboardEvent.type == SDL_EventType.SDL_KEYDOWN)
                             {
-                                EventQueue.Raise(sdlWindow, PlatformEventType.KeyDown, new KeyDownEventArgs(sdlWindow, key, scancode, repeat, modifiers));
+                                Toolkit.Event.RaiseEvent(new KeyDownEventArgs(sdlWindow, key, scancode, repeat, modifiers));
                             }
                             else if (keyboardEvent.type == SDL_EventType.SDL_KEYUP)
                             {
-                                EventQueue.Raise(sdlWindow, PlatformEventType.KeyUp, new KeyUpEventArgs(sdlWindow, key, scancode, modifiers));
+                                Toolkit.Event.RaiseEvent(new KeyUpEventArgs(sdlWindow, key, scancode, modifiers));
                             }
 
                             break;
@@ -443,11 +448,29 @@ namespace OpenTK.Platform.Native.SDL
 
                             break;
                         }
+                    case SDL_EventType.SDL_JOYDEVICEADDED:
+                    case SDL_EventType.SDL_JOYDEVICEREMOVED:
+                        {
+                            SDL_JoyDeviceEvent joystickDeviceEvent = @event.JoyDeviceEvent;
+
+                            (Toolkit.Joystick as SDLJoystickComponent)?.JoystickAddedOrRemoved(joystickDeviceEvent);
+
+                            break;
+                        }
+                    case SDL_EventType.SDL_JOYAXISMOTION:
+                    case SDL_EventType.SDL_JOYBALLMOTION:
+                    case SDL_EventType.SDL_JOYBATTERYUPDATED:
+                    case SDL_EventType.SDL_JOYBUTTONDOWN:
+                    case SDL_EventType.SDL_JOYBUTTONUP:
+                    case SDL_EventType.SDL_JOYHATMOTION:
+                        break;
                     default:
                         Console.WriteLine($"SDL event type: {@event.Type}");
                         break;
                 }
             }
+
+            SDL_JoystickUpdate();
         }
 
         /// <inheritdoc/>
@@ -776,8 +799,8 @@ namespace OpenTK.Platform.Native.SDL
 
             SDL_GetWindowMaximumSize(window.Window, out w, out h);
 
-            width = w != 0 ? w : null;
-            height = h != 0 ? h : null;
+            width = w != int.MaxValue ? w : null;
+            height = h != int.MaxValue ? h : null;
         }
 
         /// <inheritdoc/>
@@ -787,7 +810,9 @@ namespace OpenTK.Platform.Native.SDL
 
             // FIXME: Is this client area or windowEvent??
 
-            SDL_SetWindowMaximumSize(window.Window, width ?? 0, height ?? 0);
+            SDL_SetWindowMaximumSize(window.Window, width ?? int.MaxValue, height ?? int.MaxValue);
+
+            var a = SDL_GetError();
         }
 
         /// <inheritdoc/>
@@ -809,6 +834,8 @@ namespace OpenTK.Platform.Native.SDL
             SDLWindow window = handle.As<SDLWindow>(this);
 
             SDL_SetWindowMinimumSize(window.Window, width ?? 0, height ?? 0);
+
+            var a = SDL_GetError();
         }
 
         /// <inheritdoc/>
@@ -1276,6 +1303,13 @@ namespace OpenTK.Platform.Native.SDL
 
             scaleX = pixelWidth / (float)width;
             scaleY = pixelHeight / (float)height;
+        }
+
+        /// <inheritdoc/>
+        public OpenGLContextHandle? GetOpenGLContext(WindowHandle handle)
+        {
+            SDLWindow window = handle.As<SDLWindow>(this);
+            return window.OpenGLContextHandle;
         }
     }
 }

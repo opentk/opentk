@@ -1,6 +1,62 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
+
 namespace OpenTK.Platform
 {
 #nullable enable
+
+    /// <summary>
+    /// Represents a input language + keyboard layout name combination.
+    /// </summary>
+    public readonly struct InputLanguage : IEquatable<InputLanguage>
+    {
+        /// <summary>
+        /// The current culture/language used for input. The input language.
+        /// </summary>
+        public readonly CultureInfo Culture { get; }
+        /// <summary>
+        /// A display string representing the keyboard layout name.
+        /// </summary>
+        public readonly string LayoutName { get; }
+
+        public InputLanguage(CultureInfo culture, string layoutName)
+        {
+            Culture = culture;
+            LayoutName = layoutName;
+        }
+
+        public override bool Equals(object? obj)
+        {
+            return obj is InputLanguage language && Equals(language);
+        }
+
+        public bool Equals(InputLanguage other)
+        {
+            return EqualityComparer<CultureInfo>.Default.Equals(Culture, other.Culture) &&
+                   LayoutName == other.LayoutName;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Culture, LayoutName);
+        }
+
+        public override string? ToString()
+        {
+            return $"{Culture} - {LayoutName}";
+        }
+
+        public static bool operator ==(InputLanguage left, InputLanguage right)
+        {
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(InputLanguage left, InputLanguage right)
+        {
+            return !(left == right);
+        }
+    }
 
     /// <summary>
     /// Interaface for keyboard interaction, keyboard layouts and IME.
@@ -23,18 +79,17 @@ namespace OpenTK.Platform
         bool SupportsIme { get; }
 
         /// <summary>
-        /// Get the active keyboard layout.
+        /// Get the active input language + keyboard layout.
         /// </summary>
-        /// <param name="handle">(optional) Handle to a window to query the layout for. Ignored on systems where keyboard layout is global.</param>
-        /// <returns>A string which describes the active keyboard layout.</returns>
-        /// <exception cref="PalNotImplementedException">Driver cannot query active keyboard layout.</exception>
-        string GetActiveKeyboardLayout(WindowHandle? handle);
+        /// <param name="handle">Handle to a window to query the layout for. Ignored on systems where keyboard layout is global.</param>
+        /// <returns>The currently active input language and keyboard layout.</returns>
+        InputLanguage GetActiveInputLanguage(WindowHandle? handle);
 
         /// <summary>
-        /// See list of possible keyboard layouts for this system.
+        /// See list of installed input language + keyboard layout combinations for this system.
         /// </summary>
-        /// <returns>Array containing possible keyboard layouts.</returns>
-        string[] GetAvailableKeyboardLayouts();
+        /// <returns>Array containing installed input language + keyboard layout combinations.</returns>
+        InputLanguage[] GetInstalledInputLanguages();
 
         /// <summary>
         /// Gets the <see cref="Scancode"/> associated with the specified <see cref="Key"/>.

@@ -22,11 +22,15 @@ namespace OpenTK.Platform.Native.SDL
         /// <inheritdoc/>
         public ILogger? Logger { get; set; }
 
+        internal List<SDLJoystick> Joysticks = new List<SDLJoystick>();
+
         /// <inheritdoc/>
         public void Initialize(ToolkitOptions options)
         {
-            SDL_JoystickUpdate();
-            Console.WriteLine( $"{SDL_NumJoysticks()} joysticks connected." );
+            //SDL_JoystickUpdate();
+            SDL_JoystickEventState(1);
+            //SDL_SetHint("SDL_JOYSTICK_ALLOW_BACKGROUND_EVENTS", "1");
+            Logger?.LogDebug($"{SDL_NumJoysticks()} joysticks connected.");
         }
 
         /// <inheritdoc/>
@@ -35,66 +39,68 @@ namespace OpenTK.Platform.Native.SDL
             // FIXME: Do cleanup..
         }
 
-        // FIXME: 0 is probably not a good value to have here?
-        // Should we copy the XInput values from the windows backend?
-        /// <inheritdoc/>
-        public float LeftDeadzone => 0;
-        /// <inheritdoc/>
-        public float RightDeadzone => 0;
-        /// <inheritdoc/>
-        public float TriggerThreshold => 0;
-
-        /// <inheritdoc/>
-        public bool IsConnected(int index)
+        internal void JoystickAddedOrRemoved(SDL_JoyDeviceEvent deviceEvent)
         {
-            // FIXME: This is probably the wrong check
-            return SDL_IsGameController(index);
+            if (deviceEvent.type == SDL_EventType.SDL_JOYDEVICEADDED)
+            {
+                // FIXME: Rebuild the entire list?
+                SDL_Joystick* joystick = SDL_JoystickOpen(deviceEvent.which);
+                SDL_JoystickID instanceID = SDL_JoystickInstanceID(joystick);
+                Joysticks.Add(new SDLJoystick(joystick, instanceID));
+            }
+            else if (deviceEvent.type == SDL_EventType.SDL_JOYDEVICEREMOVED)
+            {
+                SDL_JoystickID instanceID = (SDL_JoystickID)deviceEvent.which;
+                var joystick = Joysticks.Find(j => j.InstanceID == instanceID);
+                Joysticks.Remove(joystick);
+                joystick.InstanceID = (SDL_JoystickID)0;
+                joystick.Joystick = null;
+            }
+            else
+            {
+                throw new InvalidOperationException();
+            }
         }
 
+        /// <inheritdoc/>
+        public int GetJoystickCount()
+        {
+            return SDL_NumJoysticks();
+        }
+        
         /// <inheritdoc/>
         public JoystickHandle Open(int index)
         {
             // FIXME: Error check so we don't open a game controller that is outside of the range.
 
-            // FIXME: What does index mean here? Do we really mean player index instead of index?
-            SDL_GameController* gameController = SDL_GameControllerOpen(index);
-            if (gameController == null)
-            {
-                string error = SDL_GetError();
-                throw new PalException(this, $"SDL failed to open game controller with index {index}: {error}");
-            }
-
-            return new SDLJoystick(gameController);
+            return Joysticks[index];
         }
 
         /// <inheritdoc/>
-        public void Close(JoystickHandle handle)
+        public void Close(JoystickHandle joystick)
         {
-            SDLJoystick joystick = handle.As<SDLJoystick>(this);
+            SDLJoystick sdljoystick = joystick.As<SDLJoystick>(this);
 
-            SDL_GameControllerClose(joystick.GameController);
-            joystick.GameController = null;
+            
         }
 
         /// <inheritdoc/>
-        public Guid GetGuid(JoystickHandle handle)
+        public Guid GetGuid(JoystickHandle joystick)
         {
-            SDLJoystick joystick = handle.As<SDLJoystick>(this);
+            SDLJoystick sdljoystick = joystick.As<SDLJoystick>(this);
 
-            SDL_Joystick* stick = SDL_GameControllerGetJoystick(joystick.GameController);
-
-            SDL_JoystickGUID guid = SDL_JoystickGetGUID(stick);
+            SDL_JoystickGUID guid = SDL_JoystickGetGUID(sdljoystick.Joystick);
 
             // FIXME: Is the endianness correct here??
             return new Guid(new ReadOnlySpan<byte>(guid.data, 16));
         }
 
         /// <inheritdoc/>
-        public string GetName(JoystickHandle handle)
+        public string GetName(JoystickHandle joystick)
         {
-            SDLJoystick joystick = handle.As<SDLJoystick>(this);
+            SDLJoystick sdljoystick = joystick.As<SDLJoystick>(this);
 
-            char* name = SDL_GameControllerName(joystick.GameController);
+            char* name = SDL_JoystickName(sdljoystick.Joystick);
             if (name == null)
             {
                 string error = SDL_GetError();
@@ -105,129 +111,11 @@ namespace OpenTK.Platform.Native.SDL
         }
 
         /// <inheritdoc/>
-        public float GetAxis(JoystickHandle handle, JoystickAxis axis)
+        public bool TryGetBatteryInfo(JoystickHandle joystick, out GamepadBatteryInfo batteryInfo)
         {
-            SDLJoystick joystick = handle.As<SDLJoystick>(this);
+            SDLJoystick sdljoystick = joystick.As<SDLJoystick>(this);
 
-            SDL_GameControllerAxis sdlAxis;
-            switch (axis)
-            {
-                case JoystickAxis.LeftXAxis:
-                    sdlAxis = SDL_GameControllerAxis.SDL_CONTROLLER_AXIS_LEFTX;
-                    break;
-                case JoystickAxis.LeftYAxis:
-                    sdlAxis = SDL_GameControllerAxis.SDL_CONTROLLER_AXIS_LEFTY;
-                    break;
-                case JoystickAxis.RightYAxis:
-                    sdlAxis = SDL_GameControllerAxis.SDL_CONTROLLER_AXIS_RIGHTY;
-                    break;
-                case JoystickAxis.RightXAxis:
-                    sdlAxis = SDL_GameControllerAxis.SDL_CONTROLLER_AXIS_RIGHTX;
-                    break;
-                case JoystickAxis.LeftTrigger:
-                    sdlAxis = SDL_GameControllerAxis.SDL_CONTROLLER_AXIS_TRIGGERLEFT;
-                    break;
-                case JoystickAxis.RightTrigger:
-                    sdlAxis = SDL_GameControllerAxis.SDL_CONTROLLER_AXIS_TRIGGERRIGHT;
-                    break;
-                default:
-                    throw new InvalidEnumArgumentException(nameof(axis), (int)axis, axis.GetType());
-            }
-
-            short value = SDL_GameControllerGetAxis(joystick.GameController, sdlAxis);
-
-            // [-32768, 32767] -> [-32767.5, 32767.5] -> [-1, 1]
-            return (value + 0.5f) / 32767.5f;
-        }
-
-        /// <inheritdoc/>
-        public bool GetButton(JoystickHandle handle, JoystickButton button)
-        {
-            SDLJoystick joystick = handle.As<SDLJoystick>(this);
-
-            SDL_GameControllerButton sdlButton;
-            switch (button)
-            {
-                case JoystickButton.A:
-                    sdlButton = SDL_GameControllerButton.SDL_CONTROLLER_BUTTON_A;
-                    break;
-                case JoystickButton.B:
-                    sdlButton = SDL_GameControllerButton.SDL_CONTROLLER_BUTTON_B;
-                    break;
-                case JoystickButton.X:
-                    sdlButton = SDL_GameControllerButton.SDL_CONTROLLER_BUTTON_X;
-                    break;
-                case JoystickButton.Y:
-                    sdlButton = SDL_GameControllerButton.SDL_CONTROLLER_BUTTON_Y;
-                    break;
-                case JoystickButton.Start:
-                    sdlButton = SDL_GameControllerButton.SDL_CONTROLLER_BUTTON_START;
-                    break;
-                case JoystickButton.Back:
-                    sdlButton = SDL_GameControllerButton.SDL_CONTROLLER_BUTTON_BACK;
-                    break;
-                case JoystickButton.LeftThumb:
-                    sdlButton = SDL_GameControllerButton.SDL_CONTROLLER_BUTTON_LEFTSTICK;
-                    break;
-                case JoystickButton.RightThumb:
-                    sdlButton = SDL_GameControllerButton.SDL_CONTROLLER_BUTTON_RIGHTSTICK;
-                    break;
-                case JoystickButton.LeftShoulder:
-                    sdlButton = SDL_GameControllerButton.SDL_CONTROLLER_BUTTON_LEFTSHOULDER;
-                    break;
-                case JoystickButton.RightShoulder:
-                    sdlButton = SDL_GameControllerButton.SDL_CONTROLLER_BUTTON_RIGHTSHOULDER;
-                    break;
-                case JoystickButton.DPadUp:
-                    sdlButton = SDL_GameControllerButton.SDL_CONTROLLER_BUTTON_DPAD_UP;
-                    break;
-                case JoystickButton.DPadDown:
-                    sdlButton = SDL_GameControllerButton.SDL_CONTROLLER_BUTTON_DPAD_DOWN;
-                    break;
-                case JoystickButton.DPadLeft:
-                    sdlButton = SDL_GameControllerButton.SDL_CONTROLLER_BUTTON_DPAD_LEFT;
-                    break;
-                case JoystickButton.DPadRight:
-                    sdlButton = SDL_GameControllerButton.SDL_CONTROLLER_BUTTON_DPAD_RIGHT;
-                    break;
-                default:
-                    throw new InvalidEnumArgumentException(nameof(button), (int)button, button.GetType());
-            }
-
-            byte value = SDL_GameControllerGetButton(joystick.GameController, sdlButton);
-
-            return value == 1;
-        }
-
-        /// <inheritdoc/>
-        public bool SetVibration(JoystickHandle handle, float lowFreqIntensity, float highFreqIntensity)
-        {
-            SDLJoystick joystick = handle.As<SDLJoystick>(this);
-
-            ushort low = (ushort)(lowFreqIntensity * 0xFFFF);
-            ushort high = (ushort)(highFreqIntensity * 0xFFFF);
-
-            // FIXME: Maybe we should do like SDL and add a time to the rumble.
-            // For now we just do the max time, which is about 49 days, should be enough.
-            // - 2023-04-18 Noggin_bops
-            int result = SDL_GameControllerRumble(joystick.GameController, low, high, uint.MaxValue);
-
-            return result == 0;
-        }
-
-        /// <inheritdoc/>
-        public bool TryGetBatteryInfo(JoystickHandle handle, out GamepadBatteryInfo batteryInfo)
-        {
-            SDLJoystick joystick = handle.As<SDLJoystick>(this);
-
-            SDL_Joystick* stick = SDL_GameControllerGetJoystick(joystick.GameController);
-            if (stick == null)
-            {
-                string error = SDL_GetError();
-                throw new PalException(this, $"SDL failed to get joystick: {error}");
-            }
-
-            SDL_JoystickPowerLevel level = SDL_JoystickCurrentPowerLevel(stick);
+            SDL_JoystickPowerLevel level = SDL_JoystickCurrentPowerLevel(sdljoystick.Joystick);
 
             batteryInfo.BatteryType = GamepadBatteryType.Unknown;
 
@@ -240,25 +128,133 @@ namespace OpenTK.Platform.Native.SDL
             switch (level)
             {
                 case SDL_JoystickPowerLevel.SDL_JOYSTICK_POWER_EMPTY:
-                    batteryInfo.ChargeLevel = 5;
+                    batteryInfo.ChargeLevel = 0.05f;
                     break;
                 case SDL_JoystickPowerLevel.SDL_JOYSTICK_POWER_LOW:
-                    batteryInfo.ChargeLevel = 20;
+                    batteryInfo.ChargeLevel = 0.2f;
                     break;
                 case SDL_JoystickPowerLevel.SDL_JOYSTICK_POWER_MEDIUM:
-                    batteryInfo.ChargeLevel = 70;
+                    batteryInfo.ChargeLevel = 0.7f;
                     break;
                 case SDL_JoystickPowerLevel.SDL_JOYSTICK_POWER_FULL:
-                    batteryInfo.ChargeLevel = 100;
+                    batteryInfo.ChargeLevel = 1.0f;
                     break;
                 case SDL_JoystickPowerLevel.SDL_JOYSTICK_POWER_WIRED:
-                    batteryInfo.ChargeLevel = 100;
+                    batteryInfo.ChargeLevel = 1.0f;
+                    batteryInfo.BatteryType = GamepadBatteryType.Wired;
                     break;
                 default:
                     throw new PalException(this, $"Got unknown power level from SDL: {level}");
             }
 
             return true;
+        }
+
+        /// <inheritdoc/>
+        public JoystickCapabilities GetCapabilities(JoystickHandle joystick)
+        {
+            SDLJoystick sdljoystick = joystick.As<SDLJoystick>(this);
+
+            JoystickCapabilities caps = 0;
+
+            if (SDL_JoystickHasRumble(sdljoystick.Joystick))
+                caps |= JoystickCapabilities.Rumble;
+
+            return caps;
+        }
+
+        /// <inheritdoc/>
+        public int GetNumberOfAxes(JoystickHandle joystick)
+        {
+            SDLJoystick sdljoystick = joystick.As<SDLJoystick>(this);
+
+            return SDL_JoystickNumAxes(sdljoystick.Joystick);
+        }
+
+        /// <inheritdoc/>
+        public float GetAxis(JoystickHandle joystick, int axis)
+        {
+            SDLJoystick sdljoystick = joystick.As<SDLJoystick>(this);
+
+            short value = SDL_JoystickGetAxis(sdljoystick.Joystick, axis);
+
+            // [-32768, 32767] -> [-32767.5, 32767.5] -> [-1, 1]
+            return (value + 0.5f) / 32767.5f;
+        }
+
+        /// <inheritdoc/>
+        public int GetNumberOfButtons(JoystickHandle joystick)
+        {
+            SDLJoystick sdljoystick = joystick.As<SDLJoystick>(this);
+
+            return SDL_JoystickNumButtons(sdljoystick.Joystick);
+        }
+
+        /// <inheritdoc/>
+        public bool GetButton(JoystickHandle joystick, int button)
+        {
+            SDLJoystick sdljoystick = joystick.As<SDLJoystick>(this);
+
+            byte value = SDL_JoystickGetButton(sdljoystick.Joystick, button);
+
+            return value == 1;
+        }
+
+        /// <inheritdoc/>
+        public int GetNumberOfHats(JoystickHandle joystick)
+        {
+            SDLJoystick sdljoystick = joystick.As<SDLJoystick>(this);
+
+            return SDL_JoystickNumHats(sdljoystick.Joystick);
+        }
+
+        /// <inheritdoc/>
+        public HatState GetHat(JoystickHandle joystick, int hat)
+        {
+            SDLJoystick sdljoystick = joystick.As<SDLJoystick>(this);
+
+            int value = SDL_JoystickGetHat(sdljoystick.Joystick, hat);
+
+            switch (value)
+            {
+                case SDL_HAT_CENTERED:
+                    return HatState.Centered;
+                case SDL_HAT_UP:
+                    return HatState.Up;
+                case SDL_HAT_RIGHT:
+                    return HatState.Right;
+                case SDL_HAT_DOWN:
+                    return HatState.Down;
+                case SDL_HAT_LEFT:
+                    return HatState.Left;
+                case SDL_HAT_RIGHTUP:
+                    return HatState.RightUp;
+                case SDL_HAT_RIGHTDOWN:
+                    return HatState.RightDown;
+                case SDL_HAT_LEFTUP:
+                    return HatState.LeftUp;
+                case SDL_HAT_LEFTDOWN:
+                    return HatState.LeftDown;
+                default:
+                    Logger?.LogWarning($"SDL returned {value} as the hat state, this is not documented behaviour.");
+                    return 0;
+            }
+        }
+
+        /// <inheritdoc/>
+        public bool SetRumble(JoystickHandle joystick, float lowFreqIntensity, float highFreqIntensity)
+        {
+            SDLJoystick sdljoystick = joystick.As<SDLJoystick>(this);
+
+            ushort low = (ushort)(lowFreqIntensity * 0xFFFF);
+            ushort high = (ushort)(highFreqIntensity * 0xFFFF);
+
+            // FIXME: Maybe we should do like SDL and add a time to the rumble.
+            // For now we just do the max time, which is about 49 days, should be enough.
+            // - 2023-04-18 Noggin_bops
+            int result = SDL_JoystickRumble(sdljoystick.Joystick, low, high, uint.MaxValue);
+
+            return result == 0;
         }
     }
 }

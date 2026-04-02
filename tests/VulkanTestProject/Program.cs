@@ -51,7 +51,7 @@ namespace VulkanTestProject
             ToolkitOptions options = new ToolkitOptions() { ApplicationName = "PAL2 Vulkan test app", Logger = new ConsoleLogger(), FeatureFlags = ToolkitFlags.EnableVulkan };
             Toolkit.Init(options);
 
-            EventQueue.EventRaised += EventQueue_EventRaised;
+            Toolkit.Event.EventRaised += EventQueue_EventRaised;
 
             // FIXME: How do we create a window for OpenGL vs Vulkan?
             Window = Toolkit.Window.Create(new VulkanGraphicsApiHints());
@@ -573,7 +573,7 @@ namespace VulkanTestProject
                 imgViewCreate.pNext = null;
                 imgViewCreate.flags = 0;
                 imgViewCreate.image = swapchainImages[i];
-                imgViewCreate.viewType = VkImageViewType.ImageViewType2d;
+                imgViewCreate.viewType = VkImageViewType.ImageViewType2D;
                 imgViewCreate.format = SwapchainFormat.format;
                 imgViewCreate.components.r = VkComponentSwizzle.ComponentSwizzleIdentity;
                 imgViewCreate.components.g = VkComponentSwizzle.ComponentSwizzleIdentity;
@@ -724,7 +724,7 @@ namespace VulkanTestProject
             Vk.DestroyInstance(VulkanInstance, null);
         }
 
-        private static void EventQueue_EventRaised(PalHandle? handle, PlatformEventType type, EventArgs args)
+        private static void EventQueue_EventRaised(EventArgs args)
         {
             if (args is CloseEventArgs close)
             {
@@ -956,7 +956,7 @@ namespace VulkanTestProject
                 imgViewCreate.pNext = null;
                 imgViewCreate.flags = 0;
                 imgViewCreate.image = swapchainImages[i];
-                imgViewCreate.viewType = VkImageViewType.ImageViewType2d;
+                imgViewCreate.viewType = VkImageViewType.ImageViewType2D;
                 imgViewCreate.format = SwapchainFormat.format;
                 imgViewCreate.components.r = VkComponentSwizzle.ComponentSwizzleIdentity;
                 imgViewCreate.components.g = VkComponentSwizzle.ComponentSwizzleIdentity;

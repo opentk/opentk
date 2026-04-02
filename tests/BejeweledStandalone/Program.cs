@@ -55,7 +55,7 @@ namespace Bejeweled
 
             Logger.LogInfo($"Current path: {Directory.GetCurrentDirectory()}");
 
-            EventQueue.EventRaised += EventQueue_EventRaised;
+            Toolkit.Event.EventRaised += EventQueue_EventRaised;
 
             ToolkitOptions options = new ToolkitOptions()
             {
@@ -146,7 +146,7 @@ namespace Bejeweled
             }
 
             DisplayHandle mainDisplay = Toolkit.Display.OpenPrimary();
-            Toolkit.Display.GetWorkArea(mainDisplay, out Box2i workArea);
+            Box2i workArea = Toolkit.Display.GetWorkArea(mainDisplay);
             int minWorkDimention = Math.Max(400, (int)(Math.Min(workArea.Height, workArea.Width) * 0.9f));
 
             Window = Toolkit.Window.Create(openglSettings);
@@ -270,7 +270,7 @@ namespace Bejeweled
             Logger.Flush();
         }
 
-        private static void EventQueue_EventRaised(PalHandle? handle, PlatformEventType type, EventArgs args)
+        private static void EventQueue_EventRaised(EventArgs args)
         {
             // Close the window when the users closes the window.
             if (args is CloseEventArgs close)

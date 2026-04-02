@@ -286,9 +286,10 @@ namespace OpenTK.Platform.Native.X11
                 glxWindow = Glx.CreateWindow(X11.Display, window.FBConfig!.Value, window.Window, (int*)null);
             }
 
-            XOpenGLContextHandle contextHandle = new XOpenGLContextHandle(window.Display, context, glxWindow, window.Window, sharedContext, window.ContextValues);
-
+            XOpenGLContextHandle contextHandle = new XOpenGLContextHandle(window.Display, context, glxWindow, window.Window, window, sharedContext, window.ContextValues);
             contextDict[contextHandle.Context] = contextHandle;
+
+            window.OpenGLContextHandle = contextHandle;
 
             return contextHandle;
         }
@@ -296,10 +297,17 @@ namespace OpenTK.Platform.Native.X11
         /// <inheritdoc/>
         public void DestroyContext(OpenGLContextHandle handle)
         {
-            var xhandle = handle.As<XOpenGLContextHandle>(this);
+            XOpenGLContextHandle context = handle.As<XOpenGLContextHandle>(this);
+            contextDict.Remove(context.Context);
+
+            if (context.WindowHandle != null)
+            {
+                context.WindowHandle.OpenGLContextHandle = null;
+            }
+
             // FIXME: Remove the glxWindow from the window handle!
-            Glx.DestroyWindow(X11.Display, xhandle.GLXWindow);
-            Glx.DestroyContext(X11.Display, xhandle.Context);
+            Glx.DestroyWindow(X11.Display, context.GLXWindow);
+            Glx.DestroyContext(X11.Display, context.Context);
         }
 
         /// <inheritdoc/>
@@ -457,6 +465,13 @@ namespace OpenTK.Platform.Native.X11
         {
             XOpenGLContextHandle context = handle.As<XOpenGLContextHandle>(this);
             Glx.SwapBuffers(context.Display, (GLXDrawable)context.GLXWindow);
+        }
+
+        /// <inheritdoc/>
+        public WindowHandle? GetWindow(OpenGLContextHandle handle)
+        {
+            XOpenGLContextHandle context = handle.As<XOpenGLContextHandle>(this);
+            return context.WindowHandle;
         }
 
         /// <summary>
