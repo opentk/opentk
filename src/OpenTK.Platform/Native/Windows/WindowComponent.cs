@@ -1109,7 +1109,7 @@ namespace OpenTK.Platform.Native.Windows
             }
         }
 
-        // 512 should be enough space to handle 16k Hz mouse at 30fps without
+        // 512 should be enough space to handle 16k Hz mouse at 30fps without blocking
         // - Noggin_bops 2026-04-01
         private BlockingCollection<Vector2> RawMouseInputQueue = new BlockingCollection<Vector2>(512);
         private Thread? RawInputThread = null;
