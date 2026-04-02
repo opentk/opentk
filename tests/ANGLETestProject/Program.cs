@@ -12,7 +12,7 @@ namespace ANGLETestProject
     {
         static void Main(string[] args)
         {
-            EventQueue.EventRaised += EventQueue_EventRaised;
+            Toolkit.Event.EventRaised += EventQueue_EventRaised;
 
             Toolkit.Init(new ToolkitOptions() { ApplicationName = "ANGLE Test", Logger = new ConsoleLogger(), FeatureFlags = ToolkitFlags.EnableOpenGL | ToolkitFlags.PreferANGLE });
 
@@ -45,7 +45,7 @@ namespace ANGLETestProject
             }
         }
 
-        private static void EventQueue_EventRaised(PalHandle? handle, PlatformEventType type, EventArgs args)
+        private static void EventQueue_EventRaised(EventArgs args)
         {
             if (args is CloseEventArgs close)
             {

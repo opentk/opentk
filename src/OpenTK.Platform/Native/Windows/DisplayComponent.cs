@@ -13,7 +13,6 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.Marshalling;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace OpenTK.Platform.Native.Windows
 {
@@ -390,19 +389,83 @@ namespace OpenTK.Platform.Native.Windows
                         Debug.Assert(info.DeviceName == monitor.DeviceName);
                         Debug.Assert(info.PublicName == monitor.DeviceString);
 
+                        // FIXME: Linear search for thing we've already found...
+                        DisplayValuesChangedEventArgs valuesChanged = new DisplayValuesChangedEventArgs(_displays.IndexOf(info));
+
+                        // FIXME: Some way to notify the user that a new monitor is the primary monitor...?
+                        // - Noggin_bops 2025-12-12
                         info.IsPrimary = adapter.StateFlags.HasFlag(DisplayDeviceStateFlags.PrimaryDevice);
 
+                        if (info.Position != lpDevMode.dmPosition)
+                        {
+                            valuesChanged.VirtualPositionChanged = true;
+                        }
+
+                        if (info.RefreshRate != lpDevMode.dmDisplayFrequency)
+                        {
+                            valuesChanged.RefreshRateChanged = true;
+                        }
+
+                        if (info.BitsPerPixel != (int)lpDevMode.dmBitsPerPel)
+                        {
+                            valuesChanged.BitsPerPixelChanged = true;
+                        }
+
+                        if (info.Resolution != new DisplayResolution((int)lpDevMode.dmPelsWidth, (int)lpDevMode.dmPelsHeight))
+                        {
+                            valuesChanged.ResolutionChanged = true;
+                        }
+
+                        if (info.WorkArea != workArea)
+                        {
+                            valuesChanged.WorkAreaChanged = true;
+                        }
+
+                        // FIXME: Do we have a way to check if the display scale has changed?
+                        // FIXME: Check if color info has changed.
+
                         info.Position = lpDevMode.dmPosition;
+                        // FIXME: This is not necessarily the correct refresh rate to compare against!
                         info.RefreshRate = lpDevMode.dmDisplayFrequency;
                         info.BitsPerPixel = (int)lpDevMode.dmBitsPerPel;
                         info.Resolution = new DisplayResolution((int)lpDevMode.dmPelsWidth, (int)lpDevMode.dmPelsHeight);
                         info.WorkArea = workArea;
+
+                        if (valuesChanged.AnythingChanged)
+                        {
+                            Toolkit.Event.RaiseEvent(valuesChanged);
+                        }
+                    }
+
+                    // Update supported video modes
+                    {
+                        info.SupportedVideoModes.Clear();
+
+                        int modeIndex = 0;
+                        do
+                        {
+                            // FIXME: What do we do with duplicated video modes?
+                            // For now we keep them, but there is no possibility of
+                            // differentiating them.
+                            // Should we decide or should we pass platform specific info to the user?
+
+                            // Most duplicated come from each video mode having three different dmDisplayFixedOutput version.
+                            // Default, centered, and streched. We could either add this destinction or just ignore non-default modes.
+                            // - noggin_bops 2026-03-24
+
+                            const DM RequiredFields = DM.PelsWidth | DM.PelsHeight | DM.DisplayFrequency;
+
+                            if ((lpDevMode.dmFields & RequiredFields) != RequiredFields)
+                                throw new Win32Exception($"Adapter setting {modeIndex - 1} didn't have all required fields set. dmFields={lpDevMode.dmFields}, requiredFields={RequiredFields}");
+
+                            info.SupportedVideoModes.Add(new VideoMode((int)lpDevMode.dmPelsWidth, (int)lpDevMode.dmPelsHeight, lpDevMode.dmDisplayFrequency, (int)lpDevMode.dmBitsPerPel));
+
+                            lpDevMode.dmSize = (ushort)Marshal.SizeOf<Win32.DEVMODE>();
+                        }
+                        while (Win32.EnumDisplaySettings(info.AdapterName, (uint)modeIndex++, ref lpDevMode));
                     }
                 }
             }
-
-            // Console.WriteLine();
-            // Console.WriteLine();
 
             unsafe {
                 foreach (var display in newDisplays)
@@ -529,7 +592,7 @@ namespace OpenTK.Platform.Native.Windows
 
                 if (sendEvents)
                 {
-                    EventQueue.Raise(removed, PlatformEventType.DisplayConnectionChanged, new DisplayConnectionChangedEventArgs(removed, true));
+                    Toolkit.Event.RaiseEvent(new DisplayConnectionChangedEventArgs(removed, true));
                     logger?.LogDebug($"Removed: {removed.DeviceName} (WasPrimary: {removed.IsPrimary}, Refresh: {removed.RefreshRate}, Res: {removed.Resolution})");
                 }
             }
@@ -540,7 +603,7 @@ namespace OpenTK.Platform.Native.Windows
 
                 if (sendEvents)
                 {
-                    EventQueue.Raise(connected, PlatformEventType.DisplayConnectionChanged, new DisplayConnectionChangedEventArgs(connected, false));
+                    Toolkit.Event.RaiseEvent(new DisplayConnectionChangedEventArgs(connected, false));
                     logger?.LogDebug($"Connected: {connected.DeviceName} (IsPrimary: {connected.IsPrimary}, Refresh: {connected.RefreshRate}, Res: {connected.Resolution})");
                 }
             }
@@ -694,11 +757,11 @@ namespace OpenTK.Platform.Native.Windows
         }
 
         /// <inheritdoc/>
-        public void GetVideoMode(DisplayHandle handle, out VideoMode mode)
+        public VideoMode GetVideoMode(DisplayHandle handle)
         {
             HMonitor hmonitor = handle.As<HMonitor>(this);
 
-            mode = new VideoMode(
+            return new VideoMode(
                 hmonitor.Resolution.ResolutionX,
                 hmonitor.Resolution.ResolutionY,
                 hmonitor.RefreshRate,
@@ -710,68 +773,42 @@ namespace OpenTK.Platform.Native.Windows
         {
             HMonitor hmonitor = handle.As<HMonitor>(this);
 
-            // Unfortunately we don't know the size of the array we are going to create in advance
-            List<VideoMode> modes = new List<VideoMode>(32);
-
-            int modeIndex = 0;
-            Win32.DEVMODE lpDevMode = default;
-            lpDevMode.dmSize = (ushort)Marshal.SizeOf<Win32.DEVMODE>();
-            while (Win32.EnumDisplaySettings(hmonitor.AdapterName, (uint)modeIndex++, ref lpDevMode))
-            {
-                // FIXME: What do we do with duplicated video modes?
-                // For now we keep them, but there is no possibility of
-                // differentiating them.
-                // Should we decide or should we pass platform specific info to the user?
-
-                const DM RequiredFields = DM.PelsWidth | DM.PelsHeight | DM.DisplayFrequency;
-
-                if ((lpDevMode.dmFields & RequiredFields) != RequiredFields)
-                    throw new PalException(this, $"Adapter setting {modeIndex - 1} didn't have all required fields set. dmFields={lpDevMode.dmFields}, requiredFields={RequiredFields}");
-
-                modes.Add(new VideoMode((int)lpDevMode.dmPelsWidth, (int)lpDevMode.dmPelsHeight, lpDevMode.dmDisplayFrequency, (int)lpDevMode.dmBitsPerPel));
-            }
-
-            return modes.ToArray();
+            VideoMode[] modes = new VideoMode[hmonitor.SupportedVideoModes.Count];
+            hmonitor.SupportedVideoModes.CopyTo(modes);
+            return modes;
         }
 
         /// <inheritdoc/>
-        public void GetVirtualPosition(DisplayHandle handle, out int x, out int y)
+        public Vector2i GetVirtualPosition(DisplayHandle handle)
         {
             HMonitor hmonitor = handle.As<HMonitor>(this);
-
-            x = hmonitor.Position.X;
-            y = hmonitor.Position.Y;
+            return new Vector2i(hmonitor.Position.X, hmonitor.Position.Y);
         }
 
         /// <inheritdoc/>
-        public void GetResolution(DisplayHandle handle, out int width, out int height)
+        public Vector2i GetResolution(DisplayHandle handle)
         {
             HMonitor hmonitor = handle.As<HMonitor>(this);
-
-            width = hmonitor.Resolution.ResolutionX;
-            height = hmonitor.Resolution.ResolutionY;
+            return new Vector2i(hmonitor.Resolution.ResolutionX, hmonitor.Resolution.ResolutionY);
         }
 
         /// <inheritdoc/>
-        public void GetWorkArea(DisplayHandle handle, out Box2i area)
+        public Box2i GetWorkArea(DisplayHandle handle)
         {
             HMonitor hmonitor = handle.As<HMonitor>(this);
-
             Win32.RECT workArea = hmonitor.WorkArea;
-
-            area = new Box2i(workArea.left, workArea.top, workArea.right, workArea.bottom);
+            return new Box2i(workArea.left, workArea.top, workArea.right, workArea.bottom);
         }
 
         /// <inheritdoc/>
-        public void GetRefreshRate(DisplayHandle handle, out float refreshRate)
+        public float GetRefreshRate(DisplayHandle handle)
         {
             HMonitor hmonitor = handle.As<HMonitor>(this);
-
-            refreshRate = hmonitor.RefreshRate;
+            return hmonitor.RefreshRate;
         }
 
         /// <inheritdoc/>
-        public void GetDisplayScale(DisplayHandle handle, out float  scaleX, out float scaleY)
+        public Vector2 GetDisplayScale(DisplayHandle handle)
         {
             HMonitor hmonitor = handle.As<HMonitor>(this);
 
@@ -782,10 +819,9 @@ namespace OpenTK.Platform.Native.Windows
             }
 
             // This is the platform default DPI for windows.
-            const float DefaultDPI = 96;
+            const float DefaultDPI = 96.0f;
 
-            scaleX = dpiX / DefaultDPI;
-            scaleY = dpiY / DefaultDPI;
+            return new Vector2(dpiX / DefaultDPI, dpiY / DefaultDPI);
         }
 
         /// <summary>

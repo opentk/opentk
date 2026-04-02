@@ -864,8 +864,10 @@ namespace OpenTK.Platform.Native.Windows
                 throw new Win32Exception();
             }
 
-            HGLRC hglrc = new HGLRC(hGLRC, hDC, hshareContext, chosenValues);
+            HGLRC hglrc = new HGLRC(hGLRC, hDC, hwnd, hshareContext, chosenValues);
             HGLRCDict.Add(hGLRC, hglrc);
+
+            hwnd.OpenGLContextHandle = hglrc;
 
             return hglrc;
         }
@@ -876,6 +878,11 @@ namespace OpenTK.Platform.Native.Windows
             HGLRC hglrc = handle.As<HGLRC>(this);
 
             HGLRCDict.Remove(hglrc.HGlrc);
+
+            if (hglrc.WindowHandle != null)
+            {
+                hglrc.WindowHandle.OpenGLContextHandle = null;
+            }
 
             bool success = Wgl.DeleteContext(hglrc.HGlrc);
             // FIXME: Do we add back the hglrc to HGLRCDict?
@@ -1035,6 +1042,13 @@ namespace OpenTK.Platform.Native.Windows
             {
                 throw new Win32Exception();
             }
+        }
+
+        /// <inheritdoc/>
+        public WindowHandle? GetWindow(OpenGLContextHandle handle)
+        {
+            HGLRC hglrc = handle.As<HGLRC>(this);
+            return hglrc.WindowHandle;
         }
 
         /// <summary>

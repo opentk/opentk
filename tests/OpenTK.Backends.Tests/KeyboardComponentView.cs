@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Runtime.Intrinsics;
+using OpenTK.Mathematics;
 
 namespace OpenTK.Backends.Tests
 {
@@ -18,7 +20,7 @@ namespace OpenTK.Backends.Tests
 
         private bool[] KeyboardState = new bool[256];
 
-        private string[] Layouts = new string[0];
+        private InputLanguage[] Layouts = new InputLanguage[0];
 
         private string TextInput = "";
 
@@ -28,30 +30,48 @@ namespace OpenTK.Backends.Tests
 
             try
             { 
-                Layouts = Toolkit.Keyboard.GetAvailableKeyboardLayouts();
+                Layouts = Toolkit.Keyboard.GetInstalledInputLanguages();
             }
             catch
             {
-                Layouts = new string[0];
+                Layouts = new InputLanguage[0];
             }
         }
 
-        public override void Paint(double deltaTime)
+        public unsafe override void Paint(double deltaTime)
         {
             base.Paint(deltaTime);
 
             ImGui.SeparatorText("Keyboard layout");
 
             // FIXME: Api for getting input language?
-            string layout = Toolkit.Keyboard.GetActiveKeyboardLayout(Program.Window);
-            ImGui.TextUnformatted($"Current keyboard layout: {layout}");
+            InputLanguage inputLanguage = Toolkit.Keyboard.GetActiveInputLanguage(Program.Window);
+            if (ImGui.CollapsingHeader($"Input language: {inputLanguage.Culture.EnglishName}###input-lang", ImGuiTreeNodeFlags.NoTreePushOnOpen))
+            {
+                ImGui.Indent();
+                ImGui.TextUnformatted($"{"CompareInfo",-31}{inputLanguage.Culture.CompareInfo,-47}");
+                ImGui.TextUnformatted($"{"DisplayName",-31}{inputLanguage.Culture.DisplayName,-47}");
+                ImGui.TextUnformatted($"{"EnglishName",-31}{inputLanguage.Culture.EnglishName,-47}");
+                ImGui.TextUnformatted($"{"IsNeutralCulture",-31}{inputLanguage.Culture.IsNeutralCulture,-47}");
+                ImGui.TextUnformatted($"{"IsReadOnly",-31}{inputLanguage.Culture.IsReadOnly,-47}");
+                ImGui.TextUnformatted($"{"LCID",-31}{inputLanguage.Culture.LCID,-47}");
+                ImGui.TextUnformatted($"{"Name",-31}{inputLanguage.Culture.Name,-47}");
+                ImGui.TextUnformatted($"{"NativeName",-31}{inputLanguage.Culture.NativeName,-47}");
+                ImGui.TextUnformatted($"{"Parent",-31}{inputLanguage.Culture.Parent,-47}");
+                ImGui.TextUnformatted($"{"TextInfo",-31}{inputLanguage.Culture.TextInfo,-47}");
+                ImGui.TextUnformatted($"{"ThreeLetterISOLanguageName",-31}{inputLanguage.Culture.ThreeLetterISOLanguageName,-47}");
+                ImGui.TextUnformatted($"{"ThreeLetterWindowsLanguageName",-31}{inputLanguage.Culture.ThreeLetterWindowsLanguageName,-47}");
+                ImGui.TextUnformatted($"{"TwoLetterISOLanguageName",-31}{inputLanguage.Culture.TwoLetterISOLanguageName,-47}");
+                ImGui.Unindent();
+            }
+            ImGui.TextUnformatted($"Keyboard layout: {inputLanguage.LayoutName}");
 
             if (ImGui.BeginListBox("Keyboard layouts"))
             {
                 ImGui.BeginDisabled();
                 for (int i = 0; i < Layouts.Length; i++)
                 {
-                    ImGui.Selectable(Layouts[i]);
+                    ImGui.Selectable($"{Layouts[i]}##{i}");
                 }
                 ImGui.EndDisabled();
                 ImGui.EndListBox();
@@ -59,7 +79,7 @@ namespace OpenTK.Backends.Tests
 
             if (ImGui.Button("Refresh layouts"))
             {
-                Layouts = Toolkit.Keyboard.GetAvailableKeyboardLayouts();
+                Layouts = Toolkit.Keyboard.GetInstalledInputLanguages();
             }
             
             ImGui.SeparatorText("Keyboard state");

@@ -31,7 +31,7 @@ namespace OpenTK.Graphics.Vulkan
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_REMAINING_ARRAY_LAYERS.html" /></remarks>
         public const uint RemainingArrayLayers = 4294967295;
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_REMAINING_3D_SLICES_EXT.html" /></remarks>
-        public const uint Remaining3dSlicesExt = 4294967295;
+        public const uint Remaining3DSlicesExt = 4294967295;
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_WHOLE_SIZE.html" /></remarks>
         public const ulong WholeSize = 18446744073709551615;
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_ATTACHMENT_UNUSED.html" /></remarks>
@@ -1904,10 +1904,10 @@ namespace OpenTK.Graphics.Vulkan
         public const string ExtMultiDrawExtensionName = "VK_EXT_multi_draw";
         /// <summary>[from: <b>VK_EXT_image_2d_view_of_3d</b>]</summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_IMAGE_2D_VIEW_OF_3D_SPEC_VERSION.html" /></remarks>
-        public const uint ExtImage2dViewOf3dSpecVersion = 1;
+        public const uint ExtImage2DViewOf3DSpecVersion = 1;
         /// <summary>[from: <b>VK_EXT_image_2d_view_of_3d</b>]</summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_IMAGE_2D_VIEW_OF_3D_EXTENSION_NAME.html" /></remarks>
-        public const string ExtImage2dViewOf3dExtensionName = "VK_EXT_image_2d_view_of_3d";
+        public const string ExtImage2DViewOf3DExtensionName = "VK_EXT_image_2d_view_of_3d";
         /// <summary>[from: <b>VK_KHR_portability_enumeration</b>]</summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_PORTABILITY_ENUMERATION_SPEC_VERSION.html" /></remarks>
         public const uint KhrPortabilityEnumerationSpecVersion = 1;
@@ -1982,10 +1982,10 @@ namespace OpenTK.Graphics.Vulkan
         public const string ArmSchedulingControlsExtensionName = "VK_ARM_scheduling_controls";
         /// <summary>[from: <b>VK_EXT_image_sliced_view_of_3d</b>]</summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_IMAGE_SLICED_VIEW_OF_3D_SPEC_VERSION.html" /></remarks>
-        public const uint ExtImageSlicedViewOf3dSpecVersion = 1;
+        public const uint ExtImageSlicedViewOf3DSpecVersion = 1;
         /// <summary>[from: <b>VK_EXT_image_sliced_view_of_3d</b>]</summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_IMAGE_SLICED_VIEW_OF_3D_EXTENSION_NAME.html" /></remarks>
-        public const string ExtImageSlicedViewOf3dExtensionName = "VK_EXT_image_sliced_view_of_3d";
+        public const string ExtImageSlicedViewOf3DExtensionName = "VK_EXT_image_sliced_view_of_3d";
         /// <summary>[from: <b>VK_VALVE_descriptor_set_host_mapping</b>]</summary>
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_VALVE_DESCRIPTOR_SET_HOST_MAPPING_SPEC_VERSION.html" /></remarks>
         public const uint ValveDescriptorSetHostMappingSpecVersion = 1;

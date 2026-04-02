@@ -36,18 +36,18 @@ namespace LocalTestProject
         {
             Toolkit.Init(new ToolkitOptions() { ApplicationName = "Pal2 test project", Logger = new ConsoleLogger(), FeatureFlags = ToolkitFlags.EnableOpenGL });
 
-            Console.WriteLine($"Current Keyboard Layout name: {Toolkit.Keyboard.GetActiveKeyboardLayout(null)}");
+            Console.WriteLine($"Current input language name: {Toolkit.Keyboard.GetActiveInputLanguage(null)}");
 
-            Console.WriteLine($"Available Keyboard Layouts:\n  {string.Join("\n  ", Toolkit.Keyboard.GetAvailableKeyboardLayouts())}");
+            Console.WriteLine($"Installed input languages:\n  {string.Join("\n  ", Toolkit.Keyboard.GetInstalledInputLanguages())}");
 
             {
                 PrimaryDisplayHandle = Toolkit.Display.OpenPrimary();
                 string name = Toolkit.Display.GetName(PrimaryDisplayHandle);
-                Toolkit.Display.GetVideoMode(PrimaryDisplayHandle, out VideoMode videoMode);
-                Toolkit.Display.GetDisplayScale(PrimaryDisplayHandle, out float scaleX, out float scaleY);
+                VideoMode videoMode = Toolkit.Display.GetVideoMode(PrimaryDisplayHandle);
+                Vector2 scale = Toolkit.Display.GetDisplayScale(PrimaryDisplayHandle);
                 Console.WriteLine($"Primary monitor name: {name}");
                 Console.WriteLine($"  {videoMode}");
-                Console.WriteLine($"  Scale: {scaleX}, {scaleY}");
+                Console.WriteLine($"  Scale: {scale.X}, {scale.Y}");
 
                 int modeCount = Toolkit.Display.GetSupportedVideoModes(PrimaryDisplayHandle).Length;
                 Console.WriteLine($"Primary monitor supports {modeCount} video modes.");
@@ -68,11 +68,11 @@ namespace LocalTestProject
                 DisplayHandle disp = Toolkit.Display.Open(i);
 
                 string name = Toolkit.Display.GetName(disp);
-                Toolkit.Display.GetVideoMode(disp, out VideoMode videoMode);
-                Toolkit.Display.GetDisplayScale(disp, out float scaleX, out float scaleY);
+                VideoMode videoMode = Toolkit.Display.GetVideoMode(disp);
+                Vector2 scale = Toolkit.Display.GetDisplayScale(disp);
                 Console.WriteLine($"Primary monitor name: {name}");
                 Console.WriteLine($"  {videoMode}");
-                Console.WriteLine($"  Scale: {scaleX}, {scaleY}");
+                Console.WriteLine($"  Scale: {scale.X}, {scale.Y}");
                 Console.WriteLine();
             }
             Console.WriteLine();
@@ -132,7 +132,7 @@ namespace LocalTestProject
             Console.WriteLine($"Mode: {mode}");
 
             // Subscribe to all events
-            EventQueue.EventRaised += EventQueue_EventRaised;
+            Toolkit.Event.EventRaised += EventQueue_EventRaised;
 
             Toolkit.OpenGL.SetCurrentContext(WindowContext);
             GLLoader.LoadBindings(Toolkit.OpenGL.GetBindingsContext(WindowContext));
@@ -232,7 +232,8 @@ namespace LocalTestProject
                 Console.WriteLine($"Width: {curW}, Height: {curH}");
             }
 
-            for (int i = 0; i < 4; i++)
+            int noJoysticks = Toolkit.Joystick.GetJoystickCount();
+            for (int i = 0; i < noJoysticks; i++)
             {
                 var handle = Toolkit.Joystick.Open(i);
 
@@ -290,12 +291,10 @@ namespace LocalTestProject
         static List<Scancode> vks = new List<Scancode>();
 
         static Vector2 MousePos = (0, 0);
-        private static void EventQueue_EventRaised(PalHandle? handle, PlatformEventType type, EventArgs args)
+        private static void EventQueue_EventRaised(EventArgs args)
         {
-            if (type == PlatformEventType.MouseMove)
+            if (args is MouseMoveEventArgs mouseMoveArgs)
             {
-                MouseMoveEventArgs mouseMoveArgs = (MouseMoveEventArgs)args;
-
                 //Console.WriteLine($"Delta X: {mouseMoveArgs.DeltaX}, DeltaY: {mouseMoveArgs.DeltaY}");
 
                 MousePos = mouseMoveArgs.ClientPosition;
@@ -306,37 +305,29 @@ namespace LocalTestProject
                     Toolkit.Window.SetTitle(WindowHandle, $"({client.X},{client.Y})");
                 }
             }
-            else if (type == PlatformEventType.MouseDown)
+            else if (args is MouseButtonUpEventArgs mouseButtonDownArgs)
             {
-                MouseButtonDownEventArgs mouseButtonDownArgs = (MouseButtonDownEventArgs)args;
-
                 Console.WriteLine($"Pressed Mouse Button: {mouseButtonDownArgs.Button}");
 
                 if (mouseButtonDownArgs.Button == MouseButton.Button1)
                 {
                     Toolkit.Keyboard.BeginIme(WindowHandle);
 
-                    Toolkit.Keyboard.SetImeRectangle(WindowHandle, (int)MousePos.X, (int)MousePos.Y, 0, 0);
+                    Toolkit.Keyboard.SetImeRectangle(WindowHandle, mouseButtonDownArgs.ClientPosition.X, mouseButtonDownArgs.ClientPosition.Y, 0, 0);
 
                     Toolkit.Keyboard.EndIme(WindowHandle);
                 }
             }
-            else if (type == PlatformEventType.MouseUp)
+            else if (args is MouseButtonUpEventArgs mouseButtonUpArgs)
             {
-                MouseButtonUpEventArgs mouseButtonUpArgs = (MouseButtonUpEventArgs)args;
-
                 Console.WriteLine($"Released Mouse Button: {mouseButtonUpArgs.Button}");
             }
-            else if (type == PlatformEventType.Close)
+            else if (args is CloseEventArgs closeArgs)
             {
-                CloseEventArgs closeArgs = (CloseEventArgs)args;
-
                 Toolkit.Window.Destroy(closeArgs.Window);
             }
-            else if (type == PlatformEventType.Focus)
+            else if (args is FocusEventArgs focus)
             {
-                FocusEventArgs focus = (FocusEventArgs)args;
-
                 if (focus.GotFocus)
                 {
                     Console.WriteLine("Got focus");
@@ -346,20 +337,16 @@ namespace LocalTestProject
                     Console.WriteLine("Lost focus");
                 }
             }
-            else if (type == PlatformEventType.TextInput)
+            else if (args is TextInputEventArgs input )
             {
-                TextInputEventArgs input = (TextInputEventArgs)args;
-
                 Console.WriteLine($"Input: {input.Text}");
 
                 Console.WriteLine($"Scancodes: {string.Join(", ", vks)}");
                 
                 vks.Clear();
             }
-            else if (type == PlatformEventType.MouseEnter)
+            else if (args is MouseEnterEventArgs enter)
             {
-                MouseEnterEventArgs enter = (MouseEnterEventArgs)args;
-
                 if (enter.Entered)
                 {
                     Console.WriteLine($"Mouse entered.");
@@ -369,16 +356,12 @@ namespace LocalTestProject
                     Console.WriteLine("Mouse exited.");
                 }
             }
-            else if (type == PlatformEventType.FileDrop)
+            else if (args is FileDropEventArgs fileDrop)
             {
-                FileDropEventArgs fileDrop = (FileDropEventArgs)args;
-
                 Console.WriteLine($"Files dropped! Position: {fileDrop.Position}, Paths: {string.Join(", ", fileDrop.FilePaths)}");
             }
-            else if (type == PlatformEventType.KeyDown)
+            else if (args is KeyDownEventArgs keyDown)
             {
-                KeyDownEventArgs keyDown = (KeyDownEventArgs)args;
-
                 Console.WriteLine($"keyDown: {keyDown.Key}");
 
                 if (keyDown.IsRepeat == false)
@@ -514,19 +497,19 @@ namespace LocalTestProject
                                 var tex = GL.GenTexture();
 
                                 GL.ActiveTexture(TextureUnit.Texture0);
-                                GL.BindTexture(TextureTarget.Texture2d, tex);
+                                GL.BindTexture(TextureTarget.Texture2D, tex);
 
-                                GL.TexImage2D(TextureTarget.Texture2d, 0, InternalFormat.Rgba8, bitmap.Width, bitmap.Height, 0, PixelFormat.Rgba, PixelType.UnsignedByte, bitmap.Data);
+                                GL.TexImage2D(TextureTarget.Texture2D, 0, InternalFormat.Rgba8, bitmap.Width, bitmap.Height, 0, PixelFormat.Rgba, PixelType.UnsignedByte, bitmap.Data);
 
-                                GL.GenerateMipmap(TextureTarget.Texture2d);
+                                GL.GenerateMipmap(TextureTarget.Texture2D);
 
-                                GL.TexParameteri(TextureTarget.Texture2d, TextureParameterName.TextureWrapS, (int)TextureWrapMode.ClampToEdge);
-                                GL.TexParameteri(TextureTarget.Texture2d, TextureParameterName.TextureWrapT, (int)TextureWrapMode.ClampToEdge);
+                                GL.TexParameteri(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, (int)TextureWrapMode.ClampToEdge);
+                                GL.TexParameteri(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (int)TextureWrapMode.ClampToEdge);
 
-                                GL.TexParameteri(TextureTarget.Texture2d, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Nearest);
-                                GL.TexParameteri(TextureTarget.Texture2d, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Nearest);
+                                GL.TexParameteri(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Nearest);
+                                GL.TexParameteri(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Nearest);
 
-                                GL.BindTexture(TextureTarget.Texture2d, 0);
+                                GL.BindTexture(TextureTarget.Texture2D, 0);
 
                                 if (clipboard_tex != 0)
                                 {
@@ -558,12 +541,12 @@ namespace LocalTestProject
                 {
                     DisplayHandle disp = Toolkit.Window.GetDisplay(WindowHandle);
                     bool isPrimary = Toolkit.Display.IsPrimary(disp);
-                    Toolkit.Display.GetResolution(disp, out int resX, out int resY);
-                    Toolkit.Display.GetRefreshRate(disp, out float refreshRate);
+                    Vector2i resolution = Toolkit.Display.GetResolution(disp);
+                    float refreshRate = Toolkit.Display.GetRefreshRate(disp);
 
                     string name = Toolkit.Display.GetName(disp);
                     
-                    Console.WriteLine($"Window is on monitor '{name}', primary: {isPrimary}, res: ({resX}x{resY}, refresh rate: {refreshRate:0.})");
+                    Console.WriteLine($"Window is on monitor '{name}', primary: {isPrimary}, res: ({resolution.X}x{resolution.Y}, refresh rate: {refreshRate:0.})");
                 }
                 else if (keyDown.Key == Key.S)
                 {
@@ -601,34 +584,24 @@ namespace LocalTestProject
                     Console.WriteLine($"After: {style}, Result: {Toolkit.Window.GetBorderStyle(WindowHandle)}");
                 }
             }
-            else if (type == PlatformEventType.KeyUp)
+            else if (args is KeyUpEventArgs keyUp)
             {
-                KeyUpEventArgs keyUp = (KeyUpEventArgs)args;
-
                 Console.WriteLine($"keyUp: {keyUp.Key}");
             }
-            else if (type == PlatformEventType.WindowMove)
+            else if (args is WindowMoveEventArgs move)
             {
-                WindowMoveEventArgs move = (WindowMoveEventArgs)args;
-
                 Console.WriteLine($"Window '{Toolkit.Window.GetTitle(move.Window)}' at client pos: ({move.ClientAreaPosition}), window pos: {move.WindowPosition}");
             }
-            else if (type == PlatformEventType.WindowResize)
+            else if (args is WindowResizeEventArgs resize)
             {
-                WindowResizeEventArgs resize = (WindowResizeEventArgs)args;
-
                 Console.WriteLine($"Window '{Toolkit.Window.GetTitle(resize.Window)}' new size: ({resize.NewSize})");
             }
-            else if (type == PlatformEventType.WindowModeChange)
+            else if (args is WindowModeChangeEventArgs modeChange)
             {
-                WindowModeChangeEventArgs modeChange = (WindowModeChangeEventArgs)args;
-
                 Console.WriteLine($"Window '{Toolkit.Window.GetTitle(modeChange.Window)}' new mode: ({modeChange.NewMode})");
             }
-            else if (type == PlatformEventType.PowerStateChange)
+            else if (args is PowerStateChangeEventArgs powerStateChange)
             {
-                PowerStateChangeEventArgs powerStateChange = (PowerStateChangeEventArgs)args;
-
                 if (powerStateChange.GoingToSleep)
                 {
                     Console.WriteLine("Going to sleep?");
@@ -638,9 +611,8 @@ namespace LocalTestProject
                     Console.WriteLine("Waking up?");
                 }
             }
-            else if (type == PlatformEventType.ClipboardUpdate)
+            else if (args is ClipboardUpdateEventArgs clipboardUpdate)
             {
-                ClipboardUpdateEventArgs clipboardUpdate = (ClipboardUpdateEventArgs)args;
                 Console.WriteLine($"Clipboard update! New format: {clipboardUpdate.NewFormat}");
             }
         }
@@ -700,18 +672,18 @@ void main()
             int tex = GL.GenTexture();
 
             GL.ActiveTexture(TextureUnit.Texture0);
-            GL.BindTexture(TextureTarget.Texture2d, tex);
+            GL.BindTexture(TextureTarget.Texture2D, tex);
 
-            GL.TexImage2D(TextureTarget.Texture2d, 0, InternalFormat.Rgba8, width, height, 0, PixelFormat.Rgba, PixelType.UnsignedByte, data);
+            GL.TexImage2D(TextureTarget.Texture2D, 0, InternalFormat.Rgba8, width, height, 0, PixelFormat.Rgba, PixelType.UnsignedByte, data);
 
-            GL.GenerateMipmap(TextureTarget.Texture2d);
+            GL.GenerateMipmap(TextureTarget.Texture2D);
 
-            GL.TexParameteri(TextureTarget.Texture2d, TextureParameterName.TextureWrapS, (int)TextureWrapMode.ClampToEdge);
-            GL.TexParameteri(TextureTarget.Texture2d, TextureParameterName.TextureWrapT, (int)TextureWrapMode.ClampToEdge);
+            GL.TexParameteri(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, (int)TextureWrapMode.ClampToEdge);
+            GL.TexParameteri(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (int)TextureWrapMode.ClampToEdge);
 
-            GL.TexParameteri(TextureTarget.Texture2d, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Nearest);
+            GL.TexParameteri(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Nearest);
 
-            GL.BindTexture(TextureTarget.Texture2d, 0);
+            GL.BindTexture(TextureTarget.Texture2D, 0);
 
             return tex;
         }
@@ -729,18 +701,18 @@ void main()
             int tex = GL.GenTexture();
 
             GL.ActiveTexture(TextureUnit.Texture0);
-            GL.BindTexture(TextureTarget.Texture2d, tex);
+            GL.BindTexture(TextureTarget.Texture2D, tex);
 
-            GL.TexImage2D(TextureTarget.Texture2d, 0, InternalFormat.Rgba8, width, height, 0, PixelFormat.Rgba, PixelType.UnsignedByte, data);
+            GL.TexImage2D(TextureTarget.Texture2D, 0, InternalFormat.Rgba8, width, height, 0, PixelFormat.Rgba, PixelType.UnsignedByte, data);
 
-            GL.GenerateMipmap(TextureTarget.Texture2d);
+            GL.GenerateMipmap(TextureTarget.Texture2D);
 
-            GL.TexParameteri(TextureTarget.Texture2d, TextureParameterName.TextureWrapS, (int)TextureWrapMode.ClampToEdge);
-            GL.TexParameteri(TextureTarget.Texture2d, TextureParameterName.TextureWrapT, (int)TextureWrapMode.ClampToEdge);
+            GL.TexParameteri(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, (int)TextureWrapMode.ClampToEdge);
+            GL.TexParameteri(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (int)TextureWrapMode.ClampToEdge);
 
-            GL.TexParameteri(TextureTarget.Texture2d, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Nearest);
+            GL.TexParameteri(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Nearest);
 
-            GL.BindTexture(TextureTarget.Texture2d, 0);
+            GL.BindTexture(TextureTarget.Texture2D, 0);
 
             return tex;
         }
@@ -895,6 +867,8 @@ void main()
             float deltaTime = watch.ElapsedTicks / (float)Stopwatch.Frequency;
             watch.Restart();
 
+            // FIXME: Joystick & Gamepad api...
+            /*
             for (int i = 0; i < 4; i++)
             {
                 int player = i + 1;
@@ -965,6 +939,7 @@ void main()
 
                 Toolkit.Joystick.Close(handle);
             }
+            */
 
             time += deltaTime;
             frames++;
@@ -1003,7 +978,7 @@ void main()
                 int tex = cursor_tex;
                 if (clipboard_tex != 0) tex = clipboard_tex;
 
-                GL.BindTexture(TextureTarget.Texture2d, tex);
+                GL.BindTexture(TextureTarget.Texture2D, tex);
 
                 GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
                 GL.Enable(EnableCap.Blend);
@@ -1028,7 +1003,7 @@ void main()
                 GL.Viewport(0, 0, fbSize.X, fbSize.Y);
 
                 GL.ActiveTexture(TextureUnit.Texture0);
-                GL.BindTexture(TextureTarget.Texture2d, icon_tex);
+                GL.BindTexture(TextureTarget.Texture2D, icon_tex);
 
                 GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
                 GL.Enable(EnableCap.Blend);

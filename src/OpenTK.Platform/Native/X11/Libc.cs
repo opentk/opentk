@@ -41,5 +41,18 @@ namespace OpenTK.Platform.Native.X11
             [DllImport("libc", EntryPoint = "setlocale")]
             static unsafe extern byte* setlocale(LC category, /* const */ byte* locale);
         }
+
+        internal const int RTLD_DI_ORIGIN = 6;
+        [DllImport("libc", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        internal static unsafe extern int dlinfo(void* handle, int request, void* info);
+
+        [DllImport("libc", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        internal static unsafe extern byte* getenv(byte* /* const char * */ name);
+
+        [DllImport("libc", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        internal static unsafe extern int putenv(byte* /* char * */ @string);
+
+        [DllImport("libc", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        internal static unsafe extern int unsetenv(byte* /* const char* */ name);
     }
 }

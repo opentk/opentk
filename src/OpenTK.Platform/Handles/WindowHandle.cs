@@ -12,6 +12,8 @@ namespace OpenTK.Platform
         /// </summary>
         public GraphicsApiHints GraphicsApiHints { get; protected set; }
 
+        internal OpenGLContextHandle? OpenGLContextHandle { get; set; }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="WindowHandle"/> class.
         /// </summary>

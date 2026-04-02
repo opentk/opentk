@@ -155,6 +155,21 @@ void main() {
                 // FIXME: Close OpenGL context related to this window.
                 Toolkit.Window.Destroy(close.Window);
             }
+            else if (args is KeyDownEventArgs keyDown)
+            {
+                if (keyDown.Scancode == Scancode.F)
+                {
+                    var mode = Toolkit.Window.GetMode(Window);
+                    if (mode == WindowMode.ExclusiveFullscreen)
+                    {
+                        Toolkit.Window.SetMode(Window, WindowMode.Normal);
+                    }
+                    else
+                    {
+                        Toolkit.Window.SetMode(Window, WindowMode.ExclusiveFullscreen);
+                    }
+                }
+            }
         }
 
         public bool Update(float deltaTime)

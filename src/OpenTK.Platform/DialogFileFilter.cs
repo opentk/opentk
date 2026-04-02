@@ -35,7 +35,7 @@ namespace OpenTK.Platform
         /// <seealso cref="Name"/>
         /// <seealso cref="Filter"/>
         /// <seealso cref="IDialogComponent.ShowOpenDialog(WindowHandle, string, string, DialogFileFilter[], OpenDialogOptions)"/>
-        /// <seealso cref="IDialogComponent.ShowSaveDialog(WindowHandle, string, string, DialogFileFilter[], SaveDialogOptions)"/>
+        /// <seealso cref="IDialogComponent.ShowSaveDialog(WindowHandle, string, string, string?, DialogFileFilter[], SaveDialogOptions)"/>
         public DialogFileFilter(string name, string filter)
         {
             Name = name;

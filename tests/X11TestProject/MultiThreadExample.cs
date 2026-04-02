@@ -43,7 +43,7 @@ namespace X11TestProject
             A.Start();
             B.Start();
 
-            EventQueue.EventRaised += (handle, type, args) =>
+            Toolkit.Event.EventRaised += (args) =>
             {
                 if (args is CloseEventArgs close)
                 {
@@ -108,8 +108,6 @@ namespace X11TestProject
         {
             WindowHandle? window = null;
             OpenGLContextHandle? context = null;
-            EventQueue queue = EventQueue.Subscribe();
-            queue.EventDispatched += (handle, type, args) => Console.WriteLine("{0} {1} {2}", handle, type, args);
 
             Task invokeX11Actions = new Task(() =>
             {

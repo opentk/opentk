@@ -162,7 +162,7 @@ namespace OpenTK.Graphics.OpenGLES1
         AlphaBits = 3413,
         DepthBits = 3414,
         StencilBits = 3415,
-        Texture2d = 3553,
+        Texture2D = 3553,
         DepthBufferBit4Qcom = 4096,
         DontCare = 4352,
         Fastest = 4353,
@@ -294,7 +294,7 @@ namespace OpenTK.Graphics.OpenGLES1
         Rgb5A1Oes = 32855,
         Rgba8Oes = 32856,
         Rgb10A2Ext = 32857,
-        TextureBinding2d = 32873,
+        TextureBinding2D = 32873,
         VertexArray = 32884,
         VertexArrayKhr = 32884,
         NormalArray = 32885,
@@ -518,8 +518,8 @@ namespace OpenTK.Graphics.OpenGLES1
         BufferSize = 34660,
         BufferUsage = 34661,
         AtcRgbaInterpolatedAlphaAmd = 34798,
-        _3dcXAmd = 34809,
-        _3dcXyAmd = 34810,
+        _3DCXAmd = 34809,
+        _3DCXyAmd = 34810,
         Rgba32fExt = 34836,
         Rgb32fExt = 34837,
         Alpha32fExt = 34838,
@@ -925,7 +925,7 @@ namespace OpenTK.Graphics.OpenGLES1
     }
     public enum CopyImageSubDataTarget : uint
     {
-        Texture2d = 3553,
+        Texture2D = 3553,
     }
     ///<summary>Used in <see cref="GL.KHR.DebugMessageControl" />, <see cref="GL.KHR.DebugMessageControlKHR" />, <see cref="GL.KHR.DebugMessageInsert" />, ...</summary>
     public enum DebugSeverity : uint
@@ -1010,7 +1010,7 @@ namespace OpenTK.Graphics.OpenGLES1
         Blend = 3042,
         ColorLogicOp = 3058,
         ScissorTest = 3089,
-        Texture2d = 3553,
+        Texture2D = 3553,
         ClipPlane0 = 12288,
         ClipPlane1 = 12289,
         ClipPlane2 = 12290,
@@ -1280,7 +1280,7 @@ namespace OpenTK.Graphics.OpenGLES1
         AlphaBits = 3413,
         DepthBits = 3414,
         StencilBits = 3415,
-        Texture2d = 3553,
+        Texture2D = 3553,
         PolygonOffsetUnits = 10752,
         ClipPlane0 = 12288,
         ClipPlane1 = 12289,
@@ -1300,7 +1300,7 @@ namespace OpenTK.Graphics.OpenGLES1
         BlendEquationOes = 32777,
         PolygonOffsetFill = 32823,
         PolygonOffsetFactor = 32824,
-        TextureBinding2d = 32873,
+        TextureBinding2D = 32873,
         VertexArray = 32884,
         NormalArray = 32885,
         ColorArray = 32886,
@@ -1931,7 +1931,7 @@ namespace OpenTK.Graphics.OpenGLES1
     ///<summary>Used in <see cref="GL.BindTexture" />, <see cref="GL.CompressedTexImage2D" />, <see cref="GL.CompressedTexSubImage2D" />, ...</summary>
     public enum TextureTarget : uint
     {
-        Texture2d = 3553,
+        Texture2D = 3553,
         TextureCubeMapOes = 34067,
         TextureCubeMapPositiveXOes = 34069,
         TextureCubeMapNegativeXOes = 34070,

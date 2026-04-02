@@ -48,6 +48,7 @@ namespace OpenTK.Platform.Native
                 [PalComponents.WindowIcon] = () => new SDL.SDLIconComponent(),
                 [PalComponents.Clipboard] = () => new SDL.SDLClipboardComponent(),
                 [PalComponents.Joystick] = () => new SDL.SDLJoystickComponent(),
+                //[PalComponents.Gamepad] = () => new SDL.SDLGamepadComponent(),
                 //[PalComponents.Dialog] = () => new SDL.SDLDialogComponent(),
             };
 
@@ -65,6 +66,7 @@ namespace OpenTK.Platform.Native
                 [PalComponents.WindowIcon] = () => new Windows.IconComponent(),
                 [PalComponents.Clipboard] = () => new Windows.ClipboardComponent(),
                 [PalComponents.Joystick] = () => new Windows.JoystickComponent(),
+                [PalComponents.Gamepad] = () => new Windows.GamepadComponent(),
                 [PalComponents.Dialog] = () => new Windows.DialogComponent(),
             };
 
@@ -82,6 +84,7 @@ namespace OpenTK.Platform.Native
                 [PalComponents.WindowIcon] = () => new X11.X11IconComponent(),
                 [PalComponents.Clipboard] = () => new X11.X11ClipboardComponent(),
                 //[PalComponents.Joystick] = () => new X11.X11JoystickComponent(),
+                //[PalComponents.Gamepad] = () => new X11.X11GamepadComponent(),
                 [PalComponents.Dialog] = () => new X11.X11DialogComponent(),
             };
 
@@ -99,6 +102,7 @@ namespace OpenTK.Platform.Native
                 [PalComponents.WindowIcon] = () => new macOS.MacOSIconComponent(),
                 [PalComponents.Clipboard] = () => new macOS.MacOSClipboardComponent(),
                 //[PalComponents.Joystick] = () => new macOS.MacOSJoystickComponent(),
+                //[PalComponents.Gamepad] = () => new macOS.MacOSGamepadComponent(),
                 [PalComponents.Dialog] = () => new macOS.MacOSDialogComponent(),
             };
 
@@ -262,6 +266,12 @@ namespace OpenTK.Platform.Native
         public static IJoystickComponent CreateJoystickComponent()
         {
             return GetPlatformComponent<IJoystickComponent>(PalComponents.Joystick);
+        }
+
+        /// <inheritdoc cref="GetPlatformComponent{TComp}(PalComponents)"/>
+        public static IGamepadComponent CreateGamepadComponent()
+        {
+            return GetPlatformComponent<IGamepadComponent>(PalComponents.Gamepad);
         }
 
         /// <inheritdoc cref="GetPlatformComponent{TComp}(PalComponents)"/>

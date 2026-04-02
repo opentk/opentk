@@ -43,7 +43,7 @@ namespace OpenTK.Graphics.Glx
         PipeRectLimitsSgix = 2,
         PixmapBit = 2,
         PixmapBitSgix = 2,
-        Texture2dBitExt = 2,
+        Texture2DBitExt = 2,
         Version = 2,
         Extensions = 3,
         HyperpipeStereoSgix = 3,
@@ -155,7 +155,7 @@ namespace OpenTK.Graphics.Glx
         TextureFormatRgbExt = 8409,
         TextureFormatRgbaExt = 8410,
         Texture1dExt = 8411,
-        Texture2dExt = 8412,
+        Texture2DExt = 8412,
         TextureRectangleExt = 8413,
         FrontExt = 8414,
         FrontLeftExt = 8414,
@@ -306,7 +306,7 @@ namespace OpenTK.Graphics.Glx
     public enum BindToTextureTargetMask : uint
     {
         Texture1dBitExt = 1,
-        Texture2dBitExt = 2,
+        Texture2DBitExt = 2,
         TextureRectangleBitExt = 4,
     }
     public enum ContextAttribs : uint

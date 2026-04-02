@@ -1,26 +1,21 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <OutputType>Library</OutputType>
+    <TargetFrameworks>net10.0</TargetFrameworks>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Deterministic>true</Deterministic>
-    <Description>OpenAL bindings.</Description>
-    <PackageIcon>icon.png</PackageIcon>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>$(OpenTKSolutionRoot)/OpenTK.snk</AssemblyOriginatorKeyFile>
+    <PackageIcon>images/opentk-blue-hexagon.png</PackageIcon>
+    <PackageReadmeFile>docs/README.md</PackageReadmeFile>
+    <Description>OpenAL bindings for dotnet.</Description>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="..\..\documentation\icon.png" Pack="true" PackagePath=""/>
+    <None Include="$(OpenTKSolutionRoot)\.github\opentk-blue-hexagon.png" Pack="true" PackagePath="images" Visible="false"/>
+    <None Include="README.md" Pack="true" PackagePath="docs"/>
   </ItemGroup>
   
-  <PropertyGroup>
-    <Version>4.0.0</Version>
-    <Description>OpenAL bindings, and audio utility classes.</Description>
-    <ApplicationIcon />
-    <OutputType>Library</OutputType>
-    <StartupObject />
-    <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>../../OpenTK.snk</AssemblyOriginatorKeyFile>
-  </PropertyGroup>
-
   <ItemGroup>
     <ProjectReference Include="$(OpenTKSolutionRoot)\src\OpenTK.Core\OpenTK.Core.csproj" />
     <ProjectReference Include="$(OpenTKSolutionRoot)\src\OpenTK.Mathematics\OpenTK.Mathematics.csproj" />

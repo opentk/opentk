@@ -1,4 +1,5 @@
-﻿using OpenTK.Platform;
+﻿using OpenTK.Mathematics;
+using OpenTK.Platform;
 using OpenTK.Platform.Native;
 using OpenTK.Platform.Native.Windows;
 using System;
@@ -6,11 +7,18 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace OpenTK.Platform
 {
+    /// <summary>
+    /// An event handler delegate for platform events.
+    /// </summary>
+    /// <param name="args">Information associated with the event, if any.</param>
+    public delegate void PlatformEventHandler(EventArgs args);
+
     /// <summary>
     /// Provides static access to all OpenTK platform abstraction interfaces.
     /// This is the main way to access the OpenTK PAL2 api.
@@ -33,6 +41,7 @@ namespace OpenTK.Platform
         private static IWindowComponent? _windowComponent;
         private static IShellComponent? _shellComponent;
         private static IJoystickComponent? _joystickComponent;
+        private static IGamepadComponent? _gamepadComponent;
         private static IDialogComponent? _dialogComponent;
         private static IVulkanComponent? _vulkanComponent;
 
@@ -123,6 +132,12 @@ namespace OpenTK.Platform
             (Initialized ? null! : ThrowNotInitialized<IJoystickComponent>());
 
         /// <summary>
+        /// Interface for getting gamepad input.
+        /// </summary>
+        public static IGamepadComponent Gamepad => _gamepadComponent ??
+            (Initialized ? null! : ThrowNotInitialized<IGamepadComponent>());
+
+        /// <summary>
         /// Interface for opening system dialogs such as file open dialogs.
         /// </summary>
         public static IDialogComponent Dialog => _dialogComponent ??
@@ -183,6 +198,7 @@ namespace OpenTK.Platform
             try { _iconComponent = PlatformComponents.CreateIconComponent(); } catch (NotSupportedException) { }
             try { _clipboardComponent = PlatformComponents.CreateClipboardComponent(); } catch (NotSupportedException) { }
             try { _joystickComponent = PlatformComponents.CreateJoystickComponent(); } catch (NotSupportedException) { }
+            try { _gamepadComponent = PlatformComponents.CreateGamepadComponent(); } catch (NotSupportedException) { }
             try { _dialogComponent = PlatformComponents.CreateDialogComponent(); } catch (NotSupportedException) { }
             if (EnableVulkan)
             {
@@ -211,6 +227,8 @@ namespace OpenTK.Platform
                 _clipboardComponent.Logger = options.Logger;
             if (_joystickComponent != null)
                 _joystickComponent.Logger = options.Logger;
+            if (_gamepadComponent != null)
+                _gamepadComponent.Logger = options.Logger;
             if (_dialogComponent != null)
                 _dialogComponent.Logger = options.Logger;
             if (_vulkanComponent != null)
@@ -227,6 +245,7 @@ namespace OpenTK.Platform
             _iconComponent?.Initialize(options);
             _clipboardComponent?.Initialize(options);
             _joystickComponent?.Initialize(options);
+            _gamepadComponent?.Initialize(options);
             _dialogComponent?.Initialize(options);
             _vulkanComponent?.Initialize(options);
 
@@ -292,6 +311,44 @@ namespace OpenTK.Platform
         private static T ThrowFeatureNotEnabled<T>(string featureName, ToolkitFlags flag) where T : IPalComponent
         {
             throw new InvalidOperationException($"You need to enable {featureName} by adding {nameof(ToolkitFlags)}.{flag} to {nameof(ToolkitOptions)}.{nameof(ToolkitOptions.FeatureFlags)} before you can use {featureName}.");
+        }
+
+        /// <summary>
+        /// Event component for interacting with platform events.
+        /// </summary>
+        public static class Event
+        {
+            /// <summary>
+            /// Invoked when an event is raised.
+            /// </summary>
+            public static event PlatformEventHandler? EventRaised;
+
+            /// <summary>
+            /// Raise an event without notifying waiters.
+            /// </summary>
+            /// <param name="args">The event to raise.</param>
+            public static void RaiseEvent(EventArgs args)
+            {
+                EventRaised?.Invoke(args);
+            }
+
+            /// <summary>
+            /// Raise an event and notify anyone waiting for events.
+            /// </summary>
+            /// <param name="args">The event to raise.</param>
+            public static void RaiseEventNotify(EventArgs args)
+            {
+                Toolkit.Window.PostUserEvent(args);
+            }
+
+            /// <summary>
+            /// Process platform events and send them to the <see cref="EventRaised"/> callback.
+            /// </summary>
+            /// <param name="waitForEvents">Specifies if this function should wait for events or return immediately if there are no events.</param>
+            public static void ProcessEvents(bool waitForEvents)
+            {
+                Toolkit.Window.ProcessEvents(waitForEvents);
+            }
         }
     }
 }

@@ -146,7 +146,7 @@ namespace OpenTK.Backends.Tests
                             {
                                 // Send the close event, this will close the window.
                                 WindowHandle handle = Program.ApplicationWindows[i - 1].Window;
-                                EventQueue.Raise(handle, PlatformEventType.Close, new CloseEventArgs(handle));
+                                Toolkit.Event.RaiseEvent(new CloseEventArgs(handle));
 
                                 if (selectedWindow == i)
                                 {
@@ -175,11 +175,13 @@ namespace OpenTK.Backends.Tests
                     Toolkit.Window.GetSize(window, out Vector2i size);
                     Toolkit.Window.GetClientPosition(window, out Vector2i cPos);
                     Toolkit.Window.GetPosition(window, out Vector2i pos);
+                    Toolkit.Window.GetScaleFactor(window, out float scaleX, out float scaleY);
                     ImGui.Text($"Client Position: ({cPos.X}, {cPos.Y})");
                     ImGui.Text($"Position: ({pos.X}, {pos.Y})");
                     ImGui.Text($"Client Size: ({cSize.X}, {cSize.Y})");
                     ImGui.Text($"Size: ({size.X}, {size.Y})");
                     ImGui.Text($"Mode: {Toolkit.Window.GetMode(window)}");
+                    ImGui.Text($"Scale: ({scaleX}, {scaleY})");
                 }
 
                 ImGui.AlignTextToFramePadding();

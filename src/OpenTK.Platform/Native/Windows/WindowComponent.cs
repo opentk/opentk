@@ -1,4 +1,4 @@
-﻿using OpenTK.Platform;
+﻿using Microsoft.Win32;
 using OpenTK.Core.Utility;
 using OpenTK.Mathematics;
 using System;
@@ -7,10 +7,9 @@ using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading;
-using OpenTK.Graphics.Vulkan;
 using System.Runtime.InteropServices.Marshalling;
+using System.Security.AccessControl;
+using System.Text;
 
 namespace OpenTK.Platform.Native.Windows
 {
@@ -36,6 +35,9 @@ namespace OpenTK.Platform.Native.Windows
 
         internal static IntPtr DeviceNotificationHandle;
         internal static IntPtr SuspendResumeNotificationHandle;
+
+        internal static RegistryKey? MouseSettingsRegistryKey;
+        internal static IntPtr RegistryMouseSettingsChangedEvent;
 
         internal static uint TaskbarButtonCreatedMessage;
 
@@ -143,6 +145,31 @@ namespace OpenTK.Platform.Native.Windows
                 throw new Win32Exception();
             }
 
+#pragma warning disable CA1416 // Validate platform compatibility
+            MouseSettingsRegistryKey = Registry.CurrentUser.OpenSubKey(@"Control Panel\Mouse", RegistryRights.ReadKey | RegistryRights.Notify);
+            if (MouseSettingsRegistryKey != null)
+            {
+                unsafe
+                {
+                    RegistryMouseSettingsChangedEvent = Win32.CreateEvent(null, true, false, null);
+                    if (RegistryMouseSettingsChangedEvent == 0)
+                    {
+                        throw new Win32Exception();
+                    }
+                    int result = Win32.RegNotifyChangeKeyValue(MouseSettingsRegistryKey.Handle.DangerousGetHandle(), false, RegNotifyChange.LastSet, RegistryMouseSettingsChangedEvent, true);
+                    if (result != Win32.ERROR_SUCCESS)
+                    {
+                        throw new Win32Exception(result);
+                    }
+                }
+            }
+            else
+            {
+                Logger?.LogWarning("Could not open the 'Computer\\HKEY_CURRENT_USER\\Control Panel\\Mouse' registry key. Can't register registry change callbacks for user configured double click settings.");
+            }
+#pragma warning restore CA1416 // Validate platform compatibility
+
+
             TaskbarButtonCreatedMessage = Win32.RegisterWindowMessage("TaskbarButtonCreated");
 
             OpenTKUserEventMessage = Win32.RegisterWindowMessage("OpenTKUserEvent");
@@ -161,9 +188,33 @@ namespace OpenTK.Platform.Native.Windows
             }
 
             // Unregister the helper window from notifications.
-            Win32.UnregisterDeviceNotification(DeviceNotificationHandle);
-            Win32.UnregisterSuspendResumeNotification(SuspendResumeNotificationHandle);
-            Win32.RemoveClipboardFormatListener(HelperHWnd);
+            bool success = Win32.UnregisterDeviceNotification(DeviceNotificationHandle);
+            if (success == false)
+            {
+                throw new Win32Exception();
+            }
+            success = Win32.UnregisterSuspendResumeNotification(SuspendResumeNotificationHandle);
+            if (success == false)
+            {
+                throw new Win32Exception();
+            }
+            success = Win32.RemoveClipboardFormatListener(HelperHWnd);
+            if (success == false)
+            {
+                throw new Win32Exception();
+            }
+
+            if (RegistryMouseSettingsChangedEvent != 0)
+            {
+                success = Win32.CloseHandle(RegistryMouseSettingsChangedEvent);
+                if (success == false)
+                {
+                    throw new Win32Exception();
+                }
+            }
+#pragma warning disable CA1416 // Validate platform compatibility
+            MouseSettingsRegistryKey?.Dispose();
+#pragma warning restore CA1416 // Validate platform compatibility
 
             // Delete the helper window
             Win32.DestroyWindow(HelperHWnd);
@@ -202,14 +253,7 @@ namespace OpenTK.Platform.Native.Windows
                 {
                     GCHandle handle = GCHandle.FromIntPtr(lParam);
                     EventArgs args = (EventArgs)handle.Target!;
-                    if (args is WindowEventArgs windowArgs)
-                    {
-                        EventQueue.Raise(windowArgs.Window, PlatformEventType.UserMessage, windowArgs);
-                    }
-                    else
-                    {
-                        EventQueue.Raise(null, PlatformEventType.UserMessage, args);
-                    }
+                    Toolkit.Event.RaiseEvent(args);
                     handle.Free();
                 }
 
@@ -223,11 +267,11 @@ namespace OpenTK.Platform.Native.Windows
 
                         if (power == PBT.APMSuspend)
                         {
-                            EventQueue.Raise(null, PlatformEventType.PowerStateChange, new PowerStateChangeEventArgs(true));
+                            Toolkit.Event.RaiseEvent(new PowerStateChangeEventArgs(true));
                         }
                         else if (power == PBT.APMResumeAutomatic)
                         {
-                            EventQueue.Raise(null, PlatformEventType.PowerStateChange, new PowerStateChangeEventArgs(false));
+                            Toolkit.Event.RaiseEvent(new PowerStateChangeEventArgs(false));
                         }
 
                         return (IntPtr)1;
@@ -253,7 +297,7 @@ namespace OpenTK.Platform.Native.Windows
                     {
                         ClipboardFormat newFormat = ClipboardComponent.GetClipboardFormatInternal(Logger);
 
-                        EventQueue.Raise(null, PlatformEventType.ClipboardUpdate, new ClipboardUpdateEventArgs(newFormat));
+                        Toolkit.Event.RaiseEvent(new ClipboardUpdateEventArgs(newFormat));
 
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                     }
@@ -322,7 +366,7 @@ namespace OpenTK.Platform.Native.Windows
                         // FIXME: Should this be before or after we change the keyboard state?
                         KeyModifier modifiers = KeyboardComponent.GetKeyboardModifiersInternal();
                         KeyboardComponent.KeyStateChanged(code, true);
-                        EventQueue.Raise(h, PlatformEventType.KeyDown, new KeyDownEventArgs(h, key, code, wasDown, modifiers));
+                        Toolkit.Event.RaiseEvent(new KeyDownEventArgs(h, key, code, wasDown, modifiers));
 
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                     }
@@ -379,7 +423,7 @@ namespace OpenTK.Platform.Native.Windows
                             // FIXME: Should this change the modifiers??
                             if (KeyboardComponent.KeyStateChanged(otherCode, false))
                             {
-                                EventQueue.Raise(h, PlatformEventType.KeyUp, new KeyUpEventArgs(h, otherKey, otherCode, modifiers));
+                                Toolkit.Event.RaiseEvent(new KeyUpEventArgs(h, otherKey, otherCode, modifiers));
                             }
                         }
 
@@ -387,11 +431,11 @@ namespace OpenTK.Platform.Native.Windows
                         // - 2023-02-13 NogginBops
                         if (code == Scancode.PrintScreen)
                         {
-                            EventQueue.Raise(h, PlatformEventType.KeyDown, new KeyDownEventArgs(h, key, code, false, modifiers));
+                            Toolkit.Event.RaiseEvent(new KeyDownEventArgs(h, key, code, false, modifiers));
                         }
 
                         KeyboardComponent.KeyStateChanged(code, false);
-                        EventQueue.Raise(h, PlatformEventType.KeyUp, new KeyUpEventArgs(h, key, code, modifiers));
+                        Toolkit.Event.RaiseEvent(new KeyUpEventArgs(h, key, code, modifiers));
 
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                     }
@@ -457,12 +501,12 @@ namespace OpenTK.Platform.Native.Windows
                                     }
                             }
 
-                            EventQueue.Raise(h, PlatformEventType.TextInput, new TextInputEventArgs(h, str));
+                            Toolkit.Event.RaiseEvent(new TextInputEventArgs(h, str));
                         }
                         else
                         {
                             // ANSI
-                            EventQueue.Raise(h, PlatformEventType.TextInput, new TextInputEventArgs(h, new string((char)(wParam.ToUInt64()), 1)));
+                            Toolkit.Event.RaiseEvent(new TextInputEventArgs(h, new string((char)(wParam.ToUInt64()), 1)));
                         }
 
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
@@ -480,7 +524,7 @@ namespace OpenTK.Platform.Native.Windows
                             RecaptureCursor(h, h.CaptureMode);
                         }
 
-                        EventQueue.Raise(h, PlatformEventType.Focus, new FocusEventArgs(h, true));
+                        Toolkit.Event.RaiseEvent(new FocusEventArgs(h, true));
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                     }
                 case WM.KILLFOCUS:
@@ -496,7 +540,7 @@ namespace OpenTK.Platform.Native.Windows
                                 RecaptureCursor(h, CursorCaptureMode.Normal);
                             }
 
-                            EventQueue.Raise(h, PlatformEventType.Focus, new FocusEventArgs(h, false));
+                            Toolkit.Event.RaiseEvent(new FocusEventArgs(h, false));
                         }
 
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
@@ -538,7 +582,7 @@ namespace OpenTK.Platform.Native.Windows
                                 throw new Win32Exception();
                             }
                             
-                            EventQueue.Raise(h, PlatformEventType.MouseEnter, new MouseEnterEventArgs(h, true));
+                            Toolkit.Event.RaiseEvent(new MouseEnterEventArgs(h, true));
                         }
 
                         if (CursorCapturingWindow == h && h.CaptureMode == CursorCaptureMode.Locked)
@@ -552,12 +596,12 @@ namespace OpenTK.Platform.Native.Windows
                             if (delta != (0, 0))
                             {
                                 h.VirtualCursorPosition += delta;
-                                EventQueue.Raise(h, PlatformEventType.MouseMove, new MouseMoveEventArgs(h, h.VirtualCursorPosition));
+                                Toolkit.Event.RaiseEvent(new MouseMoveEventArgs(h, h.VirtualCursorPosition));
                             }
                         }
                         else
                         {
-                            EventQueue.Raise(h, PlatformEventType.MouseMove, new MouseMoveEventArgs(h, new Vector2(x, y)));
+                            Toolkit.Event.RaiseEvent(new MouseMoveEventArgs(h, new Vector2(x, y)));
                         }
 
                         h.LastMousePosition = (x, y);
@@ -569,7 +613,7 @@ namespace OpenTK.Platform.Native.Windows
                         HWND h = HWndDict[hWnd];
                         h.TrackingMouse = false;
 
-                        EventQueue.Raise(h, PlatformEventType.MouseEnter, new MouseEnterEventArgs(h, false));
+                        Toolkit.Event.RaiseEvent(new MouseEnterEventArgs(h, false));
 
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                     }
@@ -623,11 +667,19 @@ namespace OpenTK.Platform.Native.Windows
                             // FIXME: Keep track of which buttons we are pressing?
                             Win32.SetCapture(hWnd);
 
-                            KeyModifier modifiers = KeyboardComponent.GetKeyboardModifiersInternal();
+                            // FIXME: Virtual mouse position??
+                            int x = Win32.GET_X_LPARAM(lParam);
+                            int y = Win32.GET_Y_LPARAM(lParam);
 
+                            KeyModifier modifiers = KeyboardComponent.GetKeyboardModifiersInternal();
+                            
                             HWND h = HWndDict[hWnd];
+                            int time = Win32.GetMessageTime();
+                            int clicks = h.ClickCounter.CountClicks((ulong)time, (x, y), button.Value);
+                            Logger?.LogDebug($"{h.ClickCounter}");
+
                             MouseComponent.RegisterButtonState(h, button.Value, true);
-                            EventQueue.Raise(h, PlatformEventType.MouseDown, new MouseButtonDownEventArgs(h, button.Value, modifiers));
+                            Toolkit.Event.RaiseEvent(new MouseButtonDownEventArgs(h, (x, y), button.Value, modifiers, clicks));
                         }
 
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
@@ -685,11 +737,18 @@ namespace OpenTK.Platform.Native.Windows
                                 throw new Win32Exception();
                             }
 
+                            // FIXME: Virtual mouse position??
+                            int x = Win32.GET_X_LPARAM(lParam);
+                            int y = Win32.GET_Y_LPARAM(lParam);
+
                             KeyModifier modifiers = KeyboardComponent.GetKeyboardModifiersInternal();
+
+                            // FIXME: Get the click count for this button when it was pressed?
+                            int clicks = 1;
 
                             HWND h = HWndDict[hWnd];
                             MouseComponent.RegisterButtonState(h, button.Value, false);
-                            EventQueue.Raise(h, PlatformEventType.MouseUp, new MouseButtonUpEventArgs(h, button.Value, modifiers));
+                            Toolkit.Event.RaiseEvent(new MouseButtonUpEventArgs(h, (x, y), button.Value, modifiers, clicks));
                         }
 
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
@@ -707,7 +766,7 @@ namespace OpenTK.Platform.Native.Windows
                         HWND h = HWndDict[hWnd];
 
                         MouseComponent.RegisterMouseWheelDelta(h, (0, delta));
-                        EventQueue.Raise(h, PlatformEventType.Scroll, new ScrollEventArgs(h, new Vector2(0, delta), new Vector2(0, delta * lines)));
+                        Toolkit.Event.RaiseEvent(new ScrollEventArgs(h, new Vector2(0, delta), new Vector2(0, delta * lines)));
 
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                     }
@@ -724,7 +783,7 @@ namespace OpenTK.Platform.Native.Windows
                         HWND h = HWndDict[hWnd];
 
                         MouseComponent.RegisterMouseWheelDelta(h, (delta, 0));
-                        EventQueue.Raise(h, PlatformEventType.Scroll, new ScrollEventArgs(h, new Vector2(delta, 0), new Vector2(delta * chars, 0)));
+                        Toolkit.Event.RaiseEvent(new ScrollEventArgs(h, new Vector2(delta, 0), new Vector2(delta * chars, 0)));
 
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                     }
@@ -760,7 +819,7 @@ namespace OpenTK.Platform.Native.Windows
                                 if (mouse.lLastX != 0 || mouse.lLastY != 0)
                                 {
                                     HWND h = HWndDict[hWnd];
-                                    EventQueue.Raise(h, PlatformEventType.RawMouseMove, new RawMouseMoveEventArgs(h, (mouse.lLastX, mouse.lLastY)));
+                                    Toolkit.Event.RaiseEvent(new RawMouseMoveEventArgs(h, (mouse.lLastX, mouse.lLastY)));
                                 }
                             }
                             else
@@ -832,19 +891,19 @@ namespace OpenTK.Platform.Native.Windows
                             case SIZE.Maximized:
                                 h.WindowState = WindowState.Maximized;
 
-                                EventQueue.Raise(h, PlatformEventType.WindowModeChange, new WindowModeChangeEventArgs(h, WindowMode.Maximized));
+                                Toolkit.Event.RaiseEvent(new WindowModeChangeEventArgs(h, WindowMode.Maximized));
                                 break;
                             case SIZE.Minimized:
                                 h.WindowState = WindowState.Minimized;
 
-                                EventQueue.Raise(h, PlatformEventType.WindowModeChange, new WindowModeChangeEventArgs(h, WindowMode.Minimized));
+                                Toolkit.Event.RaiseEvent(new WindowModeChangeEventArgs(h, WindowMode.Minimized));
                                 break;
                             case SIZE.Restored:
                                 if (h.WindowState != WindowState.Restored)
                                 {
                                     h.WindowState = WindowState.Restored;
 
-                                    EventQueue.Raise(h, PlatformEventType.WindowModeChange, new WindowModeChangeEventArgs(h, WindowMode.Normal));
+                                    Toolkit.Event.RaiseEvent(new WindowModeChangeEventArgs(h, WindowMode.Normal));
                                 }
                                 break;
                             case SIZE.MaxShow:
@@ -864,9 +923,9 @@ namespace OpenTK.Platform.Native.Windows
                             throw new Win32Exception();
                         }
 
-                        EventQueue.Raise(h, PlatformEventType.WindowResize, new WindowResizeEventArgs(h, new Vector2i(lpRect.Width, lpRect.Height), new Vector2i(x, y)));
+                        Toolkit.Event.RaiseEvent(new WindowResizeEventArgs(h, new Vector2i(lpRect.Width, lpRect.Height), new Vector2i(x, y)));
 
-                        EventQueue.Raise(h, PlatformEventType.WindowFramebufferResize, new WindowFramebufferResizeEventArgs(h, new Vector2i(x, y)));
+                        Toolkit.Event.RaiseEvent(new WindowFramebufferResizeEventArgs(h, new Vector2i(x, y)));
 
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                     }
@@ -879,7 +938,7 @@ namespace OpenTK.Platform.Native.Windows
 
                         Win32.GetWindowRect(hWnd, out Win32.RECT rect);
                         
-                        EventQueue.Raise(h, PlatformEventType.WindowMove, new WindowMoveEventArgs(h, new Vector2i(rect.left, rect.top), new Vector2i(x, y)));
+                        Toolkit.Event.RaiseEvent(new WindowMoveEventArgs(h, new Vector2i(rect.left, rect.top), new Vector2i(x, y)));
 
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                     }
@@ -938,7 +997,7 @@ namespace OpenTK.Platform.Native.Windows
                 case WM.CLOSE:
                     {
                         HWND h = HWndDict[hWnd];
-                        EventQueue.Raise(h, PlatformEventType.Close, new CloseEventArgs(h));
+                        Toolkit.Event.RaiseEvent(new CloseEventArgs(h));
 
                         // By not calling Destroy we allow the user to decide
                         // themselves if they want to destroy the window or not.
@@ -950,15 +1009,11 @@ namespace OpenTK.Platform.Native.Windows
                     }
                 case WM.DISPLAYCHANGE:
                     {
-                        // FIXME: We should not only look for changes in resolution and connectivity, we should also look for
-                        // changes in position etc.
-                        // Should we just expose an event that tells users that there might have been some changes to displays?
-                        // - Noggin_bops 2023-09-05
-
-                        Console.WriteLine($"{uMsg} Bit depth: {wParam.ToUInt64()}, ResX: {(lParam.ToInt64() & Win32.HiWordMask) >> 16}, ResY: {lParam.ToInt64() & Win32.LoWordMask}");
+                        Logger?.LogDebug($"{uMsg} Bit depth: {wParam.ToUInt64()}, ResX: {(lParam.ToInt64() & Win32.HiWordMask) >> 16}, ResY: {lParam.ToInt64() & Win32.LoWordMask}");
 
                         // FIXME: Some other way of notifying the DisplayComponent that things have changed.
                         DisplayComponent.UpdateMonitors(true, Logger);
+
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                     }
                 case WM.DPICHANGED:
@@ -974,7 +1029,7 @@ namespace OpenTK.Platform.Native.Windows
                         HWND h = HWndDict[hWnd];
 
                         // FIXME: Should we send this message before or after resizing the application?
-                        EventQueue.Raise(h, PlatformEventType.WindowScaleChange, new WindowScaleChangeEventArgs(h, scaleX, scaleY));
+                        Toolkit.Event.RaiseEvent(new WindowScaleChangeEventArgs(h, scaleX, scaleY));
 
                         // FIXME: glfw limits this to windows 10 only??
                         // https://github.com/glfw/glfw/blob/dd8a678a66f1967372e5a5e3deac41ebf65ee127/src/win32_window.c#L1186
@@ -1018,7 +1073,7 @@ namespace OpenTK.Platform.Native.Windows
 
                         HWND h = HWndDict[hWnd];
 
-                        EventQueue.Raise(h, PlatformEventType.FileDrop, new FileDropEventArgs(h, paths, new Vector2i(point.X, point.Y)));
+                        Toolkit.Event.RaiseEvent(new FileDropEventArgs(h, paths, new Vector2i(point.X, point.Y)));
 
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                     }
@@ -1075,7 +1130,7 @@ namespace OpenTK.Platform.Native.Windows
                                 }
 
                                 // FIXME: Length?
-                                EventQueue.Raise(h, PlatformEventType.TextEditing, new TextEditingEventArgs(h, composition, IMECursor, 0));
+                                Toolkit.Event.RaiseEvent(new TextEditingEventArgs(h, composition, IMECursor, 0));
                             }
                         }
 
@@ -1108,7 +1163,7 @@ namespace OpenTK.Platform.Native.Windows
                                 // For now we assume it will, if we send this here we later get a
                                 // WM_CHAR with the same text causing duplicate IME input.
                                 // - Noggin_bops 2023-11-13
-                                //EventQueue.Raise(h, PlatformEventType.TextInput, new TextInputEventArgs(h, composition));
+                                //Toolkit.Event.RaiseEvent(new TextInputEventArgs(h, composition));
                             }
                         }
 
@@ -1179,6 +1234,61 @@ namespace OpenTK.Platform.Native.Windows
                     CursorCapturingWindow.LastMousePosition = (size.X / 2, size.Y / 2);
                 }
             }
+
+            if (RegistryMouseSettingsChangedEvent != 0)
+            {
+                WaitResult waitResult = Win32.WaitForSingleObject(RegistryMouseSettingsChangedEvent, 0);
+                if (waitResult == WaitResult.Object0)
+                {
+                    bool success = Win32.ResetEvent(RegistryMouseSettingsChangedEvent);
+                    if (success == false)
+                    {
+                        throw new Win32Exception();
+                    }
+
+    #pragma warning disable CA1416 // Validate platform compatibility
+                    int result = Win32.RegNotifyChangeKeyValue(MouseSettingsRegistryKey!.Handle.DangerousGetHandle(), false, RegNotifyChange.LastSet, RegistryMouseSettingsChangedEvent, true);
+                    if (result != Win32.ERROR_SUCCESS)
+                    {
+                        throw new Win32Exception(result);
+                    }
+
+                    // We want to re-read all of the settings.
+                    ulong doubleClickInterval = Win32.GetDoubleClickTime();
+                    float? doubleClickWidth = null;
+                    float? doubleClickHeight = null;
+
+                    if (MouseSettingsRegistryKey.GetValue("DoubleClickWidth") is string widthStr &&
+                    int.TryParse(widthStr, out int widthPx))
+                    {
+                        // FIXME: Convert to client space coordinates instead of pixels...
+                        doubleClickWidth = widthPx;
+                    }
+                    if (MouseSettingsRegistryKey.GetValue("DoubleClickHeight") is string heightStr &&
+                        int.TryParse(heightStr, out int heightPx))
+                    {
+                        // FIXME: Convert to client space coordinates instead of pixels...
+                        doubleClickHeight = heightPx;
+                    }
+    #pragma warning restore CA1416 // Validate platform compatibility
+
+                    Logger?.LogDebug($"New double click settings: Interval: {doubleClickInterval}, Width: {doubleClickWidth}, Height: {doubleClickHeight}");
+                    foreach (var (_, hwnd) in HWndDict)
+                    {
+                        hwnd.ClickCounter.DoubleClickInfo.Interval = doubleClickInterval;
+                        if (doubleClickWidth != null)
+                            hwnd.ClickCounter.DoubleClickInfo.Distance.X = doubleClickWidth.Value;
+                        if (doubleClickHeight != null)
+                            hwnd.ClickCounter.DoubleClickInfo.Distance.Y = doubleClickHeight.Value;
+                    }
+                }
+                else if (waitResult == WaitResult.Failed)
+                {
+                    throw new Win32Exception();
+                }
+            }
+
+            (Toolkit.Joystick as JoystickComponent)?.Update();
         }
 
         /// <inheritdoc/>
@@ -1232,6 +1342,29 @@ namespace OpenTK.Platform.Native.Windows
             hcursor.Cursor = Win32.LoadImage(IntPtr.Zero, OCR.Normal, ImageType.Cursor, 0, 0, LR.Shared | LR.DefaultSize);
             hcursor.Mode = HCursor.CursorMode.SystemCursor;
             SetCursor(hwnd, hcursor);
+
+            hwnd.ClickCounter.DoubleClickInfo.Interval = Win32.GetDoubleClickTime();
+#pragma warning disable CA1416 // Validate platform compatibility
+            if (MouseSettingsRegistryKey != null)
+            {
+                if (MouseSettingsRegistryKey.GetValue("DoubleClickWidth") is string widthStr &&
+                int.TryParse(widthStr, out int widthPx))
+                {
+                    // FIXME: Convert to client space coordinates instead of pixels...
+                    hwnd.ClickCounter.DoubleClickInfo.Distance.X = widthPx;
+                }
+                if (MouseSettingsRegistryKey.GetValue("DoubleClickHeight") is string heightStr &&
+                    int.TryParse(heightStr, out int heightPx))
+                {
+                    // FIXME: Convert to client space coordinates instead of pixels...
+                    hwnd.ClickCounter.DoubleClickInfo.Distance.Y = heightPx;
+                }
+            }
+            else
+            {
+                Logger?.LogWarning("Could not open the 'Computer\\HKEY_CURRENT_USER\\Control Panel\\Mouse' registry key. Can't get user configured double click settings, will use defaults.");
+            }
+#pragma warning restore CA1416 // Validate platform compatibility
 
             HWndDict.Add(hwnd.HWnd, hwnd);
 
@@ -1947,7 +2080,7 @@ namespace OpenTK.Platform.Native.Windows
         };
 
         /// <inheritdoc/>
-        public unsafe void SetBorderStyle(WindowHandle handle, WindowBorderStyle style)
+        public void SetBorderStyle(WindowHandle handle, WindowBorderStyle style)
         {
             HWND hwnd = handle.As<HWND>(this);
 
@@ -1995,7 +2128,7 @@ namespace OpenTK.Platform.Native.Windows
                     throw new InvalidEnumArgumentException(nameof(style), (int)style, style.GetType());
             }
 
-            Win32.SetWindowPos(hwnd.HWnd, IntPtr.Zero, 0, 0, 0, 0, SetWindowPosFlags.NoMove | SetWindowPosFlags.NoSize | SetWindowPosFlags.NoZOrder | SetWindowPosFlags.FrameChanged);
+            Win32.SetWindowPos(hwnd.HWnd, IntPtr.Zero, 0, 0, 0, 0, SetWindowPosFlags.NoMove | SetWindowPosFlags.NoSize | SetWindowPosFlags.NoZOrder | SetWindowPosFlags.NoOwnerZOrder | SetWindowPosFlags.NoActivate | SetWindowPosFlags.FrameChanged);
         }
 
         /// <inheritdoc/>
@@ -2351,6 +2484,13 @@ namespace OpenTK.Platform.Native.Windows
             float scale = dpi / (float)Win32.USER_DEFAULT_SCREEN_DPI;
             scaleX = scale;
             scaleY = scale;
+        }
+
+        /// <inheritdoc/>
+        public OpenGLContextHandle? GetOpenGLContext(WindowHandle handle)
+        {
+            HWND hwnd = handle.As<HWND>(this);
+            return hwnd.OpenGLContextHandle;
         }
 
         /// <summary>
