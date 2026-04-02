@@ -40,6 +40,9 @@ namespace OpenTK.Core.Utility
     /// <summary>
     /// Interface used by OpenTK to be able to log diagnostic information.
     /// </summary>
+    /// <remarks>
+    /// Implementations of this interface need to handle logging calls made from different threads.
+    /// </remarks>
     public interface ILogger
     {
         /// <summary>

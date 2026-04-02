@@ -1111,7 +1111,7 @@ namespace OpenTK.Platform.Native.Windows
 
         // 512 should be enough space to handle 16k Hz mouse at 30fps without blocking
         // - Noggin_bops 2026-04-01
-        private BlockingCollection<Vector2> RawMouseInputQueue = new BlockingCollection<Vector2>(512);
+        private SPSCRingBuffer<Vector2> RawMouseInputQueue = new SPSCRingBuffer<Vector2>(512);
         private Thread? RawInputThread = null;
         private AutoResetEvent? RawInputThreadReadyEvent;
         private AutoResetEvent? RawInputThreadShouldExitEvent;
@@ -1140,6 +1140,7 @@ namespace OpenTK.Platform.Native.Windows
                 RawInputThreadExitedEvent = new AutoResetEvent(false);
                 RawInputThread = new Thread(RawInputThreadFunc);
                 RawInputThread.Name = "OpenTK Raw Input Thread";
+                RawInputThread.IsBackground = true;
                 RawInputThread.Start();
 
                 if (WaitHandle.WaitAny([RawInputThreadReadyEvent, RawInputThreadExitedEvent]) == 1)
@@ -1266,13 +1267,13 @@ namespace OpenTK.Platform.Native.Windows
                     for (uint i = 0; i < elementsRead; i++)
                     {
                         // FIXME: Use the same thing that the NEXTRAWINPUTBLOCK() macro does.
-                        input++;
+                        input = Win32.NEXTRAWINPUTBLOCK(input);
                     }
                 }
             }
 
             input = RawInputBuffer;
-            for (int i = 0; i < totalNumberOfEvents; i++, input++ /* FIXME: NEXTRAWINPUTBLOCK() */)
+            for (int i = 0; i < totalNumberOfEvents; i++, input = Win32.NEXTRAWINPUTBLOCK(input))
             {
                 ref Win32.RAWINPUT rawInput = ref *input;
                 if (rawInput.header.dwType == RIM.TypeMouse)
@@ -1286,7 +1287,10 @@ namespace OpenTK.Platform.Native.Windows
                             // For now we don't disable legacy mouse events so this is fine,
                             // but eventually we might and then this will matter.
                             // - Noggin_bops 2026-04-01
-                            RawMouseInputQueue.Add((rawMouse.lLastX, rawMouse.lLastY));
+                            if (RawMouseInputQueue.Enqueue((rawMouse.lLastX, rawMouse.lLastY)))
+                            {
+                                Logger?.LogDebug("Raw mouse input events overflow. This means that event processing is not keeping up with mouse events.");
+                            }
                         }
                     }
                     else
@@ -1301,7 +1305,7 @@ namespace OpenTK.Platform.Native.Windows
         /// <inheritdoc/>
         public void ProcessEvents(bool waitForEvents)
         {
-            while (RawMouseInputQueue.TryTake(out Vector2 delta))
+            while (RawMouseInputQueue.TryDequeue(out Vector2 delta))
             {
                 EventQueue.Raise(null, PlatformEventType.RawMouseMove, new RawMouseMoveEventArgs(delta));
             }

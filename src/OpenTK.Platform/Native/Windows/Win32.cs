@@ -119,6 +119,9 @@ namespace OpenTK.Platform.Native.Windows
 
         internal const int LOCALE_NAME_MAX_LENGTH = 85;
 
+        internal static RAWINPUT* RAWINPUT_ALIGN(void* x) => (RAWINPUT*)(((nint)x + sizeof(nint) - 1) & ~(sizeof(nint) - 1));
+        internal static RAWINPUT* NEXTRAWINPUTBLOCK(RAWINPUT* ptr) => RAWINPUT_ALIGN(((byte*)ptr) + ptr->header.dwSize);
+
         // Usefull extension methods for dealing with span string buffers.
         internal static Span<char> SliceAtFirstNull(this Span<char> span)
         {
