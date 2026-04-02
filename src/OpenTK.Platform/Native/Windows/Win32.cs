@@ -1,5 +1,4 @@
-﻿using OpenTK.Graphics.Vulkan;
-using OpenTK.Graphics.Wgl;
+using OpenTK.Graphics.Vulkan;
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
@@ -90,6 +89,7 @@ namespace OpenTK.Platform.Native.Windows
 
         internal const int ERROR_SUCCESS = 0;
         internal const int ERROR_FILE_NOT_FOUND = 0x2;
+        internal const int ERROR_ACCESS_DENIED = 0x5;
         internal const int ERROR_INVALID_PARAMETER = 87;
         /// <summary>
         /// The data area passed to a system call is too small.
@@ -116,6 +116,10 @@ namespace OpenTK.Platform.Native.Windows
         internal const int E_OUTOFMEMORY = unchecked((int)0x8007000E);
         internal const int E_FAIL = unchecked((int)0x80004005);
 
+        internal const uint WAIT_OBJECT_0 = 0x00000000;
+
+        internal const uint INFINITE = 0xFFFFFFFF;
+
         internal const IntPtr TD_WARNING_ICON         = unchecked((ushort)-1);
         internal const IntPtr TD_ERROR_ICON           = unchecked((ushort)-2);
         internal const IntPtr TD_INFORMATION_ICON     = unchecked((ushort)-3);
@@ -135,6 +139,9 @@ namespace OpenTK.Platform.Native.Windows
         internal const int ERROR_BUSY = 170;
 
         internal static int MAKE_HRESULT(int sev, int fac, int code) => sev << 31 | fac << 16 | code;
+
+        internal static RAWINPUT* RAWINPUT_ALIGN(void* x) => (RAWINPUT*)(((nint)x + sizeof(nint) - 1) & ~(sizeof(nint) - 1));
+        internal static RAWINPUT* NEXTRAWINPUTBLOCK(RAWINPUT* ptr) => RAWINPUT_ALIGN(((byte*)ptr) + ptr->header.dwSize);
 
         // Usefull extension methods for dealing with span string buffers.
         internal static Span<char> SliceAtFirstNull(this Span<char> span)
@@ -1556,6 +1563,13 @@ namespace OpenTK.Platform.Native.Windows
         [DllImport("user32.dll")]
         internal static extern IntPtr /* LRESULT */ DefRawInputProc(IntPtr /* PRAWINPUT* */ paRawInput, int nInput, uint cbSizeHeader);
 
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern uint GetRawInputBuffer(
+            RAWINPUT* /* PRAWINPUT */ pData,  
+            ref uint pcbSize,
+            uint cbSizeHeader
+        );
+
         [DllImport("user32.dll", SetLastError = false)]
         internal static extern uint GetRawInputData(
            IntPtr /* HRAWINPUT */ hRawInput,
@@ -1626,7 +1640,8 @@ namespace OpenTK.Platform.Native.Windows
             public fixed byte bRawData[1];
         }
 
-        internal unsafe struct RAWINPUT
+        // FIXME: Handle WOW64 layout correctly.
+        internal struct RAWINPUT
         {
             public RAWINPUTHEADER header;
             public DUMMYUNIONNAME data;
@@ -2179,6 +2194,31 @@ namespace OpenTK.Platform.Native.Windows
         [DllImport("kernel32.dll", SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool CloseHandle(IntPtr /* HANDLE */ hObject);
+
+        internal static uint MsgWaitForMultipleObjects(uint nCount, ReadOnlySpan<IntPtr> /* const HANDLE* */ pHandles, [MarshalAs(UnmanagedType.Bool)] bool fWaitAll, uint dwMilliseconds, QS dwWakeMask)
+        {
+            fixed (IntPtr* handles = pHandles)
+            {
+                return MsgWaitForMultipleObjects(nCount, handles, fWaitAll, dwMilliseconds, dwWakeMask);
+            }
+
+            [DllImport("user32.dll", SetLastError = true)]
+            static extern uint MsgWaitForMultipleObjects(uint nCount, IntPtr* /* const HANDLE* */ pHandles, [MarshalAs(UnmanagedType.Bool)] bool fWaitAll, uint dwMilliseconds, QS dwWakeMask);
+        }
+
+        internal static uint WaitForMultipleObjects(uint nCount, ReadOnlySpan<IntPtr> /* const HANDLE* */ pHandles, [MarshalAs(UnmanagedType.Bool)] bool fWaitAll, uint dwMilliseconds)
+        {
+            fixed (IntPtr* handles = pHandles)
+            {
+                return WaitForMultipleObjects(nCount, handles, fWaitAll, dwMilliseconds);
+            }
+
+            [DllImport("kernel32.dll", SetLastError = true)]
+            static extern uint WaitForMultipleObjects(uint nCount, IntPtr* /* const HANDLE* */ lpHandles, [MarshalAs(UnmanagedType.Bool)] bool bWaitAll, uint dwMilliseconds);
+        }
+
+        [DllImport("user32.dll", SetLastError = false)]
+        internal static extern uint GetQueueStatus(QS flags);
     }
 #pragma warning restore CS0649 // Field 'field' is never assigned to, and will always have its default value 'value'
 }

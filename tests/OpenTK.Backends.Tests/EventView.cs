@@ -110,10 +110,11 @@ namespace OpenTK.Backends.Tests
             if (ShowMouseEvents == false)
             {
                 if (@event is MouseMoveEventArgs ||
-                            @event is MouseButtonDownEventArgs ||
-                            @event is MouseButtonUpEventArgs ||
-                            @event is ScrollEventArgs ||
-                            @event is MouseEnterEventArgs)
+                    @event is MouseButtonDownEventArgs ||
+                    @event is MouseButtonUpEventArgs ||
+                    @event is ScrollEventArgs ||
+                    @event is MouseEnterEventArgs ||
+                    @event is RawMouseMoveEventArgs)
                 {
                     return true;
                 }
@@ -195,8 +196,13 @@ namespace OpenTK.Backends.Tests
             }
             else if (@event is WindowEventArgs windowEvent)
             {
+                string windowName;
+                if (Toolkit.Window.IsWindowDestroyed(windowEvent.Window))
+                    windowName = "<destroyed window>";
+                else
+                    windowName = Toolkit.Window.GetTitle(windowEvent.Window);
                 string extra = GetWindowEventExtra(windowEvent);
-                return $"{@event.GetType().Name,Justify} - {Toolkit.Window.GetTitle(windowEvent.Window)}{(string.IsNullOrEmpty(extra) ? "" : $": {extra}")}";
+                return $"{@event.GetType().Name,Justify} - {windowName}{(string.IsNullOrEmpty(extra) ? "" : $": {extra}")}";
             }
             else if (@event is InputLanguageChangedEventArgs languageChange)
             {
@@ -250,6 +256,10 @@ namespace OpenTK.Backends.Tests
             else if (@event is PowerStateChangeEventArgs powerState)
             {
                 return $"{@event.GetType().Name,Justify} - {(powerState.GoingToSleep ? "Going to sleep" : "Woke up")}";
+            }
+            else if (@event is RawMouseMoveEventArgs rawMouseMove)
+            {
+                return $"{@event.GetType().Name,Justify} - Delta: {rawMouseMove.Delta}";
             }
             else
             {
@@ -305,10 +315,6 @@ namespace OpenTK.Backends.Tests
                 else if (@event is MouseMoveEventArgs mouseMove)
                 {
                     return $"Client position: {mouseMove.ClientPosition}";
-                }
-                else if (@event is RawMouseMoveEventArgs rawMouseMove)
-                {
-                    return $"Delta: {rawMouseMove.Delta}";
                 }
                 else if (@event is MouseButtonDownEventArgs mouseButtonDown)
                 {
