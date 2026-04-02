@@ -2,7 +2,6 @@
 using OpenTK.Core.Utility;
 using OpenTK.Mathematics;
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
