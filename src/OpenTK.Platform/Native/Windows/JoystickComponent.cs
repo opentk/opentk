@@ -66,7 +66,7 @@ namespace OpenTK.Platform.Native.Windows
                 string instanceName = Utils.FromTszString(lpddi->tszInstanceName, MAX_PATH);
                 string productName = Utils.FromTszString(lpddi->tszProductName, MAX_PATH);
 
-                Console.WriteLine($"Type: {lpddi->dwDevType & (DevType)0xFF}, Instance Name: {instanceName}, ProductName: {productName}, GUID Instance: {lpddi->guidInstance}, GUID Product: {lpddi->guidProduct}");
+                Logger?.LogDebug($"Type: {lpddi->dwDevType & (DevType)0xFF}, Instance Name: {instanceName}, ProductName: {productName}, GUID Instance: {lpddi->guidInstance}, GUID Product: {lpddi->guidProduct}");
 
                 DirectInput8.CreateDevice(lpddi->guidInstance, out IDirectInputDevice8 device, IUnknown.Null);
 
@@ -74,7 +74,7 @@ namespace OpenTK.Platform.Native.Windows
 
                 device.GetCapabilities(out DIDEVCAPS capabilities);
 
-                Console.WriteLine($"  Capabilities: Flags: {capabilities.dwFlags}, Axes: {capabilities.dwAxes}, Buttons: {capabilities.dwButtons}, POVs: {capabilities.dwPOVs}, FFSamplePeriod: {capabilities.dwFFSamplePeriod}, FFMinTimeResolution: {capabilities.dwFFMinTimeResolution}");
+                Logger?.LogDebug($"  Capabilities: Flags: {capabilities.dwFlags}, Axes: {capabilities.dwAxes}, Buttons: {capabilities.dwButtons}, POVs: {capabilities.dwPOVs}, FFSamplePeriod: {capabilities.dwFFSamplePeriod}, FFMinTimeResolution: {capabilities.dwFFMinTimeResolution}");
 
                 Joysticks.Add(new Joystick(device, lpddi->guidInstance, instanceName));
 
@@ -142,9 +142,9 @@ namespace OpenTK.Platform.Native.Windows
             uint result = XInputGetCapabilities((uint)joystick.XInputIndex, 0, out XINPUT_CAPABILITIES capabilities);
             if (result == ERROR_SUCCESS)
             {
-                Console.WriteLine($"Vibration cap Left: {capabilities.Vibration.wLeftMotorSpeed}, Right: {capabilities.Vibration.wRightMotorSpeed}");
+                Logger?.LogDebug($"Vibration cap Left: {capabilities.Vibration.wLeftMotorSpeed}, Right: {capabilities.Vibration.wRightMotorSpeed}");
 
-                Console.WriteLine($"Flags: {capabilities.Flags}");
+                Logger?.LogDebug($"Flags: {capabilities.Flags}");
 
                 return capabilities.Flags.HasFlag(Caps.FFBSupported);
             }

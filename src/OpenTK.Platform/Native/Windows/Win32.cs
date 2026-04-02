@@ -82,6 +82,7 @@ namespace OpenTK.Platform.Native.Windows
 
         internal const int ERROR_SUCCESS = 0;
         internal const int ERROR_FILE_NOT_FOUND = 0x2;
+        internal const int ERROR_ACCESS_DENIED = 0x5;
         internal const int ERROR_INVALID_PARAMETER = 87;
         /// <summary>
         /// The data area passed to a system call is too small.

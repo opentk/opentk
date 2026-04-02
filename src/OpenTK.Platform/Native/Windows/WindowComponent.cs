@@ -44,9 +44,7 @@ namespace OpenTK.Platform.Native.Windows
         private Win32.WNDPROC? WindowProc;
 
         private int MaxRawMouseMessagesPerFrame;
-        private unsafe Win32.RAWINPUT* RawInputBuffer = null;
-        private uint RawInputBufferSize;
-
+        
         internal static readonly Dictionary<IntPtr, HWND> HWndDict = new Dictionary<IntPtr, HWND>();
 
         // This is the window we are currently capturing the cursor in. 
@@ -176,7 +174,7 @@ namespace OpenTK.Platform.Native.Windows
             // Free the raw input buffer
             unsafe
             {
-                NativeMemory.Free(RawInputBuffer);
+                NativeMemory.AlignedFree(RawInputBuffer);
             }
 
             // Unregister the OpenTK window class
@@ -1116,6 +1114,8 @@ namespace OpenTK.Platform.Native.Windows
         private AutoResetEvent? RawInputThreadReadyEvent;
         private AutoResetEvent? RawInputThreadShouldExitEvent;
         private AutoResetEvent? RawInputThreadExitedEvent;
+        private unsafe Win32.RAWINPUT* RawInputBuffer = null;
+        private uint RawInputBufferSize;
 
         private int RawInputEnableCount = 0;
         internal void EnableRawInput(bool enable)
@@ -1158,6 +1158,7 @@ namespace OpenTK.Platform.Native.Windows
             {
                 RawInputThreadShouldExitEvent?.Set();
                 RawInputThread?.Join(200);
+                RawInputThread = null;
                 RawInputThreadShouldExitEvent?.Dispose();
                 RawInputThreadShouldExitEvent = null;
                 RawInputThreadReadyEvent?.Dispose();
@@ -1237,7 +1238,7 @@ namespace OpenTK.Platform.Native.Windows
             uint totalNumberOfEvents = 0;
             while (true)
             {
-                uint availableLength = RawInputBufferSize - (uint)(input - RawInputBuffer);
+                uint availableLength = RawInputBufferSize - (uint)((byte*)input - (byte*)RawInputBuffer);
                 uint elementsRead = Win32.GetRawInputBuffer(input, ref availableLength, rawInputHeaderSize);
                 if (elementsRead == 0)
                 {
@@ -1248,9 +1249,9 @@ namespace OpenTK.Platform.Native.Windows
                     int error = Marshal.GetLastWin32Error();
                     if (error == Win32.ERROR_INSUFFICIENT_BUFFER)
                     {
-                        Win32.RAWINPUT* newInput = (Win32.RAWINPUT*)NativeMemory.AlignedRealloc(RawInputBuffer, RawInputBufferSize + RAWINPUT_BUFFER_SIZE_INCREMENT, sizeof(uint));
-                        input = newInput + (input - RawInputBuffer);
-                        RawInputBuffer = newInput;
+                        byte* newInput = (byte*)NativeMemory.AlignedRealloc(RawInputBuffer, RawInputBufferSize + RAWINPUT_BUFFER_SIZE_INCREMENT, sizeof(uint));
+                        input = (Win32.RAWINPUT*)(newInput + ((byte*)input - (byte*)RawInputBuffer));
+                        RawInputBuffer = (Win32.RAWINPUT*)newInput;
                         RawInputBufferSize += RAWINPUT_BUFFER_SIZE_INCREMENT;
                         Logger?.LogDebug($"Resized raw input buffer {RawInputBufferSize}");
                     }

@@ -583,7 +583,14 @@ namespace OpenTK.Platform.Native.Windows
                 bool success = Win32.SetProcessDpiAwarenessContext(new IntPtr((int)DpiAwarenessContext.PerMonitorAwareV2));
                 if (success == false)
                 {
-                    throw new Win32Exception();
+                    if (Marshal.GetLastWin32Error() == Win32.ERROR_ACCESS_DENIED)
+                    {
+                        Logger?.LogDebug("SetProcessDpiAwarenessContext failed with ERROR_ACCESS_DENIED, DPI awareness has already been set for this process.");
+                    }
+                    else
+                    {
+                        throw new Win32Exception();
+                    }
                 }
             }
             else if (OperatingSystem.IsWindowsVersionAtLeast(6, 3)) // Windows 8.1
@@ -596,7 +603,7 @@ namespace OpenTK.Platform.Native.Windows
                 }
                 else if (result == Win32.E_ACCESSDENIED)
                 {
-                    throw new Exception("SetProcessDpiAwareness failed with E_ACCESSDENIED");
+                    Logger?.LogDebug("SetProcessDpiAwareness failed with E_ACCESSDENIED, DPI awareness has already been set for this process.");
                 }
                 else if (result != Win32.S_OK)
                 {
@@ -610,7 +617,7 @@ namespace OpenTK.Platform.Native.Windows
                 bool success = Win32.SetProcessDPIAware();
                 if (success == false)
                 {
-                    throw new Exception("SetProcessDPIAware failed.");
+                    Logger.LogWarning("SetProcessDPIAware failed.");
                 }
             }
 
