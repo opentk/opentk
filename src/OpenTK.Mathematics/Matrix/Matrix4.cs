@@ -1595,7 +1595,7 @@ namespace OpenTK.Mathematics
                 Mult(in left, in right, out result);
             }
 #else
-            Mult(in left, in right, out Matrix4 result);
+            Mult(in left, in right, out result);
 #endif
             return result;
         }
