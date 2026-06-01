@@ -180,9 +180,10 @@ namespace OpenTK.Platform
             EnableOpenGL = options.FeatureFlags.HasFlag(ToolkitFlags.EnableOpenGL);
             EnableVulkan = options.FeatureFlags.HasFlag(ToolkitFlags.EnableVulkan);
 
-            // FIXME: Figure out where to actually store this setting...
-            // - Noggin_bops 2025-07-09
-            PlatformComponents.PreferANGLE = options.FeatureFlags.HasFlag(ToolkitFlags.PreferANGLE);
+            if (options.FeatureFlags.HasFlag(ToolkitFlags.PreferEGL))
+                // FIXME: Figure out where to actually store this setting...
+                // - Noggin_bops 2025-07-09
+                PlatformComponents.PreferredBackend = PreferredBackend.EGL;
 
             try { _windowComponent = PlatformComponents.CreateWindowComponent(); } catch (NotSupportedException) { }
             try { _surfaceComponent = PlatformComponents.CreateSurfaceComponent(); } catch (NotSupportedException) { }
