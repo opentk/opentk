@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using OpenTK.Mathematics;
 
@@ -336,42 +336,17 @@ namespace OpenTK.Platform
     public class InputLanguageChangedEventArgs : EventArgs
     {
         /// <summary>
-        /// The new keyboard layout. This indicates how physical keys are mapped to virtual keys.
-        /// E.g. The difference between QWERTY and AZERTY.
+        /// The new input language + keyboard layout.
         /// </summary>
-        public string KeyboardLayout { get; private set; }
-
-        /// <summary>
-        /// The keyboard layout display name. This is the user facing name of the keyboard layout.
-        /// </summary>
-        public string KeyboardLayoutDisplayName { get; private set; }
-
-        /// <summary>
-        /// The input language. This is separate from keyboard layout.
-        /// This could be used for features such as spell checking.
-        ///
-        /// FIXME: In what fromat should the input language be sent in?.
-        /// </summary>
-        public string InputLanguage { get; private set; }
-
-        /// <summary>
-        /// Localized display name for the new input language.
-        /// </summary>
-        public string InputLanguageDisplayName { get; private set; }
+        public InputLanguage InputLanguage { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="InputLanguageChangedEventArgs"/> class.
         /// </summary>
-        /// <param name="keyboardLayout">The keyboard layout name of the new layout.</param>
-        /// <param name="keyboardLayoutDisplayName">The user facing keyboard layout name of the new layout.</param>
-        /// <param name="inputLanguage">The input language name of the new language.</param>
-        /// <param name="inputLanguageDisplayName">The user facing input language of the new language.</param>
-        public InputLanguageChangedEventArgs(string keyboardLayout, string keyboardLayoutDisplayName, string inputLanguage, string inputLanguageDisplayName)
+        /// <param name="inputLanguage">The new input language + keyboard layout.</param>
+        public InputLanguageChangedEventArgs(InputLanguage inputLanguage)
         {
-            KeyboardLayout = keyboardLayout;
-            KeyboardLayoutDisplayName = keyboardLayoutDisplayName;
             InputLanguage = inputLanguage;
-            InputLanguageDisplayName = inputLanguageDisplayName;
         }
     }
 
@@ -404,14 +379,14 @@ namespace OpenTK.Platform
     {
         /// <summary>
         /// The new position of the mouse cursor in client coordinates.
-        /// Use <see cref="IWindowComponent.ClientToScreen(WindowHandle, int, int, out int, out int)"/> and
-        /// <see cref="IWindowComponent.ClientToFramebuffer(WindowHandle, int, int, out int, out int)"/> to
+        /// Use <see cref="IWindowComponent.ClientToScreen(WindowHandle, Vector2, out Vector2)"/> and
+        /// <see cref="IWindowComponent.ClientToFramebuffer(WindowHandle, Vector2, out Vector2)"/> to
         /// convert to the respective coordinate spaces.
         /// When using <see cref="CursorCaptureMode.Locked"/> this property will contain a virtual mouse position
         /// and will not correspond an actual location in client coordinates.
         /// </summary>
-        /// <seealso cref="IWindowComponent.ClientToScreen(WindowHandle, int, int, out int, out int)"/>
-        /// <seealso cref="IWindowComponent.ClientToFramebuffer(WindowHandle, int, int, out int, out int)"/>
+        /// <seealso cref="IWindowComponent.ClientToScreen(WindowHandle, Vector2, out Vector2)"/>
+        /// <seealso cref="IWindowComponent.ClientToFramebuffer(WindowHandle, Vector2, out Vector2)"/>
         /// <seealso cref="CursorCaptureMode.Locked"/>
         public Vector2 ClientPosition { get; private set; }
 
@@ -429,7 +404,7 @@ namespace OpenTK.Platform
     /// <summary>
     /// This event is triggered when the mouse moves and raw mouse motion is enabled.
     /// </summary>
-    public class RawMouseMoveEventArgs : WindowEventArgs
+    public class RawMouseMoveEventArgs : EventArgs
     {
         /// <summary>
         /// The unscaled movement value of the mouse.
@@ -442,9 +417,8 @@ namespace OpenTK.Platform
         /// <summary>
         /// Initializes a new instance of the <see cref="RawMouseMoveEventArgs"/> class.
         /// </summary>
-        /// <param name="window">The window in which the mouse moved.</param>
         /// <param name="delta">The raw mouse delta.</param>
-        public RawMouseMoveEventArgs(WindowHandle window, Vector2 delta) : base(window)
+        public RawMouseMoveEventArgs(Vector2 delta)
         {
             Delta = delta;
         }
@@ -460,6 +434,11 @@ namespace OpenTK.Platform
     public class MouseButtonDownEventArgs : WindowEventArgs
     {
         /// <summary>
+        /// The position where the mouse was pressed, in client coordinates.
+        /// </summary>
+        public Vector2 ClientPosition { get; private set; }
+
+        /// <summary>
         /// The mouse button that was pressed.
         /// </summary>
         public MouseButton Button { get; private set; }
@@ -470,15 +449,26 @@ namespace OpenTK.Platform
         public KeyModifier Modifiers { get; private set; }
 
         /// <summary>
+        /// The number of times this button has been clicked in a row in a small area and time limit.
+        /// 1 for single-click, 2 for double-click, etc.
+        /// </summary>
+        /// <remarks>The details of counting multi-clicks follows the platform conventions.</remarks>
+        public int Clicks { get; private set; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="MouseButtonDownEventArgs"/> class.
         /// </summary>
         /// <param name="window">The window that was clicked on.</param>
+        /// <param name="clientPosition">The coordinate in client coordinates where the mouse was pressed.</param>
         /// <param name="button">The mouse button that was pressed.</param>
         /// <param name="modifiers">The modifiers that where active when the mouse button was pressed.</param>
-        public MouseButtonDownEventArgs(WindowHandle window, MouseButton button, KeyModifier modifiers) : base(window)
+        /// <param name="clicks">The click count for this event, single-click, double-click, etc.</param>
+        public MouseButtonDownEventArgs(WindowHandle window, Vector2 clientPosition, MouseButton button, KeyModifier modifiers, int clicks) : base(window)
         {
+            ClientPosition = clientPosition;
             Button = button;
             Modifiers = modifiers;
+            Clicks = clicks;
         }
     }
 
@@ -487,6 +477,11 @@ namespace OpenTK.Platform
     /// </summary>
     public class MouseButtonUpEventArgs : WindowEventArgs
     {
+        /// <summary>
+        /// The position where the mouse was released, in client coordinates.
+        /// </summary>
+        public Vector2 ClientPosition { get; private set; }
+
         /// <summary>
         /// The mouse button that was released.
         /// </summary>
@@ -498,15 +493,26 @@ namespace OpenTK.Platform
         public KeyModifier Modifiers { get; private set; }
 
         /// <summary>
+        /// The number of times this button has been clicked in a row in a small area and time limit.
+        /// 1 for single-click, 2 for double-click, etc.
+        /// </summary>
+        /// <remarks>The details of counting multi-clicks follows the platform conventions.</remarks>
+        public int Clicks { get; private set; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="MouseButtonUpEventArgs"/> class.
         /// </summary>
         /// <param name="window">The window that had input focus when the mouse is released.</param>
+        /// <param name="clientPosition">The coordinate in client coordinates where the mouse was pressed.</param>
         /// <param name="button">The button that was released.</param>
         /// <param name="modifiers">The modifiers that where active when the mouse button was released.</param>
-        public MouseButtonUpEventArgs(WindowHandle window, MouseButton button, KeyModifier modifiers) : base(window)
+        /// <param name="clicks">The click count for this event, single-click, double-click, etc.</param>
+        public MouseButtonUpEventArgs(WindowHandle window, Vector2 clientPosition, MouseButton button, KeyModifier modifiers, int clicks) : base(window)
         {
+            ClientPosition = clientPosition;
             Button = button;
             Modifiers = modifiers;
+            Clicks = clicks;
         }
     }
 
@@ -613,6 +619,8 @@ namespace OpenTK.Platform
     /// <summary>
     /// This event is triggered when a user changes the preferred theme.
     /// </summary>
+    /// <seealso cref="IShellComponent.GetPreferredTheme"/>
+    /// <seealso cref="ThemeInfo"/>
     public class ThemeChangeEventArgs : EventArgs
     {
         /// <summary>
@@ -635,6 +643,9 @@ namespace OpenTK.Platform
     /// </summary>
     public class DisplayConnectionChangedEventArgs : EventArgs
     {
+        // FIXME: Some way to correlate DisplayHandles with their index?
+        // - Noggin_bops 2025-12-11
+
         /// <summary>
         /// A handle to the display that was connected or got disconnected.
         /// </summary>
@@ -655,6 +666,117 @@ namespace OpenTK.Platform
         {
             Display = display;
             Disconnected = disconnected;
+        }
+    }
+
+    /// <summary>
+    /// This event is triggered when any property of a display changes.
+    /// Video mode, position, resolution, etc.
+    /// </summary>
+    public class DisplayValuesChangedEventArgs : EventArgs
+    {
+        /// <summary>
+        /// The display index for the display whos values have changed.
+        /// </summary>
+        // FIXME: Do we want to send the display handle directly here? 
+        // How does that work with opening and closing display handles?
+        // - Noggin_bops 2025-12-11
+        public int DisplayIndex { get; internal set; }
+        
+        // FIXME: NameChanged?
+        // - Noggin_bops 2025-12-11
+
+        // PrimaryChanged? or is that it's own event?
+        // - Noggin_bops 2025-12-11
+
+        /// <summary>
+        /// <see langword="true"/> if the video mode bits per pixel value of the display changed, <see langword="false"/> otherwise.
+        /// </summary>
+        /// <remarks>
+        /// Get the new value by calling <see cref="IDisplayComponent.GetVideoMode(DisplayHandle)"/> on the display with index <see cref="DisplayIndex"/>.
+        /// </remarks>
+        public bool BitsPerPixelChanged { get; internal set; }
+
+        /// <summary>
+        /// <see langword="true"/> if the resolution of the display changed, <see langword="false"/> otherwise.
+        /// </summary>
+        /// <remarks>
+        /// Get the new value by calling <see cref="IDisplayComponent.GetResolution(DisplayHandle)"/> on the display with index <see cref="DisplayIndex"/>.
+        /// </remarks>
+        public bool ResolutionChanged { get; internal set; }
+
+        /// <summary>
+        /// <see langword="true"/> if the refresh rate of the display changed, <see langword="false"/> otherwise.
+        /// </summary>
+        /// <remarks>
+        /// Get the new value by calling <see cref="IDisplayComponent.GetRefreshRate(DisplayHandle)"/> on the display with index <see cref="DisplayIndex"/>.
+        /// </remarks>
+        public bool RefreshRateChanged { get; internal set; }
+
+        /// <summary>
+        /// <see langword="true"/> if the virtual position of the display changed, <see langword="false"/> otherwise.
+        /// </summary>
+        /// <remarks>
+        /// Get the new value by calling <see cref="IDisplayComponent.GetVirtualPosition(DisplayHandle)"/> on the display with index <see cref="DisplayIndex"/>.
+        /// </remarks>
+        public bool VirtualPositionChanged { get; internal set; }
+
+        /// <summary>
+        /// <see langword="true"/> if the work area of the display changed, <see langword="false"/> otherwise.
+        /// </summary>
+        /// <remarks>
+        /// Get the new value by calling <see cref="IDisplayComponent.GetWorkArea(DisplayHandle)"/> on the display with index <see cref="DisplayIndex"/>.
+        /// </remarks>
+        public bool WorkAreaChanged { get; internal set; }
+
+        /// <summary>
+        /// <see langword="true"/> if the scale factor of the display changed, <see langword="false"/> otherwise.
+        /// </summary>
+        /// <remarks>
+        /// Get the new value by calling <see cref="IDisplayComponent.GetDisplayScale(DisplayHandle)"/> on the display with index <see cref="DisplayIndex"/>.
+        /// </remarks>
+        public bool DisplayScaleChanged { get; internal set; }
+
+        /// <summary>
+        /// <see langword="true"/> if the color info of display changed, <see langword="false"/> otherwise.
+        /// </summary>
+        /// <remarks>
+        /// Get the new color info by calling <see cref="Platform.Native.Windows.DisplayComponent.GetColorInfo(DisplayHandle, out Native.Windows.DisplayColorInfo)"/> on the display with index <see cref="DisplayIndex"/>.
+        /// </remarks>
+        public bool ColorInfoChanged { get; internal set; }
+
+        internal bool AnythingChanged => BitsPerPixelChanged || ResolutionChanged || RefreshRateChanged || VirtualPositionChanged || WorkAreaChanged || DisplayScaleChanged || ColorInfoChanged;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DisplayValuesChangedEventArgs"/> class with all changes set to <see langword="false"/>.
+        /// </summary>
+        /// <param name="displayIndex">The index of the display whoes values changed.</param>
+        public DisplayValuesChangedEventArgs(int displayIndex)
+        {
+            DisplayIndex = displayIndex;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DisplayValuesChangedEventArgs"/> class.
+        /// </summary>
+        /// <param name="displayIndex">The index of the display whoes values changed.</param>
+        /// <param name="bitsPerPixelChanged">The bits per pixel value of the video mode of the display has changed.</param>
+        /// <param name="virtualPositionChanged">The virtual position of the display has changed.</param>
+        /// <param name="resolutionChanged">The resolution of the display has changed.</param>
+        /// <param name="workAreaChanged">The work area of the display has changed.</param>
+        /// <param name="refreshRateChanged">The refresh rate of the display has changed.</param>
+        /// <param name="displayScaleChanged">The scale factor of the display has changed.</param>
+        /// <param name="colorInfoChanged">The color info of the display has changed.</param>
+        public DisplayValuesChangedEventArgs(int displayIndex, bool bitsPerPixelChanged, bool virtualPositionChanged, bool resolutionChanged, bool workAreaChanged, bool refreshRateChanged, bool displayScaleChanged, bool colorInfoChanged)
+        {
+            DisplayIndex = displayIndex;
+            BitsPerPixelChanged = bitsPerPixelChanged;
+            VirtualPositionChanged = virtualPositionChanged;
+            ResolutionChanged = resolutionChanged;
+            WorkAreaChanged = workAreaChanged;
+            RefreshRateChanged = refreshRateChanged;
+            DisplayScaleChanged = displayScaleChanged;
+            ColorInfoChanged = colorInfoChanged;
         }
     }
 

@@ -23,6 +23,8 @@ SOFTWARE.
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
+using System.Numerics;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Runtime.Intrinsics;
 
@@ -33,7 +35,17 @@ namespace OpenTK.Mathematics
     /// </summary>
     [Serializable]
     [StructLayout(LayoutKind.Sequential)]
-    public struct Matrix2 : IEquatable<Matrix2>, IFormattable
+    public struct Matrix2 : IEquatable<Matrix2>, IFormattable,
+                            IMultiplyOperators<Matrix2, float, Matrix2>,
+                            IMultiplyOperators<Matrix2, Vector2, Vector2>,
+                            IMultiplyOperators<Matrix2, Matrix2, Matrix2>,
+                            IMultiplyOperators<Matrix2, Matrix2x3, Matrix2x3>,
+                            IMultiplyOperators<Matrix2, Matrix2x4, Matrix2x4>,
+                            IAdditionOperators<Matrix2, Matrix2, Matrix2>,
+                            ISubtractionOperators<Matrix2, Matrix2, Matrix2>,
+                            IEqualityOperators<Matrix2, Matrix2, bool>,
+                            IAdditiveIdentity<Matrix2, Matrix2>,
+                            IMultiplicativeIdentity<Matrix2, Matrix2>
     {
         /// <summary>
         /// Top row of the matrix.
@@ -181,6 +193,16 @@ namespace OpenTK.Mathematics
         public readonly float Trace => Row0.X + Row1.Y;
 
         /// <summary>
+        /// Gets the additive identity of the matrix, which is the zero matrix.
+        /// </summary>
+        public static Matrix2 AdditiveIdentity => Zero;
+
+        /// <summary>
+        /// Gets the multiplicative identity of the matrix, which is the identity matrix.
+        /// </summary>
+        public static Matrix2 MultiplicativeIdentity => Identity;
+
+        /// <summary>
         /// Gets or sets the value at a specified row and column.
         /// </summary>
         /// <param name="rowIndex">The index of the row.</param>
@@ -190,36 +212,30 @@ namespace OpenTK.Mathematics
         {
             readonly get
             {
-                if (rowIndex == 0)
+                if (((uint)rowIndex) >= 2 || ((uint)columnIndex) >= 2)
                 {
-                    return Row0[columnIndex];
+                    MathHelper.ThrowOutOfRangeException("You tried to access this matrix at: ({0}, {1})", rowIndex, columnIndex);
                 }
 
-                if (rowIndex == 1)
-                {
-                    return Row1[columnIndex];
-                }
-
-                throw new IndexOutOfRangeException("You tried to access this matrix at: (" + rowIndex + ", " +
-                                                   columnIndex + ")");
+                return GetRowUnsafe(in this, rowIndex)[columnIndex];
             }
 
             set
             {
-                if (rowIndex == 0)
+                if (((uint)rowIndex) >= 2 || ((uint)columnIndex) >= 2)
                 {
-                    Row0[columnIndex] = value;
+                    MathHelper.ThrowOutOfRangeException("You tried to set this matrix at: ({0}, {1})", rowIndex, columnIndex);
                 }
-                else if (rowIndex == 1)
-                {
-                    Row1[columnIndex] = value;
-                }
-                else
-                {
-                    throw new IndexOutOfRangeException("You tried to set this matrix at: (" + rowIndex + ", " +
-                                                       columnIndex + ")");
-                }
+
+                GetRowUnsafe(in this, rowIndex)[columnIndex] = value;
             }
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static ref Vector2 GetRowUnsafe(in Matrix2 m, int index)
+        {
+            ref Vector2 address = ref Unsafe.AsRef(in m.Row0);
+            return ref Unsafe.Add(ref address, index);
         }
 
         /// <summary>
@@ -641,7 +657,7 @@ namespace OpenTK.Mathematics
 
             if (det == 0)
             {
-                throw new InvalidOperationException("Matrix is singular and cannot be inverted.");
+                MathHelper.ThrowInvalidOperationException("Matrix is singular and cannot be inverted.");
             }
 
             float invDet = 1f / det;
@@ -757,6 +773,19 @@ namespace OpenTK.Mathematics
         public static Matrix2 operator *(Matrix2 left, float right)
         {
             return Mult(left, right);
+        }
+
+        /// <summary>
+        /// Transform a Vector by the given Matrix using right-handed notation.
+        /// </summary>
+        /// <param name="mat">The desired transformation.</param>
+        /// <param name="vec">The vector to transform.</param>
+        /// <returns>The transformed vector.</returns>
+        [Pure]
+        public static Vector2 operator *(Matrix2 mat, Vector2 vec)
+        {
+            Vector2.TransformColumn(in mat, in vec, out Vector2 result);
+            return result;
         }
 
         /// <summary>

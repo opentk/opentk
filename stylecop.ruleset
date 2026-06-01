@@ -46,7 +46,7 @@
     <Rule Id="SA1105" Action="Error" /> <!-- Query clauses spanning multiple lines must begin on own line -->
     <Rule Id="SA1106" Action="Error" /> <!-- Code must not contain empty statements -->
     <Rule Id="SA1107" Action="Error" /> <!-- Code must not contain multiple statements on one line -->
-    <Rule Id="SA1108" Action="Error" /> <!-- Block statements must not contain embedded comments -->
+    <Rule Id="SA1108" Action="None" Intentional="true" /> <!-- Block statements must not contain embedded comments -->
     <Rule Id="SA1110" Action="None" Intentional="true" /> <!-- Opening parenthesis or bracket must be on declaration line -->
     <Rule Id="SA1111" Action="None" Intentional="true" /> <!-- Closing parenthesis must be on line of last parameter -->
     <Rule Id="SA1112" Action="Error" /> <!-- Closing parenthesis must be on line of opening parenthesis -->

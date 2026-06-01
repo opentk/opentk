@@ -23,6 +23,8 @@ SOFTWARE.
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
+using System.Numerics;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Runtime.Intrinsics;
 
@@ -33,7 +35,16 @@ namespace OpenTK.Mathematics
     /// </summary>
     [Serializable]
     [StructLayout(LayoutKind.Sequential)]
-    public struct Matrix3x2 : IEquatable<Matrix3x2>, IFormattable
+    public struct Matrix3x2 : IEquatable<Matrix3x2>, IFormattable,
+                                IMultiplyOperators<Matrix3x2, float, Matrix3x2>,
+                                IMultiplyOperators<Matrix3x2, Vector2, Vector3>,
+                                IMultiplyOperators<Matrix3x2, Matrix2, Matrix3x2>,
+                                IMultiplyOperators<Matrix3x2, Matrix2x3, Matrix3>,
+                                IMultiplyOperators<Matrix3x2, Matrix2x4, Matrix3x4>,
+                                IAdditionOperators<Matrix3x2, Matrix3x2, Matrix3x2>,
+                                ISubtractionOperators<Matrix3x2, Matrix3x2, Matrix3x2>,
+                                IEqualityOperators<Matrix3x2, Matrix3x2, bool>,
+                                IAdditiveIdentity<Matrix3x2, Matrix3x2>
     {
         /// <summary>
         /// Top row of the matrix.
@@ -191,6 +202,11 @@ namespace OpenTK.Mathematics
         public readonly float Trace => Row0.X + Row1.Y;
 
         /// <summary>
+        /// Gets the additive identity of the matrix, which is the zero matrix.
+        /// </summary>
+        public static Matrix3x2 AdditiveIdentity => Zero;
+
+        /// <summary>
         /// Gets or sets the value at a specified row and column.
         /// </summary>
         /// <param name="rowIndex">The index of the row.</param>
@@ -200,45 +216,30 @@ namespace OpenTK.Mathematics
         {
             readonly get
             {
-                if (rowIndex == 0)
+                if (((uint)rowIndex) >= 3 || ((uint)columnIndex) >= 2)
                 {
-                    return Row0[columnIndex];
+                    MathHelper.ThrowOutOfRangeException("You tried to access this matrix at: ({0}, {1})", rowIndex, columnIndex);
                 }
 
-                if (rowIndex == 1)
-                {
-                    return Row1[columnIndex];
-                }
-
-                if (rowIndex == 2)
-                {
-                    return Row2[columnIndex];
-                }
-
-                throw new IndexOutOfRangeException("You tried to access this matrix at: (" + rowIndex + ", " +
-                                                   columnIndex + ")");
+                return GetRowUnsafe(in this, rowIndex)[columnIndex];
             }
 
             set
             {
-                if (rowIndex == 0)
+                if (((uint)rowIndex) >= 3 || ((uint)columnIndex) >= 2)
                 {
-                    Row0[columnIndex] = value;
+                    MathHelper.ThrowOutOfRangeException("You tried to set this matrix at: ({0}, {1})", rowIndex, columnIndex);
                 }
-                else if (rowIndex == 1)
-                {
-                    Row1[columnIndex] = value;
-                }
-                else if (rowIndex == 2)
-                {
-                    Row2[columnIndex] = value;
-                }
-                else
-                {
-                    throw new IndexOutOfRangeException("You tried to set this matrix at: (" + rowIndex + ", " +
-                                                       columnIndex + ")");
-                }
+
+                GetRowUnsafe(in this, rowIndex)[columnIndex] = value;
             }
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static ref Vector2 GetRowUnsafe(in Matrix3x2 m, int index)
+        {
+            ref Vector2 address = ref Unsafe.AsRef(in m.Row0);
+            return ref Unsafe.Add(ref address, index);
         }
 
         /// <summary>
@@ -713,6 +714,19 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
+        /// Transform a 2-dimensional vector into a 3-dimensional vector using the given 3x2 Matrix.
+        /// </summary>
+        /// <param name="mat">The desired transformation.</param>
+        /// <param name="vec">The vector to transform.</param>
+        /// <returns>The transformed vector in 3 dimensions.</returns>
+        [Pure]
+        public static Vector3 operator *(Matrix3x2 mat, Vector2 vec)
+        {
+            Vector2.TransformThreeDimensionsColumn(in mat, in vec, out Vector3 result);
+            return result;
+        }
+
+        /// <summary>
         /// Matrix multiplication.
         /// </summary>
         /// <param name="left">left-hand operand.</param>
@@ -794,6 +808,26 @@ namespace OpenTK.Mathematics
         public static bool operator !=(Matrix3x2 left, Matrix3x2 right)
         {
             return !left.Equals(right);
+        }
+
+        /// <summary>
+        /// Converts <see cref="System.Numerics.Matrix3x2"/> to <see cref="Matrix3x2"/>.
+        /// </summary>
+        /// <param name="mat">The <see cref="System.Numerics.Matrix3x2"/> to cast.</param>
+        [Pure]
+        public static explicit operator Matrix3x2(System.Numerics.Matrix3x2 mat)
+        {
+            return Unsafe.As<System.Numerics.Matrix3x2, Matrix3x2>(ref mat);
+        }
+
+        /// <summary>
+        /// Converts <see cref="Matrix3x2"/> to <see cref="System.Numerics.Matrix3x2"/>.
+        /// </summary>
+        /// <param name="mat">The <see cref="Matrix3x2"/> to cast.</param>
+        [Pure]
+        public static explicit operator System.Numerics.Matrix3x2(Matrix3x2 mat)
+        {
+            return Unsafe.As<Matrix3x2, System.Numerics.Matrix3x2>(ref mat);
         }
 
         /// <summary>

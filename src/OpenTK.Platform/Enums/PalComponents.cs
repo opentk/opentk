@@ -99,8 +99,13 @@ namespace OpenTK.Platform
         Joystick = 1 << 12,
 
         /// <summary>
+        /// Abstraction layer provides the gamepad component.
+        /// </summary>
+        Gamepad = 1 << 13,
+
+        /// <summary>
         /// Abstraction layer provides the dialog component.
         /// </summary>
-        Dialog = 1 << 13,
+        Dialog = 1 << 14,
     }
 }

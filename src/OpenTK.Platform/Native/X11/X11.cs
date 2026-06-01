@@ -70,20 +70,11 @@ namespace OpenTK.Platform.Native.X11
         /// </summary>
         public const long _NET_WM_STATE_TOGGLE = 2;
 
-        private struct pollfd {
-            public int fd;
-            public short events;
-            public short revents;
-        }
-
-        [DllImport("libc", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        private static unsafe extern int poll(pollfd* fds, uint nfds, int timeout);
-
-        private static unsafe bool Poll(pollfd* fds, int count, int timeout)
+        internal static unsafe bool Poll(Libc.pollfd* fds, int count, int timeout)
         {
             while (true)
             {
-                int result = poll(fds, (uint)count, timeout);
+                int result = Libc.poll(fds, (uint)count, timeout);
                 int errno = Marshal.GetLastSystemError();
 
                 const int EINTR = 4;
@@ -108,7 +99,7 @@ namespace OpenTK.Platform.Native.X11
         {
             const short POLLIN = 0x0001;
             
-            pollfd fd = new pollfd(){
+            Libc.pollfd fd = new Libc.pollfd(){
                 fd = LibX11.XConnectionNumber(X11.Display),
                 events = POLLIN,
             };

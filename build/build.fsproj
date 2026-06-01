@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
@@ -10,31 +10,32 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Update="FSharp.Core" Version="8.0.301" />
-
-    <PackageReference Include="Fake.Api.GitHub" Version="6.1.1" />
-    <PackageReference Include="Fake.Core.Environment" Version="6.1.1" />
-    <PackageReference Include="Fake.Core.ReleaseNotes" Version="6.1.1" />
-    <PackageReference Include="Fake.Core.Target" Version="6.1.1" />
-    <PackageReference Include="Fake.DotNet.AssemblyInfoFile" Version="6.1.1" />
-    <PackageReference Include="Fake.DotNet.Cli" Version="6.1.1" />
-    <PackageReference Include="Fake.DotNet.NuGet" Version="6.1.1" />
-    <PackageReference Include="Fake.DotNet.Paket" Version="6.1.1" />
-    <PackageReference Include="Fake.IO.FileSystem" Version="6.1.1" />
-    <PackageReference Include="Fake.Tools.Git" Version="6.1.1" />
+    <PackageReference Update="FSharp.Core" Version="10.0.103" />
+    <PackageReference Include="Fake.Api.GitHub" Version="6.1.4" />
+    <PackageReference Include="Fake.Core.Environment" Version="6.1.4" />
+    <PackageReference Include="Fake.Core.ReleaseNotes" Version="6.1.4" />
+    <PackageReference Include="Fake.Core.Target" Version="6.1.4" />
+    <PackageReference Include="Fake.DotNet.AssemblyInfoFile" Version="6.1.4" />
+    <PackageReference Include="Fake.DotNet.Cli" Version="6.1.4" />
+    <PackageReference Include="Fake.DotNet.NuGet" Version="6.1.4" />
+    <!-- Fake.DotNet.NuGet 6.1.4 and Fake.DotNet.Cli 6.1.4 depend on NuGet.Protocol version 6.12.4 which has a security warning, here we explicitly set a patched version. 
+      - Noggin_bops 2026-05-02 -->
+    <PackageReference Include="NuGet.Protocol" Version="6.14.3" />
+    <PackageReference Include="Fake.IO.FileSystem" Version="6.1.4" />
+    <PackageReference Include="Fake.Tools.Git" Version="6.1.4" />
     
     <!-- So that Fake.DotNet.Nuget.Nuget command can find nuget.exe, but because the nuget dependencies are -->
     <!-- downloaded into a shared cache of nuget packages we actually don't get a nuget.exe in our project -->
     <!-- so we must later copy the nuget.exe out from this package into our own. -->
     <!-- This was not needed when we ran our build using an .fsx file using paket to download dependencies as -->
     <!-- paket downloaded these dependencies into a project local folder. -->
-    <PackageReference Include="NuGet.CommandLine" Version="6.10.1" GeneratePathProperty="true">
+    <PackageReference Include="NuGet.CommandLine" Version="7.3.1" GeneratePathProperty="true">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     
     <!-- See https://github.com/fsprojects/FAKE/issues/2748 -->
-    <PackageReference Include="MSBuild.StructuredLogger" Version="2.2.291" />
+    <PackageReference Include="MSBuild.StructuredLogger" Version="2.3.113" />
   </ItemGroup>
 
   <ItemGroup>

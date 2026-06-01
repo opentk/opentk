@@ -23,6 +23,8 @@ SOFTWARE.
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
+using System.Numerics;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Runtime.Intrinsics;
 
@@ -33,7 +35,16 @@ namespace OpenTK.Mathematics
     /// </summary>
     [Serializable]
     [StructLayout(LayoutKind.Sequential)]
-    public struct Matrix2x4 : IEquatable<Matrix2x4>, IFormattable
+    public struct Matrix2x4 : IEquatable<Matrix2x4>, IFormattable,
+                                IMultiplyOperators<Matrix2x4, float, Matrix2x4>,
+                                IMultiplyOperators<Matrix2x4, Vector4, Vector2>,
+                                IMultiplyOperators<Matrix2x4, Matrix4x2, Matrix2>,
+                                IMultiplyOperators<Matrix2x4, Matrix4x3, Matrix2x3>,
+                                IMultiplyOperators<Matrix2x4, Matrix4, Matrix2x4>,
+                                IAdditionOperators<Matrix2x4, Matrix2x4, Matrix2x4>,
+                                ISubtractionOperators<Matrix2x4, Matrix2x4, Matrix2x4>,
+                                IEqualityOperators<Matrix2x4, Matrix2x4, bool>,
+                                IAdditiveIdentity<Matrix2x4, Matrix2x4>
     {
         /// <summary>
         /// Top row of the matrix.
@@ -226,6 +237,11 @@ namespace OpenTK.Mathematics
         public readonly float Trace => Row0.X + Row1.Y;
 
         /// <summary>
+        /// Gets the additive identity of the matrix, which is the zero matrix.
+        /// </summary>
+        public static Matrix2x4 AdditiveIdentity => Zero;
+
+        /// <summary>
         /// Gets or sets the value at a specified row and column.
         /// </summary>
         /// <param name="rowIndex">The index of the row.</param>
@@ -235,36 +251,30 @@ namespace OpenTK.Mathematics
         {
             readonly get
             {
-                if (rowIndex == 0)
+                if (((uint)rowIndex) >= 2 || ((uint)columnIndex) >= 4)
                 {
-                    return Row0[columnIndex];
+                    MathHelper.ThrowOutOfRangeException("You tried to access this matrix at: ({0}, {1})", rowIndex, columnIndex);
                 }
 
-                if (rowIndex == 1)
-                {
-                    return Row1[columnIndex];
-                }
-
-                throw new IndexOutOfRangeException("You tried to access this matrix at: (" + rowIndex + ", " +
-                                                   columnIndex + ")");
+                return GetRowUnsafe(in this, rowIndex)[columnIndex];
             }
 
             set
             {
-                if (rowIndex == 0)
+                if (((uint)rowIndex) >= 2 || ((uint)columnIndex) >= 4)
                 {
-                    Row0[columnIndex] = value;
+                    MathHelper.ThrowOutOfRangeException("You tried to set this matrix at: ({0}, {1})", rowIndex, columnIndex);
                 }
-                else if (rowIndex == 1)
-                {
-                    Row1[columnIndex] = value;
-                }
-                else
-                {
-                    throw new IndexOutOfRangeException("You tried to set this matrix at: (" + rowIndex + ", " +
-                                                       columnIndex + ")");
-                }
+
+                GetRowUnsafe(in this, rowIndex)[columnIndex] = value;
             }
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static ref Vector4 GetRowUnsafe(in Matrix2x4 m, int index)
+        {
+            ref Vector4 address = ref Unsafe.AsRef(in m.Row0);
+            return ref Unsafe.Add(ref address, index);
         }
 
         /// <summary>
@@ -753,6 +763,19 @@ namespace OpenTK.Mathematics
         public static Matrix2x4 operator *(Matrix2x4 left, float right)
         {
             return Mult(left, right);
+        }
+
+        /// <summary>
+        /// Transform a 4-dimensional vector into a 2-dimensional vector using the given 2x4 Matrix.
+        /// </summary>
+        /// <param name="mat">The desired transformation.</param>
+        /// <param name="vec">The vector to transform.</param>
+        /// <returns>The transformed vector.</returns>
+        [Pure]
+        public static Vector2 operator *(Matrix2x4 mat, Vector4 vec)
+        {
+            Vector4.TransformTwoDimensionsColumn(in mat, in vec, out Vector2 result);
+            return result;
         }
 
         /// <summary>

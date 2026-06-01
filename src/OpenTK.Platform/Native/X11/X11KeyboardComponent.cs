@@ -1,11 +1,12 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using OpenTK.Platform;
 using OpenTK.Core.Utility;
-using OpenTK.Platform.Native.X11.XI2;
 using static OpenTK.Platform.Native.X11.LibX11;
 using static OpenTK.Platform.Native.X11.LibXkb;
+using System.Text;
+using OpenTK.Core;
+using System.Globalization;
 
 namespace OpenTK.Platform.Native.X11
 {
@@ -24,12 +25,19 @@ namespace OpenTK.Platform.Native.X11
 
         private static bool[] KeyboardState = new bool[256];
 
+        internal IntPtr GSettingsPtr;
+        internal Dictionary<string, List<CultureInfo>> XkbLayoutLookup = new Dictionary<string, List<CultureInfo>>();
+
+        internal GCHandle ComponentGCHandle;
+
         /// <inheritdoc/>
         public unsafe void Initialize(ToolkitOptions options)
         {
+            ComponentGCHandle = GCHandle.Alloc(this, GCHandleType.Weak);
+
             int major = 1;
             int minor = 0;
-            if (XkbQueryExtension(X11.Display, out int opcode, out int @event, out int error, ref major, ref minor) == false)
+            if (XkbQueryExtension(X11.Display, out int opcode, out int base_event, out int base_error, ref major, ref minor) == false)
             {
                 // FIXME:
                 throw new Exception("Xkb extension not available.");
@@ -37,15 +45,73 @@ namespace OpenTK.Platform.Native.X11
 
             if (XkbSetDetectableAutoRepeat(X11.Display, true, out bool supported) && supported)
             {
-                // detectable repeat is enabled and supported!
+                // Detectable auto repeat allows X11 to send multiple KeyPress events
+                // without sending KeyRelease events between them.
+                // If detectable auto repeat is not supported a KeyRelease event is going 
+                // to be synthesized between every repeated KeyPress event.
+                // - Noggin_bops 2025-02-27
                 XkbDetectableRepeatEnabled = true;
             }
 
-            //XkbSelectEvents(X11.Display, XkbUseCoreKbd, )
-
-            //XkbGetMap(X11.Display, )
-
             UpdateKeymap();
+
+            {
+                var rxkbc = LibXkbRegistry.rxkb_context_new(rxkb_context_flags.NoFlags);
+
+                bool success = LibXkbRegistry.rxkb_context_parse_default_ruleset(rxkbc);
+                if (success == false)
+                {
+                    Logger?.LogWarning("rxkb could not load default ruleset.");
+                }
+
+                IntPtr layout = LibXkbRegistry.rxkb_layout_first(rxkbc);
+                if (layout != 0)
+                {
+                    do
+                    {
+                        string? name = Marshal.PtrToStringUTF8((nint)LibXkbRegistry.rxkb_layout_get_name(layout));
+                        string? variant = Marshal.PtrToStringUTF8((nint)LibXkbRegistry.rxkb_layout_get_variant(layout));
+
+                        string fullName = $"{name}{(variant != null ? $"+{variant}" : "")}";
+                        Logger?.LogDebug($"name: {fullName}");
+
+                        List<CultureInfo> cultures = new List<CultureInfo>();
+                        IntPtr iso639 = LibXkbRegistry.rxkb_layout_get_iso639_first(layout);
+                        if (iso639 != 0)
+                        {
+                            do
+                            {
+                                string? code = Marshal.PtrToStringUTF8((nint)LibXkbRegistry.rxkb_iso639_code_get_code(iso639));
+                                //var culture = new CultureInfo(code!);
+                                var culture = CultureInfo.GetCultureInfo(code!);
+                                Logger?.LogDebug($" - {code} {culture.DisplayName}");
+
+                                cultures.Add(culture);
+
+                            } while((iso639 = LibXkbRegistry.rxkb_iso639_code_next(iso639)) != 0);
+                        }
+
+                        XkbLayoutLookup.Add(fullName, cultures);
+                    } while((layout = LibXkbRegistry.rxkb_layout_next(layout)) != 0);
+                }
+
+                LibXkbRegistry.rxkb_context_unref(rxkbc);
+            }
+
+            GSettingsPtr = LibGio.g_settings_new(Utils.AsPtr("org.gnome.desktop.input-sources"u8));
+            if (GSettingsPtr == 0)
+            {
+                Logger?.LogWarning($"Could not open gsettings schema 'org.gnome.desktop.input-sources', will not be able to get accurate keyboard layout information.");
+            }
+        }
+
+        /// <inheritdoc/>
+        public void Uninitialize()
+        {
+            // FIXME: Can we reset detectable auto-repeat?
+            // - Noggin_bops 2025-07-09
+
+            LibGio.g_object_unref(GSettingsPtr);
         }
 
         internal static KeyModifier ModifiersFromState(uint state)
@@ -93,6 +159,9 @@ namespace OpenTK.Platform.Native.X11
         /// <returns>If the state of the key changed.</returns>
         internal static bool KeyStateChanged(Scancode code, bool pressed)
         {
+            if (code == Scancode.Unknown)
+                return false;
+            
             bool prev = KeyboardState[(int)code];
             KeyboardState[(int)code] = pressed;
             return prev != pressed;
@@ -214,6 +283,11 @@ namespace OpenTK.Platform.Native.X11
                 case XK.XK_Control_R: return Key.RightControl;
                 case XK.XK_Alt_R: return Key.RightAlt;
                 case XK.XK_Super_R: return Key.RightGUI;
+
+                // If AltGr is configured to be level3 shift then this is what
+                // we get when right alt is pressed.
+                // - Noggin_bops 2024-12-12
+                case XK.XK_ISO_Level3_Shift: return Key.RightAlt;
 
                 case XK.XK_Left: return Key.LeftArrow;
                 case XK.XK_Right: return Key.RightArrow;
@@ -384,10 +458,11 @@ namespace OpenTK.Platform.Native.X11
         internal unsafe void UpdateKeymap()
         {
             XkbDescRec* desc = XkbGetMap(X11.Display, 0, XkbUseCoreKbd);
-            int status = XkbGetNames(X11.Display, XkbKeyNamesMask | XkbKeyAliasesMask, desc);
+            XStatus status = XkbGetNames(X11.Display, XkbKeyNamesMask | XkbKeyAliasesMask, desc);
             if (status != Success)
             {
                 Logger?.LogError($"XkbGetNames failed with status: {status}");
+                XkbFreeKeyboard(desc, 0, true);
                 return;
             }
 
@@ -400,31 +475,149 @@ namespace OpenTK.Platform.Native.X11
                     value = Scancode.Unknown;
                 Logger?.LogDebug($"Scancode: {scancode}, Name: {name ?? "NULL"}, Otk Scancode: {value}");
 
+                if (value != Scancode.Unknown && ScancodeToKeycode[(int)value] != 0)
+                {
+                    Logger?.LogDebug($"Duplicate keycode ({scancode}) for scancode {value} (prev: {ScancodeToKeycode[(int)value]})");
+                }
+
                 KeycodeToScancode[scancode] = value;
-                ScancodeToKeycode[(int)KeycodeToScancode[scancode]] = scancode;
+
+                if (value != Scancode.Unknown && ScancodeToKeycode[(int)value] == 0)
+                    ScancodeToKeycode[(int)value] = scancode;
             }
+
+            XkbFreeKeyboard(desc, 0, true);
         }
 
         /// <inheritdoc/>
         public bool SupportsLayouts => false;
 
         /// <inheritdoc/>
-        public bool SupportsIme => false;
+        public bool SupportsIme => true;
 
-        /// <inheritdoc/>
-        public string GetActiveKeyboardLayout(WindowHandle? handle)
+        public unsafe string GetActiveKeyboardLayout(WindowHandle? handle)
         {
-            // FIXME:
-            return "Unknown";
-            //throw new NotImplementedException();
+            if (GSettingsPtr != 0)
+            {
+                IntPtr sources = LibGio.g_settings_get_value(GSettingsPtr, Utils.AsPtr("mru-sources"u8));
+
+                nuint n = LibGio.g_variant_n_children(sources);
+                if (n > 0)
+                {
+                    IntPtr source = LibGio.g_variant_get_child_value(sources, 0);
+                    IntPtr valueVar = LibGio.g_variant_get_child_value(source, 1);
+                    string value = Encoding.UTF8.GetString(LibGio.g_variant_get_string(valueVar));
+                    LibGio.g_variant_unref(valueVar);
+                    LibGio.g_variant_unref(source);
+                    LibGio.g_variant_unref(sources);
+                    return value;
+                }
+
+                LibGio.g_variant_unref(sources);
+            }
+
+            XkbDescRec* desc = XkbGetMap(X11.Display, 0, XkbUseCoreKbd);
+            XStatus status = XkbGetNames(X11.Display, XkbSymbolsNameMask | XkbAllNamesMask, desc);
+            if (status != Success)
+            {
+                Logger?.LogError($"XkbGetNames failed with status: {status}");
+                XkbFreeKeyboard(desc, 0, true);
+                return "Unknown";
+            }
+
+            string symbols = desc->names->symbols.ToString();
+
+            XkbFreeKeyboard(desc, 0, true);
+
+            return symbols;
+        }
+
+        // Keyboard layouts do not necessarily imply the language beeing written.
+        // For example, I'm writing this using a keyboard layout meant for Swedish
+        // but the text I'm writing is English. For multi-lingual users it would be
+        // very inconvenient to change input language when switching between languages
+        // so it's not possible to accurately get the input language.
+        // Keyboard layouts are more concerned with the alphabet of the language written
+        // but as languages share alphabets a single keyboard layout can imply a 
+        // number of different languages being written.
+        // - Noggin_bops 2026-03-02
+        public unsafe string[] GetAvailableKeyboardLayouts()
+        {
+            if (GSettingsPtr != 0)
+            {
+                IntPtr sources = LibGio.g_settings_get_value(GSettingsPtr, Utils.AsPtr("sources"u8));
+                nuint n = LibGio.g_variant_n_children(sources);
+
+                string[] result = new string[n];
+                for (nuint i = 0; i < n; i++)
+                {
+                    IntPtr source = LibGio.g_variant_get_child_value(sources, i);
+
+                    IntPtr valueVar = LibGio.g_variant_get_child_value(source, 1);
+
+                    string value = Encoding.UTF8.GetString(LibGio.g_variant_get_string(valueVar));
+
+                    result[i] = value;
+
+                    LibGio.g_variant_unref(valueVar);
+                    LibGio.g_variant_unref(source);
+                }
+                LibGio.g_variant_unref(sources);
+
+                return result;
+            }
+            else
+            {
+                XkbDescRec* desc = XkbGetMap(X11.Display, 0, XkbUseCoreKbd);
+                XStatus status = XkbGetNames(X11.Display, XkbGroupNamesMask, desc);
+                if (status != Success)
+                {
+                    Logger?.LogError($"XkbGetNames failed with status: {status}");
+                    XkbFreeKeyboard(desc, 0, true);
+                    return Array.Empty<string>();
+                }
+
+                
+                // FIXME: It seems we are getting "English (UK)" even though I don't have that
+                // switching option setup. We want to represent possible options, so we should
+                // have some way to detect that that isn't a valid option.
+                // - Noggin_bops 2024-12-12
+                List<string> groups = new List<string>(4);
+                if (desc->names->groups.groups0 != XAtom.None)
+                    groups.Add(desc->names->groups.groups0.ToString());
+                if (desc->names->groups.groups1 != XAtom.None)
+                    groups.Add(desc->names->groups.groups1.ToString());
+                if (desc->names->groups.groups2 != XAtom.None)
+                    groups.Add(desc->names->groups.groups2.ToString());
+                if (desc->names->groups.groups3 != XAtom.None)
+                    groups.Add(desc->names->groups.groups3.ToString());
+
+                XkbFreeKeyboard(desc, 0, true);
+
+                return groups.ToArray();
+            }
         }
 
         /// <inheritdoc/>
-        public string[] GetAvailableKeyboardLayouts()
+        public InputLanguage GetActiveInputLanguage(WindowHandle? handle)
         {
-            // FIXME: 
-            return Array.Empty<string>();
-            //throw new NotImplementedException();
+            // FIXME: Culture!
+            return new InputLanguage(System.Globalization.CultureInfo.CurrentCulture, GetActiveKeyboardLayout(handle));
+        }
+
+        /// <inheritdoc/>
+        public InputLanguage[] GetInstalledInputLanguages()
+        {
+            var layouts = GetAvailableKeyboardLayouts();
+
+            InputLanguage[] languages = new InputLanguage[layouts.Length];
+            for (int i = 0; i < layouts.Length; i++)
+            {
+                // FIXME: Culture!
+                languages[i] = new InputLanguage(System.Globalization.CultureInfo.CurrentCulture, layouts[i]);
+            }
+
+            return languages;
         }
 
         /// <inheritdoc/>
@@ -441,9 +634,11 @@ namespace OpenTK.Platform.Native.X11
         public Key GetKeyFromScancode(Scancode scancode)
         {
             int keycode = ScancodeToKeycode[(int)scancode];
+            XStatus status = XkbGetState(X11.Display, XkbUseCoreKbd, out XkbStateRec state);
+            // FIXME: What do we do with the shift level??
+            XKeySym sym = XkbKeycodeToKeysym(X11.Display, (byte)keycode, state.group, 0);
             // FIXME: index?
-            // XkbKeycodeToKeysym?
-            XKeySym sym = XKeycodeToKeysym(X11.Display, (byte)keycode, 0);
+            //XKeySym sym = XKeycodeToKeysym(X11.Display, (byte)keycode, 0);
 
             return TranslateKeySym(stackalloc XKeySym[1] { sym });
         }
@@ -470,21 +665,41 @@ namespace OpenTK.Platform.Native.X11
         }
 
         /// <inheritdoc/>
-        public void BeginIme(WindowHandle window)
+        public unsafe void BeginIme(WindowHandle window)
         {
-            throw new NotImplementedException();
+            XWindowHandle xwindow = window.As<XWindowHandle>(this);
+
+            if (xwindow.IC.Value != 0)
+            {
+                Xutf8ResetIC(xwindow.IC);
+            }
         }
 
         /// <inheritdoc/>
-        public void SetImeRectangle(WindowHandle window, int x, int y, int width, int height)
+        public unsafe void SetImeRectangle(WindowHandle window, float x, float y, float width, float height)
         {
-            throw new NotImplementedException();
+            XWindowHandle xwindow = window.As<XWindowHandle>(this);
+
+            if (xwindow.IC.Value != 0)
+            {
+                XPoint spot;
+                spot.x = (short)float.Round(x);
+                spot.y = (short)float.Round(y + height);
+                IntPtr preedit_attr = XVaCreateNestedList(0, (IntPtr)Utils.AsPtr(XNSpotLocation), (IntPtr)(&spot), IntPtr.Zero);
+                XSetICValues(xwindow.IC, Utils.AsPtr(XNPreeditAttributes), preedit_attr, IntPtr.Zero);
+                XFree(preedit_attr);
+            }
         }
 
         /// <inheritdoc/>
-        public void EndIme(WindowHandle window)
+        public unsafe void EndIme(WindowHandle window)
         {
-            throw new NotImplementedException();
+            XWindowHandle xwindow = window.As<XWindowHandle>(this);
+
+            if (xwindow.IC.Value != 0)
+            {
+                Xutf8ResetIC(xwindow.IC);
+            }
         }
     }
 }

@@ -5,5 +5,6 @@
     /// </summary>
     public abstract class OpenGLContextHandle : PalHandle
     {
+        internal WindowHandle? WindowHandle { get; set; }
     }
 }

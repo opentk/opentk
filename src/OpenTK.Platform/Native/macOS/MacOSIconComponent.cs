@@ -64,6 +64,11 @@ namespace OpenTK.Platform.Native.macOS
         }
 
         /// <inheritdoc/>
+        public void Uninitialize()
+        {
+        }
+
+        /// <inheritdoc/>
         public bool CanLoadSystemIcons => true;
 
         /// <inheritdoc/>
@@ -121,6 +126,11 @@ namespace OpenTK.Platform.Native.macOS
         /// <inheritdoc/>
         public IconHandle Create(int width, int height, ReadOnlySpan<byte> data)
         {
+            if (width < 0) throw new ArgumentOutOfRangeException($"Width cannot be negative. Value: {width}");
+            if (height < 0) throw new ArgumentOutOfRangeException($"Height cannot be negative. Value: {height}");
+
+            if (data.Length < width * height * 4) throw new ArgumentException($"The given span is too small. It must be at least {width * height * 4} long. Was: {data.Length}");
+
             IntPtr bitmap = objc_msgSend_IntPtr((IntPtr)NSBitmapImageRep, Alloc);
             // FIXME: BOOL
             bitmap = objc_msgSend_IntPtr(bitmap,

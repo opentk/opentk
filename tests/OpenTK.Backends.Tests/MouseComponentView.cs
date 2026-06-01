@@ -31,7 +31,6 @@ namespace OpenTK.Backends.Tests
             try { canSetMousePosition = Toolkit.Mouse.CanSetMousePosition; } catch { canSetMousePosition = false; }
             try { supportsRawMouseMotion = Toolkit.Mouse.SupportsRawMouseMotion; } catch { supportsRawMouseMotion = false; }
 
-            // FIXME: Make a useful hit test callback as part of this view.
             Toolkit.Window.SetHitTestCallback(Program.Window, HitTest);
         }
 
@@ -61,10 +60,12 @@ namespace OpenTK.Backends.Tests
                 return HitType.Default;
             }
 
+            Toolkit.Window.ClientToFramebuffer(window, point, out Vector2 fbPoint);
+
             for (int i = 0; i < HitTypeValues.Length; i++)
             {
                 Box2 grabArea = new Box2(HitTypeAreaPosition[i], HitTypeAreaPosition[i] + HitTypeAreaSize[i]);
-                if (grabArea.ContainsInclusive(point))
+                if (grabArea.ContainsInclusive(fbPoint))
                 {
                     return HitTypeValues[i];
                 }

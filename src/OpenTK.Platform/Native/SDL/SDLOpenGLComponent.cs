@@ -34,6 +34,12 @@ namespace OpenTK.Platform.Native.SDL
         }
 
         /// <inheritdoc/>
+        public void Uninitialize()
+        {
+            // FIXME: Do cleanup..
+        }
+
+        /// <inheritdoc/>
         public bool CanShareContexts => true;
 
         /// <inheritdoc/>
@@ -79,8 +85,9 @@ namespace OpenTK.Platform.Native.SDL
             }
 
             SDLOpenGLContext sdlContext = new SDLOpenGLContext(context, window, sharedContext);
-
             ContextDict.Add(context, sdlContext);
+
+            sdlContext.WindowHandle = window;
 
             return sdlContext;
         }
@@ -92,7 +99,21 @@ namespace OpenTK.Platform.Native.SDL
 
             ContextDict.Remove(context.Context);
 
+            if (context.WindowHandle != null)
+            {
+                context.WindowHandle.OpenGLContextHandle = null;
+            }
+
             SDL_GL_DeleteContext(context.Context);
+        }
+
+        /// <inheritdoc/>
+        public ContextValues GetContextValues(OpenGLContextHandle handle)
+        {
+            SDLOpenGLContext context = handle.As<SDLOpenGLContext>(this);
+
+            // FIXME:
+            return default;
         }
 
         /// <inheritdoc/>
@@ -172,6 +193,13 @@ namespace OpenTK.Platform.Native.SDL
             SDLOpenGLContext context = handle.As<SDLOpenGLContext>(this);
 
             SDL_GL_SwapWindow(context.Window.Window);
+        }
+
+        /// <inheritdoc/>
+        public WindowHandle? GetWindow(OpenGLContextHandle handle)
+        {
+            SDLOpenGLContext context = handle.As<SDLOpenGLContext>(this);
+            return context.WindowHandle;
         }
     }
 }

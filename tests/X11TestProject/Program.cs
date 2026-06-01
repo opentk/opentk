@@ -10,53 +10,40 @@ namespace X11TestProject
 {
     public class Program
     {
-        static IWindowComponent windowComp;
-        static IOpenGLComponent glComp;
-        static IDisplayComponent dispComp;
-
         static WindowHandle window;
         static OpenGLContextHandle context;
 
         public static void Main()
         {
-            //MultiThreadExample.MultiThreadMain();
-            //return;
+            Toolkit.Init(new ToolkitOptions() { FeatureFlags = ToolkitFlags.EnableOpenGL });
 
-            EventQueue.EventRaised += EventQueue_EventRaised;
+            Toolkit.Event.EventRaised += EventQueue_EventRaised;
 
-            windowComp = PlatformComponents.CreateWindowComponent();
-            glComp = PlatformComponents.CreateOpenGLComponent();
-            dispComp = PlatformComponents.CreateDisplayComponent();
 
-            ToolkitOptions options = new ToolkitOptions();
-            windowComp.Initialize(options);
-            glComp.Initialize(options);
-            dispComp.Initialize(options);
+            window = Toolkit.Window.Create(new OpenGLGraphicsApiHints());
+            context = Toolkit.OpenGL.CreateFromWindow(window);
+            Toolkit.OpenGL.SetCurrentContext(context);
 
-            window = windowComp.Create(new OpenGLGraphicsApiHints());
-            context = glComp.CreateFromWindow(window);
-            glComp.SetCurrentContext(context);
+            Toolkit.Window.SetClientSize(window, (800, 600));
+            Toolkit.Window.SetMode(window, WindowMode.Normal);
 
-            windowComp.SetClientSize(window, (800, 600));
-            windowComp.SetMode(window, WindowMode.Normal);
-
-            GLLoader.LoadBindings(glComp.GetBindingsContext(context));
+            GLLoader.LoadBindings(Toolkit.OpenGL.GetBindingsContext(context));
 
             // DisplayHandle handle = layer.CreatePrimary();
 
-            EventQueue.EventRaised += (handle, type, args) =>
+            Toolkit.Event.EventRaised += (args) =>
             {
                 if (args is CloseEventArgs close)
                 {
                     Console.WriteLine("close!");
-                    windowComp.Destroy(window);
+                    Toolkit.Window.Destroy(window);
                 }
             };
 
             int frames = 0;
-            while (windowComp.IsWindowDestroyed(window) == false)
+            while (Toolkit.Window.IsWindowDestroyed(window) == false)
             {
-                windowComp.GetFramebufferSize(window, out Vector2i fbSize);
+                Toolkit.Window.GetFramebufferSize(window, out Vector2i fbSize);
 
                 GL.Viewport(0, 0, fbSize.X, fbSize.Y);
                 GL.ClearColor(1, 0, 1, 1);
@@ -68,32 +55,32 @@ namespace X11TestProject
                 GL.Clear(ClearBufferMask.ColorBufferBit);
                 GL.Disable(EnableCap.ScissorTest);
 
-                glComp.SwapBuffers(context);
+                Toolkit.OpenGL.SwapBuffers(context);
 
-                windowComp.GetSize(window, out Vector2i size);
-                windowComp.SetTitle(window, $"私はまだ日本語を話すことができません [{fbSize.X},{fbSize.Y};{size.X},{size.Y};frame={++frames}]");
+                Toolkit.Window.GetSize(window, out Vector2i size);
+                Toolkit.Window.SetTitle(window, $"私はまだ日本語を話すことができません [{fbSize.X},{fbSize.Y};{size.X},{size.Y};frame={++frames}]");
                 // layer.GetClientPosition(window, out int x, out int y);
                 // Console.WriteLine("({0}, {1}) @ ({2}, {3})", width, height, x, y);
 
-                windowComp.ProcessEvents(false);
+                Toolkit.Window.ProcessEvents(false);
             }
         }
 
-        public static void EventQueue_EventRaised(PalHandle? handle, PlatformEventType type, EventArgs args)
+        public static void EventQueue_EventRaised(EventArgs args)
         {
             if (args is KeyDownEventArgs keyDown)
             {
                 if (keyDown.Key == Key.F)
                 {
-                    if (windowComp.GetFullscreenDisplay(window, out _))
+                    if (Toolkit.Window.GetFullscreenDisplay(window, out _))
                     {
-                        windowComp.SetMode(window, WindowMode.Normal);
-                        System.Console.WriteLine("Normal");
+                        Toolkit.Window.SetMode(window, WindowMode.Normal);
+                        Console.WriteLine("Normal");
                     }
                     else
                     {
-                        windowComp.SetFullscreenDisplay(window, null);
-                        System.Console.WriteLine("Fullscreen");
+                        Toolkit.Window.SetFullscreenDisplay(window, null);
+                        Console.WriteLine("Fullscreen");
                     }
                 }
             }
@@ -101,35 +88,35 @@ namespace X11TestProject
             {
                 if (buttonDown.Button == MouseButton.Button1)
                 {
-                    if (windowComp.GetFullscreenDisplay(window, out _))
+                    if (Toolkit.Window.GetFullscreenDisplay(window, out _))
                     {
-                        windowComp.SetMode(window, WindowMode.Normal);
-                        System.Console.WriteLine("Normal");
+                        Toolkit.Window.SetMode(window, WindowMode.Normal);
+                        Console.WriteLine("Normal");
                     }
                     else
                     {
-                        windowComp.SetFullscreenDisplay(window, null);
-                        System.Console.WriteLine("Windowed Fullscreen");
+                        Toolkit.Window.SetFullscreenDisplay(window, null);
+                        Console.WriteLine("Windowed Fullscreen");
                     }
                 }
                 else if (buttonDown.Button == MouseButton.Button2)
                 {
-                    if (windowComp.GetFullscreenDisplay(window, out _))
+                    if (Toolkit.Window.GetFullscreenDisplay(window, out _))
                     {
-                        windowComp.SetMode(window, WindowMode.Normal);
-                        System.Console.WriteLine("Normal");
+                        Toolkit.Window.SetMode(window, WindowMode.Normal);
+                        Console.WriteLine("Normal");
                     }
                     else
                     {
-                        var disp = windowComp.GetDisplay(window);
+                        var disp = Toolkit.Window.GetDisplay(window);
                         var mode = new VideoMode(2560, 1440, 144, 24);
-                        windowComp.SetFullscreenDisplay(window, disp, mode);
-                        System.Console.WriteLine("Exlusive Fullscreen");
+                        Toolkit.Window.SetFullscreenDisplay(window, disp, mode);
+                        Console.WriteLine("Exlusive Fullscreen");
                     }
                 }
                 else if (buttonDown.Button == MouseButton.Button3)
                 {
-                    windowComp.Destroy(window);
+                    Toolkit.Window.Destroy(window);
                 }
             }
         }

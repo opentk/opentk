@@ -1,12 +1,17 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <OutputType>Library</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Deterministic>true</Deterministic>
-    <Nullable>enable</Nullable>
-    <Description>Platform support for OpenTK, contains backends for Windows, Linux, and macOS.</Description>
-    <PackageIcon>icon.png</PackageIcon>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>$(OpenTKSolutionRoot)/OpenTK.snk</AssemblyOriginatorKeyFile>
+    <PackageIcon>images/opentk-blue-hexagon.png</PackageIcon>
+    <PackageReadmeFile>docs/README.md</PackageReadmeFile>
     <IsTrimmable>true</IsTrimmable>
+    <Nullable>enable</Nullable>
+
+    <Description>Platform support for OpenTK, contains backends for Windows, Linux, and macOS.</Description>
     <!-- 
     This is used to enable visual styles on windows so dialog windows have correct styling.
     - Noggin_bops 2024-08-01
@@ -15,12 +20,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="..\..\documentation\icon.png" Pack="true" PackagePath="" />
+    <None Include="$(OpenTKSolutionRoot)\.github\opentk-blue-hexagon.png" Pack="true" PackagePath="images" Visible="false"/>
+    <None Include="README.md" Pack="true" PackagePath="docs"/>
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\OpenTK.Core\OpenTK.Core.csproj" />
-    <ProjectReference Include="..\OpenTK.Graphics\OpenTK.Graphics.csproj" />
+    <ProjectReference Include="$(OpenTKSolutionRoot)\src\OpenTK.Core\OpenTK.Core.csproj" />
+    <ProjectReference Include="$(OpenTKSolutionRoot)\src\OpenTK.Graphics\OpenTK.Graphics.csproj" />
   </ItemGroup>
 
   <!--
@@ -35,12 +41,12 @@
     </EmbeddedResource>
   </ItemGroup>
 
-  <Import Project="..\..\props\nuget-common.props" />
+  <Import Project="$(OpenTKSolutionRoot)\props\nuget-common.props" />
   <!-- 
   The stylecop rules are way too overzealous about naming conventions
   and other style rules that make understandable interop code hard to write.
-  As such we don't enable stylecop for OpenTK.Platform.Native.
+  As such we don't enable stylecop for OpenTK.Platform.
   - Noggin_bops 2024-08-06
   -->
-  <!--<Import Project="..\..\props\stylecop.props" />-->
+  <!--<Import Project="$(OpenTKSolutionRoot)\props\stylecop.props" />-->
 </Project>

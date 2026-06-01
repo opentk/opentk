@@ -838,5 +838,23 @@ namespace OpenTK.Platform.Native.X11
         public byte    v2_ndx;      /* specifies a real valuator */
         public byte    v2_value;    /* the value for valuator 1 */
     }
+
+    internal struct XkbStateRec
+    {
+        public byte group;
+        public byte base_group;
+        public byte latched_group;
+        public byte locked_group;
+        public byte mods;
+        public byte base_mods;
+        public byte latched_mods;
+        public byte locked_mods;
+        public byte compat_state;
+        public byte grab_mods;
+        public byte compat_grab_mods;
+        public byte lookup_mods;
+        public byte compat_lookup_mods;
+        public ushort ptr_buttons;
+    }
 #pragma warning restore CS0649
 }

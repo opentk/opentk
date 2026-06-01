@@ -143,19 +143,19 @@ namespace OpenTK.Backends.Tests
                         string name = Toolkit.Display.GetName(handle);
                         ImGui.Text($"Display {i + 1} ({name})");
 
-                        Toolkit.Display.GetVirtualPosition(handle, out int x, out int y);
-                        Toolkit.Display.GetResolution(handle, out int width, out int height);
-                        Toolkit.Display.GetWorkArea(handle, out Box2i workArea);
-                        Toolkit.Display.GetDisplayScale(handle, out float scaleX, out float scaleY);
-                        Toolkit.Display.GetVideoMode(handle, out VideoMode mode);
+                        Vector2i virtualPosition = Toolkit.Display.GetVirtualPosition(handle);
+                        Vector2i resolution = Toolkit.Display.GetResolution(handle);
+                        Box2i workArea = Toolkit.Display.GetWorkArea(handle);
+                        Vector2 scale = Toolkit.Display.GetDisplayScale(handle);
+                        VideoMode mode = Toolkit.Display.GetVideoMode(handle);
 
-                        System.Numerics.Vector4 resolutionsMatchColor = (mode.Width, mode.Height) == (width, height) ? GoodColor : BadColor;
+                        System.Numerics.Vector4 resolutionsMatchColor = (mode.Width, mode.Height) == resolution ? GoodColor : BadColor;
 
-                        ImGui.Text($"Position: ({x}, {y})");
+                        ImGui.Text($"Position: ({virtualPosition.X}, {virtualPosition.Y})");
                         // FIXME: Mark red if these do not match.
-                        ImGui.TextColored(resolutionsMatchColor, $"Resolution: {width}x{height}");                       ImGui.SameLine(); ImGuiUtils.HelpMarker("From GetResolution(). Should be the same as Video mode resolution.");
+                        ImGui.TextColored(resolutionsMatchColor, $"Resolution: {resolution.X}x{resolution.Y}");          ImGui.SameLine(); ImGuiUtils.HelpMarker("From GetResolution(). Should be the same as Video mode resolution.");
                         ImGui.TextColored(resolutionsMatchColor, $"Video mode resoltion: ({mode.Width}x{mode.Height})"); ImGui.SameLine(); ImGuiUtils.HelpMarker("From GetVideoMode(). Should be the same as Resolution.");
-                        ImGui.Text($"Bounds: {new Box2i((x,y), (x+width, y+height))}");
+                        ImGui.Text($"Bounds: {new Box2i(virtualPosition, virtualPosition + resolution)}");
                         ImGui.Text($"Work area: {workArea}");
 
                         ImGui.Text("");

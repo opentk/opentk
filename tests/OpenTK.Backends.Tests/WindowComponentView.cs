@@ -59,6 +59,8 @@ namespace OpenTK.Backends.Tests
         string iconTitleString = "";
         int modeIndex = 0;
         int borderStyleIndex = 0;
+        int transparencyModeIndex = 0;
+        float windowOpacity = 1.0f;
         int captureModeIndex = 0;
         Vector2i windowPosition;
         Vector2i clientPosition;
@@ -68,6 +70,9 @@ namespace OpenTK.Backends.Tests
 
         readonly static WindowBorderStyle[] WindowBorderStyles = Enum.GetValues<WindowBorderStyle>();
         readonly static string[] WindowBorderStyleNames = Enum.GetNames<WindowBorderStyle>();
+
+        readonly static WindowTransparencyMode[] TransparencyModes = Enum.GetValues<WindowTransparencyMode>();
+        readonly static string[] TransparencyModeNames = Enum.GetNames<WindowTransparencyMode>();
 
         readonly static CursorCaptureMode[] CaptureModes = Enum.GetValues<CursorCaptureMode>();
         readonly static string[] CaptureModeNames = Enum.GetNames<CursorCaptureMode>();
@@ -141,7 +146,7 @@ namespace OpenTK.Backends.Tests
                             {
                                 // Send the close event, this will close the window.
                                 WindowHandle handle = Program.ApplicationWindows[i - 1].Window;
-                                EventQueue.Raise(handle, PlatformEventType.Close, new CloseEventArgs(handle));
+                                Toolkit.Event.RaiseEvent(new CloseEventArgs(handle));
 
                                 if (selectedWindow == i)
                                 {
@@ -170,11 +175,13 @@ namespace OpenTK.Backends.Tests
                     Toolkit.Window.GetSize(window, out Vector2i size);
                     Toolkit.Window.GetClientPosition(window, out Vector2i cPos);
                     Toolkit.Window.GetPosition(window, out Vector2i pos);
+                    Toolkit.Window.GetScaleFactor(window, out float scaleX, out float scaleY);
                     ImGui.Text($"Client Position: ({cPos.X}, {cPos.Y})");
                     ImGui.Text($"Position: ({pos.X}, {pos.Y})");
                     ImGui.Text($"Client Size: ({cSize.X}, {cSize.Y})");
                     ImGui.Text($"Size: ({size.X}, {size.Y})");
                     ImGui.Text($"Mode: {Toolkit.Window.GetMode(window)}");
+                    ImGui.Text($"Scale: ({scaleX}, {scaleY})");
                 }
 
                 ImGui.AlignTextToFramePadding();
@@ -246,6 +253,47 @@ namespace OpenTK.Backends.Tests
                 }
 
                 ImGui.AlignTextToFramePadding();
+                ImGui.TextUnformatted("Transparency mode"); ImGui.SameLine();
+                if (ImGui.BeginCombo("##transparency_mode",  TransparencyModeNames[transparencyModeIndex]))
+                {
+                    for (int i = 0; i < TransparencyModeNames.Length; i++)
+                    {
+                        bool isSelected = i == transparencyModeIndex;
+
+                        bool disable = false;
+                        if (TransparencyModes[i] == WindowTransparencyMode.TransparentFramebuffer &&
+                            Toolkit.Window.SupportsFramebufferTransparency(window) == false)
+                        {
+                            disable = true;
+                        }
+
+                        ImGui.BeginDisabled(disable);
+
+                        if (ImGui.Selectable(TransparencyModeNames[i], isSelected))
+                        {
+                            transparencyModeIndex = i;
+                        }
+
+                        ImGui.EndDisabled();
+
+                        if (isSelected)
+                            ImGui.SetItemDefaultFocus();
+                    }
+                    ImGui.EndCombo();
+                }
+                ImGui.SameLine();
+                //ImGui.Combo("##transparency_mode", ref transparencyModeIndex, TransparencyModeNames, TransparencyModeNames.Length); ImGui.SameLine();
+                if (ImGui.Button("Apply##transparency_mode"))
+                {
+                    Toolkit.Window.SetTransparencyMode(window, TransparencyModes[transparencyModeIndex], windowOpacity);
+                    Program.Logger.LogInfo($"WindowComponent.SetTransparencyMode({TransparencyModeNames[transparencyModeIndex]})");
+
+                    var mode = Toolkit.Window.GetTransparencyMode(window, out float opacity);
+                    Program.Logger.LogInfo($"Transparency mode: {mode}");
+                }
+                ImGui.DragFloat("Opacity", ref windowOpacity, 0.01f, 0.0f, 1.0f);
+
+                ImGui.AlignTextToFramePadding();
                 ImGui.TextUnformatted("Always on top:"); ImGui.SameLine();
                 if (ImGui.Button("Yes"))
                 {
@@ -266,20 +314,20 @@ namespace OpenTK.Backends.Tests
                 ImGui.DragInt2("Position", ref windowPosition.X); ImGui.SameLine();
                 if (ImGui.Button("Set##Position"))
                 {
-                    Toolkit.Window.SetPosition(Program.Window, windowPosition);
+                    Toolkit.Window.SetPosition(window, windowPosition);
                     Program.Logger.LogInfo($"WindowComponent.SetPosition({windowPosition})");
 
-                    Toolkit.Window.GetPosition(Program.Window, out Vector2i position);
+                    Toolkit.Window.GetPosition(window, out Vector2i position);
                     Program.Logger.LogInfo($"Window position: ({position.X}, {position.Y})");
                 }
 
                 ImGui.DragInt2("Client position", ref clientPosition.X); ImGui.SameLine();
                 if (ImGui.Button("Set##ClientPosition"))
                 {
-                    Toolkit.Window.SetClientPosition(Program.Window, clientPosition);
+                    Toolkit.Window.SetClientPosition(window, clientPosition);
                     Program.Logger.LogInfo($"WindowComponent.SetClientPosition({clientPosition})");
 
-                    Toolkit.Window.GetClientPosition(Program.Window, out Vector2i cPos);
+                    Toolkit.Window.GetClientPosition(window, out Vector2i cPos);
                     Program.Logger.LogInfo($"Client position: ({cPos.X}, {cPos.Y})");
                 }
             }
@@ -331,12 +379,17 @@ namespace OpenTK.Backends.Tests
 
                         ImGui.BeginDisabled(enableMultisample == false);
 
+                        // FIXME: Get the max supported samples from the selected window context...?
                         int samples = openglSettings.Multisamples;
                         if (ImGui.DragInt("Samples", ref samples, IntDragSpeed, 1, 128))
                             openglSettings.Multisamples = samples;
 
                         ImGui.EndDisabled();
                     }
+
+                    ContextPixelFormat pixelFormat = openglSettings.PixelFormat;
+                    if (ImGuiUtils.EnumCombo("Pixel format", ref pixelFormat))
+                        openglSettings.PixelFormat = pixelFormat;
 
                     bool doubleBuffer = openglSettings.DoubleBuffer;
                     if (ImGui.Checkbox("Double buffer", ref doubleBuffer))
@@ -346,6 +399,13 @@ namespace OpenTK.Backends.Tests
                     if (ImGui.Checkbox("sRGB Framebuffer", ref srgb))
                         openglSettings.sRGBFramebuffer = srgb;
 
+                    if (Toolkit.Window is Platform.Native.X11.X11WindowComponent)
+                    {
+                        bool supportTransparentFramebuffer = openglSettings.SupportTransparentFramebufferX11;
+                        if (ImGui.Checkbox("Supports framebuffer transparency", ref supportTransparentFramebuffer))
+                            openglSettings.SupportTransparentFramebufferX11 = supportTransparentFramebuffer;
+                    }
+                    
                     ImGui.SeparatorText("Context settings");
 
                     OpenGLProfile profile = openglSettings.Profile;

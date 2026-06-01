@@ -6,8 +6,9 @@ using System.Runtime.CompilerServices;
 namespace OpenTK.Platform
 {
     /// <summary>
-    /// Interface for drivers which provide the PAL OpenGL Component.
+    /// Interface for creating and interacting with OpenGL contexts.
     /// </summary>
+    /// <seealso cref="Toolkit.OpenGL"/>
     public interface IOpenGLComponent : IPalComponent
     {
         /// <summary>
@@ -37,6 +38,8 @@ namespace OpenTK.Platform
         /// </summary>
         /// <param name="handle">The window for which the OpenGL context should be created.</param>
         /// <returns>An OpenGL context handle.</returns>
+        /// <seealso cref="IWindowComponent.Create(GraphicsApiHints)"/>
+        /// <seealso cref="OpenGLGraphicsApiHints"/>
         // FIXME: Rename to CreateContextFromWindow?
         // Or just make CreateContext overloaded with both WindowHandle and SurfaceHandle?
         OpenGLContextHandle CreateFromWindow(WindowHandle handle);
@@ -45,14 +48,32 @@ namespace OpenTK.Platform
         /// Destroy an OpenGL context.
         /// </summary>
         /// <param name="handle">Handle to the OpenGL context to destroy.</param>
-        /// <exception cref="ArgumentNullException">OpenGL context handle is null.</exception>
+        /// <seealso cref="CreateFromWindow(WindowHandle)"/>
         void DestroyContext(OpenGLContextHandle handle);
 
         /// <summary>
+        /// Gets the context values of the OpenGL context.
+        /// This can be used to query the actually selected context values initially requested in <see cref="OpenGLGraphicsApiHints"/>.
+        /// </summary>
+        /// <remarks>
+        /// During context creation all possible context values are enumerated and sent to <see cref="OpenGLGraphicsApiHints.Selector"/>
+        /// (by default set to <see cref="ContextValues.DefaultValuesSelector(System.Collections.Generic.IReadOnlyList{ContextValues}, ContextValues, Core.Utility.ILogger?)"/>)
+        /// which can choose the an appropriate format. This function returns these selected values.
+        /// </remarks>
+        /// <param name="handle">The OpenGL context to get the context values from.</param>
+        /// <returns>The context values for the OpenGL context.</returns>
+        /// <seealso cref="OpenGLGraphicsApiHints"/>
+        /// <seealso cref="OpenGLGraphicsApiHints.Selector"/>
+        ContextValues GetContextValues(OpenGLContextHandle handle);
+
+        /// <summary>
         /// Gets a <see cref="IBindingsContext"/> from an <see cref="OpenGLContextHandle"/>.
+        /// Pass this to <see cref="OpenTK.Graphics.GLLoader.LoadBindings(IBindingsContext)"/> to load the OpenGL bindings.
         /// </summary>
         /// <param name="handle">The handle to get a bindings context for.</param>
         /// <returns>The created bindings context.</returns>
+        /// <seealso cref="OpenTK.Graphics.GLLoader"/>
+        /// <seealso cref="IBindingsContext"/>
         IBindingsContext GetBindingsContext(OpenGLContextHandle handle);
 
         /// <summary>
@@ -61,20 +82,21 @@ namespace OpenTK.Platform
         /// <param name="handle">Handle to an OpenGL context.</param>
         /// <param name="procedureName">Name of the OpenGL command.</param>
         /// <returns>The procedure address to the OpenGL command.</returns>
-        /// <exception cref="ArgumentNullException">OpenGL context handle or procedure name is null.</exception>
         IntPtr GetProcedureAddress(OpenGLContextHandle handle, string procedureName);
 
         /// <summary>
         /// Get the current OpenGL context for this thread.
         /// </summary>
-        /// <returns>Handle to the current OpenGL context, null if none are current.</returns>
+        /// <returns>Handle to the current OpenGL context, <see langword="null"/> if no context is current.</returns>
+        /// <seealso cref="SetCurrentContext(OpenGLContextHandle?)"/>
         OpenGLContextHandle? GetCurrentContext();
 
         /// <summary>
         /// Set the current OpenGL context for this thread.
         /// </summary>
-        /// <param name="handle">Handle to the OpenGL context to make current, or null to make none current.</param>
-        /// <returns>True when the OpenGL context is successfully made current.</returns>
+        /// <param name="handle">Handle to the OpenGL context to make current, or <see langword="null"/> to make no context current.</param>
+        /// <returns><see langword="true"/> when the OpenGL context is successfully made current.</returns>
+        /// <seealso cref="GetCurrentContext"/>
         // FIXME: Rename to MakeCurrent, like all other apis do
         bool SetCurrentContext(OpenGLContextHandle? handle);
 
@@ -83,6 +105,7 @@ namespace OpenTK.Platform
         /// </summary>
         /// <param name="handle">Handle to the OpenGL context.</param>
         /// <returns>Handle to the OpenGL context the given context shares display lists with.</returns>
+        /// <seealso cref="OpenGLGraphicsApiHints.SharedContext"/>
         OpenGLContextHandle? GetSharedContext(OpenGLContextHandle handle);
 
         /// <summary>
@@ -93,9 +116,9 @@ namespace OpenTK.Platform
         void SetSwapInterval(int interval);
 
         /// <summary>
-        /// Gets the swap interval of the current OpenGL context.
+        /// Gets the swap interval of the current OpenGL context, or <c>-1</c> if no context is current.
         /// </summary>
-        /// <returns>The current swap interval.</returns>
+        /// <returns>The current swap interval, or <c>-1</c> if no context is current.</returns>
         // FIXME: Better documentation.
         int GetSwapInterval();
 
@@ -103,6 +126,14 @@ namespace OpenTK.Platform
         /// Swaps the buffer of the specified context.
         /// </summary>
         /// <param name="handle">Handle to the context.</param>
+        /// <seealso cref="OpenGLGraphicsApiHints.SwapMethod"/>
         void SwapBuffers(OpenGLContextHandle handle);
+
+        /// <summary>
+        /// Gets the <see cref="WindowHandle"/> that was used to create this context, or <see langword="null"/> if this context wasn't created from a window.
+        /// </summary>
+        /// <param name="handle">Handle to the OpenGL context.</param>
+        /// <returns>The <see cref="WindowHandle"/> that was used to create this context, or <see langword="null"/> if this context wasn't created from a window.</returns>
+        WindowHandle? GetWindow(OpenGLContextHandle handle);
     }
 }

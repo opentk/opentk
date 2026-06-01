@@ -23,6 +23,8 @@ SOFTWARE.
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
+using System.Numerics;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Runtime.Intrinsics;
 
@@ -33,7 +35,16 @@ namespace OpenTK.Mathematics
     /// </summary>
     [Serializable]
     [StructLayout(LayoutKind.Sequential)]
-    public struct Matrix3x2d : IEquatable<Matrix3x2d>, IFormattable
+    public struct Matrix3x2d : IEquatable<Matrix3x2d>, IFormattable,
+                                IMultiplyOperators<Matrix3x2d, double, Matrix3x2d>,
+                                IMultiplyOperators<Matrix3x2d, Vector2d, Vector3d>,
+                                IMultiplyOperators<Matrix3x2d, Matrix2d, Matrix3x2d>,
+                                IMultiplyOperators<Matrix3x2d, Matrix2x3d, Matrix3d>,
+                                IMultiplyOperators<Matrix3x2d, Matrix2x4d, Matrix3x4d>,
+                                IAdditionOperators<Matrix3x2d, Matrix3x2d, Matrix3x2d>,
+                                ISubtractionOperators<Matrix3x2d, Matrix3x2d, Matrix3x2d>,
+                                IEqualityOperators<Matrix3x2d, Matrix3x2d, bool>,
+                                IAdditiveIdentity<Matrix3x2d, Matrix3x2d>
     {
         /// <summary>
         /// Top row of the matrix.
@@ -191,6 +202,11 @@ namespace OpenTK.Mathematics
         public readonly double Trace => Row0.X + Row1.Y;
 
         /// <summary>
+        /// Gets the additive identity of the matrix, which is the zero matrix.
+        /// </summary>
+        public static Matrix3x2d AdditiveIdentity => Zero;
+
+        /// <summary>
         /// Gets or sets the value at a specified row and column.
         /// </summary>
         /// <param name="rowIndex">The index of the row.</param>
@@ -200,45 +216,30 @@ namespace OpenTK.Mathematics
         {
             readonly get
             {
-                if (rowIndex == 0)
+                if (((uint)rowIndex) >= 3 || ((uint)columnIndex) >= 2)
                 {
-                    return Row0[columnIndex];
+                    MathHelper.ThrowOutOfRangeException("You tried to access this matrix at: ({0}, {1})", rowIndex, columnIndex);
                 }
 
-                if (rowIndex == 1)
-                {
-                    return Row1[columnIndex];
-                }
-
-                if (rowIndex == 2)
-                {
-                    return Row2[columnIndex];
-                }
-
-                throw new IndexOutOfRangeException("You tried to access this matrix at: (" + rowIndex + ", " +
-                                                   columnIndex + ")");
+                return GetRowUnsafe(in this, rowIndex)[columnIndex];
             }
 
             set
             {
-                if (rowIndex == 0)
+                if (((uint)rowIndex) >= 3 || ((uint)columnIndex) >= 2)
                 {
-                    Row0[columnIndex] = value;
+                    MathHelper.ThrowOutOfRangeException("You tried to set this matrix at: ({0}, {1})", rowIndex, columnIndex);
                 }
-                else if (rowIndex == 1)
-                {
-                    Row1[columnIndex] = value;
-                }
-                else if (rowIndex == 2)
-                {
-                    Row2[columnIndex] = value;
-                }
-                else
-                {
-                    throw new IndexOutOfRangeException("You tried to set this matrix at: (" + rowIndex + ", " +
-                                                       columnIndex + ")");
-                }
+
+                GetRowUnsafe(in this, rowIndex)[columnIndex] = value;
             }
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static ref Vector2d GetRowUnsafe(in Matrix3x2d m, int index)
+        {
+            ref Vector2d address = ref Unsafe.AsRef(in m.Row0);
+            return ref Unsafe.Add(ref address, index);
         }
 
         /// <summary>
@@ -710,6 +711,19 @@ namespace OpenTK.Mathematics
         public static Matrix3x2d operator *(Matrix3x2d left, double right)
         {
             return Mult(left, right);
+        }
+
+        /// <summary>
+        /// Transform a 2-dimensional vector into a 3-dimensional vector using the given 3x2 Matrix.
+        /// </summary>
+        /// <param name="mat">The desired transformation.</param>
+        /// <param name="vec">The vector to transform.</param>
+        /// <returns>The transformed vector in 3 dimensions.</returns>
+        [Pure]
+        public static Vector3d operator *(Matrix3x2d mat, Vector2d vec)
+        {
+            Vector2d.TransformThreeDimensionsColumn(in mat, in vec, out Vector3d result);
+            return result;
         }
 
         /// <summary>

@@ -9,6 +9,7 @@
 
 using System;
 using System.Diagnostics.Contracts;
+using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Xml.Serialization;
@@ -23,7 +24,19 @@ namespace OpenTK.Mathematics
     /// </remarks>
     [Serializable]
     [StructLayout(LayoutKind.Sequential)]
-    public struct Vector2i : IEquatable<Vector2i>, IFormattable
+    public struct Vector2i : IEquatable<Vector2i>, IFormattable,
+                            IAdditionOperators<Vector2i, Vector2i, Vector2i>,
+                            ISubtractionOperators<Vector2i, Vector2i, Vector2i>,
+                            IUnaryNegationOperators<Vector2i, Vector2i>,
+                            IUnaryPlusOperators<Vector2i, Vector2i>,
+                            IMultiplyOperators<Vector2i, int, Vector2i>,
+                            IMultiplyOperators<Vector2i, Vector2i, Vector2i>,
+                            IDivisionOperators<Vector2i, int, Vector2i>,
+                            IDivisionOperators<Vector2i, Vector2i, Vector2i>,
+                            IEqualityOperators<Vector2i, Vector2i, bool>,
+                            IAdditiveIdentity<Vector2i, Vector2i>,
+                            IMultiplicativeIdentity<Vector2i, Vector2i>,
+                            IMinMaxValue<Vector2i>
     {
         /// <summary>
         /// The X component of the Vector2i.
@@ -65,34 +78,30 @@ namespace OpenTK.Mathematics
         {
             readonly get
             {
-                if (index == 0)
+                if (((uint)index) >= 2)
                 {
-                    return X;
+                    MathHelper.ThrowOutOfRangeException("You tried to access this vector at index: {0}", index);
                 }
 
-                if (index == 1)
-                {
-                    return Y;
-                }
-
-                throw new IndexOutOfRangeException("You tried to access this vector at index: " + index);
+                return GetElementUnsafe(in this, index);
             }
 
             set
             {
-                if (index == 0)
+                if (((uint)index) >= 2)
                 {
-                    X = value;
+                    MathHelper.ThrowOutOfRangeException("You tried to set this vector at index: {0}", index);
                 }
-                else if (index == 1)
-                {
-                    Y = value;
-                }
-                else
-                {
-                    throw new IndexOutOfRangeException("You tried to set this vector at index: " + index);
-                }
+
+                GetElementUnsafe(in this, index) = value;
             }
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static ref int GetElementUnsafe(in Vector2i v, int index)
+        {
+            ref int address = ref Unsafe.AsRef(in v.X);
+            return ref Unsafe.Add(ref address, index);
         }
 
         /// <summary>
@@ -158,6 +167,28 @@ namespace OpenTK.Mathematics
         public static readonly int SizeInBytes = Unsafe.SizeOf<Vector2i>();
 
         /// <summary>
+        /// Gets the additive identity of Vector2i. Equivalent to Vector2i.Zero.
+        /// </summary>
+        public static Vector2i AdditiveIdentity => Zero;
+
+        /// <summary>
+        /// Gets the multiplicative identity of Vector2i. Equivalent to Vector2i.One.
+        /// </summary>
+        public static Vector2i MultiplicativeIdentity => One;
+
+        /// <summary>
+        /// Gets the maximum value for Vector2i.
+        /// Sets both X and Y components to the largest value for a signed 32-bit integer.
+        /// </summary>
+        public static Vector2i MaxValue => new Vector2i(int.MaxValue, int.MaxValue);
+
+        /// <summary>
+        /// Gets the minimum value for Vector2i.
+        /// Sets both X and Y components to the smallest value for a signed 32-bit integer.
+        /// </summary>
+        public static Vector2i MinValue => new Vector2i(int.MinValue, int.MinValue);
+
+        /// <summary>
         /// Adds two vectors.
         /// </summary>
         /// <param name="a">Left operand.</param>
@@ -187,7 +218,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <param name="a">First operand.</param>
         /// <param name="b">Second operand.</param>
-        /// <returns>Result of subtraction.</returns>
+        /// <returns>Result of the subtraction.</returns>
         [Pure]
         public static Vector2i Subtract(Vector2i a, Vector2i b)
         {
@@ -411,6 +442,72 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
+        /// Component wise less than comparision of two vectors.
+        /// </summary>
+        /// <param name="left">The left vector.</param>
+        /// <param name="right">The right vector.</param>
+        /// <returns>A component wise boolean vector whose compoennts are true when the corresponding left component is less than the right component.</returns>
+        public static Vector2b LessThan(in Vector2i left, in Vector2i right)
+        {
+            return new Vector2b(left.X < right.X, left.Y < right.Y);
+        }
+
+        /// <summary>
+        /// Component wise less than or equal comparision of two vectors.
+        /// </summary>
+        /// <param name="left">The left vector.</param>
+        /// <param name="right">The right vector.</param>
+        /// <returns>A component wise boolean vector whose compoennts are true when the corresponding left component is less than or equal to the right component.</returns>
+        public static Vector2b LessThanOrEqual(in Vector2i left, in Vector2i right)
+        {
+            return new Vector2b(left.X <= right.X, left.Y <= right.Y);
+        }
+
+        /// <summary>
+        /// Component wise greater than comparision of two vectors.
+        /// </summary>
+        /// <param name="left">The left vector.</param>
+        /// <param name="right">The right vector.</param>
+        /// <returns>A component wise boolean vector whose compoennts are true when the corresponding left component is greater than the right component.</returns>
+        public static Vector2b GreaterThan(in Vector2i left, in Vector2i right)
+        {
+            return new Vector2b(left.X > right.X, left.Y > right.Y);
+        }
+
+        /// <summary>
+        /// Component wise greater than or equal comparision of two vectors.
+        /// </summary>
+        /// <param name="left">The left vector.</param>
+        /// <param name="right">The right vector.</param>
+        /// <returns>A component wise boolean vector whose compoennts are true when the corresponding left component is greater than or equal to the right component.</returns>
+        public static Vector2b GreaterThanOrEqual(in Vector2i left, in Vector2i right)
+        {
+            return new Vector2b(left.X >= right.X, left.Y >= right.Y);
+        }
+
+        /// <summary>
+        /// Component wise equal comparision of two vectors.
+        /// </summary>
+        /// <param name="left">The left vector.</param>
+        /// <param name="right">The right vector.</param>
+        /// <returns>A component wise boolean vector whose compoennts are true when the corresponding left component is equal to the right component.</returns>
+        public static Vector2b ComponentEqual(in Vector2i left, in Vector2i right)
+        {
+            return new Vector2b(left.X == right.X, left.Y == right.Y);
+        }
+
+        /// <summary>
+        /// Component wise not equal comparision of two vectors.
+        /// </summary>
+        /// <param name="left">The left vector.</param>
+        /// <param name="right">The right vector.</param>
+        /// <returns>A component wise boolean vector whose compoennts are true when the corresponding left component is not equal to the right component.</returns>
+        public static Vector2b ComponentNotEqual(in Vector2i left, in Vector2i right)
+        {
+            return new Vector2b(left.X != right.X, left.Y != right.Y);
+        }
+
+        /// <summary>
         /// Gets or sets a <see cref="Vector2i"/> with the Y and X components of this instance.
         /// </summary>
         [XmlIgnore]
@@ -445,11 +542,39 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
+        /// Adds a scalar to an instance.
+        /// </summary>
+        /// <param name="left">The instance.</param>
+        /// <param name="right">The scalar.</param>
+        /// <returns>The result of the operation.</returns>
+        [Pure]
+        public static Vector2i operator +(Vector2i left, int right)
+        {
+            left.X += right;
+            left.Y += right;
+            return left;
+        }
+
+        /// <summary>
+        /// Adds a scalar to an instance.
+        /// </summary>
+        /// <param name="left">The scalar.</param>
+        /// <param name="right">The instance.</param>
+        /// <returns>The result of the operation.</returns>
+        [Pure]
+        public static Vector2i operator +(int left, Vector2i right)
+        {
+            right.X += left;
+            right.Y += left;
+            return right;
+        }
+
+        /// <summary>
         /// Adds the specified instances.
         /// </summary>
         /// <param name="left">Left operand.</param>
         /// <param name="right">Right operand.</param>
-        /// <returns>Result of addition.</returns>
+        /// <returns>Result of the addition.</returns>
         [Pure]
         public static Vector2i operator +(Vector2i left, Vector2i right)
         {
@@ -459,11 +584,39 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
+        /// Subtracts an instance by a scalar.
+        /// </summary>
+        /// <param name="left">The instance.</param>
+        /// <param name="right">The scalar.</param>
+        /// <returns>The result of the operation.</returns>
+        [Pure]
+        public static Vector2i operator -(Vector2i left, int right)
+        {
+            left.X -= right;
+            left.Y -= right;
+            return left;
+        }
+
+        /// <summary>
+        /// Subtracts a scalar by an instance.
+        /// </summary>
+        /// <param name="left">The scalar.</param>
+        /// <param name="right">The instance.</param>
+        /// <returns>The result of the operation.</returns>
+        [Pure]
+        public static Vector2i operator -(int left, Vector2i right)
+        {
+            right.X = left - right.X;
+            right.Y = left - right.Y;
+            return right;
+        }
+
+        /// <summary>
         /// Subtracts the specified instances.
         /// </summary>
         /// <param name="left">Left operand.</param>
         /// <param name="right">Right operand.</param>
-        /// <returns>Result of subtraction.</returns>
+        /// <returns>Result of the subtraction.</returns>
         [Pure]
         public static Vector2i operator -(Vector2i left, Vector2i right)
         {
@@ -486,11 +639,24 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
+        /// Computes the unary plus of the vector.
+        /// </summary>
+        /// <param name="vec">The instance.</param>
+        /// <returns>The result of the calculation.</returns>
+        [Pure]
+        public static Vector2i operator +(Vector2i vec)
+        {
+            vec.X = +vec.X;
+            vec.Y = +vec.Y;
+            return vec;
+        }
+
+        /// <summary>
         /// Multiplies the specified instance by a scalar.
         /// </summary>
         /// <param name="vec">Left operand.</param>
         /// <param name="scale">Right operand.</param>
-        /// <returns>Result of multiplication.</returns>
+        /// <returns>Result of the multiplication.</returns>
         [Pure]
         public static Vector2i operator *(Vector2i vec, int scale)
         {
@@ -504,7 +670,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <param name="scale">Left operand.</param>
         /// <param name="vec">Right operand.</param>
-        /// <returns>Result of multiplication.</returns>
+        /// <returns>Result of the multiplication.</returns>
         [Pure]
         public static Vector2i operator *(int scale, Vector2i vec)
         {
@@ -518,7 +684,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <param name="scale">Left operand.</param>
         /// <param name="vec">Right operand.</param>
-        /// <returns>Result of multiplication.</returns>
+        /// <returns>Result of the multiplication.</returns>
         [Pure]
         public static Vector2i operator *(Vector2i vec, Vector2i scale)
         {
@@ -542,6 +708,20 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
+        /// Divides a scalar by the instance using integer division, floor(a/b).
+        /// </summary>
+        /// <param name="left">Left operand.</param>
+        /// <param name="right">Right operand.</param>
+        /// <returns>Result of the division.</returns>
+        [Pure]
+        public static Vector2i operator /(int left, Vector2i right)
+        {
+            right.X = left / right.X;
+            right.Y = left / right.Y;
+            return right;
+        }
+
+        /// <summary>
         /// Component-wise division between the specified instance by a scale vector.
         /// </summary>
         /// <param name="vec">Left operand.</param>
@@ -553,6 +733,54 @@ namespace OpenTK.Mathematics
             vec.X /= scale.X;
             vec.Y /= scale.Y;
             return vec;
+        }
+
+        /// <summary>
+        /// Component wise less than comparision between the specified instances.
+        /// </summary>
+        /// <param name="left">The left instance.</param>
+        /// <param name="right">The right instance.</param>
+        /// <returns>A component wise boolean vector whose compoennts are true when the corresponding left component is less than the right component.</returns>
+        [Pure]
+        public static Vector2b operator <(Vector2i left, Vector2i right)
+        {
+            return LessThan(left, right);
+        }
+
+        /// <summary>
+        /// Component wise less than or equal comparision between the specified instances.
+        /// </summary>
+        /// <param name="left">The left instance.</param>
+        /// <param name="right">The right instance.</param>
+        /// <returns>A component wise boolean vector whose compoennts are true when the corresponding left component is less than or equal the right component.</returns>
+        [Pure]
+        public static Vector2b operator <=(Vector2i left, Vector2i right)
+        {
+            return LessThanOrEqual(left, right);
+        }
+
+        /// <summary>
+        /// Component wise greater than comparision between the specified instances.
+        /// </summary>
+        /// <param name="left">The left instance.</param>
+        /// <param name="right">The right instance.</param>
+        /// <returns>A component wise boolean vector whose compoennts are true when the corresponding greater component is greater than the right component.</returns>
+        [Pure]
+        public static Vector2b operator >(Vector2i left, Vector2i right)
+        {
+            return GreaterThan(left, right);
+        }
+
+        /// <summary>
+        /// Component wise greater than or equal comparision between the specified instances.
+        /// </summary>
+        /// <param name="left">The left instance.</param>
+        /// <param name="right">The right instance.</param>
+        /// <returns>A component wise boolean vector whose compoennts are true when the corresponding left component is greater than or equal the right component.</returns>
+        [Pure]
+        public static Vector2b operator >=(Vector2i left, Vector2i right)
+        {
+            return GreaterThanOrEqual(left, right);
         }
 
         /// <summary>
@@ -645,19 +873,19 @@ namespace OpenTK.Mathematics
         }
 
         /// <inheritdoc/>
-        public override string ToString()
+        public override readonly string ToString()
         {
             return ToString(null, null);
         }
 
         /// <inheritdoc cref="ToString(string, IFormatProvider)"/>
-        public string ToString(string format)
+        public readonly string ToString(string format)
         {
             return ToString(format, null);
         }
 
         /// <inheritdoc cref="ToString(string, IFormatProvider)"/>
-        public string ToString(IFormatProvider formatProvider)
+        public readonly string ToString(IFormatProvider formatProvider)
         {
             return ToString(null, formatProvider);
         }
@@ -673,7 +901,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <inheritdoc/>
-        public override bool Equals(object obj)
+        public override readonly bool Equals(object obj)
         {
             return obj is Vector2i && Equals((Vector2i)obj);
         }

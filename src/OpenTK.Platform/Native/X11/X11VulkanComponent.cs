@@ -67,6 +67,11 @@ namespace OpenTK.Platform.Native.X11
             }
         }
 
+        /// <inheritdoc/>
+        public void Uninitialize()
+        {
+        }
+
         internal bool KHR_surface;
         internal bool KHR_xcb_surface;
         internal bool KHR_xlib_surface;
@@ -93,7 +98,7 @@ namespace OpenTK.Platform.Native.X11
             }
             else
             {
-                Logger?.LogWarning("Missing VK_KHR_xcb_surface or VK_KHR_xlib_surface. Won't be able to create vulkan windows.");
+                Logger?.LogWarning("Missing both VK_KHR_xcb_surface and VK_KHR_xlib_surface. Won't be able to create vulkan windows.");
                 return [];
             }
         }
@@ -120,7 +125,7 @@ namespace OpenTK.Platform.Native.X11
             }
             else
             {
-                Logger?.LogError("Missing VK_KHR_xcb_surface or VK_KHR_xlib_surface. Can't query presentation support.");
+                Logger?.LogError("Missing both VK_KHR_xcb_surface and VK_KHR_xlib_surface. Can't query presentation support.");
                 return false;
             }
         }
@@ -176,7 +181,7 @@ namespace OpenTK.Platform.Native.X11
             }
             else
             {
-                Logger?.LogError("Missing VK_KHR_xcb_surface or VK_KHR_xlib_surface. Can't create window surface.");
+                Logger?.LogError("Missing both VK_KHR_xcb_surface and VK_KHR_xlib_surface. Can't create window surface.");
                 surface = VkSurfaceKHR.Zero;
                 return VkResult.ErrorExtensionNotPresent;
             }

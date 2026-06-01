@@ -9,6 +9,8 @@ namespace OpenTK.Platform.Native.macOS
         public IntPtr Window { get; set; }
         public IntPtr View { get; set; }
 
+        // FIXME: Make this compatible with the EGL OpenGL component...
+        // - Noggin_bops 2025-09-01
         // This is used to implement SwapBuffers
         public NSOpenGLContext? Context { get; set; }
 
@@ -41,6 +43,11 @@ namespace OpenTK.Platform.Native.macOS
         public MouseButtonFlags PressedMouseButtons { get; set; }
         public Vector2 ScrollPosition { get; set; }
 
+        // Is the framebuffer transparent? We need to keep track of this
+        // so that if the framebuffer is set to transparent before we
+        // create the opengl context we can make the opengl context transparent.
+        public WindowTransparencyMode TransparencyMode { get; set; }
+
         public NSWindowHandle(IntPtr window, IntPtr view, GraphicsApiHints graphicsApiHints) : base(graphicsApiHints)
         {
             Window = window;
@@ -54,10 +61,14 @@ namespace OpenTK.Platform.Native.macOS
 
         public NSOpenGLContext? SharedContext { get; private set; }
 
-        public NSOpenGLContext(IntPtr context, NSOpenGLContext? sharedContext)
+        public ContextValues ContextValues { get; private set; }
+
+        public NSOpenGLContext(IntPtr context, NSWindowHandle window, NSOpenGLContext? sharedContext, ContextValues contextValues)
         {
             Context = context;
+            WindowHandle = window;
             SharedContext = sharedContext;
+            ContextValues = contextValues;
         }
     }
 

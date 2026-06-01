@@ -1,4 +1,4 @@
-﻿using OpenTK.Platform;
+﻿using Microsoft.Win32;
 using OpenTK.Core.Utility;
 using OpenTK.Mathematics;
 using System;
@@ -7,6 +7,8 @@ using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using System.Runtime.InteropServices.Marshalling;
+using System.Security.AccessControl;
 using System.Text;
 using System.Threading;
 
@@ -28,13 +30,25 @@ namespace OpenTK.Platform.Native.Windows
         public static readonly IntPtr HInstance;
 
         /// <summary>
-        /// The helper window used to load wgl extensions.
+        /// The helper window used in part to load wgl extensions.
         /// </summary>
         public static IntPtr HelperHWnd { get; private set; }
+
+        internal static IntPtr DeviceNotificationHandle;
+        internal static IntPtr SuspendResumeNotificationHandle;
+
+        internal static RegistryKey? MouseSettingsRegistryKey;
+        internal static IntPtr RegistryMouseSettingsChangedEvent;
+
+        internal static uint TaskbarButtonCreatedMessage;
+
+        internal static uint OpenTKUserEventMessage;
 
         // A handle to a windowproc delegate so it doesn't get GC collected.
         private Win32.WNDPROC? WindowProc;
 
+        private int MaxWindowMessagesPerFrame;
+        
         internal static readonly Dictionary<IntPtr, HWND> HWndDict = new Dictionary<IntPtr, HWND>();
 
         // This is the window we are currently capturing the cursor in. 
@@ -58,6 +72,8 @@ namespace OpenTK.Platform.Native.Windows
         /// <inheritdoc/>
         public void Initialize(ToolkitOptions options)
         {
+            MaxWindowMessagesPerFrame = options.Windows.MaxWindowMessagesPerFrame;
+
             // Set the WindowProc delegate so that we capture "this".
             // FIXME: Does this cause GC issues where "this" is circularly referenced?
             WindowProc = Win32WindowProc;
@@ -124,10 +140,8 @@ namespace OpenTK.Platform.Native.Windows
             dbh.dbcc_devicetype = DBTDevType.DeviceInterface;
             dbh.dbcc_classguid = Win32.GUID_DEVINTERFACE_HID;
 
-            // We assume we are going to need these notification handles for the lifetime of the application, so we do not close them.
-            // - 2023-06-28 Noggin_bops
-            IntPtr devNotifHandle = Win32.RegisterDeviceNotification(HelperHWnd, dbh, DEVICE_NOTIFY.DEVICE_NOTIFY_WINDOW_HANDLE);
-            IntPtr resumeSuspendNotifHandle = Win32.RegisterSuspendResumeNotification(HelperHWnd, DEVICE_NOTIFY.DEVICE_NOTIFY_WINDOW_HANDLE);
+            DeviceNotificationHandle = Win32.RegisterDeviceNotification(HelperHWnd, dbh, DEVICE_NOTIFY.DEVICE_NOTIFY_WINDOW_HANDLE);
+            SuspendResumeNotificationHandle = Win32.RegisterSuspendResumeNotification(HelperHWnd, DEVICE_NOTIFY.DEVICE_NOTIFY_WINDOW_HANDLE);
 
             // Register for WM_CLIPBOARDUPDATE
             bool success = Win32.AddClipboardFormatListener(HelperHWnd);
@@ -135,6 +149,89 @@ namespace OpenTK.Platform.Native.Windows
             {
                 throw new Win32Exception();
             }
+
+#pragma warning disable CA1416 // Validate platform compatibility
+            MouseSettingsRegistryKey = Registry.CurrentUser.OpenSubKey(@"Control Panel\Mouse", RegistryRights.ReadKey | RegistryRights.Notify);
+            if (MouseSettingsRegistryKey != null)
+            {
+                unsafe
+                {
+                    RegistryMouseSettingsChangedEvent = Win32.CreateEvent(null, true, false, null);
+                    if (RegistryMouseSettingsChangedEvent == 0)
+                    {
+                        throw new Win32Exception();
+                    }
+                    int result = Win32.RegNotifyChangeKeyValue(MouseSettingsRegistryKey.Handle.DangerousGetHandle(), false, RegNotifyChange.LastSet, RegistryMouseSettingsChangedEvent, true);
+                    if (result != Win32.ERROR_SUCCESS)
+                    {
+                        throw new Win32Exception(result);
+                    }
+                }
+            }
+            else
+            {
+                Logger?.LogWarning("Could not open the 'Computer\\HKEY_CURRENT_USER\\Control Panel\\Mouse' registry key. Can't register registry change callbacks for user configured double click settings.");
+            }
+#pragma warning restore CA1416 // Validate platform compatibility
+
+
+            TaskbarButtonCreatedMessage = Win32.RegisterWindowMessage("TaskbarButtonCreated");
+
+            OpenTKUserEventMessage = Win32.RegisterWindowMessage("OpenTKUserEvent");
+        }
+
+        /// <inheritdoc/>
+        public void Uninitialize()
+        {
+            // Free all of the native resources.
+            // This means that if there are any windows still open we need to close them.
+            // - Noggin_bops 2024-10-30
+            foreach (var (_, hwnd) in HWndDict)
+            {
+                Logger?.LogWarning($"Window {GetTitle(hwnd)} is still open when uninitializing Toolkit. Please close all windows before uninitializing.");
+                Destroy(hwnd);
+            }
+
+            // Unregister the helper window from notifications.
+            bool success = Win32.UnregisterDeviceNotification(DeviceNotificationHandle);
+            if (success == false)
+            {
+                throw new Win32Exception();
+            }
+            success = Win32.UnregisterSuspendResumeNotification(SuspendResumeNotificationHandle);
+            if (success == false)
+            {
+                throw new Win32Exception();
+            }
+            success = Win32.RemoveClipboardFormatListener(HelperHWnd);
+            if (success == false)
+            {
+                throw new Win32Exception();
+            }
+
+            if (RegistryMouseSettingsChangedEvent != 0)
+            {
+                success = Win32.CloseHandle(RegistryMouseSettingsChangedEvent);
+                if (success == false)
+                {
+                    throw new Win32Exception();
+                }
+            }
+#pragma warning disable CA1416 // Validate platform compatibility
+            MouseSettingsRegistryKey?.Dispose();
+#pragma warning restore CA1416 // Validate platform compatibility
+
+            // Delete the helper window
+            Win32.DestroyWindow(HelperHWnd);
+
+            // Free the raw input buffer
+            unsafe
+            {
+                NativeMemory.AlignedFree(RawInputBuffer);
+            }
+
+            // Unregister the OpenTK window class
+            Win32.UnregisterClass(WindowComponent.CLASS_NAME, IntPtr.Zero);
         }
 
         /// <inheritdoc/>
@@ -160,61 +257,85 @@ namespace OpenTK.Platform.Native.Windows
 
         private IntPtr Win32WindowProc(IntPtr hWnd, WM uMsg, UIntPtr wParam, IntPtr lParam)
         {
+            //Console.WriteLine("WinProc " + uMsg + " " + hWnd);
+
             // Filter out helper window messages early.
             if (hWnd == HelperHWnd)
             {
+                if (uMsg == (WM)OpenTKUserEventMessage)
+                {
+                    GCHandle handle = GCHandle.FromIntPtr(lParam);
+                    EventArgs args = (EventArgs)handle.Target!;
+                    Toolkit.Event.RaiseEvent(args);
+                    handle.Free();
+                }
+
                 switch (uMsg)
                 {
                     case WM.POWERBROADCAST:
-                    {
-                        // We are only interested in the messages sent to the helper window that we registered to get notifications.
-                        // - 2023-03-29 NogginBops
-                        PBT power = (PBT)wParam;
-
-                        if (power == PBT.APMSuspend)
                         {
-                            EventQueue.Raise(null, PlatformEventType.PowerStateChange, new PowerStateChangeEventArgs(true));
-                        }
-                        else if (power == PBT.APMResumeAutomatic)
-                        {
-                            EventQueue.Raise(null, PlatformEventType.PowerStateChange, new PowerStateChangeEventArgs(false));
-                        }
+                            // We are only interested in the messages sent to the helper window that we registered to get notifications.
+                            // - 2023-03-29 NogginBops
+                            PBT power = (PBT)wParam;
+                            
+                            if (power == PBT.APMSuspend)
+                            {
+                                Toolkit.Event.RaiseEvent(new PowerStateChangeEventArgs(true));
+                            }
+                            else if (power == PBT.APMResumeAutomatic)
+                            {
+                                Toolkit.Event.RaiseEvent(new PowerStateChangeEventArgs(false));
+                            }
 
-                        return (IntPtr)1;
-                    }
+                            return (IntPtr)1;
+                        }
                     case WM.DEVICECHANGE:
-                    {
-                        DBT dbt = (DBT)wParam;
-                        switch (dbt)
                         {
-                            case DBT.DeviceArrival:
-                            case DBT.DeviceRemoveComplete:
-                                // FIXME: Implement joystick events!
-                                // JoystickComponent.UpdateJoysticks();
-                                break;
-                            default:
-                                break;
+                            DBT dbt = (DBT)wParam;
+                            switch (dbt)
+                            {
+                                case DBT.DeviceArrival:
+                                case DBT.DeviceRemoveComplete:
+                                    // FIXME: Implement joystick events!
+                                    // JoystickComponent.UpdateJoysticks();
+                                    break;
+                                default:
+                                    break;
+                            }
+
+                            Logger?.LogDebug($"{uMsg} {(DBT)wParam} 0x{wParam.ToUInt64():X16}");
+                            return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                         }
-
-                        Console.WriteLine($"{uMsg} {(DBT)wParam} 0x{wParam.ToUInt64():X16}");
-                        return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
-                    }
                     case WM.CLIPBOARDUPDATE:
-                    {
-                        ClipboardFormat newFormat = ClipboardComponent.GetClipboardFormatInternal(Logger);
+                        {
+                            ClipboardFormat newFormat = ClipboardComponent.GetClipboardFormatInternal(Logger);
 
-                        EventQueue.Raise(null, PlatformEventType.ClipboardUpdate, new ClipboardUpdateEventArgs(newFormat));
+                            Toolkit.Event.RaiseEvent(new ClipboardUpdateEventArgs(newFormat));
 
-                        return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
-                    }
+                            return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
+                        }
                     default:
-                    {
-                        return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
-                    }
+                        {
+                            return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
+                        }
                 }
             }
 
-            // Console.WriteLine("WinProc " + uMsg + " " + hWnd);
+            if (uMsg == (WM)TaskbarButtonCreatedMessage)
+            {
+                Guid iidITaskbarList3 = typeof(COM.ITaskbarList3).GUID;
+                COM.CoCreateInstance(in COM.CLSID_TaskbarList, IntPtr.Zero, CLSCTX.INPROC_SERVER, in iidITaskbarList3, out IntPtr tbl3);
+                if (tbl3 != IntPtr.Zero)
+                {
+                    ComWrappers wrapper = new StrategyBasedComWrappers();
+                    // FIXME: Error check!
+                    COM.ITaskbarList3 list = (COM.ITaskbarList3)wrapper.GetOrCreateObjectForComInstance(tbl3, CreateObjectFlags.None);
+                    ((ShellComponent)Toolkit.Shell).TaskbarList = list;
+                    Logger?.LogDebug("Created ITaskbarList3!");
+                }
+            }
+
+            
             switch (uMsg)
             {
                 case WM.KEYDOWN:
@@ -258,7 +379,7 @@ namespace OpenTK.Platform.Native.Windows
                         // FIXME: Should this be before or after we change the keyboard state?
                         KeyModifier modifiers = KeyboardComponent.GetKeyboardModifiersInternal();
                         KeyboardComponent.KeyStateChanged(code, true);
-                        EventQueue.Raise(h, PlatformEventType.KeyDown, new KeyDownEventArgs(h, key, code, wasDown, modifiers));
+                        Toolkit.Event.RaiseEvent(new KeyDownEventArgs(h, key, code, wasDown, modifiers));
 
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                     }
@@ -315,7 +436,7 @@ namespace OpenTK.Platform.Native.Windows
                             // FIXME: Should this change the modifiers??
                             if (KeyboardComponent.KeyStateChanged(otherCode, false))
                             {
-                                EventQueue.Raise(h, PlatformEventType.KeyUp, new KeyUpEventArgs(h, otherKey, otherCode, modifiers));
+                                Toolkit.Event.RaiseEvent(new KeyUpEventArgs(h, otherKey, otherCode, modifiers));
                             }
                         }
 
@@ -323,11 +444,11 @@ namespace OpenTK.Platform.Native.Windows
                         // - 2023-02-13 NogginBops
                         if (code == Scancode.PrintScreen)
                         {
-                            EventQueue.Raise(h, PlatformEventType.KeyDown, new KeyDownEventArgs(h, key, code, false, modifiers));
+                            Toolkit.Event.RaiseEvent(new KeyDownEventArgs(h, key, code, false, modifiers));
                         }
 
                         KeyboardComponent.KeyStateChanged(code, false);
-                        EventQueue.Raise(h, PlatformEventType.KeyUp, new KeyUpEventArgs(h, key, code, modifiers));
+                        Toolkit.Event.RaiseEvent(new KeyUpEventArgs(h, key, code, modifiers));
 
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                     }
@@ -360,7 +481,7 @@ namespace OpenTK.Platform.Native.Windows
                             string str;
 
                             ulong chars = wParam.ToUInt64();
-                            
+
                             switch (chars)
                             {
                                 case 0x0A: // linefeed, SHIFT + ENTER
@@ -370,9 +491,9 @@ namespace OpenTK.Platform.Native.Windows
                                 case 0x08: // backspace
                                 case 0x09: // tab
                                 case 0x1B: // escape
-                                    // FIXME: For now we just send these to the user directly,
-                                    // but maybe we want something better?
-                                    // or we just formalize this?
+                                           // FIXME: For now we just send these to the user directly,
+                                           // but maybe we want something better?
+                                           // or we just formalize this?
                                 default:
                                     {
                                         // FIXME: Do we even need to handle this??
@@ -393,12 +514,12 @@ namespace OpenTK.Platform.Native.Windows
                                     }
                             }
 
-                            EventQueue.Raise(h, PlatformEventType.TextInput, new TextInputEventArgs(h, str));
+                            Toolkit.Event.RaiseEvent(new TextInputEventArgs(h, str));
                         }
                         else
                         {
                             // ANSI
-                            EventQueue.Raise(h, PlatformEventType.TextInput, new TextInputEventArgs(h, new string((char)(wParam.ToUInt64()), 1)));
+                            Toolkit.Event.RaiseEvent(new TextInputEventArgs(h, new string((char)(wParam.ToUInt64()), 1)));
                         }
 
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
@@ -406,7 +527,6 @@ namespace OpenTK.Platform.Native.Windows
                 case WM.SETFOCUS:
                     {
                         HWND h = HWndDict[hWnd];
-
                         // Because windows removes our capture when we loose focus,
                         // we need to re-capture the mouse when we get focus again.
                         // - Noggin_bops 2023-01-16
@@ -416,7 +536,7 @@ namespace OpenTK.Platform.Native.Windows
                             RecaptureCursor(h, h.CaptureMode);
                         }
 
-                        EventQueue.Raise(h, PlatformEventType.Focus, new FocusEventArgs(h, true));
+                        Toolkit.Event.RaiseEvent(new FocusEventArgs(h, true));
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                     }
                 case WM.KILLFOCUS:
@@ -432,7 +552,7 @@ namespace OpenTK.Platform.Native.Windows
                                 RecaptureCursor(h, CursorCaptureMode.Normal);
                             }
 
-                            EventQueue.Raise(h, PlatformEventType.Focus, new FocusEventArgs(h, false));
+                            Toolkit.Event.RaiseEvent(new FocusEventArgs(h, false));
                         }
 
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
@@ -474,7 +594,7 @@ namespace OpenTK.Platform.Native.Windows
                                 throw new Win32Exception();
                             }
                             
-                            EventQueue.Raise(h, PlatformEventType.MouseEnter, new MouseEnterEventArgs(h, true));
+                            Toolkit.Event.RaiseEvent(new MouseEnterEventArgs(h, true));
                         }
 
                         if (CursorCapturingWindow == h && h.CaptureMode == CursorCaptureMode.Locked)
@@ -488,12 +608,12 @@ namespace OpenTK.Platform.Native.Windows
                             if (delta != (0, 0))
                             {
                                 h.VirtualCursorPosition += delta;
-                                EventQueue.Raise(h, PlatformEventType.MouseMove, new MouseMoveEventArgs(h, h.VirtualCursorPosition));
+                                Toolkit.Event.RaiseEvent(new MouseMoveEventArgs(h, h.VirtualCursorPosition));
                             }
                         }
                         else
                         {
-                            EventQueue.Raise(h, PlatformEventType.MouseMove, new MouseMoveEventArgs(h, new Vector2(x, y)));
+                            Toolkit.Event.RaiseEvent(new MouseMoveEventArgs(h, new Vector2(x, y)));
                         }
 
                         h.LastMousePosition = (x, y);
@@ -505,7 +625,7 @@ namespace OpenTK.Platform.Native.Windows
                         HWND h = HWndDict[hWnd];
                         h.TrackingMouse = false;
 
-                        EventQueue.Raise(h, PlatformEventType.MouseEnter, new MouseEnterEventArgs(h, false));
+                        Toolkit.Event.RaiseEvent(new MouseEnterEventArgs(h, false));
 
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                     }
@@ -559,11 +679,19 @@ namespace OpenTK.Platform.Native.Windows
                             // FIXME: Keep track of which buttons we are pressing?
                             Win32.SetCapture(hWnd);
 
-                            KeyModifier modifiers = KeyboardComponent.GetKeyboardModifiersInternal();
+                            // FIXME: Virtual mouse position??
+                            int x = Win32.GET_X_LPARAM(lParam);
+                            int y = Win32.GET_Y_LPARAM(lParam);
 
+                            KeyModifier modifiers = KeyboardComponent.GetKeyboardModifiersInternal();
+                            
                             HWND h = HWndDict[hWnd];
+                            int time = Win32.GetMessageTime();
+                            int clicks = h.ClickCounter.CountClicks((ulong)time, (x, y), button.Value);
+                            Logger?.LogDebug($"{h.ClickCounter}");
+
                             MouseComponent.RegisterButtonState(h, button.Value, true);
-                            EventQueue.Raise(h, PlatformEventType.MouseDown, new MouseButtonDownEventArgs(h, button.Value, modifiers));
+                            Toolkit.Event.RaiseEvent(new MouseButtonDownEventArgs(h, (x, y), button.Value, modifiers, clicks));
                         }
 
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
@@ -621,11 +749,18 @@ namespace OpenTK.Platform.Native.Windows
                                 throw new Win32Exception();
                             }
 
+                            // FIXME: Virtual mouse position??
+                            int x = Win32.GET_X_LPARAM(lParam);
+                            int y = Win32.GET_Y_LPARAM(lParam);
+
                             KeyModifier modifiers = KeyboardComponent.GetKeyboardModifiersInternal();
+
+                            // FIXME: Get the click count for this button when it was pressed?
+                            int clicks = 1;
 
                             HWND h = HWndDict[hWnd];
                             MouseComponent.RegisterButtonState(h, button.Value, false);
-                            EventQueue.Raise(h, PlatformEventType.MouseUp, new MouseButtonUpEventArgs(h, button.Value, modifiers));
+                            Toolkit.Event.RaiseEvent(new MouseButtonUpEventArgs(h, (x, y), button.Value, modifiers, clicks));
                         }
 
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
@@ -633,7 +768,7 @@ namespace OpenTK.Platform.Native.Windows
                 case WM.MOUSEWHEEL:
                     {
                         float delta = ((int)(wParam.ToUInt32() & Win32.HiWordMask) >> 16) / 120f;
-                        
+
                         bool success = Win32.SystemParametersInfo(SPI.GetWheelScrollLines, 0, out uint lines, SPIF.None);
                         if (success == false)
                         {
@@ -643,7 +778,7 @@ namespace OpenTK.Platform.Native.Windows
                         HWND h = HWndDict[hWnd];
 
                         MouseComponent.RegisterMouseWheelDelta(h, (0, delta));
-                        EventQueue.Raise(h, PlatformEventType.Scroll, new ScrollEventArgs(h, new Vector2(0, delta), new Vector2(0, delta * lines)));
+                        Toolkit.Event.RaiseEvent(new ScrollEventArgs(h, new Vector2(0, delta), new Vector2(0, delta * lines)));
 
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                     }
@@ -660,51 +795,7 @@ namespace OpenTK.Platform.Native.Windows
                         HWND h = HWndDict[hWnd];
 
                         MouseComponent.RegisterMouseWheelDelta(h, (delta, 0));
-                        EventQueue.Raise(h, PlatformEventType.Scroll, new ScrollEventArgs(h, new Vector2(delta, 0), new Vector2(delta * chars, 0)));
-
-                        return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
-                    }
-                case WM.INPUT:
-                    {
-                        Win32.RAWINPUT input = default;
-                        uint size = (uint)Marshal.SizeOf<Win32.RAWINPUTHEADER>();
-                        input.header.dwSize = size;
-                        uint ret = Win32.GetRawInputData(lParam, RID.Header, ref input, ref size, (uint)Marshal.SizeOf<Win32.RAWINPUTHEADER>());
-                        if (ret == 0xFFFF_FFFF)
-                        {
-                            throw new Win32Exception("GetRawInputData failed.");
-                        }
-
-                        if (input.header.dwType == RIM.TypeMouse)
-                        {
-                            ret = Win32.GetRawInputData(lParam, RID.Input, null, ref size, (uint)Marshal.SizeOf<Win32.RAWINPUTHEADER>());
-                            if (ret == 0xFFFF_FFFF)
-                            {
-                                throw new Win32Exception("GetRawInputData failed.");
-                            }
-
-                            ret = Win32.GetRawInputData(lParam, RID.Input, ref input, ref size, (uint)Marshal.SizeOf<Win32.RAWINPUTHEADER>());
-                            if (ret == 0xFFFF_FFFF)
-                            {
-                                throw new Win32Exception("GetRawInputData failed.");
-                            }
-
-                            ref Win32.RAWMOUSE mouse = ref input.data.mouse;
-
-                            if (mouse.usFlags == RawMouseFlags.MoveRelative)
-                            {
-                                if (mouse.lLastX != 0 && mouse.lLastY != 0)
-                                {
-                                    HWND h = HWndDict[hWnd];
-                                    EventQueue.Raise(h, PlatformEventType.RawMouseMove, new RawMouseMoveEventArgs(h, (mouse.lLastX, mouse.lLastY)));
-                                }
-                            }
-                            else
-                            {
-                                // FIXME: We don't want to spam this for every WM_INPUT message...
-                                Logger?.LogError("MOUSE_MOVE_ABSOLUTE not supported yet. This might happen when using remote desktop. Open an issue on the OpenTK github if this happens to you.");
-                            }
-                        }
+                        Toolkit.Event.RaiseEvent(new ScrollEventArgs(h, new Vector2(delta, 0), new Vector2(delta * chars, 0)));
 
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                     }
@@ -768,19 +859,19 @@ namespace OpenTK.Platform.Native.Windows
                             case SIZE.Maximized:
                                 h.WindowState = WindowState.Maximized;
 
-                                EventQueue.Raise(h, PlatformEventType.WindowModeChange, new WindowModeChangeEventArgs(h, WindowMode.Maximized));
+                                Toolkit.Event.RaiseEvent(new WindowModeChangeEventArgs(h, WindowMode.Maximized));
                                 break;
                             case SIZE.Minimized:
                                 h.WindowState = WindowState.Minimized;
 
-                                EventQueue.Raise(h, PlatformEventType.WindowModeChange, new WindowModeChangeEventArgs(h, WindowMode.Minimized));
+                                Toolkit.Event.RaiseEvent(new WindowModeChangeEventArgs(h, WindowMode.Minimized));
                                 break;
                             case SIZE.Restored:
                                 if (h.WindowState != WindowState.Restored)
                                 {
                                     h.WindowState = WindowState.Restored;
 
-                                    EventQueue.Raise(h, PlatformEventType.WindowModeChange, new WindowModeChangeEventArgs(h, WindowMode.Normal));
+                                    Toolkit.Event.RaiseEvent(new WindowModeChangeEventArgs(h, WindowMode.Normal));
                                 }
                                 break;
                             case SIZE.MaxShow:
@@ -800,9 +891,9 @@ namespace OpenTK.Platform.Native.Windows
                             throw new Win32Exception();
                         }
 
-                        EventQueue.Raise(h, PlatformEventType.WindowResize, new WindowResizeEventArgs(h, new Vector2i(lpRect.Width, lpRect.Height), new Vector2i(x, y)));
+                        Toolkit.Event.RaiseEvent(new WindowResizeEventArgs(h, new Vector2i(lpRect.Width, lpRect.Height), new Vector2i(x, y)));
 
-                        EventQueue.Raise(h, PlatformEventType.WindowFramebufferResize, new WindowFramebufferResizeEventArgs(h, new Vector2i(x, y)));
+                        Toolkit.Event.RaiseEvent(new WindowFramebufferResizeEventArgs(h, new Vector2i(x, y)));
 
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                     }
@@ -815,7 +906,7 @@ namespace OpenTK.Platform.Native.Windows
 
                         Win32.GetWindowRect(hWnd, out Win32.RECT rect);
                         
-                        EventQueue.Raise(h, PlatformEventType.WindowMove, new WindowMoveEventArgs(h, new Vector2i(rect.left, rect.top), new Vector2i(x, y)));
+                        Toolkit.Event.RaiseEvent(new WindowMoveEventArgs(h, new Vector2i(rect.left, rect.top), new Vector2i(x, y)));
 
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                     }
@@ -874,7 +965,7 @@ namespace OpenTK.Platform.Native.Windows
                 case WM.CLOSE:
                     {
                         HWND h = HWndDict[hWnd];
-                        EventQueue.Raise(h, PlatformEventType.Close, new CloseEventArgs(h));
+                        Toolkit.Event.RaiseEvent(new CloseEventArgs(h));
 
                         // By not calling Destroy we allow the user to decide
                         // themselves if they want to destroy the window or not.
@@ -886,15 +977,11 @@ namespace OpenTK.Platform.Native.Windows
                     }
                 case WM.DISPLAYCHANGE:
                     {
-                        // FIXME: We should not only look for changes in resolution and connectivity, we should also look for
-                        // changes in position etc.
-                        // Should we just expose an event that tells users that there might have been some changes to displays?
-                        // - Noggin_bops 2023-09-05
-
-                        Console.WriteLine($"{uMsg} Bit depth: {wParam.ToUInt64()}, ResX: {(lParam.ToInt64() & Win32.HiWordMask) >> 16}, ResY: {lParam.ToInt64() & Win32.LoWordMask}");
+                        Logger?.LogDebug($"{uMsg} Bit depth: {wParam.ToUInt64()}, ResX: {(lParam.ToInt64() & Win32.HiWordMask) >> 16}, ResY: {lParam.ToInt64() & Win32.LoWordMask}");
 
                         // FIXME: Some other way of notifying the DisplayComponent that things have changed.
                         DisplayComponent.UpdateMonitors(true, Logger);
+
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                     }
                 case WM.DPICHANGED:
@@ -910,7 +997,7 @@ namespace OpenTK.Platform.Native.Windows
                         HWND h = HWndDict[hWnd];
 
                         // FIXME: Should we send this message before or after resizing the application?
-                        EventQueue.Raise(h, PlatformEventType.WindowScaleChange, new WindowScaleChangeEventArgs(h, scaleX, scaleY));
+                        Toolkit.Event.RaiseEvent(new WindowScaleChangeEventArgs(h, scaleX, scaleY));
 
                         // FIXME: glfw limits this to windows 10 only??
                         // https://github.com/glfw/glfw/blob/dd8a678a66f1967372e5a5e3deac41ebf65ee127/src/win32_window.c#L1186
@@ -954,7 +1041,7 @@ namespace OpenTK.Platform.Native.Windows
 
                         HWND h = HWndDict[hWnd];
 
-                        EventQueue.Raise(h, PlatformEventType.FileDrop, new FileDropEventArgs(h, paths, new Vector2i(point.X, point.Y)));
+                        Toolkit.Event.RaiseEvent(new FileDropEventArgs(h, paths, new Vector2i(point.X, point.Y)));
 
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                     }
@@ -967,7 +1054,7 @@ namespace OpenTK.Platform.Native.Windows
                 case WM.THEMECHANGED:
                     {
                         ShellComponent.CheckPreferredThemeChange();
-                        
+
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                     }
                 case WM.IME_COMPOSITION:
@@ -1011,7 +1098,7 @@ namespace OpenTK.Platform.Native.Windows
                                 }
 
                                 // FIXME: Length?
-                                EventQueue.Raise(h, PlatformEventType.TextEditing, new TextEditingEventArgs(h, composition, IMECursor, 0));
+                                Toolkit.Event.RaiseEvent(new TextEditingEventArgs(h, composition, IMECursor, 0));
                             }
                         }
 
@@ -1044,7 +1131,7 @@ namespace OpenTK.Platform.Native.Windows
                                 // For now we assume it will, if we send this here we later get a
                                 // WM_CHAR with the same text causing duplicate IME input.
                                 // - Noggin_bops 2023-11-13
-                                //EventQueue.Raise(h, PlatformEventType.TextInput, new TextInputEventArgs(h, composition));
+                                //Toolkit.Event.RaiseEvent(new TextInputEventArgs(h, composition));
                             }
                         }
 
@@ -1079,23 +1166,242 @@ namespace OpenTK.Platform.Native.Windows
             }
         }
 
+        // 512 should be enough space to handle 16k Hz mouse at 30fps without blocking
+        // - Noggin_bops 2026-04-01
+        private SPSCRingBuffer<Vector2> RawMouseInputQueue = new SPSCRingBuffer<Vector2>(512);
+        private Thread? RawInputThread = null;
+        private AutoResetEvent? RawInputThreadReadyEvent;
+        private AutoResetEvent? RawInputThreadShouldExitEvent;
+        private AutoResetEvent? RawInputThreadExitedEvent;
+        private unsafe Win32.RAWINPUT* RawInputBuffer = null;
+        private uint RawInputBufferSize;
+
+        private int RawInputEnableCount = 0;
+        internal void EnableRawInput(bool enable)
+        {
+            if (enable)
+            {
+                RawInputEnableCount++;
+                if (RawInputEnableCount > 1)
+                    return;
+            }
+            else
+            {
+                RawInputEnableCount = int.Max(0, RawInputEnableCount - 1);
+                if (RawInputEnableCount > 0)
+                    return;
+            }
+
+            if (enable)
+            {
+                RawInputThreadReadyEvent = new AutoResetEvent(false);
+                RawInputThreadShouldExitEvent = new AutoResetEvent(false);
+                RawInputThreadExitedEvent = new AutoResetEvent(false);
+                RawInputThread = new Thread(RawInputThreadFunc);
+                RawInputThread.Name = "OpenTK Raw Input Thread";
+                RawInputThread.IsBackground = true;
+                RawInputThread.Start();
+
+                if (WaitHandle.WaitAny([RawInputThreadReadyEvent, RawInputThreadExitedEvent]) == 1)
+                {
+                    CleanupRawInputThread();
+                    Logger?.LogError("Could not enable raw input handling.");
+                }
+            }
+            else
+            {
+                CleanupRawInputThread();
+            }
+
+            void CleanupRawInputThread()
+            {
+                RawInputThreadShouldExitEvent?.Set();
+                RawInputThread?.Join(200);
+                RawInputThread = null;
+                RawInputThreadShouldExitEvent?.Dispose();
+                RawInputThreadShouldExitEvent = null;
+                RawInputThreadReadyEvent?.Dispose();
+                RawInputThreadReadyEvent = null;
+                RawInputThreadExitedEvent?.Dispose();
+                RawInputThreadExitedEvent = null;
+            }
+        }
+
+        private void RawInputThreadFunc()
+        {
+            Logger?.LogDebug("Starting raw input thread.");
+
+            IntPtr window = Win32.CreateWindowEx(0, "Message", null, 0, 0, 0, 0, 0, HelperHWnd, 0, 0, 0);
+            if (window == 0)
+            {
+                RawInputThreadExitedEvent!.Set();
+                throw new Win32Exception();
+            }
+
+            Win32.RAWINPUTDEVICE device;
+            device.usUsagePage = HIDUsagePage.Generic;
+            device.usUsage = (ushort)HIDUsageGeneric.Mouse;
+            // FIXME: InputSink? ExInputSink?
+            device.dwFlags = 0;
+            device.hwndTarget = window;
+
+            bool success = Win32.RegisterRawInputDevices(device, 1, (uint)Marshal.SizeOf<Win32.RAWINPUTDEVICE>());
+            if (success == false)
+            {
+                int registerError = Marshal.GetLastWin32Error();
+                Win32.DestroyWindow(window);
+                RawInputThreadExitedEvent!.Set();
+                throw new Win32Exception(registerError);
+            }
+
+            RawInputThreadReadyEvent!.Set();
+
+            while (true)
+            {
+                var res = Win32.MsgWaitForMultipleObjects(1, [RawInputThreadShouldExitEvent!.SafeWaitHandle.DangerousGetHandle()], false, Win32.INFINITE, QS.RawInput);
+                if (res != Win32.WAIT_OBJECT_0 + 1)
+                {
+                    Logger?.LogDebug($"MsgWaitForMultipleObjects returned {res}");
+                    break;
+                }
+
+                // Clear RawInput queue status
+                Win32.GetQueueStatus(QS.RawInput);
+
+                // Read raw input data
+                RawInputThread_ProcessRawInput();
+            }
+
+            device.dwFlags |= RIDEV.Remove;
+            Win32.RegisterRawInputDevices(device, 1, (uint)Marshal.SizeOf<Win32.RAWINPUTDEVICE>());
+            Win32.DestroyWindow(window);
+
+            Logger?.LogDebug("Exit raw input thread.");
+            RawInputThreadExitedEvent!.Set();
+        }
+
+        private unsafe void RawInputThread_ProcessRawInput()
+        {
+            const uint RAWINPUT_BUFFER_SIZE_INCREMENT = 96;
+
+            if (RawInputBuffer == null)
+            {
+                RawInputBuffer = (Win32.RAWINPUT*)NativeMemory.AlignedAlloc(0, sizeof(uint));
+                RawInputBufferSize = 0;
+            }
+
+            // FIXME: Handle WOW64 header size correctly!
+            uint rawInputHeaderSize = (uint)Marshal.SizeOf<Win32.RAWINPUTHEADER>();
+
+            Win32.RAWINPUT* input = RawInputBuffer;
+            uint totalNumberOfEvents = 0;
+            while (true)
+            {
+                uint availableLength = RawInputBufferSize - (uint)((byte*)input - (byte*)RawInputBuffer);
+                uint elementsRead = Win32.GetRawInputBuffer(input, ref availableLength, rawInputHeaderSize);
+                if (elementsRead == 0)
+                {
+                    break;
+                }
+                else if (elementsRead == unchecked((uint)-1))
+                {
+                    int error = Marshal.GetLastWin32Error();
+                    if (error == Win32.ERROR_INSUFFICIENT_BUFFER)
+                    {
+                        byte* newInput = (byte*)NativeMemory.AlignedRealloc(RawInputBuffer, RawInputBufferSize + RAWINPUT_BUFFER_SIZE_INCREMENT, sizeof(uint));
+                        input = (Win32.RAWINPUT*)(newInput + ((byte*)input - (byte*)RawInputBuffer));
+                        RawInputBuffer = (Win32.RAWINPUT*)newInput;
+                        RawInputBufferSize += RAWINPUT_BUFFER_SIZE_INCREMENT;
+                        Logger?.LogDebug($"Resized raw input buffer {RawInputBufferSize}");
+                    }
+                    else
+                    {
+                        // FIXME: Leaking the RawInputThread window and not properly setting the RawInputThreadExitedEvent event.
+                        Logger?.LogError(new Win32Exception(error).ToString());
+                        break;
+                    }
+                }
+                else
+                {
+                    totalNumberOfEvents += elementsRead;
+                    for (uint i = 0; i < elementsRead; i++)
+                    {
+                        // FIXME: Use the same thing that the NEXTRAWINPUTBLOCK() macro does.
+                        input = Win32.NEXTRAWINPUTBLOCK(input);
+                    }
+                }
+            }
+
+            input = RawInputBuffer;
+            for (int i = 0; i < totalNumberOfEvents; i++, input = Win32.NEXTRAWINPUTBLOCK(input))
+            {
+                ref Win32.RAWINPUT rawInput = ref *input;
+                if (rawInput.header.dwType == RIM.TypeMouse)
+                {
+                    ref Win32.RAWMOUSE rawMouse = ref rawInput.data.mouse;
+                    if (rawMouse.usFlags == RawMouseFlags.MoveRelative)
+                    {
+                        if (rawMouse.lLastX != 0 || rawMouse.lLastY != 0)
+                        {
+                            // FIXME: This doesn't wake the main thread if it's waiting on events...
+                            // For now we don't disable legacy mouse events so this is fine,
+                            // but eventually we might and then this will matter.
+                            // - Noggin_bops 2026-04-01
+                            if (RawMouseInputQueue.Enqueue((rawMouse.lLastX, rawMouse.lLastY)))
+                            {
+                                Logger?.LogDebug("Raw mouse input events overflow. This means that event processing is not keeping up with mouse events.");
+                            }
+                        }
+                    }
+                    else
+                    {
+                        // FIXME: We don't want to spam this for every WM_INPUT message...
+                        Logger?.LogError("MOUSE_MOVE_ABSOLUTE not supported yet. This might happen when using remote desktop. Open an issue on the OpenTK github if this happens to you.");
+                    }
+                }
+            }
+        }
+
         /// <inheritdoc/>
         public void ProcessEvents(bool waitForEvents)
         {
-            if (waitForEvents)
+            uint target_time = Win32.GetTickCount() + 1;
+
+            int events = 0;
+            int rawMouseEvents = 0;
+            while (RawMouseInputQueue.TryDequeue(out Vector2 delta))
             {
-                // Wait for one message then we go into the PeekMessage loop.
-                int ret = Win32.GetMessage(out Win32.MSG lpMsg, IntPtr.Zero, 0, 0);
-                Win32.TranslateMessage(in lpMsg);
-                Win32.DispatchMessage(in lpMsg);
+                Toolkit.Event.RaiseEvent(new RawMouseMoveEventArgs(delta));
+                rawMouseEvents++;
             }
 
+            if (waitForEvents)
+            {
+                // Wait for one message to arrive, then translate/dispatch it.
+                Win32.GetMessage(out Win32.MSG lpMsg, IntPtr.Zero, 0, 0);
+                Win32.TranslateMessage(in lpMsg);
+                Win32.DispatchMessage(in lpMsg);
+                events++;
+            }
+
+            
             while (Win32.PeekMessage(out Win32.MSG lpMsg, IntPtr.Zero, 0, 0, PM.Remove))
             {
                 Win32.TranslateMessage(in lpMsg);
                 Win32.DispatchMessage(in lpMsg);
-            }
+                events++;
 
+                if ((int)(target_time - lpMsg.time) <= 0)
+                {
+                    break;
+                }
+
+                if (MaxWindowMessagesPerFrame > 0 && events >= MaxWindowMessagesPerFrame)
+                {
+                    break;
+                }
+            }
+            
             if (CursorCapturingWindow != null && CursorCapturingWindow.CaptureMode == CursorCaptureMode.Locked)
             {
                 GetClientSize(CursorCapturingWindow, out Vector2i size);
@@ -1106,14 +1412,76 @@ namespace OpenTK.Platform.Native.Windows
 
                     bool success = Win32.SetCursorPos(p.X, p.Y);
                     if (success == false)
+                        throw new Win32Exception();
+
+                    CursorCapturingWindow.LastMousePosition = (size.X / 2, size.Y / 2);
+                }
+            }
+
+            if (RegistryMouseSettingsChangedEvent != 0)
+            {
+                WaitResult waitResult = Win32.WaitForSingleObject(RegistryMouseSettingsChangedEvent, 0);
+                if (waitResult == WaitResult.Object0)
+                {
+                    bool success = Win32.ResetEvent(RegistryMouseSettingsChangedEvent);
+                    if (success == false)
                     {
                         throw new Win32Exception();
                     }
 
-                    // Set the last mouse position to the position we are moving to
-                    // to avoid generating a mouse move event.
-                    CursorCapturingWindow.LastMousePosition = (size.X / 2, size.Y / 2);
+    #pragma warning disable CA1416 // Validate platform compatibility
+                    int result = Win32.RegNotifyChangeKeyValue(MouseSettingsRegistryKey!.Handle.DangerousGetHandle(), false, RegNotifyChange.LastSet, RegistryMouseSettingsChangedEvent, true);
+                    if (result != Win32.ERROR_SUCCESS)
+                    {
+                        throw new Win32Exception(result);
+                    }
+
+                    // We want to re-read all of the settings.
+                    ulong doubleClickInterval = Win32.GetDoubleClickTime();
+                    float? doubleClickWidth = null;
+                    float? doubleClickHeight = null;
+
+                    if (MouseSettingsRegistryKey.GetValue("DoubleClickWidth") is string widthStr &&
+                    int.TryParse(widthStr, out int widthPx))
+                    {
+                        // FIXME: Convert to client space coordinates instead of pixels...
+                        doubleClickWidth = widthPx;
+                    }
+                    if (MouseSettingsRegistryKey.GetValue("DoubleClickHeight") is string heightStr &&
+                        int.TryParse(heightStr, out int heightPx))
+                    {
+                        // FIXME: Convert to client space coordinates instead of pixels...
+                        doubleClickHeight = heightPx;
+                    }
+    #pragma warning restore CA1416 // Validate platform compatibility
+
+                    Logger?.LogDebug($"New double click settings: Interval: {doubleClickInterval}, Width: {doubleClickWidth}, Height: {doubleClickHeight}");
+                    foreach (var (_, hwnd) in HWndDict)
+                    {
+                        hwnd.ClickCounter.DoubleClickInfo.Interval = doubleClickInterval;
+                        if (doubleClickWidth != null)
+                            hwnd.ClickCounter.DoubleClickInfo.Distance.X = doubleClickWidth.Value;
+                        if (doubleClickHeight != null)
+                            hwnd.ClickCounter.DoubleClickInfo.Distance.Y = doubleClickHeight.Value;
+                    }
                 }
+                else if (waitResult == WaitResult.Failed)
+                {
+                    throw new Win32Exception();
+                }
+            }
+
+            (Toolkit.Joystick as JoystickComponent)?.Update();
+        }
+
+        /// <inheritdoc/>
+        public void PostUserEvent(EventArgs @event)
+        {
+            GCHandle handle = GCHandle.Alloc(@event, GCHandleType.Normal);
+            bool success = Win32.PostMessage(HelperHWnd, (WM)OpenTKUserEventMessage, 0, (IntPtr)handle);
+            if (success == false)
+            {
+                throw new Win32Exception();
             }
         }
 
@@ -1142,6 +1510,13 @@ namespace OpenTK.Platform.Native.Windows
             // We accept drag and drop operations.
             Win32.DragAcceptFiles(hWnd, true);
 
+            // Make sure we receive the task button created message.
+            bool success = Win32.ChangeWindowMessageFilterEx(hWnd, TaskbarButtonCreatedMessage, MSGFLT.Allow, IntPtr.Zero);
+            if (success == false)
+            {
+                throw new Win32Exception();
+            }
+
             // FIXME: Set HWND.WindowState!
             HWND hwnd = new HWND(hWnd, hints);
 
@@ -1150,6 +1525,29 @@ namespace OpenTK.Platform.Native.Windows
             hcursor.Cursor = Win32.LoadImage(IntPtr.Zero, OCR.Normal, ImageType.Cursor, 0, 0, LR.Shared | LR.DefaultSize);
             hcursor.Mode = HCursor.CursorMode.SystemCursor;
             SetCursor(hwnd, hcursor);
+
+            hwnd.ClickCounter.DoubleClickInfo.Interval = Win32.GetDoubleClickTime();
+#pragma warning disable CA1416 // Validate platform compatibility
+            if (MouseSettingsRegistryKey != null)
+            {
+                if (MouseSettingsRegistryKey.GetValue("DoubleClickWidth") is string widthStr &&
+                int.TryParse(widthStr, out int widthPx))
+                {
+                    // FIXME: Convert to client space coordinates instead of pixels...
+                    hwnd.ClickCounter.DoubleClickInfo.Distance.X = widthPx;
+                }
+                if (MouseSettingsRegistryKey.GetValue("DoubleClickHeight") is string heightStr &&
+                    int.TryParse(heightStr, out int heightPx))
+                {
+                    // FIXME: Convert to client space coordinates instead of pixels...
+                    hwnd.ClickCounter.DoubleClickInfo.Distance.Y = heightPx;
+                }
+            }
+            else
+            {
+                Logger?.LogWarning("Could not open the 'Computer\\HKEY_CURRENT_USER\\Control Panel\\Mouse' registry key. Can't get user configured double click settings, will use defaults.");
+            }
+#pragma warning restore CA1416 // Validate platform compatibility
 
             HWndDict.Add(hwnd.HWnd, hwnd);
 
@@ -1164,6 +1562,12 @@ namespace OpenTK.Platform.Native.Windows
             if (CursorCapturingWindow == hwnd)
             {
                 SetCursorCaptureMode(hwnd, CursorCaptureMode.Normal);
+            }
+
+            if (hwnd.RawMouseMotionEnabled)
+            {
+                EnableRawInput(false);
+                hwnd.RawMouseMotionEnabled = false;
             }
 
             if (hwnd.FullscreenMonitor != null)
@@ -1643,7 +2047,19 @@ namespace OpenTK.Platform.Native.Windows
                     SetBorderStyle(hwnd, hwnd.PreviousBorderStyle);
                 }
             }
-            
+
+            // Going from a hidden state to fullscreen directly does not work unless we first
+            // make the window visible. See: https://github.com/opentk/opentk/issues/1799
+            // - Noggin_bops 2025-02-18
+            if (mode == WindowMode.WindowedFullscreen || mode == WindowMode.ExclusiveFullscreen)
+            {
+                WindowStyles style = (WindowStyles)Win32.GetWindowLongPtr(hwnd.HWnd, GetGWLPIndex.Style).ToInt64();
+                if (style.HasFlag(WindowStyles.Visible) == false)
+                {
+                    Win32.ShowWindow(hwnd.HWnd, ShowWindowCommands.ShowNA);
+                }
+            }
+
             // FIXME: Handle ShowWindowCommands.ShowMinimized?
             switch (mode)
             {
@@ -1738,8 +2154,14 @@ namespace OpenTK.Platform.Native.Windows
                 devmode.dmFields = DM.PelsWidth | DM.PelsHeight | DM.BitsPerPel | DM.DisplayFrequency;
                 devmode.dmPelsWidth = (uint)videoMode.Width;
                 devmode.dmPelsHeight = (uint)videoMode.Height;
-                devmode.dmDisplayFrequency = (uint)videoMode.RefreshRate;
+                // Windows deals with refresh rates as both integers and rationals.
+                // So windows might use the integer refresh rate 60 Hz, while the rational value migth be 59.94 Hz.
+                // If we just cast here we would send 59 Hz which would cause an error to occur.
+                // Instead we round the value to the nearest integer, that way we hopefully avoid this issue.
+                // - Noggin_bops 2025-08-27
+                devmode.dmDisplayFrequency = (uint)float.Round(videoMode.RefreshRate);
                 devmode.dmBitsPerPel = (uint)videoMode.BitsPerPixel;
+                devmode.dmDriverExtra = 0;
 
                 DispChange result = Win32.ChangeDisplaySettingsExW(hmonitor.AdapterName, ref devmode, IntPtr.Zero, CDS.Fullscreen, IntPtr.Zero);
                 if (result != DispChange.Successful)
@@ -1761,7 +2183,7 @@ namespace OpenTK.Platform.Native.Windows
                 hwnd.FullscreenMonitor = hmonitor;
                 hwnd.ExclusiveFullscreen = true;
                 hwnd.PreviousBorderStyle = GetBorderStyle(hwnd);
-                
+
                 // FIXME: check if we need to remove the window decorations.
                 WindowStyles style = (WindowStyles)(uint)Win32.GetWindowLongPtr(hwnd.HWnd, GetGWLPIndex.Style);
                 Win32.SetWindowLongPtr(hwnd.HWnd, SetGWLPIndex.Style, new IntPtr((int)(style & ~WindowStyles.OverlappedWindow)));
@@ -1847,7 +2269,7 @@ namespace OpenTK.Platform.Native.Windows
         };
 
         /// <inheritdoc/>
-        public unsafe void SetBorderStyle(WindowHandle handle, WindowBorderStyle style)
+        public void SetBorderStyle(WindowHandle handle, WindowBorderStyle style)
         {
             HWND hwnd = handle.As<HWND>(this);
 
@@ -1895,7 +2317,117 @@ namespace OpenTK.Platform.Native.Windows
                     throw new InvalidEnumArgumentException(nameof(style), (int)style, style.GetType());
             }
 
-            Win32.SetWindowPos(hwnd.HWnd, IntPtr.Zero, 0, 0, 0, 0, SetWindowPosFlags.NoMove | SetWindowPosFlags.NoSize | SetWindowPosFlags.NoZOrder | SetWindowPosFlags.FrameChanged);
+            Win32.SetWindowPos(hwnd.HWnd, IntPtr.Zero, 0, 0, 0, 0, SetWindowPosFlags.NoMove | SetWindowPosFlags.NoSize | SetWindowPosFlags.NoZOrder | SetWindowPosFlags.NoOwnerZOrder | SetWindowPosFlags.NoActivate | SetWindowPosFlags.FrameChanged);
+        }
+
+        /// <inheritdoc/>
+        public bool SupportsFramebufferTransparency(WindowHandle handle)
+        {
+            HWND hwnd = handle.As<HWND>(this);
+            return true;
+        }
+
+        /// <inheritdoc/>
+        public void SetTransparencyMode(WindowHandle handle, WindowTransparencyMode transparencyMode, float opacity = 0.5f)
+        {
+            HWND hwnd = handle.As<HWND>(this);
+
+            WindowStylesEx exStyle = (WindowStylesEx)Win32.GetWindowLongPtr(hwnd.HWnd, GetGWLPIndex.ExStyle).ToInt64();
+            if (transparencyMode != WindowTransparencyMode.TransparentWindow && exStyle.HasFlag(WindowStylesEx.Layered))
+            {
+                // Disable opacity
+                Win32.SetLayeredWindowAttributes(hwnd.HWnd, 0, 0, 0);
+                exStyle &= ~WindowStylesEx.Layered;
+                Win32.SetWindowLongPtr(hwnd.HWnd, SetGWLPIndex.ExStyle, new IntPtr((int)exStyle));
+            }
+
+            switch (transparencyMode)
+            {
+                case WindowTransparencyMode.Opaque:
+                    {
+                        if (Win32.DwmIsCompositionEnabled(out bool dwmEnabled) != Win32.S_OK || dwmEnabled == false)
+                        {
+                            return;
+                        }
+
+                        Win32.DWM_BLURBEHIND bb = default;
+                        bb.dwFlags = DWMBB.Enable;
+                        bb.fEnable = 0;
+                        Win32.DwmEnableBlurBehindWindow(hwnd.HWnd, in bb);
+                        hwnd.FramebufferTransparencyEnabled = false;
+                        break;
+                    }
+                case WindowTransparencyMode.TransparentFramebuffer:
+                    {
+                        if (Win32.DwmIsCompositionEnabled(out bool dwmEnabled) != Win32.S_OK || dwmEnabled == false)
+                        {
+                            return;
+                        }
+
+                        if (Win32.DwmGetColorizationColor(out uint color, out bool opaqueBlend) == Win32.S_OK && opaqueBlend == false)
+                        {
+                            Logger?.LogWarning("DwmGetColorizationColor: Opaque blend active. Transparent framebuffer might not work. Please report this as an OpenTK bug if you see this.");
+                        }
+
+                        // Since windows 8 there is no blur effect any more.
+                        // Instead the blur darkens the blur area.
+                        // So we want to create an empty blur area so we
+                        // can get a completely transparent window.
+                        // - Noggin_bops 2024-10-31
+                        IntPtr region = Win32.CreateRectRgn(0, 0, -1, -1);
+                        Win32.DWM_BLURBEHIND bb = default;
+                        bb.dwFlags = DWMBB.Enable | DWMBB.BlurRegion;
+                        bb.fEnable = 1;
+                        bb.hRgnBlur = region;
+                        Win32.DwmEnableBlurBehindWindow(hwnd.HWnd, in bb);
+                        Win32.DeleteObject(region);
+                        hwnd.FramebufferTransparencyEnabled = true;
+                        break;
+                    }
+                case WindowTransparencyMode.TransparentWindow:
+                    {
+                        opacity = float.Clamp(opacity, 0, 1);
+
+                        // The documentation for WS_EX_LAYERED says it can't be combined with
+                        // CS_OWNDC but there are plenty of examples online where people are
+                        // using that combination so I think we'll be fine.
+                        // - Noggin_bops 2024-10-31
+                        exStyle |= WindowStylesEx.Layered;
+                        Win32.SetWindowLongPtr(hwnd.HWnd, SetGWLPIndex.ExStyle, new IntPtr((int)exStyle));
+                        Win32.SetLayeredWindowAttributes(hwnd.HWnd, 0, (byte)(opacity * 255), LWA.Alpha);
+                        hwnd.FramebufferTransparencyEnabled = false;
+                        break;
+                    }
+                default:
+                    throw new InvalidEnumArgumentException(nameof(transparencyMode), (int)transparencyMode, transparencyMode.GetType());
+            }
+        }
+
+        /// <inheritdoc/>
+        public WindowTransparencyMode GetTransparencyMode(WindowHandle handle, out float opacity)
+        {
+            HWND hwnd = handle.As<HWND>(this);
+
+            WindowStylesEx exStyle = (WindowStylesEx)Win32.GetWindowLongPtr(hwnd.HWnd, GetGWLPIndex.ExStyle).ToInt64();
+            if (exStyle.HasFlag(WindowStylesEx.Layered))
+            {
+                // FIXME: Maybe check the LWA to see if we are actually applying alpha?
+                Win32.GetLayeredWindowAttributes(hwnd.HWnd, out _, out byte alpha, out LWA flags);
+                opacity = alpha / 255.0f;
+                return WindowTransparencyMode.TransparentWindow;
+            }
+
+            opacity = 0.0f;
+
+            // FIXME: Because there seems to be no way to detect if blur behind is enabled or not
+            // we resort to storing a bool on the window handle itself.
+            // - Noggin_bops 2024-10-31
+            if (hwnd.FramebufferTransparencyEnabled)
+            {
+                return WindowTransparencyMode.TransparentFramebuffer;
+            }
+
+            return WindowTransparencyMode.Opaque;
         }
 
         /// <inheritdoc/>
@@ -2141,6 +2673,13 @@ namespace OpenTK.Platform.Native.Windows
             float scale = dpi / (float)Win32.USER_DEFAULT_SCREEN_DPI;
             scaleX = scale;
             scaleY = scale;
+        }
+
+        /// <inheritdoc/>
+        public OpenGLContextHandle? GetOpenGLContext(WindowHandle handle)
+        {
+            HWND hwnd = handle.As<HWND>(this);
+            return hwnd.OpenGLContextHandle;
         }
 
         /// <summary>

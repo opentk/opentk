@@ -67,6 +67,12 @@ namespace OpenTK.Platform
         /// </summary>
         public bool sRGBFramebuffer { get; set; } = false;
 
+        // FIXME: Better documentation...
+        /// <summary>
+        /// Makes the backbuffer support left and right buffers.
+        /// </summary>
+        public bool Stereo { get; set; } = false;
+
         /// <summary>
         /// The pixel format of the context.
         /// This differentiates between "normal" fixed point LDR formats
@@ -141,14 +147,33 @@ namespace OpenTK.Platform
 
         /// <summary>
         /// A callback that can be used to select appropriate backbuffer values.
+        /// Defaults to <see cref="ContextValues.DefaultValuesSelector(System.Collections.Generic.IReadOnlyList{ContextValues}, ContextValues, Core.Utility.ILogger?)"/>.
         /// </summary>
+        /// <remarks>
+        /// By default on macOS this selector is not used due to slow performance,
+        /// see <see cref="UseSelectorOnMacOS"/> to enable the selector on macOS.
+        /// </remarks>
+        /// <seealso cref="UseSelectorOnMacOS"/>
+        /// <seealso cref="ContextValues.DefaultValuesSelector(System.Collections.Generic.IReadOnlyList{ContextValues}, ContextValues, Core.Utility.ILogger?)"/>
         public ContextValueSelector Selector { get; set; } = ContextValues.DefaultValuesSelector;
 
         /// <summary>
         /// Enumerating <see cref="ContextValues"/> on macOS is slow, so by default <see cref="Selector"/> is not used on macOS.
         /// When this property is <c>false</c> the default platform selection of context values are used, which tries to find a closest match.
         /// </summary>
+        /// <seealso cref="Selector"/>
+        /// <seealso cref="ContextValueSelector"/>
         public bool UseSelectorOnMacOS { get; set; } = false;
+
+        /// <summary>
+        /// If the requested <see cref="ContextValues"/> should have <see cref="ContextValues.SupportsFramebufferTransparency"/> set to <see langword="true"/>.
+        /// This only matters on Linux/X11 as other platforms always support framebuffer transparency.
+        /// </summary>
+        /// <seealso cref="ContextValues.SupportsFramebufferTransparency"/>
+        /// <seealso cref="IWindowComponent.SupportsFramebufferTransparency(WindowHandle)"/>
+        /// <seealso cref="IWindowComponent.SetTransparencyMode(WindowHandle, WindowTransparencyMode, float)"/>
+        /// <seealso cref="IWindowComponent.GetTransparencyMode(WindowHandle, out float)"/>
+        public bool SupportTransparentFramebufferX11 { get; set; } = true;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="OpenGLGraphicsApiHints"/> class.

@@ -22,6 +22,7 @@ SOFTWARE.
 
 using System;
 using System.Diagnostics.Contracts;
+using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Runtime.Intrinsics;
@@ -34,7 +35,22 @@ namespace OpenTK.Mathematics
     /// </summary>
     [Serializable]
     [StructLayout(LayoutKind.Sequential)]
-    public struct Vector2d : IEquatable<Vector2d>, IFormattable
+    public struct Vector2d : IEquatable<Vector2d>, IFormattable,
+                            IAdditionOperators<Vector2d, Vector2d, Vector2d>,
+                            ISubtractionOperators<Vector2d, Vector2d, Vector2d>,
+                            IUnaryNegationOperators<Vector2d, Vector2d>,
+                            IUnaryPlusOperators<Vector2d, Vector2d>,
+                            IMultiplyOperators<Vector2d, double, Vector2d>,
+                            IMultiplyOperators<Vector2d, Vector2d, Vector2d>,
+                            IMultiplyOperators<Vector2d, Matrix2d, Vector2d>,
+                            IMultiplyOperators<Vector2d, Matrix2x3d, Vector3d>,
+                            IMultiplyOperators<Vector2d, Matrix2x4d, Vector4d>,
+                            IDivisionOperators<Vector2d, double, Vector2d>,
+                            IDivisionOperators<Vector2d, Vector2d, Vector2d>,
+                            IEqualityOperators<Vector2d, Vector2d, bool>,
+                            IAdditiveIdentity<Vector2d, Vector2d>,
+                            IMultiplicativeIdentity<Vector2d, Vector2d>,
+                            IMinMaxValue<Vector2d>
     {
         /// <summary>
         /// The X coordinate of this instance.
@@ -111,34 +127,30 @@ namespace OpenTK.Mathematics
         {
             readonly get
             {
-                if (index == 0)
+                if (((uint)index) >= 2)
                 {
-                    return X;
+                    MathHelper.ThrowOutOfRangeException("You tried to access this vector at index: {0}", index);
                 }
 
-                if (index == 1)
-                {
-                    return Y;
-                }
-
-                throw new IndexOutOfRangeException("You tried to access this vector at index: " + index);
+                return GetElementUnsafe(in this, index);
             }
 
             set
             {
-                if (index == 0)
+                if (((uint)index) >= 2)
                 {
-                    X = value;
+                    MathHelper.ThrowOutOfRangeException("You tried to set this vector at index: {0}", index);
                 }
-                else if (index == 1)
-                {
-                    Y = value;
-                }
-                else
-                {
-                    throw new IndexOutOfRangeException("You tried to set this vector at index: " + index);
-                }
+
+                GetElementUnsafe(in this, index) = value;
             }
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static ref double GetElementUnsafe(in Vector2d v, int index)
+        {
+            ref double address = ref Unsafe.AsRef(in v.X);
+            return ref Unsafe.Add(ref address, index);
         }
 
         /// <summary>
@@ -181,6 +193,26 @@ namespace OpenTK.Mathematics
         /// Gets the perpendicular vector on the left side of this vector.
         /// </summary>
         public readonly Vector2d PerpendicularLeft => new Vector2d(-Y, X);
+
+        /// <summary>
+        /// Gets the additive identity of Vector2. Equivalent to Vector2.Zero.
+        /// </summary>
+        public static Vector2d AdditiveIdentity => Zero;
+
+        /// <summary>
+        /// Gets the multiplicative identity of Vector2d. Equivalent to Vector2d.One.
+        /// </summary>
+        public static Vector2d MultiplicativeIdentity => One;
+
+        /// <summary>
+        /// Gets the max value for Vector2d. Equivalent to Vector2d.PositiveInfinity.
+        /// </summary>
+        public static Vector2d MaxValue => PositiveInfinity;
+
+        /// <summary>
+        /// Gets the min value for Vector2d. Equivalent to Vector2d.NegativeInfinity.
+        /// </summary>
+        public static Vector2d MinValue => NegativeInfinity;
 
         /// <summary>
         /// Returns a copy of the Vector2d scaled to unit length.
@@ -226,6 +258,57 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
+        /// Returns a new vector were component-wise rounding has been applied.
+        /// Equivalent to calling <see cref="Math.Round(double)"/> on each component.
+        /// </summary>
+        /// <returns>The rounded vector.</returns>
+        public readonly Vector2d Round()
+        {
+            return Round(this);
+        }
+
+        /// <summary>
+        /// Returns a new vector were component-wise rounding has been applied with the specified midpoint rounding rule.
+        /// Equivalent to calling <see cref="Math.Round(double,MidpointRounding)"/> on each component.
+        /// </summary>
+        /// <param name="rounding">The midpoint rounding rule to use.</param>
+        /// <returns>The rounded vector.</returns>
+        public readonly Vector2d Round(MidpointRounding rounding)
+        {
+            return Round(this, rounding);
+        }
+
+        /// <summary>
+        /// Returns a new vector were a component-wise ceiling operation has been applied.
+        /// Equivalent to calling <see cref="Math.Ceiling(double)"/> on each component.
+        /// </summary>
+        /// <returns>The ceiled vector.</returns>
+        public readonly Vector2d Ceiling()
+        {
+            return Ceiling(this);
+        }
+
+        /// <summary>
+        /// Returns a new vector were a component-wise floor operation has been applied.
+        /// Equivalent to calling <see cref="Math.Floor(double)"/> on each component.
+        /// </summary>
+        /// <returns>The floored vector.</returns>
+        public readonly Vector2d Floor()
+        {
+            return Floor(this);
+        }
+
+        /// <summary>
+        /// Returns a new vector were component-wise truncation has been applied.
+        /// Equivalent to calling <see cref="Math.Truncate(double)"/> on each component.
+        /// </summary>
+        /// <returns>The truncated vector.</returns>
+        public readonly Vector2d Truncate()
+        {
+            return Truncate(this);
+        }
+
+        /// <summary>
         /// Adds two vectors.
         /// </summary>
         /// <param name="a">Left operand.</param>
@@ -255,7 +338,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <param name="a">First operand.</param>
         /// <param name="b">Second operand.</param>
-        /// <returns>Result of subtraction.</returns>
+        /// <returns>Result of the subtraction.</returns>
         [Pure]
         public static Vector2d Subtract(Vector2d a, Vector2d b)
         {
@@ -377,54 +460,182 @@ namespace OpenTK.Mathematics
 
         /// <summary>
         /// Returns a vector created from the smallest of the corresponding components of the given vectors.
+        /// Any NaN inputs are propagated.
         /// </summary>
         /// <param name="a">First operand.</param>
         /// <param name="b">Second operand.</param>
         /// <returns>The component-wise minimum.</returns>
         [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector2d ComponentMin(Vector2d a, Vector2d b)
         {
-            a.X = a.X < b.X ? a.X : b.X;
-            a.Y = a.Y < b.Y ? a.Y : b.Y;
-            return a;
+            return new Vector2d(
+                double.Min(a.X, b.X),
+                double.Min(a.Y, b.Y));
         }
 
         /// <summary>
         /// Returns a vector created from the smallest of the corresponding components of the given vectors.
+        /// Any NaN inputs are propagated.
         /// </summary>
         /// <param name="a">First operand.</param>
         /// <param name="b">Second operand.</param>
         /// <param name="result">The component-wise minimum.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void ComponentMin(in Vector2d a, in Vector2d b, out Vector2d result)
         {
-            result.X = a.X < b.X ? a.X : b.X;
-            result.Y = a.Y < b.Y ? a.Y : b.Y;
+            result.X = double.Min(a.X, b.X);
+            result.Y = double.Min(a.Y, b.Y);
+        }
+
+        /// <summary>
+        /// Returns a vector created from the smallest of the corresponding components of the given vectors.
+        /// If one of the two components are NaN the other component is returned.
+        /// </summary>
+        /// <param name="a">First operand.</param>
+        /// <param name="b">Second operand.</param>
+        /// <returns>The component-wise minimum.</returns>
+        [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Vector2d ComponentMinNumber(Vector2d a, Vector2d b)
+        {
+            return new Vector2d(
+                double.MinNumber(a.X, b.X),
+                double.MinNumber(a.Y, b.Y));
+        }
+
+        /// <summary>
+        /// Returns a vector created from the smallest of the corresponding components of the given vectors.
+        /// If one of the two components are NaN the other component is returned.
+        /// </summary>
+        /// <param name="a">First operand.</param>
+        /// <param name="b">Second operand.</param>
+        /// <param name="result">The component-wise minimum.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void ComponentMinNumber(in Vector2d a, in Vector2d b, out Vector2d result)
+        {
+            result.X = double.MinNumber(a.X, b.X);
+            result.Y = double.MinNumber(a.Y, b.Y);
+        }
+
+        /// <summary>
+        /// Returns a vector created from the smallest of the corresponding components of the given vectors.
+        /// What happens when the input component is NaN or -0 is platform dependent.
+        /// </summary>
+        /// <param name="a">First operand.</param>
+        /// <param name="b">Second operand.</param>
+        /// <returns>The component-wise minimum.</returns>
+        [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Vector2d ComponentMinNative(Vector2d a, Vector2d b)
+        {
+            return new Vector2d(
+                double.MinNative(a.X, b.X),
+                double.MinNative(a.Y, b.Y));
+        }
+
+        /// <summary>
+        /// Returns a vector created from the smallest of the corresponding components of the given vectors.
+        /// What happens when the input component is NaN or -0 is platform dependent.
+        /// </summary>
+        /// <param name="a">First operand.</param>
+        /// <param name="b">Second operand.</param>
+        /// <param name="result">The component-wise minimum.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void ComponentMinNative(in Vector2d a, in Vector2d b, out Vector2d result)
+        {
+            result.X = double.MinNative(a.X, b.X);
+            result.Y = double.MinNative(a.Y, b.Y);
         }
 
         /// <summary>
         /// Returns a vector created from the largest of the corresponding components of the given vectors.
+        /// Any NaN inputs are propagated.
         /// </summary>
         /// <param name="a">First operand.</param>
         /// <param name="b">Second operand.</param>
-        /// <returns>The component-wise maximum.</returns>
+        /// <returns>The component-wise minimum.</returns>
         [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector2d ComponentMax(Vector2d a, Vector2d b)
         {
-            a.X = a.X > b.X ? a.X : b.X;
-            a.Y = a.Y > b.Y ? a.Y : b.Y;
-            return a;
+            return new Vector2d(
+                double.Max(a.X, b.X),
+                double.Max(a.Y, b.Y));
         }
 
         /// <summary>
         /// Returns a vector created from the largest of the corresponding components of the given vectors.
+        /// Any NaN inputs are propagated.
         /// </summary>
         /// <param name="a">First operand.</param>
         /// <param name="b">Second operand.</param>
-        /// <param name="result">The component-wise maximum.</param>
+        /// <param name="result">The component-wise minimum.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void ComponentMax(in Vector2d a, in Vector2d b, out Vector2d result)
         {
-            result.X = a.X > b.X ? a.X : b.X;
-            result.Y = a.Y > b.Y ? a.Y : b.Y;
+            result.X = double.Max(a.X, b.X);
+            result.Y = double.Max(a.Y, b.Y);
+        }
+
+        /// <summary>
+        /// Returns a vector created from the largest of the corresponding components of the given vectors.
+        /// If one of the two components are NaN the other component is returned.
+        /// </summary>
+        /// <param name="a">First operand.</param>
+        /// <param name="b">Second operand.</param>
+        /// <returns>The component-wise minimum.</returns>
+        [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Vector2d ComponentMaxNumber(Vector2d a, Vector2d b)
+        {
+            return new Vector2d(
+                double.MaxNumber(a.X, b.X),
+                double.MaxNumber(a.Y, b.Y));
+        }
+
+        /// <summary>
+        /// Returns a vector created from the largest of the corresponding components of the given vectors.
+        /// If one of the two components are NaN the other component is returned.
+        /// </summary>
+        /// <param name="a">First operand.</param>
+        /// <param name="b">Second operand.</param>
+        /// <param name="result">The component-wise minimum.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void ComponentMaxNumber(in Vector2d a, in Vector2d b, out Vector2d result)
+        {
+            result.X = double.MaxNumber(a.X, b.X);
+            result.Y = double.MaxNumber(a.Y, b.Y);
+        }
+
+        /// <summary>
+        /// Returns a vector created from the largest of the corresponding components of the given vectors.
+        /// What happens when the input component is NaN or -0 is platform dependent.
+        /// </summary>
+        /// <param name="a">First operand.</param>
+        /// <param name="b">Second operand.</param>
+        /// <returns>The component-wise minimum.</returns>
+        [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Vector2d ComponentMaxNative(Vector2d a, Vector2d b)
+        {
+            return new Vector2d(
+                double.MaxNative(a.X, b.X),
+                double.MaxNative(a.Y, b.Y));
+        }
+
+        /// <summary>
+        /// Returns a vector created from the largest of the corresponding components of the given vectors.
+        /// What happens when the input component is NaN or -0 is platform dependent.
+        /// </summary>
+        /// <param name="a">First operand.</param>
+        /// <param name="b">Second operand.</param>
+        /// <param name="result">The component-wise minimum.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void ComponentMaxNative(in Vector2d a, in Vector2d b, out Vector2d result)
+        {
+            result.X = double.MaxNative(a.X, b.X);
+            result.Y = double.MaxNative(a.Y, b.Y);
         }
 
         /// <summary>
@@ -526,6 +737,136 @@ namespace OpenTK.Mathematics
         {
             result.X = Math.Abs(vec.X);
             result.Y = Math.Abs(vec.Y);
+        }
+
+        /// <summary>
+        /// Component-wise rounding. Equivalent to calling <see cref="Math.Round(double)"/> on each component.
+        /// </summary>
+        /// <param name="vec">The vector to round.</param>
+        /// <returns>The component-wise rounded vector.</returns>
+        [Pure]
+        public static Vector2d Round(Vector2d vec)
+        {
+            vec.X = Math.Round(vec.X);
+            vec.Y = Math.Round(vec.Y);
+            return vec;
+        }
+
+        /// <summary>
+        /// Component-wise rounding. Equivalent to calling <see cref="Math.Round(double)"/> on each component.
+        /// </summary>
+        /// <param name="vec">The vector to round.</param>
+        /// <param name="result">The component-wise rounded vector.</param>
+        public static void Round(in Vector2d vec, out Vector2d result)
+        {
+            result.X = Math.Round(vec.X);
+            result.Y = Math.Round(vec.Y);
+        }
+
+        /// <summary>
+        /// Component-wise rounding with specified midpoint rounding rule.
+        /// Equivalent to calling <see cref="Math.Round(double,MidpointRounding)"/> on each component.
+        /// </summary>
+        /// <param name="vec">The vector to round.</param>
+        /// <param name="rounding">The midpoint rounding rule to use.</param>
+        /// <returns>The component-wise rounded vector.</returns>
+        [Pure]
+        public static Vector2d Round(Vector2d vec, MidpointRounding rounding)
+        {
+            vec.X = Math.Round(vec.X, rounding);
+            vec.Y = Math.Round(vec.Y, rounding);
+            return vec;
+        }
+
+        /// <summary>
+        /// Component-wise rounding with specified midpoint rounding rule.
+        /// Equivalent to calling <see cref="Math.Round(double,MidpointRounding)"/> on each component.
+        /// </summary>
+        /// <param name="vec">The vector to round.</param>
+        /// <param name="rounding">The midpoint rounding rule to use.</param>
+        /// <param name="result">The component-wise rounded vector.</param>
+        public static void Round(in Vector2d vec, MidpointRounding rounding, out Vector2d result)
+        {
+            result.X = Math.Round(vec.X, rounding);
+            result.Y = Math.Round(vec.Y, rounding);
+        }
+
+        /// <summary>
+        /// Component-wise ceiling operation.
+        /// Equivalent to calling <see cref="Math.Ceiling(double)"/> on each component.
+        /// </summary>
+        /// <param name="vec">The vector to take the ceiling of.</param>
+        /// <returns>The component-wise ceiling vector.</returns>
+        [Pure]
+        public static Vector2d Ceiling(Vector2d vec)
+        {
+            vec.X = Math.Ceiling(vec.X);
+            vec.Y = Math.Ceiling(vec.Y);
+            return vec;
+        }
+
+        /// <summary>
+        /// Component-wise ceiling operation.
+        /// Equivalent to calling <see cref="Math.Ceiling(double)"/> on each component.
+        /// </summary>
+        /// <param name="vec">The vector to take the ceiling of.</param>
+        /// <param name="result">The component-wise ceiling vector.</param>
+        public static void Ceiling(in Vector2d vec, out Vector2d result)
+        {
+            result.X = Math.Ceiling(vec.X);
+            result.Y = Math.Ceiling(vec.Y);
+        }
+
+        /// <summary>
+        /// Component-wise floor operation.
+        /// Equivalent to calling <see cref="Math.Floor(double)"/> on each component.
+        /// </summary>
+        /// <param name="vec">The vector to take the floor of.</param>
+        /// <returns>The component-wise floored vector.</returns>
+        [Pure]
+        public static Vector2d Floor(Vector2d vec)
+        {
+            vec.X = Math.Floor(vec.X);
+            vec.Y = Math.Floor(vec.Y);
+            return vec;
+        }
+
+        /// <summary>
+        /// Component-wise floor operation.
+        /// Equivalent to calling <see cref="Math.Floor(double)"/> on each component.
+        /// </summary>
+        /// <param name="vec">The vector to take the floor of.</param>
+        /// <param name="result">The component-wise floored vector.</param>
+        public static void Floor(in Vector2d vec, out Vector2d result)
+        {
+            result.X = Math.Floor(vec.X);
+            result.Y = Math.Floor(vec.Y);
+        }
+
+        /// <summary>
+        /// Component-wise truncation.
+        /// Equivalent to calling <see cref="Math.Truncate(double)"/> on each component.
+        /// </summary>
+        /// <param name="vec">The vector to truncate.</param>
+        /// <returns>The component-wise truncated vector.</returns>
+        [Pure]
+        public static Vector2d Truncate(Vector2d vec)
+        {
+            vec.X = Math.Truncate(vec.X);
+            vec.Y = Math.Truncate(vec.Y);
+            return vec;
+        }
+
+        /// <summary>
+        /// Component-wise truncation.
+        /// Equivalent to calling <see cref="Math.Truncate(double)"/> on each component.
+        /// </summary>
+        /// <param name="vec">The vector to truncate.</param>
+        /// <param name="result">The component-wise truncated vector.</param>
+        public static void Truncate(in Vector2d vec, out Vector2d result)
+        {
+            result.X = Math.Truncate(vec.X);
+            result.Y = Math.Truncate(vec.Y);
         }
 
         /// <summary>
@@ -649,6 +990,95 @@ namespace OpenTK.Mathematics
         public static void Dot(in Vector2d left, in Vector2d right, out double result)
         {
             result = (left.X * right.X) + (left.Y * right.Y);
+        }
+
+        /// <summary>
+        /// Calculate the perpendicular dot (scalar) product of two vectors.
+        /// </summary>
+        /// <param name="left">First operand.</param>
+        /// <param name="right">Second operand.</param>
+        /// <returns>The perpendicular dot product of the two inputs.</returns>
+        [Pure]
+        public static double PerpDot(Vector2d left, Vector2d right)
+        {
+            return (left.X * right.Y) - (left.Y * right.X);
+        }
+
+        /// <summary>
+        /// Calculate the perpendicular dot (scalar) product of two vectors.
+        /// </summary>
+        /// <param name="left">First operand.</param>
+        /// <param name="right">Second operand.</param>
+        /// <param name="result">The perpendicular dot product of the two inputs.</param>
+        public static void PerpDot(in Vector2d left, in Vector2d right, out double result)
+        {
+            result = (left.X * right.Y) - (left.Y * right.X);
+        }
+
+        /// <summary>
+        /// Component wise less than comparision of two vectors.
+        /// </summary>
+        /// <param name="left">The left vector.</param>
+        /// <param name="right">The right vector.</param>
+        /// <returns>A component wise boolean vector whose compoennts are true when the corresponding left component is less than the right component.</returns>
+        public static Vector2b LessThan(in Vector2d left, in Vector2d right)
+        {
+            return new Vector2b(left.X < right.X, left.Y < right.Y);
+        }
+
+        /// <summary>
+        /// Component wise less than or equal comparision of two vectors.
+        /// </summary>
+        /// <param name="left">The left vector.</param>
+        /// <param name="right">The right vector.</param>
+        /// <returns>A component wise boolean vector whose compoennts are true when the corresponding left component is less than or equal to the right component.</returns>
+        public static Vector2b LessThanOrEqual(in Vector2d left, in Vector2d right)
+        {
+            return new Vector2b(left.X <= right.X, left.Y <= right.Y);
+        }
+
+        /// <summary>
+        /// Component wise greater than comparision of two vectors.
+        /// </summary>
+        /// <param name="left">The left vector.</param>
+        /// <param name="right">The right vector.</param>
+        /// <returns>A component wise boolean vector whose compoennts are true when the corresponding left component is greater than the right component.</returns>
+        public static Vector2b GreaterThan(in Vector2d left, in Vector2d right)
+        {
+            return new Vector2b(left.X > right.X, left.Y > right.Y);
+        }
+
+        /// <summary>
+        /// Component wise greater than or equal comparision of two vectors.
+        /// </summary>
+        /// <param name="left">The left vector.</param>
+        /// <param name="right">The right vector.</param>
+        /// <returns>A component wise boolean vector whose compoennts are true when the corresponding left component is greater than or equal to the right component.</returns>
+        public static Vector2b GreaterThanOrEqual(in Vector2d left, in Vector2d right)
+        {
+            return new Vector2b(left.X >= right.X, left.Y >= right.Y);
+        }
+
+        /// <summary>
+        /// Component wise equal comparision of two vectors.
+        /// </summary>
+        /// <param name="left">The left vector.</param>
+        /// <param name="right">The right vector.</param>
+        /// <returns>A component wise boolean vector whose compoennts are true when the corresponding left component is equal to the right component.</returns>
+        public static Vector2b ComponentEqual(in Vector2d left, in Vector2d right)
+        {
+            return new Vector2b(left.X == right.X, left.Y == right.Y);
+        }
+
+        /// <summary>
+        /// Component wise not equal comparision of two vectors.
+        /// </summary>
+        /// <param name="left">The left vector.</param>
+        /// <param name="right">The right vector.</param>
+        /// <returns>A component wise boolean vector whose compoennts are true when the corresponding left component is not equal to the right component.</returns>
+        public static Vector2b ComponentNotEqual(in Vector2d left, in Vector2d right)
+        {
+            return new Vector2b(left.X != right.X, left.Y != right.Y);
         }
 
         /// <summary>
@@ -879,6 +1309,63 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
+        /// Transform a 2-dimensional vector into a 3-dimensional vector using the given 2x3 Matrix.
+        /// </summary>
+        /// <param name="vec">The vector to transform.</param>
+        /// <param name="mat">The desired transformation.</param>
+        /// <returns>The transformed vector in 3 dimensions.</returns>
+        [Pure]
+        public static Vector3d TransformThreeDimensionsRow(Vector2d vec, Matrix2x3d mat)
+        {
+            TransformThreeDimensionsRow(in vec, in mat, out Vector3d result);
+            return result;
+        }
+
+        /// <summary>
+        /// Transform a 2-dimensional vector into a 3-dimensional vector using the given 2x3 Matrix.
+        /// </summary>
+        /// <param name="vec">The vector to transform.</param>
+        /// <param name="mat">The desired transformation.</param>
+        /// <param name="result">The transformed, 3-dimensional vector.</param>
+        public static void TransformThreeDimensionsRow(in Vector2d vec, in Matrix2x3d mat, out Vector3d result)
+        {
+            result = new Vector3d(
+                (vec.X * mat.Row0.X) + (vec.Y * mat.Row1.X),
+                (vec.X * mat.Row0.Y) + (vec.Y * mat.Row1.Y),
+                (vec.X * mat.Row0.Z) + (vec.Y * mat.Row1.Z)
+            );
+        }
+
+        /// <summary>
+        /// Transform a 2-dimensional vector into a 4-dimensional vector using the given 2x4 Matrix.
+        /// </summary>
+        /// <param name="vec">The vector to transform.</param>
+        /// <param name="mat">The desired transformation.</param>
+        /// <returns>The transformed vector in 4 dimensions.</returns>
+        [Pure]
+        public static Vector4d TransformFourDimensionsRow(Vector2d vec, Matrix2x4d mat)
+        {
+            TransformFourDimensionsRow(in vec, in mat, out Vector4d result);
+            return result;
+        }
+
+        /// <summary>
+        /// Transform a 2-dimensional vector into a 4-dimensional vector using the given 2x4 Matrix.
+        /// </summary>
+        /// <param name="vec">The vector to transform.</param>
+        /// <param name="mat">The desired transformation.</param>
+        /// <param name="result">The transformed, 4-dimensional vector.</param>
+        public static void TransformFourDimensionsRow(in Vector2d vec, in Matrix2x4d mat, out Vector4d result)
+        {
+            result = new Vector4d(
+                (vec.X * mat.Row0.X) + (vec.Y * mat.Row1.X),
+                (vec.X * mat.Row0.Y) + (vec.Y * mat.Row1.Y),
+                (vec.X * mat.Row0.Z) + (vec.Y * mat.Row1.Z),
+                (vec.X * mat.Row0.W) + (vec.Y * mat.Row1.W)
+            );
+        }
+
+        /// <summary>
         /// Transforms a vector by a quaternion rotation.
         /// </summary>
         /// <param name="vec">The vector to transform.</param>
@@ -934,6 +1421,59 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
+        /// Transform a 2-dimensional vector into a 3-dimensional vector using the given 3x2 Matrix.
+        /// </summary>
+        /// <param name="mat">The desired transformation.</param>
+        /// <param name="vec">The vector to transform.</param>
+        /// <returns>The transformed vector in 3 dimensions.</returns>
+        [Pure]
+        public static Vector3d TransformThreeDimensionsColumn(Matrix3x2d mat, Vector2d vec)
+        {
+            TransformThreeDimensionsColumn(in mat, in vec, out Vector3d result);
+            return result;
+        }
+
+        /// <summary>
+        /// Transform a 2-dimensional vector into a 3-dimensional vector using the given 3x2 Matrix.
+        /// </summary>
+        /// <param name="mat">The desired transformation.</param>
+        /// <param name="vec">The vector to transform.</param>
+        /// <param name="result">The transformed, 3-dimensional vector.</param>
+        public static void TransformThreeDimensionsColumn(in Matrix3x2d mat, in Vector2d vec, out Vector3d result)
+        {
+            result.X = (mat.Row0.X * vec.X) + (mat.Row0.Y * vec.Y);
+            result.Y = (mat.Row1.X * vec.X) + (mat.Row1.Y * vec.Y);
+            result.Z = (mat.Row2.X * vec.X) + (mat.Row2.Y * vec.Y);
+        }
+
+        /// <summary>
+        /// Transform a 2-dimensional vector into a 3-dimensional vector using the given 3x2 Matrix.
+        /// </summary>
+        /// <param name="mat">The desired transformation.</param>
+        /// <param name="vec">The vector to transform.</param>
+        /// <returns>The transformed vector in 3 dimensions.</returns>
+        [Pure]
+        public static Vector4d TransformFourDimensionsColumn(Matrix4x2d mat, Vector2d vec)
+        {
+            TransformFourDimensionsColumn(in mat, in vec, out Vector4d result);
+            return result;
+        }
+
+        /// <summary>
+        /// Transform a 2-dimensional vector into a 3-dimensional vector using the given 3x2 Matrix.
+        /// </summary>
+        /// <param name="mat">The desired transformation.</param>
+        /// <param name="vec">The vector to transform.</param>
+        /// <param name="result">The transformed, 3-dimensional vector.</param>
+        public static void TransformFourDimensionsColumn(in Matrix4x2d mat, in Vector2d vec, out Vector4d result)
+        {
+            result.X = (mat.Row0.X * vec.X) + (mat.Row0.Y * vec.Y);
+            result.Y = (mat.Row1.X * vec.X) + (mat.Row1.Y * vec.Y);
+            result.Z = (mat.Row2.X * vec.X) + (mat.Row2.Y * vec.Y);
+            result.W = (mat.Row3.X * vec.X) + (mat.Row3.Y * vec.Y);
+        }
+
+        /// <summary>
         /// Gets or sets an OpenTK.Vector2d with the Y and X components of this instance.
         /// </summary>
         [XmlIgnore]
@@ -948,6 +1488,34 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
+        /// Adds a scalar to an instance.
+        /// </summary>
+        /// <param name="left">The instance.</param>
+        /// <param name="right">The scalar.</param>
+        /// <returns>The result of the operation.</returns>
+        [Pure]
+        public static Vector2d operator +(Vector2d left, double right)
+        {
+            left.X += right;
+            left.Y += right;
+            return left;
+        }
+
+        /// <summary>
+        /// Adds a scalar to an instance.
+        /// </summary>
+        /// <param name="left">The scalar.</param>
+        /// <param name="right">The instance.</param>
+        /// <returns>The result of the operation.</returns>
+        [Pure]
+        public static Vector2d operator +(double left, Vector2d right)
+        {
+            right.X += left;
+            right.Y += left;
+            return right;
+        }
+
+        /// <summary>
         /// Adds two instances.
         /// </summary>
         /// <param name="left">The left instance.</param>
@@ -959,6 +1527,34 @@ namespace OpenTK.Mathematics
             left.X += right.X;
             left.Y += right.Y;
             return left;
+        }
+
+        /// <summary>
+        /// Subtracts an instance by a scalar.
+        /// </summary>
+        /// <param name="left">The instance.</param>
+        /// <param name="right">The scalar.</param>
+        /// <returns>The result of the operation.</returns>
+        [Pure]
+        public static Vector2d operator -(Vector2d left, double right)
+        {
+            left.X -= right;
+            left.Y -= right;
+            return left;
+        }
+
+        /// <summary>
+        /// Subtracts a scalar by an instance.
+        /// </summary>
+        /// <param name="left">The scalar.</param>
+        /// <param name="right">The instance.</param>
+        /// <returns>The result of the operation.</returns>
+        [Pure]
+        public static Vector2d operator -(double left, Vector2d right)
+        {
+            right.X = left - right.X;
+            right.Y = left - right.Y;
+            return right;
         }
 
         /// <summary>
@@ -989,30 +1585,43 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
+        /// Computes the unary plus of the vector.
+        /// </summary>
+        /// <param name="vec">The instance.</param>
+        /// <returns>The result of the calculation.</returns>
+        [Pure]
+        public static Vector2d operator +(Vector2d vec)
+        {
+            vec.X = +vec.X;
+            vec.Y = +vec.Y;
+            return vec;
+        }
+
+        /// <summary>
         /// Multiplies an instance by a scalar.
         /// </summary>
         /// <param name="vec">The instance.</param>
-        /// <param name="f">The scalar.</param>
+        /// <param name="scale">The scalar.</param>
         /// <returns>The result of the operation.</returns>
         [Pure]
-        public static Vector2d operator *(Vector2d vec, double f)
+        public static Vector2d operator *(Vector2d vec, double scale)
         {
-            vec.X *= f;
-            vec.Y *= f;
+            vec.X *= scale;
+            vec.Y *= scale;
             return vec;
         }
 
         /// <summary>
         /// Multiply an instance by a scalar.
         /// </summary>
-        /// <param name="f">The scalar.</param>
+        /// <param name="scale">The scalar.</param>
         /// <param name="vec">The instance.</param>
         /// <returns>The result of the operation.</returns>
         [Pure]
-        public static Vector2d operator *(double f, Vector2d vec)
+        public static Vector2d operator *(double scale, Vector2d vec)
         {
-            vec.X *= f;
-            vec.Y *= f;
+            vec.X *= scale;
+            vec.Y *= scale;
             return vec;
         }
 
@@ -1021,7 +1630,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <param name="scale">Left operand.</param>
         /// <param name="vec">Right operand.</param>
-        /// <returns>Result of multiplication.</returns>
+        /// <returns>Result of the multiplication.</returns>
         [Pure]
         public static Vector2d operator *(Vector2d vec, Vector2d scale)
         {
@@ -1044,28 +1653,28 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Transform a Vector by the given Matrix using right-handed notation.
+        /// Transform a 2-dimensional vector into a 3-dimensional vector using the given 2x3 Matrix.
         /// </summary>
-        /// <param name="mat">The desired transformation.</param>
         /// <param name="vec">The vector to transform.</param>
+        /// <param name="mat">The desired transformation.</param>
         /// <returns>The transformed vector.</returns>
         [Pure]
-        public static Vector2d operator *(Matrix2d mat, Vector2d vec)
+        public static Vector3d operator *(Vector2d vec, Matrix2x3d mat)
         {
-            TransformColumn(in mat, in vec, out Vector2d result);
+            TransformThreeDimensionsRow(in vec, in mat, out Vector3d result);
             return result;
         }
 
         /// <summary>
-        /// Transforms a vector by a quaternion rotation.
+        /// Transform a 2-dimensional vector into a 4-dimensional vector using the given 2x4 Matrix.
         /// </summary>
-        /// <param name="quat">The quaternion to rotate the vector by.</param>
         /// <param name="vec">The vector to transform.</param>
+        /// <param name="mat">The desired transformation.</param>
         /// <returns>The transformed vector.</returns>
         [Pure]
-        public static Vector2d operator *(Quaterniond quat, Vector2d vec)
+        public static Vector4d operator *(Vector2d vec, Matrix2x4d mat)
         {
-            Transform(in vec, in quat, out Vector2d result);
+            TransformFourDimensionsRow(in vec, in mat, out Vector4d result);
             return result;
         }
 
@@ -1073,18 +1682,32 @@ namespace OpenTK.Mathematics
         /// Divides an instance by a scalar.
         /// </summary>
         /// <param name="vec">The instance.</param>
-        /// <param name="f">The scalar.</param>
-        /// <returns>The result of the operation.</returns>
+        /// <param name="scale">The scalar.</param>
+        /// <returns>Result of the division.</returns>
         [Pure]
-        public static Vector2d operator /(Vector2d vec, double f)
+        public static Vector2d operator /(Vector2d vec, double scale)
         {
-            vec.X /= f;
-            vec.Y /= f;
+            vec.X /= scale;
+            vec.Y /= scale;
             return vec;
         }
 
         /// <summary>
-        /// Component-wise division between the specified instance by a scale vector.
+        /// Divides a scalar by an instance.
+        /// </summary>
+        /// <param name="left">The scalar.</param>
+        /// <param name="right">The instance.</param>
+        /// <returns>Result of the division.</returns>
+        [Pure]
+        public static Vector2d operator /(double left, Vector2d right)
+        {
+            right.X = left / right.X;
+            right.Y = left / right.Y;
+            return right;
+        }
+
+        /// <summary>
+        /// Divides an instance by a scalar.
         /// </summary>
         /// <param name="vec">Left operand.</param>
         /// <param name="scale">Right operand.</param>
@@ -1095,6 +1718,54 @@ namespace OpenTK.Mathematics
             vec.X /= scale.X;
             vec.Y /= scale.Y;
             return vec;
+        }
+
+        /// <summary>
+        /// Component wise less than comparision between the specified instances.
+        /// </summary>
+        /// <param name="left">The left instance.</param>
+        /// <param name="right">The right instance.</param>
+        /// <returns>A component wise boolean vector whose compoennts are true when the corresponding left component is less than the right component.</returns>
+        [Pure]
+        public static Vector2b operator <(Vector2d left, Vector2d right)
+        {
+            return LessThan(left, right);
+        }
+
+        /// <summary>
+        /// Component wise less than or equal comparision between the specified instances.
+        /// </summary>
+        /// <param name="left">The left instance.</param>
+        /// <param name="right">The right instance.</param>
+        /// <returns>A component wise boolean vector whose compoennts are true when the corresponding left component is less than or equal the right component.</returns>
+        [Pure]
+        public static Vector2b operator <=(Vector2d left, Vector2d right)
+        {
+            return LessThanOrEqual(left, right);
+        }
+
+        /// <summary>
+        /// Component wise greater than comparision between the specified instances.
+        /// </summary>
+        /// <param name="left">The left instance.</param>
+        /// <param name="right">The right instance.</param>
+        /// <returns>A component wise boolean vector whose compoennts are true when the corresponding greater component is greater than the right component.</returns>
+        [Pure]
+        public static Vector2b operator >(Vector2d left, Vector2d right)
+        {
+            return GreaterThan(left, right);
+        }
+
+        /// <summary>
+        /// Component wise greater than or equal comparision between the specified instances.
+        /// </summary>
+        /// <param name="left">The left instance.</param>
+        /// <param name="right">The right instance.</param>
+        /// <returns>A component wise boolean vector whose compoennts are true when the corresponding left component is greater than or equal the right component.</returns>
+        [Pure]
+        public static Vector2b operator >=(Vector2d left, Vector2d right)
+        {
+            return GreaterThanOrEqual(left, right);
         }
 
         /// <summary>
@@ -1165,19 +1836,19 @@ namespace OpenTK.Mathematics
         }
 
         /// <inheritdoc/>
-        public override string ToString()
+        public override readonly string ToString()
         {
             return ToString(null, null);
         }
 
         /// <inheritdoc cref="ToString(string, IFormatProvider)"/>
-        public string ToString(string format)
+        public readonly string ToString(string format)
         {
             return ToString(format, null);
         }
 
         /// <inheritdoc cref="ToString(string, IFormatProvider)"/>
-        public string ToString(IFormatProvider formatProvider)
+        public readonly string ToString(IFormatProvider formatProvider)
         {
             return ToString(null, formatProvider);
         }
@@ -1193,7 +1864,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <inheritdoc/>
-        public override bool Equals(object obj)
+        public override readonly bool Equals(object obj)
         {
             return obj is Vector2d && Equals((Vector2d)obj);
         }

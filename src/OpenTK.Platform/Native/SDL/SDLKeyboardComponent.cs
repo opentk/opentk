@@ -31,12 +31,16 @@ namespace OpenTK.Platform.Native.SDL
         }
 
         /// <inheritdoc/>
+        public void Uninitialize()
+        {
+        }
+
+        /// <inheritdoc/>
         public bool SupportsLayouts => false;
 
         /// <inheritdoc/>
         public bool SupportsIme => true;
 
-        /// <inheritdoc/>
         public string GetActiveKeyboardLayout(WindowHandle? handle)
         {
             // FIXME! Can we do something here?
@@ -44,10 +48,31 @@ namespace OpenTK.Platform.Native.SDL
             return "Unknown";
         }
 
-        /// <inheritdoc/>
         public string[] GetAvailableKeyboardLayouts()
         {
             throw new NotSupportedException("SDL 2 doesn't support getting keyboard layouts.");
+        }
+
+        /// <inheritdoc/>
+        public InputLanguage GetActiveInputLanguage(WindowHandle? handle)
+        {
+            // FIXME: Culture!
+            return new InputLanguage(System.Globalization.CultureInfo.CurrentCulture, GetActiveKeyboardLayout(handle));
+        }
+
+        /// <inheritdoc/>
+        public InputLanguage[] GetInstalledInputLanguages()
+        {
+            var layouts = GetAvailableKeyboardLayouts();
+
+            InputLanguage[] languages = new InputLanguage[layouts.Length];
+            for (int i = 0; i < layouts.Length; i++)
+            {
+                // FIXME: Culture!
+                languages[i] = new InputLanguage(System.Globalization.CultureInfo.CurrentCulture, layouts[i]);
+            }
+
+            return languages;
         }
 
         /// <inheritdoc/>
@@ -104,15 +129,15 @@ namespace OpenTK.Platform.Native.SDL
         }
 
         /// <inheritdoc/>
-        public void SetImeRectangle(WindowHandle window, int x, int y, int width, int height)
+        public void SetImeRectangle(WindowHandle window, float x, float y, float width, float height)
         {
             SDLWindow sdlWindow = window.As<SDLWindow>(this);
 
             SDL_Rect rect;
-            rect.x = x;
-            rect.y = y;
-            rect.w = width;
-            rect.h = height;
+            rect.x = (int)x;
+            rect.y = (int)y;
+            rect.w = (int)width;
+            rect.h = (int)height;
 
             SDL_SetTextInputRect(rect);
         }

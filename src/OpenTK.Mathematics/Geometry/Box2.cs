@@ -8,7 +8,6 @@
 //
 
 using System;
-using System.Diagnostics.Contracts;
 using System.Runtime.InteropServices;
 using System.Xml.Serialization;
 
@@ -21,61 +20,68 @@ namespace OpenTK.Mathematics
     [Serializable]
     public struct Box2 : IEquatable<Box2>, IFormattable
     {
-        private Vector2 _min;
+        /// <summary>
+        /// An empty box with <c>Min = Vector2.PositiveInfinity</c> and <c>Max = Vector2.NegativeInfinity</c>.
+        /// This box can be used with <see cref="Extend(Vector2)"/> to create a bounding box without a special case for the first point.
+        /// </summary>
+        /// <example>
+        /// For example:
+        /// <code>
+        /// Vector2[] points = GetPoints();
+        /// Box2 aabb = Box2.Empty;
+        /// for (int i = 0; i &lt; points.Length; i++)
+        /// {
+        ///     aabb.Extend(points[i]):
+        /// }
+        /// </code>
+        /// Will calculate the bounding box of all the points in the array without needing a special case for the first point.
+        /// </example>
+        public static readonly Box2 Empty = new Box2(Vector2.PositiveInfinity, Vector2.NegativeInfinity);
 
         /// <summary>
-        /// Gets or sets the minimum boundary of the structure.
+        /// A box with <c>Min = Vector2.Zero</c> and <c>Min = Vector2.Zero</c>.
         /// </summary>
-        public Vector2 Min
-        {
-            readonly get => _min;
-            set
-            {
-                if (value.X > _max.X)
-                {
-                    _max.X = value.X;
-                }
-                if (value.Y > _max.Y)
-                {
-                    _max.Y = value.Y;
-                }
-
-                _min = value;
-            }
-        }
-
-        private Vector2 _max;
+        /// <remarks>
+        /// If you want an empty box, consider using <see cref="Empty"/>.
+        /// </remarks>
+        public static readonly Box2 Zero = new Box2(Vector2.Zero, Vector2.Zero);
 
         /// <summary>
-        /// Gets or sets the maximum boundary of the structure.
+        /// A box with a <c>Min = (0, 0)</c> and <c>Max = (1, 1)</c>.
         /// </summary>
-        public Vector2 Max
-        {
-            readonly get => _max;
-            set
-            {
-                if (value.X < _min.X)
-                {
-                    _min.X = value.X;
-                }
-                if (value.Y < _min.Y)
-                {
-                    _min.Y = value.Y;
-                }
+        public static readonly Box2 UnitSquare = new Box2(Vector2.Zero, Vector2.One);
 
-                _max = value;
-            }
-        }
+        /// <summary>
+        /// The minimum boundary of the box.
+        /// This field is not guaranteed to be less than <see cref="Max"/>.
+        /// </summary>
+        /// <remarks>
+        /// A box with a minimum point greater than the maximum is not considered valid
+        /// except for a single configuration where <c>Min = Vector2.PositiveInfinity</c> and <c>Max = Vector2.NegativeInfinity</c> as is the case with <see cref="Empty"/>.
+        /// </remarks>
+        /// <seealso cref="Empty"/>
+        /// <seealso cref="IsEmpty"/>
+        public Vector2 Min;
+
+        /// <summary>
+        /// The maximum boundary of the box.
+        /// This field is not guaranteed to be greater than <see cref="Max"/>.
+        /// </summary>
+        /// <remarks>
+        /// A box with a minimum point greater than the maximum is not considered valid
+        /// except for a single configuration where <c>Min = Vector2.PositiveInfinity</c> and <c>Max = Vector2.NegativeInfinity</c> as is the case with <see cref="Empty"/>.
+        /// </remarks>
+        public Vector2 Max;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Box2"/> struct.
         /// </summary>
-        /// <param name="min">The minimum point on the XY plane this box encloses.</param>
-        /// <param name="max">The maximum point on the XY plane this box encloses.</param>
+        /// <param name="min">The minimum point this box encloses.</param>
+        /// <param name="max">The maximum point this box encloses.</param>
         public Box2(Vector2 min, Vector2 max)
         {
-            _min = Vector2.ComponentMin(min, max);
-            _max = Vector2.ComponentMax(min, max);
+            Min = min;
+            Max = max;
         }
 
         /// <summary>
@@ -86,32 +92,9 @@ namespace OpenTK.Mathematics
         /// <param name="maxX">The maximum X value to be enclosed.</param>
         /// <param name="maxY">The maximum Y value to be enclosed.</param>
         public Box2(float minX, float minY, float maxX, float maxY)
-            : this(new Vector2(minX, minY), new Vector2(maxX, maxY))
         {
-        }
-
-        /// <summary>
-        /// Gets or sets a vector describing the size of the Box2 structure.
-        /// </summary>
-        public Vector2 CenteredSize
-        {
-            get => Max - Min;
-            set
-            {
-                Vector2 center = Center;
-                _min = center - (value * 0.5f);
-                _max = center + (value * 0.5f);
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets a vector describing half the size of the box.
-        /// </summary>
-        [XmlIgnore]
-        public Vector2 HalfSize
-        {
-            get => CenteredSize / 2;
-            set => CenteredSize = value * 2;
+            Min = (minX, minY);
+            Max = (maxX, maxY);
         }
 
         /// <summary>
@@ -120,313 +103,191 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector2 Center
         {
-            get => HalfSize + _min;
+            readonly get => Min + HalfSize;
             set => Translate(value - Center);
         }
 
-        // --
+        /// <summary>
+        /// Gets the location of the box from a Location + Size perspective. Basically an alias for <see cref="Min"/>.
+        /// </summary>
+        public readonly Vector2 Location => Min;
 
         /// <summary>
-        /// Gets or sets the width of the box.
+        /// Gets the size of the box.
         /// </summary>
-        public float Width
-        {
-            get => _max.X - _min.X;
-            set => _max.X = _min.X + value;
-        }
+        /// <remarks>
+        /// This function never returns negative values, so <see cref="Empty"/> will have a size of (0, 0).
+        /// </remarks>
+        public readonly Vector2 Size => Vector2.ComponentMax(Vector2.Zero, Max - Min);
 
         /// <summary>
-        /// Gets or sets the height of the box.
+        /// Gets half the size of the box.
+        /// The distance from the center of the box to the edge of the box in X and Y.
         /// </summary>
-        public float Height
-        {
-            get => _max.Y - _min.Y;
-            set => _max.Y = _min.Y + value;
-        }
+        /// <remarks>
+        /// This function never returns negative values, so <see cref="Empty"/> will have a size of (0, 0).
+        /// </remarks>
+        public readonly Vector2 HalfSize => Size / 2.0f;
 
         /// <summary>
-        /// Gets or sets the left location of the box.
+        /// The width of the box.
         /// </summary>
-        public float Left
-        {
-            get => _min.X;
-            set => _min.X = value;
-        }
+        public readonly float Width => Size.X;
 
         /// <summary>
-        /// Gets or sets the top location of the box.
+        /// The height of the box.
         /// </summary>
-        public float Top
-        {
-            get => _min.Y;
-            set => _min.Y = value;
-        }
+        public readonly float Height => Size.Y;
 
         /// <summary>
-        /// Gets or sets the right location of the box.
+        /// The area of the box.
         /// </summary>
-        public float Right
-        {
-            get => _max.X;
-            set => _max.X = value;
-        }
+        public readonly float Area => Size.X * Size.Y;
 
         /// <summary>
-        /// Gets or sets the bottom location of the box.
+        /// If this box is equal to <see cref="Empty"/>.
         /// </summary>
-        public float Bottom
-        {
-            get => _max.Y;
-            set => _max.Y = value;
-        }
+        public readonly bool IsEmpty => this == Empty;
 
         /// <summary>
-        /// Gets or sets the X location of the box.
+        /// If this box is a point, i.e. its minimum point is equal to its maximum point.
         /// </summary>
-        public float X
-        {
-            get => _min.X;
-            set => _min.X = value;
-        }
+        public readonly bool IsPoint => Min == Max;
 
         /// <summary>
-        /// Gets or sets the Y location of the box.
+        /// If this box has zero area.
         /// </summary>
-        public float Y
-        {
-            get => _min.Y;
-            set => _min.Y = value;
-        }
+        public readonly bool HasZeroArea => Area == 0;
 
         /// <summary>
-        /// Gets or sets the horizontal size.
+        /// Creates a box from a point and size.
         /// </summary>
-        public float SizeX
-        {
-            get => _max.X - _min.X;
-            set => _max.X = _min.X + value;
-        }
-
-        /// <summary>
-        /// Gets or sets the vertical size.
-        /// </summary>
-        public float SizeY
-        {
-            get => _max.Y - _min.Y;
-            set => _max.Y = _min.Y + value;
-        }
-
-        /// <summary>
-        /// Gets or sets the size of the box.
-        /// </summary>
-        public Vector2 Size
-        {
-            get => new Vector2(_max.X - _min.X, _max.Y - _min.Y);
-            set
-            {
-                _max.X = _min.X + value.X;
-                _max.Y = _min.Y + value.Y;
-            }
-        }
-
-        /// <summary>
-        /// Gets the location of the box.
-        /// </summary>
-        public Vector2 Location => _min;
-
-        /// <summary>
-        /// Gets a value indicating whether all values are zero.
-        /// </summary>
-        public bool IsZero => _min.X == 0 && _min.Y == 0 && _max.X == 0 && _max.Y == 0;
-
-        /// <summary>
-        /// Gets a box with all components zero.
-        /// </summary>
-        public static readonly Box2 Empty = new Box2(0, 0, 0, 0);
-
-        /// <summary>
-        /// Gets a box with a location 0,0 with the a size of 1.
-        /// </summary>
-        public static readonly Box2 UnitSquare = new Box2(0, 0, 1, 1);
-
-        /// <summary>
-        /// Creates a box.
-        /// </summary>
-        /// <param name="location">The location of the box.</param>
+        /// <param name="point">The minimum point of the box.</param>
         /// <param name="size">The size of the box.</param>
-        /// <returns>A box.</returns>
-        public static Box2 FromSize(Vector2 location, Vector2 size)
+        /// <returns>The created box.</returns>
+        public static Box2 FromSize(Vector2 point, Vector2 size)
         {
-            return new Box2(location, location + size);
+            return new Box2(point, point + size);
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Box2"/> struct.
+        /// Creates a box from a minimum and maximum point.
         /// </summary>
         /// <param name="min">The minimum point on the XY plane this box encloses.</param>
         /// <param name="max">The maximum point on the XY plane this box encloses.</param>
-        /// <returns>A box.</returns>
-        public static Box2 FromPositions(Vector2 min, Vector2 max)
+        /// <returns>The created box.</returns>
+        public static Box2 FromMinMax(Vector2 min, Vector2 max)
         {
             return new Box2(min, max);
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Box2"/> struct.
+        /// Create a box from two unordered points, i.e. creates a box that contains two points.
         /// </summary>
-        /// <param name="minX">The minimum X value to be enclosed.</param>
-        /// <param name="minY">The minimum Y value to be enclosed.</param>
-        /// <param name="maxX">The maximum X value to be enclosed.</param>
-        /// <param name="maxY">The maximum Y value to be enclosed.</param>
-        /// <returns>A box.</returns>
-        public static Box2 FromPositions(float minX, float minY, float maxX, float maxY)
+        /// <param name="p1">The first point to contain.</param>
+        /// <param name="p2">The second point to contain.</param>
+        /// <returns>The created box.</returns>
+        public static Box2 FromTwoPoints(Vector2 p1, Vector2 p2)
         {
-            return new Box2(minX, minY, maxX, maxY);
+            Vector2 min = Vector2.ComponentMin(p1, p2);
+            Vector2 max = Vector2.ComponentMax(p1, p2);
+            return new Box2(min, max);
         }
 
         /// <summary>
-        /// Replaces this Box with the intersection of itself and the specified Box.
+        /// Creates a box from a center point and a half size.
+        /// </summary>
+        /// <param name="center">The center of the box.</param>
+        /// <param name="halfSize">The half size of the box.</param>
+        /// <returns>The created box.</returns>
+        public static Box2 FromCenterAndHalfSize(Vector2 center, Vector2 halfSize)
+        {
+            return new Box2(center - halfSize, center + halfSize);
+        }
+
+        /// <summary>
+        /// Returns the intersection of two boxes, or <see cref="Empty"/> if there is no intersection.
+        /// </summary>
+        /// <param name="a">The first box.</param>
+        /// <param name="b">The second box.</param>
+        /// <returns>The intersection of the two boxes.</returns>
+        public static Box2 Intersect(Box2 a, Box2 b)
+        {
+            Vector2 min = Vector2.ComponentMax(a.Min, b.Min);
+            Vector2 max = Vector2.ComponentMin(a.Max, b.Max);
+            if (max.X >= min.X && max.Y >= min.Y)
+            {
+                return new Box2(min, max);
+            }
+            else
+            {
+                return Box2.Empty;
+            }
+        }
+
+        /// <summary>
+        /// Returns the intersection of two boxes, or <see cref="Empty"/> if there is no intersection.
+        /// With NaN propagation and -0 behaviour being platform depedent.
+        /// </summary>
+        /// <param name="a">The first box.</param>
+        /// <param name="b">The second box.</param>
+        /// <returns>The intersection of the two boxes.</returns>
+        public static Box2 IntersectNative(in Box2 a, in Box2 b)
+        {
+            Vector2 min = Vector2.ComponentMaxNative(a.Min, b.Min);
+            Vector2 max = Vector2.ComponentMinNative(a.Max, b.Max);
+            if (max.X >= min.X && max.Y >= min.Y)
+            {
+                return new Box2(min, max);
+            }
+            else
+            {
+                return Box2.Empty;
+            }
+        }
+
+        /// <summary>
+        /// Replaces this box with the intersection of itself and the specified box.
         /// </summary>
         /// <param name="other">The Box with which to intersect.</param>
         public void Intersect(Box2 other)
         {
-            Box2 result = Intersect(other, this);
-
-            X = result.X;
-            Y = result.Y;
-            Width = result.Width;
-            Height = result.Height;
+            this = Intersect(this, other);
         }
 
         /// <summary>
-        /// Returns the intersection of two Boxes.
-        /// </summary>
-        /// <param name="a">The first box.</param>
-        /// <param name="b">The second box.</param>
-        /// <returns>The intersection of two Boxes.</returns>
-        public static Box2 Intersect(Box2 a, Box2 b)
-        {
-            float minX = a._min.X > b._min.X ? a._min.X : b._min.X;
-            float minY = a._min.Y > b._min.Y ? a._min.Y : b._min.Y;
-            float maxX = a._max.X < b._max.X ? a._max.X : b._max.X;
-            float maxY = a._max.Y < b._max.Y ? a._max.Y : b._max.Y;
-
-            if (maxX >= minX && maxY >= minY)
-            {
-                return new Box2(minX, minY, maxX, maxY);
-            }
-            return Box2.Empty;
-        }
-
-        /// <summary>
-        /// Returns the intersection of itself and the specified Box.
+        /// Returns the intersection of itself and the specified box.
         /// </summary>
         /// <param name="other">The Box with which to intersect.</param>
-        /// <returns>The intersection of itself and the specified Box.</returns>
-        public Box2 Intersected(Box2 other)
+        /// <returns>The intersection of itself and the specified box.</returns>
+        public readonly Box2 Intersected(Box2 other)
         {
-            return Intersect(other, this);
+            return Intersect(this, other);
         }
 
         /// <summary>
-        /// Determines if this Box intersects with another Box.
+        /// Determines if this box intersects with another box.
         /// </summary>
-        /// <param name="other">The Box to test.</param>
-        /// <returns>This method returns true if there is any intersection, otherwise false.</returns>
-        public bool IntersectsWith(Box2 other)
+        /// <remarks>
+        /// Two boxes next to each other do not intersect, for detecting that case use <see cref="Touches(Box2)"/>.
+        /// </remarks>
+        /// <param name="other">The box to test.</param>
+        /// <returns>This method returns <see langword="true"/> if there is any intersection, otherwise <see langword="false"/>.</returns>
+        public readonly bool IntersectsWith(Box2 other)
         {
-            return other._min.X < _max.X
-                && _min.X < other._max.X
-                && other._min.Y < _max.Y
-                && _min.Y < other._max.Y;
+            return other.Min.X < Max.X && Min.X < other.Max.X &&
+                   other.Min.Y < Max.Y && Min.Y < other.Max.Y;
         }
 
         /// <summary>
-        /// Determines if this Box intersects or touches with another Box.
+        /// Determines if this box intersects or touches with another box.
         /// </summary>
-        /// <param name="other">The Box to test.</param>
-        /// <returns>This method returns true if there is any intersection or touches, otherwise false.</returns>
-        public bool TouchWith(Box2 other)
+        /// <param name="other">The box to test.</param>
+        /// <returns>This method returns <see langword="true"/> if there is any intersection or touches, otherwise <see langword="false"/>.</returns>
+        public readonly bool Touches(Box2 other)
         {
-            return other._min.X <= _max.X
-                && _min.X <= other._max.X
-                && other._min.Y <= _max.Y
-                && _min.Y <= other._max.Y;
-        }
-
-        /// <summary>
-        /// Gets a Box structure that contains the union of two Box structures.
-        /// </summary>
-        /// <param name="a">A Box to union.</param>
-        /// <param name="b">a box to union.</param>
-        /// <returns>A Box structure that bounds the union of the two Box structures.</returns>
-        public static Box2 Union(Box2 a, Box2 b)
-        {
-            float minX = a._min.X < b._min.X ? a._min.X : b._min.X;
-            float minY = a._min.Y < b._min.Y ? a._min.Y : b._min.Y;
-            float maxX = a._max.X > b._max.X ? a._max.X : b._max.X;
-            float maxY = a._max.Y > b._max.Y ? a._max.Y : b._max.Y;
-
-            return new Box2(minX, minY, maxX, maxY);
-        }
-
-        /// <summary>
-        /// Gets a Box structure that contains rounded integers.
-        /// </summary>
-        /// <param name="value">A Box to round.</param>
-        /// <returns>A Box structure that contains rounded integers.</returns>
-        public static Box2i Round(Box2 value)
-        {
-            return new Box2i(
-                (int)MathF.Round(value.Min.X),
-                (int)MathF.Round(value.Min.Y),
-                (int)MathF.Round(value.Max.X),
-                (int)MathF.Round(value.Max.Y));
-        }
-
-        /// <summary>
-        /// Gets a Box structure that contains rounded up integers.
-        /// </summary>
-        /// <param name="value">A Box to round.</param>
-        /// <returns>A Box structure that contains rounded up integers.</returns>
-        public static Box2i Ceiling(Box2 value)
-        {
-            int x = (int)MathF.Ceiling(value._min.X);
-            int y = (int)MathF.Ceiling(value._min.Y);
-            int sizeX = (int)MathF.Ceiling(value.Width);
-            int sizeY = (int)MathF.Ceiling(value.Height);
-
-            return new Box2i(x, y, x + sizeX, y + sizeY);
-        }
-
-        /// <summary>
-        /// Gets a Box structure that contains rounded down integers.
-        /// </summary>
-        /// <param name="value">A Box to round.</param>
-        /// <returns>A Box structure that contains rounded down integers.</returns>
-        public static Box2i Floor(Box2 value)
-        {
-            int x = (int)MathF.Floor(value._min.X);
-            int y = (int)MathF.Floor(value._min.Y);
-            int sizeX = (int)MathF.Floor(value.Width);
-            int sizeY = (int)MathF.Floor(value.Height);
-
-            return new Box2i(x, y, x + sizeX, y + sizeY);
-        }
-
-        // --
-
-        /// <summary>
-        /// Returns whether the box contains the specified point (borders exclusive).
-        /// </summary>
-        /// <param name="point">The point to query.</param>
-        /// <returns>Whether this box contains the point.</returns>
-        [Pure]
-        [Obsolete("This function used to exclude borders, but to follow changes from the other Box structs it's deprecated. Use ContainsInclusive and ContainsExclusive for the desired behaviour.")]
-        public readonly bool Contains(Vector2 point)
-        {
-            return _min.X < point.X && point.X < _max.X &&
-                   _min.Y < point.Y && point.Y < _max.Y;
+            return other.Min.X <= Max.X && Min.X <= other.Max.X &&
+                   other.Min.Y <= Max.Y && Min.Y <= other.Max.Y;
         }
 
         /// <summary>
@@ -434,11 +295,11 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <param name="point">The point to query.</param>
         /// <returns>Whether this box contains the point.</returns>
-        [Pure]
+        /// <seealso cref="ContainsExclusive(Vector2)"/>
         public readonly bool ContainsInclusive(Vector2 point)
         {
-            return _min.X <= point.X && point.X <= _max.X &&
-                   _min.Y <= point.Y && point.Y <= _max.Y;
+            return Min.X <= point.X && Min.Y <= point.Y &&
+                point.X <= Max.X && point.Y <= Max.Y;
         }
 
         /// <summary>
@@ -446,44 +307,37 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <param name="point">The point to query.</param>
         /// <returns>Whether this box contains the point.</returns>
-        [Pure]
+        /// <seealso cref="ContainsInclusive(Vector2)"/>
         public readonly bool ContainsExclusive(Vector2 point)
         {
-            return _min.X < point.X && point.X < _max.X &&
-                   _min.Y < point.Y && point.Y < _max.Y;
+            return Min.X < point.X && Min.Y < point.Y &&
+                point.X < Max.X && point.Y < Max.Y;
         }
 
         /// <summary>
-        /// Returns whether the box contains the specified point.
+        /// Returns whether the box <paramref name="other"/> is entirely contained within this box.
+        /// A box is considered to be able to contain itself.
         /// </summary>
-        /// <param name="point">The point to query.</param>
-        /// <param name="boundaryInclusive">
-        /// Whether points on the box boundary should be recognised as contained as well.
-        /// </param>
-        /// <returns>Whether this box contains the point.</returns>
-        [Pure]
-        public bool Contains(Vector2 point, bool boundaryInclusive)
-        {
-            if (boundaryInclusive)
-            {
-                return ContainsInclusive(point);
-            }
-            else
-            {
-                return ContainsExclusive(point);
-            }
-        }
-
-        /// <summary>
-        /// Returns whether the box contains the specified box (borders inclusive).
-        /// </summary>
-        /// <param name="other">The box to query.</param>
-        /// <returns>Whether this box contains the other box.</returns>
-        [Pure]
+        /// <param name="other">The box to check.</param>
+        /// <returns><see langword="true"/> if the box <paramref name="other"/> is entirely contained within the this box; otherwise, <see langword="false"/>.</returns>
         public readonly bool Contains(Box2 other)
         {
-            return _max.X >= other._min.X && _min.X <= other._max.X &&
-                   _max.Y >= other._min.Y && _min.Y <= other._max.Y;
+            return Min.X <= other.Min.X && Min.Y <= other.Min.Y &&
+                Max.X >= other.Max.X && Max.Y >= other.Max.Y;
+        }
+
+        /// <summary>
+        /// Returns the distance between the nearest point inside the box and the specified point.
+        /// </summary>
+        /// <remarks>
+        /// The distance to points inside the box is zero.
+        /// </remarks>
+        /// <param name="point">The point to find distance for.</param>
+        /// <returns>The distance between the specified point and the nearest edge.</returns>
+        public readonly float DistanceToNearestPointInBox(Vector2 point)
+        {
+            Vector2 dist = Vector2.ComponentMax(Vector2.Zero, Vector2.ComponentMax(Min - point, point - Max));
+            return dist.Length;
         }
 
         /// <summary>
@@ -491,120 +345,314 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <param name="point">The point to find distance for.</param>
         /// <returns>The distance between the specified point and the nearest edge.</returns>
-        [Pure]
         public readonly float DistanceToNearestEdge(Vector2 point)
         {
-            var distX = new Vector2(
-                Math.Max(0f, Math.Max(_min.X - point.X, point.X - _max.X)),
-                Math.Max(0f, Math.Max(_min.Y - point.Y, point.Y - _max.Y)));
-            return distX.Length;
+            return float.Abs(SignedDistanceToNearestEdge(point));
         }
 
         /// <summary>
-        /// Translates this Box2 by the given amount.
+        /// Returns the signed distance between the nearest edge and the specified point.
+        /// </summary>
+        /// <param name="point">The point to find distance for.</param>
+        /// <returns>The distance between the specified point and the nearest edge.</returns>
+        public readonly float SignedDistanceToNearestEdge(Vector2 point)
+        {
+            Vector2 d = Vector2.Abs(point - Center) - HalfSize;
+            return Vector2.ComponentMax(Vector2.Zero, d).Length + float.Min(float.Max(d.X, d.Y), 0.0f);
+        }
+
+        /// <summary>
+        /// Returns the nearest point in or on the edge of the box to the given point, <paramref name="point"/>.
+        /// </summary>
+        /// <param name="point">The point for which the nearest point in the box should be found.</param>
+        /// <returns>The nearest point on or on the edge of the box to the point, <paramref name="point"/>.</returns>
+        public readonly Vector2 NearestPointInBox(Vector2 point)
+        {
+            return Vector2.ComponentMin(Max, Vector2.ComponentMax(Min, point));
+        }
+
+        /// <summary>
+        /// Returns the nearest point that is on the edge of the box.
+        /// </summary>
+        /// <param name="point">The point for which the nearest point on the edge of the box should be found.</param>
+        /// <returns>The nearest point on the edge of the box to the point, <paramref name="point"/>.</returns>
+        public readonly Vector2 NearestPointOnEdge(Vector2 point)
+        {
+            Vector2 nearestInBox = Vector2.ComponentMin(Max, Vector2.ComponentMax(Min, point));
+            Vector2 minToP = nearestInBox - Min;
+            Vector2 pToMax = Max - nearestInBox;
+            float minDistance = float.Min(float.Min(minToP.X, pToMax.X), float.Min(minToP.Y, pToMax.Y));
+            if (minDistance == minToP.X)
+            {
+                return new Vector2(Min.X, nearestInBox.Y);
+            }
+            else if (minDistance == pToMax.X)
+            {
+                return new Vector2(Max.X, nearestInBox.Y);
+            }
+            else if (minDistance == minToP.Y)
+            {
+                return new Vector2(nearestInBox.X, Min.Y);
+            }
+            else // if (minDistance == maxToP.Y)
+            {
+                return new Vector2(nearestInBox.X, Max.Y);
+            }
+        }
+
+        /// <summary>
+        /// Returns a box that contains rounded integers.
+        /// </summary>
+        /// <param name="box">The box to round.</param>
+        /// <returns>The box that contains rounded integers.</returns>
+        /// <see cref="Ceiling(Box2)"/>
+        /// <see cref="Floor(Box2)"/>
+        /// <see cref="FloorCeiling(Box2)"/>
+        public static Box2 Round(Box2 box)
+        {
+            return new Box2(Vector2.Round(box.Min), Vector2.Round(box.Max));
+        }
+
+        /// <summary>
+        /// Returns a box that contains rounded up integers.
+        /// </summary>
+        /// <param name="box">The box to round.</param>
+        /// <returns>The box that contains rounded up integers.</returns>
+        /// <see cref="Round(Box2)"/>
+        /// <see cref="Floor(Box2)"/>
+        /// <see cref="FloorCeiling(Box2)"/>
+        public static Box2 Ceiling(Box2 box)
+        {
+            return new Box2(Vector2.Ceiling(box.Min), Vector2.Ceiling(box.Max));
+        }
+
+        /// <summary>
+        /// Returns a box that contains rounded down integers.
+        /// </summary>
+        /// <param name="box">The box to round.</param>
+        /// <returns>The box that contains rounded down integers.</returns>
+        /// <see cref="Round(Box2)"/>
+        /// <see cref="Ceiling(Box2)"/>
+        /// <see cref="FloorCeiling(Box2)"/>
+        public static Box2 Floor(Box2 box)
+        {
+            return new Box2(Vector2.Floor(box.Min), Vector2.Floor(box.Max));
+        }
+
+        /// <summary>
+        /// Returns a box where <see cref="Min"/> has been rounded down and <see cref="Max"/> has been rounded up.
+        /// </summary>
+        /// <param name="box">The box to round.</param>
+        /// <returns>The box that contains rounded down integers.</returns>
+        /// <see cref="Round(Box2)"/>
+        /// <see cref="Ceiling(Box2)"/>
+        /// <see cref="Floor(Box2)"/>
+        public static Box2 FloorCeiling(Box2 box)
+        {
+            return new Box2(Vector2.Floor(box.Min), Vector2.Ceiling(box.Max));
+        }
+
+        /// <summary>
+        /// Translates this box by the given distance.
         /// </summary>
         /// <param name="distance">The distance to translate the box.</param>
         public void Translate(Vector2 distance)
         {
-            _min += distance;
-            _max += distance;
+            Min += distance;
+            Max += distance;
         }
 
         /// <summary>
-        /// Returns a Box2 translated by the given amount.
+        /// Returns a box translated by the given distance.
         /// </summary>
         /// <param name="distance">The distance to translate the box.</param>
         /// <returns>The translated box.</returns>
-        [Pure]
         public readonly Box2 Translated(Vector2 distance)
         {
-            // create a local copy of this box
             Box2 box = this;
             box.Translate(distance);
             return box;
         }
 
         /// <summary>
-        /// Scales this Box2 by the given amount.
+        /// Scales this box by the given scale, <paramref name="scale"/>, and from the given anchor point, <paramref name="anchor"/>.
         /// </summary>
         /// <param name="scale">The scale to scale the box.</param>
         /// <param name="anchor">The anchor to scale the box from.</param>
         public void Scale(Vector2 scale, Vector2 anchor)
         {
-            _min = anchor + ((_min - anchor) * scale);
-            _max = anchor + ((_max - anchor) * scale);
+            Min = anchor + ((Min - anchor) * scale);
+            Max = anchor + ((Max - anchor) * scale);
         }
 
         /// <summary>
-        /// Returns a Box2 scaled by a given amount from an anchor point.
+        /// Returns a box scaled by the given scale, <paramref name="scale"/>, and from the given anchor point, <paramref name="anchor"/>.
         /// </summary>
         /// <param name="scale">The scale to scale the box.</param>
         /// <param name="anchor">The anchor to scale the box from.</param>
         /// <returns>The scaled box.</returns>
-        [Pure]
         public readonly Box2 Scaled(Vector2 scale, Vector2 anchor)
         {
-            // create a local copy of this box
             Box2 box = this;
             box.Scale(scale, anchor);
             return box;
         }
 
         /// <summary>
-        /// Inflates this Box2 by the given size in all directions. A negative size will shrink the box to a maximum of -HalfSize.
-        /// Use the <see cref="Extend"/> method for the point-encapsulation functionality in OpenTK version 4.8.1 and earlier.
+        /// Inflates this box by the given size in all directions.
+        /// A negative size will shrink the box to a maximum of -<see cref="HalfSize"/>.
         /// </summary>
         /// <param name="size">The size to inflate by.</param>
         public void Inflate(Vector2 size)
         {
             size = Vector2.ComponentMax(size, -HalfSize);
-            Vector2 newMin = _min - size;
-            Vector2 newMax = _max + size;
-            _min = Vector2.ComponentMin(newMin, newMax);
-            _max = Vector2.ComponentMax(newMin, newMax);
+            Vector2 newMin = Min - size;
+            Vector2 newMax = Max + size;
+            Min = Vector2.ComponentMin(newMin, newMax);
+            Max = Vector2.ComponentMax(newMin, newMax);
         }
 
         /// <summary>
-        /// Inflates this Box2 by the given size in all directions. A negative size will shrink the box to a maximum of -HalfSize.
-        /// Use the <see cref="Extended"/> method for the point-encapsulation functionality in OpenTK version 4.8.1 and earlier.
+        /// Returns a box inflated by the given size in all directions.
+        /// A negative size will shrink the box to a maximum of -<see cref="HalfSize"/>.
         /// </summary>
         /// <param name="size">The size to inflate by.</param>
         /// <returns>The inflated box.</returns>
-        [Pure]
         public readonly Box2 Inflated(Vector2 size)
         {
-            // create a local copy of this box
             Box2 box = this;
             box.Inflate(size);
             return box;
         }
 
         /// <summary>
-        /// Extend this Box2 to encapsulate a given point.
+        /// Extends this box to encapsulate a given point.
         /// </summary>
+        /// <remarks>
+        /// This can be used in combination with <see cref="Empty"/> to make an efficient bounding box calculation.
+        /// </remarks>
         /// <param name="point">The point to contain.</param>
+        /// <example>
+        /// For example:
+        /// <code>
+        /// Vector2[] points = GetPoints();
+        /// Box2 aabb = Box2.Empty;
+        /// for (int i = 0; i &lt; points.Length; i++)
+        /// {
+        ///     aabb.Extend(points[i]):
+        /// }
+        /// </code>
+        /// Will calculate the bounding box of all the points in the array without needing a special case for the first point.
+        /// </example>
         public void Extend(Vector2 point)
         {
-            _min = Vector2.ComponentMin(_min, point);
-            _max = Vector2.ComponentMax(_max, point);
+            Min = Vector2.ComponentMin(Min, point);
+            Max = Vector2.ComponentMax(Max, point);
         }
 
         /// <summary>
-        /// Extend this Box2 to encapsulate a given point.
+        /// Extends this box to encapsulate a given point.
+        /// With NaN propagation and -0 behaviour being platform dependent.
         /// </summary>
+        /// <remarks>
+        /// This can be used in combination with <see cref="Empty"/> to make an efficient bounding box calculation.
+        /// </remarks>
         /// <param name="point">The point to contain.</param>
-        /// <returns>The inflated box.</returns>
-        [Pure]
+        /// <example>
+        /// For example:
+        /// <code>
+        /// Vector2[] points = GetPoints();
+        /// Box2 aabb = Box2.Empty;
+        /// for (int i = 0; i &lt; points.Length; i++)
+        /// {
+        ///     aabb.Extend(points[i]):
+        /// }
+        /// </code>
+        /// Will calculate the bounding box of all the points in the array without needing a special case for the first point.
+        /// </example>
+        public void ExtendNative(Vector2 point)
+        {
+            Min = Vector2.ComponentMinNative(Min, point);
+            Max = Vector2.ComponentMaxNative(Max, point);
+        }
+
+        /// <summary>
+        /// Returns a box that is extended to encapsulate a given point.
+        /// </summary>
+        /// <remarks>
+        /// This can be used in combination with <see cref="Empty"/> to make an efficient bounding box calculation.
+        /// </remarks>
+        /// <param name="point">The point to contain.</param>
+        /// <returns>The extended box.</returns>
+        /// <example>
+        /// For example:
+        /// <code>
+        /// Vector2[] points = GetPoints();
+        /// Box2 aabb = Box2.Empty;
+        /// for (int i = 0; i &lt; points.Length; i++)
+        /// {
+        ///     aabb = aabb.Extended(points[i]):
+        /// }
+        /// </code>
+        /// Will calculate the bounding box of all the points in the array without needing a special case for the first point.
+        /// </example>
         public readonly Box2 Extended(Vector2 point)
         {
-            // create a local copy of this box
             Box2 box = this;
             box.Extend(point);
             return box;
         }
 
         /// <summary>
+        /// Returns a box that is extended to encapsulate a given point.
+        /// With NaN propagation and -0 behaviour being platform dependent.
+        /// </summary>
+        /// <remarks>
+        /// This can be used in combination with <see cref="Empty"/> to make an efficient bounding box calculation.
+        /// </remarks>
+        /// <param name="point">The point to contain.</param>
+        /// <returns>The extended box.</returns>
+        /// <example>
+        /// For example:
+        /// <code>
+        /// Vector2[] points = GetPoints();
+        /// Box2 aabb = Box2.Empty;
+        /// for (int i = 0; i &lt; points.Length; i++)
+        /// {
+        ///     aabb = aabb.Extended(points[i]):
+        /// }
+        /// </code>
+        /// Will calculate the bounding box of all the points in the array without needing a special case for the first point.
+        /// </example>
+        public readonly Box2 ExtendedNative(Vector2 point)
+        {
+            Box2 box = this;
+            box.ExtendNative(point);
+            return box;
+        }
+
+        /// <inheritdoc/>
+        public readonly override bool Equals(object obj)
+        {
+            return obj is Box2 box && Equals(box);
+        }
+
+        /// <inheritdoc/>
+        public readonly bool Equals(Box2 other)
+        {
+            return Min.Equals(other.Min) &&
+                   Max.Equals(other.Max);
+        }
+
+        /// <inheritdoc/>
+        public readonly override int GetHashCode()
+        {
+            return HashCode.Combine(Min, Max);
+        }
+
+        /// <summary>
         /// Equality comparator.
+        /// Two boxes are considered equal if both the <see cref="Min"/> and <see cref="Max"/> fields are equal.
         /// </summary>
         /// <param name="left">The left operand.</param>
         /// <param name="right">The right operand.</param>
@@ -624,54 +672,56 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Converts this <see cref="Box2i"/> to a <see cref="System.Drawing.Rectangle"/> using <see cref="Min"/> as the position and <see cref="Size"/> as the size.
+        /// Converts this <see cref="Box2"/> to a <see cref="System.Drawing.Rectangle"/> using <see cref="Min"/> as the position and <see cref="Size"/> as the size.
         /// </summary>
         /// <param name="box">The box to cast.</param>
-        [Pure]
         public static explicit operator System.Drawing.RectangleF(Box2 box)
         {
             return new System.Drawing.RectangleF((System.Drawing.PointF)box.Min, (System.Drawing.SizeF)box.Size);
         }
 
-        /// <inheritdoc/>
-        public override bool Equals(object obj)
+        /// <summary>
+        /// Converts this <see cref="Box2"/> to a <see cref="Box2d"/>.
+        /// </summary>
+        /// <param name="box">The box to cast.</param>
+        public static explicit operator Box2d(Box2 box)
         {
-            return obj is Box2 && Equals((Box2)obj);
+            return new Box2d(box.Min, box.Max);
+        }
+
+        /// <summary>
+        /// Converts this <see cref="Box2"/> to a <see cref="Box2i"/> using truncation.
+        /// </summary>
+        /// <param name="box">The box to cast.</param>
+        /// <see cref="Round(Box2)"/>
+        /// <see cref="Ceiling(Box2)"/>
+        /// <see cref="Floor(Box2)"/>
+        /// <see cref="FloorCeiling(Box2)"/>
+        public static explicit operator Box2i(Box2 box)
+        {
+            return new Box2i((Vector2i)box.Min, (Vector2i)box.Max);
         }
 
         /// <inheritdoc/>
-        public bool Equals(Box2 other)
-        {
-            return _min.Equals(other._min) &&
-                   _max.Equals(other._max);
-        }
-
-        /// <inheritdoc/>
-        public override readonly int GetHashCode()
-        {
-            return HashCode.Combine(_min, _max);
-        }
-
-        /// <inheritdoc/>
-        public override string ToString()
+        public override readonly string ToString()
         {
             return ToString(null, null);
         }
 
         /// <inheritdoc cref="ToString(string, IFormatProvider)"/>
-        public string ToString(string format)
+        public readonly string ToString(string format)
         {
             return ToString(format, null);
         }
 
         /// <inheritdoc cref="ToString(string, IFormatProvider)"/>
-        public string ToString(IFormatProvider formatProvider)
+        public readonly string ToString(IFormatProvider formatProvider)
         {
             return ToString(null, formatProvider);
         }
 
         /// <inheritdoc/>
-        public string ToString(string format, IFormatProvider formatProvider)
+        public readonly string ToString(string format, IFormatProvider formatProvider)
         {
             return $"{Min.ToString(format, formatProvider)} - {Max.ToString(format, formatProvider)}";
         }

@@ -9,6 +9,8 @@ namespace OpenTK.Platform
     /// <summary>
     /// Options for open dialogs.
     /// </summary>
+    /// <seealso cref="Toolkit.Dialog"/>
+    /// <seealso cref="IDialogComponent.ShowOpenDialog(WindowHandle, string, string, DialogFileFilter[], OpenDialogOptions)"/>
     [Flags]
     public enum OpenDialogOptions
     {

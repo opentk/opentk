@@ -27,7 +27,7 @@ namespace OpenTK.Backends.Tests
         /// <summary>
         /// Name of the application.
         /// </summary>
-        string Name { get; }
+        static abstract string Name { get; }
 
         /// <summary>
         /// Called once when the app is initialized.

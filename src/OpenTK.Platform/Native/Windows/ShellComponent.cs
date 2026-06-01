@@ -28,17 +28,36 @@ namespace OpenTK.Platform.Native.Windows
         /// <inheritdoc/>
         public ILogger? Logger { get; set; }
 
+        internal ExecutionState OriginalExecutionState;
+
+        internal COM.ITaskbarList3 TaskbarList;
+
         /// <inheritdoc/>
         public void Initialize(ToolkitOptions options)
         {
+            OriginalExecutionState = Win32.SetThreadExecutionState(0);
+
             // Set the inital theme so we can detect changes later.
             LastTheme = GetCurrentTheme();
         }
 
         /// <inheritdoc/>
-        public void AllowScreenSaver(bool allow)
+        public void Uninitialize()
+        {
+            Win32.SetThreadExecutionState(OriginalExecutionState | ExecutionState.Continuous);
+        }
+
+        /// <inheritdoc/>
+        public void AllowScreenSaver(bool allow, string? disableReason)
         {
             Win32.SetThreadExecutionState(ExecutionState.Continuous | (allow ? 0 : ExecutionState.DisplayRequired));
+        }
+
+        /// <inheritdoc/>
+        public bool IsScreenSaverAllowed()
+        {
+            ExecutionState state = Win32.SetThreadExecutionState(0);
+            return state.HasFlag(ExecutionState.DisplayRequired) == false;
         }
 
         /// <inheritdoc/>
@@ -116,7 +135,7 @@ namespace OpenTK.Platform.Native.Windows
 
             if (theme != LastTheme)
             {
-                EventQueue.Raise(null, PlatformEventType.ThemeChange, new ThemeChangeEventArgs(theme));
+                Toolkit.Event.RaiseEvent(new ThemeChangeEventArgs(theme));
 
                 LastTheme = theme;
             }
@@ -308,6 +327,67 @@ namespace OpenTK.Platform.Native.Windows
             else
             {
                 throw new Win32Exception();
+            }
+        }
+
+        /// <summary>
+        /// Enum describing different progress modes.
+        /// </summary>
+        /// <seealso cref="SetProgressStatus(WindowHandle, ProgressMode, float)"/>
+        public enum ProgressMode
+        {
+            /// <summary>
+            /// No progress bar is shown.
+            /// </summary>
+            NoProgress,
+            /// <summary>
+            /// The application is processing data but cannot make a time estimate for when the operation will be finished.
+            /// </summary>
+            Indeterminate,
+            /// <summary>
+            /// The application is processing data. Use <c>completion</c> parameter of <see cref="SetProgressStatus(WindowHandle, ProgressMode, float)"/> to indicate current progress.
+            /// </summary>
+            Normal,
+
+            /// <summary>
+            /// The application encountered an error while processing data.
+            /// </summary>
+            Error,
+
+            /// <summary>
+            /// The application has paused the data processing.
+            /// </summary>
+            Paused,
+        }
+
+        /// <summary>
+        /// Sets the current progress status for a window.
+        /// The progress status is used to display a progress bar in the taskbar.
+        /// </summary>
+        /// <param name="handle">The window to set the progress status for.</param>
+        /// <param name="mode">The progress mode to use for the window.</param>
+        /// <param name="completion">A number in the range [0, 1] indicating progress. 0 being no progress and 1 meaning finished. Ignored if <paramref name="mode"/> is <see cref="ProgressMode.NoProgress"/> or <see cref="ProgressMode.Indeterminate"/>.</param>
+        /// <seealso cref="ProgressMode"/>
+        /// <seealso cref="macOS.MacOSShellComponent.SetProgressStatus(WindowHandle, macOS.MacOSShellComponent.ProgressMode, float)"/>
+        public void SetProgressStatus(WindowHandle handle, ProgressMode mode, float completion)
+        {
+            HWND hwnd = handle.As<HWND>(this);
+            TBPFLAG tbp = mode switch
+            {
+                ProgressMode.NoProgress => TBPFLAG.NoProgress,
+                ProgressMode.Indeterminate => TBPFLAG.Indeterminate,
+                ProgressMode.Normal => TBPFLAG.Normal,
+                ProgressMode.Error => TBPFLAG.Error,
+                ProgressMode.Paused => TBPFLAG.Paused,
+                _ => throw new InvalidEnumArgumentException(nameof(mode), (int)mode, mode.GetType()),
+            };
+            ulong progress = (ulong)(float.Clamp(completion, 0, 1) * uint.MaxValue);
+
+            TaskbarList.SetProgressState(hwnd.HWnd, tbp);
+
+            if (tbp != TBPFLAG.NoProgress && tbp != TBPFLAG.Indeterminate)
+            {
+                TaskbarList.SetProgressValue(hwnd.HWnd, progress, uint.MaxValue);
             }
         }
 

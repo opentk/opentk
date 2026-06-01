@@ -17,29 +17,13 @@ namespace LocalTestProject
 {
     public class Program
     {
-        static WindowComponent windowComp = new WindowComponent();
         static WindowHandle WindowHandle;
         static WindowHandle WindowHandle2;
 
-        static IOpenGLComponent glComp = new OpenGLComponent();
         static OpenGLContextHandle WindowContext;
         static OpenGLContextHandle Window2Context;
 
         static DisplayHandle PrimaryDisplayHandle;
-
-        static IMouseComponent mouseComp = new MouseComponent();
-        static ICursorComponent cursorComp = new CursorComponent();
-        static IIconComponent iconComp = new IconComponent();
-
-        static IDisplayComponent dispComp = new DisplayComponent();
-
-        static IKeyboardComponent keyboardComp = new KeyboardComponent();
-
-        static IClipboardComponent clipComp = new ClipboardComponent();
-
-        static IShellComponent shellComp = new ShellComponent();
-
-        static IJoystickComponent joystickComponent = new JoystickComponent();
 
         static CursorHandle CursorHandle;
         static CursorHandle ImageCursorHandle;
@@ -50,74 +34,45 @@ namespace LocalTestProject
 
         public static void Main(string[] args)
         {
-            // Set the logger for all of the components
-            // FIXME: A better way to set all of the loggers at the same time.
-            var logger = new ConsoleLogger();
-            windowComp.Logger = logger;
-            glComp.Logger = logger;
-            mouseComp.Logger = logger;
-            cursorComp.Logger = logger;
-            iconComp.Logger = logger;
-            dispComp.Logger = logger;
-            keyboardComp.Logger = logger;
-            clipComp.Logger = logger;
-            joystickComponent.Logger = logger;
+            Toolkit.Init(new ToolkitOptions() { ApplicationName = "Pal2 test project", Logger = new ConsoleLogger(), FeatureFlags = ToolkitFlags.EnableOpenGL });
 
-            ToolkitOptions options = new ToolkitOptions() { ApplicationName = "LocalTestProject", Logger = logger };
+            Console.WriteLine($"Current input language name: {Toolkit.Keyboard.GetActiveInputLanguage(null)}");
 
-            windowComp.Initialize(options);
-            glComp.Initialize(options);
-
-            dispComp.Initialize(options);
-
-            keyboardComp.Initialize(options);
-
-            iconComp.Initialize(options);
-            cursorComp.Initialize(options);
-
-            clipComp.Initialize(options);
-
-            shellComp.Initialize(options);
-
-            joystickComponent.Initialize(options);
-
-            Console.WriteLine($"Current Keyboard Layout name: {keyboardComp.GetActiveKeyboardLayout(null)}");
-
-            Console.WriteLine($"Available Keyboard Layouts:\n  {string.Join("\n  ", keyboardComp.GetAvailableKeyboardLayouts())}");
+            Console.WriteLine($"Installed input languages:\n  {string.Join("\n  ", Toolkit.Keyboard.GetInstalledInputLanguages())}");
 
             {
-                PrimaryDisplayHandle = dispComp.OpenPrimary();
-                string name = dispComp.GetName(PrimaryDisplayHandle);
-                dispComp.GetVideoMode(PrimaryDisplayHandle, out VideoMode videoMode);
-                dispComp.GetDisplayScale(PrimaryDisplayHandle, out float scaleX, out float scaleY);
+                PrimaryDisplayHandle = Toolkit.Display.OpenPrimary();
+                string name = Toolkit.Display.GetName(PrimaryDisplayHandle);
+                VideoMode videoMode = Toolkit.Display.GetVideoMode(PrimaryDisplayHandle);
+                Vector2 scale = Toolkit.Display.GetDisplayScale(PrimaryDisplayHandle);
                 Console.WriteLine($"Primary monitor name: {name}");
                 Console.WriteLine($"  {videoMode}");
-                Console.WriteLine($"  Scale: {scaleX}, {scaleY}");
+                Console.WriteLine($"  Scale: {scale.X}, {scale.Y}");
 
-                int modeCount = dispComp.GetSupportedVideoModes(PrimaryDisplayHandle).Length;
+                int modeCount = Toolkit.Display.GetSupportedVideoModes(PrimaryDisplayHandle).Length;
                 Console.WriteLine($"Primary monitor supports {modeCount} video modes.");
 
-                if (dispComp.GetDisplayCount() > 1)
+                if (Toolkit.Display.GetDisplayCount() > 1)
                 {
-                    var secondaryHandle = dispComp.Open(1);
-                    modeCount = dispComp.GetSupportedVideoModes(secondaryHandle).Length;
+                    var secondaryHandle = Toolkit.Display.Open(1);
+                    modeCount = Toolkit.Display.GetSupportedVideoModes(secondaryHandle).Length;
                     Console.WriteLine($"Secondary monitor supports {modeCount} video modes.");
                 }
                 
                 Console.WriteLine();
             }
 
-            Console.WriteLine($"Monitors: {dispComp.GetDisplayCount()}");
-            for (int i = 0; i < dispComp.GetDisplayCount(); i++)
+            Console.WriteLine($"Monitors: {Toolkit.Display.GetDisplayCount()}");
+            for (int i = 0; i < Toolkit.Display.GetDisplayCount(); i++)
             {
-                DisplayHandle disp = dispComp.Open(i);
+                DisplayHandle disp = Toolkit.Display.Open(i);
 
-                string name = dispComp.GetName(disp);
-                dispComp.GetVideoMode(disp, out VideoMode videoMode);
-                dispComp.GetDisplayScale(disp, out float scaleX, out float scaleY);
+                string name = Toolkit.Display.GetName(disp);
+                VideoMode videoMode = Toolkit.Display.GetVideoMode(disp);
+                Vector2 scale = Toolkit.Display.GetDisplayScale(disp);
                 Console.WriteLine($"Primary monitor name: {name}");
                 Console.WriteLine($"  {videoMode}");
-                Console.WriteLine($"  Scale: {scaleX}, {scaleY}");
+                Console.WriteLine($"  Scale: {scale.X}, {scale.Y}");
                 Console.WriteLine();
             }
             Console.WriteLine();
@@ -132,60 +87,60 @@ namespace LocalTestProject
                 StencilBits = ContextStencilBits.Stencil8,
             };
 
-            WindowHandle = windowComp.Create(contextSettings);
+            WindowHandle = Toolkit.Window.Create(contextSettings);
 
-            WindowContext = glComp.CreateFromWindow(WindowHandle);
+            WindowContext = Toolkit.OpenGL.CreateFromWindow(WindowHandle);
 
             contextSettings.SharedContext = WindowContext;
 
-            WindowHandle2 = windowComp.Create(contextSettings);
+            WindowHandle2 = Toolkit.Window.Create(contextSettings);
 
-            Window2Context = glComp.CreateFromWindow(WindowHandle2);
+            Window2Context = Toolkit.OpenGL.CreateFromWindow(WindowHandle2);
 
             SetWindowSettings(WindowHandle, "Cool test window", 600, 400);
             SetWindowSettings(WindowHandle2, "Cool test window #2", 300, 300);
 
-            windowComp.GetPosition(WindowHandle, out Vector2i position);
-            windowComp.GetSize(WindowHandle, out Vector2i size);
-            windowComp.GetClientPosition(WindowHandle, out Vector2i cPosition);
-            windowComp.GetClientSize(WindowHandle, out Vector2i cSize);
+            Toolkit.Window.GetPosition(WindowHandle, out Vector2i position);
+            Toolkit.Window.GetSize(WindowHandle, out Vector2i size);
+            Toolkit.Window.GetClientPosition(WindowHandle, out Vector2i cPosition);
+            Toolkit.Window.GetClientSize(WindowHandle, out Vector2i cSize);
             Console.WriteLine($"Window: X: {position.X}, Y: {position.Y}, Width: {size.X}, Height: {size.Y}");
             Console.WriteLine($"Client: X: {cPosition.X}, Y {cPosition.Y} Width: {cSize.X}, Height: {cSize.Y}");
 
-            windowComp.SetClientSize(WindowHandle, (600, 400));
-            windowComp.SetClientPosition(WindowHandle, (100, 100));
+            Toolkit.Window.SetClientSize(WindowHandle, (600, 400));
+            Toolkit.Window.SetClientPosition(WindowHandle, (100, 100));
 
-            windowComp.SetMinClientSize(WindowHandle, 200, 200);
-            windowComp.SetMaxClientSize(WindowHandle, 1600, 900);
+            Toolkit.Window.SetMinClientSize(WindowHandle, 200, 200);
+            Toolkit.Window.SetMaxClientSize(WindowHandle, 1600, 900);
 
-            windowComp.GetPosition(WindowHandle, out position);
-            windowComp.GetSize(WindowHandle, out size);
-            windowComp.GetClientPosition(WindowHandle, out cPosition);
-            windowComp.GetClientSize(WindowHandle, out cSize);
+            Toolkit.Window.GetPosition(WindowHandle, out position);
+            Toolkit.Window.GetSize(WindowHandle, out size);
+            Toolkit.Window.GetClientPosition(WindowHandle, out cPosition);
+            Toolkit.Window.GetClientSize(WindowHandle, out cSize);
             Console.WriteLine($"Window: X: {position.X}, Y: {position.Y}, Width: {size.X}, Height: {size.Y}");
             Console.WriteLine($"Client: X: {cPosition.X}, Y {cPosition.Y} Width: {cSize.X}, Height: {cSize.Y}");
 
-            var mode = windowComp.GetMode(WindowHandle);
+            var mode = Toolkit.Window.GetMode(WindowHandle);
             Console.WriteLine($"Mode: {mode}");
 
-            windowComp.SetMode(WindowHandle, WindowMode.Normal);
-            windowComp.SetMode(WindowHandle2, WindowMode.Normal);
+            Toolkit.Window.SetMode(WindowHandle, WindowMode.Normal);
+            Toolkit.Window.SetMode(WindowHandle2, WindowMode.Normal);
 
-            windowComp.SetPosition(WindowHandle2, (0, 0));
+            Toolkit.Window.SetPosition(WindowHandle2, (0, 0));
 
-            mode = windowComp.GetMode(WindowHandle);
+            mode = Toolkit.Window.GetMode(WindowHandle);
             Console.WriteLine($"Mode: {mode}");
 
             // Subscribe to all events
-            EventQueue.EventRaised += EventQueue_EventRaised;
+            Toolkit.Event.EventRaised += EventQueue_EventRaised;
 
-            glComp.SetCurrentContext(WindowContext);
-            GLLoader.LoadBindings(glComp.GetBindingsContext(WindowContext));
+            Toolkit.OpenGL.SetCurrentContext(WindowContext);
+            GLLoader.LoadBindings(Toolkit.OpenGL.GetBindingsContext(WindowContext));
 
-            CursorHandle = cursorComp.Create(SystemCursorType.TextBeam);
-            cursorComp.GetSize(CursorHandle, out _, out _);
-            windowComp.SetCursor(WindowHandle, CursorHandle);
-            windowComp.SetCursor(WindowHandle2, CursorHandle);
+            CursorHandle = Toolkit.Cursor.Create(SystemCursorType.TextBeam);
+            Toolkit.Cursor.GetSize(CursorHandle, out _, out _);
+            Toolkit.Window.SetCursor(WindowHandle, CursorHandle);
+            Toolkit.Window.SetCursor(WindowHandle2, CursorHandle);
 
             byte[] image = new byte[16 * 16 * 3];
             byte[] mask = new byte[16 * 16 * 1];
@@ -202,8 +157,8 @@ namespace LocalTestProject
                     mask[(ccy * 16 + ccx)] = (byte)((ccy % 2 == 0) ? 1 : 0);
                 }
             }
-            ImageCursorHandle = cursorComp.Create(16, 16, image, mask, 8, 8);
-            windowComp.SetCursor(WindowHandle2, ImageCursorHandle);
+            ImageCursorHandle = Toolkit.Cursor.Create(16, 16, image, mask, 8, 8);
+            Toolkit.Window.SetCursor(WindowHandle2, ImageCursorHandle);
 
             {
                 byte[] icon = new byte[16 * 16 * 4];
@@ -240,18 +195,18 @@ namespace LocalTestProject
                     }
                 }
 
-                IconHandle = iconComp.Create(16, 16, icon);
+                IconHandle = Toolkit.Icon.Create(16, 16, icon);
 
-                windowComp.SetIcon(WindowHandle, IconHandle);
+                Toolkit.Window.SetIcon(WindowHandle, IconHandle);
 
                 // FIXME: Make reading icon data backend specific?
                 {
-                    iconComp.GetSize(IconHandle, out int iw, out int ih);
+                    Toolkit.Icon.GetSize(IconHandle, out int iw, out int ih);
 
-                    int bytes = ((IconComponent)iconComp).GetBitmapByteSize(IconHandle);
+                    int bytes = ((IconComponent)Toolkit.Icon).GetBitmapByteSize(IconHandle);
                     byte[] data = new byte[bytes];
 
-                    ((IconComponent)iconComp).GetBitmapData(IconHandle, data);
+                    ((IconComponent)Toolkit.Icon).GetBitmapData(IconHandle, data);
 
                     Debug.Assert(iw == 16);
                     Debug.Assert(ih == 16);
@@ -261,27 +216,28 @@ namespace LocalTestProject
             }
 
             {
-                IconHandle2 = (iconComp as IconComponent)?.CreateFromIcoFile("Wikipedia-Flags-UN-United-Nations-Flag.ico") ??
-                                iconComp.Create(SystemIconType.Default);
+                IconHandle2 = (Toolkit.Icon as IconComponent)?.CreateFromIcoFile("Wikipedia-Flags-UN-United-Nations-Flag.ico") ??
+                                Toolkit.Icon.Create(SystemIconType.Default);
                 
-                windowComp.SetIcon(WindowHandle2, IconHandle2);
+                Toolkit.Window.SetIcon(WindowHandle2, IconHandle2);
             }
 
-            FileCursorHandle = (cursorComp as CursorComponent)?.CreateFromCurFile("Cute Light Green Normal Select.cur") ??
-                                cursorComp.Create(SystemCursorType.Default);
+            FileCursorHandle = (Toolkit.Cursor as CursorComponent)?.CreateFromCurFile("Cute Light Green Normal Select.cur") ??
+                                Toolkit.Cursor.Create(SystemCursorType.Default);
 
-            windowComp.SetCursor(WindowHandle, FileCursorHandle);
+            Toolkit.Window.SetCursor(WindowHandle, FileCursorHandle);
 
             {
-                cursorComp.GetSize(ImageCursorHandle, out int curW, out int curH);
+                Toolkit.Cursor.GetSize(ImageCursorHandle, out int curW, out int curH);
                 Console.WriteLine($"Width: {curW}, Height: {curH}");
             }
 
-            for (int i = 0; i < 4; i++)
+            int noJoysticks = Toolkit.Joystick.GetJoystickCount();
+            for (int i = 0; i < noJoysticks; i++)
             {
-                var handle = joystickComponent.Open(i);
+                var handle = Toolkit.Joystick.Open(i);
 
-                if (joystickComponent.TryGetBatteryInfo(handle, out GamepadBatteryInfo info))
+                if (Toolkit.Joystick.TryGetBatteryInfo(handle, out GamepadBatteryInfo info))
                 {
                     Console.WriteLine($"Gamepad {i+1}: {info.BatteryType} {info.ChargeLevel*100}%");
                 }
@@ -290,17 +246,17 @@ namespace LocalTestProject
                     Console.WriteLine($"Could not get battery info for gamepad {i+1}");
                 }
 
-                joystickComponent.Close(handle);
+                Toolkit.Joystick.Close(handle);
             }
 
             Init();
             while (true)
             {
-                windowComp.ProcessEvents(false);
+                Toolkit.Window.ProcessEvents(false);
 
                 // If both of our windows are closed, we exit the application.
-                if (windowComp.IsWindowDestroyed(WindowHandle) &&
-                    windowComp.IsWindowDestroyed(WindowHandle2))
+                if (Toolkit.Window.IsWindowDestroyed(WindowHandle) &&
+                    Toolkit.Window.IsWindowDestroyed(WindowHandle2))
                 {
                     break;
                 }
@@ -314,74 +270,64 @@ namespace LocalTestProject
 
         public static void SetWindowSettings(WindowHandle handle, string title, int width, int height)
         {
-            windowComp.SetTitle(handle, title);
+            Toolkit.Window.SetTitle(handle, title);
 
-            windowComp.SetSize(handle, (width, height));
-            //windowComp.SetPosition(handle, 100, 100);
+            Toolkit.Window.SetSize(handle, (width, height));
+            //Toolkit.Window.SetPosition(handle, 100, 100);
 
-            windowComp.SetBorderStyle(handle, WindowBorderStyle.Borderless);
-            WindowBorderStyle border = windowComp.GetBorderStyle(handle);
+            Toolkit.Window.SetBorderStyle(handle, WindowBorderStyle.Borderless);
+            WindowBorderStyle border = Toolkit.Window.GetBorderStyle(handle);
             Console.WriteLine($"Border: {border}");
 
-            windowComp.SetBorderStyle(handle, WindowBorderStyle.FixedBorder);
-            border = windowComp.GetBorderStyle(handle);
+            Toolkit.Window.SetBorderStyle(handle, WindowBorderStyle.FixedBorder);
+            border = Toolkit.Window.GetBorderStyle(handle);
             Console.WriteLine($"Border: {border}");
 
-            windowComp.SetBorderStyle(handle, WindowBorderStyle.ResizableBorder);
-            border = windowComp.GetBorderStyle(handle);
+            Toolkit.Window.SetBorderStyle(handle, WindowBorderStyle.ResizableBorder);
+            border = Toolkit.Window.GetBorderStyle(handle);
             Console.WriteLine($"Border: {border}");
         }
 
         static List<Scancode> vks = new List<Scancode>();
 
         static Vector2 MousePos = (0, 0);
-        private static void EventQueue_EventRaised(PalHandle? handle, PlatformEventType type, EventArgs args)
+        private static void EventQueue_EventRaised(EventArgs args)
         {
-            if (type == PlatformEventType.MouseMove)
+            if (args is MouseMoveEventArgs mouseMoveArgs)
             {
-                MouseMoveEventArgs mouseMoveArgs = (MouseMoveEventArgs)args;
-
                 //Console.WriteLine($"Delta X: {mouseMoveArgs.DeltaX}, DeltaY: {mouseMoveArgs.DeltaY}");
 
                 MousePos = mouseMoveArgs.ClientPosition;
 
-                if (windowComp.IsWindowDestroyed(WindowHandle) == false)
+                if (Toolkit.Window.IsWindowDestroyed(WindowHandle) == false)
                 {
-                    windowComp.ScreenToClient(WindowHandle, MousePos, out Vector2 client);
-                    windowComp.SetTitle(WindowHandle, $"({client.X},{client.Y})");
+                    Toolkit.Window.ScreenToClient(WindowHandle, MousePos, out Vector2 client);
+                    Toolkit.Window.SetTitle(WindowHandle, $"({client.X},{client.Y})");
                 }
             }
-            else if (type == PlatformEventType.MouseDown)
+            else if (args is MouseButtonUpEventArgs mouseButtonDownArgs)
             {
-                MouseButtonDownEventArgs mouseButtonDownArgs = (MouseButtonDownEventArgs)args;
-
                 Console.WriteLine($"Pressed Mouse Button: {mouseButtonDownArgs.Button}");
 
                 if (mouseButtonDownArgs.Button == MouseButton.Button1)
                 {
-                    keyboardComp.BeginIme(WindowHandle);
+                    Toolkit.Keyboard.BeginIme(WindowHandle);
 
-                    keyboardComp.SetImeRectangle(WindowHandle, (int)MousePos.X, (int)MousePos.Y, 0, 0);
+                    Toolkit.Keyboard.SetImeRectangle(WindowHandle, mouseButtonDownArgs.ClientPosition.X, mouseButtonDownArgs.ClientPosition.Y, 0, 0);
 
-                    keyboardComp.EndIme(WindowHandle);
+                    Toolkit.Keyboard.EndIme(WindowHandle);
                 }
             }
-            else if (type == PlatformEventType.MouseUp)
+            else if (args is MouseButtonUpEventArgs mouseButtonUpArgs)
             {
-                MouseButtonUpEventArgs mouseButtonUpArgs = (MouseButtonUpEventArgs)args;
-
                 Console.WriteLine($"Released Mouse Button: {mouseButtonUpArgs.Button}");
             }
-            else if (type == PlatformEventType.Close)
+            else if (args is CloseEventArgs closeArgs)
             {
-                CloseEventArgs closeArgs = (CloseEventArgs)args;
-
-                windowComp.Destroy(closeArgs.Window);
+                Toolkit.Window.Destroy(closeArgs.Window);
             }
-            else if (type == PlatformEventType.Focus)
+            else if (args is FocusEventArgs focus)
             {
-                FocusEventArgs focus = (FocusEventArgs)args;
-
                 if (focus.GotFocus)
                 {
                     Console.WriteLine("Got focus");
@@ -391,20 +337,16 @@ namespace LocalTestProject
                     Console.WriteLine("Lost focus");
                 }
             }
-            else if (type == PlatformEventType.TextInput)
+            else if (args is TextInputEventArgs input )
             {
-                TextInputEventArgs input = (TextInputEventArgs)args;
-
                 Console.WriteLine($"Input: {input.Text}");
 
                 Console.WriteLine($"Scancodes: {string.Join(", ", vks)}");
                 
                 vks.Clear();
             }
-            else if (type == PlatformEventType.MouseEnter)
+            else if (args is MouseEnterEventArgs enter)
             {
-                MouseEnterEventArgs enter = (MouseEnterEventArgs)args;
-
                 if (enter.Entered)
                 {
                     Console.WriteLine($"Mouse entered.");
@@ -414,16 +356,12 @@ namespace LocalTestProject
                     Console.WriteLine("Mouse exited.");
                 }
             }
-            else if (type == PlatformEventType.FileDrop)
+            else if (args is FileDropEventArgs fileDrop)
             {
-                FileDropEventArgs fileDrop = (FileDropEventArgs)args;
-
                 Console.WriteLine($"Files dropped! Position: {fileDrop.Position}, Paths: {string.Join(", ", fileDrop.FilePaths)}");
             }
-            else if (type == PlatformEventType.KeyDown)
+            else if (args is KeyDownEventArgs keyDown)
             {
-                KeyDownEventArgs keyDown = (KeyDownEventArgs)args;
-
                 Console.WriteLine($"keyDown: {keyDown.Key}");
 
                 if (keyDown.IsRepeat == false)
@@ -434,27 +372,27 @@ namespace LocalTestProject
                     // FIXME: What does bpp=32 compared to bpp=24?
                     VideoMode mode = new VideoMode(1920, 1080, 144, 32);
 
-                    if (windowComp.GetMode(keyDown.Window) == WindowMode.WindowedFullscreen)
+                    if (Toolkit.Window.GetMode(keyDown.Window) == WindowMode.WindowedFullscreen)
                     {
-                        windowComp.SetMode(keyDown.Window, WindowMode.Normal);
+                        Toolkit.Window.SetMode(keyDown.Window, WindowMode.Normal);
                     }
                     else
                     {
-                        windowComp.SetMode(keyDown.Window, WindowMode.WindowedFullscreen);
+                        Toolkit.Window.SetMode(keyDown.Window, WindowMode.WindowedFullscreen);
                     }
                 }
                 else if (keyDown.Key == Key.M)
                 {
-                    windowComp.GetFullscreenDisplay(keyDown.Window, out var display);
-                    Console.WriteLine($"Current fullscreen display: {(display != null ? dispComp.GetName(display) : "null")}");
+                    Toolkit.Window.GetFullscreenDisplay(keyDown.Window, out var display);
+                    Console.WriteLine($"Current fullscreen display: {(display != null ? Toolkit.Display.GetName(display) : "null")}");
                 }
                 else if (keyDown.Key == Key.C)
                 {
-                    clipComp.SetClipboardText("Copy");
+                    Toolkit.Clipboard.SetClipboardText("Copy");
                 }
                 else if (keyDown.Key == Key.V)
                 {
-                    clipComp.SetClipboardText("Paste");
+                    Toolkit.Clipboard.SetClipboardText("Paste");
                 }
                 else if (keyDown.Key == Key.A)
                 {
@@ -473,7 +411,7 @@ namespace LocalTestProject
                         data.Audio[i] = s;
                     }
 
-                    ((ClipboardComponent)clipComp).SetClipboardAudio(data);
+                    ((ClipboardComponent)Toolkit.Clipboard).SetClipboardAudio(data);
                 }
                 else if (keyDown.Key == Key.B)
                 {
@@ -532,23 +470,23 @@ namespace LocalTestProject
                     
                     Bitmap bitmap = new Bitmap(W, H, b);
 
-                    ((ClipboardComponent)clipComp).SetClipboardBitmap(bitmap);
+                    ((ClipboardComponent)Toolkit.Clipboard).SetClipboardBitmap(bitmap);
                 }
                 else if (keyDown.Key == Key.P)
                 {
-                    ClipboardFormat format = clipComp.GetClipboardFormat();
+                    ClipboardFormat format = Toolkit.Clipboard.GetClipboardFormat();
                     Console.WriteLine($"Clipboard format: {format}");
                     switch (format)
                     {
                         case ClipboardFormat.Text:
-                            Console.WriteLine($"Current clipboard: '{clipComp.GetClipboardText()}'");
+                            Console.WriteLine($"Current clipboard: '{Toolkit.Clipboard.GetClipboardText()}'");
                             break;
                         case ClipboardFormat.Files:
-                            Console.WriteLine($"Current clipboard: '{string.Join(", ", clipComp.GetClipboardFiles()!)}'");
+                            Console.WriteLine($"Current clipboard: '{string.Join(", ", Toolkit.Clipboard.GetClipboardFiles()!)}'");
                             break;
                         case ClipboardFormat.Bitmap:
                             {
-                                Bitmap? bitmap = clipComp.GetClipboardBitmap();
+                                Bitmap? bitmap = Toolkit.Clipboard.GetClipboardBitmap();
                                 if (bitmap == null)
                                 {
                                     Console.WriteLine("Could not get clipboard image!");
@@ -559,19 +497,19 @@ namespace LocalTestProject
                                 var tex = GL.GenTexture();
 
                                 GL.ActiveTexture(TextureUnit.Texture0);
-                                GL.BindTexture(TextureTarget.Texture2d, tex);
+                                GL.BindTexture(TextureTarget.Texture2D, tex);
 
-                                GL.TexImage2D(TextureTarget.Texture2d, 0, InternalFormat.Rgba8, bitmap.Width, bitmap.Height, 0, PixelFormat.Rgba, PixelType.UnsignedByte, bitmap.Data);
+                                GL.TexImage2D(TextureTarget.Texture2D, 0, InternalFormat.Rgba8, bitmap.Width, bitmap.Height, 0, PixelFormat.Rgba, PixelType.UnsignedByte, bitmap.Data);
 
-                                GL.GenerateMipmap(TextureTarget.Texture2d);
+                                GL.GenerateMipmap(TextureTarget.Texture2D);
 
-                                GL.TexParameteri(TextureTarget.Texture2d, TextureParameterName.TextureWrapS, (int)TextureWrapMode.ClampToEdge);
-                                GL.TexParameteri(TextureTarget.Texture2d, TextureParameterName.TextureWrapT, (int)TextureWrapMode.ClampToEdge);
+                                GL.TexParameteri(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, (int)TextureWrapMode.ClampToEdge);
+                                GL.TexParameteri(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (int)TextureWrapMode.ClampToEdge);
 
-                                GL.TexParameteri(TextureTarget.Texture2d, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Nearest);
-                                GL.TexParameteri(TextureTarget.Texture2d, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Nearest);
+                                GL.TexParameteri(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Nearest);
+                                GL.TexParameteri(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Nearest);
 
-                                GL.BindTexture(TextureTarget.Texture2d, 0);
+                                GL.BindTexture(TextureTarget.Texture2D, 0);
 
                                 if (clipboard_tex != 0)
                                 {
@@ -584,7 +522,7 @@ namespace LocalTestProject
                             }
                         case ClipboardFormat.Audio:
                             {
-                                var audio = clipComp.GetClipboardAudio()!;
+                                var audio = Toolkit.Clipboard.GetClipboardAudio()!;
 
                                 int samples = audio.Audio.Length;
                                 if (audio.Stereo) samples /= 2;
@@ -601,23 +539,23 @@ namespace LocalTestProject
                 }
                 else if (keyDown.Key == Key.D)
                 {
-                    DisplayHandle disp = windowComp.GetDisplay(WindowHandle);
-                    bool isPrimary = dispComp.IsPrimary(disp);
-                    dispComp.GetResolution(disp, out int resX, out int resY);
-                    dispComp.GetRefreshRate(disp, out float refreshRate);
+                    DisplayHandle disp = Toolkit.Window.GetDisplay(WindowHandle);
+                    bool isPrimary = Toolkit.Display.IsPrimary(disp);
+                    Vector2i resolution = Toolkit.Display.GetResolution(disp);
+                    float refreshRate = Toolkit.Display.GetRefreshRate(disp);
 
-                    string name = dispComp.GetName(disp);
+                    string name = Toolkit.Display.GetName(disp);
                     
-                    Console.WriteLine($"Window is on monitor '{name}', primary: {isPrimary}, res: ({resX}x{resY}, refresh rate: {refreshRate:0.})");
+                    Console.WriteLine($"Window is on monitor '{name}', primary: {isPrimary}, res: ({resolution.X}x{resolution.Y}, refresh rate: {refreshRate:0.})");
                 }
                 else if (keyDown.Key == Key.S)
                 {
-                    windowComp.GetClientSize(WindowHandle, out Vector2i size);
+                    Toolkit.Window.GetClientSize(WindowHandle, out Vector2i size);
                     Console.WriteLine($"Window 1 client size: ({size.X}, {size.Y})");
                 }
                 else if (keyDown.Key == Key.Q)
                 {
-                    BatteryStatus status = shellComp.GetBatteryInfo(out BatteryInfo info);
+                    BatteryStatus status = Toolkit.Shell.GetBatteryInfo(out BatteryInfo info);
                     switch (status)
                     {
                         default:
@@ -636,44 +574,34 @@ namespace LocalTestProject
                 {
                     
 
-                    var style = windowComp.GetBorderStyle(WindowHandle);
+                    var style = Toolkit.Window.GetBorderStyle(WindowHandle);
                     Console.WriteLine($"Before: {style}");
                     style += 1;
                     style = (WindowBorderStyle)((int)style % 4);
 
-                    windowComp.SetBorderStyle(WindowHandle, style);
+                    Toolkit.Window.SetBorderStyle(WindowHandle, style);
 
-                    Console.WriteLine($"After: {style}, Result: {windowComp.GetBorderStyle(WindowHandle)}");
+                    Console.WriteLine($"After: {style}, Result: {Toolkit.Window.GetBorderStyle(WindowHandle)}");
                 }
             }
-            else if (type == PlatformEventType.KeyUp)
+            else if (args is KeyUpEventArgs keyUp)
             {
-                KeyUpEventArgs keyUp = (KeyUpEventArgs)args;
-
                 Console.WriteLine($"keyUp: {keyUp.Key}");
             }
-            else if (type == PlatformEventType.WindowMove)
+            else if (args is WindowMoveEventArgs move)
             {
-                WindowMoveEventArgs move = (WindowMoveEventArgs)args;
-
-                Console.WriteLine($"Window '{windowComp.GetTitle(move.Window)}' at client pos: ({move.ClientAreaPosition}), window pos: {move.WindowPosition}");
+                Console.WriteLine($"Window '{Toolkit.Window.GetTitle(move.Window)}' at client pos: ({move.ClientAreaPosition}), window pos: {move.WindowPosition}");
             }
-            else if (type == PlatformEventType.WindowResize)
+            else if (args is WindowResizeEventArgs resize)
             {
-                WindowResizeEventArgs resize = (WindowResizeEventArgs)args;
-
-                Console.WriteLine($"Window '{windowComp.GetTitle(resize.Window)}' new size: ({resize.NewSize})");
+                Console.WriteLine($"Window '{Toolkit.Window.GetTitle(resize.Window)}' new size: ({resize.NewSize})");
             }
-            else if (type == PlatformEventType.WindowModeChange)
+            else if (args is WindowModeChangeEventArgs modeChange)
             {
-                WindowModeChangeEventArgs modeChange = (WindowModeChangeEventArgs)args;
-
-                Console.WriteLine($"Window '{windowComp.GetTitle(modeChange.Window)}' new mode: ({modeChange.NewMode})");
+                Console.WriteLine($"Window '{Toolkit.Window.GetTitle(modeChange.Window)}' new mode: ({modeChange.NewMode})");
             }
-            else if (type == PlatformEventType.PowerStateChange)
+            else if (args is PowerStateChangeEventArgs powerStateChange)
             {
-                PowerStateChangeEventArgs powerStateChange = (PowerStateChangeEventArgs)args;
-
                 if (powerStateChange.GoingToSleep)
                 {
                     Console.WriteLine("Going to sleep?");
@@ -683,9 +611,8 @@ namespace LocalTestProject
                     Console.WriteLine("Waking up?");
                 }
             }
-            else if (type == PlatformEventType.ClipboardUpdate)
+            else if (args is ClipboardUpdateEventArgs clipboardUpdate)
             {
-                ClipboardUpdateEventArgs clipboardUpdate = (ClipboardUpdateEventArgs)args;
                 Console.WriteLine($"Clipboard update! New format: {clipboardUpdate.NewFormat}");
             }
         }
@@ -730,10 +657,10 @@ void main()
 
         public static int GetCursorImage(CursorHandle handle)
         {
-            cursorComp.GetSize(handle, out int width, out int height);
+            Toolkit.Cursor.GetSize(handle, out int width, out int height);
             byte[] data = new byte[width * height * 4];
             // FIXME: Handle proper RGBA format when using AND and XOR masks. Atm it gets a constant alpha = 0.
-            ((CursorComponent)cursorComp).GetImage(handle, data);
+            ((CursorComponent)Toolkit.Cursor).GetImage(handle, data);
 
             for (int i = 0; i < width * height; i++)
             {
@@ -745,47 +672,47 @@ void main()
             int tex = GL.GenTexture();
 
             GL.ActiveTexture(TextureUnit.Texture0);
-            GL.BindTexture(TextureTarget.Texture2d, tex);
+            GL.BindTexture(TextureTarget.Texture2D, tex);
 
-            GL.TexImage2D(TextureTarget.Texture2d, 0, InternalFormat.Rgba8, width, height, 0, PixelFormat.Rgba, PixelType.UnsignedByte, data);
+            GL.TexImage2D(TextureTarget.Texture2D, 0, InternalFormat.Rgba8, width, height, 0, PixelFormat.Rgba, PixelType.UnsignedByte, data);
 
-            GL.GenerateMipmap(TextureTarget.Texture2d);
+            GL.GenerateMipmap(TextureTarget.Texture2D);
 
-            GL.TexParameteri(TextureTarget.Texture2d, TextureParameterName.TextureWrapS, (int)TextureWrapMode.ClampToEdge);
-            GL.TexParameteri(TextureTarget.Texture2d, TextureParameterName.TextureWrapT, (int)TextureWrapMode.ClampToEdge);
+            GL.TexParameteri(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, (int)TextureWrapMode.ClampToEdge);
+            GL.TexParameteri(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (int)TextureWrapMode.ClampToEdge);
 
-            GL.TexParameteri(TextureTarget.Texture2d, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Nearest);
+            GL.TexParameteri(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Nearest);
 
-            GL.BindTexture(TextureTarget.Texture2d, 0);
+            GL.BindTexture(TextureTarget.Texture2D, 0);
 
             return tex;
         }
 
         public static int GetIconImage(IconHandle handle)
         {
-            int size = ((IconComponent)iconComp).GetBitmapByteSize(handle);
+            int size = ((IconComponent)Toolkit.Icon).GetBitmapByteSize(handle);
             byte[] data = new byte[size];
             
             // FIXME: Handle proper RGBA format when using AND and XOR masks. Atm it gets a constant alpha = 0.
-            ((IconComponent)iconComp).GetBitmapData(handle, data);
+            ((IconComponent)Toolkit.Icon).GetBitmapData(handle, data);
 
-            iconComp.GetSize(handle, out int width, out int height);
+            Toolkit.Icon.GetSize(handle, out int width, out int height);
 
             int tex = GL.GenTexture();
 
             GL.ActiveTexture(TextureUnit.Texture0);
-            GL.BindTexture(TextureTarget.Texture2d, tex);
+            GL.BindTexture(TextureTarget.Texture2D, tex);
 
-            GL.TexImage2D(TextureTarget.Texture2d, 0, InternalFormat.Rgba8, width, height, 0, PixelFormat.Rgba, PixelType.UnsignedByte, data);
+            GL.TexImage2D(TextureTarget.Texture2D, 0, InternalFormat.Rgba8, width, height, 0, PixelFormat.Rgba, PixelType.UnsignedByte, data);
 
-            GL.GenerateMipmap(TextureTarget.Texture2d);
+            GL.GenerateMipmap(TextureTarget.Texture2D);
 
-            GL.TexParameteri(TextureTarget.Texture2d, TextureParameterName.TextureWrapS, (int)TextureWrapMode.ClampToEdge);
-            GL.TexParameteri(TextureTarget.Texture2d, TextureParameterName.TextureWrapT, (int)TextureWrapMode.ClampToEdge);
+            GL.TexParameteri(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, (int)TextureWrapMode.ClampToEdge);
+            GL.TexParameteri(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (int)TextureWrapMode.ClampToEdge);
 
-            GL.TexParameteri(TextureTarget.Texture2d, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Nearest);
+            GL.TexParameteri(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Nearest);
 
-            GL.BindTexture(TextureTarget.Texture2d, 0);
+            GL.BindTexture(TextureTarget.Texture2D, 0);
 
             return tex;
         }
@@ -808,7 +735,7 @@ void main()
             -1f * 0.5f, -1f * 0.5f, 0f,     0f, 0f,     1f, 0f, 0f,
             };
 
-            glComp.SetCurrentContext(WindowContext);
+            Toolkit.OpenGL.SetCurrentContext(WindowContext);
 
             buffer = CreateBuffer(vertices);
             vao = CreateVAO(buffer);
@@ -826,12 +753,12 @@ void main()
             
             CheckError("get cursor tex");
 
-            glComp.SetCurrentContext(Window2Context);
+            Toolkit.OpenGL.SetCurrentContext(Window2Context);
 
             vao2 = CreateVAO(buffer);
             program2 = CreateShader("", vertexShaderSource, fragmentShaderSource);
 
-            glComp.SetCurrentContext(WindowContext);
+            Toolkit.OpenGL.SetCurrentContext(WindowContext);
 
             CheckError("getString");
 
@@ -940,34 +867,36 @@ void main()
             float deltaTime = watch.ElapsedTicks / (float)Stopwatch.Frequency;
             watch.Restart();
 
+            // FIXME: Joystick & Gamepad api...
+            /*
             for (int i = 0; i < 4; i++)
             {
                 int player = i + 1;
-                JoystickHandle handle = joystickComponent.Open(i);
+                JoystickHandle handle = Toolkit.Joystick.Open(i);
 
-                float leftX = joystickComponent.GetAxis(handle, JoystickAxis.LeftXAxis);
-                float leftY = joystickComponent.GetAxis(handle, JoystickAxis.LeftYAxis);
-                float rightX = joystickComponent.GetAxis(handle, JoystickAxis.RightXAxis);
-                float rightY = joystickComponent.GetAxis(handle, JoystickAxis.RightYAxis);
-                float triggerLeft = joystickComponent.GetAxis(handle, JoystickAxis.LeftTrigger);
-                float triggerRight = joystickComponent.GetAxis(handle, JoystickAxis.RightTrigger);
+                float leftX = Toolkit.Joystick.GetAxis(handle, JoystickAxis.LeftXAxis);
+                float leftY = Toolkit.Joystick.GetAxis(handle, JoystickAxis.LeftYAxis);
+                float rightX = Toolkit.Joystick.GetAxis(handle, JoystickAxis.RightXAxis);
+                float rightY = Toolkit.Joystick.GetAxis(handle, JoystickAxis.RightYAxis);
+                float triggerLeft = Toolkit.Joystick.GetAxis(handle, JoystickAxis.LeftTrigger);
+                float triggerRight = Toolkit.Joystick.GetAxis(handle, JoystickAxis.RightTrigger);
 
-                if (MathF.Abs(leftX) < joystickComponent.LeftDeadzone)
+                if (MathF.Abs(leftX) < Toolkit.Joystick.LeftDeadzone)
                     leftX = 0;
 
-                if (MathF.Abs(leftY) < joystickComponent.LeftDeadzone)
+                if (MathF.Abs(leftY) < Toolkit.Joystick.LeftDeadzone)
                     leftY = 0;
 
-                if (MathF.Abs(rightX) < joystickComponent.RightDeadzone)
+                if (MathF.Abs(rightX) < Toolkit.Joystick.RightDeadzone)
                     rightX = 0;
 
-                if (MathF.Abs(rightY) < joystickComponent.RightDeadzone)
+                if (MathF.Abs(rightY) < Toolkit.Joystick.RightDeadzone)
                     rightY = 0;
 
-                if (triggerLeft < joystickComponent.TriggerThreshold)
+                if (triggerLeft < Toolkit.Joystick.TriggerThreshold)
                     triggerLeft = 0;
 
-                if (triggerRight < joystickComponent.TriggerThreshold)
+                if (triggerRight < Toolkit.Joystick.TriggerThreshold)
                     triggerRight = 0;
 
                 Vector2 left = (leftX, leftY);
@@ -995,7 +924,7 @@ void main()
 
                 foreach (JoystickButton button in Enum.GetValues<JoystickButton>())
                 {
-                    if (joystickComponent.GetButton(handle, button))
+                    if (Toolkit.Joystick.GetButton(handle, button))
                     {
                         Console.WriteLine($"Player {player} Button {button}");
                     }
@@ -1003,13 +932,14 @@ void main()
 
                 if (triggerLeft > 0 || triggerRight > 0)
                 {
-                    Console.WriteLine($"Supports FFB: {(joystickComponent as JoystickComponent)?.SupportsForceFeedback(handle)}");
+                    Console.WriteLine($"Supports FFB: {(Toolkit.Joystick as JoystickComponent)?.SupportsForceFeedback(handle)}");
                 }
                 
-                joystickComponent.SetVibration(handle, triggerLeft, triggerRight);
+                Toolkit.Joystick.SetVibration(handle, triggerLeft, triggerRight);
 
-                joystickComponent.Close(handle);
+                Toolkit.Joystick.Close(handle);
             }
+            */
 
             time += deltaTime;
             frames++;
@@ -1022,9 +952,9 @@ void main()
                 frames = 0;
             }
 
-            if (windowComp.IsWindowDestroyed(WindowHandle) == false)
+            if (Toolkit.Window.IsWindowDestroyed(WindowHandle) == false)
             {
-                glComp.SetCurrentContext(WindowContext);
+                Toolkit.OpenGL.SetCurrentContext(WindowContext);
 
                 GL.UseProgram(program);
 
@@ -1034,21 +964,21 @@ void main()
 
                 GL.ClearColor(Color4.ToRgba(color));
                 GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit | ClearBufferMask.StencilBufferBit);
-                windowComp.GetFramebufferSize(WindowHandle, out Vector2i fbSize);
+                Toolkit.Window.GetFramebufferSize(WindowHandle, out Vector2i fbSize);
                 GL.Viewport(0, 0, fbSize.X, fbSize.Y);
 
                 CheckError("clear");
 
                 //mouseComp.GetPosition(null, out int x, out int y);
-                //windowComp.ScreenToClient(WindowHandle, x, y, out int clientX, out int clientY);
-                //windowComp.SetTitle(WindowHandle, $"({clientX},{clientY})");
+                //Toolkit.Window.ScreenToClient(WindowHandle, x, y, out int clientX, out int clientY);
+                //Toolkit.Window.SetTitle(WindowHandle, $"({clientX},{clientY})");
 
                 GL.ActiveTexture(TextureUnit.Texture0);
 
                 int tex = cursor_tex;
                 if (clipboard_tex != 0) tex = clipboard_tex;
 
-                GL.BindTexture(TextureTarget.Texture2d, tex);
+                GL.BindTexture(TextureTarget.Texture2D, tex);
 
                 GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
                 GL.Enable(EnableCap.Blend);
@@ -1058,22 +988,22 @@ void main()
 
                 CheckError("draw");
 
-                glComp.SwapBuffers(WindowContext);
+                Toolkit.OpenGL.SwapBuffers(WindowContext);
             }
 
-            if (windowComp.IsWindowDestroyed(WindowHandle2) == false)
+            if (Toolkit.Window.IsWindowDestroyed(WindowHandle2) == false)
             {
-                glComp.SetCurrentContext(Window2Context);
+                Toolkit.OpenGL.SetCurrentContext(Window2Context);
 
                 GL.UseProgram(program2);
 
                 GL.ClearColor(new Color4<Rgba>(64 / 255f, 0, 127 / 255f, 255));
                 GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit | ClearBufferMask.StencilBufferBit);
-                windowComp.GetFramebufferSize(WindowHandle2, out Vector2i fbSize);
+                Toolkit.Window.GetFramebufferSize(WindowHandle2, out Vector2i fbSize);
                 GL.Viewport(0, 0, fbSize.X, fbSize.Y);
 
                 GL.ActiveTexture(TextureUnit.Texture0);
-                GL.BindTexture(TextureTarget.Texture2d, icon_tex);
+                GL.BindTexture(TextureTarget.Texture2D, icon_tex);
 
                 GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
                 GL.Enable(EnableCap.Blend);
@@ -1081,7 +1011,7 @@ void main()
                 GL.BindVertexArray(vao2);
                 GL.DrawArrays(PrimitiveType.Triangles, 0, 6);
 
-                glComp.SwapBuffers(Window2Context);
+                Toolkit.OpenGL.SwapBuffers(Window2Context);
             }
 
             return true;

@@ -5,7 +5,7 @@ namespace OpenTK.Graphics
     /// <summary>
     /// Used to load the OpenGL bindings.
     /// </summary>
-    public unsafe static class GLLoader
+    public static class GLLoader
     {
         private static IBindingsContext? _bindingsContext;
 

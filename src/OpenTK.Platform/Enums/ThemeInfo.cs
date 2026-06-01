@@ -9,6 +9,9 @@ namespace OpenTK.Platform
     /// <summary>
     /// Enum representing a theme setting.
     /// </summary>
+    /// <see cref="ThemeInfo"/>
+    /// <see cref="IShellComponent.GetPreferredTheme"/>
+    /// <see cref="ThemeChangeEventArgs"/>
     public enum AppTheme
     {
         /// <summary>
@@ -30,6 +33,8 @@ namespace OpenTK.Platform
     /// <summary>
     /// Represents theme info.
     /// </summary>
+    /// <see cref="IShellComponent.GetPreferredTheme"/>
+    /// <see cref="ThemeChangeEventArgs"/>
     public struct ThemeInfo : IEquatable<ThemeInfo>
     {
         /// <summary>

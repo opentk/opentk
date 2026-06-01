@@ -1,18 +1,109 @@
-﻿using OpenTK.Platform;
-using OpenTK.Core.Utility;
+﻿using OpenTK.Core.Utility;
+using OpenTK.Graphics.Vulkan;
 using OpenTK.Mathematics;
+using OpenTK.Platform;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using System.Runtime.InteropServices.Marshalling;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace OpenTK.Platform.Native.Windows
 {
+    public enum ColorEncoding : uint
+    {
+        Rgb = 0,
+        YCbCr444 = 1,
+        YCbCr422 = 2,
+        YCbCr420 = 3,
+        Intensity = 4,
+    }
+
+    public enum ColorSpace : uint
+    {
+        RGB_FULL_G22_NONE_P709 = 0,
+        RGB_FULL_G10_NONE_P709 = 1,
+        RGB_STUDIO_G22_NONE_P709 = 2,
+        RGB_STUDIO_G22_NONE_P2020 = 3,
+        RESERVED = 4,
+        YCBCR_FULL_G22_NONE_P709_X601 = 5,
+        YCBCR_STUDIO_G22_LEFT_P601 = 6,
+        YCBCR_FULL_G22_LEFT_P601 = 7,
+        YCBCR_STUDIO_G22_LEFT_P709 = 8,
+        YCBCR_FULL_G22_LEFT_P709 = 9,
+        YCBCR_STUDIO_G22_LEFT_P2020 = 10,
+        YCBCR_FULL_G22_LEFT_P2020 = 11,
+        RGB_FULL_G2084_NONE_P2020 = 12,
+        YCBCR_STUDIO_G2084_LEFT_P2020 = 13,
+        RGB_STUDIO_G2084_NONE_P2020 = 14,
+        YCBCR_STUDIO_G22_TOPLEFT_P2020 = 15,
+        YCBCR_STUDIO_G2084_TOPLEFT_P2020 = 16,
+        RGB_FULL_G22_NONE_P2020 = 17,
+        YCBCR_STUDIO_GHLG_TOPLEFT_P2020 = 18,
+        YCBCR_FULL_GHLG_TOPLEFT_P2020 = 19,
+        RGB_STUDIO_G24_NONE_P709 = 20,
+        RGB_STUDIO_G24_NONE_P2020 = 21,
+        YCBCR_STUDIO_G24_LEFT_P709 = 22,
+        YCBCR_STUDIO_G24_LEFT_P2020 = 23,
+        YCBCR_STUDIO_G24_TOPLEFT_P2020 = 24,
+        CUSTOM = 0xFFFFFFFF
+    }
+
+    public struct RGBColorVolume
+    {
+        internal static readonly RGBColorVolume DefaultSRGBColorVolume = new RGBColorVolume()
+        {
+            RedPrimary = (0.6400f, 0.3300f),
+            GreenPrimary = (0.3000f, 0.6000f),
+            BluePrimary = (0.1500f, 0.0600f),
+            WhitePoint = (0.3127f, 0.3290f),
+            MinLuminance = 0,
+            MaxLuminance = 80,
+            MaxFullFrameLuminance = 80,
+        };
+
+        public Vector2 RedPrimary;
+        public Vector2 GreenPrimary;
+        public Vector2 BluePrimary;
+        public Vector2 WhitePoint;
+
+        public float MinLuminance;
+        public float MaxLuminance;
+        public float MaxFullFrameLuminance;
+    }
+
+    /// <summary>
+    /// Display color and HDR info.
+    /// </summary>
+    // FIXME: Indicate support and enabled difference...?
+    public struct DisplayColorInfo
+    {
+        public bool IsAdvancedColorInfo2;
+
+        public bool HdrSupported;
+        public bool? HdrEnabled;
+        public bool HdrActive;
+
+        public bool WideColorGammutSupported;
+        public bool WideColorGammutEnabled;
+        public bool WideColorGammutActive;
+
+        public ColorEncoding ColorEncoding;
+        public ColorSpace ColorSpace;
+
+        public ulong SDRWhitePoint;
+
+        public bool HasColorVolumeInfo;
+        public RGBColorVolume ColorVolume;
+
+    }
+
     public class DisplayComponent : IDisplayComponent
     {
         /// <inheritdoc/>
@@ -65,6 +156,122 @@ namespace OpenTK.Platform.Native.Windows
             }
 
             return monitorHandle;
+        }
+
+        private static Dxgi.IDXGIOutput? FindDXGIOutput(IntPtr hMonitor, out Dxgi.IDXGIAdapter? adapter)
+        {
+            // From my understaind creating this object should be cheap?
+            // - Noggin_bops 2025-08-22
+            ComWrappers wrapper = new StrategyBasedComWrappers();
+
+            Guid guid = typeof(Dxgi.IDXGIFactory).GUID;
+            int result = Dxgi.CreateDXGIFactory(guid, out IntPtr factoryPtr);
+            if (result != 0)
+            {
+                throw new Win32Exception(result);
+            }
+
+            Dxgi.IDXGIFactory factory = (Dxgi.IDXGIFactory)wrapper.GetOrCreateObjectForComInstance(factoryPtr, CreateObjectFlags.None);
+
+            uint adapterIdx = 0;
+            while (factory.EnumAdapters(adapterIdx++, out IntPtr adapterPtr) != Dxgi.DXGI_ERROR_NOT_FOUND)
+            {
+                adapter = (Dxgi.IDXGIAdapter)wrapper.GetOrCreateObjectForComInstance(adapterPtr, CreateObjectFlags.None);
+
+                uint outputIdx = 0;
+                while (adapter.EnumOutputs(outputIdx++, out IntPtr outputPtr) != Dxgi.DXGI_ERROR_NOT_FOUND)
+                {
+                    Dxgi.IDXGIOutput output = (Dxgi.IDXGIOutput)wrapper.GetOrCreateObjectForComInstance(outputPtr, CreateObjectFlags.None);
+                    output.GetDesc(out var desc);
+
+                    if (desc.Monitor == hMonitor)
+                    {
+                        return output;
+                    }
+                }
+            }
+
+            adapter = default;
+            return default;
+        }
+
+        private static unsafe int FindPathInfo(string deviceName, out Win32.DISPLAYCONFIG_PATH_INFO pathInfo)
+        {
+            int result = Win32.S_OK;
+            uint NumPathArrayElements = 0;
+            uint NumModeInfoArrayElements = 0;
+
+            Win32.DISPLAYCONFIG_PATH_INFO[] PathInfoArray;
+            Win32.DISPLAYCONFIG_MODE_INFO[] ModeInfoArray;
+            do
+            {
+                result = Win32.GetDisplayConfigBufferSizes(QDC.OnlyActivePaths, out NumPathArrayElements, out NumModeInfoArrayElements);
+                if (result != 0)
+                {
+                    pathInfo = default;
+                    return result;
+                }
+
+                PathInfoArray = new Win32.DISPLAYCONFIG_PATH_INFO[NumPathArrayElements];
+                ModeInfoArray = new Win32.DISPLAYCONFIG_MODE_INFO[NumModeInfoArrayElements];
+
+                result = Win32.QueryDisplayConfig(QDC.OnlyActivePaths, ref NumPathArrayElements, ref PathInfoArray[0], ref NumModeInfoArrayElements, ref ModeInfoArray[0], ref Unsafe.NullRef<DISPLAYCONFIG_TOPOLOGY_ID>());
+            } while (result == Win32.ERROR_INSUFFICIENT_BUFFER);
+
+            int DesiredPathIdx = -1;
+
+            if (result == 0)
+            {
+                // Loop through all sources until the one which matches the 'monitor' is found.
+                for (int PathIdx = 0; PathIdx < NumPathArrayElements; ++PathIdx)
+                {
+                    Win32.DISPLAYCONFIG_SOURCE_DEVICE_NAME SourceName = default;
+                    SourceName.header.type = DISPLAYCONFIG_DEVICE_INFO_TYPE.GetSourceName;
+                    SourceName.header.size = (uint)sizeof(Win32.DISPLAYCONFIG_SOURCE_DEVICE_NAME);
+                    SourceName.header.adapterId = PathInfoArray[PathIdx].sourceInfo.adapterId;
+                    SourceName.header.id = PathInfoArray[PathIdx].sourceInfo.id;
+
+                    result = Win32.DisplayConfigGetDeviceInfo(ref SourceName.header);
+                    if (result == 0)
+                    {
+                        ReadOnlySpan<char> gdiDeviceName = Win32.SliceAtFirstNull(new ReadOnlySpan<char>(SourceName.viewGdiDeviceName, 32));
+                        if (deviceName.AsSpan().SequenceEqual(gdiDeviceName))
+                        {
+                            // Found the source which matches this hmonitor. The paths are given in path-priority order
+                            // so the first found is the most desired, unless we later find an internal.
+                            if (DesiredPathIdx == -1 || IsInternalVideoOutput(PathInfoArray[PathIdx].targetInfo.outputTechnology))
+                            {
+                                DesiredPathIdx = PathIdx;
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (DesiredPathIdx != -1)
+            {
+                pathInfo = PathInfoArray[DesiredPathIdx];
+            }
+            else
+            {
+                pathInfo = default;
+                result = result != 0 ? result : Win32.E_INVALIDARG;
+            }
+
+            return result;
+
+            static bool IsInternalVideoOutput(DISPLAYCONFIG_VIDEO_OUTPUT_TECHNOLOGY videoOutputTechnologyType)
+            {
+                switch (videoOutputTechnologyType)
+                {
+                    case DISPLAYCONFIG_VIDEO_OUTPUT_TECHNOLOGY.Internal:
+                    case DISPLAYCONFIG_VIDEO_OUTPUT_TECHNOLOGY.DisplayPortEmbedded:
+                    case DISPLAYCONFIG_VIDEO_OUTPUT_TECHNOLOGY.UDIEmbedded:
+                        return true;
+                    default:
+                        return false;
+                }
+            }
         }
 
         internal static void UpdateMonitors(bool sendEvents, ILogger? logger)
@@ -165,7 +372,7 @@ namespace OpenTK.Platform.Native.Windows
                             PublicName = monitor.DeviceString,
                             IsPrimary = adapter.StateFlags.HasFlag(DisplayDeviceStateFlags.PrimaryDevice),
                             Position = lpDevMode.dmPosition,
-                            RefreshRate = (int)lpDevMode.dmDisplayFrequency,
+                            RefreshRate = lpDevMode.dmDisplayFrequency,
                             BitsPerPixel = (int)lpDevMode.dmBitsPerPel,
                             Resolution = new DisplayResolution((int)lpDevMode.dmPelsWidth, (int)lpDevMode.dmPelsHeight),
                             DpiX = -1,
@@ -182,21 +389,202 @@ namespace OpenTK.Platform.Native.Windows
                         Debug.Assert(info.DeviceName == monitor.DeviceName);
                         Debug.Assert(info.PublicName == monitor.DeviceString);
 
+                        // FIXME: Linear search for thing we've already found...
+                        DisplayValuesChangedEventArgs valuesChanged = new DisplayValuesChangedEventArgs(_displays.IndexOf(info));
+
+                        // FIXME: Some way to notify the user that a new monitor is the primary monitor...?
+                        // - Noggin_bops 2025-12-12
                         info.IsPrimary = adapter.StateFlags.HasFlag(DisplayDeviceStateFlags.PrimaryDevice);
 
+                        if (info.Position != lpDevMode.dmPosition)
+                        {
+                            valuesChanged.VirtualPositionChanged = true;
+                        }
+
+                        if (info.RefreshRate != lpDevMode.dmDisplayFrequency)
+                        {
+                            valuesChanged.RefreshRateChanged = true;
+                        }
+
+                        if (info.BitsPerPixel != (int)lpDevMode.dmBitsPerPel)
+                        {
+                            valuesChanged.BitsPerPixelChanged = true;
+                        }
+
+                        if (info.Resolution != new DisplayResolution((int)lpDevMode.dmPelsWidth, (int)lpDevMode.dmPelsHeight))
+                        {
+                            valuesChanged.ResolutionChanged = true;
+                        }
+
+                        if (info.WorkArea != workArea)
+                        {
+                            valuesChanged.WorkAreaChanged = true;
+                        }
+
+                        // FIXME: Do we have a way to check if the display scale has changed?
+                        // FIXME: Check if color info has changed.
+
                         info.Position = lpDevMode.dmPosition;
-                        info.RefreshRate = (int)lpDevMode.dmDisplayFrequency;
+                        // FIXME: This is not necessarily the correct refresh rate to compare against!
+                        info.RefreshRate = lpDevMode.dmDisplayFrequency;
                         info.BitsPerPixel = (int)lpDevMode.dmBitsPerPel;
                         info.Resolution = new DisplayResolution((int)lpDevMode.dmPelsWidth, (int)lpDevMode.dmPelsHeight);
                         info.WorkArea = workArea;
+
+                        if (valuesChanged.AnythingChanged)
+                        {
+                            Toolkit.Event.RaiseEvent(valuesChanged);
+                        }
+                    }
+
+                    // Update supported video modes
+                    {
+                        info.SupportedVideoModes.Clear();
+
+                        int modeIndex = 0;
+                        do
+                        {
+                            // FIXME: What do we do with duplicated video modes?
+                            // For now we keep them, but there is no possibility of
+                            // differentiating them.
+                            // Should we decide or should we pass platform specific info to the user?
+
+                            // Most duplicated come from each video mode having three different dmDisplayFixedOutput version.
+                            // Default, centered, and streched. We could either add this destinction or just ignore non-default modes.
+                            // - noggin_bops 2026-03-24
+
+                            const DM RequiredFields = DM.PelsWidth | DM.PelsHeight | DM.DisplayFrequency;
+
+                            if ((lpDevMode.dmFields & RequiredFields) != RequiredFields)
+                                throw new Win32Exception($"Adapter setting {modeIndex - 1} didn't have all required fields set. dmFields={lpDevMode.dmFields}, requiredFields={RequiredFields}");
+
+                            info.SupportedVideoModes.Add(new VideoMode((int)lpDevMode.dmPelsWidth, (int)lpDevMode.dmPelsHeight, lpDevMode.dmDisplayFrequency, (int)lpDevMode.dmBitsPerPel));
+
+                            lpDevMode.dmSize = (ushort)Marshal.SizeOf<Win32.DEVMODE>();
+                        }
+                        while (Win32.EnumDisplaySettings(info.AdapterName, (uint)modeIndex++, ref lpDevMode));
                     }
                 }
             }
 
-            // Console.WriteLine();
-            // Console.WriteLine();
+            unsafe {
+                foreach (var display in newDisplays)
+                {
+                    // FIXME: O(n^2) loop + unecessary OS calls.
+                    // We should get the path info list once and find the
+                    // paths in that list for each new monitor.
+                    // - Noggin_bops
+                    int result = FindPathInfo(display.AdapterName, out Win32.DISPLAYCONFIG_PATH_INFO path);
+                    if (result != 0)
+                        throw new Win32Exception(result);
+
+                    display.RefreshRate = path.targetInfo.refreshRate.Numerator / (float)path.targetInfo.refreshRate.Denominator;
+
+                    Win32.DISPLAYCONFIG_SDR_WHITE_LEVEL whiteLevel = new Win32.DISPLAYCONFIG_SDR_WHITE_LEVEL();
+                    whiteLevel.header.type = DISPLAYCONFIG_DEVICE_INFO_TYPE.GetSDRWhiteLevel;
+                    whiteLevel.header.size = (uint)sizeof(Win32.DISPLAYCONFIG_SDR_WHITE_LEVEL);
+                    whiteLevel.header.adapterId = path.targetInfo.adapterId;
+                    whiteLevel.header.id = path.targetInfo.id;
+                    result = Win32.DisplayConfigGetDeviceInfo(ref whiteLevel);
+                    if (result != 0)
+                        throw new Win32Exception(result);
+
+                    // 24H2 or greater.
+                    if (OperatingSystem.IsWindowsVersionAtLeast(10, 0, 26100))
+                    {
+                        Win32.DISPLAYCONFIG_GET_ADVANCED_COLOR_INFO_2 colorInfo2 = new Win32.DISPLAYCONFIG_GET_ADVANCED_COLOR_INFO_2();
+                        colorInfo2.header.type = DISPLAYCONFIG_DEVICE_INFO_TYPE.GetAdvancedColorInfo2;
+                        colorInfo2.header.size = (uint)sizeof(Win32.DISPLAYCONFIG_GET_ADVANCED_COLOR_INFO_2);
+                        colorInfo2.header.adapterId = path.targetInfo.adapterId;
+                        colorInfo2.header.id = path.targetInfo.id;
+                        result = Win32.DisplayConfigGetDeviceInfo(ref colorInfo2);
+                        if (result != 0)
+                            throw new Win32Exception(result);
+
+                        display.HasColorInfo = true;
+                        display.ColorInfo = new DisplayColorInfo()
+                        {
+                            IsAdvancedColorInfo2 = true,
+                            HdrSupported = colorInfo2.union.highDynamicRangeSupported,
+                            HdrEnabled = colorInfo2.union.highDynamicRangeUserEnabled,
+                            HdrActive = colorInfo2.activeColorMode == DISPLAYCONFIG_ADVANCED_COLOR_MODE.DISPLAYCONFIG_ADVANCED_COLOR_MODE_HDR,
+                            WideColorGammutSupported = colorInfo2.union.wideColorSupported,
+                            WideColorGammutEnabled = colorInfo2.union.wideColorUserEnabled,
+                            WideColorGammutActive = colorInfo2.activeColorMode != DISPLAYCONFIG_ADVANCED_COLOR_MODE.DISPLAYCONFIG_ADVANCED_COLOR_MODE_SDR,
+                            ColorEncoding = (ColorEncoding)colorInfo2.colorEncoding,
+                            SDRWhitePoint = whiteLevel.SDRWhiteLevel,
+                        };
+                    }
+                    else
+                    {
+                        Win32.DISPLAYCONFIG_GET_ADVANCED_COLOR_INFO colorInfo = new Win32.DISPLAYCONFIG_GET_ADVANCED_COLOR_INFO();
+                        colorInfo.header.type = DISPLAYCONFIG_DEVICE_INFO_TYPE.GetAdvancedColorInfo;
+                        colorInfo.header.size = (uint)sizeof(Win32.DISPLAYCONFIG_GET_ADVANCED_COLOR_INFO);
+                        colorInfo.header.adapterId = path.targetInfo.adapterId;
+                        colorInfo.header.id = path.targetInfo.id;
+                        result = Win32.DisplayConfigGetDeviceInfo(ref colorInfo);
+                        if (result != 0)
+                            throw new Win32Exception(result);
+
+                        bool hdrSupported = false;
+                        bool hdrEnabled = false;
+
+                        if (colorInfo.union.advancedColorSupported && !colorInfo.union.wideColorEnforced)
+                        {
+                            hdrSupported = true;
+                        }
+
+                        if (hdrSupported == true && colorInfo.union.advancedColorEnabled)
+                        {
+                            hdrEnabled = true;
+                        }
+
+                        display.HasColorInfo = true;
+                        display.ColorInfo = new DisplayColorInfo()
+                        {
+                            IsAdvancedColorInfo2 = false,
+                            HdrSupported = hdrSupported,
+                            HdrEnabled = null,
+                            HdrActive = hdrEnabled,
+                            ColorEncoding = (ColorEncoding)colorInfo.colorEncoding,
+                            SDRWhitePoint = whiteLevel.SDRWhiteLevel,
+                            HasColorVolumeInfo = false,
+                            ColorVolume = RGBColorVolume.DefaultSRGBColorVolume,
+                        };
+                    }
+
+                    var dxgiOutput = FindDXGIOutput(display.Monitor, out var dxgiAdapter);
+                    var dxgiOutput6 = dxgiOutput as Dxgi.IDXGIOutput6;
+
+                    if (dxgiOutput6 != null)
+                    {
+                        dxgiOutput6.GetDesc1(out var desc);
+
+                        RGBColorVolume colorVolume;
+                        colorVolume.RedPrimary = (Vector2)desc.RedPrimary;
+                        colorVolume.GreenPrimary = (Vector2)desc.GreenPrimary;
+                        colorVolume.BluePrimary = (Vector2)desc.BluePrimary;
+                        colorVolume.WhitePoint = (Vector2)desc.WhitePoint;
+                        colorVolume.MinLuminance = desc.MinLuminance;
+                        colorVolume.MaxLuminance = desc.MaxLuminance;
+                        colorVolume.MaxFullFrameLuminance = desc.MaxFullFrameLuminance;
+                        display.ColorInfo = display.ColorInfo with {
+                            HasColorVolumeInfo = true,
+                            ColorVolume = colorVolume,
+                            ColorSpace = (ColorSpace)desc.ColorSpace,
+                        };
+                    }
+                }
+            }
 
             // FIXME: Maybe we should just send all of the data at once to the user.
+
+            // FIXME: Maybe make sure that the primary display is always at the beginning of the list?
+            // Right now the primary display is not guaranteed to be first in the DisplayConnectionChanged events...
+            // - Noggin_bops 2024-02-28
+            // FIXME: Maybe we want to order the removed and connected events so that changes to the primary monitor
+            // are handled in a good way. But maybe it also doesn't matter that much...
+            // - Noggin_bops 2024-10-30
 
             foreach (HMonitor removed in removedDisplays)
             {
@@ -204,7 +592,7 @@ namespace OpenTK.Platform.Native.Windows
 
                 if (sendEvents)
                 {
-                    EventQueue.Raise(removed, PlatformEventType.DisplayConnectionChanged, new DisplayConnectionChangedEventArgs(removed, true));
+                    Toolkit.Event.RaiseEvent(new DisplayConnectionChangedEventArgs(removed, true));
                     logger?.LogDebug($"Removed: {removed.DeviceName} (WasPrimary: {removed.IsPrimary}, Refresh: {removed.RefreshRate}, Res: {removed.Resolution})");
                 }
             }
@@ -215,14 +603,10 @@ namespace OpenTK.Platform.Native.Windows
 
                 if (sendEvents)
                 {
-                    EventQueue.Raise(connected, PlatformEventType.DisplayConnectionChanged, new DisplayConnectionChangedEventArgs(connected, false));
+                    Toolkit.Event.RaiseEvent(new DisplayConnectionChangedEventArgs(connected, false));
                     logger?.LogDebug($"Connected: {connected.DeviceName} (IsPrimary: {connected.IsPrimary}, Refresh: {connected.RefreshRate}, Res: {connected.Resolution})");
                 }
             }
-
-            // FIXME: Maybe make sure that the primary display is always at the beginning of the list?
-            // Right now the primary display is not guaranteed to be first in the DisplayConnectionChanged events...
-            // - Noggin_bops 2024-02-28
 
             HMonitor? primary = null;
             foreach (HMonitor display in _displays)
@@ -256,13 +640,20 @@ namespace OpenTK.Platform.Native.Windows
         /// <inheritdoc/>
         public void Initialize(ToolkitOptions options)
         {
-            // FIXME: Should the user have any way to control the DPI awareness?
+            // FIXME: Add a ToolkitOptions option for setting DPI awareness on windows.
             if (OperatingSystem.IsWindowsVersionAtLeast(10, 0))
             {
                 bool success = Win32.SetProcessDpiAwarenessContext(new IntPtr((int)DpiAwarenessContext.PerMonitorAwareV2));
                 if (success == false)
                 {
-                    throw new Win32Exception();
+                    if (Marshal.GetLastWin32Error() == Win32.ERROR_ACCESS_DENIED)
+                    {
+                        Logger?.LogDebug("SetProcessDpiAwarenessContext failed with ERROR_ACCESS_DENIED, DPI awareness has already been set for this process.");
+                    }
+                    else
+                    {
+                        throw new Win32Exception();
+                    }
                 }
             }
             else if (OperatingSystem.IsWindowsVersionAtLeast(6, 3)) // Windows 8.1
@@ -275,7 +666,7 @@ namespace OpenTK.Platform.Native.Windows
                 }
                 else if (result == Win32.E_ACCESSDENIED)
                 {
-                    throw new Exception("SetProcessDpiAwareness failed with E_ACCESSDENIED");
+                    Logger?.LogDebug("SetProcessDpiAwareness failed with E_ACCESSDENIED, DPI awareness has already been set for this process.");
                 }
                 else if (result != Win32.S_OK)
                 {
@@ -289,11 +680,20 @@ namespace OpenTK.Platform.Native.Windows
                 bool success = Win32.SetProcessDPIAware();
                 if (success == false)
                 {
-                    throw new Exception("SetProcessDPIAware failed.");
+                    Logger.LogWarning("SetProcessDPIAware failed.");
                 }
             }
 
             UpdateMonitors(false, Logger);
+        }
+
+        /// <inheritdoc/>
+        public void Uninitialize()
+        {
+            // We don't need to clear this list,
+            // but it feels appropriate.
+            // - Noggin_bops 2024-10-30
+            _displays.Clear();
         }
 
         /// <inheritdoc/>
@@ -364,11 +764,11 @@ namespace OpenTK.Platform.Native.Windows
         }
 
         /// <inheritdoc/>
-        public void GetVideoMode(DisplayHandle handle, out VideoMode mode)
+        public VideoMode GetVideoMode(DisplayHandle handle)
         {
             HMonitor hmonitor = handle.As<HMonitor>(this);
 
-            mode = new VideoMode(
+            return new VideoMode(
                 hmonitor.Resolution.ResolutionX,
                 hmonitor.Resolution.ResolutionY,
                 hmonitor.RefreshRate,
@@ -380,68 +780,42 @@ namespace OpenTK.Platform.Native.Windows
         {
             HMonitor hmonitor = handle.As<HMonitor>(this);
 
-            // Unfortunately we don't know the size of the array we are going to create in advance
-            List<VideoMode> modes = new List<VideoMode>(32);
-
-            int modeIndex = 0;
-            Win32.DEVMODE lpDevMode = default;
-            lpDevMode.dmSize = (ushort)Marshal.SizeOf<Win32.DEVMODE>();
-            while (Win32.EnumDisplaySettings(hmonitor.AdapterName, (uint)modeIndex++, ref lpDevMode))
-            {
-                // FIXME: What do we do with duplicated video modes?
-                // For now we keep them, but there is no possibility of
-                // differentiating them.
-                // Should we decide or should we pass platform specific info to the user?
-
-                const DM RequiredFields = DM.PelsWidth | DM.PelsHeight | DM.DisplayFrequency;
-
-                if ((lpDevMode.dmFields & RequiredFields) != RequiredFields)
-                    throw new PalException(this, $"Adapter setting {modeIndex - 1} didn't have all required fields set. dmFields={lpDevMode.dmFields}, requiredFields={RequiredFields}");
-
-                modes.Add(new VideoMode((int)lpDevMode.dmPelsWidth, (int)lpDevMode.dmPelsHeight, lpDevMode.dmDisplayFrequency, (int)lpDevMode.dmBitsPerPel));
-            }
-
-            return modes.ToArray();
+            VideoMode[] modes = new VideoMode[hmonitor.SupportedVideoModes.Count];
+            hmonitor.SupportedVideoModes.CopyTo(modes);
+            return modes;
         }
 
         /// <inheritdoc/>
-        public void GetVirtualPosition(DisplayHandle handle, out int x, out int y)
+        public Vector2i GetVirtualPosition(DisplayHandle handle)
         {
             HMonitor hmonitor = handle.As<HMonitor>(this);
-
-            x = hmonitor.Position.X;
-            y = hmonitor.Position.Y;
+            return new Vector2i(hmonitor.Position.X, hmonitor.Position.Y);
         }
 
         /// <inheritdoc/>
-        public void GetResolution(DisplayHandle handle, out int width, out int height)
+        public Vector2i GetResolution(DisplayHandle handle)
         {
             HMonitor hmonitor = handle.As<HMonitor>(this);
-
-            width = hmonitor.Resolution.ResolutionX;
-            height = hmonitor.Resolution.ResolutionY;
+            return new Vector2i(hmonitor.Resolution.ResolutionX, hmonitor.Resolution.ResolutionY);
         }
 
         /// <inheritdoc/>
-        public void GetWorkArea(DisplayHandle handle, out Box2i area)
+        public Box2i GetWorkArea(DisplayHandle handle)
         {
             HMonitor hmonitor = handle.As<HMonitor>(this);
-
             Win32.RECT workArea = hmonitor.WorkArea;
-
-            area = new Box2i(workArea.left, workArea.top, workArea.right, workArea.bottom);
+            return new Box2i(workArea.left, workArea.top, workArea.right, workArea.bottom);
         }
 
         /// <inheritdoc/>
-        public void GetRefreshRate(DisplayHandle handle, out float refreshRate)
+        public float GetRefreshRate(DisplayHandle handle)
         {
             HMonitor hmonitor = handle.As<HMonitor>(this);
-
-            refreshRate = hmonitor.RefreshRate;
+            return hmonitor.RefreshRate;
         }
 
         /// <inheritdoc/>
-        public void GetDisplayScale(DisplayHandle handle, out float  scaleX, out float scaleY)
+        public Vector2 GetDisplayScale(DisplayHandle handle)
         {
             HMonitor hmonitor = handle.As<HMonitor>(this);
 
@@ -452,10 +826,31 @@ namespace OpenTK.Platform.Native.Windows
             }
 
             // This is the platform default DPI for windows.
-            const float DefaultDPI = 96;
+            const float DefaultDPI = 96.0f;
 
-            scaleX = dpiX / DefaultDPI;
-            scaleY = dpiY / DefaultDPI;
+            return new Vector2(dpiX / DefaultDPI, dpiY / DefaultDPI);
+        }
+
+        /// <summary>
+        /// Temporary API: Gets the color and HDR info from a monitor.
+        /// </summary>
+        /// <param name="handle"></param>
+        /// <param name="displayColorInfo"></param>
+        /// <returns></returns>
+        public bool GetColorInfo(DisplayHandle handle, out DisplayColorInfo displayColorInfo)
+        {
+            HMonitor hmonitor = handle.As<HMonitor>(this);
+
+            if (hmonitor.HasColorInfo)
+            {
+                displayColorInfo = hmonitor.ColorInfo;
+                return true;
+            }
+            else
+            {
+                displayColorInfo = default;
+                return true;
+            }
         }
 
         /// <summary>

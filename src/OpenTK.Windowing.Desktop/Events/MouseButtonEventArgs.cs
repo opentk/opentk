@@ -12,8 +12,8 @@ using OpenTK.Windowing.GraphicsLibraryFramework;
 namespace OpenTK.Windowing.Common
 {
     /// <summary>
-    /// Defines the event data for <see cref="NativeWindow.MouseDown" />
-    /// and <see cref="NativeWindow.MouseUp" /> events.
+    /// Defines the event data for <see cref="Desktop.NativeWindow.MouseDown" />
+    /// and <see cref="Desktop.NativeWindow.MouseUp" /> events.
     /// </summary>
     public readonly struct MouseButtonEventArgs
     {

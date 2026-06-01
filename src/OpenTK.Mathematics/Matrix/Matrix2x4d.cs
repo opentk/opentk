@@ -23,6 +23,8 @@ SOFTWARE.
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
+using System.Numerics;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Runtime.Intrinsics;
 
@@ -33,7 +35,16 @@ namespace OpenTK.Mathematics
     /// </summary>
     [Serializable]
     [StructLayout(LayoutKind.Sequential)]
-    public struct Matrix2x4d : IEquatable<Matrix2x4d>, IFormattable
+    public struct Matrix2x4d : IEquatable<Matrix2x4d>, IFormattable,
+                                IMultiplyOperators<Matrix2x4d, double, Matrix2x4d>,
+                                IMultiplyOperators<Matrix2x4d, Vector4d, Vector2d>,
+                                IMultiplyOperators<Matrix2x4d, Matrix4x2d, Matrix2d>,
+                                IMultiplyOperators<Matrix2x4d, Matrix4x3d, Matrix2x3d>,
+                                IMultiplyOperators<Matrix2x4d, Matrix4, Matrix2x4d>,
+                                IAdditionOperators<Matrix2x4d, Matrix2x4d, Matrix2x4d>,
+                                ISubtractionOperators<Matrix2x4d, Matrix2x4d, Matrix2x4d>,
+                                IEqualityOperators<Matrix2x4d, Matrix2x4d, bool>,
+                                IAdditiveIdentity<Matrix2x4d, Matrix2x4d>
     {
         /// <summary>
         /// Top row of the matrix.
@@ -226,6 +237,11 @@ namespace OpenTK.Mathematics
         public readonly double Trace => Row0.X + Row1.Y;
 
         /// <summary>
+        /// Gets the additive identity of the matrix, which is the zero matrix.
+        /// </summary>
+        public static Matrix2x4d AdditiveIdentity => Zero;
+
+        /// <summary>
         /// Gets or sets the value at a specified row and column.
         /// </summary>
         /// <param name="rowIndex">The index of the row.</param>
@@ -235,36 +251,30 @@ namespace OpenTK.Mathematics
         {
             readonly get
             {
-                if (rowIndex == 0)
+                if (((uint)rowIndex) >= 2 || ((uint)columnIndex) >= 4)
                 {
-                    return Row0[columnIndex];
+                    MathHelper.ThrowOutOfRangeException("You tried to access this matrix at: ({0}, {1})", rowIndex, columnIndex);
                 }
 
-                if (rowIndex == 1)
-                {
-                    return Row1[columnIndex];
-                }
-
-                throw new IndexOutOfRangeException("You tried to access this matrix at: (" + rowIndex + ", " +
-                                                   columnIndex + ")");
+                return GetRowUnsafe(in this, rowIndex)[columnIndex];
             }
 
             set
             {
-                if (rowIndex == 0)
+                if (((uint)rowIndex) >= 2 || ((uint)columnIndex) >= 4)
                 {
-                    Row0[columnIndex] = value;
+                    MathHelper.ThrowOutOfRangeException("You tried to set this matrix at: ({0}, {1})", rowIndex, columnIndex);
                 }
-                else if (rowIndex == 1)
-                {
-                    Row1[columnIndex] = value;
-                }
-                else
-                {
-                    throw new IndexOutOfRangeException("You tried to set this matrix at: (" + rowIndex + ", " +
-                                                       columnIndex + ")");
-                }
+
+                GetRowUnsafe(in this, rowIndex)[columnIndex] = value;
             }
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static ref Vector4d GetRowUnsafe(in Matrix2x4d m, int index)
+        {
+            ref Vector4d address = ref Unsafe.AsRef(in m.Row0);
+            return ref Unsafe.Add(ref address, index);
         }
 
         /// <summary>
@@ -457,7 +467,7 @@ namespace OpenTK.Mathematics
         /// <param name="left">The left operand of the multiplication.</param>
         /// <param name="right">The right operand of the multiplication.</param>
         /// <param name="result">A new instance that is the result of the multiplication.</param>
-        public static void Mult(in Matrix2x4d left, in Matrix4x2 right, out Matrix2d result)
+        public static void Mult(in Matrix2x4d left, in Matrix4x2d right, out Matrix2d result)
         {
             double leftM11 = left.Row0.X;
             double leftM12 = left.Row0.Y;
@@ -489,7 +499,7 @@ namespace OpenTK.Mathematics
         /// <param name="right">The right operand of the multiplication.</param>
         /// <returns>A new instance that is the result of the multiplication.</returns>
         [Pure]
-        public static Matrix2d Mult(Matrix2x4d left, Matrix4x2 right)
+        public static Matrix2d Mult(Matrix2x4d left, Matrix4x2d right)
         {
             Mult(in left, in right, out Matrix2d result);
             return result;
@@ -501,7 +511,7 @@ namespace OpenTK.Mathematics
         /// <param name="left">The left operand of the multiplication.</param>
         /// <param name="right">The right operand of the multiplication.</param>
         /// <param name="result">A new instance that is the result of the multiplication.</param>
-        public static void Mult(in Matrix2x4d left, in Matrix4x3 right, out Matrix2x3d result)
+        public static void Mult(in Matrix2x4d left, in Matrix4x3d right, out Matrix2x3d result)
         {
             double leftM11 = left.Row0.X;
             double leftM12 = left.Row0.Y;
@@ -539,7 +549,7 @@ namespace OpenTK.Mathematics
         /// <param name="right">The right operand of the multiplication.</param>
         /// <returns>A new instance that is the result of the multiplication.</returns>
         [Pure]
-        public static Matrix2x3d Mult(Matrix2x4d left, Matrix4x3 right)
+        public static Matrix2x3d Mult(Matrix2x4d left, Matrix4x3d right)
         {
             Mult(in left, in right, out Matrix2x3d result);
             return result;
@@ -756,13 +766,25 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
+        /// Transform a 4-dimensional vector into a 2-dimensional vector using the given 2x4 Matrix.
+        /// </summary>
+        /// <param name="mat">The desired transformation.</param>
+        /// <param name="vec">The vector to transform.</param>
+        /// <returns>The transformed vector.</returns>
+        public static Vector2d operator *(Matrix2x4d mat, Vector4d vec)
+        {
+            Vector4d.TransformTwoDimensionsColumn(in mat, in vec, out Vector2d result);
+            return result;
+        }
+
+        /// <summary>
         /// Matrix multiplication.
         /// </summary>
         /// <param name="left">left-hand operand.</param>
         /// <param name="right">right-hand operand.</param>
         /// <returns>A new Matrix2d which holds the result of the multiplication.</returns>
         [Pure]
-        public static Matrix2d operator *(Matrix2x4d left, Matrix4x2 right)
+        public static Matrix2d operator *(Matrix2x4d left, Matrix4x2d right)
         {
             return Mult(left, right);
         }
@@ -774,7 +796,7 @@ namespace OpenTK.Mathematics
         /// <param name="right">right-hand operand.</param>
         /// <returns>A new Matrix2x3d which holds the result of the multiplication.</returns>
         [Pure]
-        public static Matrix2x3d operator *(Matrix2x4d left, Matrix4x3 right)
+        public static Matrix2x3d operator *(Matrix2x4d left, Matrix4x3d right)
         {
             return Mult(left, right);
         }

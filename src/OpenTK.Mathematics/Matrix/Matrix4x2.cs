@@ -23,6 +23,8 @@ SOFTWARE.
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
+using System.Numerics;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Runtime.Intrinsics;
 
@@ -33,7 +35,16 @@ namespace OpenTK.Mathematics
     /// </summary>
     [Serializable]
     [StructLayout(LayoutKind.Sequential)]
-    public struct Matrix4x2 : IEquatable<Matrix4x2>, IFormattable
+    public struct Matrix4x2 : IEquatable<Matrix4x2>, IFormattable,
+                                IMultiplyOperators<Matrix4x2, float, Matrix4x2>,
+                                IMultiplyOperators<Matrix4x2, Vector2, Vector4>,
+                                IMultiplyOperators<Matrix4x2, Matrix2, Matrix4x2>,
+                                IMultiplyOperators<Matrix4x2, Matrix2x3, Matrix4x3>,
+                                IMultiplyOperators<Matrix4x2, Matrix2x4, Matrix4>,
+                                IAdditionOperators<Matrix4x2, Matrix4x2, Matrix4x2>,
+                                ISubtractionOperators<Matrix4x2, Matrix4x2, Matrix4x2>,
+                                IEqualityOperators<Matrix4x2, Matrix4x2, bool>,
+                                IAdditiveIdentity<Matrix4x2, Matrix4x2>
     {
         /// <summary>
         /// Top row of the matrix.
@@ -222,6 +233,11 @@ namespace OpenTK.Mathematics
         public readonly float Trace => Row0.X + Row1.Y;
 
         /// <summary>
+        /// Gets the additive identity of the matrix, which is the zero matrix.
+        /// </summary>
+        public static Matrix4x2 AdditiveIdentity => Zero;
+
+        /// <summary>
         /// Gets or sets the value at a specified row and column.
         /// </summary>
         /// <param name="rowIndex">The index of the row.</param>
@@ -231,54 +247,30 @@ namespace OpenTK.Mathematics
         {
             readonly get
             {
-                if (rowIndex == 0)
+                if (((uint)rowIndex) >= 4 || ((uint)columnIndex) >= 2)
                 {
-                    return Row0[columnIndex];
+                    MathHelper.ThrowOutOfRangeException("You tried to access this matrix at: ({0}, {1})", rowIndex, columnIndex);
                 }
 
-                if (rowIndex == 1)
-                {
-                    return Row1[columnIndex];
-                }
-
-                if (rowIndex == 2)
-                {
-                    return Row2[columnIndex];
-                }
-
-                if (rowIndex == 3)
-                {
-                    return Row3[columnIndex];
-                }
-
-                throw new IndexOutOfRangeException("You tried to access this matrix at: (" + rowIndex + ", " +
-                                                   columnIndex + ")");
+                return GetRowUnsafe(in this, rowIndex)[columnIndex];
             }
 
             set
             {
-                if (rowIndex == 0)
+                if (((uint)rowIndex) >= 4 || ((uint)columnIndex) >= 2)
                 {
-                    Row0[columnIndex] = value;
+                    MathHelper.ThrowOutOfRangeException("You tried to set this matrix at: ({0}, {1})", rowIndex, columnIndex);
                 }
-                else if (rowIndex == 1)
-                {
-                    Row1[columnIndex] = value;
-                }
-                else if (rowIndex == 2)
-                {
-                    Row2[columnIndex] = value;
-                }
-                else if (rowIndex == 3)
-                {
-                    Row3[columnIndex] = value;
-                }
-                else
-                {
-                    throw new IndexOutOfRangeException("You tried to set this matrix at: (" + rowIndex + ", " +
-                                                       columnIndex + ")");
-                }
+
+                GetRowUnsafe(in this, rowIndex)[columnIndex] = value;
             }
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static ref Vector2 GetRowUnsafe(in Matrix4x2 m, int index)
+        {
+            ref Vector2 address = ref Unsafe.AsRef(in m.Row0);
+            return ref Unsafe.Add(ref address, index);
         }
 
         /// <summary>
@@ -797,6 +789,19 @@ namespace OpenTK.Mathematics
         public static Matrix4x2 operator *(Matrix4x2 left, float right)
         {
             return Mult(left, right);
+        }
+
+        /// <summary>
+        /// Transform a 2-dimensional vector into a 4-dimensional vector using the given 4x2 Matrix.
+        /// </summary>
+        /// <param name="mat">The vector to transform.</param>
+        /// <param name="vec">The desired transformation.</param>
+        /// <returns>The transformed vector.</returns>
+        [Pure]
+        public static Vector4 operator *(Matrix4x2 mat, Vector2 vec)
+        {
+            Vector2.TransformFourDimensionsColumn(in mat, in vec, out Vector4 result);
+            return result;
         }
 
         /// <summary>

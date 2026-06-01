@@ -1,4 +1,5 @@
-﻿using OpenTK.Platform;
+﻿using OpenTK.Graphics.Egl;
+using OpenTK.Platform;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,16 +10,22 @@ namespace OpenTK.Platform.Native.ANGLE
 {
     internal class ANGLEOpenGLContextHandle : OpenGLContextHandle
     {
-        public IntPtr EglSurface;
-        public IntPtr EglContext;
+        public EGLSurface EglSurface;
+        public EGLContext EglContext;
 
         public ANGLEOpenGLContextHandle? SharedContext;
 
-        public ANGLEOpenGLContextHandle(IntPtr eglSurface, IntPtr eglContext, ANGLEOpenGLContextHandle? sharedContext)
+        public ContextValues ContextValues;
+
+        public int SwapInterval = 0;
+
+        public ANGLEOpenGLContextHandle(EGLSurface eglSurface, EGLContext eglContext, WindowHandle window, ANGLEOpenGLContextHandle? sharedContext, ContextValues contextValues)
         {
             EglSurface = eglSurface;
             EglContext = eglContext;
+            WindowHandle = window;
             SharedContext = sharedContext;
+            ContextValues = contextValues;
         }
     }
 }

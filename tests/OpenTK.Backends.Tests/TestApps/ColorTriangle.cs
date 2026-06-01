@@ -16,7 +16,7 @@ namespace OpenTK.Backends.Tests
     [TestApp]
     public class ColorTriangle : ITestApp
     {
-        public string Name => "Color Triangle";
+        public static string Name => "Color Triangle";
 
         public struct Vertex
         {
@@ -56,11 +56,11 @@ void main()
 
 in vec3 f_Color;
 
-out vec3 color;
+out vec4 color;
 
 void main()
 {
-    color = f_Color;
+    color = vec4(f_Color, 0.5);
 }
 ";
 
@@ -85,11 +85,11 @@ precision highp float;
 
 in vec3 f_Color;
 
-out vec3 color;
+out vec4 color;
 
 void main()
 {
-    color = f_Color;
+    color = vec4(f_Color, 0.5);
 }
 ";
 
@@ -135,15 +135,15 @@ void main()
             {
                 ShaderProgram = CompileShader(VertexShader, FragmentShader);
             }
-            if (KHRDebugAvailable) GL.ObjectLabel(ObjectIdentifier.Program, (uint)ShaderProgram, -1, "Program: Color Triangle");
+            if (KHRDebugAvailable) GL.ObjectLabel(ObjectIdentifier.Program, ShaderProgram, -1, "Program: Color Triangle");
 
             VAO = GL.GenVertexArray();
             GL.BindVertexArray(VAO);
-            if (KHRDebugAvailable) GL.ObjectLabel(ObjectIdentifier.VertexArray, (uint)VAO, -1, "VAO: Color Triangle");
+            if (KHRDebugAvailable) GL.ObjectLabel(ObjectIdentifier.VertexArray, VAO, -1, "VAO: Color Triangle");
 
             VBO = GL.GenBuffer();
             GL.BindBuffer(BufferTarget.ArrayBuffer, VBO);
-            if (KHRDebugAvailable) GL.ObjectLabel(ObjectIdentifier.Buffer, (uint)VBO, -1, "VBO: Color Triangle");
+            if (KHRDebugAvailable) GL.ObjectLabel(ObjectIdentifier.Buffer, VBO, -1, "VBO: Color Triangle");
 
             GL.BufferData(BufferTarget.ArrayBuffer, Vertices.Length * sizeof(Vertex), Vertices, BufferUsage.StaticDraw);
 
@@ -202,12 +202,12 @@ void main()
 
         public void HandleEvent(EventArgs args)
         {
-            if (args is WindowResizeEventArgs resize)
+            if (args is WindowFramebufferResizeEventArgs framebufferResize)
             {
                 var prevContext = Toolkit.OpenGL.GetCurrentContext();
                 Toolkit.OpenGL.SetCurrentContext(Context);
 
-                GL.Viewport(0, 0, resize.NewSize.X, resize.NewSize.Y);
+                GL.Viewport(0, 0, framebufferResize.NewFramebufferSize.X, framebufferResize.NewFramebufferSize.Y);
 
                 // Re-render the window to make resize live.
                 Render();

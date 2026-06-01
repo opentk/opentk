@@ -23,6 +23,7 @@ SOFTWARE.
 using System;
 using System.Diagnostics.Contracts;
 using System.IO;
+using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
@@ -35,7 +36,7 @@ namespace OpenTK.Mathematics
     /// </summary>
     [Serializable]
     [StructLayout(LayoutKind.Sequential)]
-    public struct Vector3h : ISerializable, IEquatable<Vector3h>, IFormattable
+    public struct Vector3h : ISerializable, IEquatable<Vector3h>, IFormattable, IEqualityOperators<Vector3h, Vector3h, bool>
     {
         /// <summary>
         /// The X component of the Half3.
@@ -131,7 +132,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector2h Xy
         {
-            get => Unsafe.As<Vector3h, Vector2h>(ref this);
+            readonly get => new Vector2h(X, Y);
             set
             {
                 X = value.X;
@@ -396,25 +397,25 @@ namespace OpenTK.Mathematics
         }
 
         /// <inheritdoc/>
-        public override string ToString()
+        public override readonly string ToString()
         {
             return ToString(null, null);
         }
 
         /// <inheritdoc cref="ToString(string, IFormatProvider)"/>
-        public string ToString(string format)
+        public readonly string ToString(string format)
         {
             return ToString(format, null);
         }
 
         /// <inheritdoc cref="ToString(string, IFormatProvider)"/>
-        public string ToString(IFormatProvider formatProvider)
+        public readonly string ToString(IFormatProvider formatProvider)
         {
             return ToString(null, formatProvider);
         }
 
         /// <inheritdoc />
-        public string ToString(string format, IFormatProvider formatProvider)
+        public readonly string ToString(string format, IFormatProvider formatProvider)
         {
             return string.Format(
                 "({0}{3} {1}{3} {2})",
@@ -425,13 +426,13 @@ namespace OpenTK.Mathematics
         }
 
         /// <inheritdoc/>
-        public override bool Equals(object obj)
+        public override readonly bool Equals(object obj)
         {
             return obj is Vector3h && Equals((Vector3h)obj);
         }
 
         /// <inheritdoc/>
-        public bool Equals(Vector3h other)
+        public readonly bool Equals(Vector3h other)
         {
             return X.Equals(other.X) &&
                    Y.Equals(other.Y) &&

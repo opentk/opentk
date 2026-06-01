@@ -1,0 +1,215 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glMultiDrawElementsIndirectCount">
+    <info>
+        <copyright>
+            <year>2010-2014</year>
+            <holder>Khronos Group.</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glMultiDrawElementsIndirectCount</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glMultiDrawElementsIndirectCount</refname>
+        <refpurpose>render indexed primitives from array data, taking parameters and count from memory</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glMultiDrawElementsIndirectCount</function></funcdef>
+                <paramdef>GLenum <parameter>mode</parameter></paramdef>
+                <paramdef>GLenum <parameter>type</parameter></paramdef>
+                <paramdef>const void *<parameter>indirect</parameter></paramdef>
+                <paramdef>GLintptr <parameter>drawcount</parameter></paramdef>
+                <paramdef>GLsizei <parameter>maxdrawcount</parameter></paramdef>
+                <paramdef>GLsizei <parameter>stride</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>mode</parameter></term>
+            <listitem>
+                <para>
+                    Specifies what kind of primitives to render.
+                    Symbolic constants
+                    <constant>GL_POINTS</constant>,
+                    <constant>GL_LINE_STRIP</constant>,
+                    <constant>GL_LINE_LOOP</constant>,
+                    <constant>GL_LINES</constant>,
+                    <constant>GL_LINE_STRIP_ADJACENCY</constant>,
+                    <constant>GL_LINES_ADJACENCY</constant>,
+                    <constant>GL_TRIANGLE_STRIP</constant>,
+                    <constant>GL_TRIANGLE_FAN</constant>,
+                    <constant>GL_TRIANGLES</constant>,
+                    <constant>GL_TRIANGLE_STRIP_ADJACENCY</constant>,
+                    <constant>GL_TRIANGLES_ADJACENCY</constant>, and
+                    <constant>GL_PATCHES</constant>
+                    are accepted.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>type</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the type of data in the buffer bound to the <constant>GL_ELEMENT_ARRAY_BUFFER</constant> binding. Must be one of
+                    <constant>GL_UNSIGNED_BYTE</constant>, <constant>GL_UNSIGNED_SHORT</constant>, or
+                    <constant>GL_UNSIGNED_INT</constant>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>indirect</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the address of a structure containing an array of draw parameters.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>drawcount</parameter></term>
+            <listitem>
+                <para>
+                    Specifies an offset (in bytes) into the buffer object bound to the <constant>GL_PARAMETER_BUFFER</constant> 
+                    binding point at which a single <emphasis>sizei</emphasis> typed value is stored. Must be a multiple of four.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>maxdrawcount</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the maximum number of draws that are expected to be stored in the buffer.
+                    If the value stored at <parameter>drawcount</parameter> into the buffer is greater than <parameter>maxdrawcount</parameter>,
+                    the implementation stops processing draws after <parameter>maxdrawcount</parameter> parameter sets.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>stride</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the distance in basic machine units between elements of the draw parameter array.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glMultiDrawElementsIndirectCount</function> specifies multiple geometric primitives
+            with very few subroutine calls. <function>glMultiDrawElementsIndirectCount</function> behaves
+            similarly to <citerefentry><refentrytitle>glMultiDrawElementsIndirect</refentrytitle></citerefentry>,
+            execept that the <parameter>drawcount</parameter> parameter is stored in the buffer bound to the 
+            <constant>GL_PARAMETER_BUFFER</constant> binding at the offset specified by <parameter>drawcount</parameter>.
+        </para>
+        <para>
+            The parameters addressed by <parameter>indirect</parameter> are packed into a structure
+            that takes the form (in C):
+            <programlisting>    typedef  struct {
+        uint  count;
+        uint  instanceCount;
+        uint  firstIndex;
+        int  baseVertex;
+        uint  baseInstance;
+    } DrawElementsIndirectCommand;</programlisting>
+        </para>
+        <para>
+            If a buffer is bound to the <constant>GL_DRAW_INDIRECT_BUFFER</constant> binding at the time
+            of a call to <function>glMultiDrawElementsIndirectCount</function>, <parameter>indirect</parameter>
+            is interpreted as an offset, in basic machine units, into that buffer and the parameter
+            data is read from the buffer rather than from client memory.
+        </para>
+        <para>
+            Note that indices stored in client memory are not supported. If no buffer is bound to the
+            <constant>GL_ELEMENT_ARRAY_BUFFER</constant> binding, an error will be generated.
+        </para>
+        <para>
+            The results of the operation are undefined if the <code>reservedMustBeZero</code> member
+            of the parameter structure is non-zero. However, no error is generated in this case.
+        </para>
+        <para>
+            Vertex attributes that are modified by <function>glMultiDrawElementsIndirectCount</function> have an
+            unspecified value after <function>glMultiDrawElementsIndirectCount</function> returns. Attributes that aren't
+            modified remain well defined.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>mode</parameter> is not an accepted value.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>stride</parameter> is not a multiple of four.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>drawcount</parameter> is negative.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if no buffer is bound to the <constant>GL_ELEMENT_ARRAY_BUFFER</constant>
+            binding, or if such a buffer's data store is currently mapped.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if a non-zero buffer object name is bound to an
+            enabled array or to the <constant>GL_DRAW_INDIRECT_BUFFER</constant> binding and the buffer object's data store is currently mapped.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if a geometry shader is active and <parameter>mode</parameter>
+            is incompatible with the input primitive type of the geometry shader in the currently installed program object.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if <parameter>mode</parameter> is <constant>GL_PATCHES</constant>
+            and no tessellation control shader is active.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> error is generated if no buffer is bound to the <constant>GL_PARAMETER_BUFFER</constant> binding point.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> error is generated if <parameter>drawcount</parameter> is not a multiple of four.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> error is generated if reading a <emphasis>sizei</emphasis> typed value
+            from the buffer bound to the <constant>GL_PARAMETER_BUFFER</constant> target at the offset specified
+            by <parameter>drawcount</parameter> would result in an out-of-bounds access.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="14" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glMultiDrawElementsIndirectCount</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='46']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glDrawArrays</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDrawArraysInstanced</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDrawArraysIndirect</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDrawElements</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDrawRangeElements</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDrawElementsIndirect</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glMultiDrawArraysIndirect</refentrytitle></citerefentry>
+            <citerefentry><refentrytitle>glMultiDrawArraysIndirectCount</refentrytitle></citerefentry>
+            <citerefentry><refentrytitle>glMultiDrawElementsIndirect</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2010-2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

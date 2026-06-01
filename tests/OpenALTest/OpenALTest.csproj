@@ -2,12 +2,15 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net8.0</TargetFramework>
-    <StartupObject>OpenTK.Audio.OpenAL.ALTest</StartupObject>
+    <TargetFramework>net10.0</TargetFramework>
+    <StartupObject>OpenALTest.ALTest</StartupObject>
+    <SignAssembly>False</SignAssembly>
+    <AssemblyOriginatorKeyFile>$(OpenTKSolutionRoot)/OpenTK.snk</AssemblyOriginatorKeyFile>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\OpenAL\OpenTK.Audio.OpenAL\OpenTK.Audio.OpenAL.csproj" />
+    <ProjectReference Include="..\..\src\OpenTK.Audio\OpenTK.Audio.csproj" />
   </ItemGroup>
 
 </Project>

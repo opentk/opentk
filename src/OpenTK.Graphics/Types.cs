@@ -9,9 +9,9 @@ namespace OpenTK.Graphics
     namespace OpenGL
     {
         public delegate void GLDebugProc(DebugSource source, DebugType type, uint id, DebugSeverity severity, int length, IntPtr message, IntPtr userParam);
-        public unsafe delegate void GLDebugProcARB(DebugSource source, DebugType type, uint id, DebugSeverity severity, int length, char* message, void* userParam);
-        public unsafe delegate void GLDebugProcKHR(DebugSource source, DebugType type, uint id, DebugSeverity severity, int length, char* message, void* userParam);
-        public unsafe delegate void GLDebugProcAMD(uint id, uint category, uint severity, int length, char* message, void* userParam);
+        public unsafe delegate void GLDebugProcARB(DebugSource source, DebugType type, uint id, DebugSeverity severity, int length, byte* message, void* userParam);
+        public unsafe delegate void GLDebugProcKHR(DebugSource source, DebugType type, uint id, DebugSeverity severity, int length, byte* message, void* userParam);
+        public unsafe delegate void GLDebugProcAMD(uint id, uint category, uint severity, int length, byte* message, void* userParam);
         public unsafe delegate void GLDebugProcNV();
     }
 
@@ -609,6 +609,300 @@ namespace OpenTK.Graphics
             public fixed byte DeviceString[128];
             public uint Flags; // FIXME: Enum
             public Rect rcVirtualScreen;
+        }
+    }
+
+    namespace Egl
+    {
+        public unsafe delegate void EGLDebugProcKHR(All error, byte* command, int messageType, EGLLabelKHR threadLabel, EGLLabelKHR objectLabel, byte* message);
+
+        public unsafe delegate void EGLSetBlobFuncANDROID(void* key, nint keySize, void* value, nint valueSize);
+        public unsafe delegate nint EGLGetBlobFuncANDROID(void* key, nint keySize, void* value, nint valueSize);
+
+        public struct EGLClientBuffer
+        {
+            public nint Value;
+
+            public EGLClientBuffer(nint value)
+            {
+                Value = value;
+            }
+
+            public static explicit operator nint(EGLClientBuffer handle) => handle.Value;
+            public static explicit operator EGLClientBuffer(nint value) => new EGLClientBuffer(value);
+        }
+
+        public struct EGLConfig
+        {
+            public nint Value;
+
+            public EGLConfig(nint value)
+            {
+                Value = value;
+            }
+
+            public static explicit operator nint(EGLConfig handle) => handle.Value;
+            public static explicit operator EGLConfig(nint value) => new EGLConfig(value);
+        }
+
+        public struct EGLContext : IEquatable<EGLContext>
+        {
+            public static EGLContext NoContext => new EGLContext(0);
+
+            public nint Value;
+
+            public EGLContext(nint value)
+            {
+                Value = value;
+            }
+
+            public static explicit operator nint(EGLContext handle) => handle.Value;
+            public static explicit operator EGLContext(nint value) => new EGLContext(value);
+
+            public static bool operator ==(EGLContext left, EGLContext right)
+            {
+                return left.Equals(right);
+            }
+
+            public static bool operator !=(EGLContext left, EGLContext right)
+            {
+                return !(left == right);
+            }
+
+            public override bool Equals(object? obj)
+            {
+                return obj is EGLContext context && Equals(context);
+            }
+
+            public bool Equals(EGLContext other)
+            {
+                return Value.Equals(other.Value);
+            }
+
+            public override int GetHashCode()
+            {
+                return HashCode.Combine(Value);
+            }
+        }
+
+        public struct EGLDeviceEXT
+        {
+            public nint Value;
+
+            public EGLDeviceEXT(nint value)
+            {
+                Value = value;
+            }
+
+            public static explicit operator nint(EGLDeviceEXT handle) => handle.Value;
+            public static explicit operator EGLDeviceEXT(nint value) => new EGLDeviceEXT(value);
+        }
+
+        public struct EGLDisplay
+        {
+            public static EGLDisplay NoDisplay => new EGLDisplay(0);
+
+            public nint Value;
+
+            public EGLDisplay(nint value)
+            {
+                Value = value;
+            }
+
+            public static explicit operator nint(EGLDisplay handle) => handle.Value;
+            public static explicit operator EGLDisplay(nint value) => new EGLDisplay(value);
+        }
+
+        public struct EGLImage
+        {
+            public nint Value;
+
+            public EGLImage(nint value)
+            {
+                Value = value;
+            }
+
+            public static explicit operator nint(EGLImage handle) => handle.Value;
+            public static explicit operator EGLImage(nint value) => new EGLImage(value);
+        }
+
+        public struct EGLImageKHR
+        {
+            public nint Value;
+
+            public EGLImageKHR(nint value)
+            {
+                Value = value;
+            }
+
+            public static explicit operator nint(EGLImageKHR handle) => handle.Value;
+            public static explicit operator EGLImageKHR(nint value) => new EGLImageKHR(value);
+        }
+
+        public struct EGLLabelKHR
+        {
+            public nint Value;
+
+            public EGLLabelKHR(nint value)
+            {
+                Value = value;
+            }
+
+            public static explicit operator nint(EGLLabelKHR handle) => handle.Value;
+            public static explicit operator EGLLabelKHR(nint value) => new EGLLabelKHR(value);
+        }
+
+        public struct EGLObjectKHR
+        {
+            public nint Value;
+
+            public EGLObjectKHR(nint value)
+            {
+                Value = value;
+            }
+
+            public static explicit operator nint(EGLObjectKHR handle) => handle.Value;
+            public static explicit operator EGLObjectKHR(nint value) => new EGLObjectKHR(value);
+        }
+
+        public struct EGLOutputLayerEXT
+        {
+            public nint Value;
+
+            public EGLOutputLayerEXT(nint value)
+            {
+                Value = value;
+            }
+
+            public static explicit operator nint(EGLOutputLayerEXT handle) => handle.Value;
+            public static explicit operator EGLOutputLayerEXT(nint value) => new EGLOutputLayerEXT(value);
+        }
+
+        public struct EGLOutputPortEXT
+        {
+            public nint Value;
+
+            public EGLOutputPortEXT(nint value)
+            {
+                Value = value;
+            }
+
+            public static explicit operator nint(EGLOutputPortEXT handle) => handle.Value;
+            public static explicit operator EGLOutputPortEXT(nint value) => new EGLOutputPortEXT(value);
+        }
+
+        public struct EGLStreamKHR
+        {
+            public nint Value;
+
+            public EGLStreamKHR(nint value)
+            {
+                Value = value;
+            }
+
+            public static explicit operator nint(EGLStreamKHR handle) => handle.Value;
+            public static explicit operator EGLStreamKHR(nint value) => new EGLStreamKHR(value);
+        }
+
+        public struct EGLSurface : IEquatable<EGLSurface>
+        {
+            public static EGLSurface NoSurface => new EGLSurface(0);
+
+            public nint Value;
+
+            public EGLSurface(nint value)
+            {
+                Value = value;
+            }
+
+            public static explicit operator nint(EGLSurface handle) => handle.Value;
+            public static explicit operator EGLSurface(nint value) => new EGLSurface(value);
+
+            public static bool operator ==(EGLSurface left, EGLSurface right)
+            {
+                return left.Equals(right);
+            }
+
+            public static bool operator !=(EGLSurface left, EGLSurface right)
+            {
+                return !(left == right);
+            }
+
+            public override bool Equals(object? obj)
+            {
+                return obj is EGLSurface surface && Equals(surface);
+            }
+
+            public bool Equals(EGLSurface other)
+            {
+                return Value.Equals(other.Value);
+            }
+
+            public override int GetHashCode()
+            {
+                return HashCode.Combine(Value);
+            }
+        }
+
+        public struct EGLSync
+        {
+            public nint Value;
+
+            public EGLSync(nint value)
+            {
+                Value = value;
+            }
+
+            public static explicit operator nint(EGLSync handle) => handle.Value;
+            public static explicit operator EGLSync(nint value) => new EGLSync(value);
+        }
+
+        public struct EGLSyncKHR
+        {
+            public nint Value;
+
+            public EGLSyncKHR(nint value)
+            {
+                Value = value;
+            }
+
+            public static explicit operator nint(EGLSyncKHR handle) => handle.Value;
+            public static explicit operator EGLSyncKHR(nint value) => new EGLSyncKHR(value);
+        }
+
+        public struct EGLSyncNV
+        {
+            public nint Value;
+
+            public EGLSyncNV(nint value)
+            {
+                Value = value;
+            }
+
+            public static explicit operator nint(EGLSyncNV handle) => handle.Value;
+            public static explicit operator EGLSyncNV(nint value) => new EGLSyncNV(value);
+        }
+
+        public struct AHardwareBuffer
+        {
+            public nint Value;
+
+            public AHardwareBuffer(nint value)
+            {
+                Value = value;
+            }
+
+            public static explicit operator nint(AHardwareBuffer handle) => handle.Value;
+            public static explicit operator AHardwareBuffer(nint value) => new AHardwareBuffer(value);
+        }
+        
+
+        public struct EGLClientPixmapHI
+        {
+            public IntPtr pData;
+            public int iWidth;
+            public int iHeight;
+            public int iStride;
         }
     }
 

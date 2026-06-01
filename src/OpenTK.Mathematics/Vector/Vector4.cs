@@ -22,6 +22,7 @@ SOFTWARE.
 
 using System;
 using System.Diagnostics.Contracts;
+using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Runtime.Intrinsics;
@@ -37,7 +38,22 @@ namespace OpenTK.Mathematics
     /// </remarks>
     [Serializable]
     [StructLayout(LayoutKind.Sequential)]
-    public struct Vector4 : IEquatable<Vector4>, IFormattable
+    public struct Vector4 : IEquatable<Vector4>, IFormattable,
+                            IAdditionOperators<Vector4, Vector4, Vector4>,
+                            ISubtractionOperators<Vector4, Vector4, Vector4>,
+                            IUnaryNegationOperators<Vector4, Vector4>,
+                            IUnaryPlusOperators<Vector4, Vector4>,
+                            IMultiplyOperators<Vector4, float, Vector4>,
+                            IMultiplyOperators<Vector4, Vector4, Vector4>,
+                            IMultiplyOperators<Vector4, Matrix4x2, Vector2>,
+                            IMultiplyOperators<Vector4, Matrix4x3, Vector3>,
+                            IMultiplyOperators<Vector4, Matrix4, Vector4>,
+                            IDivisionOperators<Vector4, float, Vector4>,
+                            IDivisionOperators<Vector4, Vector4, Vector4>,
+                            IEqualityOperators<Vector4, Vector4, bool>,
+                            IAdditiveIdentity<Vector4, Vector4>,
+                            IMultiplicativeIdentity<Vector4, Vector4>,
+                            IMinMaxValue<Vector4>
     {
         /// <summary>
         /// The X component of the Vector4.
@@ -167,52 +183,30 @@ namespace OpenTK.Mathematics
         {
             readonly get
             {
-                if (index == 0)
+                if (((uint)index) >= 4)
                 {
-                    return X;
+                    MathHelper.ThrowOutOfRangeException("You tried to access this vector at index: {0}", index);
                 }
 
-                if (index == 1)
-                {
-                    return Y;
-                }
-
-                if (index == 2)
-                {
-                    return Z;
-                }
-
-                if (index == 3)
-                {
-                    return W;
-                }
-
-                throw new IndexOutOfRangeException("You tried to access this vector at index: " + index);
+                return GetElementUnsafe(in this, index);
             }
 
             set
             {
-                if (index == 0)
+                if (((uint)index) >= 4)
                 {
-                    X = value;
+                    MathHelper.ThrowOutOfRangeException("You tried to set this vector at index: {0}", index);
                 }
-                else if (index == 1)
-                {
-                    Y = value;
-                }
-                else if (index == 2)
-                {
-                    Z = value;
-                }
-                else if (index == 3)
-                {
-                    W = value;
-                }
-                else
-                {
-                    throw new IndexOutOfRangeException("You tried to set this vector at index: " + index);
-                }
+
+                GetElementUnsafe(in this, index) = value;
             }
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static ref float GetElementUnsafe(in Vector4 v, int index)
+        {
+            ref float address = ref Unsafe.AsRef(in v.X);
+            return ref Unsafe.Add(ref address, index);
         }
 
         /// <summary>
@@ -247,6 +241,26 @@ namespace OpenTK.Mathematics
         /// <see cref="Length"/>
         /// <seealso cref="LengthFast"/>
         public readonly float LengthSquared => (X * X) + (Y * Y) + (Z * Z) + (W * W);
+
+        /// <summary>
+        /// Gets the additive identity of Vector4. Equivalent to Vector4.Zero.
+        /// </summary>
+        public static Vector4 AdditiveIdentity => Zero;
+
+        /// <summary>
+        /// Gets the multiplicative identity of Vector4. Equivalent to Vector4.One.
+        /// </summary>
+        public static Vector4 MultiplicativeIdentity => One;
+
+        /// <summary>
+        /// Gets the max value for Vector4. Equivalent to Vector4.PositiveInfinity.
+        /// </summary>
+        public static Vector4 MaxValue => PositiveInfinity;
+
+        /// <summary>
+        /// Gets the min value for Vector4. Equivalent to Vector4.NegativeInfinity.
+        /// </summary>
+        public static Vector4 MinValue => NegativeInfinity;
 
         /// <summary>
         /// Returns a copy of the Vector4 scaled to unit length.
@@ -298,6 +312,57 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
+        /// Returns a new vector were component-wise rounding has been applied.
+        /// Equivalent to calling <see cref="MathF.Round(float)"/> on each component.
+        /// </summary>
+        /// <returns>The rounded vector.</returns>
+        public readonly Vector4 Round()
+        {
+            return Round(this);
+        }
+
+        /// <summary>
+        /// Returns a new vector were component-wise rounding has been applied with the specified midpoint rounding rule.
+        /// Equivalent to calling <see cref="MathF.Round(float,MidpointRounding)"/> on each component.
+        /// </summary>
+        /// <param name="rounding">The midpoint rounding rule to use.</param>
+        /// <returns>The rounded vector.</returns>
+        public readonly Vector4 Round(MidpointRounding rounding)
+        {
+            return Round(this, rounding);
+        }
+
+        /// <summary>
+        /// Returns a new vector were a component-wise ceiling operation has been applied.
+        /// Equivalent to calling <see cref="MathF.Ceiling(float)"/> on each component.
+        /// </summary>
+        /// <returns>The ceiled vector.</returns>
+        public readonly Vector4 Ceiling()
+        {
+            return Ceiling(this);
+        }
+
+        /// <summary>
+        /// Returns a new vector were a component-wise floor operation has been applied.
+        /// Equivalent to calling <see cref="MathF.Floor(float)"/> on each component.
+        /// </summary>
+        /// <returns>The floored vector.</returns>
+        public readonly Vector4 Floor()
+        {
+            return Floor(this);
+        }
+
+        /// <summary>
+        /// Returns a new vector were component-wise truncation has been applied.
+        /// Equivalent to calling <see cref="MathF.Truncate(float)"/> on each component.
+        /// </summary>
+        /// <returns>The truncated vector.</returns>
+        public readonly Vector4 Truncate()
+        {
+            return Truncate(this);
+        }
+
+        /// <summary>
         /// Adds two vectors.
         /// </summary>
         /// <param name="a">Left operand.</param>
@@ -329,7 +394,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <param name="a">First operand.</param>
         /// <param name="b">Second operand.</param>
-        /// <returns>Result of subtraction.</returns>
+        /// <returns>Result of the subtraction.</returns>
         [Pure]
         public static Vector4 Subtract(Vector4 a, Vector4 b)
         {
@@ -461,62 +526,206 @@ namespace OpenTK.Mathematics
 
         /// <summary>
         /// Returns a vector created from the smallest of the corresponding components of the given vectors.
+        /// Any NaN inputs are propagated.
         /// </summary>
         /// <param name="a">First operand.</param>
         /// <param name="b">Second operand.</param>
         /// <returns>The component-wise minimum.</returns>
         [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector4 ComponentMin(Vector4 a, Vector4 b)
         {
-            a.X = a.X < b.X ? a.X : b.X;
-            a.Y = a.Y < b.Y ? a.Y : b.Y;
-            a.Z = a.Z < b.Z ? a.Z : b.Z;
-            a.W = a.W < b.W ? a.W : b.W;
-            return a;
+            return new Vector4(
+                float.Min(a.X, b.X),
+                float.Min(a.Y, b.Y),
+                float.Min(a.Z, b.Z),
+                float.Min(a.W, b.W));
         }
 
         /// <summary>
         /// Returns a vector created from the smallest of the corresponding components of the given vectors.
+        /// Any NaN inputs are propagated.
         /// </summary>
         /// <param name="a">First operand.</param>
         /// <param name="b">Second operand.</param>
         /// <param name="result">The component-wise minimum.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void ComponentMin(in Vector4 a, in Vector4 b, out Vector4 result)
         {
-            result.X = a.X < b.X ? a.X : b.X;
-            result.Y = a.Y < b.Y ? a.Y : b.Y;
-            result.Z = a.Z < b.Z ? a.Z : b.Z;
-            result.W = a.W < b.W ? a.W : b.W;
+            result.X = float.Min(a.X, b.X);
+            result.Y = float.Min(a.Y, b.Y);
+            result.Z = float.Min(a.Z, b.Z);
+            result.W = float.Min(a.W, b.W);
+        }
+
+        /// <summary>
+        /// Returns a vector created from the smallest of the corresponding components of the given vectors.
+        /// If one of the two components are NaN the other component is returned.
+        /// </summary>
+        /// <param name="a">First operand.</param>
+        /// <param name="b">Second operand.</param>
+        /// <returns>The component-wise minimum.</returns>
+        [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Vector4 ComponentMinNumber(Vector4 a, Vector4 b)
+        {
+            return new Vector4(
+                float.MinNumber(a.X, b.X),
+                float.MinNumber(a.Y, b.Y),
+                float.MinNumber(a.Z, b.Z),
+                float.MinNumber(a.W, b.W));
+        }
+
+        /// <summary>
+        /// Returns a vector created from the smallest of the corresponding components of the given vectors.
+        /// If one of the two components are NaN the other component is returned.
+        /// </summary>
+        /// <param name="a">First operand.</param>
+        /// <param name="b">Second operand.</param>
+        /// <param name="result">The component-wise minimum.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void ComponentMinNumber(in Vector4 a, in Vector4 b, out Vector4 result)
+        {
+            result.X = float.MinNumber(a.X, b.X);
+            result.Y = float.MinNumber(a.Y, b.Y);
+            result.Z = float.MinNumber(a.Z, b.Z);
+            result.W = float.MinNumber(a.W, b.W);
+        }
+
+        /// <summary>
+        /// Returns a vector created from the smallest of the corresponding components of the given vectors.
+        /// What happens when the input component is NaN or -0 is platform dependent.
+        /// </summary>
+        /// <param name="a">First operand.</param>
+        /// <param name="b">Second operand.</param>
+        /// <returns>The component-wise minimum.</returns>
+        [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Vector4 ComponentMinNative(Vector4 a, Vector4 b)
+        {
+            return new Vector4(
+                float.MinNative(a.X, b.X),
+                float.MinNative(a.Y, b.Y),
+                float.MinNative(a.Z, b.Z),
+                float.MinNative(a.W, b.W));
+        }
+
+        /// <summary>
+        /// Returns a vector created from the smallest of the corresponding components of the given vectors.
+        /// What happens when the input component is NaN or -0 is platform dependent.
+        /// </summary>
+        /// <param name="a">First operand.</param>
+        /// <param name="b">Second operand.</param>
+        /// <param name="result">The component-wise minimum.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void ComponentMinNative(in Vector4 a, in Vector4 b, out Vector4 result)
+        {
+            result.X = float.MinNative(a.X, b.X);
+            result.Y = float.MinNative(a.Y, b.Y);
+            result.Z = float.MinNative(a.Z, b.Z);
+            result.W = float.MinNative(a.W, b.W);
         }
 
         /// <summary>
         /// Returns a vector created from the largest of the corresponding components of the given vectors.
+        /// Any NaN inputs are propagated.
         /// </summary>
         /// <param name="a">First operand.</param>
         /// <param name="b">Second operand.</param>
-        /// <returns>The component-wise maximum.</returns>
+        /// <returns>The component-wise minimum.</returns>
         [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector4 ComponentMax(Vector4 a, Vector4 b)
         {
-            a.X = a.X > b.X ? a.X : b.X;
-            a.Y = a.Y > b.Y ? a.Y : b.Y;
-            a.Z = a.Z > b.Z ? a.Z : b.Z;
-            a.W = a.W > b.W ? a.W : b.W;
-            return a;
+            return new Vector4(
+                float.Max(a.X, b.X),
+                float.Max(a.Y, b.Y),
+                float.Max(a.Z, b.Z),
+                float.Max(a.W, b.W));
         }
 
         /// <summary>
         /// Returns a vector created from the largest of the corresponding components of the given vectors.
+        /// Any NaN inputs are propagated.
         /// </summary>
         /// <param name="a">First operand.</param>
         /// <param name="b">Second operand.</param>
-        /// <param name="result">The component-wise maximum.</param>
+        /// <param name="result">The component-wise minimum.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void ComponentMax(in Vector4 a, in Vector4 b, out Vector4 result)
         {
-            result.X = a.X > b.X ? a.X : b.X;
-            result.Y = a.Y > b.Y ? a.Y : b.Y;
-            result.Z = a.Z > b.Z ? a.Z : b.Z;
-            result.W = a.W > b.W ? a.W : b.W;
+            result.X = float.Max(a.X, b.X);
+            result.Y = float.Max(a.Y, b.Y);
+            result.Z = float.Max(a.Z, b.Z);
+            result.W = float.Max(a.W, b.W);
+        }
+
+        /// <summary>
+        /// Returns a vector created from the largest of the corresponding components of the given vectors.
+        /// If one of the two components are NaN the other component is returned.
+        /// </summary>
+        /// <param name="a">First operand.</param>
+        /// <param name="b">Second operand.</param>
+        /// <returns>The component-wise minimum.</returns>
+        [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Vector4 ComponentMaxNumber(Vector4 a, Vector4 b)
+        {
+            return new Vector4(
+                float.MaxNumber(a.X, b.X),
+                float.MaxNumber(a.Y, b.Y),
+                float.MaxNumber(a.Z, b.Z),
+                float.MaxNumber(a.W, b.W));
+        }
+
+        /// <summary>
+        /// Returns a vector created from the largest of the corresponding components of the given vectors.
+        /// If one of the two components are NaN the other component is returned.
+        /// </summary>
+        /// <param name="a">First operand.</param>
+        /// <param name="b">Second operand.</param>
+        /// <param name="result">The component-wise minimum.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void ComponentMaxNumber(in Vector4 a, in Vector4 b, out Vector4 result)
+        {
+            result.X = float.MaxNumber(a.X, b.X);
+            result.Y = float.MaxNumber(a.Y, b.Y);
+            result.Z = float.MaxNumber(a.Z, b.Z);
+            result.W = float.MaxNumber(a.W, b.W);
+        }
+
+        /// <summary>
+        /// Returns a vector created from the largest of the corresponding components of the given vectors.
+        /// What happens when the input component is NaN or -0 is platform dependent.
+        /// </summary>
+        /// <param name="a">First operand.</param>
+        /// <param name="b">Second operand.</param>
+        /// <returns>The component-wise minimum.</returns>
+        [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Vector4 ComponentMaxNative(Vector4 a, Vector4 b)
+        {
+            return new Vector4(
+                float.MaxNative(a.X, b.X),
+                float.MaxNative(a.Y, b.Y),
+                float.MaxNative(a.Z, b.Z),
+                float.MaxNative(a.W, b.W));
+        }
+
+        /// <summary>
+        /// Returns a vector created from the largest of the corresponding components of the given vectors.
+        /// What happens when the input component is NaN or -0 is platform dependent.
+        /// </summary>
+        /// <param name="a">First operand.</param>
+        /// <param name="b">Second operand.</param>
+        /// <param name="result">The component-wise minimum.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void ComponentMaxNative(in Vector4 a, in Vector4 b, out Vector4 result)
+        {
+            result.X = float.MaxNative(a.X, b.X);
+            result.Y = float.MaxNative(a.Y, b.Y);
+            result.Z = float.MaxNative(a.Z, b.Z);
+            result.W = float.MaxNative(a.W, b.W);
         }
 
         /// <summary>
@@ -629,6 +838,204 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
+        /// Component-wise rounding. Equivalent to calling <see cref="MathF.Round(float)"/> on each component.
+        /// </summary>
+        /// <param name="vec">The vector to round.</param>
+        /// <returns>The component-wise rounded vector.</returns>
+        [Pure]
+        public static Vector4 Round(Vector4 vec)
+        {
+            vec.X = MathF.Round(vec.X);
+            vec.Y = MathF.Round(vec.Y);
+            vec.Z = MathF.Round(vec.Z);
+            vec.W = MathF.Round(vec.W);
+            return vec;
+        }
+
+        /// <summary>
+        /// Component-wise rounding. Equivalent to calling <see cref="MathF.Round(float)"/> on each component.
+        /// </summary>
+        /// <param name="vec">The vector to round.</param>
+        /// <param name="result">The component-wise rounded vector.</param>
+        public static void Round(in Vector4 vec, out Vector4 result)
+        {
+            result.X = MathF.Round(vec.X);
+            result.Y = MathF.Round(vec.Y);
+            result.Z = MathF.Round(vec.Z);
+            result.W = MathF.Round(vec.W);
+        }
+
+        /// <summary>
+        /// Component-wise rounding with specified midpoint rounding rule.
+        /// Equivalent to calling <see cref="MathF.Round(float,MidpointRounding)"/> on each component.
+        /// </summary>
+        /// <param name="vec">The vector to round.</param>
+        /// <param name="rounding">The midpoint rounding rule to use.</param>
+        /// <returns>The component-wise rounded vector.</returns>
+        [Pure]
+        public static Vector4 Round(Vector4 vec, MidpointRounding rounding)
+        {
+            vec.X = MathF.Round(vec.X, rounding);
+            vec.Y = MathF.Round(vec.Y, rounding);
+            vec.Z = MathF.Round(vec.Z, rounding);
+            vec.W = MathF.Round(vec.W, rounding);
+            return vec;
+        }
+
+        /// <summary>
+        /// Component-wise rounding with specified midpoint rounding rule.
+        /// Equivalent to calling <see cref="MathF.Round(float,MidpointRounding)"/> on each component.
+        /// </summary>
+        /// <param name="vec">The vector to round.</param>
+        /// <param name="rounding">The midpoint rounding rule to use.</param>
+        /// <param name="result">The component-wise rounded vector.</param>
+        public static void Round(in Vector4 vec, MidpointRounding rounding, out Vector4 result)
+        {
+            result.X = MathF.Round(vec.X, rounding);
+            result.Y = MathF.Round(vec.Y, rounding);
+            result.Z = MathF.Round(vec.Z, rounding);
+            result.W = MathF.Round(vec.W, rounding);
+        }
+
+        /// <summary>
+        /// Component-wise ceiling operation.
+        /// Equivalent to calling <see cref="MathF.Ceiling(float)"/> on each component.
+        /// </summary>
+        /// <param name="vec">The vector to take the ceiling of.</param>
+        /// <returns>The component-wise ceiling vector.</returns>
+        [Pure]
+        public static Vector4 Ceiling(Vector4 vec)
+        {
+            vec.X = MathF.Ceiling(vec.X);
+            vec.Y = MathF.Ceiling(vec.Y);
+            vec.Z = MathF.Ceiling(vec.Z);
+            vec.W = MathF.Ceiling(vec.W);
+            return vec;
+        }
+
+        /// <summary>
+        /// Component-wise ceiling operation.
+        /// Equivalent to calling <see cref="MathF.Ceiling(float)"/> on each component.
+        /// </summary>
+        /// <param name="vec">The vector to take the ceiling of.</param>
+        /// <param name="result">The component-wise ceiling vector.</param>
+        public static void Ceiling(in Vector4 vec, out Vector4 result)
+        {
+            result.X = MathF.Ceiling(vec.X);
+            result.Y = MathF.Ceiling(vec.Y);
+            result.Z = MathF.Ceiling(vec.Z);
+            result.W = MathF.Ceiling(vec.W);
+        }
+
+        /// <summary>
+        /// Component-wise floor operation.
+        /// Equivalent to calling <see cref="MathF.Floor(float)"/> on each component.
+        /// </summary>
+        /// <param name="vec">The vector to take the floor of.</param>
+        /// <returns>The component-wise floored vector.</returns>
+        [Pure]
+        public static Vector4 Floor(Vector4 vec)
+        {
+            vec.X = MathF.Floor(vec.X);
+            vec.Y = MathF.Floor(vec.Y);
+            vec.Z = MathF.Floor(vec.Z);
+            vec.W = MathF.Floor(vec.W);
+            return vec;
+        }
+
+        /// <summary>
+        /// Component-wise floor operation.
+        /// Equivalent to calling <see cref="MathF.Floor(float)"/> on each component.
+        /// </summary>
+        /// <param name="vec">The vector to take the floor of.</param>
+        /// <param name="result">The component-wise floored vector.</param>
+        public static void Floor(in Vector4 vec, out Vector4 result)
+        {
+            result.X = MathF.Floor(vec.X);
+            result.Y = MathF.Floor(vec.Y);
+            result.Z = MathF.Floor(vec.Z);
+            result.W = MathF.Floor(vec.W);
+        }
+
+        /// <summary>
+        /// Component-wise truncation.
+        /// Equivalent to calling <see cref="MathF.Truncate(float)"/> on each component.
+        /// </summary>
+        /// <param name="vec">The vector to truncate.</param>
+        /// <returns>The component-wise truncated vector.</returns>
+        [Pure]
+        public static Vector4 Truncate(Vector4 vec)
+        {
+            vec.X = MathF.Truncate(vec.X);
+            vec.Y = MathF.Truncate(vec.Y);
+            vec.Z = MathF.Truncate(vec.Z);
+            vec.W = MathF.Truncate(vec.W);
+            return vec;
+        }
+
+        /// <summary>
+        /// Component-wise truncation.
+        /// Equivalent to calling <see cref="MathF.Truncate(float)"/> on each component.
+        /// </summary>
+        /// <param name="vec">The vector to truncate.</param>
+        /// <param name="result">The component-wise truncated vector.</param>
+        public static void Truncate(in Vector4 vec, out Vector4 result)
+        {
+            result.X = MathF.Truncate(vec.X);
+            result.Y = MathF.Truncate(vec.Y);
+            result.Z = MathF.Truncate(vec.Z);
+            result.W = MathF.Truncate(vec.W);
+        }
+
+        /// <summary>
+        /// Compute the euclidean distance between two vectors.
+        /// </summary>
+        /// <param name="vec1">The first vector.</param>
+        /// <param name="vec2">The second vector.</param>
+        /// <returns>The distance.</returns>
+        [Pure]
+        public static float Distance(Vector4 vec1, Vector4 vec2)
+        {
+            Distance(in vec1, in vec2, out float result);
+            return result;
+        }
+
+        /// <summary>
+        /// Compute the euclidean distance between two vectors.
+        /// </summary>
+        /// <param name="vec1">The first vector.</param>
+        /// <param name="vec2">The second vector.</param>
+        /// <param name="result">The distance.</param>
+        public static void Distance(in Vector4 vec1, in Vector4 vec2, out float result)
+        {
+            result = MathF.Sqrt(((vec2.X - vec1.X) * (vec2.X - vec1.X)) + ((vec2.Y - vec1.Y) * (vec2.Y - vec1.Y)) + ((vec2.Z - vec1.Z) * (vec2.Z - vec1.Z)) + ((vec2.W - vec1.W) * (vec2.W - vec1.W)));
+        }
+
+        /// <summary>
+        /// Compute the squared euclidean distance between two vectors.
+        /// </summary>
+        /// <param name="vec1">The first vector.</param>
+        /// <param name="vec2">The second vector.</param>
+        /// <returns>The squared distance.</returns>
+        [Pure]
+        public static float DistanceSquared(Vector4 vec1, Vector4 vec2)
+        {
+            DistanceSquared(in vec1, in vec2, out float result);
+            return result;
+        }
+
+        /// <summary>
+        /// Compute the squared euclidean distance between two vectors.
+        /// </summary>
+        /// <param name="vec1">The first vector.</param>
+        /// <param name="vec2">The second vector.</param>
+        /// <param name="result">The squared distance.</param>
+        public static void DistanceSquared(in Vector4 vec1, in Vector4 vec2, out float result)
+        {
+            result = ((vec2.X - vec1.X) * (vec2.X - vec1.X)) + ((vec2.Y - vec1.Y) * (vec2.Y - vec1.Y)) + ((vec2.Z - vec1.Z) * (vec2.Z - vec1.Z)) + ((vec2.W - vec1.W) * (vec2.W - vec1.W));
+        }
+
+        /// <summary>
         /// Scale a vector to unit length.
         /// </summary>
         /// <param name="vec">The input vector.</param>
@@ -712,6 +1119,72 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
+        /// Component wise less than comparision of two vectors.
+        /// </summary>
+        /// <param name="left">The left vector.</param>
+        /// <param name="right">The right vector.</param>
+        /// <returns>A component wise boolean vector whose compoennts are true when the corresponding left component is less than the right component.</returns>
+        public static Vector4b LessThan(in Vector4 left, in Vector4 right)
+        {
+            return new Vector4b(left.X < right.X, left.Y < right.Y, left.Z < right.Z, left.W < right.W);
+        }
+
+        /// <summary>
+        /// Component wise less than or equal comparision of two vectors.
+        /// </summary>
+        /// <param name="left">The left vector.</param>
+        /// <param name="right">The right vector.</param>
+        /// <returns>A component wise boolean vector whose compoennts are true when the corresponding left component is less than or equal to the right component.</returns>
+        public static Vector4b LessThanOrEqual(in Vector4 left, in Vector4 right)
+        {
+            return new Vector4b(left.X <= right.X, left.Y <= right.Y, left.Z <= right.Z, left.W <= right.W);
+        }
+
+        /// <summary>
+        /// Component wise greater than comparision of two vectors.
+        /// </summary>
+        /// <param name="left">The left vector.</param>
+        /// <param name="right">The right vector.</param>
+        /// <returns>A component wise boolean vector whose compoennts are true when the corresponding left component is greater than the right component.</returns>
+        public static Vector4b GreaterThan(in Vector4 left, in Vector4 right)
+        {
+            return new Vector4b(left.X > right.X, left.Y > right.Y, left.Z > right.Z, left.W > right.W);
+        }
+
+        /// <summary>
+        /// Component wise greater than or equal comparision of two vectors.
+        /// </summary>
+        /// <param name="left">The left vector.</param>
+        /// <param name="right">The right vector.</param>
+        /// <returns>A component wise boolean vector whose compoennts are true when the corresponding left component is greater than or equal to the right component.</returns>
+        public static Vector4b GreaterThanOrEqual(in Vector4 left, in Vector4 right)
+        {
+            return new Vector4b(left.X >= right.X, left.Y >= right.Y, left.Z >= right.Z, left.W >= right.W);
+        }
+
+        /// <summary>
+        /// Component wise equal comparision of two vectors.
+        /// </summary>
+        /// <param name="left">The left vector.</param>
+        /// <param name="right">The right vector.</param>
+        /// <returns>A component wise boolean vector whose compoennts are true when the corresponding left component is equal to the right component.</returns>
+        public static Vector4b ComponentEqual(in Vector4 left, in Vector4 right)
+        {
+            return new Vector4b(left.X == right.X, left.Y == right.Y, left.Z == right.Z, left.W == right.W);
+        }
+
+        /// <summary>
+        /// Component wise not equal comparision of two vectors.
+        /// </summary>
+        /// <param name="left">The left vector.</param>
+        /// <param name="right">The right vector.</param>
+        /// <returns>A component wise boolean vector whose compoennts are true when the corresponding left component is not equal to the right component.</returns>
+        public static Vector4b ComponentNotEqual(in Vector4 left, in Vector4 right)
+        {
+            return new Vector4b(left.X != right.X, left.Y != right.Y, left.Z != right.Z, left.W != right.W);
+        }
+
+        /// <summary>
         /// Returns a new vector that is the linear blend of the 2 given vectors.
         /// </summary>
         /// <param name="a">First input vector.</param>
@@ -778,6 +1251,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Returns a new vector that is the spherical interpolation of the two given vectors.
         /// <paramref name="a"/> and <paramref name="b"/> need to be normalized for this function to work properly.
+        /// Results are undefined for vectors that point in opposite directions or very close to opposite directions.
         /// </summary>
         /// <param name="a">Unit vector start point.</param>
         /// <param name="b">Unit vector end point.</param>
@@ -808,6 +1282,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Returns a new vector that is the spherical interpolation of the two given vectors.
         /// <paramref name="a"/> and <paramref name="b"/> need to be normalized for this function to work properly.
+        /// Results are undefined for vectors that point in opposite directions or very close to opposite directions.
         /// </summary>
         /// <param name="a">Unit vector start point.</param>
         /// <param name="b">Unit vector end point.</param>
@@ -1013,12 +1488,122 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
+        /// Transform a 4-dimensional vector into a 2-dimensional vector using the given 4x2 Matrix.
+        /// </summary>
+        /// <param name="vec">The vector to transform.</param>
+        /// <param name="mat">The desired transformation.</param>
+        /// <returns>The transformed vector.</returns>
+        [Pure]
+        public static Vector2 TransformTwoDimensionsRow(Vector4 vec, Matrix4x2 mat)
+        {
+            TransformTwoDimensionsRow(in vec, in mat, out Vector2 result);
+            return result;
+        }
+
+        /// <summary>
+        /// Transform a 4-dimensional vector into a 2-dimensional vector using the given 4x2 Matrix.
+        /// </summary>
+        /// <param name="vec">The vector to transform.</param>
+        /// <param name="mat">The desired transformation.</param>
+        /// <param name="result">The transformed vector.</param>
+        public static void TransformTwoDimensionsRow(in Vector4 vec, in Matrix4x2 mat, out Vector2 result)
+        {
+            result = new Vector2(
+                (vec.X * mat.Row0.X) + (vec.Y * mat.Row1.X) + (vec.Z * mat.Row2.X) + (vec.W * mat.Row3.X),
+                (vec.X * mat.Row0.Y) + (vec.Y * mat.Row1.Y) + (vec.Z * mat.Row2.Y) + (vec.W * mat.Row3.Y)
+            );
+        }
+
+        /// <summary>
+        /// Transform a 4-dimensional vector into a 3-dimensional vector using the given 4x3 Matrix.
+        /// </summary>
+        /// <param name="vec">The vector to transform.</param>
+        /// <param name="mat">The desired transformation.</param>
+        /// <returns>The transformed vector.</returns>
+        [Pure]
+        public static Vector3 TransformThreeDimensionsRow(Vector4 vec, Matrix4x3 mat)
+        {
+            TransformThreeDimensionsRow(in vec, in mat, out Vector3 result);
+            return result;
+        }
+
+        /// <summary>
+        /// Transform a 4-dimensional vector into a 3-dimensional vector using the given 4x3 Matrix.
+        /// </summary>
+        /// <param name="vec">The vector to transform.</param>
+        /// <param name="mat">The desired transformation.</param>
+        /// <param name="result">The transformed vector.</param>
+        public static void TransformThreeDimensionsRow(in Vector4 vec, in Matrix4x3 mat, out Vector3 result)
+        {
+            result = new Vector3(
+                (vec.X * mat.Row0.X) + (vec.Y * mat.Row1.X) + (vec.Z * mat.Row2.X) + (vec.W * mat.Row3.X),
+                (vec.X * mat.Row0.Y) + (vec.Y * mat.Row1.Y) + (vec.Z * mat.Row2.Y) + (vec.W * mat.Row3.Y),
+                (vec.X * mat.Row0.Z) + (vec.Y * mat.Row1.Z) + (vec.Z * mat.Row2.Z) + (vec.W * mat.Row3.Z)
+            );
+        }
+
+        /// <summary>
+        /// Transform a 4-dimensional vector into a 2-dimensional vector using the given 2x4 Matrix.
+        /// </summary>
+        /// <param name="mat">The desired transformation.</param>
+        /// <param name="vec">The vector to transform.</param>
+        /// <returns>The transformed vector.</returns>
+        [Pure]
+        public static Vector2 TransformTwoDimensionsColumn(Matrix2x4 mat, Vector4 vec)
+        {
+            TransformTwoDimensionsColumn(in mat, in vec, out Vector2 result);
+            return result;
+        }
+
+        /// <summary>
+        /// Transform a 4-dimensional vector into a 2-dimensional vector using the given 2x4 Matrix.
+        /// </summary>
+        /// <param name="mat">The desired transformation.</param>
+        /// <param name="vec">The vector to transform.</param>
+        /// <param name="result">The transformed vector.</param>
+        public static void TransformTwoDimensionsColumn(in Matrix2x4 mat, in Vector4 vec, out Vector2 result)
+        {
+            result = new Vector2(
+                (mat.Row0.X * vec.X) + (mat.Row0.Y * vec.Y) + (mat.Row0.Z * vec.Z) + (mat.Row0.W * vec.W),
+                (mat.Row1.X * vec.X) + (mat.Row1.Y * vec.Y) + (mat.Row1.Z * vec.Z) + (mat.Row1.W * vec.W)
+            );
+        }
+
+        /// <summary>
+        /// Transform a 4-dimensional vector into a 3-dimensional vector using the given 3x4 Matrix.
+        /// </summary>
+        /// <param name="mat">The desired transformation.</param>
+        /// <param name="vec">The vector to transform.</param>
+        /// <returns>The transformed vector.</returns>
+        [Pure]
+        public static Vector3 TransformThreeDimensionsColumn(Matrix3x4 mat, Vector4 vec)
+        {
+            TransformThreeDimensionsColumn(in mat, in vec, out Vector3 result);
+            return result;
+        }
+
+        /// <summary>
+        /// Transform a 4-dimensional vector into a 3-dimensional vector using the given 3x4 Matrix.
+        /// </summary>
+        /// <param name="mat">The desired transformation.</param>
+        /// <param name="vec">The vector to transform.</param>
+        /// <param name="result">The transformed vector.</param>
+        public static void TransformThreeDimensionsColumn(in Matrix3x4 mat, in Vector4 vec, out Vector3 result)
+        {
+            result = new Vector3(
+                (mat.Row0.X * vec.X) + (mat.Row0.Y * vec.Y) + (mat.Row0.Z * vec.Z) + (mat.Row0.W * vec.W),
+                (mat.Row1.X * vec.X) + (mat.Row1.Y * vec.Y) + (mat.Row1.Z * vec.Z) + (mat.Row1.W * vec.W),
+                (mat.Row2.X * vec.X) + (mat.Row2.Y * vec.Y) + (mat.Row2.Z * vec.Z) + (mat.Row2.W * vec.W)
+            );
+        }
+
+        /// <summary>
         /// Gets or sets an OpenTK.Vector2 with the X and Y components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector2 Xy
         {
-            get => Unsafe.As<Vector4, Vector2>(ref this);
+            readonly get => new Vector2(X, Y);
             set
             {
                 X = value.X;
@@ -1186,7 +1771,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector3 Xyz
         {
-            get => Unsafe.As<Vector4, Vector3>(ref this);
+            readonly get => new Vector3(X, Y, Z);
             set
             {
                 X = value.X;
@@ -1973,6 +2558,38 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
+        /// Adds a scalar to an instance.
+        /// </summary>
+        /// <param name="left">The instance.</param>
+        /// <param name="right">The scalar.</param>
+        /// <returns>The result of the operation.</returns>
+        [Pure]
+        public static Vector4 operator +(Vector4 left, float right)
+        {
+            left.X += right;
+            left.Y += right;
+            left.Z += right;
+            left.W += right;
+            return left;
+        }
+
+        /// <summary>
+        /// Adds a scalar to an instance.
+        /// </summary>
+        /// <param name="left">The scalar.</param>
+        /// <param name="right">The instance.</param>
+        /// <returns>The result of the operation.</returns>
+        [Pure]
+        public static Vector4 operator +(float left, Vector4 right)
+        {
+            right.X += left;
+            right.Y += left;
+            right.Z += left;
+            right.W += left;
+            return right;
+        }
+
+        /// <summary>
         /// Adds two instances.
         /// </summary>
         /// <param name="left">The first instance.</param>
@@ -1986,6 +2603,38 @@ namespace OpenTK.Mathematics
             left.Z += right.Z;
             left.W += right.W;
             return left;
+        }
+
+        /// <summary>
+        /// Subtracts an instance by a scalar.
+        /// </summary>
+        /// <param name="left">The instance.</param>
+        /// <param name="right">The scalar.</param>
+        /// <returns>The result of the operation.</returns>
+        [Pure]
+        public static Vector4 operator -(Vector4 left, float right)
+        {
+            left.X -= right;
+            left.Y -= right;
+            left.Z -= right;
+            left.W -= right;
+            return left;
+        }
+
+        /// <summary>
+        /// Subtracts a scalar by an instance.
+        /// </summary>
+        /// <param name="left">The scalar.</param>
+        /// <param name="right">The instance.</param>
+        /// <returns>The result of the operation.</returns>
+        [Pure]
+        public static Vector4 operator -(float left, Vector4 right)
+        {
+            right.X = left - right.X;
+            right.Y = left - right.Y;
+            right.Z = left - right.Z;
+            right.W = left - right.W;
+            return right;
         }
 
         /// <summary>
@@ -2016,6 +2665,21 @@ namespace OpenTK.Mathematics
             vec.Y = -vec.Y;
             vec.Z = -vec.Z;
             vec.W = -vec.W;
+            return vec;
+        }
+
+        /// <summary>
+        /// Computes the unary plus of the vector.
+        /// </summary>
+        /// <param name="vec">The instance.</param>
+        /// <returns>The result of the calculation.</returns>
+        [Pure]
+        public static Vector4 operator +(Vector4 vec)
+        {
+            vec.X = +vec.X;
+            vec.Y = +vec.Y;
+            vec.Z = +vec.Z;
+            vec.W = +vec.W;
             return vec;
         }
 
@@ -2056,7 +2720,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <param name="scale">Left operand.</param>
         /// <param name="vec">Right operand.</param>
-        /// <returns>Result of multiplication.</returns>
+        /// <returns>Result of the multiplication.</returns>
         [Pure]
         public static Vector4 operator *(Vector4 vec, Vector4 scale)
         {
@@ -2065,6 +2729,32 @@ namespace OpenTK.Mathematics
             vec.Z *= scale.Z;
             vec.W *= scale.W;
             return vec;
+        }
+
+        /// <summary>
+        /// Transform a 4-dimensional vector into a 2-dimensional vector using the given 4x2 Matrix.
+        /// </summary>
+        /// <param name="vec">The vector to transform.</param>
+        /// <param name="mat">The desired transformation.</param>
+        /// <returns>The transformed vector.</returns>
+        [Pure]
+        public static Vector2 operator *(Vector4 vec, Matrix4x2 mat)
+        {
+            TransformTwoDimensionsRow(in vec, in mat, out Vector2 result);
+            return result;
+        }
+
+        /// <summary>
+        /// Transform a 4-dimensional vector into a 2-dimensional vector using the given 4x2 Matrix.
+        /// </summary>
+        /// <param name="vec">The vector to transform.</param>
+        /// <param name="mat">The desired transformation.</param>
+        /// <returns>The transformed vector.</returns>
+        [Pure]
+        public static Vector3 operator *(Vector4 vec, Matrix4x3 mat)
+        {
+            TransformThreeDimensionsRow(in vec, in mat, out Vector3 result);
+            return result;
         }
 
         /// <summary>
@@ -2081,37 +2771,11 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Transform a Vector by the given Matrix using right-handed notation.
-        /// </summary>
-        /// <param name="mat">The desired transformation.</param>
-        /// <param name="vec">The vector to transform.</param>
-        /// <returns>The transformed vector.</returns>
-        [Pure]
-        public static Vector4 operator *(Matrix4 mat, Vector4 vec)
-        {
-            TransformColumn(in mat, in vec, out Vector4 result);
-            return result;
-        }
-
-        /// <summary>
-        /// Transforms a vector by a quaternion rotation.
-        /// </summary>
-        /// <param name="quat">The quaternion to rotate the vector by.</param>
-        /// <param name="vec">The vector to transform.</param>
-        /// <returns>The transformed vector.</returns>
-        [Pure]
-        public static Vector4 operator *(Quaternion quat, Vector4 vec)
-        {
-            Transform(in vec, in quat, out Vector4 result);
-            return result;
-        }
-
-        /// <summary>
         /// Divides an instance by a scalar.
         /// </summary>
         /// <param name="vec">The instance.</param>
         /// <param name="scale">The scalar.</param>
-        /// <returns>The result of the calculation.</returns>
+        /// <returns>Result of the division.</returns>
         [Pure]
         public static Vector4 operator /(Vector4 vec, float scale)
         {
@@ -2120,6 +2784,22 @@ namespace OpenTK.Mathematics
             vec.Z /= scale;
             vec.W /= scale;
             return vec;
+        }
+
+        /// <summary>
+        /// Divides a scalar by an instance.
+        /// </summary>
+        /// <param name="left">The scalar.</param>
+        /// <param name="right">The instance.</param>
+        /// <returns>Result of the division.</returns>
+        [Pure]
+        public static Vector4 operator /(float left, Vector4 right)
+        {
+            right.X = left / right.X;
+            right.Y = left / right.Y;
+            right.Z = left / right.Z;
+            right.W = left / right.W;
+            return right;
         }
 
         /// <summary>
@@ -2136,6 +2816,54 @@ namespace OpenTK.Mathematics
             vec.Z /= scale.Z;
             vec.W /= scale.W;
             return vec;
+        }
+
+        /// <summary>
+        /// Component wise less than comparision between the specified instances.
+        /// </summary>
+        /// <param name="left">The left instance.</param>
+        /// <param name="right">The right instance.</param>
+        /// <returns>A component wise boolean vector whose compoennts are true when the corresponding left component is less than the right component.</returns>
+        [Pure]
+        public static Vector4b operator <(Vector4 left, Vector4 right)
+        {
+            return LessThan(left, right);
+        }
+
+        /// <summary>
+        /// Component wise less than or equal comparision between the specified instances.
+        /// </summary>
+        /// <param name="left">The left instance.</param>
+        /// <param name="right">The right instance.</param>
+        /// <returns>A component wise boolean vector whose compoennts are true when the corresponding left component is less than or equal the right component.</returns>
+        [Pure]
+        public static Vector4b operator <=(Vector4 left, Vector4 right)
+        {
+            return LessThanOrEqual(left, right);
+        }
+
+        /// <summary>
+        /// Component wise greater than comparision between the specified instances.
+        /// </summary>
+        /// <param name="left">The left instance.</param>
+        /// <param name="right">The right instance.</param>
+        /// <returns>A component wise boolean vector whose compoennts are true when the corresponding greater component is greater than the right component.</returns>
+        [Pure]
+        public static Vector4b operator >(Vector4 left, Vector4 right)
+        {
+            return GreaterThan(left, right);
+        }
+
+        /// <summary>
+        /// Component wise greater than or equal comparision between the specified instances.
+        /// </summary>
+        /// <param name="left">The left instance.</param>
+        /// <param name="right">The right instance.</param>
+        /// <returns>A component wise boolean vector whose compoennts are true when the corresponding left component is greater than or equal the right component.</returns>
+        [Pure]
+        public static Vector4b operator >=(Vector4 left, Vector4 right)
+        {
+            return GreaterThanOrEqual(left, right);
         }
 
         /// <summary>
@@ -2203,6 +2931,26 @@ namespace OpenTK.Mathematics
         public static implicit operator Vector4((float X, float Y, float Z, float W) values)
         {
             return new Vector4(values.X, values.Y, values.Z, values.W);
+        }
+
+        /// <summary>
+        /// Converts <see cref="System.Numerics.Vector4"/> to <see cref="Vector4"/>.
+        /// </summary>
+        /// <param name="vec">The <see cref="System.Numerics.Vector4"/> to cast.</param>
+        [Pure]
+        public static explicit operator Vector4(System.Numerics.Vector4 vec)
+        {
+            return Unsafe.As<System.Numerics.Vector4, Vector4>(ref vec);
+        }
+
+        /// <summary>
+        /// Converts <see cref="Vector4"/> to <see cref="System.Numerics.Vector4"/>.
+        /// </summary>
+        /// <param name="vec">The <see cref="Vector4"/> to cast.</param>
+        [Pure]
+        public static explicit operator System.Numerics.Vector4(Vector4 vec)
+        {
+            return Unsafe.As<Vector4, System.Numerics.Vector4>(ref vec);
         }
 
         /// <inheritdoc/>

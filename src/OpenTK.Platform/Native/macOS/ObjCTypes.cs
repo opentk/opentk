@@ -120,6 +120,10 @@ namespace OpenTK.Platform.Native.macOS
             size = new CGPoint(width, height);
         }
 
+        public CGRect InsetBy(NFloat dx, NFloat dy) {
+            return new CGRect(origin.x + dx, origin.y + dy, size.x - 2 * dx, size.y - 2 * dy);
+        }
+
         public bool Contains(CGPoint point)
         {
             if (point.x >= origin.x && point.x < origin.x + size.x &&

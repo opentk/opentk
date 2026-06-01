@@ -15,8 +15,8 @@ using OpenTK.Mathematics;
 using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Common.Input;
 
-[assembly: InternalsVisibleTo("OpenTK.Windowing.Desktop")]
-[assembly: InternalsVisibleTo("OpenTK.Tests")]
+[assembly: InternalsVisibleTo("OpenTK.Windowing.Desktop, PublicKey=0024000004800000940000000602000000240000525341310004000001000100690271c30ef355685baa02ef75a29ed11d2c2dad57636e5add6c104c241bc08fcf4fb07b3683a088450596f0f17728fed9aa04b915f6ccd0b02b5aea6503cab0fe8195e0db8502aedc242ec88892a9dbb2e850de5812db75f961133ac31c5e931291dae188aab9e30d45725be66d86e276dc79f1fd8bd045554ec7003371f3b2")]
+[assembly: InternalsVisibleTo("OpenTK.Tests, PublicKey=0024000004800000940000000602000000240000525341310004000001000100690271c30ef355685baa02ef75a29ed11d2c2dad57636e5add6c104c241bc08fcf4fb07b3683a088450596f0f17728fed9aa04b915f6ccd0b02b5aea6503cab0fe8195e0db8502aedc242ec88892a9dbb2e850de5812db75f961133ac31c5e931291dae188aab9e30d45725be66d86e276dc79f1fd8bd045554ec7003371f3b2")]
 
 namespace OpenTK.Windowing.GraphicsLibraryFramework
 {
@@ -44,6 +44,11 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         public string Name { get; }
 
         /// <summary>
+        /// Gets the GUID of the joysitck this state describes.
+        /// </summary>
+        public string GUID { get; }
+
+        /// <summary>
         /// Gets the number of buttons on the joystick this state describes.
         /// </summary>
         public int ButtonCount { get => _buttons.Length; }
@@ -58,7 +63,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// </summary>
         public int HatCount { get => _hats.Length; }
 
-        internal JoystickState(int hatCount, int axesCount, int buttonCount, int id, string name)
+        internal JoystickState(int hatCount, int axesCount, int buttonCount, int id, string name, string guid)
         {
             _hats = new Hat[hatCount];
             _axes = new float[axesCount];
@@ -70,6 +75,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
 
             Id = id;
             Name = name;
+            GUID = guid;
         }
 
         private JoystickState(JoystickState source)
@@ -78,7 +84,8 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
                    source._axes.Length,
                    source._buttons.Length,
                    source.Id,
-                   source.Name)
+                   source.Name,
+                   source.GUID)
         {
             Array.Copy(source._hats, _hats, source._hats.Length);
             Array.Copy(source._axes, _axes, source._axes.Length);

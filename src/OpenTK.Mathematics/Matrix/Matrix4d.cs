@@ -23,6 +23,8 @@ SOFTWARE.
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
+using System.Numerics;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Runtime.Intrinsics;
 
@@ -34,7 +36,17 @@ namespace OpenTK.Mathematics
     /// <seealso cref="Matrix4"/>
     [Serializable]
     [StructLayout(LayoutKind.Sequential)]
-    public struct Matrix4d : IEquatable<Matrix4d>, IFormattable
+    public struct Matrix4d : IEquatable<Matrix4d>, IFormattable,
+                            IMultiplyOperators<Matrix4d, Vector4d, Vector4d>,
+                            IMultiplyOperators<Matrix4d, Matrix4d, Matrix4d>,
+                            IMultiplyOperators<Matrix4d, double, Matrix4d>,
+                            IAdditionOperators<Matrix4d, Matrix4d, Matrix4d>,
+                            IMultiplyOperators<Matrix4d, Matrix4x2d, Matrix4x2d>,
+                            IMultiplyOperators<Matrix4d, Matrix4x3d, Matrix4x3d>,
+                            ISubtractionOperators<Matrix4d, Matrix4d, Matrix4d>,
+                            IEqualityOperators<Matrix4d, Matrix4d, bool>,
+                            IAdditiveIdentity<Matrix4d, Matrix4d>,
+                            IMultiplicativeIdentity<Matrix4d, Matrix4d>
     {
         /// <summary>
         /// Top row of the matrix.
@@ -381,6 +393,16 @@ namespace OpenTK.Mathematics
         public readonly double Trace => Row0.X + Row1.Y + Row2.Z + Row3.W;
 
         /// <summary>
+        /// Gets the additive identity of the matrix, which is the zero matrix.
+        /// </summary>
+        public static Matrix4d AdditiveIdentity => Zero;
+
+        /// <summary>
+        /// Gets the multiplicative identity of the matrix, which is the identity matrix.
+        /// </summary>
+        public static Matrix4d MultiplicativeIdentity => Identity;
+
+        /// <summary>
         /// Gets or sets the value at a specified row and column.
         /// </summary>
         /// <param name="rowIndex">The index of the row.</param>
@@ -390,54 +412,30 @@ namespace OpenTK.Mathematics
         {
             readonly get
             {
-                if (rowIndex == 0)
+                if (((uint)rowIndex) >= 4 || ((uint)columnIndex) >= 4)
                 {
-                    return Row0[columnIndex];
+                    MathHelper.ThrowOutOfRangeException("You tried to access this matrix at: ({0}, {1})", rowIndex, columnIndex);
                 }
 
-                if (rowIndex == 1)
-                {
-                    return Row1[columnIndex];
-                }
-
-                if (rowIndex == 2)
-                {
-                    return Row2[columnIndex];
-                }
-
-                if (rowIndex == 3)
-                {
-                    return Row3[columnIndex];
-                }
-
-                throw new IndexOutOfRangeException("You tried to access this matrix at: (" + rowIndex + ", " +
-                                                   columnIndex + ")");
+                return GetRowUnsafe(in this, rowIndex)[columnIndex];
             }
 
             set
             {
-                if (rowIndex == 0)
+                if (((uint)rowIndex) >= 4 || ((uint)columnIndex) >= 4)
                 {
-                    Row0[columnIndex] = value;
+                    MathHelper.ThrowOutOfRangeException("You tried to set this matrix at: ({0}, {1})", rowIndex, columnIndex);
                 }
-                else if (rowIndex == 1)
-                {
-                    Row1[columnIndex] = value;
-                }
-                else if (rowIndex == 2)
-                {
-                    Row2[columnIndex] = value;
-                }
-                else if (rowIndex == 3)
-                {
-                    Row3[columnIndex] = value;
-                }
-                else
-                {
-                    throw new IndexOutOfRangeException("You tried to set this matrix at: (" + rowIndex + ", " +
-                                                       columnIndex + ")");
-                }
+
+                GetRowUnsafe(in this, rowIndex)[columnIndex] = value;
             }
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static ref Vector4d GetRowUnsafe(in Matrix4d m, int index)
+        {
+            ref Vector4d address = ref Unsafe.AsRef(in m.Row0);
+            return ref Unsafe.Add(ref address, index);
         }
 
         /// <summary>
@@ -574,9 +572,10 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Returns a copy of this Matrix4d without projection.
+        /// Returns a copy of this Matrix4d without projection. (equivalent to setting <see cref="Column3"/> = (0, 0, 0, 0)).
         /// </summary>
         /// <returns>The matrix without projection.</returns>
+        [Obsolete("This function doesn't actually clear the projection of the matrix. This is equivalent of setting Column3 = (0, 0, 0, 0).")]
         public readonly Matrix4d ClearProjection()
         {
             var m = this;
@@ -674,12 +673,105 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Returns the projection component of this instance.
+        /// Returns the projection component of this instance (equivalent to <see cref="Column3"/>).
         /// </summary>
-        /// <returns>The projection.</returns>
+        /// <returns>The projection (<see cref="Column3"/>).</returns>
+        [Obsolete("Use Column3 if the old behaviour is needed, or use ExtractPerspective*() or ExtractOrthographic* instead.")]
         public readonly Vector4d ExtractProjection()
         {
             return Column3;
+        }
+
+        /// <summary>
+        /// Returns the off-center projection parameters of this instance.
+        /// This only works if the matrix was created using <see cref="CreatePerspectiveOffCenter(double, double, double, double, double, double)"/>.
+        /// </summary>
+        /// <param name="left">The left edge of the view frustum.</param>
+        /// <param name="right">The right edge of the view frustum.</param>
+        /// <param name="bottom">The bottom edge of the view frustum.</param>
+        /// <param name="top">The top edge of the view frustum.</param>
+        /// <param name="depthNear">The distance to the near clip plane.</param>
+        /// <param name="depthFar">The distance to the far clip plane.</param>
+        public readonly void ExtractPerspectiveOffCenter
+        (
+            out double left,
+            out double right,
+            out double bottom,
+            out double top,
+            out double depthNear,
+            out double depthFar
+        )
+        {
+            depthNear = Row3.Z / (Row2.Z - 1);
+            depthFar = Row3.Z / (Row2.Z + 1);
+            left = depthNear * (Row2.X - 1) / Row0.X;
+            right = depthNear * (Row2.X + 1) / Row0.X;
+            bottom = depthNear * (Row2.Y - 1) / Row1.Y;
+            top = depthNear * (Row2.Y + 1) / Row1.Y;
+        }
+
+        /// <summary>
+        /// Returns the field of view projection parameters of this instance.
+        /// This only works if the matrix was created using <see cref="CreatePerspectiveFieldOfView(double, double, double, double)"/>.
+        /// </summary>
+        /// <param name="fovy">Angle of the field of view in the y direction (in radians).</param>
+        /// <param name="aspect">Aspect ratio of the view (width / height).</param>
+        /// <param name="depthNear">The distance to the near clip plane.</param>
+        /// <param name="depthFar">The distance to the far clip plane.</param>
+        public readonly void ExtractPerspectiveFieldOfView(out double fovy, out double aspect, out double depthNear, out double depthFar)
+        {
+            fovy = 2.0f * Math.Atan(1 / Row1.Y);
+            aspect = Row1.Y / Row0.X;
+            depthNear = Row3.Z / (Row2.Z - 1);
+            depthFar = Row3.Z / (Row2.Z + 1);
+        }
+
+        /// <summary>
+        /// Returns the off-center orthographic projection parameters of this instance.
+        /// This only works if the matrix was created using <see cref="CreateOrthographicOffCenter(double, double, double, double, double, double)"/>.
+        /// </summary>
+        /// <param name="left">The left edge of the projection volume.</param>
+        /// <param name="right">The right edge of the projection volume.</param>
+        /// <param name="bottom">The bottom edge of the projection volume.</param>
+        /// <param name="top">The top edge of the projection volume.</param>
+        /// <param name="depthNear">The distance to the near clip plane.</param>
+        /// <param name="depthFar">The distance to the far clip plane.</param>
+        public readonly void ExtractOrthographicOffCenter
+        (
+            out double left,
+            out double right,
+            out double bottom,
+            out double top,
+            out double depthNear,
+            out double depthFar
+        )
+        {
+            left = -(1 + Row3.X) / Row0.X;
+            right = (1 - Row3.X) / Row0.X;
+            bottom = -(1 + Row3.Y) / Row1.Y;
+            top = (1 - Row3.Y) / Row1.Y;
+            depthNear = (1 + Row3.Z) / Row2.Z;
+            depthFar = -(1 - Row3.Z) / Row2.Z;
+        }
+
+        /// <summary>
+        /// Returns the orthographic projection parameters of this instance.
+        /// This only works if the matrix was created using <see cref="CreateOrthographic(double, double, double, double)"/>.
+        /// </summary>
+        /// <param name="width">The width of the projection volume.</param>
+        /// <param name="height">The height of the projection volume.</param>
+        /// <param name="depthNear">The distance to the near clip plane.</param>
+        /// <param name="depthFar">The distance to the far clip plane.</param>
+        public readonly void ExtractOrthographic(out double width, out double height, out double depthNear, out double depthFar)
+        {
+            double left = -(1 + Row3.X) / Row0.X;
+            double right = (1 - Row3.X) / Row0.X;
+            width = right - left;
+            double bottom = -(1 + Row3.Y) / Row1.Y;
+            double top = (1 - Row3.Y) / Row1.Y;
+            height = top - bottom;
+            depthNear = (1 + Row3.Z) / Row2.Z;
+            depthFar = -(1 - Row3.Z) / Row2.Z;
         }
 
         /// <summary>
@@ -1671,6 +1763,128 @@ namespace OpenTK.Mathematics
         /// <param name="right">The right operand of the multiplication.</param>
         /// <returns>A new instance that is the result of the multiplication.</returns>
         [Pure]
+        public static Matrix4x2d Mult(Matrix4d left, Matrix4x2d right)
+        {
+            Mult(in left, in right, out Matrix4x2d result);
+            return result;
+        }
+
+        /// <summary>
+        /// Multiplies two instances.
+        /// </summary>
+        /// <param name="left">The left operand of the multiplication.</param>
+        /// <param name="right">The right operand of the multiplication.</param>
+        /// <param name="result">A new instance that is the result of the multiplication.</param>
+        public static void Mult(in Matrix4d left, in Matrix4x2d right, out Matrix4x2d result)
+        {
+            double leftM11 = left.Row0.X;
+            double leftM12 = left.Row0.Y;
+            double leftM13 = left.Row0.Z;
+            double leftM14 = left.Row0.W;
+            double leftM21 = left.Row1.X;
+            double leftM22 = left.Row1.Y;
+            double leftM23 = left.Row1.Z;
+            double leftM24 = left.Row1.W;
+            double leftM31 = left.Row2.X;
+            double leftM32 = left.Row2.Y;
+            double leftM33 = left.Row2.Z;
+            double leftM34 = left.Row2.W;
+            double leftM41 = left.Row3.X;
+            double leftM42 = left.Row3.Y;
+            double leftM43 = left.Row3.Z;
+            double leftM44 = left.Row3.W;
+
+            double rightM11 = right.Row0.X;
+            double rightM12 = right.Row0.Y;
+            double rightM21 = right.Row1.X;
+            double rightM22 = right.Row1.Y;
+            double rightM31 = right.Row2.X;
+            double rightM32 = right.Row2.Y;
+            double rightM41 = right.Row3.X;
+            double rightM42 = right.Row3.Y;
+
+            result.Row0.X = (leftM11 * rightM11) + (leftM12 * rightM21) + (leftM13 * rightM31) + (leftM14 * rightM41);
+            result.Row0.Y = (leftM11 * rightM12) + (leftM12 * rightM22) + (leftM13 * rightM32) + (leftM14 * rightM42);
+            result.Row1.X = (leftM21 * rightM11) + (leftM22 * rightM21) + (leftM23 * rightM31) + (leftM24 * rightM41);
+            result.Row1.Y = (leftM21 * rightM12) + (leftM22 * rightM22) + (leftM23 * rightM32) + (leftM24 * rightM42);
+            result.Row2.X = (leftM31 * rightM11) + (leftM32 * rightM21) + (leftM33 * rightM31) + (leftM34 * rightM41);
+            result.Row2.Y = (leftM31 * rightM12) + (leftM32 * rightM22) + (leftM33 * rightM32) + (leftM34 * rightM42);
+            result.Row3.X = (leftM41 * rightM11) + (leftM42 * rightM21) + (leftM43 * rightM31) + (leftM44 * rightM41);
+            result.Row3.Y = (leftM41 * rightM12) + (leftM42 * rightM22) + (leftM43 * rightM32) + (leftM44 * rightM42);
+        }
+
+        /// <summary>
+        /// Multiplies two instances.
+        /// </summary>
+        /// <param name="left">The left operand of the multiplication.</param>
+        /// <param name="right">The right operand of the multiplication.</param>
+        /// <returns>A new instance that is the result of the multiplication.</returns>
+        [Pure]
+        public static Matrix4x3d Mult(Matrix4d left, Matrix4x3d right)
+        {
+            Mult(in left, in right, out Matrix4x3d result);
+            return result;
+        }
+
+        /// <summary>
+        /// Multiplies two instances.
+        /// </summary>
+        /// <param name="left">The left operand of the multiplication.</param>
+        /// <param name="right">The right operand of the multiplication.</param>
+        /// <param name="result">A new instance that is the result of the multiplication.</param>
+        public static void Mult(in Matrix4d left, in Matrix4x3d right, out Matrix4x3d result)
+        {
+            double leftM11 = left.Row0.X;
+            double leftM12 = left.Row0.Y;
+            double leftM13 = left.Row0.Z;
+            double leftM14 = left.Row0.W;
+            double leftM21 = left.Row1.X;
+            double leftM22 = left.Row1.Y;
+            double leftM23 = left.Row1.Z;
+            double leftM24 = left.Row1.W;
+            double leftM31 = left.Row2.X;
+            double leftM32 = left.Row2.Y;
+            double leftM33 = left.Row2.Z;
+            double leftM34 = left.Row2.W;
+            double leftM41 = left.Row3.X;
+            double leftM42 = left.Row3.Y;
+            double leftM43 = left.Row3.Z;
+            double leftM44 = left.Row3.W;
+
+            double rightM11 = right.Row0.X;
+            double rightM12 = right.Row0.Y;
+            double rightM13 = right.Row0.Z;
+            double rightM21 = right.Row1.X;
+            double rightM22 = right.Row1.Y;
+            double rightM23 = right.Row1.Z;
+            double rightM31 = right.Row2.X;
+            double rightM32 = right.Row2.Y;
+            double rightM33 = right.Row2.Z;
+            double rightM41 = right.Row3.X;
+            double rightM42 = right.Row3.Y;
+            double rightM43 = right.Row3.Z;
+
+            result.Row0.X = (leftM11 * rightM11) + (leftM12 * rightM21) + (leftM13 * rightM31) + (leftM14 * rightM41);
+            result.Row0.Y = (leftM11 * rightM12) + (leftM12 * rightM22) + (leftM13 * rightM32) + (leftM14 * rightM42);
+            result.Row0.Z = (leftM11 * rightM13) + (leftM12 * rightM23) + (leftM13 * rightM33) + (leftM14 * rightM43);
+            result.Row1.X = (leftM21 * rightM11) + (leftM22 * rightM21) + (leftM23 * rightM31) + (leftM24 * rightM41);
+            result.Row1.Y = (leftM21 * rightM12) + (leftM22 * rightM22) + (leftM23 * rightM32) + (leftM24 * rightM42);
+            result.Row1.Z = (leftM21 * rightM13) + (leftM22 * rightM23) + (leftM23 * rightM33) + (leftM24 * rightM43);
+            result.Row2.X = (leftM31 * rightM11) + (leftM32 * rightM21) + (leftM33 * rightM31) + (leftM34 * rightM41);
+            result.Row2.Y = (leftM31 * rightM12) + (leftM32 * rightM22) + (leftM33 * rightM32) + (leftM34 * rightM42);
+            result.Row2.Z = (leftM31 * rightM13) + (leftM32 * rightM23) + (leftM33 * rightM33) + (leftM34 * rightM43);
+            result.Row3.X = (leftM41 * rightM11) + (leftM42 * rightM21) + (leftM43 * rightM31) + (leftM44 * rightM41);
+            result.Row3.Y = (leftM41 * rightM12) + (leftM42 * rightM22) + (leftM43 * rightM32) + (leftM44 * rightM42);
+            result.Row3.Z = (leftM41 * rightM13) + (leftM42 * rightM23) + (leftM43 * rightM33) + (leftM44 * rightM43);
+        }
+
+        /// <summary>
+        /// Multiplies two instances.
+        /// </summary>
+        /// <param name="left">The left operand of the multiplication.</param>
+        /// <param name="right">The right operand of the multiplication.</param>
+        /// <returns>A new instance that is the result of the multiplication.</returns>
+        [Pure]
         public static Matrix4d Mult(Matrix4d left, Matrix4d right)
         {
             Mult(in left, in right, out Matrix4d result);
@@ -1796,7 +2010,7 @@ namespace OpenTK.Mathematics
 
             if (Math.Abs(det) < double.Epsilon)
             {
-                throw new InvalidOperationException("Matrix is singular and cannot be inverted.");
+                MathHelper.ThrowInvalidOperationException("Matrix is singular and cannot be inverted.");
             }
 
             double invDet = 1.0f / det;
@@ -1937,6 +2151,43 @@ namespace OpenTK.Mathematics
                 3 => mat.Row3,
                 _ => throw new IndexOutOfRangeException($"{nameof(rowForRow3)} must be a number between 0 and 2. Got {rowForRow3}."),
             };
+        }
+
+        /// <summary>
+        /// Transform a Vector by the given Matrix using right-handed notation.
+        /// </summary>
+        /// <param name="mat">The desired transformation.</param>
+        /// <param name="vec">The vector to transform.</param>
+        /// <returns>The transformed vector.</returns>
+        [Pure]
+        public static Vector4d operator *(Matrix4d mat, Vector4d vec)
+        {
+            Vector4d.TransformColumn(in mat, in vec, out Vector4d result);
+            return result;
+        }
+
+        /// <summary>
+        /// Matrix multiplication.
+        /// </summary>
+        /// <param name="left">left-hand operand.</param>
+        /// <param name="right">right-hand operand.</param>
+        /// <returns>A new Matrix4x2d which holds the result of the multiplication.</returns>
+        [Pure]
+        public static Matrix4x2d operator *(Matrix4d left, Matrix4x2d right)
+        {
+            return Mult(left, right);
+        }
+
+        /// <summary>
+        /// Matrix multiplication.
+        /// </summary>
+        /// <param name="left">left-hand operand.</param>
+        /// <param name="right">right-hand operand.</param>
+        /// <returns>A new Matrix4x3d which holds the result of the multiplication.</returns>
+        [Pure]
+        public static Matrix4x3d operator *(Matrix4d left, Matrix4x3d right)
+        {
+            return Mult(left, right);
         }
 
         /// <summary>

@@ -2,8 +2,7 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net8.0</TargetFramework>
-    <LangVersion>12.0</LangVersion>
+    <TargetFramework>net10.0</TargetFramework>
     <ImplicitUsings>disable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
@@ -20,6 +19,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="StbImageSharp" Version="2.27.14" />
+  </ItemGroup>
+
+  <ItemGroup>
     <!--<Content Include="alsoft.conf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>-->
@@ -29,6 +32,9 @@
     <Content Include="info.plist">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Splash\Splash.png" />
+    <Content Update="Splash\Splash.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
-
 </Project>

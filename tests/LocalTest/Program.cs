@@ -9,10 +9,12 @@ using OpenTK.Windowing.Desktop;
 using OpenTK.Windowing.GraphicsLibraryFramework;
 using System;
 using System.ComponentModel.Design;
+using System.Data;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Threading;
+using System.Xml.Serialization;
 
 namespace LocalTest
 {
@@ -34,7 +36,7 @@ namespace LocalTest
 
             NativeWindowSettings nwSettings = new NativeWindowSettings()
             {
-                API = ContextAPI.NoAPI,
+                API = ContextAPI.OpenGL,
                 //APIVersion = new Version(3, 3),
                 AutoLoadBindings = true,
                 Flags = 0,
@@ -90,7 +92,7 @@ namespace LocalTest
 
             GL.ClearColor(color);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
-
+            
             SwapBuffers();
         }
 

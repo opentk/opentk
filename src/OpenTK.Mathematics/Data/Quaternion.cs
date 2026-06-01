@@ -22,6 +22,8 @@ SOFTWARE.
 
 using System;
 using System.Diagnostics.Contracts;
+using System.Numerics;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Runtime.Intrinsics;
 using System.Xml.Serialization;
@@ -32,7 +34,17 @@ namespace OpenTK.Mathematics
     /// Represents a Quaternion.
     /// </summary>
     [Serializable, StructLayout(LayoutKind.Sequential)]
-    public struct Quaternion : IEquatable<Quaternion>, IFormattable
+    public struct Quaternion : IEquatable<Quaternion>, IFormattable,
+                                IAdditionOperators<Quaternion, Quaternion, Quaternion>,
+                                ISubtractionOperators<Quaternion, Quaternion, Quaternion>,
+                                IMultiplyOperators<Quaternion, Quaternion, Quaternion>,
+                                IMultiplyOperators<Quaternion, float, Quaternion>,
+                                IMultiplyOperators<Quaternion, Vector2, Vector2>,
+                                IMultiplyOperators<Quaternion, Vector3, Vector3>,
+                                IMultiplyOperators<Quaternion, Vector4, Vector4>,
+                                IEqualityOperators<Quaternion, Quaternion, bool>,
+                                IAdditiveIdentity<Quaternion, Quaternion>,
+                                IMultiplicativeIdentity<Quaternion, Quaternion>
     {
         /// <summary>
         /// The X, Y and Z components of this instance.
@@ -248,6 +260,16 @@ namespace OpenTK.Mathematics
         public readonly float LengthSquared => (W * W) + Xyz.LengthSquared;
 
         /// <summary>
+        /// Gets the additive identity of the quaternion, which is the zero quaternion.
+        /// </summary>
+        public static Quaternion AdditiveIdentity => Zero;
+
+        /// <summary>
+        /// Gets the multiplicative identity of the quaternion, which is the identity quaternion.
+        /// </summary>
+        public static Quaternion MultiplicativeIdentity => Identity;
+
+        /// <summary>
         /// Returns a copy of the Quaternion scaled to unit length.
         /// </summary>
         /// <returns>The normalized copy.</returns>
@@ -294,6 +316,11 @@ namespace OpenTK.Mathematics
         {
             Xyz = -Xyz;
         }
+
+        /// <summary>
+        /// Defines the zero quaternion.
+        /// </summary>
+        public static readonly Quaternion Zero = new Quaternion(0, 0, 0, 0);
 
         /// <summary>
         /// Defines the identity quaternion.
@@ -783,6 +810,45 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
+        /// Transforms a vector by a quaternion rotation.
+        /// </summary>
+        /// <param name="quat">The quaternion to rotate the vector by.</param>
+        /// <param name="vec">The vector to transform.</param>
+        /// <returns>The multiplied vector.</returns>
+        [Pure]
+        public static Vector2 operator *(Quaternion quat, Vector2 vec)
+        {
+            Vector2.Transform(in vec, in quat, out Vector2 result);
+            return result;
+        }
+
+        /// <summary>
+        /// Transforms a vector by a quaternion rotation.
+        /// </summary>
+        /// <param name="quat">The quaternion to rotate the vector by.</param>
+        /// <param name="vec">The vector to transform.</param>
+        /// <returns>The multiplied vector.</returns>
+        [Pure]
+        public static Vector3 operator *(Quaternion quat, Vector3 vec)
+        {
+            Vector3.Transform(in vec, in quat, out Vector3 result);
+            return result;
+        }
+
+        /// <summary>
+        /// Transforms a vector by a quaternion rotation.
+        /// </summary>
+        /// <param name="quat">The quaternion to rotate the vector by.</param>
+        /// <param name="vec">The vector to transform.</param>
+        /// <returns>The transformed vector.</returns>
+        [Pure]
+        public static Vector4 operator *(Quaternion quat, Vector4 vec)
+        {
+            Vector4.Transform(in vec, in quat, out Vector4 result);
+            return result;
+        }
+
+        /// <summary>
         /// Compares two instances for equality.
         /// </summary>
         /// <param name="left">The first instance.</param>
@@ -802,6 +868,26 @@ namespace OpenTK.Mathematics
         public static bool operator !=(Quaternion left, Quaternion right)
         {
             return !(left == right);
+        }
+
+        /// <summary>
+        /// Converts <see cref="System.Numerics.Quaternion"/> to <see cref="Quaternion"/>.
+        /// </summary>
+        /// <param name="quat">The <see cref="System.Numerics.Quaternion"/> to cast.</param>
+        [Pure]
+        public static explicit operator Quaternion(System.Numerics.Quaternion quat)
+        {
+            return Unsafe.As<System.Numerics.Quaternion, Quaternion>(ref quat);
+        }
+
+        /// <summary>
+        /// Converts <see cref="Quaternion"/> to <see cref="System.Numerics.Quaternion"/>.
+        /// </summary>
+        /// <param name="quat">The <see cref="Quaternion"/> to cast.</param>
+        [Pure]
+        public static explicit operator System.Numerics.Quaternion(Quaternion quat)
+        {
+            return Unsafe.As<Quaternion, System.Numerics.Quaternion>(ref quat);
         }
 
         /// <inheritdoc />

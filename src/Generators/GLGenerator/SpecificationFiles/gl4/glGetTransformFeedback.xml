@@ -1,0 +1,264 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glGetTransformFeedback">
+  <info>
+    <copyright>
+      <year>2014</year>
+      <holder>Khronos Group</holder>
+    </copyright>
+  </info>
+
+  <refmeta>
+    <refentrytitle>glGetTransformFeedback</refentrytitle>
+
+    <manvolnum>3G</manvolnum>
+  </refmeta>
+
+  <refnamediv>
+    <refname>glGetTransformFeedbackiv</refname>
+
+    <refpurpose>query the state of a transform feedback object.</refpurpose>
+  </refnamediv>
+
+  <refsynopsisdiv>
+    <title>C Specification</title>
+
+    <funcsynopsis>
+      <funcprototype>
+        <funcdef>void <function>glGetTransformFeedbackiv</function></funcdef>
+
+        <paramdef>GLuint <parameter>xfb</parameter></paramdef>
+
+        <paramdef>GLenum <parameter>pname</parameter></paramdef>
+
+        <paramdef>GLint *<parameter>param</parameter></paramdef>
+      </funcprototype>
+    </funcsynopsis>
+
+    <funcsynopsis>
+      <funcprototype>
+        <funcdef>void <function>glGetTransformFeedbacki_v</function></funcdef>
+
+        <paramdef>GLuint <parameter>xfb</parameter></paramdef>
+
+        <paramdef>GLenum <parameter>pname</parameter></paramdef>
+
+        <paramdef>GLuint <parameter>index</parameter></paramdef>
+
+        <paramdef>GLint *<parameter>param</parameter></paramdef>
+      </funcprototype>
+    </funcsynopsis>
+
+    <funcsynopsis>
+      <funcprototype>
+        <funcdef>void <function>glGetTransformFeedbacki64_v</function></funcdef>
+
+        <paramdef>GLuint <parameter>xfb</parameter></paramdef>
+
+        <paramdef>GLenum <parameter>pname</parameter></paramdef>
+
+        <paramdef>GLuint <parameter>index</parameter></paramdef>
+
+        <paramdef>GLint64 *<parameter>param</parameter></paramdef>
+      </funcprototype>
+    </funcsynopsis>
+  </refsynopsisdiv>
+
+  <refsect1 xml:id="parameters">
+    <title>Parameters</title>
+
+    <variablelist>
+      <varlistentry>
+        <term><parameter>xfb</parameter></term>
+
+        <listitem>
+          <para>The name of an existing transform feedback object, or zero for
+          the default transform feedback object.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term><parameter>pname</parameter></term>
+
+        <listitem>
+          <para>Property to use for the query. Must be one of the values:
+          <constant>GL_TRANSFORM_FEEDBACK_BUFFER_BINDING</constant>,
+          <constant>GL_TRANSFORM_FEEDBACK_BUFFER_START</constant>,
+          <constant>GL_TRANSFORM_FEEDBACK_BUFFER_SIZE</constant>,
+          <constant>GL_TRANSFORM_FEEDBACK_PAUSED</constant>,
+          <constant>GL_TRANSFORM_FEEDBACK_ACTIVE</constant>.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term><parameter>index</parameter></term>
+
+        <listitem>
+          <para>Index of the transform feedback stream (for indexed
+          state).</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term><parameter>param</parameter></term>
+
+        <listitem>
+          <para>The address of a buffer into which will be written the
+          requested state information.</para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+  </refsect1>
+
+  <refsect1 xml:id="description">
+    <title>Description</title>
+
+    <para>In order to use the Transform Feedback functionality, you need to
+    configure the Transform Feedback Buffer indexed bindings. This can be
+    achieved by either using <function>glBindBufferBase</function> or
+    <function>glBindBuffersBase</function> to associate whole buffer object
+    storage to one of the Transform Feedback Binding Points, or by calling
+    <function>glBindBufferRange</function> or
+    <function>glBindBuffersRange</function> to use a region of a buffer object
+    storage for the binding. You may want to (but are not required to) bind a
+    Transform Feedback Object first, in order to cache the binding
+    configuration. This usually allows you to restore the Transform Feedback
+    configuration faster, than if you were to execute a list of API calls
+    necessary to set up the Transform Feedback state of your liking.</para>
+
+    <para>This reference page discusses two types of getters that operate on
+    Transform Feedback Objects and their bindings.</para>
+
+    <para>The first class operates on general Transform Feedback binding point
+    and includes <function>glGetTransformFeedbackiv</function> function.
+    <function>glGetTransformFeedbackiv</function> can be used to retrieve
+    information about Transform Feedback object bound to the general Transform
+    Feedback binding point, as configured with a
+    <function>glBindTransformFeedback</function> call. In this case, you can
+    check:</para>
+
+    <para><itemizedlist>
+        <listitem>
+          <para>What the ID of the currently bound Transform Feedback Object
+          is;
+          (<constant>GL_TRANSFORM_FEEDBACK_BUFFER_BINDING</constant>)</para>
+        </listitem>
+
+        <listitem>
+          <para>Whether the Transform Feedback process is currently paused;
+          (<constant>GL_TRANSFORM_FEEDBACK_PAUSED</constant>)</para>
+        </listitem>
+
+        <listitem>
+          <para>Whether the Transform Feedback process has been begun and is
+          currently undergoing;
+          (<constant>GL_TRANSFORM_FEEDBACK_ACTIVE</constant>)</para>
+        </listitem>
+      </itemizedlist></para>
+
+    <para>The latter class, which includes
+    <function>glGetTransformFeedbacki_v</function> and
+    <function>glGetTransformFeedbacki64_v</function> functions, can be used to
+    check what the current configuration of each of the buffer object regions
+    bound to Transform Feedback Buffer binding points is. This allows you to
+    query for the following information:</para>
+
+    <para><itemizedlist>
+        <listitem>
+          <para><function>glGetTransformFeedbacki_v</function> only: What the
+          ID of the Buffer Object bound to a Transform Feedback Binding Point
+          of user-specified index is;
+          (<constant>GL_TRANSFORM_FEEDBACK_BUFFER_BINDING</constant>).</para>
+        </listitem>
+
+        <listitem>
+          <para><function>glGetTransformFeedbacki64_v</function> only: What
+          the start offset configured for the binding is;
+          (<constant>GL_TRANSFORM_FEEDBACK_BUFFER_START</constant>);</para>
+        </listitem>
+
+        <listitem>
+          <para><function>glGetTransformFeedbacki64_v</function> only: What
+          the length of the region used for the binding is;
+          (<constant>GL_TRANSFORM_FEEDBACK_BUFFER_SIZE</constant>);</para>
+        </listitem>
+      </itemizedlist></para>
+  </refsect1>
+
+  <refsect1 xml:id="errors">
+    <title>Errors</title>
+
+    <para><constant>GL_INVALID_OPERATION</constant> error is generated if
+    <parameter>xfb</parameter> is not zero or the name of an existing
+    transform feedback object.</para>
+
+    <para><constant>GL_INVALID_ENUM</constant> error is generated by
+    <function>glGetTransformFeedbackiv</function> if
+    <parameter>pname</parameter> is not
+    <constant>GL_TRANSFORM_FEEDBACK_PAUSED</constant> or
+    <constant>GL_TRANSFORM_FEEDBACK_ACTIVE</constant>.</para>
+
+    <para><constant>GL_INVALID_ENUM</constant> error is generated by
+    <function>glGetTransformFeedbacki_v</function> if
+    <parameter>pname</parameter> is not
+    <constant>GL_TRANSFORM_FEEDBACK_BUFFER_BINDING</constant>.</para>
+
+    <para><constant>GL_INVALID_ENUM</constant> error is generated by
+    <function>glGetTransformFeedbacki64_v</function> if
+    <parameter>pname</parameter> is not
+    <constant>GL_TRANSFORM_FEEDBACK_BUFFER_START</constant> or
+    <constant>GL_TRANSFORM_FEEDBACK_BUFFER_SIZE</constant>.</para>
+
+    <para><constant>GL_INVALID_VALUE</constant> error is generated by
+    <function>glGetTransformFeedbacki_v</function> and
+    <function>glGetTransformFeedbacki64_v</function> if
+    <parameter>index</parameter> is greater than or equal to the number of
+    binding points for transform feedback (the value of
+    <constant>GL_MAX_TRANSFORM_FEEDBACK_BUFFERS</constant>).</para>
+  </refsect1>
+
+  <refsect1 xml:id="versions">
+    <title>Version Support</title>
+
+    <informaltable>
+      <tgroup align="left" cols="13">
+        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+        <tbody>
+          <row>
+            <entry><function>glGetTransformFeedbackiv</function></entry>
+            <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='45']/*)"/>
+          </row>
+          <row>
+            <entry><function>glGetTransformFeedbacki_v</function></entry>
+            <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='45']/*)"/>
+          </row>
+          <row>
+            <entry><function>glGetTransformFeedbacki64v</function></entry>
+            <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='45']/*)"/>
+          </row>
+        </tbody>
+      </tgroup>
+    </informaltable>
+  </refsect1>
+
+  <refsect1 xml:id="seealso">
+    <title>See Also</title>
+
+    <para>
+        <citerefentry><refentrytitle>glBindBufferBase</refentrytitle></citerefentry>,
+        <citerefentry><refentrytitle>glBindBufferRange</refentrytitle></citerefentry>,
+        <citerefentry><refentrytitle>glBindBuffersBase</refentrytitle></citerefentry>,
+        <citerefentry><refentrytitle>glBindBuffersRange</refentrytitle></citerefentry>,
+        <citerefentry><refentrytitle>glBindTransformFeedback</refentrytitle></citerefentry>
+    </para>
+  </refsect1>
+
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

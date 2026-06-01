@@ -13,6 +13,7 @@ using System.Text;
 using System.Runtime.CompilerServices;
 using OpenTK.Core.Utility;
 using ImGuiNET;
+using OpenTK.Audio.OpenAL.ALC;
 
 namespace Bejeweled
 {
@@ -238,7 +239,7 @@ namespace Bejeweled
         public int UniformLocationPrefilteredEnvironmentMap;
         public int UniformLocationBRDFLUT;
 
-        public int UniformLocationScreenSize;
+        public int UniformLocationViewport;
         public int UniformLocationBackfaceNormals;
         public int UniformLocationBackfaceDepth;
         public int UniformLocationDepthScale;
@@ -261,7 +262,7 @@ namespace Bejeweled
             shader.UniformLocationPrefilteredEnvironmentMap = GL.GetUniformLocation(shader.Program.Handle, "uPrefilteredEnvironmentMap");
             shader.UniformLocationBRDFLUT = GL.GetUniformLocation(shader.Program.Handle, "uBRDF_LUT");
 
-            shader.UniformLocationScreenSize = GL.GetUniformLocation(shader.Program.Handle, "uScreenSize");
+            shader.UniformLocationViewport = GL.GetUniformLocation(shader.Program.Handle, "uViewport");
             shader.UniformLocationBackfaceNormals = GL.GetUniformLocation(shader.Program.Handle, "uBackfaceNormalTexture");
             shader.UniformLocationBackfaceDepth = GL.GetUniformLocation(shader.Program.Handle, "uBackfaceDepthTexture");
             shader.UniformLocationDepthScale = GL.GetUniformLocation(shader.Program.Handle, "uDepthScale");
@@ -312,9 +313,9 @@ namespace Bejeweled
             }
 
             int buffer = AL.GenBuffer();
-            AL.BufferData(buffer, ALFormat.Stereo16, ref samples[0], decoded * soundData.Channels * sizeof(short), soundData.SampleRate);
-            ALError error = AL.GetError();
-            if (error != ALError.NoError)
+            AL.BufferData(buffer, Format.Stereo16, ref samples[0], decoded * soundData.Channels * sizeof(short), soundData.SampleRate);
+            OpenTK.Audio.OpenAL.ErrorCode error = AL.GetError();
+            if (error != OpenTK.Audio.OpenAL.ErrorCode.NoError)
             {
                 Debug.Assert(false, $"ALError: {error}");
             }
@@ -330,21 +331,60 @@ namespace Bejeweled
 
     internal class SoundEffect
     {
+        // Hacky stuff to be able to set the gain of all sound effects at the same time.
+        // - Noggin_bops 2025-03-12
+        static float SoundEffectGain = 1.0f;
+        static List<WeakReference<SoundEffect>> AllSoundEffects = new List<WeakReference<SoundEffect>>();
+        public static void SetGain(float gain)
+        {
+            SoundEffectGain = gain;
+            for (int i = AllSoundEffects.Count - 1; i >= 0; i--)
+            {
+                WeakReference<SoundEffect> reference = AllSoundEffects[i];
+                if (reference.TryGetTarget(out SoundEffect? effect))
+                {
+                    foreach (Source source in effect.Sources)
+                    {
+                        AL.Sourcef(source.ALSource, SourcePNameF.Gain, source.Gain * gain);
+                    }
+                }
+                else
+                {
+                    AllSoundEffects.RemoveAt(i);
+                }
+            }
+        }
+
+        struct Source
+        {
+            public int ALSource;
+            public float Gain;
+
+            public Source(int alSource, float gain)
+            {
+                ALSource = alSource;
+                Gain = gain;
+            }
+        }
+
         public SoundClip Clip;
-        List<int> Sources = new List<int>();
+        List<Source> Sources = new List<Source>();
 
         public SoundEffect(SoundClip clip)
         {
             Clip = clip;
+
+            AllSoundEffects.Add(new WeakReference<SoundEffect>(this));
         }
 
         public void Update()
         {
             for (int i = Sources.Count - 1; i >= 0; i--)
             {
-                if ((ALSourceState)AL.GetSource(Sources[i], ALGetSourcei.SourceState) == ALSourceState.Stopped)
+                int source = Sources[i].ALSource;
+                if ((SourceState)AL.GetSourcei(source, SourceGetPNameI.SourceState) == SourceState.Stopped)
                 {
-                    AL.DeleteSource(Sources[i]);
+                    AL.DeleteSource(source);
                     Sources.RemoveAt(i);
                 }
             }
@@ -353,21 +393,21 @@ namespace Bejeweled
         public void PlayOneShot(float gain, float pitch)
         {
             int source = AL.GenSource();
-            AL.Source(source, ALSourcei.Buffer, Clip.Buffer);
-            AL.Source(source, ALSourceb.Looping, false);
+            AL.Sourcei(source, SourcePNameI.Buffer, Clip.Buffer);
+            AL.Sourcei(source, SourcePNameI.Looping, 0);
 
-            AL.Source(source, ALSourcef.Gain, gain);
-            AL.Source(source, ALSourcef.Pitch, pitch);
+            AL.Sourcef(source, SourcePNameF.Gain, gain * SoundEffectGain);
+            AL.Sourcef(source, SourcePNameF.Pitch, pitch);
 
             AL.SourcePlay(source);
 
-            ALError error = AL.GetError();
-            if (error != ALError.NoError)
+            OpenTK.Audio.OpenAL.ErrorCode error = AL.GetError();
+            if (error != OpenTK.Audio.OpenAL.ErrorCode.NoError)
             {
                 Debug.Assert(false, $"ALError: {error}");
             }
 
-            Sources.Add(source);
+            Sources.Add(new Source(source, gain));
         }
     }
 
@@ -381,8 +421,8 @@ namespace Bejeweled
             Clip = clip;
             Source = AL.GenSource();
 
-            AL.Source(Source, ALSourcei.Buffer, clip.Buffer);
-            AL.Source(Source, ALSourceb.Looping, true);
+            AL.Sourcei(Source, SourcePNameI.Buffer, clip.Buffer);
+            AL.Sourcei(Source, SourcePNameI.Looping, 1);
         }
 
         public void Play()
@@ -402,7 +442,7 @@ namespace Bejeweled
 
         public void SetGain(float gain)
         {
-            AL.Source(Source, ALSourcef.Gain, gain);
+            AL.Sourcef(Source, SourcePNameF.Gain, gain);
         }
     }
 
@@ -444,7 +484,7 @@ namespace Bejeweled
                 int n = GL.GetInteger(GetPName.NumExtensions);
                 for (int i = 0; i < n; i++)
                 {
-                    string extension = GL.GetStringi(StringName.Extensions, (uint)i)!;
+                    string extension = GL.GetStringi(OpenTK.Graphics.OpenGL.StringName.Extensions, (uint)i)!;
                     if (extension == name) return true;
                 }
 
@@ -465,21 +505,21 @@ namespace Bejeweled
             {
                 case DDSImageFormat.BC5_UNORM:
                     // FIXME: Should it be unsigned or signed?
-                    internalFormat = (SizedInternalFormat)All.CompressedRgRgtc2;
+                    internalFormat = (SizedInternalFormat)OpenTK.Graphics.OpenGL.All.CompressedRgRgtc2;
                     compressed = true;
                     bytesPerPixel = 1;
                     blockSize = 16;
                     break;
                 case DDSImageFormat.BC7_UNORM:
                     // FIXME: Is this supposed to be sRGB?
-                    internalFormat = (SizedInternalFormat)All.CompressedRgbaBptcUnorm;
+                    internalFormat = (SizedInternalFormat)OpenTK.Graphics.OpenGL.All.CompressedRgbaBptcUnorm;
                     compressed = true;
                     bytesPerPixel = 1;
                     blockSize = 16;
                     break;
                 case DDSImageFormat.BC7_UNORM_SRGB:
                     // FIXME: Is this supposed to be sRGB?
-                    internalFormat = (SizedInternalFormat)All.CompressedSrgbAlphaBptcUnorm;
+                    internalFormat = (SizedInternalFormat)OpenTK.Graphics.OpenGL.All.CompressedSrgbAlphaBptcUnorm;
                     compressed = true;
                     bytesPerPixel = 1;
                     blockSize = 16;
@@ -488,7 +528,7 @@ namespace Bejeweled
                     // This is core since 4.2, but we'll just assume support in 4.1.
                     // FIXME: MacOS does not have support for this texture format...
                     // Maybe we can decompress this format if there is no support.
-                    internalFormat = (SizedInternalFormat)All.CompressedRgbBptcUnsignedFloat;
+                    internalFormat = (SizedInternalFormat)OpenTK.Graphics.OpenGL.All.CompressedRgbBptcUnsignedFloat;
                     compressed = true;
                     bytesPerPixel = 1;
                     blockSize = 16;
@@ -544,18 +584,18 @@ namespace Bejeweled
                             Span<byte> data = new Span<byte>(image.AllData, dataOffset, dataLength);
                             BC6H.DecompressBC6H(data, mipWidth, mipHeight, decompressed);
 
-                            GL.TexImage2D(faceTextureTarget, i, InternalFormat.Rgba16f, mipWidth, mipHeight, 0, PixelFormat.Rgba, PixelType.HalfFloat, decompressed);
+                            GL.TexImage2D(faceTextureTarget, i, OpenTK.Graphics.OpenGL.InternalFormat.Rgba16f, mipWidth, mipHeight, 0, PixelFormat.Rgba, PixelType.HalfFloat, decompressed);
                         }
                         else
                         {
-                            GL.TexImage2D(faceTextureTarget, i, InternalFormat.Rgba16f, mipWidth, mipHeight, 0, PixelFormat.Rgba, PixelType.HalfFloat, IntPtr.Zero);
+                            GL.TexImage2D(faceTextureTarget, i, OpenTK.Graphics.OpenGL.InternalFormat.Rgba16f, mipWidth, mipHeight, 0, PixelFormat.Rgba, PixelType.HalfFloat, IntPtr.Zero);
                         }
                     }
                     else if (compressed)
                     {
                         if (i < image.MipmapCount)
                         {
-                            GL.CompressedTexImage2D(faceTextureTarget, i, (InternalFormat)internalFormat, mipWidth, mipHeight, 0, dataLength, in image.AllData[dataOffset]);
+                            GL.CompressedTexImage2D(faceTextureTarget, i, (OpenTK.Graphics.OpenGL.InternalFormat)internalFormat, mipWidth, mipHeight, 0, dataLength, in image.AllData[dataOffset]);
                             //GL.CompressedTextureSubImage3D(texture, i, 0, 0, layer, mipWidth, mipHeight, 1, (PixelFormat)internalFormat, dataLength, (nint)Unsafe.AsPointer(ref image.AllData[dataOffset]));
                         }
                         else
@@ -564,14 +604,14 @@ namespace Bejeweled
                             // 2x2 and 1x1 level mips for block compressed formats,
                             // even though the spec accomodates this...
                             // - Noggin_bops 2024-06-12
-                            GL.CompressedTexImage2D(faceTextureTarget, i, (InternalFormat)internalFormat, mipWidth, mipHeight, 0, dataLength, IntPtr.Zero);
+                            GL.CompressedTexImage2D(faceTextureTarget, i, (OpenTK.Graphics.OpenGL.InternalFormat)internalFormat, mipWidth, mipHeight, 0, dataLength, IntPtr.Zero);
                         }
                     }
                     else
                     {
                         if (i < image.MipmapCount)
                         {
-                            GL.TexImage2D(faceTextureTarget, i, (InternalFormat)internalFormat, mipWidth, mipHeight, 0, pixelFormat, pixelType, (nint)Unsafe.AsPointer(ref image.AllData[dataOffset]));
+                            GL.TexImage2D(faceTextureTarget, i, (OpenTK.Graphics.OpenGL.InternalFormat)internalFormat, mipWidth, mipHeight, 0, pixelFormat, pixelType, (nint)Unsafe.AsPointer(ref image.AllData[dataOffset]));
                             //GL.TextureSubImage3D(texture, i, 0, 0, layer, mipWidth, mipHeight, 1, pixelFormat, pixelType, (nint)Unsafe.AsPointer(ref image.AllData[dataOffset]));
                         }
                         else
@@ -580,7 +620,7 @@ namespace Bejeweled
                             // 2x2 and 1x1 level mips for block compressed formats,
                             // even though the spec accomodates this...
                             // - Noggin_bops 2024-06-12
-                            GL.TexImage2D(faceTextureTarget, i, (InternalFormat)internalFormat, mipWidth, mipHeight, 0, pixelFormat, pixelType, IntPtr.Zero);
+                            GL.TexImage2D(faceTextureTarget, i, (OpenTK.Graphics.OpenGL.InternalFormat)internalFormat, mipWidth, mipHeight, 0, pixelFormat, pixelType, IntPtr.Zero);
                         }
                     }
 
@@ -631,7 +671,7 @@ namespace Bejeweled
             Debug.Assert(image.Type == DDSImageType.Texture2D);
 
             int depth = 1;
-            TextureTarget target = TextureTarget.Texture2d;
+            TextureTarget target = TextureTarget.Texture2D;
 
             int bytesPerPixel;
             SizedInternalFormat internalFormat;
@@ -642,19 +682,19 @@ namespace Bejeweled
             {
                 case DDSImageFormat.BC5_UNORM:
                     // FIXME: Should it be unsigned or signed?
-                    internalFormat = (SizedInternalFormat)All.CompressedRgRgtc2;
+                    internalFormat = (SizedInternalFormat)OpenTK.Graphics.OpenGL.All.CompressedRgRgtc2;
                     compressed = true;
                     bytesPerPixel = 1;
                     break;
                 case DDSImageFormat.BC7_UNORM:
                     // FIXME: Is this supposed to be sRGB?
-                    internalFormat = (SizedInternalFormat)All.CompressedRgbaBptcUnorm;
+                    internalFormat = (SizedInternalFormat)OpenTK.Graphics.OpenGL.All.CompressedRgbaBptcUnorm;
                     compressed = true;
                     bytesPerPixel = 1;
                     break;
                 case DDSImageFormat.BC7_UNORM_SRGB:
                     // FIXME: Is this supposed to be sRGB?
-                    internalFormat = (SizedInternalFormat)All.CompressedSrgbAlphaBptcUnorm;
+                    internalFormat = (SizedInternalFormat)OpenTK.Graphics.OpenGL.All.CompressedSrgbAlphaBptcUnorm;
                     compressed = true;
                     bytesPerPixel = 1;
                     break;
@@ -693,14 +733,17 @@ namespace Bejeweled
             int mipHeight = image.Height;
             for (int i = 0; i < image.MipmapCount; i++)
             {
+                // FIXME: On macOS BC7 textures are not supported...
+                // so we need to decompress the data.
+
                 int dataLength = MultipleOfRoundingUp(mipWidth, 4) * MultipleOfRoundingUp(mipHeight, 4);
                 if (compressed)
                 {
-                    GL.CompressedTexImage2D(target, i, (InternalFormat)internalFormat, mipWidth, mipHeight, 0, dataLength, (nint)Unsafe.AsPointer(ref image.AllData[dataOffset]));
+                    GL.CompressedTexImage2D(target, i, (OpenTK.Graphics.OpenGL.InternalFormat)internalFormat, mipWidth, mipHeight, 0, dataLength, (nint)Unsafe.AsPointer(ref image.AllData[dataOffset]));
                 }
                 else
                 {
-                    GL.TexImage2D(target, i, (InternalFormat)internalFormat, mipWidth, mipHeight, 0, pixelFormat, pixelType, (nint)Unsafe.AsPointer(ref image.AllData[dataOffset]));
+                    GL.TexImage2D(target, i, (OpenTK.Graphics.OpenGL.InternalFormat)internalFormat, mipWidth, mipHeight, 0, pixelFormat, pixelType, (nint)Unsafe.AsPointer(ref image.AllData[dataOffset]));
                 }
                 dataOffset += dataLength;
                 mipWidth = Math.Max(1, mipWidth / 2);
@@ -743,20 +786,20 @@ namespace Bejeweled
             int framebuffer = GL.GenFramebuffer();
 
             int normalTexture = GL.GenTexture();
-            GL.BindTexture(TextureTarget.Texture2d, normalTexture);
-            GL.TexImage2D(TextureTarget.Texture2d, 0, InternalFormat.Rgba16Snorm, width, height, 0, PixelFormat.Rgba, PixelType.Float, IntPtr.Zero);
+            GL.BindTexture(TextureTarget.Texture2D, normalTexture);
+            GL.TexImage2D(TextureTarget.Texture2D, 0, OpenTK.Graphics.OpenGL.InternalFormat.Rgba16, width, height, 0, PixelFormat.Rgba, PixelType.Float, IntPtr.Zero);
 
-            GL.TexParameteri(TextureTarget.Texture2d, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Linear);
+            GL.TexParameteri(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Linear);
 
             int depthTexture = GL.GenTexture();
-            GL.BindTexture(TextureTarget.Texture2d, depthTexture);
-            GL.TexImage2D(TextureTarget.Texture2d, 0, InternalFormat.DepthComponent16, width, height, 0, PixelFormat.DepthComponent, PixelType.Float, IntPtr.Zero);
+            GL.BindTexture(TextureTarget.Texture2D, depthTexture);
+            GL.TexImage2D(TextureTarget.Texture2D, 0, OpenTK.Graphics.OpenGL.InternalFormat.DepthComponent16, width, height, 0, PixelFormat.DepthComponent, PixelType.Float, IntPtr.Zero);
 
-            GL.TexParameteri(TextureTarget.Texture2d, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Linear);
+            GL.TexParameteri(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Linear);
 
             GL.BindFramebuffer(FramebufferTarget.Framebuffer, framebuffer);
-            GL.FramebufferTexture2D(FramebufferTarget.Framebuffer, FramebufferAttachment.ColorAttachment0, TextureTarget.Texture2d, normalTexture, 0);
-            GL.FramebufferTexture2D(FramebufferTarget.Framebuffer, FramebufferAttachment.DepthAttachment, TextureTarget.Texture2d, depthTexture, 0);
+            GL.FramebufferTexture2D(FramebufferTarget.Framebuffer, FramebufferAttachment.ColorAttachment0, TextureTarget.Texture2D, normalTexture, 0);
+            GL.FramebufferTexture2D(FramebufferTarget.Framebuffer, FramebufferAttachment.DepthAttachment, TextureTarget.Texture2D, depthTexture, 0);
 
             FramebufferStatus status = GL.CheckFramebufferStatus(FramebufferTarget.Framebuffer);
             if (status != FramebufferStatus.FramebufferComplete)
@@ -774,16 +817,16 @@ namespace Bejeweled
             int framebuffer = GL.GenFramebuffer();
 
             int normalTexture = GL.GenTexture();
-            GL.BindTexture(TextureTarget.Texture2dMultisample, normalTexture);
-            GL.TexImage2DMultisample(TextureTarget.Texture2dMultisample, samples, InternalFormat.Rgba32f, width, height, true);
+            GL.BindTexture(TextureTarget.Texture2DMultisample, normalTexture);
+            GL.TexImage2DMultisample(TextureTarget.Texture2DMultisample, samples, OpenTK.Graphics.OpenGL.InternalFormat.Rgba32f, width, height, true);
 
             int depthTexture = GL.GenTexture();
-            GL.BindTexture(TextureTarget.Texture2dMultisample, depthTexture);
-            GL.TexImage2DMultisample(TextureTarget.Texture2dMultisample, samples, InternalFormat.DepthComponent32f, width, height, true);
+            GL.BindTexture(TextureTarget.Texture2DMultisample, depthTexture);
+            GL.TexImage2DMultisample(TextureTarget.Texture2DMultisample, samples, OpenTK.Graphics.OpenGL.InternalFormat.DepthComponent32f, width, height, true);
 
             GL.BindFramebuffer(FramebufferTarget.Framebuffer, framebuffer);
-            GL.FramebufferTexture2D(FramebufferTarget.Framebuffer, FramebufferAttachment.ColorAttachment0, TextureTarget.Texture2dMultisample, normalTexture, 0);
-            GL.FramebufferTexture2D(FramebufferTarget.Framebuffer, FramebufferAttachment.DepthAttachment, TextureTarget.Texture2dMultisample, depthTexture, 0);
+            GL.FramebufferTexture2D(FramebufferTarget.Framebuffer, FramebufferAttachment.ColorAttachment0, TextureTarget.Texture2DMultisample, normalTexture, 0);
+            GL.FramebufferTexture2D(FramebufferTarget.Framebuffer, FramebufferAttachment.DepthAttachment, TextureTarget.Texture2DMultisample, depthTexture, 0);
 
             FramebufferStatus status = GL.CheckFramebufferStatus(FramebufferTarget.Framebuffer);
             if (status != FramebufferStatus.FramebufferComplete)
@@ -798,10 +841,10 @@ namespace Bejeweled
 
         public void ResizeNormalDepthFramebuffer(int newWidth, int newHeight)
         {
-            GL.BindTexture(TextureTarget.Texture2d, ColorAttachement0);
-            GL.TexImage2D(TextureTarget.Texture2d, 0, InternalFormat.Rgba16Snorm, newWidth, newHeight, 0, PixelFormat.Rgba, PixelType.Float, IntPtr.Zero);
-            GL.BindTexture(TextureTarget.Texture2d, DepthAttachement);
-            GL.TexImage2D(TextureTarget.Texture2d, 0, InternalFormat.DepthComponent16, newWidth, newHeight, 0, PixelFormat.DepthComponent, PixelType.Float, IntPtr.Zero);
+            GL.BindTexture(TextureTarget.Texture2D, ColorAttachement0);
+            GL.TexImage2D(TextureTarget.Texture2D, 0, OpenTK.Graphics.OpenGL.InternalFormat.Rgba16Snorm, newWidth, newHeight, 0, PixelFormat.Rgba, PixelType.Float, IntPtr.Zero);
+            GL.BindTexture(TextureTarget.Texture2D, DepthAttachement);
+            GL.TexImage2D(TextureTarget.Texture2D, 0, OpenTK.Graphics.OpenGL.InternalFormat.DepthComponent16, newWidth, newHeight, 0, PixelFormat.DepthComponent, PixelType.Float, IntPtr.Zero);
 
             GL.BindFramebuffer(FramebufferTarget.Framebuffer, Handle);
             FramebufferStatus status = GL.CheckFramebufferStatus(FramebufferTarget.Framebuffer);
@@ -815,10 +858,10 @@ namespace Bejeweled
 
         public void ResizeDebugFramebufferMS(int newWidth, int newHeight, int samples)
         {
-            GL.BindTexture(TextureTarget.Texture2dMultisample, ColorAttachement0);
-            GL.TexImage2DMultisample(TextureTarget.Texture2dMultisample, samples, InternalFormat.Rgba32f, newWidth, newHeight, true);
-            GL.BindTexture(TextureTarget.Texture2dMultisample, DepthAttachement);
-            GL.TexImage2DMultisample(TextureTarget.Texture2dMultisample, samples, InternalFormat.DepthComponent32f, newWidth, newHeight, true);
+            GL.BindTexture(TextureTarget.Texture2DMultisample, ColorAttachement0);
+            GL.TexImage2DMultisample(TextureTarget.Texture2DMultisample, samples, OpenTK.Graphics.OpenGL.InternalFormat.Rgba32f, newWidth, newHeight, true);
+            GL.BindTexture(TextureTarget.Texture2DMultisample, DepthAttachement);
+            GL.TexImage2DMultisample(TextureTarget.Texture2DMultisample, samples, OpenTK.Graphics.OpenGL.InternalFormat.DepthComponent32f, newWidth, newHeight, true);
 
             GL.BindFramebuffer(FramebufferTarget.Framebuffer, Handle);
             FramebufferStatus status = GL.CheckFramebufferStatus(FramebufferTarget.Framebuffer);
@@ -867,6 +910,37 @@ namespace Bejeweled
 
     }
 
+    internal struct BreakParticle
+    {
+        public Vector2 Position;
+        public Vector2 Velocity;
+        public Vector3 Color;
+        public float Timer = 0;
+        public float Delay = 0;
+        public int Score;
+        public bool Done = false;
+
+        public BreakParticle(Vector2 position, Vector2 velocity, Vector3 color, float delay, int score)
+        {
+            Position = position;
+            Velocity = velocity;
+            Color = color;
+            Delay = delay;
+            Score = score;
+        }
+    }
+
+    static class VectorExtensions
+    {
+        public static ref System.Numerics.Vector2 AsNumerics(this ref Vector2 v) => ref Unsafe.As<Vector2, System.Numerics.Vector2>(ref v);
+        public static ref System.Numerics.Vector3 AsNumerics(this ref Vector3 v) => ref Unsafe.As<Vector3, System.Numerics.Vector3>(ref v);
+        public static ref System.Numerics.Vector4 AsNumerics(this ref Vector4 v) => ref Unsafe.As<Vector4, System.Numerics.Vector4>(ref v);
+
+        public static System.Numerics.Vector2 ToNumerics(this Vector2 v) => Unsafe.As<Vector2, System.Numerics.Vector2>(ref v);
+        public static System.Numerics.Vector3 ToNumerics(this Vector3 v) => Unsafe.As<Vector3, System.Numerics.Vector3>(ref v);
+        public static System.Numerics.Vector4 ToNumerics(this Vector4 v) => Unsafe.As<Vector4, System.Numerics.Vector4>(ref v);
+    }
+
     public class Bejeweled
     {
         public string Name => "Bejeweled";
@@ -876,8 +950,8 @@ namespace Bejeweled
         WindowHandle Window;
         OpenGLContextHandle Context;
 
-        ALDevice ALDevice;
-        ALContext ALContext;
+        ALCDevice ALDevice;
+        ALCContext ALContext;
 
         private bool KHRDebugAvailable;
 
@@ -906,7 +980,8 @@ namespace Bejeweled
         };
 
         ImGuiController ImGuiController;
-        ImDrawListPtr CustomDrawlist;
+        ImDrawListPtr UIOverlayDrawlist;
+        ImDrawListPtr UIBaseDrawlist;
         ImDrawDataPtr CustomDrawData;
         ImFontPtr CurrentImGuiFont;
 
@@ -914,8 +989,14 @@ namespace Bejeweled
 
         Framebuffer DebugFramebuffer;
 
-        Texture UnmutedTexture;
-        Texture MutedTexture;
+        Texture SfxUnmutedTexture;
+        Texture SfxMutedTexture;
+
+        Texture MusicUnmutedTexture;
+        Texture MusicMutedTexture;
+
+        bool SfxMuted = false;
+        bool MusicMuted = false;
 
         Texture BrdfLUT;
         Cubemap EnvironmentMap;
@@ -923,6 +1004,9 @@ namespace Bejeweled
         Cubemap PrefilteredEnvironmentMap;
 
         List<BreakEffect> BreakEffects = new List<BreakEffect>();
+        List<BreakParticle> BreakParticles = new List<BreakParticle>();
+
+        Texture ParticleTexture;
 
         GemShader GemShader;
         GemNormalShader GemNormalShader;
@@ -936,6 +1020,8 @@ namespace Bejeweled
         GemVisual ZirconVisual;
 
         internal const float MusicVolume = 0.8f;
+        internal const float SfxVolume = 1.0f;
+
         internal const float BreakSFXVolume = 0.5f;
         internal const float SwapSFXVolume = 0.25f;
 
@@ -943,6 +1029,7 @@ namespace Bejeweled
 
         SoundEffect BreakSoundEffect;
         SoundEffect SwapSoundEffect;
+        SoundEffect PointSoundEffect;
 
         SoundEffect ButtonPressEffect;
 
@@ -953,6 +1040,7 @@ namespace Bejeweled
 
 
         State CurrentState;
+        int Score = 0;
 
         // Idle state
         internal Vector2i HoveredGem = (-1, -1);
@@ -979,6 +1067,51 @@ namespace Bejeweled
         internal float FallingTime = 0.0f;
         internal int BrokenGemsComboCount = 0;
 
+        internal const float ParticleDelayTime = 0.18f;
+        internal float ParticlePitchResetTimer = 0.0f;
+        internal const float ParticlePitchResetTime = 1.5f;
+        internal int ParticlePitchCounter = 0;
+
+        public static ALCContextAttributes ALCGetContextAttributes(ALCDevice device)
+        {
+            int size = 0;
+            ALC.GetInteger(device, OpenTK.Audio.OpenAL.ALC.GetPNameIV.AttributesSize, 1, ref size);
+            int[] attributes = new int[size];
+            ALC.GetInteger(device, OpenTK.Audio.OpenAL.ALC.GetPNameIV.AllAttributes, size, attributes);
+            return ALCContextAttributes.FromArray(attributes);
+        }
+
+        public static unsafe List<string> ALCGetStringList(ALCDevice device, OpenTK.Audio.OpenAL.ALC.StringName name)
+        {
+            byte* result = ALC.GetString_(device, name);
+            return ALStringListToList(result);
+
+            static unsafe List<string> ALStringListToList(byte* alList)
+            {
+                if (alList == (byte*)0)
+                {
+                    return new List<string>();
+                }
+
+                var strings = new List<string>();
+
+                byte* currentPos = alList;
+                while (true)
+                {
+                    var currentString = Marshal.PtrToStringAnsi(new IntPtr(currentPos));
+                    if (string.IsNullOrEmpty(currentString))
+                    {
+                        break;
+                    }
+
+                    strings.Add(currentString);
+                    currentPos += currentString.Length + 1;
+                }
+
+                return strings;
+            }
+        }
+
         public unsafe void Initialize(WindowHandle window, OpenGLContextHandle context, bool useGLES, ILogger logger)
         {
             Debug.Assert(useGLES == false, "We don't support GLES for this demo yet.");
@@ -995,17 +1128,17 @@ namespace Bejeweled
                 int n = GL.GetInteger(GetPName.NumExtensions);
                 for (int i = 0; i < n; i++)
                 {
-                    string extension = GL.GetStringi(StringName.Extensions, (uint)i)!;
+                    string extension = GL.GetStringi(OpenTK.Graphics.OpenGL.StringName.Extensions, (uint)i)!;
                     if (extension == name) return true;
                 }
 
                 return false;
             }
 
-            string version = GL.GetString(StringName.Version)!;
-            string glslVersion = GL.GetString(StringName.ShadingLanguageVersion)!;
-            string renderer = GL.GetString(StringName.Renderer)!;
-            string vendor = GL.GetString(StringName.Vendor)!;
+            string version = GL.GetString(OpenTK.Graphics.OpenGL.StringName.Version)!;
+            string glslVersion = GL.GetString(OpenTK.Graphics.OpenGL.StringName.ShadingLanguageVersion)!;
+            string renderer = GL.GetString(OpenTK.Graphics.OpenGL.StringName.Renderer)!;
+            string vendor = GL.GetString(OpenTK.Graphics.OpenGL.StringName.Vendor)!;
             Logger.LogInfo($"OpenGL version: {version}");
             Logger.LogInfo($"GLSL version: {glslVersion}");
             Logger.LogInfo($"Renderer: {renderer}");
@@ -1020,16 +1153,17 @@ namespace Bejeweled
                 // Enabling debug output before setting the callback is apprently
                 // needed to make certain (Mesa 23.2.1-1ubuntu3.1~22.04.2) linux drivers not segfault.
                 // - Noggin_bops 2024-06-16
-                GL.Enable(EnableCap.DebugOutput);
-                GL.Enable(EnableCap.DebugOutputSynchronous);
+                GL.Enable(OpenTK.Graphics.OpenGL.EnableCap.DebugOutput);
+                GL.Enable(OpenTK.Graphics.OpenGL.EnableCap.DebugOutputSynchronous);
                 GL.DebugMessageCallback(Bejeweled.DebugProcCallback, IntPtr.Zero);
             }
 
-            GL.Enable(EnableCap.FramebufferSrgb);
-            GL.Enable(EnableCap.DepthTest);
-            GL.Enable(EnableCap.TextureCubeMapSeamless);
+            GL.Enable(OpenTK.Graphics.OpenGL.EnableCap.FramebufferSrgb);
+            GL.Enable(OpenTK.Graphics.OpenGL.EnableCap.DepthTest);
+            GL.Enable(OpenTK.Graphics.OpenGL.EnableCap.TextureCubeMapSeamless);
 
             Toolkit.Window.GetFramebufferSize(Window, out Vector2i fbSize);
+            nint oldImguiContext = ImGui.GetCurrentContext();
             ImGuiController = new ImGuiController(fbSize.X, fbSize.Y, useGLES);
             {
                 float scale = 6;
@@ -1049,10 +1183,13 @@ namespace Bejeweled
                 }
             }
             ImGuiController.RecreateFontDeviceTexture();
-            EventQueue.EventRaised += EventQueue_EventRaised;
+            Toolkit.Event.EventRaised += EventQueue_EventRaised;
             
-            CustomDrawlist = new ImDrawListPtr((ImDrawList*)NativeMemory.AllocZeroed((nuint)sizeof(ImDrawList)));
-            CustomDrawlist._Data = ImGui.GetDrawListSharedData();
+            UIBaseDrawlist = new ImDrawListPtr((ImDrawList*)NativeMemory.AllocZeroed((nuint)sizeof(ImDrawList)));
+            UIBaseDrawlist._Data = ImGui.GetDrawListSharedData();
+
+            UIOverlayDrawlist = new ImDrawListPtr((ImDrawList*)NativeMemory.AllocZeroed((nuint)sizeof(ImDrawList)));
+            UIOverlayDrawlist._Data = ImGui.GetDrawListSharedData();
 
             CustomDrawData = new ImDrawDataPtr((ImDrawData*)NativeMemory.AllocZeroed((nuint)sizeof(ImDrawData)));
             CustomDrawData.Clear();
@@ -1073,14 +1210,19 @@ namespace Bejeweled
             AmethystVisual = GemVisual.Create(Gem.Amethyst, "./Assets/Models/Amethyst.glb");
             ZirconVisual = GemVisual.Create(Gem.Zircon, "./Assets/Models/Zircon.glb");
 
-            UnmutedTexture = Texture.LoadTexture("./Assets/Textures/unmute.dds");
-            MutedTexture = Texture.LoadTexture("./Assets/Textures/mute.dds");
+            SfxUnmutedTexture = Texture.LoadTexture("./Assets/Textures/sfx_unmute.dds");
+            SfxMutedTexture = Texture.LoadTexture("./Assets/Textures/sfx_mute.dds");
+
+            MusicUnmutedTexture = Texture.LoadTexture("./Assets/Textures/music_unmute.dds");
+            MusicMutedTexture = Texture.LoadTexture("./Assets/Textures/music_mute.dds");
 
             BrdfLUT = Texture.LoadTexture("./Assets/Textures/dancing_hall_4kBrdf.dds");
 
             EnvironmentMap = Cubemap.LoadCubemap("./Assets/Textures/dancing_hall_4kEnvHDR.dds");
             IrradianceMap = Cubemap.LoadCubemap("./Assets/Textures/dancing_hall_4kDiffuseHDR.dds");
             PrefilteredEnvironmentMap = Cubemap.LoadCubemap("./Assets/Textures/dancing_hall_4kSpecularHDR.dds");
+
+            ParticleTexture = Texture.LoadTexture("./Assets/Textures/particle.dds");
 
             Toolkit.Window.SetTitle(Window, $"Bejeweled");
 
@@ -1092,11 +1234,11 @@ namespace Bejeweled
                 OpenALLibraryNameContainer.OverridePath = "win32-x64/soft_oal.dll";
             }
             
-            IEnumerable<string> devices = ALC.GetStringList(GetEnumerationStringList.DeviceSpecifier);
+            IEnumerable<string> devices = ALCGetStringList(ALCDevice.Null, OpenTK.Audio.OpenAL.ALC.StringName.DeviceSpecifier);
             Logger.LogDebug($"Devices: {string.Join(", ", devices)}");
 
             // Get the default device, then go though all devices and select the AL soft device if it exists.
-            string deviceName = ALC.GetString(ALDevice.Null, AlcGetString.DefaultDeviceSpecifier);
+            string deviceName = ALC.GetString(ALCDevice.Null, OpenTK.Audio.OpenAL.ALC.StringName.DefaultDeviceSpecifier)!;
             foreach (var d in devices)
             {
                 if (d.Contains("OpenAL Soft"))
@@ -1105,9 +1247,9 @@ namespace Bejeweled
                 }
             }
 
-            if (ALC.EnumerateAll.IsExtensionPresent())
+            if (ALC.IsExtensionPresent(ALCDevice.Null, "ALC_ENUMERATE_ALL_EXT"))
             {
-                IEnumerable<string> allDevices = ALC.EnumerateAll.GetStringList(GetEnumerateAllContextStringList.AllDevicesSpecifier);
+                IEnumerable<string> allDevices = ALCGetStringList(ALCDevice.Null, OpenTK.Audio.OpenAL.ALC.StringName.AllDevicesSpecifier);
                 Logger.LogDebug($"All Devices: {string.Join(", ", allDevices)}");
             }
 
@@ -1115,26 +1257,26 @@ namespace Bejeweled
             ALContext = ALC.CreateContext(ALDevice, (int[]?)null);
             ALC.MakeContextCurrent(ALContext);
 
-            ALC.GetInteger(ALDevice, AlcGetInteger.MajorVersion, 1, out int alcMajorVersion);
-            ALC.GetInteger(ALDevice, AlcGetInteger.MinorVersion, 1, out int alcMinorVersion);
-            string alcExts = ALC.GetString(ALDevice, AlcGetString.Extensions);
+            int alcMajorVersion = ALC.GetInteger(ALDevice, OpenTK.Audio.OpenAL.ALC.GetPNameIV.MajorVersion);
+            int alcMinorVersion = ALC.GetInteger(ALDevice, OpenTK.Audio.OpenAL.ALC.GetPNameIV.MinorVersion);
+            string alcExts = ALC.GetString(ALDevice, OpenTK.Audio.OpenAL.ALC.StringName.Extensions)!;
 
-            var attrs = ALC.GetContextAttributes(ALDevice);
+            var attrs = ALCGetContextAttributes(ALDevice);
             Logger.LogDebug($"Attributes: {attrs}");
 
-            string exts = AL.Get(ALGetString.Extensions);
-            string rend = AL.Get(ALGetString.Renderer);
-            string vend = AL.Get(ALGetString.Vendor);
-            string vers = AL.Get(ALGetString.Version);
+            string exts = AL.GetString(OpenTK.Audio.OpenAL.StringName.Extensions)!;
+            string rend = AL.GetString(OpenTK.Audio.OpenAL.StringName.Renderer)!;
+            string vend = AL.GetString(OpenTK.Audio.OpenAL.StringName.Vendor)!;
+            string vers = AL.GetString(OpenTK.Audio.OpenAL.StringName.Version)!;
 
             Logger.LogDebug($"Vendor: {vend}, \nVersion: {vers}, \nRenderer: {rend}, \nExtensions: {exts}, \nALC Version: {alcMajorVersion}.{alcMinorVersion}, \nALC Extensions: {alcExts}");
 
-            AL.DistanceModel(ALDistanceModel.None);
+            AL.DistanceModel(DistanceModel.None);
 
-            AL.Listener(ALListenerf.Gain, 1.0f);
+            AL.Listenerf(ListenerPNameF.Gain, 1.0f);
 
-            ALError error = AL.GetError();
-            if (error != ALError.NoError)
+            OpenTK.Audio.OpenAL.ErrorCode error = AL.GetError();
+            if (error != OpenTK.Audio.OpenAL.ErrorCode.NoError)
             {
                 Debug.Assert(false, $"ALError: {error}");
             }
@@ -1146,10 +1288,12 @@ namespace Bejeweled
 
             ButtonPressEffect = new SoundEffect(SoundClip.LoadSound("./Assets/Sounds/switch8.ogg"));
 
+            PointSoundEffect = new SoundEffect(SoundClip.LoadSound("./Assets/Sounds/Coin01.ogg"));
+
             watch.Stop();
             Logger.LogInfo($"Loading assets took: {watch.Elapsed.TotalMilliseconds}ms");
 
-            TransitionToGame();
+            ImGui.SetCurrentContext(oldImguiContext);
         }
 
         public void TransitionToGame()
@@ -1173,6 +1317,48 @@ namespace Bejeweled
             // FIXME: Maybe put a fade-in envelope on this?
             AmbientMusic.SetGain(MusicVolume);
             AmbientMusic.Play();
+        }
+
+        // FIXME: Better place..
+        const float UI_LEFT_PAD = 0.1f;
+        const float UI_BOTTOM_PAD = 0.1f;
+
+        public Box2i GetGemBoardBox()
+        {
+            Toolkit.Window.GetFramebufferSize(Window, out Vector2i fbSize);
+            int leftPadPx = (int)(fbSize.X * UI_LEFT_PAD);
+            int bottomPadPx = (int)(fbSize.Y * UI_BOTTOM_PAD);
+            return new Box2i(leftPadPx, 0, fbSize.X, fbSize.Y - bottomPadPx);
+        }
+
+        public Vector4i GetGemBoardViewport()
+        {
+            Box2i board = GetGemBoardBox();
+            Toolkit.Window.GetFramebufferSize(Window, out Vector2i fbSize);
+            int y = (fbSize.Y - (board.Min.Y + board.Height));
+            return new Vector4i(board.Min.X, y, board.Width, board.Height);
+        }
+
+        public bool TryClientPosToTile(Vector2 clientPos, out Vector2i tile)
+        {
+            Toolkit.Window.ClientToFramebuffer(Window, clientPos, out Vector2 fbPos);
+            return TryFramebufferPosToTile(fbPos, out tile);
+        }
+
+        public bool TryFramebufferPosToTile(Vector2 fbPos, out Vector2i tile)
+        {
+            Box2i board = GetGemBoardBox();
+            // FIXME: Contains functions for Box2i that take Vector2?
+            if (board.ContainsInclusive((Vector2i)fbPos))
+            {
+                tile = (Vector2i)Vector2.Floor(((fbPos - board.Min) / board.Size) * 8);
+                return true;
+            }
+            else
+            {
+                tile = (Vector2i)Vector2.Floor(((fbPos - board.Min) / board.Size) * 8);
+                return false;
+            }
         }
 
         Vector2 GetTileLocation(int x, int y)
@@ -1264,6 +1450,12 @@ namespace Bejeweled
             return legalMoves;
         }
 
+        Vector2 RandomDirection(Random rand)
+        {
+            float theta = rand.NextSingle() * MathHelper.TwoPi;
+            return (MathF.Cos(theta), MathF.Sin(theta));
+        }
+
         /// <returns>How many gems where broken, if any.</returns>
         int HandleMovedGem(Vector2i newPosition)
         {
@@ -1281,6 +1473,8 @@ namespace Bejeweled
             int rightCount = CountMatchesInDirection(Board[newPosition.X, newPosition.Y], newPosition, (+1, 0));
 
             int brokeCount = 0;
+
+            int particle = 0;
             
             int verticalCount = upCount + downCount - 1;
             int horizontalCount = leftCount + rightCount - 1;
@@ -1288,12 +1482,15 @@ namespace Bejeweled
             {
                 brokeCount += verticalCount;
 
+                int gemScore = (verticalCount - 2) * 5;
+                int score = verticalCount * gemScore;
+
                 for (int y = newPosition.Y - upCount + 1; y < newPosition.Y + downCount; y++)
                 {
                     Board[newPosition.X, y] = Gem.Empty;
-                }
 
-                int score = (verticalCount - 2) * 10;
+                    BreakParticles.Add(new BreakParticle(GetTileLocation(newPosition.X, y), RandomDirection(Random.Shared), GemColors[(int)gemType], particle++ * ParticleDelayTime, gemScore));
+                }
 
                 float horizontalLocation = GetTileLocation(newPosition.X, newPosition.Y).X;
                 float verticalCenter = GetTileLocation(newPosition.X, newPosition.Y + ((downCount - upCount) / 2)).Y;
@@ -1305,12 +1502,16 @@ namespace Bejeweled
             {
                 brokeCount += horizontalCount;
 
+                int gemScore = (horizontalCount - 2) * 5;
+                int score = horizontalCount * gemScore;
+
                 for (int x = newPosition.X - leftCount + 1; x < newPosition.X + rightCount; x++)
                 {
                     Board[x, newPosition.Y] = Gem.Empty;
-                }
 
-                int score = (horizontalCount - 2) * 10;
+                    if (verticalCount < 3 || x != newPosition.X)
+                        BreakParticles.Add(new BreakParticle(GetTileLocation(x, newPosition.Y), RandomDirection(Random.Shared), GemColors[(int)gemType], particle++ * ParticleDelayTime, gemScore));
+                }
 
                 float verticalLocation = GetTileLocation(newPosition.X, newPosition.Y).Y;
                 float verticalCenter = GetTileLocation(newPosition.X, newPosition.Y + ((downCount - upCount) / 2)).Y;
@@ -1323,6 +1524,16 @@ namespace Bejeweled
             {
                 // Remove the double counted gem.
                 brokeCount -= 1;
+            }
+
+            for (int i = 0; i < brokeCount; i++)
+            {
+                float verticalCenter = GetTileLocation(newPosition.X, newPosition.Y + ((downCount - upCount) / 2)).Y;
+                float horizontalCenter = GetTileLocation(newPosition.X + ((rightCount - leftCount) / 2), newPosition.Y).X;
+
+                // FIXME: If we break multiple rows at once we get particles that sync up.
+                // We'd ideally want like a global delay counter or something, so we could delay stuff.
+                //BreakParticles.Add(new BreakParticle((horizontalCenter, verticalCenter) + RandomDirection(Random.Shared) * 0.1f, RandomDirection(Random.Shared), GemColors[(int)gemType], i * ParticleDelayTime));
             }
 
             return brokeCount;
@@ -1343,23 +1554,49 @@ namespace Bejeweled
             return count;
         }
 
+        static ImDrawCallback SetBlendModeAdditiveCallback = SetBlendModeAdditive;
+        static GCHandle SetBlendModeAdditiveCallbackHandle = GCHandle.Alloc(SetBlendModeAdditiveCallback);
+        static void SetBlendModeAdditive(ImDrawListPtr parentList, ImDrawCmdPtr cmd)
+        {
+            GL.BlendEquation(BlendEquationMode.FuncAdd);
+            GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.One);
+        }
+
+        static ImDrawCallback SetBlendModeAlphaBlendingCallback = SetBlendModeAlphaBlending;
+        static GCHandle SetBlendModeAlphaBlendingCallbackHandle = GCHandle.Alloc(SetBlendModeAlphaBlendingCallback);
+        static void SetBlendModeAlphaBlending(ImDrawListPtr parentList, ImDrawCmdPtr cmd)
+        {
+            GL.BlendEquation(BlendEquationMode.FuncAdd);
+            GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
+        }
+
         float Time = 0;
         MouseState PrevMouseState;
         bool[] PrevKeyboardState = new bool[256];
         bool[] KeyboardState = new bool[256];
         public bool Update(float deltaTime)
         {
+            nint oldImguiContext = ImGui.GetCurrentContext();
+            ImGui.SetCurrentContext(ImGuiController.Context);
+
             Time += deltaTime;
 
+            // FIXME: A nicer way to automatically update all sfx...
             SwapSoundEffect.Update();
             BreakSoundEffect.Update();
+            PointSoundEffect.Update();
+            ButtonPressEffect.Update();
 
             ImGuiController.Update(deltaTime);
             ImGui.PushFont(CurrentImGuiFont);
 
-            CustomDrawlist._ResetForNewFrame();
-            CustomDrawlist.PushClipRectFullScreen();
-            CustomDrawlist.PushTextureID(ImGui.GetIO().Fonts.TexID);
+            UIBaseDrawlist._ResetForNewFrame();
+            UIBaseDrawlist.PushClipRectFullScreen();
+            UIBaseDrawlist.PushTextureID(ImGui.GetIO().Fonts.TexID);
+
+            UIOverlayDrawlist._ResetForNewFrame();
+            UIOverlayDrawlist.PushClipRectFullScreen();
+            UIOverlayDrawlist.PushTextureID(ImGui.GetIO().Fonts.TexID);
 
             var UV00 = new System.Numerics.Vector2(0, 0);
             var UV11 = new System.Numerics.Vector2(1, 1);
@@ -1403,7 +1640,9 @@ namespace Bejeweled
                     position += (1, 1);
                     position *= 0.5f;
                     position.Y = 1 - position.Y;
-                    position *= fbSize;
+                    Vector4 board = GetGemBoardViewport();
+                    position *= board.Wz;
+                    position.X += board.X;
 
                     string text = $"+{effect.Score}";
 
@@ -1417,11 +1656,93 @@ namespace Bejeweled
 
                     position.Y -= EaseOutQuad(t) * RiseAmount;
 
-                    CustomDrawlist.AddText(CurrentImGuiFont, fontSize, new System.Numerics.Vector2(position.X, position.Y), col, text);
+                    UIOverlayDrawlist.AddText(CurrentImGuiFont, fontSize, new System.Numerics.Vector2(position.X, position.Y), col, text);
                 }
 
                 // Remove all break effects that have died.
                 BreakEffects.RemoveAll(be => be.Timer > Lifetime);
+
+                UIOverlayDrawlist.AddCallback((nint)SetBlendModeAdditiveCallbackHandle, 0);
+
+                ParticlePitchResetTimer -= deltaTime;
+                if (ParticlePitchResetTimer <= 0)
+                {
+                    ParticlePitchResetTimer = 0;
+                    ParticlePitchCounter = 0;
+                }
+
+                Span<BreakParticle> particles = CollectionsMarshal.AsSpan(BreakParticles);
+                for (int i = 0; i < particles.Length; i++)
+                {
+                    ref BreakParticle particle = ref particles[i];
+                    particle.Timer += deltaTime;
+
+
+
+                    Vector2 goal = (-4.5f, -4.5f);
+                    Vector2 acceleration = (-4.5f, -4.5f) - particle.Position;
+
+                    static float EaseOutExpo(float x)
+                    {
+                        return x == 1 ? 1 : 1 - MathF.Pow(2, -10 * x);
+                    }
+
+                    static float EaseInOutCirc(float x)
+                    {
+                       return x < 0.5
+                          ? (1 - MathF.Sqrt(1 - MathF.Pow(2 * x, 2))) / 2
+                          : (MathF.Sqrt(1 - MathF.Pow(-2 * x + 2, 2)) + 1) / 2;
+                    }
+
+                    const float ExplodeAnimationTime = 0.5f;
+                    float explodeTime = float.Clamp(particle.Timer / (ExplodeAnimationTime + particle.Delay), 0.0f, 1.0f);
+
+                    Vector2 position = particle.Position + particle.Velocity * EaseOutExpo(explodeTime) * 1.2f;
+
+                    const float GatherStartTime = 0.2f;
+                    const float GatherAnimationTime = 1f;
+                    float gatherTime = float.Clamp((particle.Timer - GatherStartTime) / (GatherAnimationTime + particle.Delay), 0.0f, 1.0f);
+
+                    position = Vector2.Lerp(position, goal, EaseInOutCirc(gatherTime));
+
+                    static float EaseInExpo(float x)
+                    {
+                        return x == 0 ? 0 : MathF.Pow(2, 10 * x - 10);
+                    }
+
+                    const float FadeOutTime = 1f;
+                    float alphaT = float.Clamp((particle.Timer - (GatherStartTime + GatherAnimationTime - FadeOutTime + particle.Delay)) / FadeOutTime, 0.0f, 1.0f);
+                    float alpha = float.Lerp(1.0f, 0.0f, EaseInExpo(alphaT));
+
+                    if (particle.Timer > GatherStartTime + GatherAnimationTime + particle.Delay)
+                    {
+                        ParticlePitchCounter++;
+                        ParticlePitchResetTimer = ParticlePitchResetTime;
+                        PointSoundEffect.PlayOneShot(0.5f, MathHelper.MapRange(int.Clamp(ParticlePitchCounter - 3, 1, 15), 1.0f, 15.0f, 1.0f, 2.0f) + (Random.Shared.NextSingle() - 0.5f) * 0.01f);
+                        particle.Done = true;
+
+                        Score += particle.Score;
+                    }
+
+                    position = position / 4;
+                    position += (1, 1);
+                    position *= 0.5f;
+                    position.Y = 1 - position.Y;
+                    Vector4 board = GetGemBoardViewport();
+                    position *= board.Wz;
+                    position.X += board.X;
+
+                    const float ParticleSize = 45.0f;
+
+                    //UIOverlayDrawlist.AddCircleFilled(position.ToNumerics(), 10f, ImGui.ColorConvertFloat4ToU32(new System.Numerics.Vector4(particle.Color.X, particle.Color.Y, particle.Color.Z, 1.0f)));
+                    uint col = ImGui.ColorConvertFloat4ToU32(new System.Numerics.Vector4(particle.Color.X, particle.Color.Y, particle.Color.Z, alpha));
+                    UIOverlayDrawlist.AddImage(ParticleTexture.Handle, (position - (ParticleSize/2, ParticleSize/2)).ToNumerics(), (position + (ParticleSize/2, ParticleSize/2)).ToNumerics(), System.Numerics.Vector2.Zero, System.Numerics.Vector2.One, col);
+                }
+
+                UIOverlayDrawlist.AddCallback((nint)SetBlendModeAlphaBlendingCallbackHandle, 0);
+
+                // Remove all break effects that have died.
+                BreakParticles.RemoveAll(be => be.Done);
             }
 
             Toolkit.Mouse.GetMouseState(Window, out MouseState mouseState);
@@ -1430,6 +1751,50 @@ namespace Bejeweled
             Vector2i clientPosition = (Vector2i)mouseState.Position;
 
             Toolkit.Window.GetClientSize(Window, out Vector2i clientSize);
+
+            {
+                float leftArea = fbSize.X * UI_LEFT_PAD;
+                float leftIconPad = leftArea * 0.05f;
+                float iconSize = leftArea * 0.9f;
+
+                Box2i board = GetGemBoardBox();
+                
+                UIBaseDrawlist.AddRectFilled(board.Min.ToVector2().ToNumerics(), board.Max.ToVector2().ToNumerics(), ImGui.ColorConvertFloat4ToU32(new System.Numerics.Vector4(0.1f, 0.1f, 0.1f, 1.0f)));
+                
+                UIBaseDrawlist.AddRectFilled(new System.Numerics.Vector2(0, fbSize.Y - fbSize.Y * UI_BOTTOM_PAD), new System.Numerics.Vector2(fbSize.X, fbSize.Y), ImGui.ColorConvertFloat4ToU32(new System.Numerics.Vector4(0.5f, 0.5f, 0.5f, 1.0f)), (fbSize.Y * UI_BOTTOM_PAD) * 0.5f);
+                UIBaseDrawlist.AddText(new System.Numerics.Vector2(leftIconPad * 4, fbSize.Y - fbSize.Y * UI_BOTTOM_PAD + ImGui.GetTextLineHeight() * 0.3f), ImGui.ColorConvertFloat4ToU32(new System.Numerics.Vector4(0.8f, 0.8f, 0.8f, 1.0f)), $"{Score}");
+
+                // FIXME: Sliders for both music and SFX.
+                Box2 sfxMuteButtonBox = new Box2(leftIconPad, 0, leftIconPad + iconSize, iconSize);
+                UIBaseDrawlist.AddImage(SfxMuted ? SfxMutedTexture.Handle : SfxUnmutedTexture.Handle, sfxMuteButtonBox.Min.ToNumerics(), sfxMuteButtonBox.Max.ToNumerics());
+                if (sfxMuteButtonBox.ContainsInclusive(clientPosition) && mouseState.PressedButtons.HasFlag(MouseButtonFlags.Button1) && PrevMouseState.PressedButtons.HasFlag(MouseButtonFlags.Button1) == false)
+                {
+                    SfxMuted = !SfxMuted;
+                    if (SfxMuted)
+                    {
+                        SoundEffect.SetGain(0.0f);
+                    }
+                    else
+                    {
+                        SoundEffect.SetGain(SfxVolume);
+                    }
+                }
+
+                Box2 musicMuteButtonBox = new Box2(leftIconPad, leftArea, leftIconPad + iconSize, leftArea + iconSize);
+                UIBaseDrawlist.AddImage(MusicMuted ? MusicMutedTexture.Handle : MusicUnmutedTexture.Handle, musicMuteButtonBox.Min.ToNumerics(), musicMuteButtonBox.Max.ToNumerics());
+                if (musicMuteButtonBox.ContainsInclusive(clientPosition) && mouseState.PressedButtons.HasFlag(MouseButtonFlags.Button1) && PrevMouseState.PressedButtons.HasFlag(MouseButtonFlags.Button1) == false)
+                {
+                    MusicMuted = !MusicMuted;
+                    if (MusicMuted)
+                    {
+                        AmbientMusic.SetGain(0.0f);
+                    }
+                    else
+                    {
+                        AmbientMusic.SetGain(MusicVolume);
+                    }
+                }
+            }
 
             switch (CurrentState)
             {
@@ -1448,6 +1813,9 @@ namespace Bejeweled
 
             Array.Copy(KeyboardState, PrevKeyboardState, KeyboardState.Length);
             PrevMouseState = mouseState;
+
+            ImGui.PopFont();
+            ImGui.SetCurrentContext(oldImguiContext);
             return false;
 
             void DoIdle(float deltaTime)
@@ -1492,7 +1860,9 @@ namespace Bejeweled
                     }
                 }
 
-                HoveredGem = (clientPosition * 8) / clientSize;
+                if (TryClientPosToTile(clientPosition, out HoveredGem) == false)
+                    inWindow = false;
+                //HoveredGem = (clientPosition * 8) / clientSize;
 
                 if (inWindow && mouseState.PressedButtons.HasFlag(MouseButtonFlags.Button1) && PrevMouseState.PressedButtons.HasFlag(MouseButtonFlags.Button1) == false)
                 {
@@ -1573,6 +1943,7 @@ namespace Bejeweled
                     // FIXME: Play nice sound effect.
 
                     CurrentState = State.Falling;
+                    Score = 0;
 
                     // If there was a selected gem, deselect and reset position.
                     if (SelectedGem != (-1, -1))
@@ -1766,6 +2137,16 @@ namespace Bejeweled
 
         public void Render()
         {
+            nint oldImguiContext = ImGui.GetCurrentContext();
+            ImGui.SetCurrentContext(ImGuiController.Context);
+
+            GL.BindFramebuffer(FramebufferTarget.Framebuffer, 0);
+            GL.ClearDepth(1);
+            GL.ClearColor(Color4.Black);
+            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+
+            RenderDrawList(UIBaseDrawlist);
+
             switch (CurrentState)
             {
                 case State.Idle:
@@ -1777,18 +2158,25 @@ namespace Bejeweled
 
             ImGuiController.Render();
 
-            CustomDrawData.Clear();
-            CustomDrawData.Valid = true;
-            CustomDrawData.DisplayPos = ImGui.GetMainViewport().Pos;
-            CustomDrawData.DisplaySize = ImGui.GetMainViewport().Size;
-            // FIXME: Get the actual framebuffer scale?
-            CustomDrawData.FramebufferScale = new System.Numerics.Vector2(1, 1);
-            CustomDrawData.AddDrawList(CustomDrawlist);
-            ImGuiController.RenderImDrawData(CustomDrawData);
+            Toolkit.Window.GetFramebufferSize(Window, out Vector2i fbSize);
+            GL.Viewport(0, 0, fbSize.X, fbSize.Y);
+
+            // FIXME: Set the viewport?
+            // The scores are displayed at the wrong positions.
+            RenderDrawList(UIOverlayDrawlist);
 
             Toolkit.OpenGL.SwapBuffers(Context);
 
+            ImGui.SetCurrentContext(oldImguiContext);
+
             void RenderGame()
+            {
+                Vector4i viewport = GetGemBoardViewport();
+                GL.Viewport(viewport.X, viewport.Y, viewport.Z, viewport.W);
+                RenderGemBoard(viewport);
+            }
+
+            void RenderGemBoard(Vector4i viewport)
             {
                 const float NearPlane = 0.1f;
                 const float FarPlane = 10.0f;
@@ -1849,11 +2237,12 @@ namespace Bejeweled
                 GL.BindFramebuffer(FramebufferTarget.Framebuffer, 0);
                 //GL.BindFramebuffer(FramebufferTarget.Framebuffer, DebugFramebuffer.Handle);
 
-                GL.ClearDepth(1);
-                GL.DepthFunc(DepthFunction.Less);
+                // Don't clear here as we've already begun drawing the UI to the default frame buffer.
+                //GL.ClearDepth(1);
+                //GL.ClearColor(Color4.Black);
+                //GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
-                GL.ClearColor(Color4.Black);
-                GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+                GL.DepthFunc(DepthFunction.Less);
 
                 GL.UseProgram(GemShader.Program.Handle);
 
@@ -1872,15 +2261,15 @@ namespace Bejeweled
 
                 GL.Uniform1i(GemShader.UniformLocationBRDFLUT, 3);
                 GL.ActiveTexture(TextureUnit.Texture3);
-                GL.BindTexture(TextureTarget.Texture2d, BrdfLUT.Handle);
+                GL.BindTexture(TextureTarget.Texture2D, BrdfLUT.Handle);
 
                 GL.Uniform1i(GemShader.UniformLocationBackfaceNormals, 4);
                 GL.ActiveTexture(TextureUnit.Texture4);
-                GL.BindTexture(TextureTarget.Texture2d, RefractionInfoFramebuffer.ColorAttachement0);
+                GL.BindTexture(TextureTarget.Texture2D, RefractionInfoFramebuffer.ColorAttachement0);
 
                 GL.Uniform1i(GemShader.UniformLocationBackfaceDepth, 5);
                 GL.ActiveTexture(TextureUnit.Texture5);
-                GL.BindTexture(TextureTarget.Texture2d, RefractionInfoFramebuffer.DepthAttachement);
+                GL.BindTexture(TextureTarget.Texture2D, RefractionInfoFramebuffer.DepthAttachement);
 
                 GL.Uniform1f(GemShader.UniformLocationDepthScale, FarPlane - NearPlane);
 
@@ -1919,21 +2308,34 @@ namespace Bejeweled
                         Matrix4.CreateTranslation(new Vector3(position, -2));
                     Matrix4 mvp = model * viewProjection;
                     Matrix3 normalMat = Matrix3.Invert(Matrix3.Transpose(new Matrix3(model)));
-                    GL.UniformMatrix4f(GemShader.UniformLocationMVP, 1, true, mvp);
-                    GL.UniformMatrix4f(GemShader.UniformLocationModel, 1, true, model);
-                    GL.UniformMatrix4f(GemShader.UniformLocationViewProjection, 1, true, viewProjection);
-                    GL.UniformMatrix3f(GemShader.UniformLocationNormalMat, 1, true, normalMat);
+                    GL.UniformMatrix4f(GemShader.UniformLocationMVP, 1, true, in mvp);
+                    GL.UniformMatrix4f(GemShader.UniformLocationModel, 1, true, in model);
+                    GL.UniformMatrix4f(GemShader.UniformLocationViewProjection, 1, true, in viewProjection);
+                    GL.UniformMatrix3f(GemShader.UniformLocationNormalMat, 1, true, in normalMat);
 
-                    GL.Uniform2f(GemShader.UniformLocationScreenSize, fbSize.X, fbSize.Y);
+                    Vector4 viewportF = viewport;
+                    GL.Uniform4f(GemShader.UniformLocationViewport, 1, in viewportF);
 
-                    GL.Uniform3f(GemShader.UniformLocationTint, 1, tint);
-                    GL.Uniform3f(GemShader.UniformLocationF0, 1, GemF0s[(int)gem]);
+                    GL.Uniform3f(GemShader.UniformLocationTint, 1, in tint);
+                    GL.Uniform3f(GemShader.UniformLocationF0, 1, in GemF0s[(int)gem]);
 
                     GL.DrawElements(PrimitiveType.Triangles, visual.Elements, DrawElementsType.UnsignedShort, 0);
                 }
 
                 //GL.BindFramebuffer(FramebufferTarget.DrawFramebuffer, 0);
                 //GL.BlitFramebuffer(0,0,fbWidth,fbHeight,0,0,fbWidth,fbHeight,ClearBufferMask.ColorBufferBit,BlitFramebufferFilter.Nearest);
+            }
+
+            void RenderDrawList(ImDrawListPtr drawlist)
+            {
+                CustomDrawData.Clear();
+                CustomDrawData.Valid = true;
+                CustomDrawData.DisplayPos = ImGui.GetMainViewport().Pos;
+                CustomDrawData.DisplaySize = ImGui.GetMainViewport().Size;
+                // FIXME: Get the actual framebuffer scale?
+                CustomDrawData.FramebufferScale = new System.Numerics.Vector2(1, 1);
+                CustomDrawData.AddDrawList(drawlist);
+                ImGuiController.RenderImDrawData(CustomDrawData);
             }
         }
 
@@ -1972,7 +2374,7 @@ namespace Bejeweled
 
         public void Deinitialize()
         {
-            ALC.MakeContextCurrent(ALContext.Null);
+            ALC.MakeContextCurrent(ALCContext.Null);
             ALC.DestroyContext(ALContext);
             ALC.CloseDevice(ALDevice);
         }
@@ -2011,8 +2413,11 @@ namespace Bejeweled
             }
         }
 
-        private void EventQueue_EventRaised(PalHandle? handle, PlatformEventType type, EventArgs args)
+        private void EventQueue_EventRaised(EventArgs args)
         {
+            nint oldImguiContext = ImGui.GetCurrentContext();
+            ImGui.SetCurrentContext(ImGuiController.Context);
+
             // Only update imgui stuff for the main window
             if (args is KeyDownEventArgs keyDown)
             {
@@ -2060,10 +2465,12 @@ namespace Bejeweled
                 // FIXME: scale the ImGui text!
                 // ImGuiController.RecreateFontDeviceTexture();
             }
+
+            ImGui.SetCurrentContext(oldImguiContext);
         }
 
         public readonly static GLDebugProc DebugProcCallback = Window_DebugProc;
-        private static void Window_DebugProc(DebugSource source, DebugType type, uint id, DebugSeverity severity, int length, IntPtr messagePtr, IntPtr userParam)
+        private static void Window_DebugProc(OpenTK.Graphics.OpenGL.DebugSource source, OpenTK.Graphics.OpenGL.DebugType type, uint id, OpenTK.Graphics.OpenGL.DebugSeverity severity, int length, IntPtr messagePtr, IntPtr userParam)
         {
             string message = Marshal.PtrToStringAnsi(messagePtr, length);
 
@@ -2071,15 +2478,15 @@ namespace Bejeweled
 
             switch (source)
             {
-                case DebugSource.DebugSourceApplication:
+                case OpenTK.Graphics.OpenGL.DebugSource.DebugSourceApplication:
                     showMessage = false;
                     break;
-                case DebugSource.DontCare:
-                case DebugSource.DebugSourceApi:
-                case DebugSource.DebugSourceWindowSystem:
-                case DebugSource.DebugSourceShaderCompiler:
-                case DebugSource.DebugSourceThirdParty:
-                case DebugSource.DebugSourceOther:
+                case OpenTK.Graphics.OpenGL.DebugSource.DontCare:
+                case OpenTK.Graphics.OpenGL.DebugSource.DebugSourceApi:
+                case OpenTK.Graphics.OpenGL.DebugSource.DebugSourceWindowSystem:
+                case OpenTK.Graphics.OpenGL.DebugSource.DebugSourceShaderCompiler:
+                case OpenTK.Graphics.OpenGL.DebugSource.DebugSourceThirdParty:
+                case OpenTK.Graphics.OpenGL.DebugSource.DebugSourceOther:
                 default:
                     showMessage = true;
                     break;
@@ -2089,19 +2496,19 @@ namespace Bejeweled
             {
                 switch (severity)
                 {
-                    case DebugSeverity.DontCare:
+                    case OpenTK.Graphics.OpenGL.DebugSeverity.DontCare:
                         Logger?.LogInfo($"[DontCare] [{source}] {message}");
                         break;
-                    case DebugSeverity.DebugSeverityNotification:
+                    case OpenTK.Graphics.OpenGL.DebugSeverity.DebugSeverityNotification:
                         //Logger?.LogDebug($"[{source}] {message}");
                         break;
-                    case DebugSeverity.DebugSeverityHigh:
+                    case OpenTK.Graphics.OpenGL.DebugSeverity.DebugSeverityHigh:
                         Logger?.LogError($"[{source}] {message}");
                         break;
-                    case DebugSeverity.DebugSeverityMedium:
+                    case OpenTK.Graphics.OpenGL.DebugSeverity.DebugSeverityMedium:
                         Logger?.LogWarning($"[{source}] {message}");
                         break;
-                    case DebugSeverity.DebugSeverityLow:
+                    case OpenTK.Graphics.OpenGL.DebugSeverity.DebugSeverityLow:
                         Logger?.LogInfo($"[{source}] {message}");
                         break;
                     default:

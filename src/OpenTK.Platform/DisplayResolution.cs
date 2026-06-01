@@ -1,9 +1,11 @@
-﻿namespace OpenTK.Platform
+﻿using System;
+
+namespace OpenTK.Platform
 {
     /// <summary>
     /// Represents a display resolution.
     /// </summary>
-    public readonly struct DisplayResolution
+    public readonly struct DisplayResolution : IEquatable<DisplayResolution>
     {
         /// <summary>
         /// The horizontal resolution in pixels.
@@ -27,9 +29,40 @@
         }
 
         /// <inheritdoc/>
+        public override bool Equals(object? obj)
+        {
+            return obj is DisplayResolution resolution && Equals(resolution);
+        }
+
+        /// <inheritdoc/>
+        public bool Equals(DisplayResolution other)
+        {
+            return ResolutionX == other.ResolutionX &&
+                   ResolutionY == other.ResolutionY;
+        }
+
+        /// <inheritdoc/>
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(ResolutionX, ResolutionY);
+        }
+
+        /// <inheritdoc/>
         public override string ToString()
         {
             return $"{ResolutionX}x{ResolutionY}";
+        }
+
+        /// <inheritdoc/>
+        public static bool operator ==(DisplayResolution left, DisplayResolution right)
+        {
+            return left.Equals(right);
+        }
+
+        /// <inheritdoc/>
+        public static bool operator !=(DisplayResolution left, DisplayResolution right)
+        {
+            return !(left == right);
         }
     }
 }

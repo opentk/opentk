@@ -1,18 +1,23 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OpenTK.Graphics
 {
-    // FIXME: Actually implement this properly.
+    /// <summary>
+    /// Used to load the GLX bindings.
+    /// </summary>
     public static class GLXLoader
     {
+        /// <summary>
+        /// The bindings context for GLX.
+        /// </summary>
         public static class BindingsContext
         {
+            /// <summary>
+            /// Obtain a pointer to an OpenGL or GLX function.
+            /// </summary>
+            /// <param name="procName">Specifies the name of the OpenGL or GLX function whose address is to be returned.</param>
+            /// <returns>Returns the address of the function specified in <paramref name="procName"/>, or null.</returns>
             public static unsafe IntPtr GetProcAddress(string procName)
             {
                 if (NativeLibrary.TryGetExport(GLXHandle, procName, out IntPtr ret))
@@ -47,9 +52,32 @@ namespace OpenTK.Graphics
                 return 0;
             }
         }
+        
+        // FIXME: By default let the OS decide, if that fails use vendor. Add other vendor GLX versions.
+        static readonly string[] LibraryNames = new string[]
+            {
+                "libGLX.so",
+                "libGLX.so.0",
+                "libGLX_nvidia.so.1",
+                "libGLX_nvidia.so.0",
+                "libGLX_mesa.so.0",
+            };
 
-        // FIXME: More advanced .so resolution?
-        private static readonly IntPtr GLXHandle = NativeLibrary.Load("libGL.so");
+        // FIXME: Is it possible to make an API for users to provide additional search paths?
+        private static IntPtr LoadGLX()
+        {
+            foreach (string name in LibraryNames)
+            {
+                if (NativeLibrary.TryLoad(name, out IntPtr handle))
+                {
+                    return handle;
+                }
+            }
+
+            return 0;
+        }
+
+        private static readonly IntPtr GLXHandle;
 
         // Unfortunately we can't mark function pointers as nullable, but
         // if the function cannot be loaded it's null so we need to check before using.
@@ -57,9 +85,15 @@ namespace OpenTK.Graphics
         private static readonly unsafe delegate* unmanaged<byte*, IntPtr> glXGetProcAddress;
         private static readonly unsafe delegate* unmanaged<byte*, IntPtr> glXGetProcAddressARB;
 
-        // Try load the function pointers..
         static unsafe GLXLoader()
         {
+            GLXHandle = LoadGLX();
+            if (GLXHandle == 0)
+            {
+                throw new DllNotFoundException($"Could not find libGLX (we searched these names '{string.Join(", ", LibraryNames)}'). Either glX is not installed or this is an OpenTK library searching bug.");
+            }
+
+            // Try load the function pointers, this could return null.
             NativeLibrary.TryGetExport(GLXHandle, "glXGetProcAddress", out IntPtr ptr);
             glXGetProcAddress = (delegate* unmanaged<byte*, IntPtr>)ptr;
 

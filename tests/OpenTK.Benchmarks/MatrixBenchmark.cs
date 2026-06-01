@@ -9,7 +9,7 @@ using System.Text;
 namespace OpenTK.Benchmarks
 {
     [SimpleJob(RuntimeMoniker.Net70)]
-    internal class MatrixBenchmark
+    public class MatrixBenchmark
     {
         [ParamsSource(nameof(Quaternions))]
         public Quaternion Quat { get; set; }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
@@ -15,6 +16,8 @@ namespace OpenTK.Platform.Native
             NativeLibrary.SetDllImportResolver(Assembly.GetExecutingAssembly(), DllImportResolver);
         }
 
+        public static bool PrintDllResolutionPathInfo = false;
+
         /// <summary>
         /// Called to trigger the static constructor.
         /// </summary>
@@ -27,10 +30,24 @@ namespace OpenTK.Platform.Native
                 foreach(string name in names)
                 {
                     if (NativeLibrary.TryLoad(name, assembly, searchPath, out IntPtr lib))
+                    {
+                        if (PrintDllResolutionPathInfo)
+                        {
+                            unsafe
+                            {
+                                byte* namebuf = (byte*)NativeMemory.AllocZeroed(1024);
+                                X11.Libc.dlinfo((void*)lib, 6, (void*)namebuf);
+                                string? path = Marshal.PtrToStringUTF8((nint)namebuf);
+                                NativeMemory.Free(namebuf);
+                                Toolkit.Shell?.Logger?.LogDebug($"Loaded library: {libraryName}, Loading Assembly: {assembly.FullName}, DllImportSearchPath: {searchPath?.ToString() ?? "null"}, Resolved path: {Path.Combine(path ?? "", name)}");
+                            }
+                        }
+                        
                         return lib;
+                    }
                 }
 
-                throw new DllNotFoundException($"Could not find any of these libraries '{string.Join(", ", names)}' (this load is intercepted, specified in DllImport as '{libraryName}').");
+                throw new DllNotFoundException($"Could not find any of these libraries '{string.Join(", ", names)}' (this load is intercepted, specified in DllImport as '{libraryName}'). Either this library is not installed or this is an OpenTK library resolution bug.");
             }
 
             return IntPtr.Zero;
@@ -48,16 +65,6 @@ namespace OpenTK.Platform.Native
                 "libGL.so",
                 "libGL.so.1",
                 "libGL.so.0",
-            },
-
-            // FIXME: By default let the OS decide, if that fails use vendor. Add other vendor GLX versions.
-            ["GLX"] = new string[]
-            {
-                "libGLX.so",
-                "libGLX.so.0",
-                "libGLX_nvidia.so.1",
-                "libGLX_nvidia.so.0",
-                "libGLX_mesa.so.0",
             },
 
             ["X11"] = new string[]
@@ -108,6 +115,12 @@ namespace OpenTK.Platform.Native
                 "libXcursor.so.1",
             },
 
+            ["Xrender"] = new string[]
+            {
+                "libXrender.so",
+                "libXrender.so.1",
+            },
+
             ["Xkb"] = new string[]
             {
                 "libX11.so",
@@ -118,6 +131,12 @@ namespace OpenTK.Platform.Native
                 "libX11.so.2",
                 "libX11.so.1",
                 "libX11.so.0",
+            },
+
+            ["XkbRegistry"] = new string[]
+            {
+              "libxkbregistry.so",
+              "libxkbregistry.so.0"  
             },
 
             ["XI2"] = new string[]

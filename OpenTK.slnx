@@ -1,0 +1,57 @@
+<Solution>
+  <Folder Name="/build/">
+    <File Path="build.ps1" />
+    <Project Path="build/build.fsproj" />
+    <File Path="appveyor.yml" />
+  </Folder>
+  <Folder Name="/Generators/">
+    <Project Path="src/Generators/ALGenerator/ALGenerator.csproj" />
+    <Project Path="src/Generators/GeneratorBase/GeneratorBase.csproj" />
+    <Project Path="src/Generators/GLGenerator/GLGenerator.csproj" />
+    <Project Path="src/Generators/VkGenerator/VkGenerator.csproj" />
+  </Folder>
+  <Folder Name="/project/">
+    <File Path=".editorconfig" />
+    <File Path=".gitignore" />
+    <File Path="CONTRIBUTING.md" />
+    <File Path="OpenTK.nuspec" />
+    <File Path="README.md" />
+    <File Path="RELEASE_NOTES.md" />
+    <File Path="stylecop.json" />
+    <File Path="stylecop.ruleset" />
+  </Folder>
+  <Folder Name="/props/">
+    <File Path="Directory.Build.props" />
+    <File Path="props/nuget-common.props" />
+    <File Path="props/stylecop.props" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/ANGLETestProject/ANGLETestProject.csproj" />
+    <Project Path="tests/Bejeweled/Bejeweled.csproj" />
+    <Project Path="tests/BejeweledStandalone/BejeweledStandalone.csproj" />
+    <Project Path="tests/LocalTest/LocalTest.csproj" />
+    <Project Path="tests/LocalTestProject/LocalTestProject.csproj" />
+    <Project Path="tests/MacOSTestProject/MacOSTestProject.csproj" />
+    <Project Path="tests/OpenALTest/OpenALTest.csproj" />
+    <Project Path="tests/OpenTK.Backends.Tests/OpenTK.Backends.Tests.csproj" />
+    <Project Path="tests/OpenTK.Benchmarks/OpenTK.Benchmarks.csproj" />
+    <Project Path="tests/OpenTK.Platform.Tests/OpenTK.Platform.Tests.csproj" />
+    <Project Path="tests/OpenTK.Tests.Integration/OpenTK.Tests.Integration.fsproj" />
+    <Project Path="tests/OpenTK.Tests/OpenTK.Tests.fsproj" />
+    <Project Path="tests/PAL2ContextSharingTest/PAL2ContextSharingTest.csproj" />
+    <Project Path="tests/SDLTestProject/SDLTestProject.csproj" />
+    <Project Path="tests/VulkanTestProject/VulkanTestProject.csproj" />
+    <Project Path="tests/X11TestProject/X11TestProject.csproj" />
+  </Folder>
+  <Folder Name="/Windowing/">
+    <Project Path="src/OpenTK.Windowing.Common/OpenTK.Windowing.Common.csproj" />
+    <Project Path="src/OpenTK.Windowing.Desktop/OpenTK.Windowing.Desktop.csproj" />
+    <Project Path="src/OpenTK.Windowing.GraphicsLibraryFramework/OpenTK.Windowing.GraphicsLibraryFramework.csproj" />
+  </Folder>
+  <Project Path="src/OpenTK.Audio/OpenTK.Audio.csproj" />
+  <Project Path="src/OpenTK.Compute/OpenTK.Compute.csproj" />
+  <Project Path="src/OpenTK.Core/OpenTK.Core.csproj" />
+  <Project Path="src/OpenTK.Graphics/OpenTK.Graphics.csproj" />
+  <Project Path="src/OpenTK.Mathematics/OpenTK.Mathematics.csproj" />
+  <Project Path="src/OpenTK.Platform/OpenTK.Platform.csproj" />
+</Solution>

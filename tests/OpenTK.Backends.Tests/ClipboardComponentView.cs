@@ -201,17 +201,17 @@ namespace OpenTK.Backends.Tests
                         // Because we target 4.1 (for macOS) we can't use the newer texture functions
                         // - Noggin_bops 2024-05-19
                         ClipboardGLTexture = GL.GenTexture();
-                        GL.BindTexture(TextureTarget.Texture2d, ClipboardGLTexture);
-                        GL.TexImage2D(TextureTarget.Texture2d, 0, InternalFormat.Rgba, bitmap.Width, bitmap.Height, 0, PixelFormat.Rgba, PixelType.UnsignedByte, in bitmap.Data[0]);
+                        GL.BindTexture(TextureTarget.Texture2D, ClipboardGLTexture);
+                        GL.TexImage2D(TextureTarget.Texture2D, 0, InternalFormat.Rgba, bitmap.Width, bitmap.Height, 0, PixelFormat.Rgba, PixelType.UnsignedByte, in bitmap.Data[0]);
                         //GL.TextureStorage2D(ClipboardGLTexture, mipmapLevels, SizedInternalFormat.Rgba8, bitmap.Width, bitmap.Height);
                         //GL.TextureSubImage2D(ClipboardGLTexture, 0, 0, 0, bitmap.Width, bitmap.Height, PixelFormat.Rgba, PixelType.UnsignedByte, in bitmap.Data[0]);
 
                         var error = GL.GetError();
 
-                        GL.GenerateMipmap(TextureTarget.Texture2d);
+                        GL.GenerateMipmap(TextureTarget.Texture2D);
                         //GL.GenerateTextureMipmap(ClipboardGLTexture);
 
-                        GL.TexParameteri(TextureTarget.Texture2d, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Linear);
+                        GL.TexParameteri(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Linear);
                         //GL.TextureParameteri(ClipboardGLTexture, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Linear);
 
                         // Maybe try to match the pixel size of the bitmap to the display.

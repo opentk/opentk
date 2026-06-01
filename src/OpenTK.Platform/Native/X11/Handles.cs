@@ -17,7 +17,9 @@ namespace OpenTK.Platform.Native.X11
         public XDisplayPtr Display { get; }
         public XWindow Window { get; }
         public GLXFBConfig? FBConfig { get; }
-        public ContextPixelFormat PixelFormat { get; }
+        public ContextValues ContextValues { get; }
+
+        public bool VisualSupportsFramebufferTransparency { get; set; }
 
         public int X { get; set; }
 
@@ -60,19 +62,33 @@ namespace OpenTK.Platform.Native.X11
         internal XAtom XDnDType { get; set; }
         internal XAtom XDnDSource { get; set; }
 
+        /// <summary>
+        /// Can be null.
+        /// </summary>
+        internal XIC IC { get; set; }
+        internal StringBuilder PreeditText { get; } = new StringBuilder();
+
+        internal XCursorHandle? Cursor { get; set; }
+
+        internal DoubleClickCounter ClickCounter { get; set; } = new DoubleClickCounter();
+
         public XWindowHandle(
             XDisplayPtr display,
             XWindow window,
             GraphicsApiHints hints,
             GLXFBConfig? fbConfig,
-            ContextPixelFormat pixelFormat,
-            XColorMap? colorMap) : base(hints)
+            ContextValues contextValues,
+            bool visualSupportsFramebufferTransparency,
+            XColorMap? colorMap,
+            XIC ic) : base(hints)
         {
             Display = display;
             Window = window;
             FBConfig = fbConfig;
-            PixelFormat = pixelFormat;
+            ContextValues = contextValues;
+            VisualSupportsFramebufferTransparency = visualSupportsFramebufferTransparency;
             ColorMap = colorMap;
+            IC = ic;
         }
     }
 
@@ -87,6 +103,8 @@ namespace OpenTK.Platform.Native.X11
 
         public XOpenGLContextHandle? SharedContext { get; }
 
+        public ContextValues ContextValues { get; }
+
         /// <summary>
         /// We use this value to keep track of the latest swap interval set through GLX_SGI_swap_control.
         /// </summary>
@@ -97,13 +115,17 @@ namespace OpenTK.Platform.Native.X11
             GLXContext context,
             GLXWindow glxWindow,
             XWindow window,
-            XOpenGLContextHandle? sharedContext)
+            XWindowHandle windowHandle,
+            XOpenGLContextHandle? sharedContext,
+            ContextValues contextValues)
         {
             Display = display;
             Context = context;
             GLXWindow = glxWindow;
             Window = window;
+            WindowHandle = windowHandle;
             SharedContext = sharedContext;
+            ContextValues = contextValues;
         }
     }
 
@@ -119,6 +141,17 @@ namespace OpenTK.Platform.Native.X11
         /// RRMode of the display before any window being fullscreened.
         /// </summary>
         public RRMode OldMode { get; set; } = RRMode.None;
+
+
+        /// <summary>Only updated in <see cref="X11DisplayComponent.UpdateDisplayValues()"/>.</summary>
+        public VideoMode VideoMode { get; set; }
+        /// <summary>Only updated in <see cref="X11DisplayComponent.UpdateDisplayValues()"/>.</summary>
+        public Vector2i VirtualPosition { get; set; }
+        /// <summary>Only updated in <see cref="X11DisplayComponent.UpdateDisplayValues()"/>.</summary>
+        public Box2i WorkArea { get; set; }
+        /// <summary>Only updated in <see cref="X11DisplayComponent.UpdateDisplayValues()"/>.</summary>
+        public Vector2 Scale { get; set; }
+
 
         public XDisplayHandle(RROutput output, RRCrtc crtc, string name)
         {

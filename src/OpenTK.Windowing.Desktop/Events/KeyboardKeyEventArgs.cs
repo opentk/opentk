@@ -13,7 +13,7 @@ using OpenTK.Windowing.GraphicsLibraryFramework;
 namespace OpenTK.Windowing.Common
 {
     /// <summary>
-    /// Defines the event data for <see cref="NativeWindow.KeyDown"/> and <see cref="NativeWindow.KeyUp"/> events.
+    /// Defines the event data for <see cref="Desktop.NativeWindow.KeyDown"/> and <see cref="Desktop.NativeWindow.KeyUp"/> events.
     /// </summary>
     public readonly struct KeyboardKeyEventArgs
     {
@@ -59,25 +59,25 @@ namespace OpenTK.Windowing.Common
         public bool IsRepeat { get; }
 
         /// <summary>
-        /// Gets a value indicating whether <see cref="OpenTK.Windowing.Common.Input.KeyModifiers.Alt" /> is pressed.
+        /// Gets a value indicating whether <see cref="KeyModifiers.Alt" /> is pressed.
         /// </summary>
         /// <value><c>true</c> if pressed; otherwise, <c>false</c>.</value>
         public bool Alt => Modifiers.HasFlag(KeyModifiers.Alt);
 
         /// <summary>
-        /// Gets a value indicating whether <see cref="OpenTK.Windowing.Common.Input.KeyModifiers.Control" /> is pressed.
+        /// Gets a value indicating whether <see cref="KeyModifiers.Control" /> is pressed.
         /// </summary>
         /// <value><c>true</c> if pressed; otherwise, <c>false</c>.</value>
         public bool Control => Modifiers.HasFlag(KeyModifiers.Control);
 
         /// <summary>
-        /// Gets a value indicating whether <see cref="OpenTK.Windowing.Common.Input.KeyModifiers.Shift" /> is pressed.
+        /// Gets a value indicating whether <see cref="KeyModifiers.Shift" /> is pressed.
         /// </summary>
         /// <value><c>true</c> if pressed; otherwise, <c>false</c>.</value>
         public bool Shift => Modifiers.HasFlag(KeyModifiers.Shift);
 
         /// <summary>
-        /// Gets a value indicating whether <see cref="OpenTK.Windowing.Common.Input.KeyModifiers.Super" /> is pressed.
+        /// Gets a value indicating whether <see cref="KeyModifiers.Super" /> is pressed.
         /// </summary>
         /// <value><c>true</c> if pressed; otherwise, <c>false</c>.</value>
         public bool Command => Modifiers.HasFlag(KeyModifiers.Super);

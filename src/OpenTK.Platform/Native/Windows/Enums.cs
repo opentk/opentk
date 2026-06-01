@@ -1,4 +1,9 @@
-﻿using System;
+﻿using OpenTK.Core;
+using OpenTK.Platform.Native.macOS;
+using System;
+using System.Collections.Generic;
+using System.Dynamic;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace OpenTK.Platform.Native.Windows
 {
@@ -713,6 +718,22 @@ namespace OpenTK.Platform.Native.Windows
         VerticalRedraw = 0x1
     }
 
+    internal enum DWMBB : uint
+    {
+        /// <summary>
+        /// A value for the fEnable member has been specified.
+        /// </summary>
+        Enable = 0x00000001,
+        /// <summary>
+        /// A value for the hRgnBlur member has been specified.
+        /// </summary>
+        BlurRegion = 0x00000002,
+        /// <summary>
+        /// A value for the fTransitionOnMaximized member has been specified.
+        /// </summary>
+        TransitionMaximized = 0x00000004,
+    }
+
     internal enum DWMWindowAttribute : uint
     {
         /// <summary>
@@ -1201,7 +1222,7 @@ namespace OpenTK.Platform.Native.Windows
 
         /// <summary>
         /// Owner-display format.
-        /// The clipboard owner must display and update the clipboard viewer window, and receive the WM_ASKCBFORMATNAME, WM_HSCROLLCLIPBOARD, WM_PAINTCLIPBOARD, WM_SIZECLIPBOARD, and WM_VSCROLLCLIPBOARD messages.
+        /// The clipboard owner must display and update the clipboard viewer window, and receive the <see cref="WM.ASKCBFORMATNAME"/> <see cref="WM.HSCROLLCLIPBOARD"/> <see cref="WM.PAINTCLIPBOARD"/> <see cref="WM.SIZECLIPBOARD"/> and WM_VSCROLLCLIPBOARD messages.
         /// The hMem parameter must be NULL.
         /// </summary>
         OwnerDisplay = 0x0080,
@@ -1328,6 +1349,8 @@ namespace OpenTK.Platform.Native.Windows
         ScreenPointer = 0x1A,
         Remote = 0x1B,
         Supplemental = 0x1C,
+
+        Hid = 0x00010000
     }
 
     internal enum DispChange : int
@@ -1508,40 +1531,138 @@ namespace OpenTK.Platform.Native.Windows
     // DIDFT_GETTYPE(n) = LOBYTE(n),
     // DIDFT_GETINSTANCE(n) = LOWORD((n) >> 8),
     // DIDFT_ENUMCOLLECTION(n) = ((WORD)(n) << 8),
+
+
+    [Flags]
     internal enum DIDFT : uint
     {
+        /// <summary>
+        /// All objects.
+        /// </summary>
         All = 0x00000000,
+        /// <summary>
+        /// A relative axis.
+        /// </summary>
         RelAxis = 0x00000001,
+        /// <summary>
+        /// An absolute axis.
+        /// </summary>
         AbsAxis = 0x00000002,
+        /// <summary>
+        /// An axis, either absolute or relative.
+        /// </summary>
         Axis = 0x00000003,
+        /// <summary>
+        /// A push button. A push button is reported as down when the user presses it, and as up when the user releases it.
+        /// </summary>
         PshButton = 0x00000004,
+        /// <summary>
+        /// A toggle button. A toggle button is reported as down when the user presses it and remains so until the user presses the button a second time.
+        /// </summary>
         TglButton = 0x00000008,
+        /// <summary>
+        /// A push button or a toggle button.
+        /// </summary>
         Button = 0x0000000C,
-        POV = 0x00000010,
+        /// <summary>
+        /// A point-of-view controller.
+        /// </summary>
+        Pov = 0x00000010,
+        /// <summary>
+        /// A HID link collection. HID link collections do not generate data of their own.
+        /// </summary>
         Collection = 0x00000040,
-        NoData = 0x00000080,
+        /// <summary>
+        /// An object that does not generate data.
+        /// </summary>
+        NoDdata = 0x00000080,
         AnyInstance = 0x00FFFF00,
         InstanceMask = AnyInstance,
-        
+        //MAKEINSTANCE(n) ((WORD)(n) << 8)
+        //GETTYPE(n)     LOBYTE(n)
+        //GETINSTANCE(n) LOWORD((n) >> 8)
+        /// <summary>
+        /// An object that contains a force-feedback actuator. In other words, forces can be applied to this object.
+        /// </summary>
         FFActuator = 0x01000000,
+        /// <summary>
+        /// An object that can be used to trigger force-feedback effects.
+        /// </summary>
         FFEffectTrigger = 0x02000000,
+        /// <summary>
+        /// An object that supports output. For details, see Remarks in IDirectInputDevice8::SendDeviceData.
+        /// </summary>
         Output = 0x10000000,
+        /// <summary>
+        /// An object of a type defined by the manufacturer.
+        /// </summary>
         VendorDefined = 0x04000000,
+        /// <summary>
+        /// Controls identified by a Human Interface Device (HID) usage alias.This flag applies only to HID-compliant USB devices.
+        /// </summary>
         Alias = 0x08000000,
         Optional = 0x80000000,
+        /// <summary>
+        /// An object that belongs to HID link collection number n.
+        /// </summary>
+        //ENUMCOLLECTION(n) ((WORD)(n) << 8)
+        /// <summary>
+        /// An object that does not belong to any HID link collection; in other words, an object for which the wCollectionNumber member of the DIDEVICEOBJECTINSTANCE structure is 0.
+        /// </summary>
         NoCollection = 0x00FFFF00,
     }
 
+    internal static class DIDFTExtensions
+    {
+        internal static DIDFT GetType2(this DIDFT didft)
+        {
+            return didft & (DIDFT)0xFF;
+        }
+
+        internal static ushort GetInstance(this DIDFT didft)
+        {
+            return (ushort)((uint)didft >> 8);
+        }
+    }
+
+    [Flags]
     internal enum DIDOI : uint
     {
+        /// <summary>
+        /// The object can have force-feedback effects applied to it.
+        /// </summary>
         FFActuator = 0x00000001,
+        /// <summary>
+        /// The object can trigger playback of force-feedback effects.
+        /// </summary>
         FFEffectTrigger = 0x00000002,
+        /// <summary>
+        /// The object does not return data until the IDirectInputDevice8 Interface method is called.
+        /// </summary>
         Polled = 0x00008000,
+        /// <summary>
+        /// The object reports position information.
+        /// </summary>
         AspectPosition = 0x00000100,
+        /// <summary>
+        /// The object reports velocity information.
+        /// </summary>
         AspectVelocity = 0x00000200,
+        /// <summary>
+        /// The object reports acceleration information.
+        /// </summary>
         AspectAccel = 0x00000300,
+        /// <summary>
+        /// The object reports force information.
+        /// </summary>
         AspectForce = 0x00000400,
+        /// <summary>
+        /// The bits that are used to report aspect information. An object can represent at most one aspect.
+        /// </summary>
         AspectMask = 0x00000F00,
+        /// <summary>
+        /// The pguid member of the DIOBJECTDATAFORMAT structure contains the desired usage page and usage in a packed DWORD. See DIMAKEUSAGEDWORD.
+        /// </summary>
         GuidUsage = 0x00010000,
     }
 
@@ -1549,6 +1670,554 @@ namespace OpenTK.Platform.Native.Windows
     {
         AbsAxis = 0x00000001,
         RelAxis = 0x00000002,
+    }
+
+    internal enum DISCL : uint
+    {
+        /// <summary>
+        /// The application requires exclusive access.
+        /// If exclusive access is granted, no other instance of the device can obtain exclusive access to the device while it is acquired.
+        /// However, nonexclusive access to the device is always permitted, even if another application has obtained exclusive access.
+        /// An application that acquires the mouse or keyboard device in exclusive mode should always unacquire the devices when it receives WM_ENTERSIZEMOVE and WM_ENTERMENULOOP messages.
+        /// Otherwise, the user cannot manipulate the menu or move and resize the window.
+        /// </summary>
+        Exclusive = 0x00000001,
+        /// <summary>
+        /// The application requires nonexclusive access.
+        /// Access to the device does not interfere with other applications that are accessing the same device.
+        /// </summary>
+        NonExclusive = 0x00000002,
+        /// <summary>
+        /// The application requires foreground access.
+        /// If foreground access is granted, the device is automatically unacquired when the associated window moves to the background.
+        /// </summary>
+        Foreground = 0x00000004,
+        /// <summary>
+        /// The application requires background access.
+        /// If background access is granted, the device can be acquired at any time, even when the associated window is not the active window.
+        /// </summary>
+        Background = 0x00000008,
+        /// <summary>
+        /// Disable the Windows logo key.
+        /// Setting this flag ensures that the user cannot inadvertently break out of the application.
+        /// Note, however, that DISCL_NOWINKEY has no effect when the default action mapping user interface (UI) is displayed,
+        /// and the Windows logo key will operate normally as long as that UI is present.
+        /// </summary>
+        NoWinKey = 0x00000010,
+    }
+
+    internal enum DISFFC
+    {
+        /// <summary>
+        /// The device's force-feedback system is to be put in its startup state.
+        /// All effects are removed from the device, are no longer valid, and must be re-created if they are to be used again.
+        /// The device's actuators are disabled.
+        /// </summary>
+        Reset = 0x00000001,
+        /// <summary>
+        /// Playback of any active effects is to be stopped.
+        /// All active effects are reset, but are still being maintained by the device and are still valid.
+        /// If the device is in a paused state, that state is lost.
+        /// This command is equivalent to calling the IDirectInputEffect::Stop method for each effect playing.
+        /// </summary>
+        StopAll = 0x00000002,
+        /// <summary>
+        /// Playback of all active effects is to be paused. This command also stops the clock-on effects so that they continue playing to their full duration when restarted.
+        /// While the device is paused, new effects cannot be started, and existing ones cannot be modified. Doing so can cause the subsequent DISFFC_CONTINUE command to fail to perform properly.
+        /// To abandon a pause and stop all effects, use the DISFFC_STOPALL or DISFCC_RESET commands.
+        /// </summary>
+        Pause = 0x00000004,
+        /// <summary>
+        /// Paused playback of all active effects is to be continued. It is an error to send this command when the device is not in a paused state.
+        /// </summary>
+        Continue = 0x00000008,
+        /// <summary>
+        /// The device's force-feedback actuators are to be enabled.
+        /// </summary>
+        SetActuatorsOn = 0x00000010,
+        /// <summary>
+        /// The device's force-feedback actuators are to be disabled.
+        /// While the actuators are off, effects continue to play but are ignored by the device.
+        /// Using the analogy of a sound playback device, they are muted, rather than paused.
+        /// </summary>
+        SetActuatorsOff = 0x00000020,
+    }
+
+    internal enum DIES : uint
+    {
+        /// <summary>
+        /// All other effects on the device should be stopped before the specified effect is played.
+        /// If this flag is omitted, the effect is mixed with existing effects already started on the device.
+        /// </summary>
+        DIES_SOLO = 0x00000001,
+        /// <summary>
+        /// Do not automatically download the effect.
+        /// </summary>
+        DIES_NODOWNLOAD = 0x80000000,
+    }
+
+    internal enum DIEP : uint
+    {
+        /// <summary>
+        /// The dwDuration member contains data.
+        /// </summary>
+        Duration = 0x00000001,
+        /// <summary>
+        /// The dwSamplePeriod member contains data.
+        /// </summary>
+        SamplePeriod = 0x00000002,
+        /// <summary>
+        /// The dwGain member contains data.
+        /// </summary>
+        Gain = 0x00000004,
+        /// <summary>
+        /// The dwTriggerButton member contains data.
+        /// </summary>
+        TriggerButton = 0x00000008,
+        /// <summary>
+        /// The dwTriggerRepeatInterval member contains data.
+        /// </summary>
+        TriggerRepeatInterval = 0x00000010,
+        /// <summary>
+        /// The cAxes and rgdwAxes members contain data.
+        /// </summary>
+        Axes = 0x00000020,
+        /// <summary>
+        /// The cAxes and rglDirection members contain data.
+        /// The dwFlags member specifies (with DIEFF_CARTESIAN or DIEFF_POLAR) the coordinate system in which the values should be interpreted.
+        /// </summary>
+        Direction = 0x00000040,
+        /// <summary>
+        /// The lpEnvelope member points to a DIENVELOPE structure that contains data.
+        /// To detach any existing envelope from the effect, pass this flag and set the lpEnvelope member to NULL.
+        /// </summary>
+        Envelope = 0x00000080,
+        /// <summary>
+        /// The lpvTypeSpecificParams and cbTypeSpecificParams members of the DIEFFECT structure contain the address and size of type-specific data for the effect.
+        /// </summary>
+        TypeSpecificParams = 0x00000100,
+        /// <summary>
+        /// The dwStartDelay member contains data.
+        /// </summary>
+        StartDelay = 0x00000200,
+        AllParamsDX5           = 0x000001FF,
+        AllParams               = 0x000003FF,
+        /// <summary>
+        /// The effect is to be started (or restarted if it is currently playing) after the parameters are updated.
+        /// By default, the play state of the effect is not altered.
+        /// </summary>
+        Start = 0x20000000,
+        /// <summary>
+        /// Suppress the stopping and restarting of the effect to change parameters. See Remarks.
+        /// </summary>
+        NoRestart = 0x40000000,
+        /// <summary>
+        /// Suppress the automatic IDirectInputEffect::Download that is normally performed after the parameters are updated. See Remarks.
+        /// </summary>
+        NoDownload = 0x80000000,
+    }
+
+    internal enum DIEB : uint
+    {
+        NoTrigger = 0xFFFFFFFF,
+    }
+
+    internal enum DIEFF : uint
+    {
+        /// <summary>
+        /// The values of dwTriggerButton and rgdwAxes are object identifiers as obtained by IDirectInputDevice8::EnumObjects.
+        /// </summary>
+        ObjectIDs = 0x00000001,
+        /// <summary>
+        /// The values of dwTriggerButton and rgdwAxes are data format offsets.
+        /// </summary>
+        ObjectOffsets = 0x00000002,
+        /// <summary>
+        /// The values of rglDirection are to be interpreted as Cartesian coordinates.
+        /// </summary>
+        Cartesian = 0x00000010,
+        /// <summary>
+        /// The values of rglDirection are to be interpreted as polar coordinates.
+        /// </summary>
+        Polar = 0x00000020,
+        /// <summary>
+        /// The values of rglDirection are to be interpreted as spherical coordinates.
+        /// </summary>
+        Spherical = 0x00000040,
+    }
+
+    internal enum DISPLAYCONFIG_TOPOLOGY_ID : uint
+    {
+        Internal= 0x00000001,
+        Clone = 0x00000002,
+        Extend = 0x00000004,
+        External = 0x00000008,
+    }
+
+    internal enum DISPLAYCONFIG_VIDEO_OUTPUT_TECHNOLOGY : uint
+    {
+        /// <summary>
+        /// Indicates a connector that is not one of the types that is indicated by the following enumerators in this enumeration.
+        /// </summary>
+        Other = unchecked((uint)-1),
+        /// <summary>
+        /// Indicates an HD15 (VGA) connector.
+        /// </summary>
+        HD15 = 0,
+        /// <summary>
+        /// Indicates an S-video connector.
+        /// </summary>
+        SVideo = 1,
+        /// <summary>
+        /// Indicates a composite video connector group.
+        /// </summary>
+        CompositeVideo = 2,
+        /// <summary>
+        /// Indicates a component video connector group.
+        /// </summary>
+        ComponentVideo = 3,
+        /// <summary>
+        /// Indicates a Digital Video Interface (DVI) connector.
+        /// </summary>
+        DVI = 4,
+        /// <summary>
+        /// Indicates a High-Definition Multimedia Interface (HDMI) connector.
+        /// </summary>
+        HDMI = 5,
+        /// <summary>
+        /// Indicates a Low Voltage Differential Swing (LVDS) connector.
+        /// </summary>
+        LVDS = 6,
+        /// <summary>
+        /// Indicates a Japanese D connector.
+        /// </summary>
+        DJpn = 8,
+        /// <summary>
+        /// Indicates an SDI connector.
+        /// </summary>
+        SDI = 9,
+        /// <summary>
+        /// Indicates an external display port, which is a display port that connects externally to a display device.
+        /// </summary>
+        DisplayPortExternal = 10,
+        /// <summary>
+        /// Indicates an embedded display port that connects internally to a display device.
+        /// </summary>
+        DisplayPortEmbedded = 11,
+        /// <summary>
+        /// Indicates an external Unified Display Interface (UDI), which is a UDI that connects externally to a display device.
+        /// </summary>
+        UDIExternal = 12,
+        /// <summary>
+        /// Indicates an embedded UDI that connects internally to a display device.
+        /// </summary>
+        UDIEmbedded = 13,
+        /// <summary>
+        /// Indicates a dongle cable that supports standard definition television (SDTV).
+        /// </summary>
+        SDTVDongle = 14,
+        /// <summary>
+        /// Indicates that the VidPN target is a Miracast wireless display device.
+        /// Supported starting in Windows 8.1.
+        /// </summary>
+        Miracast = 15,
+        IndirectWired = 16,
+        IndirectVirtual = 17,
+        DisplayPortUSBTunnel,
+        /// <summary>
+        /// Indicates that the video output device connects internally to a display device (for example, the internal connection in a laptop computer).
+        /// </summary>
+        Internal = 0x80000000,
+    }
+
+    internal enum DISPLAYCONFIG_ROTATION : uint
+    {
+        /// <summary>
+        /// Indicates that rotation is 0 degrees—landscape mode.
+        /// </summary>
+        Identity = 1,
+        /// <summary>
+        /// Indicates that rotation is 90 degrees clockwise—portrait mode.
+        /// </summary>
+        Rotate90 = 2,
+        /// <summary>
+        /// Indicates that rotation is 180 degrees clockwise—inverted landscape mode.
+        /// </summary>
+        Rotate180 = 3,
+        /// <summary>
+        /// Indicates that rotation is 270 degrees clockwise—inverted portrait mode.
+        /// </summary>
+        Rotate270 = 4,
+    }
+
+    internal enum DISPLAYCONFIG_SCALING : uint
+    {
+        /// <summary>
+        /// Indicates the identity transformation; the source content is presented with no change.
+        /// This transformation is available only if the path's source mode has the same spatial resolution as the path's target mode.
+        /// </summary>
+        Identity = 1,
+        /// <summary>
+        /// Indicates the centering transformation; the source content is presented unscaled,
+        /// centered with respect to the spatial resolution of the target mode.
+        /// </summary>
+        Centered = 2,
+        /// <summary>
+        /// Indicates the content is scaled to fit the path's target.
+        /// </summary>
+        Stretched = 3,
+        /// <summary>
+        /// Indicates the aspect-ratio centering transformation.
+        /// </summary>
+        AspectRatioCenteredMax = 4,
+        /// <summary>
+        /// Indicates that the caller requests a custom scaling that the caller cannot describe with any of the other DISPLAYCONFIG_SCALING_XXX values.
+        /// Only a hardware vendor's value-add application should use DISPLAYCONFIG_SCALING_CUSTOM, because the value-add application might require a private interface to the driver.
+        /// The application can then use DISPLAYCONFIG_SCALING_CUSTOM to indicate additional context for the driver for the custom value on the specified path.
+        /// </summary>
+        Custom = 5,
+        /// <summary>
+        /// Indicates that the caller does not have any preference for the scaling.
+        /// The SetDisplayConfig function will use the scaling value that was last saved in the database for the path.
+        /// If such a scaling value does not exist, SetDisplayConfig will use the default scaling for the computer.
+        /// For example, stretched (DISPLAYCONFIG_SCALING_STRETCHED) for tablet computers and
+        /// aspect-ratio centered (DISPLAYCONFIG_SCALING_ASPECTRATIOCENTEREDMAX) for non-tablet computers.
+        /// </summary>
+        Preferred = 128,
+    }
+
+    internal enum DISPLAYCONFIG_SCANLINE_ORDERING : uint
+    {
+        /// <summary>
+        /// Indicates that scan-line ordering of the output is unspecified.
+        /// The caller can only set the scanLineOrdering member of the DISPLAYCONFIG_PATH_TARGET_INFO structure
+        /// in a call to the SetDisplayConfig function to DISPLAYCONFIG_SCANLINE_ORDERING_UNSPECIFIED
+        /// if the caller also set the refresh rate denominator and numerator of the refreshRate member
+        /// both to zero.
+        /// In this case, SetDisplayConfig uses the best refresh rate it can find.
+        /// </summary>
+        Unspecified = 0,
+        /// <summary>
+        /// Indicates that the output is a progressive image.
+        /// </summary>
+        Progressive = 1,
+        /// <summary>
+        /// Indicates that the output is an interlaced image that is created beginning with the upper field.
+        /// </summary>
+        Interlaced = 2,
+        /// <summary>
+        /// Indicates that the output is an interlaced image that is created beginning with the upper field.
+        /// </summary>
+        InterlacedUpperFieldFirst = 2,
+        /// <summary>
+        /// Indicates that the output is an interlaced image that is created beginning with the lower field.
+        /// </summary>
+        InterlacedLowerFieldFirst = 3,
+    }
+
+    internal enum DISPLAYCONFIG_MODE_INFO_TYPE : uint
+    {
+        /// <summary>
+        /// Indicates that the DISPLAYCONFIG_MODE_INFO structure contains source mode information.
+        /// </summary>
+        Source = 1,
+        /// <summary>
+        /// Indicates that the DISPLAYCONFIG_MODE_INFO structure contains target mode information.
+        /// </summary>
+        Target = 2,
+        /// <summary>
+        /// Indicates that the DISPLAYCONFIG_MODE_INFO structure contains a valid DISPLAYCONFIG_DESKTOP_IMAGE_INFO structure.
+        /// Supported starting in Windows 10.
+        /// </summary>
+        DesktopImage = 3,
+    }
+
+    internal enum DISPLAYCONFIG_PIXELFORMAT : uint
+    {
+        /// <summary>
+        /// Indicates 8 BPP format.
+        /// </summary>
+        _8Bpp = 1,
+        /// <summary>
+        /// Indicates 16 BPP format.
+        /// </summary>
+        _16Bpp = 2,
+        /// <summary>
+        /// Indicates 24 BPP format.
+        /// </summary>
+        _24Bpp = 3,
+        /// <summary>
+        /// Indicates 32 BPP format.
+        /// </summary>
+        _32Bpp = 4,
+        /// <summary>
+        /// Indicates that the current display is not an 8, 16, 24, or 32 BPP GDI desktop mode.
+        /// For example, a call to the QueryDisplayConfig function returns DISPLAYCONFIG_PIXELFORMAT_NONGDI if a DirectX application previously set the desktop to A2R10G10B10 format.
+        /// A call to the SetDisplayConfig function fails if any pixel formats for active paths are set to DISPLAYCONFIG_PIXELFORMAT_NONGDI.
+        /// </summary>
+        NonGdi = 5,
+    }
+
+    [Flags]
+    internal enum DISPLAYCONFIG_PATH : uint
+    {
+        /// <summary>
+        /// Set by QueryDisplayConfig to indicate that the path is active and part of the desktop.
+        /// If this flag value is set, SetDisplayConfig attempts to enable this path.
+        /// </summary>
+        Active = 0x00000001,
+
+        /// <summary>
+        /// Set by QueryDisplayConfig to indicate that the path supports virtual modes.
+        /// Supported starting in Windows 10.
+        /// </summary>
+        VirtualMode = 0x00000008,
+
+        /// <summary>
+        /// Set by QueryDisplayConfig to indicate that the path supports virtual refresh rates.
+        /// Supported starting in Windows 11.
+        /// </summary>
+        BoostRefreshRate = 0x00000010,
+
+    }
+
+    [Flags]
+    internal enum DISPLAYCONFIG_SOURCE : uint
+    {
+        /// <summary>
+        /// This source is in use by at least one active path.
+        /// </summary>
+        InUse = 1,
+    }
+
+    internal enum DISPLAYCONFIG_TARGET : uint
+    {
+        /// <summary>
+        /// Target is in use on an active path.
+        /// </summary>
+        InUSe = 0x00000001,
+        /// <summary>
+        /// The output can be forced on this target even if a monitor is not detected.
+        /// </summary>
+        FORCIBLE = 0x00000002,
+
+        /// <summary>
+        /// Output is currently being forced in a boot-persistent manner.
+        /// </summary>
+        ForcedAvailabilityBoot = 0x00000004,
+
+        /// <summary>
+        /// Output is currently being forced in a path-persistent manner.
+        /// </summary>
+        ForcedAvailabilityPath = 0x00000008,
+
+        /// <summary>
+        /// Output is currently being forced in a nonpersistent manner.
+        /// </summary>
+        ForcedAvailabilitySystem = 0x00000010,
+
+        /// <summary>
+        /// The output is a head-mounted display (HMD). Such a path is only returned from QueryDisplayConfig using the QDC_INCLUDE_HMD flag.
+        /// Supported starting in the Windows 10 Creators Update (Version 1703).
+        /// </summary>
+        IsHMD = 0x00000020,
+    }
+
+    internal enum DISPLAYCONFIG_DEVICE_INFO_TYPE : uint
+    {
+        /// <summary>
+        /// Specifies the source name of the display device.
+        /// If the DisplayConfigGetDeviceInfo function is successful,
+        /// DisplayConfigGetDeviceInfo returns the source name in the DISPLAYCONFIG_SOURCE_DEVICE_NAME structure.
+        /// </summary>
+        GetSourceName = 1,
+        /// <summary>
+        /// Specifies information about the monitor.
+        /// If the DisplayConfigGetDeviceInfo function is successful,
+        /// DisplayConfigGetDeviceInfo returns info about the monitor in the DISPLAYCONFIG_TARGET_DEVICE_NAME structure.
+        /// </summary>
+        GetTargetName = 2,
+        /// <summary>
+        /// Specifies information about the preferred mode of a monitor.
+        /// If the DisplayConfigGetDeviceInfo function is successful,
+        /// DisplayConfigGetDeviceInfo returns info about the preferred mode of a monitor in the DISPLAYCONFIG_TARGET_PREFERRED_MODE structure.
+        /// </summary>
+        GetTargetPreferredMode = 3,
+        /// <summary>
+        /// Specifies the graphics adapter name.
+        /// If the DisplayConfigGetDeviceInfo function is successful,
+        /// DisplayConfigGetDeviceInfo returns the adapter name in the DISPLAYCONFIG_ADAPTER_NAME structure.
+        /// </summary>
+        GetAdapterName = 4,
+        /// <summary>
+        /// Specifies how to set the monitor.
+        /// If the DisplayConfigSetDeviceInfo function is successful,
+        /// DisplayConfigSetDeviceInfo uses info in the DISPLAYCONFIG_SET_TARGET_PERSISTENCE structure to force the output in a boot-persistent manner.
+        /// </summary>
+        SetTargetPersistence = 5,
+        /// <summary>
+        /// Specifies how to set the base output technology for a given target ID.
+        /// If the DisplayConfigGetDeviceInfo function is successful,
+        /// DisplayConfigGetDeviceInfo returns base output technology info in the DISPLAYCONFIG_TARGET_BASE_TYPE structure.
+        /// <br/>
+        /// Supported by WDDM 1.3 and later user-mode display drivers running on Windows 8.1 and later.
+        /// </summary>
+        GetTargetBaseType = 6,
+        /// <summary>
+        /// Specifies the state of virtual mode support.
+        /// If the DisplayConfigGetDeviceInfo function is successful,
+        /// DisplayConfigGetDeviceInfo returns virtual mode support information in the DISPLAYCONFIG_SUPPORT_VIRTUAL_RESOLUTION structure.
+        /// Supported starting in Windows 10.
+        /// </summary>
+        GetSupportVirtualResolution = 7,
+        /// <summary>
+        /// Specifies how to set the state of virtual mode support.
+        /// If the DisplayConfigSetDeviceInfo function is successful,
+        /// DisplayConfigSetDeviceInfo uses info in the DISPLAYCONFIG_SUPPORT_VIRTUAL_RESOLUTION structure to change the state of virtual mode support.
+        /// Supported starting in Windows 10.
+        /// </summary>
+        SetSupportVirtualResolution = 8,
+        GetAdvancedColorInfo = 9,
+        SetAdvancedColorState = 10,
+        /// <summary>
+        /// Specifies the current SDR white level for an HDR monitor.
+        /// If the DisplayConfigGetDeviceInfo function is successful,
+        /// DisplayConfigGetDeviceInfo return SDR white level info in the DISPLAYCONFIG_SDR_WHITE_LEVEL structure.
+        /// <br/>
+        /// Supported starting in Windows 10 Fall Creators Update (Version 1709).
+        /// </summary>
+        GetSDRWhiteLevel = 11,
+        GetMonitorSpecialization = 12,
+        SetMonitorSpecialization = 13,
+        SetReserved1 = 14,
+        GetAdvancedColorInfo2 = 15,
+        SetHDRState = 16,
+        SetWCGState = 17,
+    }
+
+    internal enum DISPLAYCONFIG_COLOR_ENCODING : uint
+    {
+        Rgb = 0,
+        YCbCr444 = 1,
+        YCbCr422 = 2,
+        YCbCr420 = 3,
+        Intensity = 4,
+    }
+
+    internal enum DISPLAYCONFIG_ADVANCED_COLOR_MODE : int
+    {
+        /// <summary>
+        /// RGB888 composition, display-referred color, display-referred luminance
+        /// </summary>
+        DISPLAYCONFIG_ADVANCED_COLOR_MODE_SDR,
+        /// <summary>
+        /// Advanced color (FP16 scRGB composition), scene-referred color, display-referred luminance
+        /// </summary>
+        DISPLAYCONFIG_ADVANCED_COLOR_MODE_WCG,
+        /// <summary>
+        /// Advanced color (FP16 scRGB composition), scene-referred color, scene-referred luminance
+        /// </summary>
+        DISPLAYCONFIG_ADVANCED_COLOR_MODE_HDR,
     }
 
     internal enum DBT : int
@@ -2492,6 +3161,21 @@ namespace OpenTK.Platform.Native.Windows
         NoMoveCaret = 0x4000,
     }
 
+    internal enum GMMP : uint
+    {
+        /// <summary>
+        /// Retrieves the points using the display resolution.
+        /// </summary>
+        UseDisplayPoints = 1,
+
+        /// <summary>
+        /// Retrieves high resolution points.
+        /// Points can range from zero to 65,535 (0xFFFF) in both x-and y-coordinates.
+        /// This is the resolution provided by absolute coordinate pointing devices such as drawing tablets.
+        /// </summary>
+        UseHighResolutionPoints = 2,
+    }
+
     // FIXME: There are additional values for when the hWnd is a dialog box.
     // See DWL values:
     // https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getwindowlongw
@@ -3316,6 +4000,18 @@ namespace OpenTK.Platform.Native.Windows
         /// Since this name is based on the localization of the product, it changes for each localized version.
         /// </summary>
         SLocalizedLanguageName = 0x0000006f,
+    }
+
+    internal enum LWA : uint
+    {
+        /// <summary>
+        /// Use bAlpha to determine the opacity of the layered window.
+        /// </summary>
+        Alpha = 0x00000002,
+        /// <summary>
+        /// Use crKey as the transparency color.
+        /// </summary>
+        ColorKey = 0x00000001
     }
 
     internal enum DIB
@@ -4807,6 +5503,59 @@ namespace OpenTK.Platform.Native.Windows
         VerificationClicked = 8,
     }
 
+    internal enum THUMBBUTTONFLAGS
+    {
+        THBF_ENABLED = 0,
+        THBF_DISABLED = 0x1,
+        THBF_DISMISSONCLICK = 0x2,
+        THBF_NOBACKGROUND = 0x4,
+        THBF_HIDDEN = 0x8,
+        THBF_NONINTERACTIVE = 0x10
+    }
+
+    internal enum THUMBBUTTONMASK
+    {
+        THB_BITMAP = 0x1,
+        THB_ICON = 0x2,
+        THB_TOOLTIP = 0x4,
+        THB_FLAGS = 0x8
+    }
+
+    internal enum TBPFLAG
+    {
+        /// <summary>
+        /// Stops displaying progress and returns the button to its normal state.
+        /// Call this method with this flag to dismiss the progress bar when the operation is complete or canceled.
+        /// </summary>
+        NoProgress = 0,
+        /// <summary>
+        /// The progress indicator does not grow in size, but cycles repeatedly along the length of the taskbar button.
+        /// This indicates activity without specifying what proportion of the progress is complete.
+        /// Progress is taking place, but there is no prediction as to how long the operation will take.
+        /// </summary>
+        Indeterminate = 0x1,
+        /// <summary>
+        /// The progress indicator grows in size from left to right in proportion to the estimated amount of the operation completed.
+        /// This is a determinate progress indicator; a prediction is being made as to the duration of the operation.
+        /// </summary>
+        Normal = 0x2,
+        /// <summary>
+        /// The progress indicator turns red to show that an error has occurred in one of the windows that is broadcasting progress.
+        /// This is a determinate state.
+        /// If the progress indicator is in the indeterminate state,
+        /// it switches to a red determinate display of a generic percentage not indicative of actual progress.
+        /// </summary>
+        Error = 0x4,
+        /// <summary>
+        /// The progress indicator turns yellow to show that progress is currently stopped in one of the windows but can be resumed by the user.
+        /// No error condition exists and nothing is preventing the progress from continuing.
+        /// This is a determinate state.
+        /// If the progress indicator is in the indeterminate state,
+        /// it switches to a yellow determinate display of a generic percentage not indicative of actual progress.
+        /// </summary>
+        Paused = 0x8,
+    }
+
     [Flags]
     internal enum FileAttribute : uint
     {
@@ -4972,6 +5721,29 @@ namespace OpenTK.Platform.Native.Windows
         /// Returns a handle to the display monitor that is nearest to the window.
         /// </summary>
         Nearest = 2,
+    }
+
+    internal enum MSGFLT : uint
+    {
+        /// <summary>
+        /// Allows the message through the filter.
+        /// This enables the message to be received by hWnd, regardless of the source of the message, even it comes from a lower privileged process.
+        /// </summary>
+        Allow = 1,
+
+        /// <summary>
+        /// Blocks the message to be delivered to hWnd if it comes from a lower privileged process,
+        /// unless the message is allowed process-wide by using the ChangeWindowMessageFilter function or globally.
+        /// </summary>
+        Disallow = 2,
+
+        /// <summary>
+        /// Resets the window message filter for hWnd to the default.
+        /// Any message allowed globally or process-wide will get through,
+        /// but any message not included in those two categories,
+        /// and which comes from a lower privileged process, will be blocked.
+        /// </summary>
+        Reset = 0,
     }
 
     internal enum ProcessDPIAwareness : int
@@ -5170,6 +5942,36 @@ namespace OpenTK.Platform.Native.Windows
         /// Registry symbolic links should only be used when absolutely necessary.
         /// </summary>
         OpenLink = 0x00000008
+    }
+
+    [Flags]
+    internal enum RegNotifyChange : uint
+    {
+        /// <summary>
+        /// Notify the caller if a subkey is added or deleted.
+        /// </summary>
+        Name = 0x00000001,
+
+        /// <summary>
+        /// Notify the caller of changes to the attributes of the key, such as the security descriptor information.
+        /// </summary>
+        Attributes = 0x00000002,
+
+        /// <summary>
+        /// Notify the caller of changes to a value of the key. This can include adding or deleting a value, or changing an existing value.
+        /// </summary>
+        LastSet = 0x00000004,
+
+        /// <summary>
+        /// Notify the caller of changes to the security descriptor of the key.
+        /// </summary>
+        Security = 0x00000008,
+
+        /// <summary>
+        /// Indicates that the lifetime of the registration must not be tied to the lifetime of the thread issuing the RegNotifyChangeKeyValue call.
+        /// Note  This flag value is only supported in Windows 8 and later.
+        /// </summary>
+        ThreadAgnostic = 0x10000000,
     }
 
     /// <remarks>Sometimes called REGSAM.</remarks>
@@ -5395,6 +6197,27 @@ namespace OpenTK.Platform.Native.Windows
         HKEY_PERFORMANCE_NLSTEXT = 0x80000060,
     }
 
+    internal enum QDC : uint
+    {
+        /// <summary>
+        /// Returns all the possible path combinations of sources to targets.
+        /// <para>Note: In the case of any temporary modes, the QDC_ALL_PATHS setting means the mode data returned may not be the same as that which is stored in the persistence database.</para>
+        /// <para>Note: This flag may be very expensive to compute. It's not recommended to use this flag unless the caller is trying to determine the set of valid connections between sources and targets.</para>
+        /// </summary>
+        AllPaths = 0x00000001,
+
+        /// <summary>
+        /// Returns currently active paths only.
+        /// <para>Note: In the case of any temporary modes, the QDC_ONLY_ACTIVE_PATHS setting means the mode data returned may not be the same as that which is stored in the persistence database.</para>
+        /// </summary>
+        OnlyActivePaths = 0x00000002,
+
+        /// <summary>
+        /// Returns active paths as defined in the CCD database for the currently connected displays.
+        /// </summary>
+        DatabaseCurrent = 0x00000004,
+    }
+
     internal enum RDW : uint
     {
         /// <summary>
@@ -5451,7 +6274,7 @@ namespace OpenTK.Platform.Native.Windows
         EraseNow = 512,
 
         /// <summary>
-        /// Causes the affected windows (as specified by the RDW_ALLCHILDREN and RDW_NOCHILDREN flags) to receive WM_NCPAINT, WM_ERASEBKGND, and WM_PAINT
+        /// Causes the affected windows (as specified by the RDW_ALLCHILDREN and RDW_NOCHILDREN flags) to receive <see cref="WM.NCPAINT"/> <see cref="WM.ERASEBKGND"/> and WM_PAINT
         /// messages, if necessary, before the function returns.
         /// </summary>
         UpdateNow = 256,
@@ -5872,6 +6695,31 @@ namespace OpenTK.Platform.Native.Windows
         Noname = 0xFC,
         PA1 = 0xFD,
         OEMClear = 0xFE
+    }
+
+    internal enum WaitResult : uint
+    {
+        /// <summary>
+        /// The specified object is a mutex object that was not released by the thread that owned the mutex object before the owning thread terminated.
+        /// Ownership of the mutex object is granted to the calling thread and the mutex state is set to nonsignaled.
+        /// If the mutex was protecting persistent state information, you should check it for consistency.
+        /// </summary>
+        Abandoned = 0x00000080,
+
+        /// <summary>
+        /// The state of the specified object is signaled.
+        /// </summary>
+        Object0 = 0x00000000,
+
+        /// <summary>
+        /// The time-out interval elapsed, and the object's state is nonsignaled.
+        /// </summary>
+        Timeout = 0x00000102,
+
+        /// <summary>
+        /// The function has failed. To get extended error information, call GetLastError.
+        /// </summary>
+        Failed = 0xFFFFFFFF,
     }
 
     /// <summary>
@@ -6402,7 +7250,7 @@ namespace OpenTK.Platform.Native.Windows
 
         /// <summary>
         /// The WM_UNICHAR message is posted to the window with the keyboard focus when a WM_KEYDOWN message is translated by the TranslateMessage function. The WM_UNICHAR message contains the character code of the key that was pressed.
-        /// The WM_UNICHAR message is equivalent to WM_CHAR, but it uses Unicode Transformation Format (UTF)-32, whereas WM_CHAR uses UTF-16. It is designed to send or post Unicode characters to ANSI windows and it can can handle Unicode Supplementary Plane characters.
+        /// The WM_UNICHAR message is equivalent to <see cref="WM.CHAR"/> but it uses Unicode Transformation Format (UTF)-32, whereas WM_CHAR uses UTF-16. It is designed to send or post Unicode characters to ANSI windows and it can can handle Unicode Supplementary Plane characters.
         /// </summary>
         UNICHAR = 0x0109,
 
@@ -7469,5 +8317,76 @@ namespace OpenTK.Platform.Native.Windows
         /// </summary>
         SetMinPosition = 0x0001
 
+    }
+
+    [Flags]
+    internal enum QS
+    {
+        /// <summary>
+        /// A <see cref="WM.KEYUP"/>, <see cref="WM.KEYDOWN"/> <see cref="WM.SYSKEYUP"/> or <see cref="WM.SYSKEYDOWN"/> message is in the queue.
+        /// </summary>
+        Key = 0x0001,
+        /// <summary>
+        /// A <see cref="WM.MOUSEMOVE"/> message is in the queue.
+        /// </summary>
+        MouseMove = 0x0002,
+        /// <summary>
+        /// A mouse-button message (<see cref="WM.LBUTTONUP"/> <see cref="WM.RBUTTONDOWN"/> and so on).
+        /// </summary>
+        MouseButton = 0x0004,
+        /// <summary>
+        /// A posted message (other than those listed here) is in the queue. For more information, see PostMessage.
+        /// This value is cleared when you call GetMessage or PeekMessage, whether or not you are filtering messages.
+        /// </summary>
+        PostMessage = 0x0008,
+        /// <summary>
+        /// A <see cref="WM.TIMER"/> message is in the queue.
+        /// </summary>
+        Timer = 0x0010,
+        /// <summary>
+        /// A <see cref="WM.PAINT"/> message is in the queue.
+        /// </summary>
+        Paint = 0x0020,
+        /// <summary>
+        /// A message sent by another thread or application is in the queue. For more information, see SendMessage.
+        /// </summary>
+        SendMessage = 0x0040,
+        /// <summary>
+        /// A <see cref="WM.HOTKEY"/> message is in the queue.
+        /// </summary>
+        HotKey = 0x0080,
+        /// <summary>
+        /// A posted message (other than those listed here) is in the queue. For more information, see PostMessage.
+        /// This value is cleared when you call GetMessage or PeekMessage without filtering messages.
+        /// </summary>
+        AllPostMessage = 0x0100,
+        /// <summary>
+        /// Windows XP and newer: A raw input message is in the queue. For more information, see Raw Input.
+        /// </summary>
+        RawInput = 0x0400,
+        /// <summary>
+        /// Windows 8 and newer: A touch input message is in the queue. For more information, see Touch Input.
+        /// </summary>
+        Touch = 0x0800,
+        /// <summary>
+        /// Windows 8 and newer: A pointer input message is in the queue. For more information, see Pointer Input.
+        /// </summary>
+        Pointer = 0x1000,
+        /// <summary>
+        /// A <see cref="WM.MOUSEMOVE"/> message or mouse-button message (<see cref="WM.LBUTTONUP"/> <see cref="WM.RBUTTONDOWN"/> and so on).
+        /// </summary>
+        Mouse = (MouseMove | MouseButton),
+        /// <summary>
+        /// An input message is in the queue.
+        /// </summary>
+        Input = (Mouse | Key | RawInput | Touch | Pointer),
+        /// <summary>
+        /// An input, <see cref="WM.TIMER"/> <see cref="WM.PAINT"/> <see cref="WM.HOTKEY"/> or posted message is in the queue.
+        /// </summary>
+        AllEvents = (Input | PostMessage | Timer | Paint | HotKey),
+        /// <summary>
+        /// Any message is in the queue.
+        /// </summary>
+        AllInput = (Input | PostMessage | Timer | Paint | HotKey | SendMessage),
     }
 }

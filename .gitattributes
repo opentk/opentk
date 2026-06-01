@@ -38,3 +38,4 @@
 *.res binary
 *.dds binary
 *.afdesign binary
+*.spv binary

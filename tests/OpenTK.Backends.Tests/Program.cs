@@ -2,12 +2,12 @@
 using OpenTK.Platform;
 using OpenTK.Core.Utility;
 using OpenTK.Graphics;
-using OpenTK.Graphics.Egl;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Mathematics;
 using OpenTK.Platform.Native;
 using OpenTK.Platform.Native.ANGLE;
 using OpenTK.Platform.Native.macOS;
+using OpenTK.Platform.Native.X11;
 using StbImageSharp;
 using System;
 using System.Collections.Generic;
@@ -17,7 +17,7 @@ using System.IO.Compression;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Threading;
-using OpenTK.Platform.Native.X11;
+using System.Runtime;
 
 namespace OpenTK.Backends.Tests
 {
@@ -66,19 +66,22 @@ namespace OpenTK.Backends.Tests
             new DisplayComponentView(),
             new MouseComponentView(),
             new KeyboardComponentView(),
+            new JoystickComponentView(),
             new CursorComponentView(),
             new IconComponentView(),
             new ClipboardComponentView(),
             new ShellComponentView(),
             new CoordinateSpacesView(),
             new DialogComponentView(),
+            new EventView(),
         };
 
         static void Main(string[] args)
         {
+            GCSettings.LatencyMode = GCLatencyMode.SustainedLowLatency;
             Thread.CurrentThread.Name = "Main thread";
 
-            EventQueue.EventRaised += EventQueue_EventRaised;
+            Toolkit.Event.EventRaised += EventQueue_EventRaised;
 
             BackendsConfig.Logger = Logger;
 
@@ -107,7 +110,7 @@ namespace OpenTK.Backends.Tests
                 // If we are loading angle we want to hook into the DllImport resolver and
                 // make sure we load the correct binaries for each platform.
                 // - Noggin_bops 2024-03-07
-                NativeLibrary.SetDllImportResolver(typeof(Egl).Assembly, (name, assembly, path) => {
+                NativeLibrary.SetDllImportResolver(typeof(OpenTK.Graphics.Egl.Egl).Assembly, (name, assembly, path) => {
                     if (name == "libEGL" && OperatingSystem.IsWindows())
                     {
                         name = Path.Combine(Path.GetDirectoryName(typeof(Program).Assembly.Location)!, "win32-x64", "libEGL.dll");
@@ -126,7 +129,7 @@ namespace OpenTK.Backends.Tests
             }
 
             // Init all of the components.
-            Toolkit.Init(new ToolkitOptions() { ApplicationName = "OpenTK.Backends.Tests", Logger = Logger, });
+            Toolkit.Init(new ToolkitOptions() { ApplicationName = "OpenTK.Backends.Tests", Logger = Logger, FeatureFlags = ToolkitFlags.EnableOpenGL | ToolkitFlags.EnableVulkan });
 
             (Toolkit.Clipboard as X11ClipboardComponent)?.SetPngCodec(new StbPngCodec());
 
@@ -136,6 +139,7 @@ namespace OpenTK.Backends.Tests
                 Profile = OpenGLProfile.Core,
                 ForwardCompatibleFlag = true,
                 DebugFlag = true,
+                SupportTransparentFramebufferX11 = false,
                 Selector = static (options, requested, logger) => {
                     for (int i = 0; i < options.Count; i++)
                     {
@@ -159,6 +163,8 @@ namespace OpenTK.Backends.Tests
             Window = Toolkit.Window.Create(hints);
             WindowContext = Toolkit.OpenGL.CreateFromWindow(Window);
             Toolkit.OpenGL.SetCurrentContext(WindowContext);
+            Toolkit.OpenGL.SetSwapInterval(0);
+            //Toolkit.OpenGL.SetSwapInterval(1);
             GLLoader.LoadBindings(Toolkit.OpenGL.GetBindingsContext(WindowContext));
 
             static bool IsExtensionSupported(string name)
@@ -187,9 +193,10 @@ namespace OpenTK.Backends.Tests
             Toolkit.Window.SetTitle(Window, "OpenTK PAL Test Application");
             Toolkit.Window.SetClientSize(Window, (800, 600));
             Toolkit.Window.SetMode(Window, WindowMode.Normal);
+            Toolkit.Window.SetBorderStyle(Window, WindowBorderStyle.ResizableBorder);
 
             Toolkit.Window.SetMinClientSize(Window, 700, null);
-            Toolkit.Window.SetMaxClientSize(Window, 900, null);
+            //Toolkit.Window.SetMaxClientSize(Window, 900, null);
 
             try
             {
@@ -219,7 +226,7 @@ namespace OpenTK.Backends.Tests
                         // Using the icon UI to set the icon does change the taskbar icon...
                         // - Noggin_bops 2024-04-02
                         Toolkit.Window.SetIcon(Window, handle);
-                        (Toolkit.Window as MacOSWindowComponent)?.SetDockIcon(Window, handle);
+                        (Toolkit.Shell as MacOSShellComponent)?.SetDockIcon(handle);
 
                         // FIXME: Should we destroy the icon?
                         Toolkit.Icon?.Destroy(handle);
@@ -244,11 +251,11 @@ namespace OpenTK.Backends.Tests
                 if (Toolkit.Display != null)
                 {
                     DisplayHandle handle = Toolkit.Window.GetDisplay(Window);
-                    Toolkit.Display.GetDisplayScale(handle, out float scaleX, out float scaleY);
+                    Vector2 scaleXY = Toolkit.Display.GetDisplayScale(handle);
                     Toolkit.Display.Close(handle);
 
                     // FIXME: Should we only scale on Y? or something else?
-                    float scale = MathF.Max(scaleX, scaleY);
+                    float scale = MathF.Max(scaleXY.X, scaleXY.Y);
                     if (scale != 1)
                     {
                         // Update font size with scale.
@@ -267,6 +274,8 @@ namespace OpenTK.Backends.Tests
                         {
                             ImFontConfigPtr configPtr = new ImFontConfigPtr(&config);
                             CurrentImGuiFont = ImGui.GetIO().Fonts.AddFontFromFileTTF("Resources/ProggyVector/ProggyVectorDotted.ttf", float.Floor(fontSize), configPtr);
+
+                            //ImGui.GetIO().Fonts.AddFontFromFileTTF("Resources/NotoSans/NotoSansJP-Regular.ttf", float.Floor(fontSize), configPtr, ImGui.GetIO().Fonts.GetGlyphRangesJapanese());
                             ImGui.GetStyle().ScaleAllSizes(scale);
                             CurrentImGuiScale = scale;
                         }
@@ -293,13 +302,14 @@ namespace OpenTK.Backends.Tests
                 config.PixelSnapH = 1;
                 config.GlyphMaxAdvanceX = float.PositiveInfinity;
                 config.RasterizerMultiply = 1;
+                config.RasterizerDensity = 1;
 
                 config.MergeMode = 1;
                 unsafe
                 {
                     ImFontConfigPtr configPtr = new ImFontConfigPtr(&config);
                     var io = ImGui.GetIO();
-                    io.Fonts.AddFontFromFileTTF("Resources/NotoSans/NotoSansJP-Regular.ttf", float.Floor(fontSize) + 3, configPtr, io.Fonts.GetGlyphRangesJapanese());
+                    io.Fonts.AddFontFromFileTTF(Path.Combine("Resources", "NotoSans", "NotoSansJP-Regular.ttf"), float.Floor(fontSize) + 3, configPtr, io.Fonts.GetGlyphRangesJapanese());
                     // FIXME: When should we call this?
                     io.Fonts.Build();
                 }
@@ -311,10 +321,28 @@ namespace OpenTK.Backends.Tests
             {
                 ImGuiViewportPtr viewport = ImGui.GetMainViewport();
                 GCHandle gchandle = GCHandle.Alloc(Window);
-                viewport.PlatformHandleRaw = (nint)gchandle;
+                viewport.PlatformHandle = (nint)gchandle;
+                switch (Toolkit.Window)
+                {
+                    case Platform.Native.Windows.WindowComponent win32:
+                        viewport.PlatformHandleRaw = win32.GetHWND(Window);
+                        break;
+                    case X11WindowComponent x11:
+                        viewport.PlatformHandleRaw = x11.GetX11Window(Window);
+                        break;
+                    case MacOSWindowComponent macOS:
+                        viewport.PlatformHandleRaw = macOS.GetNSWindow(Window);
+                        break;
+                    default:
+                        break;
+                }
             }
             // Make it so ImGui can set IME rect.
-            ImGui.GetIO().PlatformSetImeDataFn = Marshal.GetFunctionPointerForDelegate(ImGui_SetPlatformImeDataInst);
+            ImGuiPlatformIOPtr platformIO = ImGui.GetPlatformIO();
+            platformIO.Platform_SetClipboardTextFn = Marshal.GetFunctionPointerForDelegate(ImGui_SetClipboardTextInst);
+            platformIO.Platform_GetClipboardTextFn = Marshal.GetFunctionPointerForDelegate(ImGui_GetClipboardTextInst);
+            platformIO.Platform_SetImeDataFn = Marshal.GetFunctionPointerForDelegate(ImGui_SetImeDataInst);
+
 
             if (Toolkit.Cursor != null && Toolkit.Cursor.CanLoadSystemCursors)
             {
@@ -328,36 +356,15 @@ namespace OpenTK.Backends.Tests
 
             Stopwatch watch = Stopwatch.StartNew();
 
-            if (false){
-                WindowHandle handle = Toolkit.Window.Create(new OpenGLGraphicsApiHints()
-                {
-                    Version = new Version(4, 1),
-                    Profile = OpenGLProfile.Core,
-                    ForwardCompatibleFlag = true,
-                    DebugFlag = true,
-                    Multisamples = 16,
-                    sRGBFramebuffer = true,
-                    
-                });
-                Toolkit.Window.SetTitle(handle, $"Bejeweled");
-                Toolkit.Window.SetClientSize(handle, (1200, 1200));
-                (Toolkit.Shell as Platform.Native.Windows.ShellComponent)?.SetImmersiveDarkMode(handle, true);
-                Toolkit.Window.SetMode(handle, WindowMode.Normal);
-                Toolkit.Window.SetBorderStyle(handle, WindowBorderStyle.FixedBorder);
-                ApplicationWindow bejeweled = new ApplicationWindow(handle);
-                bejeweled.Context = Toolkit.OpenGL.CreateFromWindow(handle);
-                Toolkit.OpenGL.SetSwapInterval(1);
-                bejeweled.Application = new Bejeweled.Bejeweled();
-                Toolkit.OpenGL.SetCurrentContext(bejeweled.Context);
-                bejeweled.Application.Initialize(handle, bejeweled.Context, UsingGLES);
-                Toolkit.OpenGL.SetCurrentContext(WindowContext);
-                Program.ApplicationWindows.Add(bejeweled);
-            }
-
             while (true)
             {
                 float dt = (float)watch.Elapsed.TotalSeconds;
                 watch.Restart();
+
+                if (dt > ((1.0f/60.0f) + (1.0f/1000.0f)))
+                {
+                    Logger?.LogWarning($"Slow performance, dt = {dt}");
+                }
 
                 // FIXME: Wait for events?
                 IsProcessingEvents = true;
@@ -402,6 +409,11 @@ namespace OpenTK.Backends.Tests
                     CloseApplicationWindow(window);
                 }
             }
+
+            // Calling Uninit is not necessary when exiting the application.
+            // We call it here to test the implementation.
+            // - Noggin_bops 2026-02-08
+            Toolkit.Uninit();
         }
 
         static void Update(float dt)
@@ -484,6 +496,11 @@ namespace OpenTK.Backends.Tests
 
         static ImGuiKey ToImgui(Key key)
         {
+            if (key >= Key.A && key <= Key.Z)
+                return key - Key.A + ImGuiKey.A;
+            if (key >= Key.D0 && key <= Key.D9)
+                return key - Key.D0 + ImGuiKey._0;
+
             // FIXME: Rest of the keycodes.
             switch (key)
             {
@@ -537,11 +554,11 @@ namespace OpenTK.Backends.Tests
 
                 ApplicationWindows.RemoveAt(index);
             }
-
+            
             Toolkit.Window.Destroy(window);
         }
 
-        private static void EventQueue_EventRaised(PalHandle? handle, PlatformEventType type, EventArgs args)
+        private static void EventQueue_EventRaised(EventArgs args)
         {
             if (args is WindowEventArgs windowEvent)
             {
@@ -549,7 +566,7 @@ namespace OpenTK.Backends.Tests
                 {
                     if (args is CloseEventArgs close2)
                     {
-                        Console.WriteLine($"Closing window: '{Toolkit.Window.GetTitle(close2.Window)}'");
+                        Logger.LogInfo($"Closing window: '{Toolkit.Window.GetTitle(close2.Window)}'");
                         CloseApplicationWindow(close2.Window);
                         return;
                     }
@@ -570,11 +587,29 @@ namespace OpenTK.Backends.Tests
                     {
                         ImGuiKey ikey = ToImgui(keyDown.Key);
                         ImGui.GetIO().AddKeyEvent(ikey, true);
+
+                        if (keyDown.Modifiers.HasFlag(KeyModifier.Control))
+                            ImGui.GetIO().AddKeyEvent(ImGuiKey.ModCtrl, true);
+                        if (keyDown.Modifiers.HasFlag(KeyModifier.Shift))
+                            ImGui.GetIO().AddKeyEvent(ImGuiKey.ModShift, true);
+                        if (keyDown.Modifiers.HasFlag(KeyModifier.Alt))
+                            ImGui.GetIO().AddKeyEvent(ImGuiKey.ModAlt, true);
+                        if (keyDown.Modifiers.HasFlag(KeyModifier.GUI))
+                            ImGui.GetIO().AddKeyEvent(ImGuiKey.ModSuper, true);
                     }
                     else if (args is KeyUpEventArgs keyUp)
                     {
                         ImGuiKey ikey = ToImgui(keyUp.Key);
                         ImGui.GetIO().AddKeyEvent(ikey, false);
+
+                        if (!keyUp.Modifiers.HasFlag(KeyModifier.Control))
+                            ImGui.GetIO().AddKeyEvent(ImGuiKey.ModCtrl, false);
+                        if (!keyUp.Modifiers.HasFlag(KeyModifier.Shift))
+                            ImGui.GetIO().AddKeyEvent(ImGuiKey.ModShift, false);
+                        if (!keyUp.Modifiers.HasFlag(KeyModifier.Alt))
+                            ImGui.GetIO().AddKeyEvent(ImGuiKey.ModAlt, false);
+                        if (!keyUp.Modifiers.HasFlag(KeyModifier.GUI))
+                            ImGui.GetIO().AddKeyEvent(ImGuiKey.ModSuper, false);
                     }
                     else if (args is TextInputEventArgs textInput)
                     {
@@ -622,6 +657,7 @@ namespace OpenTK.Backends.Tests
                             config.GlyphMaxAdvanceX = float.PositiveInfinity;
                             config.RasterizerMultiply = 1;
                             config.EllipsisChar = 0xFFFF;
+                            config.RasterizerDensity = 1;
                             unsafe
                             {
                                 ImFontConfigPtr configPtr = new ImFontConfigPtr(&config);
@@ -644,7 +680,9 @@ namespace OpenTK.Backends.Tests
 
             if (args is CloseEventArgs close)
             {
-                Console.WriteLine("Closing main window!");
+                Logger.LogInfo("Closing main window!");
+                // FIXME: Function for getting the OpenGL context from a WindowHandle...
+                Toolkit.OpenGL.DestroyContext(Program.WindowContext);
                 Toolkit.Window.Destroy(close.Window);
             }
             else if (args is FocusEventArgs focus)
@@ -695,7 +733,7 @@ namespace OpenTK.Backends.Tests
                     // So we need to check so that we are in ordinary event processing.
                     if (ImGuiController != null && IsProcessingEvents)
                     {
-                        Update(0f);
+                        Update(0.1f);
                         Toolkit.OpenGL.SetCurrentContext(WindowContext);
                         Render();
                     }
@@ -707,9 +745,10 @@ namespace OpenTK.Backends.Tests
                 {
                     //Logger.LogDebug($"Window moved: Window pos: {move.WindowPosition}, client pos {move.ClientAreaPosition}");
 
-                    if (ImGuiController != null && IsProcessingEvents)
+                    if (OperatingSystem.IsWindows() && ImGuiController != null && IsProcessingEvents)
                     {
-                        Update(0f);
+                        // FIXME: Real delta time?
+                        Update(0.01f);
                         Toolkit.OpenGL.SetCurrentContext(WindowContext);
                         Render();
                     }
@@ -732,10 +771,24 @@ namespace OpenTK.Backends.Tests
             {
                 ((DisplayComponentView?)MainTabContainer[typeof(DisplayComponentView)])?.HandleConnectionChange(displayChanged);
             }
+            else if (args is DisplayValuesChangedEventArgs displayValuesChanged)
+            {
+                ((DisplayComponentView?)MainTabContainer[typeof(DisplayComponentView)])?.UpdateDisplayValues(displayValuesChanged);
+            }
             else if (args is ThemeChangeEventArgs themeChange)
             {
                 // FIXME: Actually change imgui theme?
                 Logger.LogInfo($"Theme changed: {themeChange.NewTheme}.");
+            }
+            else if (args is RawMouseMoveEventArgs rawMouseMove)
+            {
+                for (int i = 0; i < ApplicationWindows.Count; i++)
+                {
+                    if (Toolkit.Mouse.IsRawMouseMotionEnabled(ApplicationWindows[i].Window))
+                    {
+                        ApplicationWindows[i].Application?.HandleEvent(rawMouseMove);
+                    }
+                }
             }
         }
 
@@ -754,6 +807,7 @@ namespace OpenTK.Backends.Tests
                 case PalComponents.Shell:         return Toolkit.Shell;
                 case PalComponents.Joystick:      return Toolkit.Joystick;
                 case PalComponents.Dialog:        return Toolkit.Dialog;
+                case PalComponents.Vulkan:        return Toolkit.Vulkan;
 
                 default: return null;
             }
@@ -808,9 +862,9 @@ namespace OpenTK.Backends.Tests
         }
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        private delegate void ImGui_SetPlaformImeDataFn(ImGuiViewportPtr viewport, ImGuiPlatformImeDataPtr data);
-        private static ImGui_SetPlaformImeDataFn ImGui_SetPlatformImeDataInst = ImGui_SetPlatformImeData;
-        private static void ImGui_SetPlatformImeData(ImGuiViewportPtr viewport, ImGuiPlatformImeDataPtr data)
+        private delegate void ImGui_SetPlaformImeDataFn(IntPtr context, ImGuiViewportPtr viewport, ImGuiPlatformImeDataPtr data);
+        private static ImGui_SetPlaformImeDataFn ImGui_SetImeDataInst = ImGui_SetImeData;
+        private static unsafe void ImGui_SetImeData(IntPtr context, ImGuiViewportPtr viewport, ImGuiPlatformImeDataPtr data)
         {
             if (data.WantVisible)
             {
@@ -818,21 +872,52 @@ namespace OpenTK.Backends.Tests
                 {
                     try
                     {
-                        GCHandle handle = GCHandle.FromIntPtr(viewport.PlatformHandleRaw);
-                        WindowHandle window = (WindowHandle)handle.Target!;
+                        WindowHandle window = Program.Window;
 
-                        int x = (int)data.InputPos.X;
-                        int y = (int)data.InputPos.Y;
-                        int w = 1; // FIXME: What do we actually want to pass here?
-                        int h = (int)data.InputLineHeight;
+                        float w = 1; // FIXME: What do we actually want to pass here?
+                        // FIXME: Convert this to proper coordinates
+                        float h = data.InputLineHeight;
 
-                        Toolkit.Keyboard.SetImeRectangle(window, x, y, w, h);
+                        // FIXME: Function for scaling either a box or just a distance...
+                        Toolkit.Window.FramebufferToClient(window, new Vector2(data.InputPos.X, data.InputPos.Y), out Vector2 clientPos);
+                        
+                        Toolkit.Keyboard.SetImeRectangle(window, clientPos.X, clientPos.Y, w, h);
+                        Toolkit.Keyboard.BeginIme(window);
                     }
                     catch
                     {
                     }
                 }
+            } 
+            else
+            {
+                WindowHandle window = Program.Window;
+                Toolkit.Keyboard.EndIme(window);
             }
+        }
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        private unsafe delegate void ImGui_SetClipboardTextFn(IntPtr ctx, byte* text);
+        private static unsafe ImGui_SetClipboardTextFn ImGui_SetClipboardTextInst = ImGui_SetClipboardText;
+        private static unsafe void ImGui_SetClipboardText(IntPtr ctx, byte* text)
+        {
+            string? str = Marshal.PtrToStringUTF8((IntPtr)text);
+            if (str != null)
+                Toolkit.Clipboard.SetClipboardText(str);
+        }
+
+        private static unsafe byte* currentClipboardString;
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        private unsafe delegate byte* ImGui_GetClipboardTextFn(IntPtr ctx);
+        private static unsafe ImGui_GetClipboardTextFn ImGui_GetClipboardTextInst = ImGui_GetClipboardText;
+        private static unsafe byte* ImGui_GetClipboardText(IntPtr ctx)
+        {
+            if (currentClipboardString != null)
+                Marshal.FreeCoTaskMem((IntPtr)currentClipboardString);
+
+            string? str = Toolkit.Clipboard.GetClipboardText();
+            currentClipboardString = (byte*)Marshal.StringToCoTaskMemUTF8(str);
+            return currentClipboardString;
         }
     }
 }

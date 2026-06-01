@@ -1,22 +1,66 @@
-﻿using OpenTK.Platform.Native.Windows;
+using OpenTK.Graphics.Vulkan;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Reflection;
-using System.Reflection.Metadata;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using System.Runtime.InteropServices.JavaScript;
 using System.Text;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
-using static OpenTK.Platform.Native.Windows.Win32;
-
-#nullable enable
 
 namespace OpenTK.Platform.Native.Windows
 {
+    // FIXME: Maybe start using this...
+    internal readonly struct BOOL : IEquatable<BOOL>
+    {
+        public readonly int Value;
+
+        public BOOL(bool value)
+        {
+            Value = value ? 1 : 0;
+        }
+
+        public readonly override bool Equals(object? obj)
+        {
+            return obj is BOOL @bool && Equals(@bool);
+        }
+
+        public readonly bool Equals(BOOL other)
+        {
+            return ((bool)this) == ((bool)other);
+        }
+
+        public readonly override int GetHashCode()
+        {
+            return HashCode.Combine((bool)this);
+        }
+
+        public readonly override string? ToString()
+        {
+            return this ? bool.TrueString : bool.FalseString;
+        }
+
+        public static bool operator ==(BOOL left, BOOL right)
+        {
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(BOOL left, BOOL right)
+        {
+            return !(left == right);
+        }
+
+        public static bool operator true(BOOL a)
+        {
+            return a.Value != 0;
+        }
+
+        public static bool operator false(BOOL a)
+        {
+            return a.Value == 0;
+        }
+
+        public static implicit operator bool(BOOL @bool) => @bool;
+        public static implicit operator BOOL(bool @bool) => new BOOL(@bool);
+    }
+
 #pragma warning disable CS0649 // Field 'field' is never assigned to, and will always have its default value 'value'
     internal static unsafe class Win32
     {
@@ -24,6 +68,12 @@ namespace OpenTK.Platform.Native.Windows
 
         internal const int LoWordMask = 0x0000_FFFF;
         internal const int HiWordMask = unchecked((int)0xFFFF_0000);
+
+        internal static ushort LOWORD(nint w) => LOWORD((int)w);
+        internal static ushort LOWORD(int w) => (ushort)(w & 0xFFFF);
+
+        internal static ushort HIWORD(nint w) => HIWORD((int)w);
+        internal static ushort HIWORD(int w) => (ushort)((w >> 16) & 0xFFFF);
 
         internal static int GET_X_LPARAM(IntPtr lParam) => (short)(lParam.ToInt64() & LoWordMask);
         internal static int GET_Y_LPARAM(IntPtr lParam) => (short)((lParam.ToInt64() >> 16) & LoWordMask);
@@ -37,8 +87,16 @@ namespace OpenTK.Platform.Native.Windows
 
         internal const int CW_USEDEFAULT = -1;
 
+        internal const int ERROR_SUCCESS = 0;
         internal const int ERROR_FILE_NOT_FOUND = 0x2;
+        internal const int ERROR_ACCESS_DENIED = 0x5;
         internal const int ERROR_INVALID_PARAMETER = 87;
+        /// <summary>
+        /// The data area passed to a system call is too small.
+        /// </summary>
+        internal const int ERROR_INSUFFICIENT_BUFFER = 0x7A;
+
+        internal const int ERROR_MORE_DATA = 0xEA;
 
         internal const int CCHDEVICENAME = 32;
         internal const int CCHFORMNAME = 32;
@@ -58,6 +116,10 @@ namespace OpenTK.Platform.Native.Windows
         internal const int E_OUTOFMEMORY = unchecked((int)0x8007000E);
         internal const int E_FAIL = unchecked((int)0x80004005);
 
+        internal const uint WAIT_OBJECT_0 = 0x00000000;
+
+        internal const uint INFINITE = 0xFFFFFFFF;
+
         internal const IntPtr TD_WARNING_ICON         = unchecked((ushort)-1);
         internal const IntPtr TD_ERROR_ICON           = unchecked((ushort)-2);
         internal const IntPtr TD_INFORMATION_ICON     = unchecked((ushort)-3);
@@ -66,6 +128,20 @@ namespace OpenTK.Platform.Native.Windows
         internal const IntPtr INVALID_HANDLE_VALUE = -1;
 
         internal const int LOCALE_NAME_MAX_LENGTH = 85;
+
+        internal const int SEVERITY_SUCCESS = 0;
+        internal const int SEVERITY_ERROR = 1;
+
+        internal const int FACILITY_WIN32 = 7;
+
+        internal const int ERROR_READ_FAULT = 30;
+        internal const int ERROR_INVALID_ACCESS = 12;
+        internal const int ERROR_BUSY = 170;
+
+        internal static int MAKE_HRESULT(int sev, int fac, int code) => sev << 31 | fac << 16 | code;
+
+        internal static RAWINPUT* RAWINPUT_ALIGN(void* x) => (RAWINPUT*)(((nint)x + sizeof(nint) - 1) & ~(sizeof(nint) - 1));
+        internal static RAWINPUT* NEXTRAWINPUTBLOCK(RAWINPUT* ptr) => RAWINPUT_ALIGN(((byte*)ptr) + ptr->header.dwSize);
 
         // Usefull extension methods for dealing with span string buffers.
         internal static Span<char> SliceAtFirstNull(this Span<char> span)
@@ -79,6 +155,8 @@ namespace OpenTK.Platform.Native.Windows
             int index = span.IndexOf("\0");
             return index == -1 ? span : span.Slice(0, index);
         }
+
+        internal static int /* HRESULT */ HRESULT_FROM_WIN32(uint error) => (unchecked(error <= 0 ? (int)error : (int)(((uint)error & 0x0000FFFF) | 0x80070000)));
 
         [DllImport("kernel32.dll", SetLastError = false)]
         internal static extern uint GetLastError();
@@ -143,6 +221,9 @@ namespace OpenTK.Platform.Native.Windows
         internal static extern short RegisterClassEx(in WNDCLASSEX wndClass);
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        internal static extern bool UnregisterClass(string lpClassName, IntPtr /* HINSTANCE */ hInstance);
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         internal static extern IntPtr CreateWindowEx(
             WindowStylesEx dwExStyle,
             string? lpClassName,
@@ -189,9 +270,9 @@ namespace OpenTK.Platform.Native.Windows
             public WM message;
             public UIntPtr wParam;
             public IntPtr lParam;
-            public int time;
+            public uint time;
             public POINT pt;
-            public int lPrivate;
+            public uint lPrivate;
         }
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
@@ -214,6 +295,13 @@ namespace OpenTK.Platform.Native.Windows
 
         [DllImport("user32.dll")]
         internal static extern void PostQuitMessage(int nExitCode);
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        internal static extern uint RegisterWindowMessage([MarshalAs(UnmanagedType.LPTStr)] string /* LPCSTR */ lpString);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static extern bool ChangeWindowMessageFilterEx(IntPtr /* HWND */ hwnd, uint message, MSGFLT action, IntPtr /* PCHANGEFILTERSTRUCT */ pChangeFilterStruct);
 
         [DllImport("user32.dll")]
         internal static extern int GetMessageTime();
@@ -408,7 +496,7 @@ namespace OpenTK.Platform.Native.Windows
         [DllImport("shell32.dll")]
         internal static extern void DragFinish(IntPtr /* HDROP */ hDrop);
 
-        internal struct RECT
+        internal struct RECT : IEquatable<RECT>
         {
             public int left;
             public int top;
@@ -425,6 +513,36 @@ namespace OpenTK.Platform.Native.Windows
                 this.top = top;
                 this.right = right;
                 this.bottom = bottom;
+            }
+
+            public override bool Equals(object? obj)
+            {
+                return obj is RECT rECT && Equals(rECT);
+            }
+
+            public bool Equals(RECT other)
+            {
+                return left == other.left &&
+                       top == other.top &&
+                       right == other.right &&
+                       bottom == other.bottom &&
+                       Width == other.Width &&
+                       Height == other.Height;
+            }
+
+            public override int GetHashCode()
+            {
+                return HashCode.Combine(left, top, right, bottom, Width, Height);
+            }
+
+            public static bool operator ==(RECT left, RECT right)
+            {
+                return left.Equals(right);
+            }
+
+            public static bool operator !=(RECT left, RECT right)
+            {
+                return !(left == right);
             }
         }
 
@@ -816,14 +934,40 @@ namespace OpenTK.Platform.Native.Windows
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = false)]
         internal static extern bool EnumDisplaySettings(string lpszDeviceName, uint iModeNum, [In, Out] ref DEVMODE lpDevMode);
 
-        internal struct POINTL
+        internal struct POINTL : IEquatable<POINTL>
         {
             public int X;
             public int Y;
 
+            public override bool Equals(object? obj)
+            {
+                return obj is POINTL pOINTL && Equals(pOINTL);
+            }
+
+            public bool Equals(POINTL other)
+            {
+                return X == other.X &&
+                       Y == other.Y;
+            }
+
+            public override int GetHashCode()
+            {
+                return HashCode.Combine(X, Y);
+            }
+
             public override string ToString()
             {
                 return $"({X}, {Y})";
+            }
+
+            public static bool operator ==(POINTL left, POINTL right)
+            {
+                return left.Equals(right);
+            }
+
+            public static bool operator !=(POINTL left, POINTL right)
+            {
+                return !(left == right);
             }
         }
 
@@ -994,8 +1138,19 @@ namespace OpenTK.Platform.Native.Windows
             }
         }
 
+        [DllImport("advapi32.dll", SetLastError = false)]
+        internal static extern int /* LSTATUS */ RegNotifyChangeKeyValue(
+            IntPtr /* HKEY */ hKey,
+            [MarshalAs(UnmanagedType.Bool)] bool bWatchSubtree,
+            RegNotifyChange dwNotifyFilter,
+            IntPtr /* HANDLE */ hEvent,
+            [MarshalAs(UnmanagedType.Bool)] bool fAsynchronous);
+
         [DllImport("shlwapi.dll", CharSet = CharSet.Auto, SetLastError = false)]
         internal static unsafe extern uint /* LWSTDAPI */ SHLoadIndirectString(char* pszSource, char* pszOutBuf, uint cchOutBuf, void** ppvReserved);
+
+        [DllImport("advapi32.dll", CharSet = CharSet.Auto, SetLastError = false)]
+        internal static unsafe extern uint /* LSTATUS */ RegLoadMUIString(IntPtr /* HKEY */ hKey, char* pszValue, char* pszOutBuf, uint cbOutBuf, out uint pcbData, uint flags, char* pszDirectory);
 
         [DllImport("user32.dll", SetLastError = true)]
         internal static extern int GetKeyboardLayoutList(int nBuff, IntPtr* lpList);
@@ -1221,6 +1376,9 @@ namespace OpenTK.Platform.Native.Windows
               DEV_BROADCAST_DEVICEINTERFACE NotificationFilter,
               DEVICE_NOTIFY Flags);
 
+        [DllImport("user32.dll", SetLastError = true)]
+        internal static extern bool UnregisterDeviceNotification(IntPtr /* HDEVNOTIFY */ Handle);
+
         internal struct MEMORYSTATUSEX
         {
             public uint dwLength;
@@ -1244,7 +1402,13 @@ namespace OpenTK.Platform.Native.Windows
         internal static extern IntPtr /* HPOWERNOTIFY */ RegisterSuspendResumeNotification(IntPtr /* HANDLE */ hRecipient, DEVICE_NOTIFY Flags);
 
         [DllImport("user32.dll", SetLastError = true)]
+        internal static extern bool UnregisterSuspendResumeNotification(IntPtr /* HPOWERNOTIFY */ Handle);
+
+        [DllImport("user32.dll", SetLastError = true)]
         internal static extern bool AddClipboardFormatListener(IntPtr /* HWND */ hwnd);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        internal static extern bool RemoveClipboardFormatListener(IntPtr /* HWND */ hwnd);
 
         internal struct WINDOWPLACEMENT
         {
@@ -1399,6 +1563,13 @@ namespace OpenTK.Platform.Native.Windows
         [DllImport("user32.dll")]
         internal static extern IntPtr /* LRESULT */ DefRawInputProc(IntPtr /* PRAWINPUT* */ paRawInput, int nInput, uint cbSizeHeader);
 
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern uint GetRawInputBuffer(
+            RAWINPUT* /* PRAWINPUT */ pData,  
+            ref uint pcbSize,
+            uint cbSizeHeader
+        );
+
         [DllImport("user32.dll", SetLastError = false)]
         internal static extern uint GetRawInputData(
            IntPtr /* HRAWINPUT */ hRawInput,
@@ -1436,19 +1607,19 @@ namespace OpenTK.Platform.Native.Windows
         {
             [FieldOffset(0)]
             public RawMouseFlags usFlags;
-            [FieldOffset(2)]
-            public uint ulButtons;
-            [FieldOffset(2)]
-            public ushort usButtonFlags;
             [FieldOffset(4)]
-            public ushort usButtonData;
+            public uint ulButtons;
+            [FieldOffset(4)]
+            public ushort usButtonFlags;
             [FieldOffset(6)]
+            public ushort usButtonData;
+            [FieldOffset(8)]
             public uint ulRawButtons;
-            [FieldOffset(10)]
+            [FieldOffset(12)]
             public int lLastX;
-            [FieldOffset(14)]
+            [FieldOffset(16)]
             public int lLastY;
-            [FieldOffset(18)]
+            [FieldOffset(20)]
             public uint ulExtraInformation;
         }
 
@@ -1469,7 +1640,8 @@ namespace OpenTK.Platform.Native.Windows
             public fixed byte bRawData[1];
         }
 
-        internal unsafe struct RAWINPUT
+        // FIXME: Handle WOW64 layout correctly.
+        internal struct RAWINPUT
         {
             public RAWINPUTHEADER header;
             public DUMMYUNIONNAME data;
@@ -1487,7 +1659,7 @@ namespace OpenTK.Platform.Native.Windows
         }
 
         [DllImport("kernel32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
-        internal extern static IntPtr /* HANDLE */ CreateActCtxW(ref ACTCTXW actctx);
+        internal static extern IntPtr /* HANDLE */ CreateActCtxW(ref ACTCTXW actctx);
 
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
         internal struct ACTCTXW
@@ -1504,12 +1676,563 @@ namespace OpenTK.Platform.Native.Windows
         }
 
         [DllImport("kernel32.dll", SetLastError = true)]
-        internal extern static bool ActivateActCtx(IntPtr /* HANDLE */ hActCtx, out uint lpCookie);
+        internal static extern bool ActivateActCtx(IntPtr /* HANDLE */ hActCtx, out uint lpCookie);
 
         [DllImport("kernel32.dll", SetLastError = true)]
-        internal extern static bool DeactivateActCtx(uint dwFlags, uint lpCookie);
+        internal static extern bool DeactivateActCtx(uint dwFlags, uint lpCookie);
 
+        internal struct DWM_BLURBEHIND
+        {
+            public DWMBB dwFlags;
+            public int fEnable;
+            public IntPtr /* HRGN */ hRgnBlur;
+            public int fTransitionOnMaximized;
+        }
+
+        [DllImport("dwmapi.dll")]
+        internal static extern int /* HRESULT */ DwmEnableBlurBehindWindow(IntPtr /* HWND */ hWnd, in DWM_BLURBEHIND pBlurBehind);
+
+        [DllImport("dwmapi.dll")]
+        internal static extern int /* HRESULT */ DwmGetColorizationColor(out uint pcrColorization, [MarshalAs(UnmanagedType.Bool)] out bool pfOpaqueBlend);
+
+        [DllImport("gdi32.dll")]
+        internal static extern IntPtr /* HRGN */ CreateRectRgn(int x1, int y1, int x2, int y2);
+
+        [DllImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static extern bool SetLayeredWindowAttributes(IntPtr /* HWND */ hwnd, uint /* COLORREF */ crKey, byte bAlpha, LWA dwFlags);
+
+        [DllImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static extern bool GetLayeredWindowAttributes(IntPtr /* HWND */ hwnd, out uint /* COLORREF* */ pcrKey, out byte /* BYTE* */ pbAlpha, out LWA /* DWORD* */ pdwFlags);
+
+        [DllImport("user32.dll")]
+        internal static extern int GetDisplayConfigBufferSizes(QDC flags, out uint numPathArrayElements, out uint numModeInfoArrayElements);
+
+        internal struct DISPLAYCONFIG_RATIONAL
+        {
+            public uint Numerator;
+            public uint Denominator;
+
+            public override string ToString()
+            {
+                return $"{Numerator} / {Denominator}";
+            }
+        }
+
+        internal struct DISPLAYCONFIG_2DREGION
+        {
+            public uint cx;
+            public uint cy;
+        }
+
+        [StructLayout(LayoutKind.Explicit, Pack = 8)]
+        internal struct DISPLAYCONFIG_PATH_SOURCE_INFO
+        {
+            [FieldOffset(0)] public LUID adapterId;
+            [FieldOffset(8)] public uint id;
+            //union {
+                [FieldOffset(12)] public uint modeInfoIdx;
+                [FieldOffset(12)] public ushort cloneGroupId;
+                [FieldOffset(14)] public ushort sourceModeInfoIdx;
+            //}
+            [FieldOffset(16)] public DISPLAYCONFIG_SOURCE statusFlags;
+        }
+
+        [StructLayout(LayoutKind.Explicit)]
+        internal struct DISPLAYCONFIG_PATH_TARGET_INFO
+        {
+            [FieldOffset(0)] public LUID adapterId;
+            [FieldOffset(8)] public uint id;
+            //union {
+                [FieldOffset(12)] public uint modeInfoIdx;
+                [FieldOffset(12)] public ushort desktopModeInfoIdx;
+                [FieldOffset(14)] public ushort targetModeInfoIdx;
+            //}
+            [FieldOffset(16)] public DISPLAYCONFIG_VIDEO_OUTPUT_TECHNOLOGY outputTechnology;
+            [FieldOffset(20)] public DISPLAYCONFIG_ROTATION rotation;
+            [FieldOffset(24)] public DISPLAYCONFIG_SCALING scaling;
+            [FieldOffset(28)] public DISPLAYCONFIG_RATIONAL refreshRate;
+            [FieldOffset(36)] public DISPLAYCONFIG_SCANLINE_ORDERING scanLineOrdering;
+            [FieldOffset(40)] public uint /* BOOL */ targetAvailable;
+            [FieldOffset(44)] public DISPLAYCONFIG_TARGET statusFlags;
+        }
+
+        internal struct DISPLAYCONFIG_PATH_INFO
+        {
+            public DISPLAYCONFIG_PATH_SOURCE_INFO sourceInfo;
+            public DISPLAYCONFIG_PATH_TARGET_INFO targetInfo;
+            public DISPLAYCONFIG_PATH flags;
+        }
+
+        [StructLayout(LayoutKind.Explicit)]
+        internal struct DISPLAYCONFIG_VIDEO_SIGNAL_INFO
+        {
+            [FieldOffset( 0)] public ulong pixelRate;
+            [FieldOffset( 8)] public DISPLAYCONFIG_RATIONAL hSyncFreq;
+            [FieldOffset(16)] public DISPLAYCONFIG_RATIONAL vSyncFreq;
+            [FieldOffset(24)] public DISPLAYCONFIG_2DREGION activeSize;
+            [FieldOffset(32)] public DISPLAYCONFIG_2DREGION totalSize;
+            //union {
+                [FieldOffset(40)] public AdditionalSignalInfo_struct AdditionalSignalInfo;
+                [FieldOffset(40)] public uint videoStandard;
+            //}
+            [FieldOffset(44)] public DISPLAYCONFIG_SCANLINE_ORDERING scanLineOrdering;
+
+            internal struct AdditionalSignalInfo_struct
+            {
+                uint _bitfield;
+
+                internal ushort videoStandard
+                {
+                    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                    readonly get => (ushort)((this._bitfield >> 0) & 0x0000FFFF);
+                    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                    set
+                    {
+                        this._bitfield = (uint)((this._bitfield & unchecked((uint)~0x0000FFFF)) | ((uint)(value & 0x0000FFFF) << 0));
+                    }
+                }
+
+                internal byte vSyncFreqDivider
+                {
+                    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                    readonly get => (byte)((this._bitfield >> 16) & 0x0000003F);
+                    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                    set
+                    {
+                        global::System.Diagnostics.Debug.Assert(value is <= (byte)63L);
+                        this._bitfield = (uint)((this._bitfield & unchecked((uint)~0x003F0000)) | ((uint)(value & 0x0000003F) << 16));
+                    }
+                }
+
+                internal ushort reserved
+                {
+                    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                    readonly get => (ushort)((this._bitfield >> 22) & 0x000003FF);
+                    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                    set
+                    {
+                        global::System.Diagnostics.Debug.Assert(value is <= (ushort)1023L);
+                        this._bitfield = (uint)((this._bitfield & unchecked((uint)~0xFFC00000)) | ((uint)(value & 0x000003FF) << 22));
+                    }
+                }
+            }
+        }
+
+        internal struct DISPLAYCONFIG_TARGET_MODE
+        {
+            public DISPLAYCONFIG_VIDEO_SIGNAL_INFO targetVideoSignalInfo;
+        }
+
+        internal struct DISPLAYCONFIG_SOURCE_MODE
+        {
+            public uint width;
+            public uint height;
+            public DISPLAYCONFIG_PIXELFORMAT pixelFormat;
+            public POINTL position;
+        }
+
+        internal struct RECTL
+        {
+            public int left;
+            public int top;
+            public int right;
+            public int bottom;
+        }
+
+        internal struct DISPLAYCONFIG_DESKTOP_IMAGE_INFO
+        {
+            public POINTL PathSourceSize;
+            public RECTL DesktopImageRegion;
+            public RECTL DesktopImageClip;
+        }
+
+        [StructLayout(LayoutKind.Explicit)]
+        internal struct DISPLAYCONFIG_MODE_INFO
+        {
+            [FieldOffset(0)] public DISPLAYCONFIG_MODE_INFO_TYPE infoType;
+            [FieldOffset(4)] public uint id;
+            [FieldOffset(8)] public LUID adapterId;
+            //union {
+                [FieldOffset(16)] public DISPLAYCONFIG_TARGET_MODE targetMode;
+                [FieldOffset(16)] public DISPLAYCONFIG_SOURCE_MODE sourceMode;
+                [FieldOffset(16)] public DISPLAYCONFIG_DESKTOP_IMAGE_INFO desktopImageInfo;
+            //}
+        }
+
+        [DllImport("user32.dll", SetLastError = false)]
+        internal static extern int QueryDisplayConfig(
+            QDC flags,
+            ref uint numPathArrayElements,
+            ref DISPLAYCONFIG_PATH_INFO pathArray,
+            ref uint numModeInfoArrayElements,
+            ref DISPLAYCONFIG_MODE_INFO modeInfoArray,
+            ref DISPLAYCONFIG_TOPOLOGY_ID currentTopologyId);
+
+        internal struct DISPLAYCONFIG_DEVICE_INFO_HEADER
+        {
+            public DISPLAYCONFIG_DEVICE_INFO_TYPE type;
+            public uint size;
+            public LUID adapterId;
+            public uint id;
+        }
+
+        [StructLayout(LayoutKind.Explicit)]
+        internal partial struct DISPLAYCONFIG_TARGET_DEVICE_NAME_FLAGS
+        {
+            [FieldOffset(0)]
+            internal _Anonymous_e__Struct Anonymous;
+
+            [FieldOffset(0)]
+            internal uint value;
+
+            internal partial struct _Anonymous_e__Struct
+            {
+                internal uint _bitfield;
+
+                /// <summary>Gets or sets bit 0 in the <see cref="_bitfield" /> field.</summary>
+                internal bool friendlyNameFromEdid
+                {
+                    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                    readonly get => (this._bitfield & 0x00000001) != 0;
+                    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                    set => this._bitfield = (uint)(value ? this._bitfield | 0x00000001 : (this._bitfield & unchecked((uint)~0x00000001)));
+                }
+
+                /// <summary>Gets or sets bit 1 in the <see cref="_bitfield" /> field.</summary>
+                internal bool friendlyNameForced
+                {
+                    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                    readonly get => (this._bitfield & 0x00000002) != 0;
+                    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                    set => this._bitfield = (uint)(value ? this._bitfield | 0x00000002 : (this._bitfield & unchecked((uint)~0x00000002)));
+                }
+
+                /// <summary>Gets or sets bit 2 in the <see cref="_bitfield" /> field.</summary>
+                internal bool edidIdsValid
+                {
+                    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                    readonly get => (this._bitfield & 0x00000004) != 0;
+                    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                    set => this._bitfield = (uint)(value ? this._bitfield | 0x00000004 : (this._bitfield & unchecked((uint)~0x00000004)));
+                }
+
+                /// <summary>Gets or sets bits 3-31 in the <see cref="_bitfield" /> field. Allowed values are [0..536870911].</summary>
+                internal uint reserved
+                {
+                    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                    readonly get => (uint)((this._bitfield >> 3) & 0x1FFFFFFF);
+                    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                    set
+                    {
+                        global::System.Diagnostics.Debug.Assert(value is <= (uint)536870911L);
+                        this._bitfield = (uint)((this._bitfield & unchecked((uint)~0xFFFFFFF8)) | ((uint)(value & 0x1FFFFFFF) << 3));
+                    }
+                }
+            }
+        }
+
+        internal struct DISPLAYCONFIG_TARGET_DEVICE_NAME
+        {
+            public DISPLAYCONFIG_DEVICE_INFO_HEADER header;
+            public DISPLAYCONFIG_TARGET_DEVICE_NAME_FLAGS flags;
+            public DISPLAYCONFIG_VIDEO_OUTPUT_TECHNOLOGY outputTechnology;
+            public ushort edidManufactureId;
+            public ushort edidProductCodeId;
+            public uint connectorInstance;
+            public fixed char monitorFriendlyDeviceName[64];
+            public fixed char monitorDevicePath[128];
+        }
+
+        internal struct DISPLAYCONFIG_SOURCE_DEVICE_NAME
+        {
+            public DISPLAYCONFIG_DEVICE_INFO_HEADER header;
+            public fixed char viewGdiDeviceName[32];
+        }
+
+        [StructLayout(LayoutKind.Explicit)]
+        internal struct DISPLAYCONFIG_GET_ADVANCED_COLOR_INFO
+        {
+            [FieldOffset(0)] public DISPLAYCONFIG_DEVICE_INFO_HEADER header;
+            //union {
+                [FieldOffset(20)] public DummyUnion_struct union;
+                [FieldOffset(20)] public uint value;
+            //}
+
+            [FieldOffset(24)] public DISPLAYCONFIG_COLOR_ENCODING colorEncoding;
+            [FieldOffset(28)] public uint bitsPerColorChannel;
+
+            internal struct DummyUnion_struct {
+                uint _bitfield;
+
+                /// <summary>
+                /// A type of advanced color is supported
+                /// </summary>
+                internal bool advancedColorSupported
+                {
+                    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                    readonly get => (this._bitfield & 0x00000001) != 0;
+                    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                    set => this._bitfield = (uint)(value ? this._bitfield | 0x00000001 : (this._bitfield & unchecked((uint)~0x00000001)));
+                }
+
+                /// <summary>
+                /// A type of advanced color is enabled
+                /// </summary>
+                internal bool advancedColorEnabled
+                {
+                    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                    readonly get => (this._bitfield & 0x00000002) != 0;
+                    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                    set => this._bitfield = (uint)(value ? this._bitfield | 0x00000002 : (this._bitfield & unchecked((uint)~0x00000002)));
+                }
+
+                /// <summary>
+                /// Wide color gamut is enabled
+                /// </summary>
+                internal bool wideColorEnforced
+                {
+                    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                    readonly get => (this._bitfield & 0x00000004) != 0;
+                    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                    set => this._bitfield = (uint)(value ? this._bitfield | 0x00000004 : (this._bitfield & unchecked((uint)~0x00000004)));
+                }
+
+                /// <summary>
+                /// Advanced color is force disabled due to system/OS policy
+                /// </summary>
+                internal bool advancedColorForceDisabled
+                {
+                    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                    readonly get => (this._bitfield & 0x00000004) != 0;
+                    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                    set => this._bitfield = (uint)(value ? this._bitfield | 0x00000004 : (this._bitfield & unchecked((uint)~0x00000004)));
+                }
+
+                internal uint reserved
+                {
+                    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                    readonly get => (byte)((this._bitfield >> 4) & 0x0FFFFFFF);
+                    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                    set
+                    {
+                        global::System.Diagnostics.Debug.Assert(value is <= (uint)268435456L);
+                        this._bitfield = (uint)((this._bitfield & unchecked((uint)~0xFFFFFFF0)) | ((uint)(value & 0x0FFFFFFF) << 4));
+                    }
+                }
+            }
+        }
+
+        [StructLayout(LayoutKind.Explicit)]
+        internal struct DISPLAYCONFIG_GET_ADVANCED_COLOR_INFO_2
+        {
+            [FieldOffset(0)] public DISPLAYCONFIG_DEVICE_INFO_HEADER header;
+            //union
+            //{
+                [FieldOffset(20)] public DummyUnion_struct union;
+                [FieldOffset(20)] public uint value;
+            //}
+
+            [FieldOffset(24)] public DISPLAYCONFIG_COLOR_ENCODING colorEncoding;
+            [FieldOffset(28)] public uint bitsPerColorChannel;
+
+            /// <summary>
+            /// The active color mode for this monitor
+            /// </summary>
+            [FieldOffset(32)] public DISPLAYCONFIG_ADVANCED_COLOR_MODE activeColorMode;
+
+            internal struct DummyUnion_struct
+            {
+                uint _bitfield;
+
+                /// <summary>
+                /// A type of advanced color is supported
+                /// </summary>
+                internal bool advancedColorSupported
+                {
+                    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                    readonly get => (this._bitfield & 0x00000001) != 0;
+                    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                    set => this._bitfield = (uint)(value ? this._bitfield | 0x00000001 : (this._bitfield & unchecked((uint)~0x00000001)));
+                }
+
+                /// <summary>
+                /// A type of advanced color is active (see currentColorMode for the specific advanced color mode)
+                /// </summary>
+                internal bool advancedColorActive
+                {
+                    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                    readonly get => (this._bitfield & 0x00000002) != 0;
+                    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                    set => this._bitfield = (uint)(value ? this._bitfield | 0x00000002 : (this._bitfield & unchecked((uint)~0x00000002)));
+                }
+
+                /// <summary>
+                /// Wide color gamut is enabled
+                /// </summary>
+                internal bool reserved1
+                {
+                    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                    readonly get => (this._bitfield & 0x00000004) != 0;
+                    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                    set => this._bitfield = (uint)(value ? this._bitfield | 0x00000004 : (this._bitfield & unchecked((uint)~0x00000004)));
+                }
+
+                /// <summary>
+                /// System/OS policy is limiting advanced color options (see currentColorMode for the current mode)
+                /// </summary>
+                internal bool advancedColorLimitedByPolicy
+                {
+                    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                    readonly get => (this._bitfield & 0x00000008) != 0;
+                    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                    set => this._bitfield = (uint)(value ? this._bitfield | 0x00000008 : (this._bitfield & unchecked((uint)~0x00000008)));
+                }
+
+                /// <summary>
+                /// HDR is supported
+                /// </summary>
+                internal bool highDynamicRangeSupported
+                {
+                    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                    readonly get => (this._bitfield & 0x00000010) != 0;
+                    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                    set => this._bitfield = (uint)(value ? this._bitfield | 0x00000010 : (this._bitfield & unchecked((uint)~0x00000010)));
+                }
+
+                /// <summary>
+                /// HDR is enabled by the user (but may not be active)
+                /// </summary>
+                internal bool highDynamicRangeUserEnabled
+                {
+                    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                    readonly get => (this._bitfield & 0x00000020) != 0;
+                    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                    set => this._bitfield = (uint)(value ? this._bitfield | 0x00000020 : (this._bitfield & unchecked((uint)~0x00000020)));
+                }
+
+                /// <summary>
+                /// Wide color gamut is supported
+                /// </summary>
+                internal bool wideColorSupported
+                {
+                    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                    readonly get => (this._bitfield & 0x00000040) != 0;
+                    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                    set => this._bitfield = (uint)(value ? this._bitfield | 0x00000040 : (this._bitfield & unchecked((uint)~0x00000040)));
+                }
+
+                /// <summary>
+                /// Wide color gamut is enabled by the user (but may not be active)
+                /// </summary>
+                internal bool wideColorUserEnabled
+                {
+                    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                    readonly get => (this._bitfield & 0x00000080) != 0;
+                    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                    set => this._bitfield = (uint)(value ? this._bitfield | 0x00000080 : (this._bitfield & unchecked((uint)~0x00000080)));
+                }
+
+                internal uint reserved
+                {
+                    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                    readonly get => (byte)((this._bitfield >> 8) & 0x00FFFFFF);
+                    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                    set
+                    {
+                        global::System.Diagnostics.Debug.Assert(value is <= (uint)16777216L);
+                        this._bitfield = (uint)((this._bitfield & unchecked((uint)~0xFFFFFF00)) | ((uint)(value & 0x00FFFFFF) << 8));
+                    }
+                }
+            }
+        }
+
+        internal struct DISPLAYCONFIG_SDR_WHITE_LEVEL
+        {
+            public DISPLAYCONFIG_DEVICE_INFO_HEADER header;
+
+            // SDRWhiteLevel represents a multiplier for standard SDR white
+            // peak value i.e. 80 nits represented as fixed point.
+            // To get value in nits use the following conversion
+            // SDRWhiteLevel in nits = (SDRWhiteLevel / 1000 ) * 80
+            public uint SDRWhiteLevel;
+        }
+
+        [DllImport("user32.dll", SetLastError = false)]
+        internal static extern int DisplayConfigGetDeviceInfo(ref DISPLAYCONFIG_DEVICE_INFO_HEADER requestPacket);
+
+        [DllImport("user32.dll", SetLastError = false)]
+        internal static extern int DisplayConfigGetDeviceInfo(ref DISPLAYCONFIG_TARGET_DEVICE_NAME requestPacket);
+
+        [DllImport("user32.dll", SetLastError = false)]
+        internal static extern int DisplayConfigGetDeviceInfo(ref DISPLAYCONFIG_GET_ADVANCED_COLOR_INFO requestPacket);
+
+        [DllImport("user32.dll", SetLastError = false)]
+        internal static extern int DisplayConfigGetDeviceInfo(ref DISPLAYCONFIG_GET_ADVANCED_COLOR_INFO_2 requestPacket);
+
+        [DllImport("user32.dll", SetLastError = false)]
+        internal static extern int DisplayConfigGetDeviceInfo(ref DISPLAYCONFIG_SDR_WHITE_LEVEL requestPacket);
+
+        [DllImport("user32.dll", SetLastError = false)]
+        internal static extern uint GetDoubleClickTime();
+
+        [DllImport("kernel32.dll", CharSet =  CharSet.Auto, SetLastError = true)]
+        internal static extern IntPtr /* HANDLE */ CreateEvent(
+            SECURITY_ATTRIBUTES* lpEventAttributes,
+            [MarshalAs(UnmanagedType.Bool)] bool bManualReset,
+            [MarshalAs(UnmanagedType.Bool)] bool bInitialState,
+            string? lpName);
+
+        [DllImport("kernel32.dll", SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static extern bool ResetEvent(IntPtr /* HANDLE */ hEvent);
+
+        [DllImport("kernel32.dll", SetLastError = true)]
+        internal static extern WaitResult WaitForSingleObject(IntPtr /* HANDLE */ hHandle, uint dwMilliseconds);
+
+        [DllImport("kernel32.dll", SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static extern bool CloseHandle(IntPtr /* HANDLE */ hObject);
+
+        internal static uint MsgWaitForMultipleObjects(uint nCount, ReadOnlySpan<IntPtr> /* const HANDLE* */ pHandles, [MarshalAs(UnmanagedType.Bool)] bool fWaitAll, uint dwMilliseconds, QS dwWakeMask)
+        {
+            fixed (IntPtr* handles = pHandles)
+            {
+                return MsgWaitForMultipleObjects(nCount, handles, fWaitAll, dwMilliseconds, dwWakeMask);
+            }
+
+            [DllImport("user32.dll", SetLastError = true)]
+            static extern uint MsgWaitForMultipleObjects(uint nCount, IntPtr* /* const HANDLE* */ pHandles, [MarshalAs(UnmanagedType.Bool)] bool fWaitAll, uint dwMilliseconds, QS dwWakeMask);
+        }
+
+        internal static uint WaitForMultipleObjects(uint nCount, ReadOnlySpan<IntPtr> /* const HANDLE* */ pHandles, [MarshalAs(UnmanagedType.Bool)] bool fWaitAll, uint dwMilliseconds)
+        {
+            fixed (IntPtr* handles = pHandles)
+            {
+                return WaitForMultipleObjects(nCount, handles, fWaitAll, dwMilliseconds);
+            }
+
+            [DllImport("kernel32.dll", SetLastError = true)]
+            static extern uint WaitForMultipleObjects(uint nCount, IntPtr* /* const HANDLE* */ lpHandles, [MarshalAs(UnmanagedType.Bool)] bool bWaitAll, uint dwMilliseconds);
+        }
+
+        [DllImport("user32.dll", SetLastError = false)]
+        internal static extern uint GetQueueStatus(QS flags);
+
+        internal struct MOUSEMOVEPOINT
+        {
+            public int x;
+            public int y;
+            public uint time;
+            public nuint dwExtraInfo;
+        }
+
+        [DllImport("user32.dll", SetLastError = true)]
+        internal static unsafe extern int GetMouseMovePointsEx(uint cbSize, ref MOUSEMOVEPOINT lppt, MOUSEMOVEPOINT* lpptBuf, int nBufPoints, GMMP resolution);
+
+        [DllImport("kernel32.dll", SetLastError = false)]
+        internal static extern uint GetTickCount();
     }
-
 #pragma warning restore CS0649 // Field 'field' is never assigned to, and will always have its default value 'value'
 }

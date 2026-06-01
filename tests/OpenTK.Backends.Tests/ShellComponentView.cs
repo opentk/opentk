@@ -29,21 +29,33 @@ namespace OpenTK.Backends.Tests
         bool useImmersiveDarkMode = false;
 
         int cornerPreferenceIndex = 0;
+        Platform.Native.Windows.ShellComponent.ProgressMode win32ProgressMode = Platform.Native.Windows.ShellComponent.ProgressMode.NoProgress;
+        Platform.Native.macOS.MacOSShellComponent.ProgressMode macOSProgressMode = Platform.Native.macOS.MacOSShellComponent.ProgressMode.NoProgress;
+        
+        float progressCompletion = 0;
 
         readonly static Platform.Native.Windows.ShellComponent.CornerPreference[] CornerPreferences = Enum.GetValues<Platform.Native.Windows.ShellComponent.CornerPreference>();
         readonly static string[] CornerPreferenceNames = Enum.GetNames<Platform.Native.Windows.ShellComponent.CornerPreference>();
-        
+
+        bool UseCustomReason = false;
+        string SSDisableReason = "";
+
         public override void Paint(double deltaTime)
         {
             base.Paint(deltaTime);
 
             ImGui.SeparatorText("Screen saver");
 
-            if (ImGui.Button("Disable"))
-                Toolkit.Shell.AllowScreenSaver(false);
-            ImGui.SameLine();
-            if (ImGui.Button("Enable"))
-                Toolkit.Shell.AllowScreenSaver(true);
+            bool ssAllowed = Toolkit.Shell.IsScreenSaverAllowed();
+            if (ImGui.Checkbox("Screen saver allowed", ref ssAllowed))
+            {
+                Toolkit.Shell.AllowScreenSaver(ssAllowed, UseCustomReason ? SSDisableReason : null);
+            }
+
+            ImGui.Checkbox("Custom disable reason", ref UseCustomReason);
+            ImGui.BeginDisabled(UseCustomReason == false);
+            ImGui.InputText("Screen saver disable reason", ref SSDisableReason, 128);
+            ImGui.EndDisabled();
 
             BatteryStatus status = Toolkit.Shell.GetBatteryInfo(out BatteryInfo batteryInfo);
             string statusStr = status switch
@@ -144,6 +156,29 @@ namespace OpenTK.Backends.Tests
                         {
                             winShell.SetWindowCornerPreference(Program.Window, CornerPreferences[cornerPreferenceIndex]);
                             Program.Logger.LogInfo($"ShellComponent.SetWindowCornerPreference({CornerPreferenceNames[cornerPreferenceIndex]})");
+                        }
+
+                        bool updateProgress = false;
+                        updateProgress |= ImGuiUtils.EnumCombo("Progress mode", ref win32ProgressMode);
+                        updateProgress |= ImGui.SliderFloat("Progess completion", ref progressCompletion, 0, 1);
+                        if (updateProgress)
+                        {
+                            winShell.SetProgressStatus(Program.Window, win32ProgressMode, progressCompletion);
+                        }
+
+                        ImGui.EndTabItem();
+                    }
+                }
+                else if (Toolkit.Shell is Platform.Native.macOS.MacOSShellComponent macosShell)
+                {
+                    if (ImGui.BeginTabItem("macOS"))
+                    {
+                        bool updateProgress = false;
+                        updateProgress |= ImGuiUtils.EnumCombo("Progress mode", ref macOSProgressMode);
+                        updateProgress |= ImGui.SliderFloat("Progess completion", ref progressCompletion, 0, 1);
+                        if (updateProgress)
+                        {
+                            macosShell.SetProgressStatus(Program.Window, macOSProgressMode, progressCompletion);
                         }
 
                         ImGui.EndTabItem();

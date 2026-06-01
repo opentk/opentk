@@ -256,6 +256,92 @@ module Vector2 =
             Assert.Equal(r2, r3)
 
         [<Property>]
+        let ``Vector2-Matrix2x3 multiplication is the same as vector/column multiplication and summation`` (a : Matrix2x3, b : Vector2) =
+            let res = b * a;
+
+            let c1 = b.X * a.M11 + b.Y * a.M21
+            let c2 = b.X * a.M12 + b.Y * a.M22
+            let c3 = b.X * a.M13 + b.Y * a.M23
+
+            let exp = Vector3(c1, c2, c3)
+
+            Assert.Equal(exp, res)
+
+        [<Property>]
+        let ``Vector2-Matrix2x3 multiplication is consistent across overloads`` (a : Matrix2x3, b : Vector2) =
+            let r1 = b * a;
+            let r2 = Vector2.TransformThreeDimensionsRow(b, a);
+            let r3 = Vector2.TransformThreeDimensionsRow(&b, &a);
+
+            Assert.Equal(r1, r2)
+            Assert.Equal(r2, r3)
+
+        [<Property>]
+        let ``Matrix3x2-Vector2 multiplication is the same as vector/column multiplication and summation`` (a : Matrix3x2, b : Vector2) =
+            let res = a * b;
+
+            let c1 = b.X * a.M11 + b.Y * a.M12
+            let c2 = b.X * a.M21 + b.Y * a.M22
+            let c3 = b.X * a.M31 + b.Y * a.M32
+
+            let exp = Vector3(c1, c2, c3)
+
+            Assert.Equal(exp, res)
+
+        [<Property>]
+        let ``Matrix2x3-Vector2 multiplication is consistent across overloads`` (a : Matrix3x2, b : Vector2) =
+            let r1 = a * b;
+            let r2 = Vector2.TransformThreeDimensionsColumn(a, b);
+            let r3 = Vector2.TransformThreeDimensionsColumn(&a, &b);
+
+            Assert.Equal(r1, r2)
+            Assert.Equal(r2, r3)
+
+        [<Property>]
+        let ``Vector2-Matrix2x4 multiplication is the same as vector/column multiplication and summation`` (a : Matrix2x4, b : Vector2) =
+            let res = b * a;
+
+            let c1 = b.X * a.M11 + b.Y * a.M21
+            let c2 = b.X * a.M12 + b.Y * a.M22
+            let c3 = b.X * a.M13 + b.Y * a.M23
+            let c4 = b.X * a.M14 + b.Y * a.M24
+
+            let exp = Vector4(c1, c2, c3, c4)
+
+            Assert.Equal(exp, res)
+
+        [<Property>]
+        let ``Vector2-Matrix2x4 multiplication is consistent across overloads`` (a : Matrix2x4, b : Vector2) =
+            let r1 = b * a;
+            let r2 = Vector2.TransformFourDimensionsRow(b, a);
+            let r3 = Vector2.TransformFourDimensionsRow(&b, &a);
+
+            Assert.Equal(r1, r2)
+            Assert.Equal(r2, r3)
+
+        [<Property>]
+        let ``Matrix4x2-Vector2 multiplication is the same as vector/column multiplication and summation`` (a : Matrix4x2, b : Vector2) =
+            let res = a * b;
+
+            let c1 = b.X * a.M11 + b.Y * a.M12
+            let c2 = b.X * a.M21 + b.Y * a.M22
+            let c3 = b.X * a.M31 + b.Y * a.M32
+            let c4 = b.X * a.M41 + b.Y * a.M42
+
+            let exp = Vector4(c1, c2, c3, c4)
+
+            Assert.Equal(exp, res)
+
+        [<Property>]
+        let ``Matrix4x2-Vector2 multiplication is consistent across overloads`` (a : Matrix4x2, b : Vector2) =
+            let r1 = a * b;
+            let r2 = Vector2.TransformFourDimensionsColumn(a, b);
+            let r3 = Vector2.TransformFourDimensionsColumn(&a, &b);
+
+            Assert.Equal(r1, r2)
+            Assert.Equal(r2, r3)
+
+        [<Property>]
         let ``Static Vector2 multiplication method is the same as component multiplication`` (a : Vector2, b : Vector2) =
 
             let v1 = Vector2(a.X * b.X, a.Y * b.Y)
@@ -694,3 +780,46 @@ module Vector2 =
 
             Assert.Equal(expectedSize, Vector2.SizeInBytes)
             Assert.Equal(expectedSize, Marshal.SizeOf(Vector2()))
+
+    [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
+    module Comparison = 
+        //
+        [<Property>]
+        let ``Greater than between two vectors returns the correct boolean vector`` (v1 : Vector2, v2 : Vector2) =
+            let gt = Vector2.GreaterThan(&v1, &v2)
+
+            let xgt = v1.X > v2.X;
+            let ygt = v1.Y > v2.Y;
+
+            Assert.Equal(gt.X, xgt)
+            Assert.Equal(gt.Y, ygt)
+
+        [<Property>]
+        let ``Greater than or equal between two vectors returns the correct boolean vector`` (v1 : Vector2, v2 : Vector2) =
+            let gt = Vector2.GreaterThanOrEqual(&v1, &v2)
+
+            let xgt = v1.X >= v2.X;
+            let ygt = v1.Y >= v2.Y;
+
+            Assert.Equal(gt.X, xgt)
+            Assert.Equal(gt.Y, ygt)
+
+        [<Property>]
+        let ``Less than between two vectors returns the correct boolean vector`` (v1 : Vector2, v2 : Vector2) =
+            let lt = Vector2.LessThan(&v1, &v2)
+
+            let xgt = v1.X < v2.X;
+            let ygt = v1.Y < v2.Y;
+
+            Assert.Equal(lt.X, xgt)
+            Assert.Equal(lt.Y, ygt)
+
+        [<Property>]
+        let ``Less than or equal between two vectors returns the correct boolean vector`` (v1 : Vector2, v2 : Vector2) =
+            let lt = Vector2.LessThanOrEqual(&v1, &v2)
+
+            let xgt = v1.X <= v2.X;
+            let ygt = v1.Y <= v2.Y;
+
+            Assert.Equal(lt.X, xgt)
+            Assert.Equal(lt.Y, ygt)

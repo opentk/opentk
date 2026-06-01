@@ -27,18 +27,28 @@ namespace OpenTK.Platform.Native.SDL
         }
 
         /// <inheritdoc/>
+        public void Uninitialize()
+        {
+        }
+
+        /// <inheritdoc/>
         public bool CanLoadSystemIcons => false;
 
         /// <inheritdoc/>
         public IconHandle Create(SystemIconType systemIcon)
         {
-            throw new NotSupportedException("SDL2 can't load system icons.");
+            throw new PlatformNotSupportedException("SDL2 can't load system icons.");
         }
 
         /// <inheritdoc/>
         public unsafe IconHandle Create(int width, int height, ReadOnlySpan<byte> data)
         {
             SDLIcon icon = new SDLIcon();
+
+            if (width < 0) throw new ArgumentOutOfRangeException($"Width cannot be negative. Value: {width}");
+            if (height < 0) throw new ArgumentOutOfRangeException($"Height cannot be negative. Value: {height}");
+
+            if (data.Length < width * height * 4) throw new ArgumentException($"The given span is too small. It must be at least {width * height * 4} long. Was: {data.Length}");
 
             SDL_Surface* surface = SDL_CreateRGBSurfaceWithFormat(0, width, height, 32, SDL_PixelFormatEnum.SDL_PIXELFORMAT_ABGR8888);
 

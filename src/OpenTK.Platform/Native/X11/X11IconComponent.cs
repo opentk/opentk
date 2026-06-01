@@ -35,20 +35,30 @@ namespace OpenTK.Platform.Native.X11
         }
 
         /// <inheritdoc/>
+        public void Uninitialize()
+        {
+        }
+
+        /// <inheritdoc/>
         public bool CanLoadSystemIcons => false;
 
         /// <inheritdoc/>
         public IconHandle Create(SystemIconType systemIcon)
         {
             // FIXME: Is there some way to get system cursors?
-            throw new NotSupportedException("X11 doesn't support system icons!");
+            throw new PlatformNotSupportedException("X11 doesn't support system icons!");
         }
 
         /// <inheritdoc/>
         public IconHandle Create(int width, int height, ReadOnlySpan<byte> data)
         {
+            if (width < 0) throw new ArgumentOutOfRangeException($"Width cannot be negative. Value: {width}");
+            if (height < 0) throw new ArgumentOutOfRangeException($"Height cannot be negative. Value: {height}");
+
+            if (data.Length < width * height * 4) throw new ArgumentException($"The given span is too small. It must be at least {width * height * 4} long. Was: {data.Length}");
+
             IconImage image = new IconImage(width, height, data.ToArray());
-            IconImage[] images = new IconImage[1] { image };
+            IconImage[] images = [image];
 
             XIconHandle xicon = new XIconHandle(width, height, images);
             

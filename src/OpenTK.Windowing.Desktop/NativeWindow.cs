@@ -9,12 +9,13 @@ using System.Reflection;
 using System.Runtime.ExceptionServices;
 using System.Runtime.InteropServices;
 using System.Threading;
-using System.Threading.Tasks;
 using OpenTK.Core;
 using OpenTK.Mathematics;
 using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Common.Input;
 using OpenTK.Windowing.GraphicsLibraryFramework;
+
+using Monitor = OpenTK.Windowing.GraphicsLibraryFramework.Monitor;
 
 namespace OpenTK.Windowing.Desktop
 {
@@ -275,31 +276,19 @@ namespace OpenTK.Windowing.Desktop
         /// </summary>
         public IGLFWGraphicsContext Context { get; }
 
-        private MonitorHandle _currentMonitor;
-
         /// <summary>
-        /// Gets or sets the current <see cref="MonitorHandle"/>.
+        /// Gets the current <see cref="MonitorInfo"/> of the monitor that the window is currently on.
+        /// To make the window fullscreen use <see cref="MakeFullscreen(MonitorHandle, int?, int?, int?)"/> or <see cref="WindowState"/>.
         /// </summary>
-        public unsafe MonitorHandle CurrentMonitor
+        /// <seealso cref="MakeFullscreen(MonitorHandle, int?, int?, int?)"/>
+        /// <seealso cref="WindowState"/>
+        public unsafe MonitorInfo CurrentMonitor
         {
-            get => _currentMonitor;
+            get => Monitors.GetMonitorFromWindow(WindowPtr);
 
+            [Obsolete("Use MakeFullscreen to set the current monitor. Setting this property does nothing anymore.")]
             set
             {
-                GraphicsLibraryFramework.Monitor* monitor = value.ToUnsafePtr<GraphicsLibraryFramework.Monitor>();
-                VideoMode* mode = GLFW.GetVideoMode(monitor);
-                Vector2i location = ClientLocation;
-                Vector2i size = ClientSize;
-                GLFW.SetWindowMonitor(
-                    WindowPtr,
-                    monitor,
-                    location.X,
-                    location.Y,
-                    size.X,
-                    size.Y,
-                    mode->RefreshRate);
-
-                _currentMonitor = value;
             }
         }
 
@@ -373,13 +362,13 @@ namespace OpenTK.Windowing.Desktop
                 // Set the new window state before any potential callback is called,
                 // so that the new state is available in for example OnResize.
                 // - Noggin_bops 2023-09-25
-                var previousWindowState = _windowState;
+                WindowState previousWindowState = _windowState;
                 _windowState = value;
 
                 if (previousWindowState == WindowState.Fullscreen && value != WindowState.Fullscreen)
                 {
                     // We are going from fullscreen to something else.
-                    GLFW.SetWindowMonitor(WindowPtr, null, _cachedWindowLocation.X, _cachedWindowLocation.Y, _cachedWindowClientSize.X, _cachedWindowClientSize.Y, 0);
+                    GLFW.SetWindowMonitor(WindowPtr, null, _cachedWindowLocation.X, _cachedWindowLocation.Y, _cachedWindowClientSize.X, _cachedWindowClientSize.Y, GLFW.DontCare);
                 }
 
                 switch (value)
@@ -397,10 +386,13 @@ namespace OpenTK.Windowing.Desktop
                         break;
 
                     case WindowState.Fullscreen:
-                        _cachedWindowClientSize = ClientSize;
-                        _cachedWindowLocation = ClientLocation;
-                        var monitor = CurrentMonitor.ToUnsafePtr<GraphicsLibraryFramework.Monitor>();
-                        var modePtr = GLFW.GetVideoMode(monitor);
+                        if (previousWindowState != WindowState.Fullscreen)
+                        {
+                            _cachedWindowClientSize = ClientSize;
+                            _cachedWindowLocation = ClientLocation;
+                        }
+                        Monitor* monitor = CurrentMonitor.Handle.ToUnsafePtr<Monitor>();
+                        VideoMode* modePtr = GLFW.GetVideoMode(monitor);
                         GLFW.SetWindowMonitor(WindowPtr, monitor, 0, 0, modePtr->Width, modePtr->Height, modePtr->RefreshRate);
                         break;
                 }
@@ -418,7 +410,7 @@ namespace OpenTK.Windowing.Desktop
 
             set
             {
-                GLFW.GetVersion(out var major, out var minor, out _);
+                GLFW.GetVersion(out int major, out int minor, out _);
 
                 // It isn't possible to implement this in versions of GLFW older than 3.3,
                 // as SetWindowAttrib didn't exist before then.
@@ -443,6 +435,40 @@ namespace OpenTK.Windowing.Desktop
                 }
 
                 _windowBorder = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets if the window should be transparent to mouse input.
+        /// This only works for windows with window border set to <see cref="WindowBorder.Hidden"/>,
+        /// other borders will behave differently between platforms.
+        /// </summary>
+        public unsafe bool MousePassthrough
+        {
+            get
+            {
+                return GLFW.GetWindowAttrib(WindowPtr, WindowAttributeGetBool.MousePassthrough);
+            }
+
+            set
+            {
+                GLFW.SetWindowAttrib(WindowPtr, WindowAttribute.MousePassthrough, value);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets if this window will be displayed on top of all other windows.
+        /// </summary>
+        public unsafe bool AlwaysOnTop
+        {
+            get
+            {
+                return GLFW.GetWindowAttrib(WindowPtr, WindowAttributeGetBool.Floating);
+            }
+
+            set
+            {
+                GLFW.SetWindowAttrib(WindowPtr, WindowAttribute.Floating, value);
             }
         }
 
@@ -651,7 +677,7 @@ namespace OpenTK.Windowing.Desktop
 
                 unsafe
                 {
-                    var oldCursor = _glfwCursor;
+                    Cursor* oldCursor = _glfwCursor;
                     _glfwCursor = null;
 
                     // Create the new GLFW cursor
@@ -660,7 +686,7 @@ namespace OpenTK.Windowing.Desktop
                         // User provided mouse cursor.
                         fixed (byte* ptr = value.Data)
                         {
-                            var cursorImg = new GraphicsLibraryFramework.Image(value.Width, value.Height, ptr);
+                            GraphicsLibraryFramework.Image cursorImg = new GraphicsLibraryFramework.Image(value.Width, value.Height, ptr);
                             _glfwCursor = GLFW.CreateCursor(cursorImg, value.X, value.Y);
                         }
                     }
@@ -701,6 +727,8 @@ namespace OpenTK.Windowing.Desktop
                         return CursorState.Hidden;
                     case CursorModeValue.CursorDisabled:
                         return CursorState.Grabbed;
+                    case CursorModeValue.CursorCaptured:
+                        return CursorState.Confined;
                     default:
                         throw new ArgumentOutOfRangeException();
                 }
@@ -719,6 +747,9 @@ namespace OpenTK.Windowing.Desktop
                         break;
                     case CursorState.Grabbed:
                         inputMode = CursorModeValue.CursorDisabled;
+                        break;
+                    case CursorState.Confined:
+                        inputMode = CursorModeValue.CursorCaptured;
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();
@@ -764,13 +795,13 @@ namespace OpenTK.Windowing.Desktop
         /// Initializes a new instance of the <see cref="NativeWindow"/> class.
         /// </summary>
         /// <param name="settings">The <see cref="NativeWindow"/> related settings.</param>
+        /// <exception cref="InvalidOperationException">If GLFW fails to create a window.</exception>
+        /// <exception cref="OutOfMemoryException">If GLFW can't create a window because we're out of memory.</exception>
         public unsafe NativeWindow(NativeWindowSettings settings)
         {
             GLFWProvider.EnsureInitialized();
 
             _title = settings.Title;
-
-            _currentMonitor = settings.CurrentMonitor;
 
             switch (settings.WindowBorder)
             {
@@ -787,7 +818,7 @@ namespace OpenTK.Windowing.Desktop
                     break;
             }
 
-            var isOpenGl = false;
+            bool isOpenGl = false;
             API = settings.API;
             switch (settings.API)
             {
@@ -894,6 +925,30 @@ namespace OpenTK.Windowing.Desktop
                 WindowPtr = GLFW.CreateWindow(settings.ClientSize.X, settings.ClientSize.Y, _title, null, (Window*)(settings.SharedContext?.WindowPtr ?? IntPtr.Zero));
             }
 
+            if (WindowPtr == null)
+            {
+                ErrorCode error = GLFW.GetError(out string desc);
+                switch (error)
+                {
+                    case ErrorCode.NotInitialized:
+                        throw new InvalidOperationException($"GLFW must be initialized before creating a window. This is an OpenTK bug. '{desc}'");
+                    case ErrorCode.OutOfMemory:
+                        throw new OutOfMemoryException($"GLFW couldn't create window, out of memory. {desc}");
+                    case ErrorCode.ApiUnavailable:
+                        throw new InvalidOperationException($"GLFW API unavailable: {desc}");
+                    case ErrorCode.VersionUnavailable:
+                        throw new InvalidOperationException($"GLFW Version unavailable: {desc}");
+                    case ErrorCode.FormatUnavailable:
+                        throw new InvalidOperationException($"GLFW Format unavailable: {desc}");
+                    case ErrorCode.NoWindowContext:
+                        throw new InvalidOperationException($"GLFW no window context: {desc}");
+                    case ErrorCode.PlatformError:
+                        throw new InvalidOperationException($"GLFW platform error: {desc}");
+                    default:
+                        throw new InvalidOperationException($"GLFW {error}: {desc}");
+                }
+            }
+
             // For Vulkan, we need to pass ContextAPI.NoAPI, otherwise we will get an exception.
             // See https://github.com/glfw/glfw/blob/56a4cb0a3a2c7a44a2fd8ab3335adf915e19d30c/src/vulkan.c#L320
             //
@@ -933,7 +988,18 @@ namespace OpenTK.Windowing.Desktop
             InitialiseJoystickStates();
 
             _isFocused = settings.StartFocused;
-            if (settings.StartFocused)
+            // Workaround for glfw issue: https://github.com/glfw/glfw/issues/1300
+            // where glfwFocusWindow makes the window visible on macOS even without calling glfwShowWindow.
+            // This is here to make sure the window actually starts hidden.
+            // - Noggin_bops 2024-11-25
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+            {
+                if (_isVisible == false)
+                {
+                    _isFocused = false;
+                }
+            }
+            if (_isFocused)
             {
                 Focus();
             }
@@ -958,8 +1024,6 @@ namespace OpenTK.Windowing.Desktop
             _maximumClientize = settings.MaximumClientSize;
 
             GLFW.SetWindowSizeLimits(WindowPtr, _minimumClientSize?.X ?? GLFW.DontCare, _minimumClientSize?.Y ?? GLFW.DontCare, _maximumClientize?.X ?? GLFW.DontCare, _maximumClientize?.Y ?? GLFW.DontCare);
-
-            GLFW.GetWindowPos(WindowPtr, out var x, out var y);
 
             GLFW.GetCursorPos(WindowPtr, out var mousex, out var mousey);
             _lastReportedMousePos = new Vector2((float)mousex, (float)mousey);
@@ -1117,8 +1181,9 @@ namespace OpenTK.Windowing.Desktop
                     GLFW.GetJoystickAxesRaw(i, out var axisCount);
                     GLFW.GetJoystickButtonsRaw(i, out var buttonCount);
                     var name = GLFW.GetJoystickName(i);
+                    var guid = GLFW.GetJoystickGUID(i);
 
-                    _joystickStates[i] = new JoystickState(hatCount, axisCount, buttonCount, i, name);
+                    _joystickStates[i] = new JoystickState(hatCount, axisCount, buttonCount, i, name, guid);
                 }
             }
         }
@@ -1375,8 +1440,9 @@ namespace OpenTK.Windowing.Desktop
                     GLFW.GetJoystickAxesRaw(joy, out var axisCount);
                     GLFW.GetJoystickButtonsRaw(joy, out var buttonCount);
                     var name = GLFW.GetJoystickName(joy);
+                    var guid = GLFW.GetJoystickGUID(joy);
 
-                    _joystickStates[joy] = new JoystickState(hatCount, axisCount, buttonCount, joy, name);
+                    _joystickStates[joy] = new JoystickState(hatCount, axisCount, buttonCount, joy, name, guid);
                 }
                 else
                 {
@@ -1941,15 +2007,23 @@ namespace OpenTK.Windowing.Desktop
             {
             }
 
-            if (GLFWProvider.IsOnMainThread)
+            // If glfw fails to create the window in the ctor
+            // we are going to be finalized eventually, and then
+            // we don't want to crash trying to dispose a window
+            // we never managed to create.
+            // - Noggin_bops 2024-11-18
+            if (WindowPtr != null)
             {
-                UnregisterWindowCallbacks();
-                GLFW.DestroyWindow(WindowPtr);
-                Exists = false;
-            }
-            else
-            {
-                throw new GLFWException("You can only dispose windows on the main thread. The window needs to be disposed as it cannot safely be disposed in the finalizer.");
+                if (GLFWProvider.IsOnMainThread)
+                {
+                    UnregisterWindowCallbacks();
+                    GLFW.DestroyWindow(WindowPtr);
+                    Exists = false;
+                }
+                else
+                {
+                    throw new GLFWException("You can only dispose windows on the main thread. The window needs to be disposed as it cannot safely be disposed in the finalizer.");
+                }
             }
 
             _disposedValue = true;
@@ -2035,6 +2109,30 @@ namespace OpenTK.Windowing.Desktop
 
             // Actually move the window.
             ClientRectangle = new Box2i(x, y, x + newSize.X, y + newSize.Y);
+        }
+
+        /// <summary>
+        /// Make the window fullscreen with the specified resolution and refresh rate.
+        /// This function is meant to provide greater control than <see cref="WindowState"/> and <see cref="CurrentMonitor"/> when making the window fullscreen.
+        /// </summary>
+        /// <param name="monitor">The monitor on which to make the window fullscreen.</param>
+        /// <param name="horizontalResolution">The horizontal resolution to switch the screen to, or <see langword="null"/> to use the monitor resolution.</param>
+        /// <param name="verticalResolution">The vertical resoltion to switch the screen to, or <see langword="null"/> to use the monitor resolution.</param>
+        /// <param name="refreshRate">The refresh rate to use, or <see langword="null"/> to not change refresh rate.</param>
+        /// <seealso cref="CurrentMonitor"/>
+        /// <seealso cref="WindowState"/>
+        public unsafe void MakeFullscreen(MonitorHandle monitor, int? horizontalResolution = null, int? verticalResolution = null, int? refreshRate = null)
+        {
+            if (_windowState != WindowState.Fullscreen)
+            {
+                _cachedWindowClientSize = ClientSize;
+                _cachedWindowLocation = ClientLocation;
+            }
+            _windowState = WindowState.Fullscreen;
+            Monitor* monitorPtr = monitor.ToUnsafePtr<Monitor>();
+            GLFW.GetMonitorPos(monitorPtr, out int x, out int y);
+            VideoMode* mode = GLFW.GetVideoMode(monitorPtr);
+            GLFW.SetWindowMonitor(WindowPtr, monitorPtr, x, y, horizontalResolution ?? mode->Width, verticalResolution ?? mode->Height, refreshRate ?? -1);
         }
     }
 }

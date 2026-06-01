@@ -1,7 +1,8 @@
-// This file is auto generated, do not edit. Generated: 2024-09-24 18:01:57 GMT+02:00
+// This file is auto generated, do not edit.
 using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using OpenTK.Core.Native;
 using OpenTK.Mathematics;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
@@ -231,13 +232,11 @@ namespace OpenTK.Graphics.OpenGLES1
             }
         }
         /// <inheritdoc cref="DeleteBuffers(int, int*)"/>
-        public static unsafe void DeleteBuffer(ref readonly int buffer)
+        public static unsafe void DeleteBuffer(int buffer)
         {
             int n = 1;
-            fixed(int* buffers_handle = &buffer)
-            {
-                DeleteBuffers(n, buffers_handle);
-            }
+            int* buffers_handle = &buffer;
+            DeleteBuffers(n, buffers_handle);
         }
         /// <inheritdoc cref="DeleteBuffers(int, int*)"/>
         public static unsafe void DeleteBuffers(int n, ReadOnlySpan<int> buffers)
@@ -264,13 +263,11 @@ namespace OpenTK.Graphics.OpenGLES1
             }
         }
         /// <inheritdoc cref="DeleteTextures(int, int*)"/>
-        public static unsafe void DeleteTexture(ref readonly int texture)
+        public static unsafe void DeleteTexture(int texture)
         {
             int n = 1;
-            fixed(int* textures_handle = &texture)
-            {
-                DeleteTextures(n, textures_handle);
-            }
+            int* textures_handle = &texture;
+            DeleteTextures(n, textures_handle);
         }
         /// <inheritdoc cref="DeleteTextures(int, int*)"/>
         public static unsafe void DeleteTextures(int n, ReadOnlySpan<int> textures)
@@ -303,27 +300,27 @@ namespace OpenTK.Graphics.OpenGLES1
             DrawElements(mode, count, type, indices);
         }
         /// <inheritdoc cref="Fogfv(FogParameter, float*)"/>
-        public static unsafe void Fogf(FogParameter pname, ReadOnlySpan<float> parameters)
+        public static unsafe void Fogf(FogParameter pname, ReadOnlySpan<float> @params)
         {
-            fixed (float* parameters_ptr = parameters)
+            fixed (float* @params_ptr = @params)
             {
-                Fogfv(pname, parameters_ptr);
+                Fogfv(pname, @params_ptr);
             }
         }
         /// <inheritdoc cref="Fogfv(FogParameter, float*)"/>
-        public static unsafe void Fogf(FogParameter pname, float[] parameters)
+        public static unsafe void Fogf(FogParameter pname, float[] @params)
         {
-            fixed (float* parameters_ptr = parameters)
+            fixed (float* @params_ptr = @params)
             {
-                Fogfv(pname, parameters_ptr);
+                Fogfv(pname, @params_ptr);
             }
         }
         /// <inheritdoc cref="Fogfv(FogParameter, float*)"/>
-        public static unsafe void Fogf(FogParameter pname, ref readonly float parameters)
+        public static unsafe void Fogf(FogParameter pname, ref readonly float @params)
         {
-            fixed (float* parameters_ptr = &parameters)
+            fixed (float* @params_ptr = &@params)
             {
-                Fogfv(pname, parameters_ptr);
+                Fogfv(pname, @params_ptr);
             }
         }
         /// <inheritdoc cref="Fogxv(FogPName, int*)"/>
@@ -473,37 +470,37 @@ namespace OpenTK.Graphics.OpenGLES1
             }
         }
         /// <inheritdoc cref="GetBufferParameteriv(BufferTarget, BufferPName, int*)"/>
-        public static unsafe void GetBufferParameteri(BufferTarget target, BufferPName pname, Span<int> parameters)
+        public static unsafe void GetBufferParameteri(BufferTarget target, BufferPName pname, Span<int> @params)
         {
-            fixed (int* parameters_ptr = parameters)
+            fixed (int* @params_ptr = @params)
             {
-                GetBufferParameteriv(target, pname, parameters_ptr);
+                GetBufferParameteriv(target, pname, @params_ptr);
             }
         }
         /// <inheritdoc cref="GetBufferParameteriv(BufferTarget, BufferPName, int*)"/>
-        public static unsafe void GetBufferParameteri(BufferTarget target, BufferPName pname, int[] parameters)
+        public static unsafe void GetBufferParameteri(BufferTarget target, BufferPName pname, int[] @params)
         {
-            fixed (int* parameters_ptr = parameters)
+            fixed (int* @params_ptr = @params)
             {
-                GetBufferParameteriv(target, pname, parameters_ptr);
+                GetBufferParameteriv(target, pname, @params_ptr);
             }
         }
         /// <inheritdoc cref="GetBufferParameteriv(BufferTarget, BufferPName, int*)"/>
         public static unsafe int GetBufferParameteri(BufferTarget target, BufferPName pname)
         {
-            int parameters;
-            int* parameters_ptr = &parameters;
+            int @params;
+            int* @params_ptr = &@params;
             {
-                GetBufferParameteriv(target, pname, parameters_ptr);
+                GetBufferParameteriv(target, pname, @params_ptr);
             }
-            return parameters;
+            return @params;
         }
         /// <inheritdoc cref="GetBufferParameteriv(BufferTarget, BufferPName, int*)"/>
-        public static unsafe void GetBufferParameteri(BufferTarget target, BufferPName pname, out int parameters)
+        public static unsafe void GetBufferParameteri(BufferTarget target, BufferPName pname, out int @params)
         {
-            fixed (int* parameters_ptr = &parameters)
+            fixed (int* @params_ptr = &@params)
             {
-                GetBufferParameteriv(target, pname, parameters_ptr);
+                GetBufferParameteriv(target, pname, @params_ptr);
             }
         }
         /// <inheritdoc cref="GetClipPlanef(ClipPlaneName, float*)"/>
@@ -555,27 +552,27 @@ namespace OpenTK.Graphics.OpenGLES1
             }
         }
         /// <inheritdoc cref="GetFixedv(GetPName, int*)"/>
-        public static unsafe void GetFixed(GetPName pname, Span<int> parameters)
+        public static unsafe void GetFixed(GetPName pname, Span<int> @params)
         {
-            fixed (int* parameters_ptr = parameters)
+            fixed (int* @params_ptr = @params)
             {
-                GetFixedv(pname, parameters_ptr);
+                GetFixedv(pname, @params_ptr);
             }
         }
         /// <inheritdoc cref="GetFixedv(GetPName, int*)"/>
-        public static unsafe void GetFixed(GetPName pname, int[] parameters)
+        public static unsafe void GetFixed(GetPName pname, int[] @params)
         {
-            fixed (int* parameters_ptr = parameters)
+            fixed (int* @params_ptr = @params)
             {
-                GetFixedv(pname, parameters_ptr);
+                GetFixedv(pname, @params_ptr);
             }
         }
         /// <inheritdoc cref="GetFixedv(GetPName, int*)"/>
-        public static unsafe void GetFixed(GetPName pname, ref int parameters)
+        public static unsafe void GetFixed(GetPName pname, ref int @params)
         {
-            fixed (int* parameters_ptr = &parameters)
+            fixed (int* @params_ptr = &@params)
             {
-                GetFixedv(pname, parameters_ptr);
+                GetFixedv(pname, @params_ptr);
             }
         }
         /// <inheritdoc cref="GetFloatv(GetPName, float*)"/>
@@ -647,147 +644,147 @@ namespace OpenTK.Graphics.OpenGLES1
             }
         }
         /// <inheritdoc cref="GetLightfv(LightName, LightParameter, float*)"/>
-        public static unsafe void GetLightf(LightName light, LightParameter pname, Span<float> parameters)
+        public static unsafe void GetLightf(LightName light, LightParameter pname, Span<float> @params)
         {
-            fixed (float* parameters_ptr = parameters)
+            fixed (float* @params_ptr = @params)
             {
-                GetLightfv(light, pname, parameters_ptr);
+                GetLightfv(light, pname, @params_ptr);
             }
         }
         /// <inheritdoc cref="GetLightfv(LightName, LightParameter, float*)"/>
-        public static unsafe void GetLightf(LightName light, LightParameter pname, float[] parameters)
+        public static unsafe void GetLightf(LightName light, LightParameter pname, float[] @params)
         {
-            fixed (float* parameters_ptr = parameters)
+            fixed (float* @params_ptr = @params)
             {
-                GetLightfv(light, pname, parameters_ptr);
+                GetLightfv(light, pname, @params_ptr);
             }
         }
         /// <inheritdoc cref="GetLightfv(LightName, LightParameter, float*)"/>
         public static unsafe float GetLightf(LightName light, LightParameter pname)
         {
-            float parameters;
-            float* parameters_ptr = &parameters;
+            float @params;
+            float* @params_ptr = &@params;
             {
-                GetLightfv(light, pname, parameters_ptr);
+                GetLightfv(light, pname, @params_ptr);
             }
-            return parameters;
+            return @params;
         }
         /// <inheritdoc cref="GetLightfv(LightName, LightParameter, float*)"/>
-        public static unsafe void GetLightf(LightName light, LightParameter pname, out float parameters)
+        public static unsafe void GetLightf(LightName light, LightParameter pname, out float @params)
         {
-            fixed (float* parameters_ptr = &parameters)
+            fixed (float* @params_ptr = &@params)
             {
-                GetLightfv(light, pname, parameters_ptr);
+                GetLightfv(light, pname, @params_ptr);
             }
         }
         /// <inheritdoc cref="GetLightxv(LightName, LightParameter, int*)"/>
-        public static unsafe void GetLightx(LightName light, LightParameter pname, Span<int> parameters)
+        public static unsafe void GetLightx(LightName light, LightParameter pname, Span<int> @params)
         {
-            fixed (int* parameters_ptr = parameters)
+            fixed (int* @params_ptr = @params)
             {
-                GetLightxv(light, pname, parameters_ptr);
+                GetLightxv(light, pname, @params_ptr);
             }
         }
         /// <inheritdoc cref="GetLightxv(LightName, LightParameter, int*)"/>
-        public static unsafe void GetLightx(LightName light, LightParameter pname, int[] parameters)
+        public static unsafe void GetLightx(LightName light, LightParameter pname, int[] @params)
         {
-            fixed (int* parameters_ptr = parameters)
+            fixed (int* @params_ptr = @params)
             {
-                GetLightxv(light, pname, parameters_ptr);
+                GetLightxv(light, pname, @params_ptr);
             }
         }
         /// <inheritdoc cref="GetLightxv(LightName, LightParameter, int*)"/>
         public static unsafe int GetLightx(LightName light, LightParameter pname)
         {
-            int parameters;
-            int* parameters_ptr = &parameters;
+            int @params;
+            int* @params_ptr = &@params;
             {
-                GetLightxv(light, pname, parameters_ptr);
+                GetLightxv(light, pname, @params_ptr);
             }
-            return parameters;
+            return @params;
         }
         /// <inheritdoc cref="GetLightxv(LightName, LightParameter, int*)"/>
-        public static unsafe void GetLightx(LightName light, LightParameter pname, out int parameters)
+        public static unsafe void GetLightx(LightName light, LightParameter pname, out int @params)
         {
-            fixed (int* parameters_ptr = &parameters)
+            fixed (int* @params_ptr = &@params)
             {
-                GetLightxv(light, pname, parameters_ptr);
+                GetLightxv(light, pname, @params_ptr);
             }
         }
         /// <inheritdoc cref="GetMaterialfv(TriangleFace, MaterialParameter, float*)"/>
-        public static unsafe void GetMaterialf(TriangleFace face, MaterialParameter pname, Span<float> parameters)
+        public static unsafe void GetMaterialf(TriangleFace face, MaterialParameter pname, Span<float> @params)
         {
-            fixed (float* parameters_ptr = parameters)
+            fixed (float* @params_ptr = @params)
             {
-                GetMaterialfv(face, pname, parameters_ptr);
+                GetMaterialfv(face, pname, @params_ptr);
             }
         }
         /// <inheritdoc cref="GetMaterialfv(TriangleFace, MaterialParameter, float*)"/>
-        public static unsafe void GetMaterialf(TriangleFace face, MaterialParameter pname, float[] parameters)
+        public static unsafe void GetMaterialf(TriangleFace face, MaterialParameter pname, float[] @params)
         {
-            fixed (float* parameters_ptr = parameters)
+            fixed (float* @params_ptr = @params)
             {
-                GetMaterialfv(face, pname, parameters_ptr);
+                GetMaterialfv(face, pname, @params_ptr);
             }
         }
         /// <inheritdoc cref="GetMaterialfv(TriangleFace, MaterialParameter, float*)"/>
         public static unsafe float GetMaterialf(TriangleFace face, MaterialParameter pname)
         {
-            float parameters;
-            float* parameters_ptr = &parameters;
+            float @params;
+            float* @params_ptr = &@params;
             {
-                GetMaterialfv(face, pname, parameters_ptr);
+                GetMaterialfv(face, pname, @params_ptr);
             }
-            return parameters;
+            return @params;
         }
         /// <inheritdoc cref="GetMaterialfv(TriangleFace, MaterialParameter, float*)"/>
-        public static unsafe void GetMaterialf(TriangleFace face, MaterialParameter pname, out float parameters)
+        public static unsafe void GetMaterialf(TriangleFace face, MaterialParameter pname, out float @params)
         {
-            fixed (float* parameters_ptr = &parameters)
+            fixed (float* @params_ptr = &@params)
             {
-                GetMaterialfv(face, pname, parameters_ptr);
+                GetMaterialfv(face, pname, @params_ptr);
             }
         }
         /// <inheritdoc cref="GetMaterialxv(TriangleFace, MaterialParameter, int*)"/>
-        public static unsafe void GetMaterialx(TriangleFace face, MaterialParameter pname, Span<int> parameters)
+        public static unsafe void GetMaterialx(TriangleFace face, MaterialParameter pname, Span<int> @params)
         {
-            fixed (int* parameters_ptr = parameters)
+            fixed (int* @params_ptr = @params)
             {
-                GetMaterialxv(face, pname, parameters_ptr);
+                GetMaterialxv(face, pname, @params_ptr);
             }
         }
         /// <inheritdoc cref="GetMaterialxv(TriangleFace, MaterialParameter, int*)"/>
-        public static unsafe void GetMaterialx(TriangleFace face, MaterialParameter pname, int[] parameters)
+        public static unsafe void GetMaterialx(TriangleFace face, MaterialParameter pname, int[] @params)
         {
-            fixed (int* parameters_ptr = parameters)
+            fixed (int* @params_ptr = @params)
             {
-                GetMaterialxv(face, pname, parameters_ptr);
+                GetMaterialxv(face, pname, @params_ptr);
             }
         }
         /// <inheritdoc cref="GetMaterialxv(TriangleFace, MaterialParameter, int*)"/>
         public static unsafe int GetMaterialx(TriangleFace face, MaterialParameter pname)
         {
-            int parameters;
-            int* parameters_ptr = &parameters;
+            int @params;
+            int* @params_ptr = &@params;
             {
-                GetMaterialxv(face, pname, parameters_ptr);
+                GetMaterialxv(face, pname, @params_ptr);
             }
-            return parameters;
+            return @params;
         }
         /// <inheritdoc cref="GetMaterialxv(TriangleFace, MaterialParameter, int*)"/>
-        public static unsafe void GetMaterialx(TriangleFace face, MaterialParameter pname, out int parameters)
+        public static unsafe void GetMaterialx(TriangleFace face, MaterialParameter pname, out int @params)
         {
-            fixed (int* parameters_ptr = &parameters)
+            fixed (int* @params_ptr = &@params)
             {
-                GetMaterialxv(face, pname, parameters_ptr);
+                GetMaterialxv(face, pname, @params_ptr);
             }
         }
         /// <inheritdoc cref="GetPointerv(GetPointervPName, void**)"/>
-        public static unsafe void GetPointer(GetPointervPName pname, void** parameters)
+        public static unsafe void GetPointer(GetPointervPName pname, void** @params)
         {
-            GetPointerv(pname, parameters);
+            GetPointerv(pname, @params);
         }
-        /// <inheritdoc cref="GetString(StringName)"/>
+        /// <inheritdoc cref="GetString_(StringName)"/>
         public static unsafe string? GetString(StringName name)
         {
             string? returnValue_str;
@@ -797,255 +794,255 @@ namespace OpenTK.Graphics.OpenGLES1
             return returnValue_str;
         }
         /// <inheritdoc cref="GetTexEnvfv(TextureEnvTarget, TextureEnvParameter, float*)"/>
-        public static unsafe void GetTexEnvf(TextureEnvTarget target, TextureEnvParameter pname, Span<float> parameters)
+        public static unsafe void GetTexEnvf(TextureEnvTarget target, TextureEnvParameter pname, Span<float> @params)
         {
-            fixed (float* parameters_ptr = parameters)
+            fixed (float* @params_ptr = @params)
             {
-                GetTexEnvfv(target, pname, parameters_ptr);
+                GetTexEnvfv(target, pname, @params_ptr);
             }
         }
         /// <inheritdoc cref="GetTexEnvfv(TextureEnvTarget, TextureEnvParameter, float*)"/>
-        public static unsafe void GetTexEnvf(TextureEnvTarget target, TextureEnvParameter pname, float[] parameters)
+        public static unsafe void GetTexEnvf(TextureEnvTarget target, TextureEnvParameter pname, float[] @params)
         {
-            fixed (float* parameters_ptr = parameters)
+            fixed (float* @params_ptr = @params)
             {
-                GetTexEnvfv(target, pname, parameters_ptr);
+                GetTexEnvfv(target, pname, @params_ptr);
             }
         }
         /// <inheritdoc cref="GetTexEnvfv(TextureEnvTarget, TextureEnvParameter, float*)"/>
         public static unsafe float GetTexEnvf(TextureEnvTarget target, TextureEnvParameter pname)
         {
-            float parameters;
-            float* parameters_ptr = &parameters;
+            float @params;
+            float* @params_ptr = &@params;
             {
-                GetTexEnvfv(target, pname, parameters_ptr);
+                GetTexEnvfv(target, pname, @params_ptr);
             }
-            return parameters;
+            return @params;
         }
         /// <inheritdoc cref="GetTexEnvfv(TextureEnvTarget, TextureEnvParameter, float*)"/>
-        public static unsafe void GetTexEnvf(TextureEnvTarget target, TextureEnvParameter pname, out float parameters)
+        public static unsafe void GetTexEnvf(TextureEnvTarget target, TextureEnvParameter pname, out float @params)
         {
-            fixed (float* parameters_ptr = &parameters)
+            fixed (float* @params_ptr = &@params)
             {
-                GetTexEnvfv(target, pname, parameters_ptr);
+                GetTexEnvfv(target, pname, @params_ptr);
             }
         }
         /// <inheritdoc cref="GetTexEnviv(TextureEnvTarget, TextureEnvParameter, int*)"/>
-        public static unsafe void GetTexEnvi(TextureEnvTarget target, TextureEnvParameter pname, Span<int> parameters)
+        public static unsafe void GetTexEnvi(TextureEnvTarget target, TextureEnvParameter pname, Span<int> @params)
         {
-            fixed (int* parameters_ptr = parameters)
+            fixed (int* @params_ptr = @params)
             {
-                GetTexEnviv(target, pname, parameters_ptr);
+                GetTexEnviv(target, pname, @params_ptr);
             }
         }
         /// <inheritdoc cref="GetTexEnviv(TextureEnvTarget, TextureEnvParameter, int*)"/>
-        public static unsafe void GetTexEnvi(TextureEnvTarget target, TextureEnvParameter pname, int[] parameters)
+        public static unsafe void GetTexEnvi(TextureEnvTarget target, TextureEnvParameter pname, int[] @params)
         {
-            fixed (int* parameters_ptr = parameters)
+            fixed (int* @params_ptr = @params)
             {
-                GetTexEnviv(target, pname, parameters_ptr);
+                GetTexEnviv(target, pname, @params_ptr);
             }
         }
         /// <inheritdoc cref="GetTexEnviv(TextureEnvTarget, TextureEnvParameter, int*)"/>
         public static unsafe int GetTexEnvi(TextureEnvTarget target, TextureEnvParameter pname)
         {
-            int parameters;
-            int* parameters_ptr = &parameters;
+            int @params;
+            int* @params_ptr = &@params;
             {
-                GetTexEnviv(target, pname, parameters_ptr);
+                GetTexEnviv(target, pname, @params_ptr);
             }
-            return parameters;
+            return @params;
         }
         /// <inheritdoc cref="GetTexEnviv(TextureEnvTarget, TextureEnvParameter, int*)"/>
-        public static unsafe void GetTexEnvi(TextureEnvTarget target, TextureEnvParameter pname, out int parameters)
+        public static unsafe void GetTexEnvi(TextureEnvTarget target, TextureEnvParameter pname, out int @params)
         {
-            fixed (int* parameters_ptr = &parameters)
+            fixed (int* @params_ptr = &@params)
             {
-                GetTexEnviv(target, pname, parameters_ptr);
+                GetTexEnviv(target, pname, @params_ptr);
             }
         }
         /// <inheritdoc cref="GetTexEnvxv(TextureEnvTarget, TextureEnvParameter, int*)"/>
-        public static unsafe void GetTexEnvx(TextureEnvTarget target, TextureEnvParameter pname, Span<int> parameters)
+        public static unsafe void GetTexEnvx(TextureEnvTarget target, TextureEnvParameter pname, Span<int> @params)
         {
-            fixed (int* parameters_ptr = parameters)
+            fixed (int* @params_ptr = @params)
             {
-                GetTexEnvxv(target, pname, parameters_ptr);
+                GetTexEnvxv(target, pname, @params_ptr);
             }
         }
         /// <inheritdoc cref="GetTexEnvxv(TextureEnvTarget, TextureEnvParameter, int*)"/>
-        public static unsafe void GetTexEnvx(TextureEnvTarget target, TextureEnvParameter pname, int[] parameters)
+        public static unsafe void GetTexEnvx(TextureEnvTarget target, TextureEnvParameter pname, int[] @params)
         {
-            fixed (int* parameters_ptr = parameters)
+            fixed (int* @params_ptr = @params)
             {
-                GetTexEnvxv(target, pname, parameters_ptr);
+                GetTexEnvxv(target, pname, @params_ptr);
             }
         }
         /// <inheritdoc cref="GetTexEnvxv(TextureEnvTarget, TextureEnvParameter, int*)"/>
         public static unsafe int GetTexEnvx(TextureEnvTarget target, TextureEnvParameter pname)
         {
-            int parameters;
-            int* parameters_ptr = &parameters;
+            int @params;
+            int* @params_ptr = &@params;
             {
-                GetTexEnvxv(target, pname, parameters_ptr);
+                GetTexEnvxv(target, pname, @params_ptr);
             }
-            return parameters;
+            return @params;
         }
         /// <inheritdoc cref="GetTexEnvxv(TextureEnvTarget, TextureEnvParameter, int*)"/>
-        public static unsafe void GetTexEnvx(TextureEnvTarget target, TextureEnvParameter pname, out int parameters)
+        public static unsafe void GetTexEnvx(TextureEnvTarget target, TextureEnvParameter pname, out int @params)
         {
-            fixed (int* parameters_ptr = &parameters)
+            fixed (int* @params_ptr = &@params)
             {
-                GetTexEnvxv(target, pname, parameters_ptr);
+                GetTexEnvxv(target, pname, @params_ptr);
             }
         }
         /// <inheritdoc cref="GetTexParameterfv(TextureTarget, GetTextureParameter, float*)"/>
-        public static unsafe void GetTexParameterf(TextureTarget target, GetTextureParameter pname, Span<float> parameters)
+        public static unsafe void GetTexParameterf(TextureTarget target, GetTextureParameter pname, Span<float> @params)
         {
-            fixed (float* parameters_ptr = parameters)
+            fixed (float* @params_ptr = @params)
             {
-                GetTexParameterfv(target, pname, parameters_ptr);
+                GetTexParameterfv(target, pname, @params_ptr);
             }
         }
         /// <inheritdoc cref="GetTexParameterfv(TextureTarget, GetTextureParameter, float*)"/>
-        public static unsafe void GetTexParameterf(TextureTarget target, GetTextureParameter pname, float[] parameters)
+        public static unsafe void GetTexParameterf(TextureTarget target, GetTextureParameter pname, float[] @params)
         {
-            fixed (float* parameters_ptr = parameters)
+            fixed (float* @params_ptr = @params)
             {
-                GetTexParameterfv(target, pname, parameters_ptr);
+                GetTexParameterfv(target, pname, @params_ptr);
             }
         }
         /// <inheritdoc cref="GetTexParameterfv(TextureTarget, GetTextureParameter, float*)"/>
         public static unsafe float GetTexParameterf(TextureTarget target, GetTextureParameter pname)
         {
-            float parameters;
-            float* parameters_ptr = &parameters;
+            float @params;
+            float* @params_ptr = &@params;
             {
-                GetTexParameterfv(target, pname, parameters_ptr);
+                GetTexParameterfv(target, pname, @params_ptr);
             }
-            return parameters;
+            return @params;
         }
         /// <inheritdoc cref="GetTexParameterfv(TextureTarget, GetTextureParameter, float*)"/>
-        public static unsafe void GetTexParameterf(TextureTarget target, GetTextureParameter pname, out float parameters)
+        public static unsafe void GetTexParameterf(TextureTarget target, GetTextureParameter pname, out float @params)
         {
-            fixed (float* parameters_ptr = &parameters)
+            fixed (float* @params_ptr = &@params)
             {
-                GetTexParameterfv(target, pname, parameters_ptr);
+                GetTexParameterfv(target, pname, @params_ptr);
             }
         }
         /// <inheritdoc cref="GetTexParameteriv(TextureTarget, GetTextureParameter, int*)"/>
-        public static unsafe void GetTexParameteri(TextureTarget target, GetTextureParameter pname, Span<int> parameters)
+        public static unsafe void GetTexParameteri(TextureTarget target, GetTextureParameter pname, Span<int> @params)
         {
-            fixed (int* parameters_ptr = parameters)
+            fixed (int* @params_ptr = @params)
             {
-                GetTexParameteriv(target, pname, parameters_ptr);
+                GetTexParameteriv(target, pname, @params_ptr);
             }
         }
         /// <inheritdoc cref="GetTexParameteriv(TextureTarget, GetTextureParameter, int*)"/>
-        public static unsafe void GetTexParameteri(TextureTarget target, GetTextureParameter pname, int[] parameters)
+        public static unsafe void GetTexParameteri(TextureTarget target, GetTextureParameter pname, int[] @params)
         {
-            fixed (int* parameters_ptr = parameters)
+            fixed (int* @params_ptr = @params)
             {
-                GetTexParameteriv(target, pname, parameters_ptr);
+                GetTexParameteriv(target, pname, @params_ptr);
             }
         }
         /// <inheritdoc cref="GetTexParameteriv(TextureTarget, GetTextureParameter, int*)"/>
         public static unsafe int GetTexParameteri(TextureTarget target, GetTextureParameter pname)
         {
-            int parameters;
-            int* parameters_ptr = &parameters;
+            int @params;
+            int* @params_ptr = &@params;
             {
-                GetTexParameteriv(target, pname, parameters_ptr);
+                GetTexParameteriv(target, pname, @params_ptr);
             }
-            return parameters;
+            return @params;
         }
         /// <inheritdoc cref="GetTexParameteriv(TextureTarget, GetTextureParameter, int*)"/>
-        public static unsafe void GetTexParameteri(TextureTarget target, GetTextureParameter pname, out int parameters)
+        public static unsafe void GetTexParameteri(TextureTarget target, GetTextureParameter pname, out int @params)
         {
-            fixed (int* parameters_ptr = &parameters)
+            fixed (int* @params_ptr = &@params)
             {
-                GetTexParameteriv(target, pname, parameters_ptr);
+                GetTexParameteriv(target, pname, @params_ptr);
             }
         }
         /// <inheritdoc cref="GetTexParameterxv(TextureTarget, GetTextureParameter, int*)"/>
-        public static unsafe void GetTexParameterx(TextureTarget target, GetTextureParameter pname, Span<int> parameters)
+        public static unsafe void GetTexParameterx(TextureTarget target, GetTextureParameter pname, Span<int> @params)
         {
-            fixed (int* parameters_ptr = parameters)
+            fixed (int* @params_ptr = @params)
             {
-                GetTexParameterxv(target, pname, parameters_ptr);
+                GetTexParameterxv(target, pname, @params_ptr);
             }
         }
         /// <inheritdoc cref="GetTexParameterxv(TextureTarget, GetTextureParameter, int*)"/>
-        public static unsafe void GetTexParameterx(TextureTarget target, GetTextureParameter pname, int[] parameters)
+        public static unsafe void GetTexParameterx(TextureTarget target, GetTextureParameter pname, int[] @params)
         {
-            fixed (int* parameters_ptr = parameters)
+            fixed (int* @params_ptr = @params)
             {
-                GetTexParameterxv(target, pname, parameters_ptr);
+                GetTexParameterxv(target, pname, @params_ptr);
             }
         }
         /// <inheritdoc cref="GetTexParameterxv(TextureTarget, GetTextureParameter, int*)"/>
         public static unsafe int GetTexParameterx(TextureTarget target, GetTextureParameter pname)
         {
-            int parameters;
-            int* parameters_ptr = &parameters;
+            int @params;
+            int* @params_ptr = &@params;
             {
-                GetTexParameterxv(target, pname, parameters_ptr);
+                GetTexParameterxv(target, pname, @params_ptr);
             }
-            return parameters;
+            return @params;
         }
         /// <inheritdoc cref="GetTexParameterxv(TextureTarget, GetTextureParameter, int*)"/>
-        public static unsafe void GetTexParameterx(TextureTarget target, GetTextureParameter pname, out int parameters)
+        public static unsafe void GetTexParameterx(TextureTarget target, GetTextureParameter pname, out int @params)
         {
-            fixed (int* parameters_ptr = &parameters)
+            fixed (int* @params_ptr = &@params)
             {
-                GetTexParameterxv(target, pname, parameters_ptr);
+                GetTexParameterxv(target, pname, @params_ptr);
             }
         }
         /// <inheritdoc cref="Lightfv(LightName, LightParameter, float*)"/>
-        public static unsafe void Lightf(LightName light, LightParameter pname, ReadOnlySpan<float> parameters)
+        public static unsafe void Lightf(LightName light, LightParameter pname, ReadOnlySpan<float> @params)
         {
-            fixed (float* parameters_ptr = parameters)
+            fixed (float* @params_ptr = @params)
             {
-                Lightfv(light, pname, parameters_ptr);
+                Lightfv(light, pname, @params_ptr);
             }
         }
         /// <inheritdoc cref="Lightfv(LightName, LightParameter, float*)"/>
-        public static unsafe void Lightf(LightName light, LightParameter pname, float[] parameters)
+        public static unsafe void Lightf(LightName light, LightParameter pname, float[] @params)
         {
-            fixed (float* parameters_ptr = parameters)
+            fixed (float* @params_ptr = @params)
             {
-                Lightfv(light, pname, parameters_ptr);
+                Lightfv(light, pname, @params_ptr);
             }
         }
         /// <inheritdoc cref="Lightfv(LightName, LightParameter, float*)"/>
-        public static unsafe void Lightf(LightName light, LightParameter pname, ref readonly float parameters)
+        public static unsafe void Lightf(LightName light, LightParameter pname, ref readonly float @params)
         {
-            fixed (float* parameters_ptr = &parameters)
+            fixed (float* @params_ptr = &@params)
             {
-                Lightfv(light, pname, parameters_ptr);
+                Lightfv(light, pname, @params_ptr);
             }
         }
         /// <inheritdoc cref="LightModelfv(LightModelParameter, float*)"/>
-        public static unsafe void LightModelf(LightModelParameter pname, ReadOnlySpan<float> parameters)
+        public static unsafe void LightModelf(LightModelParameter pname, ReadOnlySpan<float> @params)
         {
-            fixed (float* parameters_ptr = parameters)
+            fixed (float* @params_ptr = @params)
             {
-                LightModelfv(pname, parameters_ptr);
+                LightModelfv(pname, @params_ptr);
             }
         }
         /// <inheritdoc cref="LightModelfv(LightModelParameter, float*)"/>
-        public static unsafe void LightModelf(LightModelParameter pname, float[] parameters)
+        public static unsafe void LightModelf(LightModelParameter pname, float[] @params)
         {
-            fixed (float* parameters_ptr = parameters)
+            fixed (float* @params_ptr = @params)
             {
-                LightModelfv(pname, parameters_ptr);
+                LightModelfv(pname, @params_ptr);
             }
         }
         /// <inheritdoc cref="LightModelfv(LightModelParameter, float*)"/>
-        public static unsafe void LightModelf(LightModelParameter pname, ref readonly float parameters)
+        public static unsafe void LightModelf(LightModelParameter pname, ref readonly float @params)
         {
-            fixed (float* parameters_ptr = &parameters)
+            fixed (float* @params_ptr = &@params)
             {
-                LightModelfv(pname, parameters_ptr);
+                LightModelfv(pname, @params_ptr);
             }
         }
         /// <inheritdoc cref="LightModelxv(LightModelParameter, int*)"/>
@@ -1073,27 +1070,27 @@ namespace OpenTK.Graphics.OpenGLES1
             }
         }
         /// <inheritdoc cref="Lightxv(LightName, LightParameter, int*)"/>
-        public static unsafe void Lightx(LightName light, LightParameter pname, ReadOnlySpan<int> parameters)
+        public static unsafe void Lightx(LightName light, LightParameter pname, ReadOnlySpan<int> @params)
         {
-            fixed (int* parameters_ptr = parameters)
+            fixed (int* @params_ptr = @params)
             {
-                Lightxv(light, pname, parameters_ptr);
+                Lightxv(light, pname, @params_ptr);
             }
         }
         /// <inheritdoc cref="Lightxv(LightName, LightParameter, int*)"/>
-        public static unsafe void Lightx(LightName light, LightParameter pname, int[] parameters)
+        public static unsafe void Lightx(LightName light, LightParameter pname, int[] @params)
         {
-            fixed (int* parameters_ptr = parameters)
+            fixed (int* @params_ptr = @params)
             {
-                Lightxv(light, pname, parameters_ptr);
+                Lightxv(light, pname, @params_ptr);
             }
         }
         /// <inheritdoc cref="Lightxv(LightName, LightParameter, int*)"/>
-        public static unsafe void Lightx(LightName light, LightParameter pname, ref readonly int parameters)
+        public static unsafe void Lightx(LightName light, LightParameter pname, ref readonly int @params)
         {
-            fixed (int* parameters_ptr = &parameters)
+            fixed (int* @params_ptr = &@params)
             {
-                Lightxv(light, pname, parameters_ptr);
+                Lightxv(light, pname, @params_ptr);
             }
         }
         /// <inheritdoc cref="LoadMatrixf(float*)"/>
@@ -1145,27 +1142,27 @@ namespace OpenTK.Graphics.OpenGLES1
             }
         }
         /// <inheritdoc cref="Materialfv(TriangleFace, MaterialParameter, float*)"/>
-        public static unsafe void Materialf(TriangleFace face, MaterialParameter pname, ReadOnlySpan<float> parameters)
+        public static unsafe void Materialf(TriangleFace face, MaterialParameter pname, ReadOnlySpan<float> @params)
         {
-            fixed (float* parameters_ptr = parameters)
+            fixed (float* @params_ptr = @params)
             {
-                Materialfv(face, pname, parameters_ptr);
+                Materialfv(face, pname, @params_ptr);
             }
         }
         /// <inheritdoc cref="Materialfv(TriangleFace, MaterialParameter, float*)"/>
-        public static unsafe void Materialf(TriangleFace face, MaterialParameter pname, float[] parameters)
+        public static unsafe void Materialf(TriangleFace face, MaterialParameter pname, float[] @params)
         {
-            fixed (float* parameters_ptr = parameters)
+            fixed (float* @params_ptr = @params)
             {
-                Materialfv(face, pname, parameters_ptr);
+                Materialfv(face, pname, @params_ptr);
             }
         }
         /// <inheritdoc cref="Materialfv(TriangleFace, MaterialParameter, float*)"/>
-        public static unsafe void Materialf(TriangleFace face, MaterialParameter pname, ref readonly float parameters)
+        public static unsafe void Materialf(TriangleFace face, MaterialParameter pname, ref readonly float @params)
         {
-            fixed (float* parameters_ptr = &parameters)
+            fixed (float* @params_ptr = &@params)
             {
-                Materialfv(face, pname, parameters_ptr);
+                Materialfv(face, pname, @params_ptr);
             }
         }
         /// <inheritdoc cref="Materialxv(TriangleFace, MaterialParameter, int*)"/>
@@ -1274,51 +1271,51 @@ namespace OpenTK.Graphics.OpenGLES1
             }
         }
         /// <inheritdoc cref="PointParameterfv(PointParameterNameARB, float*)"/>
-        public static unsafe void PointParameterf(PointParameterNameARB pname, ReadOnlySpan<float> parameters)
+        public static unsafe void PointParameterf(PointParameterNameARB pname, ReadOnlySpan<float> @params)
         {
-            fixed (float* parameters_ptr = parameters)
+            fixed (float* @params_ptr = @params)
             {
-                PointParameterfv(pname, parameters_ptr);
+                PointParameterfv(pname, @params_ptr);
             }
         }
         /// <inheritdoc cref="PointParameterfv(PointParameterNameARB, float*)"/>
-        public static unsafe void PointParameterf(PointParameterNameARB pname, float[] parameters)
+        public static unsafe void PointParameterf(PointParameterNameARB pname, float[] @params)
         {
-            fixed (float* parameters_ptr = parameters)
+            fixed (float* @params_ptr = @params)
             {
-                PointParameterfv(pname, parameters_ptr);
+                PointParameterfv(pname, @params_ptr);
             }
         }
         /// <inheritdoc cref="PointParameterfv(PointParameterNameARB, float*)"/>
-        public static unsafe void PointParameterf(PointParameterNameARB pname, ref readonly float parameters)
+        public static unsafe void PointParameterf(PointParameterNameARB pname, ref readonly float @params)
         {
-            fixed (float* parameters_ptr = &parameters)
+            fixed (float* @params_ptr = &@params)
             {
-                PointParameterfv(pname, parameters_ptr);
+                PointParameterfv(pname, @params_ptr);
             }
         }
         /// <inheritdoc cref="PointParameterxv(PointParameterNameARB, int*)"/>
-        public static unsafe void PointParameterx(PointParameterNameARB pname, ReadOnlySpan<int> parameters)
+        public static unsafe void PointParameterx(PointParameterNameARB pname, ReadOnlySpan<int> @params)
         {
-            fixed (int* parameters_ptr = parameters)
+            fixed (int* @params_ptr = @params)
             {
-                PointParameterxv(pname, parameters_ptr);
+                PointParameterxv(pname, @params_ptr);
             }
         }
         /// <inheritdoc cref="PointParameterxv(PointParameterNameARB, int*)"/>
-        public static unsafe void PointParameterx(PointParameterNameARB pname, int[] parameters)
+        public static unsafe void PointParameterx(PointParameterNameARB pname, int[] @params)
         {
-            fixed (int* parameters_ptr = parameters)
+            fixed (int* @params_ptr = @params)
             {
-                PointParameterxv(pname, parameters_ptr);
+                PointParameterxv(pname, @params_ptr);
             }
         }
         /// <inheritdoc cref="PointParameterxv(PointParameterNameARB, int*)"/>
-        public static unsafe void PointParameterx(PointParameterNameARB pname, ref readonly int parameters)
+        public static unsafe void PointParameterx(PointParameterNameARB pname, ref readonly int @params)
         {
-            fixed (int* parameters_ptr = &parameters)
+            fixed (int* @params_ptr = &@params)
             {
-                PointParameterxv(pname, parameters_ptr);
+                PointParameterxv(pname, @params_ptr);
             }
         }
         /// <inheritdoc cref="ReadPixels(int, int, int, int, PixelFormat, PixelType, void*)"/>
@@ -1388,75 +1385,75 @@ namespace OpenTK.Graphics.OpenGLES1
             }
         }
         /// <inheritdoc cref="TexEnvfv(TextureEnvTarget, TextureEnvParameter, float*)"/>
-        public static unsafe void TexEnvf(TextureEnvTarget target, TextureEnvParameter pname, ReadOnlySpan<float> parameters)
+        public static unsafe void TexEnvf(TextureEnvTarget target, TextureEnvParameter pname, ReadOnlySpan<float> @params)
         {
-            fixed (float* parameters_ptr = parameters)
+            fixed (float* @params_ptr = @params)
             {
-                TexEnvfv(target, pname, parameters_ptr);
+                TexEnvfv(target, pname, @params_ptr);
             }
         }
         /// <inheritdoc cref="TexEnvfv(TextureEnvTarget, TextureEnvParameter, float*)"/>
-        public static unsafe void TexEnvf(TextureEnvTarget target, TextureEnvParameter pname, float[] parameters)
+        public static unsafe void TexEnvf(TextureEnvTarget target, TextureEnvParameter pname, float[] @params)
         {
-            fixed (float* parameters_ptr = parameters)
+            fixed (float* @params_ptr = @params)
             {
-                TexEnvfv(target, pname, parameters_ptr);
+                TexEnvfv(target, pname, @params_ptr);
             }
         }
         /// <inheritdoc cref="TexEnvfv(TextureEnvTarget, TextureEnvParameter, float*)"/>
-        public static unsafe void TexEnvf(TextureEnvTarget target, TextureEnvParameter pname, ref readonly float parameters)
+        public static unsafe void TexEnvf(TextureEnvTarget target, TextureEnvParameter pname, ref readonly float @params)
         {
-            fixed (float* parameters_ptr = &parameters)
+            fixed (float* @params_ptr = &@params)
             {
-                TexEnvfv(target, pname, parameters_ptr);
+                TexEnvfv(target, pname, @params_ptr);
             }
         }
         /// <inheritdoc cref="TexEnviv(TextureEnvTarget, TextureEnvParameter, int*)"/>
-        public static unsafe void TexEnvi(TextureEnvTarget target, TextureEnvParameter pname, ReadOnlySpan<int> parameters)
+        public static unsafe void TexEnvi(TextureEnvTarget target, TextureEnvParameter pname, ReadOnlySpan<int> @params)
         {
-            fixed (int* parameters_ptr = parameters)
+            fixed (int* @params_ptr = @params)
             {
-                TexEnviv(target, pname, parameters_ptr);
+                TexEnviv(target, pname, @params_ptr);
             }
         }
         /// <inheritdoc cref="TexEnviv(TextureEnvTarget, TextureEnvParameter, int*)"/>
-        public static unsafe void TexEnvi(TextureEnvTarget target, TextureEnvParameter pname, int[] parameters)
+        public static unsafe void TexEnvi(TextureEnvTarget target, TextureEnvParameter pname, int[] @params)
         {
-            fixed (int* parameters_ptr = parameters)
+            fixed (int* @params_ptr = @params)
             {
-                TexEnviv(target, pname, parameters_ptr);
+                TexEnviv(target, pname, @params_ptr);
             }
         }
         /// <inheritdoc cref="TexEnviv(TextureEnvTarget, TextureEnvParameter, int*)"/>
-        public static unsafe void TexEnvi(TextureEnvTarget target, TextureEnvParameter pname, ref readonly int parameters)
+        public static unsafe void TexEnvi(TextureEnvTarget target, TextureEnvParameter pname, ref readonly int @params)
         {
-            fixed (int* parameters_ptr = &parameters)
+            fixed (int* @params_ptr = &@params)
             {
-                TexEnviv(target, pname, parameters_ptr);
+                TexEnviv(target, pname, @params_ptr);
             }
         }
         /// <inheritdoc cref="TexEnvxv(TextureEnvTarget, TextureEnvParameter, int*)"/>
-        public static unsafe void TexEnvx(TextureEnvTarget target, TextureEnvParameter pname, ReadOnlySpan<int> parameters)
+        public static unsafe void TexEnvx(TextureEnvTarget target, TextureEnvParameter pname, ReadOnlySpan<int> @params)
         {
-            fixed (int* parameters_ptr = parameters)
+            fixed (int* @params_ptr = @params)
             {
-                TexEnvxv(target, pname, parameters_ptr);
+                TexEnvxv(target, pname, @params_ptr);
             }
         }
         /// <inheritdoc cref="TexEnvxv(TextureEnvTarget, TextureEnvParameter, int*)"/>
-        public static unsafe void TexEnvx(TextureEnvTarget target, TextureEnvParameter pname, int[] parameters)
+        public static unsafe void TexEnvx(TextureEnvTarget target, TextureEnvParameter pname, int[] @params)
         {
-            fixed (int* parameters_ptr = parameters)
+            fixed (int* @params_ptr = @params)
             {
-                TexEnvxv(target, pname, parameters_ptr);
+                TexEnvxv(target, pname, @params_ptr);
             }
         }
         /// <inheritdoc cref="TexEnvxv(TextureEnvTarget, TextureEnvParameter, int*)"/>
-        public static unsafe void TexEnvx(TextureEnvTarget target, TextureEnvParameter pname, ref readonly int parameters)
+        public static unsafe void TexEnvx(TextureEnvTarget target, TextureEnvParameter pname, ref readonly int @params)
         {
-            fixed (int* parameters_ptr = &parameters)
+            fixed (int* @params_ptr = &@params)
             {
-                TexEnvxv(target, pname, parameters_ptr);
+                TexEnvxv(target, pname, @params_ptr);
             }
         }
         /// <inheritdoc cref="TexImage2D(TextureTarget, int, InternalFormat, int, int, int, PixelFormat, PixelType, void*)"/>
@@ -1493,75 +1490,75 @@ namespace OpenTK.Graphics.OpenGLES1
             }
         }
         /// <inheritdoc cref="TexParameterfv(TextureTarget, TextureParameterName, float*)"/>
-        public static unsafe void TexParameterf(TextureTarget target, TextureParameterName pname, ReadOnlySpan<float> parameters)
+        public static unsafe void TexParameterf(TextureTarget target, TextureParameterName pname, ReadOnlySpan<float> @params)
         {
-            fixed (float* parameters_ptr = parameters)
+            fixed (float* @params_ptr = @params)
             {
-                TexParameterfv(target, pname, parameters_ptr);
+                TexParameterfv(target, pname, @params_ptr);
             }
         }
         /// <inheritdoc cref="TexParameterfv(TextureTarget, TextureParameterName, float*)"/>
-        public static unsafe void TexParameterf(TextureTarget target, TextureParameterName pname, float[] parameters)
+        public static unsafe void TexParameterf(TextureTarget target, TextureParameterName pname, float[] @params)
         {
-            fixed (float* parameters_ptr = parameters)
+            fixed (float* @params_ptr = @params)
             {
-                TexParameterfv(target, pname, parameters_ptr);
+                TexParameterfv(target, pname, @params_ptr);
             }
         }
         /// <inheritdoc cref="TexParameterfv(TextureTarget, TextureParameterName, float*)"/>
-        public static unsafe void TexParameterf(TextureTarget target, TextureParameterName pname, ref readonly float parameters)
+        public static unsafe void TexParameterf(TextureTarget target, TextureParameterName pname, ref readonly float @params)
         {
-            fixed (float* parameters_ptr = &parameters)
+            fixed (float* @params_ptr = &@params)
             {
-                TexParameterfv(target, pname, parameters_ptr);
+                TexParameterfv(target, pname, @params_ptr);
             }
         }
         /// <inheritdoc cref="TexParameteriv(TextureTarget, TextureParameterName, int*)"/>
-        public static unsafe void TexParameteri(TextureTarget target, TextureParameterName pname, ReadOnlySpan<int> parameters)
+        public static unsafe void TexParameteri(TextureTarget target, TextureParameterName pname, ReadOnlySpan<int> @params)
         {
-            fixed (int* parameters_ptr = parameters)
+            fixed (int* @params_ptr = @params)
             {
-                TexParameteriv(target, pname, parameters_ptr);
+                TexParameteriv(target, pname, @params_ptr);
             }
         }
         /// <inheritdoc cref="TexParameteriv(TextureTarget, TextureParameterName, int*)"/>
-        public static unsafe void TexParameteri(TextureTarget target, TextureParameterName pname, int[] parameters)
+        public static unsafe void TexParameteri(TextureTarget target, TextureParameterName pname, int[] @params)
         {
-            fixed (int* parameters_ptr = parameters)
+            fixed (int* @params_ptr = @params)
             {
-                TexParameteriv(target, pname, parameters_ptr);
+                TexParameteriv(target, pname, @params_ptr);
             }
         }
         /// <inheritdoc cref="TexParameteriv(TextureTarget, TextureParameterName, int*)"/>
-        public static unsafe void TexParameteri(TextureTarget target, TextureParameterName pname, ref readonly int parameters)
+        public static unsafe void TexParameteri(TextureTarget target, TextureParameterName pname, ref readonly int @params)
         {
-            fixed (int* parameters_ptr = &parameters)
+            fixed (int* @params_ptr = &@params)
             {
-                TexParameteriv(target, pname, parameters_ptr);
+                TexParameteriv(target, pname, @params_ptr);
             }
         }
         /// <inheritdoc cref="TexParameterxv(TextureTarget, GetTextureParameter, int*)"/>
-        public static unsafe void TexParameterx(TextureTarget target, GetTextureParameter pname, ReadOnlySpan<int> parameters)
+        public static unsafe void TexParameterx(TextureTarget target, GetTextureParameter pname, ReadOnlySpan<int> @params)
         {
-            fixed (int* parameters_ptr = parameters)
+            fixed (int* @params_ptr = @params)
             {
-                TexParameterxv(target, pname, parameters_ptr);
+                TexParameterxv(target, pname, @params_ptr);
             }
         }
         /// <inheritdoc cref="TexParameterxv(TextureTarget, GetTextureParameter, int*)"/>
-        public static unsafe void TexParameterx(TextureTarget target, GetTextureParameter pname, int[] parameters)
+        public static unsafe void TexParameterx(TextureTarget target, GetTextureParameter pname, int[] @params)
         {
-            fixed (int* parameters_ptr = parameters)
+            fixed (int* @params_ptr = @params)
             {
-                TexParameterxv(target, pname, parameters_ptr);
+                TexParameterxv(target, pname, @params_ptr);
             }
         }
         /// <inheritdoc cref="TexParameterxv(TextureTarget, GetTextureParameter, int*)"/>
-        public static unsafe void TexParameterx(TextureTarget target, GetTextureParameter pname, ref readonly int parameters)
+        public static unsafe void TexParameterx(TextureTarget target, GetTextureParameter pname, ref readonly int @params)
         {
-            fixed (int* parameters_ptr = &parameters)
+            fixed (int* @params_ptr = &@params)
             {
-                TexParameterxv(target, pname, parameters_ptr);
+                TexParameterxv(target, pname, @params_ptr);
             }
         }
         /// <inheritdoc cref="TexSubImage2D(TextureTarget, int, int, int, int, int, PixelFormat, PixelType, void*)"/>
@@ -1633,27 +1630,27 @@ namespace OpenTK.Graphics.OpenGLES1
         public static unsafe partial class APPLE
         {
             /// <inheritdoc cref="GetInteger64vAPPLE(GetPName, long*)"/>
-            public static unsafe void GetInteger64vAPPLE(GetPName pname, Span<long> parameters)
+            public static unsafe void GetInteger64vAPPLE(GetPName pname, Span<long> @params)
             {
-                fixed (long* parameters_ptr = parameters)
+                fixed (long* @params_ptr = @params)
                 {
-                    GetInteger64vAPPLE(pname, parameters_ptr);
+                    GetInteger64vAPPLE(pname, @params_ptr);
                 }
             }
             /// <inheritdoc cref="GetInteger64vAPPLE(GetPName, long*)"/>
-            public static unsafe void GetInteger64vAPPLE(GetPName pname, long[] parameters)
+            public static unsafe void GetInteger64vAPPLE(GetPName pname, long[] @params)
             {
-                fixed (long* parameters_ptr = parameters)
+                fixed (long* @params_ptr = @params)
                 {
-                    GetInteger64vAPPLE(pname, parameters_ptr);
+                    GetInteger64vAPPLE(pname, @params_ptr);
                 }
             }
             /// <inheritdoc cref="GetInteger64vAPPLE(GetPName, long*)"/>
-            public static unsafe void GetInteger64vAPPLE(GetPName pname, ref long parameters)
+            public static unsafe void GetInteger64vAPPLE(GetPName pname, ref long @params)
             {
-                fixed (long* parameters_ptr = &parameters)
+                fixed (long* @params_ptr = &@params)
                 {
-                    GetInteger64vAPPLE(pname, parameters_ptr);
+                    GetInteger64vAPPLE(pname, @params_ptr);
                 }
             }
             /// <inheritdoc cref="GetSyncivAPPLE(GLSync, SyncParameterName, int, int*, int*)"/>
@@ -1715,51 +1712,51 @@ namespace OpenTK.Graphics.OpenGLES1
                 }
             }
             /// <inheritdoc cref="GetnUniformfvEXT(int, int, int, float*)"/>
-            public static unsafe void GetnUniformfvEXT(int program, int location, int bufSize, Span<float> parameters)
+            public static unsafe void GetnUniformfvEXT(int program, int location, int bufSize, Span<float> @params)
             {
-                fixed (float* parameters_ptr = parameters)
+                fixed (float* @params_ptr = @params)
                 {
-                    GetnUniformfvEXT(program, location, bufSize, parameters_ptr);
+                    GetnUniformfvEXT(program, location, bufSize, @params_ptr);
                 }
             }
             /// <inheritdoc cref="GetnUniformfvEXT(int, int, int, float*)"/>
-            public static unsafe void GetnUniformfvEXT(int program, int location, int bufSize, float[] parameters)
+            public static unsafe void GetnUniformfvEXT(int program, int location, int bufSize, float[] @params)
             {
-                fixed (float* parameters_ptr = parameters)
+                fixed (float* @params_ptr = @params)
                 {
-                    GetnUniformfvEXT(program, location, bufSize, parameters_ptr);
+                    GetnUniformfvEXT(program, location, bufSize, @params_ptr);
                 }
             }
             /// <inheritdoc cref="GetnUniformfvEXT(int, int, int, float*)"/>
-            public static unsafe void GetnUniformfvEXT(int program, int location, int bufSize, ref float parameters)
+            public static unsafe void GetnUniformfvEXT(int program, int location, int bufSize, ref float @params)
             {
-                fixed (float* parameters_ptr = &parameters)
+                fixed (float* @params_ptr = &@params)
                 {
-                    GetnUniformfvEXT(program, location, bufSize, parameters_ptr);
+                    GetnUniformfvEXT(program, location, bufSize, @params_ptr);
                 }
             }
             /// <inheritdoc cref="GetnUniformivEXT(int, int, int, int*)"/>
-            public static unsafe void GetnUniformivEXT(int program, int location, int bufSize, Span<int> parameters)
+            public static unsafe void GetnUniformivEXT(int program, int location, int bufSize, Span<int> @params)
             {
-                fixed (int* parameters_ptr = parameters)
+                fixed (int* @params_ptr = @params)
                 {
-                    GetnUniformivEXT(program, location, bufSize, parameters_ptr);
+                    GetnUniformivEXT(program, location, bufSize, @params_ptr);
                 }
             }
             /// <inheritdoc cref="GetnUniformivEXT(int, int, int, int*)"/>
-            public static unsafe void GetnUniformivEXT(int program, int location, int bufSize, int[] parameters)
+            public static unsafe void GetnUniformivEXT(int program, int location, int bufSize, int[] @params)
             {
-                fixed (int* parameters_ptr = parameters)
+                fixed (int* @params_ptr = @params)
                 {
-                    GetnUniformivEXT(program, location, bufSize, parameters_ptr);
+                    GetnUniformivEXT(program, location, bufSize, @params_ptr);
                 }
             }
             /// <inheritdoc cref="GetnUniformivEXT(int, int, int, int*)"/>
-            public static unsafe void GetnUniformivEXT(int program, int location, int bufSize, ref int parameters)
+            public static unsafe void GetnUniformivEXT(int program, int location, int bufSize, ref int @params)
             {
-                fixed (int* parameters_ptr = &parameters)
+                fixed (int* @params_ptr = &@params)
                 {
-                    GetnUniformivEXT(program, location, bufSize, parameters_ptr);
+                    GetnUniformivEXT(program, location, bufSize, @params_ptr);
                 }
             }
             /// <inheritdoc cref="InsertEventMarkerEXT(int, byte*)"/>
@@ -1916,678 +1913,6 @@ namespace OpenTK.Graphics.OpenGLES1
                 }
             }
         }
-        public static unsafe partial class KHR
-        {
-            /// <inheritdoc cref="DebugMessageCallback(IntPtr, void*)"/>
-            public static unsafe void DebugMessageCallback(GLDebugProc callback, IntPtr userParam)
-            {
-                void* userParam_vptr = (void*)userParam;
-                IntPtr callback_ptr = Marshal.GetFunctionPointerForDelegate(callback);
-                DebugMessageCallback(callback_ptr, userParam_vptr);
-            }
-            /// <inheritdoc cref="DebugMessageCallback(IntPtr, void*)"/>
-            public static unsafe void DebugMessageCallback<T1>(GLDebugProc callback, ReadOnlySpan<T1> userParam)
-                where T1 : unmanaged
-            {
-                fixed (void* userParam_ptr = userParam)
-                {
-                    IntPtr callback_ptr = Marshal.GetFunctionPointerForDelegate(callback);
-                    DebugMessageCallback(callback_ptr, userParam_ptr);
-                }
-            }
-            /// <inheritdoc cref="DebugMessageCallback(IntPtr, void*)"/>
-            public static unsafe void DebugMessageCallback<T1>(GLDebugProc callback, T1[] userParam)
-                where T1 : unmanaged
-            {
-                fixed (void* userParam_ptr = userParam)
-                {
-                    IntPtr callback_ptr = Marshal.GetFunctionPointerForDelegate(callback);
-                    DebugMessageCallback(callback_ptr, userParam_ptr);
-                }
-            }
-            /// <inheritdoc cref="DebugMessageCallback(IntPtr, void*)"/>
-            public static unsafe void DebugMessageCallback<T1>(GLDebugProc callback, ref readonly T1 userParam)
-                where T1 : unmanaged
-            {
-                fixed (void* userParam_ptr = &userParam)
-                {
-                    IntPtr callback_ptr = Marshal.GetFunctionPointerForDelegate(callback);
-                    DebugMessageCallback(callback_ptr, userParam_ptr);
-                }
-            }
-            /// <inheritdoc cref="DebugMessageCallbackKHR(IntPtr, void*)"/>
-            public static unsafe void DebugMessageCallbackKHR(GLDebugProcKHR callback, IntPtr userParam)
-            {
-                void* userParam_vptr = (void*)userParam;
-                IntPtr callback_ptr = Marshal.GetFunctionPointerForDelegate(callback);
-                DebugMessageCallbackKHR(callback_ptr, userParam_vptr);
-            }
-            /// <inheritdoc cref="DebugMessageCallbackKHR(IntPtr, void*)"/>
-            public static unsafe void DebugMessageCallbackKHR<T1>(GLDebugProcKHR callback, ReadOnlySpan<T1> userParam)
-                where T1 : unmanaged
-            {
-                fixed (void* userParam_ptr = userParam)
-                {
-                    IntPtr callback_ptr = Marshal.GetFunctionPointerForDelegate(callback);
-                    DebugMessageCallbackKHR(callback_ptr, userParam_ptr);
-                }
-            }
-            /// <inheritdoc cref="DebugMessageCallbackKHR(IntPtr, void*)"/>
-            public static unsafe void DebugMessageCallbackKHR<T1>(GLDebugProcKHR callback, T1[] userParam)
-                where T1 : unmanaged
-            {
-                fixed (void* userParam_ptr = userParam)
-                {
-                    IntPtr callback_ptr = Marshal.GetFunctionPointerForDelegate(callback);
-                    DebugMessageCallbackKHR(callback_ptr, userParam_ptr);
-                }
-            }
-            /// <inheritdoc cref="DebugMessageCallbackKHR(IntPtr, void*)"/>
-            public static unsafe void DebugMessageCallbackKHR<T1>(GLDebugProcKHR callback, ref readonly T1 userParam)
-                where T1 : unmanaged
-            {
-                fixed (void* userParam_ptr = &userParam)
-                {
-                    IntPtr callback_ptr = Marshal.GetFunctionPointerForDelegate(callback);
-                    DebugMessageCallbackKHR(callback_ptr, userParam_ptr);
-                }
-            }
-            /// <inheritdoc cref="DebugMessageControl(DebugSource, DebugType, DebugSeverity, int, uint*, bool)"/>
-            public static unsafe void DebugMessageControl(DebugSource source, DebugType type, DebugSeverity severity, int count, ReadOnlySpan<uint> ids, bool enabled)
-            {
-                fixed (uint* ids_ptr = ids)
-                {
-                    DebugMessageControl(source, type, severity, count, ids_ptr, enabled);
-                }
-            }
-            /// <inheritdoc cref="DebugMessageControl(DebugSource, DebugType, DebugSeverity, int, uint*, bool)"/>
-            public static unsafe void DebugMessageControl(DebugSource source, DebugType type, DebugSeverity severity, int count, uint[] ids, bool enabled)
-            {
-                fixed (uint* ids_ptr = ids)
-                {
-                    DebugMessageControl(source, type, severity, count, ids_ptr, enabled);
-                }
-            }
-            /// <inheritdoc cref="DebugMessageControl(DebugSource, DebugType, DebugSeverity, int, uint*, bool)"/>
-            public static unsafe void DebugMessageControl(DebugSource source, DebugType type, DebugSeverity severity, int count, ref readonly uint ids, bool enabled)
-            {
-                fixed (uint* ids_ptr = &ids)
-                {
-                    DebugMessageControl(source, type, severity, count, ids_ptr, enabled);
-                }
-            }
-            /// <inheritdoc cref="DebugMessageControlKHR(DebugSource, DebugType, DebugSeverity, int, uint*, bool)"/>
-            public static unsafe void DebugMessageControlKHR(DebugSource source, DebugType type, DebugSeverity severity, int count, ReadOnlySpan<uint> ids, bool enabled)
-            {
-                fixed (uint* ids_ptr = ids)
-                {
-                    DebugMessageControlKHR(source, type, severity, count, ids_ptr, enabled);
-                }
-            }
-            /// <inheritdoc cref="DebugMessageControlKHR(DebugSource, DebugType, DebugSeverity, int, uint*, bool)"/>
-            public static unsafe void DebugMessageControlKHR(DebugSource source, DebugType type, DebugSeverity severity, int count, uint[] ids, bool enabled)
-            {
-                fixed (uint* ids_ptr = ids)
-                {
-                    DebugMessageControlKHR(source, type, severity, count, ids_ptr, enabled);
-                }
-            }
-            /// <inheritdoc cref="DebugMessageControlKHR(DebugSource, DebugType, DebugSeverity, int, uint*, bool)"/>
-            public static unsafe void DebugMessageControlKHR(DebugSource source, DebugType type, DebugSeverity severity, int count, ref readonly uint ids, bool enabled)
-            {
-                fixed (uint* ids_ptr = &ids)
-                {
-                    DebugMessageControlKHR(source, type, severity, count, ids_ptr, enabled);
-                }
-            }
-            /// <inheritdoc cref="DebugMessageInsert(DebugSource, DebugType, uint, DebugSeverity, int, byte*)"/>
-            public static unsafe void DebugMessageInsert(DebugSource source, DebugType type, uint id, DebugSeverity severity, int length, string buf)
-            {
-                byte* buf_ptr = (byte*)Marshal.StringToCoTaskMemUTF8(buf);
-                DebugMessageInsert(source, type, id, severity, length, buf_ptr);
-                Marshal.FreeCoTaskMem((IntPtr)buf_ptr);
-            }
-            /// <inheritdoc cref="DebugMessageInsertKHR(DebugSource, DebugType, uint, DebugSeverity, int, byte*)"/>
-            public static unsafe void DebugMessageInsertKHR(DebugSource source, DebugType type, uint id, DebugSeverity severity, int length, string buf)
-            {
-                byte* buf_ptr = (byte*)Marshal.StringToCoTaskMemUTF8(buf);
-                DebugMessageInsertKHR(source, type, id, severity, length, buf_ptr);
-                Marshal.FreeCoTaskMem((IntPtr)buf_ptr);
-            }
-            /// <inheritdoc cref="GetDebugMessageLog(uint, int, DebugSource*, DebugType*, uint*, DebugSeverity*, int*, byte*)"/>
-            public static unsafe uint GetDebugMessageLog(uint count, int bufSize, Span<DebugSource> sources, Span<DebugType> types, Span<uint> ids, Span<DebugSeverity> severities, Span<int> lengths, out string messageLog)
-            {
-                uint returnValue;
-                fixed (int* lengths_ptr = lengths)
-                {
-                    fixed (DebugSeverity* severities_ptr = severities)
-                    {
-                        fixed (uint* ids_ptr = ids)
-                        {
-                            fixed (DebugType* types_ptr = types)
-                            {
-                                fixed (DebugSource* sources_ptr = sources)
-                                {
-                                    var messageLog_ptr = (byte*)Marshal.AllocCoTaskMem(bufSize);
-                                    returnValue = GetDebugMessageLog(count, bufSize, sources_ptr, types_ptr, ids_ptr, severities_ptr, lengths_ptr, messageLog_ptr);
-                                    messageLog = Marshal.PtrToStringUTF8((IntPtr)messageLog_ptr)!;
-                                    Marshal.FreeCoTaskMem((IntPtr)messageLog_ptr);
-                                }
-                            }
-                        }
-                    }
-                }
-                return returnValue;
-            }
-            /// <inheritdoc cref="GetDebugMessageLog(uint, int, DebugSource*, DebugType*, uint*, DebugSeverity*, int*, byte*)"/>
-            public static unsafe uint GetDebugMessageLog(uint count, int bufSize, DebugSource[] sources, DebugType[] types, uint[] ids, DebugSeverity[] severities, int[] lengths, out string messageLog)
-            {
-                uint returnValue;
-                fixed (int* lengths_ptr = lengths)
-                {
-                    fixed (DebugSeverity* severities_ptr = severities)
-                    {
-                        fixed (uint* ids_ptr = ids)
-                        {
-                            fixed (DebugType* types_ptr = types)
-                            {
-                                fixed (DebugSource* sources_ptr = sources)
-                                {
-                                    var messageLog_ptr = (byte*)Marshal.AllocCoTaskMem(bufSize);
-                                    returnValue = GetDebugMessageLog(count, bufSize, sources_ptr, types_ptr, ids_ptr, severities_ptr, lengths_ptr, messageLog_ptr);
-                                    messageLog = Marshal.PtrToStringUTF8((IntPtr)messageLog_ptr)!;
-                                    Marshal.FreeCoTaskMem((IntPtr)messageLog_ptr);
-                                }
-                            }
-                        }
-                    }
-                }
-                return returnValue;
-            }
-            /// <inheritdoc cref="GetDebugMessageLog(uint, int, DebugSource*, DebugType*, uint*, DebugSeverity*, int*, byte*)"/>
-            public static unsafe uint GetDebugMessageLog(uint count, int bufSize, ref DebugSource sources, ref DebugType types, ref uint ids, ref DebugSeverity severities, ref int lengths, out string messageLog)
-            {
-                uint returnValue;
-                fixed (DebugSource* sources_ptr = &sources)
-                fixed (DebugType* types_ptr = &types)
-                fixed (uint* ids_ptr = &ids)
-                fixed (DebugSeverity* severities_ptr = &severities)
-                fixed (int* lengths_ptr = &lengths)
-                {
-                    var messageLog_ptr = (byte*)Marshal.AllocCoTaskMem(bufSize);
-                    returnValue = GetDebugMessageLog(count, bufSize, sources_ptr, types_ptr, ids_ptr, severities_ptr, lengths_ptr, messageLog_ptr);
-                    messageLog = Marshal.PtrToStringUTF8((IntPtr)messageLog_ptr)!;
-                    Marshal.FreeCoTaskMem((IntPtr)messageLog_ptr);
-                }
-                return returnValue;
-            }
-            /// <inheritdoc cref="GetDebugMessageLogKHR(uint, int, DebugSource*, DebugType*, uint*, DebugSeverity*, int*, byte*)"/>
-            public static unsafe uint GetDebugMessageLogKHR(uint count, int bufSize, Span<DebugSource> sources, Span<DebugType> types, Span<uint> ids, Span<DebugSeverity> severities, Span<int> lengths, out string messageLog)
-            {
-                uint returnValue;
-                fixed (int* lengths_ptr = lengths)
-                {
-                    fixed (DebugSeverity* severities_ptr = severities)
-                    {
-                        fixed (uint* ids_ptr = ids)
-                        {
-                            fixed (DebugType* types_ptr = types)
-                            {
-                                fixed (DebugSource* sources_ptr = sources)
-                                {
-                                    var messageLog_ptr = (byte*)Marshal.AllocCoTaskMem(bufSize);
-                                    returnValue = GetDebugMessageLogKHR(count, bufSize, sources_ptr, types_ptr, ids_ptr, severities_ptr, lengths_ptr, messageLog_ptr);
-                                    messageLog = Marshal.PtrToStringUTF8((IntPtr)messageLog_ptr)!;
-                                    Marshal.FreeCoTaskMem((IntPtr)messageLog_ptr);
-                                }
-                            }
-                        }
-                    }
-                }
-                return returnValue;
-            }
-            /// <inheritdoc cref="GetDebugMessageLogKHR(uint, int, DebugSource*, DebugType*, uint*, DebugSeverity*, int*, byte*)"/>
-            public static unsafe uint GetDebugMessageLogKHR(uint count, int bufSize, DebugSource[] sources, DebugType[] types, uint[] ids, DebugSeverity[] severities, int[] lengths, out string messageLog)
-            {
-                uint returnValue;
-                fixed (int* lengths_ptr = lengths)
-                {
-                    fixed (DebugSeverity* severities_ptr = severities)
-                    {
-                        fixed (uint* ids_ptr = ids)
-                        {
-                            fixed (DebugType* types_ptr = types)
-                            {
-                                fixed (DebugSource* sources_ptr = sources)
-                                {
-                                    var messageLog_ptr = (byte*)Marshal.AllocCoTaskMem(bufSize);
-                                    returnValue = GetDebugMessageLogKHR(count, bufSize, sources_ptr, types_ptr, ids_ptr, severities_ptr, lengths_ptr, messageLog_ptr);
-                                    messageLog = Marshal.PtrToStringUTF8((IntPtr)messageLog_ptr)!;
-                                    Marshal.FreeCoTaskMem((IntPtr)messageLog_ptr);
-                                }
-                            }
-                        }
-                    }
-                }
-                return returnValue;
-            }
-            /// <inheritdoc cref="GetDebugMessageLogKHR(uint, int, DebugSource*, DebugType*, uint*, DebugSeverity*, int*, byte*)"/>
-            public static unsafe uint GetDebugMessageLogKHR(uint count, int bufSize, ref DebugSource sources, ref DebugType types, ref uint ids, ref DebugSeverity severities, ref int lengths, out string messageLog)
-            {
-                uint returnValue;
-                fixed (DebugSource* sources_ptr = &sources)
-                fixed (DebugType* types_ptr = &types)
-                fixed (uint* ids_ptr = &ids)
-                fixed (DebugSeverity* severities_ptr = &severities)
-                fixed (int* lengths_ptr = &lengths)
-                {
-                    var messageLog_ptr = (byte*)Marshal.AllocCoTaskMem(bufSize);
-                    returnValue = GetDebugMessageLogKHR(count, bufSize, sources_ptr, types_ptr, ids_ptr, severities_ptr, lengths_ptr, messageLog_ptr);
-                    messageLog = Marshal.PtrToStringUTF8((IntPtr)messageLog_ptr)!;
-                    Marshal.FreeCoTaskMem((IntPtr)messageLog_ptr);
-                }
-                return returnValue;
-            }
-            /// <inheritdoc cref="GetObjectLabel(ObjectIdentifier, uint, int, int*, byte*)"/>
-            public static unsafe string GetObjectLabel(ObjectIdentifier identifier, uint name, int bufSize, out int length)
-            {
-                string label;
-                fixed (int* length_ptr = &length)
-                {
-                    var label_ptr = (byte*)Marshal.AllocCoTaskMem(bufSize);
-                    GetObjectLabel(identifier, name, bufSize, length_ptr, label_ptr);
-                    label = Marshal.PtrToStringUTF8((IntPtr)label_ptr)!;
-                    Marshal.FreeCoTaskMem((IntPtr)label_ptr);
-                }
-                return label;
-            }
-            /// <inheritdoc cref="GetObjectLabel(ObjectIdentifier, uint, int, int*, byte*)"/>
-            public static unsafe void GetObjectLabel(ObjectIdentifier identifier, uint name, int bufSize, out int length, out string label)
-            {
-                fixed (int* length_ptr = &length)
-                {
-                    var label_ptr = (byte*)Marshal.AllocCoTaskMem(bufSize);
-                    GetObjectLabel(identifier, name, bufSize, length_ptr, label_ptr);
-                    label = Marshal.PtrToStringUTF8((IntPtr)label_ptr)!;
-                    Marshal.FreeCoTaskMem((IntPtr)label_ptr);
-                }
-            }
-            /// <inheritdoc cref="GetObjectLabelKHR(All, uint, int, int*, byte*)"/>
-            public static unsafe string GetObjectLabelKHR(All identifier, uint name, int bufSize, out int length)
-            {
-                string label;
-                fixed (int* length_ptr = &length)
-                {
-                    var label_ptr = (byte*)Marshal.AllocCoTaskMem(bufSize);
-                    GetObjectLabelKHR(identifier, name, bufSize, length_ptr, label_ptr);
-                    label = Marshal.PtrToStringUTF8((IntPtr)label_ptr)!;
-                    Marshal.FreeCoTaskMem((IntPtr)label_ptr);
-                }
-                return label;
-            }
-            /// <inheritdoc cref="GetObjectLabelKHR(All, uint, int, int*, byte*)"/>
-            public static unsafe void GetObjectLabelKHR(All identifier, uint name, int bufSize, out int length, out string label)
-            {
-                fixed (int* length_ptr = &length)
-                {
-                    var label_ptr = (byte*)Marshal.AllocCoTaskMem(bufSize);
-                    GetObjectLabelKHR(identifier, name, bufSize, length_ptr, label_ptr);
-                    label = Marshal.PtrToStringUTF8((IntPtr)label_ptr)!;
-                    Marshal.FreeCoTaskMem((IntPtr)label_ptr);
-                }
-            }
-            /// <inheritdoc cref="GetObjectPtrLabel(void*, int, int*, byte*)"/>
-            public static unsafe string GetObjectPtrLabel(IntPtr ptr, int bufSize, out int length)
-            {
-                string label;
-                fixed (int* length_ptr = &length)
-                {
-                    var label_ptr = (byte*)Marshal.AllocCoTaskMem(bufSize);
-                    void* ptr_vptr = (void*)ptr;
-                    GetObjectPtrLabel(ptr_vptr, bufSize, length_ptr, label_ptr);
-                    label = Marshal.PtrToStringUTF8((IntPtr)label_ptr)!;
-                    Marshal.FreeCoTaskMem((IntPtr)label_ptr);
-                }
-                return label;
-            }
-            /// <inheritdoc cref="GetObjectPtrLabel(void*, int, int*, byte*)"/>
-            public static unsafe void GetObjectPtrLabel(IntPtr ptr, int bufSize, out int length, out string label)
-            {
-                fixed (int* length_ptr = &length)
-                {
-                    var label_ptr = (byte*)Marshal.AllocCoTaskMem(bufSize);
-                    void* ptr_vptr = (void*)ptr;
-                    GetObjectPtrLabel(ptr_vptr, bufSize, length_ptr, label_ptr);
-                    label = Marshal.PtrToStringUTF8((IntPtr)label_ptr)!;
-                    Marshal.FreeCoTaskMem((IntPtr)label_ptr);
-                }
-            }
-            /// <inheritdoc cref="GetObjectPtrLabel(void*, int, int*, byte*)"/>
-            public static unsafe string GetObjectPtrLabel<T1>(ReadOnlySpan<T1> ptr, int bufSize, out int length)
-                where T1 : unmanaged
-            {
-                string label;
-                fixed (int* length_ptr = &length)
-                {
-                    fixed (void* ptr_ptr = ptr)
-                    {
-                        var label_ptr = (byte*)Marshal.AllocCoTaskMem(bufSize);
-                        GetObjectPtrLabel(ptr_ptr, bufSize, length_ptr, label_ptr);
-                        label = Marshal.PtrToStringUTF8((IntPtr)label_ptr)!;
-                        Marshal.FreeCoTaskMem((IntPtr)label_ptr);
-                    }
-                }
-                return label;
-            }
-            /// <inheritdoc cref="GetObjectPtrLabel(void*, int, int*, byte*)"/>
-            public static unsafe void GetObjectPtrLabel<T1>(ReadOnlySpan<T1> ptr, int bufSize, out int length, out string label)
-                where T1 : unmanaged
-            {
-                fixed (int* length_ptr = &length)
-                {
-                    fixed (void* ptr_ptr = ptr)
-                    {
-                        var label_ptr = (byte*)Marshal.AllocCoTaskMem(bufSize);
-                        GetObjectPtrLabel(ptr_ptr, bufSize, length_ptr, label_ptr);
-                        label = Marshal.PtrToStringUTF8((IntPtr)label_ptr)!;
-                        Marshal.FreeCoTaskMem((IntPtr)label_ptr);
-                    }
-                }
-            }
-            /// <inheritdoc cref="GetObjectPtrLabel(void*, int, int*, byte*)"/>
-            public static unsafe string GetObjectPtrLabel<T1>(T1[] ptr, int bufSize, out int length)
-                where T1 : unmanaged
-            {
-                string label;
-                fixed (int* length_ptr = &length)
-                {
-                    fixed (void* ptr_ptr = ptr)
-                    {
-                        var label_ptr = (byte*)Marshal.AllocCoTaskMem(bufSize);
-                        GetObjectPtrLabel(ptr_ptr, bufSize, length_ptr, label_ptr);
-                        label = Marshal.PtrToStringUTF8((IntPtr)label_ptr)!;
-                        Marshal.FreeCoTaskMem((IntPtr)label_ptr);
-                    }
-                }
-                return label;
-            }
-            /// <inheritdoc cref="GetObjectPtrLabel(void*, int, int*, byte*)"/>
-            public static unsafe void GetObjectPtrLabel<T1>(T1[] ptr, int bufSize, out int length, out string label)
-                where T1 : unmanaged
-            {
-                fixed (int* length_ptr = &length)
-                {
-                    fixed (void* ptr_ptr = ptr)
-                    {
-                        var label_ptr = (byte*)Marshal.AllocCoTaskMem(bufSize);
-                        GetObjectPtrLabel(ptr_ptr, bufSize, length_ptr, label_ptr);
-                        label = Marshal.PtrToStringUTF8((IntPtr)label_ptr)!;
-                        Marshal.FreeCoTaskMem((IntPtr)label_ptr);
-                    }
-                }
-            }
-            /// <inheritdoc cref="GetObjectPtrLabel(void*, int, int*, byte*)"/>
-            public static unsafe string GetObjectPtrLabel<T1>(ref readonly T1 ptr, int bufSize, out int length)
-                where T1 : unmanaged
-            {
-                string label;
-                fixed (void* ptr_ptr = &ptr)
-                fixed (int* length_ptr = &length)
-                {
-                    var label_ptr = (byte*)Marshal.AllocCoTaskMem(bufSize);
-                    GetObjectPtrLabel(ptr_ptr, bufSize, length_ptr, label_ptr);
-                    label = Marshal.PtrToStringUTF8((IntPtr)label_ptr)!;
-                    Marshal.FreeCoTaskMem((IntPtr)label_ptr);
-                }
-                return label;
-            }
-            /// <inheritdoc cref="GetObjectPtrLabel(void*, int, int*, byte*)"/>
-            public static unsafe void GetObjectPtrLabel<T1>(ref readonly T1 ptr, int bufSize, out int length, out string label)
-                where T1 : unmanaged
-            {
-                fixed (void* ptr_ptr = &ptr)
-                fixed (int* length_ptr = &length)
-                {
-                    var label_ptr = (byte*)Marshal.AllocCoTaskMem(bufSize);
-                    GetObjectPtrLabel(ptr_ptr, bufSize, length_ptr, label_ptr);
-                    label = Marshal.PtrToStringUTF8((IntPtr)label_ptr)!;
-                    Marshal.FreeCoTaskMem((IntPtr)label_ptr);
-                }
-            }
-            /// <inheritdoc cref="GetObjectPtrLabelKHR(void*, int, int*, byte*)"/>
-            public static unsafe string GetObjectPtrLabelKHR(IntPtr ptr, int bufSize, out int length)
-            {
-                string label;
-                fixed (int* length_ptr = &length)
-                {
-                    var label_ptr = (byte*)Marshal.AllocCoTaskMem(bufSize);
-                    void* ptr_vptr = (void*)ptr;
-                    GetObjectPtrLabelKHR(ptr_vptr, bufSize, length_ptr, label_ptr);
-                    label = Marshal.PtrToStringUTF8((IntPtr)label_ptr)!;
-                    Marshal.FreeCoTaskMem((IntPtr)label_ptr);
-                }
-                return label;
-            }
-            /// <inheritdoc cref="GetObjectPtrLabelKHR(void*, int, int*, byte*)"/>
-            public static unsafe void GetObjectPtrLabelKHR(IntPtr ptr, int bufSize, out int length, out string label)
-            {
-                fixed (int* length_ptr = &length)
-                {
-                    var label_ptr = (byte*)Marshal.AllocCoTaskMem(bufSize);
-                    void* ptr_vptr = (void*)ptr;
-                    GetObjectPtrLabelKHR(ptr_vptr, bufSize, length_ptr, label_ptr);
-                    label = Marshal.PtrToStringUTF8((IntPtr)label_ptr)!;
-                    Marshal.FreeCoTaskMem((IntPtr)label_ptr);
-                }
-            }
-            /// <inheritdoc cref="GetObjectPtrLabelKHR(void*, int, int*, byte*)"/>
-            public static unsafe string GetObjectPtrLabelKHR<T1>(ReadOnlySpan<T1> ptr, int bufSize, out int length)
-                where T1 : unmanaged
-            {
-                string label;
-                fixed (int* length_ptr = &length)
-                {
-                    fixed (void* ptr_ptr = ptr)
-                    {
-                        var label_ptr = (byte*)Marshal.AllocCoTaskMem(bufSize);
-                        GetObjectPtrLabelKHR(ptr_ptr, bufSize, length_ptr, label_ptr);
-                        label = Marshal.PtrToStringUTF8((IntPtr)label_ptr)!;
-                        Marshal.FreeCoTaskMem((IntPtr)label_ptr);
-                    }
-                }
-                return label;
-            }
-            /// <inheritdoc cref="GetObjectPtrLabelKHR(void*, int, int*, byte*)"/>
-            public static unsafe void GetObjectPtrLabelKHR<T1>(ReadOnlySpan<T1> ptr, int bufSize, out int length, out string label)
-                where T1 : unmanaged
-            {
-                fixed (int* length_ptr = &length)
-                {
-                    fixed (void* ptr_ptr = ptr)
-                    {
-                        var label_ptr = (byte*)Marshal.AllocCoTaskMem(bufSize);
-                        GetObjectPtrLabelKHR(ptr_ptr, bufSize, length_ptr, label_ptr);
-                        label = Marshal.PtrToStringUTF8((IntPtr)label_ptr)!;
-                        Marshal.FreeCoTaskMem((IntPtr)label_ptr);
-                    }
-                }
-            }
-            /// <inheritdoc cref="GetObjectPtrLabelKHR(void*, int, int*, byte*)"/>
-            public static unsafe string GetObjectPtrLabelKHR<T1>(T1[] ptr, int bufSize, out int length)
-                where T1 : unmanaged
-            {
-                string label;
-                fixed (int* length_ptr = &length)
-                {
-                    fixed (void* ptr_ptr = ptr)
-                    {
-                        var label_ptr = (byte*)Marshal.AllocCoTaskMem(bufSize);
-                        GetObjectPtrLabelKHR(ptr_ptr, bufSize, length_ptr, label_ptr);
-                        label = Marshal.PtrToStringUTF8((IntPtr)label_ptr)!;
-                        Marshal.FreeCoTaskMem((IntPtr)label_ptr);
-                    }
-                }
-                return label;
-            }
-            /// <inheritdoc cref="GetObjectPtrLabelKHR(void*, int, int*, byte*)"/>
-            public static unsafe void GetObjectPtrLabelKHR<T1>(T1[] ptr, int bufSize, out int length, out string label)
-                where T1 : unmanaged
-            {
-                fixed (int* length_ptr = &length)
-                {
-                    fixed (void* ptr_ptr = ptr)
-                    {
-                        var label_ptr = (byte*)Marshal.AllocCoTaskMem(bufSize);
-                        GetObjectPtrLabelKHR(ptr_ptr, bufSize, length_ptr, label_ptr);
-                        label = Marshal.PtrToStringUTF8((IntPtr)label_ptr)!;
-                        Marshal.FreeCoTaskMem((IntPtr)label_ptr);
-                    }
-                }
-            }
-            /// <inheritdoc cref="GetObjectPtrLabelKHR(void*, int, int*, byte*)"/>
-            public static unsafe string GetObjectPtrLabelKHR<T1>(ref readonly T1 ptr, int bufSize, out int length)
-                where T1 : unmanaged
-            {
-                string label;
-                fixed (void* ptr_ptr = &ptr)
-                fixed (int* length_ptr = &length)
-                {
-                    var label_ptr = (byte*)Marshal.AllocCoTaskMem(bufSize);
-                    GetObjectPtrLabelKHR(ptr_ptr, bufSize, length_ptr, label_ptr);
-                    label = Marshal.PtrToStringUTF8((IntPtr)label_ptr)!;
-                    Marshal.FreeCoTaskMem((IntPtr)label_ptr);
-                }
-                return label;
-            }
-            /// <inheritdoc cref="GetObjectPtrLabelKHR(void*, int, int*, byte*)"/>
-            public static unsafe void GetObjectPtrLabelKHR<T1>(ref readonly T1 ptr, int bufSize, out int length, out string label)
-                where T1 : unmanaged
-            {
-                fixed (void* ptr_ptr = &ptr)
-                fixed (int* length_ptr = &length)
-                {
-                    var label_ptr = (byte*)Marshal.AllocCoTaskMem(bufSize);
-                    GetObjectPtrLabelKHR(ptr_ptr, bufSize, length_ptr, label_ptr);
-                    label = Marshal.PtrToStringUTF8((IntPtr)label_ptr)!;
-                    Marshal.FreeCoTaskMem((IntPtr)label_ptr);
-                }
-            }
-            /// <inheritdoc cref="GetPointerv(GetPointervPName, void**)"/>
-            public static unsafe void GetPointer(GetPointervPName pname, void** parameters)
-            {
-                GetPointerv(pname, parameters);
-            }
-            /// <inheritdoc cref="ObjectLabel(ObjectIdentifier, uint, int, byte*)"/>
-            public static unsafe void ObjectLabel(ObjectIdentifier identifier, uint name, int length, string label)
-            {
-                byte* label_ptr = (byte*)Marshal.StringToCoTaskMemUTF8(label);
-                ObjectLabel(identifier, name, length, label_ptr);
-                Marshal.FreeCoTaskMem((IntPtr)label_ptr);
-            }
-            /// <inheritdoc cref="ObjectLabelKHR(ObjectIdentifier, uint, int, byte*)"/>
-            public static unsafe void ObjectLabelKHR(ObjectIdentifier identifier, uint name, int length, string label)
-            {
-                byte* label_ptr = (byte*)Marshal.StringToCoTaskMemUTF8(label);
-                ObjectLabelKHR(identifier, name, length, label_ptr);
-                Marshal.FreeCoTaskMem((IntPtr)label_ptr);
-            }
-            /// <inheritdoc cref="ObjectPtrLabel(void*, int, byte*)"/>
-            public static unsafe void ObjectPtrLabel(IntPtr ptr, int length, string label)
-            {
-                byte* label_ptr = (byte*)Marshal.StringToCoTaskMemUTF8(label);
-                void* ptr_vptr = (void*)ptr;
-                ObjectPtrLabel(ptr_vptr, length, label_ptr);
-                Marshal.FreeCoTaskMem((IntPtr)label_ptr);
-            }
-            /// <inheritdoc cref="ObjectPtrLabel(void*, int, byte*)"/>
-            public static unsafe void ObjectPtrLabel<T1>(ReadOnlySpan<T1> ptr, int length, string label)
-                where T1 : unmanaged
-            {
-                fixed (void* ptr_ptr = ptr)
-                {
-                    byte* label_ptr = (byte*)Marshal.StringToCoTaskMemUTF8(label);
-                    ObjectPtrLabel(ptr_ptr, length, label_ptr);
-                    Marshal.FreeCoTaskMem((IntPtr)label_ptr);
-                }
-            }
-            /// <inheritdoc cref="ObjectPtrLabel(void*, int, byte*)"/>
-            public static unsafe void ObjectPtrLabel<T1>(T1[] ptr, int length, string label)
-                where T1 : unmanaged
-            {
-                fixed (void* ptr_ptr = ptr)
-                {
-                    byte* label_ptr = (byte*)Marshal.StringToCoTaskMemUTF8(label);
-                    ObjectPtrLabel(ptr_ptr, length, label_ptr);
-                    Marshal.FreeCoTaskMem((IntPtr)label_ptr);
-                }
-            }
-            /// <inheritdoc cref="ObjectPtrLabel(void*, int, byte*)"/>
-            public static unsafe void ObjectPtrLabel<T1>(ref readonly T1 ptr, int length, string label)
-                where T1 : unmanaged
-            {
-                fixed (void* ptr_ptr = &ptr)
-                {
-                    byte* label_ptr = (byte*)Marshal.StringToCoTaskMemUTF8(label);
-                    ObjectPtrLabel(ptr_ptr, length, label_ptr);
-                    Marshal.FreeCoTaskMem((IntPtr)label_ptr);
-                }
-            }
-            /// <inheritdoc cref="ObjectPtrLabelKHR(void*, int, byte*)"/>
-            public static unsafe void ObjectPtrLabelKHR(IntPtr ptr, int length, string label)
-            {
-                byte* label_ptr = (byte*)Marshal.StringToCoTaskMemUTF8(label);
-                void* ptr_vptr = (void*)ptr;
-                ObjectPtrLabelKHR(ptr_vptr, length, label_ptr);
-                Marshal.FreeCoTaskMem((IntPtr)label_ptr);
-            }
-            /// <inheritdoc cref="ObjectPtrLabelKHR(void*, int, byte*)"/>
-            public static unsafe void ObjectPtrLabelKHR<T1>(ReadOnlySpan<T1> ptr, int length, string label)
-                where T1 : unmanaged
-            {
-                fixed (void* ptr_ptr = ptr)
-                {
-                    byte* label_ptr = (byte*)Marshal.StringToCoTaskMemUTF8(label);
-                    ObjectPtrLabelKHR(ptr_ptr, length, label_ptr);
-                    Marshal.FreeCoTaskMem((IntPtr)label_ptr);
-                }
-            }
-            /// <inheritdoc cref="ObjectPtrLabelKHR(void*, int, byte*)"/>
-            public static unsafe void ObjectPtrLabelKHR<T1>(T1[] ptr, int length, string label)
-                where T1 : unmanaged
-            {
-                fixed (void* ptr_ptr = ptr)
-                {
-                    byte* label_ptr = (byte*)Marshal.StringToCoTaskMemUTF8(label);
-                    ObjectPtrLabelKHR(ptr_ptr, length, label_ptr);
-                    Marshal.FreeCoTaskMem((IntPtr)label_ptr);
-                }
-            }
-            /// <inheritdoc cref="ObjectPtrLabelKHR(void*, int, byte*)"/>
-            public static unsafe void ObjectPtrLabelKHR<T1>(ref readonly T1 ptr, int length, string label)
-                where T1 : unmanaged
-            {
-                fixed (void* ptr_ptr = &ptr)
-                {
-                    byte* label_ptr = (byte*)Marshal.StringToCoTaskMemUTF8(label);
-                    ObjectPtrLabelKHR(ptr_ptr, length, label_ptr);
-                    Marshal.FreeCoTaskMem((IntPtr)label_ptr);
-                }
-            }
-            /// <inheritdoc cref="PushDebugGroup(DebugSource, uint, int, byte*)"/>
-            public static unsafe void PushDebugGroup(DebugSource source, uint id, int length, string message)
-            {
-                byte* message_ptr = (byte*)Marshal.StringToCoTaskMemUTF8(message);
-                PushDebugGroup(source, id, length, message_ptr);
-                Marshal.FreeCoTaskMem((IntPtr)message_ptr);
-            }
-            /// <inheritdoc cref="PushDebugGroupKHR(DebugSource, uint, int, byte*)"/>
-            public static unsafe void PushDebugGroupKHR(DebugSource source, uint id, int length, string message)
-            {
-                byte* message_ptr = (byte*)Marshal.StringToCoTaskMemUTF8(message);
-                PushDebugGroupKHR(source, id, length, message_ptr);
-                Marshal.FreeCoTaskMem((IntPtr)message_ptr);
-            }
-        }
         public static unsafe partial class NV
         {
             /// <inheritdoc cref="DeleteFencesNV(int, uint*)"/>
@@ -2639,66 +1964,42 @@ namespace OpenTK.Graphics.OpenGLES1
                 }
             }
             /// <inheritdoc cref="GetFenceivNV(uint, FenceParameterNameNV, int*)"/>
-            public static unsafe void GetFenceivNV(uint fence, FenceParameterNameNV pname, Span<int> parameters)
+            public static unsafe void GetFenceivNV(uint fence, FenceParameterNameNV pname, Span<int> @params)
             {
-                fixed (int* parameters_ptr = parameters)
+                fixed (int* @params_ptr = @params)
                 {
-                    GetFenceivNV(fence, pname, parameters_ptr);
+                    GetFenceivNV(fence, pname, @params_ptr);
                 }
             }
             /// <inheritdoc cref="GetFenceivNV(uint, FenceParameterNameNV, int*)"/>
-            public static unsafe void GetFenceivNV(uint fence, FenceParameterNameNV pname, int[] parameters)
+            public static unsafe void GetFenceivNV(uint fence, FenceParameterNameNV pname, int[] @params)
             {
-                fixed (int* parameters_ptr = parameters)
+                fixed (int* @params_ptr = @params)
                 {
-                    GetFenceivNV(fence, pname, parameters_ptr);
+                    GetFenceivNV(fence, pname, @params_ptr);
                 }
             }
             /// <inheritdoc cref="GetFenceivNV(uint, FenceParameterNameNV, int*)"/>
             public static unsafe int GetFenceivNV(uint fence, FenceParameterNameNV pname)
             {
-                int parameters;
-                int* parameters_ptr = &parameters;
+                int @params;
+                int* @params_ptr = &@params;
                 {
-                    GetFenceivNV(fence, pname, parameters_ptr);
+                    GetFenceivNV(fence, pname, @params_ptr);
                 }
-                return parameters;
+                return @params;
             }
             /// <inheritdoc cref="GetFenceivNV(uint, FenceParameterNameNV, int*)"/>
-            public static unsafe void GetFenceivNV(uint fence, FenceParameterNameNV pname, out int parameters)
+            public static unsafe void GetFenceivNV(uint fence, FenceParameterNameNV pname, out int @params)
             {
-                fixed (int* parameters_ptr = &parameters)
+                fixed (int* @params_ptr = &@params)
                 {
-                    GetFenceivNV(fence, pname, parameters_ptr);
+                    GetFenceivNV(fence, pname, @params_ptr);
                 }
             }
         }
         public static unsafe partial class OES
         {
-            /// <inheritdoc cref="BitmapxOES(int, int, int, int, int, int, byte*)"/>
-            public static unsafe void BitmapxOES(int width, int height, int xorig, int yorig, int xmove, int ymove, ReadOnlySpan<byte> bitmap)
-            {
-                fixed (byte* bitmap_ptr = bitmap)
-                {
-                    BitmapxOES(width, height, xorig, yorig, xmove, ymove, bitmap_ptr);
-                }
-            }
-            /// <inheritdoc cref="BitmapxOES(int, int, int, int, int, int, byte*)"/>
-            public static unsafe void BitmapxOES(int width, int height, int xorig, int yorig, int xmove, int ymove, byte[] bitmap)
-            {
-                fixed (byte* bitmap_ptr = bitmap)
-                {
-                    BitmapxOES(width, height, xorig, yorig, xmove, ymove, bitmap_ptr);
-                }
-            }
-            /// <inheritdoc cref="BitmapxOES(int, int, int, int, int, int, byte*)"/>
-            public static unsafe void BitmapxOES(int width, int height, int xorig, int yorig, int xmove, int ymove, ref readonly byte bitmap)
-            {
-                fixed (byte* bitmap_ptr = &bitmap)
-                {
-                    BitmapxOES(width, height, xorig, yorig, xmove, ymove, bitmap_ptr);
-                }
-            }
             /// <inheritdoc cref="ClipPlanefOES(ClipPlaneName, float*)"/>
             public static unsafe void ClipPlanefOES(ClipPlaneName plane, ReadOnlySpan<float> equation)
             {
@@ -2745,78 +2046,6 @@ namespace OpenTK.Graphics.OpenGLES1
                 fixed (int* equation_ptr = &equation)
                 {
                     ClipPlanexOES(plane, equation_ptr);
-                }
-            }
-            /// <inheritdoc cref="Color3xvOES(int*)"/>
-            public static unsafe void Color3xvOES(ReadOnlySpan<int> components)
-            {
-                fixed (int* components_ptr = components)
-                {
-                    Color3xvOES(components_ptr);
-                }
-            }
-            /// <inheritdoc cref="Color3xvOES(int*)"/>
-            public static unsafe void Color3xvOES(int[] components)
-            {
-                fixed (int* components_ptr = components)
-                {
-                    Color3xvOES(components_ptr);
-                }
-            }
-            /// <inheritdoc cref="Color3xvOES(int*)"/>
-            public static unsafe void Color3xvOES(ref readonly int components)
-            {
-                fixed (int* components_ptr = &components)
-                {
-                    Color3xvOES(components_ptr);
-                }
-            }
-            /// <inheritdoc cref="Color4xvOES(int*)"/>
-            public static unsafe void Color4xvOES(ReadOnlySpan<int> components)
-            {
-                fixed (int* components_ptr = components)
-                {
-                    Color4xvOES(components_ptr);
-                }
-            }
-            /// <inheritdoc cref="Color4xvOES(int*)"/>
-            public static unsafe void Color4xvOES(int[] components)
-            {
-                fixed (int* components_ptr = components)
-                {
-                    Color4xvOES(components_ptr);
-                }
-            }
-            /// <inheritdoc cref="Color4xvOES(int*)"/>
-            public static unsafe void Color4xvOES(ref readonly int components)
-            {
-                fixed (int* components_ptr = &components)
-                {
-                    Color4xvOES(components_ptr);
-                }
-            }
-            /// <inheritdoc cref="ConvolutionParameterxvOES(ConvolutionTargetEXT, ConvolutionParameter, int*)"/>
-            public static unsafe void ConvolutionParameterxvOES(ConvolutionTargetEXT target, ConvolutionParameter pname, ReadOnlySpan<int> parameters)
-            {
-                fixed (int* parameters_ptr = parameters)
-                {
-                    ConvolutionParameterxvOES(target, pname, parameters_ptr);
-                }
-            }
-            /// <inheritdoc cref="ConvolutionParameterxvOES(ConvolutionTargetEXT, ConvolutionParameter, int*)"/>
-            public static unsafe void ConvolutionParameterxvOES(ConvolutionTargetEXT target, ConvolutionParameter pname, int[] parameters)
-            {
-                fixed (int* parameters_ptr = parameters)
-                {
-                    ConvolutionParameterxvOES(target, pname, parameters_ptr);
-                }
-            }
-            /// <inheritdoc cref="ConvolutionParameterxvOES(ConvolutionTargetEXT, ConvolutionParameter, int*)"/>
-            public static unsafe void ConvolutionParameterxvOES(ConvolutionTargetEXT target, ConvolutionParameter pname, ref readonly int parameters)
-            {
-                fixed (int* parameters_ptr = &parameters)
-                {
-                    ConvolutionParameterxvOES(target, pname, parameters_ptr);
                 }
             }
             /// <inheritdoc cref="DeleteFramebuffersOES(int, int*)"/>
@@ -3053,62 +2282,6 @@ namespace OpenTK.Graphics.OpenGLES1
                     EGLImageTargetTexture2DOES(target, image_ptr);
                 }
             }
-            /// <inheritdoc cref="EvalCoord1xvOES(int*)"/>
-            public static unsafe void EvalCoord1xvOES(ref readonly int coords)
-            {
-                fixed (int* coords_ptr = &coords)
-                {
-                    EvalCoord1xvOES(coords_ptr);
-                }
-            }
-            /// <inheritdoc cref="EvalCoord2xvOES(int*)"/>
-            public static unsafe void EvalCoord2xvOES(ReadOnlySpan<int> coords)
-            {
-                fixed (int* coords_ptr = coords)
-                {
-                    EvalCoord2xvOES(coords_ptr);
-                }
-            }
-            /// <inheritdoc cref="EvalCoord2xvOES(int*)"/>
-            public static unsafe void EvalCoord2xvOES(int[] coords)
-            {
-                fixed (int* coords_ptr = coords)
-                {
-                    EvalCoord2xvOES(coords_ptr);
-                }
-            }
-            /// <inheritdoc cref="EvalCoord2xvOES(int*)"/>
-            public static unsafe void EvalCoord2xvOES(ref readonly int coords)
-            {
-                fixed (int* coords_ptr = &coords)
-                {
-                    EvalCoord2xvOES(coords_ptr);
-                }
-            }
-            /// <inheritdoc cref="FeedbackBufferxOES(int, All, int*)"/>
-            public static unsafe void FeedbackBufferxOES(int n, All type, ReadOnlySpan<int> buffer)
-            {
-                fixed (int* buffer_ptr = buffer)
-                {
-                    FeedbackBufferxOES(n, type, buffer_ptr);
-                }
-            }
-            /// <inheritdoc cref="FeedbackBufferxOES(int, All, int*)"/>
-            public static unsafe void FeedbackBufferxOES(int n, All type, int[] buffer)
-            {
-                fixed (int* buffer_ptr = buffer)
-                {
-                    FeedbackBufferxOES(n, type, buffer_ptr);
-                }
-            }
-            /// <inheritdoc cref="FeedbackBufferxOES(int, All, int*)"/>
-            public static unsafe void FeedbackBufferxOES(int n, All type, ref readonly int buffer)
-            {
-                fixed (int* buffer_ptr = &buffer)
-                {
-                    FeedbackBufferxOES(n, type, buffer_ptr);
-                }
-            }
             /// <inheritdoc cref="FogxvOES(FogPName, int*)"/>
             public static unsafe void FogxvOES(FogPName pname, ReadOnlySpan<int> param)
             {
@@ -3253,546 +2426,344 @@ namespace OpenTK.Graphics.OpenGLES1
                     GetClipPlanexOES(plane, equation_ptr);
                 }
             }
-            /// <inheritdoc cref="GetConvolutionParameterxvOES(All, All, int*)"/>
-            public static unsafe void GetConvolutionParameterxvOES(All target, All pname, Span<int> parameters)
+            /// <inheritdoc cref="GetFixedvOES(GetPName, int*)"/>
+            public static unsafe void GetFixedvOES(GetPName pname, Span<int> @params)
             {
-                fixed (int* parameters_ptr = parameters)
+                fixed (int* @params_ptr = @params)
                 {
-                    GetConvolutionParameterxvOES(target, pname, parameters_ptr);
-                }
-            }
-            /// <inheritdoc cref="GetConvolutionParameterxvOES(All, All, int*)"/>
-            public static unsafe void GetConvolutionParameterxvOES(All target, All pname, int[] parameters)
-            {
-                fixed (int* parameters_ptr = parameters)
-                {
-                    GetConvolutionParameterxvOES(target, pname, parameters_ptr);
-                }
-            }
-            /// <inheritdoc cref="GetConvolutionParameterxvOES(All, All, int*)"/>
-            public static unsafe int GetConvolutionParameterxvOES(All target, All pname)
-            {
-                int parameters;
-                int* parameters_ptr = &parameters;
-                {
-                    GetConvolutionParameterxvOES(target, pname, parameters_ptr);
-                }
-                return parameters;
-            }
-            /// <inheritdoc cref="GetConvolutionParameterxvOES(All, All, int*)"/>
-            public static unsafe void GetConvolutionParameterxvOES(All target, All pname, out int parameters)
-            {
-                fixed (int* parameters_ptr = &parameters)
-                {
-                    GetConvolutionParameterxvOES(target, pname, parameters_ptr);
+                    GetFixedvOES(pname, @params_ptr);
                 }
             }
             /// <inheritdoc cref="GetFixedvOES(GetPName, int*)"/>
-            public static unsafe void GetFixedvOES(GetPName pname, Span<int> parameters)
+            public static unsafe void GetFixedvOES(GetPName pname, int[] @params)
             {
-                fixed (int* parameters_ptr = parameters)
+                fixed (int* @params_ptr = @params)
                 {
-                    GetFixedvOES(pname, parameters_ptr);
-                }
-            }
-            /// <inheritdoc cref="GetFixedvOES(GetPName, int*)"/>
-            public static unsafe void GetFixedvOES(GetPName pname, int[] parameters)
-            {
-                fixed (int* parameters_ptr = parameters)
-                {
-                    GetFixedvOES(pname, parameters_ptr);
+                    GetFixedvOES(pname, @params_ptr);
                 }
             }
             /// <inheritdoc cref="GetFixedvOES(GetPName, int*)"/>
             public static unsafe int GetFixedvOES(GetPName pname)
             {
-                int parameters;
-                int* parameters_ptr = &parameters;
+                int @params;
+                int* @params_ptr = &@params;
                 {
-                    GetFixedvOES(pname, parameters_ptr);
+                    GetFixedvOES(pname, @params_ptr);
                 }
-                return parameters;
+                return @params;
             }
             /// <inheritdoc cref="GetFixedvOES(GetPName, int*)"/>
-            public static unsafe void GetFixedvOES(GetPName pname, out int parameters)
+            public static unsafe void GetFixedvOES(GetPName pname, out int @params)
             {
-                fixed (int* parameters_ptr = &parameters)
+                fixed (int* @params_ptr = &@params)
                 {
-                    GetFixedvOES(pname, parameters_ptr);
+                    GetFixedvOES(pname, @params_ptr);
                 }
             }
             /// <inheritdoc cref="GetFramebufferAttachmentParameterivOES(FramebufferTarget, FramebufferAttachment, FramebufferAttachmentParameterName, int*)"/>
-            public static unsafe void GetFramebufferAttachmentParameterivOES(FramebufferTarget target, FramebufferAttachment attachment, FramebufferAttachmentParameterName pname, Span<int> parameters)
+            public static unsafe void GetFramebufferAttachmentParameterivOES(FramebufferTarget target, FramebufferAttachment attachment, FramebufferAttachmentParameterName pname, Span<int> @params)
             {
-                fixed (int* parameters_ptr = parameters)
+                fixed (int* @params_ptr = @params)
                 {
-                    GetFramebufferAttachmentParameterivOES(target, attachment, pname, parameters_ptr);
+                    GetFramebufferAttachmentParameterivOES(target, attachment, pname, @params_ptr);
                 }
             }
             /// <inheritdoc cref="GetFramebufferAttachmentParameterivOES(FramebufferTarget, FramebufferAttachment, FramebufferAttachmentParameterName, int*)"/>
-            public static unsafe void GetFramebufferAttachmentParameterivOES(FramebufferTarget target, FramebufferAttachment attachment, FramebufferAttachmentParameterName pname, int[] parameters)
+            public static unsafe void GetFramebufferAttachmentParameterivOES(FramebufferTarget target, FramebufferAttachment attachment, FramebufferAttachmentParameterName pname, int[] @params)
             {
-                fixed (int* parameters_ptr = parameters)
+                fixed (int* @params_ptr = @params)
                 {
-                    GetFramebufferAttachmentParameterivOES(target, attachment, pname, parameters_ptr);
+                    GetFramebufferAttachmentParameterivOES(target, attachment, pname, @params_ptr);
                 }
             }
             /// <inheritdoc cref="GetFramebufferAttachmentParameterivOES(FramebufferTarget, FramebufferAttachment, FramebufferAttachmentParameterName, int*)"/>
             public static unsafe int GetFramebufferAttachmentParameterivOES(FramebufferTarget target, FramebufferAttachment attachment, FramebufferAttachmentParameterName pname)
             {
-                int parameters;
-                int* parameters_ptr = &parameters;
+                int @params;
+                int* @params_ptr = &@params;
                 {
-                    GetFramebufferAttachmentParameterivOES(target, attachment, pname, parameters_ptr);
+                    GetFramebufferAttachmentParameterivOES(target, attachment, pname, @params_ptr);
                 }
-                return parameters;
+                return @params;
             }
             /// <inheritdoc cref="GetFramebufferAttachmentParameterivOES(FramebufferTarget, FramebufferAttachment, FramebufferAttachmentParameterName, int*)"/>
-            public static unsafe void GetFramebufferAttachmentParameterivOES(FramebufferTarget target, FramebufferAttachment attachment, FramebufferAttachmentParameterName pname, out int parameters)
+            public static unsafe void GetFramebufferAttachmentParameterivOES(FramebufferTarget target, FramebufferAttachment attachment, FramebufferAttachmentParameterName pname, out int @params)
             {
-                fixed (int* parameters_ptr = &parameters)
+                fixed (int* @params_ptr = &@params)
                 {
-                    GetFramebufferAttachmentParameterivOES(target, attachment, pname, parameters_ptr);
-                }
-            }
-            /// <inheritdoc cref="GetHistogramParameterxvOES(HistogramTargetEXT, GetHistogramParameterPNameEXT, int*)"/>
-            public static unsafe void GetHistogramParameterxvOES(HistogramTargetEXT target, GetHistogramParameterPNameEXT pname, Span<int> parameters)
-            {
-                fixed (int* parameters_ptr = parameters)
-                {
-                    GetHistogramParameterxvOES(target, pname, parameters_ptr);
-                }
-            }
-            /// <inheritdoc cref="GetHistogramParameterxvOES(HistogramTargetEXT, GetHistogramParameterPNameEXT, int*)"/>
-            public static unsafe void GetHistogramParameterxvOES(HistogramTargetEXT target, GetHistogramParameterPNameEXT pname, int[] parameters)
-            {
-                fixed (int* parameters_ptr = parameters)
-                {
-                    GetHistogramParameterxvOES(target, pname, parameters_ptr);
-                }
-            }
-            /// <inheritdoc cref="GetHistogramParameterxvOES(HistogramTargetEXT, GetHistogramParameterPNameEXT, int*)"/>
-            public static unsafe int GetHistogramParameterxvOES(HistogramTargetEXT target, GetHistogramParameterPNameEXT pname)
-            {
-                int parameters;
-                int* parameters_ptr = &parameters;
-                {
-                    GetHistogramParameterxvOES(target, pname, parameters_ptr);
-                }
-                return parameters;
-            }
-            /// <inheritdoc cref="GetHistogramParameterxvOES(HistogramTargetEXT, GetHistogramParameterPNameEXT, int*)"/>
-            public static unsafe void GetHistogramParameterxvOES(HistogramTargetEXT target, GetHistogramParameterPNameEXT pname, out int parameters)
-            {
-                fixed (int* parameters_ptr = &parameters)
-                {
-                    GetHistogramParameterxvOES(target, pname, parameters_ptr);
-                }
-            }
-            /// <inheritdoc cref="GetLightxOES(LightName, LightParameter, int*)"/>
-            public static unsafe void GetLightxOES(LightName light, LightParameter pname, Span<int> parameters)
-            {
-                fixed (int* parameters_ptr = parameters)
-                {
-                    GetLightxOES(light, pname, parameters_ptr);
-                }
-            }
-            /// <inheritdoc cref="GetLightxOES(LightName, LightParameter, int*)"/>
-            public static unsafe void GetLightxOES(LightName light, LightParameter pname, int[] parameters)
-            {
-                fixed (int* parameters_ptr = parameters)
-                {
-                    GetLightxOES(light, pname, parameters_ptr);
-                }
-            }
-            /// <inheritdoc cref="GetLightxOES(LightName, LightParameter, int*)"/>
-            public static unsafe int GetLightxOES(LightName light, LightParameter pname)
-            {
-                int parameters;
-                int* parameters_ptr = &parameters;
-                {
-                    GetLightxOES(light, pname, parameters_ptr);
-                }
-                return parameters;
-            }
-            /// <inheritdoc cref="GetLightxOES(LightName, LightParameter, int*)"/>
-            public static unsafe void GetLightxOES(LightName light, LightParameter pname, out int parameters)
-            {
-                fixed (int* parameters_ptr = &parameters)
-                {
-                    GetLightxOES(light, pname, parameters_ptr);
+                    GetFramebufferAttachmentParameterivOES(target, attachment, pname, @params_ptr);
                 }
             }
             /// <inheritdoc cref="GetLightxvOES(LightName, LightParameter, int*)"/>
-            public static unsafe void GetLightxvOES(LightName light, LightParameter pname, Span<int> parameters)
+            public static unsafe void GetLightxvOES(LightName light, LightParameter pname, Span<int> @params)
             {
-                fixed (int* parameters_ptr = parameters)
+                fixed (int* @params_ptr = @params)
                 {
-                    GetLightxvOES(light, pname, parameters_ptr);
+                    GetLightxvOES(light, pname, @params_ptr);
                 }
             }
             /// <inheritdoc cref="GetLightxvOES(LightName, LightParameter, int*)"/>
-            public static unsafe void GetLightxvOES(LightName light, LightParameter pname, int[] parameters)
+            public static unsafe void GetLightxvOES(LightName light, LightParameter pname, int[] @params)
             {
-                fixed (int* parameters_ptr = parameters)
+                fixed (int* @params_ptr = @params)
                 {
-                    GetLightxvOES(light, pname, parameters_ptr);
+                    GetLightxvOES(light, pname, @params_ptr);
                 }
             }
             /// <inheritdoc cref="GetLightxvOES(LightName, LightParameter, int*)"/>
             public static unsafe int GetLightxvOES(LightName light, LightParameter pname)
             {
-                int parameters;
-                int* parameters_ptr = &parameters;
+                int @params;
+                int* @params_ptr = &@params;
                 {
-                    GetLightxvOES(light, pname, parameters_ptr);
+                    GetLightxvOES(light, pname, @params_ptr);
                 }
-                return parameters;
+                return @params;
             }
             /// <inheritdoc cref="GetLightxvOES(LightName, LightParameter, int*)"/>
-            public static unsafe void GetLightxvOES(LightName light, LightParameter pname, out int parameters)
+            public static unsafe void GetLightxvOES(LightName light, LightParameter pname, out int @params)
             {
-                fixed (int* parameters_ptr = &parameters)
+                fixed (int* @params_ptr = &@params)
                 {
-                    GetLightxvOES(light, pname, parameters_ptr);
-                }
-            }
-            /// <inheritdoc cref="GetMapxvOES(MapTarget, GetMapQuery, int*)"/>
-            public static unsafe void GetMapxvOES(MapTarget target, GetMapQuery query, Span<int> v)
-            {
-                fixed (int* v_ptr = v)
-                {
-                    GetMapxvOES(target, query, v_ptr);
-                }
-            }
-            /// <inheritdoc cref="GetMapxvOES(MapTarget, GetMapQuery, int*)"/>
-            public static unsafe void GetMapxvOES(MapTarget target, GetMapQuery query, int[] v)
-            {
-                fixed (int* v_ptr = v)
-                {
-                    GetMapxvOES(target, query, v_ptr);
-                }
-            }
-            /// <inheritdoc cref="GetMapxvOES(MapTarget, GetMapQuery, int*)"/>
-            public static unsafe int GetMapxvOES(MapTarget target, GetMapQuery query)
-            {
-                int v;
-                int* v_ptr = &v;
-                {
-                    GetMapxvOES(target, query, v_ptr);
-                }
-                return v;
-            }
-            /// <inheritdoc cref="GetMapxvOES(MapTarget, GetMapQuery, int*)"/>
-            public static unsafe void GetMapxvOES(MapTarget target, GetMapQuery query, out int v)
-            {
-                fixed (int* v_ptr = &v)
-                {
-                    GetMapxvOES(target, query, v_ptr);
+                    GetLightxvOES(light, pname, @params_ptr);
                 }
             }
             /// <inheritdoc cref="GetMaterialxvOES(TriangleFace, MaterialParameter, int*)"/>
-            public static unsafe void GetMaterialxvOES(TriangleFace face, MaterialParameter pname, Span<int> parameters)
+            public static unsafe void GetMaterialxvOES(TriangleFace face, MaterialParameter pname, Span<int> @params)
             {
-                fixed (int* parameters_ptr = parameters)
+                fixed (int* @params_ptr = @params)
                 {
-                    GetMaterialxvOES(face, pname, parameters_ptr);
+                    GetMaterialxvOES(face, pname, @params_ptr);
                 }
             }
             /// <inheritdoc cref="GetMaterialxvOES(TriangleFace, MaterialParameter, int*)"/>
-            public static unsafe void GetMaterialxvOES(TriangleFace face, MaterialParameter pname, int[] parameters)
+            public static unsafe void GetMaterialxvOES(TriangleFace face, MaterialParameter pname, int[] @params)
             {
-                fixed (int* parameters_ptr = parameters)
+                fixed (int* @params_ptr = @params)
                 {
-                    GetMaterialxvOES(face, pname, parameters_ptr);
+                    GetMaterialxvOES(face, pname, @params_ptr);
                 }
             }
             /// <inheritdoc cref="GetMaterialxvOES(TriangleFace, MaterialParameter, int*)"/>
             public static unsafe int GetMaterialxvOES(TriangleFace face, MaterialParameter pname)
             {
-                int parameters;
-                int* parameters_ptr = &parameters;
+                int @params;
+                int* @params_ptr = &@params;
                 {
-                    GetMaterialxvOES(face, pname, parameters_ptr);
+                    GetMaterialxvOES(face, pname, @params_ptr);
                 }
-                return parameters;
+                return @params;
             }
             /// <inheritdoc cref="GetMaterialxvOES(TriangleFace, MaterialParameter, int*)"/>
-            public static unsafe void GetMaterialxvOES(TriangleFace face, MaterialParameter pname, out int parameters)
+            public static unsafe void GetMaterialxvOES(TriangleFace face, MaterialParameter pname, out int @params)
             {
-                fixed (int* parameters_ptr = &parameters)
+                fixed (int* @params_ptr = &@params)
                 {
-                    GetMaterialxvOES(face, pname, parameters_ptr);
-                }
-            }
-            /// <inheritdoc cref="GetPixelMapxv(PixelMap, int, int*)"/>
-            public static unsafe void GetPixelMapx(PixelMap map, int size, Span<int> values)
-            {
-                fixed (int* values_ptr = values)
-                {
-                    GetPixelMapxv(map, size, values_ptr);
-                }
-            }
-            /// <inheritdoc cref="GetPixelMapxv(PixelMap, int, int*)"/>
-            public static unsafe void GetPixelMapx(PixelMap map, int size, int[] values)
-            {
-                fixed (int* values_ptr = values)
-                {
-                    GetPixelMapxv(map, size, values_ptr);
-                }
-            }
-            /// <inheritdoc cref="GetPixelMapxv(PixelMap, int, int*)"/>
-            public static unsafe void GetPixelMapx(PixelMap map, int size, ref int values)
-            {
-                fixed (int* values_ptr = &values)
-                {
-                    GetPixelMapxv(map, size, values_ptr);
+                    GetMaterialxvOES(face, pname, @params_ptr);
                 }
             }
             /// <inheritdoc cref="GetRenderbufferParameterivOES(RenderbufferTarget, RenderbufferParameterName, int*)"/>
-            public static unsafe void GetRenderbufferParameterivOES(RenderbufferTarget target, RenderbufferParameterName pname, Span<int> parameters)
+            public static unsafe void GetRenderbufferParameterivOES(RenderbufferTarget target, RenderbufferParameterName pname, Span<int> @params)
             {
-                fixed (int* parameters_ptr = parameters)
+                fixed (int* @params_ptr = @params)
                 {
-                    GetRenderbufferParameterivOES(target, pname, parameters_ptr);
+                    GetRenderbufferParameterivOES(target, pname, @params_ptr);
                 }
             }
             /// <inheritdoc cref="GetRenderbufferParameterivOES(RenderbufferTarget, RenderbufferParameterName, int*)"/>
-            public static unsafe void GetRenderbufferParameterivOES(RenderbufferTarget target, RenderbufferParameterName pname, int[] parameters)
+            public static unsafe void GetRenderbufferParameterivOES(RenderbufferTarget target, RenderbufferParameterName pname, int[] @params)
             {
-                fixed (int* parameters_ptr = parameters)
+                fixed (int* @params_ptr = @params)
                 {
-                    GetRenderbufferParameterivOES(target, pname, parameters_ptr);
+                    GetRenderbufferParameterivOES(target, pname, @params_ptr);
                 }
             }
             /// <inheritdoc cref="GetRenderbufferParameterivOES(RenderbufferTarget, RenderbufferParameterName, int*)"/>
             public static unsafe int GetRenderbufferParameterivOES(RenderbufferTarget target, RenderbufferParameterName pname)
             {
-                int parameters;
-                int* parameters_ptr = &parameters;
+                int @params;
+                int* @params_ptr = &@params;
                 {
-                    GetRenderbufferParameterivOES(target, pname, parameters_ptr);
+                    GetRenderbufferParameterivOES(target, pname, @params_ptr);
                 }
-                return parameters;
+                return @params;
             }
             /// <inheritdoc cref="GetRenderbufferParameterivOES(RenderbufferTarget, RenderbufferParameterName, int*)"/>
-            public static unsafe void GetRenderbufferParameterivOES(RenderbufferTarget target, RenderbufferParameterName pname, out int parameters)
+            public static unsafe void GetRenderbufferParameterivOES(RenderbufferTarget target, RenderbufferParameterName pname, out int @params)
             {
-                fixed (int* parameters_ptr = &parameters)
+                fixed (int* @params_ptr = &@params)
                 {
-                    GetRenderbufferParameterivOES(target, pname, parameters_ptr);
+                    GetRenderbufferParameterivOES(target, pname, @params_ptr);
                 }
             }
             /// <inheritdoc cref="GetTexEnvxvOES(TextureEnvTarget, TextureEnvParameter, int*)"/>
-            public static unsafe void GetTexEnvxvOES(TextureEnvTarget target, TextureEnvParameter pname, Span<int> parameters)
+            public static unsafe void GetTexEnvxvOES(TextureEnvTarget target, TextureEnvParameter pname, Span<int> @params)
             {
-                fixed (int* parameters_ptr = parameters)
+                fixed (int* @params_ptr = @params)
                 {
-                    GetTexEnvxvOES(target, pname, parameters_ptr);
+                    GetTexEnvxvOES(target, pname, @params_ptr);
                 }
             }
             /// <inheritdoc cref="GetTexEnvxvOES(TextureEnvTarget, TextureEnvParameter, int*)"/>
-            public static unsafe void GetTexEnvxvOES(TextureEnvTarget target, TextureEnvParameter pname, int[] parameters)
+            public static unsafe void GetTexEnvxvOES(TextureEnvTarget target, TextureEnvParameter pname, int[] @params)
             {
-                fixed (int* parameters_ptr = parameters)
+                fixed (int* @params_ptr = @params)
                 {
-                    GetTexEnvxvOES(target, pname, parameters_ptr);
+                    GetTexEnvxvOES(target, pname, @params_ptr);
                 }
             }
             /// <inheritdoc cref="GetTexEnvxvOES(TextureEnvTarget, TextureEnvParameter, int*)"/>
             public static unsafe int GetTexEnvxvOES(TextureEnvTarget target, TextureEnvParameter pname)
             {
-                int parameters;
-                int* parameters_ptr = &parameters;
+                int @params;
+                int* @params_ptr = &@params;
                 {
-                    GetTexEnvxvOES(target, pname, parameters_ptr);
+                    GetTexEnvxvOES(target, pname, @params_ptr);
                 }
-                return parameters;
+                return @params;
             }
             /// <inheritdoc cref="GetTexEnvxvOES(TextureEnvTarget, TextureEnvParameter, int*)"/>
-            public static unsafe void GetTexEnvxvOES(TextureEnvTarget target, TextureEnvParameter pname, out int parameters)
+            public static unsafe void GetTexEnvxvOES(TextureEnvTarget target, TextureEnvParameter pname, out int @params)
             {
-                fixed (int* parameters_ptr = &parameters)
+                fixed (int* @params_ptr = &@params)
                 {
-                    GetTexEnvxvOES(target, pname, parameters_ptr);
+                    GetTexEnvxvOES(target, pname, @params_ptr);
                 }
             }
             /// <inheritdoc cref="GetTexGenfvOES(TextureCoordName, TextureGenParameter, float*)"/>
-            public static unsafe void GetTexGenfvOES(TextureCoordName coord, TextureGenParameter pname, Span<float> parameters)
+            public static unsafe void GetTexGenfvOES(TextureCoordName coord, TextureGenParameter pname, Span<float> @params)
             {
-                fixed (float* parameters_ptr = parameters)
+                fixed (float* @params_ptr = @params)
                 {
-                    GetTexGenfvOES(coord, pname, parameters_ptr);
+                    GetTexGenfvOES(coord, pname, @params_ptr);
                 }
             }
             /// <inheritdoc cref="GetTexGenfvOES(TextureCoordName, TextureGenParameter, float*)"/>
-            public static unsafe void GetTexGenfvOES(TextureCoordName coord, TextureGenParameter pname, float[] parameters)
+            public static unsafe void GetTexGenfvOES(TextureCoordName coord, TextureGenParameter pname, float[] @params)
             {
-                fixed (float* parameters_ptr = parameters)
+                fixed (float* @params_ptr = @params)
                 {
-                    GetTexGenfvOES(coord, pname, parameters_ptr);
+                    GetTexGenfvOES(coord, pname, @params_ptr);
                 }
             }
             /// <inheritdoc cref="GetTexGenfvOES(TextureCoordName, TextureGenParameter, float*)"/>
             public static unsafe float GetTexGenfvOES(TextureCoordName coord, TextureGenParameter pname)
             {
-                float parameters;
-                float* parameters_ptr = &parameters;
+                float @params;
+                float* @params_ptr = &@params;
                 {
-                    GetTexGenfvOES(coord, pname, parameters_ptr);
+                    GetTexGenfvOES(coord, pname, @params_ptr);
                 }
-                return parameters;
+                return @params;
             }
             /// <inheritdoc cref="GetTexGenfvOES(TextureCoordName, TextureGenParameter, float*)"/>
-            public static unsafe void GetTexGenfvOES(TextureCoordName coord, TextureGenParameter pname, out float parameters)
+            public static unsafe void GetTexGenfvOES(TextureCoordName coord, TextureGenParameter pname, out float @params)
             {
-                fixed (float* parameters_ptr = &parameters)
+                fixed (float* @params_ptr = &@params)
                 {
-                    GetTexGenfvOES(coord, pname, parameters_ptr);
+                    GetTexGenfvOES(coord, pname, @params_ptr);
                 }
             }
             /// <inheritdoc cref="GetTexGenivOES(TextureCoordName, TextureGenParameter, int*)"/>
-            public static unsafe void GetTexGenivOES(TextureCoordName coord, TextureGenParameter pname, Span<int> parameters)
+            public static unsafe void GetTexGenivOES(TextureCoordName coord, TextureGenParameter pname, Span<int> @params)
             {
-                fixed (int* parameters_ptr = parameters)
+                fixed (int* @params_ptr = @params)
                 {
-                    GetTexGenivOES(coord, pname, parameters_ptr);
+                    GetTexGenivOES(coord, pname, @params_ptr);
                 }
             }
             /// <inheritdoc cref="GetTexGenivOES(TextureCoordName, TextureGenParameter, int*)"/>
-            public static unsafe void GetTexGenivOES(TextureCoordName coord, TextureGenParameter pname, int[] parameters)
+            public static unsafe void GetTexGenivOES(TextureCoordName coord, TextureGenParameter pname, int[] @params)
             {
-                fixed (int* parameters_ptr = parameters)
+                fixed (int* @params_ptr = @params)
                 {
-                    GetTexGenivOES(coord, pname, parameters_ptr);
+                    GetTexGenivOES(coord, pname, @params_ptr);
                 }
             }
             /// <inheritdoc cref="GetTexGenivOES(TextureCoordName, TextureGenParameter, int*)"/>
             public static unsafe int GetTexGenivOES(TextureCoordName coord, TextureGenParameter pname)
             {
-                int parameters;
-                int* parameters_ptr = &parameters;
+                int @params;
+                int* @params_ptr = &@params;
                 {
-                    GetTexGenivOES(coord, pname, parameters_ptr);
+                    GetTexGenivOES(coord, pname, @params_ptr);
                 }
-                return parameters;
+                return @params;
             }
             /// <inheritdoc cref="GetTexGenivOES(TextureCoordName, TextureGenParameter, int*)"/>
-            public static unsafe void GetTexGenivOES(TextureCoordName coord, TextureGenParameter pname, out int parameters)
+            public static unsafe void GetTexGenivOES(TextureCoordName coord, TextureGenParameter pname, out int @params)
             {
-                fixed (int* parameters_ptr = &parameters)
+                fixed (int* @params_ptr = &@params)
                 {
-                    GetTexGenivOES(coord, pname, parameters_ptr);
+                    GetTexGenivOES(coord, pname, @params_ptr);
                 }
             }
             /// <inheritdoc cref="GetTexGenxvOES(TextureCoordName, TextureGenParameter, int*)"/>
-            public static unsafe void GetTexGenxvOES(TextureCoordName coord, TextureGenParameter pname, Span<int> parameters)
+            public static unsafe void GetTexGenxvOES(TextureCoordName coord, TextureGenParameter pname, Span<int> @params)
             {
-                fixed (int* parameters_ptr = parameters)
+                fixed (int* @params_ptr = @params)
                 {
-                    GetTexGenxvOES(coord, pname, parameters_ptr);
+                    GetTexGenxvOES(coord, pname, @params_ptr);
                 }
             }
             /// <inheritdoc cref="GetTexGenxvOES(TextureCoordName, TextureGenParameter, int*)"/>
-            public static unsafe void GetTexGenxvOES(TextureCoordName coord, TextureGenParameter pname, int[] parameters)
+            public static unsafe void GetTexGenxvOES(TextureCoordName coord, TextureGenParameter pname, int[] @params)
             {
-                fixed (int* parameters_ptr = parameters)
+                fixed (int* @params_ptr = @params)
                 {
-                    GetTexGenxvOES(coord, pname, parameters_ptr);
+                    GetTexGenxvOES(coord, pname, @params_ptr);
                 }
             }
             /// <inheritdoc cref="GetTexGenxvOES(TextureCoordName, TextureGenParameter, int*)"/>
             public static unsafe int GetTexGenxvOES(TextureCoordName coord, TextureGenParameter pname)
             {
-                int parameters;
-                int* parameters_ptr = &parameters;
+                int @params;
+                int* @params_ptr = &@params;
                 {
-                    GetTexGenxvOES(coord, pname, parameters_ptr);
+                    GetTexGenxvOES(coord, pname, @params_ptr);
                 }
-                return parameters;
+                return @params;
             }
             /// <inheritdoc cref="GetTexGenxvOES(TextureCoordName, TextureGenParameter, int*)"/>
-            public static unsafe void GetTexGenxvOES(TextureCoordName coord, TextureGenParameter pname, out int parameters)
+            public static unsafe void GetTexGenxvOES(TextureCoordName coord, TextureGenParameter pname, out int @params)
             {
-                fixed (int* parameters_ptr = &parameters)
+                fixed (int* @params_ptr = &@params)
                 {
-                    GetTexGenxvOES(coord, pname, parameters_ptr);
-                }
-            }
-            /// <inheritdoc cref="GetTexLevelParameterxvOES(TextureTarget, int, GetTextureParameter, int*)"/>
-            public static unsafe void GetTexLevelParameterxvOES(TextureTarget target, int level, GetTextureParameter pname, Span<int> parameters)
-            {
-                fixed (int* parameters_ptr = parameters)
-                {
-                    GetTexLevelParameterxvOES(target, level, pname, parameters_ptr);
-                }
-            }
-            /// <inheritdoc cref="GetTexLevelParameterxvOES(TextureTarget, int, GetTextureParameter, int*)"/>
-            public static unsafe void GetTexLevelParameterxvOES(TextureTarget target, int level, GetTextureParameter pname, int[] parameters)
-            {
-                fixed (int* parameters_ptr = parameters)
-                {
-                    GetTexLevelParameterxvOES(target, level, pname, parameters_ptr);
-                }
-            }
-            /// <inheritdoc cref="GetTexLevelParameterxvOES(TextureTarget, int, GetTextureParameter, int*)"/>
-            public static unsafe int GetTexLevelParameterxvOES(TextureTarget target, int level, GetTextureParameter pname)
-            {
-                int parameters;
-                int* parameters_ptr = &parameters;
-                {
-                    GetTexLevelParameterxvOES(target, level, pname, parameters_ptr);
-                }
-                return parameters;
-            }
-            /// <inheritdoc cref="GetTexLevelParameterxvOES(TextureTarget, int, GetTextureParameter, int*)"/>
-            public static unsafe void GetTexLevelParameterxvOES(TextureTarget target, int level, GetTextureParameter pname, out int parameters)
-            {
-                fixed (int* parameters_ptr = &parameters)
-                {
-                    GetTexLevelParameterxvOES(target, level, pname, parameters_ptr);
+                    GetTexGenxvOES(coord, pname, @params_ptr);
                 }
             }
             /// <inheritdoc cref="GetTexParameterxvOES(TextureTarget, GetTextureParameter, int*)"/>
-            public static unsafe void GetTexParameterxvOES(TextureTarget target, GetTextureParameter pname, Span<int> parameters)
+            public static unsafe void GetTexParameterxvOES(TextureTarget target, GetTextureParameter pname, Span<int> @params)
             {
-                fixed (int* parameters_ptr = parameters)
+                fixed (int* @params_ptr = @params)
                 {
-                    GetTexParameterxvOES(target, pname, parameters_ptr);
+                    GetTexParameterxvOES(target, pname, @params_ptr);
                 }
             }
             /// <inheritdoc cref="GetTexParameterxvOES(TextureTarget, GetTextureParameter, int*)"/>
-            public static unsafe void GetTexParameterxvOES(TextureTarget target, GetTextureParameter pname, int[] parameters)
+            public static unsafe void GetTexParameterxvOES(TextureTarget target, GetTextureParameter pname, int[] @params)
             {
-                fixed (int* parameters_ptr = parameters)
+                fixed (int* @params_ptr = @params)
                 {
-                    GetTexParameterxvOES(target, pname, parameters_ptr);
+                    GetTexParameterxvOES(target, pname, @params_ptr);
                 }
             }
             /// <inheritdoc cref="GetTexParameterxvOES(TextureTarget, GetTextureParameter, int*)"/>
             public static unsafe int GetTexParameterxvOES(TextureTarget target, GetTextureParameter pname)
             {
-                int parameters;
-                int* parameters_ptr = &parameters;
+                int @params;
+                int* @params_ptr = &@params;
                 {
-                    GetTexParameterxvOES(target, pname, parameters_ptr);
+                    GetTexParameterxvOES(target, pname, @params_ptr);
                 }
-                return parameters;
+                return @params;
             }
             /// <inheritdoc cref="GetTexParameterxvOES(TextureTarget, GetTextureParameter, int*)"/>
-            public static unsafe void GetTexParameterxvOES(TextureTarget target, GetTextureParameter pname, out int parameters)
+            public static unsafe void GetTexParameterxvOES(TextureTarget target, GetTextureParameter pname, out int @params)
             {
-                fixed (int* parameters_ptr = &parameters)
+                fixed (int* @params_ptr = &@params)
                 {
-                    GetTexParameterxvOES(target, pname, parameters_ptr);
-                }
-            }
-            /// <inheritdoc cref="IndexxvOES(int*)"/>
-            public static unsafe void IndexxvOES(ref readonly int component)
-            {
-                fixed (int* component_ptr = &component)
-                {
-                    IndexxvOES(component_ptr);
+                    GetTexParameterxvOES(target, pname, @params_ptr);
                 }
             }
             /// <inheritdoc cref="LightModelxvOES(LightModelParameter, int*)"/>
@@ -3820,27 +2791,27 @@ namespace OpenTK.Graphics.OpenGLES1
                 }
             }
             /// <inheritdoc cref="LightxvOES(LightName, LightParameter, int*)"/>
-            public static unsafe void LightxvOES(LightName light, LightParameter pname, ReadOnlySpan<int> parameters)
+            public static unsafe void LightxvOES(LightName light, LightParameter pname, ReadOnlySpan<int> @params)
             {
-                fixed (int* parameters_ptr = parameters)
+                fixed (int* @params_ptr = @params)
                 {
-                    LightxvOES(light, pname, parameters_ptr);
+                    LightxvOES(light, pname, @params_ptr);
                 }
             }
             /// <inheritdoc cref="LightxvOES(LightName, LightParameter, int*)"/>
-            public static unsafe void LightxvOES(LightName light, LightParameter pname, int[] parameters)
+            public static unsafe void LightxvOES(LightName light, LightParameter pname, int[] @params)
             {
-                fixed (int* parameters_ptr = parameters)
+                fixed (int* @params_ptr = @params)
                 {
-                    LightxvOES(light, pname, parameters_ptr);
+                    LightxvOES(light, pname, @params_ptr);
                 }
             }
             /// <inheritdoc cref="LightxvOES(LightName, LightParameter, int*)"/>
-            public static unsafe void LightxvOES(LightName light, LightParameter pname, ref readonly int parameters)
+            public static unsafe void LightxvOES(LightName light, LightParameter pname, ref readonly int @params)
             {
-                fixed (int* parameters_ptr = &parameters)
+                fixed (int* @params_ptr = &@params)
                 {
-                    LightxvOES(light, pname, parameters_ptr);
+                    LightxvOES(light, pname, @params_ptr);
                 }
             }
             /// <inheritdoc cref="LoadMatrixxOES(int*)"/>
@@ -3865,30 +2836,6 @@ namespace OpenTK.Graphics.OpenGLES1
                 fixed (int* m_ptr = &m)
                 {
                     LoadMatrixxOES(m_ptr);
-                }
-            }
-            /// <inheritdoc cref="LoadTransposeMatrixxOES(int*)"/>
-            public static unsafe void LoadTransposeMatrixxOES(ReadOnlySpan<int> m)
-            {
-                fixed (int* m_ptr = m)
-                {
-                    LoadTransposeMatrixxOES(m_ptr);
-                }
-            }
-            /// <inheritdoc cref="LoadTransposeMatrixxOES(int*)"/>
-            public static unsafe void LoadTransposeMatrixxOES(int[] m)
-            {
-                fixed (int* m_ptr = m)
-                {
-                    LoadTransposeMatrixxOES(m_ptr);
-                }
-            }
-            /// <inheritdoc cref="LoadTransposeMatrixxOES(int*)"/>
-            public static unsafe void LoadTransposeMatrixxOES(ref readonly int m)
-            {
-                fixed (int* m_ptr = &m)
-                {
-                    LoadTransposeMatrixxOES(m_ptr);
                 }
             }
             /// <inheritdoc cref="MaterialxvOES(TriangleFace, MaterialParameter, int*)"/>
@@ -3948,166 +2895,6 @@ namespace OpenTK.Graphics.OpenGLES1
                     MatrixIndexPointerOES(size, type, stride, pointer_ptr);
                 }
             }
-            /// <inheritdoc cref="MultiTexCoord1bvOES(TextureUnit, sbyte*)"/>
-            public static unsafe void MultiTexCoord1bvOES(TextureUnit texture, ref readonly sbyte coords)
-            {
-                fixed (sbyte* coords_ptr = &coords)
-                {
-                    MultiTexCoord1bvOES(texture, coords_ptr);
-                }
-            }
-            /// <inheritdoc cref="MultiTexCoord1xvOES(TextureUnit, int*)"/>
-            public static unsafe void MultiTexCoord1xvOES(TextureUnit texture, ref readonly int coords)
-            {
-                fixed (int* coords_ptr = &coords)
-                {
-                    MultiTexCoord1xvOES(texture, coords_ptr);
-                }
-            }
-            /// <inheritdoc cref="MultiTexCoord2bvOES(TextureUnit, sbyte*)"/>
-            public static unsafe void MultiTexCoord2bvOES(TextureUnit texture, ReadOnlySpan<sbyte> coords)
-            {
-                fixed (sbyte* coords_ptr = coords)
-                {
-                    MultiTexCoord2bvOES(texture, coords_ptr);
-                }
-            }
-            /// <inheritdoc cref="MultiTexCoord2bvOES(TextureUnit, sbyte*)"/>
-            public static unsafe void MultiTexCoord2bvOES(TextureUnit texture, sbyte[] coords)
-            {
-                fixed (sbyte* coords_ptr = coords)
-                {
-                    MultiTexCoord2bvOES(texture, coords_ptr);
-                }
-            }
-            /// <inheritdoc cref="MultiTexCoord2bvOES(TextureUnit, sbyte*)"/>
-            public static unsafe void MultiTexCoord2bvOES(TextureUnit texture, ref readonly sbyte coords)
-            {
-                fixed (sbyte* coords_ptr = &coords)
-                {
-                    MultiTexCoord2bvOES(texture, coords_ptr);
-                }
-            }
-            /// <inheritdoc cref="MultiTexCoord2xvOES(TextureUnit, int*)"/>
-            public static unsafe void MultiTexCoord2xvOES(TextureUnit texture, ReadOnlySpan<int> coords)
-            {
-                fixed (int* coords_ptr = coords)
-                {
-                    MultiTexCoord2xvOES(texture, coords_ptr);
-                }
-            }
-            /// <inheritdoc cref="MultiTexCoord2xvOES(TextureUnit, int*)"/>
-            public static unsafe void MultiTexCoord2xvOES(TextureUnit texture, int[] coords)
-            {
-                fixed (int* coords_ptr = coords)
-                {
-                    MultiTexCoord2xvOES(texture, coords_ptr);
-                }
-            }
-            /// <inheritdoc cref="MultiTexCoord2xvOES(TextureUnit, int*)"/>
-            public static unsafe void MultiTexCoord2xvOES(TextureUnit texture, ref readonly int coords)
-            {
-                fixed (int* coords_ptr = &coords)
-                {
-                    MultiTexCoord2xvOES(texture, coords_ptr);
-                }
-            }
-            /// <inheritdoc cref="MultiTexCoord3bvOES(TextureUnit, sbyte*)"/>
-            public static unsafe void MultiTexCoord3bvOES(TextureUnit texture, ReadOnlySpan<sbyte> coords)
-            {
-                fixed (sbyte* coords_ptr = coords)
-                {
-                    MultiTexCoord3bvOES(texture, coords_ptr);
-                }
-            }
-            /// <inheritdoc cref="MultiTexCoord3bvOES(TextureUnit, sbyte*)"/>
-            public static unsafe void MultiTexCoord3bvOES(TextureUnit texture, sbyte[] coords)
-            {
-                fixed (sbyte* coords_ptr = coords)
-                {
-                    MultiTexCoord3bvOES(texture, coords_ptr);
-                }
-            }
-            /// <inheritdoc cref="MultiTexCoord3bvOES(TextureUnit, sbyte*)"/>
-            public static unsafe void MultiTexCoord3bvOES(TextureUnit texture, ref readonly sbyte coords)
-            {
-                fixed (sbyte* coords_ptr = &coords)
-                {
-                    MultiTexCoord3bvOES(texture, coords_ptr);
-                }
-            }
-            /// <inheritdoc cref="MultiTexCoord3xvOES(TextureUnit, int*)"/>
-            public static unsafe void MultiTexCoord3xvOES(TextureUnit texture, ReadOnlySpan<int> coords)
-            {
-                fixed (int* coords_ptr = coords)
-                {
-                    MultiTexCoord3xvOES(texture, coords_ptr);
-                }
-            }
-            /// <inheritdoc cref="MultiTexCoord3xvOES(TextureUnit, int*)"/>
-            public static unsafe void MultiTexCoord3xvOES(TextureUnit texture, int[] coords)
-            {
-                fixed (int* coords_ptr = coords)
-                {
-                    MultiTexCoord3xvOES(texture, coords_ptr);
-                }
-            }
-            /// <inheritdoc cref="MultiTexCoord3xvOES(TextureUnit, int*)"/>
-            public static unsafe void MultiTexCoord3xvOES(TextureUnit texture, ref readonly int coords)
-            {
-                fixed (int* coords_ptr = &coords)
-                {
-                    MultiTexCoord3xvOES(texture, coords_ptr);
-                }
-            }
-            /// <inheritdoc cref="MultiTexCoord4bvOES(TextureUnit, sbyte*)"/>
-            public static unsafe void MultiTexCoord4bvOES(TextureUnit texture, ReadOnlySpan<sbyte> coords)
-            {
-                fixed (sbyte* coords_ptr = coords)
-                {
-                    MultiTexCoord4bvOES(texture, coords_ptr);
-                }
-            }
-            /// <inheritdoc cref="MultiTexCoord4bvOES(TextureUnit, sbyte*)"/>
-            public static unsafe void MultiTexCoord4bvOES(TextureUnit texture, sbyte[] coords)
-            {
-                fixed (sbyte* coords_ptr = coords)
-                {
-                    MultiTexCoord4bvOES(texture, coords_ptr);
-                }
-            }
-            /// <inheritdoc cref="MultiTexCoord4bvOES(TextureUnit, sbyte*)"/>
-            public static unsafe void MultiTexCoord4bvOES(TextureUnit texture, ref readonly sbyte coords)
-            {
-                fixed (sbyte* coords_ptr = &coords)
-                {
-                    MultiTexCoord4bvOES(texture, coords_ptr);
-                }
-            }
-            /// <inheritdoc cref="MultiTexCoord4xvOES(TextureUnit, int*)"/>
-            public static unsafe void MultiTexCoord4xvOES(TextureUnit texture, ReadOnlySpan<int> coords)
-            {
-                fixed (int* coords_ptr = coords)
-                {
-                    MultiTexCoord4xvOES(texture, coords_ptr);
-                }
-            }
-            /// <inheritdoc cref="MultiTexCoord4xvOES(TextureUnit, int*)"/>
-            public static unsafe void MultiTexCoord4xvOES(TextureUnit texture, int[] coords)
-            {
-                fixed (int* coords_ptr = coords)
-                {
-                    MultiTexCoord4xvOES(texture, coords_ptr);
-                }
-            }
-            /// <inheritdoc cref="MultiTexCoord4xvOES(TextureUnit, int*)"/>
-            public static unsafe void MultiTexCoord4xvOES(TextureUnit texture, ref readonly int coords)
-            {
-                fixed (int* coords_ptr = &coords)
-                {
-                    MultiTexCoord4xvOES(texture, coords_ptr);
-                }
-            }
             /// <inheritdoc cref="MultMatrixxOES(int*)"/>
             public static unsafe void MultMatrixxOES(ReadOnlySpan<int> m)
             {
@@ -4132,100 +2919,28 @@ namespace OpenTK.Graphics.OpenGLES1
                     MultMatrixxOES(m_ptr);
                 }
             }
-            /// <inheritdoc cref="MultTransposeMatrixxOES(int*)"/>
-            public static unsafe void MultTransposeMatrixxOES(ReadOnlySpan<int> m)
+            /// <inheritdoc cref="PointParameterxvOES(PointParameterNameARB, int*)"/>
+            public static unsafe void PointParameterxvOES(PointParameterNameARB pname, ReadOnlySpan<int> @params)
             {
-                fixed (int* m_ptr = m)
+                fixed (int* @params_ptr = @params)
                 {
-                    MultTransposeMatrixxOES(m_ptr);
-                }
-            }
-            /// <inheritdoc cref="MultTransposeMatrixxOES(int*)"/>
-            public static unsafe void MultTransposeMatrixxOES(int[] m)
-            {
-                fixed (int* m_ptr = m)
-                {
-                    MultTransposeMatrixxOES(m_ptr);
-                }
-            }
-            /// <inheritdoc cref="MultTransposeMatrixxOES(int*)"/>
-            public static unsafe void MultTransposeMatrixxOES(ref readonly int m)
-            {
-                fixed (int* m_ptr = &m)
-                {
-                    MultTransposeMatrixxOES(m_ptr);
-                }
-            }
-            /// <inheritdoc cref="Normal3xvOES(int*)"/>
-            public static unsafe void Normal3xvOES(ReadOnlySpan<int> coords)
-            {
-                fixed (int* coords_ptr = coords)
-                {
-                    Normal3xvOES(coords_ptr);
-                }
-            }
-            /// <inheritdoc cref="Normal3xvOES(int*)"/>
-            public static unsafe void Normal3xvOES(int[] coords)
-            {
-                fixed (int* coords_ptr = coords)
-                {
-                    Normal3xvOES(coords_ptr);
-                }
-            }
-            /// <inheritdoc cref="Normal3xvOES(int*)"/>
-            public static unsafe void Normal3xvOES(ref readonly int coords)
-            {
-                fixed (int* coords_ptr = &coords)
-                {
-                    Normal3xvOES(coords_ptr);
-                }
-            }
-            /// <inheritdoc cref="PixelMapx(PixelMap, int, int*)"/>
-            public static unsafe void PixelMapx(PixelMap map, int size, ReadOnlySpan<int> values)
-            {
-                fixed (int* values_ptr = values)
-                {
-                    PixelMapx(map, size, values_ptr);
-                }
-            }
-            /// <inheritdoc cref="PixelMapx(PixelMap, int, int*)"/>
-            public static unsafe void PixelMapx(PixelMap map, int size, int[] values)
-            {
-                fixed (int* values_ptr = values)
-                {
-                    PixelMapx(map, size, values_ptr);
-                }
-            }
-            /// <inheritdoc cref="PixelMapx(PixelMap, int, int*)"/>
-            public static unsafe void PixelMapx(PixelMap map, int size, ref readonly int values)
-            {
-                fixed (int* values_ptr = &values)
-                {
-                    PixelMapx(map, size, values_ptr);
+                    PointParameterxvOES(pname, @params_ptr);
                 }
             }
             /// <inheritdoc cref="PointParameterxvOES(PointParameterNameARB, int*)"/>
-            public static unsafe void PointParameterxvOES(PointParameterNameARB pname, ReadOnlySpan<int> parameters)
+            public static unsafe void PointParameterxvOES(PointParameterNameARB pname, int[] @params)
             {
-                fixed (int* parameters_ptr = parameters)
+                fixed (int* @params_ptr = @params)
                 {
-                    PointParameterxvOES(pname, parameters_ptr);
+                    PointParameterxvOES(pname, @params_ptr);
                 }
             }
             /// <inheritdoc cref="PointParameterxvOES(PointParameterNameARB, int*)"/>
-            public static unsafe void PointParameterxvOES(PointParameterNameARB pname, int[] parameters)
+            public static unsafe void PointParameterxvOES(PointParameterNameARB pname, ref readonly int @params)
             {
-                fixed (int* parameters_ptr = parameters)
+                fixed (int* @params_ptr = &@params)
                 {
-                    PointParameterxvOES(pname, parameters_ptr);
-                }
-            }
-            /// <inheritdoc cref="PointParameterxvOES(PointParameterNameARB, int*)"/>
-            public static unsafe void PointParameterxvOES(PointParameterNameARB pname, ref readonly int parameters)
-            {
-                fixed (int* parameters_ptr = &parameters)
-                {
-                    PointParameterxvOES(pname, parameters_ptr);
+                    PointParameterxvOES(pname, @params_ptr);
                 }
             }
             /// <inheritdoc cref="PointSizePointerOES(All, int, void*)"/>
@@ -4259,37 +2974,6 @@ namespace OpenTK.Graphics.OpenGLES1
                 fixed (void* pointer_ptr = &pointer)
                 {
                     PointSizePointerOES(type, stride, pointer_ptr);
-                }
-            }
-            /// <inheritdoc cref="PrioritizeTexturesxOES(int, int*, int*)"/>
-            public static unsafe void PrioritizeTexturesxOES(int n, ReadOnlySpan<int> textures, ReadOnlySpan<int> priorities)
-            {
-                fixed (int* priorities_ptr = priorities)
-                {
-                    fixed (int* textures_ptr = textures)
-                    {
-                        PrioritizeTexturesxOES(n, textures_ptr, priorities_ptr);
-                    }
-                }
-            }
-            /// <inheritdoc cref="PrioritizeTexturesxOES(int, int*, int*)"/>
-            public static unsafe void PrioritizeTexturesxOES(int n, int[] textures, int[] priorities)
-            {
-                fixed (int* priorities_ptr = priorities)
-                {
-                    fixed (int* textures_ptr = textures)
-                    {
-                        PrioritizeTexturesxOES(n, textures_ptr, priorities_ptr);
-                    }
-                }
-            }
-            /// <inheritdoc cref="PrioritizeTexturesxOES(int, int*, int*)"/>
-            public static unsafe void PrioritizeTexturesxOES(int n, ref readonly int textures, ref readonly int priorities)
-            {
-                fixed (int* textures_ptr = &textures)
-                fixed (int* priorities_ptr = &priorities)
-                {
-                    PrioritizeTexturesxOES(n, textures_ptr, priorities_ptr);
                 }
             }
             /// <inheritdoc cref="QueryMatrixxOES(int*, int*)"/>
@@ -4329,531 +3013,124 @@ namespace OpenTK.Graphics.OpenGLES1
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="RasterPos2xvOES(int*)"/>
-            public static unsafe void RasterPos2xvOES(ReadOnlySpan<int> coords)
+            /// <inheritdoc cref="TexEnvxvOES(TextureEnvTarget, TextureEnvParameter, int*)"/>
+            public static unsafe void TexEnvxvOES(TextureEnvTarget target, TextureEnvParameter pname, ReadOnlySpan<int> @params)
             {
-                fixed (int* coords_ptr = coords)
+                fixed (int* @params_ptr = @params)
                 {
-                    RasterPos2xvOES(coords_ptr);
-                }
-            }
-            /// <inheritdoc cref="RasterPos2xvOES(int*)"/>
-            public static unsafe void RasterPos2xvOES(int[] coords)
-            {
-                fixed (int* coords_ptr = coords)
-                {
-                    RasterPos2xvOES(coords_ptr);
-                }
-            }
-            /// <inheritdoc cref="RasterPos2xvOES(int*)"/>
-            public static unsafe void RasterPos2xvOES(ref readonly int coords)
-            {
-                fixed (int* coords_ptr = &coords)
-                {
-                    RasterPos2xvOES(coords_ptr);
-                }
-            }
-            /// <inheritdoc cref="RasterPos3xvOES(int*)"/>
-            public static unsafe void RasterPos3xvOES(ReadOnlySpan<int> coords)
-            {
-                fixed (int* coords_ptr = coords)
-                {
-                    RasterPos3xvOES(coords_ptr);
-                }
-            }
-            /// <inheritdoc cref="RasterPos3xvOES(int*)"/>
-            public static unsafe void RasterPos3xvOES(int[] coords)
-            {
-                fixed (int* coords_ptr = coords)
-                {
-                    RasterPos3xvOES(coords_ptr);
-                }
-            }
-            /// <inheritdoc cref="RasterPos3xvOES(int*)"/>
-            public static unsafe void RasterPos3xvOES(ref readonly int coords)
-            {
-                fixed (int* coords_ptr = &coords)
-                {
-                    RasterPos3xvOES(coords_ptr);
-                }
-            }
-            /// <inheritdoc cref="RasterPos4xvOES(int*)"/>
-            public static unsafe void RasterPos4xvOES(ReadOnlySpan<int> coords)
-            {
-                fixed (int* coords_ptr = coords)
-                {
-                    RasterPos4xvOES(coords_ptr);
-                }
-            }
-            /// <inheritdoc cref="RasterPos4xvOES(int*)"/>
-            public static unsafe void RasterPos4xvOES(int[] coords)
-            {
-                fixed (int* coords_ptr = coords)
-                {
-                    RasterPos4xvOES(coords_ptr);
-                }
-            }
-            /// <inheritdoc cref="RasterPos4xvOES(int*)"/>
-            public static unsafe void RasterPos4xvOES(ref readonly int coords)
-            {
-                fixed (int* coords_ptr = &coords)
-                {
-                    RasterPos4xvOES(coords_ptr);
-                }
-            }
-            /// <inheritdoc cref="RectxvOES(int*, int*)"/>
-            public static unsafe void RectxvOES(ReadOnlySpan<int> v1, ReadOnlySpan<int> v2)
-            {
-                fixed (int* v2_ptr = v2)
-                {
-                    fixed (int* v1_ptr = v1)
-                    {
-                        RectxvOES(v1_ptr, v2_ptr);
-                    }
-                }
-            }
-            /// <inheritdoc cref="RectxvOES(int*, int*)"/>
-            public static unsafe void RectxvOES(int[] v1, int[] v2)
-            {
-                fixed (int* v2_ptr = v2)
-                {
-                    fixed (int* v1_ptr = v1)
-                    {
-                        RectxvOES(v1_ptr, v2_ptr);
-                    }
-                }
-            }
-            /// <inheritdoc cref="RectxvOES(int*, int*)"/>
-            public static unsafe void RectxvOES(ref readonly int v1, ref readonly int v2)
-            {
-                fixed (int* v1_ptr = &v1)
-                fixed (int* v2_ptr = &v2)
-                {
-                    RectxvOES(v1_ptr, v2_ptr);
-                }
-            }
-            /// <inheritdoc cref="TexCoord1bvOES(sbyte*)"/>
-            public static unsafe void TexCoord1bvOES(ref readonly sbyte coords)
-            {
-                fixed (sbyte* coords_ptr = &coords)
-                {
-                    TexCoord1bvOES(coords_ptr);
-                }
-            }
-            /// <inheritdoc cref="TexCoord1xvOES(int*)"/>
-            public static unsafe void TexCoord1xvOES(ref readonly int coords)
-            {
-                fixed (int* coords_ptr = &coords)
-                {
-                    TexCoord1xvOES(coords_ptr);
-                }
-            }
-            /// <inheritdoc cref="TexCoord2bvOES(sbyte*)"/>
-            public static unsafe void TexCoord2bvOES(ReadOnlySpan<sbyte> coords)
-            {
-                fixed (sbyte* coords_ptr = coords)
-                {
-                    TexCoord2bvOES(coords_ptr);
-                }
-            }
-            /// <inheritdoc cref="TexCoord2bvOES(sbyte*)"/>
-            public static unsafe void TexCoord2bvOES(sbyte[] coords)
-            {
-                fixed (sbyte* coords_ptr = coords)
-                {
-                    TexCoord2bvOES(coords_ptr);
-                }
-            }
-            /// <inheritdoc cref="TexCoord2bvOES(sbyte*)"/>
-            public static unsafe void TexCoord2bvOES(ref readonly sbyte coords)
-            {
-                fixed (sbyte* coords_ptr = &coords)
-                {
-                    TexCoord2bvOES(coords_ptr);
-                }
-            }
-            /// <inheritdoc cref="TexCoord2xvOES(int*)"/>
-            public static unsafe void TexCoord2xvOES(ReadOnlySpan<int> coords)
-            {
-                fixed (int* coords_ptr = coords)
-                {
-                    TexCoord2xvOES(coords_ptr);
-                }
-            }
-            /// <inheritdoc cref="TexCoord2xvOES(int*)"/>
-            public static unsafe void TexCoord2xvOES(int[] coords)
-            {
-                fixed (int* coords_ptr = coords)
-                {
-                    TexCoord2xvOES(coords_ptr);
-                }
-            }
-            /// <inheritdoc cref="TexCoord2xvOES(int*)"/>
-            public static unsafe void TexCoord2xvOES(ref readonly int coords)
-            {
-                fixed (int* coords_ptr = &coords)
-                {
-                    TexCoord2xvOES(coords_ptr);
-                }
-            }
-            /// <inheritdoc cref="TexCoord3bvOES(sbyte*)"/>
-            public static unsafe void TexCoord3bvOES(ReadOnlySpan<sbyte> coords)
-            {
-                fixed (sbyte* coords_ptr = coords)
-                {
-                    TexCoord3bvOES(coords_ptr);
-                }
-            }
-            /// <inheritdoc cref="TexCoord3bvOES(sbyte*)"/>
-            public static unsafe void TexCoord3bvOES(sbyte[] coords)
-            {
-                fixed (sbyte* coords_ptr = coords)
-                {
-                    TexCoord3bvOES(coords_ptr);
-                }
-            }
-            /// <inheritdoc cref="TexCoord3bvOES(sbyte*)"/>
-            public static unsafe void TexCoord3bvOES(ref readonly sbyte coords)
-            {
-                fixed (sbyte* coords_ptr = &coords)
-                {
-                    TexCoord3bvOES(coords_ptr);
-                }
-            }
-            /// <inheritdoc cref="TexCoord3xvOES(int*)"/>
-            public static unsafe void TexCoord3xvOES(ReadOnlySpan<int> coords)
-            {
-                fixed (int* coords_ptr = coords)
-                {
-                    TexCoord3xvOES(coords_ptr);
-                }
-            }
-            /// <inheritdoc cref="TexCoord3xvOES(int*)"/>
-            public static unsafe void TexCoord3xvOES(int[] coords)
-            {
-                fixed (int* coords_ptr = coords)
-                {
-                    TexCoord3xvOES(coords_ptr);
-                }
-            }
-            /// <inheritdoc cref="TexCoord3xvOES(int*)"/>
-            public static unsafe void TexCoord3xvOES(ref readonly int coords)
-            {
-                fixed (int* coords_ptr = &coords)
-                {
-                    TexCoord3xvOES(coords_ptr);
-                }
-            }
-            /// <inheritdoc cref="TexCoord4bvOES(sbyte*)"/>
-            public static unsafe void TexCoord4bvOES(ReadOnlySpan<sbyte> coords)
-            {
-                fixed (sbyte* coords_ptr = coords)
-                {
-                    TexCoord4bvOES(coords_ptr);
-                }
-            }
-            /// <inheritdoc cref="TexCoord4bvOES(sbyte*)"/>
-            public static unsafe void TexCoord4bvOES(sbyte[] coords)
-            {
-                fixed (sbyte* coords_ptr = coords)
-                {
-                    TexCoord4bvOES(coords_ptr);
-                }
-            }
-            /// <inheritdoc cref="TexCoord4bvOES(sbyte*)"/>
-            public static unsafe void TexCoord4bvOES(ref readonly sbyte coords)
-            {
-                fixed (sbyte* coords_ptr = &coords)
-                {
-                    TexCoord4bvOES(coords_ptr);
-                }
-            }
-            /// <inheritdoc cref="TexCoord4xvOES(int*)"/>
-            public static unsafe void TexCoord4xvOES(ReadOnlySpan<int> coords)
-            {
-                fixed (int* coords_ptr = coords)
-                {
-                    TexCoord4xvOES(coords_ptr);
-                }
-            }
-            /// <inheritdoc cref="TexCoord4xvOES(int*)"/>
-            public static unsafe void TexCoord4xvOES(int[] coords)
-            {
-                fixed (int* coords_ptr = coords)
-                {
-                    TexCoord4xvOES(coords_ptr);
-                }
-            }
-            /// <inheritdoc cref="TexCoord4xvOES(int*)"/>
-            public static unsafe void TexCoord4xvOES(ref readonly int coords)
-            {
-                fixed (int* coords_ptr = &coords)
-                {
-                    TexCoord4xvOES(coords_ptr);
+                    TexEnvxvOES(target, pname, @params_ptr);
                 }
             }
             /// <inheritdoc cref="TexEnvxvOES(TextureEnvTarget, TextureEnvParameter, int*)"/>
-            public static unsafe void TexEnvxvOES(TextureEnvTarget target, TextureEnvParameter pname, ReadOnlySpan<int> parameters)
+            public static unsafe void TexEnvxvOES(TextureEnvTarget target, TextureEnvParameter pname, int[] @params)
             {
-                fixed (int* parameters_ptr = parameters)
+                fixed (int* @params_ptr = @params)
                 {
-                    TexEnvxvOES(target, pname, parameters_ptr);
+                    TexEnvxvOES(target, pname, @params_ptr);
                 }
             }
             /// <inheritdoc cref="TexEnvxvOES(TextureEnvTarget, TextureEnvParameter, int*)"/>
-            public static unsafe void TexEnvxvOES(TextureEnvTarget target, TextureEnvParameter pname, int[] parameters)
+            public static unsafe void TexEnvxvOES(TextureEnvTarget target, TextureEnvParameter pname, ref readonly int @params)
             {
-                fixed (int* parameters_ptr = parameters)
+                fixed (int* @params_ptr = &@params)
                 {
-                    TexEnvxvOES(target, pname, parameters_ptr);
-                }
-            }
-            /// <inheritdoc cref="TexEnvxvOES(TextureEnvTarget, TextureEnvParameter, int*)"/>
-            public static unsafe void TexEnvxvOES(TextureEnvTarget target, TextureEnvParameter pname, ref readonly int parameters)
-            {
-                fixed (int* parameters_ptr = &parameters)
-                {
-                    TexEnvxvOES(target, pname, parameters_ptr);
+                    TexEnvxvOES(target, pname, @params_ptr);
                 }
             }
             /// <inheritdoc cref="TexGenfvOES(TextureCoordName, TextureGenParameter, float*)"/>
-            public static unsafe void TexGenfvOES(TextureCoordName coord, TextureGenParameter pname, ReadOnlySpan<float> parameters)
+            public static unsafe void TexGenfvOES(TextureCoordName coord, TextureGenParameter pname, ReadOnlySpan<float> @params)
             {
-                fixed (float* parameters_ptr = parameters)
+                fixed (float* @params_ptr = @params)
                 {
-                    TexGenfvOES(coord, pname, parameters_ptr);
+                    TexGenfvOES(coord, pname, @params_ptr);
                 }
             }
             /// <inheritdoc cref="TexGenfvOES(TextureCoordName, TextureGenParameter, float*)"/>
-            public static unsafe void TexGenfvOES(TextureCoordName coord, TextureGenParameter pname, float[] parameters)
+            public static unsafe void TexGenfvOES(TextureCoordName coord, TextureGenParameter pname, float[] @params)
             {
-                fixed (float* parameters_ptr = parameters)
+                fixed (float* @params_ptr = @params)
                 {
-                    TexGenfvOES(coord, pname, parameters_ptr);
+                    TexGenfvOES(coord, pname, @params_ptr);
                 }
             }
             /// <inheritdoc cref="TexGenfvOES(TextureCoordName, TextureGenParameter, float*)"/>
-            public static unsafe void TexGenfvOES(TextureCoordName coord, TextureGenParameter pname, ref readonly float parameters)
+            public static unsafe void TexGenfvOES(TextureCoordName coord, TextureGenParameter pname, ref readonly float @params)
             {
-                fixed (float* parameters_ptr = &parameters)
+                fixed (float* @params_ptr = &@params)
                 {
-                    TexGenfvOES(coord, pname, parameters_ptr);
+                    TexGenfvOES(coord, pname, @params_ptr);
                 }
             }
             /// <inheritdoc cref="TexGenivOES(TextureCoordName, TextureGenParameter, int*)"/>
-            public static unsafe void TexGenivOES(TextureCoordName coord, TextureGenParameter pname, ReadOnlySpan<int> parameters)
+            public static unsafe void TexGenivOES(TextureCoordName coord, TextureGenParameter pname, ReadOnlySpan<int> @params)
             {
-                fixed (int* parameters_ptr = parameters)
+                fixed (int* @params_ptr = @params)
                 {
-                    TexGenivOES(coord, pname, parameters_ptr);
+                    TexGenivOES(coord, pname, @params_ptr);
                 }
             }
             /// <inheritdoc cref="TexGenivOES(TextureCoordName, TextureGenParameter, int*)"/>
-            public static unsafe void TexGenivOES(TextureCoordName coord, TextureGenParameter pname, int[] parameters)
+            public static unsafe void TexGenivOES(TextureCoordName coord, TextureGenParameter pname, int[] @params)
             {
-                fixed (int* parameters_ptr = parameters)
+                fixed (int* @params_ptr = @params)
                 {
-                    TexGenivOES(coord, pname, parameters_ptr);
+                    TexGenivOES(coord, pname, @params_ptr);
                 }
             }
             /// <inheritdoc cref="TexGenivOES(TextureCoordName, TextureGenParameter, int*)"/>
-            public static unsafe void TexGenivOES(TextureCoordName coord, TextureGenParameter pname, ref readonly int parameters)
+            public static unsafe void TexGenivOES(TextureCoordName coord, TextureGenParameter pname, ref readonly int @params)
             {
-                fixed (int* parameters_ptr = &parameters)
+                fixed (int* @params_ptr = &@params)
                 {
-                    TexGenivOES(coord, pname, parameters_ptr);
+                    TexGenivOES(coord, pname, @params_ptr);
                 }
             }
             /// <inheritdoc cref="TexGenxvOES(TextureCoordName, TextureGenParameter, int*)"/>
-            public static unsafe void TexGenxvOES(TextureCoordName coord, TextureGenParameter pname, ReadOnlySpan<int> parameters)
+            public static unsafe void TexGenxvOES(TextureCoordName coord, TextureGenParameter pname, ReadOnlySpan<int> @params)
             {
-                fixed (int* parameters_ptr = parameters)
+                fixed (int* @params_ptr = @params)
                 {
-                    TexGenxvOES(coord, pname, parameters_ptr);
+                    TexGenxvOES(coord, pname, @params_ptr);
                 }
             }
             /// <inheritdoc cref="TexGenxvOES(TextureCoordName, TextureGenParameter, int*)"/>
-            public static unsafe void TexGenxvOES(TextureCoordName coord, TextureGenParameter pname, int[] parameters)
+            public static unsafe void TexGenxvOES(TextureCoordName coord, TextureGenParameter pname, int[] @params)
             {
-                fixed (int* parameters_ptr = parameters)
+                fixed (int* @params_ptr = @params)
                 {
-                    TexGenxvOES(coord, pname, parameters_ptr);
+                    TexGenxvOES(coord, pname, @params_ptr);
                 }
             }
             /// <inheritdoc cref="TexGenxvOES(TextureCoordName, TextureGenParameter, int*)"/>
-            public static unsafe void TexGenxvOES(TextureCoordName coord, TextureGenParameter pname, ref readonly int parameters)
+            public static unsafe void TexGenxvOES(TextureCoordName coord, TextureGenParameter pname, ref readonly int @params)
             {
-                fixed (int* parameters_ptr = &parameters)
+                fixed (int* @params_ptr = &@params)
                 {
-                    TexGenxvOES(coord, pname, parameters_ptr);
+                    TexGenxvOES(coord, pname, @params_ptr);
                 }
             }
             /// <inheritdoc cref="TexParameterxvOES(TextureTarget, GetTextureParameter, int*)"/>
-            public static unsafe void TexParameterxvOES(TextureTarget target, GetTextureParameter pname, ReadOnlySpan<int> parameters)
+            public static unsafe void TexParameterxvOES(TextureTarget target, GetTextureParameter pname, ReadOnlySpan<int> @params)
             {
-                fixed (int* parameters_ptr = parameters)
+                fixed (int* @params_ptr = @params)
                 {
-                    TexParameterxvOES(target, pname, parameters_ptr);
+                    TexParameterxvOES(target, pname, @params_ptr);
                 }
             }
             /// <inheritdoc cref="TexParameterxvOES(TextureTarget, GetTextureParameter, int*)"/>
-            public static unsafe void TexParameterxvOES(TextureTarget target, GetTextureParameter pname, int[] parameters)
+            public static unsafe void TexParameterxvOES(TextureTarget target, GetTextureParameter pname, int[] @params)
             {
-                fixed (int* parameters_ptr = parameters)
+                fixed (int* @params_ptr = @params)
                 {
-                    TexParameterxvOES(target, pname, parameters_ptr);
+                    TexParameterxvOES(target, pname, @params_ptr);
                 }
             }
             /// <inheritdoc cref="TexParameterxvOES(TextureTarget, GetTextureParameter, int*)"/>
-            public static unsafe void TexParameterxvOES(TextureTarget target, GetTextureParameter pname, ref readonly int parameters)
+            public static unsafe void TexParameterxvOES(TextureTarget target, GetTextureParameter pname, ref readonly int @params)
             {
-                fixed (int* parameters_ptr = &parameters)
+                fixed (int* @params_ptr = &@params)
                 {
-                    TexParameterxvOES(target, pname, parameters_ptr);
-                }
-            }
-            /// <inheritdoc cref="Vertex2bvOES(sbyte*)"/>
-            public static unsafe void Vertex2bvOES(ReadOnlySpan<sbyte> coords)
-            {
-                fixed (sbyte* coords_ptr = coords)
-                {
-                    Vertex2bvOES(coords_ptr);
-                }
-            }
-            /// <inheritdoc cref="Vertex2bvOES(sbyte*)"/>
-            public static unsafe void Vertex2bvOES(sbyte[] coords)
-            {
-                fixed (sbyte* coords_ptr = coords)
-                {
-                    Vertex2bvOES(coords_ptr);
-                }
-            }
-            /// <inheritdoc cref="Vertex2bvOES(sbyte*)"/>
-            public static unsafe void Vertex2bvOES(ref readonly sbyte coords)
-            {
-                fixed (sbyte* coords_ptr = &coords)
-                {
-                    Vertex2bvOES(coords_ptr);
-                }
-            }
-            /// <inheritdoc cref="Vertex2xvOES(int*)"/>
-            public static unsafe void Vertex2xvOES(ReadOnlySpan<int> coords)
-            {
-                fixed (int* coords_ptr = coords)
-                {
-                    Vertex2xvOES(coords_ptr);
-                }
-            }
-            /// <inheritdoc cref="Vertex2xvOES(int*)"/>
-            public static unsafe void Vertex2xvOES(int[] coords)
-            {
-                fixed (int* coords_ptr = coords)
-                {
-                    Vertex2xvOES(coords_ptr);
-                }
-            }
-            /// <inheritdoc cref="Vertex2xvOES(int*)"/>
-            public static unsafe void Vertex2xvOES(ref readonly int coords)
-            {
-                fixed (int* coords_ptr = &coords)
-                {
-                    Vertex2xvOES(coords_ptr);
-                }
-            }
-            /// <inheritdoc cref="Vertex3bvOES(sbyte*)"/>
-            public static unsafe void Vertex3bvOES(ReadOnlySpan<sbyte> coords)
-            {
-                fixed (sbyte* coords_ptr = coords)
-                {
-                    Vertex3bvOES(coords_ptr);
-                }
-            }
-            /// <inheritdoc cref="Vertex3bvOES(sbyte*)"/>
-            public static unsafe void Vertex3bvOES(sbyte[] coords)
-            {
-                fixed (sbyte* coords_ptr = coords)
-                {
-                    Vertex3bvOES(coords_ptr);
-                }
-            }
-            /// <inheritdoc cref="Vertex3bvOES(sbyte*)"/>
-            public static unsafe void Vertex3bvOES(ref readonly sbyte coords)
-            {
-                fixed (sbyte* coords_ptr = &coords)
-                {
-                    Vertex3bvOES(coords_ptr);
-                }
-            }
-            /// <inheritdoc cref="Vertex3xvOES(int*)"/>
-            public static unsafe void Vertex3xvOES(ReadOnlySpan<int> coords)
-            {
-                fixed (int* coords_ptr = coords)
-                {
-                    Vertex3xvOES(coords_ptr);
-                }
-            }
-            /// <inheritdoc cref="Vertex3xvOES(int*)"/>
-            public static unsafe void Vertex3xvOES(int[] coords)
-            {
-                fixed (int* coords_ptr = coords)
-                {
-                    Vertex3xvOES(coords_ptr);
-                }
-            }
-            /// <inheritdoc cref="Vertex3xvOES(int*)"/>
-            public static unsafe void Vertex3xvOES(ref readonly int coords)
-            {
-                fixed (int* coords_ptr = &coords)
-                {
-                    Vertex3xvOES(coords_ptr);
-                }
-            }
-            /// <inheritdoc cref="Vertex4bvOES(sbyte*)"/>
-            public static unsafe void Vertex4bvOES(ReadOnlySpan<sbyte> coords)
-            {
-                fixed (sbyte* coords_ptr = coords)
-                {
-                    Vertex4bvOES(coords_ptr);
-                }
-            }
-            /// <inheritdoc cref="Vertex4bvOES(sbyte*)"/>
-            public static unsafe void Vertex4bvOES(sbyte[] coords)
-            {
-                fixed (sbyte* coords_ptr = coords)
-                {
-                    Vertex4bvOES(coords_ptr);
-                }
-            }
-            /// <inheritdoc cref="Vertex4bvOES(sbyte*)"/>
-            public static unsafe void Vertex4bvOES(ref readonly sbyte coords)
-            {
-                fixed (sbyte* coords_ptr = &coords)
-                {
-                    Vertex4bvOES(coords_ptr);
-                }
-            }
-            /// <inheritdoc cref="Vertex4xvOES(int*)"/>
-            public static unsafe void Vertex4xvOES(ReadOnlySpan<int> coords)
-            {
-                fixed (int* coords_ptr = coords)
-                {
-                    Vertex4xvOES(coords_ptr);
-                }
-            }
-            /// <inheritdoc cref="Vertex4xvOES(int*)"/>
-            public static unsafe void Vertex4xvOES(int[] coords)
-            {
-                fixed (int* coords_ptr = coords)
-                {
-                    Vertex4xvOES(coords_ptr);
-                }
-            }
-            /// <inheritdoc cref="Vertex4xvOES(int*)"/>
-            public static unsafe void Vertex4xvOES(ref readonly int coords)
-            {
-                fixed (int* coords_ptr = &coords)
-                {
-                    Vertex4xvOES(coords_ptr);
+                    TexParameterxvOES(target, pname, @params_ptr);
                 }
             }
             /// <inheritdoc cref="WeightPointerOES(int, All, int, void*)"/>
@@ -5266,27 +3543,27 @@ namespace OpenTK.Graphics.OpenGLES1
                 }
             }
             /// <inheritdoc cref="ExtGetTexLevelParameterivQCOM(int, All, int, All, int*)"/>
-            public static unsafe void ExtGetTexLevelParameterivQCOM(int texture, All face, int level, All pname, Span<int> parameters)
+            public static unsafe void ExtGetTexLevelParameterivQCOM(int texture, All face, int level, All pname, Span<int> @params)
             {
-                fixed (int* parameters_ptr = parameters)
+                fixed (int* @params_ptr = @params)
                 {
-                    ExtGetTexLevelParameterivQCOM(texture, face, level, pname, parameters_ptr);
+                    ExtGetTexLevelParameterivQCOM(texture, face, level, pname, @params_ptr);
                 }
             }
             /// <inheritdoc cref="ExtGetTexLevelParameterivQCOM(int, All, int, All, int*)"/>
-            public static unsafe void ExtGetTexLevelParameterivQCOM(int texture, All face, int level, All pname, int[] parameters)
+            public static unsafe void ExtGetTexLevelParameterivQCOM(int texture, All face, int level, All pname, int[] @params)
             {
-                fixed (int* parameters_ptr = parameters)
+                fixed (int* @params_ptr = @params)
                 {
-                    ExtGetTexLevelParameterivQCOM(texture, face, level, pname, parameters_ptr);
+                    ExtGetTexLevelParameterivQCOM(texture, face, level, pname, @params_ptr);
                 }
             }
             /// <inheritdoc cref="ExtGetTexLevelParameterivQCOM(int, All, int, All, int*)"/>
-            public static unsafe void ExtGetTexLevelParameterivQCOM(int texture, All face, int level, All pname, ref int parameters)
+            public static unsafe void ExtGetTexLevelParameterivQCOM(int texture, All face, int level, All pname, ref int @params)
             {
-                fixed (int* parameters_ptr = &parameters)
+                fixed (int* @params_ptr = &@params)
                 {
-                    ExtGetTexLevelParameterivQCOM(texture, face, level, pname, parameters_ptr);
+                    ExtGetTexLevelParameterivQCOM(texture, face, level, pname, @params_ptr);
                 }
             }
             /// <inheritdoc cref="ExtGetTexSubImageQCOM(All, int, int, int, int, int, int, int, PixelFormat, PixelType, void*)"/>

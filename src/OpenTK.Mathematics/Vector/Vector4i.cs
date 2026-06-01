@@ -9,6 +9,7 @@
 
 using System;
 using System.Diagnostics.Contracts;
+using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Runtime.Intrinsics;
@@ -24,7 +25,19 @@ namespace OpenTK.Mathematics
     /// </remarks>
     [Serializable]
     [StructLayout(LayoutKind.Sequential)]
-    public struct Vector4i : IEquatable<Vector4i>, IFormattable
+    public struct Vector4i : IEquatable<Vector4i>, IFormattable,
+                            IAdditionOperators<Vector4i, Vector4i, Vector4i>,
+                            ISubtractionOperators<Vector4i, Vector4i, Vector4i>,
+                            IUnaryNegationOperators<Vector4i, Vector4i>,
+                            IUnaryPlusOperators<Vector4i, Vector4i>,
+                            IMultiplyOperators<Vector4i, int, Vector4i>,
+                            IMultiplyOperators<Vector4i, Vector4i, Vector4i>,
+                            IDivisionOperators<Vector4i, int, Vector4i>,
+                            IDivisionOperators<Vector4i, Vector4i, Vector4i>,
+                            IEqualityOperators<Vector4i, Vector4i, bool>,
+                            IAdditiveIdentity<Vector4i, Vector4i>,
+                            IMultiplicativeIdentity<Vector4i, Vector4i>,
+                            IMinMaxValue<Vector4i>
     {
         /// <summary>
         /// The X component of the Vector4i.
@@ -109,52 +122,30 @@ namespace OpenTK.Mathematics
         {
             readonly get
             {
-                if (index == 0)
+                if (((uint)index) >= 4)
                 {
-                    return X;
+                    MathHelper.ThrowOutOfRangeException("You tried to access this vector at index: {0}", index);
                 }
 
-                if (index == 1)
-                {
-                    return Y;
-                }
-
-                if (index == 2)
-                {
-                    return Z;
-                }
-
-                if (index == 3)
-                {
-                    return W;
-                }
-
-                throw new IndexOutOfRangeException("You tried to access this vector at index: " + index);
+                return GetElementUnsafe(in this, index);
             }
 
             set
             {
-                if (index == 0)
+                if (((uint)index) >= 4)
                 {
-                    X = value;
+                    MathHelper.ThrowOutOfRangeException("You tried to set this vector at index: {0}", index);
                 }
-                else if (index == 1)
-                {
-                    Y = value;
-                }
-                else if (index == 2)
-                {
-                    Z = value;
-                }
-                else if (index == 3)
-                {
-                    W = value;
-                }
-                else
-                {
-                    throw new IndexOutOfRangeException("You tried to set this vector at index: " + index);
-                }
+
+                GetElementUnsafe(in this, index) = value;
             }
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static ref int GetElementUnsafe(in Vector4i v, int index)
+        {
+            ref int address = ref Unsafe.AsRef(in v.X);
+            return ref Unsafe.Add(ref address, index);
         }
 
         /// <summary>
@@ -222,6 +213,28 @@ namespace OpenTK.Mathematics
         public static readonly int SizeInBytes = Unsafe.SizeOf<Vector4i>();
 
         /// <summary>
+        /// Gets the additive identity of Vector4i. Equivalent to Vector4i.Zero.
+        /// </summary>
+        public static Vector4i AdditiveIdentity => Zero;
+
+        /// <summary>
+        /// Gets the multiplicative identity of Vector4i. Equivalent to Vector4i.One.
+        /// </summary>
+        public static Vector4i MultiplicativeIdentity => One;
+
+        /// <summary>
+        /// Gets the maximum value for Vector4i.
+        /// Sets X, Y, Z, and W components to the largest value for a signed 32-bit integer.
+        /// </summary>
+        public static Vector4i MaxValue => new Vector4i(int.MaxValue, int.MaxValue, int.MaxValue, int.MaxValue);
+
+        /// <summary>
+        /// Gets the minimum value for Vector4i.
+        /// Sets X, Y, Z, and W components to the smallest value for a signed 32-bit integer.
+        /// </summary>
+        public static Vector4i MinValue => new Vector4i(int.MinValue, int.MinValue, int.MinValue, int.MinValue);
+
+        /// <summary>
         /// Adds two vectors.
         /// </summary>
         /// <param name="a">Left operand.</param>
@@ -253,7 +266,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <param name="a">First operand.</param>
         /// <param name="b">Second operand.</param>
-        /// <returns>Result of subtraction.</returns>
+        /// <returns>Result of the subtraction.</returns>
         [Pure]
         public static Vector4i Subtract(Vector4i a, Vector4i b)
         {
@@ -506,12 +519,78 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
+        /// Component wise less than comparision of two vectors.
+        /// </summary>
+        /// <param name="left">The left vector.</param>
+        /// <param name="right">The right vector.</param>
+        /// <returns>A component wise boolean vector whose compoennts are true when the corresponding left component is less than the right component.</returns>
+        public static Vector4b LessThan(in Vector4i left, in Vector4i right)
+        {
+            return new Vector4b(left.X < right.X, left.Y < right.Y, left.Z < right.Z, left.W < right.W);
+        }
+
+        /// <summary>
+        /// Component wise less than or equal comparision of two vectors.
+        /// </summary>
+        /// <param name="left">The left vector.</param>
+        /// <param name="right">The right vector.</param>
+        /// <returns>A component wise boolean vector whose compoennts are true when the corresponding left component is less than or equal to the right component.</returns>
+        public static Vector4b LessThanOrEqual(in Vector4i left, in Vector4i right)
+        {
+            return new Vector4b(left.X <= right.X, left.Y <= right.Y, left.Z <= right.Z, left.W <= right.W);
+        }
+
+        /// <summary>
+        /// Component wise greater than comparision of two vectors.
+        /// </summary>
+        /// <param name="left">The left vector.</param>
+        /// <param name="right">The right vector.</param>
+        /// <returns>A component wise boolean vector whose compoennts are true when the corresponding left component is greater than the right component.</returns>
+        public static Vector4b GreaterThan(in Vector4i left, in Vector4i right)
+        {
+            return new Vector4b(left.X > right.X, left.Y > right.Y, left.Z > right.Z, left.W > right.W);
+        }
+
+        /// <summary>
+        /// Component wise greater than or equal comparision of two vectors.
+        /// </summary>
+        /// <param name="left">The left vector.</param>
+        /// <param name="right">The right vector.</param>
+        /// <returns>A component wise boolean vector whose compoennts are true when the corresponding left component is greater than or equal to the right component.</returns>
+        public static Vector4b GreaterThanOrEqual(in Vector4i left, in Vector4i right)
+        {
+            return new Vector4b(left.X >= right.X, left.Y >= right.Y, left.Z >= right.Z, left.W >= right.W);
+        }
+
+        /// <summary>
+        /// Component wise equal comparision of two vectors.
+        /// </summary>
+        /// <param name="left">The left vector.</param>
+        /// <param name="right">The right vector.</param>
+        /// <returns>A component wise boolean vector whose compoennts are true when the corresponding left component is equal to the right component.</returns>
+        public static Vector4b ComponentEqual(in Vector4i left, in Vector4i right)
+        {
+            return new Vector4b(left.X == right.X, left.Y == right.Y, left.Z == right.Z, left.W == right.W);
+        }
+
+        /// <summary>
+        /// Component wise not equal comparision of two vectors.
+        /// </summary>
+        /// <param name="left">The left vector.</param>
+        /// <param name="right">The right vector.</param>
+        /// <returns>A component wise boolean vector whose compoennts are true when the corresponding left component is not equal to the right component.</returns>
+        public static Vector4b ComponentNotEqual(in Vector4i left, in Vector4i right)
+        {
+            return new Vector4b(left.X != right.X, left.Y != right.Y, left.Z != right.Z, left.W != right.W);
+        }
+
+        /// <summary>
         /// Gets or sets a <see cref="Vector2i"/> with the X and Y components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector2i Xy
         {
-            get => Unsafe.As<Vector4i, Vector2i>(ref this);
+            readonly get => new Vector2i(X, Y);
             set
             {
                 X = value.X;
@@ -679,7 +758,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector3i Xyz
         {
-            get => Unsafe.As<Vector4i, Vector3i>(ref this);
+            readonly get => new Vector3i(X, Y, Z);
             set
             {
                 X = value.X;
@@ -1488,6 +1567,38 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
+        /// Adds a scalar to an instance.
+        /// </summary>
+        /// <param name="left">The instance.</param>
+        /// <param name="right">The scalar.</param>
+        /// <returns>The result of the operation.</returns>
+        [Pure]
+        public static Vector4i operator +(Vector4i left, int right)
+        {
+            left.X += right;
+            left.Y += right;
+            left.Z += right;
+            left.W += right;
+            return left;
+        }
+
+        /// <summary>
+        /// Adds a scalar to an instance.
+        /// </summary>
+        /// <param name="left">The scalar.</param>
+        /// <param name="right">The instance.</param>
+        /// <returns>The result of the operation.</returns>
+        [Pure]
+        public static Vector4i operator +(int left, Vector4i right)
+        {
+            right.X += left;
+            right.Y += left;
+            right.Z += left;
+            right.W += left;
+            return right;
+        }
+
+        /// <summary>
         /// Adds two instances.
         /// </summary>
         /// <param name="left">The first instance.</param>
@@ -1501,6 +1612,38 @@ namespace OpenTK.Mathematics
             left.Z += right.Z;
             left.W += right.W;
             return left;
+        }
+
+        /// <summary>
+        /// Subtracts an instance by a scalar.
+        /// </summary>
+        /// <param name="left">The instance.</param>
+        /// <param name="right">The scalar.</param>
+        /// <returns>The result of the operation.</returns>
+        [Pure]
+        public static Vector4i operator -(Vector4i left, int right)
+        {
+            left.X -= right;
+            left.Y -= right;
+            left.Z -= right;
+            left.W -= right;
+            return left;
+        }
+
+        /// <summary>
+        /// Subtracts a scalar by an instance.
+        /// </summary>
+        /// <param name="left">The scalar.</param>
+        /// <param name="right">The instance.</param>
+        /// <returns>The result of the operation.</returns>
+        [Pure]
+        public static Vector4i operator -(int left, Vector4i right)
+        {
+            right.X = left - right.X;
+            right.Y = left - right.Y;
+            right.Z = left - right.Z;
+            right.W = left - right.W;
+            return right;
         }
 
         /// <summary>
@@ -1531,6 +1674,21 @@ namespace OpenTK.Mathematics
             vec.Y = -vec.Y;
             vec.Z = -vec.Z;
             vec.W = -vec.W;
+            return vec;
+        }
+
+        /// <summary>
+        /// Computes the unary plus of the vector.
+        /// </summary>
+        /// <param name="vec">The instance.</param>
+        /// <returns>The result of the calculation.</returns>
+        [Pure]
+        public static Vector4i operator +(Vector4i vec)
+        {
+            vec.X = +vec.X;
+            vec.Y = +vec.Y;
+            vec.Z = +vec.Z;
+            vec.W = +vec.W;
             return vec;
         }
 
@@ -1571,7 +1729,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <param name="scale">Left operand.</param>
         /// <param name="vec">Right operand.</param>
-        /// <returns>Result of multiplication.</returns>
+        /// <returns>Result of the multiplication.</returns>
         [Pure]
         public static Vector4i operator *(Vector4i vec, Vector4i scale)
         {
@@ -1587,7 +1745,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <param name="vec">The instance.</param>
         /// <param name="scale">The scalar.</param>
-        /// <returns>The result of the calculation.</returns>
+        /// <returns>Result of the division.</returns>
         [Pure]
         public static Vector4i operator /(Vector4i vec, int scale)
         {
@@ -1596,6 +1754,22 @@ namespace OpenTK.Mathematics
             vec.Z /= scale;
             vec.W /= scale;
             return vec;
+        }
+
+        /// <summary>
+        /// Divides a scalar by the instance using integer division, floor(a/b).
+        /// </summary>
+        /// <param name="left">The scalar.</param>
+        /// <param name="right">The instance.</param>
+        /// <returns>Result of the division.</returns>
+        [Pure]
+        public static Vector4i operator /(int left, Vector4i right)
+        {
+            right.X = left / right.X;
+            right.Y = left / right.Y;
+            right.Z = left / right.Z;
+            right.W = left / right.W;
+            return right;
         }
 
         /// <summary>
@@ -1612,6 +1786,54 @@ namespace OpenTK.Mathematics
             vec.Z /= scale.Z;
             vec.W /= scale.W;
             return vec;
+        }
+
+        /// <summary>
+        /// Component wise less than comparision between the specified instances.
+        /// </summary>
+        /// <param name="left">The left instance.</param>
+        /// <param name="right">The right instance.</param>
+        /// <returns>A component wise boolean vector whose compoennts are true when the corresponding left component is less than the right component.</returns>
+        [Pure]
+        public static Vector4b operator <(Vector4i left, Vector4i right)
+        {
+            return LessThan(left, right);
+        }
+
+        /// <summary>
+        /// Component wise less than or equal comparision between the specified instances.
+        /// </summary>
+        /// <param name="left">The left instance.</param>
+        /// <param name="right">The right instance.</param>
+        /// <returns>A component wise boolean vector whose compoennts are true when the corresponding left component is less than or equal the right component.</returns>
+        [Pure]
+        public static Vector4b operator <=(Vector4i left, Vector4i right)
+        {
+            return LessThanOrEqual(left, right);
+        }
+
+        /// <summary>
+        /// Component wise greater than comparision between the specified instances.
+        /// </summary>
+        /// <param name="left">The left instance.</param>
+        /// <param name="right">The right instance.</param>
+        /// <returns>A component wise boolean vector whose compoennts are true when the corresponding greater component is greater than the right component.</returns>
+        [Pure]
+        public static Vector4b operator >(Vector4i left, Vector4i right)
+        {
+            return GreaterThan(left, right);
+        }
+
+        /// <summary>
+        /// Component wise greater than or equal comparision between the specified instances.
+        /// </summary>
+        /// <param name="left">The left instance.</param>
+        /// <param name="right">The right instance.</param>
+        /// <returns>A component wise boolean vector whose compoennts are true when the corresponding left component is greater than or equal the right component.</returns>
+        [Pure]
+        public static Vector4b operator >=(Vector4i left, Vector4i right)
+        {
+            return GreaterThanOrEqual(left, right);
         }
 
         /// <summary>

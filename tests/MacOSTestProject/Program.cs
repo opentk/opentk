@@ -64,7 +64,7 @@ void main()
         {
             Console.WriteLine("Hello World!");
 
-            EventQueue.EventRaised += EventQueue_EventRaised;
+            Toolkit.Event.EventRaised += EventQueue_EventRaised;
 
             MacOSWindowComponent windowComponent = new MacOSWindowComponent();
             MacOSOpenGLComponent openglComponent = new MacOSOpenGLComponent();
@@ -119,15 +119,15 @@ void main()
             }
 
             ShaderProgram = CompileShader(VertexShader, FragmentShader);
-            if (KHRDebugAvailable) GL.ObjectLabel(ObjectIdentifier.Program, (uint)ShaderProgram, -1, "Program: Color Triangle");
+            if (KHRDebugAvailable) GL.ObjectLabel(ObjectIdentifier.Program, ShaderProgram, -1, "Program: Color Triangle");
 
             VAO = GL.GenVertexArray();
             GL.BindVertexArray(VAO);
-            if (KHRDebugAvailable) GL.ObjectLabel(ObjectIdentifier.VertexArray, (uint)VAO, -1, "VAO: Color Triangle");
+            if (KHRDebugAvailable) GL.ObjectLabel(ObjectIdentifier.VertexArray, VAO, -1, "VAO: Color Triangle");
 
             VBO = GL.GenBuffer();
             GL.BindBuffer(BufferTarget.ArrayBuffer, VBO);
-            if (KHRDebugAvailable) GL.ObjectLabel(ObjectIdentifier.Buffer, (uint)VBO, -1, "VBO: Color Triangle");
+            if (KHRDebugAvailable) GL.ObjectLabel(ObjectIdentifier.Buffer, VBO, -1, "VBO: Color Triangle");
 
             GL.BufferData(BufferTarget.ArrayBuffer, Vertices.Length * sizeof(Vertex), Vertices, BufferUsage.StaticDraw);
 
@@ -198,7 +198,7 @@ void main()
             }
         }
 
-        private static void EventQueue_EventRaised(PalHandle? handle, PlatformEventType type, EventArgs args)
+        private static void EventQueue_EventRaised(EventArgs args)
         {
             if (args is MouseButtonDownEventArgs mouseDown)
             {

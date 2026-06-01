@@ -56,6 +56,15 @@ namespace OpenTK.Platform.Native.macOS
             UpdateDisplays(Logger, false);
         }
 
+        /// <inheritdoc/>
+        public void Uninitialize()
+        {
+            // We don't need to clear this list,
+            // but it feels appropriate.
+            // - Noggin_bops 2024-10-30
+            _displays.Clear();
+        }
+
         internal static unsafe void UpdateDisplays(ILogger? logger, bool sendEvents)
         {
             List<NSScreenHandle> newDisplays = new List<NSScreenHandle>();
@@ -156,7 +165,7 @@ namespace OpenTK.Platform.Native.macOS
                 _displays.Remove(removed);
                 if (sendEvents)
                 {
-                    EventQueue.Raise(removed, PlatformEventType.DisplayConnectionChanged, new DisplayConnectionChangedEventArgs(removed, true));
+                    Toolkit.Event.RaiseEvent(new DisplayConnectionChangedEventArgs(removed, true));
                 }
             }
 
@@ -165,7 +174,7 @@ namespace OpenTK.Platform.Native.macOS
                 _displays.Add(connected);
                 if (sendEvents)
                 {
-                    EventQueue.Raise(connected, PlatformEventType.DisplayConnectionChanged, new DisplayConnectionChangedEventArgs(connected, false));
+                    Toolkit.Event.RaiseEvent(new DisplayConnectionChangedEventArgs(connected, false));
                 }
             }
 
@@ -261,20 +270,24 @@ namespace OpenTK.Platform.Native.macOS
         }
 
         /// <inheritdoc/>
-        public void GetVideoMode(DisplayHandle handle, out VideoMode mode)
+        public VideoMode GetVideoMode(DisplayHandle handle)
         {
             NSScreenHandle nsscreen = handle.As<NSScreenHandle>(this);
+
+            VideoMode mode;
 
             CGRect bounds = objc_msgSend_CGRect(nsscreen.Screen, selFrame);
 
             // FIXME: Should we report pixels or virtual screen size?
             mode.Width = (int)bounds.size.x;
             mode.Height = (int)bounds.size.y;
-            GetRefreshRate(nsscreen, out mode.RefreshRate);
+            mode.RefreshRate = GetRefreshRate(nsscreen);
 
             int /* NSWindowDepth */ depth = objc_msgSend_int(nsscreen.Screen, selDepth);
             nint bpp = NSBitsPerPixelFromDepth(depth);
             mode.BitsPerPixel = (int)bpp;
+
+            return mode;
         }
 
         /// <inheritdoc/>
@@ -366,7 +379,7 @@ namespace OpenTK.Platform.Native.macOS
         }
 
         /// <inheritdoc/>
-        public void GetVirtualPosition(DisplayHandle handle, out int x, out int y)
+        public Vector2i GetVirtualPosition(DisplayHandle handle)
         {
             NSScreenHandle nsscreen = handle.As<NSScreenHandle>(this);
 
@@ -376,31 +389,30 @@ namespace OpenTK.Platform.Native.macOS
             // is that the coordinate space we want to return?
             // FIXME: Either do something to align this to pixels or make the virtual
             // position floating point.
-            x = (int)bounds.origin.x;
-            y = (int)bounds.origin.y;
+            return new Vector2i((int)bounds.origin.x, (int)bounds.origin.y);
         }
 
         /// <inheritdoc/>
         // FIXME: Maybe rename this to be size? it will not return pixels!
-        public void GetResolution(DisplayHandle handle, out int width, out int height)
+        public Vector2i GetResolution(DisplayHandle handle)
         {
             NSScreenHandle nsscreen = handle.As<NSScreenHandle>(this);
 
             CGRect bounds = objc_msgSend_CGRect(nsscreen.Screen, selFrame);
 
-            // FIXME: Do not round?
-            width = (int)bounds.size.x;
-            height = (int)bounds.size.y;
+            // FIXME: Do not cast to int?
+            return new Vector2i((int)bounds.size.x, (int)bounds.size.y);
         }
 
         /// <inheritdoc/>
-        public void GetWorkArea(DisplayHandle handle, out Box2i area)
+        public Box2i GetWorkArea(DisplayHandle handle)
         {
             NSScreenHandle nsscreen = handle.As<NSScreenHandle>(this);
 
             CGRect visible = objc_msgSend_CGRect(nsscreen.Screen, selVisibleFrame);
 
-            area = new Box2i(
+            // FIXME: Do not cast to int?
+            return new Box2i(
                 (int)visible.origin.x,
                 (int)FlipYCoordinate(visible.origin.y + visible.size.y),
                 (int)(visible.origin.x + visible.size.x),
@@ -408,7 +420,7 @@ namespace OpenTK.Platform.Native.macOS
         }
 
         // FIXME: Document this!
-        public void GetSafeArea(DisplayHandle handle, out Box2i area)
+        public Box2i GetSafeArea(DisplayHandle handle)
         {
             NSScreenHandle nsscreen = handle.As<NSScreenHandle>(this);
 
@@ -421,7 +433,8 @@ namespace OpenTK.Platform.Native.macOS
             frame.size.x -= insets.left + insets.right;
             frame.size.y -= insets.bottom + insets.top;
 
-            area = new Box2i(
+            // FIXME: Do not cast to int?
+            return new Box2i(
                 (int)frame.origin.x,
                 (int)FlipYCoordinate(frame.origin.y + frame.size.y),
                 (int)(frame.origin.x + frame.size.x),
@@ -491,9 +504,11 @@ namespace OpenTK.Platform.Native.macOS
         }
 
         /// <inheritdoc/>
-        public void GetRefreshRate(DisplayHandle handle, out float refreshRate)
+        public float GetRefreshRate(DisplayHandle handle)
         {
             NSScreenHandle nsscreen = handle.As<NSScreenHandle>(this);
+
+            float refreshRate;
 
             IntPtr mode = CGDisplayCopyDisplayMode(nsscreen.DirectDisplayID);
             refreshRate = (float)CGDisplayModeGetRefreshRate(mode);
@@ -513,21 +528,29 @@ namespace OpenTK.Platform.Native.macOS
                 CVDisplayLinkRelease(link);
             }
             CGDisplayModeRelease(mode);
+
+            return refreshRate;
         }
 
         /// <inheritdoc/>
-        public void GetDisplayScale(DisplayHandle handle, out float scaleX, out float scaleY)
+        public Vector2 GetDisplayScale(DisplayHandle handle)
         {
             NSScreenHandle nsscreen = handle.As<NSScreenHandle>(this);
 
             CGRect frame = objc_msgSend_CGRect(nsscreen.Screen, selFrame);
             CGRect frameBacking = objc_msgSend_CGRect(nsscreen.Screen, selConvertRectToBacking, frame);
 
-            scaleX = (float)(frameBacking.size.x / frame.size.x);
-            scaleY = (float)(frameBacking.size.y / frame.size.y);
-
             //float factor = (float)objc_msgSend_nfloat(nsscreen.Screen, selBackingScaleFactor);
+
+            return new Vector2((float)(frameBacking.size.x / frame.size.x), (float)(frameBacking.size.y / frame.size.y));
         }
+
+        /// <inheritdoc />
+        //public bool GetHDRInfo(DisplayHandle handle, out HdrInfo hdrInfo)
+        //{
+        //    hdrInfo = default;
+        //    return false;
+        //}
 
         /// <summary>
         /// Returns the <c>CGDirectDisplayID</c> associated with this display handle.

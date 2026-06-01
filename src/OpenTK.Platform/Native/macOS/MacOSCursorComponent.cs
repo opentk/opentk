@@ -87,6 +87,11 @@ namespace OpenTK.Platform.Native.macOS
         }
 
         /// <inheritdoc/>
+        public void Uninitialize()
+        {
+        }
+
+        /// <inheritdoc/>
         public bool CanLoadSystemCursors => true;
 
         /// <inheritdoc/>
@@ -396,6 +401,16 @@ namespace OpenTK.Platform.Native.macOS
         /// <inheritdoc/>
         public CursorHandle Create(int width, int height, ReadOnlySpan<byte> image, int hotspotX, int hotspotY)
         {
+            if (width < 0) throw new ArgumentOutOfRangeException(nameof(width), width, "Width cannot be negative");
+            if (height < 0) throw new ArgumentOutOfRangeException(nameof(height), height, "Height cannot be negative");
+
+            if (image.Length < width * height * 4) throw new ArgumentException($"The given span is too small. It must be at least {width * height * 4} long. Was: {image.Length}");
+
+            if (hotspotX < 0) throw new ArgumentOutOfRangeException(nameof(hotspotX), hotspotX, "Hotspot X cannot be negative");
+            if (hotspotY < 0) throw new ArgumentOutOfRangeException(nameof(hotspotY), hotspotY, "Hotspot Y cannot be negative");
+            if (hotspotX > width) throw new ArgumentOutOfRangeException(nameof(hotspotX), hotspotX, $"Hotspot X cannot be larger than the width of the image {width}");
+            if (hotspotY > height) throw new ArgumentOutOfRangeException(nameof(hotspotY), hotspotY, $"Hotspot Y cannot be larger than the height of the image {height}");
+
             IntPtr nscursor = NSCursorFromImage(width, height, width, height, image, hotspotX, hotspotY);
 
             NSCursorHandle handle = new NSCursorHandle(NSCursorHandle.CursorMode.CustomCursor, nscursor);
@@ -406,6 +421,17 @@ namespace OpenTK.Platform.Native.macOS
         /// <inheritdoc/>
         public CursorHandle Create(int width, int height, ReadOnlySpan<byte> colorData, ReadOnlySpan<byte> maskData, int hotspotX, int hotspotY)
         {
+            if (width < 0) throw new ArgumentOutOfRangeException(nameof(width), width, "Width cannot be negative");
+            if (height < 0) throw new ArgumentOutOfRangeException(nameof(height), height, "Height cannot be negative");
+
+            if (colorData.Length < width * height * 3) throw new ArgumentException($"The given color data span is too small. It must be at least {width * height * 3} long. Was: {colorData.Length}");
+            if (maskData.Length < width * height * 1) throw new ArgumentException($"The given mask data span is too small. It must be at least {width * height * 1} long. Was: {maskData.Length}");
+
+            if (hotspotX < 0) throw new ArgumentOutOfRangeException(nameof(hotspotX), hotspotX, "Hotspot X cannot be negative");
+            if (hotspotY < 0) throw new ArgumentOutOfRangeException(nameof(hotspotY), hotspotY, "Hotspot Y cannot be negative");
+            if (hotspotX > width) throw new ArgumentOutOfRangeException(nameof(hotspotX), hotspotX, $"Hotspot X cannot be larger than the width of the image {width}");
+            if (hotspotY > height) throw new ArgumentOutOfRangeException(nameof(hotspotY), hotspotY, $"Hotspot Y cannot be larger than the height of the image {height}");
+
             // Convert the image to RGBA interleaved format
             int pixels = width * height;
             byte[] imageData = new byte[pixels * 4];
@@ -420,23 +446,59 @@ namespace OpenTK.Platform.Native.macOS
             return Create(width, height, imageData, hotspotX, hotspotY);
         }
 
+        /// <summary>
+        /// Struct defining data for one frame of an custom animated cursor.
+        /// </summary>
         public struct Frame
         {
+            /// <summary>
+            /// X resolution of <see cref="Image"/>
+            /// </summary>
             public int ResX;
+            /// <summary>
+            /// Y resolution of <see cref="Image"/>
+            /// </summary>
             public int ResY;
+            /// <summary>
+            /// Width of the cursor in window coordinates.
+            /// </summary>
             public float Width;
+            /// <summary>
+            /// Height of the cursor in window coordinates.
+            /// </summary>
             public float Height;
+            /// <summary>
+            /// The x axis pixel of the image to be the hotspot.
+            /// </summary>
             public int HotspotX;
+            /// <summary>
+            /// The y axis pixel of the image to be the hotspot.
+            /// </summary>
             public int HotspotY;
+            /// <summary>
+            /// The frame image data in RGBA format.
+            /// </summary>
             public byte[] Image;
 
-            public Frame(int width, int height, byte[] image, int hotspotX, int hotspotY)
+            /// <summary>
+            /// Creates a animated cursor frame.
+            /// </summary>
+            /// <remarks>Calling this constructor will create a copy of the image data array.</remarks>
+            /// <param name="width">The width in window coordinates of the cursor.</param>
+            /// <param name="height">The height in window coordinates of the cursor.</param>
+            /// <param name="image">The frame image data.</param>
+            /// <param name="hotspotX">The x-coordinate of the image to use as the hotspot.</param>
+            /// <param name="hotspotY">The y-coordinate of the image to use as the hotspot.</param>
+            public Frame(int width, int height, Bitmap image, int hotspotX, int hotspotY)
             {
+                ResX = image.Width;
+                ResY = image.Height;
                 Width = width;
                 Height = height;
-                Image = image;
                 HotspotX = hotspotX;
                 HotspotY = hotspotY;
+                Image = new byte[image.Data.Length];
+                Array.Copy(image.Data, Image, image.Data.Length);
             }
         }
 
@@ -455,7 +517,7 @@ namespace OpenTK.Platform.Native.macOS
                 cursorFrames[i] = NSCursorFromImage(frame.ResX, frame.ResY, frame.Width, frame.Height, frame.Image, frame.HotspotX, frame.HotspotY);
             }
 
-            NSCursorHandle handle = new NSCursorHandle(NSCursorHandle.CursorMode.SystemAnimatedCursor, cursorFrames, delay);
+            NSCursorHandle handle = new NSCursorHandle(NSCursorHandle.CursorMode.CustomAnimatedCursor, cursorFrames, delay);
 
             return handle;
         }
@@ -505,15 +567,8 @@ namespace OpenTK.Platform.Native.macOS
             }
         }
 
-        /// <summary>
-        /// Returns true if the cursor is an animated cursor.
-        /// </summary>
-        /// <param name="handle">The cursor to check if it is an animated</param>
-        /// <returns>True if the cursor is animated, false otherwise.</returns>
-        public bool IsAnimatedCursor(CursorHandle handle)
+        internal static bool IsAnimatedCursorInternal(NSCursorHandle nscursor)
         {
-            NSCursorHandle nscursor = handle.As<NSCursorHandle>(this);
-
             if (nscursor.Mode == NSCursorHandle.CursorMode.SystemAnimatedCursor ||
                 nscursor.Mode == NSCursorHandle.CursorMode.CustomAnimatedCursor)
             {
@@ -523,6 +578,18 @@ namespace OpenTK.Platform.Native.macOS
             {
                 return false;
             }
+        }
+
+        /// <summary>
+        /// Returns true if the cursor is an animated cursor.
+        /// </summary>
+        /// <param name="handle">The cursor to check if it is an animated</param>
+        /// <returns>True if the cursor is animated, false otherwise.</returns>
+        internal bool IsAnimatedCursor(CursorHandle handle)
+        {
+            NSCursorHandle nscursor = handle.As<NSCursorHandle>(this);
+
+            return IsAnimatedCursorInternal(nscursor);
         }
 
         /// <inheritdoc/>
@@ -549,12 +616,10 @@ namespace OpenTK.Platform.Native.macOS
             switch (nscursor.Mode)
             {
                 case NSCursorHandle.CursorMode.SystemAnimatedCursor:
-                    // Measure the current frame
+                case NSCursorHandle.CursorMode.CustomAnimatedCursor:
                     cursor = nscursor.CursorFrames![nscursor.Frame];
                     break;
                 case NSCursorHandle.CursorMode.SystemCursor:
-                    cursor = nscursor.Cursor;
-                    break;
                 case NSCursorHandle.CursorMode.CustomCursor:
                     cursor = nscursor.Cursor;
                     break;
@@ -601,19 +666,10 @@ namespace OpenTK.Platform.Native.macOS
             }
         }
 
-        /// <summary>
-        /// Updates the animation of an animated cursor.
-        /// When animated cursors change frame <see cref="IWindowComponent.SetCursor(WindowHandle, CursorHandle?)"/> needs to be called to properly animate.
-        /// This function returns true if the cursor needs to be set again.
-        /// </summary>
-        /// <param name="handle">An animated cursor to update.</param>
-        /// <param name="deltaTime">The amount of time to advance the cursor animation.</param>
-        /// <returns>True if the cursor frame has changed and <see cref="IWindowComponent.SetCursor(WindowHandle, CursorHandle?)"/> needs to be called for the cursor to update, false otherwise.</returns>
-        public bool UpdateAnimation(CursorHandle handle, double deltaTime)
+        // Used to update the animation state of a cursor handle. 
+        internal static bool UpdateAnimation(NSCursorHandle nscursor, double deltaTime)
         {
-            NSCursorHandle nscursor = handle.As<NSCursorHandle>(this);
-
-            if (nscursor.Mode != NSCursorHandle.CursorMode.SystemAnimatedCursor)
+            if (IsAnimatedCursorInternal(nscursor) == false)
             {
                 return false;
             }

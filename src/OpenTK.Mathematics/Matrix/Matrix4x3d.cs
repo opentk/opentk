@@ -23,6 +23,8 @@ SOFTWARE.
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
+using System.Numerics;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Runtime.Intrinsics;
 
@@ -33,7 +35,17 @@ namespace OpenTK.Mathematics
     /// </summary>
     [Serializable]
     [StructLayout(LayoutKind.Sequential)]
-    public struct Matrix4x3d : IEquatable<Matrix4x3d>, IFormattable
+    public struct Matrix4x3d : IEquatable<Matrix4x3d>, IFormattable,
+                                IMultiplyOperators<Matrix4x3d, Vector3d, Vector4d>,
+                                IMultiplyOperators<Matrix4x3d, Matrix3x2d, Matrix4x2d>,
+                                IMultiplyOperators<Matrix4x3d, Matrix3d, Matrix4x3d>,
+                                IMultiplyOperators<Matrix4x3d, Matrix3x4d, Matrix4d>,
+                                IMultiplyOperators<Matrix4x3d, Matrix4x3d, Matrix4x3d>,
+                                IMultiplyOperators<Matrix4x3d, double, Matrix4x3d>,
+                                IAdditionOperators<Matrix4x3d, Matrix4x3d, Matrix4x3d>,
+                                ISubtractionOperators<Matrix4x3d, Matrix4x3d, Matrix4x3d>,
+                                IEqualityOperators<Matrix4x3d, Matrix4x3d, bool>,
+                                IAdditiveIdentity<Matrix4x3d, Matrix4x3d>
     {
         /// <summary>
         /// Top row of the matrix.
@@ -59,6 +71,11 @@ namespace OpenTK.Mathematics
         /// The zero matrix.
         /// </summary>
         public static readonly Matrix4x3d Zero = new Matrix4x3d(Vector3d.Zero, Vector3d.Zero, Vector3d.Zero, Vector3d.Zero);
+
+        /// <summary>
+        /// The identity matrix.
+        /// </summary>
+        public static readonly Matrix4x3d Identity = new Matrix4x3d((1, 0, 0), (0, 1, 0), (0, 0, 1), (0, 0, 0));
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Matrix4x3d"/> struct.
@@ -278,6 +295,11 @@ namespace OpenTK.Mathematics
         public readonly double Trace => Row0.X + Row1.Y + Row2.Z;
 
         /// <summary>
+        /// Gets the additive identity of the matrix, which is the zero matrix.
+        /// </summary>
+        public static Matrix4x3d AdditiveIdentity => Zero;
+
+        /// <summary>
         /// Gets or sets the value at a specified row and column.
         /// </summary>
         /// <param name="rowIndex">The index of the row.</param>
@@ -287,54 +309,30 @@ namespace OpenTK.Mathematics
         {
             readonly get
             {
-                if (rowIndex == 0)
+                if (((uint)rowIndex) >= 4 || ((uint)columnIndex) >= 3)
                 {
-                    return Row0[columnIndex];
+                    MathHelper.ThrowOutOfRangeException("You tried to access this matrix at: ({0}, {1})", rowIndex, columnIndex);
                 }
 
-                if (rowIndex == 1)
-                {
-                    return Row1[columnIndex];
-                }
-
-                if (rowIndex == 2)
-                {
-                    return Row2[columnIndex];
-                }
-
-                if (rowIndex == 3)
-                {
-                    return Row3[columnIndex];
-                }
-
-                throw new IndexOutOfRangeException("You tried to access this matrix at: (" + rowIndex + ", " +
-                                                   columnIndex + ")");
+                return GetRowUnsafe(in this, rowIndex)[columnIndex];
             }
 
             set
             {
-                if (rowIndex == 0)
+                if (((uint)rowIndex) >= 4 || ((uint)columnIndex) >= 3)
                 {
-                    Row0[columnIndex] = value;
+                    MathHelper.ThrowOutOfRangeException("You tried to set this matrix at: ({0}, {1})", rowIndex, columnIndex);
                 }
-                else if (rowIndex == 1)
-                {
-                    Row1[columnIndex] = value;
-                }
-                else if (rowIndex == 2)
-                {
-                    Row2[columnIndex] = value;
-                }
-                else if (rowIndex == 3)
-                {
-                    Row3[columnIndex] = value;
-                }
-                else
-                {
-                    throw new IndexOutOfRangeException("You tried to set this matrix at: (" + rowIndex + ", " +
-                                                       columnIndex + ")");
-                }
+
+                GetRowUnsafe(in this, rowIndex)[columnIndex] = value;
             }
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static ref Vector3d GetRowUnsafe(in Matrix4x3d m, int index)
+        {
+            ref Vector3d address = ref Unsafe.AsRef(in m.Row0);
+            return ref Unsafe.Add(ref address, index);
         }
 
         /// <summary>
@@ -452,35 +450,38 @@ namespace OpenTK.Mathematics
         /// <param name="result">A matrix instance.</param>
         public static void CreateFromQuaternion(in Quaternion q, out Matrix4x3d result)
         {
-            double x = q.X;
-            double y = q.Y;
-            double z = q.Z;
-            double w = q.W;
-            double tx = 2 * x;
-            double ty = 2 * y;
-            double tz = 2 * z;
-            double txx = tx * x;
-            double tyy = ty * y;
-            double tzz = tz * z;
-            double txy = tx * y;
-            double txz = tx * z;
-            double tyz = ty * z;
-            double twx = w * tx;
-            double twy = w * ty;
-            double twz = w * tz;
+            // Adapted from https://en.wikipedia.org/wiki/Quaternions_and_spatial_rotation#Quaternion-derived_rotation_matrix
+            // with the caviat that opentk uses row-major matrices so the matrix we create is transposed
+            double sqx = q.X * q.X;
+            double sqy = q.Y * q.Y;
+            double sqz = q.Z * q.Z;
+            double sqw = q.W * q.W;
 
-            result.Row0.X = 1f - tyy - tzz;
-            result.Row0.Y = txy - twz;
-            result.Row0.Z = txz + twy;
-            result.Row1.X = txy + twz;
-            result.Row1.Y = 1f - txx - tzz;
-            result.Row1.Z = tyz - twx;
-            result.Row2.X = txz - twy;
-            result.Row2.Y = tyz + twx;
-            result.Row2.Z = 1f - txx - tyy;
-            result.Row3.X = 0;
-            result.Row3.Y = 0;
-            result.Row3.Z = 0;
+            double xy = q.X * q.Y;
+            double xz = q.X * q.Z;
+            double xw = q.X * q.W;
+
+            double yz = q.Y * q.Z;
+            double yw = q.Y * q.W;
+
+            double zw = q.Z * q.W;
+
+            double s2 = 2d / (sqx + sqy + sqz + sqw);
+
+            result.Row0.X = 1d - (s2 * (sqy + sqz));
+            result.Row1.Y = 1d - (s2 * (sqx + sqz));
+            result.Row2.Z = 1d - (s2 * (sqx + sqy));
+
+            result.Row0.Y = s2 * (xy + zw);
+            result.Row1.X = s2 * (xy - zw);
+
+            result.Row2.X = s2 * (xz + yw);
+            result.Row0.Z = s2 * (xz - yw);
+
+            result.Row2.Y = s2 * (yz - xw);
+            result.Row1.Z = s2 * (yz + xw);
+
+            result.Row3 = new Vector3d(0, 0, 0);
         }
 
         /// <summary>
@@ -722,7 +723,121 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// This isn't quite a multiply, but the result may be useful in some situations.
+        /// Multiplies two instances.
+        /// </summary>
+        /// <param name="left">The left operand of the multiplication.</param>
+        /// <param name="right">The right operand of the multiplication.</param>
+        /// <returns>A new instance that is the result of the multiplication.</returns>
+        [Pure]
+        public static Matrix4x2d Mult(Matrix4x3d left, Matrix3x2d right)
+        {
+            Mult(in left, in right, out Matrix4x2d result);
+            return result;
+        }
+
+        /// <summary>
+        /// Multiplies two instances.
+        /// </summary>
+        /// <param name="left">The left operand of the multiplication.</param>
+        /// <param name="right">The right operand of the multiplication.</param>
+        /// <param name="result">A new instance that is the result of the multiplication.</param>
+        public static void Mult(in Matrix4x3d left, in Matrix3x2d right, out Matrix4x2d result)
+        {
+            double leftM11 = left.Row0.X;
+            double leftM12 = left.Row0.Y;
+            double leftM13 = left.Row0.Z;
+            double leftM21 = left.Row1.X;
+            double leftM22 = left.Row1.Y;
+            double leftM23 = left.Row1.Z;
+            double leftM31 = left.Row2.X;
+            double leftM32 = left.Row2.Y;
+            double leftM33 = left.Row2.Z;
+            double leftM41 = left.Row3.X;
+            double leftM42 = left.Row3.Y;
+            double leftM43 = left.Row3.Z;
+
+            double rightM11 = right.Row0.X;
+            double rightM12 = right.Row0.Y;
+            double rightM21 = right.Row1.X;
+            double rightM22 = right.Row1.Y;
+            double rightM31 = right.Row2.X;
+            double rightM32 = right.Row2.Y;
+
+            result.Row0.X = (leftM11 * rightM11) + (leftM12 * rightM21) + (leftM13 * rightM31);
+            result.Row0.Y = (leftM11 * rightM12) + (leftM12 * rightM22) + (leftM13 * rightM32);
+
+            result.Row1.X = (leftM21 * rightM11) + (leftM22 * rightM21) + (leftM23 * rightM31);
+            result.Row1.Y = (leftM21 * rightM12) + (leftM22 * rightM22) + (leftM23 * rightM32);
+
+            result.Row2.X = (leftM31 * rightM11) + (leftM32 * rightM21) + (leftM33 * rightM31);
+            result.Row2.Y = (leftM31 * rightM12) + (leftM32 * rightM22) + (leftM33 * rightM32);
+
+            result.Row3.X = (leftM41 * rightM11) + (leftM42 * rightM21) + (leftM43 * rightM31);
+            result.Row3.Y = (leftM41 * rightM12) + (leftM42 * rightM22) + (leftM43 * rightM32);
+        }
+
+        /// <summary>
+        /// Multiplies two instances.
+        /// </summary>
+        /// <param name="left">The left operand of the multiplication.</param>
+        /// <param name="right">The right operand of the multiplication.</param>
+        /// <returns>A new instance that is the result of the multiplication.</returns>
+        [Pure]
+        public static Matrix4x3d Mult(Matrix4x3d left, Matrix3d right)
+        {
+            Mult(in left, in right, out Matrix4x3d result);
+            return result;
+        }
+
+        /// <summary>
+        /// Multiplies two instances.
+        /// </summary>
+        /// <param name="left">The left operand of the multiplication.</param>
+        /// <param name="right">The right operand of the multiplication.</param>
+        /// <param name="result">A new instance that is the result of the multiplication.</param>
+        public static void Mult(in Matrix4x3d left, in Matrix3d right, out Matrix4x3d result)
+        {
+            double leftM11 = left.Row0.X;
+            double leftM12 = left.Row0.Y;
+            double leftM13 = left.Row0.Z;
+            double leftM21 = left.Row1.X;
+            double leftM22 = left.Row1.Y;
+            double leftM23 = left.Row1.Z;
+            double leftM31 = left.Row2.X;
+            double leftM32 = left.Row2.Y;
+            double leftM33 = left.Row2.Z;
+            double leftM41 = left.Row3.X;
+            double leftM42 = left.Row3.Y;
+            double leftM43 = left.Row3.Z;
+
+            double rightM11 = right.Row0.X;
+            double rightM12 = right.Row0.Y;
+            double rightM13 = right.Row0.Z;
+            double rightM21 = right.Row1.X;
+            double rightM22 = right.Row1.Y;
+            double rightM23 = right.Row1.Z;
+            double rightM31 = right.Row2.X;
+            double rightM32 = right.Row2.Y;
+            double rightM33 = right.Row2.Z;
+
+            result.Row0.X = (leftM11 * rightM11) + (leftM12 * rightM21) + (leftM13 * rightM31);
+            result.Row0.Y = (leftM11 * rightM12) + (leftM12 * rightM22) + (leftM13 * rightM32);
+            result.Row0.Z = (leftM11 * rightM13) + (leftM12 * rightM23) + (leftM13 * rightM33);
+
+            result.Row1.X = (leftM21 * rightM11) + (leftM22 * rightM21) + (leftM23 * rightM31);
+            result.Row1.Y = (leftM21 * rightM12) + (leftM22 * rightM22) + (leftM23 * rightM32);
+            result.Row1.Z = (leftM21 * rightM13) + (leftM22 * rightM23) + (leftM23 * rightM33);
+
+            result.Row2.X = (leftM31 * rightM11) + (leftM32 * rightM21) + (leftM33 * rightM31);
+            result.Row2.Y = (leftM31 * rightM12) + (leftM32 * rightM22) + (leftM33 * rightM32);
+            result.Row2.Z = (leftM31 * rightM13) + (leftM32 * rightM23) + (leftM33 * rightM33);
+
+            result.Row3.X = (leftM41 * rightM11) + (leftM42 * rightM21) + (leftM43 * rightM31);
+            result.Row3.Y = (leftM41 * rightM12) + (leftM42 * rightM22) + (leftM43 * rightM32);
+            result.Row3.Z = (leftM41 * rightM13) + (leftM42 * rightM23) + (leftM43 * rightM33);
+        }
+
+        /// <summary>
         /// Multiplies two instances.
         /// </summary>
         /// <param name="left">The left operand of the multiplication.</param>
@@ -736,7 +851,6 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// This isn't quite a multiply, but the result may be useful in some situations.
         /// Multiplies two instances.
         /// </summary>
         /// <param name="left">The left operand of the multiplication.</param>
@@ -789,6 +903,7 @@ namespace OpenTK.Mathematics
 
         /// <summary>
         /// Multiplies two instances.
+        /// This is done by extending the matrices with a last row of (0, 0, 0, 1), and discarding the last row of the result.
         /// </summary>
         /// <param name="left">The left operand of the multiplication.</param>
         /// <param name="right">The right operand of the multiplication.</param>
@@ -802,6 +917,7 @@ namespace OpenTK.Mathematics
 
         /// <summary>
         /// Multiplies two instances.
+        /// This is done by extending the matrices with a last row of (0, 0, 0, 1), and discarding the last row of the result.
         /// </summary>
         /// <param name="left">The left operand of the multiplication.</param>
         /// <param name="right">The right operand of the multiplication.</param>
@@ -1089,6 +1205,43 @@ namespace OpenTK.Mathematics
         public static Matrix4x3d operator *(Matrix4x3d left, double right)
         {
             return Mult(left, right);
+        }
+
+        /// <summary>
+        /// Transform a 3-dimensional vector into a 4-dimensional vector using the given 4x3 Matrix.
+        /// </summary>
+        /// <param name="mat">The desired transformation.</param>
+        /// <param name="vec">The vector to transform.</param>
+        /// <returns>The transformed vector.</returns>
+        [Pure]
+        public static Vector4d operator *(Matrix4x3d mat, Vector3d vec)
+        {
+            Vector3d.TransformFourDimensionsColumn(in mat, in vec, out Vector4d result);
+            return result;
+        }
+
+        /// <summary>
+        /// Matrix multiplication.
+        /// </summary>
+        /// <param name="left">left-hand operand.</param>
+        /// <param name="right">right-hand operand.</param>
+        /// <returns>A new Matrix4x2 which holds the result of the multiplication.</returns>
+        public static Matrix4x2d operator *(Matrix4x3d left, Matrix3x2d right)
+        {
+            Mult(in left, in right, out Matrix4x2d result);
+            return result;
+        }
+
+        /// <summary>
+        /// Matrix multiplication.
+        /// </summary>
+        /// <param name="left">left-hand operand.</param>
+        /// <param name="right">right-hand operand.</param>
+        /// <returns>A new Matrix4x3 which holds the result of the multiplication.</returns>
+        public static Matrix4x3d operator *(Matrix4x3d left, Matrix3d right)
+        {
+            Mult(in left, in right, out Matrix4x3d result);
+            return result;
         }
 
         /// <summary>

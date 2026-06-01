@@ -6,13 +6,14 @@ namespace OpenTK.Backends.Tests.Bejeweled
     [TestApp]
     internal class Bejeweled : ITestApp
     {
-        public string Name => "Bejeweled";
+        public static string Name => "Bejeweled";
         
         private global::Bejeweled.Bejeweled BejeweledGame = new global::Bejeweled.Bejeweled();
 
         public void Initialize(WindowHandle window, OpenGLContextHandle context, bool useGLES)
         {
             BejeweledGame.Initialize(window, context, useGLES, Program.Logger);
+            BejeweledGame.TransitionToGame();
         }
 
         public void HandleEvent(EventArgs args)

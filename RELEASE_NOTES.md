@@ -1,3 +1,228 @@
+## 5.0-pre.16
+
+* Update to .NET 10. (@NogginBops)
+* Migrate to `slnx` solution. (@NogginBops)
+* Remove paket from the build system and use `dotnet pack` instead. (@NogginBops)
+* Update descriptions and READMEs of packages to be consistent. (@NogginBops)
+* Removed `OpenTK.Input` package and namespace. (@NogginBops)
+* Enable source link for OpenTK packages. (@NogginBops)
+* Unified the OpenAL and OpenGL bindings generator code and simplified it significantly. (@NogginBops)
+* Make `VectorN.ComponentMin` and `VectorN.ComponentMax` properly NaN propagating. (@NogginBops)
+* Add `VectorN.ComponentMinNumber`, `VectorN.ComponentMinNative`, `VectorN.ComponentMaxNumber`, and `VectorN.ComponentMaxNative`. (@NogginBops)
+* Reworked `Box2/i/d` and `Box3/i/d` structs significantly. (@NogginBops)
+  * Made `Min` and `Max` raw fields.
+  * Changed `BoxN.Contains` to actually test if the box is completely contained. For the old behavior use `BoxN.IntersectsWith` or `BoxN.Touches`.
+  * Add `BoxN.Empty` to represent empty boxes for use in bounding box calculations.
+  * Add `BoxN.Zero` to represent point at (0, 0).
+  * Add `BoxN.IsEmpty`, `BoxN.IsPoint`, and `BoxN.HasZeroArea`, `Box2.Area`, and `Box3.Volume` properties.
+  * Removed `BoxN.Top`, `BoxN.Right`, `BoxN.Bottom`, `BoxN.Left`, `BoxN.X`, `BoxN.Y`, `BoxN.SizeX`, `BoxN.SizeY`, `BoxN.CenteredSize`, `BoxN.IsZero` properties.
+  * Removed setters for `BoxN.Width`, `BoxN.Height`, `BoxN.Size`, `BoxN.Location` properties.
+  * Added `BoxN.DistanceToNearestPointInBox`, `BoxN.DistanceToNearestEdge`,  `BoxN.SignedDistanceToNearestEdge`, `BoxN.NearestPointInBox`, and `BoxN.NearestPointOnEdge`.
+  * Added `BoxNi.EuclidianDistanceToNearestPointInBox`, `BoxNi.EuclidianDistanceToNearestEdge`, `BoxNi.ManhattanDistanceToNearestEdge`, `BoxNi.SignedEuclidianDistanceToNearestEdge`, and `BoxNi.SignedManhattanDistanceToNearestEdge`.
+  * Changed `BoxN.Round`, `BoxN.Floor`, and `BoxN.Ceiling` to return `BoxN` instead of `BoxNi`.
+  * Added `BoxN.FloorCeiling` that floors min point and ceilings the max point.
+
+**OpenAL bindings changes**:
+
+* Add documentation to ALC and AL enums. (@NogginBops)
+* Add OpenAL specification and extension specificiation links to OpenAL function documentation. (@NogginBops)
+* Fix typo `AL.DopperFactor` -> `AL.DopplerFactor`. (@NogginBops)
+* Capitalization of "1D", "2D", and "3D" is now correct. (@NogginBops)
+* Add version info to enum members. (@NogginBops)
+* Add back `ALC.GetContextAttributes` and `ALC.GetStringList` (@NogginBops)
+* Change `AL.SourceQueueBuffers`  and `AL.SourceUnqueueBuffers` to take `int` instead of `uint`. (@NogginBops)
+* Fixed capitalization of many acronyms in the OpenAL bindings. (@NogginBops)
+* Document original enum name in inline enum documentation. (@NogginBops)
+
+**Vulkan bindings changes**:
+
+* Updates vulkan bindings to 1.4.352. (@NogginBops)
+* Capitalization of "1D", "2D", and "3D" is now correct. (@NogginBops)
+* Fix underlying type for dispatchable handles on 32-bit platforms. (@NogginBops)
+* Added inline documentation annotations for optional and extern sync parameters. (@NogginBops)
+* Fix 64-bit enums with values larger than `int.MaxValue` having the wrong values. (@NogginBops)
+* Properly XML escape documentation comments for struct members. (@NogginBops)
+
+**OpenGL bindings changes**:
+
+* Capitalization of "1D", "2D", and "3D" is now correct. (@NogginBops)
+* Fix inline documentation now working correctly being included in the nuget package. (@NogginBops)
+* Fix extension documentation links sometimes being broken. (@NogginBops)
+* Remove GLES2 functions from OpenGL namespace that had snuck in and vice versa. (@NogginBops)
+* Make `GL.ObjectLabel` and `GL.ObjectPtrLabel` take an `int` parameter instead of `uint` for the OpenGL object. (@NogginBops)
+* Make `GL.ObjectPtrLabel` correctly take a `GLSync` parameter. (@NogginBops)
+* Add `GL.GetShaderInfoLog` and `GL.GetProgramInfoLog` overloads returning a `string`. (@NogginBops)
+* Capitalization of "1D" is now correct. (@NogginBops)
+* Add `ClipOrigin` and `ClipDepthMode` to the `GetPName` enum. (@NogginBops)
+* Removed extension functions marked for compatibility profile from `OpenTK.Graphics.OpenGL`. (@NogginBops)
+* Updated to latest OpenGL 4 documentation. Notably `GL.DrawElements` now correctly documents `indices` as being an offset and not a pointer to the index data itself. (@NogginBops)
+* Add version info to enum members. (@NogginBops)
+* Document original enum name in inline enum documentation. (@NogginBops)
+
+**PAL2 changes**:
+
+* Added `Toolkit.Window.GetOpenGLContext` to get OpenGL context from a window handle if one has been created. (@NogginBops)
+* Added `Toolkit.OpenGL.GetWindow` to get the window that was used to create a OpenGL context. (@NogginBops)
+* Rework `Toolkit.Joystick` to handle arbitrary number of buttons and axes. (@NogginBops)
+  * `Toolkit.Joystick` is only implemented in the Win32 and SDL backends so far.
+* Add `Toolkit.Gamepad` for xbox style gamepad support. (@NogginBops)
+  * `Toolkit.Gamepad` only works *partially* in the Win32 backend so far.
+* Changed `Toolkit.Keyboard.GetActiveKeyboardLayout` to `Toolkit.Keyboard.GetActiveInputLanguage`. (@NogginBops)
+* Changed `Toolkit.Keyboard.GetAvailableKeyboardLayouts` to `Toolkit.Keyboard.GetInstalledInputLanguages`. (@NogginBops)
+* Add `DisplayValuesChangedEvent` which is sent when various properties of displays change. (@NogginBops) 
+* Add `ClientPosition` property to `MouseButtonDownEventArgs` and `MouseButtonUpEventArgs`. (@NogginBops)
+* Add `Clicks` property to `MouseButtonDownEventArgs` and `MouseButtonUpEventArgs` for detecting double-clicks. (@NogginBops)
+* Replaced `EventQueue` with `Toolkit.Event` and remove some unused apis from `EventQueue`. (@NogginBops)
+
+win32: 
+
+* Fix issue where non-integer refresh rates would cause `ExclusiveFullscreen` to fail. (@NogginBops)
+* Partial fix to high polling rate mice having large impact on framerate. (@JoeTwizzle, @NogginBops)
+* Added `ToolkitOptions.Windows.MaxWindowMessagesPerFrame` to limit the number of events processed in a frame, can help with high polling rate mice performance. (@JoeTwizzle, @NogginBops)
+* Fix bug where changing the window border mode would give the window focus. (@NogginBops)
+
+macOS:
+
+* Fix issue with missing entry point `objc_msgSend_stret` on apple silicon. (@NogginBops)
+
+x11:
+
+* Read `Xft.dpi` setting for `Toolkit.Display.GetDisplayScale` and `Toolkit.Window.GetContentScale`. (@NogginBops)
+* Made `Toolkit.Shell.AllowScreenSaver(false, ...)` a little more likely to work. (@NogginBops)
+* Use freedesktop UPower dbus service, if available, for more reliable battery information. (@NogginBops)
+* Use gsettings, if available, to get more accurate keyboard layout information. (@NogginBops)
+
+## 5.0-pre.15
+
+* Optimize vector and matrix indexers so they are actually inlined correctly. (@BoyBaykiller)
+* Changed `Matrix4.Invert` to throw using a throw helper method. (@BoyBaykiller)
+* Remove unecessary aggressive inlining hint from internal functions `Matrix4.InvertSee3` and `Matrix4.InvertFallback`. (@BoyBaykiller)
+
+**OpenAL bindings changes**:
+
+* Introduces new generated bindings for the entire OpenAL API. (@NogginBops)
+
+**Vulkan bindings changes**:
+
+* Version constants are now correctly typed as `uint` again. (@NogginBops)
+
+**OpenGL bindings changes**:
+
+* Bindings have been modified to be more compatible with trimming, allowing most of the bindings to be trimmed where they wouldn't be able to before. (@BoyBaykiller)
+
+**PAL2 changes**:
+
+* Added `Toolkit.OpenGL.GetContextValues` to get the actually selected OpenGL context settings. (@NogginBops)
+* Add `defaultFileName` argument to `Toolkit.Dialog.OpenSaveDialog` to prefill/suggest a file name to the user. (@NogginBops)
+* Add `OpenGLGraphicsApiHints.Stereo` and `ContextValues.Stereo` to be able to enumerate and select context settings that allow stereoscopic rendering. (@NogginBops)
+
+win32:
+
+* Add `DisplayComponent.GetColorInfo` for getting display color volume and HDR info. (@NogginBops)
+
+x11:
+
+* Fix crash when unfocusing a window when using non-IME input (@NogginBops)
+* Fix issue where `ContextValues.DepthBits` and `ContextValues.StencilBits` where not set correctly causing enumeration to select context values that are not the requested values. (@NogginBops)
+
+## 5.0-pre.14
+
+* Added generic math interfaces to all vector and matrix types. (@vovatrykoz)
+* Add boolean vectors `VectorNb` and comparison operators for vectors. (@NogginBops)
+* Add `scalar + vecor`, `scalar - vector`, and `scalar / vector` operator overloads for vectors. (@BoyBaykiller)
+* Add `JoystickState.GUID`. (@DamensIsPoggers)
+* Merged latest OpenTK 4.9.4 changes onto 5.0-pre.14. (@NogginBops)
+* Mark many properties and functions as `readonly` in math library. (@BoyBaykiller)
+* Made GLFW loading compatible with `IlcDisableReflection. (@BoyBaykiller)
+
+**Vulkan bindings changes**:
+
+* Update vulkan bindings to 1.4.321. (@NogginBops)
+* Add `InstanceDispatchTable` and `DeviceDispatchTable` dispatch tables for more efficiently calling vulkan functions. (@NogginBops)
+* Fix aliased structs so that they actually contain the correct memebers. (@NogginBops)
+* Functions, handles, structs and enums now have correct version and deprecation info documented. (@NogginBops)
+* Annotated structs and enums with functions that use them. (@NogginBops)
+* Fix XML escape codes in documentation comments. (@NogginBops)
+
+**OpenGL bindings changes**:
+
+* Add `string[]` overloads to functions where applicable. (@NogginBops)
+* Remove `VertexBufferObjectUsage` in favor of `BufferUsageHint`. (@NogginBops)
+
+**PAL2 changes**:
+
+* Add `Toolkit.Window.PostUserEvent` multi-threaded API on all plaforms for posting events to the main thread (useful with `waitForEvents = true`). (@NogginBops)
+* Add `ToolkitOptions.FeatureFlags` for specifying if pal2 should load OpenGL and/or Vulkan components. (@NogginBops)
+
+win32:
+
+* Fix raw mouse motion. (@JoeTwizzle)
+* Add platform specific api for setting window taskbar progress, `ShellComponent.SetProgressStatus`. (@NogginBops)
+* Fix transitioning from `WindowState.Hidden` to `WindowState.*Fullscreen` directly. (@NogginBops)
+* 
+
+macOS:
+
+* Support for IME text input though `Toolkit.Keyboard.BeginIme`, `Toolkit.Keyboard.SetImeRectangle`, and `Toolkit.Keyboard.EndIme`. (@NogginBops)
+* Add platform specific api for setting window taskbar progress, `ShellComponent.SetProgressStatus`. (@NogginBops)
+* Support `waitForEvents = true` in `Toolkit.Window.ProcessEvents`. (@NogginBops)
+* Animated cursors are not automatically handled, `MacOSCursorComponent.UpdateAnimation` is removed. (@NogginBops)
+* Moved `MacOSWindowComponent.SetDockIcon` to `MacOSShellComponent.SetDockIcon`. (@NogginBops)
+
+x11:
+
+* Fix `DllNotFoundException` for `Xrender`. (@NogginBops)
+* Make it possible to hide the cursor. (@NogginBops)
+* Support for IME text input though `Toolkit.Keyboard.BeginIme`, `Toolkit.Keyboard.SetImeRectangle`, and `Toolkit.Keyboard.EndIme`. (@NogginBops)
+* Fix window shadow for opaque windows with transparent Visuals on Ubuntu. (@NogginBops)
+* Fix `Toolkit.Window.SetCursorCaptureMode` when running on XWayland. (@NogginBops)
+* Fix `Toolkit.Dialog` with newer versions of Zenity. (@NogginBops)
+
+## 5.0-pre.13
+
+* Changed `MarshalTk.MarshalStringArrayToAnsiStringArrayPtr` to take `ReadOnlySpan<string>` instead of `Span<string>`. (@NogginBops)
+
+**Vulkan bindings changes**:
+
+* Add default parameterless constructor to all Vulkan structs so that default member values can be applied (mostly to automatically set `sType`). (@NogginBops)
+
+* Made the Vulkan example project render a triangle. (@NogginBops)
+
+**OpenGL bindings changes**:
+
+* Skip `ref readonly` for singular `Delete*()` functions. (@NogginBops)
+* Added generated EGL bindings containing all EGL and ANGLE extensions. (@NogginBops)
+* Fixed missing documentation on some OpenGL functions. (@NogginBops)
+
+**PAL2 changes**:
+
+* A lot of documentation improvements. (@NogginBops)
+* Added `Toolkit.Window.Get/SetTransparencyMode` to support different modes for window transparency. (@NogginBops)
+* Add `reason` parameter to `Toolkit.Shell.AllowScreenSaver`. (@NogginBops)
+* Add `Toolkit.Shell.IsScreenSaverAllowed` to be able to check if the screen saver is disabled. (@NogginBops)
+* Added `OpenGLGraphicsApiHints.SupportsTransparentFramebufferX11` to mark if the context values selector should look for formats that support framebuffer transparency when on X11 (framebuffer transparency is always supported on Windows and macOS). (@NogginBops)
+* Added `ContextValues.SupportsFramebufferTransparency` to check if a particular format supports framebuffer transparency (only relevant on X11). (@NogginBops)
+* Updated `ContextValues.DefaultValuesSelector` to handle `SupportsFramebufferTransparency`. (@NogginBops)
+* Added `Toolkit.Uninit()` for usecases where unloading OpenTK is useful (don't call this function on application exit). (@NogginBops)
+* Added `IPalComponent.Uninitialize()` and implemented it for every component on every platform to make `Toolkit.Uninit()` possible. (@NogginBops)
+
+win32:
+
+macOS:
+
+* Implement `MacOSVulkanComponent` using MoltenVK. (@NogginBops)
+* Made dialogs proper window sheets by default. (@NogginBops)
+* Added `MacOSDialogComponent.Show*NoWindow` functions for showing dialogs not attached to any window. (@NogginBops)
+
+x11:
+
+* Fixed glX dll resolution to be the same as before 5.0-pre.12 (@NogginBops)
+* Fixed memory leak in `X11KeyboardComponent`. (@NogginBops)
+
+ANGLE:
+
+* Switched implementation to use the generated EGL bindings. (@NogginBops)
+
 ## 5.0-pre.12
 
 **Vulkan bindings changes:**
@@ -304,6 +529,112 @@ Platform Abstraction Layer 2.0 (PAL2):
 **Note**: The new OpenGL bindings will receive updates and breaking changes in the coming previews.
 
 **Note**: The generated functions currently do not have xml documentation attached to them, this will be available in the final release.
+
+## 4.9.4
+
+* BREAKING: Made `Matrix3/4.CreateFromQuaternion` and `Matrix3x4/4x3.CreateFromQuaternion` produce idential results for non-normalized quaternions. (@NogginBops)
+
+* API: Add explicit casts to and from `System.Numerics` types. (@DamienIsPoggers, @NogginBops)
+
+* API: Added `VectorN.Round/Ceiling/Floor/Truncate` element-wise functions. (@NogginBops)
+
+* API: Add `ShaderStorageBufferBinding`, `ShaderStorageBufferStart`, and `ShaderStorageBufferSize` to `GetIndexedPName`. (@NogginBops)
+
+* API: Add `MathHelper.RadToDeg(d)` and `MathHelper.DegToRad(d)` constants for conversion between radians and degrees. (@DamienIsPoggers)
+
+* API: Add support for the `ALC_SOFT_loopback` OpenAL extension through `OpenTK.Audio.OpenAL.ALC.Loopback`. (@NogginBops)
+
+* FIX: Update `OpenTK.redist.glfw` to GLFW 3.4 so that the GLFW 3.4 apis work properly. (@NogginBops)
+
+* FIX: Optimized `VectorN.this[int i]` and `MatrixN.this[int row, int col]` indexers. (@NogginBops)
+
+* FIX: Made `Color4.FromHsv` and `Color4.FromHsl` work correctly when hue is `1`. (@NogginBops)
+
+* FIX: Updated OpenAL `DllNotFoundException` exception message to mention having to install OpenAL. (@NogginBops)
+
+* FIX: The documentation for `NativeWindowSettings.RenderFrequency` now correctly refers to `UpdateFrequency` instead of `UpdateFrame`. (@NogginBops)
+
+## 4.9.3
+
+* Fix issue where the `OpenTK.Mathematics` nuget package referenced `System.Runtime.CompilerServices.Unsafe` version `5.0.0` but the compiled `OpenTK.Mathematics.dll` assembly referenced version `6.0.0`. Causing runtime crashes in some circumstances. The `OpenTK.Mathematics` nuget package now correctly requires version `6.0.0`. (@NogginBops)
+
+## 4.9.2
+
+* Made nuget package builds "deterministic". (@NogginBops)
+
+* Fix assembly versions to match OpenTK release version. (@NogginBops)
+
+## 4.9.1
+
+* BREAKING: Made `NativeWindow` able to run on Wayland (when running on Wayland `NativeWindow` will default to Wayland, use `OPENTK_4_USE_WAYLAND=0` or set the X11 glfw hint to use X11/Xwayland). (@NogginBops)
+
+* BREAKING: Change type of `NativeWindow.CurrentMonitor` property from `MonitorHandle` to `MonitorInfo`. (@NogginBops)
+
+* BREAKING: Changed EGL bindings to `DllImport` `libEGL` instead of `libEGL.dll` (shouldn't be breaking in most cases). (@NogginBops)
+
+* BREAKING: Removed leftover module references to `libGLESv2.dll` (and `opengl32.dll` and `GLESv1_CM`) in `OpenTK.Graphics.dll` which was causing build errors in `net8.0-macos` projects. (these references are never used by OpenTK so they shoudn't be there, this might break something in very specific circumstances)(@NogginBops)
+
+* BREAKING: `MathHelper.Lerp` no longer clamps `t` to `[0, 1]` range. (@NogginBops)
+
+* API: Upgrade to GLFW 3.4. (@NogginBops)
+
+* API: Updated OpenGL bindings to contain the latest definitions without breaking `4.8.2` compatibility (this includes OpenGLES 3.1 and 3.2). (@NogginBops)
+
+* API: Add `NativeWindow.MakeFullscreen` method to more seamlessly transition a window to fullscreen. (@NogginBops)
+
+* API: Deprecate `Matrix4(d).ExtractProjection`. (@NogginBops)
+
+* API: Added `Matrix4(d).ExtractPerspectiveOffCenter/ExtractPerspectiveFieldOfView` to extract projection matrix parameters from perspective projections. (@NogginBops)
+
+* API: Added `Matrix4(d).ExtractOrthographicOffCenter/ExtractOrthographic` to extract projection matrix parameters from orthographic projections. (@NogginBops)
+
+* API: Add matrix swizzle functions `Matrix2/3/4(d).Swizzle/Swizzled/CreateSwizzle`. (@NogginBops)
+
+* API: Added `MouseCursor.PointingHand/ResizeEW/ResizeNS/ResizeNWSE/ResizeNESW/ResizeAll/NotAllowed` standard mouse cursors. (@NogginBops)
+
+* API: Added `VectorN.Slerp` (spherical interpolation) and `VectorN.Elerp` (exponential interpolation) functions. (@NogginBops)
+
+* API: Added `NativeWindow.AlwaysOnTop` property to set if a window should always be visible. (@NogginBops)
+
+* API: Added `NativeWindow.MousePassthrough` property to set if the window should be transparent to mouse interactions. (@NogginBops)
+
+* API: Added `CusorState.Confined` to be able to confine the mouse cursor to the window content area. (@NogginBops)
+
+* API: Implemented `Matrix3(d).Column1/2/3`, `Matrix4x3(d).Column1/2/3` and ``Matrix3x4(d).Column1/2/3/4` property setters. (@NogginBops)
+
+* API: Make `NativeWindow` throw explicit `InvalidOperationException` or `OutOfMemoryException` if `glfwCreateWindow` fails. (@NogginBops)
+
+* API: Added a few missing constants to the EGL bindings. (@NogginBops)
+
+* API: Deprecate `NativeWindow.CurrentMonitor` property setter. (@NogginBops)
+
+* API: Implemented `Matrix2/3/4(d).Transposed/Inverted` for matrix types that where missing them. (@NogginBops)
+
+* API: Deprecate `Matrix4d.Scale/RotateX/RotateY/RotateZ/Rotate/Frustum/Perspective`use the `Create*` functions instead. (@NogginBops)
+
+* API: Deprecate `EffectSlotInteger.AuxiliarySendAuto` in favor of `EffectSlotBoolean.AuxiliarySendAuto`. (@NogginBops)
+
+* FIX: Fix wglDXCloseDeviceNV argument name, from `dxDevice` to `hDecvice`. (@NogginBops)
+
+* FIX: All assemblies are now signed. (@RFBomb, @NogginBops)
+
+* FIX: Fixed nuget package metadata. (@NogginBops)
+
+* FIX: `OpenTK.Graphics` now contains proper debug info, the code is still generated but might improve debug experience. (@NogginBops)
+
+* FIX: Fix issue where `NativeWindowSettings.StartVisible=false` with `NativeWindowSettings.StartFocused=true` would create a visible window. (@NogginBops)
+
+* FIX: Updated links in README to link to the website tutorial. (@NogginBops)
+
+* FIX: Added basic README to nuget packages. (@NogginBops)
+
+* FIX: Fix GLFW calling convention when on 32-bit windows, this was causing a StackOverflowException. (@NogginBops)
+
+* FIX: Improved a bunch of OpenAL documentation. (@NogginBops)
+
+## 4.9.0
+
+* This version had broken nuget packages, see `4.9.1` instead.
 
 ## 4.8.2
 

@@ -23,6 +23,26 @@ namespace OpenTK.Platform.Native.X11
         /// <inheritdoc/>
         public ILogger? Logger { get; set; }
 
+        /// <summary>
+        /// Custom atom used to receive clipboard data.
+        /// </summary>
+        internal static XAtom OpenTKSelection;
+
+        // FIXME: Figure out which image formats we support?
+        private static XAtom image_png;
+        private static XAtom image_bmp;
+
+        private static XAtom text_urilist;
+        private static XAtom text_utf8;
+
+        private IPngCodec? PngCodec;
+
+        /// <summary>The currently set clipboard string, or null if no clipboard string is set.</summary>
+        // FIXME: Some way to discern what type of clipboard data we have...
+        private static ClipboardFormat CurrentClipboardFormat = ClipboardFormat.None;
+        private static string? ClipboardString;
+        private static byte[]? ClipboardPng;
+
         /// <inheritdoc/>
         public void Initialize(ToolkitOptions options)
         {
@@ -39,31 +59,16 @@ namespace OpenTK.Platform.Native.X11
             //xspecial_gnomecopiedfiles = XInternAtom(X11.Display, "x-special/gnome-copied-files", false);
         }
 
-        /// <summary>
-        /// Custom atom used to receive clipboard data.
-        /// </summary>
-        internal static XAtom OpenTKSelection;
-
-        // FIXME: Figure out which image formats we support?
-        private static XAtom image_png;
-        private static XAtom image_bmp;
-
-        private static XAtom text_urilist;
-        private static XAtom text_utf8;
+        /// <inheritdoc/>
+        public void Uninitialize()
+        {
+        }
 
         private static readonly ClipboardFormat[] _supportedFormats = { ClipboardFormat.Text, ClipboardFormat.Files };
         private static readonly ClipboardFormat[] _supportedFormatsWithBitmap = { ClipboardFormat.Text, ClipboardFormat.Bitmap, ClipboardFormat.Files };
 
         /// <inheritdoc/>
         public IReadOnlyList<ClipboardFormat> SupportedFormats => (PngCodec != null && PngCodec.CanDecodePng) ?  _supportedFormatsWithBitmap : _supportedFormats;
-
-        private IPngCodec? PngCodec;
-
-        /// <summary>The currently set clipboard string, or null if no clipboard string is set.</summary>
-        // FIXME: Some way to discern what type of clipboard data we have...
-        private static ClipboardFormat CurrentClipboardFormat = ClipboardFormat.None;
-        private static string? ClipboardString;
-        private static byte[]? ClipboardPng;
 
         private unsafe byte[] ReadINCRData(XEvent notification)
         {

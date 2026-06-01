@@ -141,6 +141,11 @@ namespace OpenTK.Platform.Native.Windows
             CF_CanUploadToCloudClipboard = Win32.RegisterClipboardFormat("CanUploadToCloudClipboard");
         }
 
+        /// <inheritdoc/>
+        public void Uninitialize()
+        {
+        }
+
         private static CF CF_CanIncludeInClipboardHistory;
         private static CF CF_CanUploadToCloudClipboard;
 

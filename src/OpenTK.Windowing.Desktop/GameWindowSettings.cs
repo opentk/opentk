@@ -38,7 +38,7 @@ namespace OpenTK.Windowing.Desktop
         ///  </para>
         ///  <para>Values lower than 1.0Hz are clamped to 0.0. Values higher than 500.0Hz are clamped to 200.0Hz.</para>
         /// </remarks>
-        [Obsolete("Use UpdateFrame instead. We no longer support different update rates for OnUpdateFrame and OnRenderFrame.", true)]
+        [Obsolete("Use UpdateFrequency instead. We no longer support different update rates for OnUpdateFrame and OnRenderFrame.", true)]
         public double RenderFrequency { get; set; } = 0.0;
 
         /// <summary>
