@@ -1,10 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Runtime.InteropServices;
 using OpenTK.Core.Utility;
 using OpenTK.Graphics.Egl;
-using OpenTK.Platform.Native.ANGLE;
 
 namespace OpenTK.Platform.Native.EGL
 {
@@ -21,21 +19,27 @@ namespace OpenTK.Platform.Native.EGL
 
         internal string[] Extensions;
 
-        internal IntPtr eglDisplay;
+        internal EGLDisplay eglDisplay;
         internal Version eglVersion;
 
-        internal static readonly Dictionary<IntPtr, EGLOpenGLContextHandle> ContextDict = new Dictionary<IntPtr, EGLOpenGLContextHandle>();
+        internal static readonly Dictionary<EGLContext, EGLOpenGLContextHandle> ContextDict = new Dictionary<EGLContext, EGLOpenGLContextHandle>();
 
         /// <inheritdoc/>
         public void Initialize(ToolkitOptions options)
         {
-            const IntPtr EGL_NO_DISPLAY = 0;
-            IntPtr extensionsPtr = Egl.QueryString(EGL_NO_DISPLAY, Egl.EXTENSIONS);
-            string extensionsStr = Marshal.PtrToStringAnsi(extensionsPtr)!;
-            Extensions = extensionsStr.Split(" ", StringSplitOptions.RemoveEmptyEntries);
+            string? extensions = Egl.QueryString(EGLDisplay.NoDisplay, StringName.Extensions);
+            if (extensions == null)
+                throw new PalException(this, "EGL extensions string could not be retrieved.");
+
+            Extensions = extensions.Split(" ", StringSplitOptions.RemoveEmptyEntries);
             Logger?.LogDebug($"EGL extensions: {string.Join(", ", Extensions)}");
 
-            eglDisplay = Egl.GetDisplay(Egl.DEFAULT_DISPLAY);
+            eglDisplay = Egl.GetDisplay(IntPtr.Zero);
+            if (eglDisplay.Value == IntPtr.Zero)
+            {
+                var error = Egl.GetError();
+                throw new PalException(this, $"EGL couldn't get a display. {error}");
+            }
 
             bool success = Egl.Initialize(eglDisplay, out int major, out int minor);
             if (success == false)
@@ -47,7 +51,13 @@ namespace OpenTK.Platform.Native.EGL
             eglVersion = new Version(major, minor);
 
             // FIXME
-            Egl.BindAPI(RenderApi.ES);
+            Egl.BindAPI(RenderApi.OpenglEsApi);
+        }
+
+        /// <inheritdoc/>
+        public void Uninitialize()
+        {
+            Egl.Terminate(eglDisplay);
         }
 
         /// <inheritdoc/>
@@ -73,14 +83,14 @@ namespace OpenTK.Platform.Native.EGL
             // - Noggin_bops 2024-03-07
             IntPtr xwin = ((IntPtr?)(handle as X11.XWindowHandle)?.Window.Id) ?? 0;
 
-            // FIXME: Can we use an SDL window to create an ANGLE context?
+            // FIXME: Can we use an SDL window to create an EGL context?
             IntPtr windowHandle = handle switch
             {
                 Windows.HWND hwnd => hwnd.HWnd,
                 X11.XWindowHandle => (IntPtr)(&xwin),
                 macOS.NSWindowHandle nswindow => nswindow.Window,
 
-                _ => throw new PlatformNotSupportedException($"OpenTK doesn't support creating an ANGLE context using {handle.GetType()}.")
+                _ => throw new PlatformNotSupportedException($"OpenTK doesn't support creating an EGL context using {handle.GetType()}.")
             };
 
             EGLGraphicsApiHints? settings = handle.GraphicsApiHints as EGLGraphicsApiHints;
@@ -90,38 +100,38 @@ namespace OpenTK.Platform.Native.EGL
                 throw new PalException(this, "Window has no graphics settings.");
             }
 
-            bool success = Egl.GetConfigs(eglDisplay, null, 0, out int numConfigs);
-            IntPtr[] availableConfigs = new IntPtr[numConfigs];
-            success = Egl.GetConfigs(eglDisplay, availableConfigs, numConfigs, out numConfigs);
+            bool success = Egl.GetConfig(eglDisplay, null, 0, out int numConfigs);
+            EGLConfig[] availableConfigs = new EGLConfig[numConfigs];
+            success = Egl.GetConfig(eglDisplay, availableConfigs, numConfigs, out numConfigs);
 
             List<ContextValues> possibleContextValues = new List<ContextValues>();
             for (int i = 0; i < numConfigs; i++)
             {
-                IntPtr config = availableConfigs[i];
+                EGLConfig config = availableConfigs[i];
 
                 // We only want configs that can render to a window.
-                Egl.GetConfigAttrib(eglDisplay, config, Egl.SURFACE_TYPE, out int configSupportedSurfaceTypes);
-                if ((configSupportedSurfaceTypes & Egl.WINDOW_BIT) == 0)
+                Egl.GetConfigAttrib(eglDisplay, config, ConfigAttribute.SurfaceType, out int configSupportedSurfaceTypes);
+                if (((SurfaceTypeMask)configSupportedSurfaceTypes & SurfaceTypeMask.WindowBit) == 0)
                     continue;
 
-                Egl.GetConfigAttrib(eglDisplay, config, Egl.RENDERABLE_TYPE, out int renderableType);
-                if ((renderableType & Egl.OPENGL_ES_BIT) == 0 &&
-                    (renderableType & Egl.OPENGL_ES2_BIT) == 0 &&
-                    (renderableType & Egl.OPENGL_ES3_BIT) == 0)
+                Egl.GetConfigAttrib(eglDisplay, config, ConfigAttribute.RenderableType, out int renderableType);
+                if (((RenderableTypeMask)renderableType & RenderableTypeMask.OpenglEsBit) == 0 &&
+                    ((RenderableTypeMask)renderableType & RenderableTypeMask.OpenglEs2Bit) == 0 &&
+                    ((RenderableTypeMask)renderableType & RenderableTypeMask.OpenglEs3Bit) == 0)
                 {
                     continue;
                 }
 
-                Egl.GetConfigAttrib(eglDisplay, config, Egl.RED_SIZE, out int configRedBits);
-                Egl.GetConfigAttrib(eglDisplay, config, Egl.GREEN_SIZE, out int configGreenBits);
-                Egl.GetConfigAttrib(eglDisplay, config, Egl.BLUE_SIZE, out int configBlueBits);
-                Egl.GetConfigAttrib(eglDisplay, config, Egl.ALPHA_SIZE, out int configAlphaBits);
-                Egl.GetConfigAttrib(eglDisplay, config, Egl.DEPTH_SIZE, out int configDepthBits);
-                Egl.GetConfigAttrib(eglDisplay, config, Egl.STENCIL_SIZE, out int configStencilBits);
-                Egl.GetConfigAttrib(eglDisplay, config, Egl.SAMPLES, out int configSamples);
+                Egl.GetConfigAttrib(eglDisplay, config, ConfigAttribute.RedSize, out int configRedBits);
+                Egl.GetConfigAttrib(eglDisplay, config, ConfigAttribute.GreenSize, out int configGreenBits);
+                Egl.GetConfigAttrib(eglDisplay, config, ConfigAttribute.BlueSize, out int configBlueBits);
+                Egl.GetConfigAttrib(eglDisplay, config, ConfigAttribute.AlphaSize, out int configAlphaBits);
+                Egl.GetConfigAttrib(eglDisplay, config, ConfigAttribute.DepthSize, out int configDepthBits);
+                Egl.GetConfigAttrib(eglDisplay, config, ConfigAttribute.StencilSize, out int configStencilBits);
+                Egl.GetConfigAttrib(eglDisplay, config, ConfigAttribute.Samples, out int configSamples);
 
                 ContextValues values;
-                values.ID = (ulong)config;
+                values.ID = (ulong)(nint)config;
                 values.RedBits = configRedBits;
                 values.GreenBits = configGreenBits;
                 values.BlueBits = configBlueBits;
@@ -147,6 +157,10 @@ namespace OpenTK.Platform.Native.EGL
                 // - Noggin_bops 2024-07-22
                 values.SwapMethod = ContextSwapMethod.Undefined;
                 values.Samples = configSamples;
+                values.SupportsFramebufferTransparency = false;
+                // EGL 1.5 nor any extensions specify how to create or query support for stereo display.
+                // - Noggin_bops 2025-08-11
+                values.Stereo = false;
 
                 possibleContextValues.Add(values);
             }
@@ -180,6 +194,8 @@ namespace OpenTK.Platform.Native.EGL
             requested.PixelFormat = settings.PixelFormat;
             requested.SwapMethod = settings.SwapMethod;
             requested.Samples = settings.Multisamples;
+            requested.SupportsFramebufferTransparency = settings.SupportTransparentFramebufferX11;
+            requested.Stereo = settings.Stereo;
 
             int selectedFormatIndex = settings.Selector(possibleContextValues, requested, Logger);
             if (selectedFormatIndex < 0 || selectedFormatIndex >= possibleContextValues.Count)
@@ -187,51 +203,49 @@ namespace OpenTK.Platform.Native.EGL
                 throw new IndexOutOfRangeException($"The selected format index ({selectedFormatIndex}) is outside the range of valid indices. This is either an OpenTK bug or an issue with your custom ContextValueSelector.");
             }
 
-            IntPtr selectedConfig = (IntPtr)possibleContextValues[selectedFormatIndex].ID;
+            EGLConfig selectedConfig = new EGLConfig((nint)possibleContextValues[selectedFormatIndex].ID);
+            ContextValues chosenValues = possibleContextValues[selectedFormatIndex];
 
             List<int> surface_attribs_list = new List<int>();
-            surface_attribs_list.Add(Egl.RENDER_BUFFER);
-            surface_attribs_list.Add(settings.DoubleBuffer ? Egl.BACK_BUFFER : Egl.SINGLE_BUFFER);
+            surface_attribs_list.Add((int)SurfaceCreateAttribute.RenderBuffer);
+            surface_attribs_list.Add(settings.DoubleBuffer ? (int)RenderBuffer.BackBuffer : (int)RenderBuffer.SingleBuffer);
 
             // ANGLE doesn't support COLORSPACE option.
             if (!settings.IsAngle)
             {
-                surface_attribs_list.Add(Egl.COLORSPACE);
-                surface_attribs_list.Add(settings.sRGBFramebuffer ? Egl.COLORSPACE_sRGB : Egl.COLORSPACE_LINEAR);
+                surface_attribs_list.Add((int)SurfaceCreateAttribute.GlColorspaceKhr);
+                surface_attribs_list.Add(settings.sRGBFramebuffer ? (int)All.GlColorspaceSrgb : (int)All.GlColorspaceLinear);
             }
 
-            surface_attribs_list.Add(Egl.NONE);
+            surface_attribs_list.Add((int)SurfaceAttribute.None);
 
-            int[] structure_attribs = surface_attribs_list.ToArray();
-
-            IntPtr eglSurface;
-            fixed (int* structure_attribs_ptr = structure_attribs)
+            EGLSurface eglSurface = Egl.CreateWindowSurface(eglDisplay, selectedConfig, windowHandle, surface_attribs_list.ToArray());
+            if (eglSurface == EGLSurface.NoSurface)
             {
-                eglSurface = Egl.CreateWindowSurface(eglDisplay, selectedConfig, windowHandle, (IntPtr)structure_attribs_ptr);
-                if (eglSurface == IntPtr.Zero)
-                {
-                    throw new PalException(this, $"Was not able to create egl surface. {Egl.GetError()}");
-                }
+                var error = Egl.GetError();
+                throw new PalException(this, $"Was not able to create egl surface. {error}");
             }
 
             // FIXME: Share context
-            List<int> context_attribs = new List<int>() { Egl.CONTEXT_MAJOR_VERSION, settings.Version.Major, Egl.CONTEXT_MINOR_VERSION, settings.Version.Minor };
+            List<int> context_attribs = new List<int>() { (int)ContextAttribute.ContextMajorVersion, settings.Version.Major, (int)ContextAttribute.ContextMinorVersion, settings.Version.Minor };
             if (settings.DebugFlag)
             {
-                context_attribs.Add(Egl.CONTEXT_OPENGL_DEBUG);
+                context_attribs.Add((int)ContextAttribute.ContextOpenglDebug);
                 context_attribs.Add(1);
             }
 
-            context_attribs.Add(Egl.NONE);
+            context_attribs.Add((int)ContextAttribute.None);
 
             EGLOpenGLContextHandle? shared = settings.SharedContext?.As<EGLOpenGLContextHandle>(this);
-            IntPtr shareContext = shared?.EglContext ?? IntPtr.Zero;
+            EGLContext shareContext = shared?.EglContext ?? EGLContext.NoContext;
 
-            IntPtr contextPtr = Egl.CreateContext(eglDisplay, selectedConfig, shareContext, context_attribs.ToArray());
+            EGLContext contextPtr = Egl.CreateContext(eglDisplay, selectedConfig, shareContext, context_attribs.ToArray());
 
-            EGLOpenGLContextHandle context = new EGLOpenGLContextHandle(eglSurface, contextPtr, shared);
+            EGLOpenGLContextHandle context = new EGLOpenGLContextHandle(eglSurface, contextPtr, handle, shared, chosenValues);
 
             ContextDict.Add(contextPtr, context);
+
+            handle.OpenGLContextHandle = context;
 
             return context;
         }
@@ -241,6 +255,11 @@ namespace OpenTK.Platform.Native.EGL
             EGLOpenGLContextHandle context = handle.As<EGLOpenGLContextHandle>(this);
 
             ContextDict.Remove(context.EglContext);
+
+            if (context.WindowHandle != null)
+            {
+                context.WindowHandle.OpenGLContextHandle = null;
+            }
 
             bool success = Egl.DestroyContext(eglDisplay, context.EglContext);
             if (success == false)
@@ -253,6 +272,14 @@ namespace OpenTK.Platform.Native.EGL
             {
                 Logger?.LogError($"Failed to destroy egl surface: {Egl.GetError()}");
             }
+        }
+
+        /// <inheritdoc/>
+        public ContextValues GetContextValues(OpenGLContextHandle handle)
+        {
+            EGLOpenGLContextHandle context = handle.As<EGLOpenGLContextHandle>(this);
+
+            return context.ContextValues;
         }
 
         /// <inheritdoc/>
@@ -271,8 +298,8 @@ namespace OpenTK.Platform.Native.EGL
         /// <inheritdoc/>
         public OpenGLContextHandle? GetCurrentContext()
         {
-            IntPtr ptr = Egl.GetCurrentContext();
-            if (ptr == IntPtr.Zero)
+            EGLContext ptr = Egl.GetCurrentContext();
+            if (ptr == EGLContext.NoContext)
             {
                 return null;
             }
@@ -292,7 +319,7 @@ namespace OpenTK.Platform.Native.EGL
             }
             else
             {
-                return Egl.MakeCurrent(eglDisplay, Egl.NO_SURFACE, Egl.NO_SURFACE, Egl.NO_CONTEXT);
+                return Egl.MakeCurrent(eglDisplay, EGLSurface.NoSurface, EGLSurface.NoSurface, EGLContext.NoContext);
             }
         }
 
@@ -303,33 +330,51 @@ namespace OpenTK.Platform.Native.EGL
             return context.SharedContext;
         }
 
-        private int swapInterval = 1;
-
         /// <inheritdoc/>
         public void SetSwapInterval(int interval)
         {
-            Egl.SwapInterval(eglDisplay, interval);
-            swapInterval = interval;
+            EGLOpenGLContextHandle? context = GetCurrentContext()?.As<EGLOpenGLContextHandle>(this);
+            if (context != null)
+            {
+                Egl.SwapInterval(eglDisplay, interval);
+                context.SwapInterval = interval;
+            }
+            else
+            {
+                Logger?.LogWarning("No context current on the calling thread, can't set swap interval.");
+            }
         }
 
         /// <inheritdoc/>
         public int GetSwapInterval()
         {
-            return swapInterval;
+            EGLOpenGLContextHandle? context = GetCurrentContext()?.As<EGLOpenGLContextHandle>(this);
+            return context?.SwapInterval ?? -1;
         }
 
         /// <inheritdoc/>
         public void SwapBuffers(OpenGLContextHandle handle)
         {
             EGLOpenGLContextHandle context = handle.As<EGLOpenGLContextHandle>(this);
-            Egl.SwapBuffers(eglDisplay, context.EglSurface);
+            bool success = Egl.SwapBuffers(eglDisplay, context.EglSurface);
+            if (success == false)
+            {
+                Logger?.LogWarning($"Unable to swap buffers: {Egl.GetError()}");
+            }
+        }
+
+        /// <inheritdoc/>
+        public WindowHandle? GetWindow(OpenGLContextHandle handle)
+        {
+            EGLOpenGLContextHandle context = handle.As<EGLOpenGLContextHandle>(this);
+            return context.WindowHandle;
         }
 
         /// <summary>
         /// Returns the <c>EGLDisplay</c> used by OpenTK.
         /// </summary>
         /// <returns>The <c>EGLDisplay</c> used by OpenTK.</returns>
-        public IntPtr GetEglDisplay()
+        public EGLDisplay GetEglDisplay()
         {
             return eglDisplay;
         }
@@ -339,9 +384,9 @@ namespace OpenTK.Platform.Native.EGL
         /// </summary>
         /// <param name="handle">A handle to an OpenGL context to get the associated <c>EGLContext</c> from.</param>
         /// <returns>The <c>EGLContext</c> associated with the context handle.</returns>
-        public IntPtr GetEglContext(OpenGLContextHandle handle)
+        public EGLContext GetEglContext(OpenGLContextHandle handle)
         {
-            ANGLEOpenGLContextHandle context = handle.As<ANGLEOpenGLContextHandle>(this);
+            EGLOpenGLContextHandle context = handle.As<EGLOpenGLContextHandle>(this);
 
             return context.EglContext;
         }
@@ -351,9 +396,9 @@ namespace OpenTK.Platform.Native.EGL
         /// </summary>
         /// <param name="handle">A handle to an OpenGL context to get the associated <c>EGLSurface</c> from.</param>
         /// <returns>The <c>EGLSurface</c> associated with the context handle.</returns>
-        public IntPtr GetEglSurface(OpenGLContextHandle handle)
+        public EGLSurface GetEglSurface(OpenGLContextHandle handle)
         {
-            ANGLEOpenGLContextHandle context = handle.As<ANGLEOpenGLContextHandle>(this);
+            EGLOpenGLContextHandle context = handle.As<EGLOpenGLContextHandle>(this);
 
             return context.EglSurface;
         }
