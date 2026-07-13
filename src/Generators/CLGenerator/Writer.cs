@@ -1,22 +1,23 @@
-﻿using System;
+﻿using GeneratorBase;
+using GeneratorBase.Overloading;
+using GeneratorBase.Process;
+using GeneratorBase.Utility;
+using GeneratorBase.Utility.Extensions;
+using System;
+using System.CodeDom.Compiler;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using System.CodeDom.Compiler;
-using GeneratorBase.Utility;
-using GeneratorBase.Utility.Extensions;
-using GeneratorBase;
-using GeneratorBase.Overloading;
-using System.Diagnostics;
 
-namespace GLGenerator
+namespace CLGenerator
 {
     internal static class Writer
     {
         private const string BaseNamespace = "OpenTK";
-        private const string GraphicsNamespace = BaseNamespace + ".Graphics";
+        private const string Namespace = BaseNamespace + ".Compute2";
 
         internal record FileStrings(string FileNamePrefix, string ClassName, string Namespace, string LoaderClass, string LoaderBindingsContext)
         {
@@ -24,21 +25,18 @@ namespace GLGenerator
             public string ApiName => ClassName;
         }
 
-        public static void Write(OutputData data)
+        public static void Write(OutputData data, NameMangler nameMangler)
         {
             // This is quite fragile, no idea if there is an easy way that is "better".
             string outputProjectPath = Path.Combine(
                 Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? throw new NullReferenceException(),
-                "..", "..", "..", "..", "..", GraphicsNamespace);
+                "..", "..", "..", "..", "..", Namespace);
 
             foreach (ApiPointers pointers in data.Pointers)
             {
                 FileStrings strings = pointers.File switch
                 {
-                    ApiFile.GL => new FileStrings("GL", "GL", "OpenGL", "GLLoader", "GLLoader.BindingsContext"),
-                    ApiFile.WGL => new FileStrings("WGL", "Wgl", "Wgl", "WGLLoader", "WGLLoader.BindingsContext"),
-                    ApiFile.GLX => new FileStrings("GLX", "Glx", "Glx", "GLXLoader", "GLXLoader.BindingsContext"),
-                    ApiFile.EGL => new FileStrings("EGL", "Egl", "Egl", "EGLLoader", "EGLLoader.BindingsContext"),
+                    ApiFile.CL => new FileStrings("CL", "CL", "OpenCL", "CLLoader", "CLLoader.BindingsContext"),
                     _ => throw new Exception(),
                 };
 
@@ -50,6 +48,8 @@ namespace GLGenerator
             {
                 WriteNamespace(outputProjectPath, @namespace);
             }
+
+            WriteStructs(outputProjectPath, data.Structs, data.Namespaces[0].Enums, nameMangler);
         }
 
         public static void WriteNamespace(string outputProjectPath, OutputApiData @namespace)
@@ -57,13 +57,7 @@ namespace GLGenerator
             // FIXME: Fix function pointers so we can merge this.
             FileStrings strings = @namespace.Api switch
             {
-                OutputApi.GL => new FileStrings("GL", "GL", "OpenGL", "GLLoader", "GLLoader.BindingsContext"),
-                OutputApi.GLCompat => new FileStrings("GL", "GL", "OpenGL.Compatibility", "GLLoader", "GLLoader.BindingsContext"),
-                OutputApi.GLES1 => new FileStrings("GL", "GL", "OpenGLES1", "GLLoader", "GLLoader.BindingsContext"),
-                OutputApi.GLES2 => new FileStrings("GL", "GL", "OpenGLES2", "GLLoader", "GLLoader.BindingsContext"),
-                OutputApi.WGL => new FileStrings("WGL", "Wgl", "Wgl", "WGLLoader", "WGLLoader.BindingsContext"),
-                OutputApi.GLX => new FileStrings("GLX", "Glx", "Glx", "GLXLoader", "GLXLoader.BindingsContext"),
-                OutputApi.EGL => new FileStrings("EGL", "Egl", "Egl", "EGLLoader", "EGLLoader.BindingsContext"),
+                OutputApi.CL => new FileStrings("CL", "CL", "OpenCL", "CLLoader", "CLLoader.BindingsContext"),
                 _ => throw new Exception($"This is not a valid output API ({@namespace.Api})"),
             };
 
@@ -87,19 +81,17 @@ namespace GLGenerator
             using StreamWriter stream = File.CreateText(Path.Combine(directoryPath, $"{strings.FileNamePrefix}.Pointers.cs"));
             using IndentedTextWriter writer = new IndentedTextWriter(stream);
 
-            // FIXME: using OpenTK.Graphics.OpenGL if we are wgl or glx...
-
             writer.WriteLine($"// This file is auto generated, do not edit.");
             writer.WriteLine("using System;");
             writer.WriteLine("using System.Runtime.InteropServices;");
             writer.WriteLine("using System.Runtime.CompilerServices;");
-            writer.WriteLine("using OpenTK.Graphics;");
+            writer.WriteLine("using OpenTK.Compute2;");
             writer.WriteLine();
-            writer.WriteLine($"namespace {GraphicsNamespace}.{strings.Namespace}");
+            writer.WriteLine($"namespace {Namespace}.{strings.Namespace}");
 
             using (writer.CsScope())
             {
-                writer.WriteLine($"/// <summary>A collection of all function pointers to all OpenGL entry points.</summary>");
+                writer.WriteLine($"/// <summary>A collection of all function pointers to all OpenCL entry points.</summary>");
                 // FIXME: Better class name?
                 writer.WriteLine($"public static unsafe partial class {strings.ClassName}Pointers");
                 using (writer.CsScope())
@@ -245,16 +237,10 @@ namespace GLGenerator
             writer.WriteLine($"// This file is auto generated, do not edit.");
             writer.WriteLine("using System;");
             writer.WriteLine("using System.Runtime.InteropServices;");
-            writer.WriteLine("using OpenTK.Graphics;");
-
-            // FIXME: This is messy.
-            if (strings.Namespace != "OpenGL") writer.WriteLine("using OpenTK.Graphics.OpenGL;");
-            if (strings.Namespace != "Wgl") writer.WriteLine("using OpenTK.Graphics.Wgl;");
-            if (strings.Namespace != "Glx") writer.WriteLine("using OpenTK.Graphics.Glx;");
-            if (strings.Namespace != "Egl") writer.WriteLine("using OpenTK.Graphics.Egl;");
+            writer.WriteLine("using OpenTK.Compute2;");
 
             writer.WriteLine();
-            writer.WriteLine($"namespace {GraphicsNamespace}.{strings.Namespace}");
+            writer.WriteLine($"namespace {Namespace}.{strings.Namespace}");
             using (writer.CsScope())
             {
                 writer.WriteLine($"public static unsafe partial class {strings.ApiName}");
@@ -340,15 +326,10 @@ namespace GLGenerator
             writer.WriteLine("using System.Runtime.InteropServices;");
             writer.WriteLine("using OpenTK.Core.Native;");
             writer.WriteLine("using OpenTK.Mathematics;");
-            writer.WriteLine("using OpenTK.Graphics;");
-
-            // FIXME: This is messy.
-            if (strings.Namespace != "OpenGL") writer.WriteLine("using OpenTK.Graphics.OpenGL;");
-            if (strings.Namespace != "Wgl") writer.WriteLine("using OpenTK.Graphics.Wgl;");
-            if (strings.Namespace != "Glx") writer.WriteLine("using OpenTK.Graphics.Glx;");
+            writer.WriteLine("using OpenTK.Compute2;");
 
             writer.WriteLine();
-            writer.WriteLine($"namespace {GraphicsNamespace}.{strings.Namespace}");
+            writer.WriteLine($"namespace {Namespace}.{strings.Namespace}");
             using (writer.CsScope())
             {
                 // FIXME: Maybe we want to fix this?
@@ -462,6 +443,282 @@ namespace GLGenerator
         }
 
 
+
+        private static void WriteStructs(string directoryPath, List<StructType> structs, List<EnumType> enums, NameMangler nameMangler)
+        {
+            using StreamWriter stream = File.CreateText(Path.Combine(directoryPath, "Structs.cs"));
+            using IndentedTextWriter writer = new IndentedTextWriter(stream);
+            writer.WriteLine("// This file is auto generated, do not edit.");
+            writer.WriteLine("using OpenTK.Mathematics;");
+            writer.WriteLine("using System;");
+            writer.WriteLine("using System.Runtime.CompilerServices;");
+            writer.WriteLine("using System.Runtime.InteropServices;");
+            writer.WriteLine();
+            writer.WriteLine($"namespace {Namespace}");
+            using (writer.CsScope())
+            {
+                writer.WriteLineNoTabs("#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member");
+
+                foreach (StructType @struct in structs)
+                {
+                    writer.Write("/// <summary>");
+                    if (@struct.VersionInfo != null)
+                    {
+                        writer.WriteVersionInfo(@struct.VersionInfo);
+                    }
+                    else
+                    {
+                        ReadOnlySpan<string> exceptedNames = [
+                            ];
+
+                        if (exceptedNames.Contains(@struct.Name) == false)
+                        {
+                            // FIXME: For now no structs have documentation...
+                            //Debug.Assert(false);
+                        }
+                    }
+                    if (@struct.Comment != null)
+                    {
+                        writer.Write($"{NameMangler.XmlEscapeCharacters(NameMangler.MaybeRemoveStart(@struct.Comment, "// "))}");
+                    }
+                    if (@struct.ReferencedBy.Count > 0)
+                    {
+                        if (@struct.Comment != null)
+                            writer.Write("<br/>");
+
+                        writer.Write($"Used by {string.Join(", ", @struct.ReferencedBy.Take(3).Select(c => $"<see cref=\"CL.{c.Name}\"/>"))}");
+                        if (@struct.ReferencedBy.Count > 3)
+                        {
+                            writer.Write(", ...");
+                        }
+                    }
+                    writer.WriteLine("</summary>");
+
+                    // FIXME: Make sure to not do name mangling?
+                    writer.WriteLine($"/// <remarks><see href=\"FIXME: url to struct docs {@struct.Name}.html\" /></remarks>");
+
+                    WriteStruct(writer, @struct, enums, nameMangler);
+                }
+
+                writer.WriteLineNoTabs("#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member");
+            }
+        }
+
+        private static void WriteStruct(IndentedTextWriter writer, StructType @struct, List<EnumType> enums, NameMangler nameMangler)
+        {
+            if (@struct.Union)
+            {
+                writer.WriteLine($"[StructLayout(LayoutKind.Explicit)]");
+            }
+
+            writer.WriteLine($"public unsafe struct {@struct.Name}");
+            using (writer.CsScope())
+            {
+                int bitfieldCount = 0;
+                int underlyingBitwidth = -1;
+                int bitsLeft = -1;
+
+                bool canWriteSimpleCtor = (@struct.Union == false);
+                foreach (StructMember member in @struct.Members)
+                {
+                    static void WriteMemeberDocs(IndentedTextWriter writer, StructMember member)
+                    {
+                        writer.Write("/// <summary>");
+                        if (member.ExternSync.Type != ExternSyncType.None)
+                        {
+                            writer.Write($"[extern sync: {member.ExternSync}] ");
+                        }
+                        if (string.IsNullOrEmpty(member.Comment) == false)
+                        {
+                            writer.Write(NameMangler.XmlEscapeCharacters(member.Comment));
+                        }
+                        writer.WriteLine("</summary>");
+                    }
+
+                    // FIXME: What do we do with these?
+                    if (member.StrongType is CSNotSupportedType notSupported)
+                    {
+                        // We can't have unsupported types in our ctor
+                        canWriteSimpleCtor &= false;
+
+                        Console.WriteLine($"Unsupported type '{notSupported.UnsupportedType}' in struct {@struct.Name}!");
+                        writer.WriteLine($"// Unsupported type for field {member.Name}");
+                        continue;
+                    }
+                    else if (member.StrongType is CSFixedSizeArray csFixedSizeArray)
+                    {
+                        // We can't have fixed sized arrays in our ctor
+                        canWriteSimpleCtor &= false;
+
+                        WriteInlineArray(writer, @struct.Union, member, csFixedSizeArray, 1, nameMangler);
+
+                        static void WriteInlineArray(IndentedTextWriter writer, bool union, StructMember member, CSFixedSizeArray csFixedSizeArray, int level, NameMangler nameMangler)
+                        {
+                            // FIXME: Reference the constant instead of just emitting a magic number!
+                            if (csFixedSizeArray.BaseType is CSFixedSizeArray csFixedSizeArray2)
+                            {
+                                //FIXME: Figure out the name recursion 
+                                string helperTypeName = $"{member.Name}InlineArray{level++}";
+                                writer.WriteLine($"[InlineArray({csFixedSizeArray.Size})]");
+                                writer.WriteLine($"public struct {helperTypeName}");
+                                using (writer.CsScope())
+                                {
+                                    WriteInlineArray(writer, false, member, csFixedSizeArray2, level, nameMangler);
+                                    //writer.WriteLine($"public {member.Name}InlineArray{level} element;");
+                                }
+
+                                if (level == 1)
+                                {
+                                    WriteMemeberDocs(writer, member);
+                                }
+                                if (union)
+                                {
+                                    writer.WriteLine($"[FieldOffset(0)]");
+                                }
+                                writer.WriteLine($"public {helperTypeName} {member.Name};");
+                            }
+                            else if (csFixedSizeArray.BaseType is not CSPrimitive csPrimitive || csPrimitive.TypeName == "IntPtr" || level > 1)
+                            {
+                                string helperTypeName = $"{member.Name}InlineArray{level}";
+                                writer.WriteLine($"[InlineArray({csFixedSizeArray.Size})]");
+                                writer.WriteLine($"public struct {helperTypeName}");
+                                using (writer.CsScope())
+                                {
+                                    writer.WriteLine($"public {csFixedSizeArray.BaseType.ToCSString()} element;");
+                                }
+
+                                if (level == 1)
+                                {
+                                    WriteMemeberDocs(writer, member);
+                                }
+                                if (union)
+                                {
+                                    writer.WriteLine($"[FieldOffset(0)]");
+                                }
+                                writer.WriteLine($"public {helperTypeName} {member.Name};");
+                            }
+                            else
+                            {
+                                if (level == 1)
+                                {
+                                    WriteMemeberDocs(writer, member);
+                                }
+                                if (union)
+                                {
+                                    writer.WriteLine($"[FieldOffset(0)]");
+                                }
+                                writer.WriteLine($"public fixed {csFixedSizeArray.BaseType.ToCSString()} {nameMangler.MangleStructMemberName(member.Name)}[{csFixedSizeArray.Size}];");
+                            }
+                        }
+                    }
+                    else if (member.StrongType is CSBitfield csBitfield)
+                    {
+                        // FIXME: For now we disable ctors for structs with bitfields
+                        canWriteSimpleCtor &= false;
+
+                        if (csBitfield.UnderlyingType is IBitwidthCSType bitwidthType)
+                        {
+                            if (bitwidthType.BitWidth == null)
+                            {
+                                Debug.Assert(false, $"No valid bitwidth for: {bitwidthType}");
+                            }
+                            else
+                            {
+                                int underlyingWidth = bitwidthType.BitWidth.Value;
+                                int actualWidth = csBitfield.BitWidth;
+
+                                if (underlyingWidth != underlyingBitwidth || bitsLeft < actualWidth)
+                                {
+                                    writer.WriteLine($"private {csBitfield.UnderlyingType.ToCSString()} _bitfield{bitfieldCount++};");
+                                    underlyingBitwidth = underlyingWidth;
+                                    bitsLeft = underlyingWidth;
+                                }
+
+                                Debug.Assert(underlyingBitwidth > 0);
+                                Debug.Assert(bitsLeft > 0);
+
+                                int size = actualWidth;
+                                int offset = underlyingBitwidth - bitsLeft;
+                                WriteMemeberDocs(writer, member);
+                                writer.WriteLine($"public {csBitfield.UnderlyingType.ToCSString()} {nameMangler.MangleStructMemberName(member.Name)}");
+                                using (writer.CsScope())
+                                {
+                                    // FIXME: Do only 1u if the underlying type is unsigned...?
+                                    writer.WriteLine($"get => ({csBitfield.UnderlyingType.ToCSString()})((_bitfield{bitfieldCount - 1} >> {offset}) & 0x{(1u << size) - 1u:X}u);");
+                                    BaseCSType targetType = csBitfield.UnderlyingType;
+                                    if (targetType is CSEnum csBitfieldEnum)
+                                    {
+                                        targetType = csBitfieldEnum.PrimitiveType;
+                                    }
+                                    writer.WriteLine($"set => _bitfield{bitfieldCount - 1} = (_bitfield{bitfieldCount - 1} & ~(0x{(1u << size) - 1u:X}u << {offset})) | (((({targetType.ToCSString()})value) & 0x{(1u << size) - 1u:X}u) << {offset});");
+
+                                }
+                                bitsLeft -= actualWidth;
+                            }
+                        }
+                        else
+                        {
+                            Debug.Assert(false, $"Not bitwidth type: {csBitfield.UnderlyingType}");
+                        }
+                    }
+                    else
+                    {
+                        WriteMemeberDocs(writer, member);
+                        if (@struct.Union)
+                        {
+                            writer.WriteLine($"[FieldOffset(0)]");
+                        }
+                        writer.WriteLine($"public {member.StrongType!.ToCSString()} {nameMangler.MangleStructMemberName(member.Name)};");
+                    }
+                }
+
+                // Write empty ctor so our default values can apply.
+                {
+                    writer.WriteLine($"public {@struct.Name}() {{ }}");
+                }
+
+                if (canWriteSimpleCtor && @struct.Members.Count > 0)
+                {
+                    StringBuilder signature = new StringBuilder();
+                    foreach (StructMember member in @struct.Members)
+                    {
+                        signature.Append($"{member.StrongType!.ToCSString()} {nameMangler.MangleStructMemberName(member.Name)}, ");
+                    }
+                    if (@struct.Members.Count > 0)
+                    {
+                        signature.Length -= 2;
+                    }
+
+                    writer.WriteLine($"public {@struct.Name}({signature})");
+                    using (writer.CsScope())
+                    {
+                        foreach (StructMember member in @struct.Members)
+                        {
+                            string memberName = nameMangler.MangleStructMemberName(member.Name);
+                            writer.WriteLine($"this.{memberName} = {memberName};");
+                        }
+                    }
+                }
+            }
+
+            static EnumMember? FindEnumMember(List<EnumType> enums, string memberName)
+            {
+                foreach (EnumType @enum in enums)
+                {
+                    foreach (EnumMember member in @enum.Members)
+                    {
+                        if (member.Name == memberName)
+                        {
+                            return member;
+                        }
+                    }
+                }
+
+                return null;
+            }
+        }
+
+
         private static void WriteDocumentation(IndentedTextWriter writer, Function function, FunctionDocumentation documentation)
         {
             writer.Write("/// <summary> ");
@@ -502,7 +759,7 @@ namespace GLGenerator
             writer.WriteLine($"// This file is auto generated, do not edit.");
             writer.WriteLine("using System;");
             writer.WriteLine();
-            writer.WriteLine($"namespace {GraphicsNamespace}.{strings.Namespace}");
+            writer.WriteLine($"namespace {Namespace}.{strings.Namespace}");
             using (writer.CsScope())
             {
                 writer.WriteLineNoTabs("#pragma warning disable CA1069 // Enums values should not be duplicated");

@@ -1,0 +1,31 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <TargetFrameworks>net10.0</TargetFrameworks>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Deterministic>true</Deterministic>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>$(OpenTKSolutionRoot)/OpenTK.snk</AssemblyOriginatorKeyFile>
+    <PackageIcon>images/opentk-blue-hexagon.png</PackageIcon>
+    <PackageReadmeFile>docs/README.md</PackageReadmeFile>
+    <IsTrimmable>true</IsTrimmable>
+    <Description>OpenCL bindings for dotnet.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="$(OpenTKSolutionRoot)\.github\opentk-blue-hexagon.png" Pack="true" PackagePath="images" Visible="false" />
+    <None Include="README.md" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../OpenTK.Core/OpenTK.Core.csproj" />
+    <ProjectReference Include="../OpenTK.Mathematics/OpenTK.Mathematics.csproj" />
+  </ItemGroup>
+  
+  <Import Project="$(OpenTKSolutionRoot)\props\nuget-common.props" />
+  <!-- 
+  We skip stylecop for OpenTK.Compute as there is a bunch of generated code that would trigger tons of warnings. 
+  - Noggin_bops 2026-07-13
+  -->
+  <!--<Import Project="$(OpenTKSolutionRoot)\props\stylecop.props" />-->
+</Project>

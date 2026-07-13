@@ -25,7 +25,7 @@ namespace GLGenerator.Parsing
             List<Feature> features = ParseFeatures(xdocument.Root, ignoreFunctions);
             List<Extension> extensions = ParseExtensions(xdocument.Root, nameMangler, ignoreFunctions);
 
-            return new SpecificationFile(currentFile, functions, enums, features, extensions);
+            return new SpecificationFile(currentFile, functions, enums, [], features, extensions);
         }
 
         private static List<Function> ParseCommands(XElement input, NameMangler nameMangler, ApiFile currentFile, List<string> ignoreFunctions)
