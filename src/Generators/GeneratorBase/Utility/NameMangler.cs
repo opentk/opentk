@@ -12,6 +12,8 @@ namespace GeneratorBase.Utility
         public List<string> ExtensionPrefixes { get; init; }
         public HashSet<string> ExtensionsWithoutPrefixes { get; init; }
         public string FunctionPrefix { get; init; }
+        public List<string> EnumGroupPrefixes { get; init; }
+        public bool MangleUnderscoresInEnumGroupNames { get; init; }
         public List<string> EnumPrefixes { get; init; }
         public HashSet<string> FunctionsWithoutPrefix { get; init; }
         public HashSet<string> EnumsWithoutPrefix { get; init; }
@@ -26,6 +28,7 @@ namespace GeneratorBase.Utility
             ExtensionPrefixes = [];
             ExtensionsWithoutPrefixes = [];
             FunctionPrefix = "";
+            EnumGroupPrefixes = [];
             EnumPrefixes = [];
             FunctionsWithoutPrefix = [];
             EnumsWithoutPrefix = [];
@@ -153,6 +156,19 @@ namespace GeneratorBase.Utility
             if (Settings.EnumGroupNameTranslationTable.TryGetValue(name, out string? translated))
             {
                 return translated;
+            }
+
+            foreach (var prefix in Settings.EnumGroupPrefixes)
+            {
+                if (name.StartsWith(prefix))
+                {
+                    name = name[prefix.Length..];
+                    if (Settings.MangleUnderscoresInEnumGroupNames)
+                    {
+                        name = MangleCapsUnderscoreName(name);
+                    }
+                    return name;
+                }
             }
 
             return name;

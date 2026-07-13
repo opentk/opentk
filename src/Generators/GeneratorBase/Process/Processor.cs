@@ -521,6 +521,7 @@ namespace GeneratorBase.Process
                 IsFlags = false,
                 Members = [],
 
+                UnderlyingSize = EnumSize.Uint32,
                 StrongUnderlyingType = CSPrimitive.Uint(true),
             };
 
@@ -599,6 +600,7 @@ namespace GeneratorBase.Process
                     ReferencedBy = [],
                     FunctionsUsingEnumGroup = [],
 
+                    UnderlyingSize = size,
                     StrongUnderlyingType = strongType,
                 };
 

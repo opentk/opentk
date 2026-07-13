@@ -34,6 +34,7 @@
     <Project Path="tests/LocalTestProject/LocalTestProject.csproj" />
     <Project Path="tests/MacOSTestProject/MacOSTestProject.csproj" />
     <Project Path="tests/OpenALTest/OpenALTest.csproj" />
+    <Project Path="tests/OpenCLTest/OpenCLTest.csproj" Id="fa406960-08c6-4245-80f9-36afb4dc1b85" />
     <Project Path="tests/OpenTK.Backends.Tests/OpenTK.Backends.Tests.csproj" />
     <Project Path="tests/OpenTK.Benchmarks/OpenTK.Benchmarks.csproj" />
     <Project Path="tests/OpenTK.Platform.Tests/OpenTK.Platform.Tests.csproj" />

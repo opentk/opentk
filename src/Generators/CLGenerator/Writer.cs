@@ -792,25 +792,33 @@ namespace CLGenerator
                 }
 
                 if (group.IsFlags) writer.WriteLine($"[Flags]");
-                writer.WriteLine($"public enum {group.Name} : uint");
+                writer.WriteLine($"public enum {group.Name} : {group.StrongUnderlyingType!.ToCSString()}");
                 using (writer.CsScope())
                 {
                     foreach (var member in group.Members)
                     {
                         WriteEnumMemberDocumentation(writer, member);
 
-                        // HACK: Some enums have a value of -1, and because
-                        // we don't know the bitwidth of the enum here we can't cast
-                        // the value correctly. This hack fixes this for -1 but doesn't
-                        // work for any other negative numbers...
-                        // - Noggin_bops 2024-11-11
-                        if (member.Value == ulong.MaxValue)
+                        switch (group.UnderlyingSize)
                         {
-                            writer.WriteLine($"{member.Name} = unchecked((uint)-1),");
-                        }
-                        else
-                        {
-                            writer.WriteLine($"{member.Name} = {member.Value},");
+                            case EnumSize.Int32:
+                                writer.WriteLine($"{member.Name} = {(int)member.Value},");
+                                break;
+                            case EnumSize.Uint32:
+                                writer.WriteLine($"{member.Name} = {(uint)member.Value},");
+                                break;
+                            case EnumSize.Int64:
+                                writer.WriteLine($"{member.Name} = {(long)member.Value},");
+                                break;
+                            case EnumSize.Uint64:
+                                writer.WriteLine($"{member.Name} = {(ulong)member.Value},");
+                                break;
+                            case EnumSize.Float32:
+                            case EnumSize.Float64:
+                                throw new NotImplementedException("Float enums are not implemented...");
+                            case EnumSize.Invalid:
+                            default:
+                                throw new Exception();
                         }
                     }
                 }

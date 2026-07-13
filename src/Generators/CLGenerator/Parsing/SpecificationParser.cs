@@ -35,6 +35,7 @@ namespace CLGenerator.Parsing
 
             // FIXME: Parse #defines like in vulkan.
             TypeData types = ParseTypes(xdocument.Root, nameMangler);
+            
 
             // FIXME: Parse constants.
 
@@ -44,14 +45,15 @@ namespace CLGenerator.Parsing
             List<Feature> features = ParseFeatures(xdocument.Root, currentFile, ignoreFunctions);
             List<Extension> extensions = ParseExtensions(xdocument.Root, currentFile, nameMangler, ignoreFunctions);
 
-            ResolveFunctionTypes(functions, types);
-            ResolveStructMemberTypes(types.Structs, types);
+            var typeMap = BuildTypeMap(types, enums);
+            ResolveFunctionTypes(functions, typeMap);
+            ResolveStructMemberTypes(types.Structs, typeMap);
 
             // FIXME: Add type map here...
             return new SpecificationFile(currentFile, functions, enums, types.Structs, features, extensions);
         }
 
-        private static void ResolveFunctionTypes(List<Function> functions, TypeData typeData)
+        private static Dictionary<string, TypeEntry> BuildTypeMap(TypeData typeData, List<EnumEntry> enums)
         {
             Dictionary<string, TypeEntry> typeMap = [];
             foreach (TypeDefine typedef in typeData.Typedefs)
@@ -60,9 +62,75 @@ namespace CLGenerator.Parsing
             }
             foreach (StructType @struct in typeData.Structs)
             {
-                typeMap.Add(@struct.Name, new TypeEntry(new CSStruct(@struct.Name, true), @struct));
+                typeMap.Add(@struct.Name, new TypeEntry(new CSStruct(@struct.Name, false), @struct));
             }
 
+            foreach (EnumEntry enumEntry in enums)
+            {
+                Debug.Assert(enumEntry.Groups.Length <= 1);
+                if (enumEntry.Groups.Length > 0)
+                {
+                    GroupRef group = enumEntry.Groups[0];
+
+                    if (typeMap.TryGetValue(group.OriginalName, out TypeEntry? underlyingTypeEntry))
+                    {
+                        BaseCSType underlyingType = underlyingTypeEntry.CSType;
+                        if (underlyingType is CSPrimitive primitive)
+                        {
+                            // FIXME: We want to update the IReferable to be the enum group itself, but that is not created for a long time.
+                            typeMap[group.OriginalName] = underlyingTypeEntry with { CSType = new CSEnum(group.TranslatedName, primitive, false) };
+                            switch (primitive.TypeName)
+                            {
+                                case "int":
+                                    enumEntry.UnderlyingSize = EnumSize.Int32;
+                                    break;
+                                case "uint":
+                                    enumEntry.UnderlyingSize = EnumSize.Uint32;
+                                    break;
+                                case "long":
+                                    enumEntry.UnderlyingSize = EnumSize.Int64;
+                                    break;
+                                case "ulong":
+                                    enumEntry.UnderlyingSize = EnumSize.Uint64;
+                                    break;
+                                default:
+                                    throw new Exception($"Unsupported underlying type: {primitive}");
+                            }
+                        }
+                        else if (underlyingType is CSEnum enumType)
+                        {
+                            switch (enumType.PrimitiveType.TypeName)
+                            {
+                                case "int":
+                                    enumEntry.UnderlyingSize = EnumSize.Int32;
+                                    break;
+                                case "uint":
+                                    enumEntry.UnderlyingSize = EnumSize.Uint32;
+                                    break;
+                                case "long":
+                                    enumEntry.UnderlyingSize = EnumSize.Int64;
+                                    break;
+                                case "ulong":
+                                    enumEntry.UnderlyingSize = EnumSize.Uint64;
+                                    break;
+                                default:
+                                    throw new Exception($"Unsupported underlying type: {enumType.PrimitiveType}");
+                            }
+                        }
+                        else throw new Exception("The underlying type of enums needs to be a CSPrimitive or CSEnum");
+                    }
+                    else
+                    {
+                        Logger.Warning($"Enum group '{group.TranslatedName}' doesn't have a known underlying type.");
+                    }
+                }
+            }
+
+            return typeMap;
+        }
+
+        private static void ResolveFunctionTypes(List<Function> functions, Dictionary<string, TypeEntry> typeMap)
+        {
             foreach (Function function in functions)
             {
                 function.StrongReturnType = ParseType(function.ReturnType, typeMap, [], out IReferable? reference);
@@ -76,18 +144,8 @@ namespace CLGenerator.Parsing
             }
         }
 
-        private static void ResolveStructMemberTypes(List<StructType> structs, TypeData typeData)
+        private static void ResolveStructMemberTypes(List<StructType> structs, Dictionary<string, TypeEntry> typeMap)
         {
-            Dictionary<string, TypeEntry> typeMap = [];
-            foreach (TypeDefine typedef in typeData.Typedefs)
-            {
-                typeMap.Add(typedef.Name, new TypeEntry(typedef.StrongType, typedef));
-            }
-            foreach (StructType @struct in typeData.Structs)
-            {
-                typeMap.Add(@struct.Name, new TypeEntry(new CSStruct(@struct.Name, true), @struct));
-            }
-
             // FIXME: Parse the constants properly...
             Dictionary<string, Constant> constMap = new Dictionary<string, Constant>()
             {
@@ -399,22 +457,24 @@ namespace CLGenerator.Parsing
 
             // cl.xml doesn't do typedefs in order, so we can't resolve them linearly.
             // So instead we need to do this non-linearly.
+
+            // FIXME: Setting const to false here is not necessarily correct as that depends on how these types are referenced...
             Dictionary<string, BaseCSType> typeMap = new Dictionary<string, BaseCSType>(typedefs.Count)
             {
-                { "int", CSPrimitive.Int(true) },
-                { "unsigned int", CSPrimitive.Uint(true) },
-                { "double", CSPrimitive.Double(true) },
-                { "float", CSPrimitive.Float(true) },
-                { "int16_t", CSPrimitive.Short(true) },
-                { "int32_t", CSPrimitive.Int(true) },
-                { "int64_t", CSPrimitive.Long(true) },
-                { "int8_t", CSPrimitive.Sbyte(true) },
-                { "uint8_t", CSPrimitive.Byte(true) },
-                { "uint16_t", CSPrimitive.Ushort(true) },
-                { "uint32_t", CSPrimitive.Uint(true) },
-                { "uint64_t", CSPrimitive.Ulong(true) },
-                { "intptr_t", CSPrimitive.IntPtr(true) },
-                { "void", new CSVoid(true) },
+                { "int", CSPrimitive.Int(false) },
+                { "unsigned int", CSPrimitive.Uint(false) },
+                { "double", CSPrimitive.Double(false) },
+                { "float", CSPrimitive.Float(false) },
+                { "int16_t", CSPrimitive.Short(false) },
+                { "int32_t", CSPrimitive.Int(false) },
+                { "int64_t", CSPrimitive.Long(false) },
+                { "int8_t", CSPrimitive.Sbyte(false) },
+                { "uint8_t", CSPrimitive.Byte(false) },
+                { "uint16_t", CSPrimitive.Ushort(false) },
+                { "uint32_t", CSPrimitive.Uint(false) },
+                { "uint64_t", CSPrimitive.Ulong(false) },
+                { "intptr_t", CSPrimitive.IntPtr(false) },
+                { "void", new CSVoid(false) },
             };
             List<TypeDefine> unresolvedTypes = new List<TypeDefine>(typedefs);
             bool resolvedAnyTypeThisIteration;
@@ -796,8 +856,16 @@ namespace CLGenerator.Parsing
                     continue;
                 }
 
-                GroupRef[] parentGroups = ParseGroups(enums.Attribute("group")?.Value, currentFile, nameMangler);
-
+                GroupRef[] groups;
+                if (enumsTagName.Contains('.') == false)
+                    groups = [GroupRefFromString(enumsTagName, currentFile, nameMangler)];
+                else if (enumsTagName.StartsWith("ErrorCodes"))
+                    groups = [GroupRefFromString("ErrorCodes", currentFile, nameMangler)];
+                else
+                {
+                    groups = [];
+                }
+                
                 string? vendor = enums.Attribute("vendor")?.Value;
 
                 bool isFlags = IsEnumTypeBitmask(enums.Attribute("type")?.Value);
@@ -846,14 +914,7 @@ namespace CLGenerator.Parsing
                         throw new Exception();
                     }
 
-
-
-
                     string? alias = @enum.Attribute("alias")?.Value;
-
-                    GroupRef[] groups = ParseGroups(@enum.Attribute("group")?.Value, currentFile, nameMangler);
-                    // Mark this with all of the groups from the parent tag.
-                    groups = ArrayUtil.MergeDeduplicate(groups, parentGroups);
 
                     string? enumComment = @enum.Attribute("comment")?.Value;
 
@@ -889,7 +950,7 @@ namespace CLGenerator.Parsing
                         }
                     }
 
-                    enumsEntries.Add(new EnumEntry(nameMangler.MangleEnumName(name), name, value, enumApi, isFlags, vendor, alias, groups, size));
+                    enumsEntries.Add(new EnumEntry(nameMangler.MangleEnumName(name), name, value, enumApi, isFlags, vendor, alias, groups) { UnderlyingSize = size });
                 }
             }
 
@@ -931,48 +992,10 @@ namespace CLGenerator.Parsing
             }
         }
 
-        internal static GroupRef[] ParseGroups(string? groups, ApiFile currentFile, NameMangler nameMangler)
-        {
-            if (groups == null) return [];
-
-            string[] rawGroups = groups.Split(',', StringSplitOptions.RemoveEmptyEntries) ?? [];
-            List<GroupRef> groupRefs = new List<GroupRef>(rawGroups.Length);
-            for (int i = 0; i < rawGroups.Length; i++)
-            {
-                GroupRef group = GroupRefFromString(rawGroups[i], currentFile, nameMangler);
-                // FIXME: Make this a per file "ignorable" group...
-                if (group.OriginalName == "SpecialNumbers")
-                    continue;
-                groupRefs.Add(group);
-            }
-
-            return groupRefs.ToArray();
-        }
-
         internal static GroupRef GroupRefFromString(string group, ApiFile currentFile, NameMangler nameMangler)
         {
-            string name;
-            ApiFile file;
-            if (group.StartsWith("gl::"))
-            {
-                name = NameMangler.RemoveStart(group, "gl::");
-                file = ApiFile.GL;
-            }
-            else if (group.StartsWith("wgl::"))
-            {
-                name = NameMangler.RemoveStart(group, "wgl::");
-                file = ApiFile.WGL;
-            }
-            else if (group.StartsWith("glx::"))
-            {
-                name = NameMangler.RemoveStart(group, "glx::");
-                file = ApiFile.GLX;
-            }
-            else
-            {
-                name = group;
-                file = currentFile;
-            }
+            string name = group;
+            ApiFile file = currentFile;
 
             string translatedName = nameMangler.TranslateEnumGroupName(name);
 

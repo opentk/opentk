@@ -663,7 +663,7 @@ namespace GLGenerator.Parsing
                         }
                     }
 
-                    enumsEntries.Add(new EnumEntry(nameMangler.MangleEnumName(name), name, value, enumApi, isFlags, vendor, alias, groups, size));
+                    enumsEntries.Add(new EnumEntry(nameMangler.MangleEnumName(name), name, value, enumApi, isFlags, vendor, alias, groups) { UnderlyingSize = size });
                 }
             }
 

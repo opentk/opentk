@@ -6,6 +6,7 @@ using GeneratorBase.Utility;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
@@ -39,6 +40,11 @@ namespace CLGenerator
                         EnumPrefixes = new List<string> { "CL_" },
                         ExtensionPrefixes = ["cl_"],
                         EnumAcronymsToKeepCapitalization = ["1D", "2D", "3dfx", "3D"],
+                        EnumGroupPrefixes = ["cl_"],
+                        MangleUnderscoresInEnumGroupNames = true,
+                        EnumGroupNameTranslationTable = new Dictionary<string, string> {
+                            { "clCommandExecutionStatus", "CommandExecutionStatus" },
+                        }
                     };
 
                     // Reading the gl.xml file and parsing it into data structures.

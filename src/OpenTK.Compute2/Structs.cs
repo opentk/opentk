@@ -213,9 +213,9 @@ namespace OpenTK.Compute2
     public unsafe struct cl_queue_family_properties_intel
     {
         /// <summary></summary>
-        public ulong properties;
+        public CommandQueueProperties properties;
         /// <summary></summary>
-        public ulong capabilities;
+        public CommandQueueCapabilitiesIntel capabilities;
         /// <summary></summary>
         public uint count;
         [InlineArray(64)]
@@ -253,19 +253,19 @@ namespace OpenTK.Compute2
     public unsafe struct cl_device_integer_dot_product_acceleration_properties
     {
         /// <summary></summary>
-        public uint signed_accelerated;
+        public Bool signed_accelerated;
         /// <summary></summary>
-        public uint unsigned_accelerated;
+        public Bool unsigned_accelerated;
         /// <summary></summary>
-        public uint mixed_signedness_accelerated;
+        public Bool mixed_signedness_accelerated;
         /// <summary></summary>
-        public uint accumulating_saturating_signed_accelerated;
+        public Bool accumulating_saturating_signed_accelerated;
         /// <summary></summary>
-        public uint accumulating_saturating_unsigned_accelerated;
+        public Bool accumulating_saturating_unsigned_accelerated;
         /// <summary></summary>
-        public uint accumulating_saturating_mixed_signedness_accelerated;
+        public Bool accumulating_saturating_mixed_signedness_accelerated;
         public cl_device_integer_dot_product_acceleration_properties() { }
-        public cl_device_integer_dot_product_acceleration_properties(uint signed_accelerated, uint unsigned_accelerated, uint mixed_signedness_accelerated, uint accumulating_saturating_signed_accelerated, uint accumulating_saturating_unsigned_accelerated, uint accumulating_saturating_mixed_signedness_accelerated)
+        public cl_device_integer_dot_product_acceleration_properties(Bool signed_accelerated, Bool unsigned_accelerated, Bool mixed_signedness_accelerated, Bool accumulating_saturating_signed_accelerated, Bool accumulating_saturating_unsigned_accelerated, Bool accumulating_saturating_mixed_signedness_accelerated)
         {
             this.signed_accelerated = signed_accelerated;
             this.unsigned_accelerated = unsigned_accelerated;
@@ -280,19 +280,19 @@ namespace OpenTK.Compute2
     public unsafe struct cl_device_integer_dot_product_acceleration_properties_khr
     {
         /// <summary></summary>
-        public uint signed_accelerated;
+        public Bool signed_accelerated;
         /// <summary></summary>
-        public uint unsigned_accelerated;
+        public Bool unsigned_accelerated;
         /// <summary></summary>
-        public uint mixed_signedness_accelerated;
+        public Bool mixed_signedness_accelerated;
         /// <summary></summary>
-        public uint accumulating_saturating_signed_accelerated;
+        public Bool accumulating_saturating_signed_accelerated;
         /// <summary></summary>
-        public uint accumulating_saturating_unsigned_accelerated;
+        public Bool accumulating_saturating_unsigned_accelerated;
         /// <summary></summary>
-        public uint accumulating_saturating_mixed_signedness_accelerated;
+        public Bool accumulating_saturating_mixed_signedness_accelerated;
         public cl_device_integer_dot_product_acceleration_properties_khr() { }
-        public cl_device_integer_dot_product_acceleration_properties_khr(uint signed_accelerated, uint unsigned_accelerated, uint mixed_signedness_accelerated, uint accumulating_saturating_signed_accelerated, uint accumulating_saturating_unsigned_accelerated, uint accumulating_saturating_mixed_signedness_accelerated)
+        public cl_device_integer_dot_product_acceleration_properties_khr(Bool signed_accelerated, Bool unsigned_accelerated, Bool mixed_signedness_accelerated, Bool accumulating_saturating_signed_accelerated, Bool accumulating_saturating_unsigned_accelerated, Bool accumulating_saturating_mixed_signedness_accelerated)
         {
             this.signed_accelerated = signed_accelerated;
             this.unsigned_accelerated = unsigned_accelerated;

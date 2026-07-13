@@ -341,6 +341,7 @@ namespace GeneratorBase
         // Vulkan
         public string? Extension { get; init; }
 
+        public EnumSize UnderlyingSize { get; set; }
         public BaseCSType? StrongUnderlyingType { get; set; }
         public VersionInfo? VersionInfo { get; set; }
 
@@ -395,10 +396,10 @@ namespace GeneratorBase
         bool IsFlags,
         string? Vendor,
         string? Alias,
-        GroupRef[] Groups,
-        EnumSize UnderlyingSize)
+        GroupRef[] Groups)
     {
         public bool IsCrossReferenced { get; init; }
+        public EnumSize UnderlyingSize { get; set; }
         public VersionInfo? VersionInfo { get; set; }
     }
 

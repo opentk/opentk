@@ -17,13 +17,13 @@ namespace OpenTK.Compute2.OpenCL
         public static int CompileProgram(IntPtr program, uint num_devices, IntPtr* device_list, byte* options, uint num_input_headers, IntPtr* input_headers, byte** header_include_names, delegate* unmanaged[Cdecl]<IntPtr, void*, void> pfn_notify, void* user_data) => CLPointers.clCompileProgram_Lazy(program, num_devices, device_list, options, num_input_headers, input_headers, header_include_names, pfn_notify, user_data);
         
         /// <summary> <b>[requires: v1.0]</b> <b>[entry point: <c>clCreateBuffer</c>]</b><br/>  </summary>
-        public static IntPtr CreateBuffer(IntPtr context, ulong flags, nuint size, void* host_ptr, int* errcode_ret) => CLPointers.clCreateBuffer_Lazy(context, flags, size, host_ptr, errcode_ret);
+        public static IntPtr CreateBuffer(IntPtr context, MemFlags flags, nuint size, void* host_ptr, int* errcode_ret) => CLPointers.clCreateBuffer_Lazy(context, (ulong)flags, size, host_ptr, errcode_ret);
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>clCreateBufferWithProperties</c>]</b><br/>  </summary>
-        public static IntPtr CreateBufferWithProperties(IntPtr context, ulong* properties, ulong flags, nuint size, void* host_ptr, int* errcode_ret) => CLPointers.clCreateBufferWithProperties_Lazy(context, properties, flags, size, host_ptr, errcode_ret);
+        public static IntPtr CreateBufferWithProperties(IntPtr context, ulong* properties, MemFlags flags, nuint size, void* host_ptr, int* errcode_ret) => CLPointers.clCreateBufferWithProperties_Lazy(context, properties, (ulong)flags, size, host_ptr, errcode_ret);
         
         /// <summary> <b>[requires: v1.0]</b> <b>[entry point: <c>clCreateCommandQueue</c>]</b><br/>  </summary>
-        public static IntPtr CreateCommandQueue(IntPtr context, IntPtr device, ulong properties, int* errcode_ret) => CLPointers.clCreateCommandQueue_Lazy(context, device, properties, errcode_ret);
+        public static IntPtr CreateCommandQueue(IntPtr context, IntPtr device, CommandQueueProperties properties, int* errcode_ret) => CLPointers.clCreateCommandQueue_Lazy(context, device, (ulong)properties, errcode_ret);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>clCreateCommandQueueWithProperties</c>]</b><br/>  </summary>
         public static IntPtr CreateCommandQueueWithProperties(IntPtr context, IntPtr device, ulong* properties, int* errcode_ret) => CLPointers.clCreateCommandQueueWithProperties_Lazy(context, device, properties, errcode_ret);
@@ -32,19 +32,19 @@ namespace OpenTK.Compute2.OpenCL
         public static IntPtr CreateContext(IntPtr* properties, uint num_devices, IntPtr* devices, delegate* unmanaged[Cdecl]<byte*, void*, nuint, void*, void> pfn_notify, void* user_data, int* errcode_ret) => CLPointers.clCreateContext_Lazy(properties, num_devices, devices, pfn_notify, user_data, errcode_ret);
         
         /// <summary> <b>[requires: v1.0]</b> <b>[entry point: <c>clCreateContextFromType</c>]</b><br/>  </summary>
-        public static IntPtr CreateContextFromType(IntPtr* properties, ulong device_type, delegate* unmanaged[Cdecl]<byte*, void*, nuint, void*, void> pfn_notify, void* user_data, int* errcode_ret) => CLPointers.clCreateContextFromType_Lazy(properties, device_type, pfn_notify, user_data, errcode_ret);
+        public static IntPtr CreateContextFromType(IntPtr* properties, DeviceType device_type, delegate* unmanaged[Cdecl]<byte*, void*, nuint, void*, void> pfn_notify, void* user_data, int* errcode_ret) => CLPointers.clCreateContextFromType_Lazy(properties, (ulong)device_type, pfn_notify, user_data, errcode_ret);
         
         /// <summary> <b>[requires: v1.2]</b> <b>[entry point: <c>clCreateImage</c>]</b><br/>  </summary>
-        public static IntPtr CreateImage(IntPtr context, ulong flags, cl_image_format* image_format, cl_image_desc* image_desc, void* host_ptr, int* errcode_ret) => CLPointers.clCreateImage_Lazy(context, flags, image_format, image_desc, host_ptr, errcode_ret);
+        public static IntPtr CreateImage(IntPtr context, MemFlags flags, cl_image_format* image_format, cl_image_desc* image_desc, void* host_ptr, int* errcode_ret) => CLPointers.clCreateImage_Lazy(context, (ulong)flags, image_format, image_desc, host_ptr, errcode_ret);
         
         /// <summary> <b>[requires: v1.0]</b> <b>[entry point: <c>clCreateImage2D</c>]</b><br/>  </summary>
-        public static IntPtr CreateImage2D(IntPtr context, ulong flags, cl_image_format* image_format, nuint image_width, nuint image_height, nuint image_row_pitch, void* host_ptr, int* errcode_ret) => CLPointers.clCreateImage2D_Lazy(context, flags, image_format, image_width, image_height, image_row_pitch, host_ptr, errcode_ret);
+        public static IntPtr CreateImage2D(IntPtr context, MemFlags flags, cl_image_format* image_format, nuint image_width, nuint image_height, nuint image_row_pitch, void* host_ptr, int* errcode_ret) => CLPointers.clCreateImage2D_Lazy(context, (ulong)flags, image_format, image_width, image_height, image_row_pitch, host_ptr, errcode_ret);
         
         /// <summary> <b>[requires: v1.0]</b> <b>[entry point: <c>clCreateImage3D</c>]</b><br/>  </summary>
-        public static IntPtr CreateImage3D(IntPtr context, ulong flags, cl_image_format* image_format, nuint image_width, nuint image_height, nuint image_depth, nuint image_row_pitch, nuint image_slice_pitch, void* host_ptr, int* errcode_ret) => CLPointers.clCreateImage3D_Lazy(context, flags, image_format, image_width, image_height, image_depth, image_row_pitch, image_slice_pitch, host_ptr, errcode_ret);
+        public static IntPtr CreateImage3D(IntPtr context, MemFlags flags, cl_image_format* image_format, nuint image_width, nuint image_height, nuint image_depth, nuint image_row_pitch, nuint image_slice_pitch, void* host_ptr, int* errcode_ret) => CLPointers.clCreateImage3D_Lazy(context, (ulong)flags, image_format, image_width, image_height, image_depth, image_row_pitch, image_slice_pitch, host_ptr, errcode_ret);
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>clCreateImageWithProperties</c>]</b><br/>  </summary>
-        public static IntPtr CreateImageWithProperties(IntPtr context, ulong* properties, ulong flags, cl_image_format* image_format, cl_image_desc* image_desc, void* host_ptr, int* errcode_ret) => CLPointers.clCreateImageWithProperties_Lazy(context, properties, flags, image_format, image_desc, host_ptr, errcode_ret);
+        public static IntPtr CreateImageWithProperties(IntPtr context, ulong* properties, MemFlags flags, cl_image_format* image_format, cl_image_desc* image_desc, void* host_ptr, int* errcode_ret) => CLPointers.clCreateImageWithProperties_Lazy(context, properties, (ulong)flags, image_format, image_desc, host_ptr, errcode_ret);
         
         /// <summary> <b>[requires: v1.0]</b> <b>[entry point: <c>clCreateKernel</c>]</b><br/>  </summary>
         public static IntPtr CreateKernel(IntPtr program, byte* kernel_name, int* errcode_ret) => CLPointers.clCreateKernel_Lazy(program, kernel_name, errcode_ret);
@@ -53,7 +53,7 @@ namespace OpenTK.Compute2.OpenCL
         public static int CreateKernelsInProgram(IntPtr program, uint num_kernels, IntPtr* kernels, uint* num_kernels_ret) => CLPointers.clCreateKernelsInProgram_Lazy(program, num_kernels, kernels, num_kernels_ret);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>clCreatePipe</c>]</b><br/>  </summary>
-        public static IntPtr CreatePipe(IntPtr context, ulong flags, uint pipe_packet_size, uint pipe_max_packets, IntPtr* properties, int* errcode_ret) => CLPointers.clCreatePipe_Lazy(context, flags, pipe_packet_size, pipe_max_packets, properties, errcode_ret);
+        public static IntPtr CreatePipe(IntPtr context, MemFlags flags, uint pipe_packet_size, uint pipe_max_packets, IntPtr* properties, int* errcode_ret) => CLPointers.clCreatePipe_Lazy(context, (ulong)flags, pipe_packet_size, pipe_max_packets, properties, errcode_ret);
         
         /// <summary> <b>[requires: v1.0]</b> <b>[entry point: <c>clCreateProgramWithBinary</c>]</b><br/>  </summary>
         public static IntPtr CreateProgramWithBinary(IntPtr context, uint num_devices, IntPtr* device_list, nuint* lengths, byte** binaries, int* binary_status, int* errcode_ret) => CLPointers.clCreateProgramWithBinary_Lazy(context, num_devices, device_list, lengths, binaries, binary_status, errcode_ret);
@@ -68,13 +68,13 @@ namespace OpenTK.Compute2.OpenCL
         public static IntPtr CreateProgramWithSource(IntPtr context, uint count, byte** strings, nuint* lengths, int* errcode_ret) => CLPointers.clCreateProgramWithSource_Lazy(context, count, strings, lengths, errcode_ret);
         
         /// <summary> <b>[requires: v1.0]</b> <b>[entry point: <c>clCreateSampler</c>]</b><br/>  </summary>
-        public static IntPtr CreateSampler(IntPtr context, uint normalized_coords, uint addressing_mode, uint filter_mode, int* errcode_ret) => CLPointers.clCreateSampler_Lazy(context, normalized_coords, addressing_mode, filter_mode, errcode_ret);
+        public static IntPtr CreateSampler(IntPtr context, Bool normalized_coords, uint addressing_mode, uint filter_mode, int* errcode_ret) => CLPointers.clCreateSampler_Lazy(context, (uint)normalized_coords, addressing_mode, filter_mode, errcode_ret);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>clCreateSamplerWithProperties</c>]</b><br/>  </summary>
         public static IntPtr CreateSamplerWithProperties(IntPtr context, ulong* sampler_properties, int* errcode_ret) => CLPointers.clCreateSamplerWithProperties_Lazy(context, sampler_properties, errcode_ret);
         
         /// <summary> <b>[requires: v1.1]</b> <b>[entry point: <c>clCreateSubBuffer</c>]</b><br/>  </summary>
-        public static IntPtr CreateSubBuffer(IntPtr buffer, ulong flags, uint buffer_create_type, void* buffer_create_info, int* errcode_ret) => CLPointers.clCreateSubBuffer_Lazy(buffer, flags, buffer_create_type, buffer_create_info, errcode_ret);
+        public static IntPtr CreateSubBuffer(IntPtr buffer, MemFlags flags, uint buffer_create_type, void* buffer_create_info, int* errcode_ret) => CLPointers.clCreateSubBuffer_Lazy(buffer, (ulong)flags, buffer_create_type, buffer_create_info, errcode_ret);
         
         /// <summary> <b>[requires: v1.2]</b> <b>[entry point: <c>clCreateSubDevices</c>]</b><br/>  </summary>
         public static int CreateSubDevices(IntPtr in_device, IntPtr* properties, uint num_devices, IntPtr* out_devices, uint* num_devices_ret) => CLPointers.clCreateSubDevices_Lazy(in_device, properties, num_devices, out_devices, num_devices_ret);
@@ -110,10 +110,10 @@ namespace OpenTK.Compute2.OpenCL
         public static int EnqueueFillImage(IntPtr command_queue, IntPtr image, void* fill_color, nuint* origin, nuint* region, uint num_events_in_wait_list, IntPtr* event_wait_list, IntPtr* @event) => CLPointers.clEnqueueFillImage_Lazy(command_queue, image, fill_color, origin, region, num_events_in_wait_list, event_wait_list, @event);
         
         /// <summary> <b>[requires: v1.0]</b> <b>[entry point: <c>clEnqueueMapBuffer</c>]</b><br/>  </summary>
-        public static void* EnqueueMapBuffer(IntPtr command_queue, IntPtr buffer, uint blocking_map, ulong map_flags, nuint offset, nuint size, uint num_events_in_wait_list, IntPtr* event_wait_list, IntPtr* @event, int* errcode_ret) => CLPointers.clEnqueueMapBuffer_Lazy(command_queue, buffer, blocking_map, map_flags, offset, size, num_events_in_wait_list, event_wait_list, @event, errcode_ret);
+        public static void* EnqueueMapBuffer(IntPtr command_queue, IntPtr buffer, Bool blocking_map, MapFlags map_flags, nuint offset, nuint size, uint num_events_in_wait_list, IntPtr* event_wait_list, IntPtr* @event, int* errcode_ret) => CLPointers.clEnqueueMapBuffer_Lazy(command_queue, buffer, (uint)blocking_map, (ulong)map_flags, offset, size, num_events_in_wait_list, event_wait_list, @event, errcode_ret);
         
         /// <summary> <b>[requires: v1.0]</b> <b>[entry point: <c>clEnqueueMapImage</c>]</b><br/>  </summary>
-        public static void* EnqueueMapImage(IntPtr command_queue, IntPtr image, uint blocking_map, ulong map_flags, nuint* origin, nuint* region, nuint* image_row_pitch, nuint* image_slice_pitch, uint num_events_in_wait_list, IntPtr* event_wait_list, IntPtr* @event, int* errcode_ret) => CLPointers.clEnqueueMapImage_Lazy(command_queue, image, blocking_map, map_flags, origin, region, image_row_pitch, image_slice_pitch, num_events_in_wait_list, event_wait_list, @event, errcode_ret);
+        public static void* EnqueueMapImage(IntPtr command_queue, IntPtr image, Bool blocking_map, MapFlags map_flags, nuint* origin, nuint* region, nuint* image_row_pitch, nuint* image_slice_pitch, uint num_events_in_wait_list, IntPtr* event_wait_list, IntPtr* @event, int* errcode_ret) => CLPointers.clEnqueueMapImage_Lazy(command_queue, image, (uint)blocking_map, (ulong)map_flags, origin, region, image_row_pitch, image_slice_pitch, num_events_in_wait_list, event_wait_list, @event, errcode_ret);
         
         /// <summary> <b>[requires: v1.0]</b> <b>[entry point: <c>clEnqueueMarker</c>]</b><br/>  </summary>
         public static int EnqueueMarker(IntPtr command_queue, IntPtr* @event) => CLPointers.clEnqueueMarker_Lazy(command_queue, @event);
@@ -122,7 +122,7 @@ namespace OpenTK.Compute2.OpenCL
         public static int EnqueueMarkerWithWaitList(IntPtr command_queue, uint num_events_in_wait_list, IntPtr* event_wait_list, IntPtr* @event) => CLPointers.clEnqueueMarkerWithWaitList_Lazy(command_queue, num_events_in_wait_list, event_wait_list, @event);
         
         /// <summary> <b>[requires: v1.2]</b> <b>[entry point: <c>clEnqueueMigrateMemObjects</c>]</b><br/>  </summary>
-        public static int EnqueueMigrateMemObjects(IntPtr command_queue, uint num_mem_objects, IntPtr* mem_objects, ulong flags, uint num_events_in_wait_list, IntPtr* event_wait_list, IntPtr* @event) => CLPointers.clEnqueueMigrateMemObjects_Lazy(command_queue, num_mem_objects, mem_objects, flags, num_events_in_wait_list, event_wait_list, @event);
+        public static int EnqueueMigrateMemObjects(IntPtr command_queue, uint num_mem_objects, IntPtr* mem_objects, MemMigrationFlags flags, uint num_events_in_wait_list, IntPtr* event_wait_list, IntPtr* @event) => CLPointers.clEnqueueMigrateMemObjects_Lazy(command_queue, num_mem_objects, mem_objects, (ulong)flags, num_events_in_wait_list, event_wait_list, @event);
         
         /// <summary> <b>[requires: v1.0]</b> <b>[entry point: <c>clEnqueueNativeKernel</c>]</b><br/>  </summary>
         public static int EnqueueNativeKernel(IntPtr command_queue, delegate* unmanaged[Cdecl]<void*, void> user_func, void* args, nuint cb_args, uint num_mem_objects, IntPtr* mem_list, void** args_mem_loc, uint num_events_in_wait_list, IntPtr* event_wait_list, IntPtr* @event) => CLPointers.clEnqueueNativeKernel_Lazy(command_queue, user_func, args, cb_args, num_mem_objects, mem_list, args_mem_loc, num_events_in_wait_list, event_wait_list, @event);
@@ -131,28 +131,28 @@ namespace OpenTK.Compute2.OpenCL
         public static int EnqueueNDRangeKernel(IntPtr command_queue, IntPtr kernel, uint work_dim, nuint* global_work_offset, nuint* global_work_size, nuint* local_work_size, uint num_events_in_wait_list, IntPtr* event_wait_list, IntPtr* @event) => CLPointers.clEnqueueNDRangeKernel_Lazy(command_queue, kernel, work_dim, global_work_offset, global_work_size, local_work_size, num_events_in_wait_list, event_wait_list, @event);
         
         /// <summary> <b>[requires: v1.0]</b> <b>[entry point: <c>clEnqueueReadBuffer</c>]</b><br/>  </summary>
-        public static int EnqueueReadBuffer(IntPtr command_queue, IntPtr buffer, uint blocking_read, nuint offset, nuint size, void* ptr, uint num_events_in_wait_list, IntPtr* event_wait_list, IntPtr* @event) => CLPointers.clEnqueueReadBuffer_Lazy(command_queue, buffer, blocking_read, offset, size, ptr, num_events_in_wait_list, event_wait_list, @event);
+        public static int EnqueueReadBuffer(IntPtr command_queue, IntPtr buffer, Bool blocking_read, nuint offset, nuint size, void* ptr, uint num_events_in_wait_list, IntPtr* event_wait_list, IntPtr* @event) => CLPointers.clEnqueueReadBuffer_Lazy(command_queue, buffer, (uint)blocking_read, offset, size, ptr, num_events_in_wait_list, event_wait_list, @event);
         
         /// <summary> <b>[requires: v1.1]</b> <b>[entry point: <c>clEnqueueReadBufferRect</c>]</b><br/>  </summary>
-        public static int EnqueueReadBufferRect(IntPtr command_queue, IntPtr buffer, uint blocking_read, nuint* buffer_origin, nuint* host_origin, nuint* region, nuint buffer_row_pitch, nuint buffer_slice_pitch, nuint host_row_pitch, nuint host_slice_pitch, void* ptr, uint num_events_in_wait_list, IntPtr* event_wait_list, IntPtr* @event) => CLPointers.clEnqueueReadBufferRect_Lazy(command_queue, buffer, blocking_read, buffer_origin, host_origin, region, buffer_row_pitch, buffer_slice_pitch, host_row_pitch, host_slice_pitch, ptr, num_events_in_wait_list, event_wait_list, @event);
+        public static int EnqueueReadBufferRect(IntPtr command_queue, IntPtr buffer, Bool blocking_read, nuint* buffer_origin, nuint* host_origin, nuint* region, nuint buffer_row_pitch, nuint buffer_slice_pitch, nuint host_row_pitch, nuint host_slice_pitch, void* ptr, uint num_events_in_wait_list, IntPtr* event_wait_list, IntPtr* @event) => CLPointers.clEnqueueReadBufferRect_Lazy(command_queue, buffer, (uint)blocking_read, buffer_origin, host_origin, region, buffer_row_pitch, buffer_slice_pitch, host_row_pitch, host_slice_pitch, ptr, num_events_in_wait_list, event_wait_list, @event);
         
         /// <summary> <b>[requires: v1.0]</b> <b>[entry point: <c>clEnqueueReadImage</c>]</b><br/>  </summary>
-        public static int EnqueueReadImage(IntPtr command_queue, IntPtr image, uint blocking_read, nuint* origin, nuint* region, nuint row_pitch, nuint slice_pitch, void* ptr, uint num_events_in_wait_list, IntPtr* event_wait_list, IntPtr* @event) => CLPointers.clEnqueueReadImage_Lazy(command_queue, image, blocking_read, origin, region, row_pitch, slice_pitch, ptr, num_events_in_wait_list, event_wait_list, @event);
+        public static int EnqueueReadImage(IntPtr command_queue, IntPtr image, Bool blocking_read, nuint* origin, nuint* region, nuint row_pitch, nuint slice_pitch, void* ptr, uint num_events_in_wait_list, IntPtr* event_wait_list, IntPtr* @event) => CLPointers.clEnqueueReadImage_Lazy(command_queue, image, (uint)blocking_read, origin, region, row_pitch, slice_pitch, ptr, num_events_in_wait_list, event_wait_list, @event);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>clEnqueueSVMFree</c>]</b><br/>  </summary>
         public static int EnqueueSVMFree(IntPtr command_queue, uint num_svm_pointers, void** svm_pointers, delegate* unmanaged[Cdecl]<IntPtr, uint, void**, void*, void> pfn_free_func, void* user_data, uint num_events_in_wait_list, IntPtr* event_wait_list, IntPtr* @event) => CLPointers.clEnqueueSVMFree_Lazy(command_queue, num_svm_pointers, svm_pointers, pfn_free_func, user_data, num_events_in_wait_list, event_wait_list, @event);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>clEnqueueSVMMap</c>]</b><br/>  </summary>
-        public static int EnqueueSVMMap(IntPtr command_queue, uint blocking_map, ulong flags, void* svm_ptr, nuint size, uint num_events_in_wait_list, IntPtr* event_wait_list, IntPtr* @event) => CLPointers.clEnqueueSVMMap_Lazy(command_queue, blocking_map, flags, svm_ptr, size, num_events_in_wait_list, event_wait_list, @event);
+        public static int EnqueueSVMMap(IntPtr command_queue, Bool blocking_map, MapFlags flags, void* svm_ptr, nuint size, uint num_events_in_wait_list, IntPtr* event_wait_list, IntPtr* @event) => CLPointers.clEnqueueSVMMap_Lazy(command_queue, (uint)blocking_map, (ulong)flags, svm_ptr, size, num_events_in_wait_list, event_wait_list, @event);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>clEnqueueSVMMemcpy</c>]</b><br/>  </summary>
-        public static int EnqueueSVMMemcpy(IntPtr command_queue, uint blocking_copy, void* dst_ptr, void* src_ptr, nuint size, uint num_events_in_wait_list, IntPtr* event_wait_list, IntPtr* @event) => CLPointers.clEnqueueSVMMemcpy_Lazy(command_queue, blocking_copy, dst_ptr, src_ptr, size, num_events_in_wait_list, event_wait_list, @event);
+        public static int EnqueueSVMMemcpy(IntPtr command_queue, Bool blocking_copy, void* dst_ptr, void* src_ptr, nuint size, uint num_events_in_wait_list, IntPtr* event_wait_list, IntPtr* @event) => CLPointers.clEnqueueSVMMemcpy_Lazy(command_queue, (uint)blocking_copy, dst_ptr, src_ptr, size, num_events_in_wait_list, event_wait_list, @event);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>clEnqueueSVMMemFill</c>]</b><br/>  </summary>
         public static int EnqueueSVMMemFill(IntPtr command_queue, void* svm_ptr, void* pattern, nuint pattern_size, nuint size, uint num_events_in_wait_list, IntPtr* event_wait_list, IntPtr* @event) => CLPointers.clEnqueueSVMMemFill_Lazy(command_queue, svm_ptr, pattern, pattern_size, size, num_events_in_wait_list, event_wait_list, @event);
         
         /// <summary> <b>[requires: v2.1]</b> <b>[entry point: <c>clEnqueueSVMMigrateMem</c>]</b><br/>  </summary>
-        public static int EnqueueSVMMigrateMem(IntPtr command_queue, uint num_svm_pointers, void** svm_pointers, nuint* sizes, ulong flags, uint num_events_in_wait_list, IntPtr* event_wait_list, IntPtr* @event) => CLPointers.clEnqueueSVMMigrateMem_Lazy(command_queue, num_svm_pointers, svm_pointers, sizes, flags, num_events_in_wait_list, event_wait_list, @event);
+        public static int EnqueueSVMMigrateMem(IntPtr command_queue, uint num_svm_pointers, void** svm_pointers, nuint* sizes, MemMigrationFlags flags, uint num_events_in_wait_list, IntPtr* event_wait_list, IntPtr* @event) => CLPointers.clEnqueueSVMMigrateMem_Lazy(command_queue, num_svm_pointers, svm_pointers, sizes, (ulong)flags, num_events_in_wait_list, event_wait_list, @event);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>clEnqueueSVMUnmap</c>]</b><br/>  </summary>
         public static int EnqueueSVMUnmap(IntPtr command_queue, void* svm_ptr, uint num_events_in_wait_list, IntPtr* event_wait_list, IntPtr* @event) => CLPointers.clEnqueueSVMUnmap_Lazy(command_queue, svm_ptr, num_events_in_wait_list, event_wait_list, @event);
@@ -167,13 +167,13 @@ namespace OpenTK.Compute2.OpenCL
         public static int EnqueueWaitForEvents(IntPtr command_queue, uint num_events, IntPtr* event_list) => CLPointers.clEnqueueWaitForEvents_Lazy(command_queue, num_events, event_list);
         
         /// <summary> <b>[requires: v1.0]</b> <b>[entry point: <c>clEnqueueWriteBuffer</c>]</b><br/>  </summary>
-        public static int EnqueueWriteBuffer(IntPtr command_queue, IntPtr buffer, uint blocking_write, nuint offset, nuint size, void* ptr, uint num_events_in_wait_list, IntPtr* event_wait_list, IntPtr* @event) => CLPointers.clEnqueueWriteBuffer_Lazy(command_queue, buffer, blocking_write, offset, size, ptr, num_events_in_wait_list, event_wait_list, @event);
+        public static int EnqueueWriteBuffer(IntPtr command_queue, IntPtr buffer, Bool blocking_write, nuint offset, nuint size, void* ptr, uint num_events_in_wait_list, IntPtr* event_wait_list, IntPtr* @event) => CLPointers.clEnqueueWriteBuffer_Lazy(command_queue, buffer, (uint)blocking_write, offset, size, ptr, num_events_in_wait_list, event_wait_list, @event);
         
         /// <summary> <b>[requires: v1.1]</b> <b>[entry point: <c>clEnqueueWriteBufferRect</c>]</b><br/>  </summary>
-        public static int EnqueueWriteBufferRect(IntPtr command_queue, IntPtr buffer, uint blocking_write, nuint* buffer_origin, nuint* host_origin, nuint* region, nuint buffer_row_pitch, nuint buffer_slice_pitch, nuint host_row_pitch, nuint host_slice_pitch, void* ptr, uint num_events_in_wait_list, IntPtr* event_wait_list, IntPtr* @event) => CLPointers.clEnqueueWriteBufferRect_Lazy(command_queue, buffer, blocking_write, buffer_origin, host_origin, region, buffer_row_pitch, buffer_slice_pitch, host_row_pitch, host_slice_pitch, ptr, num_events_in_wait_list, event_wait_list, @event);
+        public static int EnqueueWriteBufferRect(IntPtr command_queue, IntPtr buffer, Bool blocking_write, nuint* buffer_origin, nuint* host_origin, nuint* region, nuint buffer_row_pitch, nuint buffer_slice_pitch, nuint host_row_pitch, nuint host_slice_pitch, void* ptr, uint num_events_in_wait_list, IntPtr* event_wait_list, IntPtr* @event) => CLPointers.clEnqueueWriteBufferRect_Lazy(command_queue, buffer, (uint)blocking_write, buffer_origin, host_origin, region, buffer_row_pitch, buffer_slice_pitch, host_row_pitch, host_slice_pitch, ptr, num_events_in_wait_list, event_wait_list, @event);
         
         /// <summary> <b>[requires: v1.0]</b> <b>[entry point: <c>clEnqueueWriteImage</c>]</b><br/>  </summary>
-        public static int EnqueueWriteImage(IntPtr command_queue, IntPtr image, uint blocking_write, nuint* origin, nuint* region, nuint input_row_pitch, nuint input_slice_pitch, void* ptr, uint num_events_in_wait_list, IntPtr* event_wait_list, IntPtr* @event) => CLPointers.clEnqueueWriteImage_Lazy(command_queue, image, blocking_write, origin, region, input_row_pitch, input_slice_pitch, ptr, num_events_in_wait_list, event_wait_list, @event);
+        public static int EnqueueWriteImage(IntPtr command_queue, IntPtr image, Bool blocking_write, nuint* origin, nuint* region, nuint input_row_pitch, nuint input_slice_pitch, void* ptr, uint num_events_in_wait_list, IntPtr* event_wait_list, IntPtr* @event) => CLPointers.clEnqueueWriteImage_Lazy(command_queue, image, (uint)blocking_write, origin, region, input_row_pitch, input_slice_pitch, ptr, num_events_in_wait_list, event_wait_list, @event);
         
         /// <summary> <b>[requires: v1.0]</b> <b>[entry point: <c>clFinish</c>]</b><br/>  </summary>
         public static int Finish(IntPtr command_queue) => CLPointers.clFinish_Lazy(command_queue);
@@ -191,10 +191,10 @@ namespace OpenTK.Compute2.OpenCL
         public static int GetDeviceAndHostTimer(IntPtr device, ulong* device_timestamp, ulong* host_timestamp) => CLPointers.clGetDeviceAndHostTimer_Lazy(device, device_timestamp, host_timestamp);
         
         /// <summary> <b>[requires: v1.0]</b> <b>[entry point: <c>clGetDeviceIDs</c>]</b><br/>  </summary>
-        public static int GetDeviceIDs(IntPtr platform, ulong device_type, uint num_entries, IntPtr* devices, uint* num_devices) => CLPointers.clGetDeviceIDs_Lazy(platform, device_type, num_entries, devices, num_devices);
+        public static int GetDeviceIDs(IntPtr platform, DeviceType device_type, uint num_entries, IntPtr* devices, uint* num_devices) => CLPointers.clGetDeviceIDs_Lazy(platform, (ulong)device_type, num_entries, devices, num_devices);
         
         /// <summary> <b>[requires: v1.0]</b> <b>[entry point: <c>clGetDeviceInfo</c>]</b><br/>  </summary>
-        public static int GetDeviceInfo(IntPtr device, uint param_name, nuint param_value_size, void* param_value, nuint* param_value_size_ret) => CLPointers.clGetDeviceInfo_Lazy(device, param_name, param_value_size, param_value, param_value_size_ret);
+        public static int GetDeviceInfo(IntPtr device, DeviceInfo param_name, nuint param_value_size, void* param_value, nuint* param_value_size_ret) => CLPointers.clGetDeviceInfo_Lazy(device, (uint)param_name, param_value_size, param_value, param_value_size_ret);
         
         /// <summary> <b>[requires: v1.0]</b> <b>[entry point: <c>clGetEventInfo</c>]</b><br/>  </summary>
         public static int GetEventInfo(IntPtr @event, uint param_name, nuint param_value_size, void* param_value, nuint* param_value_size_ret) => CLPointers.clGetEventInfo_Lazy(@event, param_name, param_value_size, param_value, param_value_size_ret);
@@ -239,7 +239,7 @@ namespace OpenTK.Compute2.OpenCL
         public static int GetPlatformIDs(uint num_entries, IntPtr* platforms, uint* num_platforms) => CLPointers.clGetPlatformIDs_Lazy(num_entries, platforms, num_platforms);
         
         /// <summary> <b>[requires: v1.0]</b> <b>[entry point: <c>clGetPlatformInfo</c>]</b><br/>  </summary>
-        public static int GetPlatformInfo(IntPtr platform, uint param_name, nuint param_value_size, void* param_value, nuint* param_value_size_ret) => CLPointers.clGetPlatformInfo_Lazy(platform, param_name, param_value_size, param_value, param_value_size_ret);
+        public static int GetPlatformInfo(IntPtr platform, PlatformInfo param_name, nuint param_value_size, void* param_value, nuint* param_value_size_ret) => CLPointers.clGetPlatformInfo_Lazy(platform, (uint)param_name, param_value_size, param_value, param_value_size_ret);
         
         /// <summary> <b>[requires: v1.0]</b> <b>[entry point: <c>clGetProgramBuildInfo</c>]</b><br/>  </summary>
         public static int GetProgramBuildInfo(IntPtr program, IntPtr device, uint param_name, nuint param_value_size, void* param_value, nuint* param_value_size_ret) => CLPointers.clGetProgramBuildInfo_Lazy(program, device, param_name, param_value_size, param_value, param_value_size_ret);
@@ -251,7 +251,7 @@ namespace OpenTK.Compute2.OpenCL
         public static int GetSamplerInfo(IntPtr sampler, uint param_name, nuint param_value_size, void* param_value, nuint* param_value_size_ret) => CLPointers.clGetSamplerInfo_Lazy(sampler, param_name, param_value_size, param_value, param_value_size_ret);
         
         /// <summary> <b>[requires: v1.0]</b> <b>[entry point: <c>clGetSupportedImageFormats</c>]</b><br/>  </summary>
-        public static int GetSupportedImageFormats(IntPtr context, ulong flags, uint image_type, uint num_entries, cl_image_format* image_formats, uint* num_image_formats) => CLPointers.clGetSupportedImageFormats_Lazy(context, flags, image_type, num_entries, image_formats, num_image_formats);
+        public static int GetSupportedImageFormats(IntPtr context, MemFlags flags, uint image_type, uint num_entries, cl_image_format* image_formats, uint* num_image_formats) => CLPointers.clGetSupportedImageFormats_Lazy(context, (ulong)flags, image_type, num_entries, image_formats, num_image_formats);
         
         /// <summary> <b>[requires: v1.2]</b> <b>[entry point: <c>clLinkProgram</c>]</b><br/>  </summary>
         public static IntPtr LinkProgram(IntPtr context, uint num_devices, IntPtr* device_list, byte* options, uint num_input_programs, IntPtr* input_programs, delegate* unmanaged[Cdecl]<IntPtr, void*, void> pfn_notify, void* user_data, int* errcode_ret) => CLPointers.clLinkProgram_Lazy(context, num_devices, device_list, options, num_input_programs, input_programs, pfn_notify, user_data, errcode_ret);
@@ -305,7 +305,7 @@ namespace OpenTK.Compute2.OpenCL
         public static int RetainSampler(IntPtr sampler) => CLPointers.clRetainSampler_Lazy(sampler);
         
         /// <summary> <b>[requires: v1.0]</b> <b>[entry point: <c>clSetCommandQueueProperty</c>]</b><br/>  </summary>
-        public static int SetCommandQueueProperty(IntPtr command_queue, ulong properties, uint enable, ulong* old_properties) => CLPointers.clSetCommandQueueProperty_Lazy(command_queue, properties, enable, old_properties);
+        public static int SetCommandQueueProperty(IntPtr command_queue, CommandQueueProperties properties, Bool enable, CommandQueueProperties* old_properties) => CLPointers.clSetCommandQueueProperty_Lazy(command_queue, (ulong)properties, (uint)enable, (ulong*)old_properties);
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>clSetContextDestructorCallback</c>]</b><br/>  </summary>
         public static int SetContextDestructorCallback(IntPtr context, delegate* unmanaged[Cdecl]<IntPtr, void*, void> pfn_notify, void* user_data) => CLPointers.clSetContextDestructorCallback_Lazy(context, pfn_notify, user_data);
@@ -381,11 +381,11 @@ namespace OpenTK.Compute2.OpenCL
             
             /// <summary> <b>[requires: cl_arm_shared_virtual_memory]</b> <b>[entry point: <c>clEnqueueSVMMapARM</c>]</b><br/>  </summary>
             /// <remarks><see href="TODO: Proper link">arm_shared_virtual_memory.txt</see></remarks>
-            public static int EnqueueSVMMapARM(IntPtr command_queue, uint blocking_map, ulong flags, void* svm_ptr, nuint size, uint num_events_in_wait_list, IntPtr* event_wait_list, IntPtr* @event) => CLPointers.clEnqueueSVMMapARM_Lazy(command_queue, blocking_map, flags, svm_ptr, size, num_events_in_wait_list, event_wait_list, @event);
+            public static int EnqueueSVMMapARM(IntPtr command_queue, Bool blocking_map, MapFlags flags, void* svm_ptr, nuint size, uint num_events_in_wait_list, IntPtr* event_wait_list, IntPtr* @event) => CLPointers.clEnqueueSVMMapARM_Lazy(command_queue, (uint)blocking_map, (ulong)flags, svm_ptr, size, num_events_in_wait_list, event_wait_list, @event);
             
             /// <summary> <b>[requires: cl_arm_shared_virtual_memory]</b> <b>[entry point: <c>clEnqueueSVMMemcpyARM</c>]</b><br/>  </summary>
             /// <remarks><see href="TODO: Proper link">arm_shared_virtual_memory.txt</see></remarks>
-            public static int EnqueueSVMMemcpyARM(IntPtr command_queue, uint blocking_copy, void* dst_ptr, void* src_ptr, nuint size, uint num_events_in_wait_list, IntPtr* event_wait_list, IntPtr* @event) => CLPointers.clEnqueueSVMMemcpyARM_Lazy(command_queue, blocking_copy, dst_ptr, src_ptr, size, num_events_in_wait_list, event_wait_list, @event);
+            public static int EnqueueSVMMemcpyARM(IntPtr command_queue, Bool blocking_copy, void* dst_ptr, void* src_ptr, nuint size, uint num_events_in_wait_list, IntPtr* event_wait_list, IntPtr* @event) => CLPointers.clEnqueueSVMMemcpyARM_Lazy(command_queue, (uint)blocking_copy, dst_ptr, src_ptr, size, num_events_in_wait_list, event_wait_list, @event);
             
             /// <summary> <b>[requires: cl_arm_shared_virtual_memory]</b> <b>[entry point: <c>clEnqueueSVMMemFillARM</c>]</b><br/>  </summary>
             /// <remarks><see href="TODO: Proper link">arm_shared_virtual_memory.txt</see></remarks>
@@ -397,7 +397,7 @@ namespace OpenTK.Compute2.OpenCL
             
             /// <summary> <b>[requires: cl_arm_import_memory]</b> <b>[entry point: <c>clImportMemoryARM</c>]</b><br/>  </summary>
             /// <remarks><see href="TODO: Proper link">arm_import_memory.txt</see></remarks>
-            public static IntPtr ImportMemoryARM(IntPtr context, ulong flags, IntPtr* properties, void* memory, nuint size, int* errcode_ret) => CLPointers.clImportMemoryARM_Lazy(context, flags, properties, memory, size, errcode_ret);
+            public static IntPtr ImportMemoryARM(IntPtr context, MemFlags flags, IntPtr* properties, void* memory, nuint size, int* errcode_ret) => CLPointers.clImportMemoryARM_Lazy(context, (ulong)flags, properties, memory, size, errcode_ret);
             
             /// <summary> <b>[requires: cl_arm_shared_virtual_memory]</b> <b>[entry point: <c>clSetKernelArgSVMPointerARM</c>]</b><br/>  </summary>
             /// <remarks><see href="TODO: Proper link">arm_shared_virtual_memory.txt</see></remarks>
@@ -429,7 +429,7 @@ namespace OpenTK.Compute2.OpenCL
             
             /// <summary> <b>[requires: cl_ext_image_requirements_info]</b> <b>[entry point: <c>clGetImageRequirementsInfoEXT</c>]</b><br/>  </summary>
             /// <remarks><see href="TODO: Proper link">ext_image_requirements_info.txt</see></remarks>
-            public static int GetImageRequirementsInfoEXT(IntPtr context, ulong* properties, ulong flags, cl_image_format* image_format, cl_image_desc* image_desc, uint param_name, nuint param_value_size, void* param_value, nuint* param_value_size_ret) => CLPointers.clGetImageRequirementsInfoEXT_Lazy(context, properties, flags, image_format, image_desc, param_name, param_value_size, param_value, param_value_size_ret);
+            public static int GetImageRequirementsInfoEXT(IntPtr context, ulong* properties, MemFlags flags, cl_image_format* image_format, cl_image_desc* image_desc, uint param_name, nuint param_value_size, void* param_value, nuint* param_value_size_ret) => CLPointers.clGetImageRequirementsInfoEXT_Lazy(context, properties, (ulong)flags, image_format, image_desc, param_name, param_value_size, param_value, param_value_size_ret);
             
             /// <summary> <b>[requires: cl_ext_device_fission]</b> <b>[entry point: <c>clReleaseDeviceEXT</c>]</b><br/>  </summary>
             /// <remarks><see href="TODO: Proper link">ext_device_fission.txt</see></remarks>
@@ -457,7 +457,7 @@ namespace OpenTK.Compute2.OpenCL
             
             /// <summary> <b>[requires: cl_img_generate_mipmap]</b> <b>[entry point: <c>clEnqueueGenerateMipmapIMG</c>]</b><br/>  </summary>
             /// <remarks><see href="TODO: Proper link">img_generate_mipmap.txt</see></remarks>
-            public static int EnqueueGenerateMipmapIMG(IntPtr command_queue, IntPtr src_image, IntPtr dst_image, uint mipmap_filter_mode, nuint* array_region, nuint* mip_region, uint num_events_in_wait_list, IntPtr* event_wait_list, IntPtr* @event) => CLPointers.clEnqueueGenerateMipmapIMG_Lazy(command_queue, src_image, dst_image, mipmap_filter_mode, array_region, mip_region, num_events_in_wait_list, event_wait_list, @event);
+            public static int EnqueueGenerateMipmapIMG(IntPtr command_queue, IntPtr src_image, IntPtr dst_image, MipmapFilterModeImg mipmap_filter_mode, nuint* array_region, nuint* mip_region, uint num_events_in_wait_list, IntPtr* event_wait_list, IntPtr* @event) => CLPointers.clEnqueueGenerateMipmapIMG_Lazy(command_queue, src_image, dst_image, (uint)mipmap_filter_mode, array_region, mip_region, num_events_in_wait_list, event_wait_list, @event);
             
             /// <summary> <b>[requires: cl_img_use_gralloc_ptr]</b> <b>[entry point: <c>clEnqueueReleaseGrallocObjectsIMG</c>]</b><br/>  </summary>
             /// <remarks><see href="TODO: Proper link">img_use_gralloc_ptr.txt</see></remarks>
@@ -469,19 +469,19 @@ namespace OpenTK.Compute2.OpenCL
         {
             /// <summary> <b>[requires: cl_intel_accelerator]</b> <b>[entry point: <c>clCreateAcceleratorINTEL</c>]</b><br/>  </summary>
             /// <remarks><see href="TODO: Proper link">intel_accelerator.txt</see></remarks>
-            public static IntPtr CreateAcceleratorINTEL(IntPtr context, uint accelerator_type, nuint descriptor_size, void* descriptor, int* errcode_ret) => CLPointers.clCreateAcceleratorINTEL_Lazy(context, accelerator_type, descriptor_size, descriptor, errcode_ret);
+            public static IntPtr CreateAcceleratorINTEL(IntPtr context, AcceleratorTypeIntel accelerator_type, nuint descriptor_size, void* descriptor, int* errcode_ret) => CLPointers.clCreateAcceleratorINTEL_Lazy(context, (uint)accelerator_type, descriptor_size, descriptor, errcode_ret);
             
             /// <summary> <b>[requires: cl_intel_create_buffer_with_properties]</b> <b>[entry point: <c>clCreateBufferWithPropertiesINTEL</c>]</b><br/>  </summary>
             /// <remarks><see href="TODO: Proper link">intel_create_buffer_with_properties.txt</see></remarks>
-            public static IntPtr CreateBufferWithPropertiesINTEL(IntPtr context, ulong* properties, ulong flags, nuint size, void* host_ptr, int* errcode_ret) => CLPointers.clCreateBufferWithPropertiesINTEL_Lazy(context, properties, flags, size, host_ptr, errcode_ret);
+            public static IntPtr CreateBufferWithPropertiesINTEL(IntPtr context, ulong* properties, MemFlags flags, nuint size, void* host_ptr, int* errcode_ret) => CLPointers.clCreateBufferWithPropertiesINTEL_Lazy(context, properties, (ulong)flags, size, host_ptr, errcode_ret);
             
             /// <summary> <b>[requires: cl_intel_dx9_media_sharing]</b> <b>[entry point: <c>clCreateFromDX9MediaSurfaceINTEL</c>]</b><br/>  </summary>
             /// <remarks><see href="TODO: Proper link">intel_dx9_media_sharing.txt</see></remarks>
-            public static IntPtr CreateFromDX9MediaSurfaceINTEL(IntPtr context, ulong flags, IntPtr* resource, IntPtr sharedHandle, uint plane, int* errcode_ret) => CLPointers.clCreateFromDX9MediaSurfaceINTEL_Lazy(context, flags, resource, sharedHandle, plane, errcode_ret);
+            public static IntPtr CreateFromDX9MediaSurfaceINTEL(IntPtr context, MemFlags flags, IntPtr* resource, IntPtr sharedHandle, uint plane, int* errcode_ret) => CLPointers.clCreateFromDX9MediaSurfaceINTEL_Lazy(context, (ulong)flags, resource, sharedHandle, plane, errcode_ret);
             
             /// <summary> <b>[requires: cl_intel_va_api_media_sharing]</b> <b>[entry point: <c>clCreateFromVA_APIMediaSurfaceINTEL</c>]</b><br/>  </summary>
             /// <remarks><see href="TODO: Proper link">intel_va_api_media_sharing.txt</see></remarks>
-            public static IntPtr CreateFromVA_APIMediaSurfaceINTEL(IntPtr context, ulong flags, uint* surface, uint plane, int* errcode_ret) => CLPointers.clCreateFromVA_APIMediaSurfaceINTEL_Lazy(context, flags, surface, plane, errcode_ret);
+            public static IntPtr CreateFromVA_APIMediaSurfaceINTEL(IntPtr context, MemFlags flags, uint* surface, uint plane, int* errcode_ret) => CLPointers.clCreateFromVA_APIMediaSurfaceINTEL_Lazy(context, (ulong)flags, surface, plane, errcode_ret);
             
             /// <summary> <b>[requires: cl_intel_unified_shared_memory]</b> <b>[entry point: <c>clDeviceMemAllocINTEL</c>]</b><br/>  </summary>
             /// <remarks><see href="TODO: Proper link">intel_unified_shared_memory.txt</see></remarks>
@@ -501,7 +501,7 @@ namespace OpenTK.Compute2.OpenCL
             
             /// <summary> <b>[requires: cl_intel_unified_shared_memory]</b> <b>[entry point: <c>clEnqueueMemcpyINTEL</c>]</b><br/>  </summary>
             /// <remarks><see href="TODO: Proper link">intel_unified_shared_memory.txt</see></remarks>
-            public static int EnqueueMemcpyINTEL(IntPtr command_queue, uint blocking, void* dst_ptr, void* src_ptr, nuint size, uint num_events_in_wait_list, IntPtr* event_wait_list, IntPtr* @event) => CLPointers.clEnqueueMemcpyINTEL_Lazy(command_queue, blocking, dst_ptr, src_ptr, size, num_events_in_wait_list, event_wait_list, @event);
+            public static int EnqueueMemcpyINTEL(IntPtr command_queue, Bool blocking, void* dst_ptr, void* src_ptr, nuint size, uint num_events_in_wait_list, IntPtr* event_wait_list, IntPtr* @event) => CLPointers.clEnqueueMemcpyINTEL_Lazy(command_queue, (uint)blocking, dst_ptr, src_ptr, size, num_events_in_wait_list, event_wait_list, @event);
             
             /// <summary> <b>[requires: cl_intel_unified_shared_memory]</b> <b>[entry point: <c>clEnqueueMemFillINTEL</c>]</b><br/>  </summary>
             /// <remarks><see href="TODO: Proper link">intel_unified_shared_memory.txt</see></remarks>
@@ -513,11 +513,11 @@ namespace OpenTK.Compute2.OpenCL
             
             /// <summary> <b>[requires: cl_intel_unified_shared_memory]</b> <b>[entry point: <c>clEnqueueMigrateMemINTEL</c>]</b><br/>  </summary>
             /// <remarks><see href="TODO: Proper link">intel_unified_shared_memory.txt</see></remarks>
-            public static int EnqueueMigrateMemINTEL(IntPtr command_queue, void* ptr, nuint size, ulong flags, uint num_events_in_wait_list, IntPtr* event_wait_list, IntPtr* @event) => CLPointers.clEnqueueMigrateMemINTEL_Lazy(command_queue, ptr, size, flags, num_events_in_wait_list, event_wait_list, @event);
+            public static int EnqueueMigrateMemINTEL(IntPtr command_queue, void* ptr, nuint size, MemMigrationFlags flags, uint num_events_in_wait_list, IntPtr* event_wait_list, IntPtr* @event) => CLPointers.clEnqueueMigrateMemINTEL_Lazy(command_queue, ptr, size, (ulong)flags, num_events_in_wait_list, event_wait_list, @event);
             
             /// <summary> <b>[requires: cl_intel_program_scope_host_pipe]</b> <b>[entry point: <c>clEnqueueReadHostPipeINTEL</c>]</b><br/>  </summary>
             /// <remarks><see href="TODO: Proper link">intel_program_scope_host_pipe.txt</see></remarks>
-            public static int EnqueueReadHostPipeINTEL(IntPtr command_queue, IntPtr program, byte* pipe_symbol, uint blocking_read, void* ptr, nuint size, uint num_events_in_wait_list, IntPtr* event_wait_list, IntPtr* @event) => CLPointers.clEnqueueReadHostPipeINTEL_Lazy(command_queue, program, pipe_symbol, blocking_read, ptr, size, num_events_in_wait_list, event_wait_list, @event);
+            public static int EnqueueReadHostPipeINTEL(IntPtr command_queue, IntPtr program, byte* pipe_symbol, Bool blocking_read, void* ptr, nuint size, uint num_events_in_wait_list, IntPtr* event_wait_list, IntPtr* @event) => CLPointers.clEnqueueReadHostPipeINTEL_Lazy(command_queue, program, pipe_symbol, (uint)blocking_read, ptr, size, num_events_in_wait_list, event_wait_list, @event);
             
             /// <summary> <b>[requires: cl_intel_dx9_media_sharing]</b> <b>[entry point: <c>clEnqueueReleaseDX9ObjectsINTEL</c>]</b><br/>  </summary>
             /// <remarks><see href="TODO: Proper link">intel_dx9_media_sharing.txt</see></remarks>
@@ -529,7 +529,7 @@ namespace OpenTK.Compute2.OpenCL
             
             /// <summary> <b>[requires: cl_intel_program_scope_host_pipe]</b> <b>[entry point: <c>clEnqueueWriteHostPipeINTEL</c>]</b><br/>  </summary>
             /// <remarks><see href="TODO: Proper link">intel_program_scope_host_pipe.txt</see></remarks>
-            public static int EnqueueWriteHostPipeINTEL(IntPtr command_queue, IntPtr program, byte* pipe_symbol, uint blocking_write, void* ptr, nuint size, uint num_events_in_wait_list, IntPtr* event_wait_list, IntPtr* @event) => CLPointers.clEnqueueWriteHostPipeINTEL_Lazy(command_queue, program, pipe_symbol, blocking_write, ptr, size, num_events_in_wait_list, event_wait_list, @event);
+            public static int EnqueueWriteHostPipeINTEL(IntPtr command_queue, IntPtr program, byte* pipe_symbol, Bool blocking_write, void* ptr, nuint size, uint num_events_in_wait_list, IntPtr* event_wait_list, IntPtr* @event) => CLPointers.clEnqueueWriteHostPipeINTEL_Lazy(command_queue, program, pipe_symbol, (uint)blocking_write, ptr, size, num_events_in_wait_list, event_wait_list, @event);
             
             /// <summary> <b>[requires: cl_intel_accelerator]</b> <b>[entry point: <c>clGetAcceleratorInfoINTEL</c>]</b><br/>  </summary>
             /// <remarks><see href="TODO: Proper link">intel_accelerator.txt</see></remarks>
@@ -549,23 +549,23 @@ namespace OpenTK.Compute2.OpenCL
             
             /// <summary> <b>[requires: cl_intel_sharing_format_query_d3d10]</b> <b>[entry point: <c>clGetSupportedD3D10TextureFormatsINTEL</c>]</b><br/>  </summary>
             /// <remarks><see href="TODO: Proper link">intel_sharing_format_query_d3d10.txt</see></remarks>
-            public static int GetSupportedD3D10TextureFormatsINTEL(IntPtr context, ulong flags, uint image_type, uint num_entries, uint* d3d10_formats, uint* num_texture_formats) => CLPointers.clGetSupportedD3D10TextureFormatsINTEL_Lazy(context, flags, image_type, num_entries, d3d10_formats, num_texture_formats);
+            public static int GetSupportedD3D10TextureFormatsINTEL(IntPtr context, MemFlags flags, uint image_type, uint num_entries, uint* d3d10_formats, uint* num_texture_formats) => CLPointers.clGetSupportedD3D10TextureFormatsINTEL_Lazy(context, (ulong)flags, image_type, num_entries, d3d10_formats, num_texture_formats);
             
             /// <summary> <b>[requires: cl_intel_sharing_format_query_d3d11]</b> <b>[entry point: <c>clGetSupportedD3D11TextureFormatsINTEL</c>]</b><br/>  </summary>
             /// <remarks><see href="TODO: Proper link">intel_sharing_format_query_d3d11.txt</see></remarks>
-            public static int GetSupportedD3D11TextureFormatsINTEL(IntPtr context, ulong flags, uint image_type, uint plane, uint num_entries, uint* d3d11_formats, uint* num_texture_formats) => CLPointers.clGetSupportedD3D11TextureFormatsINTEL_Lazy(context, flags, image_type, plane, num_entries, d3d11_formats, num_texture_formats);
+            public static int GetSupportedD3D11TextureFormatsINTEL(IntPtr context, MemFlags flags, uint image_type, uint plane, uint num_entries, uint* d3d11_formats, uint* num_texture_formats) => CLPointers.clGetSupportedD3D11TextureFormatsINTEL_Lazy(context, (ulong)flags, image_type, plane, num_entries, d3d11_formats, num_texture_formats);
             
             /// <summary> <b>[requires: cl_intel_sharing_format_query_dx9]</b> <b>[entry point: <c>clGetSupportedDX9MediaSurfaceFormatsINTEL</c>]</b><br/>  </summary>
             /// <remarks><see href="TODO: Proper link">intel_sharing_format_query_dx9.txt</see></remarks>
-            public static int GetSupportedDX9MediaSurfaceFormatsINTEL(IntPtr context, ulong flags, uint image_type, uint plane, uint num_entries, uint* dx9_formats, uint* num_surface_formats) => CLPointers.clGetSupportedDX9MediaSurfaceFormatsINTEL_Lazy(context, flags, image_type, plane, num_entries, dx9_formats, num_surface_formats);
+            public static int GetSupportedDX9MediaSurfaceFormatsINTEL(IntPtr context, MemFlags flags, uint image_type, uint plane, uint num_entries, uint* dx9_formats, uint* num_surface_formats) => CLPointers.clGetSupportedDX9MediaSurfaceFormatsINTEL_Lazy(context, (ulong)flags, image_type, plane, num_entries, dx9_formats, num_surface_formats);
             
             /// <summary> <b>[requires: cl_intel_sharing_format_query_gl]</b> <b>[entry point: <c>clGetSupportedGLTextureFormatsINTEL</c>]</b><br/>  </summary>
             /// <remarks><see href="TODO: Proper link">intel_sharing_format_query_gl.txt</see></remarks>
-            public static int GetSupportedGLTextureFormatsINTEL(IntPtr context, ulong flags, uint image_type, uint num_entries, uint* gl_formats, uint* num_texture_formats) => CLPointers.clGetSupportedGLTextureFormatsINTEL_Lazy(context, flags, image_type, num_entries, gl_formats, num_texture_formats);
+            public static int GetSupportedGLTextureFormatsINTEL(IntPtr context, MemFlags flags, uint image_type, uint num_entries, uint* gl_formats, uint* num_texture_formats) => CLPointers.clGetSupportedGLTextureFormatsINTEL_Lazy(context, (ulong)flags, image_type, num_entries, gl_formats, num_texture_formats);
             
             /// <summary> <b>[requires: cl_intel_sharing_format_query_va_api]</b> <b>[entry point: <c>clGetSupportedVA_APIMediaSurfaceFormatsINTEL</c>]</b><br/>  </summary>
             /// <remarks><see href="TODO: Proper link">intel_sharing_format_query_va_api.txt</see></remarks>
-            public static int GetSupportedVA_APIMediaSurfaceFormatsINTEL(IntPtr context, ulong flags, uint image_type, uint plane, uint num_entries, VAImageFormat* va_api_formats, uint* num_surface_formats) => CLPointers.clGetSupportedVA_APIMediaSurfaceFormatsINTEL_Lazy(context, flags, image_type, plane, num_entries, va_api_formats, num_surface_formats);
+            public static int GetSupportedVA_APIMediaSurfaceFormatsINTEL(IntPtr context, MemFlags flags, uint image_type, uint plane, uint num_entries, VAImageFormat* va_api_formats, uint* num_surface_formats) => CLPointers.clGetSupportedVA_APIMediaSurfaceFormatsINTEL_Lazy(context, (ulong)flags, image_type, plane, num_entries, va_api_formats, num_surface_formats);
             
             /// <summary> <b>[requires: cl_intel_unified_shared_memory]</b> <b>[entry point: <c>clHostMemAllocINTEL</c>]</b><br/>  </summary>
             /// <remarks><see href="TODO: Proper link">intel_unified_shared_memory.txt</see></remarks>
@@ -661,55 +661,55 @@ namespace OpenTK.Compute2.OpenCL
             
             /// <summary> <b>[requires: cl_khr_d3d10_sharing]</b> <b>[entry point: <c>clCreateFromD3D10BufferKHR</c>]</b><br/>  </summary>
             /// <remarks><see href="TODO: Proper link">khr_d3d10_sharing.txt</see></remarks>
-            public static IntPtr CreateFromD3D10BufferKHR(IntPtr context, ulong flags, IntPtr* resource, int* errcode_ret) => CLPointers.clCreateFromD3D10BufferKHR_Lazy(context, flags, resource, errcode_ret);
+            public static IntPtr CreateFromD3D10BufferKHR(IntPtr context, MemFlags flags, IntPtr* resource, int* errcode_ret) => CLPointers.clCreateFromD3D10BufferKHR_Lazy(context, (ulong)flags, resource, errcode_ret);
             
             /// <summary> <b>[requires: cl_khr_d3d10_sharing]</b> <b>[entry point: <c>clCreateFromD3D10Texture2DKHR</c>]</b><br/>  </summary>
             /// <remarks><see href="TODO: Proper link">khr_d3d10_sharing.txt</see></remarks>
-            public static IntPtr CreateFromD3D10Texture2DKHR(IntPtr context, ulong flags, IntPtr* resource, uint subresource, int* errcode_ret) => CLPointers.clCreateFromD3D10Texture2DKHR_Lazy(context, flags, resource, subresource, errcode_ret);
+            public static IntPtr CreateFromD3D10Texture2DKHR(IntPtr context, MemFlags flags, IntPtr* resource, uint subresource, int* errcode_ret) => CLPointers.clCreateFromD3D10Texture2DKHR_Lazy(context, (ulong)flags, resource, subresource, errcode_ret);
             
             /// <summary> <b>[requires: cl_khr_d3d10_sharing]</b> <b>[entry point: <c>clCreateFromD3D10Texture3DKHR</c>]</b><br/>  </summary>
             /// <remarks><see href="TODO: Proper link">khr_d3d10_sharing.txt</see></remarks>
-            public static IntPtr CreateFromD3D10Texture3DKHR(IntPtr context, ulong flags, IntPtr* resource, uint subresource, int* errcode_ret) => CLPointers.clCreateFromD3D10Texture3DKHR_Lazy(context, flags, resource, subresource, errcode_ret);
+            public static IntPtr CreateFromD3D10Texture3DKHR(IntPtr context, MemFlags flags, IntPtr* resource, uint subresource, int* errcode_ret) => CLPointers.clCreateFromD3D10Texture3DKHR_Lazy(context, (ulong)flags, resource, subresource, errcode_ret);
             
             /// <summary> <b>[requires: cl_khr_d3d11_sharing]</b> <b>[entry point: <c>clCreateFromD3D11BufferKHR</c>]</b><br/>  </summary>
             /// <remarks><see href="TODO: Proper link">khr_d3d11_sharing.txt</see></remarks>
-            public static IntPtr CreateFromD3D11BufferKHR(IntPtr context, ulong flags, IntPtr* resource, int* errcode_ret) => CLPointers.clCreateFromD3D11BufferKHR_Lazy(context, flags, resource, errcode_ret);
+            public static IntPtr CreateFromD3D11BufferKHR(IntPtr context, MemFlags flags, IntPtr* resource, int* errcode_ret) => CLPointers.clCreateFromD3D11BufferKHR_Lazy(context, (ulong)flags, resource, errcode_ret);
             
             /// <summary> <b>[requires: cl_khr_d3d11_sharing]</b> <b>[entry point: <c>clCreateFromD3D11Texture2DKHR</c>]</b><br/>  </summary>
             /// <remarks><see href="TODO: Proper link">khr_d3d11_sharing.txt</see></remarks>
-            public static IntPtr CreateFromD3D11Texture2DKHR(IntPtr context, ulong flags, IntPtr* resource, uint subresource, int* errcode_ret) => CLPointers.clCreateFromD3D11Texture2DKHR_Lazy(context, flags, resource, subresource, errcode_ret);
+            public static IntPtr CreateFromD3D11Texture2DKHR(IntPtr context, MemFlags flags, IntPtr* resource, uint subresource, int* errcode_ret) => CLPointers.clCreateFromD3D11Texture2DKHR_Lazy(context, (ulong)flags, resource, subresource, errcode_ret);
             
             /// <summary> <b>[requires: cl_khr_d3d11_sharing]</b> <b>[entry point: <c>clCreateFromD3D11Texture3DKHR</c>]</b><br/>  </summary>
             /// <remarks><see href="TODO: Proper link">khr_d3d11_sharing.txt</see></remarks>
-            public static IntPtr CreateFromD3D11Texture3DKHR(IntPtr context, ulong flags, IntPtr* resource, uint subresource, int* errcode_ret) => CLPointers.clCreateFromD3D11Texture3DKHR_Lazy(context, flags, resource, subresource, errcode_ret);
+            public static IntPtr CreateFromD3D11Texture3DKHR(IntPtr context, MemFlags flags, IntPtr* resource, uint subresource, int* errcode_ret) => CLPointers.clCreateFromD3D11Texture3DKHR_Lazy(context, (ulong)flags, resource, subresource, errcode_ret);
             
             /// <summary> <b>[requires: cl_khr_dx9_media_sharing]</b> <b>[entry point: <c>clCreateFromDX9MediaSurfaceKHR</c>]</b><br/>  </summary>
             /// <remarks><see href="TODO: Proper link">khr_dx9_media_sharing.txt</see></remarks>
-            public static IntPtr CreateFromDX9MediaSurfaceKHR(IntPtr context, ulong flags, uint adapter_type, void* surface_info, uint plane, int* errcode_ret) => CLPointers.clCreateFromDX9MediaSurfaceKHR_Lazy(context, flags, adapter_type, surface_info, plane, errcode_ret);
+            public static IntPtr CreateFromDX9MediaSurfaceKHR(IntPtr context, MemFlags flags, uint adapter_type, void* surface_info, uint plane, int* errcode_ret) => CLPointers.clCreateFromDX9MediaSurfaceKHR_Lazy(context, (ulong)flags, adapter_type, surface_info, plane, errcode_ret);
             
             /// <summary> <b>[requires: cl_khr_egl_image]</b> <b>[entry point: <c>clCreateFromEGLImageKHR</c>]</b><br/>  </summary>
             /// <remarks><see href="TODO: Proper link">khr_egl_image.txt</see></remarks>
-            public static IntPtr CreateFromEGLImageKHR(IntPtr context, void* egldisplay, void* eglimage, ulong flags, IntPtr* properties, int* errcode_ret) => CLPointers.clCreateFromEGLImageKHR_Lazy(context, egldisplay, eglimage, flags, properties, errcode_ret);
+            public static IntPtr CreateFromEGLImageKHR(IntPtr context, void* egldisplay, void* eglimage, MemFlags flags, IntPtr* properties, int* errcode_ret) => CLPointers.clCreateFromEGLImageKHR_Lazy(context, egldisplay, eglimage, (ulong)flags, properties, errcode_ret);
             
             /// <summary> <b>[requires: cl_khr_gl_sharing]</b> <b>[entry point: <c>clCreateFromGLBuffer</c>]</b><br/>  </summary>
             /// <remarks><see href="TODO: Proper link">khr_gl_sharing.txt</see></remarks>
-            public static IntPtr CreateFromGLBuffer(IntPtr context, ulong flags, uint bufobj, int* errcode_ret) => CLPointers.clCreateFromGLBuffer_Lazy(context, flags, bufobj, errcode_ret);
+            public static IntPtr CreateFromGLBuffer(IntPtr context, MemFlags flags, uint bufobj, int* errcode_ret) => CLPointers.clCreateFromGLBuffer_Lazy(context, (ulong)flags, bufobj, errcode_ret);
             
             /// <summary> <b>[requires: cl_khr_gl_sharing]</b> <b>[entry point: <c>clCreateFromGLRenderbuffer</c>]</b><br/>  </summary>
             /// <remarks><see href="TODO: Proper link">khr_gl_sharing.txt</see></remarks>
-            public static IntPtr CreateFromGLRenderbuffer(IntPtr context, ulong flags, uint renderbuffer, int* errcode_ret) => CLPointers.clCreateFromGLRenderbuffer_Lazy(context, flags, renderbuffer, errcode_ret);
+            public static IntPtr CreateFromGLRenderbuffer(IntPtr context, MemFlags flags, uint renderbuffer, int* errcode_ret) => CLPointers.clCreateFromGLRenderbuffer_Lazy(context, (ulong)flags, renderbuffer, errcode_ret);
             
             /// <summary> <b>[requires: cl_khr_gl_sharing]</b> <b>[entry point: <c>clCreateFromGLTexture</c>]</b><br/>  </summary>
             /// <remarks><see href="TODO: Proper link">khr_gl_sharing.txt</see></remarks>
-            public static IntPtr CreateFromGLTexture(IntPtr context, ulong flags, uint target, int miplevel, uint texture, int* errcode_ret) => CLPointers.clCreateFromGLTexture_Lazy(context, flags, target, miplevel, texture, errcode_ret);
+            public static IntPtr CreateFromGLTexture(IntPtr context, MemFlags flags, uint target, int miplevel, uint texture, int* errcode_ret) => CLPointers.clCreateFromGLTexture_Lazy(context, (ulong)flags, target, miplevel, texture, errcode_ret);
             
             /// <summary> <b>[requires: cl_khr_gl_sharing]</b> <b>[entry point: <c>clCreateFromGLTexture2D</c>]</b><br/>  </summary>
             /// <remarks><see href="TODO: Proper link">khr_gl_sharing.txt</see></remarks>
-            public static IntPtr CreateFromGLTexture2D(IntPtr context, ulong flags, uint target, int miplevel, uint texture, int* errcode_ret) => CLPointers.clCreateFromGLTexture2D_Lazy(context, flags, target, miplevel, texture, errcode_ret);
+            public static IntPtr CreateFromGLTexture2D(IntPtr context, MemFlags flags, uint target, int miplevel, uint texture, int* errcode_ret) => CLPointers.clCreateFromGLTexture2D_Lazy(context, (ulong)flags, target, miplevel, texture, errcode_ret);
             
             /// <summary> <b>[requires: cl_khr_gl_sharing]</b> <b>[entry point: <c>clCreateFromGLTexture3D</c>]</b><br/>  </summary>
             /// <remarks><see href="TODO: Proper link">khr_gl_sharing.txt</see></remarks>
-            public static IntPtr CreateFromGLTexture3D(IntPtr context, ulong flags, uint target, int miplevel, uint texture, int* errcode_ret) => CLPointers.clCreateFromGLTexture3D_Lazy(context, flags, target, miplevel, texture, errcode_ret);
+            public static IntPtr CreateFromGLTexture3D(IntPtr context, MemFlags flags, uint target, int miplevel, uint texture, int* errcode_ret) => CLPointers.clCreateFromGLTexture3D_Lazy(context, (ulong)flags, target, miplevel, texture, errcode_ret);
             
             /// <summary> <b>[requires: cl_khr_il_program]</b> <b>[entry point: <c>clCreateProgramWithILKHR</c>]</b><br/>  </summary>
             /// <remarks><see href="TODO: Proper link">khr_il_program.txt</see></remarks>
@@ -837,7 +837,7 @@ namespace OpenTK.Compute2.OpenCL
             
             /// <summary> <b>[requires: cl_khr_unified_svm]</b> <b>[entry point: <c>clGetSVMSuggestedTypeIndexKHR</c>]</b><br/>  </summary>
             /// <remarks><see href="TODO: Proper link">khr_unified_svm.txt</see></remarks>
-            public static int GetSVMSuggestedTypeIndexKHR(IntPtr context, ulong required_capabilities, ulong desired_capabilities, ulong* properties, nuint size, uint* suggested_svm_type_index) => CLPointers.clGetSVMSuggestedTypeIndexKHR_Lazy(context, required_capabilities, desired_capabilities, properties, size, suggested_svm_type_index);
+            public static int GetSVMSuggestedTypeIndexKHR(IntPtr context, SvmCapabilitiesKhr required_capabilities, SvmCapabilitiesKhr desired_capabilities, ulong* properties, nuint size, uint* suggested_svm_type_index) => CLPointers.clGetSVMSuggestedTypeIndexKHR_Lazy(context, (ulong)required_capabilities, (ulong)desired_capabilities, properties, size, suggested_svm_type_index);
             
             /// <summary> <b>[requires: cl_khr_icd]</b> <b>[entry point: <c>clIcdGetFunctionAddressForPlatformKHR</c>]</b><br/>  </summary>
             /// <remarks><see href="TODO: Proper link">khr_icd.txt</see></remarks>
@@ -865,7 +865,7 @@ namespace OpenTK.Compute2.OpenCL
             
             /// <summary> <b>[requires: cl_khr_command_buffer_multi_device]</b> <b>[entry point: <c>clRemapCommandBufferKHR</c>]</b><br/>  </summary>
             /// <remarks><see href="TODO: Proper link">khr_command_buffer_multi_device.txt</see></remarks>
-            public static IntPtr RemapCommandBufferKHR(IntPtr command_buffer, uint automatic, uint num_queues, IntPtr* queues, uint num_handles, IntPtr* handles, IntPtr* handles_ret, int* errcode_ret) => CLPointers.clRemapCommandBufferKHR_Lazy(command_buffer, automatic, num_queues, queues, num_handles, handles, handles_ret, errcode_ret);
+            public static IntPtr RemapCommandBufferKHR(IntPtr command_buffer, Bool automatic, uint num_queues, IntPtr* queues, uint num_handles, IntPtr* handles, IntPtr* handles_ret, int* errcode_ret) => CLPointers.clRemapCommandBufferKHR_Lazy(command_buffer, (uint)automatic, num_queues, queues, num_handles, handles, handles_ret, errcode_ret);
             
             /// <summary> <b>[requires: cl_khr_command_buffer]</b> <b>[entry point: <c>clRetainCommandBufferKHR</c>]</b><br/>  </summary>
             /// <remarks><see href="TODO: Proper link">khr_command_buffer.txt</see></remarks>
@@ -889,7 +889,7 @@ namespace OpenTK.Compute2.OpenCL
             
             /// <summary> <b>[requires: cl_khr_command_buffer_mutable_dispatch]</b> <b>[entry point: <c>clUpdateMutableCommandsKHR</c>]</b><br/>  </summary>
             /// <remarks><see href="TODO: Proper link">khr_command_buffer_mutable_dispatch.txt</see></remarks>
-            public static int UpdateMutableCommandsKHR(IntPtr command_buffer, uint num_configs, uint* config_types, void** configs) => CLPointers.clUpdateMutableCommandsKHR_Lazy(command_buffer, num_configs, config_types, configs);
+            public static int UpdateMutableCommandsKHR(IntPtr command_buffer, uint num_configs, CommandBufferUpdateTypeKhr* config_types, void** configs) => CLPointers.clUpdateMutableCommandsKHR_Lazy(command_buffer, num_configs, (uint*)config_types, configs);
             
         }
         /// <summary>loader extensions.</summary>
@@ -901,7 +901,7 @@ namespace OpenTK.Compute2.OpenCL
             
             /// <summary> <b>[requires: cl_loader_info]</b> <b>[entry point: <c>clGetICDLoaderInfoOCLICD</c>]</b><br/>  </summary>
             /// <remarks><see href="TODO: Proper link">loader_info.txt</see></remarks>
-            public static int GetICDLoaderInfoOCLICD(uint param_name, nuint param_value_size, void* param_value, nuint* param_value_size_ret) => CLPointers.clGetICDLoaderInfoOCLICD_Lazy(param_name, param_value_size, param_value, param_value_size_ret);
+            public static int GetICDLoaderInfoOCLICD(IcdlInfo param_name, nuint param_value_size, void* param_value, nuint* param_value_size_ret) => CLPointers.clGetICDLoaderInfoOCLICD_Lazy((uint)param_name, param_value_size, param_value, param_value_size_ret);
             
             /// <summary> <b>[requires: cl_loader_layers]</b> <b>[entry point: <c>clGetLayerInfo</c>]</b><br/>  </summary>
             /// <remarks><see href="TODO: Proper link">loader_layers.txt</see></remarks>

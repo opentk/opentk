@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\OpenTK.Compute2\OpenTK.Compute2.csproj" />
+    <ProjectReference Include="..\..\src\OpenTK.Compute\OpenTK.Compute.csproj" />
+  </ItemGroup>
+
+</Project>
