@@ -4,7 +4,7 @@ using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-namespace OpenTK.Compute2
+namespace OpenTK.Compute2.OpenCL
 {
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
     /// <summary></summary>
@@ -96,11 +96,11 @@ namespace OpenTK.Compute2
     public unsafe struct cl_image_format
     {
         /// <summary></summary>
-        public uint image_channel_order;
+        public ChannelOrder image_channel_order;
         /// <summary></summary>
-        public uint image_channel_data_type;
+        public ChannelType image_channel_data_type;
         public cl_image_format() { }
-        public cl_image_format(uint image_channel_order, uint image_channel_data_type)
+        public cl_image_format(ChannelOrder image_channel_order, ChannelType image_channel_data_type)
         {
             this.image_channel_order = image_channel_order;
             this.image_channel_data_type = image_channel_data_type;
@@ -111,7 +111,7 @@ namespace OpenTK.Compute2
     public unsafe struct cl_image_desc
     {
         /// <summary></summary>
-        public uint image_type;
+        public MemObjectType image_type;
         /// <summary></summary>
         public nuint image_width;
         /// <summary></summary>
@@ -129,7 +129,7 @@ namespace OpenTK.Compute2
         /// <summary></summary>
         public uint num_samples;
         public cl_image_desc() { }
-        public cl_image_desc(uint image_type, nuint image_width, nuint image_height, nuint image_depth, nuint image_array_size, nuint image_row_pitch, nuint image_slice_pitch, uint num_mip_levels, uint num_samples)
+        public cl_image_desc(MemObjectType image_type, nuint image_width, nuint image_height, nuint image_depth, nuint image_array_size, nuint image_row_pitch, nuint image_slice_pitch, uint num_mip_levels, uint num_samples)
         {
             this.image_type = image_type;
             this.image_width = image_width;
@@ -236,11 +236,11 @@ namespace OpenTK.Compute2
         /// <summary></summary>
         public nuint size;
         /// <summary></summary>
-        public uint type;
+        public UnifiedSharedMemoryTypeIntel type;
         /// <summary></summary>
         public int arg_index;
         public cl_kernel_allocation_info_intel() { }
-        public cl_kernel_allocation_info_intel(void* @base, nuint size, uint type, int arg_index)
+        public cl_kernel_allocation_info_intel(void* @base, nuint size, UnifiedSharedMemoryTypeIntel type, int arg_index)
         {
             this.@base = @base;
             this.size = size;

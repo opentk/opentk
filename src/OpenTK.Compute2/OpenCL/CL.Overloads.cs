@@ -309,13 +309,13 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="CreateBufferWithProperties(IntPtr, ulong*, MemFlags, nuint, void*, int*)"/>
-        public static unsafe IntPtr CreateBufferWithProperties(IntPtr context, Span<ulong> properties, MemFlags flags, nuint size, IntPtr host_ptr, Span<int> errcode_ret)
+        /// <inheritdoc cref="CreateBufferWithProperties(IntPtr, MemProperties*, MemFlags, nuint, void*, int*)"/>
+        public static unsafe IntPtr CreateBufferWithProperties(IntPtr context, Span<MemProperties> properties, MemFlags flags, nuint size, IntPtr host_ptr, Span<int> errcode_ret)
         {
             IntPtr returnValue;
             fixed (int* errcode_ret_ptr = errcode_ret)
             {
-                fixed (ulong* properties_ptr = properties)
+                fixed (MemProperties* properties_ptr = properties)
                 {
                     void* host_ptr_vptr = (void*)host_ptr;
                     returnValue = CreateBufferWithProperties(context, properties_ptr, flags, size, host_ptr_vptr, errcode_ret_ptr);
@@ -323,13 +323,13 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="CreateBufferWithProperties(IntPtr, ulong*, MemFlags, nuint, void*, int*)"/>
-        public static unsafe IntPtr CreateBufferWithProperties(IntPtr context, ulong[] properties, MemFlags flags, nuint size, IntPtr host_ptr, int[] errcode_ret)
+        /// <inheritdoc cref="CreateBufferWithProperties(IntPtr, MemProperties*, MemFlags, nuint, void*, int*)"/>
+        public static unsafe IntPtr CreateBufferWithProperties(IntPtr context, MemProperties[] properties, MemFlags flags, nuint size, IntPtr host_ptr, int[] errcode_ret)
         {
             IntPtr returnValue;
             fixed (int* errcode_ret_ptr = errcode_ret)
             {
-                fixed (ulong* properties_ptr = properties)
+                fixed (MemProperties* properties_ptr = properties)
                 {
                     void* host_ptr_vptr = (void*)host_ptr;
                     returnValue = CreateBufferWithProperties(context, properties_ptr, flags, size, host_ptr_vptr, errcode_ret_ptr);
@@ -337,11 +337,11 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="CreateBufferWithProperties(IntPtr, ulong*, MemFlags, nuint, void*, int*)"/>
-        public static unsafe IntPtr CreateBufferWithProperties(IntPtr context, ref ulong properties, MemFlags flags, nuint size, IntPtr host_ptr, ref int errcode_ret)
+        /// <inheritdoc cref="CreateBufferWithProperties(IntPtr, MemProperties*, MemFlags, nuint, void*, int*)"/>
+        public static unsafe IntPtr CreateBufferWithProperties(IntPtr context, ref MemProperties properties, MemFlags flags, nuint size, IntPtr host_ptr, ref int errcode_ret)
         {
             IntPtr returnValue;
-            fixed (ulong* properties_ptr = &properties)
+            fixed (MemProperties* properties_ptr = &properties)
             fixed (int* errcode_ret_ptr = &errcode_ret)
             {
                 void* host_ptr_vptr = (void*)host_ptr;
@@ -349,8 +349,8 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="CreateBufferWithProperties(IntPtr, ulong*, MemFlags, nuint, void*, int*)"/>
-        public static unsafe IntPtr CreateBufferWithProperties<T1>(IntPtr context, Span<ulong> properties, MemFlags flags, nuint size, Span<T1> host_ptr, Span<int> errcode_ret)
+        /// <inheritdoc cref="CreateBufferWithProperties(IntPtr, MemProperties*, MemFlags, nuint, void*, int*)"/>
+        public static unsafe IntPtr CreateBufferWithProperties<T1>(IntPtr context, Span<MemProperties> properties, MemFlags flags, nuint size, Span<T1> host_ptr, Span<int> errcode_ret)
             where T1 : unmanaged
         {
             IntPtr returnValue;
@@ -358,7 +358,7 @@ namespace OpenTK.Compute2.OpenCL
             {
                 fixed (void* host_ptr_ptr = host_ptr)
                 {
-                    fixed (ulong* properties_ptr = properties)
+                    fixed (MemProperties* properties_ptr = properties)
                     {
                         returnValue = CreateBufferWithProperties(context, properties_ptr, flags, size, host_ptr_ptr, errcode_ret_ptr);
                     }
@@ -366,8 +366,8 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="CreateBufferWithProperties(IntPtr, ulong*, MemFlags, nuint, void*, int*)"/>
-        public static unsafe IntPtr CreateBufferWithProperties<T1>(IntPtr context, ulong[] properties, MemFlags flags, nuint size, T1[] host_ptr, int[] errcode_ret)
+        /// <inheritdoc cref="CreateBufferWithProperties(IntPtr, MemProperties*, MemFlags, nuint, void*, int*)"/>
+        public static unsafe IntPtr CreateBufferWithProperties<T1>(IntPtr context, MemProperties[] properties, MemFlags flags, nuint size, T1[] host_ptr, int[] errcode_ret)
             where T1 : unmanaged
         {
             IntPtr returnValue;
@@ -375,7 +375,7 @@ namespace OpenTK.Compute2.OpenCL
             {
                 fixed (void* host_ptr_ptr = host_ptr)
                 {
-                    fixed (ulong* properties_ptr = properties)
+                    fixed (MemProperties* properties_ptr = properties)
                     {
                         returnValue = CreateBufferWithProperties(context, properties_ptr, flags, size, host_ptr_ptr, errcode_ret_ptr);
                     }
@@ -383,12 +383,12 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="CreateBufferWithProperties(IntPtr, ulong*, MemFlags, nuint, void*, int*)"/>
-        public static unsafe IntPtr CreateBufferWithProperties<T1>(IntPtr context, ref ulong properties, MemFlags flags, nuint size, ref T1 host_ptr, ref int errcode_ret)
+        /// <inheritdoc cref="CreateBufferWithProperties(IntPtr, MemProperties*, MemFlags, nuint, void*, int*)"/>
+        public static unsafe IntPtr CreateBufferWithProperties<T1>(IntPtr context, ref MemProperties properties, MemFlags flags, nuint size, ref T1 host_ptr, ref int errcode_ret)
             where T1 : unmanaged
         {
             IntPtr returnValue;
-            fixed (ulong* properties_ptr = &properties)
+            fixed (MemProperties* properties_ptr = &properties)
             fixed (void* host_ptr_ptr = &host_ptr)
             fixed (int* errcode_ret_ptr = &errcode_ret)
             {
@@ -426,37 +426,37 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="CreateCommandQueueWithProperties(IntPtr, IntPtr, ulong*, int*)"/>
-        public static unsafe IntPtr CreateCommandQueueWithProperties(IntPtr context, IntPtr device, Span<ulong> properties, Span<int> errcode_ret)
+        /// <inheritdoc cref="CreateCommandQueueWithProperties(IntPtr, IntPtr, QueueProperties*, int*)"/>
+        public static unsafe IntPtr CreateCommandQueueWithProperties(IntPtr context, IntPtr device, Span<QueueProperties> properties, Span<int> errcode_ret)
         {
             IntPtr returnValue;
             fixed (int* errcode_ret_ptr = errcode_ret)
             {
-                fixed (ulong* properties_ptr = properties)
+                fixed (QueueProperties* properties_ptr = properties)
                 {
                     returnValue = CreateCommandQueueWithProperties(context, device, properties_ptr, errcode_ret_ptr);
                 }
             }
             return returnValue;
         }
-        /// <inheritdoc cref="CreateCommandQueueWithProperties(IntPtr, IntPtr, ulong*, int*)"/>
-        public static unsafe IntPtr CreateCommandQueueWithProperties(IntPtr context, IntPtr device, ulong[] properties, int[] errcode_ret)
+        /// <inheritdoc cref="CreateCommandQueueWithProperties(IntPtr, IntPtr, QueueProperties*, int*)"/>
+        public static unsafe IntPtr CreateCommandQueueWithProperties(IntPtr context, IntPtr device, QueueProperties[] properties, int[] errcode_ret)
         {
             IntPtr returnValue;
             fixed (int* errcode_ret_ptr = errcode_ret)
             {
-                fixed (ulong* properties_ptr = properties)
+                fixed (QueueProperties* properties_ptr = properties)
                 {
                     returnValue = CreateCommandQueueWithProperties(context, device, properties_ptr, errcode_ret_ptr);
                 }
             }
             return returnValue;
         }
-        /// <inheritdoc cref="CreateCommandQueueWithProperties(IntPtr, IntPtr, ulong*, int*)"/>
-        public static unsafe IntPtr CreateCommandQueueWithProperties(IntPtr context, IntPtr device, ref ulong properties, ref int errcode_ret)
+        /// <inheritdoc cref="CreateCommandQueueWithProperties(IntPtr, IntPtr, QueueProperties*, int*)"/>
+        public static unsafe IntPtr CreateCommandQueueWithProperties(IntPtr context, IntPtr device, ref QueueProperties properties, ref int errcode_ret)
         {
             IntPtr returnValue;
-            fixed (ulong* properties_ptr = &properties)
+            fixed (QueueProperties* properties_ptr = &properties)
             fixed (int* errcode_ret_ptr = &errcode_ret)
             {
                 returnValue = CreateCommandQueueWithProperties(context, device, properties_ptr, errcode_ret_ptr);
@@ -926,8 +926,8 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="CreateImageWithProperties(IntPtr, ulong*, MemFlags, cl_image_format*, cl_image_desc*, void*, int*)"/>
-        public static unsafe IntPtr CreateImageWithProperties(IntPtr context, Span<ulong> properties, MemFlags flags, Span<cl_image_format> image_format, Span<cl_image_desc> image_desc, IntPtr host_ptr, Span<int> errcode_ret)
+        /// <inheritdoc cref="CreateImageWithProperties(IntPtr, MemProperties*, MemFlags, cl_image_format*, cl_image_desc*, void*, int*)"/>
+        public static unsafe IntPtr CreateImageWithProperties(IntPtr context, Span<MemProperties> properties, MemFlags flags, Span<cl_image_format> image_format, Span<cl_image_desc> image_desc, IntPtr host_ptr, Span<int> errcode_ret)
         {
             IntPtr returnValue;
             fixed (int* errcode_ret_ptr = errcode_ret)
@@ -936,7 +936,7 @@ namespace OpenTK.Compute2.OpenCL
                 {
                     fixed (cl_image_format* image_format_ptr = image_format)
                     {
-                        fixed (ulong* properties_ptr = properties)
+                        fixed (MemProperties* properties_ptr = properties)
                         {
                             void* host_ptr_vptr = (void*)host_ptr;
                             returnValue = CreateImageWithProperties(context, properties_ptr, flags, image_format_ptr, image_desc_ptr, host_ptr_vptr, errcode_ret_ptr);
@@ -946,8 +946,8 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="CreateImageWithProperties(IntPtr, ulong*, MemFlags, cl_image_format*, cl_image_desc*, void*, int*)"/>
-        public static unsafe IntPtr CreateImageWithProperties(IntPtr context, ulong[] properties, MemFlags flags, cl_image_format[] image_format, cl_image_desc[] image_desc, IntPtr host_ptr, int[] errcode_ret)
+        /// <inheritdoc cref="CreateImageWithProperties(IntPtr, MemProperties*, MemFlags, cl_image_format*, cl_image_desc*, void*, int*)"/>
+        public static unsafe IntPtr CreateImageWithProperties(IntPtr context, MemProperties[] properties, MemFlags flags, cl_image_format[] image_format, cl_image_desc[] image_desc, IntPtr host_ptr, int[] errcode_ret)
         {
             IntPtr returnValue;
             fixed (int* errcode_ret_ptr = errcode_ret)
@@ -956,7 +956,7 @@ namespace OpenTK.Compute2.OpenCL
                 {
                     fixed (cl_image_format* image_format_ptr = image_format)
                     {
-                        fixed (ulong* properties_ptr = properties)
+                        fixed (MemProperties* properties_ptr = properties)
                         {
                             void* host_ptr_vptr = (void*)host_ptr;
                             returnValue = CreateImageWithProperties(context, properties_ptr, flags, image_format_ptr, image_desc_ptr, host_ptr_vptr, errcode_ret_ptr);
@@ -966,11 +966,11 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="CreateImageWithProperties(IntPtr, ulong*, MemFlags, cl_image_format*, cl_image_desc*, void*, int*)"/>
-        public static unsafe IntPtr CreateImageWithProperties(IntPtr context, ref ulong properties, MemFlags flags, ref cl_image_format image_format, ref cl_image_desc image_desc, IntPtr host_ptr, ref int errcode_ret)
+        /// <inheritdoc cref="CreateImageWithProperties(IntPtr, MemProperties*, MemFlags, cl_image_format*, cl_image_desc*, void*, int*)"/>
+        public static unsafe IntPtr CreateImageWithProperties(IntPtr context, ref MemProperties properties, MemFlags flags, ref cl_image_format image_format, ref cl_image_desc image_desc, IntPtr host_ptr, ref int errcode_ret)
         {
             IntPtr returnValue;
-            fixed (ulong* properties_ptr = &properties)
+            fixed (MemProperties* properties_ptr = &properties)
             fixed (cl_image_format* image_format_ptr = &image_format)
             fixed (cl_image_desc* image_desc_ptr = &image_desc)
             fixed (int* errcode_ret_ptr = &errcode_ret)
@@ -980,8 +980,8 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="CreateImageWithProperties(IntPtr, ulong*, MemFlags, cl_image_format*, cl_image_desc*, void*, int*)"/>
-        public static unsafe IntPtr CreateImageWithProperties<T1>(IntPtr context, Span<ulong> properties, MemFlags flags, Span<cl_image_format> image_format, Span<cl_image_desc> image_desc, Span<T1> host_ptr, Span<int> errcode_ret)
+        /// <inheritdoc cref="CreateImageWithProperties(IntPtr, MemProperties*, MemFlags, cl_image_format*, cl_image_desc*, void*, int*)"/>
+        public static unsafe IntPtr CreateImageWithProperties<T1>(IntPtr context, Span<MemProperties> properties, MemFlags flags, Span<cl_image_format> image_format, Span<cl_image_desc> image_desc, Span<T1> host_ptr, Span<int> errcode_ret)
             where T1 : unmanaged
         {
             IntPtr returnValue;
@@ -993,7 +993,7 @@ namespace OpenTK.Compute2.OpenCL
                     {
                         fixed (cl_image_format* image_format_ptr = image_format)
                         {
-                            fixed (ulong* properties_ptr = properties)
+                            fixed (MemProperties* properties_ptr = properties)
                             {
                                 returnValue = CreateImageWithProperties(context, properties_ptr, flags, image_format_ptr, image_desc_ptr, host_ptr_ptr, errcode_ret_ptr);
                             }
@@ -1003,8 +1003,8 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="CreateImageWithProperties(IntPtr, ulong*, MemFlags, cl_image_format*, cl_image_desc*, void*, int*)"/>
-        public static unsafe IntPtr CreateImageWithProperties<T1>(IntPtr context, ulong[] properties, MemFlags flags, cl_image_format[] image_format, cl_image_desc[] image_desc, T1[] host_ptr, int[] errcode_ret)
+        /// <inheritdoc cref="CreateImageWithProperties(IntPtr, MemProperties*, MemFlags, cl_image_format*, cl_image_desc*, void*, int*)"/>
+        public static unsafe IntPtr CreateImageWithProperties<T1>(IntPtr context, MemProperties[] properties, MemFlags flags, cl_image_format[] image_format, cl_image_desc[] image_desc, T1[] host_ptr, int[] errcode_ret)
             where T1 : unmanaged
         {
             IntPtr returnValue;
@@ -1016,7 +1016,7 @@ namespace OpenTK.Compute2.OpenCL
                     {
                         fixed (cl_image_format* image_format_ptr = image_format)
                         {
-                            fixed (ulong* properties_ptr = properties)
+                            fixed (MemProperties* properties_ptr = properties)
                             {
                                 returnValue = CreateImageWithProperties(context, properties_ptr, flags, image_format_ptr, image_desc_ptr, host_ptr_ptr, errcode_ret_ptr);
                             }
@@ -1026,12 +1026,12 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="CreateImageWithProperties(IntPtr, ulong*, MemFlags, cl_image_format*, cl_image_desc*, void*, int*)"/>
-        public static unsafe IntPtr CreateImageWithProperties<T1>(IntPtr context, ref ulong properties, MemFlags flags, ref cl_image_format image_format, ref cl_image_desc image_desc, ref T1 host_ptr, ref int errcode_ret)
+        /// <inheritdoc cref="CreateImageWithProperties(IntPtr, MemProperties*, MemFlags, cl_image_format*, cl_image_desc*, void*, int*)"/>
+        public static unsafe IntPtr CreateImageWithProperties<T1>(IntPtr context, ref MemProperties properties, MemFlags flags, ref cl_image_format image_format, ref cl_image_desc image_desc, ref T1 host_ptr, ref int errcode_ret)
             where T1 : unmanaged
         {
             IntPtr returnValue;
-            fixed (ulong* properties_ptr = &properties)
+            fixed (MemProperties* properties_ptr = &properties)
             fixed (cl_image_format* image_format_ptr = &image_format)
             fixed (cl_image_desc* image_desc_ptr = &image_desc)
             fixed (void* host_ptr_ptr = &host_ptr)
@@ -1367,8 +1367,8 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="CreateSampler(IntPtr, Bool, uint, uint, int*)"/>
-        public static unsafe IntPtr CreateSampler(IntPtr context, Bool normalized_coords, uint addressing_mode, uint filter_mode, Span<int> errcode_ret)
+        /// <inheritdoc cref="CreateSampler(IntPtr, Bool, AddressingMode, FilterMode, int*)"/>
+        public static unsafe IntPtr CreateSampler(IntPtr context, Bool normalized_coords, AddressingMode addressing_mode, FilterMode filter_mode, Span<int> errcode_ret)
         {
             IntPtr returnValue;
             fixed (int* errcode_ret_ptr = errcode_ret)
@@ -1377,8 +1377,8 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="CreateSampler(IntPtr, Bool, uint, uint, int*)"/>
-        public static unsafe IntPtr CreateSampler(IntPtr context, Bool normalized_coords, uint addressing_mode, uint filter_mode, int[] errcode_ret)
+        /// <inheritdoc cref="CreateSampler(IntPtr, Bool, AddressingMode, FilterMode, int*)"/>
+        public static unsafe IntPtr CreateSampler(IntPtr context, Bool normalized_coords, AddressingMode addressing_mode, FilterMode filter_mode, int[] errcode_ret)
         {
             IntPtr returnValue;
             fixed (int* errcode_ret_ptr = errcode_ret)
@@ -1387,8 +1387,8 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="CreateSampler(IntPtr, Bool, uint, uint, int*)"/>
-        public static unsafe IntPtr CreateSampler(IntPtr context, Bool normalized_coords, uint addressing_mode, uint filter_mode, ref int errcode_ret)
+        /// <inheritdoc cref="CreateSampler(IntPtr, Bool, AddressingMode, FilterMode, int*)"/>
+        public static unsafe IntPtr CreateSampler(IntPtr context, Bool normalized_coords, AddressingMode addressing_mode, FilterMode filter_mode, ref int errcode_ret)
         {
             IntPtr returnValue;
             fixed (int* errcode_ret_ptr = &errcode_ret)
@@ -1434,8 +1434,8 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="CreateSubBuffer(IntPtr, MemFlags, uint, void*, int*)"/>
-        public static unsafe IntPtr CreateSubBuffer(IntPtr buffer, MemFlags flags, uint buffer_create_type, IntPtr buffer_create_info, Span<int> errcode_ret)
+        /// <inheritdoc cref="CreateSubBuffer(IntPtr, MemFlags, BufferCreateType, void*, int*)"/>
+        public static unsafe IntPtr CreateSubBuffer(IntPtr buffer, MemFlags flags, BufferCreateType buffer_create_type, IntPtr buffer_create_info, Span<int> errcode_ret)
         {
             IntPtr returnValue;
             fixed (int* errcode_ret_ptr = errcode_ret)
@@ -1445,8 +1445,8 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="CreateSubBuffer(IntPtr, MemFlags, uint, void*, int*)"/>
-        public static unsafe IntPtr CreateSubBuffer(IntPtr buffer, MemFlags flags, uint buffer_create_type, IntPtr buffer_create_info, int[] errcode_ret)
+        /// <inheritdoc cref="CreateSubBuffer(IntPtr, MemFlags, BufferCreateType, void*, int*)"/>
+        public static unsafe IntPtr CreateSubBuffer(IntPtr buffer, MemFlags flags, BufferCreateType buffer_create_type, IntPtr buffer_create_info, int[] errcode_ret)
         {
             IntPtr returnValue;
             fixed (int* errcode_ret_ptr = errcode_ret)
@@ -1456,8 +1456,8 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="CreateSubBuffer(IntPtr, MemFlags, uint, void*, int*)"/>
-        public static unsafe IntPtr CreateSubBuffer(IntPtr buffer, MemFlags flags, uint buffer_create_type, IntPtr buffer_create_info, ref int errcode_ret)
+        /// <inheritdoc cref="CreateSubBuffer(IntPtr, MemFlags, BufferCreateType, void*, int*)"/>
+        public static unsafe IntPtr CreateSubBuffer(IntPtr buffer, MemFlags flags, BufferCreateType buffer_create_type, IntPtr buffer_create_info, ref int errcode_ret)
         {
             IntPtr returnValue;
             fixed (int* errcode_ret_ptr = &errcode_ret)
@@ -1467,8 +1467,8 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="CreateSubBuffer(IntPtr, MemFlags, uint, void*, int*)"/>
-        public static unsafe IntPtr CreateSubBuffer<T1>(IntPtr buffer, MemFlags flags, uint buffer_create_type, ReadOnlySpan<T1> buffer_create_info, Span<int> errcode_ret)
+        /// <inheritdoc cref="CreateSubBuffer(IntPtr, MemFlags, BufferCreateType, void*, int*)"/>
+        public static unsafe IntPtr CreateSubBuffer<T1>(IntPtr buffer, MemFlags flags, BufferCreateType buffer_create_type, ReadOnlySpan<T1> buffer_create_info, Span<int> errcode_ret)
             where T1 : unmanaged
         {
             IntPtr returnValue;
@@ -1481,8 +1481,8 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="CreateSubBuffer(IntPtr, MemFlags, uint, void*, int*)"/>
-        public static unsafe IntPtr CreateSubBuffer<T1>(IntPtr buffer, MemFlags flags, uint buffer_create_type, T1[] buffer_create_info, int[] errcode_ret)
+        /// <inheritdoc cref="CreateSubBuffer(IntPtr, MemFlags, BufferCreateType, void*, int*)"/>
+        public static unsafe IntPtr CreateSubBuffer<T1>(IntPtr buffer, MemFlags flags, BufferCreateType buffer_create_type, T1[] buffer_create_info, int[] errcode_ret)
             where T1 : unmanaged
         {
             IntPtr returnValue;
@@ -1495,8 +1495,8 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="CreateSubBuffer(IntPtr, MemFlags, uint, void*, int*)"/>
-        public static unsafe IntPtr CreateSubBuffer<T1>(IntPtr buffer, MemFlags flags, uint buffer_create_type, ref readonly T1 buffer_create_info, ref int errcode_ret)
+        /// <inheritdoc cref="CreateSubBuffer(IntPtr, MemFlags, BufferCreateType, void*, int*)"/>
+        public static unsafe IntPtr CreateSubBuffer<T1>(IntPtr buffer, MemFlags flags, BufferCreateType buffer_create_type, ref readonly T1 buffer_create_info, ref int errcode_ret)
             where T1 : unmanaged
         {
             IntPtr returnValue;
@@ -3782,8 +3782,8 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="GetCommandQueueInfo(IntPtr, uint, nuint, void*, nuint*)"/>
-        public static unsafe int GetCommandQueueInfo(IntPtr command_queue, uint param_name, nuint param_value_size, IntPtr param_value, Span<nuint> param_value_size_ret)
+        /// <inheritdoc cref="GetCommandQueueInfo(IntPtr, CommandQueueInfo, nuint, void*, nuint*)"/>
+        public static unsafe int GetCommandQueueInfo(IntPtr command_queue, CommandQueueInfo param_name, nuint param_value_size, IntPtr param_value, Span<nuint> param_value_size_ret)
         {
             int returnValue;
             fixed (nuint* param_value_size_ret_ptr = param_value_size_ret)
@@ -3793,8 +3793,8 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="GetCommandQueueInfo(IntPtr, uint, nuint, void*, nuint*)"/>
-        public static unsafe int GetCommandQueueInfo(IntPtr command_queue, uint param_name, nuint param_value_size, IntPtr param_value, nuint[] param_value_size_ret)
+        /// <inheritdoc cref="GetCommandQueueInfo(IntPtr, CommandQueueInfo, nuint, void*, nuint*)"/>
+        public static unsafe int GetCommandQueueInfo(IntPtr command_queue, CommandQueueInfo param_name, nuint param_value_size, IntPtr param_value, nuint[] param_value_size_ret)
         {
             int returnValue;
             fixed (nuint* param_value_size_ret_ptr = param_value_size_ret)
@@ -3804,8 +3804,8 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="GetCommandQueueInfo(IntPtr, uint, nuint, void*, nuint*)"/>
-        public static unsafe int GetCommandQueueInfo(IntPtr command_queue, uint param_name, nuint param_value_size, IntPtr param_value, ref nuint param_value_size_ret)
+        /// <inheritdoc cref="GetCommandQueueInfo(IntPtr, CommandQueueInfo, nuint, void*, nuint*)"/>
+        public static unsafe int GetCommandQueueInfo(IntPtr command_queue, CommandQueueInfo param_name, nuint param_value_size, IntPtr param_value, ref nuint param_value_size_ret)
         {
             int returnValue;
             fixed (nuint* param_value_size_ret_ptr = &param_value_size_ret)
@@ -3815,8 +3815,8 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="GetCommandQueueInfo(IntPtr, uint, nuint, void*, nuint*)"/>
-        public static unsafe int GetCommandQueueInfo<T1>(IntPtr command_queue, uint param_name, nuint param_value_size, Span<T1> param_value, Span<nuint> param_value_size_ret)
+        /// <inheritdoc cref="GetCommandQueueInfo(IntPtr, CommandQueueInfo, nuint, void*, nuint*)"/>
+        public static unsafe int GetCommandQueueInfo<T1>(IntPtr command_queue, CommandQueueInfo param_name, nuint param_value_size, Span<T1> param_value, Span<nuint> param_value_size_ret)
             where T1 : unmanaged
         {
             int returnValue;
@@ -3829,8 +3829,8 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="GetCommandQueueInfo(IntPtr, uint, nuint, void*, nuint*)"/>
-        public static unsafe int GetCommandQueueInfo<T1>(IntPtr command_queue, uint param_name, nuint param_value_size, T1[] param_value, nuint[] param_value_size_ret)
+        /// <inheritdoc cref="GetCommandQueueInfo(IntPtr, CommandQueueInfo, nuint, void*, nuint*)"/>
+        public static unsafe int GetCommandQueueInfo<T1>(IntPtr command_queue, CommandQueueInfo param_name, nuint param_value_size, T1[] param_value, nuint[] param_value_size_ret)
             where T1 : unmanaged
         {
             int returnValue;
@@ -3843,8 +3843,8 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="GetCommandQueueInfo(IntPtr, uint, nuint, void*, nuint*)"/>
-        public static unsafe int GetCommandQueueInfo<T1>(IntPtr command_queue, uint param_name, nuint param_value_size, ref T1 param_value, ref nuint param_value_size_ret)
+        /// <inheritdoc cref="GetCommandQueueInfo(IntPtr, CommandQueueInfo, nuint, void*, nuint*)"/>
+        public static unsafe int GetCommandQueueInfo<T1>(IntPtr command_queue, CommandQueueInfo param_name, nuint param_value_size, ref T1 param_value, ref nuint param_value_size_ret)
             where T1 : unmanaged
         {
             int returnValue;
@@ -3855,8 +3855,8 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="GetContextInfo(IntPtr, uint, nuint, void*, nuint*)"/>
-        public static unsafe int GetContextInfo(IntPtr context, uint param_name, nuint param_value_size, IntPtr param_value, Span<nuint> param_value_size_ret)
+        /// <inheritdoc cref="GetContextInfo(IntPtr, ContextInfo, nuint, void*, nuint*)"/>
+        public static unsafe int GetContextInfo(IntPtr context, ContextInfo param_name, nuint param_value_size, IntPtr param_value, Span<nuint> param_value_size_ret)
         {
             int returnValue;
             fixed (nuint* param_value_size_ret_ptr = param_value_size_ret)
@@ -3866,8 +3866,8 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="GetContextInfo(IntPtr, uint, nuint, void*, nuint*)"/>
-        public static unsafe int GetContextInfo(IntPtr context, uint param_name, nuint param_value_size, IntPtr param_value, nuint[] param_value_size_ret)
+        /// <inheritdoc cref="GetContextInfo(IntPtr, ContextInfo, nuint, void*, nuint*)"/>
+        public static unsafe int GetContextInfo(IntPtr context, ContextInfo param_name, nuint param_value_size, IntPtr param_value, nuint[] param_value_size_ret)
         {
             int returnValue;
             fixed (nuint* param_value_size_ret_ptr = param_value_size_ret)
@@ -3877,8 +3877,8 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="GetContextInfo(IntPtr, uint, nuint, void*, nuint*)"/>
-        public static unsafe int GetContextInfo(IntPtr context, uint param_name, nuint param_value_size, IntPtr param_value, ref nuint param_value_size_ret)
+        /// <inheritdoc cref="GetContextInfo(IntPtr, ContextInfo, nuint, void*, nuint*)"/>
+        public static unsafe int GetContextInfo(IntPtr context, ContextInfo param_name, nuint param_value_size, IntPtr param_value, ref nuint param_value_size_ret)
         {
             int returnValue;
             fixed (nuint* param_value_size_ret_ptr = &param_value_size_ret)
@@ -3888,8 +3888,8 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="GetContextInfo(IntPtr, uint, nuint, void*, nuint*)"/>
-        public static unsafe int GetContextInfo<T1>(IntPtr context, uint param_name, nuint param_value_size, Span<T1> param_value, Span<nuint> param_value_size_ret)
+        /// <inheritdoc cref="GetContextInfo(IntPtr, ContextInfo, nuint, void*, nuint*)"/>
+        public static unsafe int GetContextInfo<T1>(IntPtr context, ContextInfo param_name, nuint param_value_size, Span<T1> param_value, Span<nuint> param_value_size_ret)
             where T1 : unmanaged
         {
             int returnValue;
@@ -3902,8 +3902,8 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="GetContextInfo(IntPtr, uint, nuint, void*, nuint*)"/>
-        public static unsafe int GetContextInfo<T1>(IntPtr context, uint param_name, nuint param_value_size, T1[] param_value, nuint[] param_value_size_ret)
+        /// <inheritdoc cref="GetContextInfo(IntPtr, ContextInfo, nuint, void*, nuint*)"/>
+        public static unsafe int GetContextInfo<T1>(IntPtr context, ContextInfo param_name, nuint param_value_size, T1[] param_value, nuint[] param_value_size_ret)
             where T1 : unmanaged
         {
             int returnValue;
@@ -3916,8 +3916,8 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="GetContextInfo(IntPtr, uint, nuint, void*, nuint*)"/>
-        public static unsafe int GetContextInfo<T1>(IntPtr context, uint param_name, nuint param_value_size, ref T1 param_value, ref nuint param_value_size_ret)
+        /// <inheritdoc cref="GetContextInfo(IntPtr, ContextInfo, nuint, void*, nuint*)"/>
+        public static unsafe int GetContextInfo<T1>(IntPtr context, ContextInfo param_name, nuint param_value_size, ref T1 param_value, ref nuint param_value_size_ret)
             where T1 : unmanaged
         {
             int returnValue;
@@ -4075,8 +4075,8 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="GetEventInfo(IntPtr, uint, nuint, void*, nuint*)"/>
-        public static unsafe int GetEventInfo(IntPtr @event, uint param_name, nuint param_value_size, IntPtr param_value, Span<nuint> param_value_size_ret)
+        /// <inheritdoc cref="GetEventInfo(IntPtr, EventInfo, nuint, void*, nuint*)"/>
+        public static unsafe int GetEventInfo(IntPtr @event, EventInfo param_name, nuint param_value_size, IntPtr param_value, Span<nuint> param_value_size_ret)
         {
             int returnValue;
             fixed (nuint* param_value_size_ret_ptr = param_value_size_ret)
@@ -4086,8 +4086,8 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="GetEventInfo(IntPtr, uint, nuint, void*, nuint*)"/>
-        public static unsafe int GetEventInfo(IntPtr @event, uint param_name, nuint param_value_size, IntPtr param_value, nuint[] param_value_size_ret)
+        /// <inheritdoc cref="GetEventInfo(IntPtr, EventInfo, nuint, void*, nuint*)"/>
+        public static unsafe int GetEventInfo(IntPtr @event, EventInfo param_name, nuint param_value_size, IntPtr param_value, nuint[] param_value_size_ret)
         {
             int returnValue;
             fixed (nuint* param_value_size_ret_ptr = param_value_size_ret)
@@ -4097,8 +4097,8 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="GetEventInfo(IntPtr, uint, nuint, void*, nuint*)"/>
-        public static unsafe int GetEventInfo(IntPtr @event, uint param_name, nuint param_value_size, IntPtr param_value, ref nuint param_value_size_ret)
+        /// <inheritdoc cref="GetEventInfo(IntPtr, EventInfo, nuint, void*, nuint*)"/>
+        public static unsafe int GetEventInfo(IntPtr @event, EventInfo param_name, nuint param_value_size, IntPtr param_value, ref nuint param_value_size_ret)
         {
             int returnValue;
             fixed (nuint* param_value_size_ret_ptr = &param_value_size_ret)
@@ -4108,8 +4108,8 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="GetEventInfo(IntPtr, uint, nuint, void*, nuint*)"/>
-        public static unsafe int GetEventInfo<T1>(IntPtr @event, uint param_name, nuint param_value_size, Span<T1> param_value, Span<nuint> param_value_size_ret)
+        /// <inheritdoc cref="GetEventInfo(IntPtr, EventInfo, nuint, void*, nuint*)"/>
+        public static unsafe int GetEventInfo<T1>(IntPtr @event, EventInfo param_name, nuint param_value_size, Span<T1> param_value, Span<nuint> param_value_size_ret)
             where T1 : unmanaged
         {
             int returnValue;
@@ -4122,8 +4122,8 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="GetEventInfo(IntPtr, uint, nuint, void*, nuint*)"/>
-        public static unsafe int GetEventInfo<T1>(IntPtr @event, uint param_name, nuint param_value_size, T1[] param_value, nuint[] param_value_size_ret)
+        /// <inheritdoc cref="GetEventInfo(IntPtr, EventInfo, nuint, void*, nuint*)"/>
+        public static unsafe int GetEventInfo<T1>(IntPtr @event, EventInfo param_name, nuint param_value_size, T1[] param_value, nuint[] param_value_size_ret)
             where T1 : unmanaged
         {
             int returnValue;
@@ -4136,8 +4136,8 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="GetEventInfo(IntPtr, uint, nuint, void*, nuint*)"/>
-        public static unsafe int GetEventInfo<T1>(IntPtr @event, uint param_name, nuint param_value_size, ref T1 param_value, ref nuint param_value_size_ret)
+        /// <inheritdoc cref="GetEventInfo(IntPtr, EventInfo, nuint, void*, nuint*)"/>
+        public static unsafe int GetEventInfo<T1>(IntPtr @event, EventInfo param_name, nuint param_value_size, ref T1 param_value, ref nuint param_value_size_ret)
             where T1 : unmanaged
         {
             int returnValue;
@@ -4148,8 +4148,8 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="GetEventProfilingInfo(IntPtr, uint, nuint, void*, nuint*)"/>
-        public static unsafe int GetEventProfilingInfo(IntPtr @event, uint param_name, nuint param_value_size, IntPtr param_value, Span<nuint> param_value_size_ret)
+        /// <inheritdoc cref="GetEventProfilingInfo(IntPtr, ProfilingInfo, nuint, void*, nuint*)"/>
+        public static unsafe int GetEventProfilingInfo(IntPtr @event, ProfilingInfo param_name, nuint param_value_size, IntPtr param_value, Span<nuint> param_value_size_ret)
         {
             int returnValue;
             fixed (nuint* param_value_size_ret_ptr = param_value_size_ret)
@@ -4159,8 +4159,8 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="GetEventProfilingInfo(IntPtr, uint, nuint, void*, nuint*)"/>
-        public static unsafe int GetEventProfilingInfo(IntPtr @event, uint param_name, nuint param_value_size, IntPtr param_value, nuint[] param_value_size_ret)
+        /// <inheritdoc cref="GetEventProfilingInfo(IntPtr, ProfilingInfo, nuint, void*, nuint*)"/>
+        public static unsafe int GetEventProfilingInfo(IntPtr @event, ProfilingInfo param_name, nuint param_value_size, IntPtr param_value, nuint[] param_value_size_ret)
         {
             int returnValue;
             fixed (nuint* param_value_size_ret_ptr = param_value_size_ret)
@@ -4170,8 +4170,8 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="GetEventProfilingInfo(IntPtr, uint, nuint, void*, nuint*)"/>
-        public static unsafe int GetEventProfilingInfo(IntPtr @event, uint param_name, nuint param_value_size, IntPtr param_value, ref nuint param_value_size_ret)
+        /// <inheritdoc cref="GetEventProfilingInfo(IntPtr, ProfilingInfo, nuint, void*, nuint*)"/>
+        public static unsafe int GetEventProfilingInfo(IntPtr @event, ProfilingInfo param_name, nuint param_value_size, IntPtr param_value, ref nuint param_value_size_ret)
         {
             int returnValue;
             fixed (nuint* param_value_size_ret_ptr = &param_value_size_ret)
@@ -4181,8 +4181,8 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="GetEventProfilingInfo(IntPtr, uint, nuint, void*, nuint*)"/>
-        public static unsafe int GetEventProfilingInfo<T1>(IntPtr @event, uint param_name, nuint param_value_size, Span<T1> param_value, Span<nuint> param_value_size_ret)
+        /// <inheritdoc cref="GetEventProfilingInfo(IntPtr, ProfilingInfo, nuint, void*, nuint*)"/>
+        public static unsafe int GetEventProfilingInfo<T1>(IntPtr @event, ProfilingInfo param_name, nuint param_value_size, Span<T1> param_value, Span<nuint> param_value_size_ret)
             where T1 : unmanaged
         {
             int returnValue;
@@ -4195,8 +4195,8 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="GetEventProfilingInfo(IntPtr, uint, nuint, void*, nuint*)"/>
-        public static unsafe int GetEventProfilingInfo<T1>(IntPtr @event, uint param_name, nuint param_value_size, T1[] param_value, nuint[] param_value_size_ret)
+        /// <inheritdoc cref="GetEventProfilingInfo(IntPtr, ProfilingInfo, nuint, void*, nuint*)"/>
+        public static unsafe int GetEventProfilingInfo<T1>(IntPtr @event, ProfilingInfo param_name, nuint param_value_size, T1[] param_value, nuint[] param_value_size_ret)
             where T1 : unmanaged
         {
             int returnValue;
@@ -4209,8 +4209,8 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="GetEventProfilingInfo(IntPtr, uint, nuint, void*, nuint*)"/>
-        public static unsafe int GetEventProfilingInfo<T1>(IntPtr @event, uint param_name, nuint param_value_size, ref T1 param_value, ref nuint param_value_size_ret)
+        /// <inheritdoc cref="GetEventProfilingInfo(IntPtr, ProfilingInfo, nuint, void*, nuint*)"/>
+        public static unsafe int GetEventProfilingInfo<T1>(IntPtr @event, ProfilingInfo param_name, nuint param_value_size, ref T1 param_value, ref nuint param_value_size_ret)
             where T1 : unmanaged
         {
             int returnValue;
@@ -4269,8 +4269,8 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="GetImageInfo(IntPtr, uint, nuint, void*, nuint*)"/>
-        public static unsafe int GetImageInfo(IntPtr image, uint param_name, nuint param_value_size, IntPtr param_value, Span<nuint> param_value_size_ret)
+        /// <inheritdoc cref="GetImageInfo(IntPtr, ImageInfo, nuint, void*, nuint*)"/>
+        public static unsafe int GetImageInfo(IntPtr image, ImageInfo param_name, nuint param_value_size, IntPtr param_value, Span<nuint> param_value_size_ret)
         {
             int returnValue;
             fixed (nuint* param_value_size_ret_ptr = param_value_size_ret)
@@ -4280,8 +4280,8 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="GetImageInfo(IntPtr, uint, nuint, void*, nuint*)"/>
-        public static unsafe int GetImageInfo(IntPtr image, uint param_name, nuint param_value_size, IntPtr param_value, nuint[] param_value_size_ret)
+        /// <inheritdoc cref="GetImageInfo(IntPtr, ImageInfo, nuint, void*, nuint*)"/>
+        public static unsafe int GetImageInfo(IntPtr image, ImageInfo param_name, nuint param_value_size, IntPtr param_value, nuint[] param_value_size_ret)
         {
             int returnValue;
             fixed (nuint* param_value_size_ret_ptr = param_value_size_ret)
@@ -4291,8 +4291,8 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="GetImageInfo(IntPtr, uint, nuint, void*, nuint*)"/>
-        public static unsafe int GetImageInfo(IntPtr image, uint param_name, nuint param_value_size, IntPtr param_value, ref nuint param_value_size_ret)
+        /// <inheritdoc cref="GetImageInfo(IntPtr, ImageInfo, nuint, void*, nuint*)"/>
+        public static unsafe int GetImageInfo(IntPtr image, ImageInfo param_name, nuint param_value_size, IntPtr param_value, ref nuint param_value_size_ret)
         {
             int returnValue;
             fixed (nuint* param_value_size_ret_ptr = &param_value_size_ret)
@@ -4302,8 +4302,8 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="GetImageInfo(IntPtr, uint, nuint, void*, nuint*)"/>
-        public static unsafe int GetImageInfo<T1>(IntPtr image, uint param_name, nuint param_value_size, Span<T1> param_value, Span<nuint> param_value_size_ret)
+        /// <inheritdoc cref="GetImageInfo(IntPtr, ImageInfo, nuint, void*, nuint*)"/>
+        public static unsafe int GetImageInfo<T1>(IntPtr image, ImageInfo param_name, nuint param_value_size, Span<T1> param_value, Span<nuint> param_value_size_ret)
             where T1 : unmanaged
         {
             int returnValue;
@@ -4316,8 +4316,8 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="GetImageInfo(IntPtr, uint, nuint, void*, nuint*)"/>
-        public static unsafe int GetImageInfo<T1>(IntPtr image, uint param_name, nuint param_value_size, T1[] param_value, nuint[] param_value_size_ret)
+        /// <inheritdoc cref="GetImageInfo(IntPtr, ImageInfo, nuint, void*, nuint*)"/>
+        public static unsafe int GetImageInfo<T1>(IntPtr image, ImageInfo param_name, nuint param_value_size, T1[] param_value, nuint[] param_value_size_ret)
             where T1 : unmanaged
         {
             int returnValue;
@@ -4330,8 +4330,8 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="GetImageInfo(IntPtr, uint, nuint, void*, nuint*)"/>
-        public static unsafe int GetImageInfo<T1>(IntPtr image, uint param_name, nuint param_value_size, ref T1 param_value, ref nuint param_value_size_ret)
+        /// <inheritdoc cref="GetImageInfo(IntPtr, ImageInfo, nuint, void*, nuint*)"/>
+        public static unsafe int GetImageInfo<T1>(IntPtr image, ImageInfo param_name, nuint param_value_size, ref T1 param_value, ref nuint param_value_size_ret)
             where T1 : unmanaged
         {
             int returnValue;
@@ -4342,8 +4342,8 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="GetKernelArgInfo(IntPtr, uint, uint, nuint, void*, nuint*)"/>
-        public static unsafe int GetKernelArgInfo(IntPtr kernel, uint arg_index, uint param_name, nuint param_value_size, IntPtr param_value, Span<nuint> param_value_size_ret)
+        /// <inheritdoc cref="GetKernelArgInfo(IntPtr, uint, KernelArgInfo, nuint, void*, nuint*)"/>
+        public static unsafe int GetKernelArgInfo(IntPtr kernel, uint arg_index, KernelArgInfo param_name, nuint param_value_size, IntPtr param_value, Span<nuint> param_value_size_ret)
         {
             int returnValue;
             fixed (nuint* param_value_size_ret_ptr = param_value_size_ret)
@@ -4353,8 +4353,8 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="GetKernelArgInfo(IntPtr, uint, uint, nuint, void*, nuint*)"/>
-        public static unsafe int GetKernelArgInfo(IntPtr kernel, uint arg_index, uint param_name, nuint param_value_size, IntPtr param_value, nuint[] param_value_size_ret)
+        /// <inheritdoc cref="GetKernelArgInfo(IntPtr, uint, KernelArgInfo, nuint, void*, nuint*)"/>
+        public static unsafe int GetKernelArgInfo(IntPtr kernel, uint arg_index, KernelArgInfo param_name, nuint param_value_size, IntPtr param_value, nuint[] param_value_size_ret)
         {
             int returnValue;
             fixed (nuint* param_value_size_ret_ptr = param_value_size_ret)
@@ -4364,8 +4364,8 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="GetKernelArgInfo(IntPtr, uint, uint, nuint, void*, nuint*)"/>
-        public static unsafe int GetKernelArgInfo(IntPtr kernel, uint arg_index, uint param_name, nuint param_value_size, IntPtr param_value, ref nuint param_value_size_ret)
+        /// <inheritdoc cref="GetKernelArgInfo(IntPtr, uint, KernelArgInfo, nuint, void*, nuint*)"/>
+        public static unsafe int GetKernelArgInfo(IntPtr kernel, uint arg_index, KernelArgInfo param_name, nuint param_value_size, IntPtr param_value, ref nuint param_value_size_ret)
         {
             int returnValue;
             fixed (nuint* param_value_size_ret_ptr = &param_value_size_ret)
@@ -4375,8 +4375,8 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="GetKernelArgInfo(IntPtr, uint, uint, nuint, void*, nuint*)"/>
-        public static unsafe int GetKernelArgInfo<T1>(IntPtr kernel, uint arg_index, uint param_name, nuint param_value_size, Span<T1> param_value, Span<nuint> param_value_size_ret)
+        /// <inheritdoc cref="GetKernelArgInfo(IntPtr, uint, KernelArgInfo, nuint, void*, nuint*)"/>
+        public static unsafe int GetKernelArgInfo<T1>(IntPtr kernel, uint arg_index, KernelArgInfo param_name, nuint param_value_size, Span<T1> param_value, Span<nuint> param_value_size_ret)
             where T1 : unmanaged
         {
             int returnValue;
@@ -4389,8 +4389,8 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="GetKernelArgInfo(IntPtr, uint, uint, nuint, void*, nuint*)"/>
-        public static unsafe int GetKernelArgInfo<T1>(IntPtr kernel, uint arg_index, uint param_name, nuint param_value_size, T1[] param_value, nuint[] param_value_size_ret)
+        /// <inheritdoc cref="GetKernelArgInfo(IntPtr, uint, KernelArgInfo, nuint, void*, nuint*)"/>
+        public static unsafe int GetKernelArgInfo<T1>(IntPtr kernel, uint arg_index, KernelArgInfo param_name, nuint param_value_size, T1[] param_value, nuint[] param_value_size_ret)
             where T1 : unmanaged
         {
             int returnValue;
@@ -4403,8 +4403,8 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="GetKernelArgInfo(IntPtr, uint, uint, nuint, void*, nuint*)"/>
-        public static unsafe int GetKernelArgInfo<T1>(IntPtr kernel, uint arg_index, uint param_name, nuint param_value_size, ref T1 param_value, ref nuint param_value_size_ret)
+        /// <inheritdoc cref="GetKernelArgInfo(IntPtr, uint, KernelArgInfo, nuint, void*, nuint*)"/>
+        public static unsafe int GetKernelArgInfo<T1>(IntPtr kernel, uint arg_index, KernelArgInfo param_name, nuint param_value_size, ref T1 param_value, ref nuint param_value_size_ret)
             where T1 : unmanaged
         {
             int returnValue;
@@ -4415,8 +4415,8 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="GetKernelInfo(IntPtr, uint, nuint, void*, nuint*)"/>
-        public static unsafe int GetKernelInfo(IntPtr kernel, uint param_name, nuint param_value_size, IntPtr param_value, Span<nuint> param_value_size_ret)
+        /// <inheritdoc cref="GetKernelInfo(IntPtr, KernelInfo, nuint, void*, nuint*)"/>
+        public static unsafe int GetKernelInfo(IntPtr kernel, KernelInfo param_name, nuint param_value_size, IntPtr param_value, Span<nuint> param_value_size_ret)
         {
             int returnValue;
             fixed (nuint* param_value_size_ret_ptr = param_value_size_ret)
@@ -4426,8 +4426,8 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="GetKernelInfo(IntPtr, uint, nuint, void*, nuint*)"/>
-        public static unsafe int GetKernelInfo(IntPtr kernel, uint param_name, nuint param_value_size, IntPtr param_value, nuint[] param_value_size_ret)
+        /// <inheritdoc cref="GetKernelInfo(IntPtr, KernelInfo, nuint, void*, nuint*)"/>
+        public static unsafe int GetKernelInfo(IntPtr kernel, KernelInfo param_name, nuint param_value_size, IntPtr param_value, nuint[] param_value_size_ret)
         {
             int returnValue;
             fixed (nuint* param_value_size_ret_ptr = param_value_size_ret)
@@ -4437,8 +4437,8 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="GetKernelInfo(IntPtr, uint, nuint, void*, nuint*)"/>
-        public static unsafe int GetKernelInfo(IntPtr kernel, uint param_name, nuint param_value_size, IntPtr param_value, ref nuint param_value_size_ret)
+        /// <inheritdoc cref="GetKernelInfo(IntPtr, KernelInfo, nuint, void*, nuint*)"/>
+        public static unsafe int GetKernelInfo(IntPtr kernel, KernelInfo param_name, nuint param_value_size, IntPtr param_value, ref nuint param_value_size_ret)
         {
             int returnValue;
             fixed (nuint* param_value_size_ret_ptr = &param_value_size_ret)
@@ -4448,8 +4448,8 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="GetKernelInfo(IntPtr, uint, nuint, void*, nuint*)"/>
-        public static unsafe int GetKernelInfo<T1>(IntPtr kernel, uint param_name, nuint param_value_size, Span<T1> param_value, Span<nuint> param_value_size_ret)
+        /// <inheritdoc cref="GetKernelInfo(IntPtr, KernelInfo, nuint, void*, nuint*)"/>
+        public static unsafe int GetKernelInfo<T1>(IntPtr kernel, KernelInfo param_name, nuint param_value_size, Span<T1> param_value, Span<nuint> param_value_size_ret)
             where T1 : unmanaged
         {
             int returnValue;
@@ -4462,8 +4462,8 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="GetKernelInfo(IntPtr, uint, nuint, void*, nuint*)"/>
-        public static unsafe int GetKernelInfo<T1>(IntPtr kernel, uint param_name, nuint param_value_size, T1[] param_value, nuint[] param_value_size_ret)
+        /// <inheritdoc cref="GetKernelInfo(IntPtr, KernelInfo, nuint, void*, nuint*)"/>
+        public static unsafe int GetKernelInfo<T1>(IntPtr kernel, KernelInfo param_name, nuint param_value_size, T1[] param_value, nuint[] param_value_size_ret)
             where T1 : unmanaged
         {
             int returnValue;
@@ -4476,8 +4476,8 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="GetKernelInfo(IntPtr, uint, nuint, void*, nuint*)"/>
-        public static unsafe int GetKernelInfo<T1>(IntPtr kernel, uint param_name, nuint param_value_size, ref T1 param_value, ref nuint param_value_size_ret)
+        /// <inheritdoc cref="GetKernelInfo(IntPtr, KernelInfo, nuint, void*, nuint*)"/>
+        public static unsafe int GetKernelInfo<T1>(IntPtr kernel, KernelInfo param_name, nuint param_value_size, ref T1 param_value, ref nuint param_value_size_ret)
             where T1 : unmanaged
         {
             int returnValue;
@@ -4488,8 +4488,8 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="GetKernelSubGroupInfo(IntPtr, IntPtr, uint, nuint, void*, nuint, void*, nuint*)"/>
-        public static unsafe int GetKernelSubGroupInfo(IntPtr kernel, IntPtr device, uint param_name, nuint input_value_size, IntPtr input_value, nuint param_value_size, IntPtr param_value, Span<nuint> param_value_size_ret)
+        /// <inheritdoc cref="GetKernelSubGroupInfo(IntPtr, IntPtr, KernelSubGroupInfo, nuint, void*, nuint, void*, nuint*)"/>
+        public static unsafe int GetKernelSubGroupInfo(IntPtr kernel, IntPtr device, KernelSubGroupInfo param_name, nuint input_value_size, IntPtr input_value, nuint param_value_size, IntPtr param_value, Span<nuint> param_value_size_ret)
         {
             int returnValue;
             fixed (nuint* param_value_size_ret_ptr = param_value_size_ret)
@@ -4500,8 +4500,8 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="GetKernelSubGroupInfo(IntPtr, IntPtr, uint, nuint, void*, nuint, void*, nuint*)"/>
-        public static unsafe int GetKernelSubGroupInfo(IntPtr kernel, IntPtr device, uint param_name, nuint input_value_size, IntPtr input_value, nuint param_value_size, IntPtr param_value, nuint[] param_value_size_ret)
+        /// <inheritdoc cref="GetKernelSubGroupInfo(IntPtr, IntPtr, KernelSubGroupInfo, nuint, void*, nuint, void*, nuint*)"/>
+        public static unsafe int GetKernelSubGroupInfo(IntPtr kernel, IntPtr device, KernelSubGroupInfo param_name, nuint input_value_size, IntPtr input_value, nuint param_value_size, IntPtr param_value, nuint[] param_value_size_ret)
         {
             int returnValue;
             fixed (nuint* param_value_size_ret_ptr = param_value_size_ret)
@@ -4512,8 +4512,8 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="GetKernelSubGroupInfo(IntPtr, IntPtr, uint, nuint, void*, nuint, void*, nuint*)"/>
-        public static unsafe int GetKernelSubGroupInfo(IntPtr kernel, IntPtr device, uint param_name, nuint input_value_size, IntPtr input_value, nuint param_value_size, IntPtr param_value, ref nuint param_value_size_ret)
+        /// <inheritdoc cref="GetKernelSubGroupInfo(IntPtr, IntPtr, KernelSubGroupInfo, nuint, void*, nuint, void*, nuint*)"/>
+        public static unsafe int GetKernelSubGroupInfo(IntPtr kernel, IntPtr device, KernelSubGroupInfo param_name, nuint input_value_size, IntPtr input_value, nuint param_value_size, IntPtr param_value, ref nuint param_value_size_ret)
         {
             int returnValue;
             fixed (nuint* param_value_size_ret_ptr = &param_value_size_ret)
@@ -4524,8 +4524,8 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="GetKernelSubGroupInfo(IntPtr, IntPtr, uint, nuint, void*, nuint, void*, nuint*)"/>
-        public static unsafe int GetKernelSubGroupInfo<T1, T2>(IntPtr kernel, IntPtr device, uint param_name, nuint input_value_size, ReadOnlySpan<T1> input_value, nuint param_value_size, Span<T2> param_value, Span<nuint> param_value_size_ret)
+        /// <inheritdoc cref="GetKernelSubGroupInfo(IntPtr, IntPtr, KernelSubGroupInfo, nuint, void*, nuint, void*, nuint*)"/>
+        public static unsafe int GetKernelSubGroupInfo<T1, T2>(IntPtr kernel, IntPtr device, KernelSubGroupInfo param_name, nuint input_value_size, ReadOnlySpan<T1> input_value, nuint param_value_size, Span<T2> param_value, Span<nuint> param_value_size_ret)
             where T1 : unmanaged
             where T2 : unmanaged
         {
@@ -4542,8 +4542,8 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="GetKernelSubGroupInfo(IntPtr, IntPtr, uint, nuint, void*, nuint, void*, nuint*)"/>
-        public static unsafe int GetKernelSubGroupInfo<T1, T2>(IntPtr kernel, IntPtr device, uint param_name, nuint input_value_size, T1[] input_value, nuint param_value_size, T2[] param_value, nuint[] param_value_size_ret)
+        /// <inheritdoc cref="GetKernelSubGroupInfo(IntPtr, IntPtr, KernelSubGroupInfo, nuint, void*, nuint, void*, nuint*)"/>
+        public static unsafe int GetKernelSubGroupInfo<T1, T2>(IntPtr kernel, IntPtr device, KernelSubGroupInfo param_name, nuint input_value_size, T1[] input_value, nuint param_value_size, T2[] param_value, nuint[] param_value_size_ret)
             where T1 : unmanaged
             where T2 : unmanaged
         {
@@ -4560,8 +4560,8 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="GetKernelSubGroupInfo(IntPtr, IntPtr, uint, nuint, void*, nuint, void*, nuint*)"/>
-        public static unsafe int GetKernelSubGroupInfo<T1, T2>(IntPtr kernel, IntPtr device, uint param_name, nuint input_value_size, ref readonly T1 input_value, nuint param_value_size, ref T2 param_value, ref nuint param_value_size_ret)
+        /// <inheritdoc cref="GetKernelSubGroupInfo(IntPtr, IntPtr, KernelSubGroupInfo, nuint, void*, nuint, void*, nuint*)"/>
+        public static unsafe int GetKernelSubGroupInfo<T1, T2>(IntPtr kernel, IntPtr device, KernelSubGroupInfo param_name, nuint input_value_size, ref readonly T1 input_value, nuint param_value_size, ref T2 param_value, ref nuint param_value_size_ret)
             where T1 : unmanaged
             where T2 : unmanaged
         {
@@ -4618,8 +4618,8 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="GetKernelWorkGroupInfo(IntPtr, IntPtr, uint, nuint, void*, nuint*)"/>
-        public static unsafe int GetKernelWorkGroupInfo(IntPtr kernel, IntPtr device, uint param_name, nuint param_value_size, IntPtr param_value, Span<nuint> param_value_size_ret)
+        /// <inheritdoc cref="GetKernelWorkGroupInfo(IntPtr, IntPtr, KernelWorkGroupInfo, nuint, void*, nuint*)"/>
+        public static unsafe int GetKernelWorkGroupInfo(IntPtr kernel, IntPtr device, KernelWorkGroupInfo param_name, nuint param_value_size, IntPtr param_value, Span<nuint> param_value_size_ret)
         {
             int returnValue;
             fixed (nuint* param_value_size_ret_ptr = param_value_size_ret)
@@ -4629,8 +4629,8 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="GetKernelWorkGroupInfo(IntPtr, IntPtr, uint, nuint, void*, nuint*)"/>
-        public static unsafe int GetKernelWorkGroupInfo(IntPtr kernel, IntPtr device, uint param_name, nuint param_value_size, IntPtr param_value, nuint[] param_value_size_ret)
+        /// <inheritdoc cref="GetKernelWorkGroupInfo(IntPtr, IntPtr, KernelWorkGroupInfo, nuint, void*, nuint*)"/>
+        public static unsafe int GetKernelWorkGroupInfo(IntPtr kernel, IntPtr device, KernelWorkGroupInfo param_name, nuint param_value_size, IntPtr param_value, nuint[] param_value_size_ret)
         {
             int returnValue;
             fixed (nuint* param_value_size_ret_ptr = param_value_size_ret)
@@ -4640,8 +4640,8 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="GetKernelWorkGroupInfo(IntPtr, IntPtr, uint, nuint, void*, nuint*)"/>
-        public static unsafe int GetKernelWorkGroupInfo(IntPtr kernel, IntPtr device, uint param_name, nuint param_value_size, IntPtr param_value, ref nuint param_value_size_ret)
+        /// <inheritdoc cref="GetKernelWorkGroupInfo(IntPtr, IntPtr, KernelWorkGroupInfo, nuint, void*, nuint*)"/>
+        public static unsafe int GetKernelWorkGroupInfo(IntPtr kernel, IntPtr device, KernelWorkGroupInfo param_name, nuint param_value_size, IntPtr param_value, ref nuint param_value_size_ret)
         {
             int returnValue;
             fixed (nuint* param_value_size_ret_ptr = &param_value_size_ret)
@@ -4651,8 +4651,8 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="GetKernelWorkGroupInfo(IntPtr, IntPtr, uint, nuint, void*, nuint*)"/>
-        public static unsafe int GetKernelWorkGroupInfo<T1>(IntPtr kernel, IntPtr device, uint param_name, nuint param_value_size, Span<T1> param_value, Span<nuint> param_value_size_ret)
+        /// <inheritdoc cref="GetKernelWorkGroupInfo(IntPtr, IntPtr, KernelWorkGroupInfo, nuint, void*, nuint*)"/>
+        public static unsafe int GetKernelWorkGroupInfo<T1>(IntPtr kernel, IntPtr device, KernelWorkGroupInfo param_name, nuint param_value_size, Span<T1> param_value, Span<nuint> param_value_size_ret)
             where T1 : unmanaged
         {
             int returnValue;
@@ -4665,8 +4665,8 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="GetKernelWorkGroupInfo(IntPtr, IntPtr, uint, nuint, void*, nuint*)"/>
-        public static unsafe int GetKernelWorkGroupInfo<T1>(IntPtr kernel, IntPtr device, uint param_name, nuint param_value_size, T1[] param_value, nuint[] param_value_size_ret)
+        /// <inheritdoc cref="GetKernelWorkGroupInfo(IntPtr, IntPtr, KernelWorkGroupInfo, nuint, void*, nuint*)"/>
+        public static unsafe int GetKernelWorkGroupInfo<T1>(IntPtr kernel, IntPtr device, KernelWorkGroupInfo param_name, nuint param_value_size, T1[] param_value, nuint[] param_value_size_ret)
             where T1 : unmanaged
         {
             int returnValue;
@@ -4679,8 +4679,8 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="GetKernelWorkGroupInfo(IntPtr, IntPtr, uint, nuint, void*, nuint*)"/>
-        public static unsafe int GetKernelWorkGroupInfo<T1>(IntPtr kernel, IntPtr device, uint param_name, nuint param_value_size, ref T1 param_value, ref nuint param_value_size_ret)
+        /// <inheritdoc cref="GetKernelWorkGroupInfo(IntPtr, IntPtr, KernelWorkGroupInfo, nuint, void*, nuint*)"/>
+        public static unsafe int GetKernelWorkGroupInfo<T1>(IntPtr kernel, IntPtr device, KernelWorkGroupInfo param_name, nuint param_value_size, ref T1 param_value, ref nuint param_value_size_ret)
             where T1 : unmanaged
         {
             int returnValue;
@@ -4691,8 +4691,8 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="GetMemObjectInfo(IntPtr, uint, nuint, void*, nuint*)"/>
-        public static unsafe int GetMemObjectInfo(IntPtr memobj, uint param_name, nuint param_value_size, IntPtr param_value, Span<nuint> param_value_size_ret)
+        /// <inheritdoc cref="GetMemObjectInfo(IntPtr, MemInfo, nuint, void*, nuint*)"/>
+        public static unsafe int GetMemObjectInfo(IntPtr memobj, MemInfo param_name, nuint param_value_size, IntPtr param_value, Span<nuint> param_value_size_ret)
         {
             int returnValue;
             fixed (nuint* param_value_size_ret_ptr = param_value_size_ret)
@@ -4702,8 +4702,8 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="GetMemObjectInfo(IntPtr, uint, nuint, void*, nuint*)"/>
-        public static unsafe int GetMemObjectInfo(IntPtr memobj, uint param_name, nuint param_value_size, IntPtr param_value, nuint[] param_value_size_ret)
+        /// <inheritdoc cref="GetMemObjectInfo(IntPtr, MemInfo, nuint, void*, nuint*)"/>
+        public static unsafe int GetMemObjectInfo(IntPtr memobj, MemInfo param_name, nuint param_value_size, IntPtr param_value, nuint[] param_value_size_ret)
         {
             int returnValue;
             fixed (nuint* param_value_size_ret_ptr = param_value_size_ret)
@@ -4713,8 +4713,8 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="GetMemObjectInfo(IntPtr, uint, nuint, void*, nuint*)"/>
-        public static unsafe int GetMemObjectInfo(IntPtr memobj, uint param_name, nuint param_value_size, IntPtr param_value, ref nuint param_value_size_ret)
+        /// <inheritdoc cref="GetMemObjectInfo(IntPtr, MemInfo, nuint, void*, nuint*)"/>
+        public static unsafe int GetMemObjectInfo(IntPtr memobj, MemInfo param_name, nuint param_value_size, IntPtr param_value, ref nuint param_value_size_ret)
         {
             int returnValue;
             fixed (nuint* param_value_size_ret_ptr = &param_value_size_ret)
@@ -4724,8 +4724,8 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="GetMemObjectInfo(IntPtr, uint, nuint, void*, nuint*)"/>
-        public static unsafe int GetMemObjectInfo<T1>(IntPtr memobj, uint param_name, nuint param_value_size, Span<T1> param_value, Span<nuint> param_value_size_ret)
+        /// <inheritdoc cref="GetMemObjectInfo(IntPtr, MemInfo, nuint, void*, nuint*)"/>
+        public static unsafe int GetMemObjectInfo<T1>(IntPtr memobj, MemInfo param_name, nuint param_value_size, Span<T1> param_value, Span<nuint> param_value_size_ret)
             where T1 : unmanaged
         {
             int returnValue;
@@ -4738,8 +4738,8 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="GetMemObjectInfo(IntPtr, uint, nuint, void*, nuint*)"/>
-        public static unsafe int GetMemObjectInfo<T1>(IntPtr memobj, uint param_name, nuint param_value_size, T1[] param_value, nuint[] param_value_size_ret)
+        /// <inheritdoc cref="GetMemObjectInfo(IntPtr, MemInfo, nuint, void*, nuint*)"/>
+        public static unsafe int GetMemObjectInfo<T1>(IntPtr memobj, MemInfo param_name, nuint param_value_size, T1[] param_value, nuint[] param_value_size_ret)
             where T1 : unmanaged
         {
             int returnValue;
@@ -4752,8 +4752,8 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="GetMemObjectInfo(IntPtr, uint, nuint, void*, nuint*)"/>
-        public static unsafe int GetMemObjectInfo<T1>(IntPtr memobj, uint param_name, nuint param_value_size, ref T1 param_value, ref nuint param_value_size_ret)
+        /// <inheritdoc cref="GetMemObjectInfo(IntPtr, MemInfo, nuint, void*, nuint*)"/>
+        public static unsafe int GetMemObjectInfo<T1>(IntPtr memobj, MemInfo param_name, nuint param_value_size, ref T1 param_value, ref nuint param_value_size_ret)
             where T1 : unmanaged
         {
             int returnValue;
@@ -4764,8 +4764,8 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="GetPipeInfo(IntPtr, uint, nuint, void*, nuint*)"/>
-        public static unsafe int GetPipeInfo(IntPtr pipe, uint param_name, nuint param_value_size, IntPtr param_value, Span<nuint> param_value_size_ret)
+        /// <inheritdoc cref="GetPipeInfo(IntPtr, PipeInfo, nuint, void*, nuint*)"/>
+        public static unsafe int GetPipeInfo(IntPtr pipe, PipeInfo param_name, nuint param_value_size, IntPtr param_value, Span<nuint> param_value_size_ret)
         {
             int returnValue;
             fixed (nuint* param_value_size_ret_ptr = param_value_size_ret)
@@ -4775,8 +4775,8 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="GetPipeInfo(IntPtr, uint, nuint, void*, nuint*)"/>
-        public static unsafe int GetPipeInfo(IntPtr pipe, uint param_name, nuint param_value_size, IntPtr param_value, nuint[] param_value_size_ret)
+        /// <inheritdoc cref="GetPipeInfo(IntPtr, PipeInfo, nuint, void*, nuint*)"/>
+        public static unsafe int GetPipeInfo(IntPtr pipe, PipeInfo param_name, nuint param_value_size, IntPtr param_value, nuint[] param_value_size_ret)
         {
             int returnValue;
             fixed (nuint* param_value_size_ret_ptr = param_value_size_ret)
@@ -4786,8 +4786,8 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="GetPipeInfo(IntPtr, uint, nuint, void*, nuint*)"/>
-        public static unsafe int GetPipeInfo(IntPtr pipe, uint param_name, nuint param_value_size, IntPtr param_value, ref nuint param_value_size_ret)
+        /// <inheritdoc cref="GetPipeInfo(IntPtr, PipeInfo, nuint, void*, nuint*)"/>
+        public static unsafe int GetPipeInfo(IntPtr pipe, PipeInfo param_name, nuint param_value_size, IntPtr param_value, ref nuint param_value_size_ret)
         {
             int returnValue;
             fixed (nuint* param_value_size_ret_ptr = &param_value_size_ret)
@@ -4797,8 +4797,8 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="GetPipeInfo(IntPtr, uint, nuint, void*, nuint*)"/>
-        public static unsafe int GetPipeInfo<T1>(IntPtr pipe, uint param_name, nuint param_value_size, Span<T1> param_value, Span<nuint> param_value_size_ret)
+        /// <inheritdoc cref="GetPipeInfo(IntPtr, PipeInfo, nuint, void*, nuint*)"/>
+        public static unsafe int GetPipeInfo<T1>(IntPtr pipe, PipeInfo param_name, nuint param_value_size, Span<T1> param_value, Span<nuint> param_value_size_ret)
             where T1 : unmanaged
         {
             int returnValue;
@@ -4811,8 +4811,8 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="GetPipeInfo(IntPtr, uint, nuint, void*, nuint*)"/>
-        public static unsafe int GetPipeInfo<T1>(IntPtr pipe, uint param_name, nuint param_value_size, T1[] param_value, nuint[] param_value_size_ret)
+        /// <inheritdoc cref="GetPipeInfo(IntPtr, PipeInfo, nuint, void*, nuint*)"/>
+        public static unsafe int GetPipeInfo<T1>(IntPtr pipe, PipeInfo param_name, nuint param_value_size, T1[] param_value, nuint[] param_value_size_ret)
             where T1 : unmanaged
         {
             int returnValue;
@@ -4825,8 +4825,8 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="GetPipeInfo(IntPtr, uint, nuint, void*, nuint*)"/>
-        public static unsafe int GetPipeInfo<T1>(IntPtr pipe, uint param_name, nuint param_value_size, ref T1 param_value, ref nuint param_value_size_ret)
+        /// <inheritdoc cref="GetPipeInfo(IntPtr, PipeInfo, nuint, void*, nuint*)"/>
+        public static unsafe int GetPipeInfo<T1>(IntPtr pipe, PipeInfo param_name, nuint param_value_size, ref T1 param_value, ref nuint param_value_size_ret)
             where T1 : unmanaged
         {
             int returnValue;
@@ -4947,8 +4947,8 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="GetProgramBuildInfo(IntPtr, IntPtr, uint, nuint, void*, nuint*)"/>
-        public static unsafe int GetProgramBuildInfo(IntPtr program, IntPtr device, uint param_name, nuint param_value_size, IntPtr param_value, Span<nuint> param_value_size_ret)
+        /// <inheritdoc cref="GetProgramBuildInfo(IntPtr, IntPtr, ProgramBuildInfo, nuint, void*, nuint*)"/>
+        public static unsafe int GetProgramBuildInfo(IntPtr program, IntPtr device, ProgramBuildInfo param_name, nuint param_value_size, IntPtr param_value, Span<nuint> param_value_size_ret)
         {
             int returnValue;
             fixed (nuint* param_value_size_ret_ptr = param_value_size_ret)
@@ -4958,8 +4958,8 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="GetProgramBuildInfo(IntPtr, IntPtr, uint, nuint, void*, nuint*)"/>
-        public static unsafe int GetProgramBuildInfo(IntPtr program, IntPtr device, uint param_name, nuint param_value_size, IntPtr param_value, nuint[] param_value_size_ret)
+        /// <inheritdoc cref="GetProgramBuildInfo(IntPtr, IntPtr, ProgramBuildInfo, nuint, void*, nuint*)"/>
+        public static unsafe int GetProgramBuildInfo(IntPtr program, IntPtr device, ProgramBuildInfo param_name, nuint param_value_size, IntPtr param_value, nuint[] param_value_size_ret)
         {
             int returnValue;
             fixed (nuint* param_value_size_ret_ptr = param_value_size_ret)
@@ -4969,8 +4969,8 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="GetProgramBuildInfo(IntPtr, IntPtr, uint, nuint, void*, nuint*)"/>
-        public static unsafe int GetProgramBuildInfo(IntPtr program, IntPtr device, uint param_name, nuint param_value_size, IntPtr param_value, ref nuint param_value_size_ret)
+        /// <inheritdoc cref="GetProgramBuildInfo(IntPtr, IntPtr, ProgramBuildInfo, nuint, void*, nuint*)"/>
+        public static unsafe int GetProgramBuildInfo(IntPtr program, IntPtr device, ProgramBuildInfo param_name, nuint param_value_size, IntPtr param_value, ref nuint param_value_size_ret)
         {
             int returnValue;
             fixed (nuint* param_value_size_ret_ptr = &param_value_size_ret)
@@ -4980,8 +4980,8 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="GetProgramBuildInfo(IntPtr, IntPtr, uint, nuint, void*, nuint*)"/>
-        public static unsafe int GetProgramBuildInfo<T1>(IntPtr program, IntPtr device, uint param_name, nuint param_value_size, Span<T1> param_value, Span<nuint> param_value_size_ret)
+        /// <inheritdoc cref="GetProgramBuildInfo(IntPtr, IntPtr, ProgramBuildInfo, nuint, void*, nuint*)"/>
+        public static unsafe int GetProgramBuildInfo<T1>(IntPtr program, IntPtr device, ProgramBuildInfo param_name, nuint param_value_size, Span<T1> param_value, Span<nuint> param_value_size_ret)
             where T1 : unmanaged
         {
             int returnValue;
@@ -4994,8 +4994,8 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="GetProgramBuildInfo(IntPtr, IntPtr, uint, nuint, void*, nuint*)"/>
-        public static unsafe int GetProgramBuildInfo<T1>(IntPtr program, IntPtr device, uint param_name, nuint param_value_size, T1[] param_value, nuint[] param_value_size_ret)
+        /// <inheritdoc cref="GetProgramBuildInfo(IntPtr, IntPtr, ProgramBuildInfo, nuint, void*, nuint*)"/>
+        public static unsafe int GetProgramBuildInfo<T1>(IntPtr program, IntPtr device, ProgramBuildInfo param_name, nuint param_value_size, T1[] param_value, nuint[] param_value_size_ret)
             where T1 : unmanaged
         {
             int returnValue;
@@ -5008,8 +5008,8 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="GetProgramBuildInfo(IntPtr, IntPtr, uint, nuint, void*, nuint*)"/>
-        public static unsafe int GetProgramBuildInfo<T1>(IntPtr program, IntPtr device, uint param_name, nuint param_value_size, ref T1 param_value, ref nuint param_value_size_ret)
+        /// <inheritdoc cref="GetProgramBuildInfo(IntPtr, IntPtr, ProgramBuildInfo, nuint, void*, nuint*)"/>
+        public static unsafe int GetProgramBuildInfo<T1>(IntPtr program, IntPtr device, ProgramBuildInfo param_name, nuint param_value_size, ref T1 param_value, ref nuint param_value_size_ret)
             where T1 : unmanaged
         {
             int returnValue;
@@ -5020,8 +5020,8 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="GetProgramInfo(IntPtr, uint, nuint, void*, nuint*)"/>
-        public static unsafe int GetProgramInfo(IntPtr program, uint param_name, nuint param_value_size, IntPtr param_value, Span<nuint> param_value_size_ret)
+        /// <inheritdoc cref="GetProgramInfo(IntPtr, ProgramInfo, nuint, void*, nuint*)"/>
+        public static unsafe int GetProgramInfo(IntPtr program, ProgramInfo param_name, nuint param_value_size, IntPtr param_value, Span<nuint> param_value_size_ret)
         {
             int returnValue;
             fixed (nuint* param_value_size_ret_ptr = param_value_size_ret)
@@ -5031,8 +5031,8 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="GetProgramInfo(IntPtr, uint, nuint, void*, nuint*)"/>
-        public static unsafe int GetProgramInfo(IntPtr program, uint param_name, nuint param_value_size, IntPtr param_value, nuint[] param_value_size_ret)
+        /// <inheritdoc cref="GetProgramInfo(IntPtr, ProgramInfo, nuint, void*, nuint*)"/>
+        public static unsafe int GetProgramInfo(IntPtr program, ProgramInfo param_name, nuint param_value_size, IntPtr param_value, nuint[] param_value_size_ret)
         {
             int returnValue;
             fixed (nuint* param_value_size_ret_ptr = param_value_size_ret)
@@ -5042,8 +5042,8 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="GetProgramInfo(IntPtr, uint, nuint, void*, nuint*)"/>
-        public static unsafe int GetProgramInfo(IntPtr program, uint param_name, nuint param_value_size, IntPtr param_value, ref nuint param_value_size_ret)
+        /// <inheritdoc cref="GetProgramInfo(IntPtr, ProgramInfo, nuint, void*, nuint*)"/>
+        public static unsafe int GetProgramInfo(IntPtr program, ProgramInfo param_name, nuint param_value_size, IntPtr param_value, ref nuint param_value_size_ret)
         {
             int returnValue;
             fixed (nuint* param_value_size_ret_ptr = &param_value_size_ret)
@@ -5053,8 +5053,8 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="GetProgramInfo(IntPtr, uint, nuint, void*, nuint*)"/>
-        public static unsafe int GetProgramInfo<T1>(IntPtr program, uint param_name, nuint param_value_size, Span<T1> param_value, Span<nuint> param_value_size_ret)
+        /// <inheritdoc cref="GetProgramInfo(IntPtr, ProgramInfo, nuint, void*, nuint*)"/>
+        public static unsafe int GetProgramInfo<T1>(IntPtr program, ProgramInfo param_name, nuint param_value_size, Span<T1> param_value, Span<nuint> param_value_size_ret)
             where T1 : unmanaged
         {
             int returnValue;
@@ -5067,8 +5067,8 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="GetProgramInfo(IntPtr, uint, nuint, void*, nuint*)"/>
-        public static unsafe int GetProgramInfo<T1>(IntPtr program, uint param_name, nuint param_value_size, T1[] param_value, nuint[] param_value_size_ret)
+        /// <inheritdoc cref="GetProgramInfo(IntPtr, ProgramInfo, nuint, void*, nuint*)"/>
+        public static unsafe int GetProgramInfo<T1>(IntPtr program, ProgramInfo param_name, nuint param_value_size, T1[] param_value, nuint[] param_value_size_ret)
             where T1 : unmanaged
         {
             int returnValue;
@@ -5081,8 +5081,8 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="GetProgramInfo(IntPtr, uint, nuint, void*, nuint*)"/>
-        public static unsafe int GetProgramInfo<T1>(IntPtr program, uint param_name, nuint param_value_size, ref T1 param_value, ref nuint param_value_size_ret)
+        /// <inheritdoc cref="GetProgramInfo(IntPtr, ProgramInfo, nuint, void*, nuint*)"/>
+        public static unsafe int GetProgramInfo<T1>(IntPtr program, ProgramInfo param_name, nuint param_value_size, ref T1 param_value, ref nuint param_value_size_ret)
             where T1 : unmanaged
         {
             int returnValue;
@@ -5093,8 +5093,8 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="GetSamplerInfo(IntPtr, uint, nuint, void*, nuint*)"/>
-        public static unsafe int GetSamplerInfo(IntPtr sampler, uint param_name, nuint param_value_size, IntPtr param_value, Span<nuint> param_value_size_ret)
+        /// <inheritdoc cref="GetSamplerInfo(IntPtr, SamplerInfo, nuint, void*, nuint*)"/>
+        public static unsafe int GetSamplerInfo(IntPtr sampler, SamplerInfo param_name, nuint param_value_size, IntPtr param_value, Span<nuint> param_value_size_ret)
         {
             int returnValue;
             fixed (nuint* param_value_size_ret_ptr = param_value_size_ret)
@@ -5104,8 +5104,8 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="GetSamplerInfo(IntPtr, uint, nuint, void*, nuint*)"/>
-        public static unsafe int GetSamplerInfo(IntPtr sampler, uint param_name, nuint param_value_size, IntPtr param_value, nuint[] param_value_size_ret)
+        /// <inheritdoc cref="GetSamplerInfo(IntPtr, SamplerInfo, nuint, void*, nuint*)"/>
+        public static unsafe int GetSamplerInfo(IntPtr sampler, SamplerInfo param_name, nuint param_value_size, IntPtr param_value, nuint[] param_value_size_ret)
         {
             int returnValue;
             fixed (nuint* param_value_size_ret_ptr = param_value_size_ret)
@@ -5115,8 +5115,8 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="GetSamplerInfo(IntPtr, uint, nuint, void*, nuint*)"/>
-        public static unsafe int GetSamplerInfo(IntPtr sampler, uint param_name, nuint param_value_size, IntPtr param_value, ref nuint param_value_size_ret)
+        /// <inheritdoc cref="GetSamplerInfo(IntPtr, SamplerInfo, nuint, void*, nuint*)"/>
+        public static unsafe int GetSamplerInfo(IntPtr sampler, SamplerInfo param_name, nuint param_value_size, IntPtr param_value, ref nuint param_value_size_ret)
         {
             int returnValue;
             fixed (nuint* param_value_size_ret_ptr = &param_value_size_ret)
@@ -5126,8 +5126,8 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="GetSamplerInfo(IntPtr, uint, nuint, void*, nuint*)"/>
-        public static unsafe int GetSamplerInfo<T1>(IntPtr sampler, uint param_name, nuint param_value_size, Span<T1> param_value, Span<nuint> param_value_size_ret)
+        /// <inheritdoc cref="GetSamplerInfo(IntPtr, SamplerInfo, nuint, void*, nuint*)"/>
+        public static unsafe int GetSamplerInfo<T1>(IntPtr sampler, SamplerInfo param_name, nuint param_value_size, Span<T1> param_value, Span<nuint> param_value_size_ret)
             where T1 : unmanaged
         {
             int returnValue;
@@ -5140,8 +5140,8 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="GetSamplerInfo(IntPtr, uint, nuint, void*, nuint*)"/>
-        public static unsafe int GetSamplerInfo<T1>(IntPtr sampler, uint param_name, nuint param_value_size, T1[] param_value, nuint[] param_value_size_ret)
+        /// <inheritdoc cref="GetSamplerInfo(IntPtr, SamplerInfo, nuint, void*, nuint*)"/>
+        public static unsafe int GetSamplerInfo<T1>(IntPtr sampler, SamplerInfo param_name, nuint param_value_size, T1[] param_value, nuint[] param_value_size_ret)
             where T1 : unmanaged
         {
             int returnValue;
@@ -5154,8 +5154,8 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="GetSamplerInfo(IntPtr, uint, nuint, void*, nuint*)"/>
-        public static unsafe int GetSamplerInfo<T1>(IntPtr sampler, uint param_name, nuint param_value_size, ref T1 param_value, ref nuint param_value_size_ret)
+        /// <inheritdoc cref="GetSamplerInfo(IntPtr, SamplerInfo, nuint, void*, nuint*)"/>
+        public static unsafe int GetSamplerInfo<T1>(IntPtr sampler, SamplerInfo param_name, nuint param_value_size, ref T1 param_value, ref nuint param_value_size_ret)
             where T1 : unmanaged
         {
             int returnValue;
@@ -5166,8 +5166,8 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="GetSupportedImageFormats(IntPtr, MemFlags, uint, uint, cl_image_format*, uint*)"/>
-        public static unsafe int GetSupportedImageFormats(IntPtr context, MemFlags flags, uint image_type, uint num_entries, Span<cl_image_format> image_formats, Span<uint> num_image_formats)
+        /// <inheritdoc cref="GetSupportedImageFormats(IntPtr, MemFlags, MemObjectType, uint, cl_image_format*, uint*)"/>
+        public static unsafe int GetSupportedImageFormats(IntPtr context, MemFlags flags, MemObjectType image_type, uint num_entries, Span<cl_image_format> image_formats, Span<uint> num_image_formats)
         {
             int returnValue;
             fixed (uint* num_image_formats_ptr = num_image_formats)
@@ -5179,8 +5179,8 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="GetSupportedImageFormats(IntPtr, MemFlags, uint, uint, cl_image_format*, uint*)"/>
-        public static unsafe int GetSupportedImageFormats(IntPtr context, MemFlags flags, uint image_type, uint num_entries, cl_image_format[] image_formats, uint[] num_image_formats)
+        /// <inheritdoc cref="GetSupportedImageFormats(IntPtr, MemFlags, MemObjectType, uint, cl_image_format*, uint*)"/>
+        public static unsafe int GetSupportedImageFormats(IntPtr context, MemFlags flags, MemObjectType image_type, uint num_entries, cl_image_format[] image_formats, uint[] num_image_formats)
         {
             int returnValue;
             fixed (uint* num_image_formats_ptr = num_image_formats)
@@ -5192,8 +5192,8 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="GetSupportedImageFormats(IntPtr, MemFlags, uint, uint, cl_image_format*, uint*)"/>
-        public static unsafe int GetSupportedImageFormats(IntPtr context, MemFlags flags, uint image_type, uint num_entries, ref cl_image_format image_formats, ref uint num_image_formats)
+        /// <inheritdoc cref="GetSupportedImageFormats(IntPtr, MemFlags, MemObjectType, uint, cl_image_format*, uint*)"/>
+        public static unsafe int GetSupportedImageFormats(IntPtr context, MemFlags flags, MemObjectType image_type, uint num_entries, ref cl_image_format image_formats, ref uint num_image_formats)
         {
             int returnValue;
             fixed (cl_image_format* image_formats_ptr = &image_formats)
@@ -5510,16 +5510,16 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="SetKernelExecInfo(IntPtr, uint, nuint, void*)"/>
-        public static unsafe int SetKernelExecInfo(IntPtr kernel, uint param_name, nuint param_value_size, IntPtr param_value)
+        /// <inheritdoc cref="SetKernelExecInfo(IntPtr, KernelExecInfo, nuint, void*)"/>
+        public static unsafe int SetKernelExecInfo(IntPtr kernel, KernelExecInfo param_name, nuint param_value_size, IntPtr param_value)
         {
             int returnValue;
             void* param_value_vptr = (void*)param_value;
             returnValue = SetKernelExecInfo(kernel, param_name, param_value_size, param_value_vptr);
             return returnValue;
         }
-        /// <inheritdoc cref="SetKernelExecInfo(IntPtr, uint, nuint, void*)"/>
-        public static unsafe int SetKernelExecInfo<T1>(IntPtr kernel, uint param_name, nuint param_value_size, ReadOnlySpan<T1> param_value)
+        /// <inheritdoc cref="SetKernelExecInfo(IntPtr, KernelExecInfo, nuint, void*)"/>
+        public static unsafe int SetKernelExecInfo<T1>(IntPtr kernel, KernelExecInfo param_name, nuint param_value_size, ReadOnlySpan<T1> param_value)
             where T1 : unmanaged
         {
             int returnValue;
@@ -5529,8 +5529,8 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="SetKernelExecInfo(IntPtr, uint, nuint, void*)"/>
-        public static unsafe int SetKernelExecInfo<T1>(IntPtr kernel, uint param_name, nuint param_value_size, T1[] param_value)
+        /// <inheritdoc cref="SetKernelExecInfo(IntPtr, KernelExecInfo, nuint, void*)"/>
+        public static unsafe int SetKernelExecInfo<T1>(IntPtr kernel, KernelExecInfo param_name, nuint param_value_size, T1[] param_value)
             where T1 : unmanaged
         {
             int returnValue;
@@ -5540,8 +5540,8 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="SetKernelExecInfo(IntPtr, uint, nuint, void*)"/>
-        public static unsafe int SetKernelExecInfo<T1>(IntPtr kernel, uint param_name, nuint param_value_size, ref readonly T1 param_value)
+        /// <inheritdoc cref="SetKernelExecInfo(IntPtr, KernelExecInfo, nuint, void*)"/>
+        public static unsafe int SetKernelExecInfo<T1>(IntPtr kernel, KernelExecInfo param_name, nuint param_value_size, ref readonly T1 param_value)
             where T1 : unmanaged
         {
             int returnValue;
@@ -5937,7 +5937,7 @@ namespace OpenTK.Compute2.OpenCL
                 return returnValue;
             }
         }
-        public static unsafe partial class arm
+        public static unsafe partial class ARM
         {
             /// <inheritdoc cref="EnqueueSVMFreeARM(IntPtr, uint, void**, delegate* unmanaged[Cdecl]<IntPtr, uint, void**, void*, void>, void*, uint, IntPtr*, IntPtr*)"/>
             public static unsafe int EnqueueSVMFreeARM(IntPtr command_queue, uint num_svm_pointers, void** svm_pointers, delegate* unmanaged[Cdecl]<IntPtr, uint, void**, void*, void> pfn_free_func, IntPtr user_data, uint num_events_in_wait_list, Span<IntPtr> event_wait_list, Span<IntPtr> @event)
@@ -6528,16 +6528,16 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="SetKernelExecInfoARM(IntPtr, uint, nuint, void*)"/>
-            public static unsafe int SetKernelExecInfoARM(IntPtr kernel, uint param_name, nuint param_value_size, IntPtr param_value)
+            /// <inheritdoc cref="SetKernelExecInfoARM(IntPtr, KernelExecInfoArm, nuint, void*)"/>
+            public static unsafe int SetKernelExecInfoARM(IntPtr kernel, KernelExecInfoArm param_name, nuint param_value_size, IntPtr param_value)
             {
                 int returnValue;
                 void* param_value_vptr = (void*)param_value;
                 returnValue = SetKernelExecInfoARM(kernel, param_name, param_value_size, param_value_vptr);
                 return returnValue;
             }
-            /// <inheritdoc cref="SetKernelExecInfoARM(IntPtr, uint, nuint, void*)"/>
-            public static unsafe int SetKernelExecInfoARM<T1>(IntPtr kernel, uint param_name, nuint param_value_size, ReadOnlySpan<T1> param_value)
+            /// <inheritdoc cref="SetKernelExecInfoARM(IntPtr, KernelExecInfoArm, nuint, void*)"/>
+            public static unsafe int SetKernelExecInfoARM<T1>(IntPtr kernel, KernelExecInfoArm param_name, nuint param_value_size, ReadOnlySpan<T1> param_value)
                 where T1 : unmanaged
             {
                 int returnValue;
@@ -6547,8 +6547,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="SetKernelExecInfoARM(IntPtr, uint, nuint, void*)"/>
-            public static unsafe int SetKernelExecInfoARM<T1>(IntPtr kernel, uint param_name, nuint param_value_size, T1[] param_value)
+            /// <inheritdoc cref="SetKernelExecInfoARM(IntPtr, KernelExecInfoArm, nuint, void*)"/>
+            public static unsafe int SetKernelExecInfoARM<T1>(IntPtr kernel, KernelExecInfoArm param_name, nuint param_value_size, T1[] param_value)
                 where T1 : unmanaged
             {
                 int returnValue;
@@ -6558,8 +6558,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="SetKernelExecInfoARM(IntPtr, uint, nuint, void*)"/>
-            public static unsafe int SetKernelExecInfoARM<T1>(IntPtr kernel, uint param_name, nuint param_value_size, ref readonly T1 param_value)
+            /// <inheritdoc cref="SetKernelExecInfoARM(IntPtr, KernelExecInfoArm, nuint, void*)"/>
+            public static unsafe int SetKernelExecInfoARM<T1>(IntPtr kernel, KernelExecInfoArm param_name, nuint param_value_size, ref readonly T1 param_value)
                 where T1 : unmanaged
             {
                 int returnValue;
@@ -6603,17 +6603,17 @@ namespace OpenTK.Compute2.OpenCL
                 }
             }
         }
-        public static unsafe partial class ext
+        public static unsafe partial class EXT
         {
-            /// <inheritdoc cref="CreateSubDevicesEXT(IntPtr, ulong*, uint, IntPtr*, uint*)"/>
-            public static unsafe int CreateSubDevicesEXT(IntPtr in_device, Span<ulong> properties, uint num_entries, Span<IntPtr> out_devices, Span<uint> num_devices)
+            /// <inheritdoc cref="CreateSubDevicesEXT(IntPtr, DevicePartitionPropertyExt*, uint, IntPtr*, uint*)"/>
+            public static unsafe int CreateSubDevicesEXT(IntPtr in_device, Span<DevicePartitionPropertyExt> properties, uint num_entries, Span<IntPtr> out_devices, Span<uint> num_devices)
             {
                 int returnValue;
                 fixed (uint* num_devices_ptr = num_devices)
                 {
                     fixed (IntPtr* out_devices_ptr = out_devices)
                     {
-                        fixed (ulong* properties_ptr = properties)
+                        fixed (DevicePartitionPropertyExt* properties_ptr = properties)
                         {
                             returnValue = CreateSubDevicesEXT(in_device, properties_ptr, num_entries, out_devices_ptr, num_devices_ptr);
                         }
@@ -6621,15 +6621,15 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="CreateSubDevicesEXT(IntPtr, ulong*, uint, IntPtr*, uint*)"/>
-            public static unsafe int CreateSubDevicesEXT(IntPtr in_device, ulong[] properties, uint num_entries, IntPtr[] out_devices, uint[] num_devices)
+            /// <inheritdoc cref="CreateSubDevicesEXT(IntPtr, DevicePartitionPropertyExt*, uint, IntPtr*, uint*)"/>
+            public static unsafe int CreateSubDevicesEXT(IntPtr in_device, DevicePartitionPropertyExt[] properties, uint num_entries, IntPtr[] out_devices, uint[] num_devices)
             {
                 int returnValue;
                 fixed (uint* num_devices_ptr = num_devices)
                 {
                     fixed (IntPtr* out_devices_ptr = out_devices)
                     {
-                        fixed (ulong* properties_ptr = properties)
+                        fixed (DevicePartitionPropertyExt* properties_ptr = properties)
                         {
                             returnValue = CreateSubDevicesEXT(in_device, properties_ptr, num_entries, out_devices_ptr, num_devices_ptr);
                         }
@@ -6637,11 +6637,11 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="CreateSubDevicesEXT(IntPtr, ulong*, uint, IntPtr*, uint*)"/>
-            public static unsafe int CreateSubDevicesEXT(IntPtr in_device, ref ulong properties, uint num_entries, ref IntPtr out_devices, ref uint num_devices)
+            /// <inheritdoc cref="CreateSubDevicesEXT(IntPtr, DevicePartitionPropertyExt*, uint, IntPtr*, uint*)"/>
+            public static unsafe int CreateSubDevicesEXT(IntPtr in_device, ref DevicePartitionPropertyExt properties, uint num_entries, ref IntPtr out_devices, ref uint num_devices)
             {
                 int returnValue;
-                fixed (ulong* properties_ptr = &properties)
+                fixed (DevicePartitionPropertyExt* properties_ptr = &properties)
                 fixed (IntPtr* out_devices_ptr = &out_devices)
                 fixed (uint* num_devices_ptr = &num_devices)
                 {
@@ -6693,8 +6693,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetImageRequirementsInfoEXT(IntPtr, ulong*, MemFlags, cl_image_format*, cl_image_desc*, uint, nuint, void*, nuint*)"/>
-            public static unsafe int GetImageRequirementsInfoEXT(IntPtr context, Span<ulong> properties, MemFlags flags, Span<cl_image_format> image_format, Span<cl_image_desc> image_desc, uint param_name, nuint param_value_size, IntPtr param_value, Span<nuint> param_value_size_ret)
+            /// <inheritdoc cref="GetImageRequirementsInfoEXT(IntPtr, MemProperties*, MemFlags, cl_image_format*, cl_image_desc*, ImageRequirementsInfoExt, nuint, void*, nuint*)"/>
+            public static unsafe int GetImageRequirementsInfoEXT(IntPtr context, Span<MemProperties> properties, MemFlags flags, Span<cl_image_format> image_format, Span<cl_image_desc> image_desc, ImageRequirementsInfoExt param_name, nuint param_value_size, IntPtr param_value, Span<nuint> param_value_size_ret)
             {
                 int returnValue;
                 fixed (nuint* param_value_size_ret_ptr = param_value_size_ret)
@@ -6703,7 +6703,7 @@ namespace OpenTK.Compute2.OpenCL
                     {
                         fixed (cl_image_format* image_format_ptr = image_format)
                         {
-                            fixed (ulong* properties_ptr = properties)
+                            fixed (MemProperties* properties_ptr = properties)
                             {
                                 void* param_value_vptr = (void*)param_value;
                                 returnValue = GetImageRequirementsInfoEXT(context, properties_ptr, flags, image_format_ptr, image_desc_ptr, param_name, param_value_size, param_value_vptr, param_value_size_ret_ptr);
@@ -6713,8 +6713,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetImageRequirementsInfoEXT(IntPtr, ulong*, MemFlags, cl_image_format*, cl_image_desc*, uint, nuint, void*, nuint*)"/>
-            public static unsafe int GetImageRequirementsInfoEXT(IntPtr context, ulong[] properties, MemFlags flags, cl_image_format[] image_format, cl_image_desc[] image_desc, uint param_name, nuint param_value_size, IntPtr param_value, nuint[] param_value_size_ret)
+            /// <inheritdoc cref="GetImageRequirementsInfoEXT(IntPtr, MemProperties*, MemFlags, cl_image_format*, cl_image_desc*, ImageRequirementsInfoExt, nuint, void*, nuint*)"/>
+            public static unsafe int GetImageRequirementsInfoEXT(IntPtr context, MemProperties[] properties, MemFlags flags, cl_image_format[] image_format, cl_image_desc[] image_desc, ImageRequirementsInfoExt param_name, nuint param_value_size, IntPtr param_value, nuint[] param_value_size_ret)
             {
                 int returnValue;
                 fixed (nuint* param_value_size_ret_ptr = param_value_size_ret)
@@ -6723,7 +6723,7 @@ namespace OpenTK.Compute2.OpenCL
                     {
                         fixed (cl_image_format* image_format_ptr = image_format)
                         {
-                            fixed (ulong* properties_ptr = properties)
+                            fixed (MemProperties* properties_ptr = properties)
                             {
                                 void* param_value_vptr = (void*)param_value;
                                 returnValue = GetImageRequirementsInfoEXT(context, properties_ptr, flags, image_format_ptr, image_desc_ptr, param_name, param_value_size, param_value_vptr, param_value_size_ret_ptr);
@@ -6733,11 +6733,11 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetImageRequirementsInfoEXT(IntPtr, ulong*, MemFlags, cl_image_format*, cl_image_desc*, uint, nuint, void*, nuint*)"/>
-            public static unsafe int GetImageRequirementsInfoEXT(IntPtr context, ref ulong properties, MemFlags flags, ref cl_image_format image_format, ref cl_image_desc image_desc, uint param_name, nuint param_value_size, IntPtr param_value, ref nuint param_value_size_ret)
+            /// <inheritdoc cref="GetImageRequirementsInfoEXT(IntPtr, MemProperties*, MemFlags, cl_image_format*, cl_image_desc*, ImageRequirementsInfoExt, nuint, void*, nuint*)"/>
+            public static unsafe int GetImageRequirementsInfoEXT(IntPtr context, ref MemProperties properties, MemFlags flags, ref cl_image_format image_format, ref cl_image_desc image_desc, ImageRequirementsInfoExt param_name, nuint param_value_size, IntPtr param_value, ref nuint param_value_size_ret)
             {
                 int returnValue;
-                fixed (ulong* properties_ptr = &properties)
+                fixed (MemProperties* properties_ptr = &properties)
                 fixed (cl_image_format* image_format_ptr = &image_format)
                 fixed (cl_image_desc* image_desc_ptr = &image_desc)
                 fixed (nuint* param_value_size_ret_ptr = &param_value_size_ret)
@@ -6747,8 +6747,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetImageRequirementsInfoEXT(IntPtr, ulong*, MemFlags, cl_image_format*, cl_image_desc*, uint, nuint, void*, nuint*)"/>
-            public static unsafe int GetImageRequirementsInfoEXT<T1>(IntPtr context, Span<ulong> properties, MemFlags flags, Span<cl_image_format> image_format, Span<cl_image_desc> image_desc, uint param_name, nuint param_value_size, Span<T1> param_value, Span<nuint> param_value_size_ret)
+            /// <inheritdoc cref="GetImageRequirementsInfoEXT(IntPtr, MemProperties*, MemFlags, cl_image_format*, cl_image_desc*, ImageRequirementsInfoExt, nuint, void*, nuint*)"/>
+            public static unsafe int GetImageRequirementsInfoEXT<T1>(IntPtr context, Span<MemProperties> properties, MemFlags flags, Span<cl_image_format> image_format, Span<cl_image_desc> image_desc, ImageRequirementsInfoExt param_name, nuint param_value_size, Span<T1> param_value, Span<nuint> param_value_size_ret)
                 where T1 : unmanaged
             {
                 int returnValue;
@@ -6760,7 +6760,7 @@ namespace OpenTK.Compute2.OpenCL
                         {
                             fixed (cl_image_format* image_format_ptr = image_format)
                             {
-                                fixed (ulong* properties_ptr = properties)
+                                fixed (MemProperties* properties_ptr = properties)
                                 {
                                     returnValue = GetImageRequirementsInfoEXT(context, properties_ptr, flags, image_format_ptr, image_desc_ptr, param_name, param_value_size, param_value_ptr, param_value_size_ret_ptr);
                                 }
@@ -6770,8 +6770,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetImageRequirementsInfoEXT(IntPtr, ulong*, MemFlags, cl_image_format*, cl_image_desc*, uint, nuint, void*, nuint*)"/>
-            public static unsafe int GetImageRequirementsInfoEXT<T1>(IntPtr context, ulong[] properties, MemFlags flags, cl_image_format[] image_format, cl_image_desc[] image_desc, uint param_name, nuint param_value_size, T1[] param_value, nuint[] param_value_size_ret)
+            /// <inheritdoc cref="GetImageRequirementsInfoEXT(IntPtr, MemProperties*, MemFlags, cl_image_format*, cl_image_desc*, ImageRequirementsInfoExt, nuint, void*, nuint*)"/>
+            public static unsafe int GetImageRequirementsInfoEXT<T1>(IntPtr context, MemProperties[] properties, MemFlags flags, cl_image_format[] image_format, cl_image_desc[] image_desc, ImageRequirementsInfoExt param_name, nuint param_value_size, T1[] param_value, nuint[] param_value_size_ret)
                 where T1 : unmanaged
             {
                 int returnValue;
@@ -6783,7 +6783,7 @@ namespace OpenTK.Compute2.OpenCL
                         {
                             fixed (cl_image_format* image_format_ptr = image_format)
                             {
-                                fixed (ulong* properties_ptr = properties)
+                                fixed (MemProperties* properties_ptr = properties)
                                 {
                                     returnValue = GetImageRequirementsInfoEXT(context, properties_ptr, flags, image_format_ptr, image_desc_ptr, param_name, param_value_size, param_value_ptr, param_value_size_ret_ptr);
                                 }
@@ -6793,12 +6793,12 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetImageRequirementsInfoEXT(IntPtr, ulong*, MemFlags, cl_image_format*, cl_image_desc*, uint, nuint, void*, nuint*)"/>
-            public static unsafe int GetImageRequirementsInfoEXT<T1>(IntPtr context, ref ulong properties, MemFlags flags, ref cl_image_format image_format, ref cl_image_desc image_desc, uint param_name, nuint param_value_size, ref T1 param_value, ref nuint param_value_size_ret)
+            /// <inheritdoc cref="GetImageRequirementsInfoEXT(IntPtr, MemProperties*, MemFlags, cl_image_format*, cl_image_desc*, ImageRequirementsInfoExt, nuint, void*, nuint*)"/>
+            public static unsafe int GetImageRequirementsInfoEXT<T1>(IntPtr context, ref MemProperties properties, MemFlags flags, ref cl_image_format image_format, ref cl_image_desc image_desc, ImageRequirementsInfoExt param_name, nuint param_value_size, ref T1 param_value, ref nuint param_value_size_ret)
                 where T1 : unmanaged
             {
                 int returnValue;
-                fixed (ulong* properties_ptr = &properties)
+                fixed (MemProperties* properties_ptr = &properties)
                 fixed (cl_image_format* image_format_ptr = &image_format)
                 fixed (cl_image_desc* image_desc_ptr = &image_desc)
                 fixed (void* param_value_ptr = &param_value)
@@ -6809,7 +6809,7 @@ namespace OpenTK.Compute2.OpenCL
                 return returnValue;
             }
         }
-        public static unsafe partial class img
+        public static unsafe partial class IMG
         {
             /// <inheritdoc cref="CancelCommandsIMG(IntPtr*, nuint)"/>
             public static unsafe int CancelCommandsIMG(Span<IntPtr> event_list, nuint num_events_in_list)
@@ -6981,7 +6981,7 @@ namespace OpenTK.Compute2.OpenCL
                 return returnValue;
             }
         }
-        public static unsafe partial class intel
+        public static unsafe partial class INTEL
         {
             /// <inheritdoc cref="CreateAcceleratorINTEL(IntPtr, AcceleratorTypeIntel, nuint, void*, int*)"/>
             public static unsafe IntPtr CreateAcceleratorINTEL(IntPtr context, AcceleratorTypeIntel accelerator_type, nuint descriptor_size, IntPtr descriptor, Span<int> errcode_ret)
@@ -7056,13 +7056,13 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="CreateBufferWithPropertiesINTEL(IntPtr, ulong*, MemFlags, nuint, void*, int*)"/>
-            public static unsafe IntPtr CreateBufferWithPropertiesINTEL(IntPtr context, Span<ulong> properties, MemFlags flags, nuint size, IntPtr host_ptr, Span<int> errcode_ret)
+            /// <inheritdoc cref="CreateBufferWithPropertiesINTEL(IntPtr, MemPropertiesIntel*, MemFlags, nuint, void*, int*)"/>
+            public static unsafe IntPtr CreateBufferWithPropertiesINTEL(IntPtr context, Span<MemPropertiesIntel> properties, MemFlags flags, nuint size, IntPtr host_ptr, Span<int> errcode_ret)
             {
                 IntPtr returnValue;
                 fixed (int* errcode_ret_ptr = errcode_ret)
                 {
-                    fixed (ulong* properties_ptr = properties)
+                    fixed (MemPropertiesIntel* properties_ptr = properties)
                     {
                         void* host_ptr_vptr = (void*)host_ptr;
                         returnValue = CreateBufferWithPropertiesINTEL(context, properties_ptr, flags, size, host_ptr_vptr, errcode_ret_ptr);
@@ -7070,13 +7070,13 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="CreateBufferWithPropertiesINTEL(IntPtr, ulong*, MemFlags, nuint, void*, int*)"/>
-            public static unsafe IntPtr CreateBufferWithPropertiesINTEL(IntPtr context, ulong[] properties, MemFlags flags, nuint size, IntPtr host_ptr, int[] errcode_ret)
+            /// <inheritdoc cref="CreateBufferWithPropertiesINTEL(IntPtr, MemPropertiesIntel*, MemFlags, nuint, void*, int*)"/>
+            public static unsafe IntPtr CreateBufferWithPropertiesINTEL(IntPtr context, MemPropertiesIntel[] properties, MemFlags flags, nuint size, IntPtr host_ptr, int[] errcode_ret)
             {
                 IntPtr returnValue;
                 fixed (int* errcode_ret_ptr = errcode_ret)
                 {
-                    fixed (ulong* properties_ptr = properties)
+                    fixed (MemPropertiesIntel* properties_ptr = properties)
                     {
                         void* host_ptr_vptr = (void*)host_ptr;
                         returnValue = CreateBufferWithPropertiesINTEL(context, properties_ptr, flags, size, host_ptr_vptr, errcode_ret_ptr);
@@ -7084,11 +7084,11 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="CreateBufferWithPropertiesINTEL(IntPtr, ulong*, MemFlags, nuint, void*, int*)"/>
-            public static unsafe IntPtr CreateBufferWithPropertiesINTEL(IntPtr context, ref ulong properties, MemFlags flags, nuint size, IntPtr host_ptr, ref int errcode_ret)
+            /// <inheritdoc cref="CreateBufferWithPropertiesINTEL(IntPtr, MemPropertiesIntel*, MemFlags, nuint, void*, int*)"/>
+            public static unsafe IntPtr CreateBufferWithPropertiesINTEL(IntPtr context, ref MemPropertiesIntel properties, MemFlags flags, nuint size, IntPtr host_ptr, ref int errcode_ret)
             {
                 IntPtr returnValue;
-                fixed (ulong* properties_ptr = &properties)
+                fixed (MemPropertiesIntel* properties_ptr = &properties)
                 fixed (int* errcode_ret_ptr = &errcode_ret)
                 {
                     void* host_ptr_vptr = (void*)host_ptr;
@@ -7096,8 +7096,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="CreateBufferWithPropertiesINTEL(IntPtr, ulong*, MemFlags, nuint, void*, int*)"/>
-            public static unsafe IntPtr CreateBufferWithPropertiesINTEL<T1>(IntPtr context, Span<ulong> properties, MemFlags flags, nuint size, Span<T1> host_ptr, Span<int> errcode_ret)
+            /// <inheritdoc cref="CreateBufferWithPropertiesINTEL(IntPtr, MemPropertiesIntel*, MemFlags, nuint, void*, int*)"/>
+            public static unsafe IntPtr CreateBufferWithPropertiesINTEL<T1>(IntPtr context, Span<MemPropertiesIntel> properties, MemFlags flags, nuint size, Span<T1> host_ptr, Span<int> errcode_ret)
                 where T1 : unmanaged
             {
                 IntPtr returnValue;
@@ -7105,7 +7105,7 @@ namespace OpenTK.Compute2.OpenCL
                 {
                     fixed (void* host_ptr_ptr = host_ptr)
                     {
-                        fixed (ulong* properties_ptr = properties)
+                        fixed (MemPropertiesIntel* properties_ptr = properties)
                         {
                             returnValue = CreateBufferWithPropertiesINTEL(context, properties_ptr, flags, size, host_ptr_ptr, errcode_ret_ptr);
                         }
@@ -7113,8 +7113,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="CreateBufferWithPropertiesINTEL(IntPtr, ulong*, MemFlags, nuint, void*, int*)"/>
-            public static unsafe IntPtr CreateBufferWithPropertiesINTEL<T1>(IntPtr context, ulong[] properties, MemFlags flags, nuint size, T1[] host_ptr, int[] errcode_ret)
+            /// <inheritdoc cref="CreateBufferWithPropertiesINTEL(IntPtr, MemPropertiesIntel*, MemFlags, nuint, void*, int*)"/>
+            public static unsafe IntPtr CreateBufferWithPropertiesINTEL<T1>(IntPtr context, MemPropertiesIntel[] properties, MemFlags flags, nuint size, T1[] host_ptr, int[] errcode_ret)
                 where T1 : unmanaged
             {
                 IntPtr returnValue;
@@ -7122,7 +7122,7 @@ namespace OpenTK.Compute2.OpenCL
                 {
                     fixed (void* host_ptr_ptr = host_ptr)
                     {
-                        fixed (ulong* properties_ptr = properties)
+                        fixed (MemPropertiesIntel* properties_ptr = properties)
                         {
                             returnValue = CreateBufferWithPropertiesINTEL(context, properties_ptr, flags, size, host_ptr_ptr, errcode_ret_ptr);
                         }
@@ -7130,12 +7130,12 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="CreateBufferWithPropertiesINTEL(IntPtr, ulong*, MemFlags, nuint, void*, int*)"/>
-            public static unsafe IntPtr CreateBufferWithPropertiesINTEL<T1>(IntPtr context, ref ulong properties, MemFlags flags, nuint size, ref T1 host_ptr, ref int errcode_ret)
+            /// <inheritdoc cref="CreateBufferWithPropertiesINTEL(IntPtr, MemPropertiesIntel*, MemFlags, nuint, void*, int*)"/>
+            public static unsafe IntPtr CreateBufferWithPropertiesINTEL<T1>(IntPtr context, ref MemPropertiesIntel properties, MemFlags flags, nuint size, ref T1 host_ptr, ref int errcode_ret)
                 where T1 : unmanaged
             {
                 IntPtr returnValue;
-                fixed (ulong* properties_ptr = &properties)
+                fixed (MemPropertiesIntel* properties_ptr = &properties)
                 fixed (void* host_ptr_ptr = &host_ptr)
                 fixed (int* errcode_ret_ptr = &errcode_ret)
                 {
@@ -7217,37 +7217,37 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="DeviceMemAllocINTEL(IntPtr, IntPtr, ulong*, nuint, uint, int*)"/>
-            public static unsafe void* DeviceMemAllocINTEL(IntPtr context, IntPtr device, Span<ulong> properties, nuint size, uint alignment, Span<int> errcode_ret)
+            /// <inheritdoc cref="DeviceMemAllocINTEL(IntPtr, IntPtr, MemPropertiesIntel*, nuint, uint, int*)"/>
+            public static unsafe void* DeviceMemAllocINTEL(IntPtr context, IntPtr device, Span<MemPropertiesIntel> properties, nuint size, uint alignment, Span<int> errcode_ret)
             {
                 void* returnValue;
                 fixed (int* errcode_ret_ptr = errcode_ret)
                 {
-                    fixed (ulong* properties_ptr = properties)
+                    fixed (MemPropertiesIntel* properties_ptr = properties)
                     {
                         returnValue = DeviceMemAllocINTEL(context, device, properties_ptr, size, alignment, errcode_ret_ptr);
                     }
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="DeviceMemAllocINTEL(IntPtr, IntPtr, ulong*, nuint, uint, int*)"/>
-            public static unsafe void* DeviceMemAllocINTEL(IntPtr context, IntPtr device, ulong[] properties, nuint size, uint alignment, int[] errcode_ret)
+            /// <inheritdoc cref="DeviceMemAllocINTEL(IntPtr, IntPtr, MemPropertiesIntel*, nuint, uint, int*)"/>
+            public static unsafe void* DeviceMemAllocINTEL(IntPtr context, IntPtr device, MemPropertiesIntel[] properties, nuint size, uint alignment, int[] errcode_ret)
             {
                 void* returnValue;
                 fixed (int* errcode_ret_ptr = errcode_ret)
                 {
-                    fixed (ulong* properties_ptr = properties)
+                    fixed (MemPropertiesIntel* properties_ptr = properties)
                     {
                         returnValue = DeviceMemAllocINTEL(context, device, properties_ptr, size, alignment, errcode_ret_ptr);
                     }
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="DeviceMemAllocINTEL(IntPtr, IntPtr, ulong*, nuint, uint, int*)"/>
-            public static unsafe void* DeviceMemAllocINTEL(IntPtr context, IntPtr device, ref ulong properties, nuint size, uint alignment, ref int errcode_ret)
+            /// <inheritdoc cref="DeviceMemAllocINTEL(IntPtr, IntPtr, MemPropertiesIntel*, nuint, uint, int*)"/>
+            public static unsafe void* DeviceMemAllocINTEL(IntPtr context, IntPtr device, ref MemPropertiesIntel properties, nuint size, uint alignment, ref int errcode_ret)
             {
                 void* returnValue;
-                fixed (ulong* properties_ptr = &properties)
+                fixed (MemPropertiesIntel* properties_ptr = &properties)
                 fixed (int* errcode_ret_ptr = &errcode_ret)
                 {
                     returnValue = DeviceMemAllocINTEL(context, device, properties_ptr, size, alignment, errcode_ret_ptr);
@@ -8089,8 +8089,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetAcceleratorInfoINTEL(IntPtr, uint, nuint, void*, nuint*)"/>
-            public static unsafe int GetAcceleratorInfoINTEL(IntPtr accelerator, uint param_name, nuint param_value_size, IntPtr param_value, Span<nuint> param_value_size_ret)
+            /// <inheritdoc cref="GetAcceleratorInfoINTEL(IntPtr, AcceleratorInfoIntel, nuint, void*, nuint*)"/>
+            public static unsafe int GetAcceleratorInfoINTEL(IntPtr accelerator, AcceleratorInfoIntel param_name, nuint param_value_size, IntPtr param_value, Span<nuint> param_value_size_ret)
             {
                 int returnValue;
                 fixed (nuint* param_value_size_ret_ptr = param_value_size_ret)
@@ -8100,8 +8100,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetAcceleratorInfoINTEL(IntPtr, uint, nuint, void*, nuint*)"/>
-            public static unsafe int GetAcceleratorInfoINTEL(IntPtr accelerator, uint param_name, nuint param_value_size, IntPtr param_value, nuint[] param_value_size_ret)
+            /// <inheritdoc cref="GetAcceleratorInfoINTEL(IntPtr, AcceleratorInfoIntel, nuint, void*, nuint*)"/>
+            public static unsafe int GetAcceleratorInfoINTEL(IntPtr accelerator, AcceleratorInfoIntel param_name, nuint param_value_size, IntPtr param_value, nuint[] param_value_size_ret)
             {
                 int returnValue;
                 fixed (nuint* param_value_size_ret_ptr = param_value_size_ret)
@@ -8111,8 +8111,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetAcceleratorInfoINTEL(IntPtr, uint, nuint, void*, nuint*)"/>
-            public static unsafe int GetAcceleratorInfoINTEL(IntPtr accelerator, uint param_name, nuint param_value_size, IntPtr param_value, ref nuint param_value_size_ret)
+            /// <inheritdoc cref="GetAcceleratorInfoINTEL(IntPtr, AcceleratorInfoIntel, nuint, void*, nuint*)"/>
+            public static unsafe int GetAcceleratorInfoINTEL(IntPtr accelerator, AcceleratorInfoIntel param_name, nuint param_value_size, IntPtr param_value, ref nuint param_value_size_ret)
             {
                 int returnValue;
                 fixed (nuint* param_value_size_ret_ptr = &param_value_size_ret)
@@ -8122,8 +8122,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetAcceleratorInfoINTEL(IntPtr, uint, nuint, void*, nuint*)"/>
-            public static unsafe int GetAcceleratorInfoINTEL<T1>(IntPtr accelerator, uint param_name, nuint param_value_size, Span<T1> param_value, Span<nuint> param_value_size_ret)
+            /// <inheritdoc cref="GetAcceleratorInfoINTEL(IntPtr, AcceleratorInfoIntel, nuint, void*, nuint*)"/>
+            public static unsafe int GetAcceleratorInfoINTEL<T1>(IntPtr accelerator, AcceleratorInfoIntel param_name, nuint param_value_size, Span<T1> param_value, Span<nuint> param_value_size_ret)
                 where T1 : unmanaged
             {
                 int returnValue;
@@ -8136,8 +8136,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetAcceleratorInfoINTEL(IntPtr, uint, nuint, void*, nuint*)"/>
-            public static unsafe int GetAcceleratorInfoINTEL<T1>(IntPtr accelerator, uint param_name, nuint param_value_size, T1[] param_value, nuint[] param_value_size_ret)
+            /// <inheritdoc cref="GetAcceleratorInfoINTEL(IntPtr, AcceleratorInfoIntel, nuint, void*, nuint*)"/>
+            public static unsafe int GetAcceleratorInfoINTEL<T1>(IntPtr accelerator, AcceleratorInfoIntel param_name, nuint param_value_size, T1[] param_value, nuint[] param_value_size_ret)
                 where T1 : unmanaged
             {
                 int returnValue;
@@ -8150,8 +8150,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetAcceleratorInfoINTEL(IntPtr, uint, nuint, void*, nuint*)"/>
-            public static unsafe int GetAcceleratorInfoINTEL<T1>(IntPtr accelerator, uint param_name, nuint param_value_size, ref T1 param_value, ref nuint param_value_size_ret)
+            /// <inheritdoc cref="GetAcceleratorInfoINTEL(IntPtr, AcceleratorInfoIntel, nuint, void*, nuint*)"/>
+            public static unsafe int GetAcceleratorInfoINTEL<T1>(IntPtr accelerator, AcceleratorInfoIntel param_name, nuint param_value_size, ref T1 param_value, ref nuint param_value_size_ret)
                 where T1 : unmanaged
             {
                 int returnValue;
@@ -8162,8 +8162,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetDeviceIDsFromDX9INTEL(IntPtr, uint, void*, uint, uint, IntPtr*, uint*)"/>
-            public static unsafe int GetDeviceIDsFromDX9INTEL(IntPtr platform, uint dx9_device_source, IntPtr dx9_object, uint dx9_device_set, uint num_entries, Span<IntPtr> devices, Span<uint> num_devices)
+            /// <inheritdoc cref="GetDeviceIDsFromDX9INTEL(IntPtr, Dx9DeviceSourceIntel, void*, Dx9DeviceSetIntel, uint, IntPtr*, uint*)"/>
+            public static unsafe int GetDeviceIDsFromDX9INTEL(IntPtr platform, Dx9DeviceSourceIntel dx9_device_source, IntPtr dx9_object, Dx9DeviceSetIntel dx9_device_set, uint num_entries, Span<IntPtr> devices, Span<uint> num_devices)
             {
                 int returnValue;
                 fixed (uint* num_devices_ptr = num_devices)
@@ -8176,8 +8176,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetDeviceIDsFromDX9INTEL(IntPtr, uint, void*, uint, uint, IntPtr*, uint*)"/>
-            public static unsafe int GetDeviceIDsFromDX9INTEL(IntPtr platform, uint dx9_device_source, IntPtr dx9_object, uint dx9_device_set, uint num_entries, IntPtr[] devices, uint[] num_devices)
+            /// <inheritdoc cref="GetDeviceIDsFromDX9INTEL(IntPtr, Dx9DeviceSourceIntel, void*, Dx9DeviceSetIntel, uint, IntPtr*, uint*)"/>
+            public static unsafe int GetDeviceIDsFromDX9INTEL(IntPtr platform, Dx9DeviceSourceIntel dx9_device_source, IntPtr dx9_object, Dx9DeviceSetIntel dx9_device_set, uint num_entries, IntPtr[] devices, uint[] num_devices)
             {
                 int returnValue;
                 fixed (uint* num_devices_ptr = num_devices)
@@ -8190,8 +8190,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetDeviceIDsFromDX9INTEL(IntPtr, uint, void*, uint, uint, IntPtr*, uint*)"/>
-            public static unsafe int GetDeviceIDsFromDX9INTEL(IntPtr platform, uint dx9_device_source, IntPtr dx9_object, uint dx9_device_set, uint num_entries, ref IntPtr devices, ref uint num_devices)
+            /// <inheritdoc cref="GetDeviceIDsFromDX9INTEL(IntPtr, Dx9DeviceSourceIntel, void*, Dx9DeviceSetIntel, uint, IntPtr*, uint*)"/>
+            public static unsafe int GetDeviceIDsFromDX9INTEL(IntPtr platform, Dx9DeviceSourceIntel dx9_device_source, IntPtr dx9_object, Dx9DeviceSetIntel dx9_device_set, uint num_entries, ref IntPtr devices, ref uint num_devices)
             {
                 int returnValue;
                 fixed (IntPtr* devices_ptr = &devices)
@@ -8202,8 +8202,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetDeviceIDsFromDX9INTEL(IntPtr, uint, void*, uint, uint, IntPtr*, uint*)"/>
-            public static unsafe int GetDeviceIDsFromDX9INTEL<T1>(IntPtr platform, uint dx9_device_source, Span<T1> dx9_object, uint dx9_device_set, uint num_entries, Span<IntPtr> devices, Span<uint> num_devices)
+            /// <inheritdoc cref="GetDeviceIDsFromDX9INTEL(IntPtr, Dx9DeviceSourceIntel, void*, Dx9DeviceSetIntel, uint, IntPtr*, uint*)"/>
+            public static unsafe int GetDeviceIDsFromDX9INTEL<T1>(IntPtr platform, Dx9DeviceSourceIntel dx9_device_source, Span<T1> dx9_object, Dx9DeviceSetIntel dx9_device_set, uint num_entries, Span<IntPtr> devices, Span<uint> num_devices)
                 where T1 : unmanaged
             {
                 int returnValue;
@@ -8219,8 +8219,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetDeviceIDsFromDX9INTEL(IntPtr, uint, void*, uint, uint, IntPtr*, uint*)"/>
-            public static unsafe int GetDeviceIDsFromDX9INTEL<T1>(IntPtr platform, uint dx9_device_source, T1[] dx9_object, uint dx9_device_set, uint num_entries, IntPtr[] devices, uint[] num_devices)
+            /// <inheritdoc cref="GetDeviceIDsFromDX9INTEL(IntPtr, Dx9DeviceSourceIntel, void*, Dx9DeviceSetIntel, uint, IntPtr*, uint*)"/>
+            public static unsafe int GetDeviceIDsFromDX9INTEL<T1>(IntPtr platform, Dx9DeviceSourceIntel dx9_device_source, T1[] dx9_object, Dx9DeviceSetIntel dx9_device_set, uint num_entries, IntPtr[] devices, uint[] num_devices)
                 where T1 : unmanaged
             {
                 int returnValue;
@@ -8236,8 +8236,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetDeviceIDsFromDX9INTEL(IntPtr, uint, void*, uint, uint, IntPtr*, uint*)"/>
-            public static unsafe int GetDeviceIDsFromDX9INTEL<T1>(IntPtr platform, uint dx9_device_source, ref T1 dx9_object, uint dx9_device_set, uint num_entries, ref IntPtr devices, ref uint num_devices)
+            /// <inheritdoc cref="GetDeviceIDsFromDX9INTEL(IntPtr, Dx9DeviceSourceIntel, void*, Dx9DeviceSetIntel, uint, IntPtr*, uint*)"/>
+            public static unsafe int GetDeviceIDsFromDX9INTEL<T1>(IntPtr platform, Dx9DeviceSourceIntel dx9_device_source, ref T1 dx9_object, Dx9DeviceSetIntel dx9_device_set, uint num_entries, ref IntPtr devices, ref uint num_devices)
                 where T1 : unmanaged
             {
                 int returnValue;
@@ -8249,8 +8249,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetDeviceIDsFromVA_APIMediaAdapterINTEL(IntPtr, uint, void*, uint, uint, IntPtr*, uint*)"/>
-            public static unsafe int GetDeviceIDsFromVA_APIMediaAdapterINTEL(IntPtr platform, uint media_adapter_type, IntPtr media_adapter, uint media_adapter_set, uint num_entries, Span<IntPtr> devices, Span<uint> num_devices)
+            /// <inheritdoc cref="GetDeviceIDsFromVA_APIMediaAdapterINTEL(IntPtr, VaApiDeviceSourceIntel, void*, VaApiDeviceSetIntel, uint, IntPtr*, uint*)"/>
+            public static unsafe int GetDeviceIDsFromVA_APIMediaAdapterINTEL(IntPtr platform, VaApiDeviceSourceIntel media_adapter_type, IntPtr media_adapter, VaApiDeviceSetIntel media_adapter_set, uint num_entries, Span<IntPtr> devices, Span<uint> num_devices)
             {
                 int returnValue;
                 fixed (uint* num_devices_ptr = num_devices)
@@ -8263,8 +8263,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetDeviceIDsFromVA_APIMediaAdapterINTEL(IntPtr, uint, void*, uint, uint, IntPtr*, uint*)"/>
-            public static unsafe int GetDeviceIDsFromVA_APIMediaAdapterINTEL(IntPtr platform, uint media_adapter_type, IntPtr media_adapter, uint media_adapter_set, uint num_entries, IntPtr[] devices, uint[] num_devices)
+            /// <inheritdoc cref="GetDeviceIDsFromVA_APIMediaAdapterINTEL(IntPtr, VaApiDeviceSourceIntel, void*, VaApiDeviceSetIntel, uint, IntPtr*, uint*)"/>
+            public static unsafe int GetDeviceIDsFromVA_APIMediaAdapterINTEL(IntPtr platform, VaApiDeviceSourceIntel media_adapter_type, IntPtr media_adapter, VaApiDeviceSetIntel media_adapter_set, uint num_entries, IntPtr[] devices, uint[] num_devices)
             {
                 int returnValue;
                 fixed (uint* num_devices_ptr = num_devices)
@@ -8277,8 +8277,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetDeviceIDsFromVA_APIMediaAdapterINTEL(IntPtr, uint, void*, uint, uint, IntPtr*, uint*)"/>
-            public static unsafe int GetDeviceIDsFromVA_APIMediaAdapterINTEL(IntPtr platform, uint media_adapter_type, IntPtr media_adapter, uint media_adapter_set, uint num_entries, ref IntPtr devices, ref uint num_devices)
+            /// <inheritdoc cref="GetDeviceIDsFromVA_APIMediaAdapterINTEL(IntPtr, VaApiDeviceSourceIntel, void*, VaApiDeviceSetIntel, uint, IntPtr*, uint*)"/>
+            public static unsafe int GetDeviceIDsFromVA_APIMediaAdapterINTEL(IntPtr platform, VaApiDeviceSourceIntel media_adapter_type, IntPtr media_adapter, VaApiDeviceSetIntel media_adapter_set, uint num_entries, ref IntPtr devices, ref uint num_devices)
             {
                 int returnValue;
                 fixed (IntPtr* devices_ptr = &devices)
@@ -8289,8 +8289,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetDeviceIDsFromVA_APIMediaAdapterINTEL(IntPtr, uint, void*, uint, uint, IntPtr*, uint*)"/>
-            public static unsafe int GetDeviceIDsFromVA_APIMediaAdapterINTEL<T1>(IntPtr platform, uint media_adapter_type, Span<T1> media_adapter, uint media_adapter_set, uint num_entries, Span<IntPtr> devices, Span<uint> num_devices)
+            /// <inheritdoc cref="GetDeviceIDsFromVA_APIMediaAdapterINTEL(IntPtr, VaApiDeviceSourceIntel, void*, VaApiDeviceSetIntel, uint, IntPtr*, uint*)"/>
+            public static unsafe int GetDeviceIDsFromVA_APIMediaAdapterINTEL<T1>(IntPtr platform, VaApiDeviceSourceIntel media_adapter_type, Span<T1> media_adapter, VaApiDeviceSetIntel media_adapter_set, uint num_entries, Span<IntPtr> devices, Span<uint> num_devices)
                 where T1 : unmanaged
             {
                 int returnValue;
@@ -8306,8 +8306,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetDeviceIDsFromVA_APIMediaAdapterINTEL(IntPtr, uint, void*, uint, uint, IntPtr*, uint*)"/>
-            public static unsafe int GetDeviceIDsFromVA_APIMediaAdapterINTEL<T1>(IntPtr platform, uint media_adapter_type, T1[] media_adapter, uint media_adapter_set, uint num_entries, IntPtr[] devices, uint[] num_devices)
+            /// <inheritdoc cref="GetDeviceIDsFromVA_APIMediaAdapterINTEL(IntPtr, VaApiDeviceSourceIntel, void*, VaApiDeviceSetIntel, uint, IntPtr*, uint*)"/>
+            public static unsafe int GetDeviceIDsFromVA_APIMediaAdapterINTEL<T1>(IntPtr platform, VaApiDeviceSourceIntel media_adapter_type, T1[] media_adapter, VaApiDeviceSetIntel media_adapter_set, uint num_entries, IntPtr[] devices, uint[] num_devices)
                 where T1 : unmanaged
             {
                 int returnValue;
@@ -8323,8 +8323,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetDeviceIDsFromVA_APIMediaAdapterINTEL(IntPtr, uint, void*, uint, uint, IntPtr*, uint*)"/>
-            public static unsafe int GetDeviceIDsFromVA_APIMediaAdapterINTEL<T1>(IntPtr platform, uint media_adapter_type, ref T1 media_adapter, uint media_adapter_set, uint num_entries, ref IntPtr devices, ref uint num_devices)
+            /// <inheritdoc cref="GetDeviceIDsFromVA_APIMediaAdapterINTEL(IntPtr, VaApiDeviceSourceIntel, void*, VaApiDeviceSetIntel, uint, IntPtr*, uint*)"/>
+            public static unsafe int GetDeviceIDsFromVA_APIMediaAdapterINTEL<T1>(IntPtr platform, VaApiDeviceSourceIntel media_adapter_type, ref T1 media_adapter, VaApiDeviceSetIntel media_adapter_set, uint num_entries, ref IntPtr devices, ref uint num_devices)
                 where T1 : unmanaged
             {
                 int returnValue;
@@ -8422,8 +8422,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetSupportedD3D10TextureFormatsINTEL(IntPtr, MemFlags, uint, uint, uint*, uint*)"/>
-            public static unsafe int GetSupportedD3D10TextureFormatsINTEL(IntPtr context, MemFlags flags, uint image_type, uint num_entries, Span<uint> d3d10_formats, Span<uint> num_texture_formats)
+            /// <inheritdoc cref="GetSupportedD3D10TextureFormatsINTEL(IntPtr, MemFlags, MemObjectType, uint, uint*, uint*)"/>
+            public static unsafe int GetSupportedD3D10TextureFormatsINTEL(IntPtr context, MemFlags flags, MemObjectType image_type, uint num_entries, Span<uint> d3d10_formats, Span<uint> num_texture_formats)
             {
                 int returnValue;
                 fixed (uint* num_texture_formats_ptr = num_texture_formats)
@@ -8435,8 +8435,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetSupportedD3D10TextureFormatsINTEL(IntPtr, MemFlags, uint, uint, uint*, uint*)"/>
-            public static unsafe int GetSupportedD3D10TextureFormatsINTEL(IntPtr context, MemFlags flags, uint image_type, uint num_entries, uint[] d3d10_formats, uint[] num_texture_formats)
+            /// <inheritdoc cref="GetSupportedD3D10TextureFormatsINTEL(IntPtr, MemFlags, MemObjectType, uint, uint*, uint*)"/>
+            public static unsafe int GetSupportedD3D10TextureFormatsINTEL(IntPtr context, MemFlags flags, MemObjectType image_type, uint num_entries, uint[] d3d10_formats, uint[] num_texture_formats)
             {
                 int returnValue;
                 fixed (uint* num_texture_formats_ptr = num_texture_formats)
@@ -8448,8 +8448,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetSupportedD3D10TextureFormatsINTEL(IntPtr, MemFlags, uint, uint, uint*, uint*)"/>
-            public static unsafe int GetSupportedD3D10TextureFormatsINTEL(IntPtr context, MemFlags flags, uint image_type, uint num_entries, ref uint d3d10_formats, ref uint num_texture_formats)
+            /// <inheritdoc cref="GetSupportedD3D10TextureFormatsINTEL(IntPtr, MemFlags, MemObjectType, uint, uint*, uint*)"/>
+            public static unsafe int GetSupportedD3D10TextureFormatsINTEL(IntPtr context, MemFlags flags, MemObjectType image_type, uint num_entries, ref uint d3d10_formats, ref uint num_texture_formats)
             {
                 int returnValue;
                 fixed (uint* d3d10_formats_ptr = &d3d10_formats)
@@ -8459,8 +8459,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetSupportedD3D11TextureFormatsINTEL(IntPtr, MemFlags, uint, uint, uint, uint*, uint*)"/>
-            public static unsafe int GetSupportedD3D11TextureFormatsINTEL(IntPtr context, MemFlags flags, uint image_type, uint plane, uint num_entries, Span<uint> d3d11_formats, Span<uint> num_texture_formats)
+            /// <inheritdoc cref="GetSupportedD3D11TextureFormatsINTEL(IntPtr, MemFlags, MemObjectType, uint, uint, uint*, uint*)"/>
+            public static unsafe int GetSupportedD3D11TextureFormatsINTEL(IntPtr context, MemFlags flags, MemObjectType image_type, uint plane, uint num_entries, Span<uint> d3d11_formats, Span<uint> num_texture_formats)
             {
                 int returnValue;
                 fixed (uint* num_texture_formats_ptr = num_texture_formats)
@@ -8472,8 +8472,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetSupportedD3D11TextureFormatsINTEL(IntPtr, MemFlags, uint, uint, uint, uint*, uint*)"/>
-            public static unsafe int GetSupportedD3D11TextureFormatsINTEL(IntPtr context, MemFlags flags, uint image_type, uint plane, uint num_entries, uint[] d3d11_formats, uint[] num_texture_formats)
+            /// <inheritdoc cref="GetSupportedD3D11TextureFormatsINTEL(IntPtr, MemFlags, MemObjectType, uint, uint, uint*, uint*)"/>
+            public static unsafe int GetSupportedD3D11TextureFormatsINTEL(IntPtr context, MemFlags flags, MemObjectType image_type, uint plane, uint num_entries, uint[] d3d11_formats, uint[] num_texture_formats)
             {
                 int returnValue;
                 fixed (uint* num_texture_formats_ptr = num_texture_formats)
@@ -8485,8 +8485,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetSupportedD3D11TextureFormatsINTEL(IntPtr, MemFlags, uint, uint, uint, uint*, uint*)"/>
-            public static unsafe int GetSupportedD3D11TextureFormatsINTEL(IntPtr context, MemFlags flags, uint image_type, uint plane, uint num_entries, ref uint d3d11_formats, ref uint num_texture_formats)
+            /// <inheritdoc cref="GetSupportedD3D11TextureFormatsINTEL(IntPtr, MemFlags, MemObjectType, uint, uint, uint*, uint*)"/>
+            public static unsafe int GetSupportedD3D11TextureFormatsINTEL(IntPtr context, MemFlags flags, MemObjectType image_type, uint plane, uint num_entries, ref uint d3d11_formats, ref uint num_texture_formats)
             {
                 int returnValue;
                 fixed (uint* d3d11_formats_ptr = &d3d11_formats)
@@ -8496,8 +8496,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetSupportedDX9MediaSurfaceFormatsINTEL(IntPtr, MemFlags, uint, uint, uint, uint*, uint*)"/>
-            public static unsafe int GetSupportedDX9MediaSurfaceFormatsINTEL(IntPtr context, MemFlags flags, uint image_type, uint plane, uint num_entries, Span<uint> dx9_formats, Span<uint> num_surface_formats)
+            /// <inheritdoc cref="GetSupportedDX9MediaSurfaceFormatsINTEL(IntPtr, MemFlags, MemObjectType, uint, uint, uint*, uint*)"/>
+            public static unsafe int GetSupportedDX9MediaSurfaceFormatsINTEL(IntPtr context, MemFlags flags, MemObjectType image_type, uint plane, uint num_entries, Span<uint> dx9_formats, Span<uint> num_surface_formats)
             {
                 int returnValue;
                 fixed (uint* num_surface_formats_ptr = num_surface_formats)
@@ -8509,8 +8509,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetSupportedDX9MediaSurfaceFormatsINTEL(IntPtr, MemFlags, uint, uint, uint, uint*, uint*)"/>
-            public static unsafe int GetSupportedDX9MediaSurfaceFormatsINTEL(IntPtr context, MemFlags flags, uint image_type, uint plane, uint num_entries, uint[] dx9_formats, uint[] num_surface_formats)
+            /// <inheritdoc cref="GetSupportedDX9MediaSurfaceFormatsINTEL(IntPtr, MemFlags, MemObjectType, uint, uint, uint*, uint*)"/>
+            public static unsafe int GetSupportedDX9MediaSurfaceFormatsINTEL(IntPtr context, MemFlags flags, MemObjectType image_type, uint plane, uint num_entries, uint[] dx9_formats, uint[] num_surface_formats)
             {
                 int returnValue;
                 fixed (uint* num_surface_formats_ptr = num_surface_formats)
@@ -8522,8 +8522,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetSupportedDX9MediaSurfaceFormatsINTEL(IntPtr, MemFlags, uint, uint, uint, uint*, uint*)"/>
-            public static unsafe int GetSupportedDX9MediaSurfaceFormatsINTEL(IntPtr context, MemFlags flags, uint image_type, uint plane, uint num_entries, ref uint dx9_formats, ref uint num_surface_formats)
+            /// <inheritdoc cref="GetSupportedDX9MediaSurfaceFormatsINTEL(IntPtr, MemFlags, MemObjectType, uint, uint, uint*, uint*)"/>
+            public static unsafe int GetSupportedDX9MediaSurfaceFormatsINTEL(IntPtr context, MemFlags flags, MemObjectType image_type, uint plane, uint num_entries, ref uint dx9_formats, ref uint num_surface_formats)
             {
                 int returnValue;
                 fixed (uint* dx9_formats_ptr = &dx9_formats)
@@ -8533,8 +8533,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetSupportedGLTextureFormatsINTEL(IntPtr, MemFlags, uint, uint, uint*, uint*)"/>
-            public static unsafe int GetSupportedGLTextureFormatsINTEL(IntPtr context, MemFlags flags, uint image_type, uint num_entries, Span<uint> gl_formats, Span<uint> num_texture_formats)
+            /// <inheritdoc cref="GetSupportedGLTextureFormatsINTEL(IntPtr, MemFlags, MemObjectType, uint, uint*, uint*)"/>
+            public static unsafe int GetSupportedGLTextureFormatsINTEL(IntPtr context, MemFlags flags, MemObjectType image_type, uint num_entries, Span<uint> gl_formats, Span<uint> num_texture_formats)
             {
                 int returnValue;
                 fixed (uint* num_texture_formats_ptr = num_texture_formats)
@@ -8546,8 +8546,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetSupportedGLTextureFormatsINTEL(IntPtr, MemFlags, uint, uint, uint*, uint*)"/>
-            public static unsafe int GetSupportedGLTextureFormatsINTEL(IntPtr context, MemFlags flags, uint image_type, uint num_entries, uint[] gl_formats, uint[] num_texture_formats)
+            /// <inheritdoc cref="GetSupportedGLTextureFormatsINTEL(IntPtr, MemFlags, MemObjectType, uint, uint*, uint*)"/>
+            public static unsafe int GetSupportedGLTextureFormatsINTEL(IntPtr context, MemFlags flags, MemObjectType image_type, uint num_entries, uint[] gl_formats, uint[] num_texture_formats)
             {
                 int returnValue;
                 fixed (uint* num_texture_formats_ptr = num_texture_formats)
@@ -8559,8 +8559,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetSupportedGLTextureFormatsINTEL(IntPtr, MemFlags, uint, uint, uint*, uint*)"/>
-            public static unsafe int GetSupportedGLTextureFormatsINTEL(IntPtr context, MemFlags flags, uint image_type, uint num_entries, ref uint gl_formats, ref uint num_texture_formats)
+            /// <inheritdoc cref="GetSupportedGLTextureFormatsINTEL(IntPtr, MemFlags, MemObjectType, uint, uint*, uint*)"/>
+            public static unsafe int GetSupportedGLTextureFormatsINTEL(IntPtr context, MemFlags flags, MemObjectType image_type, uint num_entries, ref uint gl_formats, ref uint num_texture_formats)
             {
                 int returnValue;
                 fixed (uint* gl_formats_ptr = &gl_formats)
@@ -8570,8 +8570,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetSupportedVA_APIMediaSurfaceFormatsINTEL(IntPtr, MemFlags, uint, uint, uint, VAImageFormat*, uint*)"/>
-            public static unsafe int GetSupportedVA_APIMediaSurfaceFormatsINTEL(IntPtr context, MemFlags flags, uint image_type, uint plane, uint num_entries, Span<VAImageFormat> va_api_formats, Span<uint> num_surface_formats)
+            /// <inheritdoc cref="GetSupportedVA_APIMediaSurfaceFormatsINTEL(IntPtr, MemFlags, MemObjectType, uint, uint, VAImageFormat*, uint*)"/>
+            public static unsafe int GetSupportedVA_APIMediaSurfaceFormatsINTEL(IntPtr context, MemFlags flags, MemObjectType image_type, uint plane, uint num_entries, Span<VAImageFormat> va_api_formats, Span<uint> num_surface_formats)
             {
                 int returnValue;
                 fixed (uint* num_surface_formats_ptr = num_surface_formats)
@@ -8583,8 +8583,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetSupportedVA_APIMediaSurfaceFormatsINTEL(IntPtr, MemFlags, uint, uint, uint, VAImageFormat*, uint*)"/>
-            public static unsafe int GetSupportedVA_APIMediaSurfaceFormatsINTEL(IntPtr context, MemFlags flags, uint image_type, uint plane, uint num_entries, VAImageFormat[] va_api_formats, uint[] num_surface_formats)
+            /// <inheritdoc cref="GetSupportedVA_APIMediaSurfaceFormatsINTEL(IntPtr, MemFlags, MemObjectType, uint, uint, VAImageFormat*, uint*)"/>
+            public static unsafe int GetSupportedVA_APIMediaSurfaceFormatsINTEL(IntPtr context, MemFlags flags, MemObjectType image_type, uint plane, uint num_entries, VAImageFormat[] va_api_formats, uint[] num_surface_formats)
             {
                 int returnValue;
                 fixed (uint* num_surface_formats_ptr = num_surface_formats)
@@ -8596,8 +8596,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetSupportedVA_APIMediaSurfaceFormatsINTEL(IntPtr, MemFlags, uint, uint, uint, VAImageFormat*, uint*)"/>
-            public static unsafe int GetSupportedVA_APIMediaSurfaceFormatsINTEL(IntPtr context, MemFlags flags, uint image_type, uint plane, uint num_entries, ref VAImageFormat va_api_formats, ref uint num_surface_formats)
+            /// <inheritdoc cref="GetSupportedVA_APIMediaSurfaceFormatsINTEL(IntPtr, MemFlags, MemObjectType, uint, uint, VAImageFormat*, uint*)"/>
+            public static unsafe int GetSupportedVA_APIMediaSurfaceFormatsINTEL(IntPtr context, MemFlags flags, MemObjectType image_type, uint plane, uint num_entries, ref VAImageFormat va_api_formats, ref uint num_surface_formats)
             {
                 int returnValue;
                 fixed (VAImageFormat* va_api_formats_ptr = &va_api_formats)
@@ -8607,37 +8607,37 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="HostMemAllocINTEL(IntPtr, ulong*, nuint, uint, int*)"/>
-            public static unsafe void* HostMemAllocINTEL(IntPtr context, Span<ulong> properties, nuint size, uint alignment, Span<int> errcode_ret)
+            /// <inheritdoc cref="HostMemAllocINTEL(IntPtr, MemPropertiesIntel*, nuint, uint, int*)"/>
+            public static unsafe void* HostMemAllocINTEL(IntPtr context, Span<MemPropertiesIntel> properties, nuint size, uint alignment, Span<int> errcode_ret)
             {
                 void* returnValue;
                 fixed (int* errcode_ret_ptr = errcode_ret)
                 {
-                    fixed (ulong* properties_ptr = properties)
+                    fixed (MemPropertiesIntel* properties_ptr = properties)
                     {
                         returnValue = HostMemAllocINTEL(context, properties_ptr, size, alignment, errcode_ret_ptr);
                     }
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="HostMemAllocINTEL(IntPtr, ulong*, nuint, uint, int*)"/>
-            public static unsafe void* HostMemAllocINTEL(IntPtr context, ulong[] properties, nuint size, uint alignment, int[] errcode_ret)
+            /// <inheritdoc cref="HostMemAllocINTEL(IntPtr, MemPropertiesIntel*, nuint, uint, int*)"/>
+            public static unsafe void* HostMemAllocINTEL(IntPtr context, MemPropertiesIntel[] properties, nuint size, uint alignment, int[] errcode_ret)
             {
                 void* returnValue;
                 fixed (int* errcode_ret_ptr = errcode_ret)
                 {
-                    fixed (ulong* properties_ptr = properties)
+                    fixed (MemPropertiesIntel* properties_ptr = properties)
                     {
                         returnValue = HostMemAllocINTEL(context, properties_ptr, size, alignment, errcode_ret_ptr);
                     }
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="HostMemAllocINTEL(IntPtr, ulong*, nuint, uint, int*)"/>
-            public static unsafe void* HostMemAllocINTEL(IntPtr context, ref ulong properties, nuint size, uint alignment, ref int errcode_ret)
+            /// <inheritdoc cref="HostMemAllocINTEL(IntPtr, MemPropertiesIntel*, nuint, uint, int*)"/>
+            public static unsafe void* HostMemAllocINTEL(IntPtr context, ref MemPropertiesIntel properties, nuint size, uint alignment, ref int errcode_ret)
             {
                 void* returnValue;
-                fixed (ulong* properties_ptr = &properties)
+                fixed (MemPropertiesIntel* properties_ptr = &properties)
                 fixed (int* errcode_ret_ptr = &errcode_ret)
                 {
                     returnValue = HostMemAllocINTEL(context, properties_ptr, size, alignment, errcode_ret_ptr);
@@ -8767,37 +8767,37 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="SharedMemAllocINTEL(IntPtr, IntPtr, ulong*, nuint, uint, int*)"/>
-            public static unsafe void* SharedMemAllocINTEL(IntPtr context, IntPtr device, Span<ulong> properties, nuint size, uint alignment, Span<int> errcode_ret)
+            /// <inheritdoc cref="SharedMemAllocINTEL(IntPtr, IntPtr, MemPropertiesIntel*, nuint, uint, int*)"/>
+            public static unsafe void* SharedMemAllocINTEL(IntPtr context, IntPtr device, Span<MemPropertiesIntel> properties, nuint size, uint alignment, Span<int> errcode_ret)
             {
                 void* returnValue;
                 fixed (int* errcode_ret_ptr = errcode_ret)
                 {
-                    fixed (ulong* properties_ptr = properties)
+                    fixed (MemPropertiesIntel* properties_ptr = properties)
                     {
                         returnValue = SharedMemAllocINTEL(context, device, properties_ptr, size, alignment, errcode_ret_ptr);
                     }
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="SharedMemAllocINTEL(IntPtr, IntPtr, ulong*, nuint, uint, int*)"/>
-            public static unsafe void* SharedMemAllocINTEL(IntPtr context, IntPtr device, ulong[] properties, nuint size, uint alignment, int[] errcode_ret)
+            /// <inheritdoc cref="SharedMemAllocINTEL(IntPtr, IntPtr, MemPropertiesIntel*, nuint, uint, int*)"/>
+            public static unsafe void* SharedMemAllocINTEL(IntPtr context, IntPtr device, MemPropertiesIntel[] properties, nuint size, uint alignment, int[] errcode_ret)
             {
                 void* returnValue;
                 fixed (int* errcode_ret_ptr = errcode_ret)
                 {
-                    fixed (ulong* properties_ptr = properties)
+                    fixed (MemPropertiesIntel* properties_ptr = properties)
                     {
                         returnValue = SharedMemAllocINTEL(context, device, properties_ptr, size, alignment, errcode_ret_ptr);
                     }
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="SharedMemAllocINTEL(IntPtr, IntPtr, ulong*, nuint, uint, int*)"/>
-            public static unsafe void* SharedMemAllocINTEL(IntPtr context, IntPtr device, ref ulong properties, nuint size, uint alignment, ref int errcode_ret)
+            /// <inheritdoc cref="SharedMemAllocINTEL(IntPtr, IntPtr, MemPropertiesIntel*, nuint, uint, int*)"/>
+            public static unsafe void* SharedMemAllocINTEL(IntPtr context, IntPtr device, ref MemPropertiesIntel properties, nuint size, uint alignment, ref int errcode_ret)
             {
                 void* returnValue;
-                fixed (ulong* properties_ptr = &properties)
+                fixed (MemPropertiesIntel* properties_ptr = &properties)
                 fixed (int* errcode_ret_ptr = &errcode_ret)
                 {
                     returnValue = SharedMemAllocINTEL(context, device, properties_ptr, size, alignment, errcode_ret_ptr);
@@ -8805,10 +8805,10 @@ namespace OpenTK.Compute2.OpenCL
                 return returnValue;
             }
         }
-        public static unsafe partial class khr
+        public static unsafe partial class KHR
         {
-            /// <inheritdoc cref="CommandBarrierWithWaitListKHR(IntPtr, IntPtr, ulong*, uint, uint*, uint*, IntPtr*)"/>
-            public static unsafe int CommandBarrierWithWaitListKHR(IntPtr command_buffer, IntPtr command_queue, Span<ulong> properties, uint num_sync_points_in_wait_list, Span<uint> sync_point_wait_list, Span<uint> sync_point, Span<IntPtr> mutable_handle)
+            /// <inheritdoc cref="CommandBarrierWithWaitListKHR(IntPtr, IntPtr, CommandPropertiesKhr*, uint, uint*, uint*, IntPtr*)"/>
+            public static unsafe int CommandBarrierWithWaitListKHR(IntPtr command_buffer, IntPtr command_queue, Span<CommandPropertiesKhr> properties, uint num_sync_points_in_wait_list, Span<uint> sync_point_wait_list, Span<uint> sync_point, Span<IntPtr> mutable_handle)
             {
                 int returnValue;
                 fixed (IntPtr* mutable_handle_ptr = mutable_handle)
@@ -8817,7 +8817,7 @@ namespace OpenTK.Compute2.OpenCL
                     {
                         fixed (uint* sync_point_wait_list_ptr = sync_point_wait_list)
                         {
-                            fixed (ulong* properties_ptr = properties)
+                            fixed (CommandPropertiesKhr* properties_ptr = properties)
                             {
                                 returnValue = CommandBarrierWithWaitListKHR(command_buffer, command_queue, properties_ptr, num_sync_points_in_wait_list, sync_point_wait_list_ptr, sync_point_ptr, mutable_handle_ptr);
                             }
@@ -8826,8 +8826,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="CommandBarrierWithWaitListKHR(IntPtr, IntPtr, ulong*, uint, uint*, uint*, IntPtr*)"/>
-            public static unsafe int CommandBarrierWithWaitListKHR(IntPtr command_buffer, IntPtr command_queue, ulong[] properties, uint num_sync_points_in_wait_list, uint[] sync_point_wait_list, uint[] sync_point, IntPtr[] mutable_handle)
+            /// <inheritdoc cref="CommandBarrierWithWaitListKHR(IntPtr, IntPtr, CommandPropertiesKhr*, uint, uint*, uint*, IntPtr*)"/>
+            public static unsafe int CommandBarrierWithWaitListKHR(IntPtr command_buffer, IntPtr command_queue, CommandPropertiesKhr[] properties, uint num_sync_points_in_wait_list, uint[] sync_point_wait_list, uint[] sync_point, IntPtr[] mutable_handle)
             {
                 int returnValue;
                 fixed (IntPtr* mutable_handle_ptr = mutable_handle)
@@ -8836,7 +8836,7 @@ namespace OpenTK.Compute2.OpenCL
                     {
                         fixed (uint* sync_point_wait_list_ptr = sync_point_wait_list)
                         {
-                            fixed (ulong* properties_ptr = properties)
+                            fixed (CommandPropertiesKhr* properties_ptr = properties)
                             {
                                 returnValue = CommandBarrierWithWaitListKHR(command_buffer, command_queue, properties_ptr, num_sync_points_in_wait_list, sync_point_wait_list_ptr, sync_point_ptr, mutable_handle_ptr);
                             }
@@ -8845,11 +8845,11 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="CommandBarrierWithWaitListKHR(IntPtr, IntPtr, ulong*, uint, uint*, uint*, IntPtr*)"/>
-            public static unsafe int CommandBarrierWithWaitListKHR(IntPtr command_buffer, IntPtr command_queue, ref ulong properties, uint num_sync_points_in_wait_list, ref uint sync_point_wait_list, ref uint sync_point, ref IntPtr mutable_handle)
+            /// <inheritdoc cref="CommandBarrierWithWaitListKHR(IntPtr, IntPtr, CommandPropertiesKhr*, uint, uint*, uint*, IntPtr*)"/>
+            public static unsafe int CommandBarrierWithWaitListKHR(IntPtr command_buffer, IntPtr command_queue, ref CommandPropertiesKhr properties, uint num_sync_points_in_wait_list, ref uint sync_point_wait_list, ref uint sync_point, ref IntPtr mutable_handle)
             {
                 int returnValue;
-                fixed (ulong* properties_ptr = &properties)
+                fixed (CommandPropertiesKhr* properties_ptr = &properties)
                 fixed (uint* sync_point_wait_list_ptr = &sync_point_wait_list)
                 fixed (uint* sync_point_ptr = &sync_point)
                 fixed (IntPtr* mutable_handle_ptr = &mutable_handle)
@@ -8858,8 +8858,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="CommandCopyBufferKHR(IntPtr, IntPtr, ulong*, IntPtr, IntPtr, nuint, nuint, nuint, uint, uint*, uint*, IntPtr*)"/>
-            public static unsafe int CommandCopyBufferKHR(IntPtr command_buffer, IntPtr command_queue, Span<ulong> properties, IntPtr src_buffer, IntPtr dst_buffer, nuint src_offset, nuint dst_offset, nuint size, uint num_sync_points_in_wait_list, Span<uint> sync_point_wait_list, Span<uint> sync_point, Span<IntPtr> mutable_handle)
+            /// <inheritdoc cref="CommandCopyBufferKHR(IntPtr, IntPtr, CommandPropertiesKhr*, IntPtr, IntPtr, nuint, nuint, nuint, uint, uint*, uint*, IntPtr*)"/>
+            public static unsafe int CommandCopyBufferKHR(IntPtr command_buffer, IntPtr command_queue, Span<CommandPropertiesKhr> properties, IntPtr src_buffer, IntPtr dst_buffer, nuint src_offset, nuint dst_offset, nuint size, uint num_sync_points_in_wait_list, Span<uint> sync_point_wait_list, Span<uint> sync_point, Span<IntPtr> mutable_handle)
             {
                 int returnValue;
                 fixed (IntPtr* mutable_handle_ptr = mutable_handle)
@@ -8868,7 +8868,7 @@ namespace OpenTK.Compute2.OpenCL
                     {
                         fixed (uint* sync_point_wait_list_ptr = sync_point_wait_list)
                         {
-                            fixed (ulong* properties_ptr = properties)
+                            fixed (CommandPropertiesKhr* properties_ptr = properties)
                             {
                                 returnValue = CommandCopyBufferKHR(command_buffer, command_queue, properties_ptr, src_buffer, dst_buffer, src_offset, dst_offset, size, num_sync_points_in_wait_list, sync_point_wait_list_ptr, sync_point_ptr, mutable_handle_ptr);
                             }
@@ -8877,8 +8877,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="CommandCopyBufferKHR(IntPtr, IntPtr, ulong*, IntPtr, IntPtr, nuint, nuint, nuint, uint, uint*, uint*, IntPtr*)"/>
-            public static unsafe int CommandCopyBufferKHR(IntPtr command_buffer, IntPtr command_queue, ulong[] properties, IntPtr src_buffer, IntPtr dst_buffer, nuint src_offset, nuint dst_offset, nuint size, uint num_sync_points_in_wait_list, uint[] sync_point_wait_list, uint[] sync_point, IntPtr[] mutable_handle)
+            /// <inheritdoc cref="CommandCopyBufferKHR(IntPtr, IntPtr, CommandPropertiesKhr*, IntPtr, IntPtr, nuint, nuint, nuint, uint, uint*, uint*, IntPtr*)"/>
+            public static unsafe int CommandCopyBufferKHR(IntPtr command_buffer, IntPtr command_queue, CommandPropertiesKhr[] properties, IntPtr src_buffer, IntPtr dst_buffer, nuint src_offset, nuint dst_offset, nuint size, uint num_sync_points_in_wait_list, uint[] sync_point_wait_list, uint[] sync_point, IntPtr[] mutable_handle)
             {
                 int returnValue;
                 fixed (IntPtr* mutable_handle_ptr = mutable_handle)
@@ -8887,7 +8887,7 @@ namespace OpenTK.Compute2.OpenCL
                     {
                         fixed (uint* sync_point_wait_list_ptr = sync_point_wait_list)
                         {
-                            fixed (ulong* properties_ptr = properties)
+                            fixed (CommandPropertiesKhr* properties_ptr = properties)
                             {
                                 returnValue = CommandCopyBufferKHR(command_buffer, command_queue, properties_ptr, src_buffer, dst_buffer, src_offset, dst_offset, size, num_sync_points_in_wait_list, sync_point_wait_list_ptr, sync_point_ptr, mutable_handle_ptr);
                             }
@@ -8896,11 +8896,11 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="CommandCopyBufferKHR(IntPtr, IntPtr, ulong*, IntPtr, IntPtr, nuint, nuint, nuint, uint, uint*, uint*, IntPtr*)"/>
-            public static unsafe int CommandCopyBufferKHR(IntPtr command_buffer, IntPtr command_queue, ref ulong properties, IntPtr src_buffer, IntPtr dst_buffer, nuint src_offset, nuint dst_offset, nuint size, uint num_sync_points_in_wait_list, ref uint sync_point_wait_list, ref uint sync_point, ref IntPtr mutable_handle)
+            /// <inheritdoc cref="CommandCopyBufferKHR(IntPtr, IntPtr, CommandPropertiesKhr*, IntPtr, IntPtr, nuint, nuint, nuint, uint, uint*, uint*, IntPtr*)"/>
+            public static unsafe int CommandCopyBufferKHR(IntPtr command_buffer, IntPtr command_queue, ref CommandPropertiesKhr properties, IntPtr src_buffer, IntPtr dst_buffer, nuint src_offset, nuint dst_offset, nuint size, uint num_sync_points_in_wait_list, ref uint sync_point_wait_list, ref uint sync_point, ref IntPtr mutable_handle)
             {
                 int returnValue;
-                fixed (ulong* properties_ptr = &properties)
+                fixed (CommandPropertiesKhr* properties_ptr = &properties)
                 fixed (uint* sync_point_wait_list_ptr = &sync_point_wait_list)
                 fixed (uint* sync_point_ptr = &sync_point)
                 fixed (IntPtr* mutable_handle_ptr = &mutable_handle)
@@ -8909,8 +8909,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="CommandCopyBufferRectKHR(IntPtr, IntPtr, ulong*, IntPtr, IntPtr, nuint*, nuint*, nuint*, nuint, nuint, nuint, nuint, uint, uint*, uint*, IntPtr*)"/>
-            public static unsafe int CommandCopyBufferRectKHR(IntPtr command_buffer, IntPtr command_queue, Span<ulong> properties, IntPtr src_buffer, IntPtr dst_buffer, ReadOnlySpan<nuint> src_origin, ReadOnlySpan<nuint> dst_origin, ReadOnlySpan<nuint> region, nuint src_row_pitch, nuint src_slice_pitch, nuint dst_row_pitch, nuint dst_slice_pitch, uint num_sync_points_in_wait_list, Span<uint> sync_point_wait_list, Span<uint> sync_point, Span<IntPtr> mutable_handle)
+            /// <inheritdoc cref="CommandCopyBufferRectKHR(IntPtr, IntPtr, CommandPropertiesKhr*, IntPtr, IntPtr, nuint*, nuint*, nuint*, nuint, nuint, nuint, nuint, uint, uint*, uint*, IntPtr*)"/>
+            public static unsafe int CommandCopyBufferRectKHR(IntPtr command_buffer, IntPtr command_queue, Span<CommandPropertiesKhr> properties, IntPtr src_buffer, IntPtr dst_buffer, ReadOnlySpan<nuint> src_origin, ReadOnlySpan<nuint> dst_origin, ReadOnlySpan<nuint> region, nuint src_row_pitch, nuint src_slice_pitch, nuint dst_row_pitch, nuint dst_slice_pitch, uint num_sync_points_in_wait_list, Span<uint> sync_point_wait_list, Span<uint> sync_point, Span<IntPtr> mutable_handle)
             {
                 int returnValue;
                 fixed (IntPtr* mutable_handle_ptr = mutable_handle)
@@ -8925,7 +8925,7 @@ namespace OpenTK.Compute2.OpenCL
                                 {
                                     fixed (nuint* src_origin_ptr = src_origin)
                                     {
-                                        fixed (ulong* properties_ptr = properties)
+                                        fixed (CommandPropertiesKhr* properties_ptr = properties)
                                         {
                                             returnValue = CommandCopyBufferRectKHR(command_buffer, command_queue, properties_ptr, src_buffer, dst_buffer, src_origin_ptr, dst_origin_ptr, region_ptr, src_row_pitch, src_slice_pitch, dst_row_pitch, dst_slice_pitch, num_sync_points_in_wait_list, sync_point_wait_list_ptr, sync_point_ptr, mutable_handle_ptr);
                                         }
@@ -8937,8 +8937,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="CommandCopyBufferRectKHR(IntPtr, IntPtr, ulong*, IntPtr, IntPtr, nuint*, nuint*, nuint*, nuint, nuint, nuint, nuint, uint, uint*, uint*, IntPtr*)"/>
-            public static unsafe int CommandCopyBufferRectKHR(IntPtr command_buffer, IntPtr command_queue, ulong[] properties, IntPtr src_buffer, IntPtr dst_buffer, nuint[] src_origin, nuint[] dst_origin, nuint[] region, nuint src_row_pitch, nuint src_slice_pitch, nuint dst_row_pitch, nuint dst_slice_pitch, uint num_sync_points_in_wait_list, uint[] sync_point_wait_list, uint[] sync_point, IntPtr[] mutable_handle)
+            /// <inheritdoc cref="CommandCopyBufferRectKHR(IntPtr, IntPtr, CommandPropertiesKhr*, IntPtr, IntPtr, nuint*, nuint*, nuint*, nuint, nuint, nuint, nuint, uint, uint*, uint*, IntPtr*)"/>
+            public static unsafe int CommandCopyBufferRectKHR(IntPtr command_buffer, IntPtr command_queue, CommandPropertiesKhr[] properties, IntPtr src_buffer, IntPtr dst_buffer, nuint[] src_origin, nuint[] dst_origin, nuint[] region, nuint src_row_pitch, nuint src_slice_pitch, nuint dst_row_pitch, nuint dst_slice_pitch, uint num_sync_points_in_wait_list, uint[] sync_point_wait_list, uint[] sync_point, IntPtr[] mutable_handle)
             {
                 int returnValue;
                 fixed (IntPtr* mutable_handle_ptr = mutable_handle)
@@ -8953,7 +8953,7 @@ namespace OpenTK.Compute2.OpenCL
                                 {
                                     fixed (nuint* src_origin_ptr = src_origin)
                                     {
-                                        fixed (ulong* properties_ptr = properties)
+                                        fixed (CommandPropertiesKhr* properties_ptr = properties)
                                         {
                                             returnValue = CommandCopyBufferRectKHR(command_buffer, command_queue, properties_ptr, src_buffer, dst_buffer, src_origin_ptr, dst_origin_ptr, region_ptr, src_row_pitch, src_slice_pitch, dst_row_pitch, dst_slice_pitch, num_sync_points_in_wait_list, sync_point_wait_list_ptr, sync_point_ptr, mutable_handle_ptr);
                                         }
@@ -8965,11 +8965,11 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="CommandCopyBufferRectKHR(IntPtr, IntPtr, ulong*, IntPtr, IntPtr, nuint*, nuint*, nuint*, nuint, nuint, nuint, nuint, uint, uint*, uint*, IntPtr*)"/>
-            public static unsafe int CommandCopyBufferRectKHR(IntPtr command_buffer, IntPtr command_queue, ref ulong properties, IntPtr src_buffer, IntPtr dst_buffer, ref readonly nuint src_origin, ref readonly nuint dst_origin, ref readonly nuint region, nuint src_row_pitch, nuint src_slice_pitch, nuint dst_row_pitch, nuint dst_slice_pitch, uint num_sync_points_in_wait_list, ref uint sync_point_wait_list, ref uint sync_point, ref IntPtr mutable_handle)
+            /// <inheritdoc cref="CommandCopyBufferRectKHR(IntPtr, IntPtr, CommandPropertiesKhr*, IntPtr, IntPtr, nuint*, nuint*, nuint*, nuint, nuint, nuint, nuint, uint, uint*, uint*, IntPtr*)"/>
+            public static unsafe int CommandCopyBufferRectKHR(IntPtr command_buffer, IntPtr command_queue, ref CommandPropertiesKhr properties, IntPtr src_buffer, IntPtr dst_buffer, ref readonly nuint src_origin, ref readonly nuint dst_origin, ref readonly nuint region, nuint src_row_pitch, nuint src_slice_pitch, nuint dst_row_pitch, nuint dst_slice_pitch, uint num_sync_points_in_wait_list, ref uint sync_point_wait_list, ref uint sync_point, ref IntPtr mutable_handle)
             {
                 int returnValue;
-                fixed (ulong* properties_ptr = &properties)
+                fixed (CommandPropertiesKhr* properties_ptr = &properties)
                 fixed (nuint* src_origin_ptr = &src_origin)
                 fixed (nuint* dst_origin_ptr = &dst_origin)
                 fixed (nuint* region_ptr = &region)
@@ -8981,8 +8981,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="CommandCopyBufferToImageKHR(IntPtr, IntPtr, ulong*, IntPtr, IntPtr, nuint, nuint*, nuint*, uint, uint*, uint*, IntPtr*)"/>
-            public static unsafe int CommandCopyBufferToImageKHR(IntPtr command_buffer, IntPtr command_queue, Span<ulong> properties, IntPtr src_buffer, IntPtr dst_image, nuint src_offset, ReadOnlySpan<nuint> dst_origin, ReadOnlySpan<nuint> region, uint num_sync_points_in_wait_list, Span<uint> sync_point_wait_list, Span<uint> sync_point, Span<IntPtr> mutable_handle)
+            /// <inheritdoc cref="CommandCopyBufferToImageKHR(IntPtr, IntPtr, CommandPropertiesKhr*, IntPtr, IntPtr, nuint, nuint*, nuint*, uint, uint*, uint*, IntPtr*)"/>
+            public static unsafe int CommandCopyBufferToImageKHR(IntPtr command_buffer, IntPtr command_queue, Span<CommandPropertiesKhr> properties, IntPtr src_buffer, IntPtr dst_image, nuint src_offset, ReadOnlySpan<nuint> dst_origin, ReadOnlySpan<nuint> region, uint num_sync_points_in_wait_list, Span<uint> sync_point_wait_list, Span<uint> sync_point, Span<IntPtr> mutable_handle)
             {
                 int returnValue;
                 fixed (IntPtr* mutable_handle_ptr = mutable_handle)
@@ -8995,7 +8995,7 @@ namespace OpenTK.Compute2.OpenCL
                             {
                                 fixed (nuint* dst_origin_ptr = dst_origin)
                                 {
-                                    fixed (ulong* properties_ptr = properties)
+                                    fixed (CommandPropertiesKhr* properties_ptr = properties)
                                     {
                                         returnValue = CommandCopyBufferToImageKHR(command_buffer, command_queue, properties_ptr, src_buffer, dst_image, src_offset, dst_origin_ptr, region_ptr, num_sync_points_in_wait_list, sync_point_wait_list_ptr, sync_point_ptr, mutable_handle_ptr);
                                     }
@@ -9006,8 +9006,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="CommandCopyBufferToImageKHR(IntPtr, IntPtr, ulong*, IntPtr, IntPtr, nuint, nuint*, nuint*, uint, uint*, uint*, IntPtr*)"/>
-            public static unsafe int CommandCopyBufferToImageKHR(IntPtr command_buffer, IntPtr command_queue, ulong[] properties, IntPtr src_buffer, IntPtr dst_image, nuint src_offset, nuint[] dst_origin, nuint[] region, uint num_sync_points_in_wait_list, uint[] sync_point_wait_list, uint[] sync_point, IntPtr[] mutable_handle)
+            /// <inheritdoc cref="CommandCopyBufferToImageKHR(IntPtr, IntPtr, CommandPropertiesKhr*, IntPtr, IntPtr, nuint, nuint*, nuint*, uint, uint*, uint*, IntPtr*)"/>
+            public static unsafe int CommandCopyBufferToImageKHR(IntPtr command_buffer, IntPtr command_queue, CommandPropertiesKhr[] properties, IntPtr src_buffer, IntPtr dst_image, nuint src_offset, nuint[] dst_origin, nuint[] region, uint num_sync_points_in_wait_list, uint[] sync_point_wait_list, uint[] sync_point, IntPtr[] mutable_handle)
             {
                 int returnValue;
                 fixed (IntPtr* mutable_handle_ptr = mutable_handle)
@@ -9020,7 +9020,7 @@ namespace OpenTK.Compute2.OpenCL
                             {
                                 fixed (nuint* dst_origin_ptr = dst_origin)
                                 {
-                                    fixed (ulong* properties_ptr = properties)
+                                    fixed (CommandPropertiesKhr* properties_ptr = properties)
                                     {
                                         returnValue = CommandCopyBufferToImageKHR(command_buffer, command_queue, properties_ptr, src_buffer, dst_image, src_offset, dst_origin_ptr, region_ptr, num_sync_points_in_wait_list, sync_point_wait_list_ptr, sync_point_ptr, mutable_handle_ptr);
                                     }
@@ -9031,11 +9031,11 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="CommandCopyBufferToImageKHR(IntPtr, IntPtr, ulong*, IntPtr, IntPtr, nuint, nuint*, nuint*, uint, uint*, uint*, IntPtr*)"/>
-            public static unsafe int CommandCopyBufferToImageKHR(IntPtr command_buffer, IntPtr command_queue, ref ulong properties, IntPtr src_buffer, IntPtr dst_image, nuint src_offset, ref readonly nuint dst_origin, ref readonly nuint region, uint num_sync_points_in_wait_list, ref uint sync_point_wait_list, ref uint sync_point, ref IntPtr mutable_handle)
+            /// <inheritdoc cref="CommandCopyBufferToImageKHR(IntPtr, IntPtr, CommandPropertiesKhr*, IntPtr, IntPtr, nuint, nuint*, nuint*, uint, uint*, uint*, IntPtr*)"/>
+            public static unsafe int CommandCopyBufferToImageKHR(IntPtr command_buffer, IntPtr command_queue, ref CommandPropertiesKhr properties, IntPtr src_buffer, IntPtr dst_image, nuint src_offset, ref readonly nuint dst_origin, ref readonly nuint region, uint num_sync_points_in_wait_list, ref uint sync_point_wait_list, ref uint sync_point, ref IntPtr mutable_handle)
             {
                 int returnValue;
-                fixed (ulong* properties_ptr = &properties)
+                fixed (CommandPropertiesKhr* properties_ptr = &properties)
                 fixed (nuint* dst_origin_ptr = &dst_origin)
                 fixed (nuint* region_ptr = &region)
                 fixed (uint* sync_point_wait_list_ptr = &sync_point_wait_list)
@@ -9046,8 +9046,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="CommandCopyImageKHR(IntPtr, IntPtr, ulong*, IntPtr, IntPtr, nuint*, nuint*, nuint*, uint, uint*, uint*, IntPtr*)"/>
-            public static unsafe int CommandCopyImageKHR(IntPtr command_buffer, IntPtr command_queue, Span<ulong> properties, IntPtr src_image, IntPtr dst_image, ReadOnlySpan<nuint> src_origin, ReadOnlySpan<nuint> dst_origin, ReadOnlySpan<nuint> region, uint num_sync_points_in_wait_list, Span<uint> sync_point_wait_list, Span<uint> sync_point, Span<IntPtr> mutable_handle)
+            /// <inheritdoc cref="CommandCopyImageKHR(IntPtr, IntPtr, CommandPropertiesKhr*, IntPtr, IntPtr, nuint*, nuint*, nuint*, uint, uint*, uint*, IntPtr*)"/>
+            public static unsafe int CommandCopyImageKHR(IntPtr command_buffer, IntPtr command_queue, Span<CommandPropertiesKhr> properties, IntPtr src_image, IntPtr dst_image, ReadOnlySpan<nuint> src_origin, ReadOnlySpan<nuint> dst_origin, ReadOnlySpan<nuint> region, uint num_sync_points_in_wait_list, Span<uint> sync_point_wait_list, Span<uint> sync_point, Span<IntPtr> mutable_handle)
             {
                 int returnValue;
                 fixed (IntPtr* mutable_handle_ptr = mutable_handle)
@@ -9062,7 +9062,7 @@ namespace OpenTK.Compute2.OpenCL
                                 {
                                     fixed (nuint* src_origin_ptr = src_origin)
                                     {
-                                        fixed (ulong* properties_ptr = properties)
+                                        fixed (CommandPropertiesKhr* properties_ptr = properties)
                                         {
                                             returnValue = CommandCopyImageKHR(command_buffer, command_queue, properties_ptr, src_image, dst_image, src_origin_ptr, dst_origin_ptr, region_ptr, num_sync_points_in_wait_list, sync_point_wait_list_ptr, sync_point_ptr, mutable_handle_ptr);
                                         }
@@ -9074,8 +9074,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="CommandCopyImageKHR(IntPtr, IntPtr, ulong*, IntPtr, IntPtr, nuint*, nuint*, nuint*, uint, uint*, uint*, IntPtr*)"/>
-            public static unsafe int CommandCopyImageKHR(IntPtr command_buffer, IntPtr command_queue, ulong[] properties, IntPtr src_image, IntPtr dst_image, nuint[] src_origin, nuint[] dst_origin, nuint[] region, uint num_sync_points_in_wait_list, uint[] sync_point_wait_list, uint[] sync_point, IntPtr[] mutable_handle)
+            /// <inheritdoc cref="CommandCopyImageKHR(IntPtr, IntPtr, CommandPropertiesKhr*, IntPtr, IntPtr, nuint*, nuint*, nuint*, uint, uint*, uint*, IntPtr*)"/>
+            public static unsafe int CommandCopyImageKHR(IntPtr command_buffer, IntPtr command_queue, CommandPropertiesKhr[] properties, IntPtr src_image, IntPtr dst_image, nuint[] src_origin, nuint[] dst_origin, nuint[] region, uint num_sync_points_in_wait_list, uint[] sync_point_wait_list, uint[] sync_point, IntPtr[] mutable_handle)
             {
                 int returnValue;
                 fixed (IntPtr* mutable_handle_ptr = mutable_handle)
@@ -9090,7 +9090,7 @@ namespace OpenTK.Compute2.OpenCL
                                 {
                                     fixed (nuint* src_origin_ptr = src_origin)
                                     {
-                                        fixed (ulong* properties_ptr = properties)
+                                        fixed (CommandPropertiesKhr* properties_ptr = properties)
                                         {
                                             returnValue = CommandCopyImageKHR(command_buffer, command_queue, properties_ptr, src_image, dst_image, src_origin_ptr, dst_origin_ptr, region_ptr, num_sync_points_in_wait_list, sync_point_wait_list_ptr, sync_point_ptr, mutable_handle_ptr);
                                         }
@@ -9102,11 +9102,11 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="CommandCopyImageKHR(IntPtr, IntPtr, ulong*, IntPtr, IntPtr, nuint*, nuint*, nuint*, uint, uint*, uint*, IntPtr*)"/>
-            public static unsafe int CommandCopyImageKHR(IntPtr command_buffer, IntPtr command_queue, ref ulong properties, IntPtr src_image, IntPtr dst_image, ref readonly nuint src_origin, ref readonly nuint dst_origin, ref readonly nuint region, uint num_sync_points_in_wait_list, ref uint sync_point_wait_list, ref uint sync_point, ref IntPtr mutable_handle)
+            /// <inheritdoc cref="CommandCopyImageKHR(IntPtr, IntPtr, CommandPropertiesKhr*, IntPtr, IntPtr, nuint*, nuint*, nuint*, uint, uint*, uint*, IntPtr*)"/>
+            public static unsafe int CommandCopyImageKHR(IntPtr command_buffer, IntPtr command_queue, ref CommandPropertiesKhr properties, IntPtr src_image, IntPtr dst_image, ref readonly nuint src_origin, ref readonly nuint dst_origin, ref readonly nuint region, uint num_sync_points_in_wait_list, ref uint sync_point_wait_list, ref uint sync_point, ref IntPtr mutable_handle)
             {
                 int returnValue;
-                fixed (ulong* properties_ptr = &properties)
+                fixed (CommandPropertiesKhr* properties_ptr = &properties)
                 fixed (nuint* src_origin_ptr = &src_origin)
                 fixed (nuint* dst_origin_ptr = &dst_origin)
                 fixed (nuint* region_ptr = &region)
@@ -9118,8 +9118,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="CommandCopyImageToBufferKHR(IntPtr, IntPtr, ulong*, IntPtr, IntPtr, nuint*, nuint*, nuint, uint, uint*, uint*, IntPtr*)"/>
-            public static unsafe int CommandCopyImageToBufferKHR(IntPtr command_buffer, IntPtr command_queue, Span<ulong> properties, IntPtr src_image, IntPtr dst_buffer, ReadOnlySpan<nuint> src_origin, ReadOnlySpan<nuint> region, nuint dst_offset, uint num_sync_points_in_wait_list, Span<uint> sync_point_wait_list, Span<uint> sync_point, Span<IntPtr> mutable_handle)
+            /// <inheritdoc cref="CommandCopyImageToBufferKHR(IntPtr, IntPtr, CommandPropertiesKhr*, IntPtr, IntPtr, nuint*, nuint*, nuint, uint, uint*, uint*, IntPtr*)"/>
+            public static unsafe int CommandCopyImageToBufferKHR(IntPtr command_buffer, IntPtr command_queue, Span<CommandPropertiesKhr> properties, IntPtr src_image, IntPtr dst_buffer, ReadOnlySpan<nuint> src_origin, ReadOnlySpan<nuint> region, nuint dst_offset, uint num_sync_points_in_wait_list, Span<uint> sync_point_wait_list, Span<uint> sync_point, Span<IntPtr> mutable_handle)
             {
                 int returnValue;
                 fixed (IntPtr* mutable_handle_ptr = mutable_handle)
@@ -9132,7 +9132,7 @@ namespace OpenTK.Compute2.OpenCL
                             {
                                 fixed (nuint* src_origin_ptr = src_origin)
                                 {
-                                    fixed (ulong* properties_ptr = properties)
+                                    fixed (CommandPropertiesKhr* properties_ptr = properties)
                                     {
                                         returnValue = CommandCopyImageToBufferKHR(command_buffer, command_queue, properties_ptr, src_image, dst_buffer, src_origin_ptr, region_ptr, dst_offset, num_sync_points_in_wait_list, sync_point_wait_list_ptr, sync_point_ptr, mutable_handle_ptr);
                                     }
@@ -9143,8 +9143,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="CommandCopyImageToBufferKHR(IntPtr, IntPtr, ulong*, IntPtr, IntPtr, nuint*, nuint*, nuint, uint, uint*, uint*, IntPtr*)"/>
-            public static unsafe int CommandCopyImageToBufferKHR(IntPtr command_buffer, IntPtr command_queue, ulong[] properties, IntPtr src_image, IntPtr dst_buffer, nuint[] src_origin, nuint[] region, nuint dst_offset, uint num_sync_points_in_wait_list, uint[] sync_point_wait_list, uint[] sync_point, IntPtr[] mutable_handle)
+            /// <inheritdoc cref="CommandCopyImageToBufferKHR(IntPtr, IntPtr, CommandPropertiesKhr*, IntPtr, IntPtr, nuint*, nuint*, nuint, uint, uint*, uint*, IntPtr*)"/>
+            public static unsafe int CommandCopyImageToBufferKHR(IntPtr command_buffer, IntPtr command_queue, CommandPropertiesKhr[] properties, IntPtr src_image, IntPtr dst_buffer, nuint[] src_origin, nuint[] region, nuint dst_offset, uint num_sync_points_in_wait_list, uint[] sync_point_wait_list, uint[] sync_point, IntPtr[] mutable_handle)
             {
                 int returnValue;
                 fixed (IntPtr* mutable_handle_ptr = mutable_handle)
@@ -9157,7 +9157,7 @@ namespace OpenTK.Compute2.OpenCL
                             {
                                 fixed (nuint* src_origin_ptr = src_origin)
                                 {
-                                    fixed (ulong* properties_ptr = properties)
+                                    fixed (CommandPropertiesKhr* properties_ptr = properties)
                                     {
                                         returnValue = CommandCopyImageToBufferKHR(command_buffer, command_queue, properties_ptr, src_image, dst_buffer, src_origin_ptr, region_ptr, dst_offset, num_sync_points_in_wait_list, sync_point_wait_list_ptr, sync_point_ptr, mutable_handle_ptr);
                                     }
@@ -9168,11 +9168,11 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="CommandCopyImageToBufferKHR(IntPtr, IntPtr, ulong*, IntPtr, IntPtr, nuint*, nuint*, nuint, uint, uint*, uint*, IntPtr*)"/>
-            public static unsafe int CommandCopyImageToBufferKHR(IntPtr command_buffer, IntPtr command_queue, ref ulong properties, IntPtr src_image, IntPtr dst_buffer, ref readonly nuint src_origin, ref readonly nuint region, nuint dst_offset, uint num_sync_points_in_wait_list, ref uint sync_point_wait_list, ref uint sync_point, ref IntPtr mutable_handle)
+            /// <inheritdoc cref="CommandCopyImageToBufferKHR(IntPtr, IntPtr, CommandPropertiesKhr*, IntPtr, IntPtr, nuint*, nuint*, nuint, uint, uint*, uint*, IntPtr*)"/>
+            public static unsafe int CommandCopyImageToBufferKHR(IntPtr command_buffer, IntPtr command_queue, ref CommandPropertiesKhr properties, IntPtr src_image, IntPtr dst_buffer, ref readonly nuint src_origin, ref readonly nuint region, nuint dst_offset, uint num_sync_points_in_wait_list, ref uint sync_point_wait_list, ref uint sync_point, ref IntPtr mutable_handle)
             {
                 int returnValue;
-                fixed (ulong* properties_ptr = &properties)
+                fixed (CommandPropertiesKhr* properties_ptr = &properties)
                 fixed (nuint* src_origin_ptr = &src_origin)
                 fixed (nuint* region_ptr = &region)
                 fixed (uint* sync_point_wait_list_ptr = &sync_point_wait_list)
@@ -9183,8 +9183,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="CommandFillBufferKHR(IntPtr, IntPtr, ulong*, IntPtr, void*, nuint, nuint, nuint, uint, uint*, uint*, IntPtr*)"/>
-            public static unsafe int CommandFillBufferKHR(IntPtr command_buffer, IntPtr command_queue, Span<ulong> properties, IntPtr buffer, IntPtr pattern, nuint pattern_size, nuint offset, nuint size, uint num_sync_points_in_wait_list, Span<uint> sync_point_wait_list, Span<uint> sync_point, Span<IntPtr> mutable_handle)
+            /// <inheritdoc cref="CommandFillBufferKHR(IntPtr, IntPtr, CommandPropertiesKhr*, IntPtr, void*, nuint, nuint, nuint, uint, uint*, uint*, IntPtr*)"/>
+            public static unsafe int CommandFillBufferKHR(IntPtr command_buffer, IntPtr command_queue, Span<CommandPropertiesKhr> properties, IntPtr buffer, IntPtr pattern, nuint pattern_size, nuint offset, nuint size, uint num_sync_points_in_wait_list, Span<uint> sync_point_wait_list, Span<uint> sync_point, Span<IntPtr> mutable_handle)
             {
                 int returnValue;
                 fixed (IntPtr* mutable_handle_ptr = mutable_handle)
@@ -9193,7 +9193,7 @@ namespace OpenTK.Compute2.OpenCL
                     {
                         fixed (uint* sync_point_wait_list_ptr = sync_point_wait_list)
                         {
-                            fixed (ulong* properties_ptr = properties)
+                            fixed (CommandPropertiesKhr* properties_ptr = properties)
                             {
                                 void* pattern_vptr = (void*)pattern;
                                 returnValue = CommandFillBufferKHR(command_buffer, command_queue, properties_ptr, buffer, pattern_vptr, pattern_size, offset, size, num_sync_points_in_wait_list, sync_point_wait_list_ptr, sync_point_ptr, mutable_handle_ptr);
@@ -9203,8 +9203,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="CommandFillBufferKHR(IntPtr, IntPtr, ulong*, IntPtr, void*, nuint, nuint, nuint, uint, uint*, uint*, IntPtr*)"/>
-            public static unsafe int CommandFillBufferKHR(IntPtr command_buffer, IntPtr command_queue, ulong[] properties, IntPtr buffer, IntPtr pattern, nuint pattern_size, nuint offset, nuint size, uint num_sync_points_in_wait_list, uint[] sync_point_wait_list, uint[] sync_point, IntPtr[] mutable_handle)
+            /// <inheritdoc cref="CommandFillBufferKHR(IntPtr, IntPtr, CommandPropertiesKhr*, IntPtr, void*, nuint, nuint, nuint, uint, uint*, uint*, IntPtr*)"/>
+            public static unsafe int CommandFillBufferKHR(IntPtr command_buffer, IntPtr command_queue, CommandPropertiesKhr[] properties, IntPtr buffer, IntPtr pattern, nuint pattern_size, nuint offset, nuint size, uint num_sync_points_in_wait_list, uint[] sync_point_wait_list, uint[] sync_point, IntPtr[] mutable_handle)
             {
                 int returnValue;
                 fixed (IntPtr* mutable_handle_ptr = mutable_handle)
@@ -9213,7 +9213,7 @@ namespace OpenTK.Compute2.OpenCL
                     {
                         fixed (uint* sync_point_wait_list_ptr = sync_point_wait_list)
                         {
-                            fixed (ulong* properties_ptr = properties)
+                            fixed (CommandPropertiesKhr* properties_ptr = properties)
                             {
                                 void* pattern_vptr = (void*)pattern;
                                 returnValue = CommandFillBufferKHR(command_buffer, command_queue, properties_ptr, buffer, pattern_vptr, pattern_size, offset, size, num_sync_points_in_wait_list, sync_point_wait_list_ptr, sync_point_ptr, mutable_handle_ptr);
@@ -9223,11 +9223,11 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="CommandFillBufferKHR(IntPtr, IntPtr, ulong*, IntPtr, void*, nuint, nuint, nuint, uint, uint*, uint*, IntPtr*)"/>
-            public static unsafe int CommandFillBufferKHR(IntPtr command_buffer, IntPtr command_queue, ref ulong properties, IntPtr buffer, IntPtr pattern, nuint pattern_size, nuint offset, nuint size, uint num_sync_points_in_wait_list, ref uint sync_point_wait_list, ref uint sync_point, ref IntPtr mutable_handle)
+            /// <inheritdoc cref="CommandFillBufferKHR(IntPtr, IntPtr, CommandPropertiesKhr*, IntPtr, void*, nuint, nuint, nuint, uint, uint*, uint*, IntPtr*)"/>
+            public static unsafe int CommandFillBufferKHR(IntPtr command_buffer, IntPtr command_queue, ref CommandPropertiesKhr properties, IntPtr buffer, IntPtr pattern, nuint pattern_size, nuint offset, nuint size, uint num_sync_points_in_wait_list, ref uint sync_point_wait_list, ref uint sync_point, ref IntPtr mutable_handle)
             {
                 int returnValue;
-                fixed (ulong* properties_ptr = &properties)
+                fixed (CommandPropertiesKhr* properties_ptr = &properties)
                 fixed (uint* sync_point_wait_list_ptr = &sync_point_wait_list)
                 fixed (uint* sync_point_ptr = &sync_point)
                 fixed (IntPtr* mutable_handle_ptr = &mutable_handle)
@@ -9237,8 +9237,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="CommandFillBufferKHR(IntPtr, IntPtr, ulong*, IntPtr, void*, nuint, nuint, nuint, uint, uint*, uint*, IntPtr*)"/>
-            public static unsafe int CommandFillBufferKHR<T1>(IntPtr command_buffer, IntPtr command_queue, Span<ulong> properties, IntPtr buffer, ReadOnlySpan<T1> pattern, nuint pattern_size, nuint offset, nuint size, uint num_sync_points_in_wait_list, Span<uint> sync_point_wait_list, Span<uint> sync_point, Span<IntPtr> mutable_handle)
+            /// <inheritdoc cref="CommandFillBufferKHR(IntPtr, IntPtr, CommandPropertiesKhr*, IntPtr, void*, nuint, nuint, nuint, uint, uint*, uint*, IntPtr*)"/>
+            public static unsafe int CommandFillBufferKHR<T1>(IntPtr command_buffer, IntPtr command_queue, Span<CommandPropertiesKhr> properties, IntPtr buffer, ReadOnlySpan<T1> pattern, nuint pattern_size, nuint offset, nuint size, uint num_sync_points_in_wait_list, Span<uint> sync_point_wait_list, Span<uint> sync_point, Span<IntPtr> mutable_handle)
                 where T1 : unmanaged
             {
                 int returnValue;
@@ -9250,7 +9250,7 @@ namespace OpenTK.Compute2.OpenCL
                         {
                             fixed (void* pattern_ptr = pattern)
                             {
-                                fixed (ulong* properties_ptr = properties)
+                                fixed (CommandPropertiesKhr* properties_ptr = properties)
                                 {
                                     returnValue = CommandFillBufferKHR(command_buffer, command_queue, properties_ptr, buffer, pattern_ptr, pattern_size, offset, size, num_sync_points_in_wait_list, sync_point_wait_list_ptr, sync_point_ptr, mutable_handle_ptr);
                                 }
@@ -9260,8 +9260,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="CommandFillBufferKHR(IntPtr, IntPtr, ulong*, IntPtr, void*, nuint, nuint, nuint, uint, uint*, uint*, IntPtr*)"/>
-            public static unsafe int CommandFillBufferKHR<T1>(IntPtr command_buffer, IntPtr command_queue, ulong[] properties, IntPtr buffer, T1[] pattern, nuint pattern_size, nuint offset, nuint size, uint num_sync_points_in_wait_list, uint[] sync_point_wait_list, uint[] sync_point, IntPtr[] mutable_handle)
+            /// <inheritdoc cref="CommandFillBufferKHR(IntPtr, IntPtr, CommandPropertiesKhr*, IntPtr, void*, nuint, nuint, nuint, uint, uint*, uint*, IntPtr*)"/>
+            public static unsafe int CommandFillBufferKHR<T1>(IntPtr command_buffer, IntPtr command_queue, CommandPropertiesKhr[] properties, IntPtr buffer, T1[] pattern, nuint pattern_size, nuint offset, nuint size, uint num_sync_points_in_wait_list, uint[] sync_point_wait_list, uint[] sync_point, IntPtr[] mutable_handle)
                 where T1 : unmanaged
             {
                 int returnValue;
@@ -9273,7 +9273,7 @@ namespace OpenTK.Compute2.OpenCL
                         {
                             fixed (void* pattern_ptr = pattern)
                             {
-                                fixed (ulong* properties_ptr = properties)
+                                fixed (CommandPropertiesKhr* properties_ptr = properties)
                                 {
                                     returnValue = CommandFillBufferKHR(command_buffer, command_queue, properties_ptr, buffer, pattern_ptr, pattern_size, offset, size, num_sync_points_in_wait_list, sync_point_wait_list_ptr, sync_point_ptr, mutable_handle_ptr);
                                 }
@@ -9283,12 +9283,12 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="CommandFillBufferKHR(IntPtr, IntPtr, ulong*, IntPtr, void*, nuint, nuint, nuint, uint, uint*, uint*, IntPtr*)"/>
-            public static unsafe int CommandFillBufferKHR<T1>(IntPtr command_buffer, IntPtr command_queue, ref ulong properties, IntPtr buffer, ref readonly T1 pattern, nuint pattern_size, nuint offset, nuint size, uint num_sync_points_in_wait_list, ref uint sync_point_wait_list, ref uint sync_point, ref IntPtr mutable_handle)
+            /// <inheritdoc cref="CommandFillBufferKHR(IntPtr, IntPtr, CommandPropertiesKhr*, IntPtr, void*, nuint, nuint, nuint, uint, uint*, uint*, IntPtr*)"/>
+            public static unsafe int CommandFillBufferKHR<T1>(IntPtr command_buffer, IntPtr command_queue, ref CommandPropertiesKhr properties, IntPtr buffer, ref readonly T1 pattern, nuint pattern_size, nuint offset, nuint size, uint num_sync_points_in_wait_list, ref uint sync_point_wait_list, ref uint sync_point, ref IntPtr mutable_handle)
                 where T1 : unmanaged
             {
                 int returnValue;
-                fixed (ulong* properties_ptr = &properties)
+                fixed (CommandPropertiesKhr* properties_ptr = &properties)
                 fixed (void* pattern_ptr = &pattern)
                 fixed (uint* sync_point_wait_list_ptr = &sync_point_wait_list)
                 fixed (uint* sync_point_ptr = &sync_point)
@@ -9298,8 +9298,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="CommandFillImageKHR(IntPtr, IntPtr, ulong*, IntPtr, void*, nuint*, nuint*, uint, uint*, uint*, IntPtr*)"/>
-            public static unsafe int CommandFillImageKHR(IntPtr command_buffer, IntPtr command_queue, Span<ulong> properties, IntPtr image, IntPtr fill_color, ReadOnlySpan<nuint> origin, ReadOnlySpan<nuint> region, uint num_sync_points_in_wait_list, Span<uint> sync_point_wait_list, Span<uint> sync_point, Span<IntPtr> mutable_handle)
+            /// <inheritdoc cref="CommandFillImageKHR(IntPtr, IntPtr, CommandPropertiesKhr*, IntPtr, void*, nuint*, nuint*, uint, uint*, uint*, IntPtr*)"/>
+            public static unsafe int CommandFillImageKHR(IntPtr command_buffer, IntPtr command_queue, Span<CommandPropertiesKhr> properties, IntPtr image, IntPtr fill_color, ReadOnlySpan<nuint> origin, ReadOnlySpan<nuint> region, uint num_sync_points_in_wait_list, Span<uint> sync_point_wait_list, Span<uint> sync_point, Span<IntPtr> mutable_handle)
             {
                 int returnValue;
                 fixed (IntPtr* mutable_handle_ptr = mutable_handle)
@@ -9312,7 +9312,7 @@ namespace OpenTK.Compute2.OpenCL
                             {
                                 fixed (nuint* origin_ptr = origin)
                                 {
-                                    fixed (ulong* properties_ptr = properties)
+                                    fixed (CommandPropertiesKhr* properties_ptr = properties)
                                     {
                                         void* fill_color_vptr = (void*)fill_color;
                                         returnValue = CommandFillImageKHR(command_buffer, command_queue, properties_ptr, image, fill_color_vptr, origin_ptr, region_ptr, num_sync_points_in_wait_list, sync_point_wait_list_ptr, sync_point_ptr, mutable_handle_ptr);
@@ -9324,8 +9324,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="CommandFillImageKHR(IntPtr, IntPtr, ulong*, IntPtr, void*, nuint*, nuint*, uint, uint*, uint*, IntPtr*)"/>
-            public static unsafe int CommandFillImageKHR(IntPtr command_buffer, IntPtr command_queue, ulong[] properties, IntPtr image, IntPtr fill_color, nuint[] origin, nuint[] region, uint num_sync_points_in_wait_list, uint[] sync_point_wait_list, uint[] sync_point, IntPtr[] mutable_handle)
+            /// <inheritdoc cref="CommandFillImageKHR(IntPtr, IntPtr, CommandPropertiesKhr*, IntPtr, void*, nuint*, nuint*, uint, uint*, uint*, IntPtr*)"/>
+            public static unsafe int CommandFillImageKHR(IntPtr command_buffer, IntPtr command_queue, CommandPropertiesKhr[] properties, IntPtr image, IntPtr fill_color, nuint[] origin, nuint[] region, uint num_sync_points_in_wait_list, uint[] sync_point_wait_list, uint[] sync_point, IntPtr[] mutable_handle)
             {
                 int returnValue;
                 fixed (IntPtr* mutable_handle_ptr = mutable_handle)
@@ -9338,7 +9338,7 @@ namespace OpenTK.Compute2.OpenCL
                             {
                                 fixed (nuint* origin_ptr = origin)
                                 {
-                                    fixed (ulong* properties_ptr = properties)
+                                    fixed (CommandPropertiesKhr* properties_ptr = properties)
                                     {
                                         void* fill_color_vptr = (void*)fill_color;
                                         returnValue = CommandFillImageKHR(command_buffer, command_queue, properties_ptr, image, fill_color_vptr, origin_ptr, region_ptr, num_sync_points_in_wait_list, sync_point_wait_list_ptr, sync_point_ptr, mutable_handle_ptr);
@@ -9350,11 +9350,11 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="CommandFillImageKHR(IntPtr, IntPtr, ulong*, IntPtr, void*, nuint*, nuint*, uint, uint*, uint*, IntPtr*)"/>
-            public static unsafe int CommandFillImageKHR(IntPtr command_buffer, IntPtr command_queue, ref ulong properties, IntPtr image, IntPtr fill_color, ref readonly nuint origin, ref readonly nuint region, uint num_sync_points_in_wait_list, ref uint sync_point_wait_list, ref uint sync_point, ref IntPtr mutable_handle)
+            /// <inheritdoc cref="CommandFillImageKHR(IntPtr, IntPtr, CommandPropertiesKhr*, IntPtr, void*, nuint*, nuint*, uint, uint*, uint*, IntPtr*)"/>
+            public static unsafe int CommandFillImageKHR(IntPtr command_buffer, IntPtr command_queue, ref CommandPropertiesKhr properties, IntPtr image, IntPtr fill_color, ref readonly nuint origin, ref readonly nuint region, uint num_sync_points_in_wait_list, ref uint sync_point_wait_list, ref uint sync_point, ref IntPtr mutable_handle)
             {
                 int returnValue;
-                fixed (ulong* properties_ptr = &properties)
+                fixed (CommandPropertiesKhr* properties_ptr = &properties)
                 fixed (nuint* origin_ptr = &origin)
                 fixed (nuint* region_ptr = &region)
                 fixed (uint* sync_point_wait_list_ptr = &sync_point_wait_list)
@@ -9366,8 +9366,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="CommandFillImageKHR(IntPtr, IntPtr, ulong*, IntPtr, void*, nuint*, nuint*, uint, uint*, uint*, IntPtr*)"/>
-            public static unsafe int CommandFillImageKHR<T1>(IntPtr command_buffer, IntPtr command_queue, Span<ulong> properties, IntPtr image, ReadOnlySpan<T1> fill_color, ReadOnlySpan<nuint> origin, ReadOnlySpan<nuint> region, uint num_sync_points_in_wait_list, Span<uint> sync_point_wait_list, Span<uint> sync_point, Span<IntPtr> mutable_handle)
+            /// <inheritdoc cref="CommandFillImageKHR(IntPtr, IntPtr, CommandPropertiesKhr*, IntPtr, void*, nuint*, nuint*, uint, uint*, uint*, IntPtr*)"/>
+            public static unsafe int CommandFillImageKHR<T1>(IntPtr command_buffer, IntPtr command_queue, Span<CommandPropertiesKhr> properties, IntPtr image, ReadOnlySpan<T1> fill_color, ReadOnlySpan<nuint> origin, ReadOnlySpan<nuint> region, uint num_sync_points_in_wait_list, Span<uint> sync_point_wait_list, Span<uint> sync_point, Span<IntPtr> mutable_handle)
                 where T1 : unmanaged
             {
                 int returnValue;
@@ -9383,7 +9383,7 @@ namespace OpenTK.Compute2.OpenCL
                                 {
                                     fixed (void* fill_color_ptr = fill_color)
                                     {
-                                        fixed (ulong* properties_ptr = properties)
+                                        fixed (CommandPropertiesKhr* properties_ptr = properties)
                                         {
                                             returnValue = CommandFillImageKHR(command_buffer, command_queue, properties_ptr, image, fill_color_ptr, origin_ptr, region_ptr, num_sync_points_in_wait_list, sync_point_wait_list_ptr, sync_point_ptr, mutable_handle_ptr);
                                         }
@@ -9395,8 +9395,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="CommandFillImageKHR(IntPtr, IntPtr, ulong*, IntPtr, void*, nuint*, nuint*, uint, uint*, uint*, IntPtr*)"/>
-            public static unsafe int CommandFillImageKHR<T1>(IntPtr command_buffer, IntPtr command_queue, ulong[] properties, IntPtr image, T1[] fill_color, nuint[] origin, nuint[] region, uint num_sync_points_in_wait_list, uint[] sync_point_wait_list, uint[] sync_point, IntPtr[] mutable_handle)
+            /// <inheritdoc cref="CommandFillImageKHR(IntPtr, IntPtr, CommandPropertiesKhr*, IntPtr, void*, nuint*, nuint*, uint, uint*, uint*, IntPtr*)"/>
+            public static unsafe int CommandFillImageKHR<T1>(IntPtr command_buffer, IntPtr command_queue, CommandPropertiesKhr[] properties, IntPtr image, T1[] fill_color, nuint[] origin, nuint[] region, uint num_sync_points_in_wait_list, uint[] sync_point_wait_list, uint[] sync_point, IntPtr[] mutable_handle)
                 where T1 : unmanaged
             {
                 int returnValue;
@@ -9412,7 +9412,7 @@ namespace OpenTK.Compute2.OpenCL
                                 {
                                     fixed (void* fill_color_ptr = fill_color)
                                     {
-                                        fixed (ulong* properties_ptr = properties)
+                                        fixed (CommandPropertiesKhr* properties_ptr = properties)
                                         {
                                             returnValue = CommandFillImageKHR(command_buffer, command_queue, properties_ptr, image, fill_color_ptr, origin_ptr, region_ptr, num_sync_points_in_wait_list, sync_point_wait_list_ptr, sync_point_ptr, mutable_handle_ptr);
                                         }
@@ -9424,12 +9424,12 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="CommandFillImageKHR(IntPtr, IntPtr, ulong*, IntPtr, void*, nuint*, nuint*, uint, uint*, uint*, IntPtr*)"/>
-            public static unsafe int CommandFillImageKHR<T1>(IntPtr command_buffer, IntPtr command_queue, ref ulong properties, IntPtr image, ref readonly T1 fill_color, ref readonly nuint origin, ref readonly nuint region, uint num_sync_points_in_wait_list, ref uint sync_point_wait_list, ref uint sync_point, ref IntPtr mutable_handle)
+            /// <inheritdoc cref="CommandFillImageKHR(IntPtr, IntPtr, CommandPropertiesKhr*, IntPtr, void*, nuint*, nuint*, uint, uint*, uint*, IntPtr*)"/>
+            public static unsafe int CommandFillImageKHR<T1>(IntPtr command_buffer, IntPtr command_queue, ref CommandPropertiesKhr properties, IntPtr image, ref readonly T1 fill_color, ref readonly nuint origin, ref readonly nuint region, uint num_sync_points_in_wait_list, ref uint sync_point_wait_list, ref uint sync_point, ref IntPtr mutable_handle)
                 where T1 : unmanaged
             {
                 int returnValue;
-                fixed (ulong* properties_ptr = &properties)
+                fixed (CommandPropertiesKhr* properties_ptr = &properties)
                 fixed (void* fill_color_ptr = &fill_color)
                 fixed (nuint* origin_ptr = &origin)
                 fixed (nuint* region_ptr = &region)
@@ -9441,8 +9441,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="CommandNDRangeKernelKHR(IntPtr, IntPtr, ulong*, IntPtr, uint, nuint*, nuint*, nuint*, uint, uint*, uint*, IntPtr*)"/>
-            public static unsafe int CommandNDRangeKernelKHR(IntPtr command_buffer, IntPtr command_queue, Span<ulong> properties, IntPtr kernel, uint work_dim, ReadOnlySpan<nuint> global_work_offset, ReadOnlySpan<nuint> global_work_size, ReadOnlySpan<nuint> local_work_size, uint num_sync_points_in_wait_list, Span<uint> sync_point_wait_list, Span<uint> sync_point, Span<IntPtr> mutable_handle)
+            /// <inheritdoc cref="CommandNDRangeKernelKHR(IntPtr, IntPtr, CommandPropertiesKhr*, IntPtr, uint, nuint*, nuint*, nuint*, uint, uint*, uint*, IntPtr*)"/>
+            public static unsafe int CommandNDRangeKernelKHR(IntPtr command_buffer, IntPtr command_queue, Span<CommandPropertiesKhr> properties, IntPtr kernel, uint work_dim, ReadOnlySpan<nuint> global_work_offset, ReadOnlySpan<nuint> global_work_size, ReadOnlySpan<nuint> local_work_size, uint num_sync_points_in_wait_list, Span<uint> sync_point_wait_list, Span<uint> sync_point, Span<IntPtr> mutable_handle)
             {
                 int returnValue;
                 fixed (IntPtr* mutable_handle_ptr = mutable_handle)
@@ -9457,7 +9457,7 @@ namespace OpenTK.Compute2.OpenCL
                                 {
                                     fixed (nuint* global_work_offset_ptr = global_work_offset)
                                     {
-                                        fixed (ulong* properties_ptr = properties)
+                                        fixed (CommandPropertiesKhr* properties_ptr = properties)
                                         {
                                             returnValue = CommandNDRangeKernelKHR(command_buffer, command_queue, properties_ptr, kernel, work_dim, global_work_offset_ptr, global_work_size_ptr, local_work_size_ptr, num_sync_points_in_wait_list, sync_point_wait_list_ptr, sync_point_ptr, mutable_handle_ptr);
                                         }
@@ -9469,8 +9469,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="CommandNDRangeKernelKHR(IntPtr, IntPtr, ulong*, IntPtr, uint, nuint*, nuint*, nuint*, uint, uint*, uint*, IntPtr*)"/>
-            public static unsafe int CommandNDRangeKernelKHR(IntPtr command_buffer, IntPtr command_queue, ulong[] properties, IntPtr kernel, uint work_dim, nuint[] global_work_offset, nuint[] global_work_size, nuint[] local_work_size, uint num_sync_points_in_wait_list, uint[] sync_point_wait_list, uint[] sync_point, IntPtr[] mutable_handle)
+            /// <inheritdoc cref="CommandNDRangeKernelKHR(IntPtr, IntPtr, CommandPropertiesKhr*, IntPtr, uint, nuint*, nuint*, nuint*, uint, uint*, uint*, IntPtr*)"/>
+            public static unsafe int CommandNDRangeKernelKHR(IntPtr command_buffer, IntPtr command_queue, CommandPropertiesKhr[] properties, IntPtr kernel, uint work_dim, nuint[] global_work_offset, nuint[] global_work_size, nuint[] local_work_size, uint num_sync_points_in_wait_list, uint[] sync_point_wait_list, uint[] sync_point, IntPtr[] mutable_handle)
             {
                 int returnValue;
                 fixed (IntPtr* mutable_handle_ptr = mutable_handle)
@@ -9485,7 +9485,7 @@ namespace OpenTK.Compute2.OpenCL
                                 {
                                     fixed (nuint* global_work_offset_ptr = global_work_offset)
                                     {
-                                        fixed (ulong* properties_ptr = properties)
+                                        fixed (CommandPropertiesKhr* properties_ptr = properties)
                                         {
                                             returnValue = CommandNDRangeKernelKHR(command_buffer, command_queue, properties_ptr, kernel, work_dim, global_work_offset_ptr, global_work_size_ptr, local_work_size_ptr, num_sync_points_in_wait_list, sync_point_wait_list_ptr, sync_point_ptr, mutable_handle_ptr);
                                         }
@@ -9497,11 +9497,11 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="CommandNDRangeKernelKHR(IntPtr, IntPtr, ulong*, IntPtr, uint, nuint*, nuint*, nuint*, uint, uint*, uint*, IntPtr*)"/>
-            public static unsafe int CommandNDRangeKernelKHR(IntPtr command_buffer, IntPtr command_queue, ref ulong properties, IntPtr kernel, uint work_dim, ref readonly nuint global_work_offset, ref readonly nuint global_work_size, ref readonly nuint local_work_size, uint num_sync_points_in_wait_list, ref uint sync_point_wait_list, ref uint sync_point, ref IntPtr mutable_handle)
+            /// <inheritdoc cref="CommandNDRangeKernelKHR(IntPtr, IntPtr, CommandPropertiesKhr*, IntPtr, uint, nuint*, nuint*, nuint*, uint, uint*, uint*, IntPtr*)"/>
+            public static unsafe int CommandNDRangeKernelKHR(IntPtr command_buffer, IntPtr command_queue, ref CommandPropertiesKhr properties, IntPtr kernel, uint work_dim, ref readonly nuint global_work_offset, ref readonly nuint global_work_size, ref readonly nuint local_work_size, uint num_sync_points_in_wait_list, ref uint sync_point_wait_list, ref uint sync_point, ref IntPtr mutable_handle)
             {
                 int returnValue;
-                fixed (ulong* properties_ptr = &properties)
+                fixed (CommandPropertiesKhr* properties_ptr = &properties)
                 fixed (nuint* global_work_offset_ptr = &global_work_offset)
                 fixed (nuint* global_work_size_ptr = &global_work_size)
                 fixed (nuint* local_work_size_ptr = &local_work_size)
@@ -9513,8 +9513,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="CommandSVMMemcpyKHR(IntPtr, IntPtr, ulong*, void*, void*, nuint, uint, uint*, uint*, IntPtr*)"/>
-            public static unsafe int CommandSVMMemcpyKHR(IntPtr command_buffer, IntPtr command_queue, Span<ulong> properties, IntPtr dst_ptr, IntPtr src_ptr, nuint size, uint num_sync_points_in_wait_list, Span<uint> sync_point_wait_list, Span<uint> sync_point, Span<IntPtr> mutable_handle)
+            /// <inheritdoc cref="CommandSVMMemcpyKHR(IntPtr, IntPtr, CommandPropertiesKhr*, void*, void*, nuint, uint, uint*, uint*, IntPtr*)"/>
+            public static unsafe int CommandSVMMemcpyKHR(IntPtr command_buffer, IntPtr command_queue, Span<CommandPropertiesKhr> properties, IntPtr dst_ptr, IntPtr src_ptr, nuint size, uint num_sync_points_in_wait_list, Span<uint> sync_point_wait_list, Span<uint> sync_point, Span<IntPtr> mutable_handle)
             {
                 int returnValue;
                 fixed (IntPtr* mutable_handle_ptr = mutable_handle)
@@ -9523,7 +9523,7 @@ namespace OpenTK.Compute2.OpenCL
                     {
                         fixed (uint* sync_point_wait_list_ptr = sync_point_wait_list)
                         {
-                            fixed (ulong* properties_ptr = properties)
+                            fixed (CommandPropertiesKhr* properties_ptr = properties)
                             {
                                 void* dst_ptr_vptr = (void*)dst_ptr;
                                 void* src_ptr_vptr = (void*)src_ptr;
@@ -9534,8 +9534,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="CommandSVMMemcpyKHR(IntPtr, IntPtr, ulong*, void*, void*, nuint, uint, uint*, uint*, IntPtr*)"/>
-            public static unsafe int CommandSVMMemcpyKHR(IntPtr command_buffer, IntPtr command_queue, ulong[] properties, IntPtr dst_ptr, IntPtr src_ptr, nuint size, uint num_sync_points_in_wait_list, uint[] sync_point_wait_list, uint[] sync_point, IntPtr[] mutable_handle)
+            /// <inheritdoc cref="CommandSVMMemcpyKHR(IntPtr, IntPtr, CommandPropertiesKhr*, void*, void*, nuint, uint, uint*, uint*, IntPtr*)"/>
+            public static unsafe int CommandSVMMemcpyKHR(IntPtr command_buffer, IntPtr command_queue, CommandPropertiesKhr[] properties, IntPtr dst_ptr, IntPtr src_ptr, nuint size, uint num_sync_points_in_wait_list, uint[] sync_point_wait_list, uint[] sync_point, IntPtr[] mutable_handle)
             {
                 int returnValue;
                 fixed (IntPtr* mutable_handle_ptr = mutable_handle)
@@ -9544,7 +9544,7 @@ namespace OpenTK.Compute2.OpenCL
                     {
                         fixed (uint* sync_point_wait_list_ptr = sync_point_wait_list)
                         {
-                            fixed (ulong* properties_ptr = properties)
+                            fixed (CommandPropertiesKhr* properties_ptr = properties)
                             {
                                 void* dst_ptr_vptr = (void*)dst_ptr;
                                 void* src_ptr_vptr = (void*)src_ptr;
@@ -9555,11 +9555,11 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="CommandSVMMemcpyKHR(IntPtr, IntPtr, ulong*, void*, void*, nuint, uint, uint*, uint*, IntPtr*)"/>
-            public static unsafe int CommandSVMMemcpyKHR(IntPtr command_buffer, IntPtr command_queue, ref ulong properties, IntPtr dst_ptr, IntPtr src_ptr, nuint size, uint num_sync_points_in_wait_list, ref uint sync_point_wait_list, ref uint sync_point, ref IntPtr mutable_handle)
+            /// <inheritdoc cref="CommandSVMMemcpyKHR(IntPtr, IntPtr, CommandPropertiesKhr*, void*, void*, nuint, uint, uint*, uint*, IntPtr*)"/>
+            public static unsafe int CommandSVMMemcpyKHR(IntPtr command_buffer, IntPtr command_queue, ref CommandPropertiesKhr properties, IntPtr dst_ptr, IntPtr src_ptr, nuint size, uint num_sync_points_in_wait_list, ref uint sync_point_wait_list, ref uint sync_point, ref IntPtr mutable_handle)
             {
                 int returnValue;
-                fixed (ulong* properties_ptr = &properties)
+                fixed (CommandPropertiesKhr* properties_ptr = &properties)
                 fixed (uint* sync_point_wait_list_ptr = &sync_point_wait_list)
                 fixed (uint* sync_point_ptr = &sync_point)
                 fixed (IntPtr* mutable_handle_ptr = &mutable_handle)
@@ -9570,8 +9570,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="CommandSVMMemcpyKHR(IntPtr, IntPtr, ulong*, void*, void*, nuint, uint, uint*, uint*, IntPtr*)"/>
-            public static unsafe int CommandSVMMemcpyKHR<T1, T2>(IntPtr command_buffer, IntPtr command_queue, Span<ulong> properties, Span<T1> dst_ptr, ReadOnlySpan<T2> src_ptr, nuint size, uint num_sync_points_in_wait_list, Span<uint> sync_point_wait_list, Span<uint> sync_point, Span<IntPtr> mutable_handle)
+            /// <inheritdoc cref="CommandSVMMemcpyKHR(IntPtr, IntPtr, CommandPropertiesKhr*, void*, void*, nuint, uint, uint*, uint*, IntPtr*)"/>
+            public static unsafe int CommandSVMMemcpyKHR<T1, T2>(IntPtr command_buffer, IntPtr command_queue, Span<CommandPropertiesKhr> properties, Span<T1> dst_ptr, ReadOnlySpan<T2> src_ptr, nuint size, uint num_sync_points_in_wait_list, Span<uint> sync_point_wait_list, Span<uint> sync_point, Span<IntPtr> mutable_handle)
                 where T1 : unmanaged
                 where T2 : unmanaged
             {
@@ -9586,7 +9586,7 @@ namespace OpenTK.Compute2.OpenCL
                             {
                                 fixed (void* dst_ptr_ptr = dst_ptr)
                                 {
-                                    fixed (ulong* properties_ptr = properties)
+                                    fixed (CommandPropertiesKhr* properties_ptr = properties)
                                     {
                                         returnValue = CommandSVMMemcpyKHR(command_buffer, command_queue, properties_ptr, dst_ptr_ptr, src_ptr_ptr, size, num_sync_points_in_wait_list, sync_point_wait_list_ptr, sync_point_ptr, mutable_handle_ptr);
                                     }
@@ -9597,8 +9597,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="CommandSVMMemcpyKHR(IntPtr, IntPtr, ulong*, void*, void*, nuint, uint, uint*, uint*, IntPtr*)"/>
-            public static unsafe int CommandSVMMemcpyKHR<T1, T2>(IntPtr command_buffer, IntPtr command_queue, ulong[] properties, T1[] dst_ptr, T2[] src_ptr, nuint size, uint num_sync_points_in_wait_list, uint[] sync_point_wait_list, uint[] sync_point, IntPtr[] mutable_handle)
+            /// <inheritdoc cref="CommandSVMMemcpyKHR(IntPtr, IntPtr, CommandPropertiesKhr*, void*, void*, nuint, uint, uint*, uint*, IntPtr*)"/>
+            public static unsafe int CommandSVMMemcpyKHR<T1, T2>(IntPtr command_buffer, IntPtr command_queue, CommandPropertiesKhr[] properties, T1[] dst_ptr, T2[] src_ptr, nuint size, uint num_sync_points_in_wait_list, uint[] sync_point_wait_list, uint[] sync_point, IntPtr[] mutable_handle)
                 where T1 : unmanaged
                 where T2 : unmanaged
             {
@@ -9613,7 +9613,7 @@ namespace OpenTK.Compute2.OpenCL
                             {
                                 fixed (void* dst_ptr_ptr = dst_ptr)
                                 {
-                                    fixed (ulong* properties_ptr = properties)
+                                    fixed (CommandPropertiesKhr* properties_ptr = properties)
                                     {
                                         returnValue = CommandSVMMemcpyKHR(command_buffer, command_queue, properties_ptr, dst_ptr_ptr, src_ptr_ptr, size, num_sync_points_in_wait_list, sync_point_wait_list_ptr, sync_point_ptr, mutable_handle_ptr);
                                     }
@@ -9624,13 +9624,13 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="CommandSVMMemcpyKHR(IntPtr, IntPtr, ulong*, void*, void*, nuint, uint, uint*, uint*, IntPtr*)"/>
-            public static unsafe int CommandSVMMemcpyKHR<T1, T2>(IntPtr command_buffer, IntPtr command_queue, ref ulong properties, ref T1 dst_ptr, ref readonly T2 src_ptr, nuint size, uint num_sync_points_in_wait_list, ref uint sync_point_wait_list, ref uint sync_point, ref IntPtr mutable_handle)
+            /// <inheritdoc cref="CommandSVMMemcpyKHR(IntPtr, IntPtr, CommandPropertiesKhr*, void*, void*, nuint, uint, uint*, uint*, IntPtr*)"/>
+            public static unsafe int CommandSVMMemcpyKHR<T1, T2>(IntPtr command_buffer, IntPtr command_queue, ref CommandPropertiesKhr properties, ref T1 dst_ptr, ref readonly T2 src_ptr, nuint size, uint num_sync_points_in_wait_list, ref uint sync_point_wait_list, ref uint sync_point, ref IntPtr mutable_handle)
                 where T1 : unmanaged
                 where T2 : unmanaged
             {
                 int returnValue;
-                fixed (ulong* properties_ptr = &properties)
+                fixed (CommandPropertiesKhr* properties_ptr = &properties)
                 fixed (void* dst_ptr_ptr = &dst_ptr)
                 fixed (void* src_ptr_ptr = &src_ptr)
                 fixed (uint* sync_point_wait_list_ptr = &sync_point_wait_list)
@@ -9641,8 +9641,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="CommandSVMMemFillKHR(IntPtr, IntPtr, ulong*, void*, void*, nuint, nuint, uint, uint*, uint*, IntPtr*)"/>
-            public static unsafe int CommandSVMMemFillKHR(IntPtr command_buffer, IntPtr command_queue, Span<ulong> properties, IntPtr svm_ptr, IntPtr pattern, nuint pattern_size, nuint size, uint num_sync_points_in_wait_list, Span<uint> sync_point_wait_list, Span<uint> sync_point, Span<IntPtr> mutable_handle)
+            /// <inheritdoc cref="CommandSVMMemFillKHR(IntPtr, IntPtr, CommandPropertiesKhr*, void*, void*, nuint, nuint, uint, uint*, uint*, IntPtr*)"/>
+            public static unsafe int CommandSVMMemFillKHR(IntPtr command_buffer, IntPtr command_queue, Span<CommandPropertiesKhr> properties, IntPtr svm_ptr, IntPtr pattern, nuint pattern_size, nuint size, uint num_sync_points_in_wait_list, Span<uint> sync_point_wait_list, Span<uint> sync_point, Span<IntPtr> mutable_handle)
             {
                 int returnValue;
                 fixed (IntPtr* mutable_handle_ptr = mutable_handle)
@@ -9651,7 +9651,7 @@ namespace OpenTK.Compute2.OpenCL
                     {
                         fixed (uint* sync_point_wait_list_ptr = sync_point_wait_list)
                         {
-                            fixed (ulong* properties_ptr = properties)
+                            fixed (CommandPropertiesKhr* properties_ptr = properties)
                             {
                                 void* svm_ptr_vptr = (void*)svm_ptr;
                                 void* pattern_vptr = (void*)pattern;
@@ -9662,8 +9662,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="CommandSVMMemFillKHR(IntPtr, IntPtr, ulong*, void*, void*, nuint, nuint, uint, uint*, uint*, IntPtr*)"/>
-            public static unsafe int CommandSVMMemFillKHR(IntPtr command_buffer, IntPtr command_queue, ulong[] properties, IntPtr svm_ptr, IntPtr pattern, nuint pattern_size, nuint size, uint num_sync_points_in_wait_list, uint[] sync_point_wait_list, uint[] sync_point, IntPtr[] mutable_handle)
+            /// <inheritdoc cref="CommandSVMMemFillKHR(IntPtr, IntPtr, CommandPropertiesKhr*, void*, void*, nuint, nuint, uint, uint*, uint*, IntPtr*)"/>
+            public static unsafe int CommandSVMMemFillKHR(IntPtr command_buffer, IntPtr command_queue, CommandPropertiesKhr[] properties, IntPtr svm_ptr, IntPtr pattern, nuint pattern_size, nuint size, uint num_sync_points_in_wait_list, uint[] sync_point_wait_list, uint[] sync_point, IntPtr[] mutable_handle)
             {
                 int returnValue;
                 fixed (IntPtr* mutable_handle_ptr = mutable_handle)
@@ -9672,7 +9672,7 @@ namespace OpenTK.Compute2.OpenCL
                     {
                         fixed (uint* sync_point_wait_list_ptr = sync_point_wait_list)
                         {
-                            fixed (ulong* properties_ptr = properties)
+                            fixed (CommandPropertiesKhr* properties_ptr = properties)
                             {
                                 void* svm_ptr_vptr = (void*)svm_ptr;
                                 void* pattern_vptr = (void*)pattern;
@@ -9683,11 +9683,11 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="CommandSVMMemFillKHR(IntPtr, IntPtr, ulong*, void*, void*, nuint, nuint, uint, uint*, uint*, IntPtr*)"/>
-            public static unsafe int CommandSVMMemFillKHR(IntPtr command_buffer, IntPtr command_queue, ref ulong properties, IntPtr svm_ptr, IntPtr pattern, nuint pattern_size, nuint size, uint num_sync_points_in_wait_list, ref uint sync_point_wait_list, ref uint sync_point, ref IntPtr mutable_handle)
+            /// <inheritdoc cref="CommandSVMMemFillKHR(IntPtr, IntPtr, CommandPropertiesKhr*, void*, void*, nuint, nuint, uint, uint*, uint*, IntPtr*)"/>
+            public static unsafe int CommandSVMMemFillKHR(IntPtr command_buffer, IntPtr command_queue, ref CommandPropertiesKhr properties, IntPtr svm_ptr, IntPtr pattern, nuint pattern_size, nuint size, uint num_sync_points_in_wait_list, ref uint sync_point_wait_list, ref uint sync_point, ref IntPtr mutable_handle)
             {
                 int returnValue;
-                fixed (ulong* properties_ptr = &properties)
+                fixed (CommandPropertiesKhr* properties_ptr = &properties)
                 fixed (uint* sync_point_wait_list_ptr = &sync_point_wait_list)
                 fixed (uint* sync_point_ptr = &sync_point)
                 fixed (IntPtr* mutable_handle_ptr = &mutable_handle)
@@ -9698,8 +9698,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="CommandSVMMemFillKHR(IntPtr, IntPtr, ulong*, void*, void*, nuint, nuint, uint, uint*, uint*, IntPtr*)"/>
-            public static unsafe int CommandSVMMemFillKHR<T1, T2>(IntPtr command_buffer, IntPtr command_queue, Span<ulong> properties, Span<T1> svm_ptr, ReadOnlySpan<T2> pattern, nuint pattern_size, nuint size, uint num_sync_points_in_wait_list, Span<uint> sync_point_wait_list, Span<uint> sync_point, Span<IntPtr> mutable_handle)
+            /// <inheritdoc cref="CommandSVMMemFillKHR(IntPtr, IntPtr, CommandPropertiesKhr*, void*, void*, nuint, nuint, uint, uint*, uint*, IntPtr*)"/>
+            public static unsafe int CommandSVMMemFillKHR<T1, T2>(IntPtr command_buffer, IntPtr command_queue, Span<CommandPropertiesKhr> properties, Span<T1> svm_ptr, ReadOnlySpan<T2> pattern, nuint pattern_size, nuint size, uint num_sync_points_in_wait_list, Span<uint> sync_point_wait_list, Span<uint> sync_point, Span<IntPtr> mutable_handle)
                 where T1 : unmanaged
                 where T2 : unmanaged
             {
@@ -9714,7 +9714,7 @@ namespace OpenTK.Compute2.OpenCL
                             {
                                 fixed (void* svm_ptr_ptr = svm_ptr)
                                 {
-                                    fixed (ulong* properties_ptr = properties)
+                                    fixed (CommandPropertiesKhr* properties_ptr = properties)
                                     {
                                         returnValue = CommandSVMMemFillKHR(command_buffer, command_queue, properties_ptr, svm_ptr_ptr, pattern_ptr, pattern_size, size, num_sync_points_in_wait_list, sync_point_wait_list_ptr, sync_point_ptr, mutable_handle_ptr);
                                     }
@@ -9725,8 +9725,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="CommandSVMMemFillKHR(IntPtr, IntPtr, ulong*, void*, void*, nuint, nuint, uint, uint*, uint*, IntPtr*)"/>
-            public static unsafe int CommandSVMMemFillKHR<T1, T2>(IntPtr command_buffer, IntPtr command_queue, ulong[] properties, T1[] svm_ptr, T2[] pattern, nuint pattern_size, nuint size, uint num_sync_points_in_wait_list, uint[] sync_point_wait_list, uint[] sync_point, IntPtr[] mutable_handle)
+            /// <inheritdoc cref="CommandSVMMemFillKHR(IntPtr, IntPtr, CommandPropertiesKhr*, void*, void*, nuint, nuint, uint, uint*, uint*, IntPtr*)"/>
+            public static unsafe int CommandSVMMemFillKHR<T1, T2>(IntPtr command_buffer, IntPtr command_queue, CommandPropertiesKhr[] properties, T1[] svm_ptr, T2[] pattern, nuint pattern_size, nuint size, uint num_sync_points_in_wait_list, uint[] sync_point_wait_list, uint[] sync_point, IntPtr[] mutable_handle)
                 where T1 : unmanaged
                 where T2 : unmanaged
             {
@@ -9741,7 +9741,7 @@ namespace OpenTK.Compute2.OpenCL
                             {
                                 fixed (void* svm_ptr_ptr = svm_ptr)
                                 {
-                                    fixed (ulong* properties_ptr = properties)
+                                    fixed (CommandPropertiesKhr* properties_ptr = properties)
                                     {
                                         returnValue = CommandSVMMemFillKHR(command_buffer, command_queue, properties_ptr, svm_ptr_ptr, pattern_ptr, pattern_size, size, num_sync_points_in_wait_list, sync_point_wait_list_ptr, sync_point_ptr, mutable_handle_ptr);
                                     }
@@ -9752,13 +9752,13 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="CommandSVMMemFillKHR(IntPtr, IntPtr, ulong*, void*, void*, nuint, nuint, uint, uint*, uint*, IntPtr*)"/>
-            public static unsafe int CommandSVMMemFillKHR<T1, T2>(IntPtr command_buffer, IntPtr command_queue, ref ulong properties, ref T1 svm_ptr, ref readonly T2 pattern, nuint pattern_size, nuint size, uint num_sync_points_in_wait_list, ref uint sync_point_wait_list, ref uint sync_point, ref IntPtr mutable_handle)
+            /// <inheritdoc cref="CommandSVMMemFillKHR(IntPtr, IntPtr, CommandPropertiesKhr*, void*, void*, nuint, nuint, uint, uint*, uint*, IntPtr*)"/>
+            public static unsafe int CommandSVMMemFillKHR<T1, T2>(IntPtr command_buffer, IntPtr command_queue, ref CommandPropertiesKhr properties, ref T1 svm_ptr, ref readonly T2 pattern, nuint pattern_size, nuint size, uint num_sync_points_in_wait_list, ref uint sync_point_wait_list, ref uint sync_point, ref IntPtr mutable_handle)
                 where T1 : unmanaged
                 where T2 : unmanaged
             {
                 int returnValue;
-                fixed (ulong* properties_ptr = &properties)
+                fixed (CommandPropertiesKhr* properties_ptr = &properties)
                 fixed (void* svm_ptr_ptr = &svm_ptr)
                 fixed (void* pattern_ptr = &pattern)
                 fixed (uint* sync_point_wait_list_ptr = &sync_point_wait_list)
@@ -9769,13 +9769,13 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="CreateCommandBufferKHR(uint, IntPtr*, ulong*, int*)"/>
-            public static unsafe IntPtr CreateCommandBufferKHR(uint num_queues, Span<IntPtr> queues, Span<ulong> properties, Span<int> errcode_ret)
+            /// <inheritdoc cref="CreateCommandBufferKHR(uint, IntPtr*, CommandBufferPropertiesKhr*, int*)"/>
+            public static unsafe IntPtr CreateCommandBufferKHR(uint num_queues, Span<IntPtr> queues, Span<CommandBufferPropertiesKhr> properties, Span<int> errcode_ret)
             {
                 IntPtr returnValue;
                 fixed (int* errcode_ret_ptr = errcode_ret)
                 {
-                    fixed (ulong* properties_ptr = properties)
+                    fixed (CommandBufferPropertiesKhr* properties_ptr = properties)
                     {
                         fixed (IntPtr* queues_ptr = queues)
                         {
@@ -9785,13 +9785,13 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="CreateCommandBufferKHR(uint, IntPtr*, ulong*, int*)"/>
-            public static unsafe IntPtr CreateCommandBufferKHR(uint num_queues, IntPtr[] queues, ulong[] properties, int[] errcode_ret)
+            /// <inheritdoc cref="CreateCommandBufferKHR(uint, IntPtr*, CommandBufferPropertiesKhr*, int*)"/>
+            public static unsafe IntPtr CreateCommandBufferKHR(uint num_queues, IntPtr[] queues, CommandBufferPropertiesKhr[] properties, int[] errcode_ret)
             {
                 IntPtr returnValue;
                 fixed (int* errcode_ret_ptr = errcode_ret)
                 {
-                    fixed (ulong* properties_ptr = properties)
+                    fixed (CommandBufferPropertiesKhr* properties_ptr = properties)
                     {
                         fixed (IntPtr* queues_ptr = queues)
                         {
@@ -9801,12 +9801,12 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="CreateCommandBufferKHR(uint, IntPtr*, ulong*, int*)"/>
-            public static unsafe IntPtr CreateCommandBufferKHR(uint num_queues, ref IntPtr queues, ref ulong properties, ref int errcode_ret)
+            /// <inheritdoc cref="CreateCommandBufferKHR(uint, IntPtr*, CommandBufferPropertiesKhr*, int*)"/>
+            public static unsafe IntPtr CreateCommandBufferKHR(uint num_queues, ref IntPtr queues, ref CommandBufferPropertiesKhr properties, ref int errcode_ret)
             {
                 IntPtr returnValue;
                 fixed (IntPtr* queues_ptr = &queues)
-                fixed (ulong* properties_ptr = &properties)
+                fixed (CommandBufferPropertiesKhr* properties_ptr = &properties)
                 fixed (int* errcode_ret_ptr = &errcode_ret)
                 {
                     returnValue = CreateCommandBufferKHR(num_queues, queues_ptr, properties_ptr, errcode_ret_ptr);
@@ -10188,8 +10188,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="CreateFromDX9MediaSurfaceKHR(IntPtr, MemFlags, uint, void*, uint, int*)"/>
-            public static unsafe IntPtr CreateFromDX9MediaSurfaceKHR(IntPtr context, MemFlags flags, uint adapter_type, IntPtr surface_info, uint plane, Span<int> errcode_ret)
+            /// <inheritdoc cref="CreateFromDX9MediaSurfaceKHR(IntPtr, MemFlags, Dx9MediaAdapterTypeKhr, void*, uint, int*)"/>
+            public static unsafe IntPtr CreateFromDX9MediaSurfaceKHR(IntPtr context, MemFlags flags, Dx9MediaAdapterTypeKhr adapter_type, IntPtr surface_info, uint plane, Span<int> errcode_ret)
             {
                 IntPtr returnValue;
                 fixed (int* errcode_ret_ptr = errcode_ret)
@@ -10199,8 +10199,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="CreateFromDX9MediaSurfaceKHR(IntPtr, MemFlags, uint, void*, uint, int*)"/>
-            public static unsafe IntPtr CreateFromDX9MediaSurfaceKHR(IntPtr context, MemFlags flags, uint adapter_type, IntPtr surface_info, uint plane, int[] errcode_ret)
+            /// <inheritdoc cref="CreateFromDX9MediaSurfaceKHR(IntPtr, MemFlags, Dx9MediaAdapterTypeKhr, void*, uint, int*)"/>
+            public static unsafe IntPtr CreateFromDX9MediaSurfaceKHR(IntPtr context, MemFlags flags, Dx9MediaAdapterTypeKhr adapter_type, IntPtr surface_info, uint plane, int[] errcode_ret)
             {
                 IntPtr returnValue;
                 fixed (int* errcode_ret_ptr = errcode_ret)
@@ -10210,8 +10210,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="CreateFromDX9MediaSurfaceKHR(IntPtr, MemFlags, uint, void*, uint, int*)"/>
-            public static unsafe IntPtr CreateFromDX9MediaSurfaceKHR(IntPtr context, MemFlags flags, uint adapter_type, IntPtr surface_info, uint plane, ref int errcode_ret)
+            /// <inheritdoc cref="CreateFromDX9MediaSurfaceKHR(IntPtr, MemFlags, Dx9MediaAdapterTypeKhr, void*, uint, int*)"/>
+            public static unsafe IntPtr CreateFromDX9MediaSurfaceKHR(IntPtr context, MemFlags flags, Dx9MediaAdapterTypeKhr adapter_type, IntPtr surface_info, uint plane, ref int errcode_ret)
             {
                 IntPtr returnValue;
                 fixed (int* errcode_ret_ptr = &errcode_ret)
@@ -10221,8 +10221,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="CreateFromDX9MediaSurfaceKHR(IntPtr, MemFlags, uint, void*, uint, int*)"/>
-            public static unsafe IntPtr CreateFromDX9MediaSurfaceKHR<T1>(IntPtr context, MemFlags flags, uint adapter_type, Span<T1> surface_info, uint plane, Span<int> errcode_ret)
+            /// <inheritdoc cref="CreateFromDX9MediaSurfaceKHR(IntPtr, MemFlags, Dx9MediaAdapterTypeKhr, void*, uint, int*)"/>
+            public static unsafe IntPtr CreateFromDX9MediaSurfaceKHR<T1>(IntPtr context, MemFlags flags, Dx9MediaAdapterTypeKhr adapter_type, Span<T1> surface_info, uint plane, Span<int> errcode_ret)
                 where T1 : unmanaged
             {
                 IntPtr returnValue;
@@ -10235,8 +10235,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="CreateFromDX9MediaSurfaceKHR(IntPtr, MemFlags, uint, void*, uint, int*)"/>
-            public static unsafe IntPtr CreateFromDX9MediaSurfaceKHR<T1>(IntPtr context, MemFlags flags, uint adapter_type, T1[] surface_info, uint plane, int[] errcode_ret)
+            /// <inheritdoc cref="CreateFromDX9MediaSurfaceKHR(IntPtr, MemFlags, Dx9MediaAdapterTypeKhr, void*, uint, int*)"/>
+            public static unsafe IntPtr CreateFromDX9MediaSurfaceKHR<T1>(IntPtr context, MemFlags flags, Dx9MediaAdapterTypeKhr adapter_type, T1[] surface_info, uint plane, int[] errcode_ret)
                 where T1 : unmanaged
             {
                 IntPtr returnValue;
@@ -10249,8 +10249,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="CreateFromDX9MediaSurfaceKHR(IntPtr, MemFlags, uint, void*, uint, int*)"/>
-            public static unsafe IntPtr CreateFromDX9MediaSurfaceKHR<T1>(IntPtr context, MemFlags flags, uint adapter_type, ref T1 surface_info, uint plane, ref int errcode_ret)
+            /// <inheritdoc cref="CreateFromDX9MediaSurfaceKHR(IntPtr, MemFlags, Dx9MediaAdapterTypeKhr, void*, uint, int*)"/>
+            public static unsafe IntPtr CreateFromDX9MediaSurfaceKHR<T1>(IntPtr context, MemFlags flags, Dx9MediaAdapterTypeKhr adapter_type, ref T1 surface_info, uint plane, ref int errcode_ret)
                 where T1 : unmanaged
             {
                 IntPtr returnValue;
@@ -10584,37 +10584,37 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="CreateSemaphoreWithPropertiesKHR(IntPtr, ulong*, int*)"/>
-            public static unsafe IntPtr CreateSemaphoreWithPropertiesKHR(IntPtr context, Span<ulong> sema_props, Span<int> errcode_ret)
+            /// <inheritdoc cref="CreateSemaphoreWithPropertiesKHR(IntPtr, SemaphorePropertiesKhr*, int*)"/>
+            public static unsafe IntPtr CreateSemaphoreWithPropertiesKHR(IntPtr context, Span<SemaphorePropertiesKhr> sema_props, Span<int> errcode_ret)
             {
                 IntPtr returnValue;
                 fixed (int* errcode_ret_ptr = errcode_ret)
                 {
-                    fixed (ulong* sema_props_ptr = sema_props)
+                    fixed (SemaphorePropertiesKhr* sema_props_ptr = sema_props)
                     {
                         returnValue = CreateSemaphoreWithPropertiesKHR(context, sema_props_ptr, errcode_ret_ptr);
                     }
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="CreateSemaphoreWithPropertiesKHR(IntPtr, ulong*, int*)"/>
-            public static unsafe IntPtr CreateSemaphoreWithPropertiesKHR(IntPtr context, ulong[] sema_props, int[] errcode_ret)
+            /// <inheritdoc cref="CreateSemaphoreWithPropertiesKHR(IntPtr, SemaphorePropertiesKhr*, int*)"/>
+            public static unsafe IntPtr CreateSemaphoreWithPropertiesKHR(IntPtr context, SemaphorePropertiesKhr[] sema_props, int[] errcode_ret)
             {
                 IntPtr returnValue;
                 fixed (int* errcode_ret_ptr = errcode_ret)
                 {
-                    fixed (ulong* sema_props_ptr = sema_props)
+                    fixed (SemaphorePropertiesKhr* sema_props_ptr = sema_props)
                     {
                         returnValue = CreateSemaphoreWithPropertiesKHR(context, sema_props_ptr, errcode_ret_ptr);
                     }
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="CreateSemaphoreWithPropertiesKHR(IntPtr, ulong*, int*)"/>
-            public static unsafe IntPtr CreateSemaphoreWithPropertiesKHR(IntPtr context, ref ulong sema_props, ref int errcode_ret)
+            /// <inheritdoc cref="CreateSemaphoreWithPropertiesKHR(IntPtr, SemaphorePropertiesKhr*, int*)"/>
+            public static unsafe IntPtr CreateSemaphoreWithPropertiesKHR(IntPtr context, ref SemaphorePropertiesKhr sema_props, ref int errcode_ret)
             {
                 IntPtr returnValue;
-                fixed (ulong* sema_props_ptr = &sema_props)
+                fixed (SemaphorePropertiesKhr* sema_props_ptr = &sema_props)
                 fixed (int* errcode_ret_ptr = &errcode_ret)
                 {
                     returnValue = CreateSemaphoreWithPropertiesKHR(context, sema_props_ptr, errcode_ret_ptr);
@@ -11295,8 +11295,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetCommandBufferInfoKHR(IntPtr, uint, nuint, void*, nuint*)"/>
-            public static unsafe int GetCommandBufferInfoKHR(IntPtr command_buffer, uint param_name, nuint param_value_size, IntPtr param_value, Span<nuint> param_value_size_ret)
+            /// <inheritdoc cref="GetCommandBufferInfoKHR(IntPtr, CommandBufferInfoKhr, nuint, void*, nuint*)"/>
+            public static unsafe int GetCommandBufferInfoKHR(IntPtr command_buffer, CommandBufferInfoKhr param_name, nuint param_value_size, IntPtr param_value, Span<nuint> param_value_size_ret)
             {
                 int returnValue;
                 fixed (nuint* param_value_size_ret_ptr = param_value_size_ret)
@@ -11306,8 +11306,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetCommandBufferInfoKHR(IntPtr, uint, nuint, void*, nuint*)"/>
-            public static unsafe int GetCommandBufferInfoKHR(IntPtr command_buffer, uint param_name, nuint param_value_size, IntPtr param_value, nuint[] param_value_size_ret)
+            /// <inheritdoc cref="GetCommandBufferInfoKHR(IntPtr, CommandBufferInfoKhr, nuint, void*, nuint*)"/>
+            public static unsafe int GetCommandBufferInfoKHR(IntPtr command_buffer, CommandBufferInfoKhr param_name, nuint param_value_size, IntPtr param_value, nuint[] param_value_size_ret)
             {
                 int returnValue;
                 fixed (nuint* param_value_size_ret_ptr = param_value_size_ret)
@@ -11317,8 +11317,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetCommandBufferInfoKHR(IntPtr, uint, nuint, void*, nuint*)"/>
-            public static unsafe int GetCommandBufferInfoKHR(IntPtr command_buffer, uint param_name, nuint param_value_size, IntPtr param_value, ref nuint param_value_size_ret)
+            /// <inheritdoc cref="GetCommandBufferInfoKHR(IntPtr, CommandBufferInfoKhr, nuint, void*, nuint*)"/>
+            public static unsafe int GetCommandBufferInfoKHR(IntPtr command_buffer, CommandBufferInfoKhr param_name, nuint param_value_size, IntPtr param_value, ref nuint param_value_size_ret)
             {
                 int returnValue;
                 fixed (nuint* param_value_size_ret_ptr = &param_value_size_ret)
@@ -11328,8 +11328,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetCommandBufferInfoKHR(IntPtr, uint, nuint, void*, nuint*)"/>
-            public static unsafe int GetCommandBufferInfoKHR<T1>(IntPtr command_buffer, uint param_name, nuint param_value_size, Span<T1> param_value, Span<nuint> param_value_size_ret)
+            /// <inheritdoc cref="GetCommandBufferInfoKHR(IntPtr, CommandBufferInfoKhr, nuint, void*, nuint*)"/>
+            public static unsafe int GetCommandBufferInfoKHR<T1>(IntPtr command_buffer, CommandBufferInfoKhr param_name, nuint param_value_size, Span<T1> param_value, Span<nuint> param_value_size_ret)
                 where T1 : unmanaged
             {
                 int returnValue;
@@ -11342,8 +11342,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetCommandBufferInfoKHR(IntPtr, uint, nuint, void*, nuint*)"/>
-            public static unsafe int GetCommandBufferInfoKHR<T1>(IntPtr command_buffer, uint param_name, nuint param_value_size, T1[] param_value, nuint[] param_value_size_ret)
+            /// <inheritdoc cref="GetCommandBufferInfoKHR(IntPtr, CommandBufferInfoKhr, nuint, void*, nuint*)"/>
+            public static unsafe int GetCommandBufferInfoKHR<T1>(IntPtr command_buffer, CommandBufferInfoKhr param_name, nuint param_value_size, T1[] param_value, nuint[] param_value_size_ret)
                 where T1 : unmanaged
             {
                 int returnValue;
@@ -11356,8 +11356,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetCommandBufferInfoKHR(IntPtr, uint, nuint, void*, nuint*)"/>
-            public static unsafe int GetCommandBufferInfoKHR<T1>(IntPtr command_buffer, uint param_name, nuint param_value_size, ref T1 param_value, ref nuint param_value_size_ret)
+            /// <inheritdoc cref="GetCommandBufferInfoKHR(IntPtr, CommandBufferInfoKhr, nuint, void*, nuint*)"/>
+            public static unsafe int GetCommandBufferInfoKHR<T1>(IntPtr command_buffer, CommandBufferInfoKhr param_name, nuint param_value_size, ref T1 param_value, ref nuint param_value_size_ret)
                 where T1 : unmanaged
             {
                 int returnValue;
@@ -11368,8 +11368,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetDeviceIDsFromD3D10KHR(IntPtr, uint, void*, uint, uint, IntPtr*, uint*)"/>
-            public static unsafe int GetDeviceIDsFromD3D10KHR(IntPtr platform, uint d3d_device_source, IntPtr d3d_object, uint d3d_device_set, uint num_entries, Span<IntPtr> devices, Span<uint> num_devices)
+            /// <inheritdoc cref="GetDeviceIDsFromD3D10KHR(IntPtr, D3D10DeviceSourceKhr, void*, D3D10DeviceSetKhr, uint, IntPtr*, uint*)"/>
+            public static unsafe int GetDeviceIDsFromD3D10KHR(IntPtr platform, D3D10DeviceSourceKhr d3d_device_source, IntPtr d3d_object, D3D10DeviceSetKhr d3d_device_set, uint num_entries, Span<IntPtr> devices, Span<uint> num_devices)
             {
                 int returnValue;
                 fixed (uint* num_devices_ptr = num_devices)
@@ -11382,8 +11382,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetDeviceIDsFromD3D10KHR(IntPtr, uint, void*, uint, uint, IntPtr*, uint*)"/>
-            public static unsafe int GetDeviceIDsFromD3D10KHR(IntPtr platform, uint d3d_device_source, IntPtr d3d_object, uint d3d_device_set, uint num_entries, IntPtr[] devices, uint[] num_devices)
+            /// <inheritdoc cref="GetDeviceIDsFromD3D10KHR(IntPtr, D3D10DeviceSourceKhr, void*, D3D10DeviceSetKhr, uint, IntPtr*, uint*)"/>
+            public static unsafe int GetDeviceIDsFromD3D10KHR(IntPtr platform, D3D10DeviceSourceKhr d3d_device_source, IntPtr d3d_object, D3D10DeviceSetKhr d3d_device_set, uint num_entries, IntPtr[] devices, uint[] num_devices)
             {
                 int returnValue;
                 fixed (uint* num_devices_ptr = num_devices)
@@ -11396,8 +11396,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetDeviceIDsFromD3D10KHR(IntPtr, uint, void*, uint, uint, IntPtr*, uint*)"/>
-            public static unsafe int GetDeviceIDsFromD3D10KHR(IntPtr platform, uint d3d_device_source, IntPtr d3d_object, uint d3d_device_set, uint num_entries, ref IntPtr devices, ref uint num_devices)
+            /// <inheritdoc cref="GetDeviceIDsFromD3D10KHR(IntPtr, D3D10DeviceSourceKhr, void*, D3D10DeviceSetKhr, uint, IntPtr*, uint*)"/>
+            public static unsafe int GetDeviceIDsFromD3D10KHR(IntPtr platform, D3D10DeviceSourceKhr d3d_device_source, IntPtr d3d_object, D3D10DeviceSetKhr d3d_device_set, uint num_entries, ref IntPtr devices, ref uint num_devices)
             {
                 int returnValue;
                 fixed (IntPtr* devices_ptr = &devices)
@@ -11408,8 +11408,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetDeviceIDsFromD3D10KHR(IntPtr, uint, void*, uint, uint, IntPtr*, uint*)"/>
-            public static unsafe int GetDeviceIDsFromD3D10KHR<T1>(IntPtr platform, uint d3d_device_source, Span<T1> d3d_object, uint d3d_device_set, uint num_entries, Span<IntPtr> devices, Span<uint> num_devices)
+            /// <inheritdoc cref="GetDeviceIDsFromD3D10KHR(IntPtr, D3D10DeviceSourceKhr, void*, D3D10DeviceSetKhr, uint, IntPtr*, uint*)"/>
+            public static unsafe int GetDeviceIDsFromD3D10KHR<T1>(IntPtr platform, D3D10DeviceSourceKhr d3d_device_source, Span<T1> d3d_object, D3D10DeviceSetKhr d3d_device_set, uint num_entries, Span<IntPtr> devices, Span<uint> num_devices)
                 where T1 : unmanaged
             {
                 int returnValue;
@@ -11425,8 +11425,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetDeviceIDsFromD3D10KHR(IntPtr, uint, void*, uint, uint, IntPtr*, uint*)"/>
-            public static unsafe int GetDeviceIDsFromD3D10KHR<T1>(IntPtr platform, uint d3d_device_source, T1[] d3d_object, uint d3d_device_set, uint num_entries, IntPtr[] devices, uint[] num_devices)
+            /// <inheritdoc cref="GetDeviceIDsFromD3D10KHR(IntPtr, D3D10DeviceSourceKhr, void*, D3D10DeviceSetKhr, uint, IntPtr*, uint*)"/>
+            public static unsafe int GetDeviceIDsFromD3D10KHR<T1>(IntPtr platform, D3D10DeviceSourceKhr d3d_device_source, T1[] d3d_object, D3D10DeviceSetKhr d3d_device_set, uint num_entries, IntPtr[] devices, uint[] num_devices)
                 where T1 : unmanaged
             {
                 int returnValue;
@@ -11442,8 +11442,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetDeviceIDsFromD3D10KHR(IntPtr, uint, void*, uint, uint, IntPtr*, uint*)"/>
-            public static unsafe int GetDeviceIDsFromD3D10KHR<T1>(IntPtr platform, uint d3d_device_source, ref T1 d3d_object, uint d3d_device_set, uint num_entries, ref IntPtr devices, ref uint num_devices)
+            /// <inheritdoc cref="GetDeviceIDsFromD3D10KHR(IntPtr, D3D10DeviceSourceKhr, void*, D3D10DeviceSetKhr, uint, IntPtr*, uint*)"/>
+            public static unsafe int GetDeviceIDsFromD3D10KHR<T1>(IntPtr platform, D3D10DeviceSourceKhr d3d_device_source, ref T1 d3d_object, D3D10DeviceSetKhr d3d_device_set, uint num_entries, ref IntPtr devices, ref uint num_devices)
                 where T1 : unmanaged
             {
                 int returnValue;
@@ -11455,8 +11455,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetDeviceIDsFromD3D11KHR(IntPtr, uint, void*, uint, uint, IntPtr*, uint*)"/>
-            public static unsafe int GetDeviceIDsFromD3D11KHR(IntPtr platform, uint d3d_device_source, IntPtr d3d_object, uint d3d_device_set, uint num_entries, Span<IntPtr> devices, Span<uint> num_devices)
+            /// <inheritdoc cref="GetDeviceIDsFromD3D11KHR(IntPtr, D3D11DeviceSourceKhr, void*, D3D11DeviceSetKhr, uint, IntPtr*, uint*)"/>
+            public static unsafe int GetDeviceIDsFromD3D11KHR(IntPtr platform, D3D11DeviceSourceKhr d3d_device_source, IntPtr d3d_object, D3D11DeviceSetKhr d3d_device_set, uint num_entries, Span<IntPtr> devices, Span<uint> num_devices)
             {
                 int returnValue;
                 fixed (uint* num_devices_ptr = num_devices)
@@ -11469,8 +11469,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetDeviceIDsFromD3D11KHR(IntPtr, uint, void*, uint, uint, IntPtr*, uint*)"/>
-            public static unsafe int GetDeviceIDsFromD3D11KHR(IntPtr platform, uint d3d_device_source, IntPtr d3d_object, uint d3d_device_set, uint num_entries, IntPtr[] devices, uint[] num_devices)
+            /// <inheritdoc cref="GetDeviceIDsFromD3D11KHR(IntPtr, D3D11DeviceSourceKhr, void*, D3D11DeviceSetKhr, uint, IntPtr*, uint*)"/>
+            public static unsafe int GetDeviceIDsFromD3D11KHR(IntPtr platform, D3D11DeviceSourceKhr d3d_device_source, IntPtr d3d_object, D3D11DeviceSetKhr d3d_device_set, uint num_entries, IntPtr[] devices, uint[] num_devices)
             {
                 int returnValue;
                 fixed (uint* num_devices_ptr = num_devices)
@@ -11483,8 +11483,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetDeviceIDsFromD3D11KHR(IntPtr, uint, void*, uint, uint, IntPtr*, uint*)"/>
-            public static unsafe int GetDeviceIDsFromD3D11KHR(IntPtr platform, uint d3d_device_source, IntPtr d3d_object, uint d3d_device_set, uint num_entries, ref IntPtr devices, ref uint num_devices)
+            /// <inheritdoc cref="GetDeviceIDsFromD3D11KHR(IntPtr, D3D11DeviceSourceKhr, void*, D3D11DeviceSetKhr, uint, IntPtr*, uint*)"/>
+            public static unsafe int GetDeviceIDsFromD3D11KHR(IntPtr platform, D3D11DeviceSourceKhr d3d_device_source, IntPtr d3d_object, D3D11DeviceSetKhr d3d_device_set, uint num_entries, ref IntPtr devices, ref uint num_devices)
             {
                 int returnValue;
                 fixed (IntPtr* devices_ptr = &devices)
@@ -11495,8 +11495,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetDeviceIDsFromD3D11KHR(IntPtr, uint, void*, uint, uint, IntPtr*, uint*)"/>
-            public static unsafe int GetDeviceIDsFromD3D11KHR<T1>(IntPtr platform, uint d3d_device_source, Span<T1> d3d_object, uint d3d_device_set, uint num_entries, Span<IntPtr> devices, Span<uint> num_devices)
+            /// <inheritdoc cref="GetDeviceIDsFromD3D11KHR(IntPtr, D3D11DeviceSourceKhr, void*, D3D11DeviceSetKhr, uint, IntPtr*, uint*)"/>
+            public static unsafe int GetDeviceIDsFromD3D11KHR<T1>(IntPtr platform, D3D11DeviceSourceKhr d3d_device_source, Span<T1> d3d_object, D3D11DeviceSetKhr d3d_device_set, uint num_entries, Span<IntPtr> devices, Span<uint> num_devices)
                 where T1 : unmanaged
             {
                 int returnValue;
@@ -11512,8 +11512,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetDeviceIDsFromD3D11KHR(IntPtr, uint, void*, uint, uint, IntPtr*, uint*)"/>
-            public static unsafe int GetDeviceIDsFromD3D11KHR<T1>(IntPtr platform, uint d3d_device_source, T1[] d3d_object, uint d3d_device_set, uint num_entries, IntPtr[] devices, uint[] num_devices)
+            /// <inheritdoc cref="GetDeviceIDsFromD3D11KHR(IntPtr, D3D11DeviceSourceKhr, void*, D3D11DeviceSetKhr, uint, IntPtr*, uint*)"/>
+            public static unsafe int GetDeviceIDsFromD3D11KHR<T1>(IntPtr platform, D3D11DeviceSourceKhr d3d_device_source, T1[] d3d_object, D3D11DeviceSetKhr d3d_device_set, uint num_entries, IntPtr[] devices, uint[] num_devices)
                 where T1 : unmanaged
             {
                 int returnValue;
@@ -11529,8 +11529,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetDeviceIDsFromD3D11KHR(IntPtr, uint, void*, uint, uint, IntPtr*, uint*)"/>
-            public static unsafe int GetDeviceIDsFromD3D11KHR<T1>(IntPtr platform, uint d3d_device_source, ref T1 d3d_object, uint d3d_device_set, uint num_entries, ref IntPtr devices, ref uint num_devices)
+            /// <inheritdoc cref="GetDeviceIDsFromD3D11KHR(IntPtr, D3D11DeviceSourceKhr, void*, D3D11DeviceSetKhr, uint, IntPtr*, uint*)"/>
+            public static unsafe int GetDeviceIDsFromD3D11KHR<T1>(IntPtr platform, D3D11DeviceSourceKhr d3d_device_source, ref T1 d3d_object, D3D11DeviceSetKhr d3d_device_set, uint num_entries, ref IntPtr devices, ref uint num_devices)
                 where T1 : unmanaged
             {
                 int returnValue;
@@ -11542,15 +11542,15 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetDeviceIDsFromDX9MediaAdapterKHR(IntPtr, uint, uint*, void*, uint, uint, IntPtr*, uint*)"/>
-            public static unsafe int GetDeviceIDsFromDX9MediaAdapterKHR(IntPtr platform, uint num_media_adapters, Span<uint> media_adapter_type, IntPtr media_adapters, uint media_adapter_set, uint num_entries, Span<IntPtr> devices, Span<uint> num_devices)
+            /// <inheritdoc cref="GetDeviceIDsFromDX9MediaAdapterKHR(IntPtr, uint, Dx9MediaAdapterTypeKhr*, void*, Dx9MediaAdapterSetKhr, uint, IntPtr*, uint*)"/>
+            public static unsafe int GetDeviceIDsFromDX9MediaAdapterKHR(IntPtr platform, uint num_media_adapters, Span<Dx9MediaAdapterTypeKhr> media_adapter_type, IntPtr media_adapters, Dx9MediaAdapterSetKhr media_adapter_set, uint num_entries, Span<IntPtr> devices, Span<uint> num_devices)
             {
                 int returnValue;
                 fixed (uint* num_devices_ptr = num_devices)
                 {
                     fixed (IntPtr* devices_ptr = devices)
                     {
-                        fixed (uint* media_adapter_type_ptr = media_adapter_type)
+                        fixed (Dx9MediaAdapterTypeKhr* media_adapter_type_ptr = media_adapter_type)
                         {
                             void* media_adapters_vptr = (void*)media_adapters;
                             returnValue = GetDeviceIDsFromDX9MediaAdapterKHR(platform, num_media_adapters, media_adapter_type_ptr, media_adapters_vptr, media_adapter_set, num_entries, devices_ptr, num_devices_ptr);
@@ -11559,15 +11559,15 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetDeviceIDsFromDX9MediaAdapterKHR(IntPtr, uint, uint*, void*, uint, uint, IntPtr*, uint*)"/>
-            public static unsafe int GetDeviceIDsFromDX9MediaAdapterKHR(IntPtr platform, uint num_media_adapters, uint[] media_adapter_type, IntPtr media_adapters, uint media_adapter_set, uint num_entries, IntPtr[] devices, uint[] num_devices)
+            /// <inheritdoc cref="GetDeviceIDsFromDX9MediaAdapterKHR(IntPtr, uint, Dx9MediaAdapterTypeKhr*, void*, Dx9MediaAdapterSetKhr, uint, IntPtr*, uint*)"/>
+            public static unsafe int GetDeviceIDsFromDX9MediaAdapterKHR(IntPtr platform, uint num_media_adapters, Dx9MediaAdapterTypeKhr[] media_adapter_type, IntPtr media_adapters, Dx9MediaAdapterSetKhr media_adapter_set, uint num_entries, IntPtr[] devices, uint[] num_devices)
             {
                 int returnValue;
                 fixed (uint* num_devices_ptr = num_devices)
                 {
                     fixed (IntPtr* devices_ptr = devices)
                     {
-                        fixed (uint* media_adapter_type_ptr = media_adapter_type)
+                        fixed (Dx9MediaAdapterTypeKhr* media_adapter_type_ptr = media_adapter_type)
                         {
                             void* media_adapters_vptr = (void*)media_adapters;
                             returnValue = GetDeviceIDsFromDX9MediaAdapterKHR(platform, num_media_adapters, media_adapter_type_ptr, media_adapters_vptr, media_adapter_set, num_entries, devices_ptr, num_devices_ptr);
@@ -11576,11 +11576,11 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetDeviceIDsFromDX9MediaAdapterKHR(IntPtr, uint, uint*, void*, uint, uint, IntPtr*, uint*)"/>
-            public static unsafe int GetDeviceIDsFromDX9MediaAdapterKHR(IntPtr platform, uint num_media_adapters, ref uint media_adapter_type, IntPtr media_adapters, uint media_adapter_set, uint num_entries, ref IntPtr devices, ref uint num_devices)
+            /// <inheritdoc cref="GetDeviceIDsFromDX9MediaAdapterKHR(IntPtr, uint, Dx9MediaAdapterTypeKhr*, void*, Dx9MediaAdapterSetKhr, uint, IntPtr*, uint*)"/>
+            public static unsafe int GetDeviceIDsFromDX9MediaAdapterKHR(IntPtr platform, uint num_media_adapters, ref Dx9MediaAdapterTypeKhr media_adapter_type, IntPtr media_adapters, Dx9MediaAdapterSetKhr media_adapter_set, uint num_entries, ref IntPtr devices, ref uint num_devices)
             {
                 int returnValue;
-                fixed (uint* media_adapter_type_ptr = &media_adapter_type)
+                fixed (Dx9MediaAdapterTypeKhr* media_adapter_type_ptr = &media_adapter_type)
                 fixed (IntPtr* devices_ptr = &devices)
                 fixed (uint* num_devices_ptr = &num_devices)
                 {
@@ -11589,8 +11589,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetDeviceIDsFromDX9MediaAdapterKHR(IntPtr, uint, uint*, void*, uint, uint, IntPtr*, uint*)"/>
-            public static unsafe int GetDeviceIDsFromDX9MediaAdapterKHR<T1>(IntPtr platform, uint num_media_adapters, Span<uint> media_adapter_type, Span<T1> media_adapters, uint media_adapter_set, uint num_entries, Span<IntPtr> devices, Span<uint> num_devices)
+            /// <inheritdoc cref="GetDeviceIDsFromDX9MediaAdapterKHR(IntPtr, uint, Dx9MediaAdapterTypeKhr*, void*, Dx9MediaAdapterSetKhr, uint, IntPtr*, uint*)"/>
+            public static unsafe int GetDeviceIDsFromDX9MediaAdapterKHR<T1>(IntPtr platform, uint num_media_adapters, Span<Dx9MediaAdapterTypeKhr> media_adapter_type, Span<T1> media_adapters, Dx9MediaAdapterSetKhr media_adapter_set, uint num_entries, Span<IntPtr> devices, Span<uint> num_devices)
                 where T1 : unmanaged
             {
                 int returnValue;
@@ -11600,7 +11600,7 @@ namespace OpenTK.Compute2.OpenCL
                     {
                         fixed (void* media_adapters_ptr = media_adapters)
                         {
-                            fixed (uint* media_adapter_type_ptr = media_adapter_type)
+                            fixed (Dx9MediaAdapterTypeKhr* media_adapter_type_ptr = media_adapter_type)
                             {
                                 returnValue = GetDeviceIDsFromDX9MediaAdapterKHR(platform, num_media_adapters, media_adapter_type_ptr, media_adapters_ptr, media_adapter_set, num_entries, devices_ptr, num_devices_ptr);
                             }
@@ -11609,8 +11609,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetDeviceIDsFromDX9MediaAdapterKHR(IntPtr, uint, uint*, void*, uint, uint, IntPtr*, uint*)"/>
-            public static unsafe int GetDeviceIDsFromDX9MediaAdapterKHR<T1>(IntPtr platform, uint num_media_adapters, uint[] media_adapter_type, T1[] media_adapters, uint media_adapter_set, uint num_entries, IntPtr[] devices, uint[] num_devices)
+            /// <inheritdoc cref="GetDeviceIDsFromDX9MediaAdapterKHR(IntPtr, uint, Dx9MediaAdapterTypeKhr*, void*, Dx9MediaAdapterSetKhr, uint, IntPtr*, uint*)"/>
+            public static unsafe int GetDeviceIDsFromDX9MediaAdapterKHR<T1>(IntPtr platform, uint num_media_adapters, Dx9MediaAdapterTypeKhr[] media_adapter_type, T1[] media_adapters, Dx9MediaAdapterSetKhr media_adapter_set, uint num_entries, IntPtr[] devices, uint[] num_devices)
                 where T1 : unmanaged
             {
                 int returnValue;
@@ -11620,7 +11620,7 @@ namespace OpenTK.Compute2.OpenCL
                     {
                         fixed (void* media_adapters_ptr = media_adapters)
                         {
-                            fixed (uint* media_adapter_type_ptr = media_adapter_type)
+                            fixed (Dx9MediaAdapterTypeKhr* media_adapter_type_ptr = media_adapter_type)
                             {
                                 returnValue = GetDeviceIDsFromDX9MediaAdapterKHR(platform, num_media_adapters, media_adapter_type_ptr, media_adapters_ptr, media_adapter_set, num_entries, devices_ptr, num_devices_ptr);
                             }
@@ -11629,12 +11629,12 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetDeviceIDsFromDX9MediaAdapterKHR(IntPtr, uint, uint*, void*, uint, uint, IntPtr*, uint*)"/>
-            public static unsafe int GetDeviceIDsFromDX9MediaAdapterKHR<T1>(IntPtr platform, uint num_media_adapters, ref uint media_adapter_type, ref T1 media_adapters, uint media_adapter_set, uint num_entries, ref IntPtr devices, ref uint num_devices)
+            /// <inheritdoc cref="GetDeviceIDsFromDX9MediaAdapterKHR(IntPtr, uint, Dx9MediaAdapterTypeKhr*, void*, Dx9MediaAdapterSetKhr, uint, IntPtr*, uint*)"/>
+            public static unsafe int GetDeviceIDsFromDX9MediaAdapterKHR<T1>(IntPtr platform, uint num_media_adapters, ref Dx9MediaAdapterTypeKhr media_adapter_type, ref T1 media_adapters, Dx9MediaAdapterSetKhr media_adapter_set, uint num_entries, ref IntPtr devices, ref uint num_devices)
                 where T1 : unmanaged
             {
                 int returnValue;
-                fixed (uint* media_adapter_type_ptr = &media_adapter_type)
+                fixed (Dx9MediaAdapterTypeKhr* media_adapter_type_ptr = &media_adapter_type)
                 fixed (void* media_adapters_ptr = &media_adapters)
                 fixed (IntPtr* devices_ptr = &devices)
                 fixed (uint* num_devices_ptr = &num_devices)
@@ -11643,8 +11643,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetGLContextInfoKHR(IntPtr*, uint, nuint, void*, nuint*)"/>
-            public static unsafe int GetGLContextInfoKHR(Span<IntPtr> properties, uint param_name, nuint param_value_size, IntPtr param_value, Span<nuint> param_value_size_ret)
+            /// <inheritdoc cref="GetGLContextInfoKHR(IntPtr*, GlContextInfo, nuint, void*, nuint*)"/>
+            public static unsafe int GetGLContextInfoKHR(Span<IntPtr> properties, GlContextInfo param_name, nuint param_value_size, IntPtr param_value, Span<nuint> param_value_size_ret)
             {
                 int returnValue;
                 fixed (nuint* param_value_size_ret_ptr = param_value_size_ret)
@@ -11657,8 +11657,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetGLContextInfoKHR(IntPtr*, uint, nuint, void*, nuint*)"/>
-            public static unsafe int GetGLContextInfoKHR(IntPtr[] properties, uint param_name, nuint param_value_size, IntPtr param_value, nuint[] param_value_size_ret)
+            /// <inheritdoc cref="GetGLContextInfoKHR(IntPtr*, GlContextInfo, nuint, void*, nuint*)"/>
+            public static unsafe int GetGLContextInfoKHR(IntPtr[] properties, GlContextInfo param_name, nuint param_value_size, IntPtr param_value, nuint[] param_value_size_ret)
             {
                 int returnValue;
                 fixed (nuint* param_value_size_ret_ptr = param_value_size_ret)
@@ -11671,8 +11671,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetGLContextInfoKHR(IntPtr*, uint, nuint, void*, nuint*)"/>
-            public static unsafe int GetGLContextInfoKHR(ref IntPtr properties, uint param_name, nuint param_value_size, IntPtr param_value, ref nuint param_value_size_ret)
+            /// <inheritdoc cref="GetGLContextInfoKHR(IntPtr*, GlContextInfo, nuint, void*, nuint*)"/>
+            public static unsafe int GetGLContextInfoKHR(ref IntPtr properties, GlContextInfo param_name, nuint param_value_size, IntPtr param_value, ref nuint param_value_size_ret)
             {
                 int returnValue;
                 fixed (IntPtr* properties_ptr = &properties)
@@ -11683,8 +11683,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetGLContextInfoKHR(IntPtr*, uint, nuint, void*, nuint*)"/>
-            public static unsafe int GetGLContextInfoKHR<T1>(Span<IntPtr> properties, uint param_name, nuint param_value_size, Span<T1> param_value, Span<nuint> param_value_size_ret)
+            /// <inheritdoc cref="GetGLContextInfoKHR(IntPtr*, GlContextInfo, nuint, void*, nuint*)"/>
+            public static unsafe int GetGLContextInfoKHR<T1>(Span<IntPtr> properties, GlContextInfo param_name, nuint param_value_size, Span<T1> param_value, Span<nuint> param_value_size_ret)
                 where T1 : unmanaged
             {
                 int returnValue;
@@ -11700,8 +11700,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetGLContextInfoKHR(IntPtr*, uint, nuint, void*, nuint*)"/>
-            public static unsafe int GetGLContextInfoKHR<T1>(IntPtr[] properties, uint param_name, nuint param_value_size, T1[] param_value, nuint[] param_value_size_ret)
+            /// <inheritdoc cref="GetGLContextInfoKHR(IntPtr*, GlContextInfo, nuint, void*, nuint*)"/>
+            public static unsafe int GetGLContextInfoKHR<T1>(IntPtr[] properties, GlContextInfo param_name, nuint param_value_size, T1[] param_value, nuint[] param_value_size_ret)
                 where T1 : unmanaged
             {
                 int returnValue;
@@ -11717,8 +11717,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetGLContextInfoKHR(IntPtr*, uint, nuint, void*, nuint*)"/>
-            public static unsafe int GetGLContextInfoKHR<T1>(ref IntPtr properties, uint param_name, nuint param_value_size, ref T1 param_value, ref nuint param_value_size_ret)
+            /// <inheritdoc cref="GetGLContextInfoKHR(IntPtr*, GlContextInfo, nuint, void*, nuint*)"/>
+            public static unsafe int GetGLContextInfoKHR<T1>(ref IntPtr properties, GlContextInfo param_name, nuint param_value_size, ref T1 param_value, ref nuint param_value_size_ret)
                 where T1 : unmanaged
             {
                 int returnValue;
@@ -11730,45 +11730,45 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetGLObjectInfo(IntPtr, uint*, uint*)"/>
-            public static unsafe int GetGLObjectInfo(IntPtr memobj, Span<uint> gl_object_type, Span<uint> gl_object_name)
+            /// <inheritdoc cref="GetGLObjectInfo(IntPtr, GlObjectType*, uint*)"/>
+            public static unsafe int GetGLObjectInfo(IntPtr memobj, Span<GlObjectType> gl_object_type, Span<uint> gl_object_name)
             {
                 int returnValue;
                 fixed (uint* gl_object_name_ptr = gl_object_name)
                 {
-                    fixed (uint* gl_object_type_ptr = gl_object_type)
+                    fixed (GlObjectType* gl_object_type_ptr = gl_object_type)
                     {
                         returnValue = GetGLObjectInfo(memobj, gl_object_type_ptr, gl_object_name_ptr);
                     }
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetGLObjectInfo(IntPtr, uint*, uint*)"/>
-            public static unsafe int GetGLObjectInfo(IntPtr memobj, uint[] gl_object_type, uint[] gl_object_name)
+            /// <inheritdoc cref="GetGLObjectInfo(IntPtr, GlObjectType*, uint*)"/>
+            public static unsafe int GetGLObjectInfo(IntPtr memobj, GlObjectType[] gl_object_type, uint[] gl_object_name)
             {
                 int returnValue;
                 fixed (uint* gl_object_name_ptr = gl_object_name)
                 {
-                    fixed (uint* gl_object_type_ptr = gl_object_type)
+                    fixed (GlObjectType* gl_object_type_ptr = gl_object_type)
                     {
                         returnValue = GetGLObjectInfo(memobj, gl_object_type_ptr, gl_object_name_ptr);
                     }
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetGLObjectInfo(IntPtr, uint*, uint*)"/>
-            public static unsafe int GetGLObjectInfo(IntPtr memobj, ref uint gl_object_type, ref uint gl_object_name)
+            /// <inheritdoc cref="GetGLObjectInfo(IntPtr, GlObjectType*, uint*)"/>
+            public static unsafe int GetGLObjectInfo(IntPtr memobj, ref GlObjectType gl_object_type, ref uint gl_object_name)
             {
                 int returnValue;
-                fixed (uint* gl_object_type_ptr = &gl_object_type)
+                fixed (GlObjectType* gl_object_type_ptr = &gl_object_type)
                 fixed (uint* gl_object_name_ptr = &gl_object_name)
                 {
                     returnValue = GetGLObjectInfo(memobj, gl_object_type_ptr, gl_object_name_ptr);
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetGLTextureInfo(IntPtr, uint, nuint, void*, nuint*)"/>
-            public static unsafe int GetGLTextureInfo(IntPtr memobj, uint param_name, nuint param_value_size, IntPtr param_value, Span<nuint> param_value_size_ret)
+            /// <inheritdoc cref="GetGLTextureInfo(IntPtr, GlTextureInfo, nuint, void*, nuint*)"/>
+            public static unsafe int GetGLTextureInfo(IntPtr memobj, GlTextureInfo param_name, nuint param_value_size, IntPtr param_value, Span<nuint> param_value_size_ret)
             {
                 int returnValue;
                 fixed (nuint* param_value_size_ret_ptr = param_value_size_ret)
@@ -11778,8 +11778,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetGLTextureInfo(IntPtr, uint, nuint, void*, nuint*)"/>
-            public static unsafe int GetGLTextureInfo(IntPtr memobj, uint param_name, nuint param_value_size, IntPtr param_value, nuint[] param_value_size_ret)
+            /// <inheritdoc cref="GetGLTextureInfo(IntPtr, GlTextureInfo, nuint, void*, nuint*)"/>
+            public static unsafe int GetGLTextureInfo(IntPtr memobj, GlTextureInfo param_name, nuint param_value_size, IntPtr param_value, nuint[] param_value_size_ret)
             {
                 int returnValue;
                 fixed (nuint* param_value_size_ret_ptr = param_value_size_ret)
@@ -11789,8 +11789,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetGLTextureInfo(IntPtr, uint, nuint, void*, nuint*)"/>
-            public static unsafe int GetGLTextureInfo(IntPtr memobj, uint param_name, nuint param_value_size, IntPtr param_value, ref nuint param_value_size_ret)
+            /// <inheritdoc cref="GetGLTextureInfo(IntPtr, GlTextureInfo, nuint, void*, nuint*)"/>
+            public static unsafe int GetGLTextureInfo(IntPtr memobj, GlTextureInfo param_name, nuint param_value_size, IntPtr param_value, ref nuint param_value_size_ret)
             {
                 int returnValue;
                 fixed (nuint* param_value_size_ret_ptr = &param_value_size_ret)
@@ -11800,8 +11800,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetGLTextureInfo(IntPtr, uint, nuint, void*, nuint*)"/>
-            public static unsafe int GetGLTextureInfo<T1>(IntPtr memobj, uint param_name, nuint param_value_size, Span<T1> param_value, Span<nuint> param_value_size_ret)
+            /// <inheritdoc cref="GetGLTextureInfo(IntPtr, GlTextureInfo, nuint, void*, nuint*)"/>
+            public static unsafe int GetGLTextureInfo<T1>(IntPtr memobj, GlTextureInfo param_name, nuint param_value_size, Span<T1> param_value, Span<nuint> param_value_size_ret)
                 where T1 : unmanaged
             {
                 int returnValue;
@@ -11814,8 +11814,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetGLTextureInfo(IntPtr, uint, nuint, void*, nuint*)"/>
-            public static unsafe int GetGLTextureInfo<T1>(IntPtr memobj, uint param_name, nuint param_value_size, T1[] param_value, nuint[] param_value_size_ret)
+            /// <inheritdoc cref="GetGLTextureInfo(IntPtr, GlTextureInfo, nuint, void*, nuint*)"/>
+            public static unsafe int GetGLTextureInfo<T1>(IntPtr memobj, GlTextureInfo param_name, nuint param_value_size, T1[] param_value, nuint[] param_value_size_ret)
                 where T1 : unmanaged
             {
                 int returnValue;
@@ -11828,8 +11828,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetGLTextureInfo(IntPtr, uint, nuint, void*, nuint*)"/>
-            public static unsafe int GetGLTextureInfo<T1>(IntPtr memobj, uint param_name, nuint param_value_size, ref T1 param_value, ref nuint param_value_size_ret)
+            /// <inheritdoc cref="GetGLTextureInfo(IntPtr, GlTextureInfo, nuint, void*, nuint*)"/>
+            public static unsafe int GetGLTextureInfo<T1>(IntPtr memobj, GlTextureInfo param_name, nuint param_value_size, ref T1 param_value, ref nuint param_value_size_ret)
                 where T1 : unmanaged
             {
                 int returnValue;
@@ -11840,8 +11840,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetKernelSubGroupInfoKHR(IntPtr, IntPtr, uint, nuint, void*, nuint, void*, nuint*)"/>
-            public static unsafe int GetKernelSubGroupInfoKHR(IntPtr in_kernel, IntPtr in_device, uint param_name, nuint input_value_size, IntPtr input_value, nuint param_value_size, IntPtr param_value, Span<nuint> param_value_size_ret)
+            /// <inheritdoc cref="GetKernelSubGroupInfoKHR(IntPtr, IntPtr, KernelSubGroupInfo, nuint, void*, nuint, void*, nuint*)"/>
+            public static unsafe int GetKernelSubGroupInfoKHR(IntPtr in_kernel, IntPtr in_device, KernelSubGroupInfo param_name, nuint input_value_size, IntPtr input_value, nuint param_value_size, IntPtr param_value, Span<nuint> param_value_size_ret)
             {
                 int returnValue;
                 fixed (nuint* param_value_size_ret_ptr = param_value_size_ret)
@@ -11852,8 +11852,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetKernelSubGroupInfoKHR(IntPtr, IntPtr, uint, nuint, void*, nuint, void*, nuint*)"/>
-            public static unsafe int GetKernelSubGroupInfoKHR(IntPtr in_kernel, IntPtr in_device, uint param_name, nuint input_value_size, IntPtr input_value, nuint param_value_size, IntPtr param_value, nuint[] param_value_size_ret)
+            /// <inheritdoc cref="GetKernelSubGroupInfoKHR(IntPtr, IntPtr, KernelSubGroupInfo, nuint, void*, nuint, void*, nuint*)"/>
+            public static unsafe int GetKernelSubGroupInfoKHR(IntPtr in_kernel, IntPtr in_device, KernelSubGroupInfo param_name, nuint input_value_size, IntPtr input_value, nuint param_value_size, IntPtr param_value, nuint[] param_value_size_ret)
             {
                 int returnValue;
                 fixed (nuint* param_value_size_ret_ptr = param_value_size_ret)
@@ -11864,8 +11864,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetKernelSubGroupInfoKHR(IntPtr, IntPtr, uint, nuint, void*, nuint, void*, nuint*)"/>
-            public static unsafe int GetKernelSubGroupInfoKHR(IntPtr in_kernel, IntPtr in_device, uint param_name, nuint input_value_size, IntPtr input_value, nuint param_value_size, IntPtr param_value, ref nuint param_value_size_ret)
+            /// <inheritdoc cref="GetKernelSubGroupInfoKHR(IntPtr, IntPtr, KernelSubGroupInfo, nuint, void*, nuint, void*, nuint*)"/>
+            public static unsafe int GetKernelSubGroupInfoKHR(IntPtr in_kernel, IntPtr in_device, KernelSubGroupInfo param_name, nuint input_value_size, IntPtr input_value, nuint param_value_size, IntPtr param_value, ref nuint param_value_size_ret)
             {
                 int returnValue;
                 fixed (nuint* param_value_size_ret_ptr = &param_value_size_ret)
@@ -11876,8 +11876,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetKernelSubGroupInfoKHR(IntPtr, IntPtr, uint, nuint, void*, nuint, void*, nuint*)"/>
-            public static unsafe int GetKernelSubGroupInfoKHR<T1, T2>(IntPtr in_kernel, IntPtr in_device, uint param_name, nuint input_value_size, ReadOnlySpan<T1> input_value, nuint param_value_size, Span<T2> param_value, Span<nuint> param_value_size_ret)
+            /// <inheritdoc cref="GetKernelSubGroupInfoKHR(IntPtr, IntPtr, KernelSubGroupInfo, nuint, void*, nuint, void*, nuint*)"/>
+            public static unsafe int GetKernelSubGroupInfoKHR<T1, T2>(IntPtr in_kernel, IntPtr in_device, KernelSubGroupInfo param_name, nuint input_value_size, ReadOnlySpan<T1> input_value, nuint param_value_size, Span<T2> param_value, Span<nuint> param_value_size_ret)
                 where T1 : unmanaged
                 where T2 : unmanaged
             {
@@ -11894,8 +11894,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetKernelSubGroupInfoKHR(IntPtr, IntPtr, uint, nuint, void*, nuint, void*, nuint*)"/>
-            public static unsafe int GetKernelSubGroupInfoKHR<T1, T2>(IntPtr in_kernel, IntPtr in_device, uint param_name, nuint input_value_size, T1[] input_value, nuint param_value_size, T2[] param_value, nuint[] param_value_size_ret)
+            /// <inheritdoc cref="GetKernelSubGroupInfoKHR(IntPtr, IntPtr, KernelSubGroupInfo, nuint, void*, nuint, void*, nuint*)"/>
+            public static unsafe int GetKernelSubGroupInfoKHR<T1, T2>(IntPtr in_kernel, IntPtr in_device, KernelSubGroupInfo param_name, nuint input_value_size, T1[] input_value, nuint param_value_size, T2[] param_value, nuint[] param_value_size_ret)
                 where T1 : unmanaged
                 where T2 : unmanaged
             {
@@ -11912,8 +11912,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetKernelSubGroupInfoKHR(IntPtr, IntPtr, uint, nuint, void*, nuint, void*, nuint*)"/>
-            public static unsafe int GetKernelSubGroupInfoKHR<T1, T2>(IntPtr in_kernel, IntPtr in_device, uint param_name, nuint input_value_size, ref readonly T1 input_value, nuint param_value_size, ref T2 param_value, ref nuint param_value_size_ret)
+            /// <inheritdoc cref="GetKernelSubGroupInfoKHR(IntPtr, IntPtr, KernelSubGroupInfo, nuint, void*, nuint, void*, nuint*)"/>
+            public static unsafe int GetKernelSubGroupInfoKHR<T1, T2>(IntPtr in_kernel, IntPtr in_device, KernelSubGroupInfo param_name, nuint input_value_size, ref readonly T1 input_value, nuint param_value_size, ref T2 param_value, ref nuint param_value_size_ret)
                 where T1 : unmanaged
                 where T2 : unmanaged
             {
@@ -11970,8 +11970,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetMutableCommandInfoKHR(IntPtr, uint, nuint, void*, nuint*)"/>
-            public static unsafe int GetMutableCommandInfoKHR(IntPtr command, uint param_name, nuint param_value_size, IntPtr param_value, Span<nuint> param_value_size_ret)
+            /// <inheritdoc cref="GetMutableCommandInfoKHR(IntPtr, MutableCommandInfoKhr, nuint, void*, nuint*)"/>
+            public static unsafe int GetMutableCommandInfoKHR(IntPtr command, MutableCommandInfoKhr param_name, nuint param_value_size, IntPtr param_value, Span<nuint> param_value_size_ret)
             {
                 int returnValue;
                 fixed (nuint* param_value_size_ret_ptr = param_value_size_ret)
@@ -11981,8 +11981,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetMutableCommandInfoKHR(IntPtr, uint, nuint, void*, nuint*)"/>
-            public static unsafe int GetMutableCommandInfoKHR(IntPtr command, uint param_name, nuint param_value_size, IntPtr param_value, nuint[] param_value_size_ret)
+            /// <inheritdoc cref="GetMutableCommandInfoKHR(IntPtr, MutableCommandInfoKhr, nuint, void*, nuint*)"/>
+            public static unsafe int GetMutableCommandInfoKHR(IntPtr command, MutableCommandInfoKhr param_name, nuint param_value_size, IntPtr param_value, nuint[] param_value_size_ret)
             {
                 int returnValue;
                 fixed (nuint* param_value_size_ret_ptr = param_value_size_ret)
@@ -11992,8 +11992,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetMutableCommandInfoKHR(IntPtr, uint, nuint, void*, nuint*)"/>
-            public static unsafe int GetMutableCommandInfoKHR(IntPtr command, uint param_name, nuint param_value_size, IntPtr param_value, ref nuint param_value_size_ret)
+            /// <inheritdoc cref="GetMutableCommandInfoKHR(IntPtr, MutableCommandInfoKhr, nuint, void*, nuint*)"/>
+            public static unsafe int GetMutableCommandInfoKHR(IntPtr command, MutableCommandInfoKhr param_name, nuint param_value_size, IntPtr param_value, ref nuint param_value_size_ret)
             {
                 int returnValue;
                 fixed (nuint* param_value_size_ret_ptr = &param_value_size_ret)
@@ -12003,8 +12003,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetMutableCommandInfoKHR(IntPtr, uint, nuint, void*, nuint*)"/>
-            public static unsafe int GetMutableCommandInfoKHR<T1>(IntPtr command, uint param_name, nuint param_value_size, Span<T1> param_value, Span<nuint> param_value_size_ret)
+            /// <inheritdoc cref="GetMutableCommandInfoKHR(IntPtr, MutableCommandInfoKhr, nuint, void*, nuint*)"/>
+            public static unsafe int GetMutableCommandInfoKHR<T1>(IntPtr command, MutableCommandInfoKhr param_name, nuint param_value_size, Span<T1> param_value, Span<nuint> param_value_size_ret)
                 where T1 : unmanaged
             {
                 int returnValue;
@@ -12017,8 +12017,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetMutableCommandInfoKHR(IntPtr, uint, nuint, void*, nuint*)"/>
-            public static unsafe int GetMutableCommandInfoKHR<T1>(IntPtr command, uint param_name, nuint param_value_size, T1[] param_value, nuint[] param_value_size_ret)
+            /// <inheritdoc cref="GetMutableCommandInfoKHR(IntPtr, MutableCommandInfoKhr, nuint, void*, nuint*)"/>
+            public static unsafe int GetMutableCommandInfoKHR<T1>(IntPtr command, MutableCommandInfoKhr param_name, nuint param_value_size, T1[] param_value, nuint[] param_value_size_ret)
                 where T1 : unmanaged
             {
                 int returnValue;
@@ -12031,8 +12031,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetMutableCommandInfoKHR(IntPtr, uint, nuint, void*, nuint*)"/>
-            public static unsafe int GetMutableCommandInfoKHR<T1>(IntPtr command, uint param_name, nuint param_value_size, ref T1 param_value, ref nuint param_value_size_ret)
+            /// <inheritdoc cref="GetMutableCommandInfoKHR(IntPtr, MutableCommandInfoKhr, nuint, void*, nuint*)"/>
+            public static unsafe int GetMutableCommandInfoKHR<T1>(IntPtr command, MutableCommandInfoKhr param_name, nuint param_value_size, ref T1 param_value, ref nuint param_value_size_ret)
                 where T1 : unmanaged
             {
                 int returnValue;
@@ -12043,8 +12043,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetSemaphoreHandleForTypeKHR(IntPtr, IntPtr, uint, nuint, void*, nuint*)"/>
-            public static unsafe int GetSemaphoreHandleForTypeKHR(IntPtr sema_object, IntPtr device, uint handle_type, nuint handle_size, IntPtr handle_ptr, Span<nuint> handle_size_ret)
+            /// <inheritdoc cref="GetSemaphoreHandleForTypeKHR(IntPtr, IntPtr, ExternalSemaphoreHandleTypeKhr, nuint, void*, nuint*)"/>
+            public static unsafe int GetSemaphoreHandleForTypeKHR(IntPtr sema_object, IntPtr device, ExternalSemaphoreHandleTypeKhr handle_type, nuint handle_size, IntPtr handle_ptr, Span<nuint> handle_size_ret)
             {
                 int returnValue;
                 fixed (nuint* handle_size_ret_ptr = handle_size_ret)
@@ -12054,8 +12054,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetSemaphoreHandleForTypeKHR(IntPtr, IntPtr, uint, nuint, void*, nuint*)"/>
-            public static unsafe int GetSemaphoreHandleForTypeKHR(IntPtr sema_object, IntPtr device, uint handle_type, nuint handle_size, IntPtr handle_ptr, nuint[] handle_size_ret)
+            /// <inheritdoc cref="GetSemaphoreHandleForTypeKHR(IntPtr, IntPtr, ExternalSemaphoreHandleTypeKhr, nuint, void*, nuint*)"/>
+            public static unsafe int GetSemaphoreHandleForTypeKHR(IntPtr sema_object, IntPtr device, ExternalSemaphoreHandleTypeKhr handle_type, nuint handle_size, IntPtr handle_ptr, nuint[] handle_size_ret)
             {
                 int returnValue;
                 fixed (nuint* handle_size_ret_ptr = handle_size_ret)
@@ -12065,8 +12065,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetSemaphoreHandleForTypeKHR(IntPtr, IntPtr, uint, nuint, void*, nuint*)"/>
-            public static unsafe int GetSemaphoreHandleForTypeKHR(IntPtr sema_object, IntPtr device, uint handle_type, nuint handle_size, IntPtr handle_ptr, ref nuint handle_size_ret)
+            /// <inheritdoc cref="GetSemaphoreHandleForTypeKHR(IntPtr, IntPtr, ExternalSemaphoreHandleTypeKhr, nuint, void*, nuint*)"/>
+            public static unsafe int GetSemaphoreHandleForTypeKHR(IntPtr sema_object, IntPtr device, ExternalSemaphoreHandleTypeKhr handle_type, nuint handle_size, IntPtr handle_ptr, ref nuint handle_size_ret)
             {
                 int returnValue;
                 fixed (nuint* handle_size_ret_ptr = &handle_size_ret)
@@ -12076,8 +12076,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetSemaphoreHandleForTypeKHR(IntPtr, IntPtr, uint, nuint, void*, nuint*)"/>
-            public static unsafe int GetSemaphoreHandleForTypeKHR<T1>(IntPtr sema_object, IntPtr device, uint handle_type, nuint handle_size, Span<T1> handle_ptr, Span<nuint> handle_size_ret)
+            /// <inheritdoc cref="GetSemaphoreHandleForTypeKHR(IntPtr, IntPtr, ExternalSemaphoreHandleTypeKhr, nuint, void*, nuint*)"/>
+            public static unsafe int GetSemaphoreHandleForTypeKHR<T1>(IntPtr sema_object, IntPtr device, ExternalSemaphoreHandleTypeKhr handle_type, nuint handle_size, Span<T1> handle_ptr, Span<nuint> handle_size_ret)
                 where T1 : unmanaged
             {
                 int returnValue;
@@ -12090,8 +12090,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetSemaphoreHandleForTypeKHR(IntPtr, IntPtr, uint, nuint, void*, nuint*)"/>
-            public static unsafe int GetSemaphoreHandleForTypeKHR<T1>(IntPtr sema_object, IntPtr device, uint handle_type, nuint handle_size, T1[] handle_ptr, nuint[] handle_size_ret)
+            /// <inheritdoc cref="GetSemaphoreHandleForTypeKHR(IntPtr, IntPtr, ExternalSemaphoreHandleTypeKhr, nuint, void*, nuint*)"/>
+            public static unsafe int GetSemaphoreHandleForTypeKHR<T1>(IntPtr sema_object, IntPtr device, ExternalSemaphoreHandleTypeKhr handle_type, nuint handle_size, T1[] handle_ptr, nuint[] handle_size_ret)
                 where T1 : unmanaged
             {
                 int returnValue;
@@ -12104,8 +12104,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetSemaphoreHandleForTypeKHR(IntPtr, IntPtr, uint, nuint, void*, nuint*)"/>
-            public static unsafe int GetSemaphoreHandleForTypeKHR<T1>(IntPtr sema_object, IntPtr device, uint handle_type, nuint handle_size, ref T1 handle_ptr, ref nuint handle_size_ret)
+            /// <inheritdoc cref="GetSemaphoreHandleForTypeKHR(IntPtr, IntPtr, ExternalSemaphoreHandleTypeKhr, nuint, void*, nuint*)"/>
+            public static unsafe int GetSemaphoreHandleForTypeKHR<T1>(IntPtr sema_object, IntPtr device, ExternalSemaphoreHandleTypeKhr handle_type, nuint handle_size, ref T1 handle_ptr, ref nuint handle_size_ret)
                 where T1 : unmanaged
             {
                 int returnValue;
@@ -12116,8 +12116,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetSemaphoreInfoKHR(IntPtr, uint, nuint, void*, nuint*)"/>
-            public static unsafe int GetSemaphoreInfoKHR(IntPtr sema_object, uint param_name, nuint param_value_size, IntPtr param_value, Span<nuint> param_value_size_ret)
+            /// <inheritdoc cref="GetSemaphoreInfoKHR(IntPtr, SemaphoreInfoKhr, nuint, void*, nuint*)"/>
+            public static unsafe int GetSemaphoreInfoKHR(IntPtr sema_object, SemaphoreInfoKhr param_name, nuint param_value_size, IntPtr param_value, Span<nuint> param_value_size_ret)
             {
                 int returnValue;
                 fixed (nuint* param_value_size_ret_ptr = param_value_size_ret)
@@ -12127,8 +12127,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetSemaphoreInfoKHR(IntPtr, uint, nuint, void*, nuint*)"/>
-            public static unsafe int GetSemaphoreInfoKHR(IntPtr sema_object, uint param_name, nuint param_value_size, IntPtr param_value, nuint[] param_value_size_ret)
+            /// <inheritdoc cref="GetSemaphoreInfoKHR(IntPtr, SemaphoreInfoKhr, nuint, void*, nuint*)"/>
+            public static unsafe int GetSemaphoreInfoKHR(IntPtr sema_object, SemaphoreInfoKhr param_name, nuint param_value_size, IntPtr param_value, nuint[] param_value_size_ret)
             {
                 int returnValue;
                 fixed (nuint* param_value_size_ret_ptr = param_value_size_ret)
@@ -12138,8 +12138,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetSemaphoreInfoKHR(IntPtr, uint, nuint, void*, nuint*)"/>
-            public static unsafe int GetSemaphoreInfoKHR(IntPtr sema_object, uint param_name, nuint param_value_size, IntPtr param_value, ref nuint param_value_size_ret)
+            /// <inheritdoc cref="GetSemaphoreInfoKHR(IntPtr, SemaphoreInfoKhr, nuint, void*, nuint*)"/>
+            public static unsafe int GetSemaphoreInfoKHR(IntPtr sema_object, SemaphoreInfoKhr param_name, nuint param_value_size, IntPtr param_value, ref nuint param_value_size_ret)
             {
                 int returnValue;
                 fixed (nuint* param_value_size_ret_ptr = &param_value_size_ret)
@@ -12149,8 +12149,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetSemaphoreInfoKHR(IntPtr, uint, nuint, void*, nuint*)"/>
-            public static unsafe int GetSemaphoreInfoKHR<T1>(IntPtr sema_object, uint param_name, nuint param_value_size, Span<T1> param_value, Span<nuint> param_value_size_ret)
+            /// <inheritdoc cref="GetSemaphoreInfoKHR(IntPtr, SemaphoreInfoKhr, nuint, void*, nuint*)"/>
+            public static unsafe int GetSemaphoreInfoKHR<T1>(IntPtr sema_object, SemaphoreInfoKhr param_name, nuint param_value_size, Span<T1> param_value, Span<nuint> param_value_size_ret)
                 where T1 : unmanaged
             {
                 int returnValue;
@@ -12163,8 +12163,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetSemaphoreInfoKHR(IntPtr, uint, nuint, void*, nuint*)"/>
-            public static unsafe int GetSemaphoreInfoKHR<T1>(IntPtr sema_object, uint param_name, nuint param_value_size, T1[] param_value, nuint[] param_value_size_ret)
+            /// <inheritdoc cref="GetSemaphoreInfoKHR(IntPtr, SemaphoreInfoKhr, nuint, void*, nuint*)"/>
+            public static unsafe int GetSemaphoreInfoKHR<T1>(IntPtr sema_object, SemaphoreInfoKhr param_name, nuint param_value_size, T1[] param_value, nuint[] param_value_size_ret)
                 where T1 : unmanaged
             {
                 int returnValue;
@@ -12177,8 +12177,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetSemaphoreInfoKHR(IntPtr, uint, nuint, void*, nuint*)"/>
-            public static unsafe int GetSemaphoreInfoKHR<T1>(IntPtr sema_object, uint param_name, nuint param_value_size, ref T1 param_value, ref nuint param_value_size_ret)
+            /// <inheritdoc cref="GetSemaphoreInfoKHR(IntPtr, SemaphoreInfoKhr, nuint, void*, nuint*)"/>
+            public static unsafe int GetSemaphoreInfoKHR<T1>(IntPtr sema_object, SemaphoreInfoKhr param_name, nuint param_value_size, ref T1 param_value, ref nuint param_value_size_ret)
                 where T1 : unmanaged
             {
                 int returnValue;
@@ -12189,8 +12189,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetSVMPointerInfoKHR(IntPtr, IntPtr, void*, uint, nuint, void*, nuint*)"/>
-            public static unsafe int GetSVMPointerInfoKHR(IntPtr context, IntPtr device, IntPtr ptr, uint param_name, nuint param_value_size, IntPtr param_value, Span<nuint> param_value_size_ret)
+            /// <inheritdoc cref="GetSVMPointerInfoKHR(IntPtr, IntPtr, void*, SvmPointerInfoKhr, nuint, void*, nuint*)"/>
+            public static unsafe int GetSVMPointerInfoKHR(IntPtr context, IntPtr device, IntPtr ptr, SvmPointerInfoKhr param_name, nuint param_value_size, IntPtr param_value, Span<nuint> param_value_size_ret)
             {
                 int returnValue;
                 fixed (nuint* param_value_size_ret_ptr = param_value_size_ret)
@@ -12201,8 +12201,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetSVMPointerInfoKHR(IntPtr, IntPtr, void*, uint, nuint, void*, nuint*)"/>
-            public static unsafe int GetSVMPointerInfoKHR(IntPtr context, IntPtr device, IntPtr ptr, uint param_name, nuint param_value_size, IntPtr param_value, nuint[] param_value_size_ret)
+            /// <inheritdoc cref="GetSVMPointerInfoKHR(IntPtr, IntPtr, void*, SvmPointerInfoKhr, nuint, void*, nuint*)"/>
+            public static unsafe int GetSVMPointerInfoKHR(IntPtr context, IntPtr device, IntPtr ptr, SvmPointerInfoKhr param_name, nuint param_value_size, IntPtr param_value, nuint[] param_value_size_ret)
             {
                 int returnValue;
                 fixed (nuint* param_value_size_ret_ptr = param_value_size_ret)
@@ -12213,8 +12213,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetSVMPointerInfoKHR(IntPtr, IntPtr, void*, uint, nuint, void*, nuint*)"/>
-            public static unsafe int GetSVMPointerInfoKHR(IntPtr context, IntPtr device, IntPtr ptr, uint param_name, nuint param_value_size, IntPtr param_value, ref nuint param_value_size_ret)
+            /// <inheritdoc cref="GetSVMPointerInfoKHR(IntPtr, IntPtr, void*, SvmPointerInfoKhr, nuint, void*, nuint*)"/>
+            public static unsafe int GetSVMPointerInfoKHR(IntPtr context, IntPtr device, IntPtr ptr, SvmPointerInfoKhr param_name, nuint param_value_size, IntPtr param_value, ref nuint param_value_size_ret)
             {
                 int returnValue;
                 fixed (nuint* param_value_size_ret_ptr = &param_value_size_ret)
@@ -12225,8 +12225,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetSVMPointerInfoKHR(IntPtr, IntPtr, void*, uint, nuint, void*, nuint*)"/>
-            public static unsafe int GetSVMPointerInfoKHR<T1, T2>(IntPtr context, IntPtr device, ReadOnlySpan<T1> ptr, uint param_name, nuint param_value_size, Span<T2> param_value, Span<nuint> param_value_size_ret)
+            /// <inheritdoc cref="GetSVMPointerInfoKHR(IntPtr, IntPtr, void*, SvmPointerInfoKhr, nuint, void*, nuint*)"/>
+            public static unsafe int GetSVMPointerInfoKHR<T1, T2>(IntPtr context, IntPtr device, ReadOnlySpan<T1> ptr, SvmPointerInfoKhr param_name, nuint param_value_size, Span<T2> param_value, Span<nuint> param_value_size_ret)
                 where T1 : unmanaged
                 where T2 : unmanaged
             {
@@ -12243,8 +12243,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetSVMPointerInfoKHR(IntPtr, IntPtr, void*, uint, nuint, void*, nuint*)"/>
-            public static unsafe int GetSVMPointerInfoKHR<T1, T2>(IntPtr context, IntPtr device, T1[] ptr, uint param_name, nuint param_value_size, T2[] param_value, nuint[] param_value_size_ret)
+            /// <inheritdoc cref="GetSVMPointerInfoKHR(IntPtr, IntPtr, void*, SvmPointerInfoKhr, nuint, void*, nuint*)"/>
+            public static unsafe int GetSVMPointerInfoKHR<T1, T2>(IntPtr context, IntPtr device, T1[] ptr, SvmPointerInfoKhr param_name, nuint param_value_size, T2[] param_value, nuint[] param_value_size_ret)
                 where T1 : unmanaged
                 where T2 : unmanaged
             {
@@ -12261,8 +12261,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetSVMPointerInfoKHR(IntPtr, IntPtr, void*, uint, nuint, void*, nuint*)"/>
-            public static unsafe int GetSVMPointerInfoKHR<T1, T2>(IntPtr context, IntPtr device, ref readonly T1 ptr, uint param_name, nuint param_value_size, ref T2 param_value, ref nuint param_value_size_ret)
+            /// <inheritdoc cref="GetSVMPointerInfoKHR(IntPtr, IntPtr, void*, SvmPointerInfoKhr, nuint, void*, nuint*)"/>
+            public static unsafe int GetSVMPointerInfoKHR<T1, T2>(IntPtr context, IntPtr device, ref readonly T1 ptr, SvmPointerInfoKhr param_name, nuint param_value_size, ref T2 param_value, ref nuint param_value_size_ret)
                 where T1 : unmanaged
                 where T2 : unmanaged
             {
@@ -12275,37 +12275,37 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetSVMSuggestedTypeIndexKHR(IntPtr, SvmCapabilitiesKhr, SvmCapabilitiesKhr, ulong*, nuint, uint*)"/>
-            public static unsafe int GetSVMSuggestedTypeIndexKHR(IntPtr context, SvmCapabilitiesKhr required_capabilities, SvmCapabilitiesKhr desired_capabilities, Span<ulong> properties, nuint size, Span<uint> suggested_svm_type_index)
+            /// <inheritdoc cref="GetSVMSuggestedTypeIndexKHR(IntPtr, SvmCapabilitiesKhr, SvmCapabilitiesKhr, SvmAllocPropertiesKhr*, nuint, uint*)"/>
+            public static unsafe int GetSVMSuggestedTypeIndexKHR(IntPtr context, SvmCapabilitiesKhr required_capabilities, SvmCapabilitiesKhr desired_capabilities, Span<SvmAllocPropertiesKhr> properties, nuint size, Span<uint> suggested_svm_type_index)
             {
                 int returnValue;
                 fixed (uint* suggested_svm_type_index_ptr = suggested_svm_type_index)
                 {
-                    fixed (ulong* properties_ptr = properties)
+                    fixed (SvmAllocPropertiesKhr* properties_ptr = properties)
                     {
                         returnValue = GetSVMSuggestedTypeIndexKHR(context, required_capabilities, desired_capabilities, properties_ptr, size, suggested_svm_type_index_ptr);
                     }
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetSVMSuggestedTypeIndexKHR(IntPtr, SvmCapabilitiesKhr, SvmCapabilitiesKhr, ulong*, nuint, uint*)"/>
-            public static unsafe int GetSVMSuggestedTypeIndexKHR(IntPtr context, SvmCapabilitiesKhr required_capabilities, SvmCapabilitiesKhr desired_capabilities, ulong[] properties, nuint size, uint[] suggested_svm_type_index)
+            /// <inheritdoc cref="GetSVMSuggestedTypeIndexKHR(IntPtr, SvmCapabilitiesKhr, SvmCapabilitiesKhr, SvmAllocPropertiesKhr*, nuint, uint*)"/>
+            public static unsafe int GetSVMSuggestedTypeIndexKHR(IntPtr context, SvmCapabilitiesKhr required_capabilities, SvmCapabilitiesKhr desired_capabilities, SvmAllocPropertiesKhr[] properties, nuint size, uint[] suggested_svm_type_index)
             {
                 int returnValue;
                 fixed (uint* suggested_svm_type_index_ptr = suggested_svm_type_index)
                 {
-                    fixed (ulong* properties_ptr = properties)
+                    fixed (SvmAllocPropertiesKhr* properties_ptr = properties)
                     {
                         returnValue = GetSVMSuggestedTypeIndexKHR(context, required_capabilities, desired_capabilities, properties_ptr, size, suggested_svm_type_index_ptr);
                     }
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetSVMSuggestedTypeIndexKHR(IntPtr, SvmCapabilitiesKhr, SvmCapabilitiesKhr, ulong*, nuint, uint*)"/>
-            public static unsafe int GetSVMSuggestedTypeIndexKHR(IntPtr context, SvmCapabilitiesKhr required_capabilities, SvmCapabilitiesKhr desired_capabilities, ref ulong properties, nuint size, ref uint suggested_svm_type_index)
+            /// <inheritdoc cref="GetSVMSuggestedTypeIndexKHR(IntPtr, SvmCapabilitiesKhr, SvmCapabilitiesKhr, SvmAllocPropertiesKhr*, nuint, uint*)"/>
+            public static unsafe int GetSVMSuggestedTypeIndexKHR(IntPtr context, SvmCapabilitiesKhr required_capabilities, SvmCapabilitiesKhr desired_capabilities, ref SvmAllocPropertiesKhr properties, nuint size, ref uint suggested_svm_type_index)
             {
                 int returnValue;
-                fixed (ulong* properties_ptr = &properties)
+                fixed (SvmAllocPropertiesKhr* properties_ptr = &properties)
                 fixed (uint* suggested_svm_type_index_ptr = &suggested_svm_type_index)
                 {
                     returnValue = GetSVMSuggestedTypeIndexKHR(context, required_capabilities, desired_capabilities, properties_ptr, size, suggested_svm_type_index_ptr);
@@ -12480,37 +12480,37 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="SVMAllocWithPropertiesKHR(IntPtr, ulong*, uint, nuint, int*)"/>
-            public static unsafe void* SVMAllocWithPropertiesKHR(IntPtr context, Span<ulong> properties, uint svm_type_index, nuint size, Span<int> errcode_ret)
+            /// <inheritdoc cref="SVMAllocWithPropertiesKHR(IntPtr, SvmAllocPropertiesKhr*, uint, nuint, int*)"/>
+            public static unsafe void* SVMAllocWithPropertiesKHR(IntPtr context, Span<SvmAllocPropertiesKhr> properties, uint svm_type_index, nuint size, Span<int> errcode_ret)
             {
                 void* returnValue;
                 fixed (int* errcode_ret_ptr = errcode_ret)
                 {
-                    fixed (ulong* properties_ptr = properties)
+                    fixed (SvmAllocPropertiesKhr* properties_ptr = properties)
                     {
                         returnValue = SVMAllocWithPropertiesKHR(context, properties_ptr, svm_type_index, size, errcode_ret_ptr);
                     }
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="SVMAllocWithPropertiesKHR(IntPtr, ulong*, uint, nuint, int*)"/>
-            public static unsafe void* SVMAllocWithPropertiesKHR(IntPtr context, ulong[] properties, uint svm_type_index, nuint size, int[] errcode_ret)
+            /// <inheritdoc cref="SVMAllocWithPropertiesKHR(IntPtr, SvmAllocPropertiesKhr*, uint, nuint, int*)"/>
+            public static unsafe void* SVMAllocWithPropertiesKHR(IntPtr context, SvmAllocPropertiesKhr[] properties, uint svm_type_index, nuint size, int[] errcode_ret)
             {
                 void* returnValue;
                 fixed (int* errcode_ret_ptr = errcode_ret)
                 {
-                    fixed (ulong* properties_ptr = properties)
+                    fixed (SvmAllocPropertiesKhr* properties_ptr = properties)
                     {
                         returnValue = SVMAllocWithPropertiesKHR(context, properties_ptr, svm_type_index, size, errcode_ret_ptr);
                     }
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="SVMAllocWithPropertiesKHR(IntPtr, ulong*, uint, nuint, int*)"/>
-            public static unsafe void* SVMAllocWithPropertiesKHR(IntPtr context, ref ulong properties, uint svm_type_index, nuint size, ref int errcode_ret)
+            /// <inheritdoc cref="SVMAllocWithPropertiesKHR(IntPtr, SvmAllocPropertiesKhr*, uint, nuint, int*)"/>
+            public static unsafe void* SVMAllocWithPropertiesKHR(IntPtr context, ref SvmAllocPropertiesKhr properties, uint svm_type_index, nuint size, ref int errcode_ret)
             {
                 void* returnValue;
-                fixed (ulong* properties_ptr = &properties)
+                fixed (SvmAllocPropertiesKhr* properties_ptr = &properties)
                 fixed (int* errcode_ret_ptr = &errcode_ret)
                 {
                     returnValue = SVMAllocWithPropertiesKHR(context, properties_ptr, svm_type_index, size, errcode_ret_ptr);
@@ -12621,7 +12621,7 @@ namespace OpenTK.Compute2.OpenCL
                 return returnValue;
             }
         }
-        public static unsafe partial class loader
+        public static unsafe partial class LOADER
         {
             /// <inheritdoc cref="GetICDLoaderInfoOCLICD(IcdlInfo, nuint, void*, nuint*)"/>
             public static unsafe int GetICDLoaderInfoOCLICD(IcdlInfo param_name, nuint param_value_size, IntPtr param_value, Span<nuint> param_value_size_ret)
@@ -12696,8 +12696,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetLayerInfo(uint, nuint, void*, nuint*)"/>
-            public static unsafe int GetLayerInfo(uint param_name, nuint param_value_size, IntPtr param_value, Span<nuint> param_value_size_ret)
+            /// <inheritdoc cref="GetLayerInfo(LayerInfo, nuint, void*, nuint*)"/>
+            public static unsafe int GetLayerInfo(LayerInfo param_name, nuint param_value_size, IntPtr param_value, Span<nuint> param_value_size_ret)
             {
                 int returnValue;
                 fixed (nuint* param_value_size_ret_ptr = param_value_size_ret)
@@ -12707,8 +12707,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetLayerInfo(uint, nuint, void*, nuint*)"/>
-            public static unsafe int GetLayerInfo(uint param_name, nuint param_value_size, IntPtr param_value, nuint[] param_value_size_ret)
+            /// <inheritdoc cref="GetLayerInfo(LayerInfo, nuint, void*, nuint*)"/>
+            public static unsafe int GetLayerInfo(LayerInfo param_name, nuint param_value_size, IntPtr param_value, nuint[] param_value_size_ret)
             {
                 int returnValue;
                 fixed (nuint* param_value_size_ret_ptr = param_value_size_ret)
@@ -12718,8 +12718,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetLayerInfo(uint, nuint, void*, nuint*)"/>
-            public static unsafe int GetLayerInfo(uint param_name, nuint param_value_size, IntPtr param_value, ref nuint param_value_size_ret)
+            /// <inheritdoc cref="GetLayerInfo(LayerInfo, nuint, void*, nuint*)"/>
+            public static unsafe int GetLayerInfo(LayerInfo param_name, nuint param_value_size, IntPtr param_value, ref nuint param_value_size_ret)
             {
                 int returnValue;
                 fixed (nuint* param_value_size_ret_ptr = &param_value_size_ret)
@@ -12729,8 +12729,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetLayerInfo(uint, nuint, void*, nuint*)"/>
-            public static unsafe int GetLayerInfo<T1>(uint param_name, nuint param_value_size, Span<T1> param_value, Span<nuint> param_value_size_ret)
+            /// <inheritdoc cref="GetLayerInfo(LayerInfo, nuint, void*, nuint*)"/>
+            public static unsafe int GetLayerInfo<T1>(LayerInfo param_name, nuint param_value_size, Span<T1> param_value, Span<nuint> param_value_size_ret)
                 where T1 : unmanaged
             {
                 int returnValue;
@@ -12743,8 +12743,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetLayerInfo(uint, nuint, void*, nuint*)"/>
-            public static unsafe int GetLayerInfo<T1>(uint param_name, nuint param_value_size, T1[] param_value, nuint[] param_value_size_ret)
+            /// <inheritdoc cref="GetLayerInfo(LayerInfo, nuint, void*, nuint*)"/>
+            public static unsafe int GetLayerInfo<T1>(LayerInfo param_name, nuint param_value_size, T1[] param_value, nuint[] param_value_size_ret)
                 where T1 : unmanaged
             {
                 int returnValue;
@@ -12757,8 +12757,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetLayerInfo(uint, nuint, void*, nuint*)"/>
-            public static unsafe int GetLayerInfo<T1>(uint param_name, nuint param_value_size, ref T1 param_value, ref nuint param_value_size_ret)
+            /// <inheritdoc cref="GetLayerInfo(LayerInfo, nuint, void*, nuint*)"/>
+            public static unsafe int GetLayerInfo<T1>(LayerInfo param_name, nuint param_value_size, ref T1 param_value, ref nuint param_value_size_ret)
                 where T1 : unmanaged
             {
                 int returnValue;
@@ -12851,13 +12851,13 @@ namespace OpenTK.Compute2.OpenCL
                 return returnValue;
             }
         }
-        public static unsafe partial class pocl
+        public static unsafe partial class POCL
         {
         }
-        public static unsafe partial class qcom
+        public static unsafe partial class QCOM
         {
-            /// <inheritdoc cref="GetDeviceImageInfoQCOM(IntPtr, nuint, nuint, cl_image_format*, uint, nuint, void*, nuint*)"/>
-            public static unsafe int GetDeviceImageInfoQCOM(IntPtr device, nuint image_width, nuint image_height, Span<cl_image_format> image_format, uint param_name, nuint param_value_size, IntPtr param_value, Span<nuint> param_value_size_ret)
+            /// <inheritdoc cref="GetDeviceImageInfoQCOM(IntPtr, nuint, nuint, cl_image_format*, ImagePitchInfoQcom, nuint, void*, nuint*)"/>
+            public static unsafe int GetDeviceImageInfoQCOM(IntPtr device, nuint image_width, nuint image_height, Span<cl_image_format> image_format, ImagePitchInfoQcom param_name, nuint param_value_size, IntPtr param_value, Span<nuint> param_value_size_ret)
             {
                 int returnValue;
                 fixed (nuint* param_value_size_ret_ptr = param_value_size_ret)
@@ -12870,8 +12870,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetDeviceImageInfoQCOM(IntPtr, nuint, nuint, cl_image_format*, uint, nuint, void*, nuint*)"/>
-            public static unsafe int GetDeviceImageInfoQCOM(IntPtr device, nuint image_width, nuint image_height, cl_image_format[] image_format, uint param_name, nuint param_value_size, IntPtr param_value, nuint[] param_value_size_ret)
+            /// <inheritdoc cref="GetDeviceImageInfoQCOM(IntPtr, nuint, nuint, cl_image_format*, ImagePitchInfoQcom, nuint, void*, nuint*)"/>
+            public static unsafe int GetDeviceImageInfoQCOM(IntPtr device, nuint image_width, nuint image_height, cl_image_format[] image_format, ImagePitchInfoQcom param_name, nuint param_value_size, IntPtr param_value, nuint[] param_value_size_ret)
             {
                 int returnValue;
                 fixed (nuint* param_value_size_ret_ptr = param_value_size_ret)
@@ -12884,8 +12884,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetDeviceImageInfoQCOM(IntPtr, nuint, nuint, cl_image_format*, uint, nuint, void*, nuint*)"/>
-            public static unsafe int GetDeviceImageInfoQCOM(IntPtr device, nuint image_width, nuint image_height, ref cl_image_format image_format, uint param_name, nuint param_value_size, IntPtr param_value, ref nuint param_value_size_ret)
+            /// <inheritdoc cref="GetDeviceImageInfoQCOM(IntPtr, nuint, nuint, cl_image_format*, ImagePitchInfoQcom, nuint, void*, nuint*)"/>
+            public static unsafe int GetDeviceImageInfoQCOM(IntPtr device, nuint image_width, nuint image_height, ref cl_image_format image_format, ImagePitchInfoQcom param_name, nuint param_value_size, IntPtr param_value, ref nuint param_value_size_ret)
             {
                 int returnValue;
                 fixed (cl_image_format* image_format_ptr = &image_format)
@@ -12896,8 +12896,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetDeviceImageInfoQCOM(IntPtr, nuint, nuint, cl_image_format*, uint, nuint, void*, nuint*)"/>
-            public static unsafe int GetDeviceImageInfoQCOM<T1>(IntPtr device, nuint image_width, nuint image_height, Span<cl_image_format> image_format, uint param_name, nuint param_value_size, Span<T1> param_value, Span<nuint> param_value_size_ret)
+            /// <inheritdoc cref="GetDeviceImageInfoQCOM(IntPtr, nuint, nuint, cl_image_format*, ImagePitchInfoQcom, nuint, void*, nuint*)"/>
+            public static unsafe int GetDeviceImageInfoQCOM<T1>(IntPtr device, nuint image_width, nuint image_height, Span<cl_image_format> image_format, ImagePitchInfoQcom param_name, nuint param_value_size, Span<T1> param_value, Span<nuint> param_value_size_ret)
                 where T1 : unmanaged
             {
                 int returnValue;
@@ -12913,8 +12913,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetDeviceImageInfoQCOM(IntPtr, nuint, nuint, cl_image_format*, uint, nuint, void*, nuint*)"/>
-            public static unsafe int GetDeviceImageInfoQCOM<T1>(IntPtr device, nuint image_width, nuint image_height, cl_image_format[] image_format, uint param_name, nuint param_value_size, T1[] param_value, nuint[] param_value_size_ret)
+            /// <inheritdoc cref="GetDeviceImageInfoQCOM(IntPtr, nuint, nuint, cl_image_format*, ImagePitchInfoQcom, nuint, void*, nuint*)"/>
+            public static unsafe int GetDeviceImageInfoQCOM<T1>(IntPtr device, nuint image_width, nuint image_height, cl_image_format[] image_format, ImagePitchInfoQcom param_name, nuint param_value_size, T1[] param_value, nuint[] param_value_size_ret)
                 where T1 : unmanaged
             {
                 int returnValue;
@@ -12930,8 +12930,8 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetDeviceImageInfoQCOM(IntPtr, nuint, nuint, cl_image_format*, uint, nuint, void*, nuint*)"/>
-            public static unsafe int GetDeviceImageInfoQCOM<T1>(IntPtr device, nuint image_width, nuint image_height, ref cl_image_format image_format, uint param_name, nuint param_value_size, ref T1 param_value, ref nuint param_value_size_ret)
+            /// <inheritdoc cref="GetDeviceImageInfoQCOM(IntPtr, nuint, nuint, cl_image_format*, ImagePitchInfoQcom, nuint, void*, nuint*)"/>
+            public static unsafe int GetDeviceImageInfoQCOM<T1>(IntPtr device, nuint image_width, nuint image_height, ref cl_image_format image_format, ImagePitchInfoQcom param_name, nuint param_value_size, ref T1 param_value, ref nuint param_value_size_ret)
                 where T1 : unmanaged
             {
                 int returnValue;

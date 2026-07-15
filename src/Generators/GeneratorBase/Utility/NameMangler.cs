@@ -235,7 +235,6 @@ namespace GeneratorBase.Utility
             return MangleCapsUnderscoreName(name);
         }
 
-        // FIXME: Add support for keeping abbreviations capitalized.
         private string MangleCapsUnderscoreName(string name)
         {
             var stringBuilder = new StringBuilder(name.Length);

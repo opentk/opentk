@@ -2804,13 +2804,13 @@ namespace OpenTK.Compute2.OpenCL
         /// <summary><b>[requires: cl_arm_import_memory]</b> </summary>
         /// <remarks>[originally: CL_IMPORT_TYPE_ARM]</remarks>
         ImportTypeArm = 16562,
-        /// <summary><b>[requires: cl_arm_import_memory]</b> </summary>
+        /// <summary><b>[requires: cl_arm_import_memory_host]</b> </summary>
         /// <remarks>[originally: CL_IMPORT_TYPE_HOST_ARM]</remarks>
         ImportTypeHostArm = 16563,
-        /// <summary><b>[requires: cl_arm_import_memory]</b> </summary>
+        /// <summary><b>[requires: cl_arm_import_memory_dma_buf]</b> </summary>
         /// <remarks>[originally: CL_IMPORT_TYPE_DMA_BUF_ARM]</remarks>
         ImportTypeDmaBufArm = 16564,
-        /// <summary><b>[requires: cl_arm_import_memory]</b> </summary>
+        /// <summary><b>[requires: cl_arm_import_memory_protected]</b> </summary>
         /// <remarks>[originally: CL_IMPORT_TYPE_PROTECTED_ARM]</remarks>
         ImportTypeProtectedArm = 16565,
         /// <summary><b>[requires: cl_arm_shared_virtual_memory]</b> </summary>
@@ -3017,12 +3017,12 @@ namespace OpenTK.Compute2.OpenCL
         /// <summary><b>[requires: cl_arm_job_slot_selection]</b> </summary>
         /// <remarks>[originally: CL_QUEUE_JOB_SLOT_ARM]</remarks>
         QueueJobSlotArm = 16865,
-        /// <summary><b>[requires: cl_arm_import_memory]</b> </summary>
+        /// <summary><b>[requires: cl_arm_import_memory_dma_buf]</b> </summary>
+        /// <remarks>[originally: CL_IMPORT_DMA_BUF_DATA_CONSISTENCY_WITH_HOST_ARM]</remarks>
+        ImportDmaBufDataConsistencyWithHostArm = 16866,
+        /// <summary><b>[requires: cl_arm_import_memory_android_hardware_buffer]</b> </summary>
         /// <remarks>[originally: CL_IMPORT_TYPE_ANDROID_HARDWARE_BUFFER_ARM]</remarks>
         ImportTypeAndroidHardwareBufferArm = 16866,
-        /// <summary><b>[requires: cl_arm_import_memory]</b> </summary>
-        /// <remarks>[originally: CL_IMPORT_DMA_BUF_DATA_CONSISTENCY_WITH_HOST_ARM]</remarks>
-        ImportDmaBufDataConsistencyWithHostArm = 16867,
         /// <summary><b>[requires: cl_arm_scheduling_controls]</b> </summary>
         /// <remarks>[originally: CL_DEVICE_SCHEDULING_CONTROLS_CAPABILITIES_ARM]</remarks>
         DeviceSchedulingControlsCapabilitiesArm = 16868,
@@ -3056,10 +3056,10 @@ namespace OpenTK.Compute2.OpenCL
         /// <summary><b>[requires: cl_arm_controlled_kernel_termination]</b> </summary>
         /// <remarks>[originally: CL_DEVICE_CONTROLLED_TERMINATION_CAPABILITIES_ARM]</remarks>
         DeviceControlledTerminationCapabilitiesArm = 16878,
-        /// <summary><b>[requires: cl_arm_import_memory]</b> </summary>
+        /// <summary><b>[requires: cl_arm_import_memory_android_hardware_buffer]</b> </summary>
         /// <remarks>[originally: CL_IMPORT_ANDROID_HARDWARE_BUFFER_PLANE_INDEX_ARM]</remarks>
         ImportAndroidHardwareBufferPlaneIndexArm = 16879,
-        /// <summary><b>[requires: cl_arm_import_memory]</b> </summary>
+        /// <summary><b>[requires: cl_arm_import_memory_android_hardware_buffer]</b> </summary>
         /// <remarks>[originally: CL_IMPORT_ANDROID_HARDWARE_BUFFER_LAYER_INDEX_ARM]</remarks>
         ImportAndroidHardwareBufferLayerIndexArm = 16880,
         /// <summary><b>[requires: cl_arm_scheduling_controls]</b> </summary>
@@ -3609,11 +3609,44 @@ namespace OpenTK.Compute2.OpenCL
         /// <remarks>[originally: CL_DEVICE_TYPE_ALL]</remarks>
         DeviceTypeAll = 4294967295,
     }
+    public enum AcceleratorInfoIntel : uint
+    {
+        /// <summary><b>[requires: cl_intel_accelerator]</b> </summary>
+        /// <remarks>[originally: CL_ACCELERATOR_DESCRIPTOR_INTEL]</remarks>
+        AcceleratorDescriptorIntel = 16528,
+        /// <summary><b>[requires: cl_intel_accelerator]</b> </summary>
+        /// <remarks>[originally: CL_ACCELERATOR_REFERENCE_COUNT_INTEL]</remarks>
+        AcceleratorReferenceCountIntel = 16529,
+        /// <summary><b>[requires: cl_intel_accelerator]</b> </summary>
+        /// <remarks>[originally: CL_ACCELERATOR_CONTEXT_INTEL]</remarks>
+        AcceleratorContextIntel = 16530,
+        /// <summary><b>[requires: cl_intel_accelerator]</b> </summary>
+        /// <remarks>[originally: CL_ACCELERATOR_TYPE_INTEL]</remarks>
+        AcceleratorTypeIntel = 16531,
+    }
     public enum AcceleratorTypeIntel : uint
     {
         /// <summary><b>[requires: cl_intel_motion_estimation]</b> </summary>
         /// <remarks>[originally: CL_ACCELERATOR_TYPE_MOTION_ESTIMATION_INTEL]</remarks>
         AcceleratorTypeMotionEstimationIntel = 0,
+    }
+    public enum AddressingMode : uint
+    {
+        /// <summary><b>[requires: v1.0]</b> </summary>
+        /// <remarks>[originally: CL_ADDRESS_NONE]</remarks>
+        AddressNone = 4400,
+        /// <summary><b>[requires: v1.0]</b> </summary>
+        /// <remarks>[originally: CL_ADDRESS_CLAMP_TO_EDGE]</remarks>
+        AddressClampToEdge = 4401,
+        /// <summary><b>[requires: v1.0]</b> </summary>
+        /// <remarks>[originally: CL_ADDRESS_CLAMP]</remarks>
+        AddressClamp = 4402,
+        /// <summary><b>[requires: v1.0]</b> </summary>
+        /// <remarks>[originally: CL_ADDRESS_REPEAT]</remarks>
+        AddressRepeat = 4403,
+        /// <summary><b>[requires: v1.1]</b> </summary>
+        /// <remarks>[originally: CL_ADDRESS_MIRRORED_REPEAT]</remarks>
+        AddressMirroredRepeat = 4404,
     }
     public enum AffinityDomainExt : int
     {
@@ -3651,6 +3684,12 @@ namespace OpenTK.Compute2.OpenCL
         /// <remarks>[originally: CL_TRUE]</remarks>
         True = 1,
     }
+    public enum BufferCreateType : uint
+    {
+        /// <summary><b>[requires: v1.1]</b> </summary>
+        /// <remarks>[originally: CL_BUFFER_CREATE_TYPE_REGION]</remarks>
+        BufferCreateTypeRegion = 4640,
+    }
     public enum BuildStatus : int
     {
         /// <summary><b>[requires: v1.0]</b> </summary>
@@ -3666,6 +3705,171 @@ namespace OpenTK.Compute2.OpenCL
         /// <remarks>[originally: CL_BUILD_NONE]</remarks>
         BuildNone = -1,
     }
+    public enum ChannelOrder : uint
+    {
+        /// <summary><b>[requires: v1.0]</b> </summary>
+        /// <remarks>[originally: CL_R]</remarks>
+        R = 4272,
+        /// <summary><b>[requires: v1.0]</b> </summary>
+        /// <remarks>[originally: CL_A]</remarks>
+        A = 4273,
+        /// <summary><b>[requires: v1.0]</b> </summary>
+        /// <remarks>[originally: CL_RG]</remarks>
+        Rg = 4274,
+        /// <summary><b>[requires: v1.0]</b> </summary>
+        /// <remarks>[originally: CL_RA]</remarks>
+        Ra = 4275,
+        /// <summary><b>[requires: v1.0]</b> </summary>
+        /// <remarks>[originally: CL_RGB]</remarks>
+        Rgb = 4276,
+        /// <summary><b>[requires: v1.0]</b> </summary>
+        /// <remarks>[originally: CL_RGBA]</remarks>
+        Rgba = 4277,
+        /// <summary><b>[requires: v1.0]</b> </summary>
+        /// <remarks>[originally: CL_BGRA]</remarks>
+        Bgra = 4278,
+        /// <summary><b>[requires: v1.0]</b> </summary>
+        /// <remarks>[originally: CL_ARGB]</remarks>
+        Argb = 4279,
+        /// <summary><b>[requires: v1.0]</b> </summary>
+        /// <remarks>[originally: CL_INTENSITY]</remarks>
+        Intensity = 4280,
+        /// <summary><b>[requires: v1.0]</b> </summary>
+        /// <remarks>[originally: CL_LUMINANCE]</remarks>
+        Luminance = 4281,
+        /// <summary><b>[requires: v1.1]</b> </summary>
+        /// <remarks>[originally: CL_Rx]</remarks>
+        Rx = 4282,
+        /// <summary><b>[requires: v1.1]</b> </summary>
+        /// <remarks>[originally: CL_RGx]</remarks>
+        Rgx = 4283,
+        /// <summary><b>[requires: v1.1]</b> </summary>
+        /// <remarks>[originally: CL_RGBx]</remarks>
+        Rgbx = 4284,
+        /// <summary><b>[requires: v2.0 | cl_khr_depth_images]</b> </summary>
+        /// <remarks>[originally: CL_DEPTH]</remarks>
+        Depth = 4285,
+        /// <summary><b>[requires: cl_khr_gl_depth_images]</b> </summary>
+        /// <remarks>[originally: CL_DEPTH_STENCIL]</remarks>
+        DepthStencil = 4286,
+        /// <summary><b>[requires: v2.0]</b> </summary>
+        /// <remarks>[originally: CL_sRGB]</remarks>
+        Srgb = 4287,
+        /// <summary><b>[requires: v2.0]</b> </summary>
+        /// <remarks>[originally: CL_sRGBx]</remarks>
+        Srgbx = 4288,
+        /// <summary><b>[requires: v2.0]</b> </summary>
+        /// <remarks>[originally: CL_sRGBA]</remarks>
+        Srgba = 4289,
+        /// <summary><b>[requires: v2.0]</b> </summary>
+        /// <remarks>[originally: CL_sBGRA]</remarks>
+        Sbgra = 4290,
+        /// <summary><b>[requires: v2.0]</b> </summary>
+        /// <remarks>[originally: CL_ABGR]</remarks>
+        Abgr = 4291,
+        /// <summary><b>[requires: cl_intel_packed_yuv]</b> </summary>
+        /// <remarks>[originally: CL_YUYV_INTEL]</remarks>
+        YuyvIntel = 16502,
+        /// <summary><b>[requires: cl_intel_packed_yuv]</b> </summary>
+        /// <remarks>[originally: CL_UYVY_INTEL]</remarks>
+        UyvyIntel = 16503,
+        /// <summary><b>[requires: cl_intel_packed_yuv]</b> </summary>
+        /// <remarks>[originally: CL_YVYU_INTEL]</remarks>
+        YvyuIntel = 16504,
+        /// <summary><b>[requires: cl_intel_packed_yuv]</b> </summary>
+        /// <remarks>[originally: CL_VYUY_INTEL]</remarks>
+        VyuyIntel = 16505,
+        /// <summary><b>[requires: cl_img_yuv_image]</b> </summary>
+        /// <remarks>[originally: CL_NV21_IMG]</remarks>
+        Nv21Img = 16592,
+        /// <summary><b>[requires: cl_img_yuv_image]</b> </summary>
+        /// <remarks>[originally: CL_YV12_IMG]</remarks>
+        Yv12Img = 16593,
+        /// <summary><b>[requires: cl_intel_planar_yuv]</b> </summary>
+        /// <remarks>[originally: CL_NV12_INTEL]</remarks>
+        Nv12Intel = 16654,
+    }
+    public enum ChannelType : uint
+    {
+        /// <summary><b>[requires: v1.0]</b> </summary>
+        /// <remarks>[originally: CL_SNORM_INT8]</remarks>
+        SnormInt8 = 4304,
+        /// <summary><b>[requires: v1.0]</b> </summary>
+        /// <remarks>[originally: CL_SNORM_INT16]</remarks>
+        SnormInt16 = 4305,
+        /// <summary><b>[requires: v1.0]</b> </summary>
+        /// <remarks>[originally: CL_UNORM_INT8]</remarks>
+        UnormInt8 = 4306,
+        /// <summary><b>[requires: v1.0]</b> </summary>
+        /// <remarks>[originally: CL_UNORM_INT16]</remarks>
+        UnormInt16 = 4307,
+        /// <summary><b>[requires: v1.0]</b> </summary>
+        /// <remarks>[originally: CL_UNORM_SHORT_565]</remarks>
+        UnormShort565 = 4308,
+        /// <summary><b>[requires: v1.0]</b> </summary>
+        /// <remarks>[originally: CL_UNORM_SHORT_555]</remarks>
+        UnormShort555 = 4309,
+        /// <summary><b>[requires: v1.0]</b> </summary>
+        /// <remarks>[originally: CL_UNORM_INT_101010]</remarks>
+        UnormInt101010 = 4310,
+        /// <summary><b>[requires: v1.0]</b> </summary>
+        /// <remarks>[originally: CL_SIGNED_INT8]</remarks>
+        SignedInt8 = 4311,
+        /// <summary><b>[requires: v1.0]</b> </summary>
+        /// <remarks>[originally: CL_SIGNED_INT16]</remarks>
+        SignedInt16 = 4312,
+        /// <summary><b>[requires: v1.0]</b> </summary>
+        /// <remarks>[originally: CL_SIGNED_INT32]</remarks>
+        SignedInt32 = 4313,
+        /// <summary><b>[requires: v1.0]</b> </summary>
+        /// <remarks>[originally: CL_UNSIGNED_INT8]</remarks>
+        UnsignedInt8 = 4314,
+        /// <summary><b>[requires: v1.0]</b> </summary>
+        /// <remarks>[originally: CL_UNSIGNED_INT16]</remarks>
+        UnsignedInt16 = 4315,
+        /// <summary><b>[requires: v1.0]</b> </summary>
+        /// <remarks>[originally: CL_UNSIGNED_INT32]</remarks>
+        UnsignedInt32 = 4316,
+        /// <summary><b>[requires: v1.0]</b> </summary>
+        /// <remarks>[originally: CL_HALF_FLOAT]</remarks>
+        HalfFloat = 4317,
+        /// <summary><b>[requires: v1.0]</b> </summary>
+        /// <remarks>[originally: CL_FLOAT]</remarks>
+        Float = 4318,
+        /// <summary><b>[requires: cl_khr_gl_depth_images]</b> </summary>
+        /// <remarks>[originally: CL_UNORM_INT24]</remarks>
+        UnormInt24 = 4319,
+        /// <summary><b>[requires: v2.1]</b> </summary>
+        /// <remarks>[originally: CL_UNORM_INT_101010_2]</remarks>
+        UnormInt1010102 = 4320,
+        /// <summary><b>[requires: cl_ext_image_unsigned_10x6_12x4_14x2]</b> </summary>
+        /// <remarks>[originally: CL_UNORM_INT10X6_EXT]</remarks>
+        UnormInt10x6Ext = 4321,
+        /// <summary><b>[requires: cl_ext_image_raw10_raw12]</b> </summary>
+        /// <remarks>[originally: CL_UNSIGNED_INT_RAW10_EXT]</remarks>
+        UnsignedIntRaw10Ext = 4323,
+        /// <summary><b>[requires: cl_ext_image_raw10_raw12]</b> </summary>
+        /// <remarks>[originally: CL_UNSIGNED_INT_RAW12_EXT]</remarks>
+        UnsignedIntRaw12Ext = 4324,
+        /// <summary><b>[requires: cl_ext_image_unorm_int_2_101010]</b> </summary>
+        /// <remarks>[originally: CL_UNORM_INT_2_101010_EXT]</remarks>
+        UnormInt2101010Ext = 4325,
+        /// <summary><b>[requires: cl_ext_image_unsigned_10x6_12x4_14x2]</b> </summary>
+        /// <remarks>[originally: CL_UNSIGNED_INT10X6_EXT]</remarks>
+        UnsignedInt10x6Ext = 4326,
+        /// <summary><b>[requires: cl_ext_image_unsigned_10x6_12x4_14x2]</b> </summary>
+        /// <remarks>[originally: CL_UNSIGNED_INT12X4_EXT]</remarks>
+        UnsignedInt12x4Ext = 4327,
+        /// <summary><b>[requires: cl_ext_image_unsigned_10x6_12x4_14x2]</b> </summary>
+        /// <remarks>[originally: CL_UNSIGNED_INT14X2_EXT]</remarks>
+        UnsignedInt14x2Ext = 4328,
+        /// <summary><b>[requires: cl_ext_image_unsigned_10x6_12x4_14x2]</b> </summary>
+        /// <remarks>[originally: CL_UNORM_INT12X4_EXT]</remarks>
+        UnormInt12x4Ext = 4329,
+        /// <summary><b>[requires: cl_ext_image_unsigned_10x6_12x4_14x2]</b> </summary>
+        /// <remarks>[originally: CL_UNORM_INT14X2_EXT]</remarks>
+        UnormInt14x2Ext = 4330,
+    }
     [Flags]
     public enum CommandBufferFlagsKhr : ulong
     {
@@ -3678,6 +3882,36 @@ namespace OpenTK.Compute2.OpenCL
         /// <summary><b>[requires: cl_khr_command_buffer_multi_device]</b> </summary>
         /// <remarks>[originally: CL_COMMAND_BUFFER_DEVICE_SIDE_SYNC_KHR]</remarks>
         CommandBufferDeviceSideSyncKhr = 4,
+    }
+    public enum CommandBufferInfoKhr : uint
+    {
+        /// <summary><b>[requires: cl_khr_command_buffer]</b> </summary>
+        /// <remarks>[originally: CL_COMMAND_BUFFER_QUEUES_KHR]</remarks>
+        CommandBufferQueuesKhr = 4756,
+        /// <summary><b>[requires: cl_khr_command_buffer]</b> </summary>
+        /// <remarks>[originally: CL_COMMAND_BUFFER_NUM_QUEUES_KHR]</remarks>
+        CommandBufferNumQueuesKhr = 4757,
+        /// <summary><b>[requires: cl_khr_command_buffer]</b> </summary>
+        /// <remarks>[originally: CL_COMMAND_BUFFER_REFERENCE_COUNT_KHR]</remarks>
+        CommandBufferReferenceCountKhr = 4758,
+        /// <summary><b>[requires: cl_khr_command_buffer]</b> </summary>
+        /// <remarks>[originally: CL_COMMAND_BUFFER_STATE_KHR]</remarks>
+        CommandBufferStateKhr = 4759,
+        /// <summary><b>[requires: cl_khr_command_buffer]</b> </summary>
+        /// <remarks>[originally: CL_COMMAND_BUFFER_PROPERTIES_ARRAY_KHR]</remarks>
+        CommandBufferPropertiesArrayKhr = 4760,
+        /// <summary><b>[requires: cl_khr_command_buffer]</b> </summary>
+        /// <remarks>[originally: CL_COMMAND_BUFFER_CONTEXT_KHR]</remarks>
+        CommandBufferContextKhr = 4761,
+    }
+    public enum CommandBufferPropertiesKhr : ulong
+    {
+        /// <summary><b>[requires: cl_khr_command_buffer]</b> </summary>
+        /// <remarks>[originally: CL_COMMAND_BUFFER_FLAGS_KHR]</remarks>
+        CommandBufferFlagsKhr = 4755,
+        /// <summary><b>[requires: cl_khr_command_buffer_mutable_dispatch]</b> </summary>
+        /// <remarks>[originally: CL_COMMAND_BUFFER_MUTABLE_DISPATCH_ASSERTS_KHR]</remarks>
+        CommandBufferMutableDispatchAssertsKhr = 4791,
     }
     public enum CommandBufferStateKhr : uint
     {
@@ -3711,6 +3945,15 @@ namespace OpenTK.Compute2.OpenCL
         /// <summary><b>[requires: v1.0]</b> </summary>
         /// <remarks>[originally: CL_QUEUED]</remarks>
         Queued = 3,
+    }
+    public enum CommandPropertiesKhr : ulong
+    {
+        /// <summary><b>[requires: cl_khr_command_buffer_mutable_dispatch]</b> </summary>
+        /// <remarks>[originally: CL_MUTABLE_DISPATCH_UPDATABLE_FIELDS_KHR]</remarks>
+        MutableDispatchUpdatableFieldsKhr = 4785,
+        /// <summary><b>[requires: cl_khr_command_buffer_mutable_dispatch]</b> </summary>
+        /// <remarks>[originally: CL_MUTABLE_DISPATCH_ASSERTS_KHR]</remarks>
+        MutableDispatchAssertsKhr = 4792,
     }
     [Flags]
     public enum CommandQueueCapabilitiesIntel : ulong
@@ -3764,6 +4007,42 @@ namespace OpenTK.Compute2.OpenCL
         /// <remarks>[originally: CL_QUEUE_CAPABILITY_KERNEL_INTEL]</remarks>
         QueueCapabilityKernelIntel = 67108864,
     }
+    public enum CommandQueueInfo : uint
+    {
+        /// <summary><b>[requires: v1.0]</b> </summary>
+        /// <remarks>[originally: CL_QUEUE_CONTEXT]</remarks>
+        QueueContext = 4240,
+        /// <summary><b>[requires: v1.0]</b> </summary>
+        /// <remarks>[originally: CL_QUEUE_DEVICE]</remarks>
+        QueueDevice = 4241,
+        /// <summary><b>[requires: v1.0]</b> </summary>
+        /// <remarks>[originally: CL_QUEUE_REFERENCE_COUNT]</remarks>
+        QueueReferenceCount = 4242,
+        /// <summary><b>[requires: v1.0]</b> </summary>
+        /// <remarks>[originally: CL_QUEUE_PROPERTIES]</remarks>
+        QueueProperties = 4243,
+        /// <summary><b>[requires: v2.0]</b> </summary>
+        /// <remarks>[originally: CL_QUEUE_SIZE]</remarks>
+        QueueSize = 4244,
+        /// <summary><b>[requires: v2.1]</b> </summary>
+        /// <remarks>[originally: CL_QUEUE_DEVICE_DEFAULT]</remarks>
+        QueueDeviceDefault = 4245,
+        /// <summary><b>[requires: cl_khr_priority_hints]</b> </summary>
+        /// <remarks>[originally: CL_QUEUE_PRIORITY_KHR]</remarks>
+        QueuePriorityKhr = 4246,
+        /// <summary><b>[requires: cl_khr_throttle_hints]</b> </summary>
+        /// <remarks>[originally: CL_QUEUE_THROTTLE_KHR]</remarks>
+        QueueThrottleKhr = 4247,
+        /// <summary><b>[requires: v3.0]</b> </summary>
+        /// <remarks>[originally: CL_QUEUE_PROPERTIES_ARRAY]</remarks>
+        QueuePropertiesArray = 4248,
+        /// <summary><b>[requires: cl_intel_command_queue_families]</b> </summary>
+        /// <remarks>[originally: CL_QUEUE_FAMILY_INTEL]</remarks>
+        QueueFamilyIntel = 16780,
+        /// <summary><b>[requires: cl_intel_command_queue_families]</b> </summary>
+        /// <remarks>[originally: CL_QUEUE_INDEX_INTEL]</remarks>
+        QueueIndexIntel = 16781,
+    }
     [Flags]
     public enum CommandQueueProperties : ulong
     {
@@ -3801,6 +4080,231 @@ namespace OpenTK.Compute2.OpenCL
         /// <remarks>[originally: CL_COMMAND_TERMINATION_ERROR_ARM]</remarks>
         CommandTerminationErrorArm = 3,
     }
+    public enum CommandType : uint
+    {
+        /// <summary><b>[requires: v1.0]</b> </summary>
+        /// <remarks>[originally: CL_COMMAND_NDRANGE_KERNEL]</remarks>
+        CommandNdrangeKernel = 4592,
+        /// <summary><b>[requires: v1.0]</b> </summary>
+        /// <remarks>[originally: CL_COMMAND_TASK]</remarks>
+        CommandTask = 4593,
+        /// <summary><b>[requires: v1.0]</b> </summary>
+        /// <remarks>[originally: CL_COMMAND_NATIVE_KERNEL]</remarks>
+        CommandNativeKernel = 4594,
+        /// <summary><b>[requires: v1.0]</b> </summary>
+        /// <remarks>[originally: CL_COMMAND_READ_BUFFER]</remarks>
+        CommandReadBuffer = 4595,
+        /// <summary><b>[requires: v1.0]</b> </summary>
+        /// <remarks>[originally: CL_COMMAND_WRITE_BUFFER]</remarks>
+        CommandWriteBuffer = 4596,
+        /// <summary><b>[requires: v1.0]</b> </summary>
+        /// <remarks>[originally: CL_COMMAND_COPY_BUFFER]</remarks>
+        CommandCopyBuffer = 4597,
+        /// <summary><b>[requires: v1.0]</b> </summary>
+        /// <remarks>[originally: CL_COMMAND_READ_IMAGE]</remarks>
+        CommandReadImage = 4598,
+        /// <summary><b>[requires: v1.0]</b> </summary>
+        /// <remarks>[originally: CL_COMMAND_WRITE_IMAGE]</remarks>
+        CommandWriteImage = 4599,
+        /// <summary><b>[requires: v1.0]</b> </summary>
+        /// <remarks>[originally: CL_COMMAND_COPY_IMAGE]</remarks>
+        CommandCopyImage = 4600,
+        /// <summary><b>[requires: v1.0]</b> </summary>
+        /// <remarks>[originally: CL_COMMAND_COPY_IMAGE_TO_BUFFER]</remarks>
+        CommandCopyImageToBuffer = 4601,
+        /// <summary><b>[requires: v1.0]</b> </summary>
+        /// <remarks>[originally: CL_COMMAND_COPY_BUFFER_TO_IMAGE]</remarks>
+        CommandCopyBufferToImage = 4602,
+        /// <summary><b>[requires: v1.0]</b> </summary>
+        /// <remarks>[originally: CL_COMMAND_MAP_BUFFER]</remarks>
+        CommandMapBuffer = 4603,
+        /// <summary><b>[requires: v1.0]</b> </summary>
+        /// <remarks>[originally: CL_COMMAND_MAP_IMAGE]</remarks>
+        CommandMapImage = 4604,
+        /// <summary><b>[requires: v1.0]</b> </summary>
+        /// <remarks>[originally: CL_COMMAND_UNMAP_MEM_OBJECT]</remarks>
+        CommandUnmapMemObject = 4605,
+        /// <summary><b>[requires: v1.0]</b> </summary>
+        /// <remarks>[originally: CL_COMMAND_MARKER]</remarks>
+        CommandMarker = 4606,
+        /// <summary><b>[requires: v1.0]</b> </summary>
+        /// <remarks>[originally: CL_COMMAND_ACQUIRE_GL_OBJECTS]</remarks>
+        CommandAcquireGlObjects = 4607,
+        /// <summary><b>[requires: v1.0]</b> </summary>
+        /// <remarks>[originally: CL_COMMAND_RELEASE_GL_OBJECTS]</remarks>
+        CommandReleaseGlObjects = 4608,
+        /// <summary><b>[requires: v1.1]</b> </summary>
+        /// <remarks>[originally: CL_COMMAND_READ_BUFFER_RECT]</remarks>
+        CommandReadBufferRect = 4609,
+        /// <summary><b>[requires: v1.1]</b> </summary>
+        /// <remarks>[originally: CL_COMMAND_WRITE_BUFFER_RECT]</remarks>
+        CommandWriteBufferRect = 4610,
+        /// <summary><b>[requires: v1.1]</b> </summary>
+        /// <remarks>[originally: CL_COMMAND_COPY_BUFFER_RECT]</remarks>
+        CommandCopyBufferRect = 4611,
+        /// <summary><b>[requires: v1.1]</b> </summary>
+        /// <remarks>[originally: CL_COMMAND_USER]</remarks>
+        CommandUser = 4612,
+        /// <summary><b>[requires: v1.2]</b> </summary>
+        /// <remarks>[originally: CL_COMMAND_BARRIER]</remarks>
+        CommandBarrier = 4613,
+        /// <summary><b>[requires: v1.2]</b> </summary>
+        /// <remarks>[originally: CL_COMMAND_MIGRATE_MEM_OBJECTS]</remarks>
+        CommandMigrateMemObjects = 4614,
+        /// <summary><b>[requires: v1.2]</b> </summary>
+        /// <remarks>[originally: CL_COMMAND_FILL_BUFFER]</remarks>
+        CommandFillBuffer = 4615,
+        /// <summary><b>[requires: v1.2]</b> </summary>
+        /// <remarks>[originally: CL_COMMAND_FILL_IMAGE]</remarks>
+        CommandFillImage = 4616,
+        /// <summary><b>[requires: v2.0]</b> </summary>
+        /// <remarks>[originally: CL_COMMAND_SVM_FREE]</remarks>
+        CommandSvmFree = 4617,
+        /// <summary><b>[requires: v2.0]</b> </summary>
+        /// <remarks>[originally: CL_COMMAND_SVM_MEMCPY]</remarks>
+        CommandSvmMemcpy = 4618,
+        /// <summary><b>[requires: v2.0]</b> </summary>
+        /// <remarks>[originally: CL_COMMAND_SVM_MEMFILL]</remarks>
+        CommandSvmMemfill = 4619,
+        /// <summary><b>[requires: v2.0]</b> </summary>
+        /// <remarks>[originally: CL_COMMAND_SVM_MAP]</remarks>
+        CommandSvmMap = 4620,
+        /// <summary><b>[requires: v2.0]</b> </summary>
+        /// <remarks>[originally: CL_COMMAND_SVM_UNMAP]</remarks>
+        CommandSvmUnmap = 4621,
+        /// <summary><b>[requires: v3.0]</b> </summary>
+        /// <remarks>[originally: CL_COMMAND_SVM_MIGRATE_MEM]</remarks>
+        CommandSvmMigrateMem = 4622,
+        /// <summary><b>[requires: cl_khr_command_buffer]</b> </summary>
+        /// <remarks>[originally: CL_COMMAND_COMMAND_BUFFER_KHR]</remarks>
+        CommandCommandBufferKhr = 4776,
+        /// <summary><b>[requires: cl_khr_gl_event]</b> </summary>
+        /// <remarks>[originally: CL_COMMAND_GL_FENCE_SYNC_OBJECT_KHR]</remarks>
+        CommandGlFenceSyncObjectKhr = 8205,
+        /// <summary><b>[requires: cl_khr_dx9_media_sharing]</b> </summary>
+        /// <remarks>[originally: CL_COMMAND_ACQUIRE_DX9_MEDIA_SURFACES_KHR]</remarks>
+        CommandAcquireDx9MediaSurfacesKhr = 8235,
+        /// <summary><b>[requires: cl_khr_dx9_media_sharing]</b> </summary>
+        /// <remarks>[originally: CL_COMMAND_RELEASE_DX9_MEDIA_SURFACES_KHR]</remarks>
+        CommandReleaseDx9MediaSurfacesKhr = 8236,
+        /// <summary><b>[requires: cl_khr_egl_image]</b> </summary>
+        /// <remarks>[originally: CL_COMMAND_ACQUIRE_EGL_OBJECTS_KHR]</remarks>
+        CommandAcquireEglObjectsKhr = 8237,
+        /// <summary><b>[requires: cl_khr_egl_image]</b> </summary>
+        /// <remarks>[originally: CL_COMMAND_RELEASE_EGL_OBJECTS_KHR]</remarks>
+        CommandReleaseEglObjectsKhr = 8238,
+        /// <summary><b>[requires: cl_khr_egl_image]</b> </summary>
+        /// <remarks>[originally: CL_COMMAND_EGL_FENCE_SYNC_OBJECT_KHR]</remarks>
+        CommandEglFenceSyncObjectKhr = 8239,
+        /// <summary><b>[requires: cl_khr_semaphore]</b> </summary>
+        /// <remarks>[originally: CL_COMMAND_SEMAPHORE_WAIT_KHR]</remarks>
+        CommandSemaphoreWaitKhr = 8258,
+        /// <summary><b>[requires: cl_khr_semaphore]</b> </summary>
+        /// <remarks>[originally: CL_COMMAND_SEMAPHORE_SIGNAL_KHR]</remarks>
+        CommandSemaphoreSignalKhr = 8259,
+        /// <summary><b>[requires: cl_khr_external_memory]</b> </summary>
+        /// <remarks>[originally: CL_COMMAND_ACQUIRE_EXTERNAL_MEM_OBJECTS_KHR]</remarks>
+        CommandAcquireExternalMemObjectsKhr = 8263,
+        /// <summary><b>[requires: cl_khr_external_memory]</b> </summary>
+        /// <remarks>[originally: CL_COMMAND_RELEASE_EXTERNAL_MEM_OBJECTS_KHR]</remarks>
+        CommandReleaseExternalMemObjectsKhr = 8264,
+        /// <summary><b>[requires: cl_khr_d3d10_sharing]</b> </summary>
+        /// <remarks>[originally: CL_COMMAND_ACQUIRE_D3D10_OBJECTS_KHR]</remarks>
+        CommandAcquireD3D10ObjectsKhr = 16407,
+        /// <summary><b>[requires: cl_khr_d3d10_sharing]</b> </summary>
+        /// <remarks>[originally: CL_COMMAND_RELEASE_D3D10_OBJECTS_KHR]</remarks>
+        CommandReleaseD3D10ObjectsKhr = 16408,
+        /// <summary><b>[requires: cl_khr_d3d11_sharing]</b> </summary>
+        /// <remarks>[originally: CL_COMMAND_ACQUIRE_D3D11_OBJECTS_KHR]</remarks>
+        CommandAcquireD3D11ObjectsKhr = 16416,
+        /// <summary><b>[requires: cl_khr_d3d11_sharing]</b> </summary>
+        /// <remarks>[originally: CL_COMMAND_RELEASE_D3D11_OBJECTS_KHR]</remarks>
+        CommandReleaseD3D11ObjectsKhr = 16417,
+        /// <summary><b>[requires: cl_ext_migrate_memobject]</b> </summary>
+        /// <remarks>[originally: CL_COMMAND_MIGRATE_MEM_OBJECT_EXT]</remarks>
+        CommandMigrateMemObjectExt = 16448,
+        /// <summary><b>[requires: cl_intel_va_api_media_sharing]</b> </summary>
+        /// <remarks>[originally: CL_COMMAND_ACQUIRE_VA_API_MEDIA_SURFACES_INTEL]</remarks>
+        CommandAcquireVaApiMediaSurfacesIntel = 16538,
+        /// <summary><b>[requires: cl_intel_va_api_media_sharing]</b> </summary>
+        /// <remarks>[originally: CL_COMMAND_RELEASE_VA_API_MEDIA_SURFACES_INTEL]</remarks>
+        CommandReleaseVaApiMediaSurfacesIntel = 16539,
+        /// <summary><b>[requires: cl_arm_shared_virtual_memory]</b> </summary>
+        /// <remarks>[originally: CL_COMMAND_SVM_FREE_ARM]</remarks>
+        CommandSvmFreeArm = 16570,
+        /// <summary><b>[requires: cl_arm_shared_virtual_memory]</b> </summary>
+        /// <remarks>[originally: CL_COMMAND_SVM_MEMCPY_ARM]</remarks>
+        CommandSvmMemcpyArm = 16571,
+        /// <summary><b>[requires: cl_arm_shared_virtual_memory]</b> </summary>
+        /// <remarks>[originally: CL_COMMAND_SVM_MEMFILL_ARM]</remarks>
+        CommandSvmMemfillArm = 16572,
+        /// <summary><b>[requires: cl_arm_shared_virtual_memory]</b> </summary>
+        /// <remarks>[originally: CL_COMMAND_SVM_MAP_ARM]</remarks>
+        CommandSvmMapArm = 16573,
+        /// <summary><b>[requires: cl_arm_shared_virtual_memory]</b> </summary>
+        /// <remarks>[originally: CL_COMMAND_SVM_UNMAP_ARM]</remarks>
+        CommandSvmUnmapArm = 16574,
+        /// <summary><b>[requires: cl_img_use_gralloc_ptr]</b> </summary>
+        /// <remarks>[originally: CL_COMMAND_ACQUIRE_GRALLOC_OBJECTS_IMG]</remarks>
+        CommandAcquireGrallocObjectsImg = 16594,
+        /// <summary><b>[requires: cl_img_use_gralloc_ptr]</b> </summary>
+        /// <remarks>[originally: CL_COMMAND_RELEASE_GRALLOC_OBJECTS_IMG]</remarks>
+        CommandReleaseGrallocObjectsImg = 16595,
+        /// <summary><b>[requires: cl_img_generate_mipmap]</b> </summary>
+        /// <remarks>[originally: CL_COMMAND_GENERATE_MIPMAP_IMG]</remarks>
+        CommandGenerateMipmapImg = 16598,
+        /// <summary><b>[requires: cl_intel_unified_shared_memory]</b> </summary>
+        /// <remarks>[originally: CL_COMMAND_MEMFILL_INTEL]</remarks>
+        CommandMemfillIntel = 16900,
+        /// <summary><b>[requires: cl_intel_unified_shared_memory]</b> </summary>
+        /// <remarks>[originally: CL_COMMAND_MEMCPY_INTEL]</remarks>
+        CommandMemcpyIntel = 16901,
+        /// <summary><b>[requires: cl_intel_unified_shared_memory]</b> </summary>
+        /// <remarks>[originally: CL_COMMAND_MIGRATEMEM_INTEL]</remarks>
+        CommandMigratememIntel = 16902,
+        /// <summary><b>[requires: cl_intel_unified_shared_memory]</b> </summary>
+        /// <remarks>[originally: CL_COMMAND_MEMADVISE_INTEL]</remarks>
+        CommandMemadviseIntel = 16903,
+        /// <summary><b>[requires: cl_intel_program_scope_host_pipe]</b> </summary>
+        /// <remarks>[originally: CL_COMMAND_READ_HOST_PIPE_INTEL]</remarks>
+        CommandReadHostPipeIntel = 16916,
+        /// <summary><b>[requires: cl_intel_program_scope_host_pipe]</b> </summary>
+        /// <remarks>[originally: CL_COMMAND_WRITE_HOST_PIPE_INTEL]</remarks>
+        CommandWriteHostPipeIntel = 16917,
+    }
+    public enum ContextInfo : uint
+    {
+        /// <summary><b>[requires: v1.0]</b> </summary>
+        /// <remarks>[originally: CL_CONTEXT_REFERENCE_COUNT]</remarks>
+        ContextReferenceCount = 4224,
+        /// <summary><b>[requires: v1.0]</b> </summary>
+        /// <remarks>[originally: CL_CONTEXT_DEVICES]</remarks>
+        ContextDevices = 4225,
+        /// <summary><b>[requires: v1.0]</b> </summary>
+        /// <remarks>[originally: CL_CONTEXT_PROPERTIES]</remarks>
+        ContextProperties = 4226,
+        /// <summary><b>[requires: v1.1]</b> </summary>
+        /// <remarks>[originally: CL_CONTEXT_NUM_DEVICES]</remarks>
+        ContextNumDevices = 4227,
+        /// <summary><b>[requires: cl_khr_dx9_media_sharing]</b> </summary>
+        /// <remarks>[originally: CL_CONTEXT_ADAPTER_D3D9_KHR]</remarks>
+        ContextAdapterD3D9Khr = 8229,
+        /// <summary><b>[requires: cl_khr_dx9_media_sharing]</b> </summary>
+        /// <remarks>[originally: CL_CONTEXT_ADAPTER_D3D9EX_KHR]</remarks>
+        ContextAdapterD3D9exKhr = 8230,
+        /// <summary><b>[requires: cl_khr_dx9_media_sharing]</b> </summary>
+        /// <remarks>[originally: CL_CONTEXT_ADAPTER_DXVA_KHR]</remarks>
+        ContextAdapterDxvaKhr = 8231,
+        /// <summary><b>[requires: cl_intel_dx9_media_sharing]</b> </summary>
+        /// <remarks>[originally: CL_CONTEXT_D3D9_DEVICE_INTEL]</remarks>
+        ContextD3D9DeviceIntel = 16422,
+        /// <summary><b>[requires: cl_khr_d3d10_sharing]</b> </summary>
+        /// <remarks>[originally: CL_CONTEXT_D3D10_PREFER_SHARED_RESOURCES_KHR]</remarks>
+        ContextD3D10PreferSharedResourcesKhr = 16428,
+        /// <summary><b>[requires: cl_khr_d3d11_sharing]</b> </summary>
+        /// <remarks>[originally: CL_CONTEXT_D3D11_PREFER_SHARED_RESOURCES_KHR]</remarks>
+        ContextD3D11PreferSharedResourcesKhr = 16429,
+    }
     [Flags]
     public enum ContextMemoryInitializeKhr : ulong
     {
@@ -3811,6 +4315,66 @@ namespace OpenTK.Compute2.OpenCL
         /// <remarks>[originally: CL_CONTEXT_MEMORY_INITIALIZE_PRIVATE_KHR]</remarks>
         ContextMemoryInitializePrivateKhr = 2,
     }
+    public enum ContextProperties : int
+    {
+        /// <summary><b>[requires: v1.0]</b> </summary>
+        /// <remarks>[originally: CL_CONTEXT_PLATFORM]</remarks>
+        ContextPlatform = 4228,
+        /// <summary><b>[requires: v1.2]</b> </summary>
+        /// <remarks>[originally: CL_CONTEXT_INTEROP_USER_SYNC]</remarks>
+        ContextInteropUserSync = 4229,
+        /// <summary><b>[requires: cl_khr_gl_sharing]</b> </summary>
+        /// <remarks>[originally: CL_GL_CONTEXT_KHR]</remarks>
+        GlContextKhr = 8200,
+        /// <summary><b>[requires: cl_khr_gl_sharing]</b> </summary>
+        /// <remarks>[originally: CL_EGL_DISPLAY_KHR]</remarks>
+        EglDisplayKhr = 8201,
+        /// <summary><b>[requires: cl_khr_gl_sharing]</b> </summary>
+        /// <remarks>[originally: CL_GLX_DISPLAY_KHR]</remarks>
+        GlxDisplayKhr = 8202,
+        /// <summary><b>[requires: cl_khr_gl_sharing]</b> </summary>
+        /// <remarks>[originally: CL_WGL_HDC_KHR]</remarks>
+        WglHdcKhr = 8203,
+        /// <summary><b>[requires: cl_khr_gl_sharing]</b> </summary>
+        /// <remarks>[originally: CL_CGL_SHAREGROUP_KHR]</remarks>
+        CglSharegroupKhr = 8204,
+        /// <summary><b>[requires: cl_khr_initialize_memory]</b> </summary>
+        /// <remarks>[originally: CL_CONTEXT_MEMORY_INITIALIZE_KHR]</remarks>
+        ContextMemoryInitializeKhr = 8240,
+        /// <summary><b>[requires: cl_khr_terminate_context]</b> </summary>
+        /// <remarks>[originally: CL_CONTEXT_TERMINATE_KHR]</remarks>
+        ContextTerminateKhr = 8242,
+        /// <summary><b>[requires: cl_khr_d3d10_sharing]</b> </summary>
+        /// <remarks>[originally: CL_CONTEXT_D3D10_DEVICE_KHR]</remarks>
+        ContextD3D10DeviceKhr = 16404,
+        /// <summary><b>[requires: cl_khr_d3d11_sharing]</b> </summary>
+        /// <remarks>[originally: CL_CONTEXT_D3D11_DEVICE_KHR]</remarks>
+        ContextD3D11DeviceKhr = 16413,
+        /// <summary><b>[requires: cl_intel_dx9_media_sharing]</b> </summary>
+        /// <remarks>[originally: CL_CONTEXT_D3D9EX_DEVICE_INTEL]</remarks>
+        ContextD3D9exDeviceIntel = 16498,
+        /// <summary><b>[requires: cl_intel_dx9_media_sharing]</b> </summary>
+        /// <remarks>[originally: CL_CONTEXT_DXVA_DEVICE_INTEL]</remarks>
+        ContextDxvaDeviceIntel = 16499,
+        /// <summary><b>[requires: cl_intel_va_api_media_sharing]</b> </summary>
+        /// <remarks>[originally: CL_CONTEXT_VA_API_DISPLAY_INTEL]</remarks>
+        ContextVaApiDisplayIntel = 16535,
+        /// <summary><b>[requires: cl_arm_printf]</b> </summary>
+        /// <remarks>[originally: CL_PRINTF_CALLBACK_ARM]</remarks>
+        PrintfCallbackArm = 16560,
+        /// <summary><b>[requires: cl_arm_printf]</b> </summary>
+        /// <remarks>[originally: CL_PRINTF_BUFFERSIZE_ARM]</remarks>
+        PrintfBuffersizeArm = 16561,
+        /// <summary><b>[requires: cl_qcom_perf_hint]</b> </summary>
+        /// <remarks>[originally: CL_CONTEXT_PERF_HINT_QCOM]</remarks>
+        ContextPerfHintQcom = 16578,
+        /// <summary><b>[requires: cl_img_safety_mechanisms]</b> </summary>
+        /// <remarks>[originally: CL_CONTEXT_SAFETY_PROPERTIES_IMG]</remarks>
+        ContextSafetyPropertiesImg = 16601,
+        /// <summary><b>[requires: cl_intel_driver_diagnostics]</b> </summary>
+        /// <remarks>[originally: CL_CONTEXT_SHOW_DIAGNOSTICS_INTEL]</remarks>
+        ContextShowDiagnosticsIntel = 16646,
+    }
     [Flags]
     public enum ContextSafetyPropertiesImg : ulong
     {
@@ -3820,6 +4384,42 @@ namespace OpenTK.Compute2.OpenCL
         /// <summary><b>[requires: cl_img_safety_mechanisms]</b> </summary>
         /// <remarks>[originally: CL_CONTEXT_ENHANCED_EVENT_EXECUTION_STATUS_IMG]</remarks>
         ContextEnhancedEventExecutionStatusImg = 2,
+    }
+    public enum D3D10DeviceSetKhr : uint
+    {
+        /// <summary><b>[requires: cl_khr_d3d10_sharing]</b> </summary>
+        /// <remarks>[originally: CL_PREFERRED_DEVICES_FOR_D3D10_KHR]</remarks>
+        PreferredDevicesForD3D10Khr = 16402,
+        /// <summary><b>[requires: cl_khr_d3d10_sharing]</b> </summary>
+        /// <remarks>[originally: CL_ALL_DEVICES_FOR_D3D10_KHR]</remarks>
+        AllDevicesForD3D10Khr = 16403,
+    }
+    public enum D3D10DeviceSourceKhr : uint
+    {
+        /// <summary><b>[requires: cl_khr_d3d10_sharing]</b> </summary>
+        /// <remarks>[originally: CL_D3D10_DEVICE_KHR]</remarks>
+        D3D10DeviceKhr = 16400,
+        /// <summary><b>[requires: cl_khr_d3d10_sharing]</b> </summary>
+        /// <remarks>[originally: CL_D3D10_DXGI_ADAPTER_KHR]</remarks>
+        D3D10DxgiAdapterKhr = 16401,
+    }
+    public enum D3D11DeviceSetKhr : uint
+    {
+        /// <summary><b>[requires: cl_khr_d3d11_sharing]</b> </summary>
+        /// <remarks>[originally: CL_PREFERRED_DEVICES_FOR_D3D11_KHR]</remarks>
+        PreferredDevicesForD3D11Khr = 16411,
+        /// <summary><b>[requires: cl_khr_d3d11_sharing]</b> </summary>
+        /// <remarks>[originally: CL_ALL_DEVICES_FOR_D3D11_KHR]</remarks>
+        AllDevicesForD3D11Khr = 16412,
+    }
+    public enum D3D11DeviceSourceKhr : uint
+    {
+        /// <summary><b>[requires: cl_khr_d3d11_sharing]</b> </summary>
+        /// <remarks>[originally: CL_D3D11_DEVICE_KHR]</remarks>
+        D3D11DeviceKhr = 16409,
+        /// <summary><b>[requires: cl_khr_d3d11_sharing]</b> </summary>
+        /// <remarks>[originally: CL_D3D11_DXGI_ADAPTER_KHR]</remarks>
+        D3D11DxgiAdapterKhr = 16410,
     }
     [Flags]
     public enum DeviceAffinityDomain : ulong
@@ -3869,7 +4469,7 @@ namespace OpenTK.Compute2.OpenCL
         DeviceAtomicScopeAllDevices = 64,
     }
     [Flags]
-    public enum DeviceCommandBufferCapabilitiesKhr  : int
+    public enum DeviceCommandBufferCapabilitiesKhr : ulong
     {
         /// <summary><b>[requires: cl_khr_command_buffer]</b> </summary>
         /// <remarks>[originally: CL_COMMAND_BUFFER_CAPABILITY_KERNEL_PRINTF_KHR]</remarks>
@@ -4390,687 +4990,9 @@ namespace OpenTK.Compute2.OpenCL
         /// <summary><b>[requires: cl_khr_unified_svm]</b> </summary>
         /// <remarks>[originally: CL_DEVICE_SVM_TYPE_CAPABILITIES_KHR]</remarks>
         DeviceSvmTypeCapabilitiesKhr = 4215,
-        /// <summary><b>[requires: v1.0]</b> </summary>
-        /// <remarks>[originally: CL_CONTEXT_REFERENCE_COUNT]</remarks>
-        ContextReferenceCount = 4224,
-        /// <summary><b>[requires: v1.0]</b> </summary>
-        /// <remarks>[originally: CL_CONTEXT_DEVICES]</remarks>
-        ContextDevices = 4225,
-        /// <summary><b>[requires: v1.0]</b> </summary>
-        /// <remarks>[originally: CL_CONTEXT_PROPERTIES]</remarks>
-        ContextProperties = 4226,
-        /// <summary><b>[requires: v1.1]</b> </summary>
-        /// <remarks>[originally: CL_CONTEXT_NUM_DEVICES]</remarks>
-        ContextNumDevices = 4227,
-        /// <summary><b>[requires: v1.0]</b> </summary>
-        /// <remarks>[originally: CL_CONTEXT_PLATFORM]</remarks>
-        ContextPlatform = 4228,
-        /// <summary><b>[requires: v1.2]</b> </summary>
-        /// <remarks>[originally: CL_CONTEXT_INTEROP_USER_SYNC]</remarks>
-        ContextInteropUserSync = 4229,
-        /// <summary><b>[requires: v1.2]</b> </summary>
-        /// <remarks>[originally: CL_DEVICE_PARTITION_EQUALLY]</remarks>
-        DevicePartitionEqually = 4230,
-        /// <summary><b>[requires: v1.2]</b> </summary>
-        /// <remarks>[originally: CL_DEVICE_PARTITION_BY_COUNTS]</remarks>
-        DevicePartitionByCounts = 4231,
-        /// <summary><b>[requires: v1.2]</b> </summary>
-        /// <remarks>[originally: CL_DEVICE_PARTITION_BY_AFFINITY_DOMAIN]</remarks>
-        DevicePartitionByAffinityDomain = 4232,
-        /// <summary><b>[requires: v1.0]</b> </summary>
-        /// <remarks>[originally: CL_QUEUE_CONTEXT]</remarks>
-        QueueContext = 4240,
-        /// <summary><b>[requires: v1.0]</b> </summary>
-        /// <remarks>[originally: CL_QUEUE_DEVICE]</remarks>
-        QueueDevice = 4241,
-        /// <summary><b>[requires: v1.0]</b> </summary>
-        /// <remarks>[originally: CL_QUEUE_REFERENCE_COUNT]</remarks>
-        QueueReferenceCount = 4242,
-        /// <summary><b>[requires: v1.0]</b> </summary>
-        /// <remarks>[originally: CL_QUEUE_PROPERTIES]</remarks>
-        QueueProperties = 4243,
-        /// <summary><b>[requires: v2.0]</b> </summary>
-        /// <remarks>[originally: CL_QUEUE_SIZE]</remarks>
-        QueueSize = 4244,
-        /// <summary><b>[requires: v2.1]</b> </summary>
-        /// <remarks>[originally: CL_QUEUE_DEVICE_DEFAULT]</remarks>
-        QueueDeviceDefault = 4245,
-        /// <summary><b>[requires: cl_khr_priority_hints]</b> </summary>
-        /// <remarks>[originally: CL_QUEUE_PRIORITY_KHR]</remarks>
-        QueuePriorityKhr = 4246,
-        /// <summary><b>[requires: cl_khr_throttle_hints]</b> </summary>
-        /// <remarks>[originally: CL_QUEUE_THROTTLE_KHR]</remarks>
-        QueueThrottleKhr = 4247,
-        /// <summary><b>[requires: v3.0]</b> </summary>
-        /// <remarks>[originally: CL_QUEUE_PROPERTIES_ARRAY]</remarks>
-        QueuePropertiesArray = 4248,
-        /// <summary><b>[requires: v1.0]</b> </summary>
-        /// <remarks>[originally: CL_R]</remarks>
-        R = 4272,
-        /// <summary><b>[requires: v1.0]</b> </summary>
-        /// <remarks>[originally: CL_A]</remarks>
-        A = 4273,
-        /// <summary><b>[requires: v1.0]</b> </summary>
-        /// <remarks>[originally: CL_RG]</remarks>
-        Rg = 4274,
-        /// <summary><b>[requires: v1.0]</b> </summary>
-        /// <remarks>[originally: CL_RA]</remarks>
-        Ra = 4275,
-        /// <summary><b>[requires: v1.0]</b> </summary>
-        /// <remarks>[originally: CL_RGB]</remarks>
-        Rgb = 4276,
-        /// <summary><b>[requires: v1.0]</b> </summary>
-        /// <remarks>[originally: CL_RGBA]</remarks>
-        Rgba = 4277,
-        /// <summary><b>[requires: v1.0]</b> </summary>
-        /// <remarks>[originally: CL_BGRA]</remarks>
-        Bgra = 4278,
-        /// <summary><b>[requires: v1.0]</b> </summary>
-        /// <remarks>[originally: CL_ARGB]</remarks>
-        Argb = 4279,
-        /// <summary><b>[requires: v1.0]</b> </summary>
-        /// <remarks>[originally: CL_INTENSITY]</remarks>
-        Intensity = 4280,
-        /// <summary><b>[requires: v1.0]</b> </summary>
-        /// <remarks>[originally: CL_LUMINANCE]</remarks>
-        Luminance = 4281,
-        /// <summary><b>[requires: v1.1]</b> </summary>
-        /// <remarks>[originally: CL_Rx]</remarks>
-        Rx = 4282,
-        /// <summary><b>[requires: v1.1]</b> </summary>
-        /// <remarks>[originally: CL_RGx]</remarks>
-        Rgx = 4283,
-        /// <summary><b>[requires: v1.1]</b> </summary>
-        /// <remarks>[originally: CL_RGBx]</remarks>
-        Rgbx = 4284,
-        /// <summary><b>[requires: v2.0 | cl_khr_depth_images]</b> </summary>
-        /// <remarks>[originally: CL_DEPTH]</remarks>
-        Depth = 4285,
-        /// <summary><b>[requires: cl_khr_gl_depth_images]</b> </summary>
-        /// <remarks>[originally: CL_DEPTH_STENCIL]</remarks>
-        DepthStencil = 4286,
-        /// <summary><b>[requires: v2.0]</b> </summary>
-        /// <remarks>[originally: CL_sRGB]</remarks>
-        Srgb = 4287,
-        /// <summary><b>[requires: v2.0]</b> </summary>
-        /// <remarks>[originally: CL_sRGBx]</remarks>
-        Srgbx = 4288,
-        /// <summary><b>[requires: v2.0]</b> </summary>
-        /// <remarks>[originally: CL_sRGBA]</remarks>
-        Srgba = 4289,
-        /// <summary><b>[requires: v2.0]</b> </summary>
-        /// <remarks>[originally: CL_sBGRA]</remarks>
-        Sbgra = 4290,
-        /// <summary><b>[requires: v2.0]</b> </summary>
-        /// <remarks>[originally: CL_ABGR]</remarks>
-        Abgr = 4291,
-        /// <summary><b>[requires: v1.0]</b> </summary>
-        /// <remarks>[originally: CL_SNORM_INT8]</remarks>
-        SnormInt8 = 4304,
-        /// <summary><b>[requires: v1.0]</b> </summary>
-        /// <remarks>[originally: CL_SNORM_INT16]</remarks>
-        SnormInt16 = 4305,
-        /// <summary><b>[requires: v1.0]</b> </summary>
-        /// <remarks>[originally: CL_UNORM_INT8]</remarks>
-        UnormInt8 = 4306,
-        /// <summary><b>[requires: v1.0]</b> </summary>
-        /// <remarks>[originally: CL_UNORM_INT16]</remarks>
-        UnormInt16 = 4307,
-        /// <summary><b>[requires: v1.0]</b> </summary>
-        /// <remarks>[originally: CL_UNORM_SHORT_565]</remarks>
-        UnormShort565 = 4308,
-        /// <summary><b>[requires: v1.0]</b> </summary>
-        /// <remarks>[originally: CL_UNORM_SHORT_555]</remarks>
-        UnormShort555 = 4309,
-        /// <summary><b>[requires: v1.0]</b> </summary>
-        /// <remarks>[originally: CL_UNORM_INT_101010]</remarks>
-        UnormInt101010 = 4310,
-        /// <summary><b>[requires: v1.0]</b> </summary>
-        /// <remarks>[originally: CL_SIGNED_INT8]</remarks>
-        SignedInt8 = 4311,
-        /// <summary><b>[requires: v1.0]</b> </summary>
-        /// <remarks>[originally: CL_SIGNED_INT16]</remarks>
-        SignedInt16 = 4312,
-        /// <summary><b>[requires: v1.0]</b> </summary>
-        /// <remarks>[originally: CL_SIGNED_INT32]</remarks>
-        SignedInt32 = 4313,
-        /// <summary><b>[requires: v1.0]</b> </summary>
-        /// <remarks>[originally: CL_UNSIGNED_INT8]</remarks>
-        UnsignedInt8 = 4314,
-        /// <summary><b>[requires: v1.0]</b> </summary>
-        /// <remarks>[originally: CL_UNSIGNED_INT16]</remarks>
-        UnsignedInt16 = 4315,
-        /// <summary><b>[requires: v1.0]</b> </summary>
-        /// <remarks>[originally: CL_UNSIGNED_INT32]</remarks>
-        UnsignedInt32 = 4316,
-        /// <summary><b>[requires: v1.0]</b> </summary>
-        /// <remarks>[originally: CL_HALF_FLOAT]</remarks>
-        HalfFloat = 4317,
-        /// <summary><b>[requires: v1.0]</b> </summary>
-        /// <remarks>[originally: CL_FLOAT]</remarks>
-        Float = 4318,
-        /// <summary><b>[requires: cl_khr_gl_depth_images]</b> </summary>
-        /// <remarks>[originally: CL_UNORM_INT24]</remarks>
-        UnormInt24 = 4319,
-        /// <summary><b>[requires: v2.1]</b> </summary>
-        /// <remarks>[originally: CL_UNORM_INT_101010_2]</remarks>
-        UnormInt1010102 = 4320,
-        /// <summary><b>[requires: cl_ext_image_unsigned_10x6_12x4_14x2]</b> </summary>
-        /// <remarks>[originally: CL_UNORM_INT10X6_EXT]</remarks>
-        UnormInt10x6Ext = 4321,
-        /// <summary><b>[requires: cl_ext_image_raw10_raw12]</b> </summary>
-        /// <remarks>[originally: CL_UNSIGNED_INT_RAW10_EXT]</remarks>
-        UnsignedIntRaw10Ext = 4323,
-        /// <summary><b>[requires: cl_ext_image_raw10_raw12]</b> </summary>
-        /// <remarks>[originally: CL_UNSIGNED_INT_RAW12_EXT]</remarks>
-        UnsignedIntRaw12Ext = 4324,
-        /// <summary><b>[requires: cl_ext_image_unorm_int_2_101010]</b> </summary>
-        /// <remarks>[originally: CL_UNORM_INT_2_101010_EXT]</remarks>
-        UnormInt2101010Ext = 4325,
-        /// <summary><b>[requires: cl_ext_image_unsigned_10x6_12x4_14x2]</b> </summary>
-        /// <remarks>[originally: CL_UNSIGNED_INT10X6_EXT]</remarks>
-        UnsignedInt10x6Ext = 4326,
-        /// <summary><b>[requires: cl_ext_image_unsigned_10x6_12x4_14x2]</b> </summary>
-        /// <remarks>[originally: CL_UNSIGNED_INT12X4_EXT]</remarks>
-        UnsignedInt12x4Ext = 4327,
-        /// <summary><b>[requires: cl_ext_image_unsigned_10x6_12x4_14x2]</b> </summary>
-        /// <remarks>[originally: CL_UNSIGNED_INT14X2_EXT]</remarks>
-        UnsignedInt14x2Ext = 4328,
-        /// <summary><b>[requires: cl_ext_image_unsigned_10x6_12x4_14x2]</b> </summary>
-        /// <remarks>[originally: CL_UNORM_INT12X4_EXT]</remarks>
-        UnormInt12x4Ext = 4329,
-        /// <summary><b>[requires: cl_ext_image_unsigned_10x6_12x4_14x2]</b> </summary>
-        /// <remarks>[originally: CL_UNORM_INT14X2_EXT]</remarks>
-        UnormInt14x2Ext = 4330,
-        /// <summary><b>[requires: v1.0]</b> </summary>
-        /// <remarks>[originally: CL_MEM_OBJECT_BUFFER]</remarks>
-        MemObjectBuffer = 4336,
-        /// <summary><b>[requires: v1.0]</b> </summary>
-        /// <remarks>[originally: CL_MEM_OBJECT_IMAGE2D]</remarks>
-        MemObjectImage2D = 4337,
-        /// <summary><b>[requires: v1.0]</b> </summary>
-        /// <remarks>[originally: CL_MEM_OBJECT_IMAGE3D]</remarks>
-        MemObjectImage3D = 4338,
-        /// <summary><b>[requires: v1.2]</b> </summary>
-        /// <remarks>[originally: CL_MEM_OBJECT_IMAGE2D_ARRAY]</remarks>
-        MemObjectImage2DArray = 4339,
-        /// <summary><b>[requires: v1.2]</b> </summary>
-        /// <remarks>[originally: CL_MEM_OBJECT_IMAGE1D]</remarks>
-        MemObjectImage1D = 4340,
-        /// <summary><b>[requires: v1.2]</b> </summary>
-        /// <remarks>[originally: CL_MEM_OBJECT_IMAGE1D_ARRAY]</remarks>
-        MemObjectImage1DArray = 4341,
-        /// <summary><b>[requires: v1.2]</b> </summary>
-        /// <remarks>[originally: CL_MEM_OBJECT_IMAGE1D_BUFFER]</remarks>
-        MemObjectImage1DBuffer = 4342,
-        /// <summary><b>[requires: v2.0]</b> </summary>
-        /// <remarks>[originally: CL_MEM_OBJECT_PIPE]</remarks>
-        MemObjectPipe = 4343,
-        /// <summary><b>[requires: v1.0]</b> </summary>
-        /// <remarks>[originally: CL_MEM_TYPE]</remarks>
-        MemType = 4352,
-        /// <summary><b>[requires: v1.0]</b> </summary>
-        /// <remarks>[originally: CL_MEM_FLAGS]</remarks>
-        MemFlags = 4353,
-        /// <summary><b>[requires: v1.0]</b> </summary>
-        /// <remarks>[originally: CL_MEM_SIZE]</remarks>
-        MemSize = 4354,
-        /// <summary><b>[requires: v1.0]</b> </summary>
-        /// <remarks>[originally: CL_MEM_HOST_PTR]</remarks>
-        MemHostPtr = 4355,
-        /// <summary><b>[requires: v1.0]</b> </summary>
-        /// <remarks>[originally: CL_MEM_MAP_COUNT]</remarks>
-        MemMapCount = 4356,
-        /// <summary><b>[requires: v1.0]</b> </summary>
-        /// <remarks>[originally: CL_MEM_REFERENCE_COUNT]</remarks>
-        MemReferenceCount = 4357,
-        /// <summary><b>[requires: v1.0]</b> </summary>
-        /// <remarks>[originally: CL_MEM_CONTEXT]</remarks>
-        MemContext = 4358,
-        /// <summary><b>[requires: v1.1]</b> </summary>
-        /// <remarks>[originally: CL_MEM_ASSOCIATED_MEMOBJECT]</remarks>
-        MemAssociatedMemobject = 4359,
-        /// <summary><b>[requires: v1.1]</b> </summary>
-        /// <remarks>[originally: CL_MEM_OFFSET]</remarks>
-        MemOffset = 4360,
-        /// <summary><b>[requires: v2.0]</b> </summary>
-        /// <remarks>[originally: CL_MEM_USES_SVM_POINTER]</remarks>
-        MemUsesSvmPointer = 4361,
-        /// <summary><b>[requires: v3.0]</b> </summary>
-        /// <remarks>[originally: CL_MEM_PROPERTIES]</remarks>
-        MemProperties = 4362,
-        /// <summary><b>[requires: v1.0]</b> </summary>
-        /// <remarks>[originally: CL_IMAGE_FORMAT]</remarks>
-        ImageFormat = 4368,
-        /// <summary><b>[requires: v1.0]</b> </summary>
-        /// <remarks>[originally: CL_IMAGE_ELEMENT_SIZE]</remarks>
-        ImageElementSize = 4369,
-        /// <summary><b>[requires: v1.0]</b> </summary>
-        /// <remarks>[originally: CL_IMAGE_ROW_PITCH]</remarks>
-        ImageRowPitch = 4370,
-        /// <summary><b>[requires: v1.0]</b> </summary>
-        /// <remarks>[originally: CL_IMAGE_SLICE_PITCH]</remarks>
-        ImageSlicePitch = 4371,
-        /// <summary><b>[requires: v1.0]</b> </summary>
-        /// <remarks>[originally: CL_IMAGE_WIDTH]</remarks>
-        ImageWidth = 4372,
-        /// <summary><b>[requires: v1.0]</b> </summary>
-        /// <remarks>[originally: CL_IMAGE_HEIGHT]</remarks>
-        ImageHeight = 4373,
-        /// <summary><b>[requires: v1.0]</b> </summary>
-        /// <remarks>[originally: CL_IMAGE_DEPTH]</remarks>
-        ImageDepth = 4374,
-        /// <summary><b>[requires: v1.2]</b> </summary>
-        /// <remarks>[originally: CL_IMAGE_ARRAY_SIZE]</remarks>
-        ImageArraySize = 4375,
-        /// <summary><b>[requires: v1.2]</b> </summary>
-        /// <remarks>[originally: CL_IMAGE_BUFFER]</remarks>
-        ImageBuffer = 4376,
-        /// <summary><b>[requires: v1.2]</b> </summary>
-        /// <remarks>[originally: CL_IMAGE_NUM_MIP_LEVELS]</remarks>
-        ImageNumMipLevels = 4377,
-        /// <summary><b>[requires: v1.2]</b> </summary>
-        /// <remarks>[originally: CL_IMAGE_NUM_SAMPLES]</remarks>
-        ImageNumSamples = 4378,
-        /// <summary><b>[requires: v2.0]</b> </summary>
-        /// <remarks>[originally: CL_PIPE_PACKET_SIZE]</remarks>
-        PipePacketSize = 4384,
-        /// <summary><b>[requires: v2.0]</b> </summary>
-        /// <remarks>[originally: CL_PIPE_MAX_PACKETS]</remarks>
-        PipeMaxPackets = 4385,
-        /// <summary><b>[requires: v3.0]</b> </summary>
-        /// <remarks>[originally: CL_PIPE_PROPERTIES]</remarks>
-        PipeProperties = 4386,
-        /// <summary><b>[requires: v1.0]</b> </summary>
-        /// <remarks>[originally: CL_ADDRESS_NONE]</remarks>
-        AddressNone = 4400,
-        /// <summary><b>[requires: v1.0]</b> </summary>
-        /// <remarks>[originally: CL_ADDRESS_CLAMP_TO_EDGE]</remarks>
-        AddressClampToEdge = 4401,
-        /// <summary><b>[requires: v1.0]</b> </summary>
-        /// <remarks>[originally: CL_ADDRESS_CLAMP]</remarks>
-        AddressClamp = 4402,
-        /// <summary><b>[requires: v1.0]</b> </summary>
-        /// <remarks>[originally: CL_ADDRESS_REPEAT]</remarks>
-        AddressRepeat = 4403,
-        /// <summary><b>[requires: v1.1]</b> </summary>
-        /// <remarks>[originally: CL_ADDRESS_MIRRORED_REPEAT]</remarks>
-        AddressMirroredRepeat = 4404,
-        /// <summary><b>[requires: v1.0]</b> </summary>
-        /// <remarks>[originally: CL_FILTER_NEAREST]</remarks>
-        FilterNearest = 4416,
-        /// <summary><b>[requires: v1.0]</b> </summary>
-        /// <remarks>[originally: CL_FILTER_LINEAR]</remarks>
-        FilterLinear = 4417,
-        /// <summary><b>[requires: v1.0]</b> </summary>
-        /// <remarks>[originally: CL_SAMPLER_REFERENCE_COUNT]</remarks>
-        SamplerReferenceCount = 4432,
-        /// <summary><b>[requires: v1.0]</b> </summary>
-        /// <remarks>[originally: CL_SAMPLER_CONTEXT]</remarks>
-        SamplerContext = 4433,
-        /// <summary><b>[requires: v1.0]</b> </summary>
-        /// <remarks>[originally: CL_SAMPLER_NORMALIZED_COORDS]</remarks>
-        SamplerNormalizedCoords = 4434,
-        /// <summary><b>[requires: v1.0]</b> </summary>
-        /// <remarks>[originally: CL_SAMPLER_ADDRESSING_MODE]</remarks>
-        SamplerAddressingMode = 4435,
-        /// <summary><b>[requires: v1.0]</b> </summary>
-        /// <remarks>[originally: CL_SAMPLER_FILTER_MODE]</remarks>
-        SamplerFilterMode = 4436,
-        /// <summary><b>[requires: v2.0]</b> </summary>
-        /// <remarks>[originally: CL_SAMPLER_MIP_FILTER_MODE]</remarks>
-        SamplerMipFilterMode = 4437,
-        /// <summary><b>[requires: cl_khr_mipmap_image]</b> </summary>
-        /// <remarks>[originally: CL_SAMPLER_MIP_FILTER_MODE_KHR]</remarks>
-        SamplerMipFilterModeKhr = 4437,
-        /// <summary><b>[requires: v2.0]</b> </summary>
-        /// <remarks>[originally: CL_SAMPLER_LOD_MIN]</remarks>
-        SamplerLodMin = 4438,
-        /// <summary><b>[requires: cl_khr_mipmap_image]</b> </summary>
-        /// <remarks>[originally: CL_SAMPLER_LOD_MIN_KHR]</remarks>
-        SamplerLodMinKhr = 4438,
-        /// <summary><b>[requires: v2.0]</b> </summary>
-        /// <remarks>[originally: CL_SAMPLER_LOD_MAX]</remarks>
-        SamplerLodMax = 4439,
-        /// <summary><b>[requires: cl_khr_mipmap_image]</b> </summary>
-        /// <remarks>[originally: CL_SAMPLER_LOD_MAX_KHR]</remarks>
-        SamplerLodMaxKhr = 4439,
-        /// <summary><b>[requires: v3.0]</b> </summary>
-        /// <remarks>[originally: CL_SAMPLER_PROPERTIES]</remarks>
-        SamplerProperties = 4440,
-        /// <summary><b>[requires: v1.0]</b> </summary>
-        /// <remarks>[originally: CL_PROGRAM_REFERENCE_COUNT]</remarks>
-        ProgramReferenceCount = 4448,
-        /// <summary><b>[requires: v1.0]</b> </summary>
-        /// <remarks>[originally: CL_PROGRAM_CONTEXT]</remarks>
-        ProgramContext = 4449,
-        /// <summary><b>[requires: v1.0]</b> </summary>
-        /// <remarks>[originally: CL_PROGRAM_NUM_DEVICES]</remarks>
-        ProgramNumDevices = 4450,
-        /// <summary><b>[requires: v1.0]</b> </summary>
-        /// <remarks>[originally: CL_PROGRAM_DEVICES]</remarks>
-        ProgramDevices = 4451,
-        /// <summary><b>[requires: v1.0]</b> </summary>
-        /// <remarks>[originally: CL_PROGRAM_SOURCE]</remarks>
-        ProgramSource = 4452,
-        /// <summary><b>[requires: v1.0]</b> </summary>
-        /// <remarks>[originally: CL_PROGRAM_BINARY_SIZES]</remarks>
-        ProgramBinarySizes = 4453,
-        /// <summary><b>[requires: v1.0]</b> </summary>
-        /// <remarks>[originally: CL_PROGRAM_BINARIES]</remarks>
-        ProgramBinaries = 4454,
-        /// <summary><b>[requires: v1.2]</b> </summary>
-        /// <remarks>[originally: CL_PROGRAM_NUM_KERNELS]</remarks>
-        ProgramNumKernels = 4455,
-        /// <summary><b>[requires: v1.2]</b> </summary>
-        /// <remarks>[originally: CL_PROGRAM_KERNEL_NAMES]</remarks>
-        ProgramKernelNames = 4456,
-        /// <summary><b>[requires: v2.1]</b> </summary>
-        /// <remarks>[originally: CL_PROGRAM_IL]</remarks>
-        ProgramIl = 4457,
-        /// <summary><b>[requires: cl_khr_il_program]</b> </summary>
-        /// <remarks>[originally: CL_PROGRAM_IL_KHR]</remarks>
-        ProgramIlKhr = 4457,
-        /// <summary><b>[requires: v2.2]</b> </summary>
-        /// <remarks>[originally: CL_PROGRAM_SCOPE_GLOBAL_CTORS_PRESENT]</remarks>
-        ProgramScopeGlobalCtorsPresent = 4458,
-        /// <summary><b>[requires: v2.2]</b> </summary>
-        /// <remarks>[originally: CL_PROGRAM_SCOPE_GLOBAL_DTORS_PRESENT]</remarks>
-        ProgramScopeGlobalDtorsPresent = 4459,
-        /// <summary><b>[requires: v1.0]</b> </summary>
-        /// <remarks>[originally: CL_PROGRAM_BUILD_STATUS]</remarks>
-        ProgramBuildStatus = 4481,
-        /// <summary><b>[requires: v1.0]</b> </summary>
-        /// <remarks>[originally: CL_PROGRAM_BUILD_OPTIONS]</remarks>
-        ProgramBuildOptions = 4482,
-        /// <summary><b>[requires: v1.0]</b> </summary>
-        /// <remarks>[originally: CL_PROGRAM_BUILD_LOG]</remarks>
-        ProgramBuildLog = 4483,
-        /// <summary><b>[requires: v1.2]</b> </summary>
-        /// <remarks>[originally: CL_PROGRAM_BINARY_TYPE]</remarks>
-        ProgramBinaryType = 4484,
-        /// <summary><b>[requires: v2.0]</b> </summary>
-        /// <remarks>[originally: CL_PROGRAM_BUILD_GLOBAL_VARIABLE_TOTAL_SIZE]</remarks>
-        ProgramBuildGlobalVariableTotalSize = 4485,
-        /// <summary><b>[requires: v1.0]</b> </summary>
-        /// <remarks>[originally: CL_KERNEL_FUNCTION_NAME]</remarks>
-        KernelFunctionName = 4496,
-        /// <summary><b>[requires: v1.0]</b> </summary>
-        /// <remarks>[originally: CL_KERNEL_NUM_ARGS]</remarks>
-        KernelNumArgs = 4497,
-        /// <summary><b>[requires: v1.0]</b> </summary>
-        /// <remarks>[originally: CL_KERNEL_REFERENCE_COUNT]</remarks>
-        KernelReferenceCount = 4498,
-        /// <summary><b>[requires: v1.0]</b> </summary>
-        /// <remarks>[originally: CL_KERNEL_CONTEXT]</remarks>
-        KernelContext = 4499,
-        /// <summary><b>[requires: v1.0]</b> </summary>
-        /// <remarks>[originally: CL_KERNEL_PROGRAM]</remarks>
-        KernelProgram = 4500,
-        /// <summary><b>[requires: v1.2]</b> </summary>
-        /// <remarks>[originally: CL_KERNEL_ATTRIBUTES]</remarks>
-        KernelAttributes = 4501,
-        /// <summary><b>[requires: v1.2]</b> </summary>
-        /// <remarks>[originally: CL_KERNEL_ARG_ADDRESS_QUALIFIER]</remarks>
-        KernelArgAddressQualifier = 4502,
-        /// <summary><b>[requires: v1.2]</b> </summary>
-        /// <remarks>[originally: CL_KERNEL_ARG_ACCESS_QUALIFIER]</remarks>
-        KernelArgAccessQualifier = 4503,
-        /// <summary><b>[requires: v1.2]</b> </summary>
-        /// <remarks>[originally: CL_KERNEL_ARG_TYPE_NAME]</remarks>
-        KernelArgTypeName = 4504,
-        /// <summary><b>[requires: v1.2]</b> </summary>
-        /// <remarks>[originally: CL_KERNEL_ARG_TYPE_QUALIFIER]</remarks>
-        KernelArgTypeQualifier = 4505,
-        /// <summary><b>[requires: v1.2]</b> </summary>
-        /// <remarks>[originally: CL_KERNEL_ARG_NAME]</remarks>
-        KernelArgName = 4506,
-        /// <summary><b>[requires: v1.2]</b> </summary>
-        /// <remarks>[originally: CL_KERNEL_ARG_ADDRESS_GLOBAL]</remarks>
-        KernelArgAddressGlobal = 4507,
-        /// <summary><b>[requires: v1.2]</b> </summary>
-        /// <remarks>[originally: CL_KERNEL_ARG_ADDRESS_LOCAL]</remarks>
-        KernelArgAddressLocal = 4508,
-        /// <summary><b>[requires: v1.2]</b> </summary>
-        /// <remarks>[originally: CL_KERNEL_ARG_ADDRESS_CONSTANT]</remarks>
-        KernelArgAddressConstant = 4509,
-        /// <summary><b>[requires: v1.2]</b> </summary>
-        /// <remarks>[originally: CL_KERNEL_ARG_ADDRESS_PRIVATE]</remarks>
-        KernelArgAddressPrivate = 4510,
-        /// <summary><b>[requires: v1.2]</b> </summary>
-        /// <remarks>[originally: CL_KERNEL_ARG_ACCESS_READ_ONLY]</remarks>
-        KernelArgAccessReadOnly = 4512,
-        /// <summary><b>[requires: v1.2]</b> </summary>
-        /// <remarks>[originally: CL_KERNEL_ARG_ACCESS_WRITE_ONLY]</remarks>
-        KernelArgAccessWriteOnly = 4513,
-        /// <summary><b>[requires: v1.2]</b> </summary>
-        /// <remarks>[originally: CL_KERNEL_ARG_ACCESS_READ_WRITE]</remarks>
-        KernelArgAccessReadWrite = 4514,
-        /// <summary><b>[requires: v1.2]</b> </summary>
-        /// <remarks>[originally: CL_KERNEL_ARG_ACCESS_NONE]</remarks>
-        KernelArgAccessNone = 4515,
-        /// <summary><b>[requires: v1.0]</b> </summary>
-        /// <remarks>[originally: CL_KERNEL_WORK_GROUP_SIZE]</remarks>
-        KernelWorkGroupSize = 4528,
-        /// <summary><b>[requires: v1.0]</b> </summary>
-        /// <remarks>[originally: CL_KERNEL_COMPILE_WORK_GROUP_SIZE]</remarks>
-        KernelCompileWorkGroupSize = 4529,
-        /// <summary><b>[requires: v1.0]</b> </summary>
-        /// <remarks>[originally: CL_KERNEL_LOCAL_MEM_SIZE]</remarks>
-        KernelLocalMemSize = 4530,
-        /// <summary><b>[requires: v1.0]</b> </summary>
-        /// <remarks>[originally: CL_KERNEL_PREFERRED_WORK_GROUP_SIZE_MULTIPLE]</remarks>
-        KernelPreferredWorkGroupSizeMultiple = 4531,
-        /// <summary><b>[requires: v1.0]</b> </summary>
-        /// <remarks>[originally: CL_KERNEL_PRIVATE_MEM_SIZE]</remarks>
-        KernelPrivateMemSize = 4532,
-        /// <summary><b>[requires: v1.2]</b> </summary>
-        /// <remarks>[originally: CL_KERNEL_GLOBAL_WORK_SIZE]</remarks>
-        KernelGlobalWorkSize = 4533,
-        /// <summary><b>[requires: v2.0]</b> </summary>
-        /// <remarks>[originally: CL_KERNEL_EXEC_INFO_SVM_PTRS]</remarks>
-        KernelExecInfoSvmPtrs = 4534,
-        /// <summary><b>[requires: v2.0]</b> </summary>
-        /// <remarks>[originally: CL_KERNEL_EXEC_INFO_SVM_FINE_GRAIN_SYSTEM]</remarks>
-        KernelExecInfoSvmFineGrainSystem = 4535,
-        /// <summary><b>[requires: v2.1]</b> </summary>
-        /// <remarks>[originally: CL_KERNEL_LOCAL_SIZE_FOR_SUB_GROUP_COUNT]</remarks>
-        KernelLocalSizeForSubGroupCount = 4536,
-        /// <summary><b>[requires: v2.1]</b> </summary>
-        /// <remarks>[originally: CL_KERNEL_MAX_NUM_SUB_GROUPS]</remarks>
-        KernelMaxNumSubGroups = 4537,
-        /// <summary><b>[requires: v2.1]</b> </summary>
-        /// <remarks>[originally: CL_KERNEL_COMPILE_NUM_SUB_GROUPS]</remarks>
-        KernelCompileNumSubGroups = 4538,
-        /// <summary><b>[requires: cl_khr_unified_svm]</b> </summary>
-        /// <remarks>[originally: CL_KERNEL_EXEC_INFO_SVM_INDIRECT_ACCESS_KHR]</remarks>
-        KernelExecInfoSvmIndirectAccessKhr = 4539,
-        /// <summary><b>[requires: v1.0]</b> </summary>
-        /// <remarks>[originally: CL_EVENT_COMMAND_QUEUE]</remarks>
-        EventCommandQueue = 4560,
-        /// <summary><b>[requires: v1.0]</b> </summary>
-        /// <remarks>[originally: CL_EVENT_COMMAND_TYPE]</remarks>
-        EventCommandType = 4561,
-        /// <summary><b>[requires: v1.0]</b> </summary>
-        /// <remarks>[originally: CL_EVENT_REFERENCE_COUNT]</remarks>
-        EventReferenceCount = 4562,
-        /// <summary><b>[requires: v1.0]</b> </summary>
-        /// <remarks>[originally: CL_EVENT_COMMAND_EXECUTION_STATUS]</remarks>
-        EventCommandExecutionStatus = 4563,
-        /// <summary><b>[requires: v1.1]</b> </summary>
-        /// <remarks>[originally: CL_EVENT_CONTEXT]</remarks>
-        EventContext = 4564,
-        /// <summary><b>[requires: v1.0]</b> </summary>
-        /// <remarks>[originally: CL_COMMAND_NDRANGE_KERNEL]</remarks>
-        CommandNdrangeKernel = 4592,
-        /// <summary><b>[requires: v1.0]</b> </summary>
-        /// <remarks>[originally: CL_COMMAND_TASK]</remarks>
-        CommandTask = 4593,
-        /// <summary><b>[requires: v1.0]</b> </summary>
-        /// <remarks>[originally: CL_COMMAND_NATIVE_KERNEL]</remarks>
-        CommandNativeKernel = 4594,
-        /// <summary><b>[requires: v1.0]</b> </summary>
-        /// <remarks>[originally: CL_COMMAND_READ_BUFFER]</remarks>
-        CommandReadBuffer = 4595,
-        /// <summary><b>[requires: v1.0]</b> </summary>
-        /// <remarks>[originally: CL_COMMAND_WRITE_BUFFER]</remarks>
-        CommandWriteBuffer = 4596,
-        /// <summary><b>[requires: v1.0]</b> </summary>
-        /// <remarks>[originally: CL_COMMAND_COPY_BUFFER]</remarks>
-        CommandCopyBuffer = 4597,
-        /// <summary><b>[requires: v1.0]</b> </summary>
-        /// <remarks>[originally: CL_COMMAND_READ_IMAGE]</remarks>
-        CommandReadImage = 4598,
-        /// <summary><b>[requires: v1.0]</b> </summary>
-        /// <remarks>[originally: CL_COMMAND_WRITE_IMAGE]</remarks>
-        CommandWriteImage = 4599,
-        /// <summary><b>[requires: v1.0]</b> </summary>
-        /// <remarks>[originally: CL_COMMAND_COPY_IMAGE]</remarks>
-        CommandCopyImage = 4600,
-        /// <summary><b>[requires: v1.0]</b> </summary>
-        /// <remarks>[originally: CL_COMMAND_COPY_IMAGE_TO_BUFFER]</remarks>
-        CommandCopyImageToBuffer = 4601,
-        /// <summary><b>[requires: v1.0]</b> </summary>
-        /// <remarks>[originally: CL_COMMAND_COPY_BUFFER_TO_IMAGE]</remarks>
-        CommandCopyBufferToImage = 4602,
-        /// <summary><b>[requires: v1.0]</b> </summary>
-        /// <remarks>[originally: CL_COMMAND_MAP_BUFFER]</remarks>
-        CommandMapBuffer = 4603,
-        /// <summary><b>[requires: v1.0]</b> </summary>
-        /// <remarks>[originally: CL_COMMAND_MAP_IMAGE]</remarks>
-        CommandMapImage = 4604,
-        /// <summary><b>[requires: v1.0]</b> </summary>
-        /// <remarks>[originally: CL_COMMAND_UNMAP_MEM_OBJECT]</remarks>
-        CommandUnmapMemObject = 4605,
-        /// <summary><b>[requires: v1.0]</b> </summary>
-        /// <remarks>[originally: CL_COMMAND_MARKER]</remarks>
-        CommandMarker = 4606,
-        /// <summary><b>[requires: v1.0]</b> </summary>
-        /// <remarks>[originally: CL_COMMAND_ACQUIRE_GL_OBJECTS]</remarks>
-        CommandAcquireGlObjects = 4607,
-        /// <summary><b>[requires: v1.0]</b> </summary>
-        /// <remarks>[originally: CL_COMMAND_RELEASE_GL_OBJECTS]</remarks>
-        CommandReleaseGlObjects = 4608,
-        /// <summary><b>[requires: v1.1]</b> </summary>
-        /// <remarks>[originally: CL_COMMAND_READ_BUFFER_RECT]</remarks>
-        CommandReadBufferRect = 4609,
-        /// <summary><b>[requires: v1.1]</b> </summary>
-        /// <remarks>[originally: CL_COMMAND_WRITE_BUFFER_RECT]</remarks>
-        CommandWriteBufferRect = 4610,
-        /// <summary><b>[requires: v1.1]</b> </summary>
-        /// <remarks>[originally: CL_COMMAND_COPY_BUFFER_RECT]</remarks>
-        CommandCopyBufferRect = 4611,
-        /// <summary><b>[requires: v1.1]</b> </summary>
-        /// <remarks>[originally: CL_COMMAND_USER]</remarks>
-        CommandUser = 4612,
-        /// <summary><b>[requires: v1.2]</b> </summary>
-        /// <remarks>[originally: CL_COMMAND_BARRIER]</remarks>
-        CommandBarrier = 4613,
-        /// <summary><b>[requires: v1.2]</b> </summary>
-        /// <remarks>[originally: CL_COMMAND_MIGRATE_MEM_OBJECTS]</remarks>
-        CommandMigrateMemObjects = 4614,
-        /// <summary><b>[requires: v1.2]</b> </summary>
-        /// <remarks>[originally: CL_COMMAND_FILL_BUFFER]</remarks>
-        CommandFillBuffer = 4615,
-        /// <summary><b>[requires: v1.2]</b> </summary>
-        /// <remarks>[originally: CL_COMMAND_FILL_IMAGE]</remarks>
-        CommandFillImage = 4616,
-        /// <summary><b>[requires: v2.0]</b> </summary>
-        /// <remarks>[originally: CL_COMMAND_SVM_FREE]</remarks>
-        CommandSvmFree = 4617,
-        /// <summary><b>[requires: v2.0]</b> </summary>
-        /// <remarks>[originally: CL_COMMAND_SVM_MEMCPY]</remarks>
-        CommandSvmMemcpy = 4618,
-        /// <summary><b>[requires: v2.0]</b> </summary>
-        /// <remarks>[originally: CL_COMMAND_SVM_MEMFILL]</remarks>
-        CommandSvmMemfill = 4619,
-        /// <summary><b>[requires: v2.0]</b> </summary>
-        /// <remarks>[originally: CL_COMMAND_SVM_MAP]</remarks>
-        CommandSvmMap = 4620,
-        /// <summary><b>[requires: v2.0]</b> </summary>
-        /// <remarks>[originally: CL_COMMAND_SVM_UNMAP]</remarks>
-        CommandSvmUnmap = 4621,
-        /// <summary><b>[requires: v3.0]</b> </summary>
-        /// <remarks>[originally: CL_COMMAND_SVM_MIGRATE_MEM]</remarks>
-        CommandSvmMigrateMem = 4622,
-        /// <summary><b>[requires: v1.1]</b> </summary>
-        /// <remarks>[originally: CL_BUFFER_CREATE_TYPE_REGION]</remarks>
-        BufferCreateTypeRegion = 4640,
-        /// <summary><b>[requires: v1.0]</b> </summary>
-        /// <remarks>[originally: CL_PROFILING_COMMAND_QUEUED]</remarks>
-        ProfilingCommandQueued = 4736,
-        /// <summary><b>[requires: v1.0]</b> </summary>
-        /// <remarks>[originally: CL_PROFILING_COMMAND_SUBMIT]</remarks>
-        ProfilingCommandSubmit = 4737,
-        /// <summary><b>[requires: v1.0]</b> </summary>
-        /// <remarks>[originally: CL_PROFILING_COMMAND_START]</remarks>
-        ProfilingCommandStart = 4738,
-        /// <summary><b>[requires: v1.0]</b> </summary>
-        /// <remarks>[originally: CL_PROFILING_COMMAND_END]</remarks>
-        ProfilingCommandEnd = 4739,
-        /// <summary><b>[requires: v2.0]</b> </summary>
-        /// <remarks>[originally: CL_PROFILING_COMMAND_COMPLETE]</remarks>
-        ProfilingCommandComplete = 4740,
-        /// <summary><b>[requires: cl_ext_image_requirements_info]</b> </summary>
-        /// <remarks>[originally: CL_IMAGE_REQUIREMENTS_ROW_PITCH_ALIGNMENT_EXT]</remarks>
-        ImageRequirementsRowPitchAlignmentExt = 4752,
-        /// <summary><b>[requires: cl_ext_image_from_buffer]</b> </summary>
-        /// <remarks>[originally: CL_IMAGE_REQUIREMENTS_SLICE_PITCH_ALIGNMENT_EXT]</remarks>
-        ImageRequirementsSlicePitchAlignmentExt = 4753,
-        /// <summary><b>[requires: cl_ext_image_requirements_info]</b> </summary>
-        /// <remarks>[originally: CL_IMAGE_REQUIREMENTS_BASE_ADDRESS_ALIGNMENT_EXT]</remarks>
-        ImageRequirementsBaseAddressAlignmentExt = 4754,
-        /// <summary><b>[requires: cl_khr_command_buffer]</b> </summary>
-        /// <remarks>[originally: CL_COMMAND_BUFFER_FLAGS_KHR]</remarks>
-        CommandBufferFlagsKhr = 4755,
-        /// <summary><b>[requires: cl_khr_command_buffer]</b> </summary>
-        /// <remarks>[originally: CL_COMMAND_BUFFER_QUEUES_KHR]</remarks>
-        CommandBufferQueuesKhr = 4756,
-        /// <summary><b>[requires: cl_khr_command_buffer]</b> </summary>
-        /// <remarks>[originally: CL_COMMAND_BUFFER_NUM_QUEUES_KHR]</remarks>
-        CommandBufferNumQueuesKhr = 4757,
-        /// <summary><b>[requires: cl_khr_command_buffer]</b> </summary>
-        /// <remarks>[originally: CL_COMMAND_BUFFER_REFERENCE_COUNT_KHR]</remarks>
-        CommandBufferReferenceCountKhr = 4758,
-        /// <summary><b>[requires: cl_khr_command_buffer]</b> </summary>
-        /// <remarks>[originally: CL_COMMAND_BUFFER_STATE_KHR]</remarks>
-        CommandBufferStateKhr = 4759,
-        /// <summary><b>[requires: cl_khr_command_buffer]</b> </summary>
-        /// <remarks>[originally: CL_COMMAND_BUFFER_PROPERTIES_ARRAY_KHR]</remarks>
-        CommandBufferPropertiesArrayKhr = 4760,
-        /// <summary><b>[requires: cl_khr_command_buffer]</b> </summary>
-        /// <remarks>[originally: CL_COMMAND_BUFFER_CONTEXT_KHR]</remarks>
-        CommandBufferContextKhr = 4761,
         /// <summary><b>[requires: cl_khr_command_buffer]</b> </summary>
         /// <remarks>[originally: CL_DEVICE_COMMAND_BUFFER_SUPPORTED_QUEUE_PROPERTIES_KHR]</remarks>
         DeviceCommandBufferSupportedQueuePropertiesKhr = 4762,
-        /// <summary><b>[requires: cl_khr_command_buffer_mutable_dispatch]</b> </summary>
-        /// <remarks>[originally: CL_MUTABLE_COMMAND_COMMAND_QUEUE_KHR]</remarks>
-        MutableCommandCommandQueueKhr = 4768,
-        /// <summary><b>[requires: cl_khr_command_buffer_mutable_dispatch]</b> </summary>
-        /// <remarks>[originally: CL_MUTABLE_COMMAND_COMMAND_BUFFER_KHR]</remarks>
-        MutableCommandCommandBufferKhr = 4769,
-        /// <summary><b>[requires: cl_khr_command_buffer_mutable_dispatch]</b> </summary>
-        /// <remarks>[originally: CL_MUTABLE_COMMAND_PROPERTIES_ARRAY_KHR]</remarks>
-        MutableCommandPropertiesArrayKhr = 4770,
-        /// <summary><b>[requires: cl_khr_command_buffer_mutable_dispatch]</b> </summary>
-        /// <remarks>[originally: CL_MUTABLE_DISPATCH_KERNEL_KHR]</remarks>
-        MutableDispatchKernelKhr = 4771,
-        /// <summary><b>[requires: cl_khr_command_buffer_mutable_dispatch]</b> </summary>
-        /// <remarks>[originally: CL_MUTABLE_DISPATCH_DIMENSIONS_KHR]</remarks>
-        MutableDispatchDimensionsKhr = 4772,
-        /// <summary><b>[requires: cl_khr_command_buffer_mutable_dispatch]</b> </summary>
-        /// <remarks>[originally: CL_MUTABLE_DISPATCH_GLOBAL_WORK_OFFSET_KHR]</remarks>
-        MutableDispatchGlobalWorkOffsetKhr = 4773,
-        /// <summary><b>[requires: cl_khr_command_buffer_mutable_dispatch]</b> </summary>
-        /// <remarks>[originally: CL_MUTABLE_DISPATCH_GLOBAL_WORK_SIZE_KHR]</remarks>
-        MutableDispatchGlobalWorkSizeKhr = 4774,
-        /// <summary><b>[requires: cl_khr_command_buffer_mutable_dispatch]</b> </summary>
-        /// <remarks>[originally: CL_MUTABLE_DISPATCH_LOCAL_WORK_SIZE_KHR]</remarks>
-        MutableDispatchLocalWorkSizeKhr = 4775,
-        /// <summary><b>[requires: cl_khr_command_buffer]</b> </summary>
-        /// <remarks>[originally: CL_COMMAND_COMMAND_BUFFER_KHR]</remarks>
-        CommandCommandBufferKhr = 4776,
         /// <summary><b>[requires: cl_khr_command_buffer]</b> </summary>
         /// <remarks>[originally: CL_DEVICE_COMMAND_BUFFER_CAPABILITIES_KHR]</remarks>
         DeviceCommandBufferCapabilitiesKhr = 4777,
@@ -5084,35 +5006,8 @@ namespace OpenTK.Compute2.OpenCL
         /// <remarks>[originally: CL_DEVICE_COMMAND_BUFFER_SYNC_DEVICES_KHR]</remarks>
         DeviceCommandBufferSyncDevicesKhr = 4780,
         /// <summary><b>[requires: cl_khr_command_buffer_mutable_dispatch]</b> </summary>
-        /// <remarks>[originally: CL_MUTABLE_COMMAND_COMMAND_TYPE_KHR]</remarks>
-        MutableCommandCommandTypeKhr = 4781,
-        /// <summary><b>[requires: cl_khr_command_buffer_mutable_dispatch]</b> </summary>
         /// <remarks>[originally: CL_DEVICE_MUTABLE_DISPATCH_CAPABILITIES_KHR]</remarks>
         DeviceMutableDispatchCapabilitiesKhr = 4784,
-        /// <summary><b>[requires: cl_khr_command_buffer_mutable_dispatch]</b> </summary>
-        /// <remarks>[originally: CL_MUTABLE_DISPATCH_UPDATABLE_FIELDS_KHR]</remarks>
-        MutableDispatchUpdatableFieldsKhr = 4785,
-        /// <summary><b>[requires: cl_ext_image_requirements_info]</b> </summary>
-        /// <remarks>[originally: CL_IMAGE_REQUIREMENTS_SIZE_EXT]</remarks>
-        ImageRequirementsSizeExt = 4786,
-        /// <summary><b>[requires: cl_ext_image_requirements_info]</b> </summary>
-        /// <remarks>[originally: CL_IMAGE_REQUIREMENTS_MAX_WIDTH_EXT]</remarks>
-        ImageRequirementsMaxWidthExt = 4787,
-        /// <summary><b>[requires: cl_ext_image_requirements_info]</b> </summary>
-        /// <remarks>[originally: CL_IMAGE_REQUIREMENTS_MAX_HEIGHT_EXT]</remarks>
-        ImageRequirementsMaxHeightExt = 4788,
-        /// <summary><b>[requires: cl_ext_image_requirements_info]</b> </summary>
-        /// <remarks>[originally: CL_IMAGE_REQUIREMENTS_MAX_DEPTH_EXT]</remarks>
-        ImageRequirementsMaxDepthExt = 4789,
-        /// <summary><b>[requires: cl_ext_image_requirements_info]</b> </summary>
-        /// <remarks>[originally: CL_IMAGE_REQUIREMENTS_MAX_ARRAY_SIZE_EXT]</remarks>
-        ImageRequirementsMaxArraySizeExt = 4790,
-        /// <summary><b>[requires: cl_khr_command_buffer_mutable_dispatch]</b> </summary>
-        /// <remarks>[originally: CL_COMMAND_BUFFER_MUTABLE_DISPATCH_ASSERTS_KHR]</remarks>
-        CommandBufferMutableDispatchAssertsKhr = 4791,
-        /// <summary><b>[requires: cl_khr_command_buffer_mutable_dispatch]</b> </summary>
-        /// <remarks>[originally: CL_MUTABLE_DISPATCH_ASSERTS_KHR]</remarks>
-        MutableDispatchAssertsKhr = 4792,
         /// <summary><b>[requires: v3.1]</b> </summary>
         /// <remarks>[originally: CL_DEVICE_SPIRV_EXTENDED_INSTRUCTION_SETS]</remarks>
         DeviceSpirvExtendedInstructionSets = 4793,
@@ -5131,6 +5026,255 @@ namespace OpenTK.Compute2.OpenCL
         /// <summary><b>[requires: cl_khr_spirv_queries]</b> </summary>
         /// <remarks>[originally: CL_DEVICE_SPIRV_CAPABILITIES_KHR]</remarks>
         DeviceSpirvCapabilitiesKhr = 4795,
+        /// <summary><b>[requires: cl_khr_terminate_context]</b> </summary>
+        /// <remarks>[originally: CL_DEVICE_TERMINATE_CAPABILITY_KHR]</remarks>
+        DeviceTerminateCapabilityKhr = 8241,
+        /// <summary><b>[requires: cl_khr_subgroup_named_barrier]</b> </summary>
+        /// <remarks>[originally: CL_DEVICE_MAX_NAMED_BARRIER_COUNT_KHR]</remarks>
+        DeviceMaxNamedBarrierCountKhr = 8245,
+        /// <summary><b>[requires: cl_khr_semaphore]</b> </summary>
+        /// <remarks>[originally: CL_DEVICE_SEMAPHORE_TYPES_KHR]</remarks>
+        DeviceSemaphoreTypesKhr = 8268,
+        /// <summary><b>[requires: cl_khr_external_semaphore]</b> </summary>
+        /// <remarks>[originally: CL_DEVICE_SEMAPHORE_IMPORT_HANDLE_TYPES_KHR]</remarks>
+        DeviceSemaphoreImportHandleTypesKhr = 8269,
+        /// <summary><b>[requires: cl_khr_external_semaphore]</b> </summary>
+        /// <remarks>[originally: CL_DEVICE_SEMAPHORE_EXPORT_HANDLE_TYPES_KHR]</remarks>
+        DeviceSemaphoreExportHandleTypesKhr = 8270,
+        /// <summary><b>[requires: cl_khr_external_memory]</b> </summary>
+        /// <remarks>[originally: CL_DEVICE_EXTERNAL_MEMORY_IMPORT_HANDLE_TYPES_KHR]</remarks>
+        DeviceExternalMemoryImportHandleTypesKhr = 8271,
+        /// <summary><b>[requires: cl_khr_external_memory]</b> </summary>
+        /// <remarks>[originally: CL_DEVICE_EXTERNAL_MEMORY_IMPORT_ASSUME_LINEAR_IMAGES_HANDLE_TYPES_KHR]</remarks>
+        DeviceExternalMemoryImportAssumeLinearImagesHandleTypesKhr = 8274,
+        /// <summary><b>[requires: cl_nv_device_attribute_query]</b> </summary>
+        /// <remarks>[originally: CL_DEVICE_COMPUTE_CAPABILITY_MAJOR_NV]</remarks>
+        DeviceComputeCapabilityMajorNv = 16384,
+        /// <summary><b>[requires: cl_nv_device_attribute_query]</b> </summary>
+        /// <remarks>[originally: CL_DEVICE_COMPUTE_CAPABILITY_MINOR_NV]</remarks>
+        DeviceComputeCapabilityMinorNv = 16385,
+        /// <summary><b>[requires: cl_nv_device_attribute_query]</b> </summary>
+        /// <remarks>[originally: CL_DEVICE_REGISTERS_PER_BLOCK_NV]</remarks>
+        DeviceRegistersPerBlockNv = 16386,
+        /// <summary><b>[requires: cl_nv_device_attribute_query]</b> </summary>
+        /// <remarks>[originally: CL_DEVICE_WARP_SIZE_NV]</remarks>
+        DeviceWarpSizeNv = 16387,
+        /// <summary><b>[requires: cl_nv_device_attribute_query]</b> </summary>
+        /// <remarks>[originally: CL_DEVICE_GPU_OVERLAP_NV]</remarks>
+        DeviceGpuOverlapNv = 16388,
+        /// <summary><b>[requires: cl_nv_device_attribute_query]</b> </summary>
+        /// <remarks>[originally: CL_DEVICE_KERNEL_EXEC_TIMEOUT_NV]</remarks>
+        DeviceKernelExecTimeoutNv = 16389,
+        /// <summary><b>[requires: cl_nv_device_attribute_query]</b> </summary>
+        /// <remarks>[originally: CL_DEVICE_INTEGRATED_MEMORY_NV]</remarks>
+        DeviceIntegratedMemoryNv = 16390,
+        /// <summary><b>[requires: cl_amd_device_attribute_query]</b> </summary>
+        /// <remarks>[originally: CL_DEVICE_PREFERRED_WORK_GROUP_SIZE_AMD]</remarks>
+        DevicePreferredWorkGroupSizeAmd = 16432,
+        /// <summary><b>[requires: cl_amd_device_attribute_query]</b> </summary>
+        /// <remarks>[originally: CL_DEVICE_MAX_WORK_GROUP_SIZE_AMD]</remarks>
+        DeviceMaxWorkGroupSizeAmd = 16433,
+        /// <summary><b>[requires: cl_amd_device_attribute_query]</b> </summary>
+        /// <remarks>[originally: CL_DEVICE_PREFERRED_CONSTANT_BUFFER_SIZE_AMD]</remarks>
+        DevicePreferredConstantBufferSizeAmd = 16435,
+        /// <summary><b>[requires: cl_amd_device_attribute_query]</b> </summary>
+        /// <remarks>[originally: CL_DEVICE_PCIE_ID_AMD]</remarks>
+        DevicePcieIdAmd = 16436,
+        /// <summary><b>[requires: cl_amd_device_attribute_query]</b> </summary>
+        /// <remarks>[originally: CL_DEVICE_PROFILING_TIMER_OFFSET_AMD]</remarks>
+        DeviceProfilingTimerOffsetAmd = 16438,
+        /// <summary><b>[requires: cl_amd_device_attribute_query]</b> </summary>
+        /// <remarks>[originally: CL_DEVICE_TOPOLOGY_AMD]</remarks>
+        DeviceTopologyAmd = 16439,
+        /// <summary><b>[requires: cl_amd_device_attribute_query]</b> </summary>
+        /// <remarks>[originally: CL_DEVICE_BOARD_NAME_AMD]</remarks>
+        DeviceBoardNameAmd = 16440,
+        /// <summary><b>[requires: cl_amd_device_attribute_query]</b> </summary>
+        /// <remarks>[originally: CL_DEVICE_GLOBAL_FREE_MEMORY_AMD]</remarks>
+        DeviceGlobalFreeMemoryAmd = 16441,
+        /// <summary><b>[requires: cl_amd_device_attribute_query]</b> </summary>
+        /// <remarks>[originally: CL_DEVICE_SIMD_PER_COMPUTE_UNIT_AMD]</remarks>
+        DeviceSimdPerComputeUnitAmd = 16448,
+        /// <summary><b>[requires: cl_amd_device_attribute_query]</b> </summary>
+        /// <remarks>[originally: CL_DEVICE_SIMD_WIDTH_AMD]</remarks>
+        DeviceSimdWidthAmd = 16449,
+        /// <summary><b>[requires: cl_amd_device_attribute_query]</b> </summary>
+        /// <remarks>[originally: CL_DEVICE_SIMD_INSTRUCTION_WIDTH_AMD]</remarks>
+        DeviceSimdInstructionWidthAmd = 16450,
+        /// <summary><b>[requires: cl_amd_device_attribute_query]</b> </summary>
+        /// <remarks>[originally: CL_DEVICE_WAVEFRONT_WIDTH_AMD]</remarks>
+        DeviceWavefrontWidthAmd = 16451,
+        /// <summary><b>[requires: cl_amd_device_attribute_query]</b> </summary>
+        /// <remarks>[originally: CL_DEVICE_GLOBAL_MEM_CHANNELS_AMD]</remarks>
+        DeviceGlobalMemChannelsAmd = 16452,
+        /// <summary><b>[requires: cl_amd_device_attribute_query]</b> </summary>
+        /// <remarks>[originally: CL_DEVICE_GLOBAL_MEM_CHANNEL_BANKS_AMD]</remarks>
+        DeviceGlobalMemChannelBanksAmd = 16453,
+        /// <summary><b>[requires: cl_amd_device_attribute_query]</b> </summary>
+        /// <remarks>[originally: CL_DEVICE_GLOBAL_MEM_CHANNEL_BANK_WIDTH_AMD]</remarks>
+        DeviceGlobalMemChannelBankWidthAmd = 16454,
+        /// <summary><b>[requires: cl_amd_device_attribute_query]</b> </summary>
+        /// <remarks>[originally: CL_DEVICE_LOCAL_MEM_SIZE_PER_COMPUTE_UNIT_AMD]</remarks>
+        DeviceLocalMemSizePerComputeUnitAmd = 16455,
+        /// <summary><b>[requires: cl_amd_device_attribute_query]</b> </summary>
+        /// <remarks>[originally: CL_DEVICE_LOCAL_MEM_BANKS_AMD]</remarks>
+        DeviceLocalMemBanksAmd = 16456,
+        /// <summary><b>[requires: cl_amd_device_attribute_query]</b> </summary>
+        /// <remarks>[originally: CL_DEVICE_THREAD_TRACE_SUPPORTED_AMD]</remarks>
+        DeviceThreadTraceSupportedAmd = 16457,
+        /// <summary><b>[requires: cl_amd_device_attribute_query]</b> </summary>
+        /// <remarks>[originally: CL_DEVICE_GFXIP_MAJOR_AMD]</remarks>
+        DeviceGfxipMajorAmd = 16458,
+        /// <summary><b>[requires: cl_amd_device_attribute_query]</b> </summary>
+        /// <remarks>[originally: CL_DEVICE_GFXIP_MINOR_AMD]</remarks>
+        DeviceGfxipMinorAmd = 16459,
+        /// <summary><b>[requires: cl_amd_device_attribute_query]</b> </summary>
+        /// <remarks>[originally: CL_DEVICE_AVAILABLE_ASYNC_QUEUES_AMD]</remarks>
+        DeviceAvailableAsyncQueuesAmd = 16460,
+        /// <summary><b>[requires: cl_ext_device_fission]</b> </summary>
+        /// <remarks>[originally: CL_DEVICE_PARENT_DEVICE_EXT]</remarks>
+        DeviceParentDeviceExt = 16468,
+        /// <summary><b>[requires: cl_ext_device_fission]</b> </summary>
+        /// <remarks>[originally: CL_DEVICE_PARTITION_TYPES_EXT]</remarks>
+        DevicePartitionTypesExt = 16469,
+        /// <summary><b>[requires: cl_ext_device_fission]</b> </summary>
+        /// <remarks>[originally: CL_DEVICE_AFFINITY_DOMAINS_EXT]</remarks>
+        DeviceAffinityDomainsExt = 16470,
+        /// <summary><b>[requires: cl_ext_device_fission]</b> </summary>
+        /// <remarks>[originally: CL_DEVICE_REFERENCE_COUNT_EXT]</remarks>
+        DeviceReferenceCountExt = 16471,
+        /// <summary><b>[requires: cl_ext_device_fission]</b> </summary>
+        /// <remarks>[originally: CL_DEVICE_PARTITION_STYLE_EXT]</remarks>
+        DevicePartitionStyleExt = 16472,
+        /// <summary><b>[requires: cl_intel_advanced_motion_estimation]</b> </summary>
+        /// <remarks>[originally: CL_DEVICE_ME_VERSION_INTEL]</remarks>
+        DeviceMeVersionIntel = 16510,
+        /// <summary><b>[requires: cl_qcom_ext_host_ptr]</b> </summary>
+        /// <remarks>[originally: CL_DEVICE_EXT_MEM_PADDING_IN_BYTES_QCOM]</remarks>
+        DeviceExtMemPaddingInBytesQcom = 16544,
+        /// <summary><b>[requires: cl_qcom_ext_host_ptr]</b> </summary>
+        /// <remarks>[originally: CL_DEVICE_PAGE_SIZE_QCOM]</remarks>
+        DevicePageSizeQcom = 16545,
+        /// <summary><b>[requires: cl_arm_shared_virtual_memory]</b> </summary>
+        /// <remarks>[originally: CL_DEVICE_SVM_CAPABILITIES_ARM]</remarks>
+        DeviceSvmCapabilitiesArm = 16566,
+        /// <summary><b>[requires: cl_arm_shared_virtual_memory]</b> </summary>
+        /// <remarks>[originally: CL_MEM_USES_SVM_POINTER_ARM]</remarks>
+        MemUsesSvmPointerArm = 16567,
+        /// <summary><b>[requires: cl_arm_core_id]</b> </summary>
+        /// <remarks>[originally: CL_DEVICE_COMPUTE_UNITS_BITFIELD_ARM]</remarks>
+        DeviceComputeUnitsBitfieldArm = 16575,
+        /// <summary><b>[requires: cl_img_mem_properties]</b> </summary>
+        /// <remarks>[originally: CL_DEVICE_MEMORY_CAPABILITIES_IMG]</remarks>
+        DeviceMemoryCapabilitiesImg = 16600,
+        /// <summary><b>[requires: cl_img_safety_mechanisms]</b> </summary>
+        /// <remarks>[originally: CL_DEVICE_WORKGROUP_PROTECTION_SVM_CAPABILITIES_IMG]</remarks>
+        DeviceWorkgroupProtectionSvmCapabilitiesImg = 16602,
+        /// <summary><b>[requires: cl_img_safety_mechanisms]</b> </summary>
+        /// <remarks>[originally: CL_DEVICE_WORKGROUP_PROTECTION_DEVICE_ENQUEUE_CAPABILITIES_IMG]</remarks>
+        DeviceWorkgroupProtectionDeviceEnqueueCapabilitiesImg = 16603,
+        /// <summary><b>[requires: cl_img_safety_mechanisms]</b> </summary>
+        /// <remarks>[originally: CL_DEVICE_SAFETY_MEM_SIZE_IMG]</remarks>
+        DeviceSafetyMemSizeImg = 16604,
+        /// <summary><b>[requires: cl_khr_spir]</b> </summary>
+        /// <remarks>[originally: CL_DEVICE_SPIR_VERSIONS]</remarks>
+        DeviceSpirVersions = 16608,
+        /// <summary><b>[requires: cl_intel_simultaneous_sharing]</b> </summary>
+        /// <remarks>[originally: CL_DEVICE_SIMULTANEOUS_INTEROPS_INTEL]</remarks>
+        DeviceSimultaneousInteropsIntel = 16644,
+        /// <summary><b>[requires: cl_intel_simultaneous_sharing]</b> </summary>
+        /// <remarks>[originally: CL_DEVICE_NUM_SIMULTANEOUS_INTEROPS_INTEL]</remarks>
+        DeviceNumSimultaneousInteropsIntel = 16645,
+        /// <summary><b>[requires: cl_intel_required_subgroup_size]</b> </summary>
+        /// <remarks>[originally: CL_DEVICE_SUB_GROUP_SIZES_INTEL]</remarks>
+        DeviceSubGroupSizesIntel = 16648,
+        /// <summary><b>[requires: cl_intel_device_side_avc_motion_estimation]</b> </summary>
+        /// <remarks>[originally: CL_DEVICE_AVC_ME_VERSION_INTEL]</remarks>
+        DeviceAvcMeVersionIntel = 16651,
+        /// <summary><b>[requires: cl_intel_device_side_avc_motion_estimation]</b> </summary>
+        /// <remarks>[originally: CL_DEVICE_AVC_ME_SUPPORTS_TEXTURE_SAMPLER_USE_INTEL]</remarks>
+        DeviceAvcMeSupportsTextureSamplerUseIntel = 16652,
+        /// <summary><b>[requires: cl_intel_device_side_avc_motion_estimation]</b> </summary>
+        /// <remarks>[originally: CL_DEVICE_AVC_ME_SUPPORTS_PREEMPTION_INTEL]</remarks>
+        DeviceAvcMeSupportsPreemptionIntel = 16653,
+        /// <summary><b>[requires: cl_khr_pci_bus_info]</b> </summary>
+        /// <remarks>[originally: CL_DEVICE_PCI_BUS_INFO_KHR]</remarks>
+        DevicePciBusInfoKhr = 16655,
+        /// <summary><b>[requires: cl_intel_planar_yuv]</b> </summary>
+        /// <remarks>[originally: CL_DEVICE_PLANAR_YUV_MAX_WIDTH_INTEL]</remarks>
+        DevicePlanarYuvMaxWidthIntel = 16766,
+        /// <summary><b>[requires: cl_intel_planar_yuv]</b> </summary>
+        /// <remarks>[originally: CL_DEVICE_PLANAR_YUV_MAX_HEIGHT_INTEL]</remarks>
+        DevicePlanarYuvMaxHeightIntel = 16767,
+        /// <summary><b>[requires: cl_intel_command_queue_families]</b> </summary>
+        /// <remarks>[originally: CL_DEVICE_QUEUE_FAMILY_PROPERTIES_INTEL]</remarks>
+        DeviceQueueFamilyPropertiesIntel = 16779,
+        /// <summary><b>[requires: cl_intel_unified_shared_memory]</b> </summary>
+        /// <remarks>[originally: CL_DEVICE_HOST_MEM_CAPABILITIES_INTEL]</remarks>
+        DeviceHostMemCapabilitiesIntel = 16784,
+        /// <summary><b>[requires: cl_intel_unified_shared_memory]</b> </summary>
+        /// <remarks>[originally: CL_DEVICE_DEVICE_MEM_CAPABILITIES_INTEL]</remarks>
+        DeviceDeviceMemCapabilitiesIntel = 16785,
+        /// <summary><b>[requires: cl_intel_unified_shared_memory]</b> </summary>
+        /// <remarks>[originally: CL_DEVICE_SINGLE_DEVICE_SHARED_MEM_CAPABILITIES_INTEL]</remarks>
+        DeviceSingleDeviceSharedMemCapabilitiesIntel = 16786,
+        /// <summary><b>[requires: cl_intel_unified_shared_memory]</b> </summary>
+        /// <remarks>[originally: CL_DEVICE_CROSS_DEVICE_SHARED_MEM_CAPABILITIES_INTEL]</remarks>
+        DeviceCrossDeviceSharedMemCapabilitiesIntel = 16787,
+        /// <summary><b>[requires: cl_intel_unified_shared_memory]</b> </summary>
+        /// <remarks>[originally: CL_DEVICE_SHARED_SYSTEM_MEM_CAPABILITIES_INTEL]</remarks>
+        DeviceSharedSystemMemCapabilitiesIntel = 16788,
+        /// <summary><b>[requires: cl_arm_job_slot_selection]</b> </summary>
+        /// <remarks>[originally: CL_DEVICE_JOB_SLOTS_ARM]</remarks>
+        DeviceJobSlotsArm = 16864,
+        /// <summary><b>[requires: cl_arm_scheduling_controls]</b> </summary>
+        /// <remarks>[originally: CL_DEVICE_SCHEDULING_CONTROLS_CAPABILITIES_ARM]</remarks>
+        DeviceSchedulingControlsCapabilitiesArm = 16868,
+        /// <summary><b>[requires: cl_arm_scheduling_controls]</b> </summary>
+        /// <remarks>[originally: CL_DEVICE_MAX_WARP_COUNT_ARM]</remarks>
+        DeviceMaxWarpCountArm = 16874,
+        /// <summary><b>[requires: cl_arm_scheduling_controls]</b> </summary>
+        /// <remarks>[originally: CL_DEVICE_SUPPORTED_REGISTER_ALLOCATIONS_ARM]</remarks>
+        DeviceSupportedRegisterAllocationsArm = 16875,
+        /// <summary><b>[requires: cl_arm_controlled_kernel_termination]</b> </summary>
+        /// <remarks>[originally: CL_DEVICE_CONTROLLED_TERMINATION_CAPABILITIES_ARM]</remarks>
+        DeviceControlledTerminationCapabilitiesArm = 16878,
+        /// <summary><b>[requires: cl_img_scheduling_controls]</b> </summary>
+        /// <remarks>[originally: CL_DEVICE_SCHEDULING_CONTROLS_CAPABILITIES_IMG]</remarks>
+        DeviceSchedulingControlsCapabilitiesImg = 16930,
+        /// <summary><b>[requires: cl_ext_cxx_for_opencl]</b> </summary>
+        /// <remarks>[originally: CL_DEVICE_CXX_FOR_OPENCL_NUMERIC_VERSION_EXT]</remarks>
+        DeviceCxxForOpenclNumericVersionExt = 16944,
+        /// <summary><b>[requires: cl_ext_float_atomics]</b> </summary>
+        /// <remarks>[originally: CL_DEVICE_SINGLE_FP_ATOMIC_CAPABILITIES_EXT]</remarks>
+        DeviceSingleFpAtomicCapabilitiesExt = 16945,
+        /// <summary><b>[requires: cl_ext_float_atomics]</b> </summary>
+        /// <remarks>[originally: CL_DEVICE_DOUBLE_FP_ATOMIC_CAPABILITIES_EXT]</remarks>
+        DeviceDoubleFpAtomicCapabilitiesExt = 16946,
+        /// <summary><b>[requires: cl_ext_float_atomics]</b> </summary>
+        /// <remarks>[originally: CL_DEVICE_HALF_FP_ATOMIC_CAPABILITIES_EXT]</remarks>
+        DeviceHalfFpAtomicCapabilitiesExt = 16947,
+        /// <summary><b>[requires: cl_intel_device_attribute_query]</b> </summary>
+        /// <remarks>[originally: CL_DEVICE_IP_VERSION_INTEL]</remarks>
+        DeviceIpVersionIntel = 16976,
+        /// <summary><b>[requires: cl_intel_device_attribute_query]</b> </summary>
+        /// <remarks>[originally: CL_DEVICE_ID_INTEL]</remarks>
+        DeviceIdIntel = 16977,
+        /// <summary><b>[requires: cl_intel_device_attribute_query]</b> </summary>
+        /// <remarks>[originally: CL_DEVICE_NUM_SLICES_INTEL]</remarks>
+        DeviceNumSlicesIntel = 16978,
+        /// <summary><b>[requires: cl_intel_device_attribute_query]</b> </summary>
+        /// <remarks>[originally: CL_DEVICE_NUM_SUB_SLICES_PER_SLICE_INTEL]</remarks>
+        DeviceNumSubSlicesPerSliceIntel = 16979,
+        /// <summary><b>[requires: cl_intel_device_attribute_query]</b> </summary>
+        /// <remarks>[originally: CL_DEVICE_NUM_EUS_PER_SUB_SLICE_INTEL]</remarks>
+        DeviceNumEusPerSubSliceIntel = 16980,
+        /// <summary><b>[requires: cl_intel_device_attribute_query]</b> </summary>
+        /// <remarks>[originally: CL_DEVICE_NUM_THREADS_PER_EU_INTEL]</remarks>
+        DeviceNumThreadsPerEuIntel = 16981,
+        /// <summary><b>[requires: cl_intel_device_attribute_query]</b> </summary>
+        /// <remarks>[originally: CL_DEVICE_FEATURE_CAPABILITIES_INTEL]</remarks>
+        DeviceFeatureCapabilitiesIntel = 16982,
     }
     [Flags]
     public enum DeviceIntegerDotProductCapabilities : ulong
@@ -5185,6 +5329,36 @@ namespace OpenTK.Compute2.OpenCL
         /// <summary><b>[requires: v1.0]</b> </summary>
         /// <remarks>[originally: CL_READ_WRITE_CACHE]</remarks>
         ReadWriteCache = 2,
+    }
+    public enum DevicePartitionProperty : int
+    {
+        /// <summary><b>[requires: v1.2]</b> </summary>
+        /// <remarks>[originally: CL_DEVICE_PARTITION_EQUALLY]</remarks>
+        DevicePartitionEqually = 4230,
+        /// <summary><b>[requires: v1.2]</b> </summary>
+        /// <remarks>[originally: CL_DEVICE_PARTITION_BY_COUNTS]</remarks>
+        DevicePartitionByCounts = 4231,
+        /// <summary><b>[requires: v1.2]</b> </summary>
+        /// <remarks>[originally: CL_DEVICE_PARTITION_BY_AFFINITY_DOMAIN]</remarks>
+        DevicePartitionByAffinityDomain = 4232,
+        /// <summary><b>[requires: cl_intel_device_partition_by_names]</b> </summary>
+        /// <remarks>[originally: CL_DEVICE_PARTITION_BY_NAMES_INTEL]</remarks>
+        DevicePartitionByNamesIntel = 16466,
+    }
+    public enum DevicePartitionPropertyExt : ulong
+    {
+        /// <summary><b>[requires: cl_ext_device_fission]</b> </summary>
+        /// <remarks>[originally: CL_DEVICE_PARTITION_EQUALLY_EXT]</remarks>
+        DevicePartitionEquallyExt = 16464,
+        /// <summary><b>[requires: cl_ext_device_fission]</b> </summary>
+        /// <remarks>[originally: CL_DEVICE_PARTITION_BY_COUNTS_EXT]</remarks>
+        DevicePartitionByCountsExt = 16465,
+        /// <summary><b>[requires: cl_ext_device_fission]</b> </summary>
+        /// <remarks>[originally: CL_DEVICE_PARTITION_BY_NAMES_EXT]</remarks>
+        DevicePartitionByNamesExt = 16466,
+        /// <summary><b>[requires: cl_ext_device_fission]</b> </summary>
+        /// <remarks>[originally: CL_DEVICE_PARTITION_BY_AFFINITY_DOMAIN_EXT]</remarks>
+        DevicePartitionByAffinityDomainExt = 16467,
     }
     [Flags]
     public enum DeviceSchedulingControlsCapabilitiesArm : ulong
@@ -5316,11 +5490,59 @@ namespace OpenTK.Compute2.OpenCL
         /// <remarks>[originally: CL_CONTEXT_DIAGNOSTICS_LEVEL_ALL_INTEL]</remarks>
         ContextDiagnosticsLevelAllIntel = 255,
     }
+    public enum Dx9DeviceSetIntel : uint
+    {
+        /// <summary><b>[requires: cl_intel_dx9_media_sharing]</b> </summary>
+        /// <remarks>[originally: CL_PREFERRED_DEVICES_FOR_DX9_INTEL]</remarks>
+        PreferredDevicesForDx9Intel = 16420,
+        /// <summary><b>[requires: cl_intel_dx9_media_sharing]</b> </summary>
+        /// <remarks>[originally: CL_ALL_DEVICES_FOR_DX9_INTEL]</remarks>
+        AllDevicesForDx9Intel = 16421,
+    }
+    public enum Dx9DeviceSourceIntel : uint
+    {
+        /// <summary><b>[requires: cl_intel_dx9_media_sharing]</b> </summary>
+        /// <remarks>[originally: CL_D3D9_DEVICE_INTEL]</remarks>
+        D3D9DeviceIntel = 16418,
+        /// <summary><b>[requires: cl_intel_dx9_media_sharing]</b> </summary>
+        /// <remarks>[originally: CL_D3D9EX_DEVICE_INTEL]</remarks>
+        D3D9exDeviceIntel = 16496,
+        /// <summary><b>[requires: cl_intel_dx9_media_sharing]</b> </summary>
+        /// <remarks>[originally: CL_DXVA_DEVICE_INTEL]</remarks>
+        DxvaDeviceIntel = 16497,
+    }
+    public enum Dx9MediaAdapterSetKhr : uint
+    {
+        /// <summary><b>[requires: cl_khr_dx9_media_sharing]</b> </summary>
+        /// <remarks>[originally: CL_PREFERRED_DEVICES_FOR_DX9_MEDIA_ADAPTER_KHR]</remarks>
+        PreferredDevicesForDx9MediaAdapterKhr = 8227,
+        /// <summary><b>[requires: cl_khr_dx9_media_sharing]</b> </summary>
+        /// <remarks>[originally: CL_ALL_DEVICES_FOR_DX9_MEDIA_ADAPTER_KHR]</remarks>
+        AllDevicesForDx9MediaAdapterKhr = 8228,
+    }
+    public enum Dx9MediaAdapterTypeKhr : uint
+    {
+        /// <summary><b>[requires: cl_khr_dx9_media_sharing]</b> </summary>
+        /// <remarks>[originally: CL_ADAPTER_D3D9_KHR]</remarks>
+        AdapterD3D9Khr = 8224,
+        /// <summary><b>[requires: cl_khr_dx9_media_sharing]</b> </summary>
+        /// <remarks>[originally: CL_ADAPTER_D3D9EX_KHR]</remarks>
+        AdapterD3D9exKhr = 8225,
+        /// <summary><b>[requires: cl_khr_dx9_media_sharing]</b> </summary>
+        /// <remarks>[originally: CL_ADAPTER_DXVA_KHR]</remarks>
+        AdapterDxvaKhr = 8226,
+    }
     public enum ErrorCodes : int
     {
         /// <summary><b>[requires: v1.0]</b> </summary>
         /// <remarks>[originally: CL_SUCCESS]</remarks>
         Success = 0,
+        /// <summary><b>[requires: cl_img_use_gralloc_ptr]</b> </summary>
+        /// <remarks>[originally: CL_GRALLOC_RESOURCE_NOT_ACQUIRED_IMG]</remarks>
+        GrallocResourceNotAcquiredImg = 16596,
+        /// <summary><b>[requires: cl_img_use_gralloc_ptr]</b> </summary>
+        /// <remarks>[originally: CL_INVALID_GRALLOC_OBJECT_IMG]</remarks>
+        InvalidGrallocObjectImg = 16597,
         /// <summary><b>[requires: cl_khr_semaphore]</b> </summary>
         /// <remarks>[originally: CL_INVALID_SEMAPHORE_KHR]</remarks>
         InvalidSemaphoreKhr = -1142,
@@ -5637,6 +5859,126 @@ namespace OpenTK.Compute2.OpenCL
         /// <remarks>[originally: CL_DEVICE_NOT_FOUND]</remarks>
         DeviceNotFound = -1,
     }
+    public enum EventInfo : uint
+    {
+        /// <summary><b>[requires: v1.0]</b> </summary>
+        /// <remarks>[originally: CL_EVENT_COMMAND_QUEUE]</remarks>
+        EventCommandQueue = 4560,
+        /// <summary><b>[requires: v1.0]</b> </summary>
+        /// <remarks>[originally: CL_EVENT_COMMAND_TYPE]</remarks>
+        EventCommandType = 4561,
+        /// <summary><b>[requires: v1.0]</b> </summary>
+        /// <remarks>[originally: CL_EVENT_REFERENCE_COUNT]</remarks>
+        EventReferenceCount = 4562,
+        /// <summary><b>[requires: v1.0]</b> </summary>
+        /// <remarks>[originally: CL_EVENT_COMMAND_EXECUTION_STATUS]</remarks>
+        EventCommandExecutionStatus = 4563,
+        /// <summary><b>[requires: v1.1]</b> </summary>
+        /// <remarks>[originally: CL_EVENT_CONTEXT]</remarks>
+        EventContext = 4564,
+        /// <summary><b>[requires: cl_arm_controlled_kernel_termination]</b> </summary>
+        /// <remarks>[originally: CL_EVENT_COMMAND_TERMINATION_REASON_ARM]</remarks>
+        EventCommandTerminationReasonArm = 16877,
+    }
+    public enum ExternalMemoryHandleTypeKhr : uint
+    {
+        /// <summary><b>[requires: cl_khr_external_memory_opaque_fd]</b> </summary>
+        /// <remarks>[originally: CL_EXTERNAL_MEMORY_HANDLE_OPAQUE_FD_KHR]</remarks>
+        ExternalMemoryHandleOpaqueFdKhr = 8288,
+        /// <summary><b>[requires: cl_khr_external_memory_win32]</b> </summary>
+        /// <remarks>[originally: CL_EXTERNAL_MEMORY_HANDLE_OPAQUE_WIN32_KHR]</remarks>
+        ExternalMemoryHandleOpaqueWin32Khr = 8289,
+        /// <summary><b>[requires: cl_khr_external_memory_win32]</b> </summary>
+        /// <remarks>[originally: CL_EXTERNAL_MEMORY_HANDLE_OPAQUE_WIN32_KMT_KHR]</remarks>
+        ExternalMemoryHandleOpaqueWin32KmtKhr = 8290,
+        /// <summary><b>[requires: cl_khr_external_memory_dma_buf]</b> </summary>
+        /// <remarks>[originally: CL_EXTERNAL_MEMORY_HANDLE_DMA_BUF_KHR]</remarks>
+        ExternalMemoryHandleDmaBufKhr = 8295,
+        /// <summary><b>[requires: cl_khr_external_memory_win32]</b> </summary>
+        /// <remarks>[originally: CL_EXTERNAL_MEMORY_HANDLE_OPAQUE_WIN32_NAME_KHR]</remarks>
+        ExternalMemoryHandleOpaqueWin32NameKhr = 8297,
+        /// <summary><b>[requires: cl_khr_external_memory_android_hardware_buffer]</b> </summary>
+        /// <remarks>[originally: CL_EXTERNAL_MEMORY_HANDLE_ANDROID_HARDWARE_BUFFER_KHR]</remarks>
+        ExternalMemoryHandleAndroidHardwareBufferKhr = 8304,
+    }
+    public enum ExternalSemaphoreHandleTypeKhr : uint
+    {
+        /// <summary><b>[requires: cl_khr_external_semaphore_opaque_fd]</b> </summary>
+        /// <remarks>[originally: CL_SEMAPHORE_HANDLE_OPAQUE_FD_KHR]</remarks>
+        SemaphoreHandleOpaqueFdKhr = 8277,
+        /// <summary><b>[requires: cl_khr_external_semaphore_win32]</b> </summary>
+        /// <remarks>[originally: CL_SEMAPHORE_HANDLE_OPAQUE_WIN32_KHR]</remarks>
+        SemaphoreHandleOpaqueWin32Khr = 8278,
+        /// <summary><b>[requires: cl_khr_external_semaphore_win32]</b> </summary>
+        /// <remarks>[originally: CL_SEMAPHORE_HANDLE_OPAQUE_WIN32_KMT_KHR]</remarks>
+        SemaphoreHandleOpaqueWin32KmtKhr = 8279,
+        /// <summary><b>[requires: cl_khr_external_semaphore_sync_fd]</b> </summary>
+        /// <remarks>[originally: CL_SEMAPHORE_HANDLE_SYNC_FD_KHR]</remarks>
+        SemaphoreHandleSyncFdKhr = 8280,
+        /// <summary><b>[requires: cl_khr_external_semaphore_dx_fence]</b> </summary>
+        /// <remarks>[originally: CL_SEMAPHORE_HANDLE_D3D12_FENCE_KHR]</remarks>
+        SemaphoreHandleD3D12FenceKhr = 8281,
+        /// <summary><b>[requires: cl_khr_external_semaphore_win32]</b> </summary>
+        /// <remarks>[originally: CL_SEMAPHORE_HANDLE_OPAQUE_WIN32_NAME_KHR]</remarks>
+        SemaphoreHandleOpaqueWin32NameKhr = 8296,
+    }
+    public enum FilterMode : uint
+    {
+        /// <summary><b>[requires: v1.0]</b> </summary>
+        /// <remarks>[originally: CL_FILTER_NEAREST]</remarks>
+        FilterNearest = 4416,
+        /// <summary><b>[requires: v1.0]</b> </summary>
+        /// <remarks>[originally: CL_FILTER_LINEAR]</remarks>
+        FilterLinear = 4417,
+    }
+    public enum GlContextInfo : uint
+    {
+        /// <summary><b>[requires: cl_khr_gl_sharing]</b> </summary>
+        /// <remarks>[originally: CL_CURRENT_DEVICE_FOR_GL_CONTEXT_KHR]</remarks>
+        CurrentDeviceForGlContextKhr = 8198,
+        /// <summary><b>[requires: cl_khr_gl_sharing]</b> </summary>
+        /// <remarks>[originally: CL_DEVICES_FOR_GL_CONTEXT_KHR]</remarks>
+        DevicesForGlContextKhr = 8199,
+    }
+    public enum GlObjectType : uint
+    {
+        /// <summary><b>[requires: cl_khr_gl_sharing]</b> </summary>
+        /// <remarks>[originally: CL_GL_OBJECT_BUFFER]</remarks>
+        GlObjectBuffer = 8192,
+        /// <summary><b>[requires: cl_khr_gl_sharing]</b> </summary>
+        /// <remarks>[originally: CL_GL_OBJECT_TEXTURE2D]</remarks>
+        GlObjectTexture2D = 8193,
+        /// <summary><b>[requires: cl_khr_gl_sharing]</b> </summary>
+        /// <remarks>[originally: CL_GL_OBJECT_TEXTURE3D]</remarks>
+        GlObjectTexture3D = 8194,
+        /// <summary><b>[requires: cl_khr_gl_sharing]</b> </summary>
+        /// <remarks>[originally: CL_GL_OBJECT_RENDERBUFFER]</remarks>
+        GlObjectRenderbuffer = 8195,
+        /// <summary><b>[requires: cl_khr_gl_sharing]</b> </summary>
+        /// <remarks>[originally: CL_GL_OBJECT_TEXTURE2D_ARRAY]</remarks>
+        GlObjectTexture2DArray = 8206,
+        /// <summary><b>[requires: cl_khr_gl_sharing]</b> </summary>
+        /// <remarks>[originally: CL_GL_OBJECT_TEXTURE1D]</remarks>
+        GlObjectTexture1D = 8207,
+        /// <summary><b>[requires: cl_khr_gl_sharing]</b> </summary>
+        /// <remarks>[originally: CL_GL_OBJECT_TEXTURE1D_ARRAY]</remarks>
+        GlObjectTexture1DArray = 8208,
+        /// <summary><b>[requires: cl_khr_gl_sharing]</b> </summary>
+        /// <remarks>[originally: CL_GL_OBJECT_TEXTURE_BUFFER]</remarks>
+        GlObjectTextureBuffer = 8209,
+    }
+    public enum GlTextureInfo : uint
+    {
+        /// <summary><b>[requires: cl_khr_gl_sharing]</b> </summary>
+        /// <remarks>[originally: CL_GL_TEXTURE_TARGET]</remarks>
+        GlTextureTarget = 8196,
+        /// <summary><b>[requires: cl_khr_gl_sharing]</b> </summary>
+        /// <remarks>[originally: CL_GL_MIPMAP_LEVEL]</remarks>
+        GlMipmapLevel = 8197,
+        /// <summary><b>[requires: cl_khr_gl_msaa_sharing]</b> </summary>
+        /// <remarks>[originally: CL_GL_NUM_SAMPLES]</remarks>
+        GlNumSamples = 8210,
+    }
     public enum IcdlInfo : uint
     {
         /// <summary><b>[requires: cl_loader_info]</b> </summary>
@@ -5651,6 +5993,180 @@ namespace OpenTK.Compute2.OpenCL
         /// <summary><b>[requires: cl_loader_info]</b> </summary>
         /// <remarks>[originally: CL_ICDL_VENDOR]</remarks>
         IcdlVendor = 4,
+    }
+    public enum ImageInfo : uint
+    {
+        /// <summary><b>[requires: v1.0]</b> </summary>
+        /// <remarks>[originally: CL_IMAGE_FORMAT]</remarks>
+        ImageFormat = 4368,
+        /// <summary><b>[requires: v1.0]</b> </summary>
+        /// <remarks>[originally: CL_IMAGE_ELEMENT_SIZE]</remarks>
+        ImageElementSize = 4369,
+        /// <summary><b>[requires: v1.0]</b> </summary>
+        /// <remarks>[originally: CL_IMAGE_ROW_PITCH]</remarks>
+        ImageRowPitch = 4370,
+        /// <summary><b>[requires: v1.0]</b> </summary>
+        /// <remarks>[originally: CL_IMAGE_SLICE_PITCH]</remarks>
+        ImageSlicePitch = 4371,
+        /// <summary><b>[requires: v1.0]</b> </summary>
+        /// <remarks>[originally: CL_IMAGE_WIDTH]</remarks>
+        ImageWidth = 4372,
+        /// <summary><b>[requires: v1.0]</b> </summary>
+        /// <remarks>[originally: CL_IMAGE_HEIGHT]</remarks>
+        ImageHeight = 4373,
+        /// <summary><b>[requires: v1.0]</b> </summary>
+        /// <remarks>[originally: CL_IMAGE_DEPTH]</remarks>
+        ImageDepth = 4374,
+        /// <summary><b>[requires: v1.2]</b> </summary>
+        /// <remarks>[originally: CL_IMAGE_ARRAY_SIZE]</remarks>
+        ImageArraySize = 4375,
+        /// <summary><b>[requires: v1.2]</b> </summary>
+        /// <remarks>[originally: CL_IMAGE_BUFFER]</remarks>
+        ImageBuffer = 4376,
+        /// <summary><b>[requires: v1.2]</b> </summary>
+        /// <remarks>[originally: CL_IMAGE_NUM_MIP_LEVELS]</remarks>
+        ImageNumMipLevels = 4377,
+        /// <summary><b>[requires: v1.2]</b> </summary>
+        /// <remarks>[originally: CL_IMAGE_NUM_SAMPLES]</remarks>
+        ImageNumSamples = 4378,
+        /// <summary><b>[requires: cl_khr_dx9_media_sharing]</b> </summary>
+        /// <remarks>[originally: CL_IMAGE_DX9_MEDIA_PLANE_KHR]</remarks>
+        ImageDx9MediaPlaneKhr = 8234,
+        /// <summary><b>[requires: cl_khr_d3d10_sharing]</b> </summary>
+        /// <remarks>[originally: CL_IMAGE_D3D10_SUBRESOURCE_KHR]</remarks>
+        ImageD3D10SubresourceKhr = 16406,
+        /// <summary><b>[requires: cl_khr_d3d11_sharing]</b> </summary>
+        /// <remarks>[originally: CL_IMAGE_D3D11_SUBRESOURCE_KHR]</remarks>
+        ImageD3D11SubresourceKhr = 16415,
+        /// <summary><b>[requires: cl_intel_dx9_media_sharing]</b> </summary>
+        /// <remarks>[originally: CL_IMAGE_DX9_PLANE_INTEL]</remarks>
+        ImageDx9PlaneIntel = 16501,
+        /// <summary><b>[requires: cl_intel_va_api_media_sharing]</b> </summary>
+        /// <remarks>[originally: CL_IMAGE_VA_API_PLANE_INTEL]</remarks>
+        ImageVaApiPlaneIntel = 16537,
+        /// <summary><b>[requires: cl_intel_egl_image_yuv]</b> </summary>
+        /// <remarks>[originally: CL_EGL_YUV_PLANE_INTEL]</remarks>
+        EglYuvPlaneIntel = 16647,
+    }
+    public enum ImagePitchInfoQcom : uint
+    {
+        /// <summary><b>[requires: v1.0]</b> </summary>
+        /// <remarks>[originally: CL_IMAGE_ROW_PITCH]</remarks>
+        ImageRowPitch = 4370,
+        /// <summary><b>[requires: v1.0]</b> </summary>
+        /// <remarks>[originally: CL_IMAGE_SLICE_PITCH]</remarks>
+        ImageSlicePitch = 4371,
+        /// <summary><b>[requires: cl_qcom_ext_host_ptr]</b> </summary>
+        /// <remarks>[originally: CL_IMAGE_ROW_ALIGNMENT_QCOM]</remarks>
+        ImageRowAlignmentQcom = 16546,
+        /// <summary><b>[requires: cl_qcom_ext_host_ptr]</b> </summary>
+        /// <remarks>[originally: CL_IMAGE_SLICE_ALIGNMENT_QCOM]</remarks>
+        ImageSliceAlignmentQcom = 16547,
+    }
+    public enum ImageRequirementsInfoExt : uint
+    {
+        /// <summary><b>[requires: cl_ext_image_requirements_info]</b> </summary>
+        /// <remarks>[originally: CL_IMAGE_REQUIREMENTS_ROW_PITCH_ALIGNMENT_EXT]</remarks>
+        ImageRequirementsRowPitchAlignmentExt = 4752,
+        /// <summary><b>[requires: cl_ext_image_from_buffer]</b> </summary>
+        /// <remarks>[originally: CL_IMAGE_REQUIREMENTS_SLICE_PITCH_ALIGNMENT_EXT]</remarks>
+        ImageRequirementsSlicePitchAlignmentExt = 4753,
+        /// <summary><b>[requires: cl_ext_image_requirements_info]</b> </summary>
+        /// <remarks>[originally: CL_IMAGE_REQUIREMENTS_BASE_ADDRESS_ALIGNMENT_EXT]</remarks>
+        ImageRequirementsBaseAddressAlignmentExt = 4754,
+        /// <summary><b>[requires: cl_ext_image_requirements_info]</b> </summary>
+        /// <remarks>[originally: CL_IMAGE_REQUIREMENTS_SIZE_EXT]</remarks>
+        ImageRequirementsSizeExt = 4786,
+        /// <summary><b>[requires: cl_ext_image_requirements_info]</b> </summary>
+        /// <remarks>[originally: CL_IMAGE_REQUIREMENTS_MAX_WIDTH_EXT]</remarks>
+        ImageRequirementsMaxWidthExt = 4787,
+        /// <summary><b>[requires: cl_ext_image_requirements_info]</b> </summary>
+        /// <remarks>[originally: CL_IMAGE_REQUIREMENTS_MAX_HEIGHT_EXT]</remarks>
+        ImageRequirementsMaxHeightExt = 4788,
+        /// <summary><b>[requires: cl_ext_image_requirements_info]</b> </summary>
+        /// <remarks>[originally: CL_IMAGE_REQUIREMENTS_MAX_DEPTH_EXT]</remarks>
+        ImageRequirementsMaxDepthExt = 4789,
+        /// <summary><b>[requires: cl_ext_image_requirements_info]</b> </summary>
+        /// <remarks>[originally: CL_IMAGE_REQUIREMENTS_MAX_ARRAY_SIZE_EXT]</remarks>
+        ImageRequirementsMaxArraySizeExt = 4790,
+    }
+    public enum ImportPropertiesArm : int
+    {
+        /// <summary><b>[requires: cl_arm_import_memory]</b> </summary>
+        /// <remarks>[originally: CL_IMPORT_TYPE_ARM]</remarks>
+        ImportTypeArm = 16562,
+        /// <summary><b>[requires: cl_arm_import_memory_protected]</b> </summary>
+        /// <remarks>[originally: CL_IMPORT_TYPE_PROTECTED_ARM]</remarks>
+        ImportTypeProtectedArm = 16565,
+        /// <summary><b>[requires: cl_arm_import_memory_dma_buf]</b> </summary>
+        /// <remarks>[originally: CL_IMPORT_DMA_BUF_DATA_CONSISTENCY_WITH_HOST_ARM]</remarks>
+        ImportDmaBufDataConsistencyWithHostArm = 16866,
+        /// <summary><b>[requires: cl_arm_import_memory_android_hardware_buffer]</b> </summary>
+        /// <remarks>[originally: CL_IMPORT_TYPE_ANDROID_HARDWARE_BUFFER_ARM]</remarks>
+        ImportTypeAndroidHardwareBufferArm = 16866,
+        /// <summary><b>[requires: cl_arm_import_memory_android_hardware_buffer]</b> </summary>
+        /// <remarks>[originally: CL_IMPORT_ANDROID_HARDWARE_BUFFER_PLANE_INDEX_ARM]</remarks>
+        ImportAndroidHardwareBufferPlaneIndexArm = 16879,
+        /// <summary><b>[requires: cl_arm_import_memory_android_hardware_buffer]</b> </summary>
+        /// <remarks>[originally: CL_IMPORT_ANDROID_HARDWARE_BUFFER_LAYER_INDEX_ARM]</remarks>
+        ImportAndroidHardwareBufferLayerIndexArm = 16880,
+    }
+    public enum ImportTypeArm : int
+    {
+        /// <summary><b>[requires: cl_arm_import_memory_host]</b> </summary>
+        /// <remarks>[originally: CL_IMPORT_TYPE_HOST_ARM]</remarks>
+        ImportTypeHostArm = 16563,
+        /// <summary><b>[requires: cl_arm_import_memory_dma_buf]</b> </summary>
+        /// <remarks>[originally: CL_IMPORT_TYPE_DMA_BUF_ARM]</remarks>
+        ImportTypeDmaBufArm = 16564,
+    }
+    public enum KernelArgAccessQualifier : uint
+    {
+        /// <summary><b>[requires: v1.2]</b> </summary>
+        /// <remarks>[originally: CL_KERNEL_ARG_ACCESS_READ_ONLY]</remarks>
+        KernelArgAccessReadOnly = 4512,
+        /// <summary><b>[requires: v1.2]</b> </summary>
+        /// <remarks>[originally: CL_KERNEL_ARG_ACCESS_WRITE_ONLY]</remarks>
+        KernelArgAccessWriteOnly = 4513,
+        /// <summary><b>[requires: v1.2]</b> </summary>
+        /// <remarks>[originally: CL_KERNEL_ARG_ACCESS_READ_WRITE]</remarks>
+        KernelArgAccessReadWrite = 4514,
+        /// <summary><b>[requires: v1.2]</b> </summary>
+        /// <remarks>[originally: CL_KERNEL_ARG_ACCESS_NONE]</remarks>
+        KernelArgAccessNone = 4515,
+    }
+    public enum KernelArgAddressQualifier : uint
+    {
+        /// <summary><b>[requires: v1.2]</b> </summary>
+        /// <remarks>[originally: CL_KERNEL_ARG_ADDRESS_GLOBAL]</remarks>
+        KernelArgAddressGlobal = 4507,
+        /// <summary><b>[requires: v1.2]</b> </summary>
+        /// <remarks>[originally: CL_KERNEL_ARG_ADDRESS_LOCAL]</remarks>
+        KernelArgAddressLocal = 4508,
+        /// <summary><b>[requires: v1.2]</b> </summary>
+        /// <remarks>[originally: CL_KERNEL_ARG_ADDRESS_CONSTANT]</remarks>
+        KernelArgAddressConstant = 4509,
+        /// <summary><b>[requires: v1.2]</b> </summary>
+        /// <remarks>[originally: CL_KERNEL_ARG_ADDRESS_PRIVATE]</remarks>
+        KernelArgAddressPrivate = 4510,
+    }
+    public enum KernelArgInfo : uint
+    {
+        /// <summary><b>[requires: v1.2]</b> </summary>
+        /// <remarks>[originally: CL_KERNEL_ARG_ADDRESS_QUALIFIER]</remarks>
+        KernelArgAddressQualifier = 4502,
+        /// <summary><b>[requires: v1.2]</b> </summary>
+        /// <remarks>[originally: CL_KERNEL_ARG_ACCESS_QUALIFIER]</remarks>
+        KernelArgAccessQualifier = 4503,
+        /// <summary><b>[requires: v1.2]</b> </summary>
+        /// <remarks>[originally: CL_KERNEL_ARG_TYPE_NAME]</remarks>
+        KernelArgTypeName = 4504,
+        /// <summary><b>[requires: v1.2]</b> </summary>
+        /// <remarks>[originally: CL_KERNEL_ARG_TYPE_QUALIFIER]</remarks>
+        KernelArgTypeQualifier = 4505,
+        /// <summary><b>[requires: v1.2]</b> </summary>
+        /// <remarks>[originally: CL_KERNEL_ARG_NAME]</remarks>
+        KernelArgName = 4506,
     }
     [Flags]
     public enum KernelArgTypeQualifier : ulong
@@ -5671,6 +6187,144 @@ namespace OpenTK.Compute2.OpenCL
         /// <remarks>[originally: CL_KERNEL_ARG_TYPE_PIPE]</remarks>
         KernelArgTypePipe = 8,
     }
+    public enum KernelExecInfo : uint
+    {
+        /// <summary><b>[requires: v2.0]</b> </summary>
+        /// <remarks>[originally: CL_KERNEL_EXEC_INFO_SVM_PTRS]</remarks>
+        KernelExecInfoSvmPtrs = 4534,
+        /// <summary><b>[requires: v2.0]</b> </summary>
+        /// <remarks>[originally: CL_KERNEL_EXEC_INFO_SVM_FINE_GRAIN_SYSTEM]</remarks>
+        KernelExecInfoSvmFineGrainSystem = 4535,
+        /// <summary><b>[requires: cl_arm_scheduling_controls]</b> </summary>
+        /// <remarks>[originally: CL_KERNEL_EXEC_INFO_WORKGROUP_BATCH_SIZE_ARM]</remarks>
+        KernelExecInfoWorkgroupBatchSizeArm = 16869,
+        /// <summary><b>[requires: cl_arm_scheduling_controls]</b> </summary>
+        /// <remarks>[originally: CL_KERNEL_EXEC_INFO_WORKGROUP_BATCH_SIZE_MODIFIER_ARM]</remarks>
+        KernelExecInfoWorkgroupBatchSizeModifierArm = 16870,
+        /// <summary><b>[requires: cl_arm_scheduling_controls]</b> </summary>
+        /// <remarks>[originally: CL_KERNEL_EXEC_INFO_WARP_COUNT_LIMIT_ARM]</remarks>
+        KernelExecInfoWarpCountLimitArm = 16872,
+        /// <summary><b>[requires: cl_arm_scheduling_controls]</b> </summary>
+        /// <remarks>[originally: CL_KERNEL_EXEC_INFO_COMPUTE_UNIT_MAX_QUEUED_BATCHES_ARM]</remarks>
+        KernelExecInfoComputeUnitMaxQueuedBatchesArm = 16881,
+        /// <summary><b>[requires: cl_intel_unified_shared_memory]</b> </summary>
+        /// <remarks>[originally: CL_KERNEL_EXEC_INFO_INDIRECT_HOST_ACCESS_INTEL]</remarks>
+        KernelExecInfoIndirectHostAccessIntel = 16896,
+        /// <summary><b>[requires: cl_intel_unified_shared_memory]</b> </summary>
+        /// <remarks>[originally: CL_KERNEL_EXEC_INFO_INDIRECT_DEVICE_ACCESS_INTEL]</remarks>
+        KernelExecInfoIndirectDeviceAccessIntel = 16897,
+        /// <summary><b>[requires: cl_intel_unified_shared_memory]</b> </summary>
+        /// <remarks>[originally: CL_KERNEL_EXEC_INFO_INDIRECT_SHARED_ACCESS_INTEL]</remarks>
+        KernelExecInfoIndirectSharedAccessIntel = 16898,
+        /// <summary><b>[requires: cl_intel_unified_shared_memory]</b> </summary>
+        /// <remarks>[originally: CL_KERNEL_EXEC_INFO_USM_PTRS_INTEL]</remarks>
+        KernelExecInfoUsmPtrsIntel = 16899,
+        /// <summary><b>[requires: cl_intel_unified_shared_memory]</b> </summary>
+        /// <remarks>[originally: CL_COMMAND_MEMFILL_INTEL]</remarks>
+        CommandMemfillIntel = 16900,
+        /// <summary><b>[requires: cl_intel_unified_shared_memory]</b> </summary>
+        /// <remarks>[originally: CL_COMMAND_MEMCPY_INTEL]</remarks>
+        CommandMemcpyIntel = 16901,
+        /// <summary><b>[requires: cl_intel_unified_shared_memory]</b> </summary>
+        /// <remarks>[originally: CL_COMMAND_MIGRATEMEM_INTEL]</remarks>
+        CommandMigratememIntel = 16902,
+        /// <summary><b>[requires: cl_intel_unified_shared_memory]</b> </summary>
+        /// <remarks>[originally: CL_COMMAND_MEMADVISE_INTEL]</remarks>
+        CommandMemadviseIntel = 16903,
+        /// <summary><b>[requires: cl_ext_buffer_device_address]</b> </summary>
+        /// <remarks>[originally: CL_KERNEL_EXEC_INFO_DEVICE_PTRS_EXT]</remarks>
+        KernelExecInfoDevicePtrsExt = 20482,
+    }
+    public enum KernelExecInfoArm : uint
+    {
+        /// <summary><b>[requires: cl_arm_shared_virtual_memory]</b> </summary>
+        /// <remarks>[originally: CL_KERNEL_EXEC_INFO_SVM_PTRS_ARM]</remarks>
+        KernelExecInfoSvmPtrsArm = 16568,
+        /// <summary><b>[requires: cl_arm_shared_virtual_memory]</b> </summary>
+        /// <remarks>[originally: CL_KERNEL_EXEC_INFO_SVM_FINE_GRAIN_SYSTEM_ARM]</remarks>
+        KernelExecInfoSvmFineGrainSystemArm = 16569,
+    }
+    public enum KernelInfo : uint
+    {
+        /// <summary><b>[requires: v1.0]</b> </summary>
+        /// <remarks>[originally: CL_KERNEL_FUNCTION_NAME]</remarks>
+        KernelFunctionName = 4496,
+        /// <summary><b>[requires: v1.0]</b> </summary>
+        /// <remarks>[originally: CL_KERNEL_NUM_ARGS]</remarks>
+        KernelNumArgs = 4497,
+        /// <summary><b>[requires: v1.0]</b> </summary>
+        /// <remarks>[originally: CL_KERNEL_REFERENCE_COUNT]</remarks>
+        KernelReferenceCount = 4498,
+        /// <summary><b>[requires: v1.0]</b> </summary>
+        /// <remarks>[originally: CL_KERNEL_CONTEXT]</remarks>
+        KernelContext = 4499,
+        /// <summary><b>[requires: v1.0]</b> </summary>
+        /// <remarks>[originally: CL_KERNEL_PROGRAM]</remarks>
+        KernelProgram = 4500,
+        /// <summary><b>[requires: v1.2]</b> </summary>
+        /// <remarks>[originally: CL_KERNEL_ATTRIBUTES]</remarks>
+        KernelAttributes = 4501,
+        /// <summary><b>[requires: cl_arm_scheduling_controls]</b> </summary>
+        /// <remarks>[originally: CL_KERNEL_MAX_WARP_COUNT_ARM]</remarks>
+        KernelMaxWarpCountArm = 16873,
+    }
+    public enum KernelSubGroupInfo : uint
+    {
+        /// <summary><b>[requires: v2.1]</b> </summary>
+        /// <remarks>[originally: CL_KERNEL_LOCAL_SIZE_FOR_SUB_GROUP_COUNT]</remarks>
+        KernelLocalSizeForSubGroupCount = 4536,
+        /// <summary><b>[requires: v2.1]</b> </summary>
+        /// <remarks>[originally: CL_KERNEL_MAX_NUM_SUB_GROUPS]</remarks>
+        KernelMaxNumSubGroups = 4537,
+        /// <summary><b>[requires: v2.1]</b> </summary>
+        /// <remarks>[originally: CL_KERNEL_COMPILE_NUM_SUB_GROUPS]</remarks>
+        KernelCompileNumSubGroups = 4538,
+        /// <summary><b>[requires: cl_khr_unified_svm]</b> </summary>
+        /// <remarks>[originally: CL_KERNEL_EXEC_INFO_SVM_INDIRECT_ACCESS_KHR]</remarks>
+        KernelExecInfoSvmIndirectAccessKhr = 4539,
+        /// <summary><b>[requires: v2.1]</b> </summary>
+        /// <remarks>[originally: CL_KERNEL_MAX_SUB_GROUP_SIZE_FOR_NDRANGE]</remarks>
+        KernelMaxSubGroupSizeForNdrange = 8243,
+        /// <summary><b>[requires: cl_khr_subgroups]</b> </summary>
+        /// <remarks>[originally: CL_KERNEL_MAX_SUB_GROUP_SIZE_FOR_NDRANGE_KHR]</remarks>
+        KernelMaxSubGroupSizeForNdrangeKhr = 8243,
+        /// <summary><b>[requires: v2.1]</b> </summary>
+        /// <remarks>[originally: CL_KERNEL_SUB_GROUP_COUNT_FOR_NDRANGE]</remarks>
+        KernelSubGroupCountForNdrange = 8244,
+        /// <summary><b>[requires: cl_khr_subgroups]</b> </summary>
+        /// <remarks>[originally: CL_KERNEL_SUB_GROUP_COUNT_FOR_NDRANGE_KHR]</remarks>
+        KernelSubGroupCountForNdrangeKhr = 8244,
+        /// <summary><b>[requires: cl_intel_required_subgroup_size]</b> </summary>
+        /// <remarks>[originally: CL_KERNEL_COMPILE_SUB_GROUP_SIZE_INTEL]</remarks>
+        KernelCompileSubGroupSizeIntel = 16650,
+    }
+    public enum KernelWorkGroupInfo : uint
+    {
+        /// <summary><b>[requires: v1.0]</b> </summary>
+        /// <remarks>[originally: CL_KERNEL_WORK_GROUP_SIZE]</remarks>
+        KernelWorkGroupSize = 4528,
+        /// <summary><b>[requires: v1.0]</b> </summary>
+        /// <remarks>[originally: CL_KERNEL_COMPILE_WORK_GROUP_SIZE]</remarks>
+        KernelCompileWorkGroupSize = 4529,
+        /// <summary><b>[requires: v1.0]</b> </summary>
+        /// <remarks>[originally: CL_KERNEL_LOCAL_MEM_SIZE]</remarks>
+        KernelLocalMemSize = 4530,
+        /// <summary><b>[requires: v1.0]</b> </summary>
+        /// <remarks>[originally: CL_KERNEL_PREFERRED_WORK_GROUP_SIZE_MULTIPLE]</remarks>
+        KernelPreferredWorkGroupSizeMultiple = 4531,
+        /// <summary><b>[requires: v1.0]</b> </summary>
+        /// <remarks>[originally: CL_KERNEL_PRIVATE_MEM_SIZE]</remarks>
+        KernelPrivateMemSize = 4532,
+        /// <summary><b>[requires: v1.2]</b> </summary>
+        /// <remarks>[originally: CL_KERNEL_GLOBAL_WORK_SIZE]</remarks>
+        KernelGlobalWorkSize = 4533,
+        /// <summary><b>[requires: cl_intel_required_subgroup_size]</b> </summary>
+        /// <remarks>[originally: CL_KERNEL_SPILL_MEM_SIZE_INTEL]</remarks>
+        KernelSpillMemSizeIntel = 16649,
+        /// <summary><b>[requires: cl_intel_kernel_allocations_info]</b> </summary>
+        /// <remarks>[originally: CL_KERNEL_ALLOCATIONS_INFO_INTEL]</remarks>
+        KernelAllocationsInfoIntel = 16986,
+    }
     public enum KhronosVendorId : uint
     {
         /// <summary><b>[requires: v1.0]</b> </summary>
@@ -5679,6 +6333,15 @@ namespace OpenTK.Compute2.OpenCL
         /// <summary><b>[requires: v1.0]</b> </summary>
         /// <remarks>[originally: CL_KHRONOS_VENDOR_ID_POCL]</remarks>
         KhronosVendorIdPocl = 65542,
+    }
+    public enum LayerInfo : uint
+    {
+        /// <summary><b>[requires: cl_loader_layers]</b> </summary>
+        /// <remarks>[originally: CL_LAYER_API_VERSION]</remarks>
+        LayerApiVersion = 16960,
+        /// <summary><b>[requires: cl_loader_layers]</b> </summary>
+        /// <remarks>[originally: CL_LAYER_NAME]</remarks>
+        LayerName = 16961,
     }
     [Flags]
     public enum MapFlags : ulong
@@ -5714,6 +6377,9 @@ namespace OpenTK.Compute2.OpenCL
         /// <summary><b>[requires: cl_img_mem_properties]</b> </summary>
         /// <remarks>[originally: CL_MEM_ALLOC_GPU_PRIVATE_IMG]</remarks>
         MemAllocGpuPrivateImg = 32,
+        /// <summary><b>[requires: cl_img_mem_properties]</b> </summary>
+        /// <remarks>[originally: CL_MEM_ALLOC_FLAGS_IMG]</remarks>
+        MemAllocFlagsImg = 16599,
     }
     [Flags]
     public enum MemAllocFlagsIntel : ulong
@@ -5727,6 +6393,21 @@ namespace OpenTK.Compute2.OpenCL
         /// <summary><b>[requires: cl_intel_unified_shared_memory]</b> </summary>
         /// <remarks>[originally: CL_MEM_ALLOC_INITIAL_PLACEMENT_HOST_INTEL]</remarks>
         MemAllocInitialPlacementHostIntel = 4,
+    }
+    public enum MemAllocInfoIntel : int
+    {
+        /// <summary><b>[requires: cl_intel_unified_shared_memory]</b> </summary>
+        /// <remarks>[originally: CL_MEM_ALLOC_TYPE_INTEL]</remarks>
+        MemAllocTypeIntel = 16794,
+        /// <summary><b>[requires: cl_intel_unified_shared_memory]</b> </summary>
+        /// <remarks>[originally: CL_MEM_ALLOC_BASE_PTR_INTEL]</remarks>
+        MemAllocBasePtrIntel = 16795,
+        /// <summary><b>[requires: cl_intel_unified_shared_memory]</b> </summary>
+        /// <remarks>[originally: CL_MEM_ALLOC_SIZE_INTEL]</remarks>
+        MemAllocSizeIntel = 16796,
+        /// <summary><b>[requires: cl_intel_unified_shared_memory]</b> </summary>
+        /// <remarks>[originally: CL_MEM_ALLOC_DEVICE_INTEL]</remarks>
+        MemAllocDeviceIntel = 16797,
     }
     [Flags]
     public enum MemFlags : ulong
@@ -5795,6 +6476,66 @@ namespace OpenTK.Compute2.OpenCL
         /// <remarks>[originally: CL_MEM_PROTECTED_ALLOC_ARM]</remarks>
         MemProtectedAllocArm = 68719476736,
     }
+    public enum MemInfo : uint
+    {
+        /// <summary><b>[requires: v1.0]</b> </summary>
+        /// <remarks>[originally: CL_MEM_TYPE]</remarks>
+        MemType = 4352,
+        /// <summary><b>[requires: v1.0]</b> </summary>
+        /// <remarks>[originally: CL_MEM_FLAGS]</remarks>
+        MemFlags = 4353,
+        /// <summary><b>[requires: v1.0]</b> </summary>
+        /// <remarks>[originally: CL_MEM_SIZE]</remarks>
+        MemSize = 4354,
+        /// <summary><b>[requires: v1.0]</b> </summary>
+        /// <remarks>[originally: CL_MEM_HOST_PTR]</remarks>
+        MemHostPtr = 4355,
+        /// <summary><b>[requires: v1.0]</b> </summary>
+        /// <remarks>[originally: CL_MEM_MAP_COUNT]</remarks>
+        MemMapCount = 4356,
+        /// <summary><b>[requires: v1.0]</b> </summary>
+        /// <remarks>[originally: CL_MEM_REFERENCE_COUNT]</remarks>
+        MemReferenceCount = 4357,
+        /// <summary><b>[requires: v1.0]</b> </summary>
+        /// <remarks>[originally: CL_MEM_CONTEXT]</remarks>
+        MemContext = 4358,
+        /// <summary><b>[requires: v1.1]</b> </summary>
+        /// <remarks>[originally: CL_MEM_ASSOCIATED_MEMOBJECT]</remarks>
+        MemAssociatedMemobject = 4359,
+        /// <summary><b>[requires: v1.1]</b> </summary>
+        /// <remarks>[originally: CL_MEM_OFFSET]</remarks>
+        MemOffset = 4360,
+        /// <summary><b>[requires: v2.0]</b> </summary>
+        /// <remarks>[originally: CL_MEM_USES_SVM_POINTER]</remarks>
+        MemUsesSvmPointer = 4361,
+        /// <summary><b>[requires: v3.0]</b> </summary>
+        /// <remarks>[originally: CL_MEM_PROPERTIES]</remarks>
+        MemProperties = 4362,
+        /// <summary><b>[requires: cl_khr_dx9_media_sharing]</b> </summary>
+        /// <remarks>[originally: CL_MEM_DX9_MEDIA_ADAPTER_TYPE_KHR]</remarks>
+        MemDx9MediaAdapterTypeKhr = 8232,
+        /// <summary><b>[requires: cl_khr_dx9_media_sharing]</b> </summary>
+        /// <remarks>[originally: CL_MEM_DX9_MEDIA_SURFACE_INFO_KHR]</remarks>
+        MemDx9MediaSurfaceInfoKhr = 8233,
+        /// <summary><b>[requires: cl_khr_d3d10_sharing]</b> </summary>
+        /// <remarks>[originally: CL_MEM_D3D10_RESOURCE_KHR]</remarks>
+        MemD3D10ResourceKhr = 16405,
+        /// <summary><b>[requires: cl_khr_d3d11_sharing]</b> </summary>
+        /// <remarks>[originally: CL_MEM_D3D11_RESOURCE_KHR]</remarks>
+        MemD3D11ResourceKhr = 16414,
+        /// <summary><b>[requires: cl_intel_dx9_media_sharing]</b> </summary>
+        /// <remarks>[originally: CL_MEM_DX9_RESOURCE_INTEL]</remarks>
+        MemDx9ResourceIntel = 16423,
+        /// <summary><b>[requires: cl_intel_dx9_media_sharing]</b> </summary>
+        /// <remarks>[originally: CL_MEM_DX9_SHARED_HANDLE_INTEL]</remarks>
+        MemDx9SharedHandleIntel = 16500,
+        /// <summary><b>[requires: cl_intel_va_api_media_sharing]</b> </summary>
+        /// <remarks>[originally: CL_MEM_VA_API_MEDIA_SURFACE_INTEL]</remarks>
+        MemVaApiMediaSurfaceIntel = 16536,
+        /// <summary><b>[requires: cl_ext_buffer_device_address]</b> </summary>
+        /// <remarks>[originally: CL_MEM_DEVICE_ADDRESS_EXT]</remarks>
+        MemDeviceAddressExt = 20481,
+    }
     [Flags]
     public enum MemMigrationFlags : ulong
     {
@@ -5808,6 +6549,60 @@ namespace OpenTK.Compute2.OpenCL
         /// <remarks>[originally: CL_MIGRATE_MEM_OBJECT_CONTENT_UNDEFINED]</remarks>
         MigrateMemObjectContentUndefined = 2,
     }
+    public enum MemObjectType : uint
+    {
+        /// <summary><b>[requires: v1.0]</b> </summary>
+        /// <remarks>[originally: CL_MEM_OBJECT_BUFFER]</remarks>
+        MemObjectBuffer = 4336,
+        /// <summary><b>[requires: v1.0]</b> </summary>
+        /// <remarks>[originally: CL_MEM_OBJECT_IMAGE2D]</remarks>
+        MemObjectImage2D = 4337,
+        /// <summary><b>[requires: v1.0]</b> </summary>
+        /// <remarks>[originally: CL_MEM_OBJECT_IMAGE3D]</remarks>
+        MemObjectImage3D = 4338,
+        /// <summary><b>[requires: v1.2]</b> </summary>
+        /// <remarks>[originally: CL_MEM_OBJECT_IMAGE2D_ARRAY]</remarks>
+        MemObjectImage2DArray = 4339,
+        /// <summary><b>[requires: v1.2]</b> </summary>
+        /// <remarks>[originally: CL_MEM_OBJECT_IMAGE1D]</remarks>
+        MemObjectImage1D = 4340,
+        /// <summary><b>[requires: v1.2]</b> </summary>
+        /// <remarks>[originally: CL_MEM_OBJECT_IMAGE1D_ARRAY]</remarks>
+        MemObjectImage1DArray = 4341,
+        /// <summary><b>[requires: v1.2]</b> </summary>
+        /// <remarks>[originally: CL_MEM_OBJECT_IMAGE1D_BUFFER]</remarks>
+        MemObjectImage1DBuffer = 4342,
+        /// <summary><b>[requires: v2.0]</b> </summary>
+        /// <remarks>[originally: CL_MEM_OBJECT_PIPE]</remarks>
+        MemObjectPipe = 4343,
+    }
+    public enum MemProperties : ulong
+    {
+        /// <summary><b>[requires: cl_khr_external_memory]</b> </summary>
+        /// <remarks>[originally: CL_MEM_DEVICE_HANDLE_LIST_KHR]</remarks>
+        MemDeviceHandleListKhr = 8273,
+        /// <summary><b>[requires: cl_intel_create_mem_object_properties]</b> </summary>
+        /// <remarks>[originally: CL_MEM_LOCALLY_UNCACHED_RESOURCE_INTEL]</remarks>
+        MemLocallyUncachedResourceIntel = 16920,
+        /// <summary><b>[requires: cl_intel_create_mem_object_properties]</b> </summary>
+        /// <remarks>[originally: CL_MEM_DEVICE_ID_INTEL]</remarks>
+        MemDeviceIdIntel = 16921,
+        /// <summary><b>[requires: cl_ext_buffer_device_address]</b> </summary>
+        /// <remarks>[originally: CL_MEM_DEVICE_PRIVATE_ADDRESS_EXT]</remarks>
+        MemDevicePrivateAddressExt = 20480,
+    }
+    public enum MemPropertiesIntel : ulong
+    {
+        /// <summary><b>[requires: cl_intel_unified_shared_memory]</b> </summary>
+        /// <remarks>[originally: CL_MEM_ALLOC_FLAGS_INTEL]</remarks>
+        MemAllocFlagsIntel = 16789,
+        /// <summary><b>[requires: cl_intel_mem_alloc_buffer_location | cl_intel_mem_alloc_buffer_location]</b> </summary>
+        /// <remarks>[originally: CL_MEM_ALLOC_BUFFER_LOCATION_INTEL]</remarks>
+        MemAllocBufferLocationIntel = 16798,
+        /// <summary><b>[requires: cl_intel_mem_channel_property]</b> </summary>
+        /// <remarks>[originally: CL_MEM_CHANNEL_INTEL]</remarks>
+        MemChannelIntel = 16915,
+    }
     public enum MipmapFilterModeImg : uint
     {
         /// <summary><b>[requires: cl_img_generate_mipmap]</b> </summary>
@@ -5816,6 +6611,36 @@ namespace OpenTK.Compute2.OpenCL
         /// <summary><b>[requires: cl_img_generate_mipmap]</b> </summary>
         /// <remarks>[originally: CL_MIPMAP_FILTER_BOX_IMG]</remarks>
         MipmapFilterBoxImg = 1,
+    }
+    public enum MutableCommandInfoKhr : uint
+    {
+        /// <summary><b>[requires: cl_khr_command_buffer_mutable_dispatch]</b> </summary>
+        /// <remarks>[originally: CL_MUTABLE_COMMAND_COMMAND_QUEUE_KHR]</remarks>
+        MutableCommandCommandQueueKhr = 4768,
+        /// <summary><b>[requires: cl_khr_command_buffer_mutable_dispatch]</b> </summary>
+        /// <remarks>[originally: CL_MUTABLE_COMMAND_COMMAND_BUFFER_KHR]</remarks>
+        MutableCommandCommandBufferKhr = 4769,
+        /// <summary><b>[requires: cl_khr_command_buffer_mutable_dispatch]</b> </summary>
+        /// <remarks>[originally: CL_MUTABLE_COMMAND_PROPERTIES_ARRAY_KHR]</remarks>
+        MutableCommandPropertiesArrayKhr = 4770,
+        /// <summary><b>[requires: cl_khr_command_buffer_mutable_dispatch]</b> </summary>
+        /// <remarks>[originally: CL_MUTABLE_DISPATCH_KERNEL_KHR]</remarks>
+        MutableDispatchKernelKhr = 4771,
+        /// <summary><b>[requires: cl_khr_command_buffer_mutable_dispatch]</b> </summary>
+        /// <remarks>[originally: CL_MUTABLE_DISPATCH_DIMENSIONS_KHR]</remarks>
+        MutableDispatchDimensionsKhr = 4772,
+        /// <summary><b>[requires: cl_khr_command_buffer_mutable_dispatch]</b> </summary>
+        /// <remarks>[originally: CL_MUTABLE_DISPATCH_GLOBAL_WORK_OFFSET_KHR]</remarks>
+        MutableDispatchGlobalWorkOffsetKhr = 4773,
+        /// <summary><b>[requires: cl_khr_command_buffer_mutable_dispatch]</b> </summary>
+        /// <remarks>[originally: CL_MUTABLE_DISPATCH_GLOBAL_WORK_SIZE_KHR]</remarks>
+        MutableDispatchGlobalWorkSizeKhr = 4774,
+        /// <summary><b>[requires: cl_khr_command_buffer_mutable_dispatch]</b> </summary>
+        /// <remarks>[originally: CL_MUTABLE_DISPATCH_LOCAL_WORK_SIZE_KHR]</remarks>
+        MutableDispatchLocalWorkSizeKhr = 4775,
+        /// <summary><b>[requires: cl_khr_command_buffer_mutable_dispatch]</b> </summary>
+        /// <remarks>[originally: CL_MUTABLE_COMMAND_COMMAND_TYPE_KHR]</remarks>
+        MutableCommandCommandTypeKhr = 4781,
     }
     [Flags]
     public enum MutableDispatchAssertsKhr : ulong
@@ -5843,8 +6668,32 @@ namespace OpenTK.Compute2.OpenCL
         /// <remarks>[originally: CL_MUTABLE_DISPATCH_EXEC_INFO_KHR]</remarks>
         MutableDispatchExecInfoKhr = 16,
     }
+    public enum PerfHintQcom : uint
+    {
+        /// <summary><b>[requires: cl_qcom_perf_hint]</b> </summary>
+        /// <remarks>[originally: CL_PERF_HINT_HIGH_QCOM]</remarks>
+        PerfHintHighQcom = 16579,
+        /// <summary><b>[requires: cl_qcom_perf_hint]</b> </summary>
+        /// <remarks>[originally: CL_PERF_HINT_NORMAL_QCOM]</remarks>
+        PerfHintNormalQcom = 16580,
+        /// <summary><b>[requires: cl_qcom_perf_hint]</b> </summary>
+        /// <remarks>[originally: CL_PERF_HINT_LOW_QCOM]</remarks>
+        PerfHintLowQcom = 16581,
+    }
+    public enum PipeInfo : uint
+    {
+        /// <summary><b>[requires: v2.0]</b> </summary>
+        /// <remarks>[originally: CL_PIPE_PACKET_SIZE]</remarks>
+        PipePacketSize = 4384,
+        /// <summary><b>[requires: v2.0]</b> </summary>
+        /// <remarks>[originally: CL_PIPE_MAX_PACKETS]</remarks>
+        PipeMaxPackets = 4385,
+        /// <summary><b>[requires: v3.0]</b> </summary>
+        /// <remarks>[originally: CL_PIPE_PROPERTIES]</remarks>
+        PipeProperties = 4386,
+    }
     [Flags]
-    public enum PlatformCommandBufferCapabilitiesKhr  : int
+    public enum PlatformCommandBufferCapabilitiesKhr : ulong
     {
         /// <summary><b>[requires: cl_khr_command_buffer_multi_device]</b> </summary>
         /// <remarks>[originally: CL_COMMAND_BUFFER_PLATFORM_UNIVERSAL_SYNC_KHR]</remarks>
@@ -5900,6 +6749,36 @@ namespace OpenTK.Compute2.OpenCL
         /// <summary><b>[requires: cl_khr_icd_unloadable]</b> </summary>
         /// <remarks>[originally: CL_PLATFORM_UNLOADABLE_KHR]</remarks>
         PlatformUnloadableKhr = 2337,
+        /// <summary><b>[requires: cl_khr_semaphore]</b> </summary>
+        /// <remarks>[originally: CL_PLATFORM_SEMAPHORE_TYPES_KHR]</remarks>
+        PlatformSemaphoreTypesKhr = 8246,
+        /// <summary><b>[requires: cl_khr_external_semaphore]</b> </summary>
+        /// <remarks>[originally: CL_PLATFORM_SEMAPHORE_IMPORT_HANDLE_TYPES_KHR]</remarks>
+        PlatformSemaphoreImportHandleTypesKhr = 8247,
+        /// <summary><b>[requires: cl_khr_external_semaphore]</b> </summary>
+        /// <remarks>[originally: CL_PLATFORM_SEMAPHORE_EXPORT_HANDLE_TYPES_KHR]</remarks>
+        PlatformSemaphoreExportHandleTypesKhr = 8248,
+        /// <summary><b>[requires: cl_khr_external_memory]</b> </summary>
+        /// <remarks>[originally: CL_PLATFORM_EXTERNAL_MEMORY_IMPORT_HANDLE_TYPES_KHR]</remarks>
+        PlatformExternalMemoryImportHandleTypesKhr = 8260,
+    }
+    public enum ProfilingInfo : uint
+    {
+        /// <summary><b>[requires: v1.0]</b> </summary>
+        /// <remarks>[originally: CL_PROFILING_COMMAND_QUEUED]</remarks>
+        ProfilingCommandQueued = 4736,
+        /// <summary><b>[requires: v1.0]</b> </summary>
+        /// <remarks>[originally: CL_PROFILING_COMMAND_SUBMIT]</remarks>
+        ProfilingCommandSubmit = 4737,
+        /// <summary><b>[requires: v1.0]</b> </summary>
+        /// <remarks>[originally: CL_PROFILING_COMMAND_START]</remarks>
+        ProfilingCommandStart = 4738,
+        /// <summary><b>[requires: v1.0]</b> </summary>
+        /// <remarks>[originally: CL_PROFILING_COMMAND_END]</remarks>
+        ProfilingCommandEnd = 4739,
+        /// <summary><b>[requires: v2.0]</b> </summary>
+        /// <remarks>[originally: CL_PROFILING_COMMAND_COMPLETE]</remarks>
+        ProfilingCommandComplete = 4740,
     }
     public enum ProgramBinaryType : uint
     {
@@ -5915,6 +6794,75 @@ namespace OpenTK.Compute2.OpenCL
         /// <summary><b>[requires: v1.2]</b> </summary>
         /// <remarks>[originally: CL_PROGRAM_BINARY_TYPE_EXECUTABLE]</remarks>
         ProgramBinaryTypeExecutable = 4,
+        /// <summary><b>[requires: cl_khr_spir]</b> </summary>
+        /// <remarks>[originally: CL_PROGRAM_BINARY_TYPE_INTERMEDIATE]</remarks>
+        ProgramBinaryTypeIntermediate = 16609,
+    }
+    public enum ProgramBuildInfo : uint
+    {
+        /// <summary><b>[requires: v1.0]</b> </summary>
+        /// <remarks>[originally: CL_PROGRAM_BUILD_STATUS]</remarks>
+        ProgramBuildStatus = 4481,
+        /// <summary><b>[requires: v1.0]</b> </summary>
+        /// <remarks>[originally: CL_PROGRAM_BUILD_OPTIONS]</remarks>
+        ProgramBuildOptions = 4482,
+        /// <summary><b>[requires: v1.0]</b> </summary>
+        /// <remarks>[originally: CL_PROGRAM_BUILD_LOG]</remarks>
+        ProgramBuildLog = 4483,
+        /// <summary><b>[requires: v1.2]</b> </summary>
+        /// <remarks>[originally: CL_PROGRAM_BINARY_TYPE]</remarks>
+        ProgramBinaryType = 4484,
+        /// <summary><b>[requires: v2.0]</b> </summary>
+        /// <remarks>[originally: CL_PROGRAM_BUILD_GLOBAL_VARIABLE_TOTAL_SIZE]</remarks>
+        ProgramBuildGlobalVariableTotalSize = 4485,
+    }
+    public enum ProgramInfo : uint
+    {
+        /// <summary><b>[requires: v1.0]</b> </summary>
+        /// <remarks>[originally: CL_PROGRAM_REFERENCE_COUNT]</remarks>
+        ProgramReferenceCount = 4448,
+        /// <summary><b>[requires: v1.0]</b> </summary>
+        /// <remarks>[originally: CL_PROGRAM_CONTEXT]</remarks>
+        ProgramContext = 4449,
+        /// <summary><b>[requires: v1.0]</b> </summary>
+        /// <remarks>[originally: CL_PROGRAM_NUM_DEVICES]</remarks>
+        ProgramNumDevices = 4450,
+        /// <summary><b>[requires: v1.0]</b> </summary>
+        /// <remarks>[originally: CL_PROGRAM_DEVICES]</remarks>
+        ProgramDevices = 4451,
+        /// <summary><b>[requires: v1.0]</b> </summary>
+        /// <remarks>[originally: CL_PROGRAM_SOURCE]</remarks>
+        ProgramSource = 4452,
+        /// <summary><b>[requires: v1.0]</b> </summary>
+        /// <remarks>[originally: CL_PROGRAM_BINARY_SIZES]</remarks>
+        ProgramBinarySizes = 4453,
+        /// <summary><b>[requires: v1.0]</b> </summary>
+        /// <remarks>[originally: CL_PROGRAM_BINARIES]</remarks>
+        ProgramBinaries = 4454,
+        /// <summary><b>[requires: v1.2]</b> </summary>
+        /// <remarks>[originally: CL_PROGRAM_NUM_KERNELS]</remarks>
+        ProgramNumKernels = 4455,
+        /// <summary><b>[requires: v1.2]</b> </summary>
+        /// <remarks>[originally: CL_PROGRAM_KERNEL_NAMES]</remarks>
+        ProgramKernelNames = 4456,
+        /// <summary><b>[requires: v2.1]</b> </summary>
+        /// <remarks>[originally: CL_PROGRAM_IL]</remarks>
+        ProgramIl = 4457,
+        /// <summary><b>[requires: cl_khr_il_program]</b> </summary>
+        /// <remarks>[originally: CL_PROGRAM_IL_KHR]</remarks>
+        ProgramIlKhr = 4457,
+        /// <summary><b>[requires: v2.2]</b> </summary>
+        /// <remarks>[originally: CL_PROGRAM_SCOPE_GLOBAL_CTORS_PRESENT]</remarks>
+        ProgramScopeGlobalCtorsPresent = 4458,
+        /// <summary><b>[requires: v2.2]</b> </summary>
+        /// <remarks>[originally: CL_PROGRAM_SCOPE_GLOBAL_DTORS_PRESENT]</remarks>
+        ProgramScopeGlobalDtorsPresent = 4459,
+        /// <summary><b>[requires: cl_intel_program_scope_host_pipe]</b> </summary>
+        /// <remarks>[originally: CL_PROGRAM_NUM_HOST_PIPES_INTEL]</remarks>
+        ProgramNumHostPipesIntel = 16918,
+        /// <summary><b>[requires: cl_intel_program_scope_host_pipe]</b> </summary>
+        /// <remarks>[originally: CL_PROGRAM_HOST_PIPE_NAMES_INTEL]</remarks>
+        ProgramHostPipeNamesIntel = 16919,
     }
     [Flags]
     public enum QueuePriorityKhr : uint
@@ -5929,6 +6877,30 @@ namespace OpenTK.Compute2.OpenCL
         /// <remarks>[originally: CL_QUEUE_PRIORITY_LOW_KHR]</remarks>
         QueuePriorityLowKhr = 4,
     }
+    public enum QueueProperties : ulong
+    {
+        /// <summary><b>[requires: cl_arm_job_slot_selection]</b> </summary>
+        /// <remarks>[originally: CL_QUEUE_JOB_SLOT_ARM]</remarks>
+        QueueJobSlotArm = 16865,
+        /// <summary><b>[requires: cl_arm_scheduling_controls]</b> </summary>
+        /// <remarks>[originally: CL_QUEUE_KERNEL_BATCHING_ARM]</remarks>
+        QueueKernelBatchingArm = 16871,
+        /// <summary><b>[requires: cl_arm_scheduling_controls]</b> </summary>
+        /// <remarks>[originally: CL_QUEUE_DEFERRED_FLUSH_ARM]</remarks>
+        QueueDeferredFlushArm = 16876,
+        /// <summary><b>[requires: cl_arm_scheduling_controls]</b> </summary>
+        /// <remarks>[originally: CL_QUEUE_COMPUTE_UNIT_LIMIT_ARM]</remarks>
+        QueueComputeUnitLimitArm = 16883,
+        /// <summary><b>[requires: cl_img_scheduling_controls]</b> </summary>
+        /// <remarks>[originally: CL_COMMAND_QUEUE_SCHEDULING_WORK_GROUP_SCHEDULING_ALGORITHM_IMG]</remarks>
+        CommandQueueSchedulingWorkGroupSchedulingAlgorithmImg = 16931,
+        /// <summary><b>[requires: cl_img_scheduling_controls]</b> </summary>
+        /// <remarks>[originally: CL_COMMAND_QUEUE_SCHEDULING_WORK_GROUP_ARBITRATION_ALGORITHM_IMG]</remarks>
+        CommandQueueSchedulingWorkGroupArbitrationAlgorithmImg = 16932,
+        /// <summary><b>[requires: cl_img_scheduling_controls]</b> </summary>
+        /// <remarks>[originally: CL_COMMAND_QUEUE_SCHEDULING_WORK_GROUP_EXECUTE_COUNT_IMG]</remarks>
+        CommandQueueSchedulingWorkGroupExecuteCountImg = 16939,
+    }
     [Flags]
     public enum QueueThrottleKhr : uint
     {
@@ -5941,6 +6913,84 @@ namespace OpenTK.Compute2.OpenCL
         /// <summary><b>[requires: cl_khr_throttle_hints]</b> </summary>
         /// <remarks>[originally: CL_QUEUE_THROTTLE_LOW_KHR]</remarks>
         QueueThrottleLowKhr = 4,
+    }
+    public enum SamplerInfo : uint
+    {
+        /// <summary><b>[requires: v1.0]</b> </summary>
+        /// <remarks>[originally: CL_SAMPLER_REFERENCE_COUNT]</remarks>
+        SamplerReferenceCount = 4432,
+        /// <summary><b>[requires: v1.0]</b> </summary>
+        /// <remarks>[originally: CL_SAMPLER_CONTEXT]</remarks>
+        SamplerContext = 4433,
+        /// <summary><b>[requires: v1.0]</b> </summary>
+        /// <remarks>[originally: CL_SAMPLER_NORMALIZED_COORDS]</remarks>
+        SamplerNormalizedCoords = 4434,
+        /// <summary><b>[requires: v1.0]</b> </summary>
+        /// <remarks>[originally: CL_SAMPLER_ADDRESSING_MODE]</remarks>
+        SamplerAddressingMode = 4435,
+        /// <summary><b>[requires: v1.0]</b> </summary>
+        /// <remarks>[originally: CL_SAMPLER_FILTER_MODE]</remarks>
+        SamplerFilterMode = 4436,
+        /// <summary><b>[requires: v2.0]</b> </summary>
+        /// <remarks>[originally: CL_SAMPLER_MIP_FILTER_MODE]</remarks>
+        SamplerMipFilterMode = 4437,
+        /// <summary><b>[requires: cl_khr_mipmap_image]</b> </summary>
+        /// <remarks>[originally: CL_SAMPLER_MIP_FILTER_MODE_KHR]</remarks>
+        SamplerMipFilterModeKhr = 4437,
+        /// <summary><b>[requires: v2.0]</b> </summary>
+        /// <remarks>[originally: CL_SAMPLER_LOD_MIN]</remarks>
+        SamplerLodMin = 4438,
+        /// <summary><b>[requires: cl_khr_mipmap_image]</b> </summary>
+        /// <remarks>[originally: CL_SAMPLER_LOD_MIN_KHR]</remarks>
+        SamplerLodMinKhr = 4438,
+        /// <summary><b>[requires: v2.0]</b> </summary>
+        /// <remarks>[originally: CL_SAMPLER_LOD_MAX]</remarks>
+        SamplerLodMax = 4439,
+        /// <summary><b>[requires: cl_khr_mipmap_image]</b> </summary>
+        /// <remarks>[originally: CL_SAMPLER_LOD_MAX_KHR]</remarks>
+        SamplerLodMaxKhr = 4439,
+        /// <summary><b>[requires: v3.0]</b> </summary>
+        /// <remarks>[originally: CL_SAMPLER_PROPERTIES]</remarks>
+        SamplerProperties = 4440,
+    }
+    public enum SemaphoreInfoKhr : uint
+    {
+        /// <summary><b>[requires: cl_khr_semaphore]</b> </summary>
+        /// <remarks>[originally: CL_SEMAPHORE_CONTEXT_KHR]</remarks>
+        SemaphoreContextKhr = 8249,
+        /// <summary><b>[requires: cl_khr_semaphore]</b> </summary>
+        /// <remarks>[originally: CL_SEMAPHORE_REFERENCE_COUNT_KHR]</remarks>
+        SemaphoreReferenceCountKhr = 8250,
+        /// <summary><b>[requires: cl_khr_semaphore]</b> </summary>
+        /// <remarks>[originally: CL_SEMAPHORE_PROPERTIES_KHR]</remarks>
+        SemaphorePropertiesKhr = 8251,
+        /// <summary><b>[requires: cl_khr_semaphore]</b> </summary>
+        /// <remarks>[originally: CL_SEMAPHORE_PAYLOAD_KHR]</remarks>
+        SemaphorePayloadKhr = 8252,
+        /// <summary><b>[requires: cl_khr_semaphore]</b> </summary>
+        /// <remarks>[originally: CL_SEMAPHORE_TYPE_KHR]</remarks>
+        SemaphoreTypeKhr = 8253,
+        /// <summary><b>[requires: cl_khr_external_semaphore]</b> </summary>
+        /// <remarks>[originally: CL_SEMAPHORE_EXPORT_HANDLE_TYPES_KHR]</remarks>
+        SemaphoreExportHandleTypesKhr = 8255,
+        /// <summary><b>[requires: cl_khr_semaphore]</b> </summary>
+        /// <remarks>[originally: CL_SEMAPHORE_DEVICE_HANDLE_LIST_KHR]</remarks>
+        SemaphoreDeviceHandleListKhr = 8275,
+        /// <summary><b>[requires: cl_khr_external_semaphore]</b> </summary>
+        /// <remarks>[originally: CL_SEMAPHORE_EXPORTABLE_KHR]</remarks>
+        SemaphoreExportableKhr = 8276,
+    }
+    public enum SemaphorePropertiesKhr : ulong
+    {
+        /// <summary><b>[requires: cl_khr_semaphore]</b> </summary>
+        /// <remarks>[originally: CL_SEMAPHORE_TYPE_KHR]</remarks>
+        SemaphoreTypeKhr = 8253,
+        /// <summary><b>[requires: cl_khr_external_semaphore]</b> </summary>
+        /// <remarks>[originally: CL_SEMAPHORE_EXPORT_HANDLE_TYPES_KHR]</remarks>
+        SemaphoreExportHandleTypesKhr = 8255,
+        /// <summary><b>[requires: cl_khr_semaphore]</b> </summary>
+        /// <remarks>[originally: CL_SEMAPHORE_DEVICE_HANDLE_LIST_KHR]</remarks>
+        SemaphoreDeviceHandleListKhr = 8275,
     }
     public enum SemaphoreTypeKhr : uint
     {
@@ -5963,6 +7013,24 @@ namespace OpenTK.Compute2.OpenCL
         /// <summary><b>[requires: cl_khr_unified_svm]</b> </summary>
         /// <remarks>[originally: CL_SVM_ALLOC_ACCESS_DEVICE_NOWRITE_KHR]</remarks>
         SvmAllocAccessDeviceNowriteKhr = 512,
+    }
+    public enum SvmAllocPropertiesKhr : ulong
+    {
+        /// <summary><b>[requires: cl_khr_unified_svm]</b> </summary>
+        /// <remarks>[originally: CL_SVM_ALLOC_ASSOCIATED_DEVICE_HANDLE_KHR]</remarks>
+        SvmAllocAssociatedDeviceHandleKhr = 8312,
+        /// <summary><b>[requires: cl_khr_unified_svm]</b> </summary>
+        /// <remarks>[originally: CL_SVM_ALLOC_ACCESS_FLAGS_KHR]</remarks>
+        SvmAllocAccessFlagsKhr = 8313,
+        /// <summary><b>[requires: cl_khr_unified_svm]</b> </summary>
+        /// <remarks>[originally: CL_SVM_ALLOC_ALIGNMENT_KHR]</remarks>
+        SvmAllocAlignmentKhr = 8314,
+        /// <summary><b>[requires: cl_img_unified_svm_external_memory_dma_buf]</b> </summary>
+        /// <remarks>[originally: CL_SVM_ALLOC_EXTERNAL_MEMORY_DMA_BUF_VIRTUAL_ADDRESS_IMG]</remarks>
+        SvmAllocExternalMemoryDmaBufVirtualAddressImg = 16928,
+        /// <summary><b>[requires: cl_img_unified_svm_external_memory_dma_buf]</b> </summary>
+        /// <remarks>[originally: CL_SVM_ALLOC_EXTERNAL_MEMORY_DMA_BUF_IMG]</remarks>
+        SvmAllocExternalMemoryDmaBufImg = 16929,
     }
     [Flags]
     public enum SvmCapabilitiesKhr : ulong
@@ -6012,6 +7080,60 @@ namespace OpenTK.Compute2.OpenCL
         /// <summary><b>[requires: cl_khr_unified_svm]</b> </summary>
         /// <remarks>[originally: CL_SVM_CAPABILITY_INDIRECT_ACCESS_KHR]</remarks>
         SvmCapabilityIndirectAccessKhr = 16384,
+    }
+    public enum SvmPointerInfoKhr : uint
+    {
+        /// <summary><b>[requires: cl_khr_unified_svm]</b> </summary>
+        /// <remarks>[originally: CL_SVM_INFO_TYPE_INDEX_KHR]</remarks>
+        SvmInfoTypeIndexKhr = 8328,
+        /// <summary><b>[requires: cl_khr_unified_svm]</b> </summary>
+        /// <remarks>[originally: CL_SVM_INFO_CAPABILITIES_KHR]</remarks>
+        SvmInfoCapabilitiesKhr = 8329,
+        /// <summary><b>[requires: cl_khr_unified_svm]</b> </summary>
+        /// <remarks>[originally: CL_SVM_INFO_PROPERTIES_KHR]</remarks>
+        SvmInfoPropertiesKhr = 8330,
+        /// <summary><b>[requires: cl_khr_unified_svm]</b> </summary>
+        /// <remarks>[originally: CL_SVM_INFO_ACCESS_FLAGS_KHR]</remarks>
+        SvmInfoAccessFlagsKhr = 8331,
+        /// <summary><b>[requires: cl_khr_unified_svm]</b> </summary>
+        /// <remarks>[originally: CL_SVM_INFO_BASE_PTR_KHR]</remarks>
+        SvmInfoBasePtrKhr = 16795,
+        /// <summary><b>[requires: cl_khr_unified_svm]</b> </summary>
+        /// <remarks>[originally: CL_SVM_INFO_SIZE_KHR]</remarks>
+        SvmInfoSizeKhr = 16796,
+        /// <summary><b>[requires: cl_khr_unified_svm]</b> </summary>
+        /// <remarks>[originally: CL_SVM_INFO_ASSOCIATED_DEVICE_HANDLE_KHR]</remarks>
+        SvmInfoAssociatedDeviceHandleKhr = 16797,
+    }
+    public enum UnifiedSharedMemoryTypeIntel : uint
+    {
+        /// <summary><b>[requires: cl_intel_unified_shared_memory]</b> </summary>
+        /// <remarks>[originally: CL_MEM_TYPE_UNKNOWN_INTEL]</remarks>
+        MemTypeUnknownIntel = 16790,
+        /// <summary><b>[requires: cl_intel_unified_shared_memory]</b> </summary>
+        /// <remarks>[originally: CL_MEM_TYPE_HOST_INTEL]</remarks>
+        MemTypeHostIntel = 16791,
+        /// <summary><b>[requires: cl_intel_unified_shared_memory]</b> </summary>
+        /// <remarks>[originally: CL_MEM_TYPE_DEVICE_INTEL]</remarks>
+        MemTypeDeviceIntel = 16792,
+        /// <summary><b>[requires: cl_intel_unified_shared_memory]</b> </summary>
+        /// <remarks>[originally: CL_MEM_TYPE_SHARED_INTEL]</remarks>
+        MemTypeSharedIntel = 16793,
+    }
+    public enum VaApiDeviceSetIntel : uint
+    {
+        /// <summary><b>[requires: cl_intel_va_api_media_sharing]</b> </summary>
+        /// <remarks>[originally: CL_PREFERRED_DEVICES_FOR_VA_API_INTEL]</remarks>
+        PreferredDevicesForVaApiIntel = 16533,
+        /// <summary><b>[requires: cl_intel_va_api_media_sharing]</b> </summary>
+        /// <remarks>[originally: CL_ALL_DEVICES_FOR_VA_API_INTEL]</remarks>
+        AllDevicesForVaApiIntel = 16534,
+    }
+    public enum VaApiDeviceSourceIntel : uint
+    {
+        /// <summary><b>[requires: cl_intel_va_api_media_sharing]</b> </summary>
+        /// <remarks>[originally: CL_VA_API_DISPLAY_INTEL]</remarks>
+        VaApiDisplayIntel = 16532,
     }
 #pragma warning restore CA1069 // Enums values should not be duplicated
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member

@@ -33,6 +33,7 @@ namespace CLGenerator
             using (Logger.CreateLogger(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly()!.Location)!, "log.txt")))
             {
                 SpecificationFile clSpecification;
+                Dictionary<string, SpecificationParser.TypeEntry> typeMap;
                 {
                     NameManglerSettings clSettings = new NameManglerSettings()
                     {
@@ -49,7 +50,7 @@ namespace CLGenerator
 
                     // Reading the gl.xml file and parsing it into data structures.
                     using FileStream specificationStream = Reader.ReadCLSpecFromGithub();
-                    clSpecification = SpecificationParser.Parse(specificationStream, new NameMangler(clSettings), ApiFile.CL, new List<string>());
+                    clSpecification = SpecificationParser.Parse(specificationStream, new NameMangler(clSettings), ApiFile.CL, new List<string>(), out typeMap);
                 }
 
                 SpecificationFile[] files = [clSpecification];
@@ -85,6 +86,8 @@ namespace CLGenerator
                 // Processer/overloading
                 OutputData outputSpec = Processor.ProcessSpec(resolvedApis, files, documentation, overloaders);
 
+                FixupEnumTypes(outputSpec, typeMap);
+
                 // FIXME: Don't use this here.
                 NameManglerSettings nameManglerSettings = new NameManglerSettings()
                 {
@@ -97,6 +100,45 @@ namespace CLGenerator
 
                 st.Stop();
                 Logger.Info($"Generated OpenCL bindings in {st.ElapsedMilliseconds} ms");
+            }
+        }
+
+        // Use the typemap derived from cl.xml typedefs and change the types of the enum types to the correct types.
+        // FIXME: This is done quite late in the processing so there is a high risk of bugs due to earlier assumptions about enum types...
+        static void FixupEnumTypes(OutputData data, Dictionary<string, SpecificationParser.TypeEntry> typeMap)
+        {
+            foreach (OutputApiData @namespace in data.Namespaces)
+            {
+                foreach (EnumType enumType in @namespace.Enums)
+                {
+                    if (typeMap.TryGetValue(enumType.OriginalName, out var typeEntry))
+                    {
+                        CSPrimitive primitive;
+                        if (typeEntry.CSType is CSPrimitive)
+                        {
+                            primitive = (CSPrimitive)typeEntry.CSType;
+                        }
+                        else if (typeEntry.CSType is CSEnum @enum)
+                        {
+                            primitive = @enum.PrimitiveType;
+                        }
+                        else throw new Exception("The underlying type of enums needs to be a CSPrimitive or CSEnum");
+
+                        enumType.UnderlyingSize = primitive.TypeName switch
+                        {
+                            "int" => EnumSize.Int32,
+                            "uint" => EnumSize.Uint32,
+                            "long" => EnumSize.Int64,
+                            "ulong" => EnumSize.Uint64,
+                            "IntPtr" => EnumSize.Int32,
+                            _ => throw new Exception($"Unsupported enum type '{primitive.ToCSString()}'"),
+                        };
+
+                        enumType.StrongUnderlyingType = primitive;
+                        if (primitive.TypeName == "IntPtr")
+                            enumType.StrongUnderlyingType = CSPrimitive.Int(primitive.Constant);
+                    }
+                }
             }
         }
     }

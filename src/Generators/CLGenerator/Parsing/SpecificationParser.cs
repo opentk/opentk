@@ -26,7 +26,7 @@ namespace CLGenerator.Parsing
             List<TypeDefine> Typedefs,
             List<StructType> Structs);
 
-        internal static SpecificationFile Parse(Stream input, NameMangler nameMangler, ApiFile currentFile, List<string> ignoreFunctions)
+        internal static SpecificationFile Parse(Stream input, NameMangler nameMangler, ApiFile currentFile, List<string> ignoreFunctions, out Dictionary<string, TypeEntry> typeMap)
         {
             XDocument? xdocument = XDocument.Load(input);
 
@@ -45,7 +45,7 @@ namespace CLGenerator.Parsing
             List<Feature> features = ParseFeatures(xdocument.Root, currentFile, ignoreFunctions);
             List<Extension> extensions = ParseExtensions(xdocument.Root, currentFile, nameMangler, ignoreFunctions);
 
-            var typeMap = BuildTypeMap(types, enums);
+            typeMap = BuildTypeMap(types, enums);
             ResolveFunctionTypes(functions, typeMap);
             ResolveStructMemberTypes(types.Structs, typeMap);
 
@@ -67,55 +67,31 @@ namespace CLGenerator.Parsing
 
             foreach (EnumEntry enumEntry in enums)
             {
-                Debug.Assert(enumEntry.Groups.Length <= 1);
-                if (enumEntry.Groups.Length > 0)
+                for (int i = 0; i < enumEntry.Groups.Length; i++)
                 {
-                    GroupRef group = enumEntry.Groups[0];
-
+                    GroupRef group = enumEntry.Groups[i];
                     if (typeMap.TryGetValue(group.OriginalName, out TypeEntry? underlyingTypeEntry))
                     {
                         BaseCSType underlyingType = underlyingTypeEntry.CSType;
                         if (underlyingType is CSPrimitive primitive)
                         {
-                            // FIXME: We want to update the IReferable to be the enum group itself, but that is not created for a long time.
-                            typeMap[group.OriginalName] = underlyingTypeEntry with { CSType = new CSEnum(group.TranslatedName, primitive, false) };
-                            switch (primitive.TypeName)
+                            if (primitive.TypeName == "IntPtr")
                             {
-                                case "int":
-                                    enumEntry.UnderlyingSize = EnumSize.Int32;
-                                    break;
-                                case "uint":
-                                    enumEntry.UnderlyingSize = EnumSize.Uint32;
-                                    break;
-                                case "long":
-                                    enumEntry.UnderlyingSize = EnumSize.Int64;
-                                    break;
-                                case "ulong":
-                                    enumEntry.UnderlyingSize = EnumSize.Uint64;
-                                    break;
-                                default:
-                                    throw new Exception($"Unsupported underlying type: {primitive}");
+                                // Because C# enums can't use nint as a backing type (see https://github.com/dotnet/docs/issues/28016)
+                                // we need to represent these as int32 in the enum definition, but can't use that for the
+                                // actual function definitions as they need to use the correct IntPtr type.
+                                // So we set the typemap to IntPtr.
+                                typeMap[group.OriginalName] = underlyingTypeEntry with { CSType = CSPrimitive.IntPtr(primitive.Constant) };
+                            }
+                            else
+                            {
+                                // FIXME: We want to update the IReferable to be the enum group itself, but that is not created for a long time.
+                                typeMap[group.OriginalName] = underlyingTypeEntry with { CSType = new CSEnum(group.TranslatedName, primitive, false) };
                             }
                         }
                         else if (underlyingType is CSEnum enumType)
                         {
-                            switch (enumType.PrimitiveType.TypeName)
-                            {
-                                case "int":
-                                    enumEntry.UnderlyingSize = EnumSize.Int32;
-                                    break;
-                                case "uint":
-                                    enumEntry.UnderlyingSize = EnumSize.Uint32;
-                                    break;
-                                case "long":
-                                    enumEntry.UnderlyingSize = EnumSize.Int64;
-                                    break;
-                                case "ulong":
-                                    enumEntry.UnderlyingSize = EnumSize.Uint64;
-                                    break;
-                                default:
-                                    throw new Exception($"Unsupported underlying type: {enumType.PrimitiveType}");
-                            }
+                            // Everything is already good, no need to do anything.
                         }
                         else throw new Exception("The underlying type of enums needs to be a CSPrimitive or CSEnum");
                     }
@@ -847,24 +823,14 @@ namespace CLGenerator.Parsing
             List<EnumEntry> enumsEntries = new List<EnumEntry>();
             foreach (XElement? enums in input.Elements("enums"))
             {
-                string enumsTagName = enums.Attribute("name")?.Value ?? throw new Exception($"Enums entry '{enums}' is missing a name attribute.");
-
+                string? parentEnumsName = enums.Attribute("name")?.Value;
                 // FIXME: Parse constants!
-                if (enumsTagName.StartsWith("Constants") ||
-                    enumsTagName == "MiscNumbers")
+                if (parentEnumsName != null && (parentEnumsName.StartsWith("Constants") || parentEnumsName == "MiscNumbers"))
                 {
                     continue;
                 }
 
-                GroupRef[] groups;
-                if (enumsTagName.Contains('.') == false)
-                    groups = [GroupRefFromString(enumsTagName, currentFile, nameMangler)];
-                else if (enumsTagName.StartsWith("ErrorCodes"))
-                    groups = [GroupRefFromString("ErrorCodes", currentFile, nameMangler)];
-                else
-                {
-                    groups = [];
-                }
+                GroupRef[] parentGroups = ParseGroups(enums.Attribute("group")?.Value, currentFile, nameMangler);
                 
                 string? vendor = enums.Attribute("vendor")?.Value;
 
@@ -879,6 +845,9 @@ namespace CLGenerator.Parsing
 
                     string? bitposStr = @enum.Attribute("bitpos")?.Value;
                     string? valueStr = @enum.Attribute("value")?.Value;
+
+                    GroupRef[] groups = ParseGroups(@enum.Attribute("group")?.Value, currentFile, nameMangler);
+                    groups = ArrayUtil.MergeDeduplicate(groups, parentGroups);
 
                     // FIXME: We could technically parse these values but it's not worth the hassle atm.
                     // FIXME: Make this constant...
@@ -992,14 +961,34 @@ namespace CLGenerator.Parsing
             }
         }
 
+        internal static GroupRef[] ParseGroups(string? groups, ApiFile currentFile, NameMangler nameMangler)
+        {
+            if (groups == null) return [];
+
+            string[] rawGroups = groups.Split(',', StringSplitOptions.RemoveEmptyEntries) ?? [];
+            List<GroupRef> groupRefs = new List<GroupRef>(rawGroups.Length);
+            for (int i = 0; i < rawGroups.Length; i++)
+            {
+                if (rawGroups[i].StartsWith("ErrorCodes") == false && rawGroups[i].Contains('.'))
+                    continue;
+
+                GroupRef group = GroupRefFromString(rawGroups[i], currentFile, nameMangler);
+                groupRefs.Add(group);
+            }
+
+            return groupRefs.ToArray();
+        }
+
         internal static GroupRef GroupRefFromString(string group, ApiFile currentFile, NameMangler nameMangler)
         {
-            string name = group;
+            if (group.StartsWith("ErrorCodes."))
+                group = "ErrorCodes";
+
             ApiFile file = currentFile;
 
-            string translatedName = nameMangler.TranslateEnumGroupName(name);
+            string translatedName = nameMangler.TranslateEnumGroupName(group);
 
-            return new GroupRef(name, translatedName, file);
+            return new GroupRef(group, translatedName, file);
         }
 
 
@@ -1072,7 +1061,7 @@ namespace CLGenerator.Parsing
                     // Remove "GL_" and get the vendor name from the first part of the extension name
                     // Extension name convention: "GL_VENDOR_EXTENSION_NAME"
                     string? extNameWithoutGLPrefix = nameMangler.RemoveExtensionPrefix(extName);
-                    string? vendor = extNameWithoutGLPrefix[..extNameWithoutGLPrefix.IndexOf("_")];
+                    string? vendor = extNameWithoutGLPrefix[..extNameWithoutGLPrefix.IndexOf("_")].ToUpper();
                     if (string.IsNullOrEmpty(vendor))
                     {
                         throw new Exception($"Extension '{extension}' doesn't have the vendor in it's name!");

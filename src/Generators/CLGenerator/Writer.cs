@@ -454,7 +454,7 @@ namespace CLGenerator
             writer.WriteLine("using System.Runtime.CompilerServices;");
             writer.WriteLine("using System.Runtime.InteropServices;");
             writer.WriteLine();
-            writer.WriteLine($"namespace {Namespace}");
+            writer.WriteLine($"namespace {Namespace}.OpenCL");
             using (writer.CsScope())
             {
                 writer.WriteLineNoTabs("#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member");
