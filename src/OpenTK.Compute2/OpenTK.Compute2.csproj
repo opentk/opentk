@@ -13,8 +13,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="$(OpenTKSolutionRoot)\.github\opentk-blue-hexagon.png" Pack="true" PackagePath="images" Visible="false" />
-    <None Include="README.md" />
+    <None Include="$(OpenTKSolutionRoot)\.github\opentk-blue-hexagon.png" Pack="true" PackagePath="images" Visible="false"/>
+    <None Include="README.md" Pack="true" PackagePath="docs"/>
   </ItemGroup>
 
   <ItemGroup>
