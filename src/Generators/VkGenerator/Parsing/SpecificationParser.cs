@@ -34,6 +34,7 @@ namespace VkGenerator.Parsing
         List<StructType> Structs,
         List<EnumName> EnumNames,
         List<BitmaskName> BitmaskNames,
+        // FIXME: Use these...?
         List<BaseType> BaseTypes,
         List<HandleType> HandleTypes,
         List<FunctionPoiner> FunctionPointerTypes,
@@ -62,49 +63,6 @@ namespace VkGenerator.Parsing
     }
 
     public record ExternalType(string Name, string? HeaderFile);
-
-    [Flags]
-    public enum LimitType
-    {
-        None = 0,
-        Min = 1 << 0,
-        Max = 1 << 1,
-        Not = 1 << 2,
-        PowerOfTwo = 1 << 3,
-        Multiple = 1 << 4,
-        Bits = 1 << 5,
-        Bitmask = 1 << 6,
-        Range = 1 << 7,
-        Struct = 1 << 8,
-        Exact = 1 << 9,
-        NoAuto = 1 << 10,
-    }
-
-    public record StructType(string Name, List<StructMember> Members, bool Union, string? Comment, string? Alias) : IStruct
-    {
-        List<IStructMember> IStruct.Members => Members.Cast<IStructMember>().ToList();
-
-        public VersionInfo? VersionInfo { get; set; }
-
-        public List<Function> ReferencedBy { get; } = [];
-    }
-    public record StructMember(
-            string Type,
-            string Name,
-            string? Length,
-            string? AltLength,
-            string? Stride,
-            ExternSyncInfo ExternSync,
-            bool[] Optional,
-            string? Values,
-            LimitType LimitType,
-            string? ObjectType,
-            string? FeatureLink,
-            string? Comment
-        ) : IStructMember
-    {
-        public BaseCSType? StrongType { get; set; }
-    };
 
     public record FeatureRef(string Name, string Struct);
 
@@ -475,7 +433,18 @@ namespace VkGenerator.Parsing
 
                 ExternSyncInfo externsync = ParseExternSync(member.Attribute("externsync")?.Value);
 
-                members.Add(new StructMember(typeStr, name, len, altLen, stride, externsync, optional, values, limitType, objectType, featureLink, comment));
+                members.Add(new StructMember(typeStr, name, comment)
+                {
+                    Length = len,
+                    AltLength = altLen,
+                    Stride = stride,
+                    ExternSync = externsync,
+                    Optional = optional,
+                    Values = values,
+                    LimitType = limitType,
+                    ObjectType = objectType,
+                    FeatureLink = featureLink,
+                });
             }
 
             return members;
