@@ -129,7 +129,7 @@ module Matrix4 =
             let R43 = m*c + n*g + o*k + p*o
             let R44 = m*d + n*h + o*l + p*p
 
-            let AB = A*B
+            let AB = Matrix4.MultFallback(&A,&B)
 
             Assert.Equal(R11, AB.M11)
             Assert.Equal(R12, AB.M12)
