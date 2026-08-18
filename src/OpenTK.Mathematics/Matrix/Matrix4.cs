@@ -1583,20 +1583,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Matrix4 Mult(Matrix4 left, Matrix4 right)
         {
-            Matrix4 result;
-
-#if NETCOREAPP3_1_OR_GREATER
-            if (Sse.IsSupported)
-            {
-                MultSSE1(in left, in right, out result);
-            }
-            else
-            {
-                Mult(in left, in right, out result);
-            }
-#else
-            Mult(in left, in right, out result);
-#endif
+            Mult(in left, in right, out Matrix4 result);
             return result;
         }
 
@@ -1607,6 +1594,31 @@ namespace OpenTK.Mathematics
         /// <param name="right">The right operand of the multiplication.</param>
         /// <param name="result">A new instance that is the result of the multiplication.</param>
         public static void Mult(in Matrix4 left, in Matrix4 right, out Matrix4 result)
+        {
+#if NET8_0_OR_GREATER
+            if (Avx512F.IsSupported)
+            {
+                MultAVX512_FMA(in left, in right, out result);
+            }
+            else
+#endif
+#if NETCOREAPP3_1_OR_GREATER
+            if (Fma.IsSupported)
+            {
+                MultAVX_FMA(in left, in right, out result);
+            }
+            else if (Sse.IsSupported)
+            {
+                MultSSE1(in left, in right, out result);
+            }
+            else
+#endif
+            {
+                MultFallback(in left, in right, out result);
+            }
+        }
+
+        internal static void MultFallback(in Matrix4 left, in Matrix4 right, out Matrix4 result)
         {
             float leftM11 = left.Row0.X;
             float leftM12 = left.Row0.Y;
@@ -1660,151 +1672,262 @@ namespace OpenTK.Mathematics
         }
 
 #if NETCOREAPP3_1_OR_GREATER
-        /// <summary>
-        /// Multiplies two instances (With SSE1 intrinsics).
-        /// </summary>
-        /// <param name="left">The left operand of the multiplication.</param>
-        /// <param name="right">The right operand of the multiplication.</param>
-        /// <param name="result" >A new instance that is the result of the multiplication.</param>
+        // Internal so that unit tests can view this with [InternalsVisibleTo]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static unsafe void MultSSE1(in Matrix4 left, in Matrix4 right, out Matrix4 result)
+        internal static unsafe void MultSSE1(in Matrix4 left, in Matrix4 right, out Matrix4 result)
         {
-#pragma warning disable SA1015
+            Unsafe.SkipInit(out result);
 
-            // The following xmm registers
-            // will save the shuffles
-            Vector128<float> aSeq0;
-            Vector128<float> aSeq1;
-            Vector128<float> aSeq2;
-            Vector128<float> aSeq3;
-
-            fixed (Vector4* ptr = &left.Row0)
+            Vector128<float> bRow0;
+            Vector128<float> bRow1;
+            Vector128<float> bRow2;
+            Vector128<float> bRow3;
+            fixed (Vector4* m = &right.Row0)
             {
-                aSeq0 = Sse.Shuffle(*(Vector128<float>*)ptr, *(Vector128<float>*)ptr, 0b0000_0000);
-
-                aSeq1 = Sse.Shuffle(*(Vector128<float>*)ptr, *(Vector128<float>*)ptr, 0b0101_0101);
-
-                aSeq2 = Sse.Shuffle(*(Vector128<float>*)ptr, *(Vector128<float>*)ptr, 0b1010_1010);
-
-                aSeq3 = Sse.Shuffle(*(Vector128<float>*)ptr, *(Vector128<float>*)ptr, 0b1111_1111);
+                bRow0 = Sse.LoadVector128(&m[0].X);
+                bRow1 = Sse.LoadVector128(&m[1].X);
+                bRow2 = Sse.LoadVector128(&m[2].X);
+                bRow3 = Sse.LoadVector128(&m[3].X);
             }
 
-            // The following xmm registers
-            // will save the multiplications
-            Vector128<float> muls0;
-            Vector128<float> muls1;
-            Vector128<float> muls2;
-
-            // Equivalent of aRow0 * matrixB
-            fixed (Vector4* resultPtr = &result.Row0)
-            fixed (Vector4* rightPtr = &right.Row0)
             {
-                *(Vector128<float>*)resultPtr = Sse.Multiply(aSeq0, *(Vector128<float>*)rightPtr);
+                Vector128<float> aRow0;
+                fixed (float* m = &left.Row0.X)
+                {
+                    aRow0 = Sse.LoadVector128(m);
+                }
 
-                muls0 = Sse.Multiply(aSeq1, *(Vector128<float>*)&rightPtr[1]);
+                // a[0] * bRow0 + a[1] * bRow1 + a[2] * bRow2 + a[3] * bRow3
+                Vector128<float> res =
+                        Sse.Add(
+                            Sse.Add(
+                                Sse.Add(
+                                    Sse.Multiply(
+                                        Sse.Shuffle(aRow0, aRow0, 0b_00_00_00_00),
+                                        bRow0),
+                                    Sse.Multiply(
+                                        Sse.Shuffle(aRow0, aRow0, 0b_01_01_01_01),
+                                        bRow1)),
+                                Sse.Multiply(
+                                    Sse.Shuffle(aRow0, aRow0, 0b_10_10_10_10),
+                                    bRow2)),
+                            Sse.Multiply(
+                                Sse.Shuffle(aRow0, aRow0, 0b_11_11_11_11),
+                                bRow3));
 
-                muls1 = Sse.Multiply(aSeq2, *(Vector128<float>*)&rightPtr[2]);
-
-                muls2 = Sse.Multiply(aSeq3, *(Vector128<float>*)&rightPtr[3]);
-
-                *(Vector128<float>*)resultPtr = Sse.Add(*(Vector128<float>*)resultPtr, muls0);
-
-                *(Vector128<float>*)resultPtr = Sse.Add(*(Vector128<float>*)resultPtr, muls1);
-
-                *(Vector128<float>*)resultPtr = Sse.Add(*(Vector128<float>*)resultPtr, muls2);
+                fixed (Vector4* row0 = &result.Row0)
+                {
+                    Sse.Store(&row0->X, res);
+                }
             }
 
-            fixed (Vector4* ptr = &left.Row1)
             {
-                aSeq0 = Sse.Shuffle(*(Vector128<float>*)ptr, *(Vector128<float>*)ptr, 0b0000_0000);
+                Vector128<float> aRow1;
+                fixed (float* m = &left.Row1.X)
+                {
+                    aRow1 = Sse.LoadVector128(m);
+                }
 
-                aSeq1 = Sse.Shuffle(*(Vector128<float>*)ptr, *(Vector128<float>*)ptr, 0b0101_0101);
+                // a[0] * bRow0 + a[1] * bRow1 + a[2] * bRow2 + a[3] * bRow3
+                Vector128<float> res =
+                        Sse.Add(
+                            Sse.Add(
+                                Sse.Add(
+                                    Sse.Multiply(
+                                        Sse.Shuffle(aRow1, aRow1, 0b_00_00_00_00),
+                                        bRow0),
+                                    Sse.Multiply(
+                                        Sse.Shuffle(aRow1, aRow1, 0b_01_01_01_01),
+                                        bRow1)),
+                                Sse.Multiply(
+                                    Sse.Shuffle(aRow1, aRow1, 0b_10_10_10_10),
+                                    bRow2)),
+                            Sse.Multiply(
+                                Sse.Shuffle(aRow1, aRow1, 0b_11_11_11_11),
+                                bRow3));
 
-                aSeq2 = Sse.Shuffle(*(Vector128<float>*)ptr, *(Vector128<float>*)ptr, 0b1010_1010);
-
-                aSeq3 = Sse.Shuffle(*(Vector128<float>*)ptr, *(Vector128<float>*)ptr, 0b1111_1111);
+                fixed (Vector4* row1 = &result.Row1)
+                {
+                    Sse.Store(&row1->X, res);
+                }
             }
 
-            // Equivalent of aRow1 * matrixB
-            fixed (Vector4* resultPtr = &result.Row1)
-            fixed (Vector4* rightPtr = &right.Row0)
             {
-                *(Vector128<float>*)resultPtr = Sse.Multiply(aSeq0, *(Vector128<float>*)rightPtr);
+                Vector128<float> aRow2;
+                fixed (float* m = &left.Row2.X)
+                {
+                    aRow2 = Sse.LoadVector128(m);
+                }
 
-                muls0 = Sse.Multiply(aSeq1, *(Vector128<float>*)&rightPtr[1]);
+                // a[0] * bRow0 + a[1] * bRow1 + a[2] * bRow2 + a[3] * bRow3
+                Vector128<float> res =
+                        Sse.Add(
+                            Sse.Add(
+                                Sse.Add(
+                                    Sse.Multiply(
+                                        Sse.Shuffle(aRow2, aRow2, 0b_00_00_00_00),
+                                        bRow0),
+                                    Sse.Multiply(
+                                        Sse.Shuffle(aRow2, aRow2, 0b_01_01_01_01),
+                                        bRow1)),
+                                Sse.Multiply(
+                                    Sse.Shuffle(aRow2, aRow2, 0b_10_10_10_10),
+                                    bRow2)),
+                            Sse.Multiply(
+                                Sse.Shuffle(aRow2, aRow2, 0b_11_11_11_11),
+                                bRow3));
 
-                muls1 = Sse.Multiply(aSeq2, *(Vector128<float>*)&rightPtr[2]);
-
-                muls2 = Sse.Multiply(aSeq3, *(Vector128<float>*)&rightPtr[3]);
-
-                *(Vector128<float>*)resultPtr = Sse.Add(*(Vector128<float>*)resultPtr, muls0);
-
-                *(Vector128<float>*)resultPtr = Sse.Add(*(Vector128<float>*)resultPtr, muls1);
-
-                *(Vector128<float>*)resultPtr = Sse.Add(*(Vector128<float>*)resultPtr, muls2);
+                fixed (Vector4* row2 = &result.Row2)
+                {
+                    Sse.Store(&row2->X, res);
+                }
             }
 
-            fixed (Vector4* ptr = &left.Row2)
             {
-                aSeq0 = Sse.Shuffle(*(Vector128<float>*)ptr, *(Vector128<float>*)ptr, 0b0000_0000);
+                Vector128<float> aRow3;
+                fixed (float* m = &left.Row3.X)
+                {
+                    aRow3 = Sse.LoadVector128(m);
+                }
 
-                aSeq1 = Sse.Shuffle(*(Vector128<float>*)ptr, *(Vector128<float>*)ptr, 0b0101_0101);
+                // a[0] * bRow0 + a[1] * bRow1 + a[2] * bRow2 + a[3] * bRow3
+                Vector128<float> res =
+                        Sse.Add(
+                            Sse.Add(
+                                Sse.Add(
+                                    Sse.Multiply(
+                                        Sse.Shuffle(aRow3, aRow3, 0b_00_00_00_00),
+                                        bRow0),
+                                    Sse.Multiply(
+                                        Sse.Shuffle(aRow3, aRow3, 0b_01_01_01_01),
+                                        bRow1)),
+                                Sse.Multiply(
+                                    Sse.Shuffle(aRow3, aRow3, 0b_10_10_10_10),
+                                    bRow2)),
+                            Sse.Multiply(
+                                Sse.Shuffle(aRow3, aRow3, 0b_11_11_11_11),
+                                bRow3));
 
-                aSeq2 = Sse.Shuffle(*(Vector128<float>*)ptr, *(Vector128<float>*)ptr, 0b1010_1010);
+                fixed (Vector4* row3 = &result.Row3)
+                {
+                    Sse.Store(&row3->X, res);
+                }
+            }
+        }
 
-                aSeq3 = Sse.Shuffle(*(Vector128<float>*)ptr, *(Vector128<float>*)ptr, 0b1111_1111);
+        // Internal so that unit tests can view this with [InternalsVisibleTo]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal static unsafe void MultAVX_FMA(in Matrix4 left, in Matrix4 right, out Matrix4 result)
+        {
+            Unsafe.SkipInit(out result);
+
+            Vector256<float> bRow0_0;
+            Vector256<float> bRow1_1;
+            Vector256<float> bRow2_2;
+            Vector256<float> bRow3_3;
+            fixed (Vector4* m = &right.Row0)
+            {
+                bRow0_0 = Avx.BroadcastVector128ToVector256(&m[0].X);
+                bRow1_1 = Avx.BroadcastVector128ToVector256(&m[1].X);
+                bRow2_2 = Avx.BroadcastVector128ToVector256(&m[2].X);
+                bRow3_3 = Avx.BroadcastVector128ToVector256(&m[3].X);
             }
 
-            // Equivalent of aRow2 * matrixB
-            fixed (Vector4* resultPtr = &result.Row2)
-            fixed (Vector4* rightPtr = &right.Row0)
             {
-                *(Vector128<float>*)resultPtr = Sse.Multiply(aSeq0, *(Vector128<float>*)rightPtr);
+                Vector256<float> aRow0_1;
+                fixed (float* m = &left.Row0.X)
+                {
+                    aRow0_1 = Avx.LoadVector256(m);
+                }
 
-                muls0 = Sse.Multiply(aSeq1, *(Vector128<float>*)&rightPtr[1]);
+                Vector256<float> res =
+                    Fma.MultiplyAdd(
+                        Avx.Shuffle(aRow0_1, aRow0_1, 0b_00_00_00_00),
+                        bRow0_0,
+                        Fma.MultiplyAdd(
+                            Avx.Shuffle(aRow0_1, aRow0_1, 0b_01_01_01_01),
+                            bRow1_1,
+                            Fma.MultiplyAdd(
+                                Avx.Shuffle(aRow0_1, aRow0_1, 0b_10_10_10_10),
+                                bRow2_2,
+                                Avx.Multiply(Avx.Shuffle(aRow0_1, aRow0_1, 0b_11_11_11_11), bRow3_3))));
 
-                muls1 = Sse.Multiply(aSeq2, *(Vector128<float>*)&rightPtr[2]);
-
-                muls2 = Sse.Multiply(aSeq3, *(Vector128<float>*)&rightPtr[3]);
-
-                *(Vector128<float>*)resultPtr = Sse.Add(*(Vector128<float>*)resultPtr, muls0);
-
-                *(Vector128<float>*)resultPtr = Sse.Add(*(Vector128<float>*)resultPtr, muls1);
-
-                *(Vector128<float>*)resultPtr = Sse.Add(*(Vector128<float>*)resultPtr, muls2);
+                fixed (Vector4* row0_1 = &result.Row0)
+                {
+                    Avx.Store(&row0_1->X, res);
+                }
             }
 
-            fixed (Vector4* ptr = &left.Row3)
             {
-                aSeq0 = Sse.Shuffle(*(Vector128<float>*)ptr, *(Vector128<float>*)ptr, 0b0000_0000);
+                Vector256<float> aRow2_3;
+                fixed (float* m = &left.Row2.X)
+                {
+                    aRow2_3 = Avx.LoadVector256(m);
+                }
 
-                aSeq1 = Sse.Shuffle(*(Vector128<float>*)ptr, *(Vector128<float>*)ptr, 0b0101_0101);
+                Vector256<float> res =
+                    Fma.MultiplyAdd(
+                        Avx.Shuffle(aRow2_3, aRow2_3, 0b_00_00_00_00),
+                        bRow0_0,
+                        Fma.MultiplyAdd(
+                            Avx.Shuffle(aRow2_3, aRow2_3, 0b_01_01_01_01),
+                            bRow1_1,
+                            Fma.MultiplyAdd(
+                                Avx.Shuffle(aRow2_3, aRow2_3, 0b_10_10_10_10),
+                                bRow2_2,
+                                Avx.Multiply(Avx.Shuffle(aRow2_3, aRow2_3, 0b_11_11_11_11), bRow3_3))));
 
-                aSeq2 = Sse.Shuffle(*(Vector128<float>*)ptr, *(Vector128<float>*)ptr, 0b1010_1010);
+                fixed (Vector4* row2_3 = &result.Row2)
+                {
+                    Avx.Store(&row2_3->X, res);
+                }
+            }
+        }
+#endif
 
-                aSeq3 = Sse.Shuffle(*(Vector128<float>*)ptr, *(Vector128<float>*)ptr, 0b1111_1111);
+#if NET8_0_OR_GREATER
+        // Internal so that unit tests can view this with [InternalsVisibleTo]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal static unsafe void MultAVX512_FMA(in Matrix4 left, in Matrix4 right, out Matrix4 result)
+        {
+            Unsafe.SkipInit(out result);
+
+            Vector512<float> bRow0_0_0_0;
+            Vector512<float> bRow1_1_1_1;
+            Vector512<float> bRow2_2_2_2;
+            Vector512<float> bRow3_3_3_3;
+            fixed (Vector4* m = &right.Row0)
+            {
+                bRow0_0_0_0 = Avx512F.BroadcastVector128ToVector512(&m[0].X);
+                bRow1_1_1_1 = Avx512F.BroadcastVector128ToVector512(&m[1].X);
+                bRow2_2_2_2 = Avx512F.BroadcastVector128ToVector512(&m[2].X);
+                bRow3_3_3_3 = Avx512F.BroadcastVector128ToVector512(&m[3].X);
             }
 
-            // Equivalent of aRow0 * matrixB
-            fixed (Vector4* resultPtr = &result.Row3)
-            fixed (Vector4* rightPtr = &right.Row0)
             {
-                *(Vector128<float>*)resultPtr = Sse.Multiply(aSeq0, *(Vector128<float>*)rightPtr);
+                Vector512<float> aRow0_1_2_3;
+                fixed (float* m = &left.Row0.X)
+                {
+                    aRow0_1_2_3 = Avx512F.LoadVector512(m);
+                }
 
-                muls0 = Sse.Multiply(aSeq1, *(Vector128<float>*)&rightPtr[1]);
+                Vector512<float> res =
+                    Avx512F.FusedMultiplyAdd(
+                        Avx512F.Shuffle(aRow0_1_2_3, aRow0_1_2_3, 0b_00_00_00_00),
+                        bRow0_0_0_0,
+                        Avx512F.FusedMultiplyAdd(
+                            Avx512F.Shuffle(aRow0_1_2_3, aRow0_1_2_3, 0b_01_01_01_01),
+                            bRow1_1_1_1,
+                            Avx512F.FusedMultiplyAdd(
+                                Avx512F.Shuffle(aRow0_1_2_3, aRow0_1_2_3, 0b_10_10_10_10),
+                                bRow2_2_2_2,
+                                Avx512F.Multiply(Avx512F.Shuffle(aRow0_1_2_3, aRow0_1_2_3, 0b_11_11_11_11), bRow3_3_3_3))));
 
-                muls1 = Sse.Multiply(aSeq2, *(Vector128<float>*)&rightPtr[2]);
-
-                muls2 = Sse.Multiply(aSeq3, *(Vector128<float>*)&rightPtr[3]);
-
-                *(Vector128<float>*)resultPtr = Sse.Add(*(Vector128<float>*)resultPtr, muls0);
-
-                *(Vector128<float>*)resultPtr = Sse.Add(*(Vector128<float>*)resultPtr, muls1);
-
-                *(Vector128<float>*)resultPtr = Sse.Add(*(Vector128<float>*)resultPtr, muls2);
+                fixed (Vector4* row0_1_2_3 = &result.Row0)
+                {
+                    Avx512F.Store(&row0_1_2_3->X, res);
+                }
             }
-
-#pragma warning restore SA1015
         }
 #endif
 
