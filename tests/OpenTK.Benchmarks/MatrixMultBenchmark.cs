@@ -11,32 +11,66 @@ namespace OpenTK.Benchmarks
     [DisassemblyDiagnoser(maxDepth: 2, syntax: BenchmarkDotNet.Diagnosers.DisassemblySyntax.Intel, exportHtml: true)]
     public class MatrixMultBenchmark
     {
-        public Matrix4 A { get; set; }
+        [Params(1000, 10_000, 100_000, 1_000_000)]
+        public int N;
 
-        public Matrix4 B { get; set; }
+        public Matrix4[] Matrices { get; set; }
 
-        public System.Numerics.Matrix4x4 ASN { get; set; }
+        public System.Numerics.Matrix4x4[] SNMatrices { get; set; }
 
-        public System.Numerics.Matrix4x4 BSN { get; set; }
+        [GlobalSetup]
+        public void Setup()
+        {
+            Matrices = new Matrix4[N];
+            SNMatrices = new System.Numerics.Matrix4x4[N];
+
+            Random rand = new Random();
+            for (int i = 0; i < Matrices.Length; i++)
+            {
+                Matrices[i] = new Matrix4(
+                    rand.NextSingle(), rand.NextSingle(), rand.NextSingle(), rand.NextSingle(),
+                    rand.NextSingle(), rand.NextSingle(), rand.NextSingle(), rand.NextSingle(),
+                    rand.NextSingle(), rand.NextSingle(), rand.NextSingle(), rand.NextSingle(),
+                    rand.NextSingle(), rand.NextSingle(), rand.NextSingle(), rand.NextSingle());
+
+                SNMatrices[i] = new System.Numerics.Matrix4x4(
+                    rand.NextSingle(), rand.NextSingle(), rand.NextSingle(), rand.NextSingle(),
+                    rand.NextSingle(), rand.NextSingle(), rand.NextSingle(), rand.NextSingle(),
+                    rand.NextSingle(), rand.NextSingle(), rand.NextSingle(), rand.NextSingle(),
+                    rand.NextSingle(), rand.NextSingle(), rand.NextSingle(), rand.NextSingle());
+            }
+        }
 
         [Benchmark(Baseline = true)]
         public Matrix4 MultScalar()
         {
-            Matrix4.MultFallback(A, B, out Matrix4 result);
+            Matrix4 result = Matrices[0];
+            for (int i = 1; i < Matrices.Length; i++)
+            {
+                Matrix4.MultFallback(result, Matrices[i], out result);
+            }
             return result;
         }
 
         [Benchmark]
         public Matrix4 MultSSE1()
         {
-            Matrix4.MultSSE1(A, B, out Matrix4 result);
+            Matrix4 result = Matrices[0];
+            for (int i = 1; i < Matrices.Length; i++)
+            {
+                Matrix4.MultSSE1(result, Matrices[i], out result);
+            }
             return result;
         }
 
         [Benchmark]
         public Matrix4 MultAVX2_FMA()
         {
-            Matrix4.MultAVX_FMA(A, B, out Matrix4 result);
+            Matrix4 result = Matrices[0];
+            for (int i = 1; i < Matrices.Length; i++)
+            {
+                Matrix4.MultAVX_FMA(result, Matrices[i], out result);
+            }
             return result;
         }
 
@@ -44,7 +78,11 @@ namespace OpenTK.Benchmarks
         [Benchmark]
         public Matrix4 MultAVX512_FMA()
         {
-            Matrix4.MultAVX512_FMA(A, B, out Matrix4 result);
+            Matrix4 result = Matrices[0];
+            for (int i = 1; i < Matrices.Length; i++)
+            {
+                Matrix4.MultAVX512_FMA(result, Matrices[i], out result);
+            }
             return result;
         }
 #endif
@@ -52,7 +90,12 @@ namespace OpenTK.Benchmarks
         [Benchmark]
         public System.Numerics.Matrix4x4 MultSN()
         {
-            return ASN * BSN;
+            System.Numerics.Matrix4x4 result = SNMatrices[0];
+            for (int i = 1; i < Matrices.Length; i++)
+            {
+                result = result * SNMatrices[i];
+            }
+            return result;
         }
     }
 }
