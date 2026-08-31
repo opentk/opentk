@@ -6,6 +6,7 @@
     <!-- - Noggin_bops 2026-08-18 -->
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>../../OpenTK.snk</AssemblyOriginatorKeyFile>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
   <ItemGroup>
@@ -13,6 +14,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\OpenTK.Mathematics\OpenTK.Mathematics.csproj" />
+    <ProjectReference Include="..\..\src\OpenTK.Mathematics\OpenTK.Mathematics.csproj"/>
   </ItemGroup>
 </Project>

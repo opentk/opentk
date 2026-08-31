@@ -28,16 +28,16 @@ namespace OpenTK.Benchmarks
             for (int i = 0; i < Matrices.Length; i++)
             {
                 Matrices[i] = new Matrix4(
-                    rand.NextSingle(), rand.NextSingle(), rand.NextSingle(), rand.NextSingle(),
-                    rand.NextSingle(), rand.NextSingle(), rand.NextSingle(), rand.NextSingle(),
-                    rand.NextSingle(), rand.NextSingle(), rand.NextSingle(), rand.NextSingle(),
-                    rand.NextSingle(), rand.NextSingle(), rand.NextSingle(), rand.NextSingle());
+                    (float)rand.NextDouble(), (float)rand.NextDouble(), (float)rand.NextDouble(), (float)rand.NextDouble(),
+                    (float)rand.NextDouble(), (float)rand.NextDouble(), (float)rand.NextDouble(), (float)rand.NextDouble(),
+                    (float)rand.NextDouble(), (float)rand.NextDouble(), (float)rand.NextDouble(), (float)rand.NextDouble(),
+                    (float)rand.NextDouble(), (float)rand.NextDouble(), (float)rand.NextDouble(), (float)rand.NextDouble());
 
                 SNMatrices[i] = new System.Numerics.Matrix4x4(
-                    rand.NextSingle(), rand.NextSingle(), rand.NextSingle(), rand.NextSingle(),
-                    rand.NextSingle(), rand.NextSingle(), rand.NextSingle(), rand.NextSingle(),
-                    rand.NextSingle(), rand.NextSingle(), rand.NextSingle(), rand.NextSingle(),
-                    rand.NextSingle(), rand.NextSingle(), rand.NextSingle(), rand.NextSingle());
+                    (float)rand.NextDouble(), (float)rand.NextDouble(), (float)rand.NextDouble(), (float)rand.NextDouble(),
+                    (float)rand.NextDouble(), (float)rand.NextDouble(), (float)rand.NextDouble(), (float)rand.NextDouble(),
+                    (float)rand.NextDouble(), (float)rand.NextDouble(), (float)rand.NextDouble(), (float)rand.NextDouble(),
+                    (float)rand.NextDouble(), (float)rand.NextDouble(), (float)rand.NextDouble(), (float)rand.NextDouble());
             }
         }
 
