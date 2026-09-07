@@ -129,7 +129,7 @@ module Matrix4 =
             let R43 = m*c + n*g + o*k + p*o
             let R44 = m*d + n*h + o*l + p*p
 
-            let AB = A*B
+            let AB = Matrix4.MultFallback(&A,&B)
 
             Assert.Equal(R11, AB.M11)
             Assert.Equal(R12, AB.M12)
@@ -150,6 +150,22 @@ module Matrix4 =
             Assert.Equal(R42, AB.M42)
             Assert.Equal(R43, AB.M43)
             Assert.Equal(R44, AB.M44)
+
+        [<Property>]
+        let ``Matrix multiplication fallback equals simd`` (a: Matrix4, b: Matrix4) =
+            let normal = Matrix4.Mult(&a, &b);
+            let fallback = Matrix4.MultFallback(&a, &b);
+            let sse = Matrix4.MultSSE1(&a, &b);
+            let avx2_fma = Matrix4.MultAVX_FMA(&a, &b);
+
+            Assert.ApproximatelyEqualEpsilon(normal, fallback);
+            Assert.Equal(fallback, sse);
+            Assert.ApproximatelyEqualEpsilon(fallback, avx2_fma);
+
+#if NET8_0_OR_GREATER
+            let avx512_fma = Matrix4.MultAVX512_FMA(&a, &b);
+            Assert.ApproximatelyEqualEpsilon(fallback, avx512_fma);
+#endif
 
         [<Property>]
         let ``Matrix multiplication by scalar is the same as row multiplication by scalar`` (a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, scalar : float32) =
