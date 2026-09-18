@@ -52,6 +52,7 @@ namespace OpenTK.Platform.MacOS
         NoneAvailable = 1011,
     }
 
+    /// <summary>Contains P/Invokes to the MacOS CoreGraphics API</summary>
     internal partial class CG
     {
         private const string lib = "/System/Library/Frameworks/ApplicationServices.framework/Versions/Current/ApplicationServices";
@@ -98,6 +99,24 @@ namespace OpenTK.Platform.MacOS
 
         [DllImport(lib, EntryPoint="CGShieldingWindowLevel")]
         internal static extern uint ShieldingWindowLevel();
+
+        [DllImport(lib, EntryPoint="CGDisplayCopyDisplayMode")]
+        internal static extern IntPtr CopyDisplayMode(IntPtr display);
+
+        [DllImport(lib, EntryPoint="CGDisplayModeRelease")]
+        internal static extern IntPtr ReleaseDisplayMode(IntPtr display);
+
+        [DllImport(lib, EntryPoint="CGDisplayModeGetPixelWidth")]
+        internal static extern IntPtr GetModePixelWidth(IntPtr display);
+
+        [DllImport(lib, EntryPoint="CGDisplayModeGetPixelHeight")]
+        internal static extern IntPtr GetModePixelHeight(IntPtr display);
+
+        [DllImport(lib, EntryPoint="CGDisplayModeGetWidth")]
+        internal static extern IntPtr GetModeWidth(IntPtr display);
+
+        [DllImport(lib, EntryPoint="CGDisplayModeGetHeight")]
+        internal static extern IntPtr GetModeHeight(IntPtr display);
 
         [DllImport(lib, EntryPoint="CGDisplayRelease")]
         internal static extern CGDisplayErr DisplayRelease(IntPtr display);

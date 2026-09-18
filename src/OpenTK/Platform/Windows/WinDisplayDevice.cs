@@ -132,7 +132,7 @@ namespace OpenTK.Platform.Windows
 
                         opentk_dev_available_res.Add(res);
                     }
-
+                    
                     // Construct the OpenTK DisplayDevice through the accumulated parameters.
                     // The constructor will automatically add the DisplayDevice to the list
                     // of available devices.
@@ -142,6 +142,7 @@ namespace OpenTK.Platform.Windows
                         opentk_dev_primary,
                         opentk_dev_available_res,
                         opentk_dev_current_res.Bounds,
+                        device_count,
                         dev1.DeviceName);
                     #pragma warning restore 612,618
 
@@ -191,6 +192,34 @@ namespace OpenTK.Platform.Windows
         private void HandleDisplaySettingsChanged(object sender, EventArgs e)
         {
             RefreshDisplayDevices();
+        }
+
+        public override Vector2 GetDisplayScaling (DisplayIndex displayIndex)
+        {
+            float scaleFactor = 96.0f;
+            //Pull the DPI out of the registry
+            try
+            {
+                if (Environment.OSVersion.Version.Major == 10) {
+                    //Win10
+                    scaleFactor = (float)Registry.GetValue ("HKEY_CURRENT_USER\\Control Panel\\Desktop", "LogPixels", 96);
+                } else {
+                    //Lower
+                    scaleFactor = float.Parse ((string)Registry.GetValue (@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\ThemeManager", "LastLoadedDPI", "96"));
+                }
+            }
+            catch
+            {
+                /*
+                 * WINE doesn't like this (No idea why, it's a simple registry call, but there we go...)
+                 * We can safely ignore anyway, as it's only the scale factor
+                 */
+            }
+            
+            //Divide by default 96DPI to get scale factor
+            scaleFactor /= 96.0f;
+
+            return new Vector2 (scaleFactor, scaleFactor);
         }
 
         ~WinDisplayDeviceDriver()

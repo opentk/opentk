@@ -183,6 +183,10 @@ namespace OpenTK.Platform.SDL2
         public static extern IntPtr GameControllerGetJoystick(IntPtr gamecontroller);
 
         [SuppressUnmanagedCodeSecurity]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GetDisplayDPI", ExactSpelling = true)]
+        public static extern int GetDisplayDPI(int displayIndex, out float ddpi, out float hdpi, out float vdpi);
+
+        [SuppressUnmanagedCodeSecurity]
         [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GetCurrentDisplayMode", ExactSpelling = true)]
         public static extern int GetCurrentDisplayMode(int displayIndex, out DisplayMode mode);
 

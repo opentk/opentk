@@ -604,7 +604,15 @@ namespace OpenTK.Platform.X11
                     return Key.KeypadDecimal;
                 case XKey.KP_Enter:
                     return Key.KeypadEnter;
-
+                case XKey.A_diaeresis:
+                case XKey.a_diaeresis:
+                    return Key.A_diaeresis;
+                case XKey.O_diaeresis:
+                case XKey.o_diaeresis:
+                    return Key.O_diaeresis;
+                case XKey.U_diaeresis:
+                case XKey.u_diaeresis:
+                    return Key.U_diaeresis;
                 default:
                     return Key.Unknown;
             }

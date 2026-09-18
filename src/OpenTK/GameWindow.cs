@@ -621,6 +621,10 @@ namespace OpenTK
             get
             {
                 EnsureUndisposed();
+                if (Context.SwapInterval != 0)
+                {
+                    return 0;
+                }
                 return target_render_period;
             }
             set

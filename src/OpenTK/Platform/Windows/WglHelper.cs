@@ -10,6 +10,7 @@ using System.Collections.Generic;
 
 namespace OpenTK.Platform.Windows
 {
+    /// <summary>Provides access to Wgl extensions</summary>
     public partial class Wgl
     {
         private static IntPtr[] EntryPoints;
@@ -21,11 +22,11 @@ namespace OpenTK.Platform.Windows
             new Dictionary<string, bool>();
 
         private static readonly object sync = new object();
-
-        public Wgl()
-        {
-        }
-
+        
+        /// <summary>
+        /// Returns whether Wgl supports the specified extension name
+        /// </summary>
+        /// <param name="name">The extension name</param>
         public static bool SupportsExtension(string name)
         {
             return SupportsExtension(Wgl.GetCurrentDC(), name);

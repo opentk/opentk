@@ -143,7 +143,6 @@
     <Compile Include="Platform\Windows\WinRawJoystick.cs" />
     <Compile Include="Platform\Windows\XInputJoystick.cs" />
     <Compile Include="Platform\X11\Bindings\DL.cs" />
-    <Compile Include="Platform\X11\Bindings\INotify.cs" />
     <Compile Include="Platform\X11\Bindings\XI.cs" />
     <Compile Include="ToolkitOptions.cs" />
     <Compile Include="WindowBorder.cs">

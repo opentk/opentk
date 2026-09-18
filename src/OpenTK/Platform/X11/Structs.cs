@@ -38,6 +38,7 @@ namespace OpenTK.Platform.X11
     using Bool = System.Boolean;
     using Time = System.IntPtr;
     using Window = System.IntPtr;
+    using Pixmap = System.IntPtr;
 
     //
     // In the structures below, fields of type long are mapped to IntPtr.
@@ -507,15 +508,24 @@ namespace OpenTK.Platform.X11
         public int count;
     }
 
+    /// <summary>An X11 error event</summary>
     [StructLayout(LayoutKind.Sequential)]
     internal struct XErrorEvent
     {
+        /// <summary>The type of event</summary>
+        /// <remarks>Always XErrorEvent</remarks>
         public XEventName type;
+        /// <summary>Display the event was read from</summary>
         public IntPtr display;
+        /// <summary>Resource ID which generated the errror</summary>
         public IntPtr resourceid;
+        /// <summary>Serial of the protocol which generated the event</summary>
         public IntPtr serial;
+        /// <summary>Error code of the failed request</summary>
         public byte error_code;
+        /// <summary>Major opcode of the extension which caused the event</summary>
         public XRequest request_code;
+        /// <summary>Minor opcode of the event</summary>
         public byte minor_code;
     }
 
@@ -548,29 +558,51 @@ namespace OpenTK.Platform.X11
         public IntPtr pad23;
     }
 
+    /// <summary>A generic X11 event</summary>
     [StructLayout(LayoutKind.Sequential)]
     internal struct XGenericEvent
     {
-        public int type;         // of event. Always GenericEvent
-        public IntPtr serial;       // # of last request processed
-        public bool send_event;   // true if from SendEvent request
-        public IntPtr display;     // Display the event was read from
-        public int extension;    // major opcode of extension that caused the event
-        public int evtype;       // actual event type.
+        /// <summary>The type of event</summary>
+        /// <remarks>Always GenericEvent</remarks>
+        public int type;
+        /// <summary>Serial of the protocol request which generated the event</summary>
+        public IntPtr serial;
+        /// <summary>Indicates if the event was sent by a different client</summary>
+        public bool send_event;
+        /// <summary>Display the event was read from</summary>
+        public IntPtr display;
+        /// <summary>Major opcode of the XExtension that caused the event</summary>
+        public int extension;
+        /// <summary>The underlying event type</summary>
+        public int evtype;
     }
 
+    /// <summary>The event cookie for a generic X11 event</summary>
+    [StructLayout(LayoutKind.Sequential)]
     internal struct XGenericEventCookie
     {
-        public int type;         // of event. Always GenericEvent
-        public IntPtr serial;       // # of last request processed
-        public bool send_event;   // true if from SendEvent request
-        public IntPtr display;     // Display the event was read from
-        public int extension;    // major opcode of extension that caused the event
-        public int evtype;       // actual event type.
-        public uint cookie;       // unique event cookie
-        public IntPtr data;        // actual event data
+        /// <summary>The type of event</summary>
+        /// <remarks>Always GenericEvent</remarks>
+        public int type;
+        /// <summary>Serial of the protocol request which generated the event</summary>
+        public IntPtr serial;
+        /// <summary>Indicates if the event was sent by a different client</summary>
+        public bool send_event;
+        /// <summary>Display the event was read from</summary>
+        public IntPtr display;
+        /// <summary>Major opcode of the XExtension that caused the event</summary>
+        public int extension;
+        /// <summary>The underlying event type</summary>
+        public int evtype;
+        /// <summary>Unique event cookie</summary>
+        public uint cookie;
+        /// <summary>The event data</summary>
+        public IntPtr data;
     }
 
+    /// <summary>The XEvent structure is a C union of the induvidual structures defined for each event type</summary>
+    /// <remarks>As this is not supported in C#, we instead have an overarching struct containing each sub-struct, but with a field offset of zero.
+    /// This allows the data offsets to remain constant for interop, whilst at the same time allowing us to operate in a familiar C# manner</remarks>
     [StructLayout(LayoutKind.Explicit)]
     internal struct XEvent
     {
@@ -643,8 +675,6 @@ namespace OpenTK.Platform.X11
         [FieldOffset(0)]
         public XGenericEventCookie GenericEventCookie;
 
-        //[MarshalAs(System.Runtime.InteropServices.UnmanagedType.ByValArray, SizeConst=24)]
-        //[ FieldOffset(0) ] public int[] pad;
         [FieldOffset(0)]
         public XEventPad Pad;
         public override string ToString()
@@ -1137,10 +1167,16 @@ namespace OpenTK.Platform.X11
         public IntPtr modifiermap;
     }
 
+    /// <summary>The available modes for changing an XProperty</summary>
     internal enum PropertyMode
     {
+        /// <summary>The supplied data replaces the existing data</summary>
         Replace = 0,
+        /// <summary>The supplied data is prepended to the existing data</summary>
+        /// <remarks>The data types must match, or a BadMatch error will be generated</remarks>
         Prepend = 1,
+        /// <summary>The supplied data is appended to the existing data</summary>
+        /// <remarks>The data types must match, or a BadMatch error will be generated</remarks>
         Append = 2
     }
 
@@ -1466,17 +1502,27 @@ namespace OpenTK.Platform.X11
         InactiveState = 4
     }
 
+    /// <summary>X11 Window Hints</summary>
     [StructLayout(LayoutKind.Sequential)]
     internal struct XWMHints
     {
+        /// <summary>Marks which fields in this structure are defined</summary>
         public IntPtr flags;
+        /// <summary>Whether the window relies on the window manager to get keyboard input</summary>
         public bool input;
+        /// <summary>Used by the window manager to communicate the input focus model used</summary>
         public XInitialState initial_state;
-        public IntPtr icon_pixmap;
+        /// <summary>Pointer to the pixmap to be used as the window icon</summary>
+        public Pixmap icon_pixmap;
+        /// <summary>Pointer to the window to be used as icon</summary>
         public IntPtr icon_window;
+        /// <summary>The inital X position of the icon</summary>
         public int icon_x;
+        /// <summary>The initial Y position of the icon</summary>
         public int icon_y;
-        public IntPtr icon_mask;
+        /// <summary>Pointer to the pixmap to be used as the icon mask</summary>
+        public Pixmap icon_mask;
+        /// <summary>ID of the related window group</summary>
         public IntPtr window_group;
     }
 

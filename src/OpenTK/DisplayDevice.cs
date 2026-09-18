@@ -42,7 +42,7 @@ namespace OpenTK
 
         private bool primary;
         private Rectangle bounds;
-        private DisplayResolution current_resolution = new DisplayResolution();
+        internal DisplayResolution current_resolution = new DisplayResolution();
         private List<DisplayResolution> available_resolutions = new List<DisplayResolution>();
         private IList<DisplayResolution> available_resolutions_readonly;
 
@@ -51,22 +51,25 @@ namespace OpenTK
         private static readonly object display_lock = new object();
         private static DisplayDevice primary_display;
 
-        private static Platform.IDisplayDeviceDriver implementation;
+        private static readonly Platform.IDisplayDeviceDriver implementation;
+        /// <summary>Stores the scale factor</summary>
+        private readonly DisplayIndex displayIndex;
 
         static DisplayDevice()
         {
             implementation = Platform.Factory.Default.CreateDisplayDeviceDriver();
         }
 
-        internal DisplayDevice()
+        internal DisplayDevice(int index)
         {
             available_resolutions_readonly = available_resolutions.AsReadOnly();
+            displayIndex = (DisplayIndex)index;
         }
 
         internal DisplayDevice(DisplayResolution currentResolution, bool primary,
-            IEnumerable<DisplayResolution> availableResolutions, Rectangle bounds,
+            IEnumerable<DisplayResolution> availableResolutions, Rectangle bounds, int index,
             object id)
-            : this()
+            : this(index)
         {
             // Todo: Consolidate current resolution with bounds? Can they fall out of sync right now?
             this.current_resolution = currentResolution;
@@ -97,6 +100,9 @@ namespace OpenTK
 
         /// <summary>Gets a System.Int32 that contains the height of this display in pixels.</summary>
         public int Height { get { return current_resolution.Height; } }
+
+        /// <summary>Gets a System.Double that contains the pixel scale factor of this display.</summary>
+        public Vector2 ScaleFactor { get { return implementation.GetDisplayScaling(displayIndex); } }
 
         /// <summary>Gets a System.Int32 that contains number of bits per pixel of this display. Typical values include 8, 16, 24 and 32.</summary>
         public int BitsPerPixel
@@ -199,8 +205,6 @@ namespace OpenTK
                 return;
             }
 
-            //effect.FadeOut();
-
             if (implementation.TryChangeResolution(this, resolution))
             {
                 if (OriginalResolution == null)
@@ -214,8 +218,6 @@ namespace OpenTK
                 throw new Graphics.GraphicsModeException(String.Format("Device {0}: Failed to change resolution to {1}.",
                     this, resolution));
             }
-
-            //effect.FadeIn();
         }
 
         /// <summary>Changes the resolution of the DisplayDevice.</summary>
@@ -235,8 +237,6 @@ namespace OpenTK
         {
             if (OriginalResolution != null)
             {
-                //effect.FadeOut();
-
                 if (implementation.TryRestoreResolution(this))
                 {
                     current_resolution = OriginalResolution;
@@ -246,8 +246,6 @@ namespace OpenTK
                 {
                     throw new Graphics.GraphicsModeException(String.Format("Device {0}: Failed to restore resolution.", this));
                 }
-
-                //effect.FadeIn();
             }
         }
 
@@ -309,139 +307,5 @@ namespace OpenTK
             return String.Format("{0}: {1} ({2} modes available)", IsPrimary ? "Primary" : "Secondary",
                 Bounds.ToString(), available_resolutions.Count);
         }
-
-        ///// <summary>Determines whether the specified DisplayDevices are equal.</summary>
-        ///// <param name="obj">The System.Object to check against.</param>
-        ///// <returns>True if the System.Object is an equal DisplayDevice; false otherwise.</returns>
-        //public override bool Equals(object obj)
-        //{
-        //    if (obj is DisplayDevice)
-        //    {
-        //        DisplayDevice dev = (DisplayDevice)obj;
-        //        return
-        //            IsPrimary == dev.IsPrimary &&
-        //            current_resolution == dev.current_resolution &&
-        //            available_resolutions.Count == dev.available_resolutions.Count;
-        //    }
-
-        //    return false;
-        //}
-
-        ///// <summary>Returns a unique hash representing this DisplayDevice.</summary>
-        ///// <returns>A System.Int32 that may serve as a hash code for this DisplayDevice.</returns>
-        ////public override int GetHashCode()
-        //{
-        //    return current_resolution.GetHashCode() ^ IsPrimary.GetHashCode() ^ available_resolutions.Count;
-        //}
     }
-#if false
-    class FadeEffect : IDisposable
-    {
-        List<Form> forms = new List<Form>();
-        double opacity_step = 0.04;
-        int sleep_step;
-
-        internal FadeEffect()
-        {
-            foreach (Screen s in Screen.AllScreens)
-            {
-                Form form = new Form();
-                form.ShowInTaskbar = false;
-                form.StartPosition = FormStartPosition.Manual;
-                form.WindowState = FormWindowState.Maximized;
-                form.FormBorderStyle = FormBorderStyle.None;
-                form.TopMost = true;
-
-                form.BackColor = System.Drawing.Color.Black;
-                forms.Add(form);
-            }
-
-            sleep_step = 10 / forms.Count;
-            MoveToStartPositions();
-        }
-
-        void MoveToStartPositions()
-        {
-            int count = 0;
-            foreach (Screen s in Screen.AllScreens)
-            {
-            //    forms[count++].Location = new System.Drawing.Point(s.Bounds.X, s.Bounds.Y);
-                //forms[count].Size = new System.Drawing.Size(4096, 4096);
-                count++;
-            }
-        }
-
-        bool FadedOut
-        {
-            get
-            {
-                bool ready = true;
-                foreach (Form form in forms)
-                    ready = ready && form.Opacity >= 1.0;
-
-                return ready;
-            }
-        }
-
-        bool FadedIn
-        {
-            get
-            {
-                bool ready = true;
-                foreach (Form form in forms)
-                    ready = ready && form.Opacity <= 0.0;
-
-                return ready;
-            }
-        }
-
-        internal void FadeOut()
-        {
-            MoveToStartPositions();
-
-            foreach (Form form in forms)
-            {
-                form.Opacity = 0.0;
-                form.Visible = true;
-            }
-
-            while (!FadedOut)
-            {
-                foreach (Form form in forms)
-                {
-                    form.Opacity += opacity_step;
-                    form.Refresh();
-                }
-                Thread.Sleep(sleep_step);
-            }
-        }
-
-        internal void FadeIn()
-        {
-            MoveToStartPositions();
-
-            foreach (Form form in forms)
-                form.Opacity = 1.0;
-
-            while (!FadedIn)
-            {
-                foreach (Form form in forms)
-                {
-                    form.Opacity -= opacity_step;
-                    form.Refresh();
-                }
-                Thread.Sleep(sleep_step);
-            }
-
-            foreach (Form form in forms)
-                form.Visible = false;
-        }
-
-        public void Dispose()
-        {
-            foreach (Form form in forms)
-                form.Dispose();
-        }
-    }
-#endif
 }
