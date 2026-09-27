@@ -136,6 +136,30 @@ namespace OpenTK.Graphics.ES30
             GL.Uniform4(location, vector.X, vector.Y, vector.Z, vector.W);
         }
 
+        public static unsafe void Uniform2(int location, int count, Vector2[] vectors)
+        {
+            fixed (Vector2* ptr = vectors)
+            {
+                GL.Uniform2(location, count, (float*)ptr);
+            }
+        }
+
+        public static unsafe void Uniform3(int location, int count, Vector3[] vectors)
+        {
+            fixed (Vector3* ptr = vectors)
+            {
+                GL.Uniform3(location, count, (float*)ptr);
+            }
+        }
+
+        public static unsafe void Uniform4(int location, int count, Vector4[] vectors)
+        {
+            fixed (Vector4* ptr = vectors)
+            {
+                GL.Uniform4(location, count, (float*)ptr);
+            }
+        }
+
         public static void Uniform2(int location, ref Vector2i vector)
         {
             GL.Uniform2(location, vector.X, vector.Y);
