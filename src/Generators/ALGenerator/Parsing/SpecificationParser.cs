@@ -40,7 +40,7 @@ namespace ALGenerator.Parsing
                 CreateDirectContextCommands(functions, extensions);
             }
 
-            return new SpecificationFile(currentFile, functions, enums, features, extensions);
+            return new SpecificationFile(currentFile, functions, enums, [], features, extensions);
         }
 
         private static void CreateDirectContextCommands(List<Function> functions, List<Extension> extensions)
@@ -595,7 +595,7 @@ namespace ALGenerator.Parsing
                         }
                     }
 
-                    enumsEntries.Add(new EnumEntry(nameMangler.MangleEnumName(name), name, value, enumApi, isFlags, vendor, alias, groups, size));
+                    enumsEntries.Add(new EnumEntry(nameMangler.MangleEnumName(name), name, value, enumApi, isFlags, vendor, alias, groups) { UnderlyingSize = size });
                 }
             }
 
