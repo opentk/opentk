@@ -77,7 +77,7 @@ namespace OpenTK.Platform
         IReadOnlyList<WindowMode> SupportedModes { get; }
 
         /// <summary>
-        /// Processes platform events and sends them to the <see cref="EventQueue"/>.
+        /// Processes platform events and sends them to the <see cref="Toolkit.Event.EventRaised"/> callback.
         /// </summary>
         /// <param name="waitForEvents">Specifies if this function should wait for events or return immediately if there are no events.</param>
         void ProcessEvents(bool waitForEvents);
