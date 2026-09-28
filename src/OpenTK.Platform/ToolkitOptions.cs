@@ -29,11 +29,11 @@ namespace OpenTK.Platform
         EnableVulkan = 1 << 1,
 
         /// <summary>
-        /// If <see cref="Toolkit.OpenGL"/> should perfer the ANGLE EGL component implementation <see cref="Native.ANGLE.ANGLEOpenGLComponent"/>.
-        /// This allows for the creation of OpenGL ES contexts.
+        /// If <see cref="Toolkit.OpenGL"/> should perfer the EGL component implementation <see cref="Native.EGL.EGLOpenGLComponent"/>.
+        /// This allows for the creation of OpenGL ES contexts on various platforms, such as desktop, mobile, web (through WASM) or ANGLE.
         /// </summary>
-        /// <seealso cref="Native.ANGLE.ANGLEOpenGLComponent"/>
-        PreferANGLE = 1 << 2,
+        /// <seealso cref="Native.EGL.EGLOpenGLComponent"/>
+        PreferEGL = 1 << 2,
     }
 
     /// <summary>
@@ -98,7 +98,7 @@ namespace OpenTK.Platform
             public bool IsDPIAware { get; set; } = true;
 
             /// <summary>
-            /// The maximum number of window messages to process per call to <see cref="IWindowComponent.ProcessEvents(bool)"/>. 
+            /// The maximum number of window messages to process per call to <see cref="IWindowComponent.ProcessEvents(bool)"/>.
             /// This is useful to limit the performance impact of High-DPI mice.
             /// A value of 0 means no limit.
             /// Defaults to 5.
@@ -115,7 +115,7 @@ namespace OpenTK.Platform
             /// VSCode leaks a bunch of envrionment variables that mess with dynamic library resolution.
             /// If the environment variable <c>SNAP_NAME</c> is set to <c>code</c> and this variable is set to true,
             /// we will remove a bunch of environment variables that vscode leaks into the C# process.
-            /// This means that if you want to set these variables yourself while running in VSCode 
+            /// This means that if you want to set these variables yourself while running in VSCode
             /// for whatever reason then you need to disable this.
             /// Defaults to <see langword="true"/>.
             /// </summary>
@@ -159,7 +159,7 @@ namespace OpenTK.Platform
             /// This removes focus from other applications which might be what you want for games
             /// but for applications with only hidden windows, or tools this is not the expected behaviour.
             /// Defaults to <see langword="true"/>.
-            /// </summary> 
+            /// </summary>
             public bool ActiveAppOnStart { get; set; } = true;
         }
     }
