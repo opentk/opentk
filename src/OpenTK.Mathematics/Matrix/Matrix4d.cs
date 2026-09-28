@@ -655,6 +655,56 @@ namespace OpenTK.Mathematics
             return q;
         }
 
+        public readonly Quaterniond ExtractRotationNew(bool rowNormalize = true)
+        {
+            Vector3d row0 = Row0.Xyz;
+            Vector3d row1 = Row1.Xyz;
+            Vector3d row2 = Row2.Xyz;
+
+            if (rowNormalize)
+            {
+                row0 = row0.Normalized();
+                row1 = row1.Normalized();
+                row2 = row2.Normalized();
+            }
+
+            // Based Mike Day's construction:
+            // See: https://web.archive.org/web/20210128150107/https://d3cw3dd2w32x2b.cloudfront.net/wp-content/uploads/2015/01/matrix-to-quat.pdf
+            // and https://marc-b-reynolds.github.io/quaternions/2017/08/08/QuatRotMatrix.html
+
+            Quaterniond q;
+            double t;
+            if (row2.Z < 0.0)
+            {
+                if (row0.X > row1.Y)
+                {
+                    t = 1.0 + row0.X - row1.Y - row2.Z;
+                    q = new Quaterniond(t, row0.Y + row1.X, row2.X + row0.Z, row1.Z - row2.Y);
+                }
+                else
+                {
+                    t = 1.0 - row0.X + row1.Y - row2.Z;
+                    q = new Quaterniond(row0.Y + row1.X, t, row1.Z + row2.Y, row2.X - row0.Z);
+                }
+            }
+            else
+            {
+                if (row0.X < -row1.Y)
+                {
+                    t = 1.0 - row0.X - row1.Y + row2.Z;
+                    q = new Quaterniond(row2.X + row0.Z, row1.Z + row2.Y, t, row0.Y - row1.X);
+                }
+                else
+                {
+                    t = 1.0 + row0.X + row1.Y + row2.Z;
+                    q = new Quaterniond(row1.Z - row2.Y, row2.X - row0.Z, row0.Y - row1.X, t);
+                }
+            }
+            // FIXME: Use reciprocal sqrt?
+            q *= 0.5 / Math.Sqrt(t);
+            return q;
+        }
+
         /// <summary>
         /// Returns the projection component of this instance (equivalent to <see cref="Column3"/>).
         /// </summary>

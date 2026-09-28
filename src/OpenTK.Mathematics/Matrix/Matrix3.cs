@@ -515,6 +515,56 @@ namespace OpenTK.Mathematics
             return q;
         }
 
+        public readonly Quaternion ExtractRotationNew(bool rowNormalize = true)
+        {
+            Vector3 row0 = Row0;
+            Vector3 row1 = Row1;
+            Vector3 row2 = Row2;
+
+            if (rowNormalize)
+            {
+                row0 = row0.Normalized();
+                row1 = row1.Normalized();
+                row2 = row2.Normalized();
+            }
+
+            // Based Mike Day's construction:
+            // See: https://web.archive.org/web/20210128150107/https://d3cw3dd2w32x2b.cloudfront.net/wp-content/uploads/2015/01/matrix-to-quat.pdf
+            // and https://marc-b-reynolds.github.io/quaternions/2017/08/08/QuatRotMatrix.html
+
+            Quaternion q;
+            float t;
+            if (row2.Z < 0.0f)
+            {
+                if (row0.X > row1.Y)
+                {
+                    t = 1.0f + row0.X - row1.Y - row2.Z;
+                    q = new Quaternion(t, row0.Y + row1.X, row2.X + row0.Z, row1.Z - row2.Y);
+                }
+                else
+                {
+                    t = 1.0f - row0.X + row1.Y - row2.Z;
+                    q = new Quaternion(row0.Y + row1.X, t, row1.Z + row2.Y, row2.X - row0.Z);
+                }
+            }
+            else
+            {
+                if (row0.X < -row1.Y)
+                {
+                    t = 1.0f - row0.X - row1.Y + row2.Z;
+                    q = new Quaternion(row2.X + row0.Z, row1.Z + row2.Y, t, row0.Y - row1.X);
+                }
+                else
+                {
+                    t = 1.0f + row0.X + row1.Y + row2.Z;
+                    q = new Quaternion(row1.Z - row2.Y, row2.X - row0.Z, row0.Y - row1.X, t);
+                }
+            }
+            // FIXME: Use reciprocal sqrt?
+            q *= 0.5f / MathF.Sqrt(t);
+            return q;
+        }
+
         /// <summary>
         /// Build a rotation matrix from the specified axis/angle rotation.
         /// </summary>
