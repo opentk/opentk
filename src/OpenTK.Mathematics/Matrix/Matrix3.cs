@@ -453,69 +453,8 @@ namespace OpenTK.Mathematics
         /// you know it's already normalized.
         /// </param>
         /// <returns>The rotation.</returns>
+        [Pure]
         public readonly Quaternion ExtractRotation(bool rowNormalize = true)
-        {
-            var row0 = Row0;
-            var row1 = Row1;
-            var row2 = Row2;
-
-            if (rowNormalize)
-            {
-                row0 = row0.Normalized();
-                row1 = row1.Normalized();
-                row2 = row2.Normalized();
-            }
-
-            // code below adapted from Blender
-            var q = default(Quaternion);
-            var trace = 0.25 * (row0[0] + row1[1] + row2[2] + 1.0);
-
-            if (trace > 0)
-            {
-                var sq = Math.Sqrt(trace);
-
-                q.W = (float)sq;
-                sq = 1.0 / (4.0 * sq);
-                q.X = (float)((row1[2] - row2[1]) * sq);
-                q.Y = (float)((row2[0] - row0[2]) * sq);
-                q.Z = (float)((row0[1] - row1[0]) * sq);
-            }
-            else if (row0[0] > row1[1] && row0[0] > row2[2])
-            {
-                var sq = 2.0 * Math.Sqrt(1.0 + row0[0] - row1[1] - row2[2]);
-
-                q.X = (float)(0.25 * sq);
-                sq = 1.0 / sq;
-                q.W = (float)((row2[1] - row1[2]) * sq);
-                q.Y = (float)((row1[0] + row0[1]) * sq);
-                q.Z = (float)((row2[0] + row0[2]) * sq);
-            }
-            else if (row1[1] > row2[2])
-            {
-                var sq = 2.0 * Math.Sqrt(1.0 + row1[1] - row0[0] - row2[2]);
-
-                q.Y = (float)(0.25 * sq);
-                sq = 1.0 / sq;
-                q.W = (float)((row2[0] - row0[2]) * sq);
-                q.X = (float)((row1[0] + row0[1]) * sq);
-                q.Z = (float)((row2[1] + row1[2]) * sq);
-            }
-            else
-            {
-                var sq = 2.0 * Math.Sqrt(1.0 + row2[2] - row0[0] - row1[1]);
-
-                q.Z = (float)(0.25 * sq);
-                sq = 1.0 / sq;
-                q.W = (float)((row1[0] - row0[1]) * sq);
-                q.X = (float)((row2[0] + row0[2]) * sq);
-                q.Y = (float)((row2[1] + row1[2]) * sq);
-            }
-
-            q.Normalize();
-            return q;
-        }
-
-        public readonly Quaternion ExtractRotationNew(bool rowNormalize = true)
         {
             Vector3 row0 = Row0;
             Vector3 row1 = Row1;

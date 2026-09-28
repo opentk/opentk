@@ -595,68 +595,6 @@ namespace OpenTK.Mathematics
         [Pure]
         public readonly Quaterniond ExtractRotation(bool rowNormalize = true)
         {
-            var row0 = Row0.Xyz;
-            var row1 = Row1.Xyz;
-            var row2 = Row2.Xyz;
-
-            if (rowNormalize)
-            {
-                row0 = row0.Normalized();
-                row1 = row1.Normalized();
-                row2 = row2.Normalized();
-            }
-
-            // code below adapted from Blender
-            var q = default(Quaterniond);
-            var trace = 0.25 * (row0[0] + row1[1] + row2[2] + 1.0);
-
-            if (trace > 0)
-            {
-                var sq = Math.Sqrt(trace);
-
-                q.W = sq;
-                sq = 1.0 / (4.0 * sq);
-                q.X = (row1[2] - row2[1]) * sq;
-                q.Y = (row2[0] - row0[2]) * sq;
-                q.Z = (row0[1] - row1[0]) * sq;
-            }
-            else if (row0[0] > row1[1] && row0[0] > row2[2])
-            {
-                var sq = 2.0 * Math.Sqrt(1.0 + row0[0] - row1[1] - row2[2]);
-
-                q.X = 0.25 * sq;
-                sq = 1.0 / sq;
-                q.W = (row2[1] - row1[2]) * sq;
-                q.Y = (row1[0] + row0[1]) * sq;
-                q.Z = (row2[0] + row0[2]) * sq;
-            }
-            else if (row1[1] > row2[2])
-            {
-                var sq = 2.0 * Math.Sqrt(1.0 + row1[1] - row0[0] - row2[2]);
-
-                q.Y = 0.25 * sq;
-                sq = 1.0 / sq;
-                q.W = (row2[0] - row0[2]) * sq;
-                q.X = (row1[0] + row0[1]) * sq;
-                q.Z = (row2[1] + row1[2]) * sq;
-            }
-            else
-            {
-                var sq = 2.0 * Math.Sqrt(1.0 + row2[2] - row0[0] - row1[1]);
-
-                q.Z = 0.25 * sq;
-                sq = 1.0 / sq;
-                q.W = (row1[0] - row0[1]) * sq;
-                q.X = (row2[0] + row0[2]) * sq;
-                q.Y = (row2[1] + row1[2]) * sq;
-            }
-
-            q.Normalize();
-            return q;
-        }
-
-        public readonly Quaterniond ExtractRotationNew(bool rowNormalize = true)
-        {
             Vector3d row0 = Row0.Xyz;
             Vector3d row1 = Row1.Xyz;
             Vector3d row2 = Row2.Xyz;

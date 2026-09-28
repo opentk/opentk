@@ -8,14 +8,12 @@ using System.Text;
 
 namespace OpenTK.Benchmarks
 {
-    [DisassemblyDiagnoser]
-    [SimpleJob(RuntimeMoniker.Net10_0)]
+    [SimpleJob(RuntimeMoniker.NetCoreApp31)]
     public class MatrixBenchmark
     {
-        [Params(1, 10, 1000)]
-        public int N { get; set; }
-        public Matrix4[] InMatrices { get; set; }
-        public Quaternion[] Output { get; set; }
+
+        [ParamsSource(nameof(Quaternions))]
+        public Quaternion Quat { get; set; }
 
         public Random Rand = new Random();
         public float NextFloat() => (float)Rand.Next();
@@ -24,13 +22,9 @@ namespace OpenTK.Benchmarks
         public void Setup()
         {
             Rand = new Random();
-            InMatrices = new Matrix4[N];
-            Output = new Quaternion[N];
-            for (int i = 0; i < InMatrices.Length; i++)
-            {
-                InMatrices[i] = new Matrix4(NextFloat(), NextFloat(), NextFloat(), NextFloat(), NextFloat(), NextFloat(), NextFloat(), NextFloat(), NextFloat(), NextFloat(), NextFloat(), NextFloat(), NextFloat(), NextFloat(), NextFloat(), NextFloat());
-            }
         }
+
+        public IEnumerable<Quaternion> Quaternions => Enumerable.Range(0, 1).Select(_ => new Quaternion(NextFloat(), NextFloat(), NextFloat(), NextFloat()));
 
         /*
         [BenchmarkCategory("Matrix3")]
@@ -47,7 +41,7 @@ namespace OpenTK.Benchmarks
             Quat.ToAxisAngle(out Vector3 axis, out float angle);
             Matrix3.CreateFromAxisAngle(axis, angle, out Matrix3 result);
             return result;
-        }
+        }*/
 
         [BenchmarkCategory("Matrix4")]
         [Benchmark]
@@ -63,29 +57,6 @@ namespace OpenTK.Benchmarks
             Quat.ToAxisAngle(out Vector3 axis, out float angle);
             Matrix4.CreateFromAxisAngle(axis, angle, out Matrix4 result);
             return result;
-        }
-        */
-
-        [Benchmark(Baseline = true)]
-        public void ExtractRotationOld()
-        {
-            Matrix4[] matrices = InMatrices;
-            Quaternion[] output = Output;
-            for (int i = 0; i < InMatrices.Length; i++)
-            {
-                Output[i] = matrices[i].ExtractRotation();
-            }
-        }
-
-        [Benchmark]
-        public void ExtractRotationNew()
-        {
-            Matrix4[] matrices = InMatrices;
-            Quaternion[] output = Output;
-            for (int i = 0; i < InMatrices.Length; i++)
-            {
-                Output[i] = matrices[i].ExtractRotationNew();
-            }
         }
     }
 }
