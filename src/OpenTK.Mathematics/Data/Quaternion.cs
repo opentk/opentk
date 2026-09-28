@@ -646,6 +646,73 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
+        /// Creates a quaternion representing an orientation with the specified forward and up directions.
+        /// </summary>
+        /// <param name="forward">The direction to look in.</param>
+        /// <param name="up">The direction that defines the upward orientation.</param>
+        /// <returns>The quaternion representing the specified orientation.</returns>
+        public static Quaternion LookRotation(Vector3 forward, Vector3 up)
+        {
+            var f = Vector3.Normalize(forward);
+            var r = Vector3.Normalize(Vector3.Cross(up, f));
+            var u = Vector3.Cross(f, r);
+
+            var m00 = r.X;
+            var m01 = u.X;
+            var m02 = f.X;
+            var m10 = r.Y;
+            var m11 = u.Y;
+            var m12 = f.Y;
+            var m20 = r.Z;
+            var m21 = u.Z;
+            var m22 = f.Z;
+
+            var trace = m00 + m11 + m22;
+
+            Quaternion result = default;
+
+            if (trace > 0.0f)
+            {
+                var s = MathF.Sqrt(trace + 1.0f) * 2.0f;
+
+                result.W = 0.25f * s;
+                result.X = (m21 - m12) / s;
+                result.Y = (m02 - m20) / s;
+                result.Z = (m10 - m01) / s;
+            }
+            else if (m00 > m11 && m00 > m22)
+            {
+                var s = MathF.Sqrt(1.0f + m00 - m11 - m22) * 2.0f;
+
+                result.W = (m12 - m21) / s;
+                result.X = 0.25f * s;
+                result.Y = (m01 + m10) / s;
+                result.Z = (m02 + m20) / s;
+            }
+            else if (m11 > m22)
+            {
+                var s = MathF.Sqrt(1.0f + m11 - m00 - m22) * 2.0f;
+
+                result.W = (m20 - m02) / s;
+                result.X = (m01 + m10) / s;
+                result.Y = 0.25f * s;
+                result.Z = (m12 + m21) / s;
+            }
+            else
+            {
+                var s = MathF.Sqrt(1.0f + m22 - m00 - m11) * 2.0f;
+
+                result.W = (m01 - m10) / s;
+                result.X = (m02 + m20) / s;
+                result.Y = (m12 + m21) / s;
+                result.Z = 0.25f * s;
+            }
+
+            result.Normalize();
+            return result;
+        }
+
+        /// <summary>
         /// Do Spherical linear interpolation between two quaternions.
         /// </summary>
         /// <param name="q1">The first quaternion.</param>

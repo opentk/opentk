@@ -106,3 +106,52 @@ module Quaternion =
 
     //    Assert.Equal(v1, v2)
 
+    [<Fact>]
+    let ``LookRotation with forward Z and up Y returns identity rotation``() =
+        let q = Quaternion.LookRotation(Vector3.UnitZ, Vector3.UnitY)
+        let forward = Vector3.Transform(Vector3.UnitZ, q)
+        let up = Vector3.Transform(Vector3.UnitY, q)
+
+        Assert.ApproximatelyEquivalent(Vector3.UnitZ, forward)
+        Assert.ApproximatelyEquivalent(Vector3.UnitY, up)
+
+    [<Fact>]
+    let ``LookRotation rotates local forward to positive X``() =
+        let q = Quaternion.LookRotation(Vector3.UnitX, Vector3.UnitY)
+        let forward = Vector3.Transform(Vector3.UnitZ, q)
+
+        Assert.ApproximatelyEquivalent(Vector3.UnitX, forward)
+
+    [<Fact>]
+    let ``LookRotation rotates local forward to negative X``() =
+        let q = Quaternion.LookRotation(-Vector3.UnitX, Vector3.UnitY)
+        let forward = Vector3.Transform(Vector3.UnitZ, q)
+
+        Assert.ApproximatelyEquivalent(-Vector3.UnitX, forward)
+
+    [<Fact>]
+    let ``LookRotation rotates local forward to negative Z``() =
+        let q = Quaternion.LookRotation(-Vector3.UnitZ, Vector3.UnitY)
+        let forward = Vector3.Transform(Vector3.UnitZ, q)
+
+        Assert.ApproximatelyEquivalent(-Vector3.UnitZ, forward)
+
+    [<Fact>]
+    let ``LookRotation preserves up when forward and up are perpendicular``() =
+        let q = Quaternion.LookRotation(Vector3.UnitX, Vector3.UnitY)
+        let up = Vector3.Transform(Vector3.UnitY, q)
+
+        Assert.ApproximatelyEquivalent(Vector3.UnitY, up)
+
+    [<Fact>]
+    let ``LookRotation handles non normalized forward``() =
+        let q = Quaternion.LookRotation(Vector3(10.0f, 0.0f, 0.0f), Vector3.UnitY)
+        let forward = Vector3.Transform(Vector3.UnitZ, q)
+
+        Assert.ApproximatelyEquivalent(Vector3.UnitX, forward)
+
+    [<Fact>]
+    let ``LookRotation returns normalized quaternion``() =
+        let q = Quaternion.LookRotation(Vector3(1.0f, 2.0f, 3.0f), Vector3.UnitY)
+
+        Assert.ApproximatelyEquivalent(1.0f, q.Length)
