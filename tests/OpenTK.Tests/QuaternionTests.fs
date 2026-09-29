@@ -56,102 +56,104 @@ module Quaternion =
             Assert.ApproximatelyEqual(q1.Z, q2.Z);
             Assert.ApproximatelyEqual(q1.W, q2.W);
             
-    [<Fact>]
-    let ``Single axis as euler angles is converted to correct quaternion components``() =
-        let test(v:Vector3) =
-            let cut = Quaternion(v.X, v.Y, v.Z)
-            verifyDirection cut.Xyz v
+        [<Fact>]
+        let ``Single axis as euler angles is converted to correct quaternion components``() =
+            let test(v:Vector3) =
+                let cut = Quaternion(v.X, v.Y, v.Z)
+                verifyDirection cut.Xyz v
             
-        axes |> List.iter test
+            axes |> List.iter test
         
-    [<Fact>]
-    let ``Single axis euler angles in vector3 is converted to correct quaternion components``() =
-        let test(v:Vector3) =
-            let cut = Quaternion(v)
-            verifyDirection cut.Xyz v
+        [<Fact>]
+        let ``Single axis euler angles in vector3 is converted to correct quaternion components``() =
+            let test(v:Vector3) =
+                let cut = Quaternion(v)
+                verifyDirection cut.Xyz v
             
-        axes |> List.iter test
+            axes |> List.iter test
     
-    [<Property>]
-    let ``Quaternion euler angle construction methods produce consistent results``(v:Vector3) =
-        let q1 = Quaternion(v)
-        let q2 = Quaternion(v.X, v.Y, v.Z)
-        let q3 = Quaternion.FromEulerAngles(v)
-        let q4 = Quaternion.FromEulerAngles(v.X, v.Y, v.Z)
-        let mutable q5 = Quaternion.Identity
-        let mutable inV = v
-        Quaternion.FromEulerAngles(&inV, &q5)
+        [<Property>]
+        let ``Quaternion euler angle construction methods produce consistent results``(v:Vector3) =
+            let q1 = Quaternion(v)
+            let q2 = Quaternion(v.X, v.Y, v.Z)
+            let q3 = Quaternion.FromEulerAngles(v)
+            let q4 = Quaternion.FromEulerAngles(v.X, v.Y, v.Z)
+            let mutable q5 = Quaternion.Identity
+            let mutable inV = v
+            Quaternion.FromEulerAngles(&inV, &q5)
         
-        let cases = [q2; q3; q4; q5]
-        for case in cases do
-             Assert.Equal(q1, case)
+            let cases = [q2; q3; q4; q5]
+            for case in cases do
+                 Assert.Equal(q1, case)
     
-    [<Fact>]
-    let ``Single rotation axis quaternion converts to correct axis angle representation``() =
-        let test(v:Vector3) =
-            let q = Quaternion(v)
-            let mutable vec = Vector3()
-            let mutable dontCare = 0.0f
-            q.ToAxisAngle(&vec, &dontCare)
-            verifyDirection v vec
+        [<Fact>]
+        let ``Single rotation axis quaternion converts to correct axis angle representation``() =
+            let test(v:Vector3) =
+                let q = Quaternion(v)
+                let mutable vec = Vector3()
+                let mutable dontCare = 0.0f
+                q.ToAxisAngle(&vec, &dontCare)
+                verifyDirection v vec
             
-        axes |> List.iter test
+            axes |> List.iter test
 
-    //[<Property>]
-    //let ``Quaternion to euler angle``(q:Quaternion) =
-    //    let v1 = q.ToEulerAngles()
-    //    let mutable inQ = q
-    //    let mutable v2 = Vector3.Zero
-    //    Quaternion.ToEulerAngles(&inQ, &v2)
+        //[<Property>]
+        //let ``Quaternion to euler angle``(q:Quaternion) =
+        //    let v1 = q.ToEulerAngles()
+        //    let mutable inQ = q
+        //    let mutable v2 = Vector3.Zero
+        //    Quaternion.ToEulerAngles(&inQ, &v2)
 
-    //    Assert.Equal(v1, v2)
+        //    Assert.Equal(v1, v2)
 
-    [<Fact>]
-    let ``LookRotation with forward Z and up Y returns identity rotation``() =
-        let q = Quaternion.LookRotation(Vector3.UnitZ, Vector3.UnitY)
-        let forward = Vector3.Transform(Vector3.UnitZ, q)
-        let up = Vector3.Transform(Vector3.UnitY, q)
+    [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
+    module LookRotation =
+        [<Fact>]
+        let ``LookRotation with forward Z and up Y returns identity rotation``() =
+            let q = Quaternion.LookRotation(Vector3.UnitZ, Vector3.UnitY)
+            let forward = Vector3.Transform(Vector3.UnitZ, q)
+            let up = Vector3.Transform(Vector3.UnitY, q)
 
-        Assert.ApproximatelyEquivalent(Vector3.UnitZ, forward)
-        Assert.ApproximatelyEquivalent(Vector3.UnitY, up)
+            Assert.ApproximatelyEquivalent(Vector3.UnitZ, forward)
+            Assert.ApproximatelyEquivalent(Vector3.UnitY, up)
 
-    [<Fact>]
-    let ``LookRotation rotates local forward to positive X``() =
-        let q = Quaternion.LookRotation(Vector3.UnitX, Vector3.UnitY)
-        let forward = Vector3.Transform(Vector3.UnitZ, q)
+        [<Fact>]
+        let ``LookRotation rotates local forward to positive X``() =
+            let q = Quaternion.LookRotation(Vector3.UnitX, Vector3.UnitY)
+            let forward = Vector3.Transform(Vector3.UnitZ, q)
 
-        Assert.ApproximatelyEquivalent(Vector3.UnitX, forward)
+            Assert.ApproximatelyEquivalent(Vector3.UnitX, forward)
 
-    [<Fact>]
-    let ``LookRotation rotates local forward to negative X``() =
-        let q = Quaternion.LookRotation(-Vector3.UnitX, Vector3.UnitY)
-        let forward = Vector3.Transform(Vector3.UnitZ, q)
+        [<Fact>]
+        let ``LookRotation rotates local forward to negative X``() =
+            let q = Quaternion.LookRotation(-Vector3.UnitX, Vector3.UnitY)
+            let forward = Vector3.Transform(Vector3.UnitZ, q)
 
-        Assert.ApproximatelyEquivalent(-Vector3.UnitX, forward)
+            Assert.ApproximatelyEquivalent(-Vector3.UnitX, forward)
 
-    [<Fact>]
-    let ``LookRotation rotates local forward to negative Z``() =
-        let q = Quaternion.LookRotation(-Vector3.UnitZ, Vector3.UnitY)
-        let forward = Vector3.Transform(Vector3.UnitZ, q)
+        [<Fact>]
+        let ``LookRotation rotates local forward to negative Z``() =
+            let q = Quaternion.LookRotation(-Vector3.UnitZ, Vector3.UnitY)
+            let forward = Vector3.Transform(Vector3.UnitZ, q)
 
-        Assert.ApproximatelyEquivalent(-Vector3.UnitZ, forward)
+            Assert.ApproximatelyEquivalent(-Vector3.UnitZ, forward)
 
-    [<Fact>]
-    let ``LookRotation preserves up when forward and up are perpendicular``() =
-        let q = Quaternion.LookRotation(Vector3.UnitX, Vector3.UnitY)
-        let up = Vector3.Transform(Vector3.UnitY, q)
+        [<Fact>]
+        let ``LookRotation preserves up when forward and up are perpendicular``() =
+            let q = Quaternion.LookRotation(Vector3.UnitX, Vector3.UnitY)
+            let up = Vector3.Transform(Vector3.UnitY, q)
 
-        Assert.ApproximatelyEquivalent(Vector3.UnitY, up)
+            Assert.ApproximatelyEquivalent(Vector3.UnitY, up)
 
-    [<Fact>]
-    let ``LookRotation handles non normalized forward``() =
-        let q = Quaternion.LookRotation(Vector3(10.0f, 0.0f, 0.0f), Vector3.UnitY)
-        let forward = Vector3.Transform(Vector3.UnitZ, q)
+        [<Fact>]
+        let ``LookRotation handles non normalized forward``() =
+            let q = Quaternion.LookRotation(Vector3(10.0f, 0.0f, 0.0f), Vector3.UnitY)
+            let forward = Vector3.Transform(Vector3.UnitZ, q)
 
-        Assert.ApproximatelyEquivalent(Vector3.UnitX, forward)
+            Assert.ApproximatelyEquivalent(Vector3.UnitX, forward)
 
-    [<Fact>]
-    let ``LookRotation returns normalized quaternion``() =
-        let q = Quaternion.LookRotation(Vector3(1.0f, 2.0f, 3.0f), Vector3.UnitY)
+        [<Fact>]
+        let ``LookRotation returns normalized quaternion``() =
+            let q = Quaternion.LookRotation(Vector3(1.0f, 2.0f, 3.0f), Vector3.UnitY)
 
-        Assert.ApproximatelyEquivalent(1.0f, q.Length)
+            Assert.ApproximatelyEquivalent(1.0f, q.Length)
