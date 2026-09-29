@@ -511,6 +511,13 @@ namespace OpenTK.Platform
         void FocusWindow(WindowHandle handle);
 
         /// <summary>
+        /// Controls whether the window receives input events or allows them to pass through
+        /// </summary>
+        /// <param name="handle">Handle to the window whose input transparency is being changed</param>
+        /// <param name="transparent">Should the window's input be transparent</param>
+        void SetInputTransparent(WindowHandle handle, bool transparent);
+
+        /// <summary>
         /// Requests that the user pay attention to the window.
         /// Usually by flashing the window icon.
         /// </summary>
