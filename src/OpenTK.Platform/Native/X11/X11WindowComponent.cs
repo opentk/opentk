@@ -3692,7 +3692,13 @@ namespace OpenTK.Platform.Native.X11
         }
 
         /// <inheritdoc/>
-        public void SetInputPassthrough(WindowHandle handle, bool transparent)
+        public void SetMousePassthrough(WindowHandle handle, bool transparent)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        public bool GetMousePassthrough(WindowHandle handle)
         {
             throw new NotImplementedException();
         }

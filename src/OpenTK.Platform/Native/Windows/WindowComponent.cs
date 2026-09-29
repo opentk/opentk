@@ -2337,8 +2337,12 @@ namespace OpenTK.Platform.Native.Windows
             {
                 // Disable opacity
                 Win32.SetLayeredWindowAttributes(hwnd.HWnd, 0, 0, 0);
-                exStyle &= ~WindowStylesEx.Layered;
-                Win32.SetWindowLongPtr(hwnd.HWnd, SetGWLPIndex.ExStyle, new IntPtr((int)exStyle));
+                if (exStyle.HasFlag(WindowStylesEx.Transparent) == false)
+                {
+                    // Do not remove layered style if we have input passthrough enabled.
+                    exStyle &= ~WindowStylesEx.Layered;
+                    Win32.SetWindowLongPtr(hwnd.HWnd, SetGWLPIndex.ExStyle, new IntPtr((int)exStyle));
+                }
             }
 
             switch (transparencyMode)
@@ -2431,29 +2435,41 @@ namespace OpenTK.Platform.Native.Windows
         }
 
         /// <inheritdoc/>
-        public void SetInputPassthrough(WindowHandle handle, bool transparent)
+        public void SetMousePassthrough(WindowHandle handle, bool transparent)
         {
             HWND hwnd = handle.As<HWND>(this);
 
-            WindowStylesEx exStyle = (WindowStylesEx)Win32
-                .GetWindowLongPtr(hwnd.HWnd, GetGWLPIndex.ExStyle)
-                .ToInt64();
+            WindowStylesEx exStyle = (WindowStylesEx)Win32.GetWindowLongPtr(hwnd.HWnd, GetGWLPIndex.ExStyle).ToInt64();
+            Win32.GetLayeredWindowAttributes(hwnd.HWnd, out uint key, out byte alpha, out LWA flags);
 
             if (transparent)
             {
-                exStyle |= WindowStylesEx.Layered;
-                exStyle |= WindowStylesEx.Transparent;
+                exStyle |= (WindowStylesEx.Layered | WindowStylesEx.Transparent);
             }
             else
             {
                 exStyle &= ~WindowStylesEx.Transparent;
-                exStyle &= ~WindowStylesEx.Layered;
+                if (exStyle.HasFlag(WindowStylesEx.Layered) && (flags & (LWA.Alpha | LWA.ColorKey)) == 0)
+                {
+                    // Only remove the layered style if we aren't using it for the TransparentWindow transparency mode.
+                    exStyle &= ~WindowStylesEx.Layered;
+                }
             }
 
-            Win32.SetWindowLongPtr(
-                hwnd.HWnd,
-                SetGWLPIndex.ExStyle,
-                new IntPtr((long)exStyle));
+            Win32.SetWindowLongPtr(hwnd.HWnd, SetGWLPIndex.ExStyle, new IntPtr((int)exStyle));
+
+            if (transparent)
+            {
+                Win32.SetLayeredWindowAttributes(hwnd.HWnd, key, alpha, flags);
+            }
+        }
+
+        /// <inheritdoc/>
+        public bool GetMousePassthrough(WindowHandle handle)
+        {
+            HWND hwnd = handle.As<HWND>(this);
+            WindowStylesEx exStyle = (WindowStylesEx)Win32.GetWindowLongPtr(hwnd.HWnd, GetGWLPIndex.ExStyle).ToInt64();
+            return (exStyle & (WindowStylesEx.Layered | WindowStylesEx.Transparent)) == (WindowStylesEx.Layered | WindowStylesEx.Transparent);
         }
 
         /// <inheritdoc/>
