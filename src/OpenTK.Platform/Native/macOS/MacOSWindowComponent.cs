@@ -2413,6 +2413,12 @@ namespace OpenTK.Platform.Native.macOS
         }
 
         /// <inheritdoc/>
+        public void SetInputPassthrough(WindowHandle handle, bool transparent)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
         public void SetAlwaysOnTop(WindowHandle handle, bool floating)
         {
             NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);

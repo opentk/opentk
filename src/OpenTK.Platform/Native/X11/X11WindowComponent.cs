@@ -3692,6 +3692,12 @@ namespace OpenTK.Platform.Native.X11
         }
 
         /// <inheritdoc/>
+        public void SetInputPassthrough(WindowHandle handle, bool transparent)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
         public void SetAlwaysOnTop(WindowHandle handle, bool floating)
         {
             XWindowHandle xwindow = handle.As<XWindowHandle>(this);

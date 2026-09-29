@@ -436,6 +436,13 @@ namespace OpenTK.Platform
         public WindowTransparencyMode GetTransparencyMode(WindowHandle handle, out float opacity);
 
         /// <summary>
+        /// Controls whether the window receives input events or allows them to pass through
+        /// </summary>
+        /// <param name="handle">Handle to the window whose input transparency is being changed</param>
+        /// <param name="transparent">Should the window's input be transparent</param>
+        void SetInputPassthrough(WindowHandle handle, bool transparent);
+
+        /// <summary>
         /// Set if the window is an always on top window or not.
         /// </summary>
         /// <param name="handle">A handle to the window to make always on top.</param>
@@ -509,13 +516,6 @@ namespace OpenTK.Platform
         /// <seealso cref="IsFocused(WindowHandle)"/>
         /// <seealso cref="RequestAttention(WindowHandle)"/>
         void FocusWindow(WindowHandle handle);
-
-        /// <summary>
-        /// Controls whether the window receives input events or allows them to pass through
-        /// </summary>
-        /// <param name="handle">Handle to the window whose input transparency is being changed</param>
-        /// <param name="transparent">Should the window's input be transparent</param>
-        void SetInputTransparent(WindowHandle handle, bool transparent);
 
         /// <summary>
         /// Requests that the user pay attention to the window.

@@ -2431,6 +2431,32 @@ namespace OpenTK.Platform.Native.Windows
         }
 
         /// <inheritdoc/>
+        public void SetInputPassthrough(WindowHandle handle, bool transparent)
+        {
+            HWND hwnd = handle.As<HWND>(this);
+
+            WindowStylesEx exStyle = (WindowStylesEx)Win32
+                .GetWindowLongPtr(hwnd.HWnd, GetGWLPIndex.ExStyle)
+                .ToInt64();
+
+            if (transparent)
+            {
+                exStyle |= WindowStylesEx.Layered;
+                exStyle |= WindowStylesEx.Transparent;
+            }
+            else
+            {
+                exStyle &= ~WindowStylesEx.Transparent;
+                exStyle &= ~WindowStylesEx.Layered;
+            }
+
+            Win32.SetWindowLongPtr(
+                hwnd.HWnd,
+                SetGWLPIndex.ExStyle,
+                new IntPtr((long)exStyle));
+        }
+
+        /// <inheritdoc/>
         public void SetAlwaysOnTop(WindowHandle handle, bool floating)
         {
             HWND hwnd = handle.As<HWND>(this);
