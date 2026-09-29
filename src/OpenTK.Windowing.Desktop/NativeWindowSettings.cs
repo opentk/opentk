@@ -21,6 +21,11 @@ namespace OpenTK.Windowing.Desktop
     public class NativeWindowSettings
     {
         /// <summary>
+        /// Gets or sets a value indicating whether the window should be transparent to mouse input.
+        /// </summary>
+        public bool MousePassthrough { get; set; } = false;
+
+        /// <summary>
         /// Gets the default settings for a <see cref="NativeWindow"/>.
         /// </summary>
         public static readonly NativeWindowSettings Default = new NativeWindowSettings();

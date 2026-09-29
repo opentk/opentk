@@ -915,6 +915,11 @@ namespace OpenTK.Windowing.Desktop
             _cachedWindowLocation = settings.Location ?? new Vector2i(32, 32);  // Better than nothing.
             _cachedWindowClientSize = settings.ClientSize;
 
+            if (settings.MousePassthrough)
+            {
+                GLFW.WindowHint(WindowHintBool.MousePassthrough, true);
+            }
+
             if (settings.WindowState == WindowState.Fullscreen && _isVisible)
             {
                 _windowState = WindowState.Fullscreen;
