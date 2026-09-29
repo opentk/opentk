@@ -583,6 +583,7 @@ namespace OpenTK.Mathematics
         /// <param name="matrix">A rotation matrix.</param>
         /// <returns>The equivalent quaternion.</returns>
         [Pure]
+        [Obsolete("Use Matrix3.ExtractRotation(bool) instead.")]
         public static Quaternion FromMatrix(Matrix3 matrix)
         {
             FromMatrix(in matrix, out Quaternion result);
@@ -594,55 +595,25 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <param name="matrix">A rotation matrix.</param>
         /// <param name="result">The equivalent quaternion.</param>
+        [Obsolete("Use Matrix3.ExtractRotation(bool) instead.")]
         public static void FromMatrix(in Matrix3 matrix, out Quaternion result)
         {
-            var trace = matrix.Trace;
+            result = matrix.ExtractRotation();
+        }
 
-            if (trace > 0)
-            {
-                var s = MathF.Sqrt(trace + 1) * 2;
-                var invS = 1f / s;
-
-                result.W = s * 0.25f;
-                result.Xyz.X = (matrix.Row2.Y - matrix.Row1.Z) * invS;
-                result.Xyz.Y = (matrix.Row0.Z - matrix.Row2.X) * invS;
-                result.Xyz.Z = (matrix.Row1.X - matrix.Row0.Y) * invS;
-            }
-            else
-            {
-                float m00 = matrix.Row0.X, m11 = matrix.Row1.Y, m22 = matrix.Row2.Z;
-
-                if (m00 > m11 && m00 > m22)
-                {
-                    var s = MathF.Sqrt(1 + m00 - m11 - m22) * 2;
-                    var invS = 1f / s;
-
-                    result.W = (matrix.Row2.Y - matrix.Row1.Z) * invS;
-                    result.Xyz.X = s * 0.25f;
-                    result.Xyz.Y = (matrix.Row0.Y + matrix.Row1.X) * invS;
-                    result.Xyz.Z = (matrix.Row0.Z + matrix.Row2.X) * invS;
-                }
-                else if (m11 > m22)
-                {
-                    var s = MathF.Sqrt(1 + m11 - m00 - m22) * 2;
-                    var invS = 1f / s;
-
-                    result.W = (matrix.Row0.Z - matrix.Row2.X) * invS;
-                    result.Xyz.X = (matrix.Row0.Y + matrix.Row1.X) * invS;
-                    result.Xyz.Y = s * 0.25f;
-                    result.Xyz.Z = (matrix.Row1.Z + matrix.Row2.Y) * invS;
-                }
-                else
-                {
-                    var s = MathF.Sqrt(1 + m22 - m00 - m11) * 2;
-                    var invS = 1f / s;
-
-                    result.W = (matrix.Row1.X - matrix.Row0.Y) * invS;
-                    result.Xyz.X = (matrix.Row0.Z + matrix.Row2.X) * invS;
-                    result.Xyz.Y = (matrix.Row1.Z + matrix.Row2.Y) * invS;
-                    result.Xyz.Z = s * 0.25f;
-                }
-            }
+        /// <summary>
+        /// Creates a quaternion representing an orientation with the specified forward and up directions.
+        /// </summary>
+        /// <param name="forward">The direction to look in.</param>
+        /// <param name="up">The direction that defines the upward orientation.</param>
+        /// <returns>The quaternion representing the specified orientation.</returns>
+        public static Quaternion LookRotation(Vector3 forward, Vector3 up)
+        {
+            Matrix3 orthonormal;
+            orthonormal.Row0 = Vector3.Normalize(forward);
+            orthonormal.Row1 = Vector3.Normalize(Vector3.Cross(up, orthonormal.Row0));
+            orthonormal.Row2 = Vector3.Cross(orthonormal.Row0, orthonormal.Row1);
+            return orthonormal.ExtractRotation(false);
         }
 
         /// <summary>
