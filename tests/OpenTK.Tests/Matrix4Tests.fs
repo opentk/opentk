@@ -561,3 +561,9 @@ module Matrix4 =
             Assert.ApproximatelyEqual(height, exHeight);
             Assert.ApproximatelyEqual(near, exNear);
             Assert.ApproximatelyEqual(far, exFar);
+
+        [<Property>]
+        let ``Matrix4.ExtractRotation returns the original quaternion`` (rotation: Quaternion) =
+            let m = Matrix4.CreateFromQuaternion(rotation)
+            let exRotation = m.ExtractRotation();
+            Assert.ApproximatelyEquivalent(rotation, exRotation);
