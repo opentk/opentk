@@ -186,6 +186,9 @@ namespace OpenTK.Platform.Native.macOS
         internal static readonly SEL selOtherEventWithType_Location_ModifierFlags_Timestamp_WindowNumber_Context_Subtype_Data1_Data2 = sel_registerName("otherEventWithType:location:modifierFlags:timestamp:windowNumber:context:subtype:data1:data2:"u8);
         internal static readonly SEL selPostEvent_AtStart = sel_registerName("postEvent:atStart:"u8);
         internal static readonly SEL selData1 = sel_registerName("data1"u8);
+        internal static readonly SEL selSetIgnoresMouseEvents = sel_registerName("setIgnoresMouseEvents:"u8);
+        internal static readonly SEL selIgnoresMouseEvents = sel_registerName("ignoresMouseEvents"u8);
+
 
         internal static readonly IntPtr NSPasteboardTypeFileURL = GetStringConstant(AppKitLibrary, "NSPasteboardTypeFileURL"u8);
 
@@ -2415,13 +2418,17 @@ namespace OpenTK.Platform.Native.macOS
         /// <inheritdoc/>
         public void SetMousePassthrough(WindowHandle handle, bool transparent)
         {
-            throw new NotImplementedException();
+            NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
+
+            objc_msgSend(nswindow.Window, selSetIgnoresMouseEvents, transparent);
         }
 
         /// <inheritdoc/>
         public bool GetMousePassthrough(WindowHandle handle)
         {
-            throw new NotImplementedException();
+            NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
+
+            return objc_msgSend_bool(nswindow.Window, selIgnoresMouseEvents);
         }
 
         /// <inheritdoc/>
