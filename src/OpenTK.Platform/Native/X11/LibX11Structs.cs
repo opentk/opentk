@@ -583,5 +583,24 @@ namespace OpenTK.Platform.Native.X11
         public short x, y;
     }
 
+    [DebuggerDisplay("{Value}")]
+    internal readonly struct XRegion
+    {
+        public readonly IntPtr Value { get; }
+
+        public static readonly XRegion None = new XRegion(0);
+
+        public XRegion(IntPtr value)
+        {
+            Value = value;
+        }
+    }
+
+    internal struct XRectangle {
+        public short x, y;
+        public ushort width, height;
+    }
+
+
 #pragma warning disable CS0649 // Field '' is never assigned to, and will always have its default value 0
 }
