@@ -297,7 +297,7 @@ namespace OpenTK.Platform.Native.X11
         public ulong BackgroundPixel;
         public XPixmap BorderPixmap;
         public ulong BorderPixel;
-        public int BitGravity;
+        public BitGravity BitGravity;
         public int WindowGravity;
         public int BackingStore;
         public ulong BackingPlanes;
