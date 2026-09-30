@@ -328,6 +328,12 @@ namespace OpenTK.Backends.Tests
                     bool value = Toolkit.Window.GetMousePassthrough(window);
                     Program.Logger.LogInfo($"Input Passthrough: {value}");
                 }
+                ImGui.SameLine();
+                if (ImGui.Button("Check"))
+                {
+                    bool value = Toolkit.Window.GetMousePassthrough(window);
+                    Program.Logger.LogInfo($"Input Passthrough: {value}");
+                }
 
                 ImGui.DragInt2("Position", ref windowPosition.X); ImGui.SameLine();
                 if (ImGui.Button("Set##Position"))

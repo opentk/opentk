@@ -438,6 +438,8 @@ namespace OpenTK.Platform
         /// <summary>
         /// Controls whether the window lets mouse inputs pass through the window. I.e. the window is transparent to mouse events.
         /// Useful for overlays and similar applications.
+        /// 
+        /// On X11 mouse passthrough will only work for borderless windows.
         /// </summary>
         /// <param name="handle">Handle to the window whose input transparency to change.</param>
         /// <param name="transparent">Whether the window should be transparent to mouse input or not.</param>

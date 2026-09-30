@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 
 namespace OpenTK.Platform.Native.X11
 {
-    public static unsafe class LibXkbRegistry
+    internal static unsafe class LibXkbRegistry
     {
         static LibXkbRegistry()
         {
