@@ -1939,7 +1939,7 @@ namespace OpenTK.Platform.Native.X11
                 attributes.OverrideRedirect = 0;
                 attributes.ColorMap = XDefaultColormap(X11.Display, X11.DefaultScreen);
                 attributes.EventMask = XEventMask.StructureNotify | XEventMask.SubstructureNotify | XEventMask.Exposure | XEventMask.VisibilityChanged;
-                attributes.BitGravity = (int)BitGravity.Static;
+                attributes.BitGravity = BitGravity.Static;
 
                 unsafe
                 {
