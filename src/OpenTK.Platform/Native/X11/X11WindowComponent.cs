@@ -3122,9 +3122,9 @@ namespace OpenTK.Platform.Native.X11
                             return;
                         }
 
-                        if (X11.Atoms[KnownAtoms._NET_WM_STATE_MAXIMIZED_HORZ] == XAtom.None)
+                        if (X11.Atoms[KnownAtoms._NET_WM_STATE_MAXIMIZED_VERT] == XAtom.None)
                         {
-                            Logger?.LogWarning("Can't make window maximized. The window manager doesn't support _NET_WM_STATE_MAXIMIZED_HORZ.");
+                            Logger?.LogWarning("Can't make window maximized. The window manager doesn't support _NET_WM_STATE_MAXIMIZED_VERT.");
                             return;
                         }
 
