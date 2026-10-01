@@ -1279,6 +1279,52 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
+        /// Creates an infinite perspective projection matrix.
+        /// </summary>
+        /// <param name="fovy">Angle of the field of view in the y direction (in radians).</param>
+        /// <param name="aspect">Aspect ratio of the view (width / height).</param>
+        /// <param name="depthNear">Distance to the near clip plane.</param>
+        /// <param name="result">A projection matrix that transforms camera space to raster space.</param>
+        /// <exception cref="System.ArgumentOutOfRangeException">
+        /// Thrown under the following conditions:
+        ///  <list type="bullet">
+        ///  <item>fovy is zero, less than or equal to zero or larger than Math.PI</item>
+        ///  <item>aspect is negative or zero</item>
+        ///  <item>depthNear is negative or zero</item>
+        ///  </list>
+        /// </exception>
+        public static void CreateInfinitePerspectiveFieldOfView
+        (
+            float fovy,
+            float aspect,
+            float depthNear,
+            out Matrix4d result
+        )
+        {
+            if (fovy <= 0 || fovy > MathF.PI)
+            {
+                throw new ArgumentOutOfRangeException(nameof(fovy), fovy, "Fovy must be in the range (0, PI].");
+            }
+
+            if (aspect <= 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(aspect), aspect, "Aspect cannot be negative or zero.");
+            }
+
+            if (depthNear <= 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(depthNear), depthNear, "depthNear cannot be negative or zero.");
+            }
+
+            float maxY = depthNear * MathF.Tan(0.5f * fovy);
+            float minY = -maxY;
+            float minX = minY * aspect;
+            float maxX = maxY * aspect;
+
+            CreateInfinitePerspectiveOffCenter(minX, maxX, minY, maxY, depthNear, out result);
+        }
+
+        /// <summary>
         /// Creates a perspective projection matrix.
         /// </summary>
         /// <param name="fovy">Angle of the field of view in the y direction (in radians).</param>
@@ -1300,6 +1346,28 @@ namespace OpenTK.Mathematics
         public static Matrix4d CreatePerspectiveFieldOfView(double fovy, double aspect, double depthNear, double depthFar)
         {
             CreatePerspectiveFieldOfView(fovy, aspect, depthNear, depthFar, out Matrix4d result);
+            return result;
+        }
+
+        /// <summary>
+        /// Creates a perspective projection matrix.
+        /// </summary>
+        /// <param name="fovy">Angle of the field of view in the y direction (in radians).</param>
+        /// <param name="aspect">Aspect ratio of the view (width / height).</param>
+        /// <param name="depthNear">Distance to the near clip plane.</param>
+        /// <returns>A projection matrix that transforms camera space to raster space.</returns>
+        /// <exception cref="System.ArgumentOutOfRangeException">
+        /// Thrown under the following conditions:
+        ///  <list type="bullet">
+        ///  <item>fovy is zero, less than zero or larger than Math.PI</item>
+        ///  <item>aspect is negative or zero</item>
+        ///  <item>depthNear is negative or zero</item>
+        ///  </list>
+        /// </exception>
+        [Pure]
+        public static Matrix4d CreateInfinitePerspectiveFieldOfView(float fovy, float aspect, float depthNear)
+        {
+            CreateInfinitePerspectiveFieldOfView(fovy, aspect, depthNear, out Matrix4d result);
             return result;
         }
 
@@ -1353,6 +1421,54 @@ namespace OpenTK.Mathematics
             var b = (top + bottom) / (top - bottom);
             var c = -(depthFar + depthNear) / (depthFar - depthNear);
             var d = -(2.0 * depthFar * depthNear) / (depthFar - depthNear);
+
+#pragma warning disable SA1117 // Parameters should be on same line or separate lines
+            result = new Matrix4d
+            (
+                x, 0, 0, 0,
+                0, y, 0, 0,
+                a, b, c, -1,
+                0, 0, d, 0
+            );
+#pragma warning restore SA1117 // Parameters should be on same line or separate lines
+        }
+
+        /// <summary>
+        /// Creates an infinite perspective projection matrix.
+        /// </summary>
+        /// <param name="left">Left edge of the view frustum.</param>
+        /// <param name="right">Right edge of the view frustum.</param>
+        /// <param name="bottom">Bottom edge of the view frustum.</param>
+        /// <param name="top">Top edge of the view frustum.</param>
+        /// <param name="depthNear">Distance to the near clip plane.</param>
+        /// <param name="result">A projection matrix that transforms camera space to raster space.</param>
+        /// <exception cref="System.ArgumentOutOfRangeException">
+        /// Thrown under the following conditions:
+        ///  <list type="bullet">
+        ///  <item>depthNear is negative or zero</item>
+        ///  </list>
+        /// </exception>
+        public static void CreateInfinitePerspectiveOffCenter
+        (
+            double left,
+            double right,
+            double bottom,
+            double top,
+            double depthNear,
+            out Matrix4d result
+        )
+        {
+            if (depthNear <= 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(depthNear), depthNear, "depthNear cannot be negative or zero.");
+            }
+
+            var x = 2.0 * depthNear / (right - left);
+            var y = 2.0 * depthNear / (top - bottom);
+            var a = (right + left) / (right - left);
+            var b = (top + bottom) / (top - bottom);
+            var c = -1.0f;
+            var d = -2.0 * depthNear;
 
 #pragma warning disable SA1117 // Parameters should be on same line or separate lines
             result = new Matrix4d

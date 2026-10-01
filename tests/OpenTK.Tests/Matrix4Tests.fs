@@ -562,6 +562,127 @@ module Matrix4 =
             Assert.ApproximatelyEqual(near, exNear);
             Assert.ApproximatelyEqual(far, exFar);
 
+    [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
+    module ``Infinite perspective`` =
+        [<Property>]
+        let ``CreateInfinitePerspectiveOffCenter creates infinite far plane coefficients``
+            (nearFar: PositiveRange) =
+
+            let near = nearFar.Start
+
+            let matrix =
+                Matrix4.CreateInfinitePerspectiveOffCenter(
+                    -1.0f,
+                    1.0f,
+                    -1.0f,
+                    1.0f,
+                    near
+                )
+
+            Assert.Equal(-1.0f, matrix.M33)
+            Assert.ApproximatelyEqual(-2.0f * near, matrix.M43)
+
+        [<Fact>]
+        let ``CreateInfinitePerspectiveFieldOfView approaches perspective with a large far plane`` () =
+            let fovy = MathHelper.PiOver2
+            let aspect = 16.0f / 9.0f
+            let near = 0.1f
+
+            let infinite =
+                Matrix4.CreateInfinitePerspectiveFieldOfView(
+                    fovy,
+                    aspect,
+                    near
+                )
+
+            let finite =
+                Matrix4.CreatePerspectiveFieldOfView(
+                    fovy,
+                    aspect,
+                    near,
+                    1000000.0f
+                )
+
+            let epsilon = 0.00001f
+
+            Assert.ApproximatelyEqualDelta(infinite.M33, finite.M33, epsilon)
+            Assert.ApproximatelyEqualDelta(infinite.M43, finite.M43, epsilon)
+
+        [<Fact>]
+        let ``CreateInfinitePerspectiveOffCenter throws when depthNear is zero`` () =
+            Assert.Throws<System.ArgumentOutOfRangeException>(fun () ->
+                Matrix4.CreateInfinitePerspectiveOffCenter(
+                    -1.0f,
+                    1.0f,
+                    -1.0f,
+                    1.0f,
+                    0.0f
+                )
+                |> ignore
+            )
+            |> ignore
+
+        [<Fact>]
+        let ``CreateInfinitePerspectiveOffCenter throws when depthNear is negative`` () =
+            Assert.Throws<System.ArgumentOutOfRangeException>(fun () ->
+                Matrix4.CreateInfinitePerspectiveOffCenter(
+                    -1.0f,
+                    1.0f,
+                    -1.0f,
+                    1.0f,
+                    -0.1f
+                )
+                |> ignore
+            )
+            |> ignore
+
+        [<Fact>]
+        let ``CreateInfinitePerspectiveFieldOfView throws when fovy is zero`` () =
+            Assert.Throws<System.ArgumentOutOfRangeException>(fun () ->
+                Matrix4.CreateInfinitePerspectiveFieldOfView(
+                    0.0f,
+                    1.0f,
+                    0.1f
+                )
+                |> ignore
+            )
+            |> ignore
+
+        [<Fact>]
+        let ``CreateInfinitePerspectiveFieldOfView throws when fovy is greater than PI`` () =
+            Assert.Throws<System.ArgumentOutOfRangeException>(fun () ->
+                Matrix4.CreateInfinitePerspectiveFieldOfView(
+                    MathHelper.Pi + 0.1f,
+                    1.0f,
+                    0.1f
+                )
+                |> ignore
+            )
+            |> ignore
+
+        [<Fact>]
+        let ``CreateInfinitePerspectiveFieldOfView throws when aspect is zero`` () =
+            Assert.Throws<System.ArgumentOutOfRangeException>(fun () ->
+                Matrix4.CreateInfinitePerspectiveFieldOfView(
+                    MathHelper.PiOver2,
+                    0.0f,
+                    0.1f
+                )
+                |> ignore
+            )
+            |> ignore
+
+        [<Fact>]
+        let ``CreateInfinitePerspectiveFieldOfView throws when depthNear is zero`` () =
+            Assert.Throws<System.ArgumentOutOfRangeException>(fun () ->
+                Matrix4.CreateInfinitePerspectiveFieldOfView(
+                    MathHelper.PiOver2,
+                    1.0f,
+                    0.0f
+                )
+                |> ignore
+            )
+            |> ignore
         [<Property>]
         let ``Matrix4.ExtractRotation returns the original quaternion`` (rotation: Quaternion) =
             let m = Matrix4.CreateFromQuaternion(rotation)
