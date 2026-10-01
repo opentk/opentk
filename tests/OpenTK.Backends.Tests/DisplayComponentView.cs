@@ -258,7 +258,7 @@ namespace OpenTK.Backends.Tests
                     draw_list.AddText((p + ((min + max) / 2) - (textSize / 2)).ToNumerics(), ImGui.GetColorU32(ImGuiCol.Text), resolutionStr);
                 }
 
-                ImGui.SetCursorPos((p + min).ToNumerics());
+                ImGui.SetCursorScreenPos((p + min).ToNumerics());
                 if (ImGui.InvisibleButton($"{i}", (max - min).ToNumerics()))
                 {
                     SelectedDisplay = i;
