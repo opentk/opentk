@@ -114,11 +114,12 @@ namespace OpenTK.Mathematics
 
         /// <summary>
         /// Gets the size of the box.
+        /// If <see cref="Min"/> is greater than <see cref="Max"/> this property will report a negative size.
         /// </summary>
         /// <remarks>
-        /// This function never returns negative values, so <see cref="Empty"/> will have a size of (0, 0).
+        /// <see cref="Empty"/> will have a size of <c>Vector2.NegativeInfinity</c>.
         /// </remarks>
-        public readonly Vector2 Size => Vector2.ComponentMax(Vector2.Zero, Max - Min);
+        public readonly Vector2 Size => Max - Min;
 
         /// <summary>
         /// Gets half the size of the box.
