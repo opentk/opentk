@@ -224,6 +224,69 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v2.0]
+        /// Specify the values of an array of <see cref="Vector2"/> uniform variables for the current program object.
+        /// </summary>
+        /// <param name="location">
+        /// Specifies the location of the uniform variable to be modified.
+        /// </param>
+        /// <param name="count">
+        /// Specifies the number of vectors to be modified.
+        /// </param>
+        /// <param name="vectors">
+        /// Specifies the new vectors to be used for the specified uniform variable.
+        /// </param>
+        public static unsafe void Uniform2(int location, int count, Vector2[] vectors)
+        {
+            fixed (Vector2* ptr = vectors)
+            {
+                GL.Uniform2(location, count, (float*)ptr);
+            }
+        }
+
+        /// <summary>
+        /// [requires: v2.0]
+        /// Specify the values of an array of <see cref="Vector3"/> uniform variables for the current program object.
+        /// </summary>
+        /// <param name="location">
+        /// Specifies the location of the uniform variable to be modified.
+        /// </param>
+        /// <param name="count">
+        /// Specifies the number of vectors to be modified.
+        /// </param>
+        /// <param name="vectors">
+        /// Specifies the new vectors to be used for the specified uniform variable.
+        /// </param>
+        public static unsafe void Uniform3(int location, int count, Vector3[] vectors)
+        {
+            fixed (Vector3* ptr = vectors)
+            {
+                GL.Uniform3(location, count, (float*)ptr);
+            }
+        }
+
+        /// <summary>
+        /// [requires: v2.0]
+        /// Specify the values of an array of <see cref="Vector4"/> uniform variables for the current program object.
+        /// </summary>
+        /// <param name="location">
+        /// Specifies the location of the uniform variable to be modified.
+        /// </param>
+        /// <param name="count">
+        /// Specifies the number of vectors to be modified.
+        /// </param>
+        /// <param name="vectors">
+        /// Specifies the new vectors to be used for the specified uniform variable.
+        /// </param>
+        public static unsafe void Uniform4(int location, int count, Vector4[] vectors)
+        {
+            fixed (Vector4* ptr = vectors)
+            {
+                GL.Uniform4(location, count, (float*)ptr);
+            }
+        }
+
+        /// <summary>
+        /// [requires: v2.0]
         /// Specify the value of a <see cref="Vector2"/> uniform variable for the current program object.
         /// </summary>
         /// <param name="location">

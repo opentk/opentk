@@ -453,11 +453,12 @@ namespace OpenTK.Mathematics
         /// you know it's already normalized.
         /// </param>
         /// <returns>The rotation.</returns>
+        [Pure]
         public readonly Quaternion ExtractRotation(bool rowNormalize = true)
         {
-            var row0 = Row0;
-            var row1 = Row1;
-            var row2 = Row2;
+            Vector3 row0 = Row0;
+            Vector3 row1 = Row1;
+            Vector3 row2 = Row2;
 
             if (rowNormalize)
             {
@@ -466,52 +467,40 @@ namespace OpenTK.Mathematics
                 row2 = row2.Normalized();
             }
 
-            // code below adapted from Blender
-            var q = default(Quaternion);
-            var trace = 0.25 * (row0[0] + row1[1] + row2[2] + 1.0);
+            // Based Mike Day's construction:
+            // See: https://web.archive.org/web/20210128150107/https://d3cw3dd2w32x2b.cloudfront.net/wp-content/uploads/2015/01/matrix-to-quat.pdf
+            // and https://marc-b-reynolds.github.io/quaternions/2017/08/08/QuatRotMatrix.html
 
-            if (trace > 0)
+            Quaternion q;
+            float t;
+            if (row2.Z < 0.0f)
             {
-                var sq = Math.Sqrt(trace);
-
-                q.W = (float)sq;
-                sq = 1.0 / (4.0 * sq);
-                q.X = (float)((row1[2] - row2[1]) * sq);
-                q.Y = (float)((row2[0] - row0[2]) * sq);
-                q.Z = (float)((row0[1] - row1[0]) * sq);
-            }
-            else if (row0[0] > row1[1] && row0[0] > row2[2])
-            {
-                var sq = 2.0 * Math.Sqrt(1.0 + row0[0] - row1[1] - row2[2]);
-
-                q.X = (float)(0.25 * sq);
-                sq = 1.0 / sq;
-                q.W = (float)((row2[1] - row1[2]) * sq);
-                q.Y = (float)((row1[0] + row0[1]) * sq);
-                q.Z = (float)((row2[0] + row0[2]) * sq);
-            }
-            else if (row1[1] > row2[2])
-            {
-                var sq = 2.0 * Math.Sqrt(1.0 + row1[1] - row0[0] - row2[2]);
-
-                q.Y = (float)(0.25 * sq);
-                sq = 1.0 / sq;
-                q.W = (float)((row2[0] - row0[2]) * sq);
-                q.X = (float)((row1[0] + row0[1]) * sq);
-                q.Z = (float)((row2[1] + row1[2]) * sq);
+                if (row0.X > row1.Y)
+                {
+                    t = 1.0f + row0.X - row1.Y - row2.Z;
+                    q = new Quaternion(t, row0.Y + row1.X, row2.X + row0.Z, row1.Z - row2.Y);
+                }
+                else
+                {
+                    t = 1.0f - row0.X + row1.Y - row2.Z;
+                    q = new Quaternion(row0.Y + row1.X, t, row1.Z + row2.Y, row2.X - row0.Z);
+                }
             }
             else
             {
-                var sq = 2.0 * Math.Sqrt(1.0 + row2[2] - row0[0] - row1[1]);
-
-                q.Z = (float)(0.25 * sq);
-                sq = 1.0 / sq;
-                q.W = (float)((row1[0] - row0[1]) * sq);
-                q.X = (float)((row2[0] + row0[2]) * sq);
-                q.Y = (float)((row2[1] + row1[2]) * sq);
+                if (row0.X < -row1.Y)
+                {
+                    t = 1.0f - row0.X - row1.Y + row2.Z;
+                    q = new Quaternion(row2.X + row0.Z, row1.Z + row2.Y, t, row0.Y - row1.X);
+                }
+                else
+                {
+                    t = 1.0f + row0.X + row1.Y + row2.Z;
+                    q = new Quaternion(row1.Z - row2.Y, row2.X - row0.Z, row0.Y - row1.X, t);
+                }
             }
-
-            q.Normalize();
+            // FIXME: Use reciprocal sqrt?
+            q *= 0.5f / MathF.Sqrt(t);
             return q;
         }
 

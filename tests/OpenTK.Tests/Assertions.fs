@@ -47,6 +47,10 @@ type internal Assert =
         if not <| approxEq a.X b.X && approxEq a.Y b.Y && approxEq a.Z b.Z && approxEq a.W b.W then
             raise <| Xunit.Sdk.EqualException.ForMismatchedValues(a,b)
 
+    static member ApproximatelyEquivalent(a : Quaternion,b : Quaternion) =
+        if not <| approxEq a.X b.X && approxEq a.Y b.Y && approxEq a.Z b.Z && approxEq a.W b.W then
+            raise <| Xunit.Sdk.EqualException.ForMismatchedValues(a,b)
+
     static member ApproximatelyEquivalent(a : float32,b : float32) =
         if not <| approxEq a b then raise <| Xunit.Sdk.EqualException.ForMismatchedValues(a,b)
 
@@ -112,6 +116,9 @@ type internal Assert =
 
     static member ApproximatelyEqual(a : float32, b : float32) =
         if not <| approxEqDelta a b then raise <| Xunit.Sdk.EqualException.ForMismatchedValues(a,b)
+
+    static member ApproximatelyEqual(a : Quaternion, b : Quaternion) =
+        if not <| approxEqDelta a.X b.X && approxEqDelta a.Y b.Y && approxEqDelta a.Z b.Z && approxEqDelta a.W b.W then raise <| Xunit.Sdk.EqualException.ForMismatchedValues(a,b)
 
     static member EpsilonFromValue4Digits(v : float32) =
         MathF.Max(MathF.Pow(10.0f, MathF.Floor(MathF.Log10(MathF.Abs(v))) - 4.0f), 0.0001f)
