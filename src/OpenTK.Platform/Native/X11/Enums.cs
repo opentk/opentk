@@ -661,6 +661,14 @@ namespace OpenTK.Platform.Native.X11
         BarrierNegativeY = 1 << 3,
     }
 
+    internal enum XOrdering : int
+    {
+        Unsorted = 0,
+        YSorted = 1,
+        YXSorted = 2,
+        YXBanded = 3,
+    }
+
     [Flags]
     internal enum XIMFlags : ulong {
         PreeditArea      = 0x0001L,

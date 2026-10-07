@@ -436,6 +436,23 @@ namespace OpenTK.Platform
         public WindowTransparencyMode GetTransparencyMode(WindowHandle handle, out float opacity);
 
         /// <summary>
+        /// Controls whether the window lets mouse inputs pass through the window. I.e. the window is transparent to mouse events.
+        /// Useful for overlays and similar applications.
+        /// 
+        /// On X11 mouse passthrough will only work for borderless windows.
+        /// </summary>
+        /// <param name="handle">Handle to the window whose input transparency to change.</param>
+        /// <param name="transparent">Whether the window should be transparent to mouse input or not.</param>
+        public void SetMousePassthrough(WindowHandle handle, bool transparent);
+
+        /// <summary>
+        /// Gets the input passthrough mode of the specified window.
+        /// </summary>
+        /// <param name="handle">The window to query the input passthrough mode of.</param>
+        /// <returns><see langword="true"/> if the window has input passthrough enabled, <see langword="false"/> otherwise.</returns>
+        public bool GetMousePassthrough(WindowHandle handle);
+
+        /// <summary>
         /// Set if the window is an always on top window or not.
         /// </summary>
         /// <param name="handle">A handle to the window to make always on top.</param>
