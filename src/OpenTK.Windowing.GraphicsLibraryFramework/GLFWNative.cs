@@ -25,7 +25,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
                     return IntPtr.Zero;
                 }
 
-                return LoadLibrary("glfw", new Version(3, 4), assembly, path);
+                return LoadLibrary("glfw", new Version(3, 5, 1), assembly, path);
             });
         }
 
@@ -578,6 +578,12 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
 
         [DllImport(LibraryName, CallingConvention = Cdecl)]
         public static extern IntPtr glfwGetOSMesaContext(Window* window);
+
+        [DllImport(LibraryName, CallingConvention = Cdecl)]
+        public static extern int glfwGetEglConfig(Window* window);
+
+        [DllImport(LibraryName, CallingConvention = Cdecl)]
+        public static extern int glfwGetGLXFBConfig(Window* window);
 
         #endregion
 #pragma warning restore SA1124 // Do not use regions
