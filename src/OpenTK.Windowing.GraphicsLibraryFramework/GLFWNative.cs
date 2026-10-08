@@ -559,6 +559,9 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         public static extern uint glfwGetGLXWindow(Window* window);
 
         [DllImport(LibraryName, CallingConvention = Cdecl)]
+        public static extern int glfwGetGLXFBConfig(Window* window);
+
+        [DllImport(LibraryName, CallingConvention = Cdecl)]
         public static extern IntPtr glfwGetWaylandDisplay();
 
         [DllImport(LibraryName, CallingConvention = Cdecl)]
@@ -577,6 +580,9 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         public static extern IntPtr glfwGetEGLSurface(Window* window);
 
         [DllImport(LibraryName, CallingConvention = Cdecl)]
+        public static extern int glfwGetEglConfig(Window* window);
+
+        [DllImport(LibraryName, CallingConvention = Cdecl)]
         public static extern int glfwGetOSMesaColorBuffer(Window* window, int* width, int* height, int* format, void** buffer);
 
         [DllImport(LibraryName, CallingConvention = Cdecl)]
@@ -584,12 +590,6 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
 
         [DllImport(LibraryName, CallingConvention = Cdecl)]
         public static extern IntPtr glfwGetOSMesaContext(Window* window);
-
-        [DllImport(LibraryName, CallingConvention = Cdecl)]
-        public static extern int glfwGetEglConfig(Window* window);
-
-        [DllImport(LibraryName, CallingConvention = Cdecl)]
-        public static extern int glfwGetGLXFBConfig(Window* window);
 
         #endregion
 #pragma warning restore SA1124 // Do not use regions
