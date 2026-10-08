@@ -17,7 +17,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
     public enum UnlimitedMouseButtonsAttribute
     {
         /// <summary>
-        /// Specify whether mouse buttons beyond the standard eight should be reported.
+        /// Specify whether mouse buttons beyond the standard eight should be reported in the <see cref="GLFWCallbacks.MouseButtonCallback"/>.
         /// </summary>
         UnlimitedMouseButtons = 0x00050000
     }

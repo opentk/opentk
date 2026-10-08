@@ -3642,11 +3642,25 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         }
 
         /// <summary>
-        /// This function returns whether unlimited mouse buttons are enabled for the specified window.
+        /// <para>
+        /// This function returns the value of an input option for the specified window.
+        /// The mode must be <see cref="UnlimitedMouseButtonsAttribute.UnlimitedMouseButtons"/>.
+        /// </para>
         /// </summary>
         /// <param name="window">The window to query.</param>
-        /// <param name="mode"><see cref="UnlimitedMouseButtonsAttribute.UnlimitedMouseButtons"/>.</param>
-        /// <returns>Whether unlimited mouse buttons are enabled.</returns>
+        /// <param name="mode">
+        /// <see cref="UnlimitedMouseButtonsAttribute.UnlimitedMouseButtons"/>.
+        /// </param>
+        /// <returns>Whether unlimited mouse buttons are enabled or disabled for this window.</returns>
+        /// <remarks>
+        /// <para>
+        /// This function must only be called from the main thread.
+        /// </para>
+        /// <para>
+        /// Possible errors include <see cref="ErrorCode.NotInitialized"/> and <see cref="ErrorCode.InvalidEnum"/>.
+        /// </para>
+        /// </remarks>
+        /// <seealso cref="SetInputMode(Window*, UnlimitedMouseButtonsAttribute, bool)"/>
         public static unsafe bool GetInputMode(Window* window, UnlimitedMouseButtonsAttribute mode)
         {
             return glfwGetInputMode(window, mode) == GLFW_TRUE;
@@ -4576,13 +4590,27 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         }
 
         /// <summary>
-        /// Sets whether unlimited mouse buttons are enabled for the specified window.
+        /// <para>
+        /// This function sets an input mode option for the specified window.
+        /// The mode must be <see cref="UnlimitedMouseButtonsAttribute.UnlimitedMouseButtons"/>.
+        /// </para>
+        /// <para>
+        /// If the mode is <see cref="UnlimitedMouseButtonsAttribute.UnlimitedMouseButtons"/>, the value must be either GLFW_TRUE to enable reporting of mouse buttons beyond the standard eight, or GLFW_FALSE to disable it.
+        /// </para>
         /// </summary>
         /// <param name="window">The window whose unlimited mouse button mode to set.</param>
         /// <param name="mode">
         /// The value <see cref="UnlimitedMouseButtonsAttribute.UnlimitedMouseButtons"/>.
         /// </param>
         /// <param name="value">Whether unlimited mouse buttons should be enabled or disabled.</param>
+        /// <remarks>
+        /// <para>
+        /// This function must only be called from the main thread.
+        /// </para>
+        /// <para>
+        /// Possible errors include <see cref="ErrorCode.NotInitialized"/> and <see cref="ErrorCode.InvalidEnum"/>.
+        /// </para>
+        /// </remarks>
         public static unsafe void SetInputMode(Window* window, UnlimitedMouseButtonsAttribute mode, bool value)
         {
             glfwSetInputMode(window, mode, value ? GLFW_TRUE : GLFW_FALSE);
