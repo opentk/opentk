@@ -3642,6 +3642,17 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         }
 
         /// <summary>
+        /// This function returns whether unlimited mouse buttons are enabled for the specified window.
+        /// </summary>
+        /// <param name="window">The window to query.</param>
+        /// <param name="mode"><see cref="UnlimitedMouseButtonsAttribute.UnlimitedMouseButtons"/>.</param>
+        /// <returns>Whether unlimited mouse buttons are enabled.</returns>
+        public static unsafe bool GetInputMode(Window* window, UnlimitedMouseButtonsAttribute mode)
+        {
+            return glfwGetInputMode(window, mode) == GLFW_TRUE;
+        }
+
+        /// <summary>
         /// <para>
         /// This function returns the primary monitor.
         /// </para>
@@ -4560,6 +4571,19 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// </para>
         /// </remarks>
         public static unsafe void SetInputMode(Window* window, RawMouseMotionAttribute mode, bool value)
+        {
+            glfwSetInputMode(window, mode, value ? GLFW_TRUE : GLFW_FALSE);
+        }
+
+        /// <summary>
+        /// Sets whether unlimited mouse buttons are enabled for the specified window.
+        /// </summary>
+        /// <param name="window">The window whose unlimited mouse button mode to set.</param>
+        /// <param name="mode">
+        /// The value <see cref="UnlimitedMouseButtonsAttribute.UnlimitedMouseButtons"/>.
+        /// </param>
+        /// <param name="value">Whether unlimited mouse buttons should be enabled or disabled.</param>
+        public static unsafe void SetInputMode(Window* window, UnlimitedMouseButtonsAttribute mode, bool value)
         {
             glfwSetInputMode(window, mode, value ? GLFW_TRUE : GLFW_FALSE);
         }

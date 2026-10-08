@@ -340,6 +340,9 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         public static extern int glfwGetInputMode(Window* window, RawMouseMotionAttribute mode);
 
         [DllImport(LibraryName, CallingConvention = Cdecl)]
+        public static extern int glfwGetInputMode(Window* window, UnlimitedMouseButtonsAttribute mode);
+
+        [DllImport(LibraryName, CallingConvention = Cdecl)]
         public static extern void glfwSetInputMode(Window* window, CursorStateAttribute mode, CursorModeValue value);
 
         [DllImport(LibraryName, CallingConvention = Cdecl)]
@@ -350,6 +353,9 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
 
         [DllImport(LibraryName, CallingConvention = Cdecl)]
         public static extern void glfwSetInputMode(Window* window, RawMouseMotionAttribute mode, int value);
+
+        [DllImport(LibraryName, CallingConvention = Cdecl)]
+        public static extern void glfwSetInputMode(Window* window, UnlimitedMouseButtonsAttribute mode, int value);
 
         [DllImport(LibraryName, CallingConvention = Cdecl)]
         public static extern int glfwRawMouseMotionSupported();
