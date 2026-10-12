@@ -165,6 +165,17 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
+        /// Returns a copy of the Vector2 scaled to approximately unit length.
+        /// </summary>
+        /// <returns>The normalized copy.</returns>
+        public readonly Vector2 NormalizedFast()
+        {
+            Vector2 v = this;
+            v.NormalizeFast();
+            return v;
+        }
+
+        /// <summary>
         /// Scales the Vector2 to unit length.
         /// </summary>
         public void Normalize()
