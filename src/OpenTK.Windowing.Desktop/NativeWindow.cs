@@ -781,6 +781,22 @@ namespace OpenTK.Windowing.Desktop
         }
 
         /// <summary>
+        /// Enables or disables unlimited mouse buttons.
+        /// </summary>
+        public unsafe bool UnlimitedMouseButtons
+        {
+            get
+            {
+                return GLFW.GetInputMode(WindowPtr, UnlimitedMouseButtonsAttribute.UnlimitedMouseButtons);
+            }
+
+            set
+            {
+                GLFW.SetInputMode(WindowPtr, UnlimitedMouseButtonsAttribute.UnlimitedMouseButtons, value);
+            }
+        }
+
+        /// <summary>
         /// Whether or not <see cref="RawMouseInput"/> is supported.
         /// </summary>
         public bool SupportsRawMouseInput => GLFW.RawMouseMotionSupported();
