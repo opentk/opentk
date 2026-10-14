@@ -1103,6 +1103,18 @@ namespace OpenTK.Platform.Native.SDL
         }
 
         /// <inheritdoc/>
+        public void SetMousePassthrough(WindowHandle handle, bool transparent)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        public bool GetMousePassthrough(WindowHandle handle)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
         public void SetAlwaysOnTop(WindowHandle handle, bool floating)
         {
             SDLWindow window = handle.As<SDLWindow>(this);

@@ -311,6 +311,30 @@ namespace OpenTK.Backends.Tests
                     Program.Logger.LogInfo($"Always on top: {value}");
                 }
 
+                ImGui.AlignTextToFramePadding();
+                ImGui.TextUnformatted("Input passthrough:"); ImGui.SameLine();
+                if (ImGui.Button("Enable"))
+                {
+                    Toolkit.Window.SetMousePassthrough(window, true);
+
+                    bool value = Toolkit.Window.GetMousePassthrough(window);
+                    Program.Logger.LogInfo($"Input Passthrough: {value}");
+                }
+                ImGui.SameLine();
+                if (ImGui.Button("Disable"))
+                {
+                    Toolkit.Window.SetMousePassthrough(window, false);
+
+                    bool value = Toolkit.Window.GetMousePassthrough(window);
+                    Program.Logger.LogInfo($"Input Passthrough: {value}");
+                }
+                ImGui.SameLine();
+                if (ImGui.Button("Check"))
+                {
+                    bool value = Toolkit.Window.GetMousePassthrough(window);
+                    Program.Logger.LogInfo($"Input Passthrough: {value}");
+                }
+
                 ImGui.DragInt2("Position", ref windowPosition.X); ImGui.SameLine();
                 if (ImGui.Button("Set##Position"))
                 {

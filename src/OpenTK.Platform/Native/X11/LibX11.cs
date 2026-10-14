@@ -627,6 +627,12 @@ namespace OpenTK.Platform.Native.X11
         internal static unsafe extern int XSetTransientForHint(XDisplayPtr display, XWindow w, XWindow prop_window);
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern XRegion XCreateRegion();
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int XDestroyRegion(XRegion r);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         internal static extern void XrmInitialize();
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]

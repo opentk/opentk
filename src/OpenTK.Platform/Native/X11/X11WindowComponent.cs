@@ -59,6 +59,7 @@ namespace OpenTK.Platform.Native.X11
         internal GCHandle ComponentGCHandle;
 
         internal bool IsOnXWayland = false;
+        internal bool HasShapeExtension = false;
 
         private unsafe struct EnvironmentVariableOverride
         {
@@ -467,6 +468,30 @@ namespace OpenTK.Platform.Native.X11
             */
 
             OpenTKUserMessageType = XInternAtom(X11.Display, "OPENTK_USER_MESSAGE", false);
+
+            if (X11.Extensions.Contains("SHAPE"))
+            {
+                if (XShape.XShapeQueryExtension(X11.Display, out _, out _))
+                {
+                    
+                    if (XShape.XShapeQueryVersion(X11.Display, out int major, out int minor) != 0)
+                    {
+                        HasShapeExtension = true;
+                    }
+                    else
+                    {
+                        Logger?.LogWarning("XShapeQueryVersion failed. Mouse passthrough will not work.");
+                    }
+                }
+                else
+                {
+                    Logger?.LogWarning("XShapeQueryExtension failed. Mouse passthrough will not work.");
+                }
+            }
+            else
+            {
+                Logger?.LogWarning("SHAPE extension not present. Mouse passthrough will not work.");
+            }
         }
 
         internal IMInstantiateCallback IMInstantiatedCallbackInst = IMInstantiatedCallback;
@@ -3098,9 +3123,9 @@ namespace OpenTK.Platform.Native.X11
                             return;
                         }
 
-                        if (X11.Atoms[KnownAtoms._NET_WM_STATE_MAXIMIZED_HORZ] == XAtom.None)
+                        if (X11.Atoms[KnownAtoms._NET_WM_STATE_MAXIMIZED_VERT] == XAtom.None)
                         {
-                            Logger?.LogWarning("Can't make window maximized. The window manager doesn't support _NET_WM_STATE_MAXIMIZED_HORZ.");
+                            Logger?.LogWarning("Can't make window maximized. The window manager doesn't support _NET_WM_STATE_MAXIMIZED_VERT.");
                             return;
                         }
 
@@ -3689,6 +3714,51 @@ namespace OpenTK.Platform.Native.X11
                 XFree(contents);
 
                 return isOpaque ? WindowTransparencyMode.Opaque : WindowTransparencyMode.TransparentFramebuffer;
+            }
+        }
+
+        /// <inheritdoc/>
+        public void SetMousePassthrough(WindowHandle handle, bool transparent)
+        {
+            XWindowHandle xwindow = handle.As<XWindowHandle>(this);
+
+            if (HasShapeExtension)
+            {
+                if (transparent)
+                {
+                    XRegion region = XCreateRegion();
+                    XShape.XShapeCombineRegion(X11.Display, xwindow.Window, XShape.ShapeKind.ShapeInput, 0, 0, region, XShape.Operation.ShapeSet);
+                    XDestroyRegion(region);
+                }
+                else
+                {
+                    XShape.XShapeCombineMask(X11.Display, xwindow.Window, XShape.ShapeKind.ShapeInput, 0, 0, XPixmap.None, XShape.Operation.ShapeSet);
+                }
+            }
+        }
+
+        /// <inheritdoc/>
+        public unsafe bool GetMousePassthrough(WindowHandle handle)
+        {
+            XWindowHandle xwindow = handle.As<XWindowHandle>(this);
+
+            if (HasShapeExtension)
+            {
+                // It's unclear if we are supposed to free the pointer??
+                XRectangle* rects = XShape.XShapeGetRectangles(X11.Display, xwindow.Window, XShape.ShapeKind.ShapeInput, out int count, out XOrdering ordering);
+                XFree(rects);
+                if (count == 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
             }
         }
 
