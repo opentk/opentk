@@ -9,8 +9,6 @@ using System.Threading.Tasks;
 namespace OpenTK.Platform.Native.X11
 {
 #pragma warning disable CS0649 // Field '' is never assigned to, and will always have its default value 0
-    // FIXME: XID is an "unsigned long int". This will be 4 bytes on a 32-bit machine and 8 bytes on a 64-bit machine.
-    // - Noggin_bops 2023-08-26
 
     [DebuggerDisplay("{Value}")]
     internal readonly struct XDisplayPtr
@@ -108,13 +106,13 @@ namespace OpenTK.Platform.Native.X11
     //[DebuggerDisplay("XID={(System.IntPtr)Id}")]
     internal readonly struct XAtom : IEquatable<XAtom>
     {
-        public readonly ulong Id { get; }
+        public readonly nuint Id { get; }
 
         public readonly bool IsNone => Id == 0;
 
         public static readonly XAtom None = new XAtom(0);
 
-        public XAtom(ulong id)
+        public XAtom(nuint id)
         {
             Id = id;
         }
@@ -156,11 +154,11 @@ namespace OpenTK.Platform.Native.X11
     [DebuggerDisplay("XID={(System.IntPtr)Id}")]
     internal readonly struct XDrawable
     {
-        public readonly ulong Id { get; }
+        public readonly nuint Id { get; }
 
         public static readonly XDrawable None = new XDrawable(0);
 
-        public XDrawable(ulong id)
+        public XDrawable(nuint id)
         {
             Id = id;
         }
@@ -174,11 +172,11 @@ namespace OpenTK.Platform.Native.X11
     [DebuggerDisplay("XID={(System.IntPtr)Id}")]
     internal readonly struct XColorMap
     {
-        public readonly ulong Id { get; }
+        public readonly nuint Id { get; }
 
         public static readonly XColorMap None = new XColorMap(0);
 
-        public XColorMap(ulong id)
+        public XColorMap(nuint id)
         {
             Id = id;
         }
@@ -186,7 +184,7 @@ namespace OpenTK.Platform.Native.X11
 
     internal struct XColor
     {
-        public ulong pixel;             /* pixel value */
+        public nuint pixel;             /* pixel value */
         public ushort red, green, blue; /* rgb values */
         public XColorFlags flags;              /* DoRed, DoGreen, DoBlue */
         public byte pad;
@@ -215,11 +213,11 @@ namespace OpenTK.Platform.Native.X11
     [DebuggerDisplay("XID={(System.IntPtr)Id}")]
     internal readonly struct XID
     {
-        public readonly ulong Id { get; }
+        public readonly nuint Id { get; }
 
         public static readonly XID None = new XID(0);
 
-        public XID(ulong id)
+        public XID(nuint id)
         {
             Id = id;
         }
@@ -228,13 +226,13 @@ namespace OpenTK.Platform.Native.X11
     [DebuggerDisplay("XID={(System.IntPtr)Id}")]
     internal readonly struct XPixmap
     {
-        public readonly ulong Id { get; }
+        public readonly nuint Id { get; }
 
         public static readonly XPixmap None = new XPixmap(0);
 
         public static readonly XPixmap ParentRelative = new XPixmap(1);
 
-        public XPixmap(ulong id)
+        public XPixmap(nuint id)
         {
             Id = id;
         }
@@ -243,11 +241,11 @@ namespace OpenTK.Platform.Native.X11
     [DebuggerDisplay("XID={(System.IntPtr)Id}")]
     internal readonly struct XCursor : IEquatable<XCursor>
     {
-        public readonly ulong Id { get; }
+        public readonly nuint Id { get; }
 
         public static readonly XCursor None = new XCursor(0);
 
-        public XCursor(ulong id)
+        public XCursor(nuint id)
         {
             Id = id;
         }
@@ -281,11 +279,11 @@ namespace OpenTK.Platform.Native.X11
     [DebuggerDisplay("XID={(System.IntPtr)Id}")]
     internal readonly struct XVisualId
     {
-        public readonly ulong Id { get; }
+        public readonly nuint Id { get; }
 
         public static readonly XVisualId None = new XVisualId(0);
 
-        public XVisualId(ulong id)
+        public XVisualId(nuint id)
         {
             Id = id;
         }
@@ -294,14 +292,14 @@ namespace OpenTK.Platform.Native.X11
     internal struct XSetWindowAttributes
     {
         public XPixmap BackgroundPixmap;
-        public ulong BackgroundPixel;
+        public nuint BackgroundPixel;
         public XPixmap BorderPixmap;
-        public ulong BorderPixel;
+        public nuint BorderPixel;
         public int BitGravity;
         public int WindowGravity;
         public int BackingStore;
-        public ulong BackingPlanes;
-        public ulong BackingPixel;
+        public nuint BackingPlanes;
+        public nuint BackingPixel;
         public int SaveUnder;
         public XEventMask EventMask;
         public XEventMask DoNotPropagateMask;
@@ -344,7 +342,7 @@ namespace OpenTK.Platform.Native.X11
         public byte* value;     /* property data */
         public XAtom encoding;  /* type of property */
         public int format;      /* 8, 16, or 32 */
-        public ulong nitems;    /* number of items in value */
+        public nuint nitems;    /* number of items in value */
     }
 
     /// <summary>
@@ -360,9 +358,9 @@ namespace OpenTK.Platform.Native.X11
         /// <summary>
         /// Time value.
         /// </summary>
-        public readonly ulong Value { get; }
+        public readonly nuint Value { get; }
 
-        public XTime(ulong value)
+        public XTime(nuint value)
         {
             Value = value;
         }
@@ -373,9 +371,9 @@ namespace OpenTK.Platform.Native.X11
         public IntPtr ExtensionData;
         public XVisualId VisualID;
         public int CClass;
-        public ulong RedMask;
-        public ulong GreenMask;
-        public ulong BlueMask;
+        public nuint RedMask;
+        public nuint GreenMask;
+        public nuint BlueMask;
         public int BitsPerRgb;
         public int MapEntries;
     }
@@ -387,9 +385,9 @@ namespace OpenTK.Platform.Native.X11
         public int Screen;
         public int Depth;
         public int CClass;
-        public ulong RedMask;
-        public ulong GreenMask;
-        public ulong BlueMask;
+        public nuint RedMask;
+        public nuint GreenMask;
+        public nuint BlueMask;
         public int ColorMapSize;
         public int BitsPerRGB;
     }
@@ -397,11 +395,11 @@ namespace OpenTK.Platform.Native.X11
     [DebuggerDisplay("XID={(System.IntPtr)Id}")]
     internal readonly struct XWindow : IEquatable<XWindow>
     {
-        public readonly ulong Id { get; }
+        public readonly nuint Id { get; }
 
         public static readonly XWindow None = new XWindow(0);
 
-        public XWindow(ulong id)
+        public XWindow(nuint id)
         {
             Id = id;
         }
@@ -431,7 +429,7 @@ namespace OpenTK.Platform.Native.X11
             return !(left == right);
         }
 
-        public static implicit operator Graphics.Glx.Window(XWindow window) => new Graphics.Glx.Window((nuint)window.Id);
+        public static implicit operator Graphics.Glx.Window(XWindow window) => new Graphics.Glx.Window(window.Id);
 
         public override string ToString()
         {
@@ -453,8 +451,8 @@ namespace OpenTK.Platform.Native.X11
         public int BitGravity;
         public int WindowGravity;
         public int BackingStore;
-        public ulong BackingPlanes;
-        public ulong BackingPixel;
+        public nuint BackingPlanes;
+        public nuint BackingPixel;
         public int SaveUnder;
         public XColorMap Colormap;
         public int MapInstalled;
@@ -488,23 +486,24 @@ namespace OpenTK.Platform.Native.X11
         /* this structure may be extended in the future */
     }
 
+
     internal struct MotifWmHints
     {
-        public long flags;
-        public long functions;
-        public long decorations;
-        public long input_mode;
-        public long status;
+        public nint flags;
+        public nint functions;
+        public nint decorations;
+        public nint input_mode;
+        public nint status;
     }
 
     [DebuggerDisplay("XID={(System.IntPtr)Id}")]
     internal readonly struct XKeySym : IEquatable<XKeySym>
     {
-        public readonly ulong Id { get; }
+        public readonly nuint Id { get; }
 
         public static readonly XKeySym None = new XKeySym(0);
 
-        public XKeySym(ulong id)
+        public XKeySym(nuint id)
         {
             Id = id;
         }
@@ -552,11 +551,11 @@ namespace OpenTK.Platform.Native.X11
     [DebuggerDisplay("XID={(System.IntPtr)Id}")]
     internal readonly struct XPointerBarrier
     {
-        public readonly ulong Id { get; }
+        public readonly nuint Id { get; }
 
         public static readonly XPointerBarrier None = new XPointerBarrier(0);
 
-        public XPointerBarrier(ulong id)
+        public XPointerBarrier(nuint id)
         {
             Id = id;
         }

@@ -62,10 +62,10 @@ namespace OpenTK.Platform.Native.X11
         internal static extern int XScreenCount(XDisplayPtr dispay);
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern ulong XBlackPixel(XDisplayPtr display, int screenNumber);
+        internal static extern nuint XBlackPixel(XDisplayPtr display, int screenNumber);
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern ulong XWhitePixel(XDisplayPtr display, int screenNumber);
+        internal static extern nuint XWhitePixel(XDisplayPtr display, int screenNumber);
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         internal static extern XWindow XCreateSimpleWindow(
@@ -76,8 +76,8 @@ namespace OpenTK.Platform.Native.X11
             uint width,
             uint height,
             uint borderWidth,
-            ulong border,
-            ulong background);
+            nuint border,
+            nuint background);
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         internal static extern XWindow XCreateWindow(
@@ -157,14 +157,13 @@ namespace OpenTK.Platform.Native.X11
             ref XSizeHints hints);
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern XGC XCreateGC(XDisplayPtr display, XDrawable drawable, long valueMask,
-            IntPtr values);
+        internal static extern XGC XCreateGC(XDisplayPtr display, XDrawable drawable, nint valueMask, IntPtr values);
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern int XSetBackground(XDisplayPtr display, XGC gc, ulong background);
+        internal static extern int XSetBackground(XDisplayPtr display, XGC gc, nuint background);
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern int XSetForeground(XDisplayPtr display, XGC gc, ulong background);
+        internal static extern int XSetForeground(XDisplayPtr display, XGC gc, nuint background);
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         internal static extern int XClearWindow(XDisplayPtr display, XWindow window);
@@ -300,14 +299,14 @@ namespace OpenTK.Platform.Native.X11
             XDisplayPtr display,
             XWindow window,
             XAtom property,
-            long offset,
-            long length,
+            nint offset,
+            nint length,
             [MarshalAs(UnmanagedType.Bool)] bool delete,
             XAtom requestType,
             out XAtom actualType,
             out int actualFormat,
-            out long numberOfItems,
-            out long remainingBytes,
+            out nuint numberOfItems,
+            out nuint remainingBytes,
             out IntPtr contents
         );
 
@@ -347,7 +346,7 @@ namespace OpenTK.Platform.Native.X11
             XAtom propertyType,
             int format,
             XPropertyMode mode,
-            long[] data,
+            nint[] data,
             int elements
         );
 
@@ -560,16 +559,13 @@ namespace OpenTK.Platform.Native.X11
         internal static extern unsafe bool XUnregisterIMInstantiateCallback(XDisplayPtr display, XrmDatabase db, byte* res_name, byte* res_class, IMInstantiateCallback /* XIMProc */ callback, IntPtr /* XPointer */ client_data);
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
-        internal static unsafe extern XIC XCreateIC(XIM im, byte* value0, ulong value1, byte* value2, ulong value3, void* sentinel);
+        internal static unsafe extern XIC XCreateIC(XIM im, byte* value0, IntPtr value1, byte* value2, IntPtr value3, void* sentinel);
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
-        internal static unsafe extern XIC XCreateIC(XIM im, byte* value0, ulong value1, byte* value2, ulong value3, byte* value4, ulong value5, void* sentinel);
+        internal static unsafe extern XIC XCreateIC(XIM im, byte* value0, IntPtr value1, byte* value2, IntPtr value3, byte* value4, IntPtr value5, void* sentinel);
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
-        internal static unsafe extern XIC XCreateIC(XIM im, byte* value0, ulong value1, byte* value2, ulong value3, byte* value4, IntPtr value5, void* sentinel);
-
-        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
-        internal static unsafe extern XIC XCreateIC(XIM im, byte* value0, ulong value1, byte* value2, ulong value3, byte* value4, ulong value5, byte* value6, IntPtr value7, void* sentinel);
+        internal static unsafe extern XIC XCreateIC(XIM im, byte* value0, IntPtr value1, byte* value2, IntPtr value3, byte* value4, IntPtr value5, byte* value6, IntPtr value7, void* sentinel);
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         internal static unsafe extern byte* XSetICValues(XIC ic, byte* key, IntPtr value, IntPtr sentinel);

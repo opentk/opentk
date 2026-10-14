@@ -218,7 +218,7 @@ namespace OpenTK.Platform.Native.X11
                 X11.Atoms[KnownAtoms.WINDOW],
                 out _,
                 out _,
-                out long count,
+                out nuint count,
                 out _,
                 out IntPtr array);
 
@@ -281,7 +281,7 @@ namespace OpenTK.Platform.Native.X11
                             wm_window,
                             X11.Atoms[KnownAtoms._NET_WM_NAME],
                             0,
-                            long.MaxValue,   // FIXME: Is this worth two rountrips to measure name size and then read?
+                            nint.MaxValue,   // FIXME: Is this worth two rountrips to measure name size and then read?
                             false,
                             X11.Atoms[KnownAtoms.UTF8_STRING],
                             out _,
@@ -315,7 +315,7 @@ namespace OpenTK.Platform.Native.X11
                     X11.Display, 
                     X11.DefaultRootWindow, 
                     X11.Atoms![KnownAtoms._NET_SUPPORTED], 
-                    0, long.MaxValue,
+                    0, nint.MaxValue,
                     false,
                     X11.Atoms[KnownAtoms.ATOM],
                     out _,
@@ -598,8 +598,8 @@ namespace OpenTK.Platform.Native.X11
                                     X11.Atoms[KnownAtoms.ATOM],
                                     out XAtom actualType,
                                     out int actualFormat,
-                                    out long numberOfItems,
-                                    out long remainingBytes,
+                                    out nuint numberOfItems,
+                                    out nuint remainingBytes,
                                     out IntPtr contents);
 
             if (result == Success)
@@ -626,7 +626,7 @@ namespace OpenTK.Platform.Native.X11
                         KnownAtoms._NET_WM_STATE_FOCUSED,
                     };
 
-                    for (int i = 0; i < numberOfItems; i++)
+                    for (nuint i = 0; i < numberOfItems; i++)
                     {
                         XAtom atom = atoms[i];
                         for (int j = 0; j < stateAtoms.Length; j++)
@@ -717,19 +717,19 @@ namespace OpenTK.Platform.Native.X11
                         break;
                 }
                 
-                if (XWindowDict.TryGetValue(ea.Any.Window, out XWindowHandle? xwindow) == false)
+                if (XWindowDict.TryGetValue(ea.Any.window, out XWindowHandle? xwindow) == false)
                 {
                     // If this was not for one our windows and it was filtered by XIM
                     // we don't process it.
                     if (filtered) continue;
 
-                    if (ea.Any.Window == XWindow.None && ea.Type == XEventType.KeymapNotify)
+                    if (ea.Any.window == XWindow.None && ea.Type == XEventType.KeymapNotify)
                     {
                         // FIXME: Do something with the keymap notify...
 
                         
                     }
-                    else if (ea.Any.Window == X11.DefaultRootWindow)
+                    else if (ea.Any.window == X11.DefaultRootWindow)
                     {
                         if (ea.Type == (XEventType)(X11.XFixesEventBase + XFixes.SelectionEvent.SetSelectionOwner))
                         {
@@ -763,10 +763,10 @@ namespace OpenTK.Platform.Native.X11
                             }
                         }
                     }
-                    else if (ea.Any.Window == HelperWindow)
+                    else if (ea.Any.window == HelperWindow)
                     {
                         if (ea.Type == XEventType.ClientMessage &&
-                            ea.ClientMessage.MessageType == OpenTKUserMessageType)
+                            ea.ClientMessage.message_type == OpenTKUserMessageType)
                         {
                             unsafe
                             {
@@ -796,7 +796,7 @@ namespace OpenTK.Platform.Native.X11
                     else
                     {
                         // This event likely for a deleted window.
-                        Logger?.LogDebug($"Received event {ea.Type} for an unknown (likely destroyed) window {ea.Any.Window}.");
+                        Logger?.LogDebug($"Received event {ea.Type} for an unknown (likely destroyed) window {ea.Any.window}.");
                     }
                     continue;
                 }
@@ -811,20 +811,20 @@ namespace OpenTK.Platform.Native.X11
                             {
                                 // FIXME: Check message_type for WM_PROTOCOLS?
 
-                                if (clientMessage.Format == 32 && clientMessage.l[0] == (long)X11.Atoms[KnownAtoms.WM_DELETE_WINDOW].Id)
+                                if (clientMessage.format == 32 && clientMessage.l[0] == (long)X11.Atoms[KnownAtoms.WM_DELETE_WINDOW].Id)
                                 {
                                     Toolkit.Event.RaiseEvent(new CloseEventArgs(xwindow));
                                 }
-                                else if (clientMessage.Format == 32 && clientMessage.l[0] == (long)X11.Atoms[KnownAtoms._NET_WM_PING].Id)
+                                else if (clientMessage.format == 32 && clientMessage.l[0] == (long)X11.Atoms[KnownAtoms._NET_WM_PING].Id)
                                 {
                                     // Ping events to know that we are still responsive.
                                     XEvent reply = ea;
-                                    reply.ClientMessage.Window = X11.DefaultRootWindow;
+                                    reply.ClientMessage.window = X11.DefaultRootWindow;
 
                                     XSendEvent(X11.Display, X11.DefaultRootWindow, 0, XEventMask.SubstructureNotify | XEventMask.SubstructureRedirect, reply);
                                 }
                                 // FIXME: Should we really check == 32?
-                                else if (clientMessage.MessageType == X11.Atoms[KnownAtoms.XdndEnter])
+                                else if (clientMessage.message_type == X11.Atoms[KnownAtoms.XdndEnter])
                                 {
                                     bool use_list = (clientMessage.l[1] & 1) != 0;
 
@@ -833,15 +833,15 @@ namespace OpenTK.Platform.Native.X11
                                     {
                                         int result = XGetWindowProperty(
                                             X11.Display,
-                                            new XWindow((ulong)clientMessage.l[0]),
+                                            new XWindow((nuint)clientMessage.l[0]),
                                             X11.Atoms[KnownAtoms.XdndTypeList],
-                                            0, long.MaxValue,
+                                            0, nint.MaxValue,
                                             false,
                                             X11.Atoms[KnownAtoms.ATOM],
                                             out XAtom actualType,
                                             out int actualFormat,
-                                            out long numberOfItems,
-                                            out long remainingBytes,
+                                            out nuint numberOfItems,
+                                            out nuint remainingBytes,
                                             out IntPtr contents);
 
                                         Span<XAtom> list = new Span<XAtom>((XAtom*)contents, (int)numberOfItems);
@@ -861,7 +861,7 @@ namespace OpenTK.Platform.Native.X11
                                     // Save this data so that we can respond to the other dnd events
                                     xwindow.XDnDVersion = (int)(clientMessage.l[1] >>> 24);
                                     xwindow.XDnDType = type;
-                                    xwindow.XDnDSource = new XAtom((ulong)clientMessage.l[0]);
+                                    xwindow.XDnDSource = new XAtom((nuint)clientMessage.l[0]);
 
                                     // FIXME: Send a DropBegin event?
 
@@ -881,32 +881,32 @@ namespace OpenTK.Platform.Native.X11
                                         return XAtom.None;
                                     }
                                 }
-                                else if (clientMessage.MessageType == X11.Atoms[KnownAtoms.XdndPosition])
+                                else if (clientMessage.message_type == X11.Atoms[KnownAtoms.XdndPosition])
                                 {
                                     int root_x = (int)(clientMessage.l[2] >> 16);
                                     int root_y = (int)(clientMessage.l[2] & 0xFFFF);
                                     // FIXME: Global or local coordinates?
                                     //Toolkit.Event.RaiseEvent(new DropLocationEventArgs((root_x, root_y)));
 
-                                    XWindow source = new XWindow((ulong)clientMessage.l[0]);
+                                    XWindow source = new XWindow((nuint)clientMessage.l[0]);
 
                                     XEvent @event = default;
                                     ref XClientMessageEvent status = ref @event.ClientMessage;
-                                    status.Type = XEventType.ClientMessage;
-                                    status.Display = clientMessage.Display;
-                                    status.Window = source;
-                                    status.MessageType = X11.Atoms[KnownAtoms.XdndStatus];
-                                    status.Format = 32;
-                                    status.l[0] = (long)xwindow.Window.Id;
+                                    status.type = XEventType.ClientMessage;
+                                    status.display = clientMessage.display;
+                                    status.window = source;
+                                    status.message_type = X11.Atoms[KnownAtoms.XdndStatus];
+                                    status.format = 32;
+                                    status.l[0] = (nint)xwindow.Window.Id;
                                     status.l[1] = (xwindow.XDnDType != XAtom.None) ? 1 : 0;
                                     status.l[2] = 0;
                                     status.l[3] = 0;
                                     // FIXME: Do we want to support other actions?
-                                    status.l[4] = (long)X11.Atoms[KnownAtoms.XdndActionCopy].Id;
+                                    status.l[4] = (nint)X11.Atoms[KnownAtoms.XdndActionCopy].Id;
                                     XSendEvent(X11.Display, source, 0, XEventMask.None, @event);
                                     // FIXME: SDL does XFlush here, do we need that?
                                 }
-                                else if (clientMessage.MessageType == X11.Atoms[KnownAtoms.XdndLeave])
+                                else if (clientMessage.message_type == X11.Atoms[KnownAtoms.XdndLeave])
                                 {
                                     // FIXME: Send DropEnd/DropCancelled event?
                                     xwindow.XDnDSource = default;
@@ -916,7 +916,7 @@ namespace OpenTK.Platform.Native.X11
                                     // FIXME:
                                     //EventQueue.Raise(DropEnd);
                                 }
-                                else if (clientMessage.MessageType == X11.Atoms[KnownAtoms.XdndDrop])
+                                else if (clientMessage.message_type == X11.Atoms[KnownAtoms.XdndDrop])
                                 {
                                     if (xwindow.XDnDType != XAtom.None)
                                     {
@@ -928,7 +928,7 @@ namespace OpenTK.Platform.Native.X11
                                             X11.Atoms[KnownAtoms.PRIMARY],
                                             xwindow.Window,
                                             // FIXME: Maybe return CurrentTime if xdnd version is <1?
-                                            new XTime((ulong)clientMessage.l[2]));
+                                            new XTime((nuint)clientMessage.l[2]));
 
                                         XEvent notification;
                                         while (XCheckTypedWindowEvent(X11.Display, xwindow.Window, XEventType.SelectionNotify, out notification) == false)
@@ -944,13 +944,13 @@ namespace OpenTK.Platform.Native.X11
                                             X11.Display,
                                             notification.Selection.requestor,
                                             X11.Atoms[KnownAtoms.PRIMARY],
-                                            0, long.MaxValue, true,
+                                            0, nint.MaxValue, true,
                                             // FIXME: AnyPropertyType
                                             new XAtom(0),
                                             out XAtom actualType,
                                             out int actualFormat,
-                                            out long numberOfItems,
-                                            out long remainingBytes,
+                                            out nuint numberOfItems,
+                                            out nuint remainingBytes,
                                             out IntPtr data);
 
                                         if (result == Success)
@@ -996,19 +996,19 @@ namespace OpenTK.Platform.Native.X11
                                     // End with sending XdndFinish.
                                     XEvent @event = default;
                                     ref XClientMessageEvent finish = ref @event.ClientMessage;
-                                    finish.Type = XEventType.ClientMessage;
-                                    finish.Display = clientMessage.Display;
-                                    finish.Window = clientMessage.Window;
-                                    finish.MessageType = X11.Atoms[KnownAtoms.XdndFinished];
-                                    finish.Format = 32;
-                                    finish.l[0] = (long)xwindow.Window.Id;
+                                    finish.type = XEventType.ClientMessage;
+                                    finish.display = clientMessage.display;
+                                    finish.window = clientMessage.window;
+                                    finish.message_type = X11.Atoms[KnownAtoms.XdndFinished];
+                                    finish.format = 32;
+                                    finish.l[0] = (nint)xwindow.Window.Id;
                                     finish.l[1] = (xwindow.XDnDType != XAtom.None) ? 1 : 0;
                                     finish.l[2] = (xwindow.XDnDType != XAtom.None) ?
-                                                    (long)X11.Atoms[KnownAtoms.XdndActionCopy].Id :
-                                                    (long)XAtom.None.Id;
+                                                    (nint)X11.Atoms[KnownAtoms.XdndActionCopy].Id :
+                                                    (nint)XAtom.None.Id;
                                     XSendEvent(
                                         X11.Display,
-                                        new XWindow((ulong)clientMessage.l[0]),
+                                        new XWindow((nuint)clientMessage.l[0]),
                                         0,
                                         XEventMask.None,
                                         @event);
@@ -1054,7 +1054,7 @@ namespace OpenTK.Platform.Native.X11
                                     {
                                         case HitType.Draggable:
                                             {
-                                                const long _NET_WM_MOVERESIZE_MOVE = 8;
+                                                const nint _NET_WM_MOVERESIZE_MOVE = 8;
 
                                                 // FIXME: Do we need to regrab the pointer when the move is done?
                                                 XUngrabPointer(X11.Display, XTime.CurrentTime);
@@ -1062,16 +1062,16 @@ namespace OpenTK.Platform.Native.X11
 
                                                 XEvent e = new XEvent();
                                                 ref XClientMessageEvent client = ref e.ClientMessage;
-                                                client.Type = XEventType.ClientMessage;
-                                                client.Window = xwindow.Window;
-                                                client.MessageType = X11.Atoms[KnownAtoms._NET_WM_MOVERESIZE];
-                                                client.Format = 32;
+                                                client.type = XEventType.ClientMessage;
+                                                client.window = xwindow.Window;
+                                                client.message_type = X11.Atoms[KnownAtoms._NET_WM_MOVERESIZE];
+                                                client.format = 32;
                                                 unsafe
                                                 {
                                                     client.l[0] = buttonPressed.x_root;
                                                     client.l[1] = buttonPressed.y_root;
                                                     client.l[2] = _NET_WM_MOVERESIZE_MOVE;
-                                                    client.l[3] = buttonPressed.button;
+                                                    client.l[3] = (nint)buttonPressed.button;
                                                     client.l[4] = 0;
                                                 }
 
@@ -1088,16 +1088,16 @@ namespace OpenTK.Platform.Native.X11
                                         case HitType.ResizeTopLeft:
                                         case HitType.ResizeTopRight:
                                             {
-                                                const long _NET_WM_MOVERESIZE_SIZE_TOPLEFT = 0;
-                                                const long _NET_WM_MOVERESIZE_SIZE_TOP = 1;
-                                                const long _NET_WM_MOVERESIZE_SIZE_TOPRIGHT = 2;
-                                                const long _NET_WM_MOVERESIZE_SIZE_RIGHT = 3;
-                                                const long _NET_WM_MOVERESIZE_SIZE_BOTTOMRIGHT = 4;
-                                                const long _NET_WM_MOVERESIZE_SIZE_BOTTOM = 5;
-                                                const long _NET_WM_MOVERESIZE_SIZE_BOTTOMLEFT = 6;
-                                                const long _NET_WM_MOVERESIZE_SIZE_LEFT = 7;
+                                                const nint _NET_WM_MOVERESIZE_SIZE_TOPLEFT = 0;
+                                                const nint _NET_WM_MOVERESIZE_SIZE_TOP = 1;
+                                                const nint _NET_WM_MOVERESIZE_SIZE_TOPRIGHT = 2;
+                                                const nint _NET_WM_MOVERESIZE_SIZE_RIGHT = 3;
+                                                const nint _NET_WM_MOVERESIZE_SIZE_BOTTOMRIGHT = 4;
+                                                const nint _NET_WM_MOVERESIZE_SIZE_BOTTOM = 5;
+                                                const nint _NET_WM_MOVERESIZE_SIZE_BOTTOMLEFT = 6;
+                                                const nint _NET_WM_MOVERESIZE_SIZE_LEFT = 7;
 
-                                                long direction;
+                                                nint direction;
                                                 switch (type)
                                                 {
                                                     case HitType.ResizeBottom: direction = _NET_WM_MOVERESIZE_SIZE_BOTTOM; break;
@@ -1118,16 +1118,16 @@ namespace OpenTK.Platform.Native.X11
 
                                                 XEvent e = new XEvent();
                                                 ref XClientMessageEvent client = ref e.ClientMessage;
-                                                client.Type = XEventType.ClientMessage;
-                                                client.Window = xwindow.Window;
-                                                client.MessageType = X11.Atoms[KnownAtoms._NET_WM_MOVERESIZE];
-                                                client.Format = 32;
+                                                client.type = XEventType.ClientMessage;
+                                                client.window = xwindow.Window;
+                                                client.message_type = X11.Atoms[KnownAtoms._NET_WM_MOVERESIZE];
+                                                client.format = 32;
                                                 unsafe
                                                 {
                                                     client.l[0] = buttonPressed.x_root;
                                                     client.l[1] = buttonPressed.y_root;
                                                     client.l[2] = direction;
-                                                    client.l[3] = buttonPressed.button;
+                                                    client.l[3] = (nint)buttonPressed.button;
                                                     client.l[4] = 0;
                                                 }
 
@@ -1495,12 +1495,12 @@ namespace OpenTK.Platform.Native.X11
                                     X11.Display,
                                     property.window,
                                     X11.Atoms[KnownAtoms.WM_STATE],
-                                    0, ~0, false,
+                                    0, nint.MaxValue, false,
                                     new XAtom(0),
                                     out XAtom actualType,
                                     out int actualFormat,
-                                    out long numberOfItems,
-                                    out long remainingBytes,
+                                    out nuint numberOfItems,
+                                    out nuint remainingBytes,
                                     out IntPtr contents);
 
                                 if (result == Success)
@@ -1631,12 +1631,12 @@ namespace OpenTK.Platform.Native.X11
                                 X11.Display,
                                 xwindow.Window,
                                 X11.Atoms[KnownAtoms._NET_WM_OPAQUE_REGION],
-                                0, long.MaxValue, false,
+                                0, nint.MaxValue, false,
                                 X11.Atoms[KnownAtoms.CARDINAL],
                                 out XAtom actualType,
                                 out int actualFormat,
-                                out long numberOfItems,
-                                out long remainingBytes,
+                                out nuint numberOfItems,
+                                out nuint remainingBytes,
                                 out IntPtr contents);
                             if (result == Success && numberOfItems > 0)
                             {
@@ -1646,11 +1646,11 @@ namespace OpenTK.Platform.Native.X11
                                 bool isOpaque;
                                 unsafe
                                 {
-                                    long* region = (long*)contents;
-                                    long x = region[0];
-                                    long y = region[1];
-                                    long w = region[2];
-                                    long h = region[3];
+                                    nint* region = (nint*)contents;
+                                    nint x = region[0];
+                                    nint y = region[1];
+                                    nint w = region[2];
+                                    nint h = region[3];
                                     isOpaque = (x == 0 && y == 0 && w > 0 && h > 0);
                                 }
 
@@ -1661,8 +1661,8 @@ namespace OpenTK.Platform.Native.X11
                                     // transparent. So we are unfortunately forced to keep the opaque region up to
                                     // date with the window size in order fix this issue.
                                     // - Noggin_bops 2025-02-19
-                                    Span<long> regionSpan = [0, 0, xwindow.Width, xwindow.Height];
-                                    XChangeProperty<long>(
+                                    Span<nint> regionSpan = [0, 0, xwindow.Width, xwindow.Height];
+                                    XChangeProperty<nint>(
                                         X11.Display,
                                         xwindow.Window,
                                         X11.Atoms[KnownAtoms._NET_WM_OPAQUE_REGION],
@@ -1734,15 +1734,15 @@ namespace OpenTK.Platform.Native.X11
 
             XEvent xevent = default;
             xevent.Type = XEventType.ClientMessage;
-            xevent.ClientMessage.Serial = 0;
-            xevent.ClientMessage.SendEvent = 1;
-            xevent.ClientMessage.Display = X11.Display;
-            xevent.ClientMessage.Window = HelperWindow;
-            xevent.ClientMessage.MessageType = OpenTKUserMessageType;
-            xevent.ClientMessage.Format = 32;
+            xevent.ClientMessage.serial = 0;
+            xevent.ClientMessage.send_event = 1;
+            xevent.ClientMessage.display = X11.Display;
+            xevent.ClientMessage.window = HelperWindow;
+            xevent.ClientMessage.message_type = OpenTKUserMessageType;
+            xevent.ClientMessage.format = 32;
             IntPtr ptr = (nint)handle;
-            xevent.ClientMessage.l[0] = (ptr) & 0xFFFFFFFF;
-            xevent.ClientMessage.l[1] = (ptr >> 32) & 0xFFFFFFFF;
+            xevent.ClientMessage.l[0] = (nint)((ptr >>  0) & 0xFFFFFFFF);
+            xevent.ClientMessage.l[1] = (nint)((ptr >> 32) & 0xFFFFFFFF);
             xevent.ClientMessage.l[2] = 2;
             xevent.ClientMessage.l[3] = 3;
 
@@ -2057,7 +2057,7 @@ namespace OpenTK.Platform.Native.X11
             {
                 XWMHints* wmHints = XAllocWMHints();
                 wmHints->flags |= XWMHintsMask.InputHint;
-                wmHints->input = 1;
+                wmHints->input = True;
 
                 XSetWMHints(X11.Display, window, wmHints);
                 XFree(wmHints);
@@ -2095,8 +2095,8 @@ namespace OpenTK.Platform.Native.X11
             // FIXME: Maybe a way to toggle if we 
             // accept drag and drop operations.
             // Set the supported XDnD version.
-            Span<long> dndVersion = [ 5 ];
-            XChangeProperty<long>(
+            Span<nint> dndVersion = [ 5 ];
+            XChangeProperty<nint>(
                 X11.Display,
                 window,
                 X11.Atoms[KnownAtoms.XdndAware],
@@ -2115,8 +2115,8 @@ namespace OpenTK.Platform.Native.X11
             // transparent. So we are unfortunately forced to keep the opaque region up to
             // date with the window size in order fix this issue.
             // - Noggin_bops 2025-02-19
-            Span<long> region = [0, 0, 800, 600];
-            XChangeProperty<long>(
+            Span<nint> region = [0, 0, 800, 600];
+            XChangeProperty<nint>(
                 X11.Display,
                 window,
                 X11.Atoms[KnownAtoms._NET_WM_OPAQUE_REGION],
@@ -2145,9 +2145,9 @@ namespace OpenTK.Platform.Native.X11
                 // FIXME: Check that PreeditCallbacks is available...?
                 // - Noggin_bops 2025-07-09
                 ic = XCreateIC(IM,
-                    Utils.AsPtr(XNInputStyle), (ulong)(XIMFlags.PreeditCallbacks | XIMFlags.StatusNothing),
-                    Utils.AsPtr(XNClientWindow), window.Id,
-                    Utils.AsPtr(XNFocusWindow), window.Id,
+                    Utils.AsPtr(XNInputStyle), (IntPtr)(XIMFlags.PreeditCallbacks | XIMFlags.StatusNothing),
+                    Utils.AsPtr(XNClientWindow), (IntPtr)window.Id,
+                    Utils.AsPtr(XNFocusWindow), (IntPtr)window.Id,
                     Utils.AsPtr(XNPreeditAttributes), callbacks,
                     null);
 
@@ -2155,9 +2155,9 @@ namespace OpenTK.Platform.Native.X11
                 {
                     Logger?.LogDebug("Could not create IC supporting preedit callbacks, trying to create an IC wihtout callbacks.");
                     ic = XCreateIC(IM, 
-                        Utils.AsPtr(XNInputStyle), (ulong)(XIMFlags.PreeditNothing | XIMFlags.StatusNothing),
-                        Utils.AsPtr(XNClientWindow), window.Id,
-                        Utils.AsPtr(XNFocusWindow), window.Id,
+                        Utils.AsPtr(XNInputStyle), (IntPtr)(XIMFlags.PreeditNothing | XIMFlags.StatusNothing),
+                        Utils.AsPtr(XNClientWindow), (IntPtr)window.Id,
+                        Utils.AsPtr(XNFocusWindow), (IntPtr)window.Id,
                         null);
                 }
 
@@ -2223,7 +2223,7 @@ namespace OpenTK.Platform.Native.X11
         {
             XIMPreeditDrawCallbackStruct* data = (XIMPreeditDrawCallbackStruct*)callData;
 
-            XWindow window = new XWindow((ulong)clientData);
+            XWindow window = new XWindow((nuint)clientData);
             if (XWindowDict.TryGetValue(window, out XWindowHandle? xwindow))
             {
                 // FIXME: Are we talking characters or code points...?
@@ -2247,7 +2247,7 @@ namespace OpenTK.Platform.Native.X11
         [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
         internal static unsafe void PreeditCaretCallback(XIC xic, IntPtr clientData, IntPtr callData)
         {
-            XWindow window = new XWindow((ulong)clientData);
+            XWindow window = new XWindow((nuint)clientData);
             if (XWindowDict.TryGetValue(window, out XWindowHandle? xwindow))
             {
                 Toolkit.Window.Logger?.LogDebug("Caret callback!");
@@ -2305,7 +2305,7 @@ namespace OpenTK.Platform.Native.X11
                     window.Window,
                     X11.Atoms![KnownAtoms._NET_WM_NAME],
                     0,
-                    long.MaxValue,
+                    nint.MaxValue,
                     false,
                     X11.Atoms![KnownAtoms.UTF8_STRING],
                     out XAtom returnedType,
@@ -2377,7 +2377,7 @@ namespace OpenTK.Platform.Native.X11
                 xwindow.Display,
                 xwindow.Window,
                 X11.Atoms[KnownAtoms._NET_WM_ICON_NAME],
-                0, long.MaxValue,
+                0, nint.MaxValue,
                 false,
                 X11.Atoms[KnownAtoms.UTF8_STRING],
                 out XAtom returnedType,
@@ -2461,11 +2461,11 @@ namespace OpenTK.Platform.Native.X11
             }
 
             // FIXME: Fill this array without unsafe?
-            long[] data = new long[longCount];
+            nint[] data = new nint[longCount];
             unsafe {
-                fixed (long* dataPtr = data)
+                fixed (nint* dataPtr = data)
                 {
-                    long* target = dataPtr;
+                    nint* target = dataPtr;
                     for (int i = 0; i < images.Length; i++)
                     {
                         *target++ = images[i].Width;
@@ -2474,10 +2474,10 @@ namespace OpenTK.Platform.Native.X11
                         for (int j = 0; j < images[i].Width * images[i].Height; j++)
                         {
                             // FIXME: Is this the correct color format?
-                            *target++ = ((long)images[i].Data[j * 4 + 0] << 16) |
-                                        ((long)images[i].Data[j * 4 + 1] <<  8) |
-                                        ((long)images[i].Data[j * 4 + 2] <<  0) |
-                                        ((long)images[i].Data[j * 4 + 3] <<  24);
+                            *target++ = (images[i].Data[j * 4 + 0] << 16) |
+                                        (images[i].Data[j * 4 + 1] <<  8) |
+                                        (images[i].Data[j * 4 + 2] <<  0) |
+                                        (images[i].Data[j * 4 + 3] <<  24);
                         }
                     }
                 }
@@ -2487,7 +2487,8 @@ namespace OpenTK.Platform.Native.X11
                 X11.Display,
                 xwindow.Window,
                 X11.Atoms[KnownAtoms._NET_WM_ICON],
-                X11.Atoms[KnownAtoms.CARDINAL], 32,
+                X11.Atoms[KnownAtoms.CARDINAL], 
+                32,
                 XPropertyMode.Replace,
                 data,
                 longCount);
@@ -2504,12 +2505,12 @@ namespace OpenTK.Platform.Native.X11
                 window.Window,
                 X11.Atoms![KnownAtoms._NET_FRAME_EXTENTS],
                 0,
-                long.MaxValue,
+                nint.MaxValue,
                 false,
                 X11.Atoms![KnownAtoms.CARDINAL],
                 out _,
-                out _,
-                out long count,
+                out int format,
+                out nuint count,
                 out _,
                 out IntPtr array);
 
@@ -2523,10 +2524,15 @@ namespace OpenTK.Platform.Native.X11
             }
             else
             {
-                left   = (int)Marshal.PtrToStructure<long>(array);
-                right  = (int)Marshal.PtrToStructure<long>(array + 8);
-                top    = (int)Marshal.PtrToStructure<long>(array + 16);
-                bottom = (int)Marshal.PtrToStructure<long>(array + 24);
+                unsafe
+                {
+                    // A format == 32 actually means nint.
+                    Debug.Assert(format == 32);
+                    left   = (int)((nint*)array)[0];
+                    right  = (int)((nint*)array)[1];
+                    top    = (int)((nint*)array)[2];
+                    bottom = (int)((nint*)array)[3];
+                }
             }
 
             if (array != IntPtr.Zero)
@@ -2945,14 +2951,22 @@ namespace OpenTK.Platform.Native.X11
                 }
                 else
                 {
-                    // If window type is UTILITY, assume toolbox.
-                    unsafe
+                    if (content == 0)
                     {
-                        XAtom windowType = *(XAtom*)content;
-                        XFree(content);
-                        if (windowType == X11.Atoms[KnownAtoms._NET_WM_WINDOW_TYPE_UTILITY])
+                        // If this atom isn't set we assume normal.
+                        return WindowType.Normal;
+                    }
+                    else
+                    {
+                        // If window type is UTILITY, assume toolbox.
+                        unsafe
                         {
-                            return WindowType.ToolBox;
+                            XAtom windowType = *(XAtom*)content;
+                            XFree(content);
+                            if (windowType == X11.Atoms[KnownAtoms._NET_WM_WINDOW_TYPE_UTILITY])
+                            {
+                                return WindowType.ToolBox;
+                            }
                         }
                     }
                 }
@@ -3018,12 +3032,12 @@ namespace OpenTK.Platform.Native.X11
                 X11.Display,
                 xwindow.Window,
                 X11.Atoms[KnownAtoms.WM_STATE],
-                0, ~0, false,
+                0, nint.MaxValue, false,
                 new XAtom(0),
                 out XAtom actualType,
                 out int actualFormat,
-                out long numberOfItems,
-                out long remainingBytes,
+                out nuint numberOfItems,
+                out nuint remainingBytes,
                 out IntPtr contents);
 
             WindowMode? mode = null;
@@ -3122,17 +3136,17 @@ namespace OpenTK.Platform.Native.X11
                 XEvent e = new XEvent();
                 ref XClientMessageEvent client = ref e.ClientMessage;
 
-                client.Type = XEventType.ClientMessage;
-                client.Serial = 0;
-                client.SendEvent = 1;
-                client.Display = X11.Display;
-                client.Window = xwindow.Window;
-                client.MessageType = X11.Atoms[KnownAtoms._NET_WM_STATE];
-                client.Format = 32;
+                client.type = XEventType.ClientMessage;
+                client.serial = 0;
+                client.send_event = 1;
+                client.display = X11.Display;
+                client.window = xwindow.Window;
+                client.message_type = X11.Atoms[KnownAtoms._NET_WM_STATE];
+                client.format = 32;
                 unsafe
                 {
                     client.l[0] = X11._NET_WM_STATE_REMOVE;
-                    client.l[1] = (long)X11.Atoms[KnownAtoms._NET_WM_STATE_FULLSCREEN].Id;
+                    client.l[1] = (nint)X11.Atoms[KnownAtoms._NET_WM_STATE_FULLSCREEN].Id;
                     client.l[2] = 0;
                     client.l[3] = 1;
                     client.l[4] = 0;
@@ -3240,18 +3254,18 @@ namespace OpenTK.Platform.Native.X11
 
                         ref XClientMessageEvent client = ref e.ClientMessage;
 
-                        client.Type = XEventType.ClientMessage;
-                        client.Serial = 0;
-                        client.SendEvent = 1;
-                        client.Display = X11.Display;
-                        client.Window = xwindow.Window;
-                        client.MessageType = X11.Atoms[KnownAtoms._NET_WM_STATE];
-                        client.Format = 32;
+                        client.type = XEventType.ClientMessage;
+                        client.serial = 0;
+                        client.send_event = 1;
+                        client.display = X11.Display;
+                        client.window = xwindow.Window;
+                        client.message_type = X11.Atoms[KnownAtoms._NET_WM_STATE];
+                        client.format = 32;
                         unsafe
                         {
                             client.l[0] = X11._NET_WM_STATE_ADD;
-                            client.l[1] = (long)X11.Atoms[KnownAtoms._NET_WM_STATE_MAXIMIZED_HORZ].Id;
-                            client.l[2] = (long)X11.Atoms[KnownAtoms._NET_WM_STATE_MAXIMIZED_VERT].Id;
+                            client.l[1] = (nint)X11.Atoms[KnownAtoms._NET_WM_STATE_MAXIMIZED_HORZ].Id;
+                            client.l[2] = (nint)X11.Atoms[KnownAtoms._NET_WM_STATE_MAXIMIZED_VERT].Id;
                             client.l[3] = 0;
                             client.l[4] = 0;
                         }
@@ -3323,17 +3337,17 @@ namespace OpenTK.Platform.Native.X11
             XEvent e = new XEvent();
             ref XClientMessageEvent client = ref e.ClientMessage;
 
-            client.Type = XEventType.ClientMessage;
-            client.Serial = 0;
-            client.SendEvent = 1;
-            client.Display = X11.Display;
-            client.Window = xwindow.Window;
-            client.MessageType = X11.Atoms[KnownAtoms._NET_WM_STATE];
-            client.Format = 32;
+            client.type = XEventType.ClientMessage;
+            client.serial = 0;
+            client.send_event = 1;
+            client.display = X11.Display;
+            client.window = xwindow.Window;
+            client.message_type = X11.Atoms[KnownAtoms._NET_WM_STATE];
+            client.format = 32;
             unsafe
             {
                 client.l[0] = X11._NET_WM_STATE_ADD;
-                client.l[1] = (long)X11.Atoms[KnownAtoms._NET_WM_STATE_FULLSCREEN].Id;
+                client.l[1] = (nint)X11.Atoms[KnownAtoms._NET_WM_STATE_FULLSCREEN].Id;
                 client.l[2] = 0;
                 client.l[3] = 1;
                 client.l[4] = 0;
@@ -3397,17 +3411,17 @@ namespace OpenTK.Platform.Native.X11
             XEvent e = new XEvent();
             ref XClientMessageEvent client = ref e.ClientMessage;
 
-            client.Type = XEventType.ClientMessage;
-            client.Serial = 0;
-            client.SendEvent = 1;
-            client.Display = X11.Display;
-            client.Window = xwindow.Window;
-            client.MessageType = X11.Atoms[KnownAtoms._NET_WM_STATE];
-            client.Format = 32;
+            client.type = XEventType.ClientMessage;
+            client.serial = 0;
+            client.send_event = 1;
+            client.display = X11.Display;
+            client.window = xwindow.Window;
+            client.message_type = X11.Atoms[KnownAtoms._NET_WM_STATE];
+            client.format = 32;
             unsafe
             {
                 client.l[0] = X11._NET_WM_STATE_ADD;
-                client.l[1] = (long)X11.Atoms[KnownAtoms._NET_WM_STATE_FULLSCREEN].Id;
+                client.l[1] = (nint)X11.Atoms[KnownAtoms._NET_WM_STATE_FULLSCREEN].Id;
                 client.l[2] = 0;
                 client.l[3] = 1;
                 client.l[4] = 0;
@@ -3461,13 +3475,13 @@ namespace OpenTK.Platform.Native.X11
                 int result = XGetWindowProperty(
                     X11.Display, 
                     xwindow.Window, 
-                    X11.Atoms[KnownAtoms._MOTIF_WM_HINTS], 
-                    0, long.MaxValue, false, 
-                    X11.Atoms[KnownAtoms._MOTIF_WM_HINTS], 
-                    out _,
-                    out _,
-                    out _,
-                    out _,
+                    X11.Atoms[KnownAtoms._MOTIF_WM_HINTS],
+                    0, nint.MaxValue, false, 
+                    X11.Atoms[KnownAtoms._MOTIF_WM_HINTS],
+                    out XAtom actualType,
+                    out int aformat,
+                    out nuint nitems,
+                    out nuint rbytes,
                     out IntPtr content);
 
                 if (result != Success)
@@ -3476,6 +3490,11 @@ namespace OpenTK.Platform.Native.X11
                     {
                         XFree(content);
                     }
+                }
+                else if (actualType == XAtom.None)
+                {
+                    // _MOTIF_WM_HINTS is not set, return default guess of resizable border.
+                    return WindowBorderStyle.ResizableBorder;
                 }
                 else
                 {
@@ -3603,7 +3622,7 @@ namespace OpenTK.Platform.Native.X11
                         32, 
                         XPropertyMode.Replace, 
                         (IntPtr)(void*)&hints, 
-                        sizeof(MotifWmHints) / sizeof(long));
+                        sizeof(MotifWmHints) / sizeof(nint));
             }
         }
 
@@ -3626,8 +3645,8 @@ namespace OpenTK.Platform.Native.X11
                 // because the Ubuntu 24.04 compositor messes up the drop shadow
                 // of the window in that case.
                 // - Noggin_bops 2025-02-21
-                Span<long> region = [0, 0, xwindow.Width, xwindow.Height];
-                XChangeProperty<long>(
+                Span<nint> region = [0, 0, xwindow.Width, xwindow.Height];
+                XChangeProperty<nint>(
                     X11.Display,
                     xwindow.Window,
                     X11.Atoms[KnownAtoms._NET_WM_OPAQUE_REGION],
@@ -3657,8 +3676,8 @@ namespace OpenTK.Platform.Native.X11
                         Logger?.LogWarning("Trying to enable framebuffer transparency for a window with a Visual that doesn't support transparency.");
                     }
 
-                    Span<long> region = [0, 0, 0, 0];
-                    XChangeProperty<long>(
+                    Span<nint> region = [0, 0, 0, 0];
+                    XChangeProperty<nint>(
                         X11.Display,
                         xwindow.Window,
                         X11.Atoms[KnownAtoms._NET_WM_OPAQUE_REGION],
@@ -3676,7 +3695,7 @@ namespace OpenTK.Platform.Native.X11
                     // all integers in the uint range.
                     // (uint)(0xffffffffu * 1.0f) becomes zero.
                     // - Noggin_bops 2024-11-01
-                    uint transparency = (uint)(0xffffffffu * (double)opacity);
+                    nuint transparency = (uint)(0xffffffffu * (double)opacity);
                     XChangeProperty(
                         X11.Display, 
                         xwindow.Window, 
@@ -3700,12 +3719,12 @@ namespace OpenTK.Platform.Native.X11
                 X11.Display,
                 xwindow.Window,
                 X11.Atoms[KnownAtoms._NET_WM_WINDOW_OPACITY],
-                0, long.MaxValue, false,
+                0, nint.MaxValue, false,
                 X11.Atoms[KnownAtoms.CARDINAL],
                 out XAtom actualType,
                 out int actualFormat,
-                out long numberOfItems,
-                out long remainingBytes,
+                out nuint numberOfItems,
+                out nuint remainingBytes,
                 out IntPtr contents);
             if (result != Success || numberOfItems == 0)
             {
@@ -3716,7 +3735,7 @@ namespace OpenTK.Platform.Native.X11
             }
             else
             {
-                opacity = (float)(*(uint*)contents / (double)0xffffffffu);
+                opacity = (float)(*(nuint*)contents / (double)0xffffffffu);
                 XFree(contents);
                 return WindowTransparencyMode.TransparentWindow;
             }
@@ -3732,7 +3751,7 @@ namespace OpenTK.Platform.Native.X11
                 X11.Display,
                 xwindow.Window,
                 X11.Atoms[KnownAtoms._NET_WM_OPAQUE_REGION],
-                0, long.MaxValue, false,
+                0, nint.MaxValue, false,
                 X11.Atoms[KnownAtoms.CARDINAL],
                 out actualType,
                 out actualFormat,
@@ -3748,11 +3767,11 @@ namespace OpenTK.Platform.Native.X11
                 Debug.Assert(actualFormat == 32);
                 Debug.Assert(actualType == X11.Atoms[KnownAtoms.CARDINAL]);
 
-                long* region = (long*)contents;
-                long x = region[0];
-                long y = region[1];
-                long w = region[2];
-                long h = region[3];
+                nint* region = (nint*)contents;
+                nint x = region[0];
+                nint y = region[1];
+                nint w = region[2];
+                nint h = region[3];
 
                 bool isOpaque = (x == 0 && y == 0 && w > 0 && h > 0);
 
@@ -3827,17 +3846,17 @@ namespace OpenTK.Platform.Native.X11
 
             ref XClientMessageEvent client = ref e.ClientMessage;
 
-            client.Type = XEventType.ClientMessage;
-            client.Serial = 0;
-            client.SendEvent = 1;
-            client.Display = X11.Display;
-            client.Window = xwindow.Window;
-            client.MessageType = X11.Atoms[KnownAtoms._NET_WM_STATE];
-            client.Format = 32;
+            client.type = XEventType.ClientMessage;
+            client.serial = 0;
+            client.send_event = 1;
+            client.display = X11.Display;
+            client.window = xwindow.Window;
+            client.message_type = X11.Atoms[KnownAtoms._NET_WM_STATE];
+            client.format = 32;
             unsafe
             {
                 client.l[0] = floating ? X11._NET_WM_STATE_ADD : X11._NET_WM_STATE_REMOVE;
-                client.l[1] = (long)X11.Atoms[KnownAtoms._NET_WM_STATE_ABOVE].Id;
+                client.l[1] = (nint)X11.Atoms[KnownAtoms._NET_WM_STATE_ABOVE].Id;
                 client.l[2] = 0;
                 client.l[3] = 0;
                 client.l[4] = 0;
@@ -3872,8 +3891,8 @@ namespace OpenTK.Platform.Native.X11
                 X11.Atoms[KnownAtoms.ATOM],
                 out XAtom actualType,
                 out int actualFormat,
-                out long numberOfItems,
-                out long remainingBytes,
+                out nuint numberOfItems,
+                out nuint remainingBytes,
                 out IntPtr contents);
 
             if (result != Success)
@@ -3890,7 +3909,7 @@ namespace OpenTK.Platform.Native.X11
                 bool above = false;
                 unsafe {
                     XAtom* atoms = (XAtom*)contents;
-                    for (int i = 0; i < numberOfItems; i++)
+                    for (nuint i = 0; i < numberOfItems; i++)
                     {
                         if (atoms[i] == X11.Atoms[KnownAtoms._NET_WM_STATE_ABOVE])
                         {
@@ -4057,17 +4076,17 @@ namespace OpenTK.Platform.Native.X11
 
             ref XClientMessageEvent client = ref e.ClientMessage;
 
-            client.Type = XEventType.ClientMessage;
-            client.Serial = 0;
-            client.SendEvent = 1;
-            client.Display = X11.Display;
-            client.Window = xwindow.Window;
-            client.MessageType = X11.Atoms[KnownAtoms._NET_WM_STATE];
-            client.Format = 32;
+            client.type = XEventType.ClientMessage;
+            client.serial = 0;
+            client.send_event = 1;
+            client.display = X11.Display;
+            client.window = xwindow.Window;
+            client.message_type = X11.Atoms[KnownAtoms._NET_WM_STATE];
+            client.format = 32;
             unsafe
             {
                 client.l[0] = X11._NET_WM_STATE_ADD;
-                client.l[1] = (long)X11.Atoms[KnownAtoms._NET_WM_STATE_DEMANDS_ATTENTION].Id;
+                client.l[1] = (nint)X11.Atoms[KnownAtoms._NET_WM_STATE_DEMANDS_ATTENTION].Id;
                 client.l[2] = 0;
                 client.l[3] = 0;
                 client.l[4] = 0;
@@ -4142,8 +4161,8 @@ namespace OpenTK.Platform.Native.X11
                     X11.Atoms[KnownAtoms.STRING],
                     out XAtom realType,
                     out int realFormat,
-                    out long numberOfItems,
-                    out long remainingBytes,
+                    out nuint numberOfItems,
+                    out nuint remainingBytes,
                     out nint resource_manager);
             if (result != Success || numberOfItems == 0)
             {
@@ -4218,11 +4237,7 @@ namespace OpenTK.Platform.Native.X11
         {
             XWindowHandle xwindow = handle.As<XWindowHandle>(this);
 
-            // FIXME: XID is an `unsigned long int` which is IntPtr but
-            // currently we have it as ulong.
-            // - Noggin_bops 2024-03-06
             return (IntPtr)xwindow.Window.Id;
         }
-
     }
 }

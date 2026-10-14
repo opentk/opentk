@@ -25,14 +25,14 @@ namespace OpenTK.Platform.Native.X11.XRandR
     /// <summary>
     /// XRandR Output handle.
     /// </summary>
-    [DebuggerDisplay("XID={(System.IntPtr)Id}")]
+    [DebuggerDisplay("XID={Id}")]
     internal readonly struct RROutput : IEquatable<RROutput>
     {
-        public readonly ulong Id { get; }
+        public readonly nuint Id { get; }
 
         public static readonly RROutput None = new RROutput(0);
 
-        public RROutput(ulong id)
+        public RROutput(nuint id)
         {
             Id = id;
         }
@@ -66,14 +66,14 @@ namespace OpenTK.Platform.Native.X11.XRandR
     /// <summary>
     /// XRandR Crtc handle.
     /// </summary>
-    [DebuggerDisplay("XID={(System.IntPtr)Id}")]
+    [DebuggerDisplay("XID={Id}")]
     internal readonly struct RRCrtc : IEquatable<RRCrtc>
     {
-        public readonly ulong Id { get; }
+        public readonly nuint Id { get; }
 
         public static readonly RRCrtc None = new RRCrtc(0);
 
-        public RRCrtc(ulong id)
+        public RRCrtc(nuint id)
         {
             Id = id;
         }
@@ -107,14 +107,14 @@ namespace OpenTK.Platform.Native.X11.XRandR
     /// <summary>
     /// XRandR mode handle.
     /// </summary>
-    [DebuggerDisplay("XID={(System.IntPtr)Id}")]
+    [DebuggerDisplay("XID={Id}")]
     internal readonly struct RRMode : IEquatable<RRMode>
     {
-        public readonly ulong Id { get; }
+        public readonly nuint Id { get; }
 
         public static readonly RRMode None = new RRMode(0);
 
-        public RRMode(ulong id)
+        public RRMode(nuint id)
         {
             Id = id;
         }
@@ -148,14 +148,14 @@ namespace OpenTK.Platform.Native.X11.XRandR
     /// <summary>
     /// XRandR Output handle.
     /// </summary>
-    [DebuggerDisplay("XID={(System.IntPtr)Id}")]
+    [DebuggerDisplay("XID={Id}")]
     internal readonly struct RRProvider
     {
-        public readonly ulong Id { get; }
+        public readonly nuint Id { get; }
 
         public static readonly RRProvider None = new RRProvider(0);
 
-        public RRProvider(ulong id)
+        public RRProvider(nuint id)
         {
             Id = id;
         }
@@ -167,7 +167,7 @@ namespace OpenTK.Platform.Native.X11.XRandR
         public RRMode ModeId;
         public uint Width;
         public uint Height;
-        public ulong DotClock;
+        public nuint DotClock;
         public uint HSyncStart;
         public uint HSyncEnd;
         public uint HTotal;

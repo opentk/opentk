@@ -162,7 +162,7 @@ namespace OpenTK.Platform.Native.X11.XI2
     */
     internal unsafe struct XIEvent {
         public int            type;         /* GenericEvent */
-        public ulong          serial;       /* # of last request processed by server */
+        public nuint          serial;       /* # of last request processed by server */
         public int /* Bool */ send_event;   /* true if this came from a SendEvent request */
         public XDisplayPtr    display;     /* Display the event was read from */
         public int            extension;    /* XI extension offset */
@@ -184,7 +184,7 @@ namespace OpenTK.Platform.Native.X11.XI2
     */
     internal unsafe struct XIHierarchyEvent {
         public int              type;         /* GenericEvent */
-        public ulong            serial;       /* # of last request processed by server */
+        public nuint            serial;       /* # of last request processed by server */
         public int /* Bool */   send_event;   /* true if this came from a SendEvent request */
         public XDisplayPtr      display;     /* Display the event was read from */
         public int              extension;    /* XI extension offset */
@@ -201,7 +201,7 @@ namespace OpenTK.Platform.Native.X11.XI2
     */
     internal unsafe struct XIDeviceChangedEvent {
         public int              type;         /* GenericEvent */
-        public ulong            serial;       /* # of last request processed by server */
+        public nuint            serial;       /* # of last request processed by server */
         public int /* Bool */   send_event;   /* true if this came from a SendEvent request */
         public XDisplayPtr      display;     /* Display the event was read from */
         public int              extension;    /* XI extension offset */
@@ -216,7 +216,7 @@ namespace OpenTK.Platform.Native.X11.XI2
 
     internal unsafe struct XIDeviceEvent {
         public int             type;         /* GenericEvent */
-        public ulong           serial;       /* # of last request processed by server */
+        public nuint           serial;       /* # of last request processed by server */
         public int /* Bool */  send_event;   /* true if this came from a SendEvent request */
         public XDisplayPtr     display;     /* Display the event was read from */
         public int             extension;    /* XI extension offset */
@@ -241,7 +241,7 @@ namespace OpenTK.Platform.Native.X11.XI2
     
     internal unsafe struct XIRawEvent {
         public int             type;         /* GenericEvent */
-        public ulong           serial;       /* # of last request processed by server */
+        public nuint           serial;       /* # of last request processed by server */
         public int /* Bool */  send_event;   /* true if this came from a SendEvent request */
         public XDisplayPtr     display;     /* Display the event was read from */
         public int             extension;    /* XI extension offset */
@@ -257,7 +257,7 @@ namespace OpenTK.Platform.Native.X11.XI2
     
     internal unsafe struct XIEnterEvent {
         public int             type;         /* GenericEvent */
-        public ulong           serial;       /* # of last request processed by server */
+        public nuint           serial;       /* # of last request processed by server */
         public int /* Bool */  send_event;   /* true if this came from a SendEvent request */
         public XDisplayPtr     display;     /* Display the event was read from */
         public int             extension;    /* XI extension offset */
@@ -290,7 +290,7 @@ namespace OpenTK.Platform.Native.X11.XI2
 
     internal unsafe struct XIPropertyEvent {
         public int            type;         /* GenericEvent */
-        public ulong          serial;       /* # of last request processed by server */
+        public nuint          serial;       /* # of last request processed by server */
         public int /* Bool */ send_event;   /* true if this came from a SendEvent request */
         public XDisplayPtr    display;     /* Display the event was read from */
         public int            extension;    /* XI extension offset */
@@ -303,7 +303,7 @@ namespace OpenTK.Platform.Native.X11.XI2
 
     internal unsafe struct XITouchOwnershipEvent {
         public int            type;         /* GenericEvent */
-        public ulong          serial;       /* # of last request processed by server */
+        public nuint          serial;       /* # of last request processed by server */
         public int /* Bool */ send_event;   /* true if this came from a SendEvent request */
         public XDisplayPtr    display;     /* Display the event was read from */
         public int            extension;    /* XI extension offset */
@@ -320,7 +320,7 @@ namespace OpenTK.Platform.Native.X11.XI2
 
     internal unsafe struct XIBarrierEvent {
         public int                       type;         /* GenericEvent */
-        public ulong                     serial;       /* # of last request processed by server */
+        public nuint                     serial;       /* # of last request processed by server */
         public int /* Bool */            send_event;   /* true if this came from a SendEvent request */
         public XDisplayPtr               display;     /* Display the event was read from */
         public int                       extension;    /* XI extension offset */

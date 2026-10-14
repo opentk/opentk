@@ -61,7 +61,7 @@ namespace OpenTK.Platform.Native.X11
             XDisplayPtr display,
             GLXContext source,
             GLXContext destination,
-            ulong mask);
+            nuint mask);
 
         [DllImport(glx, CallingConvention = CallingConvention.Cdecl)]
         internal static extern void glXSwapBuffers(XDisplayPtr display, GLXDrawable drawable);

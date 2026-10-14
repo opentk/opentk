@@ -313,8 +313,8 @@ namespace OpenTK.Platform.Native.X11.XI2
             XAtom               type,
             XAtom*              type_return,
             int*                format_return,
-            ulong*              num_items_return,
-            ulong*              bytes_after_return,
+            nuint*              num_items_return,
+            nuint*              bytes_after_return,
             byte**              data
         );
 

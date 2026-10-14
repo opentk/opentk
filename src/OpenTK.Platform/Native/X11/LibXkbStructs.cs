@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using static OpenTK.Platform.Native.X11.LibX11;
 
@@ -83,47 +84,18 @@ namespace OpenTK.Platform.Native.X11
         public byte*           modmap;        /* 1 per keycode, real mods bound to key */
     }
 
+    [InlineArray(32)]
+    internal struct InlineArray32<T>
+    {
+        private T t;
+    }
+
     internal unsafe struct XkbIndicatorRec
     {
         public const int XkbNumIndicators = 32;
 
-        public ulong                      phys_indicators;            /* LEDs existence */
-        // FIXME: Make this an InlineArray when we update to C# 12 and .net 8.
-        // public fixed XkbIndicatorMapRec   maps[XkbNumIndicators];     /* indicator maps */
-        public XkbIndicatorMapRec   maps0;     /* indicator maps */
-        public XkbIndicatorMapRec   maps1;     /* indicator maps */
-        public XkbIndicatorMapRec   maps2;     /* indicator maps */
-        public XkbIndicatorMapRec   maps3;     /* indicator maps */
-        public XkbIndicatorMapRec   maps4;     /* indicator maps */
-        public XkbIndicatorMapRec   maps5;     /* indicator maps */
-        public XkbIndicatorMapRec   maps6;     /* indicator maps */
-        public XkbIndicatorMapRec   maps7;     /* indicator maps */
-        public XkbIndicatorMapRec   maps8;     /* indicator maps */
-        public XkbIndicatorMapRec   maps9;     /* indicator maps */
-        public XkbIndicatorMapRec   maps10;     /* indicator maps */
-        public XkbIndicatorMapRec   maps11;     /* indicator maps */
-        public XkbIndicatorMapRec   maps12;     /* indicator maps */
-        public XkbIndicatorMapRec   maps13;     /* indicator maps */
-        public XkbIndicatorMapRec   maps14;     /* indicator maps */
-        public XkbIndicatorMapRec   maps15;     /* indicator maps */
-        public XkbIndicatorMapRec   maps16;     /* indicator maps */
-        public XkbIndicatorMapRec   maps17;     /* indicator maps */
-        public XkbIndicatorMapRec   maps18;     /* indicator maps */
-        public XkbIndicatorMapRec   maps19;     /* indicator maps */
-        public XkbIndicatorMapRec   maps20;     /* indicator maps */
-        public XkbIndicatorMapRec   maps21;     /* indicator maps */
-        public XkbIndicatorMapRec   maps22;     /* indicator maps */
-        public XkbIndicatorMapRec   maps23;     /* indicator maps */
-        public XkbIndicatorMapRec   maps24;     /* indicator maps */
-        public XkbIndicatorMapRec   maps25;     /* indicator maps */
-        public XkbIndicatorMapRec   maps26;     /* indicator maps */
-        public XkbIndicatorMapRec   maps27;     /* indicator maps */
-        public XkbIndicatorMapRec   maps28;     /* indicator maps */
-        public XkbIndicatorMapRec   maps29;     /* indicator maps */
-        public XkbIndicatorMapRec   maps30;     /* indicator maps */
-        public XkbIndicatorMapRec   maps31;     /* indicator maps */
-
-        
+        public nuint                phys_indicators;       /* LEDs existence */
+        public InlineArray32<XkbIndicatorMapRec> maps;     /* indicator maps */
     }
 
     internal unsafe struct XkbKeyNameRec
@@ -135,10 +107,7 @@ namespace OpenTK.Platform.Native.X11
     internal unsafe struct XkbCompatMapRec
     {
         public XkbSymInterpretRec* sym_interpret;    /* symbol based key semantics */
-        public XkbModsRec          groups0; /* group ⇒ modifier map */
-        public XkbModsRec          groups1; /* group ⇒ modifier map */
-        public XkbModsRec          groups2; /* group ⇒ modifier map */
-        public XkbModsRec          groups3; /* group ⇒ modifier map */
+        public InlineArray4<XkbModsRec> groups;      /* group ⇒ modifier map */
         public ushort              num_si;           /* # structures used in sym_interpret */
         public ushort              size_si;          /* # structures allocated in sym_interpret */
     }
@@ -384,9 +353,9 @@ namespace OpenTK.Platform.Native.X11
         public XAtom            symbols;         /* identifies the symbols logically bound to the keys */
         public XAtom            types;           /* identifies the set of key types */
         public XAtom            compat;          /* identifies actions for keys using core protocol */
-        public VMods            vmods;           /* symbolic names for virtual modifiers */
-        public Indicators       indicators;      /* symbolic names for indicators */
-        public Groups           groups;          /* symbolic names for keyboard groups */
+        public InlineArray16<XAtom> vmods;       /* symbolic names for virtual modifiers */
+        public InlineArray32<XAtom> indicators;  /* symbolic names for indicators */
+        public InlineArray4<XAtom> groups;       /* symbolic names for keyboard groups */
         public XkbKeyNameRec*   keys;            /* symbolic key name array */
         public XkbKeyAliasRec*  key_aliases;     /* real/alias symbolic name pairs array */
         public XAtom*           radio_groups;    /* radio group name array */
@@ -394,244 +363,6 @@ namespace OpenTK.Platform.Native.X11
         public byte             num_keys;        /* number of keys in the keys array */
         public byte             num_key_aliases; /* number of keys in the key_aliases array */
         public ushort           num_rg;          /* number of radio groups */
-
-        // FIXME: Make into InlineArray in C# 12 and .net 8.
-        internal struct VMods
-        {
-            public XAtom            vmods0;
-            public XAtom            vmods1;
-            public XAtom            vmods2;
-            public XAtom            vmods3;
-            public XAtom            vmods4;
-            public XAtom            vmods5;
-            public XAtom            vmods6;
-            public XAtom            vmods7;
-            public XAtom            vmods8;
-            public XAtom            vmods9;
-            public XAtom            vmods10;
-            public XAtom            vmods11;
-            public XAtom            vmods12;
-            public XAtom            vmods13;
-            public XAtom            vmods14;
-            public XAtom            vmods15;
-
-            public XAtom this[int i]
-            {
-                readonly get 
-                {
-                    switch (i)
-                    {
-                        case < 0: throw new IndexOutOfRangeException($"Index must be larger than zero. Got: {i}");
-                        case >= 16: throw new IndexOutOfRangeException($"Index must be smaller than 16. Got: {i}");
-
-                        case 0:  return vmods0;
-                        case 1:  return vmods1;
-                        case 2:  return vmods2;
-                        case 3:  return vmods3;
-                        case 4:  return vmods4;
-                        case 5:  return vmods5;
-                        case 6:  return vmods6;
-                        case 7:  return vmods7;
-                        case 8:  return vmods8;
-                        case 9:  return vmods9;
-                        case 10: return vmods10;
-                        case 11: return vmods11;
-                        case 12: return vmods12;
-                        case 13: return vmods13;
-                        case 14: return vmods14;
-                        case 15: return vmods15;
-                    }
-                }
-
-                set 
-                {
-                    switch (i)
-                    {
-                        case < 0: throw new IndexOutOfRangeException($"Index must be larger than zero. Got: {i}");
-                        case >= 16: throw new IndexOutOfRangeException($"Index must be smaller than 16. Got: {i}");
-
-                        case 0:  vmods0 = value; break;
-                        case 1:  vmods1 = value; break;
-                        case 2:  vmods2 = value; break;
-                        case 3:  vmods3 = value; break;
-                        case 4:  vmods4 = value; break;
-                        case 5:  vmods5 = value; break;
-                        case 6:  vmods6 = value; break;
-                        case 7:  vmods7 = value; break;
-                        case 8:  vmods8 = value; break;
-                        case 9:  vmods9 = value; break;
-                        case 10: vmods10 = value; break;
-                        case 11: vmods11 = value; break;
-                        case 12: vmods12 = value; break;
-                        case 13: vmods13 = value; break;
-                        case 14: vmods14 = value; break;
-                        case 15: vmods15 = value; break;
-                    }
-                }
-            }
-        }
-    
-        internal struct Indicators 
-        {
-            public XAtom indicators0;
-            public XAtom indicators1;
-            public XAtom indicators2;
-            public XAtom indicators3;
-            public XAtom indicators4;
-            public XAtom indicators5;
-            public XAtom indicators6;
-            public XAtom indicators7;
-            public XAtom indicators8;
-            public XAtom indicators9;
-            public XAtom indicators10;
-            public XAtom indicators11;
-            public XAtom indicators12;
-            public XAtom indicators13;
-            public XAtom indicators14;
-            public XAtom indicators15;
-            public XAtom indicators16;
-            public XAtom indicators17;
-            public XAtom indicators18;
-            public XAtom indicators19;
-            public XAtom indicators20;
-            public XAtom indicators21;
-            public XAtom indicators22;
-            public XAtom indicators23;
-            public XAtom indicators24;
-            public XAtom indicators25;
-            public XAtom indicators26;
-            public XAtom indicators27;
-            public XAtom indicators28;
-            public XAtom indicators29;
-            public XAtom indicators30;
-            public XAtom indicators31;
-
-            public XAtom this[int i]
-            {
-                readonly get 
-                {
-                    switch (i)
-                    {
-                        case < 0: throw new IndexOutOfRangeException($"Index must be larger than zero. Got: {i}");
-                        case >= 32: throw new IndexOutOfRangeException($"Index must be smaller than 32. Got: {i}");
-
-                        case 0:  return indicators0;
-                        case 1:  return indicators1;
-                        case 2:  return indicators2;
-                        case 3:  return indicators3;
-                        case 4:  return indicators4;
-                        case 5:  return indicators5;
-                        case 6:  return indicators6;
-                        case 7:  return indicators7;
-                        case 8:  return indicators8;
-                        case 9:  return indicators9;
-                        case 10: return indicators10;
-                        case 11: return indicators11;
-                        case 12: return indicators12;
-                        case 13: return indicators13;
-                        case 14: return indicators14;
-                        case 15: return indicators15;
-                        case 16: return indicators16;
-                        case 17: return indicators17;
-                        case 18: return indicators18;
-                        case 19: return indicators19;
-                        case 20: return indicators20;
-                        case 21: return indicators21;
-                        case 22: return indicators22;
-                        case 23: return indicators23;
-                        case 24: return indicators24;
-                        case 25: return indicators25;
-                        case 26: return indicators26;
-                        case 27: return indicators27;
-                        case 28: return indicators28;
-                        case 29: return indicators29;
-                        case 30: return indicators30;
-                        case 31: return indicators31;
-                    }
-                }
-
-                set 
-                {
-                    switch (i)
-                    {
-                        case < 0: throw new IndexOutOfRangeException($"Index must be larger than zero. Got: {i}");
-                        case >= 32: throw new IndexOutOfRangeException($"Index must be smaller than 32. Got: {i}");
-
-                        case 0:  indicators0 = value; break;
-                        case 1:  indicators1 = value; break;
-                        case 2:  indicators2 = value; break;
-                        case 3:  indicators3 = value; break;
-                        case 4:  indicators4 = value; break;
-                        case 5:  indicators5 = value; break;
-                        case 6:  indicators6 = value; break;
-                        case 7:  indicators7 = value; break;
-                        case 8:  indicators8 = value; break;
-                        case 9:  indicators9 = value; break;
-                        case 10: indicators10 = value; break;
-                        case 11: indicators11 = value; break;
-                        case 12: indicators12 = value; break;
-                        case 13: indicators13 = value; break;
-                        case 14: indicators14 = value; break;
-                        case 15: indicators15 = value; break;
-                        case 16: indicators16 = value; break;
-                        case 17: indicators17 = value; break;
-                        case 18: indicators18 = value; break;
-                        case 19: indicators19 = value; break;
-                        case 20: indicators20 = value; break;
-                        case 21: indicators21 = value; break;
-                        case 22: indicators22 = value; break;
-                        case 23: indicators23 = value; break;
-                        case 24: indicators24 = value; break;
-                        case 25: indicators25 = value; break;
-                        case 26: indicators26 = value; break;
-                        case 27: indicators27 = value; break;
-                        case 28: indicators28 = value; break;
-                        case 29: indicators29 = value; break;
-                        case 30: indicators30 = value; break;
-                        case 31: indicators31 = value; break;
-                    }
-                }
-            }
-        }
-    
-        internal struct Groups
-        {
-            public XAtom groups0;
-            public XAtom groups1;
-            public XAtom groups2;
-            public XAtom groups3;
-
-            public XAtom this[int i]
-            {
-                readonly get
-                {
-                    switch (i)
-                    {
-                        case < 0: throw new IndexOutOfRangeException($"Index must be larger than zero. Got: {i}");
-                        case >= 4: throw new IndexOutOfRangeException($"Index must be smaller than 4. Got: {i}");
-
-                        case 0:  return groups0;
-                        case 1:  return groups1;
-                        case 2:  return groups2;
-                        case 3:  return groups3;
-                    }
-                }
-
-                set 
-                {
-                    switch (i)
-                    {
-                        case < 0: throw new IndexOutOfRangeException($"Index must be larger than zero. Got: {i}");
-                        case >= 16: throw new IndexOutOfRangeException($"Index must be smaller than 4. Got: {i}");
-
-                        case 0:  groups0 = value; break;
-                        case 1:  groups1 = value; break;
-                        case 2:  groups2 = value; break;
-                        case 3:  groups3 = value; break;
-                    }
-                }
-            }
-        }
     }
 
     internal struct XkbIndicatorMapRec
@@ -794,7 +525,7 @@ namespace OpenTK.Platform.Native.X11
         public const int XkbActionMessageLength = 6;
 
         public int                type;             /* Xkb extension base event code */
-        public ulong              serial;           /* X server serial number for event */
+        public nuint              serial;           /* X server serial number for event */
         public int /* Bool */     send_event;       /* True ⇒ synthetically generated */
         public XDisplayPtr        display;          /* server connection where event generated */
         public XTime              time;             /* server time when event generated */
