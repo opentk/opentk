@@ -2615,6 +2615,18 @@ namespace OpenTK.Platform.Native.macOS
         }
 
         /// <inheritdoc/>
+        public bool GetFocusable(WindowHandle handle)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        public void SetFocusable(WindowHandle handle, bool focusable)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
         public bool IsFocused(WindowHandle handle)
         {
             NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);

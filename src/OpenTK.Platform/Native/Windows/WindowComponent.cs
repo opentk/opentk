@@ -524,6 +524,34 @@ namespace OpenTK.Platform.Native.Windows
 
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                     }
+                case WM.MOUSEACTIVATE:
+                    {
+                        if (HWndDict.TryGetValue(hWnd, out HWND? h))
+                        {
+                            WindowStylesEx exStyle = (WindowStylesEx)Win32.GetWindowLongPtr(hWnd, GetGWLPIndex.ExStyle);
+                            Logger?.LogDebug($"Activate: {GetTitle(h)}, ExStyle: {exStyle}");
+                            if (exStyle.HasFlag(WindowStylesEx.NoActivate))
+                            {
+                                // WindowStylesEx.NoActivate prevents focus to shift from other processes/threads to this one.
+                                // But if we already have a OpenTK window focused windows will allow this window to be focused.
+                                // We don't want that, unfocusable means unfocusable independent of whatever window you have focused.
+                                // - Noggin_bops 2026-10-11
+                                // FIXME: Because the titlebar is owned by DWM we are at the whims of whatever it decides should happen
+                                // when the titlebar is pressed, meaning that transitioning focus from an OpenTK window to an unfocusable
+                                // OpenTK window will still be possible as long as you press the titlebar of the unfocusable window...
+                                // - Noggin_bops 2026-10-11
+                                return (nint)MA.NoActivate;
+                            }
+                            else
+                            {
+                                return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
+                            }
+                        }
+                        else
+                        {
+                            return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
+                        }
+                    }
                 case WM.SETFOCUS:
                     {
                         HWND h = HWndDict[hWnd];
@@ -535,6 +563,9 @@ namespace OpenTK.Platform.Native.Windows
                         {
                             RecaptureCursor(h, h.CaptureMode);
                         }
+
+                        WindowStylesEx exStyle = (WindowStylesEx)Win32.GetWindowLongPtr(h.HWnd, GetGWLPIndex.ExStyle);
+                        Logger?.LogDebug($"Got focus. ExStyle: {exStyle}");
 
                         Toolkit.Event.RaiseEvent(new FocusEventArgs(h, true));
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
@@ -552,6 +583,8 @@ namespace OpenTK.Platform.Native.Windows
                                 RecaptureCursor(h, CursorCaptureMode.Normal);
                             }
 
+                            WindowStylesEx exStyle = (WindowStylesEx)Win32.GetWindowLongPtr(h.HWnd, GetGWLPIndex.ExStyle);
+                            Logger?.LogDebug($"Focus lost. ExStyle: {exStyle}");
                             Toolkit.Event.RaiseEvent(new FocusEventArgs(h, false));
                         }
 
@@ -805,11 +838,10 @@ namespace OpenTK.Platform.Native.Windows
                         int y = Win32.GET_Y_LPARAM(lParam);
 
                         HWND h = HWndDict[hWnd];
-
-                        ScreenToClient(h, (x, y), out Vector2 client);
-
                         if (h.HitTest != null)
                         {
+                            ScreenToClient(h, (x, y), out Vector2 client);
+
                             HitType type = h.HitTest(h, client);
 
                             switch (type)
@@ -2000,9 +2032,17 @@ namespace OpenTK.Platform.Native.Windows
             {
                 case WindowType.Normal:
                     windowStyleEx &= ~WindowStylesEx.ToolWindow;
+                    if (windowStyleEx.HasFlag(WindowStylesEx.NoActivate))
+                    {
+                        // If the window is set to be unfocusable we need to add the AppWindow style for the window to become visible in the taskbar.
+                        windowStyleEx |= WindowStylesEx.AppWindow;
+                    }
                     break;
                 case WindowType.ToolBox:
                     windowStyleEx |= WindowStylesEx.ToolWindow;
+                    // If SetFocusable(false) has been called before making this a tool window the AppWindow style will be set.
+                    // We must remove it here.
+                    windowStyleEx &= ~WindowStylesEx.AppWindow;
                     break;
                 default:
                     throw new InvalidEnumArgumentException(nameof(type), (int)type, type.GetType());
@@ -2510,8 +2550,6 @@ namespace OpenTK.Platform.Native.Windows
 
             WindowStylesEx windowStyleEx = (WindowStylesEx)Win32.GetWindowLongPtr(hwnd.HWnd, GetGWLPIndex.ExStyle);
 
-            Logger?.LogDebug($"StyleEx: {windowStyleEx}");
-
             return (windowStyleEx & WindowStylesEx.TopMost) == WindowStylesEx.TopMost;
         }
 
@@ -2611,6 +2649,46 @@ namespace OpenTK.Platform.Native.Windows
                 default:
                     throw new InvalidEnumArgumentException(nameof(mode), (int)mode, typeof(CursorCaptureMode));
             }
+        }
+
+        /// <inheritdoc/>
+        public bool GetFocusable(WindowHandle handle)
+        {
+            HWND hwnd = handle.As<HWND>(this);
+
+            WindowStylesEx exStyle = (WindowStylesEx)Win32.GetWindowLongPtr(hwnd.HWnd, GetGWLPIndex.ExStyle);
+            if (exStyle.HasFlag(WindowStylesEx.NoActivate))
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        /// <inheritdoc/>
+        public void SetFocusable(WindowHandle handle, bool focusable)
+        {
+            HWND hwnd = handle.As<HWND>(this);
+
+            WindowStylesEx exStyle = (WindowStylesEx)Win32.GetWindowLongPtr(hwnd.HWnd, GetGWLPIndex.ExStyle);
+            if (focusable)
+            {
+                exStyle &= ~WindowStylesEx.NoActivate;
+                exStyle &= ~WindowStylesEx.AppWindow;
+            }
+            else
+            {
+                exStyle |= WindowStylesEx.NoActivate;
+                if (exStyle.HasFlag(WindowStylesEx.ToolWindow) == false)
+                {
+                    // If this is not a ToolWindow then we still want the window to be in the toolbar.
+                    exStyle |= WindowStylesEx.AppWindow;
+                }
+            }
+
+            Win32.SetWindowLongPtr(hwnd.HWnd, SetGWLPIndex.ExStyle, new IntPtr((int)exStyle));
         }
 
         /// <inheritdoc/>

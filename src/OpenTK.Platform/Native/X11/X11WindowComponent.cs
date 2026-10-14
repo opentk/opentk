@@ -3984,6 +3984,18 @@ namespace OpenTK.Platform.Native.X11
         }
 
         /// <inheritdoc/>
+        public bool GetFocusable(WindowHandle handle)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        public void SetFocusable(WindowHandle handle, bool focusable)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
         public bool IsFocused(WindowHandle handle)
         {
             XWindowHandle xwindow = handle.As<XWindowHandle>(this);

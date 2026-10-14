@@ -1254,6 +1254,18 @@ namespace OpenTK.Platform.Native.SDL
         }
 
         /// <inheritdoc/>
+        public bool GetFocusable(WindowHandle handle)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        public void SetFocusable(WindowHandle handle, bool focusable)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
         public bool IsFocused(WindowHandle handle)
         {
             SDLWindow window = handle.As<SDLWindow>(this);

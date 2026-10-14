@@ -529,8 +529,8 @@ namespace OpenTK.Backends.Tests
 
             transform.Scale = bounds.Size / locusBounds.Size;
             transform.Scale.Y *= -1;
-            locusBounds = locusBounds.Scaled(transform.Scale, Vector2.Zero);
-            transform.Offset = bounds.Center - locusBounds.Center;
+            Box2 scaledLocusBounds = locusBounds.Scaled(transform.Scale, Vector2.Zero);
+            transform.Offset = bounds.Center - scaledLocusBounds.Center;
             for (int i = 0; i < locus.Length; i++)
             {
                 locus[i] = transform.Transform(locus[i]);

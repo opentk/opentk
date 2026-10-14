@@ -3301,6 +3301,29 @@ namespace OpenTK.Platform.Native.Windows
         VirtualKeyToScancodeEx = 4,
     }
 
+    internal enum MA : int
+    {
+        /// <summary>
+        /// Activates the window, and does not discard the mouse message.
+        /// </summary>
+        Activate = 1,
+
+        /// <summary>
+        /// Activates the window, and discards the mouse message.
+        /// </summary>
+        ActivateAndEat = 2,
+
+        /// <summary>
+        /// Does not activate the window, and does not discard the mouse message.
+        /// </summary>
+        NoActivate = 3,
+
+        /// <summary>
+        /// Does not activate the window, but discards the mouse message.
+        /// </summary>
+        NoActivateAndEat = 4,
+    }
+
     [Flags]
     internal enum TME : uint
     {

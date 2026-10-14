@@ -529,6 +529,20 @@ namespace OpenTK.Platform
         //bool GetFocusable(WindowHandle handle);
         
         /// <summary>
+        /// Gets if the window is able to receive focus or not.
+        /// </summary>
+        /// <param name="handle">The window handle.</param>
+        /// <returns><see langword="true"/> if the window is able to receive focus, <see langword="false"/> otherwise.</returns>
+        bool GetFocusable(WindowHandle handle);
+
+        /// <summary>
+        /// Sets if the window is able to reveice focus or not.
+        /// </summary>
+        /// <param name="handle">The window handle.</param>
+        /// <param name="focusable">If the window should be able to receive focus or not.</param>
+        void SetFocusable(WindowHandle handle, bool focusable);
+
+        /// <summary>
         /// Returns true if the given window has input focus.
         /// </summary>
         /// <param name="handle">Handle to a window.</param>
