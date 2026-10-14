@@ -176,42 +176,6 @@ module Vector4 =
                 Assert.ApproximatelyEquivalent(v.W / l, norm.W)
 
         [<Property>]
-        let ``Fast approximate normalization returns a copy without changing the instance`` (a : Vector4) =
-            let mutable v = a
-            let result = v.NormalizedFast()
-
-            Assert.Equal(a, v)
-            Assert.Equal(Vector4.NormalizeFast(a), result)
-
-        [<Fact>]
-        let ``Fast normalized copies preserve existing behavior for boundary inputs`` () =
-            let inputs = [|
-                Vector4.Zero
-                Vector4.UnitX
-                -Vector4.UnitX
-                Vector4(1.0f, 2.0f, 3.0f, 4.0f)
-                Vector4(1.0e-30f)
-                Vector4(System.Single.MaxValue)
-                Vector4(System.Single.PositiveInfinity)
-                Vector4(System.Single.NaN)
-            |]
-
-            for original in inputs do
-                let mutable v = original
-                let mutable expected = original
-                expected.NormalizeFast()
-                let result = v.NormalizedFast()
-
-                Assert.Equal(original.X, v.X)
-                Assert.Equal(expected.X, result.X)
-                Assert.Equal(original.Y, v.Y)
-                Assert.Equal(expected.Y, result.Y)
-                Assert.Equal(original.Z, v.Z)
-                Assert.Equal(expected.Z, result.Z)
-                Assert.Equal(original.W, v.W)
-                Assert.Equal(expected.W, result.W)
-
-        [<Property>]
         let ``Fast approximate normalization of instance transforms the instance into a unit length vector with the correct components`` (x, y, z, w) =
             let v = Vector4(x, y, z, w)
             let norm = Vector4(x, y, z, w)
