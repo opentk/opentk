@@ -1627,21 +1627,55 @@ namespace OpenTK.Platform.Native.X11
                                 Toolkit.Event.RaiseEvent(new WindowMoveEventArgs(xwindow, (xwindow.X, xwindow.Y), (xwindow.X, xwindow.Y)));
                             }
 
-                            // On Ubuntu 24.04 specifying opaque region values outside of the client
-                            // area will cause weird artifacts where the window shadow will not be propertly
-                            // transparent. So we are unfortunately forced to keep the opaque region up to
-                            // date with the window size in order fix this issue.
-                            // - Noggin_bops 2025-02-19
-                            Span<long> region = [0, 0, xwindow.Width, xwindow.Height];
-                            XChangeProperty<long>(
+                            int result = XGetWindowProperty(
                                 X11.Display,
                                 xwindow.Window,
                                 X11.Atoms[KnownAtoms._NET_WM_OPAQUE_REGION],
+                                0, long.MaxValue, false,
                                 X11.Atoms[KnownAtoms.CARDINAL],
-                                32,
-                                XPropertyMode.Replace,
-                                region,
-                                4);
+                                out XAtom actualType,
+                                out int actualFormat,
+                                out long numberOfItems,
+                                out long remainingBytes,
+                                out IntPtr contents);
+                            if (result == Success && numberOfItems > 0)
+                            {
+                                Debug.Assert(actualFormat == 32);
+                                Debug.Assert(actualType == X11.Atoms[KnownAtoms.CARDINAL]);
+
+                                bool isOpaque;
+                                unsafe
+                                {
+                                    long* region = (long*)contents;
+                                    long x = region[0];
+                                    long y = region[1];
+                                    long w = region[2];
+                                    long h = region[3];
+                                    isOpaque = (x == 0 && y == 0 && w > 0 && h > 0);
+                                }
+
+                                if (isOpaque)
+                                {
+                                    // On Ubuntu 24.04 specifying opaque region values outside of the client
+                                    // area will cause weird artifacts where the window shadow will not be propertly
+                                    // transparent. So we are unfortunately forced to keep the opaque region up to
+                                    // date with the window size in order fix this issue.
+                                    // - Noggin_bops 2025-02-19
+                                    Span<long> regionSpan = [0, 0, xwindow.Width, xwindow.Height];
+                                    XChangeProperty<long>(
+                                        X11.Display,
+                                        xwindow.Window,
+                                        X11.Atoms[KnownAtoms._NET_WM_OPAQUE_REGION],
+                                        X11.Atoms[KnownAtoms.CARDINAL],
+                                        32,
+                                        XPropertyMode.Replace,
+                                        regionSpan,
+                                        4);
+                                }
+                            }
+
+                            if (contents != 0)
+                                XFree(contents);
 
                             break;
                         }

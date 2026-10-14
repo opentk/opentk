@@ -217,7 +217,8 @@ namespace OpenTK.Backends.Tests
                 if (ImGui.Button("Apply##type"))
                 {
                     Toolkit.Window.SetWindowType(window, WindowTypes[windowTypeIndex]);
-                    Program.Logger.LogInfo($"Toolkit.Window.SetWindowType({WindowTypeNames[windowTypeIndex]})");
+                    WindowType type = Toolkit.Window.GetWindowType(window);
+                    Program.Logger.LogInfo($"Toolkit.Window.SetWindowType({WindowTypeNames[windowTypeIndex]}) = {type}");
                 }
 
                 ImGui.AlignTextToFramePadding();
