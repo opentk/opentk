@@ -103,7 +103,21 @@ namespace GeneratorBase
         }
     }
 
-    public record OutputData(List<ApiPointers> Pointers, List<OutputApiData> Namespaces);
+    public record AggregateReferable(params IEnumerable<IReferable> referables) : IReferable
+    {
+        public List<Function> ReferencedBy => referables.SelectMany(r => r.ReferencedBy).Distinct().ToList();
+
+        void IReferable.MarkReferencedBy(Function function)
+        {
+            foreach (var referable in referables)
+            {
+                referable.MarkReferencedBy(function);
+            }
+        }
+    }
+
+    // FIXME: Do we store structs here?
+    public record OutputData(List<ApiPointers> Pointers, List<OutputApiData> Namespaces, List<StructType> Structs);
 
     // FIXME: Add vulkan stuff to this...
     // FIXME: Better name?
@@ -118,6 +132,7 @@ namespace GeneratorBase
         ApiFile File,
         List<Function> Functions,
         List<EnumEntry> Enums,
+        List<StructType> Structs,
         List<Feature> Features,
         List<Extension> Extensions);
 
@@ -326,6 +341,7 @@ namespace GeneratorBase
         // Vulkan
         public string? Extension { get; init; }
 
+        public EnumSize UnderlyingSize { get; set; }
         public BaseCSType? StrongUnderlyingType { get; set; }
         public VersionInfo? VersionInfo { get; set; }
 
@@ -380,12 +396,37 @@ namespace GeneratorBase
         bool IsFlags,
         string? Vendor,
         string? Alias,
-        GroupRef[] Groups,
-        EnumSize UnderlyingSize)
+        GroupRef[] Groups)
     {
         public bool IsCrossReferenced { get; init; }
+        public EnumSize UnderlyingSize { get; set; }
         public VersionInfo? VersionInfo { get; set; }
     }
+
+    public record StructType(string Name, List<StructMember> Members, bool Union, string? Comment, string? Alias) : IReferable
+    {
+        public VersionInfo? VersionInfo { get; set; }
+
+        public List<Function> ReferencedBy { get; } = [];
+    }
+
+    public record StructMember(string Type, string Name, string? Comment)
+    {
+        public BaseCSType? StrongType { get; set; }
+
+        // Vulkan/OpenCL
+        public string? Values { get; init; }
+        public string? Length { get; init; }
+        public string? AltLength { get; init; }
+        public ExternSyncInfo ExternSync { get; init; }
+
+        // Vulkan
+        public bool[] Optional { get; init; }
+        public string? Stride { get; init; }
+        public LimitType LimitType { get; init; }
+        public string? ObjectType { get; init; }
+        public string? FeatureLink { get; init; }
+    };
 
     public record class FunctionPoiner : IReferable
     {
@@ -409,6 +450,9 @@ namespace GeneratorBase
         Uint32,
         Int64,
         Uint64,
+        Float32,
+        // FIXME: How do we parse this??
+        Float64,
     }
 
     public enum ConstantType
@@ -423,39 +467,6 @@ namespace GeneratorBase
     // FIXME: Figure out what is Vulkan specific and what generalizes to other APIs.
     // FIXME: Should this have a VersionInfo?
     public record Constant(ConstantType Type, string Name, string? Extension, string? Comment, ulong IntValue, float FloatValue, string StringValue);
-
-    public interface IStruct : IReferable
-    {
-        public string Name { get; }
-        public List<IStructMember> Members { get; }
-        public bool Union { get; }
-
-        public VersionInfo? VersionInfo { get; set; }
-    }
-
-    public interface IStructMember
-    {
-        public string Name { get; }
-        public string Type { get; }
-
-        public BaseCSType? StrongType { get; set; }
-    }
-
-    public enum InputApi
-    {
-        GL,
-        GLES1,
-        GLES2,
-        WGL,
-        GLX,
-        EGL,
-
-        AL,
-        ALC,
-
-        Vulkan,
-        // FIXME: VulkanVideo?
-    }
 
     public enum OutputApi
     {
@@ -473,6 +484,9 @@ namespace GeneratorBase
         // OpenAL
         AL,
         ALC,
+
+        // OpenCL
+        CL,
 
         // Vulkan
         Vulkan,
@@ -494,6 +508,7 @@ namespace GeneratorBase
             OutputApi.EGL => ApiFile.EGL,
             OutputApi.AL => ApiFile.AL,
             OutputApi.ALC => ApiFile.ALC,
+            OutputApi.CL => ApiFile.CL,
             OutputApi.Vulkan => ApiFile.Vulkan,
             OutputApi.Invalid or _ => throw new Exception(),
         };
@@ -527,6 +542,9 @@ namespace GeneratorBase
         AL = 1 << OutputApi.AL,
         ALC = 1 << OutputApi.ALC,
 
+        // OpenCL
+        CL = 1 << OutputApi.CL,
+
         // Vulkan
         Vulkan = 1 << OutputApi.Vulkan,
     }
@@ -542,6 +560,9 @@ namespace GeneratorBase
         // OpenAL
         AL,
         ALC,
+
+        // OpenCL
+        CL,
 
         // Vulkan
         Vulkan,
@@ -622,6 +643,23 @@ namespace GeneratorBase
                     throw new Exception();
             }
         }
+    }
+
+    [Flags]
+    public enum LimitType
+    {
+        None = 0,
+        Min = 1 << 0,
+        Max = 1 << 1,
+        Not = 1 << 2,
+        PowerOfTwo = 1 << 3,
+        Multiple = 1 << 4,
+        Bits = 1 << 5,
+        Bitmask = 1 << 6,
+        Range = 1 << 7,
+        Struct = 1 << 8,
+        Exact = 1 << 9,
+        NoAuto = 1 << 10,
     }
 
     #endregion

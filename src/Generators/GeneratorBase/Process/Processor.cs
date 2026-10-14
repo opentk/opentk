@@ -40,7 +40,14 @@ namespace GeneratorBase.Process
                 pointers.Add(filePointers);
             }
 
-            return new OutputData(pointers, outputNamespaces);
+            // FIXME: For now we just merge all structs.
+            List<StructType> structs = new List<StructType>();
+            foreach (var file in files)
+            {
+                structs.AddRange(file.Structs);
+            }
+
+            return new OutputData(pointers, outputNamespaces, structs);
         }
 
         public static void CrossReferenceEnums(SpecificationFile[] files)
@@ -97,6 +104,7 @@ namespace GeneratorBase.Process
                 ApiFile.AL => [OutputApi.AL],
                 ApiFile.ALC => [OutputApi.ALC],
                 ApiFile.Vulkan => [OutputApi.Vulkan],
+                ApiFile.CL => [OutputApi.CL],
                 _ => throw new Exception(),
             };
 
@@ -371,7 +379,10 @@ namespace GeneratorBase.Process
                     continue;
 
                 EnumEntry? entry = FindEnum(enumLookup, enumReference.EnumName, api.Name);
-                Debug.Assert(entry != null);
+                // FIXME:
+                if (file.File != ApiFile.CL)
+                    Debug.Assert(entry != null);
+                if (entry == null) continue;
                 Debug.Assert(entry.VersionInfo == null);
                 EnumMember member = new EnumMember()
                 {
@@ -510,6 +521,7 @@ namespace GeneratorBase.Process
                 IsFlags = false,
                 Members = [],
 
+                UnderlyingSize = EnumSize.Uint32,
                 StrongUnderlyingType = CSPrimitive.Uint(true),
             };
 
@@ -588,6 +600,7 @@ namespace GeneratorBase.Process
                     ReferencedBy = [],
                     FunctionsUsingEnumGroup = [],
 
+                    UnderlyingSize = size,
                     StrongUnderlyingType = strongType,
                 };
 

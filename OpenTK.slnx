@@ -1,11 +1,12 @@
 <Solution>
   <Folder Name="/build/">
     <File Path="build.ps1" />
-    <Project Path="build/build.fsproj" />
     <File Path="appveyor.yml" />
+    <Project Path="build/build.fsproj" />
   </Folder>
   <Folder Name="/Generators/">
     <Project Path="src/Generators/ALGenerator/ALGenerator.csproj" />
+    <Project Path="src/Generators/CLGenerator/CLGenerator.csproj" Id="f9deea25-ec26-4a7f-9dba-f7309ee961ee" />
     <Project Path="src/Generators/GeneratorBase/GeneratorBase.csproj" />
     <Project Path="src/Generators/GLGenerator/GLGenerator.csproj" />
     <Project Path="src/Generators/VkGenerator/VkGenerator.csproj" />
@@ -33,6 +34,7 @@
     <Project Path="tests/LocalTestProject/LocalTestProject.csproj" />
     <Project Path="tests/MacOSTestProject/MacOSTestProject.csproj" />
     <Project Path="tests/OpenALTest/OpenALTest.csproj" />
+    <Project Path="tests/OpenCLTest/OpenCLTest.csproj" Id="fa406960-08c6-4245-80f9-36afb4dc1b85" />
     <Project Path="tests/OpenTK.Backends.Tests/OpenTK.Backends.Tests.csproj" />
     <Project Path="tests/OpenTK.Benchmarks/OpenTK.Benchmarks.csproj" />
     <Project Path="tests/OpenTK.Platform.Tests/OpenTK.Platform.Tests.csproj" />
@@ -50,6 +52,7 @@
   </Folder>
   <Project Path="src/OpenTK.Audio/OpenTK.Audio.csproj" />
   <Project Path="src/OpenTK.Compute/OpenTK.Compute.csproj" />
+  <Project Path="src/OpenTK.Compute2/OpenTK.Compute2.csproj" />
   <Project Path="src/OpenTK.Core/OpenTK.Core.csproj" />
   <Project Path="src/OpenTK.Graphics/OpenTK.Graphics.csproj" />
   <Project Path="src/OpenTK.Mathematics/OpenTK.Mathematics.csproj" />
