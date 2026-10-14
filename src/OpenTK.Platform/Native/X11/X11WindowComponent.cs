@@ -4005,13 +4005,51 @@ namespace OpenTK.Platform.Native.X11
         /// <inheritdoc/>
         public bool GetFocusable(WindowHandle handle)
         {
-            throw new NotImplementedException();
+            XWindowHandle xwindow = handle.As<XWindowHandle>(this);
+
+            unsafe
+            {
+                XWMHints* hints = XGetWMHints(X11.Display, xwindow.Window);
+                if (hints == null)
+                {
+                    Logger?.LogWarning("Could not get focusable. XGetWMHints failed.");
+                    // Best guess is that focusable is true...
+                    return true;
+                }
+
+                bool focusable = true;
+                if (hints->flags.HasFlag(XWMHintsMask.InputHint))
+                {
+                    focusable = (hints->input == True);
+                }
+
+                XFree(hints);
+
+                return focusable;
+            }
         }
 
         /// <inheritdoc/>
         public void SetFocusable(WindowHandle handle, bool focusable)
         {
-            throw new NotImplementedException();
+            XWindowHandle xwindow = handle.As<XWindowHandle>(this);
+
+            unsafe
+            {
+                XWMHints* hints = XGetWMHints(X11.Display, xwindow.Window);
+                if (hints == null)
+                {
+                    Logger?.LogWarning("Could not set focusable. XGetWMHints failed.");
+                    return;
+                }
+
+                hints->flags |= XWMHintsMask.InputHint;
+                hints->input = focusable ? (byte)True : (byte)False;
+
+                XSetWMHints(X11.Display, xwindow.Window, hints);
+
+                XFree(hints);
+            }
         }
 
         /// <inheritdoc/>
