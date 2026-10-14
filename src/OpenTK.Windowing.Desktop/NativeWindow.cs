@@ -781,7 +781,7 @@ namespace OpenTK.Windowing.Desktop
         }
 
         /// <summary>
-        /// Enables or disables unlimited mouse buttons.
+        /// Specify whether mouse buttons beyond the standard eight should be reported in the <see cref="OnMouseDown"/> (<see cref="MouseDown"/>) and <see cref="OnMouseUp"/> (<see cref="MouseUp"/>) callbacks.
         /// </summary>
         public unsafe bool UnlimitedMouseButtons
         {
