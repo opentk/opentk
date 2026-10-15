@@ -2,6 +2,21 @@ using System;
 
 namespace OpenTK.Platform.Native.X11
 {
+    internal enum BitGravity : int
+    {
+        Forget = 0,
+        NorthWest = 1,
+        North = 2,
+        NorthEast = 3,
+        West = 4,
+        Center = 5,
+        East = 6,
+        SouthWest = 7,
+        South = 8,
+        SouthEast = 9,
+        Static = 10,
+    }
+    
     internal enum XStateMask : uint
     {
         ShiftMask = 1 << 0,

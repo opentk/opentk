@@ -295,7 +295,7 @@ namespace OpenTK.Platform.Native.X11
         public nuint BackgroundPixel;
         public XPixmap BorderPixmap;
         public nuint BorderPixel;
-        public int BitGravity;
+        public BitGravity BitGravity;
         public int WindowGravity;
         public int BackingStore;
         public nuint BackingPlanes;

@@ -1998,6 +1998,7 @@ namespace OpenTK.Platform.Native.X11
                 attributes.OverrideRedirect = 0;
                 attributes.ColorMap = XDefaultColormap(X11.Display, X11.DefaultScreen);
                 attributes.EventMask = XEventMask.StructureNotify | XEventMask.SubstructureNotify | XEventMask.Exposure | XEventMask.VisibilityChanged;
+                attributes.BitGravity = BitGravity.Static;
 
                 unsafe
                 {
@@ -2010,7 +2011,7 @@ namespace OpenTK.Platform.Native.X11
                         // FIXME: Do we want a visual here?
                         ref Unsafe.AsRef<XVisual>(visual),
                         XWindowAttributeValueMask.BackPixel | XWindowAttributeValueMask.Colormap |
-                        XWindowAttributeValueMask.BorderPixel | XWindowAttributeValueMask.EventMask, 
+                        XWindowAttributeValueMask.BorderPixel | XWindowAttributeValueMask.EventMask | XWindowAttributeValueMask.BitGravity, 
                         ref attributes);
                 }
 
