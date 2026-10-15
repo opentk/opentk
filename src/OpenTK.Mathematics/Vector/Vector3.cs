@@ -211,6 +211,17 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
+        /// Returns a copy of the Vector3 scaled to approximately unit length.
+        /// </summary>
+        /// <returns>The normalized copy.</returns>
+        public readonly Vector3 NormalizedFast()
+        {
+            Vector3 v = this;
+            v.NormalizeFast();
+            return v;
+        }
+
+        /// <summary>
         /// Scales the Vector3 to unit length.
         /// </summary>
         public void Normalize()

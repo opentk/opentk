@@ -274,6 +274,17 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
+        /// Returns a copy of the Vector4 scaled to approximately unit length.
+        /// </summary>
+        /// <returns>The normalized copy.</returns>
+        public readonly Vector4 NormalizedFast()
+        {
+            Vector4 v = this;
+            v.NormalizeFast();
+            return v;
+        }
+
+        /// <summary>
         /// Scales the Vector4 to unit length.
         /// </summary>
         public void Normalize()
