@@ -781,6 +781,22 @@ namespace OpenTK.Windowing.Desktop
         }
 
         /// <summary>
+        /// Specify whether mouse buttons beyond the standard eight should be reported in the <see cref="OnMouseDown"/> (<see cref="MouseDown"/>) and <see cref="OnMouseUp"/> (<see cref="MouseUp"/>) callbacks.
+        /// </summary>
+        public unsafe bool UnlimitedMouseButtons
+        {
+            get
+            {
+                return GLFW.GetInputMode(WindowPtr, UnlimitedMouseButtonsAttribute.UnlimitedMouseButtons);
+            }
+
+            set
+            {
+                GLFW.SetInputMode(WindowPtr, UnlimitedMouseButtonsAttribute.UnlimitedMouseButtons, value);
+            }
+        }
+
+        /// <summary>
         /// Whether or not <see cref="RawMouseInput"/> is supported.
         /// </summary>
         public bool SupportsRawMouseInput => GLFW.RawMouseMotionSupported();

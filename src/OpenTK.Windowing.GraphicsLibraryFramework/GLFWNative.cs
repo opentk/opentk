@@ -25,7 +25,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
                     return IntPtr.Zero;
                 }
 
-                return LoadLibrary("glfw", new Version(3, 4), assembly, path);
+                return LoadLibrary("glfw", new Version(3, 5, 1), assembly, path);
             });
         }
 
@@ -340,6 +340,9 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         public static extern int glfwGetInputMode(Window* window, RawMouseMotionAttribute mode);
 
         [DllImport(LibraryName, CallingConvention = Cdecl)]
+        public static extern int glfwGetInputMode(Window* window, UnlimitedMouseButtonsAttribute mode);
+
+        [DllImport(LibraryName, CallingConvention = Cdecl)]
         public static extern void glfwSetInputMode(Window* window, CursorStateAttribute mode, CursorModeValue value);
 
         [DllImport(LibraryName, CallingConvention = Cdecl)]
@@ -350,6 +353,9 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
 
         [DllImport(LibraryName, CallingConvention = Cdecl)]
         public static extern void glfwSetInputMode(Window* window, RawMouseMotionAttribute mode, int value);
+
+        [DllImport(LibraryName, CallingConvention = Cdecl)]
+        public static extern void glfwSetInputMode(Window* window, UnlimitedMouseButtonsAttribute mode, int value);
 
         [DllImport(LibraryName, CallingConvention = Cdecl)]
         public static extern int glfwRawMouseMotionSupported();
@@ -553,6 +559,9 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         public static extern uint glfwGetGLXWindow(Window* window);
 
         [DllImport(LibraryName, CallingConvention = Cdecl)]
+        public static extern int glfwGetGLXFBConfig(Window* window);
+
+        [DllImport(LibraryName, CallingConvention = Cdecl)]
         public static extern IntPtr glfwGetWaylandDisplay();
 
         [DllImport(LibraryName, CallingConvention = Cdecl)]
@@ -569,6 +578,9 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
 
         [DllImport(LibraryName, CallingConvention = Cdecl)]
         public static extern IntPtr glfwGetEGLSurface(Window* window);
+
+        [DllImport(LibraryName, CallingConvention = Cdecl)]
+        public static extern int glfwGetEglConfig(Window* window);
 
         [DllImport(LibraryName, CallingConvention = Cdecl)]
         public static extern int glfwGetOSMesaColorBuffer(Window* window, int* width, int* height, int* format, void** buffer);
