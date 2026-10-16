@@ -1,7 +1,6 @@
 ﻿using ImGuiNET;
-using OpenTK.Platform;
 using OpenTK.Mathematics;
-using OpenTK.Platform.Native;
+using OpenTK.Platform;
 using OpenTK.Platform.Native.macOS;
 using OpenTK.Platform.Native.Windows;
 using System;
@@ -57,15 +56,18 @@ namespace OpenTK.Backends.Tests
 
         string titleString = "";
         string iconTitleString = "";
+        int windowTypeIndex = 0;
         int modeIndex = 0;
         int borderStyleIndex = 0;
         int transparencyModeIndex = 0;
         float windowOpacity = 1.0f;
-        int captureModeIndex = 0;
         Vector2i windowPosition;
         Vector2i clientPosition;
 
+        readonly static WindowType[] WindowTypes = Enum.GetValues<WindowType>();
+        readonly static string[] WindowTypeNames = Enum.GetNames<WindowType>();
         readonly static WindowMode[] WindowModes = Enum.GetValues<WindowMode>();
+        
         readonly static string[] WindowModeNames = Enum.GetNames<WindowMode>();
 
         readonly static WindowBorderStyle[] WindowBorderStyles = Enum.GetValues<WindowBorderStyle>();
@@ -73,9 +75,6 @@ namespace OpenTK.Backends.Tests
 
         readonly static WindowTransparencyMode[] TransparencyModes = Enum.GetValues<WindowTransparencyMode>();
         readonly static string[] TransparencyModeNames = Enum.GetNames<WindowTransparencyMode>();
-
-        readonly static CursorCaptureMode[] CaptureModes = Enum.GetValues<CursorCaptureMode>();
-        readonly static string[] CaptureModeNames = Enum.GetNames<CursorCaptureMode>();
 
         public override void Paint(double deltaTime)
         {
@@ -96,15 +95,17 @@ namespace OpenTK.Backends.Tests
 
             ImGui.SeparatorText("Windows");
 
-            if (ImGui.BeginListBox("Windows"))
+            float itemWidth = ImGui.CalcItemWidth();
+            ImGui.Columns(2);
+            ImGui.SetColumnWidth(0, itemWidth);
+            if (ImGui.BeginChild("##windows", new System.Numerics.Vector2(0, ImGui.GetTextLineHeightWithSpacing() * 7.0f), ImGuiChildFlags.FrameStyle))
             {
                 PaintWindow(Program.Window, 0);
                 for (int i = 0; i < Program.ApplicationWindows.Count; i++)
                 {
                     PaintWindow(Program.ApplicationWindows[i].Window, i + 1);
                 }
-                ImGui.EndListBox();
-
+                
                 void PaintWindow(WindowHandle window, int i)
                 {
                     string name;
@@ -162,27 +163,43 @@ namespace OpenTK.Backends.Tests
                     }
                 }
             }
+            ImGui.EndChild();
+            ImGui.NextColumn();
+            {
+                Vector2i pos = default, cPos = default;
+                Vector2i size = default, cSize = default, fbSize = default;
+                float scaleX = 1, scaleY = 1;
+
+                if (selectedWindow != -1)
+                {
+                    WindowHandle window = (selectedWindow == 0)
+                            ? Program.Window
+                            : Program.ApplicationWindows[selectedWindow - 1].Window;
+
+                    Toolkit.Window.GetClientPosition(window, out cPos);
+                    Toolkit.Window.GetPosition(window, out pos);
+                    Toolkit.Window.GetClientSize(window, out cSize);
+                    Toolkit.Window.GetSize(window, out size);
+                    Toolkit.Window.GetFramebufferSize(window, out fbSize);
+                    Toolkit.Window.GetScaleFactor(window, out scaleX, out scaleY);
+                }
+
+                ImGui.Text($"Position: ({pos.X}, {pos.Y})");
+                ImGui.Text($"Client Position: ({cPos.X}, {cPos.Y})");
+                ImGui.Text($"Size: ({size.X}, {size.Y})");
+                ImGui.Text($"Client Size: ({cSize.X}, {cSize.Y})");
+                ImGui.Text($"Framebuffer Size: ({fbSize.X}, {fbSize.Y})");
+                ImGui.Text($"Scale: ({scaleX}, {scaleY})");
+            }
+            ImGui.Columns(1);
             
             if (selectedWindow != -1)
             {
+                ImGui.SeparatorText("Window properties");
+
                 WindowHandle window = (selectedWindow == 0)
                         ? Program.Window
                         : Program.ApplicationWindows[selectedWindow - 1].Window;
-
-                if (ImGui.CollapsingHeader("Info"))
-                {
-                    Toolkit.Window.GetClientSize(window, out Vector2i cSize);
-                    Toolkit.Window.GetSize(window, out Vector2i size);
-                    Toolkit.Window.GetClientPosition(window, out Vector2i cPos);
-                    Toolkit.Window.GetPosition(window, out Vector2i pos);
-                    Toolkit.Window.GetScaleFactor(window, out float scaleX, out float scaleY);
-                    ImGui.Text($"Client Position: ({cPos.X}, {cPos.Y})");
-                    ImGui.Text($"Position: ({pos.X}, {pos.Y})");
-                    ImGui.Text($"Client Size: ({cSize.X}, {cSize.Y})");
-                    ImGui.Text($"Size: ({size.X}, {size.Y})");
-                    ImGui.Text($"Mode: {Toolkit.Window.GetMode(window)}");
-                    ImGui.Text($"Scale: ({scaleX}, {scaleY})");
-                }
 
                 ImGui.AlignTextToFramePadding();
                 ImGui.TextUnformatted("Title"); ImGui.SameLine();
@@ -190,7 +207,7 @@ namespace OpenTK.Backends.Tests
                 if (ImGui.Button("Apply##tile"))
                 {
                     Toolkit.Window.SetTitle(window, titleString);
-                    Program.Logger.LogInfo($"WindowComponent.SetTitle(\"{titleString}\")");
+                    Program.Logger.LogInfo($"Toolkit.Window.SetTitle(\"{titleString}\")");
                 }
 
                 if (Toolkit.Window is Platform.Native.X11.X11WindowComponent x11Win)
@@ -201,19 +218,28 @@ namespace OpenTK.Backends.Tests
                     if (ImGui.Button("Apply##icon_tile"))
                     {
                         x11Win.SetIconifiedTitle(window, iconTitleString);
-                        Program.Logger.LogInfo($"WindowComponent.SetIconTitle(\"{iconTitleString}\")");
+                        Program.Logger.LogInfo($"Toolkit.Window.SetIconTitle(\"{iconTitleString}\")");
                     }
 
                     string iconTitle = x11Win.GetIconifiedTitle(window);
                 }
 
                 ImGui.AlignTextToFramePadding();
-                ImGui.TextUnformatted("Mode"); ImGui.SameLine();
-                ImGui.Combo("##mode", ref modeIndex, WindowModeNames, WindowModeNames.Length); ImGui.SameLine();
-                if (ImGui.Button("Apply##mode"))
+                WindowType type = Toolkit.Window.GetWindowType(window);
+                if (ImGuiUtils.EnumToggleButtons("Window Type", ref type))
                 {
-                    Toolkit.Window.SetMode(window, WindowModes[modeIndex]);
-                    Program.Logger.LogInfo($"WindowComponent.SetMode({WindowModeNames[modeIndex]})");
+                    Toolkit.Window.SetWindowType(window, type);
+                    Program.Logger.LogInfo($"Toolkit.Window.SetWindowType({type})");
+                }
+
+                // FIXME: Convert these into buttons for setting the mode, and add a status text showing the current mode.
+                ImGui.AlignTextToFramePadding();
+                ImGui.TextUnformatted("Mode"); ImGui.SameLine();
+                WindowMode mode = Toolkit.Window.GetMode(window);
+                if (ImGuiUtils.EnumToggleButtons("Mode", ref mode))
+                {
+                    Toolkit.Window.SetMode(window, mode);
+                    Program.Logger.LogInfo($"Toolkit.Window.SetMode({mode})");
                 }
 
                 // FIXME: change to toggle!
@@ -234,22 +260,20 @@ namespace OpenTK.Backends.Tests
 
                 ImGui.AlignTextToFramePadding();
                 ImGui.TextUnformatted("Cursor capture mode"); ImGui.SameLine();
-                ImGui.Combo("##captureMode", ref captureModeIndex, CaptureModeNames, CaptureModeNames.Length); ImGui.SameLine();
-                if (ImGui.Button("Apply##captureMode"))
+                CursorCaptureMode captureMode = Toolkit.Window.GetCursorCaptureMode(window);
+                if (ImGuiUtils.EnumCombo("###captureMode", ref captureMode))
                 {
-                    Toolkit.Window.SetCursorCaptureMode(window, CaptureModes[captureModeIndex]);
+                    Toolkit.Window.SetCursorCaptureMode(window, captureMode);
+                    Program.Logger.LogInfo($"Toolkit.Window.SetCursorCaptureMode({captureMode})");
                 }
 
                 ImGui.AlignTextToFramePadding();
                 ImGui.TextUnformatted("Border style"); ImGui.SameLine();
-                ImGui.Combo("##border_style", ref borderStyleIndex, WindowBorderStyleNames, WindowBorderStyleNames.Length); ImGui.SameLine();
-                if (ImGui.Button("Apply##border_style"))
+                WindowBorderStyle border = Toolkit.Window.GetBorderStyle(window);
+                if (ImGuiUtils.EnumCombo("##border_style", ref border))
                 {
-                    Toolkit.Window.SetBorderStyle(window, WindowBorderStyles[borderStyleIndex]);
-                    Program.Logger.LogInfo($"WindowComponent.SetBorderStyle({WindowBorderStyleNames[borderStyleIndex]})");
-
-                    var style = Toolkit.Window.GetBorderStyle(window);
-                    Program.Logger.LogInfo($"Border style: {style}");
+                    Toolkit.Window.SetBorderStyle(window, border);
+                    Program.Logger.LogInfo($"Toolkit.Window.SetBorderStyle({border})");
                 }
 
                 ImGui.AlignTextToFramePadding();
@@ -286,60 +310,42 @@ namespace OpenTK.Backends.Tests
                 if (ImGui.Button("Apply##transparency_mode"))
                 {
                     Toolkit.Window.SetTransparencyMode(window, TransparencyModes[transparencyModeIndex], windowOpacity);
-                    Program.Logger.LogInfo($"WindowComponent.SetTransparencyMode({TransparencyModeNames[transparencyModeIndex]})");
+                    Program.Logger.LogInfo($"Toolkit.Window.SetTransparencyMode({TransparencyModeNames[transparencyModeIndex]}, {windowOpacity})");
 
-                    var mode = Toolkit.Window.GetTransparencyMode(window, out float opacity);
-                    Program.Logger.LogInfo($"Transparency mode: {mode}");
+                    var transparencymMode = Toolkit.Window.GetTransparencyMode(window, out float opacity);
+                    Program.Logger.LogInfo($"Transparency mode: {transparencymMode}");
                 }
                 ImGui.DragFloat("Opacity", ref windowOpacity, 0.01f, 0.0f, 1.0f);
 
                 ImGui.AlignTextToFramePadding();
-                ImGui.TextUnformatted("Always on top:"); ImGui.SameLine();
-                if (ImGui.Button("Yes"))
+                bool alwaysOnTop = Toolkit.Window.IsAlwaysOnTop(window);
+                if (ImGuiUtils.YesNoButtons("Always on top", ref alwaysOnTop))
                 {
-                    Toolkit.Window.SetAlwaysOnTop(window, true);
-
-                    bool value = Toolkit.Window.IsAlwaysOnTop(window);
-                    Program.Logger.LogInfo($"Always on top: {value}");
-                }
-                ImGui.SameLine();
-                if (ImGui.Button("No"))
-                {
-                    Toolkit.Window.SetAlwaysOnTop(window, false);
-
-                    bool value = Toolkit.Window.IsAlwaysOnTop(window);
-                    Program.Logger.LogInfo($"Always on top: {value}");
+                    Toolkit.Window.SetAlwaysOnTop(window, alwaysOnTop);
+                    Program.Logger.LogInfo($"Toolkit.Window.SetAlwaysOnTop({alwaysOnTop})");
                 }
 
                 ImGui.AlignTextToFramePadding();
-                ImGui.TextUnformatted("Input passthrough:"); ImGui.SameLine();
-                if (ImGui.Button("Enable"))
+                bool mousePassthrough = Toolkit.Window.GetMousePassthrough(window);
+                if (ImGuiUtils.YesNoButtons("Input passthrough", ref mousePassthrough, "Enabled", "Disabled"))
                 {
-                    Toolkit.Window.SetMousePassthrough(window, true);
-
-                    bool value = Toolkit.Window.GetMousePassthrough(window);
-                    Program.Logger.LogInfo($"Input Passthrough: {value}");
+                    Toolkit.Window.SetMousePassthrough(window, mousePassthrough);
+                    Program.Logger.LogInfo($"Toolkit.Window.SetMousePassthrough({mousePassthrough})");
                 }
-                ImGui.SameLine();
-                if (ImGui.Button("Disable"))
-                {
-                    Toolkit.Window.SetMousePassthrough(window, false);
 
-                    bool value = Toolkit.Window.GetMousePassthrough(window);
-                    Program.Logger.LogInfo($"Input Passthrough: {value}");
-                }
-                ImGui.SameLine();
-                if (ImGui.Button("Check"))
+                ImGui.AlignTextToFramePadding();
+                bool focusable = Toolkit.Window.GetFocusable(window);
+                if (ImGuiUtils.YesNoButtons("Focusable", ref focusable))
                 {
-                    bool value = Toolkit.Window.GetMousePassthrough(window);
-                    Program.Logger.LogInfo($"Input Passthrough: {value}");
+                    Toolkit.Window.SetFocusable(window, focusable);
+                    Program.Logger.LogInfo($"Toolkit.Window.SetFocusable({focusable})");
                 }
 
                 ImGui.DragInt2("Position", ref windowPosition.X); ImGui.SameLine();
                 if (ImGui.Button("Set##Position"))
                 {
                     Toolkit.Window.SetPosition(window, windowPosition);
-                    Program.Logger.LogInfo($"WindowComponent.SetPosition({windowPosition})");
+                    Program.Logger.LogInfo($"Toolkit.Window.SetPosition({windowPosition})");
 
                     Toolkit.Window.GetPosition(window, out Vector2i position);
                     Program.Logger.LogInfo($"Window position: ({position.X}, {position.Y})");
@@ -349,12 +355,14 @@ namespace OpenTK.Backends.Tests
                 if (ImGui.Button("Set##ClientPosition"))
                 {
                     Toolkit.Window.SetClientPosition(window, clientPosition);
-                    Program.Logger.LogInfo($"WindowComponent.SetClientPosition({clientPosition})");
+                    Program.Logger.LogInfo($"Toolkit.Window.SetClientPosition({clientPosition})");
 
                     Toolkit.Window.GetClientPosition(window, out Vector2i cPos);
                     Program.Logger.LogInfo($"Client position: ({cPos.X}, {cPos.Y})");
                 }
             }
+
+            ImGui.SeparatorText("Window creation");
 
             if (ImGui.CollapsingHeader("Window Creation"))
             {

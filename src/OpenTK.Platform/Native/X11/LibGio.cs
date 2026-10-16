@@ -130,7 +130,7 @@ namespace OpenTK.Platform.Native
         [DllImport(Gio, CallingConvention = CallingConvention.Cdecl)]
         internal static extern uint /* GQuark */ g_dbus_error_quark();
 
-        internal static unsafe ulong g_signal_connect(
+        internal static unsafe nuint g_signal_connect(
                                 IntPtr /* gpointer */ instance,
                                 byte* /* const gchar* */ detailed_signal,
                                 delegate* unmanaged<IntPtr, byte*, byte*, IntPtr, IntPtr, void> /* GCallback */ c_handler,
@@ -139,7 +139,7 @@ namespace OpenTK.Platform.Native
             return g_signal_connect_data(instance, detailed_signal, (IntPtr)c_handler, data, IntPtr.Zero, 0);
         }
 
-        internal static unsafe ulong g_signal_connect(
+        internal static unsafe nuint g_signal_connect(
                                 IntPtr /* gpointer */ instance,
                                 byte* /* const gchar* */ detailed_signal,
                                 delegate* unmanaged<IntPtr, byte*, IntPtr, void> /* GCallback */ c_handler,
@@ -148,7 +148,7 @@ namespace OpenTK.Platform.Native
             return g_signal_connect_data(instance, detailed_signal, (IntPtr)c_handler, data, IntPtr.Zero, 0);
         }
 
-        internal static unsafe ulong g_signal_connect(
+        internal static unsafe nuint g_signal_connect(
                                 IntPtr /* gpointer */ instance,
                                 byte* /* const gchar* */ detailed_signal,
                                 IntPtr /* GCallback */ c_handler,
@@ -158,7 +158,7 @@ namespace OpenTK.Platform.Native
         }
 
         [DllImport(Gio, CallingConvention = CallingConvention.Cdecl)]
-        internal static unsafe extern ulong /* gulong */ g_signal_connect_data(
+        internal static unsafe extern nuint /* gulong */ g_signal_connect_data(
                                 IntPtr /* gpointer */ instance,
                                 byte* /* const gchar* */ detailed_signal,
                                 IntPtr /* GCallback */ c_handler,
@@ -167,7 +167,7 @@ namespace OpenTK.Platform.Native
                                 GConnectFlags connect_flags);
 
         [DllImport(Gio, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern void g_signal_handler_disconnect(IntPtr /* GObject* */ instance, ulong /* gulong */ handler_id);
+        internal static extern void g_signal_handler_disconnect(IntPtr /* GObject* */ instance, nuint /* gulong */ handler_id);
 
         [DllImport(Gio, CallingConvention = CallingConvention.Cdecl)]
         internal static unsafe extern IntPtr /* GPowerProfileMonitor* */ g_power_profile_monitor_dup_default();

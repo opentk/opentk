@@ -495,7 +495,7 @@ namespace OpenTK.Platform.Native.X11
         {
             XOpenGLContextHandle xhandle = handle.As<XOpenGLContextHandle>(this);
 
-            return xhandle.GLXWindow.Value;
+            return (IntPtr)xhandle.GLXWindow.Value;
         }
     }
 }

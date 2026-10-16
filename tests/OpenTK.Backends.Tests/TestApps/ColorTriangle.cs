@@ -39,6 +39,7 @@ namespace OpenTK.Backends.Tests
         private int VBO;
 
         private int ShaderProgram;
+        private int AlphaUniformLocation;
         const string VertexShader = @"#version 330 core
 
 layout(location = 0) in vec2 v_Position;
@@ -58,9 +59,11 @@ in vec3 f_Color;
 
 out vec4 color;
 
+uniform float uAlpha;
+
 void main()
 {
-    color = vec4(f_Color, 0.5);
+    color = vec4(f_Color, 1.0) * uAlpha;
 }
 ";
 
@@ -87,9 +90,11 @@ in vec3 f_Color;
 
 out vec4 color;
 
+uniform float uAlpha;
+
 void main()
 {
-    color = vec4(f_Color, 0.5);
+    color = vec4(f_Color, 1.0) * uAlpha;
 }
 ";
 
@@ -136,6 +141,7 @@ void main()
                 ShaderProgram = CompileShader(VertexShader, FragmentShader);
             }
             if (KHRDebugAvailable) GL.ObjectLabel(ObjectIdentifier.Program, ShaderProgram, -1, "Program: Color Triangle");
+            AlphaUniformLocation = GL.GetUniformLocation(ShaderProgram, "uAlpha");
 
             VAO = GL.GenVertexArray();
             GL.BindVertexArray(VAO);
@@ -226,7 +232,10 @@ void main()
             GL.ClearColor(new Color4<Rgba>(0.05f, 0.05f, 0.1f, 1.0f));
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
+            bool isTransparent = Toolkit.Window.GetTransparencyMode(Window, out _) == WindowTransparencyMode.TransparentFramebuffer;
+
             GL.UseProgram(ShaderProgram);
+            GL.Uniform1f(AlphaUniformLocation, isTransparent ? 0.5f : 1.0f);
             GL.BindVertexArray(VAO);
             GL.DrawArrays(PrimitiveType.Triangles, 0, 3);
 

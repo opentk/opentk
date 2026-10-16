@@ -2026,6 +2026,37 @@ namespace OpenTK.Platform.Native.macOS
         }
 
         /// <inheritdoc/>
+        public WindowType GetWindowType(WindowHandle handle)
+        {
+            NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
+
+            // FIXME: Double check that this function works once SetWindowType is implemented.
+
+            NSWindowStyleMask style = (NSWindowStyleMask)objc_msgSend_IntPtr(nswindow.Window, selStyleMask);
+
+            if (style.HasFlag(NSWindowStyleMask.UtilityWindow))
+            {
+                return WindowType.ToolBox;
+            }
+            else
+            {
+                return WindowType.Normal;
+            }
+        }
+
+        /// <inheritdoc/>
+        public void SetWindowType(WindowHandle handle, WindowType type)
+        {
+            // We want to set the "NSWindowStyleMask.UtilityWindow" style mask.
+            // But that is only possible for NSPanel objects, but our window is a subclass of NSWindow.
+            // To work around this the plan is to use "isa swizzling" to dynamically change the superclass
+            // of our window object between NSWindow and NSPanel depending on the WindowType.
+            // - Noggin_bops 2026-09-30
+
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
         public WindowMode GetMode(WindowHandle handle)
         {
             NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
@@ -2268,10 +2299,6 @@ namespace OpenTK.Platform.Native.macOS
                 return WindowBorderStyle.Borderless;
             }
 
-            if (style.HasFlag(NSWindowStyleMask.UtilityWindow))
-            {
-                return WindowBorderStyle.ToolBox;
-            }
 
             if (style.HasFlag(NSWindowStyleMask.Resizable))
             {
@@ -2285,6 +2312,9 @@ namespace OpenTK.Platform.Native.macOS
         public void SetBorderStyle(WindowHandle handle, WindowBorderStyle style)
         {
             NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
+
+            // FIXME: Don't replace the window style mask completely, we want to modify the existing mask.
+            // With SetWindowType we want to be able to set NSWindowStyleMask.UtilityWindow without border stuff messing with it.
 
             switch (style)
             {
@@ -2309,20 +2339,6 @@ namespace OpenTK.Platform.Native.macOS
                         NSWindowStyleMask nsstyle = NSWindowStyleMask.Closable | NSWindowStyleMask.Miniaturizable | NSWindowStyleMask.Titled | NSWindowStyleMask.Resizable;
 
                         objc_msgSend(nswindow.Window, selSetStyleMask, (IntPtr)nsstyle);
-
-                        break;
-                    }
-                case WindowBorderStyle.ToolBox:
-                    {
-                        NSWindowStyleMask nsstyle = NSWindowStyleMask.Closable | NSWindowStyleMask.Miniaturizable | NSWindowStyleMask.Titled | NSWindowStyleMask.Resizable | NSWindowStyleMask.UtilityWindow;
-
-                        objc_msgSend(nswindow.Window, selSetStyleMask, (IntPtr)nsstyle);
-
-                        // FIXME: We can only set the utility flag on a NSPanel and not NSWindow...
-                        // We might need to recreate the window as a panel, alternatively maybe it's
-                        // possible to change the window to be an NSPanel after it's been instantiated?
-
-                        Logger?.LogError("WindowBorderStyle.ToolBox currently doesn't work on macos.");
 
                         break;
                     }
@@ -2416,19 +2432,19 @@ namespace OpenTK.Platform.Native.macOS
         }
 
         /// <inheritdoc/>
-        public void SetMousePassthrough(WindowHandle handle, bool transparent)
-        {
-            NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
-
-            objc_msgSend(nswindow.Window, selSetIgnoresMouseEvents, transparent);
-        }
-
-        /// <inheritdoc/>
         public bool GetMousePassthrough(WindowHandle handle)
         {
             NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
 
             return objc_msgSend_bool(nswindow.Window, selIgnoresMouseEvents);
+        }
+
+        /// <inheritdoc/>
+        public void SetMousePassthrough(WindowHandle handle, bool transparent)
+        {
+            NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
+
+            objc_msgSend(nswindow.Window, selSetIgnoresMouseEvents, transparent);
         }
 
         /// <inheritdoc/>
@@ -2596,6 +2612,18 @@ namespace OpenTK.Platform.Native.macOS
             CG.CGDisplayMoveCursorToPoint(CG.CGMainDisplayID(), center);
             CG.CGWarpMouseCursorPosition(center);
             nswindow.LastMousePosition = center;
+        }
+
+        /// <inheritdoc/>
+        public bool GetFocusable(WindowHandle handle)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        public void SetFocusable(WindowHandle handle, bool focusable)
+        {
+            throw new NotImplementedException();
         }
 
         /// <inheritdoc/>

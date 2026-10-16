@@ -36,6 +36,7 @@ namespace OpenTK.Platform.Native.X11
             SelectionClientClose,
         }
 
+        // FIXME: This enum should actually be of type nuint to work on 32-bit systems...
         internal enum SelectionEventMask : ulong
         {
             SetSelectionOwnerNotifyMask = 1L << SelectionEvent.SetSelectionOwner,
@@ -49,7 +50,7 @@ namespace OpenTK.Platform.Native.X11
         internal struct XFixesSelectionNotifyEvent
         {
             public XEventType type;      /* FocusIn or FocusOut */
-            public ulong serial;         /* # of last request processed by server */
+            public nuint serial;         /* # of last request processed by server */
             public int send_event;       /* true if this came from a SendEvent request */
             public XDisplayPtr display;  /* Display the event was read from */
             public XWindow window;       /* window of event */
@@ -61,15 +62,15 @@ namespace OpenTK.Platform.Native.X11
         }
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern void XFixesSelectCursorInput(XDisplayPtr dpy, XWindow win, ulong eventMask);
+        internal static extern void XFixesSelectCursorInput(XDisplayPtr dpy, XWindow win, nuint eventMask);
 
         internal unsafe struct XFixesCursorImage {
 
             public short x, y;
             public ushort width, height;
             public ushort xhot, yhot;
-            public ulong cursor_serial;
-            public ulong* pixels;
+            public nuint cursor_serial;
+            public nuint* pixels;
             // FIXME: Special struct for v2+?
 //#if XFIXES_MAJOR >= 2
             public XAtom atom;		    /* Version >= 2 only */
@@ -78,7 +79,7 @@ namespace OpenTK.Platform.Native.X11
         }
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern XFixesCursorImage* XFixesGetCursorImage (XDisplayPtr dpy);
+        internal static extern XFixesCursorImage* XFixesGetCursorImage(XDisplayPtr dpy);
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         internal static extern XPointerBarrier XFixesCreatePointerBarrier(

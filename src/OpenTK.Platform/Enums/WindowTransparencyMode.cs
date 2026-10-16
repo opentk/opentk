@@ -22,6 +22,9 @@ namespace OpenTK.Platform
         /// <summary>
         /// Use framebuffer alpha to alpha composit this window per-pixel.
         /// Window border is unaffected.
+        ///
+        /// For per-pixel transparency to work the backbuffer needs to have an alpha channel.
+        /// And the output pixels should have alpha pre-multiplied.
         /// </summary>
         TransparentFramebuffer,
 

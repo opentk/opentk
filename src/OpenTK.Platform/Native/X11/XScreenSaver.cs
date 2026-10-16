@@ -22,9 +22,9 @@ namespace OpenTK.Platform.Native.X11
             public XWindow window;         /* screen saver window */
             public ScreenSaverState state; /* ScreenSaver{Off,On,Disabled} */
             public ScreenSaverKind kind;   /* ScreenSaver{Blanked,Internal,External}*/
-            public ulong til_or_since;     /* milliseconds */
-            public ulong idle;             /* milliseconds */
-            public ulong eventMask;        /* events */
+            public nuint til_or_since;     /* milliseconds */
+            public nuint idle;             /* milliseconds */
+            public nuint eventMask;        /* events */
         }
 
         internal enum ScreenSaverState : int
