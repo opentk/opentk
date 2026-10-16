@@ -20,14 +20,14 @@ namespace OpenTK.Mathematics
     public struct Box2i : IEquatable<Box2i>, IFormattable
     {
         /// <summary>
-        /// An empty box with <c>Min = Vector2i.MaxValue</c> and <c>Max = Vector2i.MinValue</c>.
+        /// An empty box with <c>Min = Vector3i.MaxValue</c> and <c>Max = Vector3i.MinValue</c>.
         /// This box can be used with <see cref="Extend(Vector2i)"/> to create a bounding box without a special case for the first point.
         /// </summary>
         /// <example>
         /// For example:
         /// <code>
-        /// Vector2i[] points = GetPoints();
-        /// Box2i aabb = Box2i.Empty;
+        /// Vector3i[] points = GetPoints();
+        /// Box3i aabb = Box3i.Empty;
         /// for (int i = 0; i &lt; points.Length; i++)
         /// {
         ///     aabb.Extend(points[i]):
@@ -38,15 +38,12 @@ namespace OpenTK.Mathematics
         public static readonly Box2i Empty = new Box2i(Vector2i.MaxValue, Vector2i.MinValue);
 
         /// <summary>
-        /// An empty box with <c>Min = Vector2i.Zero</c> and <c>Max = Vector2i.Zero</c>.
+        /// An empty box with <c><see cref="Min"/> = Vector2i.Zero</c> and <c><see cref="Max"/> = Vector2i.Zero</c>.
         /// </summary>
-        /// <remarks>
-        /// If you want an empty box, consider using <see cref="Empty"/>.
-        /// </remarks>
         public static readonly Box2i Zero = new Box2i(Vector2i.Zero, Vector2i.Zero);
 
         /// <summary>
-        /// A box with a <c>Min = (0, 0)</c> and <c>Max = (1, 1)</c>.
+        /// A box with a <c><see cref="Min"/> = (0, 0)</c> and <c><see cref="Max"/> = (1, 1)</c>.
         /// </summary>
         public static readonly Box2i UnitSquare = new Box2i(Vector2i.Zero, Vector2i.One);
 
@@ -55,11 +52,8 @@ namespace OpenTK.Mathematics
         /// This field is not guaranteed to be less than <see cref="Max"/>.
         /// </summary>
         /// <remarks>
-        /// A box with a minimum point greater than the maximum is not considered valid
-        /// except for a single configuration where <c>Min = Vector2i.PositiveInfinity</c> and <c>Max = Vector2i.NegativeInfinity</c> as is the case with <see cref="Empty"/>.
+        /// A box with a minimum point greater than the maximum is not considered valid.
         /// </remarks>
-        /// <seealso cref="Empty"/>
-        /// <seealso cref="IsEmpty"/>
         public Vector2i Min;
 
         /// <summary>
@@ -67,8 +61,7 @@ namespace OpenTK.Mathematics
         /// This field is not guaranteed to be greater than <see cref="Max"/>.
         /// </summary>
         /// <remarks>
-        /// A box with a minimum point greater than the maximum is not considered valid
-        /// except for a single configuration where <c>Min = Vector2i.PositiveInfinity</c> and <c>Max = Vector2i.NegativeInfinity</c> as is the case with <see cref="Empty"/>.
+        /// A box with a minimum point greater than the maximum is not considered valid.
         /// </remarks>
         public Vector2i Max;
 
@@ -110,16 +103,16 @@ namespace OpenTK.Mathematics
         /// Gets the size of the box.
         /// </summary>
         /// <remarks>
-        /// This function never returns negative values, so <see cref="Empty"/> will have a size of (0, 0).
+        /// If <see cref="Min"/> is greater than <see cref="Max"/> this property will report a negative size.
         /// </remarks>
-        public readonly Vector2i Size => Vector2i.ComponentMax(Vector2i.Zero, Max - Min);
+        public readonly Vector2i Size => Max - Min;
 
         /// <summary>
         /// Gets half the size of the box.
         /// The distance from the center of the box to the edge of the box in X and Y.
         /// </summary>
         /// <remarks>
-        /// This function never returns negative values, so <see cref="Empty"/> will have a size of (0, 0).
+        /// If <see cref="Min"/> is greater than <see cref="Max"/> this property will report a negative size.
         /// </remarks>
         public readonly Vector2 HalfSize => (Vector2)Size / 2.0f;
 
@@ -139,6 +132,11 @@ namespace OpenTK.Mathematics
         public readonly int Area => Size.X * Size.Y;
 
         /// <summary>
+        /// The area of the box as a <see cref="long"/>.
+        /// </summary>
+        public readonly long LongArea => (long)Size.X * (long)Size.Y;
+
+        /// <summary>
         /// If this box is equal to <see cref="Empty"/>.
         /// </summary>
         public readonly bool IsEmpty => this == Empty;
@@ -152,6 +150,11 @@ namespace OpenTK.Mathematics
         /// If this box has zero area.
         /// </summary>
         public readonly bool HasZeroArea => Area == 0;
+
+        /// <summary>
+        /// If any component of <see cref="Min"/> is larger than <see cref="Max"/>.
+        /// </summary>
+        public readonly bool IsInverted => (Min > Max).Any();
 
         /// <summary>
         /// Creates a box from a point and size.
@@ -220,7 +223,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Replaces this box with the intersection of itself and the specified box.
+        /// Replaces this box with the intersection of itself and the specified box, or <see cref="Empty"/> if there is no intersection.
         /// </summary>
         /// <param name="other">The Box with which to intersect.</param>
         public void Intersect(Box2i other)
@@ -229,7 +232,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Returns the intersection of itself and the specified box.
+        /// Returns the intersection of itself and the specified box, or <see cref="Empty"/> if there is no intersection.
         /// </summary>
         /// <param name="other">The Box with which to intersect.</param>
         /// <returns>The intersection of itself and the specified box.</returns>

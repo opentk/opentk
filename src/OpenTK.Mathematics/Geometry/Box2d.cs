@@ -116,16 +116,18 @@ namespace OpenTK.Mathematics
         /// Gets the size of the box.
         /// </summary>
         /// <remarks>
-        /// This function never returns negative values, so <see cref="Empty"/> will have a size of (0, 0).
+        /// If <see cref="Min"/> is greater than <see cref="Max"/> this property will report a negative size.
+        /// <see cref="Empty"/> will have a size of <see cref="Vector2d.NegativeInfinity"/>.
         /// </remarks>
-        public readonly Vector2d Size => Vector2d.ComponentMax(Vector2d.Zero, Max - Min);
+        public readonly Vector2d Size => Max - Min;
 
         /// <summary>
         /// Gets half the size of the box.
         /// The distance from the center of the box to the edge of the box in X and Y.
         /// </summary>
         /// <remarks>
-        /// This function never returns negative values, so <see cref="Empty"/> will have a size of (0, 0).
+        /// If <see cref="Min"/> is greater than <see cref="Max"/> this property will report a negative size.
+        /// <see cref="Empty"/> will have a size of <see cref="Vector2d.NegativeInfinity"/>.
         /// </remarks>
         public readonly Vector2d HalfSize => Size / 2.0f;
 
@@ -158,6 +160,11 @@ namespace OpenTK.Mathematics
         /// If this box has zero area.
         /// </summary>
         public readonly bool HasZeroArea => Area == 0;
+
+        /// <summary>
+        /// If any component of <see cref="Min"/> is larger than <see cref="Max"/>.
+        /// </summary>
+        public readonly bool IsInverted => (Min > Max).Any();
 
         /// <summary>
         /// Creates a box from a point and size.

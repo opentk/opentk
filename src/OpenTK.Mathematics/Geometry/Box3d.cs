@@ -118,16 +118,18 @@ namespace OpenTK.Mathematics
         /// Gets the size of the box.
         /// </summary>
         /// <remarks>
-        /// This function never returns negative values, so <see cref="Empty"/> will have a size of (0, 0).
+        /// If <see cref="Min"/> is greater than <see cref="Max"/> this property will report a negative size.
+        /// <see cref="Empty"/> will have a size of <see cref="Vector3d.NegativeInfinity"/>.
         /// </remarks>
-        public readonly Vector3d Size => Vector3d.ComponentMax(Vector3d.Zero, Max - Min);
+        public readonly Vector3d Size => Max - Min;
 
         /// <summary>
         /// Gets half the size of the box.
         /// The distance from the center of the box to the edge of the box in X and Y.
         /// </summary>
         /// <remarks>
-        /// This function never returns negative values, so <see cref="Empty"/> will have a size of (0, 0).
+        /// If <see cref="Min"/> is greater than <see cref="Max"/> this property will report a negative size.
+        /// <see cref="Empty"/> will have a size of <see cref="Vector3d.NegativeInfinity"/>.
         /// </remarks>
         public readonly Vector3d HalfSize => Size / 2.0d;
 
@@ -165,6 +167,11 @@ namespace OpenTK.Mathematics
         /// If this box has zero volume.
         /// </summary>
         public readonly bool HasZeroVolume => Volume == 0;
+
+        /// <summary>
+        /// If any component of <see cref="Min"/> is larger than <see cref="Max"/>.
+        /// </summary>
+        public readonly bool IsInverted => (Min > Max).Any();
 
         /// <summary>
         /// Creates a box from a point and size.
