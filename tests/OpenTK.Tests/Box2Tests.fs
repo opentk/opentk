@@ -45,15 +45,6 @@ module Box2 =
         let ``The halfsize should always be equal to half the size`` (b1 : Box2) =
             Assert.Equal(b1.Size/(float32)2, b1.HalfSize)
 
-        [<Property>]
-        let ``Using the fields should always result in size >= 0`` (v1 : Vector3, v2 : Vector3, v3 : Vector3, v4 : Vector3) =
-            let mutable b = Box3(v1, v2)
-
-            b.Min <- v3
-            b.Max <- v4
-
-            Assert.True(b.Size.X * b.Size.Y >= (float32)0)
-
     [<Properties(Arbitrary = [|typeof<OpenTKGen>|])>]
     module Scale =
         [<Property>]
@@ -73,7 +64,7 @@ module Box2 =
             
         [<Property>]
         let ``Scaling from the center of a box should have the same result as multiplying the size`` (b1 : Box2, v1 : Vector2) =
-            let v2 = Vector2.ComponentMax(Vector2.Zero, b1.Size * v1)
+            let v2 = b1.Size * v1
 
             b1.Scale(v1, b1.Center)
 

@@ -10,48 +10,48 @@ namespace OpenTK.Platform.Native.X11
     [DebuggerDisplay("XID={(System.IntPtr)Id}")]
     internal struct GLXDrawable
     {
-        public ulong Id { get; }
+        public nuint Id { get; }
 
         public static readonly GLXDrawable None = new GLXDrawable(0);
 
-        public GLXDrawable(ulong id)
+        public GLXDrawable(nuint id)
         {
             Id = id;
         }
 
         public static explicit operator GLXDrawable(GLXWindow window)
         {
-            return new GLXDrawable((ulong)window.Value);
+            return new GLXDrawable(window.Value);
         }
 
         public static explicit operator GLXDrawable(GLXPixmap pixmap)
         {
-            return new GLXDrawable((ulong)pixmap.Value);
+            return new GLXDrawable(pixmap.Value);
         }
 
-        public static implicit operator Graphics.Glx.GLXDrawable(GLXDrawable drawable) => new Graphics.Glx.GLXDrawable((nuint)drawable.Id);
+        public static implicit operator Graphics.Glx.GLXDrawable(GLXDrawable drawable) => new Graphics.Glx.GLXDrawable(drawable.Id);
     }
 
     [DebuggerDisplay("{Value}")]
     internal struct GLXWindow
     {
-        public IntPtr Value { get; }
+        public nuint Value { get; }
 
-        public GLXWindow(IntPtr value)
+        public GLXWindow(nuint value)
         {
             Value = value;
         }
 
-        public static implicit operator Graphics.Glx.GLXWindow(GLXWindow window) => new Graphics.Glx.GLXWindow((nuint)window.Value);
-        public static implicit operator GLXWindow(Graphics.Glx.GLXWindow window) => new GLXWindow((IntPtr)window.XID);
+        public static implicit operator Graphics.Glx.GLXWindow(GLXWindow window) => new Graphics.Glx.GLXWindow(window.Value);
+        public static implicit operator GLXWindow(Graphics.Glx.GLXWindow window) => new GLXWindow(window.XID);
     }
 
     [DebuggerDisplay("{Value}")]
     internal struct GLXPixmap
     {
-        public IntPtr Value { get; }
+        public nuint Value { get; }
 
-        public GLXPixmap(IntPtr value)
+        public GLXPixmap(nuint value)
         {
             Value = value;
         }

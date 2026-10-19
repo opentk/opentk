@@ -32,7 +32,7 @@ namespace OpenTK.Platform.Native.X11
 
         internal IntPtr PortalDesktop;
 
-        internal ulong PortalDesktopGSignal;
+        internal nuint PortalDesktopGSignal;
 
         // FIXME: Move this to X11WindowComponent. - Noggin_bops 2024-12-13
         internal static IntPtr GlibMainLoop;
@@ -47,7 +47,7 @@ namespace OpenTK.Platform.Native.X11
         internal IntPtr UPowerDisplayDevice;
 
         internal static IntPtr GSettingsPtr;
-        internal static ulong GSettingsDoubleClickSignal;
+        internal static nuint GSettingsDoubleClickSignal;
         internal bool GSettingsHasDoubleClickProperty = false;
         
 

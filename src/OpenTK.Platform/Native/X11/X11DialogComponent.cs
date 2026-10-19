@@ -115,14 +115,14 @@ namespace OpenTK.Platform.Native.X11
                     X11.Atoms[KnownAtoms.CARDINAL],
                     out _,
                     out _,
-                    out long nItems,
+                    out nuint nItems,
                     out _,
                     out IntPtr pidPtr);
 
                 if (status == Success && pidPtr != IntPtr.Zero)
                 {
-                    ulong windowPid = *(ulong*)pidPtr;
-                    if (windowPid == (ulong)process.Id)
+                    nuint windowPid = *(nuint*)pidPtr;
+                    if (windowPid == (nuint)process.Id)
                     {
                         // Zenity creates a hidden InputOnly XWindow which is not the window we want.
                         // So we need to also filter so we only get the relevant InputOutput window that is the dialog.
@@ -195,17 +195,17 @@ namespace OpenTK.Platform.Native.X11
                                 XEvent e = new XEvent();
                                 ref XClientMessageEvent client = ref e.ClientMessage;
 
-                                client.Type = XEventType.ClientMessage;
-                                client.Serial = 0;
-                                client.SendEvent = 1;
-                                client.Display = X11.Display;
-                                client.Window = dialogWindow.Value;
-                                client.MessageType = X11.Atoms[KnownAtoms._NET_WM_STATE];
-                                client.Format = 32;
+                                client.type = XEventType.ClientMessage;
+                                client.serial = 0;
+                                client.send_event = 1;
+                                client.display = X11.Display;
+                                client.window = dialogWindow.Value;
+                                client.message_type = X11.Atoms[KnownAtoms._NET_WM_STATE];
+                                client.format = 32;
                                 unsafe
                                 {
                                     client.l[0] = X11._NET_WM_STATE_ADD;
-                                    client.l[1] = (long)X11.Atoms[KnownAtoms._NET_WM_STATE_MODAL].Id;
+                                    client.l[1] = (nint)X11.Atoms[KnownAtoms._NET_WM_STATE_MODAL].Id;
                                     client.l[2] = 0;
                                     client.l[3] = 1;
                                     client.l[4] = 0;
@@ -227,12 +227,12 @@ namespace OpenTK.Platform.Native.X11
                     //Logger?.LogDebug($"{@event.Type}");
                     if (@event.Type == XEventType.ClientMessage)
                     {
-                        if (@event.ClientMessage.Format == 32 &&
+                        if (@event.ClientMessage.format == 32 &&
                             @event.ClientMessage.l[0] == (long)X11.Atoms[KnownAtoms._NET_WM_PING].Id)
                         {
                             // Ping events to know that we are still responsive.
                             XEvent reply = @event;
-                            reply.ClientMessage.Window = X11.DefaultRootWindow;
+                            reply.ClientMessage.window = X11.DefaultRootWindow;
 
                             XSendEvent(X11.Display, X11.DefaultRootWindow, 0, XEventMask.SubstructureNotify | XEventMask.SubstructureRedirect, reply);
                         }
@@ -334,18 +334,18 @@ namespace OpenTK.Platform.Native.X11
                             XEvent e = new XEvent();
                             ref XClientMessageEvent client = ref e.ClientMessage;
 
-                            client.Type = XEventType.ClientMessage;
-                            client.Serial = 0;
-                            client.SendEvent = 1;
-                            client.Display = X11.Display;
-                            client.Window = dialogWindow.Value;
-                            client.MessageType = X11.Atoms[KnownAtoms._NET_ACTIVE_WINDOW];
-                            client.Format = 32;
+                            client.type = XEventType.ClientMessage;
+                            client.serial = 0;
+                            client.send_event = 1;
+                            client.display = X11.Display;
+                            client.window = dialogWindow.Value;
+                            client.message_type = X11.Atoms[KnownAtoms._NET_ACTIVE_WINDOW];
+                            client.format = 32;
                             unsafe
                             {
                                 client.l[0] = 1;
                                 client.l[1] = 0;
-                                client.l[2] = (long)transientFor.Window.Id;
+                                client.l[2] = (nint)transientFor.Window.Id;
                                 client.l[3] = 1;
                                 client.l[4] = 0;
                             }
@@ -364,7 +364,7 @@ namespace OpenTK.Platform.Native.X11
             {
                 // Respond to ping messages.
                 if (@event.Type == XEventType.ClientMessage &&
-                    @event.ClientMessage.Format == 32 &&
+                    @event.ClientMessage.format == 32 &&
                     @event.ClientMessage.l[0] == (long)X11.Atoms[KnownAtoms._NET_WM_PING].Id)
                 {
                     return true;

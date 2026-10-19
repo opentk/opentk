@@ -5,7 +5,7 @@ namespace OpenTK.Platform.Native.X11.XRandR
     internal struct XRRScreenChangeNotifyEvent
     {
         public XEventType Type;
-        public ulong Serial;
+        public nuint Serial;
         public int SendEvent;
         public XDisplayPtr Display;
         public XWindow Window;
@@ -24,7 +24,7 @@ namespace OpenTK.Platform.Native.X11.XRandR
     internal struct XRRNotifyEvent
     {
         public XEventType Type;
-        public ulong Serial;
+        public nuint Serial;
         public int SendEvent;
         public XDisplayPtr Display;
         public XWindow Window;
@@ -34,7 +34,7 @@ namespace OpenTK.Platform.Native.X11.XRandR
     internal struct XRROutputChangeNotifyEvent
     {
         public XEventType Type;
-        public ulong Serial;
+        public nuint Serial;
         public int SendEvent;
         public XDisplayPtr Display;
         public XWindow Window;
@@ -50,7 +50,7 @@ namespace OpenTK.Platform.Native.X11.XRandR
     internal struct XRRCrtcChangedNotifyEvent
     {
         public XEventType Type;
-        public ulong Serial;
+        public nuint Serial;
         public int SendEvent;
         public XDisplayPtr Display;
         public XWindow Window;
@@ -68,7 +68,7 @@ namespace OpenTK.Platform.Native.X11.XRandR
     internal struct XRROutputPropertyNotifyEvent
     {
         public XEventType Type;
-        public ulong Serial;
+        public nuint Serial;
         public int SendEvent;
         public XDisplayPtr Display;
         public XWindow Window;
@@ -82,7 +82,7 @@ namespace OpenTK.Platform.Native.X11.XRandR
     internal struct XRRProviderChangeNotifyEvent
     {
         public XEventType Type;
-        public ulong Serial;
+        public nuint Serial;
         public int SendEvent;
         public XDisplayPtr Display;
         public XWindow Window;
@@ -95,7 +95,7 @@ namespace OpenTK.Platform.Native.X11.XRandR
     internal struct XRRProviderPropertyNotifyEvent
     {
         public XEventType Type;
-        public ulong Serial;
+        public nuint Serial;
         public int SendEvent;
         public XDisplayPtr Display;
         public XWindow Window;
@@ -109,7 +109,7 @@ namespace OpenTK.Platform.Native.X11.XRandR
     internal struct XRRResourceChangeNotifyEvent
     {
         public XEventType Type;
-        public ulong Serial;
+        public nuint Serial;
         public int SendEvent;
         public XDisplayPtr Display;
         public XWindow Window;

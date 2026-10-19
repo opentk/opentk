@@ -48,6 +48,8 @@ namespace OpenTK.Platform.Native.macOS
         // create the opengl context we can make the opengl context transparent.
         public WindowTransparencyMode TransparencyMode { get; set; }
 
+        public bool Focusable { get; set; } = true;
+
         public NSWindowHandle(IntPtr window, IntPtr view, GraphicsApiHints graphicsApiHints) : base(graphicsApiHints)
         {
             Window = window;

@@ -446,6 +446,7 @@ namespace OpenTK.Platform.Native.X11
         LastExtensionError = 255,
     }
 
+    // FIXME: XEventMask should actually be of type nint...
     [Flags]
     internal enum XEventMask : long
     {
@@ -669,6 +670,7 @@ namespace OpenTK.Platform.Native.X11
         YXBanded = 3,
     }
 
+    // FIXME: This enum should actually be of type nuint to work on 32-bit systems...
     [Flags]
     internal enum XIMFlags : ulong {
         PreeditArea      = 0x0001L,
@@ -682,6 +684,7 @@ namespace OpenTK.Platform.Native.X11
         StatusNone       = 0x0800L,
     }
 
+    // FIXME: This enum should actually be of type nuint to work on 32-bit systems...
     internal enum XIMFeedback : ulong
     {
         XIMReverse =           (1L<<0),

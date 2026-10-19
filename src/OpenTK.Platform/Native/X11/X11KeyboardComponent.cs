@@ -583,14 +583,12 @@ namespace OpenTK.Platform.Native.X11
                 // have some way to detect that that isn't a valid option.
                 // - Noggin_bops 2024-12-12
                 List<string> groups = new List<string>(4);
-                if (desc->names->groups.groups0 != XAtom.None)
-                    groups.Add(desc->names->groups.groups0.ToString());
-                if (desc->names->groups.groups1 != XAtom.None)
-                    groups.Add(desc->names->groups.groups1.ToString());
-                if (desc->names->groups.groups2 != XAtom.None)
-                    groups.Add(desc->names->groups.groups2.ToString());
-                if (desc->names->groups.groups3 != XAtom.None)
-                    groups.Add(desc->names->groups.groups3.ToString());
+                Span<XAtom> groupAtoms = desc->names->groups;
+                for (int i = 0; i < groupAtoms.Length; i++)
+                {
+                    if (groupAtoms[i] != XAtom.None)
+                        groups.Add(groupAtoms[i].ToString());
+                }
 
                 XkbFreeKeyboard(desc, 0, true);
 

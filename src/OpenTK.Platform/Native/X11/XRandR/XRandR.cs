@@ -55,7 +55,7 @@ namespace OpenTK.Platform.Native.X11.XRandR
             return new Span<XAtom>(atoms, nprop);
 
             [DllImport(xrandr, CallingConvention = CallingConvention.Cdecl)]
-            static unsafe extern XAtom* XRRListOutputProperties(XDisplayPtr display, RROutput output, out int nprop);
+            static extern XAtom* XRRListOutputProperties(XDisplayPtr display, RROutput output, out int nprop);
         }
 
         internal unsafe struct XRROutputInfo
@@ -64,8 +64,8 @@ namespace OpenTK.Platform.Native.X11.XRandR
             public RRCrtc crtc;
             public byte* name;
             public int nameLen;
-            public ulong mm_width;
-            public ulong mm_height;
+            public nuint mm_width;
+            public nuint mm_height;
             public Connection connection;
             public SubpixelOrder subpixel_order;
             public int ncrtc;

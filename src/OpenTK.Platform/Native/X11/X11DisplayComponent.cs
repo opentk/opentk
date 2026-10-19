@@ -797,13 +797,13 @@ namespace OpenTK.Platform.Native.X11
                     X11.Display, 
                     X11.DefaultRootWindow,
                     X11.Atoms[KnownAtoms._NET_WORKAREA],
-                    0, long.MaxValue,
+                    0, nint.MaxValue,
                     false,
                     X11.Atoms![KnownAtoms.CARDINAL],
                     out XAtom actualType,
                     out int _,
-                    out long workAreaCount,
-                    out long _,
+                    out nuint workAreaCount,
+                    out nuint _,
                     out IntPtr workAreasPtr);
 
                 if (result != Success)
@@ -820,12 +820,12 @@ namespace OpenTK.Platform.Native.X11
                     X11.Display, 
                     X11.DefaultRootWindow,
                     X11.Atoms[KnownAtoms._NET_CURRENT_DESKTOP],
-                    0, long.MaxValue,
+                    0, nint.MaxValue,
                     false,
                     X11.Atoms[KnownAtoms.CARDINAL],
                     out _,
                     out _,
-                    out long items,
+                    out nuint items,
                     out _,
                     out IntPtr desktopPtr);
 
@@ -842,9 +842,9 @@ namespace OpenTK.Platform.Native.X11
                 if (items > 0)
                 unsafe
                 {
-                    int desktop = *(int*)desktopPtr;
+                    nint desktop = *(nint*)desktopPtr;
 
-                    if (workAreaCount >= 4 && desktop < (workAreaCount / 4))
+                    if (workAreaCount >= 4 && desktop < ((nint)workAreaCount / 4))
                     {
                         nint* workAreas = (nint*)workAreasPtr;
 
@@ -947,9 +947,6 @@ namespace OpenTK.Platform.Native.X11
         {
             XDisplayHandle xdisplay = handle.As<XDisplayHandle>(this);
 
-            // FIXME: XID is a `unsigned long int` and should be IntPtr in C#
-            // but for now we have them as ulong.
-            // - Noggin_bops 2024-03-06
             return (IntPtr)xdisplay.Crtc.Id;
         }
 
@@ -962,9 +959,6 @@ namespace OpenTK.Platform.Native.X11
         {
             XDisplayHandle xdisplay = handle.As<XDisplayHandle>(this);
 
-            // FIXME: XID is a `unsigned long int` and should be IntPtr in C#
-            // but for now we have them as ulong.
-            // - Noggin_bops 2024-03-06
             return (IntPtr)xdisplay.Output.Id;
         }
     }

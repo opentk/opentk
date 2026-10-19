@@ -51,19 +51,18 @@ namespace OpenTK.Backends.Tests
         }
 
         // FIXME: Maybe make this allocate less?
-        public static bool EnumCombo<T>(string label, ref T selected) where T : struct,Enum
+        public static bool EnumCombo<T>(string label, ref T selected) where T : struct, Enum
         {
             bool selectionChanged = false;
             if (ImGui.BeginCombo(label, selected.ToString()))
             {
-                string[] names = Enum.GetNames<T>();
                 T[] values = Enum.GetValues<T>();
 
-                for (int i = 0; i < names.Length; i++)
+                for (int i = 0; i < values.Length; i++)
                 {
                     bool isSelected = EqualityComparer<T>.Default.Equals(selected, values[i]);
 
-                    if (ImGui.Selectable(names[i], isSelected))
+                    if (ImGui.Selectable(Enum.GetName(values[i]), isSelected))
                     {
                         selected = values[i];
                         selectionChanged = true;
@@ -76,6 +75,59 @@ namespace OpenTK.Backends.Tests
             }
 
             return selectionChanged;
+        }
+
+        public static bool EnumToggleButtons<T>(string label, ref T selected) where T : struct, Enum
+        {
+            bool selectionChanged = false;
+
+            T[] values = Enum.GetValues<T>();
+
+            ImGui.TextUnformatted(label);
+            ImGui.PushID(label);
+            for (int i = 0; i < values.Length; i++)
+            {
+                bool isSelected = EqualityComparer<T>.Default.Equals(selected, values[i]);
+                
+                ImGui.SameLine();
+                if (ToggleButton(Enum.GetName(values[i])!, ref isSelected))
+                {
+                    selected = values[i];
+                    selectionChanged = true;
+                }
+
+                if (isSelected) ImGui.SetItemDefaultFocus();
+            }
+            ImGui.PopID();
+
+            return selectionChanged;
+        }
+
+        public static bool YesNoButtons(string label, ref bool yesOrNo, string yesLabel = "Yes", string noLabel = "No")
+        {
+            ImGui.PushID(label);
+
+            ImGui.TextUnformatted(label); ImGui.SameLine();
+            bool changed = false;
+
+            bool yes = (yesOrNo == true);
+            if (ToggleButton(yesLabel, ref yes))
+            {
+                yesOrNo = yes;
+                changed = true;
+            }
+
+            ImGui.SameLine();
+
+            bool no = (yesOrNo == false);
+            if (ToggleButton(noLabel, ref no))
+            {
+                yesOrNo = !no;
+                changed = true;
+            }
+
+            ImGui.PopID();
+            return changed;
         }
 
         // Helper to display a little (?) mark which shows a tooltip when hovered.

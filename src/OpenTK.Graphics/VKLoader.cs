@@ -39,10 +39,33 @@ namespace OpenTK.Graphics
             }
             else if (OperatingSystem.IsMacOS())
             {
-                VulkanHandle = NativeLibrary.Load("libvulkan.1.dylib");
+                VulkanHandle = LoadMacOS();
+
+                static IntPtr LoadMacOS()
+                {
+                    IntPtr vulkanHandle;
+                    if (NativeLibrary.TryLoad("libvulkan.dylib", out vulkanHandle))
+                        return vulkanHandle;
+                    else if (NativeLibrary.TryLoad("libvulkan.1.dylib", out vulkanHandle))
+                        return vulkanHandle;
+                    // macOS has stopped looking in /usr/local/lib by default in dlopen,
+                    // but the vulkan sdk installs libvulkan there, so we look for it manually.
+                    // - Noggin_bops 2026-10-19
+                    else if (NativeLibrary.TryLoad("/usr/local/lib/libvulkan.dylib", out vulkanHandle))
+                        return vulkanHandle;
+                    else if (NativeLibrary.TryLoad("libMoltenVK.dylib", out vulkanHandle))
+                        return vulkanHandle;
+                    else if (NativeLibrary.TryLoad("vulkan.framework/vulkan", out vulkanHandle))
+                        return vulkanHandle;
+                    else if (NativeLibrary.TryLoad("MoltenVK.framework/MoltenVK", out vulkanHandle))
+                        return vulkanHandle;
+                    else
+                        throw new DllNotFoundException("Could not find libvulkan.dylib or any suitable alternatives. Tried to open 'libvulkan.dylib', 'libvulkan.1.dylib', '/usr/local/lib/libvulkan.dylib', 'vulkan.framework/vulkan', and 'MoltenVK.framework/MoltenVK'. Maybe you don't have vulkan installed?");
+                }
             }
             else
             {
+                // FIXME: Add a way for users to specify a library name or function for providing the native library handle.
                 throw new PlatformNotSupportedException();
             }
 

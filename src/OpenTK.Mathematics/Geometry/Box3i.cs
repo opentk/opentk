@@ -13,7 +13,7 @@ using System.Runtime.InteropServices;
 namespace OpenTK.Mathematics
 {
     /// <summary>
-    /// Defines an axis-aligned 2d box (cube).
+    /// Defines an axis-aligned 3d box (cube).
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
     [Serializable]
@@ -115,16 +115,16 @@ namespace OpenTK.Mathematics
         /// Gets the size of the box.
         /// </summary>
         /// <remarks>
-        /// This function never returns negative values, so <see cref="Empty"/> will have a size of (0, 0).
+        /// If <see cref="Min"/> is greater than <see cref="Max"/> this property will report a negative size.
         /// </remarks>
-        public readonly Vector3i Size => Vector3i.ComponentMax(Vector3i.Zero, Max - Min);
+        public readonly Vector3i Size => Max - Min;
 
         /// <summary>
         /// Gets half the size of the box.
         /// The distance from the center of the box to the edge of the box in X and Y.
         /// </summary>
         /// <remarks>
-        /// This function never returns negative values, so <see cref="Empty"/> will have a size of (0, 0).
+        /// If <see cref="Min"/> is greater than <see cref="Max"/> this property will report a negative size.
         /// </remarks>
         public readonly Vector3 HalfSize => (Vector3)Size / 2.0f;
 
@@ -144,12 +144,12 @@ namespace OpenTK.Mathematics
         public readonly int Depth => Size.Z;
 
         /// <summary>
-        /// The area of the box.
+        /// The volume of the box.
         /// </summary>
         public readonly int Volume => Size.X * Size.Y * Size.Z;
 
         /// <summary>
-        /// The area of the box as a <see cref="long"/>.
+        /// The volume of the box as a <see cref="long"/>.
         /// </summary>
         public readonly long LongVolume => (long)Size.X * (long)Size.Y * (long)Size.Z;
 
@@ -164,9 +164,14 @@ namespace OpenTK.Mathematics
         public readonly bool IsPoint => Min == Max;
 
         /// <summary>
-        /// If this box has zero area.
+        /// If this box has zero volume.
         /// </summary>
-        public readonly bool HasZeroArea => Volume == 0;
+        public readonly bool HasZeroVolume => Volume == 0;
+
+        /// <summary>
+        /// If any component of <see cref="Min"/> is larger than <see cref="Max"/>.
+        /// </summary>
+        public readonly bool IsInverted => (Min > Max).Any();
 
         /// <summary>
         /// Creates a box from a point and size.
@@ -202,26 +207,15 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Returns the intersection of two boxes.
+        /// Returns the intersection of two boxes, or <see cref="Empty"/> if there is no intersection.
         /// </summary>
         /// <param name="a">The first box.</param>
         /// <param name="b">The second box.</param>
         /// <returns>The intersection of the two boxes.</returns>
         public static Box3i Intersect(Box3i a, Box3i b)
         {
-            return Intersect(in a, in b);
-        }
-
-        /// <summary>
-        /// Returns the intersection of two boxes.
-        /// </summary>
-        /// <param name="a">The first box.</param>
-        /// <param name="b">The second box.</param>
-        /// <returns>The intersection of the two boxes.</returns>
-        public static Box3i Intersect(in Box3i a, in Box3i b)
-        {
-            Vector3i.ComponentMax(in a.Min, in b.Min, out Vector3i min);
-            Vector3i.ComponentMin(in a.Max, in b.Max, out Vector3i max);
+            Vector3i.ComponentMax(a.Min, b.Min, out Vector3i min);
+            Vector3i.ComponentMin(a.Max, b.Max, out Vector3i max);
             if (max.X >= min.X && max.Y >= min.Y && max.Z >= min.Z)
             {
                 return new Box3i(min, max);
@@ -233,16 +227,16 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Replaces this box with the intersection of itself and the specified box.
+        /// Replaces this box with the intersection of itself and the specified box, or <see cref="Empty"/> if there is no intersection.
         /// </summary>
         /// <param name="other">The Box with which to intersect.</param>
         public void Intersect(Box3i other)
         {
-            this = Intersect(in this, in other);
+            this = Intersect(this, other);
         }
 
         /// <summary>
-        /// Returns the intersection of itself and the specified box.
+        /// Returns the intersection of itself and the specified box, or <see cref="Empty"/> if there is no intersection.
         /// </summary>
         /// <param name="other">The Box with which to intersect.</param>
         /// <returns>The intersection of itself and the specified box.</returns>

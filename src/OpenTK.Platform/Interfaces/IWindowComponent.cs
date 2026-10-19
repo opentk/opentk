@@ -119,7 +119,7 @@ namespace OpenTK.Platform
         /// <returns>If <see cref="Destroy(WindowHandle)"/> was called with the window handle.</returns>
         /// <seealso cref="Create(GraphicsApiHints)"/>
         /// <seealso cref="Destroy(WindowHandle)"/>
-        public bool IsWindowDestroyed(WindowHandle handle);
+        bool IsWindowDestroyed(WindowHandle handle);
 
         /// <summary>
         /// Get the title of a window.
@@ -310,6 +310,21 @@ namespace OpenTK.Platform
         DisplayHandle GetDisplay(WindowHandle handle);
 
         /// <summary>
+        /// Gets the window type.
+        /// </summary>
+        /// <param name="handle">The window to query the window type of.</param>
+        /// <returns>The window type of the window.</returns>
+        WindowType GetWindowType(WindowHandle handle);
+
+        /// <summary>
+        /// Set the window type.
+        /// The window type determines both how the window will be presented visually but also if the window is visible in the task bar or not.
+        /// </summary>
+        /// <param name="handle">The window handle.</param>
+        /// <param name="type">The new window type of the window.</param>
+        void SetWindowType(WindowHandle handle, WindowType type);
+
+        /// <summary>
         /// Get the mode of a window.
         /// </summary>
         /// <param name="handle">Handle to a window.</param>
@@ -422,7 +437,7 @@ namespace OpenTK.Platform
         /// <seealso cref="WindowTransparencyMode"/>
         /// <seealso cref="SupportsFramebufferTransparency(WindowHandle)"/>
         /// <seealso cref="GetTransparencyMode(WindowHandle, out float)"/>
-        public void SetTransparencyMode(WindowHandle handle, WindowTransparencyMode transparencyMode, float opacity = 0.5f);
+        void SetTransparencyMode(WindowHandle handle, WindowTransparencyMode transparencyMode, float opacity = 0.5f);
 
         /// <summary>
         /// Gets the transparency mode of the specified window.
@@ -433,7 +448,14 @@ namespace OpenTK.Platform
         /// <seealso cref="WindowTransparencyMode"/>
         /// <seealso cref="SetTransparencyMode(WindowHandle, WindowTransparencyMode, float)"/>
         /// <seealso cref="SupportsFramebufferTransparency(WindowHandle)"/>
-        public WindowTransparencyMode GetTransparencyMode(WindowHandle handle, out float opacity);
+        WindowTransparencyMode GetTransparencyMode(WindowHandle handle, out float opacity);
+
+        /// <summary>
+        /// Gets the input passthrough mode of the specified window.
+        /// </summary>
+        /// <param name="handle">The window to query the input passthrough mode of.</param>
+        /// <returns><see langword="true"/> if the window has input passthrough enabled, <see langword="false"/> otherwise.</returns>
+        bool GetMousePassthrough(WindowHandle handle);
 
         /// <summary>
         /// Controls whether the window lets mouse inputs pass through the window. I.e. the window is transparent to mouse events.
@@ -443,14 +465,7 @@ namespace OpenTK.Platform
         /// </summary>
         /// <param name="handle">Handle to the window whose input transparency to change.</param>
         /// <param name="transparent">Whether the window should be transparent to mouse input or not.</param>
-        public void SetMousePassthrough(WindowHandle handle, bool transparent);
-
-        /// <summary>
-        /// Gets the input passthrough mode of the specified window.
-        /// </summary>
-        /// <param name="handle">The window to query the input passthrough mode of.</param>
-        /// <returns><see langword="true"/> if the window has input passthrough enabled, <see langword="false"/> otherwise.</returns>
-        public bool GetMousePassthrough(WindowHandle handle);
+        void SetMousePassthrough(WindowHandle handle, bool transparent);
 
         /// <summary>
         /// Set if the window is an always on top window or not.
@@ -458,7 +473,7 @@ namespace OpenTK.Platform
         /// <param name="handle">A handle to the window to make always on top.</param>
         /// <param name="floating">Whether the window should be always on top or not.</param>
         /// <seealso cref="IsAlwaysOnTop(WindowHandle)"/>
-        public void SetAlwaysOnTop(WindowHandle handle, bool floating);
+        void SetAlwaysOnTop(WindowHandle handle, bool floating);
 
         /// <summary>
         /// Gets if the current window is always on top or not.
@@ -466,7 +481,7 @@ namespace OpenTK.Platform
         /// <param name="handle">A handle to the window to get whether or not is always on top.</param>
         /// <returns>Whether the window is always on top or not.</returns>
         /// <seealso cref="SetAlwaysOnTop(WindowHandle, bool)"/>
-        public bool IsAlwaysOnTop(WindowHandle handle);
+        bool IsAlwaysOnTop(WindowHandle handle);
 
         /// <summary>
         /// Sets a delegate that is used for hit testing.
@@ -480,7 +495,7 @@ namespace OpenTK.Platform
         /// <param name="test">The hit test delegate.</param>
         /// <seealso cref="HitTest"/>
         /// <seealso cref="HitType"/>
-        public void SetHitTestCallback(WindowHandle handle, HitTest? test);
+        void SetHitTestCallback(WindowHandle handle, HitTest? test);
 
         /// <summary>
         /// Set the cursor object for a window.
@@ -509,6 +524,23 @@ namespace OpenTK.Platform
         /// <seealso cref="CanCaptureCursor"/>
         /// <seealso cref="SetCursorCaptureMode(WindowHandle, CursorCaptureMode)"/>
         void SetCursorCaptureMode(WindowHandle handle, CursorCaptureMode mode);
+
+        //void SetFocusable(WindowHandle handle, bool focusable);
+        //bool GetFocusable(WindowHandle handle);
+        
+        /// <summary>
+        /// Gets if the window is able to receive focus or not.
+        /// </summary>
+        /// <param name="handle">The window handle.</param>
+        /// <returns><see langword="true"/> if the window is able to receive focus, <see langword="false"/> otherwise.</returns>
+        bool GetFocusable(WindowHandle handle);
+
+        /// <summary>
+        /// Sets if the window is able to reveice focus or not.
+        /// </summary>
+        /// <param name="handle">The window handle.</param>
+        /// <param name="focusable">If the window should be able to receive focus or not.</param>
+        void SetFocusable(WindowHandle handle, bool focusable);
 
         /// <summary>
         /// Returns true if the given window has input focus.

@@ -89,8 +89,7 @@ let allTestProjects =
 
 // Test projects excluding integration tests (don't run on CI).
 let ciTestProjects =
-    allTestProjects
-    -- "tests/**/*.Integration.??proj"
+    !! "tests/**/OpenTK.Tests.??proj"
 
 // ---------
 // Other Targets

@@ -93,6 +93,7 @@ namespace OpenTK.Platform.Native.X11.XRandR
         RRNotify = 1,
     }
 
+    // FIXME: This enum should actually be of type nuint to work on 32-bit systems...
     [Flags]
     internal enum XRRModeFlags : ulong
     {

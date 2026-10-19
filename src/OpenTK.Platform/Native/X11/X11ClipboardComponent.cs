@@ -87,12 +87,12 @@ namespace OpenTK.Platform.Native.X11
                     X11.Display,
                     notification.Selection.requestor,
                     notification.Selection.property,
-                    0, long.MaxValue, true,
+                    0, nint.MaxValue, true,
                     // FIXME: AnyPropertyType
                     new XAtom(0),
                     out XAtom actualType,
                     out int actualFormat,
-                    out long numberOfItems,
+                    out nuint numberOfItems,
                     out _,
                     out IntPtr data);
 
@@ -172,13 +172,13 @@ namespace OpenTK.Platform.Native.X11
                 X11.Display,
                 notification.Selection.requestor,
                 notification.Selection.property,
-                0, long.MaxValue, true,
+                0, nint.MaxValue, true,
                 // FIXME: AnyPropertyType
                 new XAtom(0),
                 out XAtom actualType,
                 out int actualFormat,
-                out long numberOfItems,
-                out long remainingBytes,
+                out nuint numberOfItems,
+                out nuint remainingBytes,
                 out IntPtr data);
 
             if (result != Success) {
@@ -440,13 +440,13 @@ namespace OpenTK.Platform.Native.X11
                     X11.Display,
                     notification.Selection.requestor,
                     notification.Selection.property,
-                    0, long.MaxValue, true,
+                    0, nint.MaxValue, true,
                     // FIXME: AnyPropertyType
                     new XAtom(0),
                     out XAtom actualType,
                     out int actualFormat,
-                    out long numberOfItems,
-                    out long remainingBytes,
+                    out nuint numberOfItems,
+                    out nuint remainingBytes,
                     out IntPtr data);
 
                 if (result != Success)
@@ -583,13 +583,13 @@ namespace OpenTK.Platform.Native.X11
                     X11.Display,
                     notification.Selection.requestor,
                     notification.Selection.property,
-                    0, long.MaxValue, true,
+                    0, nint.MaxValue, true,
                     // FIXME: AnyPropertyType
                     new XAtom(0),
                     out XAtom actualType,
                     out int actualFormat,
-                    out long numberOfItems,
-                    out long remainingBytes,
+                    out nuint numberOfItems,
+                    out nuint remainingBytes,
                     out IntPtr data);
 
                 if (result != Success)
@@ -652,13 +652,13 @@ namespace OpenTK.Platform.Native.X11
                 X11.Display,
                 notification.Selection.requestor,
                 notification.Selection.property,
-                0, long.MaxValue, true,
+                0, nint.MaxValue, true,
                 // FIXME: AnyPropertyType
                 new XAtom(0),
                 out XAtom actualType,
                 out int actualFormat,
-                out long numberOfItems,
-                out long remainingBytes,
+                out nuint numberOfItems,
+                out nuint remainingBytes,
                 out IntPtr data);
 
             if (result != Success)

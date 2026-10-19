@@ -49,10 +49,10 @@ namespace OpenTK.Platform.Native.X11
         internal static extern int /* Status */ XShapeQueryExtents(XDisplayPtr display, XWindow window, out bool bounding_shaped, out int x_bounding, out int y_bounding, out uint w_bounding, out uint h_bounding, out bool clip_shaped, out int x_clip, out int y_clip, out uint w_clip, out uint h_clip);
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern void XShapeSelectInput(XDisplayPtr display, XWindow window, ulong mask);
+        internal static extern void XShapeSelectInput(XDisplayPtr display, XWindow window, nuint mask);
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern ulong XShapeInputSelected(XDisplayPtr display, XWindow window);
+        internal static extern nuint XShapeInputSelected(XDisplayPtr display, XWindow window);
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         internal static unsafe extern XRectangle* XShapeGetRectangles(XDisplayPtr display, XWindow window, ShapeKind kind, out int count, out XOrdering ordering);

@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using OpenTK.Platform.Native.X11.XRandR;
 
@@ -10,7 +11,7 @@ namespace OpenTK.Platform.Native.X11
         public XEventType type;
         public XDisplayPtr display;       /* Display the event was read from */
         public XID resourceid;         /* resource id */
-        public ulong serial;       /* serial number of failed request */
+        public nuint serial;       /* serial number of failed request */
         public XError error_code;   /* error code of failed request */
         public XRequestCode request_code; /* Major op-code of failed request */
         public byte minor_code;   /* Minor op-code of failed request */
@@ -111,32 +112,32 @@ namespace OpenTK.Platform.Native.X11
 
     internal struct XAnyEvent
     {
-        public XEventType Type;
-        public ulong Serial;
-        public int SendEvent;
-        public XDisplayPtr Display;
-        public XWindow Window;
+        public XEventType type;
+        public nuint serial;
+        public int send_event;
+        public XDisplayPtr display;
+        public XWindow window;
     }
 
     internal struct XConfigureRequestEvent
     {
-        public XEventType Type;     /* ConfigureRequest */
-        public ulong Serial;        /* # of last request processed by server */
-        public int SendEvent;      /* true if this came from a SendEvent request */
-        public XDisplayPtr Display; /* Display the event was read from */
-        public XWindow Parent;
-        public XWindow Window;
-        public int X, Y;
-        public int Width, Height;
-        public int BorderWidth;
-        public XWindow Above;
-        public int Detail;          /* Above, Below, TopIf, BottomIf, Opposite */
-        public ulong ValueMask;
+        public XEventType type;     /* ConfigureRequest */
+        public nuint serial;        /* # of last request processed by server */
+        public int send_event;      /* true if this came from a SendEvent request */
+        public XDisplayPtr display; /* Display the event was read from */
+        public XWindow parent;
+        public XWindow window;
+        public int x, y;
+        public int width, height;
+        public int border_width;
+        public XWindow above;
+        public int detail;          /* Above, Below, TopIf, BottomIf, Opposite */
+        public nuint value_mask;
     }
 
     internal struct XConfigureEvent {
         public XEventType type;	        /* ConfigureNotify */
-        public ulong serial;	/* # of last request processed by server */
+        public nuint serial;	/* # of last request processed by server */
         public int send_event;	/* true if this came from a SendEvent request */
         public XDisplayPtr display;	/* Display the event was read from */
         public XWindow @event;
@@ -148,26 +149,26 @@ namespace OpenTK.Platform.Native.X11
         public byte override_redirect;
     }
 
+
     [StructLayout(LayoutKind.Explicit)]
     internal unsafe struct XClientMessageEvent
     {
-        [FieldOffset(0) ] public XEventType Type;     /* ClientMessage */
-        [FieldOffset(8) ] public ulong Serial;        /* # of last request processed by server */
-        [FieldOffset(16)] public int SendEvent;      /* true if this came from a SendEvent request */
-        [FieldOffset(24)] public XDisplayPtr Display; /* Display the event was read from */
-        [FieldOffset(32)] public XWindow Window;
-        [FieldOffset(40)] public XAtom MessageType;
-        [FieldOffset(48)] public int Format;
+        [FieldOffset(0) ] public XEventType type;     /* ClientMessage */
+        [FieldOffset(8) ] public nuint serial;        /* # of last request processed by server */
+        [FieldOffset(16)] public int send_event;      /* true if this came from a SendEvent request */
+        [FieldOffset(24)] public XDisplayPtr display; /* Display the event was read from */
+        [FieldOffset(32)] public XWindow window;
+        [FieldOffset(40)] public XAtom message_type;
+        [FieldOffset(48)] public int format;
         [FieldOffset(56)] public fixed byte b[20];
         [FieldOffset(56)] public fixed short s[10];
-        // FIXME: This does not work on 32 bit...
-        [FieldOffset(56)] public fixed long l[5];
+        [FieldOffset(56)] public InlineArray5<nint> l;
     }
 
     internal struct XButtonEvent
     {
         public XEventType type;     /* ButtonPress or ButtonRelease */
-        public ulong serial;        /* # of last request processed by server */
+        public nuint serial;        /* # of last request processed by server */
         public int send_event;      /* true if this came from a SendEvent request */
         public XDisplayPtr display; /* Display the event was read from */
         public XWindow window;      /* ``event'' window it is reported relative to */
@@ -183,7 +184,7 @@ namespace OpenTK.Platform.Native.X11
 
     internal struct XKeyEvent {
         public XEventType type;     /* KeyPress or KeyRelease */
-        public ulong serial;        /* # of last request processed by server */
+        public nuint serial;        /* # of last request processed by server */
         public int send_event;      /* true if this came from a SendEvent request */
         public XDisplayPtr display; /* Display the event was read from */
         public XWindow window;      /* ``event'' window it is reported relative to */
@@ -200,7 +201,7 @@ namespace OpenTK.Platform.Native.X11
     internal struct XMotionEvent
     {
         public XEventType type;     /* MotionNotify */
-        public ulong serial;        /* # of last request processed by server */
+        public nuint serial;        /* # of last request processed by server */
         public int send_event;      /* true if this came from a SendEvent request */
         public XDisplayPtr display; /* Display the event was read from */
         public XWindow window;      /* ``event'' window reported relative to */
@@ -217,7 +218,7 @@ namespace OpenTK.Platform.Native.X11
     internal struct XCrossingEvent
     {
         public XEventType type;            /* EnterNotify or LeaveNotify */
-        public ulong serial;        /* # of last request processed by server */
+        public nuint serial;        /* # of last request processed by server */
         public int send_event;      /* true if this came from a SendEvent request */
         public XDisplayPtr display; /* Display the event was read from */
         public XWindow window;      /* ``event'' window reported relative to */
@@ -240,7 +241,7 @@ namespace OpenTK.Platform.Native.X11
     internal struct XFocusChangeEvent
     {
         public XEventType type;      /* FocusIn or FocusOut */
-        public ulong serial;         /* # of last request processed by server */
+        public nuint serial;         /* # of last request processed by server */
         public int send_event;       /* true if this came from a SendEvent request */
         public XDisplayPtr display;  /* Display the event was read from */
         public XWindow window;       /* window of event */
@@ -256,7 +257,7 @@ namespace OpenTK.Platform.Native.X11
     internal struct XUnmapEvent
     {
         public XEventType type;     /* UnmapNotify */
-        public ulong serial;        /* # of last request processed by server */
+        public nuint serial;        /* # of last request processed by server */
         public int send_event;      /* true if this came from a SendEvent request */
         public XDisplayPtr display; /* Display the event was read from */
         public XWindow @event;
@@ -267,7 +268,7 @@ namespace OpenTK.Platform.Native.X11
     internal struct XReparentEvent
     {
         public XEventType type;     /* ReparentNotify */
-        public ulong serial;        /* # of last request processed by server */
+        public nuint serial;        /* # of last request processed by server */
         public int send_event;      /* true if this came from a SendEvent request */
         public XDisplayPtr display; /* Display the event was read from */
         public XWindow @event;
@@ -280,7 +281,7 @@ namespace OpenTK.Platform.Native.X11
     internal struct XPropertyEvent
     {
         public XEventType type;     /* PropertyNotify */
-        public ulong serial;        /* # of last request processed by server */
+        public nuint serial;        /* # of last request processed by server */
         public int send_event;      /* true if this came from a SendEvent request */
         public XDisplayPtr display; /* Display the event was read from */
         public XWindow window;
@@ -292,7 +293,7 @@ namespace OpenTK.Platform.Native.X11
     internal struct XSelectionEvent
     {
         public XEventType type;		/* SelectionNotify */
-        public ulong serial;	    /* # of last request processed by server */
+        public nuint serial;	    /* # of last request processed by server */
         public int send_event;	    /* true if this came from a SendEvent request */
         public XDisplayPtr display;	/* Display the event was read from */
         public XWindow requestor;
@@ -305,7 +306,7 @@ namespace OpenTK.Platform.Native.X11
     struct XSelectionRequestEvent
     {
         public int type;		/* SelectionRequest */
-        public ulong serial;	/* # of last request processed by server */
+        public nuint serial;	/* # of last request processed by server */
         public int send_event;	/* true if this came from a SendEvent request */
         public XDisplayPtr display;	/* Display the event was read from */
         public XWindow owner;
