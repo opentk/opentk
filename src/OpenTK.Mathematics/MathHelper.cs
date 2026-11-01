@@ -6,10 +6,19 @@
  * Contributions by Andy Gill, James Talton and Georg Wächter.
  */
 
+// Polyfill for older SDKs
+#if NETCOREAPP3_1
+#define NETCOREAPP3_1_OR_GREATER
+#endif
+
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using System.Globalization;
+#if NETCOREAPP3_1_OR_GREATER
+using System.Runtime.Intrinsics;
+using System.Runtime.Intrinsics.X86;
+#endif
 
 namespace OpenTK.Mathematics
 {
@@ -808,25 +817,19 @@ namespace OpenTK.Mathematics
         /// <param name="x">A number.</param>
         /// <returns>An approximation of the inverse square root of the specified number, with an upper error bound of 0.001.</returns>
         /// <remarks>
-        /// This is an improved implementation of the the method known as Carmack's inverse square root
-        /// which is found in the Quake III source code. This implementation comes from
-        /// http://www.codemaestro.com/reviews/review00000105.html. For the history of this method, see
-        /// http://www.beyond3d.com/content/articles/8/.
+        /// Uses the hardware reciprocal square root estimate (rsqrtss) when SSE is available,
+        /// otherwise falls back to 1.0f / MathF.Sqrt(x).
         /// </remarks>
         [Pure]
-        // FIXME: Use hardware rsqrt instead of this.
-        // This is slower than 1.0f/MathF.Sqrt(x)...
         public static float InverseSqrtFast(float x)
         {
-            unsafe
+#if NETCOREAPP3_1_OR_GREATER
+            if (Sse.IsSupported)
             {
-                var xhalf = 0.5f * x;
-                var i = *(int*)&x; // Read bits as integer.
-                i = 0x5f375a86 - (i >> 1); // Make an initial guess for Newton-Raphson approximation
-                x = *(float*)&i; // Convert bits back to float
-                x = x * (1.5f - (xhalf * x * x)); // Perform left single Newton-Raphson step.
-                return x;
+                return Sse.ReciprocalSqrtScalar(Vector128.CreateScalarUnsafe(x)).ToScalar();
             }
+#endif
+            return 1.0f / MathF.Sqrt(x);
         }
 
         /// <summary>
