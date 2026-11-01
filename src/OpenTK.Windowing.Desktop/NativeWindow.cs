@@ -2,7 +2,6 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Reflection;
@@ -38,7 +37,8 @@ namespace OpenTK.Windowing.Desktop
         private Vector2 _lastReportedMousePos;
 
         // Stores exceptions thrown in callbacks so that we can rethrow them after ProcessEvents().
-        private static readonly ConcurrentQueue<ExceptionDispatchInfo> _callbackExceptions = new ConcurrentQueue<ExceptionDispatchInfo>();
+        // GLFW only invokes these callbacks on the main thread, so no synchronization is needed.
+        private static readonly List<ExceptionDispatchInfo> _callbackExceptions = new List<ExceptionDispatchInfo>();
 
         // GLFW cursor we assigned to the window.
         // Null if the cursor is default.
@@ -1241,7 +1241,7 @@ namespace OpenTK.Windowing.Desktop
             }
             catch (Exception e)
             {
-                _callbackExceptions.Enqueue(ExceptionDispatchInfo.Capture(e));
+                _callbackExceptions.Add(ExceptionDispatchInfo.Capture(e));
             }
         }
 
@@ -1253,7 +1253,7 @@ namespace OpenTK.Windowing.Desktop
             }
             catch (Exception e)
             {
-                _callbackExceptions.Enqueue(ExceptionDispatchInfo.Capture(e));
+                _callbackExceptions.Add(ExceptionDispatchInfo.Capture(e));
             }
         }
 
@@ -1265,7 +1265,7 @@ namespace OpenTK.Windowing.Desktop
             }
             catch (Exception e)
             {
-                _callbackExceptions.Enqueue(ExceptionDispatchInfo.Capture(e));
+                _callbackExceptions.Add(ExceptionDispatchInfo.Capture(e));
             }
         }
 
@@ -1282,7 +1282,7 @@ namespace OpenTK.Windowing.Desktop
             }
             catch (Exception e)
             {
-                _callbackExceptions.Enqueue(ExceptionDispatchInfo.Capture(e));
+                _callbackExceptions.Add(ExceptionDispatchInfo.Capture(e));
             }
         }
 
@@ -1294,7 +1294,7 @@ namespace OpenTK.Windowing.Desktop
             }
             catch (Exception e)
             {
-                _callbackExceptions.Enqueue(ExceptionDispatchInfo.Capture(e));
+                _callbackExceptions.Add(ExceptionDispatchInfo.Capture(e));
             }
         }
 
@@ -1306,7 +1306,7 @@ namespace OpenTK.Windowing.Desktop
             }
             catch (Exception e)
             {
-                _callbackExceptions.Enqueue(ExceptionDispatchInfo.Capture(e));
+                _callbackExceptions.Add(ExceptionDispatchInfo.Capture(e));
             }
         }
 
@@ -1318,7 +1318,7 @@ namespace OpenTK.Windowing.Desktop
             }
             catch (Exception e)
             {
-                _callbackExceptions.Enqueue(ExceptionDispatchInfo.Capture(e));
+                _callbackExceptions.Add(ExceptionDispatchInfo.Capture(e));
             }
         }
 
@@ -1330,7 +1330,7 @@ namespace OpenTK.Windowing.Desktop
             }
             catch (Exception e)
             {
-                _callbackExceptions.Enqueue(ExceptionDispatchInfo.Capture(e));
+                _callbackExceptions.Add(ExceptionDispatchInfo.Capture(e));
             }
         }
 
@@ -1353,7 +1353,7 @@ namespace OpenTK.Windowing.Desktop
             }
             catch (Exception e)
             {
-                _callbackExceptions.Enqueue(ExceptionDispatchInfo.Capture(e));
+                _callbackExceptions.Add(ExceptionDispatchInfo.Capture(e));
             }
         }
 
@@ -1370,7 +1370,7 @@ namespace OpenTK.Windowing.Desktop
             }
             catch (Exception e)
             {
-                _callbackExceptions.Enqueue(ExceptionDispatchInfo.Capture(e));
+                _callbackExceptions.Add(ExceptionDispatchInfo.Capture(e));
             }
         }
 
@@ -1389,7 +1389,7 @@ namespace OpenTK.Windowing.Desktop
             }
             catch (Exception e)
             {
-                _callbackExceptions.Enqueue(ExceptionDispatchInfo.Capture(e));
+                _callbackExceptions.Add(ExceptionDispatchInfo.Capture(e));
             }
         }
 
@@ -1408,7 +1408,7 @@ namespace OpenTK.Windowing.Desktop
             }
             catch (Exception e)
             {
-                _callbackExceptions.Enqueue(ExceptionDispatchInfo.Capture(e));
+                _callbackExceptions.Add(ExceptionDispatchInfo.Capture(e));
             }
         }
 
@@ -1439,7 +1439,7 @@ namespace OpenTK.Windowing.Desktop
             }
             catch (Exception e)
             {
-                _callbackExceptions.Enqueue(ExceptionDispatchInfo.Capture(e));
+                _callbackExceptions.Add(ExceptionDispatchInfo.Capture(e));
             }
         }
 
@@ -1451,7 +1451,7 @@ namespace OpenTK.Windowing.Desktop
             }
             catch (Exception e)
             {
-                _callbackExceptions.Enqueue(ExceptionDispatchInfo.Capture(e));
+                _callbackExceptions.Add(ExceptionDispatchInfo.Capture(e));
             }
         }
 
@@ -1470,7 +1470,7 @@ namespace OpenTK.Windowing.Desktop
             }
             catch (Exception e)
             {
-                _callbackExceptions.Enqueue(ExceptionDispatchInfo.Capture(e));
+                _callbackExceptions.Add(ExceptionDispatchInfo.Capture(e));
             }
         }
 
@@ -1499,7 +1499,7 @@ namespace OpenTK.Windowing.Desktop
             }
             catch (Exception e)
             {
-                _callbackExceptions.Enqueue(ExceptionDispatchInfo.Capture(e));
+                _callbackExceptions.Add(ExceptionDispatchInfo.Capture(e));
             }
         }
 
@@ -1566,34 +1566,24 @@ namespace OpenTK.Windowing.Desktop
             RethrowCallbackExceptionsIfNeeded();
         }
 
-        // This list must only ever be accessed from the main thread, inside RethrowCallbackExceptionsIfNeeded().
-        private static readonly List<ExceptionDispatchInfo> _localThreadExceptions = new List<ExceptionDispatchInfo>();
-
         private static void RethrowCallbackExceptionsIfNeeded()
         {
-            // Pull a thread-local copy of the exceptions from the queue.  This is thread-safe,
-            // always collecting up the queue to a known specific instant in time.
-            while (_callbackExceptions.TryDequeue(out ExceptionDispatchInfo exception))
+            if (_callbackExceptions.Count == 1)
             {
-                _localThreadExceptions.Add(exception);
-            }
-
-            if (_localThreadExceptions.Count == 1)
-            {
-                ExceptionDispatchInfo exception = _localThreadExceptions[0];
-                _localThreadExceptions.Clear();
+                ExceptionDispatchInfo exception = _callbackExceptions[0];
+                _callbackExceptions.Clear();
                 exception.Throw();
             }
-            else if (_localThreadExceptions.Count > 1)
+            else if (_callbackExceptions.Count > 1)
             {
                 // FIXME: This doesn't seem to produce great exception messages... is there something we can do about this?
-                Exception[] exceptions = new Exception[_localThreadExceptions.Count];
-                for (int i = 0; i < _localThreadExceptions.Count; i++)
+                Exception[] exceptions = new Exception[_callbackExceptions.Count];
+                for (int i = 0; i < _callbackExceptions.Count; i++)
                 {
-                    exceptions[i] = _localThreadExceptions[i].SourceException;
+                    exceptions[i] = _callbackExceptions[i].SourceException;
                 }
                 Exception exception = new AggregateException("Multiple exceptions in callback handlers while processing events.", exceptions);
-                _localThreadExceptions.Clear();
+                _callbackExceptions.Clear();
                 throw exception;
             }
         }
