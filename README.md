@@ -187,7 +187,7 @@ Requirements
 ============
 
 - Windows (7/8,10), Linux, Mac OS X, *BSD, SteamOS, Android or iOS
-- For graphics, OpenGL drivers or a suitable emulator, such as [ANGLE](https://github.com/opentk/opentk/tree/develop/Dependencies/Readme.txt)
+- For graphics, OpenGL drivers or a suitable emulator, such as [ANGLE](https://chromium.googlesource.com/angle/angle)
 - For audio, OpenAL drivers or OpenAL Soft
 - To develop desktop applications: Visual Studio, Rider, or the command line tools.
 - To develop Android applications: Visual Studio and Xamarin
