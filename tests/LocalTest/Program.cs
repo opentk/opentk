@@ -21,10 +21,11 @@ namespace LocalTest
             Vector2 d = Vector2.Slerp(a, b, 1);
 
             var res = Vector3.Elerp((1e-45f, 1, 1), (1, 1, 4), 0.3f);
-            
+
             GameWindowSettings gwSettings = new GameWindowSettings()
             {
                 UpdateFrequency = 250,
+                Win32OnSizeMoveBehavior = Win32OnSizeMoveBehavior.SendFrameEvents,
             };
 
             NativeWindowSettings nwSettings = new NativeWindowSettings()

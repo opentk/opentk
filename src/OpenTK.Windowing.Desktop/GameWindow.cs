@@ -178,7 +178,7 @@ namespace OpenTK.Windowing.Desktop
         /// </summary>
         public int ExpectedSchedulerPeriod { get; set; } = 16;
 
-        private readonly bool _win32SuspendTimerOnDrag;
+        private readonly Win32OnSizeMoveBehavior _win32SizeMoveBehavior;
 
         private Win32WindowProc _win32WndProc = null;
 
@@ -196,7 +196,7 @@ namespace OpenTK.Windowing.Desktop
             : base(nativeWindowSettings)
         {
             UpdateFrequency = gameWindowSettings.UpdateFrequency;
-            _win32SuspendTimerOnDrag = gameWindowSettings.Win32SuspendTimerOnDrag;
+            _win32SizeMoveBehavior = gameWindowSettings.Win32OnSizeMoveBehavior;
         }
 
         #region Win32 Function for timing
@@ -265,11 +265,12 @@ namespace OpenTK.Windowing.Desktop
             Context?.MakeCurrent();
 
             // Hook the Win32 window message handler and wire up related events
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows) && _win32SuspendTimerOnDrag)
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows) && _win32SizeMoveBehavior != Win32OnSizeMoveBehavior.DoNothing)
             {
                 _win32WndProc = new Win32WindowProc(WindowPtr);
                 _win32WndProc.OnModalSizeMoveBegin += Win32_OnModalSizeMoveBegin;
                 _win32WndProc.OnModalSizeMoveEnd += Win32_OnModalSizeMoveEnd;
+                _win32WndProc.OnModalTimer += Win32_OnModalTimer;
             }
 
             // Send the OnLoad event, to load all user code.
@@ -436,13 +437,50 @@ namespace OpenTK.Windowing.Desktop
         // Only fired when GameWindowSettings.Win32SuspendTimerOnDrag is enabled
         private void Win32_OnModalSizeMoveBegin()
         {
-            _watchUpdate.Stop();
+            switch (_win32SizeMoveBehavior)
+            {
+                case Win32OnSizeMoveBehavior.SuspendTimer:
+                    _watchUpdate.Stop();
+                    break;
+                case Win32OnSizeMoveBehavior.SendFrameEvents:
+                    _win32WndProc.StartModalTimer();
+                    break;
+                case Win32OnSizeMoveBehavior.DoNothing:
+                default:
+                    break;
+            }
         }
 
         // Only fired when GameWindowSettings.Win32SuspendTimerOnDrag is enabled
         private void Win32_OnModalSizeMoveEnd()
         {
-            _watchUpdate.Restart();
+            switch (_win32SizeMoveBehavior)
+            {
+                case Win32OnSizeMoveBehavior.SuspendTimer:
+                    _watchUpdate.Restart();
+                    break;
+                case Win32OnSizeMoveBehavior.SendFrameEvents:
+                    _win32WndProc.StopModalTimer();
+                    break;
+                case Win32OnSizeMoveBehavior.DoNothing:
+                default:
+                    break;
+            }
+        }
+
+        private void Win32_OnModalTimer()
+        {
+            // Try to keep the frame rate limit, but the timer has a 10ms period so we
+            // can't do better than that...
+            double updatePeriod = UpdateFrequency == 0 ? 0 : 1 / UpdateFrequency;
+            double elapsed = _watchUpdate.Elapsed.TotalSeconds;
+            if (elapsed > updatePeriod)
+            {
+                _watchUpdate.Restart();
+
+                OnUpdateFrame(new FrameEventArgs((float)elapsed));
+                OnRenderFrame(new FrameEventArgs((float)elapsed));
+            }
         }
 
         private bool _isDisposed = false;
