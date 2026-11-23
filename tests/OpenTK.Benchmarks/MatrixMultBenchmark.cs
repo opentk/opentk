@@ -28,16 +28,16 @@ namespace OpenTK.Benchmarks
             for (int i = 0; i < Matrices.Length; i++)
             {
                 Matrices[i] = new Matrix4(
-                    rand.NextSingle(), rand.NextSingle(), rand.NextSingle(), rand.NextSingle(),
-                    rand.NextSingle(), rand.NextSingle(), rand.NextSingle(), rand.NextSingle(),
-                    rand.NextSingle(), rand.NextSingle(), rand.NextSingle(), rand.NextSingle(),
-                    rand.NextSingle(), rand.NextSingle(), rand.NextSingle(), rand.NextSingle());
+                    (float)rand.NextDouble(), (float)rand.NextDouble(), (float)rand.NextDouble(), (float)rand.NextDouble(),
+                    (float)rand.NextDouble(), (float)rand.NextDouble(), (float)rand.NextDouble(), (float)rand.NextDouble(),
+                    (float)rand.NextDouble(), (float)rand.NextDouble(), (float)rand.NextDouble(), (float)rand.NextDouble(),
+                    (float)rand.NextDouble(), (float)rand.NextDouble(), (float)rand.NextDouble(), (float)rand.NextDouble());
 
                 SNMatrices[i] = new System.Numerics.Matrix4x4(
-                    rand.NextSingle(), rand.NextSingle(), rand.NextSingle(), rand.NextSingle(),
-                    rand.NextSingle(), rand.NextSingle(), rand.NextSingle(), rand.NextSingle(),
-                    rand.NextSingle(), rand.NextSingle(), rand.NextSingle(), rand.NextSingle(),
-                    rand.NextSingle(), rand.NextSingle(), rand.NextSingle(), rand.NextSingle());
+                    (float)rand.NextDouble(), (float)rand.NextDouble(), (float)rand.NextDouble(), (float)rand.NextDouble(),
+                    (float)rand.NextDouble(), (float)rand.NextDouble(), (float)rand.NextDouble(), (float)rand.NextDouble(),
+                    (float)rand.NextDouble(), (float)rand.NextDouble(), (float)rand.NextDouble(), (float)rand.NextDouble(),
+                    (float)rand.NextDouble(), (float)rand.NextDouble(), (float)rand.NextDouble(), (float)rand.NextDouble());
             }
         }
 
@@ -62,30 +62,6 @@ namespace OpenTK.Benchmarks
             }
             return result;
         }
-
-        [Benchmark]
-        public Matrix4 MultAVX2_FMA()
-        {
-            Matrix4 result = Matrices[0];
-            for (int i = 1; i < Matrices.Length; i++)
-            {
-                Matrix4.MultAVX_FMA(result, Matrices[i], out result);
-            }
-            return result;
-        }
-
-#if NET8_0_OR_GREATER
-        [Benchmark]
-        public Matrix4 MultAVX512_FMA()
-        {
-            Matrix4 result = Matrices[0];
-            for (int i = 1; i < Matrices.Length; i++)
-            {
-                Matrix4.MultAVX512_FMA(result, Matrices[i], out result);
-            }
-            return result;
-        }
-#endif
 
         [Benchmark]
         public System.Numerics.Matrix4x4 MultSN()

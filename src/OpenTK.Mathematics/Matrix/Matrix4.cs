@@ -1583,19 +1583,8 @@ namespace OpenTK.Mathematics
         /// <param name="result">A new instance that is the result of the multiplication.</param>
         public static void Mult(in Matrix4 left, in Matrix4 right, out Matrix4 result)
         {
-#if NET8_0_OR_GREATER
-            if (Avx512F.IsSupported)
-            {
-                MultAVX512_FMA(in left, in right, out result);
-            }
-            else
-#endif
 #if NETCOREAPP3_1_OR_GREATER
-            if (Fma.IsSupported)
-            {
-                MultAVX_FMA(in left, in right, out result);
-            }
-            else if (Sse.IsSupported)
+            if (Sse.IsSupported)
             {
                 MultSSE1(in left, in right, out result);
             }
@@ -1660,7 +1649,6 @@ namespace OpenTK.Mathematics
         }
 
 #if NETCOREAPP3_1_OR_GREATER
-        // Internal so that unit tests can view this with [InternalsVisibleTo]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static unsafe void MultSSE1(in Matrix4 left, in Matrix4 right, out Matrix4 result)
         {
@@ -1799,121 +1787,6 @@ namespace OpenTK.Mathematics
                 fixed (Vector4* row3 = &result.Row3)
                 {
                     Sse.Store(&row3->X, res);
-                }
-            }
-        }
-
-        // Internal so that unit tests can view this with [InternalsVisibleTo]
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static unsafe void MultAVX_FMA(in Matrix4 left, in Matrix4 right, out Matrix4 result)
-        {
-            Unsafe.SkipInit(out result);
-
-            Vector256<float> bRow0_0;
-            Vector256<float> bRow1_1;
-            Vector256<float> bRow2_2;
-            Vector256<float> bRow3_3;
-            fixed (Vector4* m = &right.Row0)
-            {
-                bRow0_0 = Avx.BroadcastVector128ToVector256(&m[0].X);
-                bRow1_1 = Avx.BroadcastVector128ToVector256(&m[1].X);
-                bRow2_2 = Avx.BroadcastVector128ToVector256(&m[2].X);
-                bRow3_3 = Avx.BroadcastVector128ToVector256(&m[3].X);
-            }
-
-            {
-                Vector256<float> aRow0_1;
-                fixed (float* m = &left.Row0.X)
-                {
-                    aRow0_1 = Avx.LoadVector256(m);
-                }
-
-                Vector256<float> res =
-                    Fma.MultiplyAdd(
-                        Avx.Shuffle(aRow0_1, aRow0_1, 0b_00_00_00_00),
-                        bRow0_0,
-                        Fma.MultiplyAdd(
-                            Avx.Shuffle(aRow0_1, aRow0_1, 0b_01_01_01_01),
-                            bRow1_1,
-                            Fma.MultiplyAdd(
-                                Avx.Shuffle(aRow0_1, aRow0_1, 0b_10_10_10_10),
-                                bRow2_2,
-                                Avx.Multiply(Avx.Shuffle(aRow0_1, aRow0_1, 0b_11_11_11_11), bRow3_3))));
-
-                fixed (Vector4* row0_1 = &result.Row0)
-                {
-                    Avx.Store(&row0_1->X, res);
-                }
-            }
-
-            {
-                Vector256<float> aRow2_3;
-                fixed (float* m = &left.Row2.X)
-                {
-                    aRow2_3 = Avx.LoadVector256(m);
-                }
-
-                Vector256<float> res =
-                    Fma.MultiplyAdd(
-                        Avx.Shuffle(aRow2_3, aRow2_3, 0b_00_00_00_00),
-                        bRow0_0,
-                        Fma.MultiplyAdd(
-                            Avx.Shuffle(aRow2_3, aRow2_3, 0b_01_01_01_01),
-                            bRow1_1,
-                            Fma.MultiplyAdd(
-                                Avx.Shuffle(aRow2_3, aRow2_3, 0b_10_10_10_10),
-                                bRow2_2,
-                                Avx.Multiply(Avx.Shuffle(aRow2_3, aRow2_3, 0b_11_11_11_11), bRow3_3))));
-
-                fixed (Vector4* row2_3 = &result.Row2)
-                {
-                    Avx.Store(&row2_3->X, res);
-                }
-            }
-        }
-#endif
-
-#if NET8_0_OR_GREATER
-        // Internal so that unit tests can view this with [InternalsVisibleTo]
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static unsafe void MultAVX512_FMA(in Matrix4 left, in Matrix4 right, out Matrix4 result)
-        {
-            Unsafe.SkipInit(out result);
-
-            Vector512<float> bRow0_0_0_0;
-            Vector512<float> bRow1_1_1_1;
-            Vector512<float> bRow2_2_2_2;
-            Vector512<float> bRow3_3_3_3;
-            fixed (Vector4* m = &right.Row0)
-            {
-                bRow0_0_0_0 = Avx512F.BroadcastVector128ToVector512(&m[0].X);
-                bRow1_1_1_1 = Avx512F.BroadcastVector128ToVector512(&m[1].X);
-                bRow2_2_2_2 = Avx512F.BroadcastVector128ToVector512(&m[2].X);
-                bRow3_3_3_3 = Avx512F.BroadcastVector128ToVector512(&m[3].X);
-            }
-
-            {
-                Vector512<float> aRow0_1_2_3;
-                fixed (float* m = &left.Row0.X)
-                {
-                    aRow0_1_2_3 = Avx512F.LoadVector512(m);
-                }
-
-                Vector512<float> res =
-                    Avx512F.FusedMultiplyAdd(
-                        Avx512F.Shuffle(aRow0_1_2_3, aRow0_1_2_3, 0b_00_00_00_00),
-                        bRow0_0_0_0,
-                        Avx512F.FusedMultiplyAdd(
-                            Avx512F.Shuffle(aRow0_1_2_3, aRow0_1_2_3, 0b_01_01_01_01),
-                            bRow1_1_1_1,
-                            Avx512F.FusedMultiplyAdd(
-                                Avx512F.Shuffle(aRow0_1_2_3, aRow0_1_2_3, 0b_10_10_10_10),
-                                bRow2_2_2_2,
-                                Avx512F.Multiply(Avx512F.Shuffle(aRow0_1_2_3, aRow0_1_2_3, 0b_11_11_11_11), bRow3_3_3_3))));
-
-                fixed (Vector4* row0_1_2_3 = &result.Row0)
-                {
-                    Avx512F.Store(&row0_1_2_3->X, res);
                 }
             }
         }
