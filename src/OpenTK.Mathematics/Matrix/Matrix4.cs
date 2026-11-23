@@ -28,6 +28,7 @@ SOFTWARE.
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
+using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 #if NETCOREAPP3_1_OR_GREATER
@@ -1582,6 +1583,20 @@ namespace OpenTK.Mathematics
         /// <param name="result">A new instance that is the result of the multiplication.</param>
         public static void Mult(in Matrix4 left, in Matrix4 right, out Matrix4 result)
         {
+#if NETCOREAPP3_1_OR_GREATER
+            if (Sse.IsSupported)
+            {
+                MultSSE1(in left, in right, out result);
+            }
+            else
+#endif
+            {
+                MultFallback(in left, in right, out result);
+            }
+        }
+
+        internal static void MultFallback(in Matrix4 left, in Matrix4 right, out Matrix4 result)
+        {
             float leftM11 = left.Row0.X;
             float leftM12 = left.Row0.Y;
             float leftM13 = left.Row0.Z;
@@ -1632,6 +1647,150 @@ namespace OpenTK.Mathematics
             result.Row3.Z = (leftM41 * rightM13) + (leftM42 * rightM23) + (leftM43 * rightM33) + (leftM44 * rightM43);
             result.Row3.W = (leftM41 * rightM14) + (leftM42 * rightM24) + (leftM43 * rightM34) + (leftM44 * rightM44);
         }
+
+#if NETCOREAPP3_1_OR_GREATER
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal static unsafe void MultSSE1(in Matrix4 left, in Matrix4 right, out Matrix4 result)
+        {
+            Unsafe.SkipInit(out result);
+
+            Vector128<float> bRow0;
+            Vector128<float> bRow1;
+            Vector128<float> bRow2;
+            Vector128<float> bRow3;
+            fixed (Vector4* m = &right.Row0)
+            {
+                bRow0 = Sse.LoadVector128(&m[0].X);
+                bRow1 = Sse.LoadVector128(&m[1].X);
+                bRow2 = Sse.LoadVector128(&m[2].X);
+                bRow3 = Sse.LoadVector128(&m[3].X);
+            }
+
+            {
+                Vector128<float> aRow0;
+                fixed (float* m = &left.Row0.X)
+                {
+                    aRow0 = Sse.LoadVector128(m);
+                }
+
+                // a[0] * bRow0 + a[1] * bRow1 + a[2] * bRow2 + a[3] * bRow3
+                Vector128<float> res =
+                        Sse.Add(
+                            Sse.Add(
+                                Sse.Add(
+                                    Sse.Multiply(
+                                        Sse.Shuffle(aRow0, aRow0, 0b_00_00_00_00),
+                                        bRow0),
+                                    Sse.Multiply(
+                                        Sse.Shuffle(aRow0, aRow0, 0b_01_01_01_01),
+                                        bRow1)),
+                                Sse.Multiply(
+                                    Sse.Shuffle(aRow0, aRow0, 0b_10_10_10_10),
+                                    bRow2)),
+                            Sse.Multiply(
+                                Sse.Shuffle(aRow0, aRow0, 0b_11_11_11_11),
+                                bRow3));
+
+                fixed (Vector4* row0 = &result.Row0)
+                {
+                    Sse.Store(&row0->X, res);
+                }
+            }
+
+            {
+                Vector128<float> aRow1;
+                fixed (float* m = &left.Row1.X)
+                {
+                    aRow1 = Sse.LoadVector128(m);
+                }
+
+                // a[0] * bRow0 + a[1] * bRow1 + a[2] * bRow2 + a[3] * bRow3
+                Vector128<float> res =
+                        Sse.Add(
+                            Sse.Add(
+                                Sse.Add(
+                                    Sse.Multiply(
+                                        Sse.Shuffle(aRow1, aRow1, 0b_00_00_00_00),
+                                        bRow0),
+                                    Sse.Multiply(
+                                        Sse.Shuffle(aRow1, aRow1, 0b_01_01_01_01),
+                                        bRow1)),
+                                Sse.Multiply(
+                                    Sse.Shuffle(aRow1, aRow1, 0b_10_10_10_10),
+                                    bRow2)),
+                            Sse.Multiply(
+                                Sse.Shuffle(aRow1, aRow1, 0b_11_11_11_11),
+                                bRow3));
+
+                fixed (Vector4* row1 = &result.Row1)
+                {
+                    Sse.Store(&row1->X, res);
+                }
+            }
+
+            {
+                Vector128<float> aRow2;
+                fixed (float* m = &left.Row2.X)
+                {
+                    aRow2 = Sse.LoadVector128(m);
+                }
+
+                // a[0] * bRow0 + a[1] * bRow1 + a[2] * bRow2 + a[3] * bRow3
+                Vector128<float> res =
+                        Sse.Add(
+                            Sse.Add(
+                                Sse.Add(
+                                    Sse.Multiply(
+                                        Sse.Shuffle(aRow2, aRow2, 0b_00_00_00_00),
+                                        bRow0),
+                                    Sse.Multiply(
+                                        Sse.Shuffle(aRow2, aRow2, 0b_01_01_01_01),
+                                        bRow1)),
+                                Sse.Multiply(
+                                    Sse.Shuffle(aRow2, aRow2, 0b_10_10_10_10),
+                                    bRow2)),
+                            Sse.Multiply(
+                                Sse.Shuffle(aRow2, aRow2, 0b_11_11_11_11),
+                                bRow3));
+
+                fixed (Vector4* row2 = &result.Row2)
+                {
+                    Sse.Store(&row2->X, res);
+                }
+            }
+
+            {
+                Vector128<float> aRow3;
+                fixed (float* m = &left.Row3.X)
+                {
+                    aRow3 = Sse.LoadVector128(m);
+                }
+
+                // a[0] * bRow0 + a[1] * bRow1 + a[2] * bRow2 + a[3] * bRow3
+                Vector128<float> res =
+                        Sse.Add(
+                            Sse.Add(
+                                Sse.Add(
+                                    Sse.Multiply(
+                                        Sse.Shuffle(aRow3, aRow3, 0b_00_00_00_00),
+                                        bRow0),
+                                    Sse.Multiply(
+                                        Sse.Shuffle(aRow3, aRow3, 0b_01_01_01_01),
+                                        bRow1)),
+                                Sse.Multiply(
+                                    Sse.Shuffle(aRow3, aRow3, 0b_10_10_10_10),
+                                    bRow2)),
+                            Sse.Multiply(
+                                Sse.Shuffle(aRow3, aRow3, 0b_11_11_11_11),
+                                bRow3));
+
+                fixed (Vector4* row3 = &result.Row3)
+                {
+                    Sse.Store(&row3->X, res);
+                }
+            }
+        }
+#endif
 
         /// <summary>
         /// Multiplies an instance by a scalar.
