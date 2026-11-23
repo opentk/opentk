@@ -9,10 +9,9 @@
     
     <ItemGroup>
       <ProjectReference Include="..\OpenTK.Core\OpenTK.Core.csproj" />
-      <!-- The PrivateAssets thing is to ensure the .dll.config file gets copied transitively. -->
       <ProjectReference Include="..\OpenTK.Mathematics\OpenTK.Mathematics.csproj" />
       <ProjectReference Include="..\OpenTK.Windowing.Common\OpenTK.Windowing.Common.csproj" />
-      <ProjectReference Include="..\OpenTK.Windowing.GraphicsLibraryFramework\OpenTK.Windowing.GraphicsLibraryFramework.csproj" PrivateAssets="analyzers;build" />
+      <ProjectReference Include="..\OpenTK.Windowing.GraphicsLibraryFramework\OpenTK.Windowing.GraphicsLibraryFramework.csproj" />
     </ItemGroup>
 
     <Import Project="..\..\props\common.props" />

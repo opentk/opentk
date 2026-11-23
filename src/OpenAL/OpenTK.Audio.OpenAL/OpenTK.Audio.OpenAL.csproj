@@ -3,15 +3,6 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Deterministic>true</Deterministic>
-    <LangVersion>latest</LangVersion>
-  </PropertyGroup>
-
-  <PropertyGroup>
-    <Version>4.0.0</Version>
-    <Description>OpenAL bindings, and audio utility classes.</Description>
-    <ApplicationIcon />
-    <OutputType>Library</OutputType>
-    <StartupObject />
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>../../../OpenTK.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
