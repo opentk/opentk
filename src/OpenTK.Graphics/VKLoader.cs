@@ -27,24 +27,39 @@ namespace OpenTK.Graphics
 
             if (OperatingSystem.IsWindows())
             {
-                VulkanHandle = NativeLibrary.Load("vulkan-1.dll");
+                Init(NativeLibrary.Load("vulkan-1.dll"));
             }
             else if (OperatingSystem.IsLinux())
             {
-                VulkanHandle = NativeLibrary.Load("libvulkan.so.1");
+                Init(NativeLibrary.Load("libvulkan.so.1"));
             }
             else if (OperatingSystem.IsFreeBSD())
             {
-                VulkanHandle = NativeLibrary.Load("libvulkan.so");
+                Init(NativeLibrary.Load("libvulkan.so"));
             }
             else if (OperatingSystem.IsMacOS())
             {
-                VulkanHandle = NativeLibrary.Load("libvulkan.1.dylib");
+                Init(NativeLibrary.Load("libvulkan.1.dylib"));
             }
             else
             {
                 throw new PlatformNotSupportedException();
             }
+        }
+
+        /// <summary>
+        /// Initializes the vulkan loader with the specified pointer to an external vulkan library.
+        /// The vulkan library pointer can be obtained with <see cref="NativeLibrary.Load(string)"/>.
+        /// </summary>
+        /// <exception cref="EntryPointNotFoundException">Couldn't load <c>vkGetInstanceProcAddr</c> from the loaded vulkan library.</exception>
+        public static void Init(IntPtr vulkanHandle)
+        {
+            if (VulkanHandle != IntPtr.Zero)
+            {
+                return;
+            }
+
+            VulkanHandle = vulkanHandle;
 
             if (NativeLibrary.TryGetExport(VulkanHandle, "vkGetInstanceProcAddr", out IntPtr vkGetInstanceProcAddrFnptr) == false)
             {
