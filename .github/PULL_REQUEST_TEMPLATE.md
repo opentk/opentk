@@ -14,3 +14,7 @@
 ### Comments
 
 * Any other comments to help understand the change.
+
+### AI disclosure statement
+
+* Was AI used in the creation of this PR and to what extent?
