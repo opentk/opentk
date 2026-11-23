@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using System.Threading;
 using OpenTK.Windowing.GraphicsLibraryFramework;
 
 namespace OpenTK.Windowing.Desktop
@@ -9,14 +10,131 @@ namespace OpenTK.Windowing.Desktop
     /// </summary>
     internal unsafe class Win32WindowProc : IDisposable
     {
-        [DllImport("user32.dll")]
+        private readonly IntPtr _hWnd;
+        private readonly IntPtr _defaultWndProc;
+        private readonly WndProcPointer _openTKWndProcDelegate;
+        private UIntPtr _modalSizeMoveTimer = UIntPtr.Zero;
+
+        // When true, WM_ENTERSIZEMOVE has been received, and this will reset
+        // to false when WM_ENTERSIZEMOVE or WM_CAPTURECHANGED is received.
+        private bool _inModalSizeMoveState = false;
+
+        /// <summary>
+        /// Invoked when Windows indicates modal move/size activity has started (the user
+        /// is dragging or resizing the window).
+        /// </summary>
+        public event Action OnModalSizeMoveBegin;
+
+        /// <summary>
+        /// Invoked when Windows indicates modal move/size activity has ended.
+        /// </summary>
+        public event Action OnModalSizeMoveEnd;
+
+        /// <summary>
+        /// Invoked when timer events from the timer started with <see cref="StartModalTimer()"/> are received.
+        /// </summary>
+        public event Action OnModalTimer;
+
+        public Win32WindowProc(Window* window)
+        {
+            _hWnd = GLFW.GetWin32Window(window);
+            _openTKWndProcDelegate = WndProc;
+            var openTKWndProc = Marshal.GetFunctionPointerForDelegate(_openTKWndProcDelegate);
+            _defaultWndProc = SetWindowPointer(_hWnd, (int)WindowLongFlags.GWL_WNDPROC, openTKWndProc);
+            // We need a unique ID for our timer that no-one else will use.
+            // So we follow Raymond Chen's advice and assign a pointer in our address space as the ID.
+            // See: https://devblogs.microsoft.com/oldnewthing/20191009-00/?p=102974/
+            _modalSizeMoveTimer = new UIntPtr((void*)Marshal.AllocCoTaskMem(0));
+        }
+
+        private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam)
+        {
+            switch (msg)
+            {
+                case WM_ENTERSIZEMOVE:
+                    _inModalSizeMoveState = true;
+                    OnModalSizeMoveBegin?.Invoke();
+                    break;
+
+                case WM_EXITSIZEMOVE:
+                case WM_CAPTURECHANGED:
+                    if (_inModalSizeMoveState)
+                    {
+                        _inModalSizeMoveState = false;
+                        OnModalSizeMoveEnd?.Invoke();
+                    }
+                    break;
+                case WM_TIMER:
+                    if ((void*)wParam == (void*)_modalSizeMoveTimer)
+                    {
+                        OnModalTimer?.Invoke();
+                    }
+                    break;
+                default:
+                    break;
+            }
+
+            return CallWindowProc(_defaultWndProc, _hWnd, msg, wParam, lParam);
+        }
+
+        public void StartModalTimer()
+        {
+            SetTimer(_hWnd, _modalSizeMoveTimer, USER_TIMER_MINIMUM, null);
+        }
+
+        public void StopModalTimer()
+        {
+            KillTimer(_hWnd, _modalSizeMoveTimer);
+            _modalSizeMoveTimer = UIntPtr.Zero;
+        }
+
+        private bool _isDisposed = false;
+
+        public void Dispose()
+        {
+            if (_isDisposed)
+            {
+                return;
+            }
+
+            if (_defaultWndProc != IntPtr.Zero)
+            {
+                SetWindowPointer(_hWnd, (int)WindowLongFlags.GWL_WNDPROC, _defaultWndProc);
+            }
+
+            Marshal.FreeCoTaskMem(new IntPtr((void*)_modalSizeMoveTimer));
+
+            GC.SuppressFinalize(this);
+            _isDisposed = true;
+        }
+
+        #region WI32_INTEROP
+#pragma warning disable SA1203 // Constants should appear before fields
+
+        private const int WM_TIMER = 0x0113;
+        private const int USER_TIMER_MINIMUM = 0x0000000A;
+
+        // Indicates the beginning of modal size/move activity.
+        private const int WM_ENTERSIZEMOVE = 0x0231;
+
+        // Indicates the completion of modal size/move activity.
+        private const int WM_EXITSIZEMOVE = 0x0232;
+
+        // On older versions of Windows, this is sent when a user initiates
+        // sizing but then does not actually resize the window. In that case,
+        // WM_EXITSIZEMOVE is not sent. This can be sent in other scenarios
+        // so it is also necessary to track whether WM_ENTERSIZEMOVE has been
+        // received, in order to use this as a proxy for WM_EXITSIZEMOVE.
+        private const int WM_CAPTURECHANGED = 0x0215;
+
+        [DllImport("user32.dll", SetLastError = true)]
         private static extern int SetWindowLong(IntPtr hWnd, int nIndex, int dwNewLong);
 
-        [DllImport("user32.dll")]
+        [DllImport("user32.dll", SetLastError = true)]
         private static extern IntPtr SetWindowLongPtr(IntPtr hWnd, int nIndex, IntPtr dwNewLong);
 
         // Invokes the 32- or 64-bit version depending on pointer size.
-        public static IntPtr SetWindowPointer(IntPtr hWnd, int nIndex, IntPtr dwNewLong)
+        private static IntPtr SetWindowPointer(IntPtr hWnd, int nIndex, IntPtr dwNewLong)
         {
             if (Environment.Is64BitProcess)
             {
@@ -45,94 +163,20 @@ namespace OpenTK.Windowing.Desktop
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
         private static extern IntPtr CallWindowProc(IntPtr wndProc, IntPtr hWnd, int msg, IntPtr wParam, IntPtr lParam);
 
+        [DllImport("user32.dll", SetLastError = true)]
+        private static extern UIntPtr SetTimer(IntPtr hwnd, UIntPtr nIDEvent, uint uElapse, TimeProc lpTimerFunc);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        private static extern bool KillTimer(IntPtr hwnd, UIntPtr uIDEvent);
+
+        [UnmanagedFunctionPointer(CallingConvention.Winapi)]
+        private delegate void TimeProc(IntPtr hwnd, uint msg, UIntPtr idEvent, uint dwTime);
+
+        [UnmanagedFunctionPointer(CallingConvention.Winapi)]
         private delegate IntPtr WndProcPointer(IntPtr hwnd, int msg, IntPtr wparam, IntPtr lparam);
 
-        // Indicates the beginning of modal size/move activity.
-        private const int WM_ENTERSIZEMOVE = 0x0231;
-
-        // Indicates the completion of modal size/move activity.
-        private const int WM_EXITSIZEMOVE = 0x0232;
-
-        // On older versions of Windows, this is sent when a user initiates
-        // sizing but then does not actually resize the window. In that case,
-        // WM_EXITSIZEMOVE is not sent. This can be sent in other scenarios
-        // so it is also necessary to track whether WM_ENTERSIZEMOVE has been
-        // received, in order to use this as a proxy for WM_EXITSIZEMOVE.
-        private const int WM_CAPTURECHANGED = 0x0215;
-
-        // Native win32 window handle
-        private readonly IntPtr _hWnd;
-
-        // Original message-handler
-        private readonly IntPtr _defaultWndProc;
-
-        // Local message-handler
-        private readonly WndProcPointer _openTKWndProcDelegate;
-
-        // When true, WM_ENTERSIZEMOVE has been received, and this will reset
-        // to false when WM_ENTERSIZEMOVE or WM_CAPTURECHANGED is received.
-        private bool _inModalSizeMoveState = false;
-
-        /// <summary>
-        /// Invoked when Windows indicates modal move/size activity has started (the user
-        /// is dragging or resizing the window).
-        /// </summary>
-        public event Action OnModalSizeMoveBegin;
-
-        /// <summary>
-        /// Invoked when Windows indicates modal move/size activity has ended.
-        /// </summary>
-        public event Action OnModalSizeMoveEnd;
-
-        public Win32WindowProc(Window* window)
-        {
-            _hWnd = GLFW.GetWin32Window(window);
-            _openTKWndProcDelegate = WndProc;
-            var openTKWndProc = Marshal.GetFunctionPointerForDelegate(_openTKWndProcDelegate);
-            _defaultWndProc = SetWindowPointer(_hWnd, (int)WindowLongFlags.GWL_WNDPROC, openTKWndProc);
-        }
-
-        private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam)
-        {
-            switch (msg)
-            {
-                case WM_ENTERSIZEMOVE:
-                    _inModalSizeMoveState = true;
-                    OnModalSizeMoveBegin?.Invoke();
-                    break;
-
-                case WM_EXITSIZEMOVE:
-                case WM_CAPTURECHANGED:
-                    if (_inModalSizeMoveState)
-                    {
-                        _inModalSizeMoveState = false;
-                        OnModalSizeMoveEnd?.Invoke();
-                    }
-                    break;
-
-                default:
-                    break;
-            }
-
-            return CallWindowProc(_defaultWndProc, _hWnd, msg, wParam, lParam);
-        }
-
-        private bool _isDisposed = false;
-
-        public void Dispose()
-        {
-            if (_isDisposed)
-            {
-                return;
-            }
-
-            if (_defaultWndProc != IntPtr.Zero)
-            {
-                SetWindowPointer(_hWnd, (int)WindowLongFlags.GWL_WNDPROC, _defaultWndProc);
-            }
-
-            GC.SuppressFinalize(this);
-            _isDisposed = true;
-        }
+#pragma warning restore SA1203 // Constants should appear before fields
+        #endregion
     }
 }

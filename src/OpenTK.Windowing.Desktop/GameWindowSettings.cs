@@ -57,6 +57,13 @@ namespace OpenTK.Windowing.Desktop
         /// Gets or sets a value which controls whether the timer which drives <see cref="FrameEventArgs"/> is
         /// suspended when the user begins dragging the window or window frame. Only applies to Windows applications.
         /// </summary>
-        public bool Win32SuspendTimerOnDrag { get; set; } = false;
+        [Obsolete("Use " + nameof(Win32OnSizeMoveBehavior) + " with " + nameof(Win32OnSizeMoveBehavior.SuspendTimer) + " to get the same behavior as before.")]
+        public bool Win32SuspendTimerOnDrag
+        {
+            get => Win32OnSizeMoveBehavior == Win32OnSizeMoveBehavior.SuspendTimer;
+            set => Win32OnSizeMoveBehavior = Win32OnSizeMoveBehavior.SuspendTimer;
+        }
+
+        public Win32OnSizeMoveBehavior Win32OnSizeMoveBehavior { get; set; } = Win32OnSizeMoveBehavior.SendFrameEvents;
     }
 }
