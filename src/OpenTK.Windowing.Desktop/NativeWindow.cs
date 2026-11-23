@@ -1131,14 +1131,20 @@ namespace OpenTK.Windowing.Desktop
                 return WindowState.Minimized;
             }
 
-            if (GLFW.GetWindowAttrib(WindowPtr, WindowAttributeGetBool.Maximized))
-            {
-                return WindowState.Maximized;
-            }
-
+            // We need to do this before checking maximized because on X11 maximized
+            // returns true even when the window is fullscreen (the maximized state is independent from fullscreen)
+            // so we want to report WindowState.Fullscreen if the glfw has a monitor set, if it doesn't then we can
+            // report WindowState.Maximized.
+            // See: https://github.com/opentk/opentk/issues/1927
+            // - Noggin_bops 2026-11-23
             if (GLFW.GetWindowMonitor(WindowPtr) != null)
             {
                 return WindowState.Fullscreen;
+            }
+
+            if (GLFW.GetWindowAttrib(WindowPtr, WindowAttributeGetBool.Maximized))
+            {
+                return WindowState.Maximized;
             }
 
             return WindowState.Normal;
