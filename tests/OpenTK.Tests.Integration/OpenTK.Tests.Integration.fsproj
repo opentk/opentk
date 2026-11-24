@@ -11,6 +11,7 @@
   
   <ItemGroup>
     <Compile Include="GameWindowTests.fs" />
+    <Compile Include="GlfwErrorTests.fs" />
   </ItemGroup>
   
   <ItemGroup>

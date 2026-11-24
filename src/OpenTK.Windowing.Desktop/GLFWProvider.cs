@@ -23,10 +23,13 @@ namespace OpenTK.Windowing.Desktop
     /// </summary>
     public static class GLFWProvider
     {
-        // FIXME: This will throw "through" native frames, which doesn't work anywhere other than windows.
         private static void DefaultErrorCallback(ErrorCode errorCode, string description)
         {
-            throw new GLFWException($"{description} (this is thrown from OpenTKs default GLFW error handler, if you find this exception inconvenient set your own error callback using GLFWProvider.SetErrorCallback)", errorCode);
+            // GLFW invokes this callback on a native stack. Throwing here can
+            // terminate the process before a managed caller can catch the error.
+            // Keep GLFW.GetError available to callers, including expected errors
+            // such as a clipboard that cannot provide text.
+            Trace.TraceError("GLFW error ({0}): {1}", errorCode, description);
         }
 
         private static GLFWCallbacks.ErrorCallback ErrorCallback = DefaultErrorCallback;
@@ -34,6 +37,11 @@ namespace OpenTK.Windowing.Desktop
         /// <summary>
         /// Sets the error handler callback that GLFW errors get reported to.
         /// </summary>
+        /// <remarks>
+        /// The callback runs on a native stack and must not throw exceptions.
+        /// The default callback reports errors through <see cref="Trace"/>;
+        /// callers can retrieve the error using <see cref="GLFW.GetError"/>.
+        /// </remarks>
         /// <param name="errorCallback">The error callback delegate to set as the error callback.</param>
         public static void SetErrorCallback(GLFWCallbacks.ErrorCallback errorCallback)
         {
@@ -71,7 +79,10 @@ namespace OpenTK.Windowing.Desktop
         /// <summary>
         /// Makes sure GLFW is intialized.
         /// </summary>
-        /// <exception cref="GLFWException">If this function is not called from the main thread and <see cref="CheckForMainThread"/> is true.</exception>
+        /// <exception cref="GLFWException">
+        /// If this function is not called from the main thread and <see cref="CheckForMainThread"/> is true,
+        /// or if GLFW could not be initialized.
+        /// </exception>
         public static void EnsureInitialized()
         {
             if (CheckForMainThread)
@@ -129,7 +140,11 @@ namespace OpenTK.Windowing.Desktop
                 }
 
                 GLFW.SetErrorCallback(ErrorCallback);
-                GLFW.Init();
+                if (!GLFW.Init())
+                {
+                    ErrorCode error = GLFW.GetError(out string description);
+                    throw new GLFWException($"Failed to initialize GLFW: {description}", error);
+                }
                 Initialized = true;
             }
         }
