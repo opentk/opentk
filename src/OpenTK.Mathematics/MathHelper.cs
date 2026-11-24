@@ -6,10 +6,21 @@
  * Contributions by Andy Gill, James Talton and Georg Wächter.
  */
 
+// Polyfill for older SDKs
+#if NETCOREAPP3_1
+#define NETCOREAPP3_1_OR_GREATER
+#endif
+
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using System.Globalization;
+using System.Runtime.CompilerServices;
+
+#if NETCOREAPP3_1_OR_GREATER
+using System.Runtime.Intrinsics;
+using System.Runtime.Intrinsics.X86;
+#endif
 
 namespace OpenTK.Mathematics
 {
@@ -808,24 +819,22 @@ namespace OpenTK.Mathematics
         /// <param name="x">A number.</param>
         /// <returns>An approximation of the inverse square root of the specified number, with an upper error bound of 0.001.</returns>
         /// <remarks>
-        /// This is an improved implementation of the the method known as Carmack's inverse square root
-        /// which is found in the Quake III source code. This implementation comes from
-        /// http://www.codemaestro.com/reviews/review00000105.html. For the history of this method, see
-        /// http://www.beyond3d.com/content/articles/8/.
+        /// This function uses hardware instructions for inverse sqrt when possible and reverts back to
+        /// <c>1.0f / MathF.Sqrt(x)</c> when such instructions are not available.
         /// </remarks>
         [Pure]
-        // FIXME: Use hardware rsqrt instead of this.
-        // This is slower than 1.0f/MathF.Sqrt(x)...
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float InverseSqrtFast(float x)
         {
-            unsafe
+#if NETCOREAPP3_1_OR_GREATER
+            if (Sse.IsSupported)
             {
-                var xhalf = 0.5f * x;
-                var i = *(int*)&x; // Read bits as integer.
-                i = 0x5f375a86 - (i >> 1); // Make an initial guess for Newton-Raphson approximation
-                x = *(float*)&i; // Convert bits back to float
-                x = x * (1.5f - (xhalf * x * x)); // Perform left single Newton-Raphson step.
-                return x;
+                return Sse.ReciprocalSqrtScalar(Vector128.CreateScalarUnsafe(x)).ToScalar();
+            }
+            else
+#endif
+            {
+                return 1 / MathF.Sqrt(x);
             }
         }
 
@@ -835,25 +844,15 @@ namespace OpenTK.Mathematics
         /// <param name="x">A number.</param>
         /// <returns>An approximation of the inverse square root of the specified number, with an upper error bound of 0.001.</returns>
         /// <remarks>
-        /// This is an improved implementation of the the method known as Carmack's inverse square root
-        /// which is found in the Quake III source code. This implementation comes from
-        /// http://www.codemaestro.com/reviews/review00000105.html. For the history of this method, see
-        /// http://www.beyond3d.com/content/articles/8/.
-        /// double magic number from: https://cs.uwaterloo.ca/~m32rober/rsqrt.pdf
+        /// This function uses hardware instructions for inverse sqrt when possible and reverts back to
+        /// <c>1.0 / Math.Sqrt(x)</c> when such instruction are not available.
         /// chapter 4.8.
         /// </remarks>
         [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static double InverseSqrtFast(double x)
         {
-            unsafe
-            {
-                double xhalf = 0.5 * x;
-                long i = *(long*)&x; // Read bits as long.
-                i = 0x5fe6eb50c7b537a9 - (i >> 1); // Make an initial guess for Newton-Raphson approximation
-                x = *(double*)&i; // Convert bits back to double
-                x = x * (1.5 - (xhalf * x * x)); // Perform left single Newton-Raphson step.
-                return x;
-            }
+            return 1 / Math.Sqrt(x);
         }
 
         /// <summary>
