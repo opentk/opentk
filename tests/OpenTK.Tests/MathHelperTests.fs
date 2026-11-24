@@ -352,14 +352,14 @@ module MathHelper =
 
     [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
     module ``MathHelper`` = 
-        [<Fact>]
-        let ``Step returns values between 0.0 and 1.0``(edge: float32, x: float32) =
+        [<Property>]
+        let ``Step returns values between 0 and 1``(edge: float32, x: float32) =
             let v = MathHelper.Step(edge, x);
             Assert.True(v >= 0.0f);
             Assert.True(v <= 1.0f);
 
-        [<Fact>]
-        let ``Smoothstep returns values between 0.0 and 1.0``(edge0: float32, edge1: float32, x: float32) =
+        [<Property>]
+        let ``Smoothstep returns values between 0 and 1``(edge0: float32, edge1: float32, x: float32) =
             let v = MathHelper.Smoothstep(edge0, edge1, x);
             Assert.True(v >= 0.0f || System.Single.IsNaN(v));
             Assert.True(v <= 1.0f || System.Single.IsNaN(v));
