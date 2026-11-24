@@ -349,3 +349,17 @@ module MathHelper =
             let b = 0.0f
             Assert.Equal(a,b)
             Assert.True(MathHelper.ApproximatelyEquivalent(a, b, 0.0001f))
+
+    [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
+    module ``MathHelper`` = 
+        [<Property>]
+        let ``Step returns values between 0 and 1``(edge: float32, x: float32) =
+            let v = MathHelper.Step(edge, x);
+            Assert.True(v >= 0.0f);
+            Assert.True(v <= 1.0f);
+
+        [<Property>]
+        let ``Smoothstep returns values between 0 and 1``(edge0: float32, edge1: float32, x: float32) =
+            let v = MathHelper.Smoothstep(edge0, edge1, x);
+            Assert.True(v >= 0.0f || System.Single.IsNaN(v));
+            Assert.True(v <= 1.0f || System.Single.IsNaN(v));
