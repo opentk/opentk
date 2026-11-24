@@ -720,6 +720,48 @@ namespace OpenTK.Mathematics
         public static int Sign(long d) => Math.Sign(d);
 
         /// <summary>
+        /// Returns the value of a step function located at <paramref name="edge"/> evaluated at <paramref name="x"/>.
+        /// </summary>
+        /// <param name="edge">The location of the step.</param>
+        /// <param name="x">The input value.</param>
+        /// <returns>0.0 if <c><paramref name="x"/> &lt; <paramref name="edge"/></c>, 1.0 otherwise.</returns>
+        public static float Step(float edge, float x) => x < edge ? 0.0f : 1.0f;
+
+        /// <summary>
+        /// Returns the value of a step function located at <paramref name="edge"/> evaluated at <paramref name="x"/>.
+        /// </summary>
+        /// <param name="edge">The location of the step.</param>
+        /// <param name="x">The input value.</param>
+        /// <returns>0.0 if <c><paramref name="x"/> &lt; <paramref name="edge"/></c>, 1.0 otherwise.</returns>
+        public static double Step(double edge, double x) => x < edge ? 0.0 : 1.0;
+
+        /// <summary>
+        /// Returns the result of the smoothstep function at <paramref name="x"/> with edges <paramref name="edge0"/> and <paramref name="edge1"/>.
+        /// </summary>
+        /// <param name="edge0">The lower edge of the smoothstep function.</param>
+        /// <param name="edge1">The upper edge of the smoothstep function.</param>
+        /// <param name="x">The value used for interpolation.</param>
+        /// <returns>0.0 if <paramref name="x"/> &lt; <paramref name="edge0"/>, 1.0 if <paramref name="x"/> &gt; <paramref name="edge1"/>, or a value between 0.0 and 1.0 if <paramref name="x"/> is inbetween.</returns>
+        public static float Smoothstep(float edge0, float edge1, float x)
+        {
+            float t = Clamp((x - edge0) / (edge1 - edge0), 0.0f, 1.0f);
+            return t * t * (3.0f - (2.0f * t));
+        }
+
+        /// <summary>
+        /// Returns the result of the smoothstep function at <paramref name="x"/> with edges <paramref name="edge0"/> and <paramref name="edge1"/>.
+        /// </summary>
+        /// <param name="edge0">The lower edge of the smoothstep function.</param>
+        /// <param name="edge1">The upper edge of the smoothstep function.</param>
+        /// <param name="x">The value used for interpolation.</param>
+        /// <returns>0.0 if <paramref name="x"/> &lt; <paramref name="edge0"/>, 1.0 if <paramref name="x"/> &gt; <paramref name="edge1"/>, or a value between 0.0 and 1.0 if <paramref name="x"/> is inbetween.</returns>
+        public static double Smoothstep(double edge0, double edge1, double x)
+        {
+            double t = Clamp((x - edge0) / (edge1 - edge0), 0.0, 1.0);
+            return t * t * (3.0 - (2.0 * t));
+        }
+
+        /// <summary>
         /// Returns the next power of two that is greater than or equal to the specified number.
         /// </summary>
         /// <param name="n">The specified number.</param>
