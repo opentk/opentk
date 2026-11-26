@@ -25,8 +25,14 @@ namespace CLGenerator.Parsing
                     {
                         string ext = NameMangler.MaybeRemoveStart(extension.Name, "cl_");
 
-                        string url = "TODO: Proper link";
+                        string url = $"https://registry.khronos.org/OpenCL/extensions/{vendorFunctions.Vendor.ToLower()}/cl_{ext}.txt";
                         extensionURLs.Add(new Link(url, $"{ext}.txt"));
+                    }
+
+                    // FIXME: Hack to get function documentation links.
+                    if (extensionURLs.Count == 0)
+                    {
+                        extensionURLs.Add(new Link($"https://registry.khronos.org/OpenCL/specs/unified/refpages/man/html/{function.NativeFunction.EntryPoint}.html"));
                     }
 
                     FunctionDocumentation? functionDocumentation = GetFunctionDocumentation(api, function.NativeFunction);
