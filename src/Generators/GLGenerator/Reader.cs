@@ -38,11 +38,11 @@ namespace GLGenerator
 
     internal static class Reader
     {
-        private static readonly string TempDirectory = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? "", "..", "..", "..", "SpecificationFiles");
+        private static readonly string SpecificationFilesDirectory = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? "", "..", "..", "..", "SpecificationFiles");
 
         private static string ReadFileFromUrl(string url, string fileName)
         {
-            string filePath = Path.Combine(TempDirectory, fileName);
+            string filePath = Path.Combine(SpecificationFilesDirectory, fileName);
             if (File.Exists(filePath))
             {
                 Logger.Info($"Found cache file for {fileName}, using that.");
@@ -51,9 +51,9 @@ namespace GLGenerator
             else
             {
                 Logger.Info($"Didn't find cache file for {fileName}, downloading from {url}. (looked for {fileName} in this directory: {Path.GetFullPath(filePath)})");
-                if (!Directory.Exists(TempDirectory))
+                if (!Directory.Exists(SpecificationFilesDirectory))
                 {
-                    Directory.CreateDirectory(TempDirectory);
+                    Directory.CreateDirectory(SpecificationFilesDirectory);
                 }
 
                 HttpClient client = new HttpClient();
@@ -80,9 +80,9 @@ namespace GLGenerator
             else
             {
                 Logger.Info($"Didn't find cache file for {fileName}, downloading from {url}. (looked for {fileName} in this directory: {Path.GetFullPath(filePath)})");
-                if (!Directory.Exists(TempDirectory))
+                if (!Directory.Exists(SpecificationFilesDirectory))
                 {
-                    Directory.CreateDirectory(TempDirectory);
+                    Directory.CreateDirectory(SpecificationFilesDirectory);
                 }
                 stream = CreateCache(url, filePath);
             }
@@ -130,7 +130,7 @@ namespace GLGenerator
 
         internal static DocumentationSource ReadDocumentationFromGithub()
         {
-            Path.GetFullPath(TempDirectory);
+            Path.GetFullPath(SpecificationFilesDirectory);
             string[] DocumentationFolders = new string[]
             {
                 "es1.1",
@@ -143,7 +143,7 @@ namespace GLGenerator
 
             for (int folderIndex = 0; folderIndex < DocumentationFolders.Length; folderIndex++)
             {
-                string folderPath = Path.Combine(TempDirectory, DocumentationFolders[folderIndex]);
+                string folderPath = Path.Combine(SpecificationFilesDirectory, DocumentationFolders[folderIndex]);
                 if (Directory.Exists(folderPath))
                 {
                     Logger.Info($"Found cache folder for {DocumentationFolders[folderIndex]} documentation, using that.");

@@ -59,7 +59,8 @@ namespace CLGenerator
                 List<ResolvedApi> resolvedApis = Processor.ResolveReferences(apis, files);
 
                 // FIXME: Documentation.
-                Documentation documentation = new Documentation(new Dictionary<OutputApi, Dictionary<string, FunctionDocumentation>>());
+                var docs = Reader.ReadDocumentationFromRefPages();
+                Documentation documentation = DocumentationParser.Parse(docs);
 
                 IOverloader[] overloaders = [
                    new TrimNameOverloader(TrimNameOverloader.EndingsNotToTrimOpenGL),

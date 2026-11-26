@@ -1,0 +1,2564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.23">
+<title>clGetDeviceInfo(3)</title>
+<style>
+/*! normalize.css v2.1.2 | MIT License | git.io/normalize */
+/* ========================================================================== HTML5 display definitions ========================================================================== */
+/** Correct `block` display not defined in IE 8/9. */
+article, aside, details, figcaption, figure, footer, header, hgroup, main, nav, section, summary { display: block; }
+
+/** Correct `inline-block` display not defined in IE 8/9. */
+audio, canvas, video { display: inline-block; }
+
+/** Prevent modern browsers from displaying `audio` without controls. Remove excess height in iOS 5 devices. */
+audio:not([controls]) { display: none; height: 0; }
+
+/** Address `[hidden]` styling not present in IE 8/9. Hide the `template` element in IE, Safari, and Firefox < 22. */
+[hidden], template { display: none; }
+
+script { display: none !important; }
+
+/* ========================================================================== Base ========================================================================== */
+/** 1. Set default font family to sans-serif. 2. Prevent iOS text size adjust after orientation change, without disabling user zoom. */
+html { font-family: sans-serif; /* 1 */ -ms-text-size-adjust: 100%; /* 2 */ -webkit-text-size-adjust: 100%; /* 2 */ }
+
+/** Remove default margin. */
+body { margin: 0; }
+
+/* ========================================================================== Links ========================================================================== */
+/** Remove the gray background color from active links in IE 10. */
+a { background: transparent; }
+
+/** Address `outline` inconsistency between Chrome and other browsers. */
+a:focus { outline: thin dotted; }
+
+/** Improve readability when focused and also mouse hovered in all browsers. */
+a:active, a:hover { outline: 0; }
+
+/* ========================================================================== Typography ========================================================================== */
+/** Address variable `h1` font-size and margin within `section` and `article` contexts in Firefox 4+, Safari 5, and Chrome. */
+h1 { font-size: 2em; margin: 0.67em 0; }
+
+/** Address styling not present in IE 8/9, Safari 5, and Chrome. */
+abbr[title] { border-bottom: 1px dotted; }
+
+/** Address style set to `bolder` in Firefox 4+, Safari 5, and Chrome. */
+b, strong { font-weight: bold; }
+
+/** Address styling not present in Safari 5 and Chrome. */
+dfn { font-style: italic; }
+
+/** Address differences between Firefox and other browsers. */
+hr { -moz-box-sizing: content-box; box-sizing: content-box; height: 0; }
+
+/** Address styling not present in IE 8/9. */
+mark { background: #ff0; color: #000; }
+
+/** Correct font family set oddly in Safari 5 and Chrome. */
+code, kbd, pre, samp { font-family: monospace, serif; font-size: 1em; }
+
+/** Improve readability of pre-formatted text in all browsers. */
+pre { white-space: pre-wrap; }
+
+/** Set consistent quote types. */
+q { quotes: "\201C" "\201D" "\2018" "\2019"; }
+
+/** Address inconsistent and variable font size in all browsers. */
+small { font-size: 80%; }
+
+/** Prevent `sub` and `sup` affecting `line-height` in all browsers. */
+sub, sup { font-size: 75%; line-height: 0; position: relative; vertical-align: baseline; }
+
+sup { top: -0.5em; }
+
+sub { bottom: -0.25em; }
+
+/* ========================================================================== Embedded content ========================================================================== */
+/** Remove border when inside `a` element in IE 8/9. */
+img { border: 0; }
+
+/** Correct overflow displayed oddly in IE 9. */
+svg:not(:root) { overflow: hidden; }
+
+/* ========================================================================== Figures ========================================================================== */
+/** Address margin not present in IE 8/9 and Safari 5. */
+figure { margin: 0; }
+
+/* ========================================================================== Forms ========================================================================== */
+/** Define consistent border, margin, and padding. */
+fieldset { border: 1px solid #c0c0c0; margin: 0 2px; padding: 0.35em 0.625em 0.75em; }
+
+/** 1. Correct `color` not being inherited in IE 8/9. 2. Remove padding so people aren't caught out if they zero out fieldsets. */
+legend { border: 0; /* 1 */ padding: 0; /* 2 */ }
+
+/** 1. Correct font family not being inherited in all browsers. 2. Correct font size not being inherited in all browsers. 3. Address margins set differently in Firefox 4+, Safari 5, and Chrome. */
+button, input, select, textarea { font-family: inherit; /* 1 */ font-size: 100%; /* 2 */ margin: 0; /* 3 */ }
+
+/** Address Firefox 4+ setting `line-height` on `input` using `!important` in the UA stylesheet. */
+button, input { line-height: normal; }
+
+/** Address inconsistent `text-transform` inheritance for `button` and `select`. All other form control elements do not inherit `text-transform` values. Correct `button` style inheritance in Chrome, Safari 5+, and IE 8+. Correct `select` style inheritance in Firefox 4+ and Opera. */
+button, select { text-transform: none; }
+
+/** 1. Avoid the WebKit bug in Android 4.0.* where (2) destroys native `audio` and `video` controls. 2. Correct inability to style clickable `input` types in iOS. 3. Improve usability and consistency of cursor style between image-type `input` and others. */
+button, html input[type="button"], input[type="reset"], input[type="submit"] { -webkit-appearance: button; /* 2 */ cursor: pointer; /* 3 */ }
+
+/** Re-set default cursor for disabled elements. */
+button[disabled], html input[disabled] { cursor: default; }
+
+/** 1. Address box sizing set to `content-box` in IE 8/9. 2. Remove excess padding in IE 8/9. */
+input[type="checkbox"], input[type="radio"] { box-sizing: border-box; /* 1 */ padding: 0; /* 2 */ }
+
+/** 1. Address `appearance` set to `searchfield` in Safari 5 and Chrome. 2. Address `box-sizing` set to `border-box` in Safari 5 and Chrome (include `-moz` to future-proof). */
+input[type="search"] { -webkit-appearance: textfield; /* 1 */ -moz-box-sizing: content-box; -webkit-box-sizing: content-box; /* 2 */ box-sizing: content-box; }
+
+/** Remove inner padding and search cancel button in Safari 5 and Chrome on OS X. */
+input[type="search"]::-webkit-search-cancel-button, input[type="search"]::-webkit-search-decoration { -webkit-appearance: none; }
+
+/** Remove inner padding and border in Firefox 4+. */
+button::-moz-focus-inner, input::-moz-focus-inner { border: 0; padding: 0; }
+
+/** 1. Remove default vertical scrollbar in IE 8/9. 2. Improve readability and alignment in all browsers. */
+textarea { overflow: auto; /* 1 */ vertical-align: top; /* 2 */ }
+
+/* ========================================================================== Tables ========================================================================== */
+/** Remove most spacing between table cells. */
+table { border-collapse: collapse; border-spacing: 0; }
+
+meta.foundation-mq-small { font-family: "only screen and (min-width: 768px)"; width: 768px; }
+
+meta.foundation-mq-medium { font-family: "only screen and (min-width:1280px)"; width: 1280px; }
+
+meta.foundation-mq-large { font-family: "only screen and (min-width:1440px)"; width: 1440px; }
+
+*, *:before, *:after { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; }
+
+html, body { font-size: 100%; }
+
+body { background: #fff; color: #222; padding: 0; margin: 0; font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif; font-weight: normal; font-style: normal; line-height: 1; position: relative; cursor: auto; }
+
+a:hover { cursor: pointer; }
+
+img, object, embed { max-width: 100%; height: auto; }
+
+object, embed { height: 100%; }
+
+img { -ms-interpolation-mode: bicubic; }
+
+#map_canvas img, #map_canvas embed, #map_canvas object, .map_canvas img, .map_canvas embed, .map_canvas object { max-width: none !important; }
+
+.left { float: left !important; }
+
+.right { float: right !important; }
+
+.text-left { text-align: left !important; }
+
+.text-right { text-align: right !important; }
+
+.text-center { text-align: center !important; }
+
+.text-justify { text-align: justify !important; }
+
+.hide { display: none; }
+
+.antialiased { -webkit-font-smoothing: antialiased; }
+
+img { display: inline-block; vertical-align: middle; }
+
+textarea { height: auto; min-height: 50px; }
+
+select { width: 100%; }
+
+object, svg { display: inline-block; vertical-align: middle; }
+
+.center { margin-left: auto; margin-right: auto; }
+
+.spread { width: 100%; }
+
+p.lead, .paragraph.lead > p, #preamble > .sectionbody > .paragraph:first-of-type p { font-size: 1.21875em; line-height: 1.6; }
+
+.subheader, .admonitionblock td.content > .title, .audioblock > .title, .exampleblock > .title, .imageblock > .title, .listingblock > .title, .literalblock > .title, .stemblock > .title, .openblock > .title, .paragraph > .title, .quoteblock > .title, table.tableblock > .title, .verseblock > .title, .videoblock > .title, .dlist > .title, .olist > .title, .ulist > .title, .qlist > .title, .hdlist > .title { line-height: 1.4; color: black; font-weight: 300; margin-top: 0.2em; margin-bottom: 0.5em; }
+
+/* Typography resets */
+div, dl, dt, dd, ul, ol, li, h1, h2, h3, #toctitle, .sidebarblock > .content > .title, h4, h5, h6, pre, form, p, blockquote, th, td { margin: 0; padding: 0; direction: ltr; }
+
+/* Default Link Styles */
+a { color: #0068b0; text-decoration: none; line-height: inherit; }
+a:hover, a:focus { color: #333; }
+a img { border: none; }
+
+/* Default paragraph styles */
+p { font-family: Noto, sans-serif; font-weight: normal; font-size: 1em; line-height: 1.6; margin-bottom: 0.75em; text-rendering: optimizeLegibility; }
+p aside { font-size: 0.875em; line-height: 1.35; font-style: italic; }
+
+/* Default header styles */
+h1, h2, h3, #toctitle, .sidebarblock > .content > .title, h4, h5, h6 { font-family: Noto, sans-serif; font-weight: normal; font-style: normal; color: black; text-rendering: optimizeLegibility; margin-top: 0.5em; margin-bottom: 0.5em; line-height: 1.2125em; }
+h1 small, h2 small, h3 small, #toctitle small, .sidebarblock > .content > .title small, h4 small, h5 small, h6 small { font-size: 60%; color: #4d4d4d; line-height: 0; }
+
+h1 { font-size: 2.125em; }
+
+h2 { font-size: 1.6875em; }
+
+h3, #toctitle, .sidebarblock > .content > .title { font-size: 1.375em; }
+
+h4 { font-size: 1.125em; }
+
+h5 { font-size: 1.125em; }
+
+h6 { font-size: 1em; }
+
+hr { border: solid #ddd; border-width: 1px 0 0; clear: both; margin: 1.25em 0 1.1875em; height: 0; }
+
+/* Helpful Typography Defaults */
+em, i { font-style: italic; line-height: inherit; }
+
+strong, b { font-weight: bold; line-height: inherit; }
+
+small { font-size: 60%; line-height: inherit; }
+
+code { font-family: Consolas, "Liberation Mono", Courier, monospace; font-weight: normal; color: #264357; }
+
+/* Lists */
+ul, ol, dl { font-size: 1em; line-height: 1.6; margin-bottom: 0.75em; list-style-position: outside; font-family: Noto, sans-serif; }
+
+ul, ol { margin-left: 1.5em; }
+ul.no-bullet, ol.no-bullet { margin-left: 1.5em; }
+
+/* Unordered Lists */
+ul li ul, ul li ol { margin-left: 1.25em; margin-bottom: 0; font-size: 1em; /* Override nested font-size change */ }
+ul.square li ul, ul.circle li ul, ul.disc li ul { list-style: inherit; }
+ul.square { list-style-type: square; }
+ul.circle { list-style-type: circle; }
+ul.disc { list-style-type: disc; }
+ul.no-bullet { list-style: none; }
+
+/* Ordered Lists */
+ol li ul, ol li ol { margin-left: 1.25em; margin-bottom: 0; }
+
+/* Definition Lists */
+dl dt { margin-bottom: 0.3em; font-weight: bold; }
+dl dd { margin-bottom: 0.75em; }
+
+/* Abbreviations */
+abbr, acronym { text-transform: uppercase; font-size: 90%; color: black; border-bottom: 1px dotted #ddd; cursor: help; }
+
+abbr { text-transform: none; }
+
+/* Blockquotes */
+blockquote { margin: 0 0 0.75em; padding: 0.5625em 1.25em 0 1.1875em; border-left: 1px solid #ddd; }
+blockquote cite { display: block; font-size: 0.8125em; color: #365E7A; }
+blockquote cite:before { content: "\2014 \0020"; }
+blockquote cite a, blockquote cite a:visited { color: #365E7A; }
+
+blockquote, blockquote p { line-height: 1.6; color: #333; }
+
+/* Microformats */
+.vcard { display: inline-block; margin: 0 0 1.25em 0; border: 1px solid #ddd; padding: 0.625em 0.75em; }
+.vcard li { margin: 0; display: block; }
+.vcard .fn { font-weight: bold; font-size: 0.9375em; }
+
+.vevent .summary { font-weight: bold; }
+.vevent abbr { cursor: auto; text-decoration: none; font-weight: bold; border: none; padding: 0 0.0625em; }
+
+@media only screen and (min-width: 768px) { h1, h2, h3, #toctitle, .sidebarblock > .content > .title, h4, h5, h6 { line-height: 1.4; }
+  h1 { font-size: 2.75em; }
+  h2 { font-size: 2.3125em; }
+  h3, #toctitle, .sidebarblock > .content > .title { font-size: 1.6875em; }
+  h4 { font-size: 1.4375em; } }
+/* Tables */
+table { background: #fff; margin-bottom: 1.25em; border: solid 1px #d8d8ce; }
+table thead, table tfoot { background: #eee; font-weight: bold; }
+table thead tr th, table thead tr td, table tfoot tr th, table tfoot tr td { padding: 0.5em 0.625em 0.625em; font-size: inherit; color: #222; text-align: left; }
+table tr th, table tr td { padding: 0.5625em 0.625em; font-size: inherit; color: #6d6e71; }
+table tr.even, table tr.alt, table tr:nth-of-type(even) { background: #f8f8f8; }
+table thead tr th, table tfoot tr th, table tbody tr td, table tr td, table tfoot tr td { display: table-cell; line-height: 1.4; }
+
+body { -moz-osx-font-smoothing: grayscale; -webkit-font-smoothing: antialiased; tab-size: 4; }
+
+h1, h2, h3, #toctitle, .sidebarblock > .content > .title, h4, h5, h6 { line-height: 1.4; }
+
+a:hover, a:focus { text-decoration: underline; }
+
+.clearfix:before, .clearfix:after, .float-group:before, .float-group:after { content: " "; display: table; }
+.clearfix:after, .float-group:after { clear: both; }
+
+*:not(pre) > code { font-size: inherit; font-style: normal !important; letter-spacing: 0; padding: 0; background-color: transparent; -webkit-border-radius: 0; border-radius: 0; line-height: inherit; word-wrap: break-word; }
+*:not(pre) > code.nobreak { word-wrap: normal; }
+*:not(pre) > code.nowrap { white-space: nowrap; }
+
+pre, pre > code { line-height: 1.6; color: #264357; font-family: Consolas, "Liberation Mono", Courier, monospace; font-weight: normal; }
+
+em em { font-style: normal; }
+
+strong strong { font-weight: normal; }
+
+.keyseq { color: #333333; }
+
+kbd { font-family: Consolas, "Liberation Mono", Courier, monospace; display: inline-block; color: black; font-size: 0.65em; line-height: 1.45; background-color: #f7f7f7; border: 1px solid #ccc; -webkit-border-radius: 3px; border-radius: 3px; -moz-box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2), 0 0 0 0.1em white inset; -webkit-box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2), 0 0 0 0.1em white inset; box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2), 0 0 0 0.1em white inset; margin: 0 0.15em; padding: 0.2em 0.5em; vertical-align: middle; position: relative; top: -0.1em; white-space: nowrap; }
+
+.keyseq kbd:first-child { margin-left: 0; }
+
+.keyseq kbd:last-child { margin-right: 0; }
+
+.menuseq, .menuref { color: #000; }
+
+.menuseq b:not(.caret), .menuref { font-weight: inherit; }
+
+.menuseq { word-spacing: -0.02em; }
+.menuseq b.caret { font-size: 1.25em; line-height: 0.8; }
+.menuseq i.caret { font-weight: bold; text-align: center; width: 0.45em; }
+
+b.button:before, b.button:after { position: relative; top: -1px; font-weight: normal; }
+
+b.button:before { content: "["; padding: 0 3px 0 2px; }
+
+b.button:after { content: "]"; padding: 0 2px 0 3px; }
+
+#header, #content, #footnotes, #footer { width: 100%; margin-left: auto; margin-right: auto; margin-top: 0; margin-bottom: 0; max-width: 62.5em; *zoom: 1; position: relative; padding-left: 1.5em; padding-right: 1.5em; }
+#header:before, #header:after, #content:before, #content:after, #footnotes:before, #footnotes:after, #footer:before, #footer:after { content: " "; display: table; }
+#header:after, #content:after, #footnotes:after, #footer:after { clear: both; }
+
+#content { margin-top: 1.25em; }
+
+#content:before { content: none; }
+
+#header > h1:first-child { color: black; margin-top: 2.25rem; margin-bottom: 0; }
+#header > h1:first-child + #toc { margin-top: 8px; border-top: 1px solid #ddd; }
+#header > h1:only-child, body.toc2 #header > h1:nth-last-child(2) { border-bottom: 1px solid #ddd; padding-bottom: 8px; }
+#header .details { border-bottom: 1px solid #ddd; line-height: 1.45; padding-top: 0.25em; padding-bottom: 0.25em; padding-left: 0.25em; color: #365E7A; display: -ms-flexbox; display: -webkit-flex; display: flex; -ms-flex-flow: row wrap; -webkit-flex-flow: row wrap; flex-flow: row wrap; }
+#header .details span:first-child { margin-left: -0.125em; }
+#header .details span.email a { color: #333; }
+#header .details br { display: none; }
+#header .details br + span:before { content: "\00a0\2013\00a0"; }
+#header .details br + span.author:before { content: "\00a0\22c5\00a0"; color: #333; }
+#header .details br + span#revremark:before { content: "\00a0|\00a0"; }
+#header #revnumber { text-transform: capitalize; }
+#header #revnumber:after { content: "\00a0"; }
+
+#content > h1:first-child:not([class]) { color: black; border-bottom: 1px solid #ddd; padding-bottom: 8px; margin-top: 0; padding-top: 1rem; margin-bottom: 1.25rem; }
+
+#toc { border-bottom: 0 solid #ddd; padding-bottom: 0.5em; }
+#toc > ul { margin-left: 0.125em; }
+#toc ul.sectlevel0 > li > a { font-style: italic; }
+#toc ul.sectlevel0 ul.sectlevel1 { margin: 0.5em 0; }
+#toc ul { font-family: Noto, sans-serif; list-style-type: none; }
+#toc li { line-height: 1.3334; margin-top: 0.3334em; }
+#toc a { text-decoration: none; }
+#toc a:active { text-decoration: underline; }
+
+#toctitle { color: black; font-size: 1.2em; }
+
+@media only screen and (min-width: 768px) { #toctitle { font-size: 1.375em; }
+  body.toc2 { padding-left: 15em; padding-right: 0; }
+  #toc.toc2 { margin-top: 0 !important; background-color: #fff; position: fixed; width: 15em; left: 0; top: 0; border-right: 1px solid #ddd; border-top-width: 0 !important; border-bottom-width: 0 !important; z-index: 1000; padding: 1.25em 1em; height: 100%; overflow: auto; }
+  #toc.toc2 #toctitle { margin-top: 0; margin-bottom: 0.8rem; font-size: 1.2em; }
+  #toc.toc2 > ul { font-size: 0.9em; margin-bottom: 0; }
+  #toc.toc2 ul ul { margin-left: 0; padding-left: 1em; }
+  #toc.toc2 ul.sectlevel0 ul.sectlevel1 { padding-left: 0; margin-top: 0.5em; margin-bottom: 0.5em; }
+  body.toc2.toc-right { padding-left: 0; padding-right: 15em; }
+  body.toc2.toc-right #toc.toc2 { border-right-width: 0; border-left: 1px solid #ddd; left: auto; right: 0; } }
+@media only screen and (min-width: 1280px) { body.toc2 { padding-left: 20em; padding-right: 0; }
+  #toc.toc2 { width: 20em; }
+  #toc.toc2 #toctitle { font-size: 1.375em; }
+  #toc.toc2 > ul { font-size: 0.95em; }
+  #toc.toc2 ul ul { padding-left: 1.25em; }
+  body.toc2.toc-right { padding-left: 0; padding-right: 20em; } }
+#content #toc { border-style: solid; border-width: 1px; border-color: #e6e6e6; margin-bottom: 1.25em; padding: 1.25em; background: #fff; -webkit-border-radius: 0; border-radius: 0; }
+#content #toc > :first-child { margin-top: 0; }
+#content #toc > :last-child { margin-bottom: 0; }
+
+#footer { max-width: 100%; background: none; padding: 1.25em; }
+
+#footer-text { color: black; line-height: 1.44; }
+
+#content { margin-bottom: 0.625em; }
+
+.sect1 { padding-bottom: 0.625em; }
+
+@media only screen and (min-width: 768px) { #content { margin-bottom: 1.25em; }
+  .sect1 { padding-bottom: 1.25em; } }
+.sect1:last-child { padding-bottom: 0; }
+
+.sect1 + .sect1 { border-top: 0 solid #ddd; }
+
+#content h1 > a.anchor, h2 > a.anchor, h3 > a.anchor, #toctitle > a.anchor, .sidebarblock > .content > .title > a.anchor, h4 > a.anchor, h5 > a.anchor, h6 > a.anchor { position: absolute; z-index: 1001; width: 1.5ex; margin-left: -1.5ex; display: block; text-decoration: none !important; visibility: hidden; text-align: center; font-weight: normal; }
+#content h1 > a.anchor:before, h2 > a.anchor:before, h3 > a.anchor:before, #toctitle > a.anchor:before, .sidebarblock > .content > .title > a.anchor:before, h4 > a.anchor:before, h5 > a.anchor:before, h6 > a.anchor:before { content: "\00A7"; font-size: 0.85em; display: block; padding-top: 0.1em; }
+#content h1:hover > a.anchor, #content h1 > a.anchor:hover, h2:hover > a.anchor, h2 > a.anchor:hover, h3:hover > a.anchor, #toctitle:hover > a.anchor, .sidebarblock > .content > .title:hover > a.anchor, h3 > a.anchor:hover, #toctitle > a.anchor:hover, .sidebarblock > .content > .title > a.anchor:hover, h4:hover > a.anchor, h4 > a.anchor:hover, h5:hover > a.anchor, h5 > a.anchor:hover, h6:hover > a.anchor, h6 > a.anchor:hover { visibility: visible; }
+#content h1 > a.link, h2 > a.link, h3 > a.link, #toctitle > a.link, .sidebarblock > .content > .title > a.link, h4 > a.link, h5 > a.link, h6 > a.link { color: black; text-decoration: none; }
+#content h1 > a.link:hover, h2 > a.link:hover, h3 > a.link:hover, #toctitle > a.link:hover, .sidebarblock > .content > .title > a.link:hover, h4 > a.link:hover, h5 > a.link:hover, h6 > a.link:hover { color: black; }
+
+.audioblock, .imageblock, .literalblock, .listingblock, .stemblock, .videoblock { margin-bottom: 1.25em; }
+
+.admonitionblock td.content > .title, .audioblock > .title, .exampleblock > .title, .imageblock > .title, .listingblock > .title, .literalblock > .title, .stemblock > .title, .openblock > .title, .paragraph > .title, .quoteblock > .title, table.tableblock > .title, .verseblock > .title, .videoblock > .title, .dlist > .title, .olist > .title, .ulist > .title, .qlist > .title, .hdlist > .title { text-rendering: optimizeLegibility; text-align: left; }
+
+table.tableblock > caption.title { white-space: nowrap; overflow: visible; max-width: 0; }
+
+.paragraph.lead > p, #preamble > .sectionbody > .paragraph:first-of-type p { color: black; }
+
+table.tableblock #preamble > .sectionbody > .paragraph:first-of-type p { font-size: inherit; }
+
+.admonitionblock > table { border-collapse: separate; border: 0; background: none; width: 100%; }
+.admonitionblock > table td.icon { text-align: center; width: 80px; }
+.admonitionblock > table td.icon img { max-width: initial; }
+.admonitionblock > table td.icon .title { font-weight: bold; font-family: Noto, sans-serif; text-transform: uppercase; }
+.admonitionblock > table td.content { padding-left: 1.125em; padding-right: 1.25em; border-left: 1px solid #ddd; color: #365E7A; }
+.admonitionblock > table td.content > :last-child > :last-child { margin-bottom: 0; }
+
+.exampleblock > .content { border-style: solid; border-width: 1px; border-color: #e6e6e6; margin-bottom: 1.25em; padding: 1.25em; background: #fff; -webkit-border-radius: 0; border-radius: 0; }
+.exampleblock > .content > :first-child { margin-top: 0; }
+.exampleblock > .content > :last-child { margin-bottom: 0; }
+
+.sidebarblock { border-style: solid; border-width: 1px; border-color: #e6e6e6; margin-bottom: 1.25em; padding: 1.25em; background: #fff; -webkit-border-radius: 0; border-radius: 0; }
+.sidebarblock > :first-child { margin-top: 0; }
+.sidebarblock > :last-child { margin-bottom: 0; }
+.sidebarblock > .content > .title { color: black; margin-top: 0; }
+
+.exampleblock > .content > :last-child > :last-child, .exampleblock > .content .olist > ol > li:last-child > :last-child, .exampleblock > .content .ulist > ul > li:last-child > :last-child, .exampleblock > .content .qlist > ol > li:last-child > :last-child, .sidebarblock > .content > :last-child > :last-child, .sidebarblock > .content .olist > ol > li:last-child > :last-child, .sidebarblock > .content .ulist > ul > li:last-child > :last-child, .sidebarblock > .content .qlist > ol > li:last-child > :last-child { margin-bottom: 0; }
+
+.literalblock pre, .listingblock pre:not(.highlight), .listingblock pre[class="highlight"], .listingblock pre[class^="highlight "], .listingblock pre.CodeRay, .listingblock pre.prettyprint { background: #eee; }
+.sidebarblock .literalblock pre, .sidebarblock .listingblock pre:not(.highlight), .sidebarblock .listingblock pre[class="highlight"], .sidebarblock .listingblock pre[class^="highlight "], .sidebarblock .listingblock pre.CodeRay, .sidebarblock .listingblock pre.prettyprint { background: #f2f1f1; }
+
+.literalblock pre, .literalblock pre[class], .listingblock pre, .listingblock pre[class] { border: 1px hidden #666; -webkit-border-radius: 0; border-radius: 0; word-wrap: break-word; padding: 1.25em 1.5625em 1.125em 1.5625em; font-size: 0.8125em; }
+.literalblock pre.nowrap, .literalblock pre[class].nowrap, .listingblock pre.nowrap, .listingblock pre[class].nowrap { overflow-x: auto; white-space: pre; word-wrap: normal; }
+@media only screen and (min-width: 768px) { .literalblock pre, .literalblock pre[class], .listingblock pre, .listingblock pre[class] { font-size: 0.90625em; } }
+@media only screen and (min-width: 1280px) { .literalblock pre, .literalblock pre[class], .listingblock pre, .listingblock pre[class] { font-size: 1em; } }
+
+.literalblock.output pre { color: #eee; background-color: #264357; }
+
+.listingblock pre.highlightjs { padding: 0; }
+.listingblock pre.highlightjs > code { padding: 1.25em 1.5625em 1.125em 1.5625em; -webkit-border-radius: 0; border-radius: 0; }
+
+.listingblock > .content { position: relative; }
+
+.listingblock code[data-lang]:before { display: none; content: attr(data-lang); position: absolute; font-size: 0.75em; top: 0.425rem; right: 0.5rem; line-height: 1; text-transform: uppercase; color: #999; }
+
+.listingblock:hover code[data-lang]:before { display: block; }
+
+.listingblock.terminal pre .command:before { content: attr(data-prompt); padding-right: 0.5em; color: #999; }
+
+.listingblock.terminal pre .command:not([data-prompt]):before { content: "$"; }
+
+table.pyhltable { border-collapse: separate; border: 0; margin-bottom: 0; background: none; }
+
+table.pyhltable td { vertical-align: top; padding-top: 0; padding-bottom: 0; line-height: 1.6; }
+
+table.pyhltable td.code { padding-left: .75em; padding-right: 0; }
+
+pre.pygments .lineno, table.pyhltable td:not(.code) { color: #999; padding-left: 0; padding-right: .5em; border-right: 1px solid #ddd; }
+
+pre.pygments .lineno { display: inline-block; margin-right: .25em; }
+
+table.pyhltable .linenodiv { background: none !important; padding-right: 0 !important; }
+
+.quoteblock { margin: 0 1em 0.75em 1.5em; display: table; }
+.quoteblock > .title { margin-left: -1.5em; margin-bottom: 0.75em; }
+.quoteblock blockquote, .quoteblock blockquote p { color: #333; font-size: 1.15rem; line-height: 1.75; word-spacing: 0.1em; letter-spacing: 0; font-style: italic; text-align: justify; }
+.quoteblock blockquote { margin: 0; padding: 0; border: 0; }
+.quoteblock blockquote:before { content: "\201c"; float: left; font-size: 2.75em; font-weight: bold; line-height: 0.6em; margin-left: -0.6em; color: black; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); }
+.quoteblock blockquote > .paragraph:last-child p { margin-bottom: 0; }
+.quoteblock .attribution { margin-top: 0.5em; margin-right: 0.5ex; text-align: right; }
+.quoteblock .quoteblock { margin-left: 0; margin-right: 0; padding: 0.5em 0; border-left: 3px solid #365E7A; }
+.quoteblock .quoteblock blockquote { padding: 0 0 0 0.75em; }
+.quoteblock .quoteblock blockquote:before { display: none; }
+
+.verseblock { margin: 0 1em 0.75em 1em; }
+.verseblock pre { font-family: "Open Sans", "DejaVu Sans", sans; font-size: 1.15rem; color: #333; font-weight: 300; text-rendering: optimizeLegibility; }
+.verseblock pre strong { font-weight: 400; }
+.verseblock .attribution { margin-top: 1.25rem; margin-left: 0.5ex; }
+
+.quoteblock .attribution, .verseblock .attribution { font-size: 0.8125em; line-height: 1.45; font-style: italic; }
+.quoteblock .attribution br, .verseblock .attribution br { display: none; }
+.quoteblock .attribution cite, .verseblock .attribution cite { display: block; letter-spacing: -0.025em; color: #365E7A; }
+
+.quoteblock.abstract { margin: 0 0 0.75em 0; display: block; }
+.quoteblock.abstract blockquote, .quoteblock.abstract blockquote p { text-align: left; word-spacing: 0; }
+.quoteblock.abstract blockquote:before, .quoteblock.abstract blockquote p:first-of-type:before { display: none; }
+
+table.tableblock { max-width: 100%; border-collapse: separate; }
+table.tableblock td > .paragraph:last-child p > p:last-child, table.tableblock th > p:last-child, table.tableblock td > p:last-child { margin-bottom: 0; }
+
+table.tableblock, th.tableblock, td.tableblock { border: 0 solid #d8d8ce; }
+
+table.grid-all > thead > tr > .tableblock, table.grid-all > tbody > tr > .tableblock { border-width: 0 1px 1px 0; }
+
+table.grid-all > tfoot > tr > .tableblock { border-width: 1px 1px 0 0; }
+
+table.grid-cols > * > tr > .tableblock { border-width: 0 1px 0 0; }
+
+table.grid-rows > thead > tr > .tableblock, table.grid-rows > tbody > tr > .tableblock { border-width: 0 0 1px 0; }
+
+table.grid-rows > tfoot > tr > .tableblock { border-width: 1px 0 0 0; }
+
+table.grid-all > * > tr > .tableblock:last-child, table.grid-cols > * > tr > .tableblock:last-child { border-right-width: 0; }
+
+table.grid-all > tbody > tr:last-child > .tableblock, table.grid-all > thead:last-child > tr > .tableblock, table.grid-rows > tbody > tr:last-child > .tableblock, table.grid-rows > thead:last-child > tr > .tableblock { border-bottom-width: 0; }
+
+table.frame-all { border-width: 1px; }
+
+table.frame-sides { border-width: 0 1px; }
+
+table.frame-topbot { border-width: 1px 0; }
+
+th.halign-left, td.halign-left { text-align: left; }
+
+th.halign-right, td.halign-right { text-align: right; }
+
+th.halign-center, td.halign-center { text-align: center; }
+
+th.valign-top, td.valign-top { vertical-align: top; }
+
+th.valign-bottom, td.valign-bottom { vertical-align: bottom; }
+
+th.valign-middle, td.valign-middle { vertical-align: middle; }
+
+table thead th, table tfoot th { font-weight: bold; }
+
+tbody tr th { display: table-cell; line-height: 1.4; background: #eee; }
+
+tbody tr th, tbody tr th p, tfoot tr th, tfoot tr th p { color: #222; font-weight: bold; }
+
+p.tableblock > code:only-child { background: none; padding: 0; }
+
+p.tableblock { font-size: 1em; }
+
+td > div.verse { white-space: pre; }
+
+ol { margin-left: 1.75em; }
+
+ul li ol { margin-left: 1.5em; }
+
+dl dd { margin-left: 1.125em; }
+
+dl dd:last-child, dl dd:last-child > :last-child { margin-bottom: 0; }
+
+ol > li p, ul > li p, ul dd, ol dd, .olist .olist, .ulist .ulist, .ulist .olist, .olist .ulist { margin-bottom: 0.375em; }
+
+ul.checklist, ul.none, ol.none, ul.no-bullet, ol.no-bullet, ol.unnumbered, ul.unstyled, ol.unstyled { list-style-type: none; }
+
+ul.no-bullet, ol.no-bullet, ol.unnumbered { margin-left: 0.625em; }
+
+ul.unstyled, ol.unstyled { margin-left: 0; }
+
+ul.checklist { margin-left: 0.625em; }
+
+ul.checklist li > p:first-child > .fa-square-o:first-child, ul.checklist li > p:first-child > .fa-check-square-o:first-child { width: 1.25em; font-size: 0.8em; position: relative; bottom: 0.125em; }
+
+ul.checklist li > p:first-child > input[type="checkbox"]:first-child { margin-right: 0.25em; }
+
+ul.inline { display: -ms-flexbox; display: -webkit-box; display: flex; -ms-flex-flow: row wrap; -webkit-flex-flow: row wrap; flex-flow: row wrap; list-style: none; margin: 0 0 0.375em -0.75em; }
+
+ul.inline > li { margin-left: 0.75em; }
+
+.unstyled dl dt { font-weight: normal; font-style: normal; }
+
+ol.arabic { list-style-type: decimal; }
+
+ol.decimal { list-style-type: decimal-leading-zero; }
+
+ol.loweralpha { list-style-type: lower-alpha; }
+
+ol.upperalpha { list-style-type: upper-alpha; }
+
+ol.lowerroman { list-style-type: lower-roman; }
+
+ol.upperroman { list-style-type: upper-roman; }
+
+ol.lowergreek { list-style-type: lower-greek; }
+
+.hdlist > table, .colist > table { border: 0; background: none; }
+.hdlist > table > tbody > tr, .colist > table > tbody > tr { background: none; }
+
+td.hdlist1, td.hdlist2 { vertical-align: top; padding: 0 0.625em; }
+
+td.hdlist1 { font-weight: bold; padding-bottom: 0.75em; }
+
+.literalblock + .colist, .listingblock + .colist { margin-top: -0.5em; }
+
+.colist > table tr > td:first-of-type { padding: 0.4em 0.75em 0 0.75em; line-height: 1; vertical-align: top; }
+.colist > table tr > td:first-of-type img { max-width: initial; }
+.colist > table tr > td:last-of-type { padding: 0.25em 0; }
+
+.thumb, .th { line-height: 0; display: inline-block; border: solid 4px #fff; -webkit-box-shadow: 0 0 0 1px #ddd; box-shadow: 0 0 0 1px #ddd; }
+
+.imageblock.left, .imageblock[style*="float: left"] { margin: 0.25em 0.625em 1.25em 0; }
+.imageblock.right, .imageblock[style*="float: right"] { margin: 0.25em 0 1.25em 0.625em; }
+.imageblock > .title { margin-bottom: 0; }
+.imageblock.thumb, .imageblock.th { border-width: 6px; }
+.imageblock.thumb > .title, .imageblock.th > .title { padding: 0 0.125em; }
+
+.image.left, .image.right { margin-top: 0.25em; margin-bottom: 0.25em; display: inline-block; line-height: 0; }
+.image.left { margin-right: 0.625em; }
+.image.right { margin-left: 0.625em; }
+
+a.image { text-decoration: none; display: inline-block; }
+a.image object { pointer-events: none; }
+
+sup.footnote, sup.footnoteref { font-size: 0.875em; position: static; vertical-align: super; }
+sup.footnote a, sup.footnoteref a { text-decoration: none; }
+sup.footnote a:active, sup.footnoteref a:active { text-decoration: underline; }
+
+#footnotes { padding-top: 0.75em; padding-bottom: 0.75em; margin-bottom: 0.625em; }
+#footnotes hr { width: 20%; min-width: 6.25em; margin: -0.25em 0 0.75em 0; border-width: 1px 0 0 0; }
+#footnotes .footnote { padding: 0 0.375em 0 0.225em; line-height: 1.3334; font-size: 0.875em; margin-left: 1.2em; margin-bottom: 0.2em; }
+#footnotes .footnote a:first-of-type { font-weight: bold; text-decoration: none; margin-left: -1.05em; }
+#footnotes .footnote:last-of-type { margin-bottom: 0; }
+#content #footnotes { margin-top: -0.625em; margin-bottom: 0; padding: 0.75em 0; }
+
+.gist .file-data > table { border: 0; background: #fff; width: 100%; margin-bottom: 0; }
+.gist .file-data > table td.line-data { width: 99%; }
+
+div.unbreakable { page-break-inside: avoid; }
+
+.big { font-size: larger; }
+
+.small { font-size: smaller; }
+
+.underline { text-decoration: underline; }
+
+.overline { text-decoration: overline; }
+
+.line-through { text-decoration: line-through; }
+
+.aqua { color: #00bfbf; }
+
+.aqua-background { background-color: #00fafa; }
+
+.black { color: black; }
+
+.black-background { background-color: black; }
+
+.blue { color: #0000bf; }
+
+.blue-background { background-color: #0000fa; }
+
+.fuchsia { color: #bf00bf; }
+
+.fuchsia-background { background-color: #fa00fa; }
+
+.gray { color: #606060; }
+
+.gray-background { background-color: #7d7d7d; }
+
+.green { color: #006000; }
+
+.green-background { background-color: #007d00; }
+
+.lime { color: #00bf00; }
+
+.lime-background { background-color: #00fa00; }
+
+.maroon { color: #600000; }
+
+.maroon-background { background-color: #7d0000; }
+
+.navy { color: #000060; }
+
+.navy-background { background-color: #00007d; }
+
+.olive { color: #606000; }
+
+.olive-background { background-color: #7d7d00; }
+
+.purple { color: #600060; }
+
+.purple-background { background-color: #7d007d; }
+
+.red { color: #bf0000; }
+
+.red-background { background-color: #fa0000; }
+
+.silver { color: #909090; }
+
+.silver-background { background-color: #bcbcbc; }
+
+.teal { color: #006060; }
+
+.teal-background { background-color: #007d7d; }
+
+.white { color: #bfbfbf; }
+
+.white-background { background-color: #fafafa; }
+
+.yellow { color: #bfbf00; }
+
+.yellow-background { background-color: #fafa00; }
+
+span.icon > .fa { cursor: default; }
+a span.icon > .fa { cursor: inherit; }
+
+.admonitionblock td.icon [class^="fa icon-"] { font-size: 2.5em; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); cursor: default; }
+.admonitionblock td.icon .icon-note:before { content: "\f05a"; color: #29475c; }
+.admonitionblock td.icon .icon-tip:before { content: "\f0eb"; text-shadow: 1px 1px 2px rgba(155, 155, 0, 0.8); color: #111; }
+.admonitionblock td.icon .icon-warning:before { content: "\f071"; color: #bf6900; }
+.admonitionblock td.icon .icon-caution:before { content: "\f06d"; color: #bf3400; }
+.admonitionblock td.icon .icon-important:before { content: "\f06a"; color: #bf0000; }
+
+.conum[data-value] { display: inline-block; color: #fff !important; background-color: black; -webkit-border-radius: 100px; border-radius: 100px; text-align: center; font-size: 0.75em; width: 1.67em; height: 1.67em; line-height: 1.67em; font-family: "Open Sans", "DejaVu Sans", sans-serif; font-style: normal; font-weight: bold; }
+.conum[data-value] * { color: #fff !important; }
+.conum[data-value] + b { display: none; }
+.conum[data-value]:after { content: attr(data-value); }
+pre .conum[data-value] { position: relative; top: -0.125em; }
+
+b.conum * { color: inherit !important; }
+
+.conum:not([data-value]):empty { display: none; }
+
+h1, h2, h3, #toctitle, .sidebarblock > .content > .title, h4, h5, h6 { border-bottom: 1px solid #ddd; }
+
+.sect1 { padding-bottom: 0; }
+
+#toctitle { color: #00406F; font-weight: normal; margin-top: 1.5em; }
+
+.sidebarblock { border-color: #aaa; }
+
+code { -webkit-border-radius: 4px; border-radius: 4px; }
+
+p.tableblock.header { color: #6d6e71; }
+
+.literalblock pre, .listingblock pre { background: #eee; }
+
+/* From https://github.com/KhronosGroup/Vulkan-Docs/pull/901 */
+a code { color: inherit; }
+
+/* From https://github.com/KhronosGroup/Vulkan-Docs/pull/1157 */
+/* Make VUID anchor handles*/
+li > p > a[id^="VUID-"] { visibility: hidden; position: absolute; z-index: 1001; width: 2.2ex; margin-left: -2.2ex; display: block; text-decoration: none !important; text-align: center; font-weight: normal; }
+
+li > p > a[id^="VUID-"]:before { content: "\00A7"; font-size: 1em; display: block; padding-top: 0em; background: #fff; }
+
+li > p:hover > a[id^="VUID-"], li > p > a[id^="VUID-"]:hover { visibility: visible; }
+
+li > p > a[id^="VUID-"].link { color: black; text-decoration: none; }
+
+/* TODO: not quite sure what these two do */
+li > p > a[id^="VUID-"].link:hover { color: black; }
+
+.vuid { color: #4d4d4d; font-family: monospace; }
+
+</style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="../../katex/katex.min.css">
+<script src="../../katex/katex.min.js"></script>
+<script src="../../katex/contrib/auto-render.min.js"></script>
+    <!-- Use KaTeX to render math once document is loaded, see
+         https://github.com/Khan/KaTeX/tree/master/contrib/auto-render -->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        renderMathInElement(
+            document.body,
+            {
+                delimiters: [
+                    { left: "$$", right: "$$", display: true},
+                    { left: "\\[", right: "\\]", display: true},
+                    { left: "$", right: "$", display: false},
+                    { left: "\\(", right: "\\)", display: false}
+                ]
+            }
+        );
+    });
+</script></head>
+<body class="manpage">
+<div id="header">
+<h1>clGetDeviceInfo(3) Manual Page</h1>
+<h2 id="_name">Name</h2>
+<div class="sectionbody">
+<p>clGetDeviceInfo - Query specific information about a device</p>
+</div>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="_c_specification"><a class="anchor" href="#_c_specification"></a>C Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>To get specific information about an OpenCL device, call the function:</p>
+</div>
+<div id="clGetDeviceInfo" class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-opencl" data-lang="opencl">// Provided by CL_VERSION_1_0
+cl_int clGetDeviceInfo(
+    cl_device_id device,
+    cl_device_info param_name,
+    size_t param_value_size,
+    void* param_value,
+    size_t* param_value_size_ret);</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_parameters"><a class="anchor" href="#_parameters"></a>Parameters</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><em>device</em> may be a device returned by <strong>clGetDeviceIDs</strong> or a sub-device
+created by <strong>clCreateSubDevices</strong>.
+If <em>device</em> is a sub-device, the specific information for the sub-device
+will be returned.
+The information that can be queried using <strong>clGetDeviceInfo</strong> is specified in
+the <a href="https://www.khronos.org/registry/OpenCL/specs/unified/html/OpenCL_API.html#device-queries-table" target="_blank" rel="noopener">Device Queries</a> table.</p>
+</li>
+<li>
+<p><em>param_name</em> is an enumeration constant that identifies the device
+information being queried.
+It can be one of the following values as specified in the
+<a href="https://www.khronos.org/registry/OpenCL/specs/unified/html/OpenCL_API.html#device-queries-table" target="_blank" rel="noopener">Device Queries</a> table.</p>
+</li>
+<li>
+<p><em>param_value</em> is a pointer to memory location where appropriate values for a
+given <em>param_name</em>, as specified in the <a href="https://www.khronos.org/registry/OpenCL/specs/unified/html/OpenCL_API.html#device-queries-table" target="_blank" rel="noopener">Device
+Queries</a> table, will be returned.
+If <em>param_value</em> is <code>NULL</code>, it is ignored.</p>
+</li>
+<li>
+<p><em>param_value_size</em> specifies the size in bytes of memory pointed to by
+<em>param_value</em>.
+This size must be greater than or equal to the size of the return type
+specified in the <a href="https://www.khronos.org/registry/OpenCL/specs/unified/html/OpenCL_API.html#device-queries-table" target="_blank" rel="noopener">Device Queries</a> table.
+If <em>param_value</em> is <code>NULL</code>, it is ignored.</p>
+</li>
+<li>
+<p><em>param_value_size_ret</em> returns the actual size in bytes of data being
+queried by <em>param_name</em>.
+If <em>param_value_size_ret</em> is <code>NULL</code>, it is ignored.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_description"><a class="anchor" href="#_description"></a>Description</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The device queries described in the <a href="https://www.khronos.org/registry/OpenCL/specs/unified/html/OpenCL_API.html#device-queries-table" target="_blank" rel="noopener">Device Queries</a>
+table should return the same information for a root-level device i.e. a
+device returned by <strong>clGetDeviceIDs</strong> and any sub-devices created from this
+device except for the following queries:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>CL_DEVICE_<wbr>GLOBAL_<wbr>MEM_<wbr>CACHE_<wbr>SIZE</code></p>
+</li>
+<li>
+<p><code>CL_DEVICE_<wbr>BUILT_<wbr>IN_<wbr>KERNELS</code></p>
+</li>
+<li>
+<p><code>CL_DEVICE_<wbr>PARENT_<wbr>DEVICE</code></p>
+</li>
+<li>
+<p><code>CL_DEVICE_<wbr>PARTITION_<wbr>TYPE</code></p>
+</li>
+<li>
+<p><code>CL_DEVICE_<wbr>REFERENCE_<wbr>COUNT</code></p>
+</li>
+</ul>
+</div>
+<table id="device-queries-table" class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. List of supported param_names by <strong>clGetDeviceInfo</strong></caption>
+<colgroup>
+<col style="width: 28%;">
+<col style="width: 15%;">
+<col style="width: 57%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Device Info</th>
+<th class="tableblock halign-left valign-top">Return Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>TYPE</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cl_device_<wbr>type</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The type of the OpenCL device.
+        The device type is purely informational and has no semantic meaning.
+        The device must report a single device type, which must not be
+        <code>CL_DEVICE_<wbr>TYPE_<wbr>DEFAULT</code> or <code>CL_DEVICE_<wbr>TYPE_<wbr>ALL</code>.</p>
+<p class="tableblock">        Please see the <a href="https://www.khronos.org/registry/OpenCL/specs/unified/html/OpenCL_API.html#device-types-table" target="_blank" rel="noopener">Device Types</a> table
+        for supported device types and device type descriptions.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>VENDOR_<wbr>ID</code> <sup class="footnote">[<a id="_footnoteref_1" class="footnote" href="#_footnotedef_1" title="View footnote.">1</a>]</sup></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cl_uint</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A unique device vendor identifier.</p>
+<p class="tableblock">        If the vendor has a PCI vendor ID, the low 16 bits must contain that PCI
+        vendor ID, and the remaining bits must be set to zero. Otherwise, the
+        value returned must be a valid Khronos vendor ID represented by type
+        <code>cl_khronos_<wbr>vendor_<wbr>id</code>. Khronos vendor IDs are allocated starting at
+        0x10000, to distinguish them from the PCI vendor ID namespace.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>MAX_<wbr>COMPUTE_<wbr>UNITS</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cl_uint</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The number of parallel compute units on the OpenCL device.
+        A work-group executes on a single compute unit.
+        The minimum value is 1.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>MAX_<wbr>WORK_<wbr>ITEM_<wbr>DIMENSIONS</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cl_uint</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Maximum dimensions that specify the global and local work-item IDs
+        used by the data parallel execution model. (Refer to
+        <strong>clEnqueueNDRangeKernel</strong>).
+        The minimum value is 3.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>MAX_<wbr>WORK_<wbr>GROUP_<wbr>SIZES</code></p>
+<p class="tableblock"><a href="https://www.khronos.org/registry/OpenCL/specs/unified/html/OpenCL_API.html#unified-spec" target="_blank" rel="noopener">missing before</a> version 3.1.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>size_t</code>[]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The maximum number of work-items that can be specified in each dimension
+        of a work-group to <strong>clEnqueueNDRangeKernel</strong>.</p>
+<p class="tableblock">        Returns <em>n</em> <code>size_t</code> values, where <em>n</em> is the value returned by the
+        query for <code>CL_DEVICE_<wbr>MAX_<wbr>WORK_<wbr>ITEM_<wbr>DIMENSIONS</code>.</p>
+<p class="tableblock">        The minimum value is (1, 1, 1).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>MAX_<wbr>WORK_<wbr>ITEM_<wbr>SIZES</code></p>
+<p class="tableblock"><a href="https://www.khronos.org/registry/OpenCL/specs/unified/html/OpenCL_API.html#unified-spec" target="_blank" rel="noopener">deprecated by</a> version 3.1.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>size_t</code>[]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">See description of <code>CL_DEVICE_<wbr>MAX_<wbr>WORK_<wbr>GROUP_<wbr>SIZES</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>MAX_<wbr>WORK_<wbr>GROUP_<wbr>SIZE</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>size_t</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The maximum total number of work-items that can be specified for a
+        work-group to <strong>clEnqueueNDRangeKernel</strong>.
+        The returned value is an upper limit and will not necessarily
+        maximize performance.
+        Additionally, this maximum for the device may be larger than the maximum
+        supported for a specific kernel, refer to the per-kernel query
+        <code>CL_KERNEL_<wbr>WORK_<wbr>GROUP_<wbr>SIZE</code>.</p>
+<p class="tableblock">        The minimum value is 1.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>PREFERRED_<wbr>VECTOR_<wbr>WIDTH_<wbr>CHAR</code>  <br>
+  <code>CL_DEVICE_<wbr>PREFERRED_<wbr>VECTOR_<wbr>WIDTH_<wbr>SHORT</code> <br>
+  <code>CL_DEVICE_<wbr>PREFERRED_<wbr>VECTOR_<wbr>WIDTH_<wbr>INT</code>   <br>
+  <code>CL_DEVICE_<wbr>PREFERRED_<wbr>VECTOR_<wbr>WIDTH_<wbr>LONG</code>  <br>
+  <code>CL_DEVICE_<wbr>PREFERRED_<wbr>VECTOR_<wbr>WIDTH_<wbr>FLOAT</code> <br>
+  <code>CL_DEVICE_<wbr>PREFERRED_<wbr>VECTOR_<wbr>WIDTH_<wbr>DOUBLE</code><br>
+  <code>CL_DEVICE_<wbr>PREFERRED_<wbr>VECTOR_<wbr>WIDTH_<wbr>HALF</code></p>
+<p class="tableblock">  <code>CL_DEVICE_<wbr>PREFERRED_<wbr>VECTOR_<wbr>WIDTH_<wbr>HALF</code> is <a href="https://www.khronos.org/registry/OpenCL/specs/unified/html/OpenCL_API.html#unified-spec" target="_blank" rel="noopener">missing before</a>
+  version 1.1.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cl_uint</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Preferred native vector width size for built-in scalar types that
+        can be put into vectors.
+        The vector width is defined as the number of scalar elements that
+        can be stored in the vector.</p>
+<p class="tableblock">        If double precision is not supported,
+        <code>CL_DEVICE_<wbr>PREFERRED_<wbr>VECTOR_<wbr>WIDTH_<wbr>DOUBLE</code> must return 0.</p>
+<p class="tableblock">        If the <code>cl_khr_<wbr>fp16</code> extension is not supported,
+        <code>CL_DEVICE_<wbr>PREFERRED_<wbr>VECTOR_<wbr>WIDTH_<wbr>HALF</code> must return 0.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>NATIVE_<wbr>VECTOR_<wbr>WIDTH_<wbr>CHAR</code>  <br>
+  <code>CL_DEVICE_<wbr>NATIVE_<wbr>VECTOR_<wbr>WIDTH_<wbr>SHORT</code> <br>
+  <code>CL_DEVICE_<wbr>NATIVE_<wbr>VECTOR_<wbr>WIDTH_<wbr>INT</code>   <br>
+  <code>CL_DEVICE_<wbr>NATIVE_<wbr>VECTOR_<wbr>WIDTH_<wbr>LONG</code>  <br>
+  <code>CL_DEVICE_<wbr>NATIVE_<wbr>VECTOR_<wbr>WIDTH_<wbr>FLOAT</code> <br>
+  <code>CL_DEVICE_<wbr>NATIVE_<wbr>VECTOR_<wbr>WIDTH_<wbr>DOUBLE</code><br>
+  <code>CL_DEVICE_<wbr>NATIVE_<wbr>VECTOR_<wbr>WIDTH_<wbr>HALF</code></p>
+<p class="tableblock"><a href="https://www.khronos.org/registry/OpenCL/specs/unified/html/OpenCL_API.html#unified-spec" target="_blank" rel="noopener">missing before</a> version 1.1.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cl_uint</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the native ISA vector width.
+        The vector width is defined as the number of scalar elements that
+        can be stored in the vector.</p>
+<p class="tableblock">        If double precision is not supported,
+        <code>CL_DEVICE_<wbr>NATIVE_<wbr>VECTOR_<wbr>WIDTH_<wbr>DOUBLE</code> must return 0.</p>
+<p class="tableblock">        If the <code>cl_khr_<wbr>fp16</code> extension is not supported,
+        <code>CL_DEVICE_<wbr>NATIVE_<wbr>VECTOR_<wbr>WIDTH_<wbr>HALF</code> must return 0.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>MAX_<wbr>CLOCK_<wbr>FREQUENCY</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cl_uint</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Clock frequency of the device in MHz.
+        The meaning of this value is implementation-defined.
+        For devices with multiple clock domains, the clock frequency for any
+        of the clock domains may be returned.
+        For devices that dynamically change frequency for power or thermal
+        reasons, the returned clock frequency may be any valid frequency.
+        Note: This definition is <a href="https://www.khronos.org/registry/OpenCL/specs/unified/html/OpenCL_API.html#unified-spec" target="_blank" rel="noopener">missing before</a> version 2.2.</p>
+<p class="tableblock">        Maximum configured clock frequency of the device in MHz.
+        Note: This definition is <a href="https://www.khronos.org/registry/OpenCL/specs/unified/html/OpenCL_API.html#unified-spec" target="_blank" rel="noopener">deprecated by</a> version 2.2.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>ADDRESS_<wbr>BITS</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cl_uint</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The default compute device address space size of the global address
+        space specified as an unsigned integer value in bits.
+        Currently supported values are 32 or 64 bits.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>MAX_<wbr>MEM_<wbr>ALLOC_<wbr>SIZE</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cl_ulong</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Max size of memory object allocation in bytes.
+        The minimum value is max(min(1024 × 1024 × 1024, 1/4<sup>th</sup>
+        of <code>CL_DEVICE_<wbr>GLOBAL_<wbr>MEM_<wbr>SIZE</code>), 32 × 1024 × 1024).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>IMAGE_<wbr>SUPPORT</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cl_bool</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Is <code>CL_TRUE</code> if images are supported by the OpenCL device and <code>CL_FALSE</code>
+        otherwise.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>MAX_<wbr>READ_<wbr>IMAGE_<wbr>ARGS</code> <sup class="footnote">[<a id="_footnoteref_2" class="footnote" href="#_footnotedef_2" title="View footnote.">2</a>]</sup></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cl_uint</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Max number of image objects arguments of a kernel declared with the
+        read_only qualifier.
+        The minimum value is 128 if <code>CL_DEVICE_<wbr>IMAGE_<wbr>SUPPORT</code> is <code>CL_TRUE</code>, the
+        value is 0 otherwise.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>MAX_<wbr>WRITE_<wbr>IMAGE_<wbr>ARGS</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cl_uint</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Max number of image objects arguments of a kernel declared with the
+        write_only qualifier.
+        The minimum value is 64 if <code>CL_DEVICE_<wbr>IMAGE_<wbr>SUPPORT</code> is <code>CL_TRUE</code>, the
+        value is 0 otherwise.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>MAX_<wbr>READ_<wbr>WRITE_<wbr>IMAGE_<wbr>ARGS</code></p>
+<p class="tableblock"><a href="https://www.khronos.org/registry/OpenCL/specs/unified/html/OpenCL_API.html#unified-spec" target="_blank" rel="noopener">missing before</a> version 2.0.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cl_uint</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Max number of image objects arguments of a kernel declared with the
+        write_only or read_write qualifier.</p>
+<p class="tableblock">        Support for read-write image arguments is required for an OpenCL 2.0, 2.1,
+        or 2.2 device if <code>CL_DEVICE_<wbr>IMAGE_<wbr>SUPPORT</code> is <code>CL_TRUE</code>.</p>
+<p class="tableblock">        The minimum value is 64 if the device supports read-write images arguments,
+        and must be 0 for devices that do not support read-write images.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>IL_<wbr>VERSION</code></p>
+<p class="tableblock"><a href="https://www.khronos.org/registry/OpenCL/specs/unified/html/OpenCL_API.html#unified-spec" target="_blank" rel="noopener">missing before</a> version 2.1.</p>
+<p class="tableblock">or</p>
+<p class="tableblock"><code>CL_DEVICE_<wbr>IL_<wbr>VERSION_<wbr>KHR</code></p>
+<p class="tableblock">provided by the <code>cl_khr_il_program</code> extension.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>char</code>[]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The intermediate languages that are supported by
+        <strong>clCreateProgramWithIL</strong> for this device.
+        Returns a space-separated list of intermediate language version strings
+        of the form:</p>
+<p class="tableblock">        &lt;IL_Prefix&gt;_&lt;Major_Version&gt;.&lt;Minor_Version&gt;</p>
+<p class="tableblock">        An OpenCL 2.1 device
+        or a device that supports the <code>cl_khr_<wbr>il_<wbr>program</code> extension
+        must support at least SPIR-V 1.0.</p>
+<p class="tableblock">        An OpenCL 2.2 device must support at least SPIR-V 1.0, SPIR-V 1.1, and
+        SPIR-V 1.2.</p>
+<p class="tableblock">        An OpenCL 3.1 device must support at least SPIR-V 1.0, SPIR-V 1.1,
+        SPIR-V 1.2, SPIR-V 1.3, and SPIR-V 1.4.</p>
+<p class="tableblock">        If the device does not support intermediate language programs, the
+        returned value must be <code>""</code> (an empty string).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>ILS_<wbr>WITH_<wbr>VERSION</code></p>
+<p class="tableblock"><a href="https://www.khronos.org/registry/OpenCL/specs/unified/html/OpenCL_API.html#unified-spec" target="_blank" rel="noopener">missing before</a> version 3.0.</p>
+<p class="tableblock">or</p>
+<p class="tableblock"><code>CL_DEVICE_<wbr>ILS_<wbr>WITH_<wbr>VERSION_<wbr>KHR</code></p>
+<p class="tableblock">provided by the <code>cl_khr_extended_versioning</code> extension.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cl_name_<wbr>version</code>[]</p>
+<p class="tableblock">or <code>cl_name_<wbr>version_<wbr>khr</code>[]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns an array of descriptions (name and version) for all supported
+        intermediate languages.
+        Intermediate languages with the same name may be reported more than
+        once but each name and major/minor version combination may only be
+        reported once.
+        The list of intermediate languages reported must match the list
+        reported via <code>CL_DEVICE_<wbr>IL_<wbr>VERSION</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>IMAGE2D_<wbr>MAX_<wbr>WIDTH</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>size_t</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Max width of 2D image or 1D image not created from a buffer object
+        in pixels.</p>
+<p class="tableblock">        The minimum value is 16384 if <code>CL_DEVICE_<wbr>IMAGE_<wbr>SUPPORT</code> is <code>CL_TRUE</code>,
+        the value is 0 otherwise.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>IMAGE2D_<wbr>MAX_<wbr>HEIGHT</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>size_t</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Max height of 2D image in pixels.</p>
+<p class="tableblock">        The minimum value is 16384 if <code>CL_DEVICE_<wbr>IMAGE_<wbr>SUPPORT</code> is <code>CL_TRUE</code>,
+        the value is 0 otherwise.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>IMAGE3D_<wbr>MAX_<wbr>WIDTH</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>size_t</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Max width of 3D image in pixels.</p>
+<p class="tableblock">        The minimum value is 2048 if <code>CL_DEVICE_<wbr>IMAGE_<wbr>SUPPORT</code> is <code>CL_TRUE</code>,
+        the value is 0 otherwise.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>IMAGE3D_<wbr>MAX_<wbr>HEIGHT</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>size_t</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Max height of 3D image in pixels.</p>
+<p class="tableblock">        The minimum value is 2048 if <code>CL_DEVICE_<wbr>IMAGE_<wbr>SUPPORT</code> is <code>CL_TRUE</code>,
+        the value is 0 otherwise.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>IMAGE3D_<wbr>MAX_<wbr>DEPTH</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>size_t</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Max depth of 3D image in pixels.</p>
+<p class="tableblock">        The minimum value is 2048 if <code>CL_DEVICE_<wbr>IMAGE_<wbr>SUPPORT</code> is <code>CL_TRUE</code>,
+        the value is 0 otherwise.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>IMAGE_<wbr>MAX_<wbr>BUFFER_<wbr>SIZE</code></p>
+<p class="tableblock"><a href="https://www.khronos.org/registry/OpenCL/specs/unified/html/OpenCL_API.html#unified-spec" target="_blank" rel="noopener">missing before</a> version 1.2.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>size_t</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Max number of pixels for a 1D image created from a buffer object.</p>
+<p class="tableblock">        The minimum value is 65536 if <code>CL_DEVICE_<wbr>IMAGE_<wbr>SUPPORT</code> is <code>CL_TRUE</code>,
+        the value is 0 otherwise.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>IMAGE_<wbr>MAX_<wbr>ARRAY_<wbr>SIZE</code></p>
+<p class="tableblock"><a href="https://www.khronos.org/registry/OpenCL/specs/unified/html/OpenCL_API.html#unified-spec" target="_blank" rel="noopener">missing before</a> version 1.2.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>size_t</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Max number of images in a 1D or 2D image array.</p>
+<p class="tableblock">        The minimum value is 2048 if <code>CL_DEVICE_<wbr>IMAGE_<wbr>SUPPORT</code> is <code>CL_TRUE</code>,
+        the value is 0 otherwise.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>MAX_<wbr>SAMPLERS</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cl_uint</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Maximum number of samplers that can be used in a kernel.</p>
+<p class="tableblock">        The minimum value is 16 if <code>CL_DEVICE_<wbr>IMAGE_<wbr>SUPPORT</code> is <code>CL_TRUE</code>,
+        the value is 0 otherwise.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>IMAGE_<wbr>PITCH_<wbr>ALIGNMENT</code></p>
+<p class="tableblock"><a href="https://www.khronos.org/registry/OpenCL/specs/unified/html/OpenCL_API.html#unified-spec" target="_blank" rel="noopener">missing before</a> version 2.0.</p>
+<p class="tableblock">The equivalent <code>CL_DEVICE_<wbr>IMAGE_<wbr>PITCH_<wbr>ALIGNMENT_<wbr>KHR</code> may be used if
+the <code>cl_khr_<wbr>image2d_<wbr>from_<wbr>buffer</code> extension is supported.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cl_uint</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The row pitch alignment size in pixels for 2D images created from a
+        buffer.
+        The value returned must be a power of 2.</p>
+<p class="tableblock">        Support for 2D images created from a buffer is required for an OpenCL 2.0, 2.1,
+        or 2.2 device if <code>CL_DEVICE_<wbr>IMAGE_<wbr>SUPPORT</code> is <code>CL_TRUE</code>.</p>
+<p class="tableblock">        This value must be 0 for devices that do not support 2D images created from a buffer.</p>
+<p class="tableblock">        If the <code>cl_khr_<wbr>image2d_<wbr>from_<wbr>buffer</code> and <code>cl_ext_<wbr>image_<wbr>requirements_<wbr>info</code>
+        extensions are supported, the value returned by <code>CL_DEVICE_<wbr>IMAGE_<wbr>PITCH_<wbr>ALIGNMENT</code>
+        after converting in bytes for the supported format with the biggest element size
+        (channel data type size × number of channels) must be greater than or equal to
+        the value returned by <code>CL_IMAGE_<wbr>REQUIREMENTS_<wbr>ROW_<wbr>PITCH_<wbr>ALIGNMENT_<wbr>EXT</code> for any
+        supported format.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>IMAGE_<wbr>BASE_<wbr>ADDRESS_<wbr>ALIGNMENT</code></p>
+<p class="tableblock"><a href="https://www.khronos.org/registry/OpenCL/specs/unified/html/OpenCL_API.html#unified-spec" target="_blank" rel="noopener">missing before</a> version 2.0.</p>
+<p class="tableblock">The equivalent <code>CL_DEVICE_<wbr>IMAGE_<wbr>BASE_<wbr>ADDRESS_<wbr>ALIGNMENT_<wbr>KHR</code> may be used
+if the <code>cl_khr_<wbr>image2d_<wbr>from_<wbr>buffer</code> extension is supported.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cl_uint</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This query specifies the minimum alignment in pixels of the host_ptr
+        specified to <strong>clCreateBuffer</strong> or <strong>clCreateBufferWithProperties</strong> when a 2D image
+        is created from a buffer which was created using <code>CL_MEM_<wbr>USE_<wbr>HOST_<wbr>PTR</code>.
+        The value returned must be a power of 2.</p>
+<p class="tableblock">        Support for 2D images created from a buffer is required for an OpenCL 2.0, 2.1,
+        or 2.2 device if <code>CL_DEVICE_<wbr>IMAGE_<wbr>SUPPORT</code> is <code>CL_TRUE</code>.</p>
+<p class="tableblock">        This value must be 0 for devices that do not support 2D images created from a buffer.</p>
+<p class="tableblock">        If the <code>cl_khr_<wbr>image2d_<wbr>from_<wbr>buffer</code> and <code>cl_ext_<wbr>image_<wbr>requirements_<wbr>info</code>
+        extensions are supported, the value returned by
+        <code>CL_DEVICE_<wbr>IMAGE_<wbr>BASE_<wbr>ADDRESS_<wbr>ALIGNMENT</code> after converting in bytes for the
+        supported format with the biggest element size
+        (channel data type size × number of channels) must be greater than or equal to
+        the value returned by <code>CL_IMAGE_<wbr>REQUIREMENTS_<wbr>BASE_<wbr>ADDRESS_<wbr>ALIGNMENT_<wbr>EXT</code> for any
+        supported format.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>MAX_<wbr>PIPE_<wbr>ARGS</code></p>
+<p class="tableblock"><a href="https://www.khronos.org/registry/OpenCL/specs/unified/html/OpenCL_API.html#unified-spec" target="_blank" rel="noopener">missing before</a> version 2.0.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cl_uint</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The maximum number of pipe objects that can be passed as arguments
+        to a kernel.
+        The minimum value is 16 for devices supporting pipes, and must be
+        0 for devices that do not support pipes.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>PIPE_<wbr>MAX_<wbr>ACTIVE_<wbr>RESERVATIONS</code></p>
+<p class="tableblock"><a href="https://www.khronos.org/registry/OpenCL/specs/unified/html/OpenCL_API.html#unified-spec" target="_blank" rel="noopener">missing before</a> version 2.0.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cl_uint</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The maximum number of reservations that can be active for a pipe per
+        work-item in a kernel.
+        A work-group reservation is counted as one reservation per
+        work-item.
+        The minimum value is 1 for devices supporting pipes, and must be
+        0 for devices that do not support pipes.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>PIPE_<wbr>MAX_<wbr>PACKET_<wbr>SIZE</code></p>
+<p class="tableblock"><a href="https://www.khronos.org/registry/OpenCL/specs/unified/html/OpenCL_API.html#unified-spec" target="_blank" rel="noopener">missing before</a> version 2.0.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cl_uint</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The maximum size of pipe packet in bytes.</p>
+<p class="tableblock">        Support for pipes is required for an OpenCL 2.0, 2.1, or 2.2 device.
+        The minimum value is 1024 bytes if the device supports pipes, and must be
+        0 for devices that do not support pipes.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>MAX_<wbr>PARAMETER_<wbr>SIZE</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>size_t</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Max size in bytes of all arguments that can be passed to a kernel.</p>
+<p class="tableblock">        The minimum value is 1024.
+        For this minimum value, only a maximum of 128 arguments can be
+        passed to a kernel.
+        For all other values, a maximum of 255 arguments can be passed
+        to a kernel.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>MEM_<wbr>BASE_<wbr>ADDR_<wbr>ALIGN</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cl_uint</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Alignment requirement (in bits) for sub-buffer offsets.
+        The minimum value is the size (in bits) of the largest OpenCL
+        built-in data type supported by the device (long16 in FULL profile,
+        long16 or int16 in EMBEDDED profile).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>MIN_<wbr>DATA_<wbr>TYPE_<wbr>ALIGN_<wbr>SIZE</code></p>
+<p class="tableblock"><a href="https://www.khronos.org/registry/OpenCL/specs/unified/html/OpenCL_API.html#unified-spec" target="_blank" rel="noopener">deprecated by</a> version 1.2.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cl_uint</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The minimum value is the size (in bytes) of the largest OpenCL data
+        type supported by the device (<code>long16</code> in FULL profile, <code>long16</code> or
+        <code>int16</code> in EMBEDDED profile).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>SINGLE_<wbr>FP_<wbr>CONFIG</code> <sup class="footnote" id="_footnote_native-rounding-modes">[<a id="_footnoteref_3" class="footnote" href="#_footnotedef_3" title="View footnote.">3</a>]</sup></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cl_device_<wbr>fp_<wbr>config</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Describes single precision floating-point capability of the device.
+        This is a bit-field that describes one or more of the following
+        values:</p>
+<p class="tableblock">        <code>CL_FP_<wbr>DENORM</code> - denorms are supported<br>
+        <code>CL_FP_<wbr>INF_<wbr>NAN</code> - INF and quiet NaNs are supported<br>
+        <code>CL_FP_<wbr>ROUND_<wbr>TO_<wbr>NEAREST</code>-- round to nearest even rounding mode
+        supported<br>
+        <code>CL_FP_<wbr>ROUND_<wbr>TO_<wbr>ZERO</code> - round to zero rounding mode supported<br>
+        <code>CL_FP_<wbr>ROUND_<wbr>TO_<wbr>INF</code> - round to positive and negative infinity
+        rounding modes supported<br>
+        <code>CL_FP_<wbr>FMA</code> - the fma kernel builtin is implemented using
+        hardware-accelerated fused multiply-add as defined in IEEE754-2008.<br>
+        <code>CL_FP_<wbr>CORRECTLY_<wbr>ROUNDED_<wbr>DIVIDE_<wbr>SQRT</code> - divide and sqrt are correctly
+        rounded as defined by the IEEE754 specification<br>
+        <code>CL_FP_<wbr>SOFT_<wbr>FLOAT</code> - Basic floating-point operations (such as
+        addition, subtraction, multiplication) are implemented in software</p>
+<p class="tableblock">        For the full profile, the mandated minimum floating-point capability
+        is:</p>
+<p class="tableblock">        <code>CL_FP_<wbr>ROUND_<wbr>TO_<wbr>NEAREST</code> |<br>
+        <code>CL_FP_<wbr>INF_<wbr>NAN</code>.</p>
+<p class="tableblock">        For the embedded profile, see the
+        <a href="https://www.khronos.org/registry/OpenCL/specs/unified/html/OpenCL_API.html#embedded-profile-single-fp-config-requirements" target="_blank" rel="noopener">dedicated table</a>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>DOUBLE_<wbr>FP_<wbr>CONFIG</code> <sup class="footnoteref">[<a class="footnote" href="#_footnotedef_3" title="View footnote.">3</a>]</sup></p>
+<p class="tableblock"><a href="https://www.khronos.org/registry/OpenCL/specs/unified/html/OpenCL_API.html#unified-spec" target="_blank" rel="noopener">missing before</a> version 1.2.</p>
+<p class="tableblock">Also see <code>cl_khr_<wbr>fp64</code>.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cl_device_<wbr>fp_<wbr>config</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Describes double precision floating-point capability of the OpenCL
+        device.
+        This is a bit-field that describes one or more of the following
+        values:</p>
+<p class="tableblock">        <code>CL_FP_<wbr>DENORM</code> - denorms are supported<br>
+        <code>CL_FP_<wbr>INF_<wbr>NAN</code> - INF and NaNs are supported<br>
+        <code>CL_FP_<wbr>ROUND_<wbr>TO_<wbr>NEAREST</code> - round to nearest even rounding mode
+        supported<br>
+        <code>CL_FP_<wbr>ROUND_<wbr>TO_<wbr>ZERO</code> - round to zero rounding mode supported<br>
+        <code>CL_FP_<wbr>ROUND_<wbr>TO_<wbr>INF</code> - round to positive and negative infinity
+        rounding modes supported<br>
+        <code>CL_FP_<wbr>FMA</code> - the fma kernel builtin is implemented using
+        hardware-accelerated fused multiply-add as defined in IEEE754-2008.<br>
+        <code>CL_FP_<wbr>SOFT_<wbr>FLOAT</code> - Basic floating-point operations (such as
+        addition, subtraction, multiplication) are implemented in software</p>
+<p class="tableblock">        Double precision is an optional feature so the mandated minimum
+        double precision floating-point capability is 0.</p>
+<p class="tableblock">        If double precision is supported by the device, then the minimum
+        double precision floating-point capability for OpenCL 2.0 or
+        newer devices is:</p>
+<p class="tableblock">        <code>CL_FP_<wbr>FMA</code> |<br>
+        <code>CL_FP_<wbr>ROUND_<wbr>TO_<wbr>NEAREST</code> |<br>
+        <code>CL_FP_<wbr>INF_<wbr>NAN</code> |<br>
+        <code>CL_FP_<wbr>DENORM</code>.</p>
+<p class="tableblock">        or for OpenCL 1.0, OpenCL 1.1 or OpenCL 1.2 devices:</p>
+<p class="tableblock">        <code>CL_FP_<wbr>FMA</code> |<br>
+        <code>CL_FP_<wbr>ROUND_<wbr>TO_<wbr>NEAREST</code> |<br>
+        <code>CL_FP_<wbr>ROUND_<wbr>TO_<wbr>ZERO</code> |<br>
+        <code>CL_FP_<wbr>ROUND_<wbr>TO_<wbr>INF</code> |<br>
+        <code>CL_FP_<wbr>INF_<wbr>NAN</code> |<br>
+        <code>CL_FP_<wbr>DENORM</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>GLOBAL_<wbr>MEM_<wbr>CACHE_<wbr>TYPE</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cl_device_<wbr>mem_<wbr>cache_<wbr>type</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Type of global memory cache supported.
+        Valid values are: <code>CL_NONE</code>, <code>CL_READ_<wbr>ONLY_<wbr>CACHE</code>, and
+        <code>CL_READ_<wbr>WRITE_<wbr>CACHE</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>GLOBAL_<wbr>MEM_<wbr>CACHELINE_<wbr>SIZE</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cl_uint</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Size of global memory cache line in bytes.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>GLOBAL_<wbr>MEM_<wbr>CACHE_<wbr>SIZE</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cl_ulong</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Size of global memory cache in bytes.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>GLOBAL_<wbr>MEM_<wbr>SIZE</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cl_ulong</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Size of global device memory in bytes.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>MAX_<wbr>CONSTANT_<wbr>BUFFER_<wbr>SIZE</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cl_ulong</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Max size in bytes of a constant buffer allocation.
+        The minimum value is 64 KB.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>MAX_<wbr>CONSTANT_<wbr>ARGS</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cl_uint</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Max number of arguments declared with the <code>__constant</code> qualifier
+        in a kernel.
+        The minimum value is 8.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>MAX_<wbr>GLOBAL_<wbr>VARIABLE_<wbr>SIZE</code></p>
+<p class="tableblock"><a href="https://www.khronos.org/registry/OpenCL/specs/unified/html/OpenCL_API.html#unified-spec" target="_blank" rel="noopener">missing before</a> version 2.0.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>size_t</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The maximum number of bytes of storage that may be allocated for any
+        single variable in program scope or inside a function in an OpenCL
+        kernel language declared in the global address space.</p>
+<p class="tableblock">        Support for program scope global variables is required for an OpenCL 2.0,
+        2.1, or 2.2 device.
+        The minimum value is 64 KB if the device supports program scope global
+        variables, and must be 0 for devices that do not support program scope
+        global variables.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>GLOBAL_<wbr>VARIABLE_<wbr>PREFERRED_<wbr>TOTAL_<wbr>SIZE</code></p>
+<p class="tableblock"><a href="https://www.khronos.org/registry/OpenCL/specs/unified/html/OpenCL_API.html#unified-spec" target="_blank" rel="noopener">missing before</a> version 2.0.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>size_t</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Maximum preferred total size, in bytes, of all program variables in
+        the global address space.
+        This is a performance hint.
+        An implementation may place such variables in storage with optimized
+        device access.
+        This query returns the capacity of such storage.
+        The minimum value is 0.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>LOCAL_<wbr>MEM_<wbr>TYPE</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cl_device_<wbr>local_<wbr>mem_<wbr>type</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Type of local memory supported.
+        This can be set to <code>CL_LOCAL</code> implying dedicated local memory storage
+        such as SRAM, or <code>CL_GLOBAL</code>.</p>
+<p class="tableblock">        For custom devices, <code>CL_NONE</code> can also be returned indicating no local
+        memory support.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>LOCAL_<wbr>MEM_<wbr>SIZE</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cl_ulong</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Size of local memory region in bytes.
+        The minimum value is 32 KB.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>ERROR_<wbr>CORRECTION_<wbr>SUPPORT</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cl_bool</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Is <code>CL_TRUE</code> if the device implements error correction for all
+        accesses to compute device memory (global and constant).
+        Is <code>CL_FALSE</code> if the device does not implement such error correction.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>HOST_<wbr>UNIFIED_<wbr>MEMORY</code></p>
+<p class="tableblock"><a href="https://www.khronos.org/registry/OpenCL/specs/unified/html/OpenCL_API.html#unified-spec" target="_blank" rel="noopener">missing before</a> version 1.1.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cl_bool</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Is <code>CL_TRUE</code> if the device and the host have a unified memory subsystem
+        and is <code>CL_FALSE</code> otherwise. <sup class="footnote">[<a id="_footnoteref_4" class="footnote" href="#_footnotedef_4" title="View footnote.">4</a>]</sup></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>PROFILING_<wbr>TIMER_<wbr>RESOLUTION</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>size_t</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Describes the resolution of device timer.
+        This is measured in nanoseconds.
+        Refer to <a href="https://www.khronos.org/registry/OpenCL/specs/unified/html/OpenCL_API.html#profiling-operations" target="_blank" rel="noopener">Profiling Operations</a> for details.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>ENDIAN_<wbr>LITTLE</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cl_bool</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Is <code>CL_TRUE</code> if the OpenCL device is a little endian device and
+        <code>CL_FALSE</code> otherwise.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>AVAILABLE</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cl_bool</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Is <code>CL_TRUE</code> if the device is available and <code>CL_FALSE</code> otherwise.
+        A device is considered to be available if the device can be expected
+        to successfully execute commands enqueued to the device.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>COMPILER_<wbr>AVAILABLE</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cl_bool</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Is <code>CL_TRUE</code> if a compiler is available to compile programs created from
+        source or IL, or <code>CL_FALSE</code> if the implementation does not have a
+        compiler available.</p>
+<p class="tableblock">        This must be <code>CL_TRUE</code> for devices supporting the full profile.</p>
+<p class="tableblock">        When an online compiler is not available, OpenCL programs may still be
+        created from binaries or built-in kernels supported by the device.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>LINKER_<wbr>AVAILABLE</code></p>
+<p class="tableblock"><a href="https://www.khronos.org/registry/OpenCL/specs/unified/html/OpenCL_API.html#unified-spec" target="_blank" rel="noopener">missing before</a> version 1.2.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cl_bool</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Is <code>CL_TRUE</code> if a linker is available to link compiled programs, or
+        <code>CL_FALSE</code> if the implementation does not have a linker available.</p>
+<p class="tableblock">        This must be <code>CL_TRUE</code> for devices supporting the full profile or if
+        <code>CL_DEVICE_<wbr>COMPILER_<wbr>AVAILABLE</code> is <code>CL_TRUE</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>EXECUTION_<wbr>CAPABILITIES</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cl_device_<wbr>exec_<wbr>capabilities</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Describes the execution capabilities of the device.
+        This is a bit-field that describes one or more of the following
+        values:</p>
+<p class="tableblock">        <code>CL_EXEC_<wbr>KERNEL</code> - The OpenCL device can execute OpenCL kernels.<br>
+        <code>CL_EXEC_<wbr>NATIVE_<wbr>KERNEL</code> - The OpenCL device can execute native
+        kernels.</p>
+<p class="tableblock">        The mandated minimum capability is: <code>CL_EXEC_<wbr>KERNEL</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>QUEUE_<wbr>PROPERTIES</code></p>
+<p class="tableblock"><a href="https://www.khronos.org/registry/OpenCL/specs/unified/html/OpenCL_API.html#unified-spec" target="_blank" rel="noopener">deprecated by</a> version 2.0.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cl_command_<wbr>queue_<wbr>properties</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">See description of <code>CL_DEVICE_<wbr>QUEUE_<wbr>ON_<wbr>HOST_<wbr>PROPERTIES</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>QUEUE_<wbr>ON_<wbr>HOST_<wbr>PROPERTIES</code></p>
+<p class="tableblock"><a href="https://www.khronos.org/registry/OpenCL/specs/unified/html/OpenCL_API.html#unified-spec" target="_blank" rel="noopener">missing before</a> version 2.0.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cl_command_<wbr>queue_<wbr>properties</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Describes the on host command-queue properties supported by the
+        device.
+        This is a bit-field that describes one or more of the following
+        values:</p>
+<p class="tableblock">        <code>CL_QUEUE_<wbr>OUT_<wbr>OF_<wbr>ORDER_<wbr>EXEC_<wbr>MODE_<wbr>ENABLE</code><br>
+        <code>CL_QUEUE_<wbr>PROFILING_<wbr>ENABLE</code></p>
+<p class="tableblock">        These properties are described in the <a href="https://www.khronos.org/registry/OpenCL/specs/unified/html/OpenCL_API.html#queue-properties-table" target="_blank" rel="noopener">Queue Properties</a> table.</p>
+<p class="tableblock">        The mandated minimum capability is: <code>CL_QUEUE_<wbr>PROFILING_<wbr>ENABLE</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>QUEUE_<wbr>ON_<wbr>DEVICE_<wbr>PROPERTIES</code></p>
+<p class="tableblock"><a href="https://www.khronos.org/registry/OpenCL/specs/unified/html/OpenCL_API.html#unified-spec" target="_blank" rel="noopener">missing before</a> version 2.0.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cl_command_<wbr>queue_<wbr>properties</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Describes the on device command-queue properties supported by the
+        device.
+        This is a bit-field that describes one or more of the following
+        values:</p>
+<p class="tableblock">        <code>CL_QUEUE_<wbr>OUT_<wbr>OF_<wbr>ORDER_<wbr>EXEC_<wbr>MODE_<wbr>ENABLE</code><br>
+        <code>CL_QUEUE_<wbr>PROFILING_<wbr>ENABLE</code></p>
+<p class="tableblock">        These properties are described in the <a href="https://www.khronos.org/registry/OpenCL/specs/unified/html/OpenCL_API.html#queue-properties-table" target="_blank" rel="noopener">Queue Properties</a> table.</p>
+<p class="tableblock">        Support for on-device queues is required for an OpenCL 2.0, 2.1, or 2.2 device.
+        When on-device queues are supported, the mandated minimum capability is:</p>
+<p class="tableblock">        <code>CL_QUEUE_<wbr>OUT_<wbr>OF_<wbr>ORDER_<wbr>EXEC_<wbr>MODE_<wbr>ENABLE</code> |<br>
+        <code>CL_QUEUE_<wbr>PROFILING_<wbr>ENABLE</code>.</p>
+<p class="tableblock">        Must be 0 for devices that do not support on-device queues.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>QUEUE_<wbr>ON_<wbr>DEVICE_<wbr>PREFERRED_<wbr>SIZE</code></p>
+<p class="tableblock"><a href="https://www.khronos.org/registry/OpenCL/specs/unified/html/OpenCL_API.html#unified-spec" target="_blank" rel="noopener">missing before</a> version 2.0.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cl_uint</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The preferred size of the device queue, in bytes.
+        Applications should use this size for the device queue to ensure
+        good performance.</p>
+<p class="tableblock">        The minimum value is 16 KB for devices supporting on-device queues,
+        and must be 0 for devices that do not support on-device queues.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>QUEUE_<wbr>ON_<wbr>DEVICE_<wbr>MAX_<wbr>SIZE</code></p>
+<p class="tableblock"><a href="https://www.khronos.org/registry/OpenCL/specs/unified/html/OpenCL_API.html#unified-spec" target="_blank" rel="noopener">missing before</a> version 2.0.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cl_uint</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The maximum size of the device queue in bytes.</p>
+<p class="tableblock">        The minimum value is 256 KB for the full profile and 64 KB for the
+        embedded profile for devices supporting on-device queues,
+        and must be 0 for devices that do not support on-device queues.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>MAX_<wbr>ON_<wbr>DEVICE_<wbr>QUEUES</code></p>
+<p class="tableblock"><a href="https://www.khronos.org/registry/OpenCL/specs/unified/html/OpenCL_API.html#unified-spec" target="_blank" rel="noopener">missing before</a> version 2.0.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cl_uint</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The maximum number of device queues that can be created for this
+        device in a single context.</p>
+<p class="tableblock">        The minimum value is 1 for devices supporting on-device queues,
+        and must be 0 for devices that do not support on-device queues.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>MAX_<wbr>ON_<wbr>DEVICE_<wbr>EVENTS</code></p>
+<p class="tableblock"><a href="https://www.khronos.org/registry/OpenCL/specs/unified/html/OpenCL_API.html#unified-spec" target="_blank" rel="noopener">missing before</a> version 2.0.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cl_uint</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The maximum number of events in use by a device queue.
+        These refer to events returned by the <code>enqueue_</code> built-in functions
+        to a device queue or user events returned by the <code>create_user_event</code>
+        built-in function that have not been released.</p>
+<p class="tableblock">        The minimum value is 1024 for devices supporting on-device queues,
+        and must be 0 for devices that do not support on-device queues.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>BUILT_<wbr>IN_<wbr>KERNELS</code></p>
+<p class="tableblock"><a href="https://www.khronos.org/registry/OpenCL/specs/unified/html/OpenCL_API.html#unified-spec" target="_blank" rel="noopener">missing before</a> version 1.2.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>char</code>[]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A semi-colon separated list of built-in kernels supported by the
+        device.
+        An empty string is returned if no built-in kernels are supported by
+        the device.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>BUILT_<wbr>IN_<wbr>KERNELS_<wbr>WITH_<wbr>VERSION</code></p>
+<p class="tableblock"><a href="https://www.khronos.org/registry/OpenCL/specs/unified/html/OpenCL_API.html#unified-spec" target="_blank" rel="noopener">missing before</a> version 3.0.</p>
+<p class="tableblock">or</p>
+<p class="tableblock"><code>CL_DEVICE_<wbr>BUILT_<wbr>IN_<wbr>KERNELS_<wbr>WITH_<wbr>VERSION_<wbr>KHR</code></p>
+<p class="tableblock">provided by the <code>cl_khr_extended_versioning</code> extension.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cl_name_<wbr>version</code>[]</p>
+<p class="tableblock">or <code>cl_name_<wbr>version_<wbr>khr</code>[]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns an array of descriptions for the built-in kernels supported by
+        the device.
+        Each built-in kernel may only be reported once.
+        The list of reported kernels must match the list returned via
+        <code>CL_DEVICE_<wbr>BUILT_<wbr>IN_<wbr>KERNELS</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>PLATFORM</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cl_platform_<wbr>id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The platform associated with this device.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>NAME</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>char</code>[]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Device name string.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>VENDOR</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>char</code>[]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Vendor name string.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DRIVER_<wbr>VERSION</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>char</code>[]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">OpenCL software driver version string.
+        Follows a vendor-specific format.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>PROFILE</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>char</code>[]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">OpenCL profile string.
+        Returns the profile name supported by the device.
+        The profile name returned can be one of the following strings:</p>
+<p class="tableblock">        FULL_PROFILE - if the device supports the OpenCL specification
+        (functionality defined as part of the core specification and does
+        not require any extensions to be supported).</p>
+<p class="tableblock">        EMBEDDED_PROFILE - if the device supports the OpenCL embedded
+        profile.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>VERSION</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>char</code>[]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">OpenCL version string.
+        Returns the OpenCL version supported by the device. This version
+        string has the following format:</p>
+<p class="tableblock">        <em>OpenCL&lt;space&gt;&lt;major_version.minor_version&gt;&lt;space&gt;&lt;vendor-specific
+        information&gt;</em></p>
+<p class="tableblock">        The <em>major_version.minor_version</em> value returned will be one of 1.0,
+        1.1, 1.2, 2.0, 2.1, 2.2, 3.0 or 3.1.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>NUMERIC_<wbr>VERSION</code></p>
+<p class="tableblock"><a href="https://www.khronos.org/registry/OpenCL/specs/unified/html/OpenCL_API.html#unified-spec" target="_blank" rel="noopener">missing before</a> version 3.0.</p>
+<p class="tableblock">or</p>
+<p class="tableblock"><code>CL_DEVICE_<wbr>NUMERIC_<wbr>VERSION_<wbr>KHR</code></p>
+<p class="tableblock">provided by the <code>cl_khr_extended_versioning</code> extension.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cl_version</code></p>
+<p class="tableblock">or <code>cl_version_<wbr>khr</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the detailed (major, minor, patch) version supported by the
+        device.
+        The major and minor version numbers returned must match those
+        returned via <code>CL_DEVICE_<wbr>VERSION</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>OPENCL_<wbr>C_<wbr>VERSION</code></p>
+<p class="tableblock"><a href="https://www.khronos.org/registry/OpenCL/specs/unified/html/OpenCL_API.html#unified-spec" target="_blank" rel="noopener">missing before</a> version 1.1 and <a href="https://www.khronos.org/registry/OpenCL/specs/unified/html/OpenCL_API.html#unified-spec" target="_blank" rel="noopener">deprecated by</a> version 3.0.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>char</code>[]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the highest fully backwards compatible OpenCL C version
+        supported by the compiler for the device.
+        For devices supporting compilation from OpenCL C source, this will
+        return a version string with the following format:</p>
+<p class="tableblock">        <em>OpenCL&lt;space&gt;C&lt;space&gt;&lt;major_version.minor_version&gt;&lt;space&gt;&lt;vendor-specific
+        information&gt;</em></p>
+<p class="tableblock">        For devices that support compilation from OpenCL C source:</p>
+<p class="tableblock">        Because OpenCL 3.0 and newer is backwards compatible with OpenCL 1.2,
+        an OpenCL 3.0 or newer device must support at least OpenCL C 1.2.
+        An OpenCL 3.0 or newer device may return an OpenCL C version newer
+        than OpenCL C 1.2 if and only if all optional OpenCL C
+        features are supported by the device for the newer version.</p>
+<p class="tableblock">        Support for OpenCL C 2.0 is required for an OpenCL 2.0, OpenCL 2.1,
+        or OpenCL 2.2 device.</p>
+<p class="tableblock">        Support for OpenCL C 1.2 is required for an OpenCL 1.2 device.</p>
+<p class="tableblock">        Support for OpenCL C 1.1 is required for an OpenCL 1.1 device.</p>
+<p class="tableblock">        Support for either OpenCL C 1.0 or OpenCL C 1.1 is required for
+        an OpenCL 1.0 device.</p>
+<p class="tableblock">        For devices that do not support compilation from OpenCL C source,
+        such as when <code>CL_DEVICE_<wbr>COMPILER_<wbr>AVAILABLE</code> is <code>CL_FALSE</code>, this
+        query may return an empty string.</p>
+<p class="tableblock">        This query has been superseded by the <code>CL_DEVICE_<wbr>OPENCL_<wbr>C_<wbr>ALL_<wbr>VERSIONS</code>
+        query, which returns a set of OpenCL C versions supported by a
+        device.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>OPENCL_<wbr>C_<wbr>ALL_<wbr>VERSIONS</code></p>
+<p class="tableblock"><a href="https://www.khronos.org/registry/OpenCL/specs/unified/html/OpenCL_API.html#unified-spec" target="_blank" rel="noopener">missing before</a> version 3.0.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cl_name_<wbr>version</code>[]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns an array of name, version descriptions listing all the versions
+        of OpenCL C supported by the compiler for the device.
+        In each returned description structure, the name field is required to be
+        "OpenCL C". The list may include both newer non-backwards compatible
+        OpenCL C versions, such as OpenCL C 3.0, and older OpenCL C versions
+        with mandatory backwards compatibility.
+        The version returned by <code>CL_DEVICE_<wbr>OPENCL_<wbr>C_<wbr>VERSION</code> is required to be
+        present in the list.</p>
+<p class="tableblock">        For devices that support compilation from OpenCL C source:</p>
+<p class="tableblock">        Because OpenCL 3.0 is backwards compatible with OpenCL 1.2,
+        and OpenCL 1.2 is backwards compatible with OpenCL 1.1 and
+        OpenCL 1.0, support for at least OpenCL C 3.0, OpenCL C 1.2,
+        OpenCL C 1.1, and OpenCL C 1.0 is required for an OpenCL 3.0 device.</p>
+<p class="tableblock">        Support for at least OpenCL C 3.1, OpenCL C 3.0, OpenCL C 1.2, OpenCL C
+        1.1, and OpenCL C 1.0 is required for an OpenCL 3.1 device.</p>
+<p class="tableblock">        Support for OpenCL C 2.0, OpenCL C 1.2, OpenCL C 1.1, and OpenCL C
+        1.0 is required for an OpenCL 2.0, OpenCL 2.1, or OpenCL 2.2 device.</p>
+<p class="tableblock">        Support for OpenCL C 1.2, OpenCL C 1.1, and OpenCL C 1.0 is required
+        for an OpenCL 1.2 device.</p>
+<p class="tableblock">        Support for OpenCL C 1.1 and OpenCL C 1.0 is required for an
+        OpenCL 1.1 device.</p>
+<p class="tableblock">        Support for at least OpenCL C 1.0 is required for an OpenCL 1.0 device.</p>
+<p class="tableblock">        For devices that do not support compilation from OpenCL C source,
+        this query may return an empty array.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>OPENCL_<wbr>C_<wbr>NUMERIC_<wbr>VERSION_<wbr>KHR</code></p>
+<p class="tableblock">provided by the <code>cl_khr_extended_versioning</code> extension.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cl_version_<wbr>khr</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns detailed (major, minor, patch) numeric version information.
+      The major and minor version numbers returned must match those returned
+      via <code>CL_DEVICE_<wbr>OPENCL_<wbr>C_<wbr>VERSION</code>.</p>
+<p class="tableblock">      This query was not promoted to core in OpenCL version 3.0, but the
+      core query <code>CL_DEVICE_<wbr>OPENCL_<wbr>C_<wbr>ALL_<wbr>VERSIONS</code> can be used to obtain
+      equivalent information.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>OPENCL_<wbr>C_<wbr>FEATURES</code></p>
+<p class="tableblock"><a href="https://www.khronos.org/registry/OpenCL/specs/unified/html/OpenCL_API.html#unified-spec" target="_blank" rel="noopener">missing before</a> version 3.0.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cl_name_<wbr>version</code>[]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns an array of optional OpenCL C features supported by the
+        compiler for the device alongside the OpenCL C version that introduced
+        the feature macro.
+        For example, if a compiler supports an OpenCL C 3.0 feature, the
+        returned name will be the full name of the OpenCL C feature macro, and
+        the returned version will be 3.0.0.</p>
+<p class="tableblock">        For devices that do not support compilation from OpenCL C source,
+        this query may return an empty array.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>EXTENSIONS</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>char</code>[]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns a space separated list of extension names (the extension
+        names themselves do not contain any spaces) supported by the device.
+        The list of extension names may include Khronos approved extension
+        names and vendor specified extension names.</p>
+<p class="tableblock">        Please refer to <a href="https://www.khronos.org/registry/OpenCL/specs/unified/html/OpenCL_API.html#required-opencl-extensions" target="_blank" rel="noopener">Required OpenCL
+        Extensions</a> for a list of OpenCL extensions that must be supported for
+        each OpenCL version.</p>
+<p class="tableblock">        Please refer to the OpenCL Specification or vendor-provided
+        documentation for a detailed description of these extensions.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>EXTENSIONS_<wbr>WITH_<wbr>VERSION</code></p>
+<p class="tableblock"><a href="https://www.khronos.org/registry/OpenCL/specs/unified/html/OpenCL_API.html#unified-spec" target="_blank" rel="noopener">missing before</a> version 3.0.</p>
+<p class="tableblock">or</p>
+<p class="tableblock"><code>CL_DEVICE_<wbr>EXTENSIONS_<wbr>WITH_<wbr>VERSION_<wbr>KHR</code></p>
+<p class="tableblock">provided by the <code>cl_khr_extended_versioning</code> extension.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cl_name_<wbr>version</code>[]</p>
+<p class="tableblock">or <code>cl_name_<wbr>version_<wbr>khr</code>[]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns an array of description (name and version) structures. The same
+        extension name must not be reported more than once. The list of
+        extensions reported must match the list reported via
+        <code>CL_DEVICE_<wbr>EXTENSIONS</code>.</p>
+<p class="tableblock">        See <code>CL_DEVICE_<wbr>EXTENSIONS</code> for a list of extensions that are
+        required to be reported for a given OpenCL version.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>PRINTF_<wbr>BUFFER_<wbr>SIZE</code></p>
+<p class="tableblock"><a href="https://www.khronos.org/registry/OpenCL/specs/unified/html/OpenCL_API.html#unified-spec" target="_blank" rel="noopener">missing before</a> version 1.2.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>size_t</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Maximum size in bytes of the internal buffer that holds the output
+        of printf calls from a kernel.
+        The minimum value for the FULL profile is 1 MB.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>PREFERRED_<wbr>INTEROP_<wbr>USER_<wbr>SYNC</code></p>
+<p class="tableblock"><a href="https://www.khronos.org/registry/OpenCL/specs/unified/html/OpenCL_API.html#unified-spec" target="_blank" rel="noopener">missing before</a> version 1.2.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cl_bool</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Is <code>CL_TRUE</code> if the devices preference is for the user to be
+        responsible for synchronization, when sharing memory objects between
+        OpenCL and other APIs such as DirectX, <code>CL_FALSE</code> if the device /
+        implementation has a performant path for performing synchronization
+        of memory object shared between OpenCL and other APIs such as
+        DirectX.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>PARENT_<wbr>DEVICE</code></p>
+<p class="tableblock"><a href="https://www.khronos.org/registry/OpenCL/specs/unified/html/OpenCL_API.html#unified-spec" target="_blank" rel="noopener">missing before</a> version 1.2.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cl_device_<wbr>id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the <code>cl_device_<wbr>id</code> of the parent device to which this
+        sub-device belongs.
+        If <em>device</em> is a root-level device, a <code>NULL</code> value is returned.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>PARTITION_<wbr>MAX_<wbr>SUB_<wbr>DEVICES</code></p>
+<p class="tableblock"><a href="https://www.khronos.org/registry/OpenCL/specs/unified/html/OpenCL_API.html#unified-spec" target="_blank" rel="noopener">missing before</a> version 1.2.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cl_uint</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the maximum number of sub-devices that can be created when a
+        device is partitioned.</p>
+<p class="tableblock">        The value returned cannot exceed <code>CL_DEVICE_<wbr>MAX_<wbr>COMPUTE_<wbr>UNITS</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>PARTITION_<wbr>PROPERTIES</code></p>
+<p class="tableblock"><a href="https://www.khronos.org/registry/OpenCL/specs/unified/html/OpenCL_API.html#unified-spec" target="_blank" rel="noopener">missing before</a> version 1.2.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cl_device_<wbr>partition_<wbr>property</code>[]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the list of partition types supported by <em>device</em>.
+        This is an array of <code>cl_device_<wbr>partition_<wbr>property</code> values drawn from
+        the following list:</p>
+<p class="tableblock">        <code>CL_DEVICE_<wbr>PARTITION_<wbr>EQUALLY</code><br>
+        <code>CL_DEVICE_<wbr>PARTITION_<wbr>BY_<wbr>COUNTS</code><br>
+        <code>CL_DEVICE_<wbr>PARTITION_<wbr>BY_<wbr>AFFINITY_<wbr>DOMAIN</code></p>
+<p class="tableblock">        If the device cannot be partitioned (i.e. there is no partitioning
+        scheme supported by the device that will return at least two
+        sub-devices), a value of 0 will be returned.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>PARTITION_<wbr>AFFINITY_<wbr>DOMAIN</code></p>
+<p class="tableblock"><a href="https://www.khronos.org/registry/OpenCL/specs/unified/html/OpenCL_API.html#unified-spec" target="_blank" rel="noopener">missing before</a> version 1.2.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cl_device_<wbr>affinity_<wbr>domain</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the list of supported affinity domains for partitioning the
+        device using <code>CL_DEVICE_<wbr>PARTITION_<wbr>BY_<wbr>AFFINITY_<wbr>DOMAIN</code>.
+        This is a bit-field that describes one or more of the following
+        values:</p>
+<p class="tableblock">        <code>CL_DEVICE_<wbr>AFFINITY_<wbr>DOMAIN_<wbr>NUMA</code><br>
+        <code>CL_DEVICE_<wbr>AFFINITY_<wbr>DOMAIN_<wbr>L4_<wbr>CACHE</code><br>
+        <code>CL_DEVICE_<wbr>AFFINITY_<wbr>DOMAIN_<wbr>L3_<wbr>CACHE</code><br>
+        <code>CL_DEVICE_<wbr>AFFINITY_<wbr>DOMAIN_<wbr>L2_<wbr>CACHE</code><br>
+        <code>CL_DEVICE_<wbr>AFFINITY_<wbr>DOMAIN_<wbr>L1_<wbr>CACHE</code><br>
+        <code>CL_DEVICE_<wbr>AFFINITY_<wbr>DOMAIN_<wbr>NEXT_<wbr>PARTITIONABLE</code></p>
+<p class="tableblock">        If the device does not support any affinity domains, a value of 0
+        will be returned.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>PARTITION_<wbr>TYPE</code></p>
+<p class="tableblock"><a href="https://www.khronos.org/registry/OpenCL/specs/unified/html/OpenCL_API.html#unified-spec" target="_blank" rel="noopener">missing before</a> version 1.2.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cl_device_<wbr>partition_<wbr>property</code>[]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the properties argument specified in <strong>clCreateSubDevices</strong> if
+        device is a sub-device.
+        In the case where the properties argument to <strong>clCreateSubDevices</strong> is
+        <code>CL_DEVICE_<wbr>PARTITION_<wbr>BY_<wbr>AFFINITY_<wbr>DOMAIN</code>,
+        <code>CL_DEVICE_<wbr>AFFINITY_<wbr>DOMAIN_<wbr>NEXT_<wbr>PARTITIONABLE</code>, the affinity domain
+        used to perform the partition will be returned.
+        This can be one of the following values:</p>
+<p class="tableblock">        <code>CL_DEVICE_<wbr>AFFINITY_<wbr>DOMAIN_<wbr>NUMA</code><br>
+        <code>CL_DEVICE_<wbr>AFFINITY_<wbr>DOMAIN_<wbr>L4_<wbr>CACHE</code><br>
+        <code>CL_DEVICE_<wbr>AFFINITY_<wbr>DOMAIN_<wbr>L3_<wbr>CACHE</code><br>
+        <code>CL_DEVICE_<wbr>AFFINITY_<wbr>DOMAIN_<wbr>L2_<wbr>CACHE</code><br>
+        <code>CL_DEVICE_<wbr>AFFINITY_<wbr>DOMAIN_<wbr>L1_<wbr>CACHE</code></p>
+<p class="tableblock">        Otherwise the implementation may either return a
+        <em>param_value_size_ret</em> of 0 i.e. there is no partition type
+        associated with device or can return a property value of 0 (where 0
+        is used to terminate the partition property list) in the memory that
+        <em>param_value</em> points to.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>REFERENCE_<wbr>COUNT</code> <sup class="footnote">[<a id="_footnoteref_5" class="footnote" href="#_footnotedef_5" title="View footnote.">5</a>]</sup></p>
+<p class="tableblock"><a href="https://www.khronos.org/registry/OpenCL/specs/unified/html/OpenCL_API.html#unified-spec" target="_blank" rel="noopener">missing before</a> version 1.2.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cl_uint</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the <em>device</em> reference count.
+        If the device is a root-level device, a reference count of one is
+        returned.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>SVM_<wbr>CAPABILITIES</code></p>
+<p class="tableblock"><a href="https://www.khronos.org/registry/OpenCL/specs/unified/html/OpenCL_API.html#unified-spec" target="_blank" rel="noopener">missing before</a> version 2.0.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cl_device_<wbr>svm_<wbr>capabilities</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Describes the various shared virtual memory (SVM) memory
+        allocation types the device supports.
+        This is a bit-field that describes a combination of the following
+        values:</p>
+<p class="tableblock">        <code>CL_DEVICE_<wbr>SVM_<wbr>COARSE_<wbr>GRAIN_<wbr>BUFFER</code> - Support for coarse-grain buffer
+        sharing using <strong>clSVMAlloc</strong>.
+        Memory consistency is guaranteed at synchronization points and the
+        host must use calls to <strong>clEnqueueMapBuffer</strong> and
+        <strong>clEnqueueUnmapMemObject</strong>.<br>
+        <code>CL_DEVICE_<wbr>SVM_<wbr>FINE_<wbr>GRAIN_<wbr>BUFFER</code> - Support for fine-grain buffer
+        sharing using <strong>clSVMAlloc</strong>.
+        Memory consistency is guaranteed at synchronization points without
+        need for <strong>clEnqueueMapBuffer</strong> and <strong>clEnqueueUnmapMemObject</strong>.<br>
+        <code>CL_DEVICE_<wbr>SVM_<wbr>FINE_<wbr>GRAIN_<wbr>SYSTEM</code> - Support for sharing the host&#8217;s
+        entire virtual memory including memory allocated using <strong>malloc</strong>.
+        Memory consistency is guaranteed at synchronization points.<br>
+        <code>CL_DEVICE_<wbr>SVM_<wbr>ATOMICS</code> - Support for the OpenCL 2.0 atomic
+        operations that provide memory consistency across the host and all
+        OpenCL devices supporting fine-grain SVM allocations.</p>
+<p class="tableblock">        The mandated minimum capability for an OpenCL 2.0, 2.1, or 2.2 device is
+        <code>CL_DEVICE_<wbr>SVM_<wbr>COARSE_<wbr>GRAIN_<wbr>BUFFER</code>.</p>
+<p class="tableblock">        For other device versions there is no mandated minimum capability.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>PREFERRED_<wbr>PLATFORM_<wbr>ATOMIC_<wbr>ALIGNMENT</code></p>
+<p class="tableblock"><a href="https://www.khronos.org/registry/OpenCL/specs/unified/html/OpenCL_API.html#unified-spec" target="_blank" rel="noopener">missing before</a> version 2.0.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cl_uint</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the value representing the preferred alignment in bytes for
+        OpenCL 2.0 fine-grained SVM atomic types.
+        This query can return 0 which indicates that the preferred alignment
+        is aligned to the natural size of the type.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>PREFERRED_<wbr>GLOBAL_<wbr>ATOMIC_<wbr>ALIGNMENT</code></p>
+<p class="tableblock"><a href="https://www.khronos.org/registry/OpenCL/specs/unified/html/OpenCL_API.html#unified-spec" target="_blank" rel="noopener">missing before</a> version 2.0.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cl_uint</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the value representing the preferred alignment in bytes for
+        OpenCL 2.0 atomic types to global memory.
+        This query can return 0 which indicates that the preferred alignment
+        is aligned to the natural size of the type.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>PREFERRED_<wbr>LOCAL_<wbr>ATOMIC_<wbr>ALIGNMENT</code></p>
+<p class="tableblock"><a href="https://www.khronos.org/registry/OpenCL/specs/unified/html/OpenCL_API.html#unified-spec" target="_blank" rel="noopener">missing before</a> version 2.0.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cl_uint</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the value representing the preferred alignment in bytes for
+        OpenCL 2.0 atomic types to local memory.
+        This query can return 0 which indicates that the preferred alignment
+        is aligned to the natural size of the type.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>MAX_<wbr>NUM_<wbr>SUB_<wbr>GROUPS</code></p>
+<p class="tableblock"><a href="https://www.khronos.org/registry/OpenCL/specs/unified/html/OpenCL_API.html#unified-spec" target="_blank" rel="noopener">missing before</a> version 2.1.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cl_uint</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Maximum number of sub-groups in a work-group that a device is
+        capable of executing on a single compute unit, for any given
+        kernel-instance running on the device.</p>
+<p class="tableblock">        The minimum value is 1 if the device supports sub-groups, and must be
+        0 for devices that do not support sub-groups.
+        Support for sub-groups is required for an OpenCL 2.1, OpenCL 2.2, or
+        OpenCL 3.1 device.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>SUB_<wbr>GROUP_<wbr>INDEPENDENT_<wbr>FORWARD_<wbr>PROGRESS</code></p>
+<p class="tableblock"><a href="https://www.khronos.org/registry/OpenCL/specs/unified/html/OpenCL_API.html#unified-spec" target="_blank" rel="noopener">missing before</a> version 2.1.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cl_bool</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Is <code>CL_TRUE</code> if this device supports independent forward progress of
+        sub-groups, <code>CL_FALSE</code> otherwise.</p>
+<p class="tableblock">        This query must return <code>CL_TRUE</code> for devices that support the
+        <code>cl_khr_<wbr>subgroups</code> extension, and must return <code>CL_FALSE</code> for
+        devices that do not support sub-groups.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>ATOMIC_<wbr>MEMORY_<wbr>CAPABILITIES</code></p>
+<p class="tableblock"><a href="https://www.khronos.org/registry/OpenCL/specs/unified/html/OpenCL_API.html#unified-spec" target="_blank" rel="noopener">missing before</a> version 3.0.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cl_device_<wbr>atomic_<wbr>capabilities</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Describes the various memory orders and scopes that the device supports for atomic memory operations.
+        This is a bit-field that describes a combination of the following
+        values:</p>
+<p class="tableblock">        <code>CL_DEVICE_<wbr>ATOMIC_<wbr>ORDER_<wbr>RELAXED</code> - Support for the <strong>relaxed</strong> memory order.<br>
+        <code>CL_DEVICE_<wbr>ATOMIC_<wbr>ORDER_<wbr>ACQ_<wbr>REL</code> - Support for the <strong>acquire</strong>, <strong>release</strong>, and <strong>acquire-release</strong> memory orders.<br>
+        <code>CL_DEVICE_<wbr>ATOMIC_<wbr>ORDER_<wbr>SEQ_<wbr>CST</code> - Support for the <strong>sequentially consistent</strong> memory order.</p>
+<p class="tableblock">        Because atomic memory orders are hierarchical, a device that supports a strong memory order must also support all weaker memory orders.</p>
+<p class="tableblock">        <code>CL_DEVICE_<wbr>ATOMIC_<wbr>SCOPE_<wbr>WORK_<wbr>ITEM</code> <sup class="footnote">[<a id="_footnoteref_6" class="footnote" href="#_footnotedef_6" title="View footnote.">6</a>]</sup> - Support for memory ordering constraints that apply to a single work-item.<br>
+        <code>CL_DEVICE_<wbr>ATOMIC_<wbr>SCOPE_<wbr>WORK_<wbr>GROUP</code> - Support for memory ordering constraints that apply to all work-items in a work-group.<br>
+        <code>CL_DEVICE_<wbr>ATOMIC_<wbr>SCOPE_<wbr>DEVICE</code> - Support for memory ordering constraints that apply to all work-items executing on the device.<br>
+        <code>CL_DEVICE_<wbr>ATOMIC_<wbr>SCOPE_<wbr>ALL_<wbr>DEVICES</code> - Support for memory ordering constraints that apply to all work-items executing across all devices that can share SVM memory with each other and the host process.</p>
+<p class="tableblock">        Because atomic scopes are hierarchical, a device that supports a wide scope must also support all narrower scopes, except for the work-item scope, which is a special case.</p>
+<p class="tableblock">        The mandated minimum capability is:</p>
+<p class="tableblock">        <code>CL_DEVICE_<wbr>ATOMIC_<wbr>ORDER_<wbr>RELAXED</code> |<br>
+        <code>CL_DEVICE_<wbr>ATOMIC_<wbr>SCOPE_<wbr>WORK_<wbr>GROUP</code></p>
+<p class="tableblock">        A device that does not support <code>CL_DEVICE_<wbr>SVM_<wbr>ATOMICS</code> (and hence does not support <code>CL_MEM_<wbr>SVM_<wbr>ATOMICS</code>) may still support <code>CL_DEVICE_<wbr>ATOMIC_<wbr>SCOPE_<wbr>ALL_<wbr>DEVICES</code>. On these devices, an atomic operation with
+        <strong>memory_scope_all_svm_devices</strong> will behave the same as if the scope were <strong>memory_scope_device</strong> - refer to the <a href="https://www.khronos.org/registry/OpenCL/specs/unified/html/OpenCL_API.html#memory-consistency-model" target="_blank" rel="noopener">memory consistency model</a>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>ATOMIC_<wbr>FENCE_<wbr>CAPABILITIES</code></p>
+<p class="tableblock"><a href="https://www.khronos.org/registry/OpenCL/specs/unified/html/OpenCL_API.html#unified-spec" target="_blank" rel="noopener">missing before</a> version 3.0.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cl_device_<wbr>atomic_<wbr>capabilities</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Describes the various memory orders and scopes that the device supports for atomic fence operations.
+        This is a bit-field that has the same set of possible values as described for <code>CL_DEVICE_<wbr>ATOMIC_<wbr>MEMORY_<wbr>CAPABILITIES</code>.</p>
+<p class="tableblock">        The mandated minimum capability is:</p>
+<p class="tableblock">        <code>CL_DEVICE_<wbr>ATOMIC_<wbr>ORDER_<wbr>RELAXED</code> |<br>
+        <code>CL_DEVICE_<wbr>ATOMIC_<wbr>ORDER_<wbr>ACQ_<wbr>REL</code> |<br>
+        <code>CL_DEVICE_<wbr>ATOMIC_<wbr>SCOPE_<wbr>WORK_<wbr>GROUP</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>NON_<wbr>UNIFORM_<wbr>WORK_<wbr>GROUP_<wbr>SUPPORT</code></p>
+<p class="tableblock"><a href="https://www.khronos.org/registry/OpenCL/specs/unified/html/OpenCL_API.html#unified-spec" target="_blank" rel="noopener">missing before</a> version 3.0.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cl_bool</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Is <code>CL_TRUE</code> if the device supports non-uniform work-groups, and <code>CL_FALSE</code> otherwise.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>WORK_<wbr>GROUP_<wbr>COLLECTIVE_<wbr>FUNCTIONS_<wbr>SUPPORT</code></p>
+<p class="tableblock"><a href="https://www.khronos.org/registry/OpenCL/specs/unified/html/OpenCL_API.html#unified-spec" target="_blank" rel="noopener">missing before</a> version 3.0.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cl_bool</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Is <code>CL_TRUE</code> if the device supports work-group collective functions e.g. <code>work_group_broadcast</code>, <code>work_group_reduce</code>, and <code>work_group_scan</code>, and <code>CL_FALSE</code> otherwise.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>GENERIC_<wbr>ADDRESS_<wbr>SPACE_<wbr>SUPPORT</code></p>
+<p class="tableblock"><a href="https://www.khronos.org/registry/OpenCL/specs/unified/html/OpenCL_API.html#unified-spec" target="_blank" rel="noopener">missing before</a> version 3.0.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cl_bool</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Is <code>CL_TRUE</code> if the device supports the generic address space and its associated built-in functions, and <code>CL_FALSE</code> otherwise.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>DEVICE_<wbr>ENQUEUE_<wbr>CAPABILITIES</code></p>
+<p class="tableblock"><a href="https://www.khronos.org/registry/OpenCL/specs/unified/html/OpenCL_API.html#unified-spec" target="_blank" rel="noopener">missing before</a> version 3.0.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cl_device_<wbr>device_<wbr>enqueue_<wbr>capabilities</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Describes device-side enqueue capabilities of the device.
+        This is a bit-field that describes one or more of the following
+        values:</p>
+<p class="tableblock">        <code>CL_DEVICE_<wbr>QUEUE_<wbr>SUPPORTED</code> - Device supports device-side enqueue and on-device queues.<br>
+        <code>CL_DEVICE_<wbr>QUEUE_<wbr>REPLACEABLE_<wbr>DEFAULT</code> - Device supports a replaceable default on-device queue.</p>
+<p class="tableblock">        If <code>CL_DEVICE_<wbr>QUEUE_<wbr>REPLACEABLE_<wbr>DEFAULT</code> is set, <code>CL_DEVICE_<wbr>QUEUE_<wbr>SUPPORTED</code> must also be set.</p>
+<p class="tableblock">        Devices that set <code>CL_DEVICE_<wbr>QUEUE_<wbr>SUPPORTED</code> for <code>CL_DEVICE_<wbr>DEVICE_<wbr>ENQUEUE_<wbr>CAPABILITIES</code> must also return <code>CL_TRUE</code> for <code>CL_DEVICE_<wbr>GENERIC_<wbr>ADDRESS_<wbr>SPACE_<wbr>SUPPORT</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>PIPE_<wbr>SUPPORT</code></p>
+<p class="tableblock"><a href="https://www.khronos.org/registry/OpenCL/specs/unified/html/OpenCL_API.html#unified-spec" target="_blank" rel="noopener">missing before</a> version 3.0.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cl_bool</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Is <code>CL_TRUE</code> if the device supports pipes, and <code>CL_FALSE</code> otherwise.</p>
+<p class="tableblock">      Devices that return <code>CL_TRUE</code> for <code>CL_DEVICE_<wbr>PIPE_<wbr>SUPPORT</code> must also return <code>CL_TRUE</code> for <code>CL_DEVICE_<wbr>GENERIC_<wbr>ADDRESS_<wbr>SPACE_<wbr>SUPPORT</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>PREFERRED_<wbr>WORK_<wbr>GROUP_<wbr>SIZE_<wbr>MULTIPLE</code></p>
+<p class="tableblock"><a href="https://www.khronos.org/registry/OpenCL/specs/unified/html/OpenCL_API.html#unified-spec" target="_blank" rel="noopener">missing before</a> version 3.0.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>size_t</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the preferred multiple of work-group size for the given device.
+        This is a performance hint intended as a guide when specifying the local work size argument to <strong>clEnqueueNDRangeKernel</strong>.</p>
+<p class="tableblock">        (Refer also to <strong>clGetKernelWorkGroupInfo</strong> where <code>CL_KERNEL_<wbr>PREFERRED_<wbr>WORK_<wbr>GROUP_<wbr>SIZE_<wbr>MULTIPLE</code>
+        can return a different value to <code>CL_DEVICE_<wbr>PREFERRED_<wbr>WORK_<wbr>GROUP_<wbr>SIZE_<wbr>MULTIPLE</code> which may be more optimal.)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>LATEST_<wbr>CONFORMANCE_<wbr>VERSION_<wbr>PASSED</code></p>
+<p class="tableblock"><a href="https://www.khronos.org/registry/OpenCL/specs/unified/html/OpenCL_API.html#unified-spec" target="_blank" rel="noopener">missing before</a> version 3.0.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>char</code>[]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the latest version of the conformance test suite that this device
+        has fully passed in accordance with the official conformance process.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>UUID</code></p>
+<p class="tableblock"><a href="https://www.khronos.org/registry/OpenCL/specs/unified/html/OpenCL_API.html#unified-spec" target="_blank" rel="noopener">missing before</a> version 3.1.</p>
+<p class="tableblock">or</p>
+<p class="tableblock"><code>CL_DEVICE_<wbr>UUID_<wbr>KHR</code></p>
+<p class="tableblock">provided by the <code>cl_khr_device_uuid</code> extension.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cl_uchar</code>[<code>CL_UUID_<wbr>SIZE</code>]</p>
+<p class="tableblock">or <code>cl_uchar</code>[<code>CL_UUID_<wbr>SIZE_<wbr>KHR</code>]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns a universally unique identifier (UUID) for the device.</p>
+<p class="tableblock">        Device UUIDs must be immutable for a given device across processes,
+        driver APIs, driver versions, and system reboots.</p>
+<p class="tableblock">        <code>CL_UUID_<wbr>SIZE</code>
+or <code>CL_UUID_<wbr>SIZE_<wbr>KHR</code>
+        is the size of the UUID, in bytes.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DRIVER_<wbr>UUID</code></p>
+<p class="tableblock"><a href="https://www.khronos.org/registry/OpenCL/specs/unified/html/OpenCL_API.html#unified-spec" target="_blank" rel="noopener">missing before</a> version 3.1.</p>
+<p class="tableblock">or</p>
+<p class="tableblock"><code>CL_DRIVER_<wbr>UUID_<wbr>KHR</code></p>
+<p class="tableblock">provided by the <code>cl_khr_device_uuid</code> extension.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cl_uchar</code>[<code>CL_UUID_<wbr>SIZE</code>]</p>
+<p class="tableblock">or <code>cl_uchar</code>[<code>CL_UUID_<wbr>SIZE_<wbr>KHR</code>]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns a universally unique identifier (UUID) for the software driver
+        for the device.</p>
+<p class="tableblock">        <code>CL_UUID_<wbr>SIZE</code>
+or <code>CL_UUID_<wbr>SIZE_<wbr>KHR</code>
+        is the size of the UUID, in bytes.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>LUID_<wbr>VALID</code></p>
+<p class="tableblock"><a href="https://www.khronos.org/registry/OpenCL/specs/unified/html/OpenCL_API.html#unified-spec" target="_blank" rel="noopener">missing before</a> version 3.1.</p>
+<p class="tableblock">or</p>
+<p class="tableblock"><code>CL_DEVICE_<wbr>LUID_<wbr>VALID_<wbr>KHR</code></p>
+<p class="tableblock">provided by the <code>cl_khr_device_uuid</code> extension.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cl_bool</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns <code>CL_TRUE</code> if the device has a valid LUID and <code>CL_FALSE</code>
+        otherwise.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>LUID</code></p>
+<p class="tableblock"><a href="https://www.khronos.org/registry/OpenCL/specs/unified/html/OpenCL_API.html#unified-spec" target="_blank" rel="noopener">missing before</a> version 3.1.</p>
+<p class="tableblock">or</p>
+<p class="tableblock"><code>CL_DEVICE_<wbr>LUID_<wbr>KHR</code></p>
+<p class="tableblock">provided by the <code>cl_khr_device_uuid</code> extension.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cl_uchar</code>[<code>CL_LUID_<wbr>SIZE</code>]</p>
+<p class="tableblock">or <code>cl_uchar</code>[<code>CL_LUID_<wbr>SIZE_<wbr>KHR</code>]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns a locally unique identifier (LUID) for the device.</p>
+<p class="tableblock">        It is not an error to query <code>CL_DEVICE_<wbr>LUID</code>
+or <code>CL_DEVICE_<wbr>LUID_<wbr>KHR</code>
+        when <code>CL_DEVICE_<wbr>LUID_<wbr>VALID</code>
+or <code>CL_DEVICE_<wbr>LUID_<wbr>VALID_<wbr>KHR</code>
+        returns <code>CL_FALSE</code>, but in this case the returned LUID value is
+        undefined.</p>
+<p class="tableblock">        When <code>CL_DEVICE_<wbr>LUID_<wbr>VALID_<wbr>KHR</code>
+or <code>CL_DEVICE_<wbr>LUID_<wbr>VALID_<wbr>KHR</code>
+        returns <code>CL_TRUE</code>, and the OpenCL device is running on the Windows
+        operating system, the returned LUID value can be cast to an <code>LUID</code>
+        object and must be equal to the locally unique identifier of an
+        <code>IDXGIAdapter1</code> object that corresponds to the OpenCL device.</p>
+<p class="tableblock">        <code>CL_LUID_<wbr>SIZE_<wbr>KHR</code>
+or <code>CL_LUID_<wbr>SIZE_<wbr>KHR</code>
+        is the size of the LUID, in bytes.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>NODE_<wbr>MASK</code></p>
+<p class="tableblock"><a href="https://www.khronos.org/registry/OpenCL/specs/unified/html/OpenCL_API.html#unified-spec" target="_blank" rel="noopener">missing before</a> version 3.1.</p>
+<p class="tableblock">or</p>
+<p class="tableblock"><code>CL_DEVICE_<wbr>NODE_<wbr>MASK_<wbr>KHR</code></p>
+<p class="tableblock">provided by the <code>cl_khr_device_uuid</code> extension.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cl_uint</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns a node mask for the device.</p>
+<p class="tableblock">        It is not an error to query <code>CL_DEVICE_<wbr>NODE_<wbr>MASK</code>
+or <code>CL_DEVICE_<wbr>NODE_<wbr>MASK_<wbr>KHR</code>
+        when <code>CL_DEVICE_<wbr>LUID_<wbr>VALID</code>
+or <code>CL_DEVICE_<wbr>LUID_<wbr>VALID_<wbr>KHR</code>
+        returns <code>CL_FALSE</code>, but in this case the returned node mask is
+        undefined.</p>
+<p class="tableblock">        When <code>CL_DEVICE_<wbr>LUID_<wbr>VALID_<wbr>KHR</code>
+or <code>CL_DEVICE_<wbr>LUID_<wbr>VALID_<wbr>KHR</code>
+        returns <code>CL_TRUE</code>, the returned node mask must contain exactly one bit.
+        If the OpenCL device is running on an operating system that supports
+        the Direct3D 12 API and the OpenCL device corresponds to an individual
+        device in a linked device adapter, the returned node mask identifies
+        the Direct3D 12 node corresponding to the OpenCL device.
+        Otherwise, the returned node mask must be <code>1</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>INTEGER_<wbr>DOT_<wbr>PRODUCT_<wbr>CAPABILITIES</code></p>
+<p class="tableblock"><a href="https://www.khronos.org/registry/OpenCL/specs/unified/html/OpenCL_API.html#unified-spec" target="_blank" rel="noopener">missing before</a> version 3.1.</p>
+<p class="tableblock">or</p>
+<p class="tableblock"><code>CL_DEVICE_<wbr>INTEGER_<wbr>DOT_<wbr>PRODUCT_<wbr>CAPABILITIES_<wbr>KHR</code></p>
+<p class="tableblock">provided by the <code>cl_khr_integer_dot_product</code> extension.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cl_device_<wbr>integer_<wbr>dot_<wbr>product_<wbr>capabilities</code></p>
+<p class="tableblock">or <code>cl_device_<wbr>integer_<wbr>dot_<wbr>product_<wbr>capabilities_<wbr>khr</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the integer dot product capabilities supported by the
+        device.</p>
+<p class="tableblock">        All implementations that support OpenCL C 3.1
+or <code>cl_khr_<wbr>integer_<wbr>dot_<wbr>product</code>
+        must support <code>CL_DEVICE_<wbr>INTEGER_<wbr>DOT_<wbr>PRODUCT_<wbr>INPUT_<wbr>4x8BIT_<wbr>PACKED</code>
+or <code>CL_DEVICE_<wbr>INTEGER_<wbr>DOT_<wbr>PRODUCT_<wbr>INPUT_<wbr>4x8BIT_<wbr>PACKED_<wbr>KHR</code>
+        to indicate support for dot product built-in functions and, when SPIR-V
+        is supported, SPIR-V instructions that take four-component vectors of
+        8-bit integers packed into 32-bit integers as input.</p>
+<p class="tableblock">        <code>CL_DEVICE_<wbr>INTEGER_<wbr>DOT_<wbr>PRODUCT_<wbr>INPUT_<wbr>4x8BIT</code>
+or <code>CL_DEVICE_<wbr>INTEGER_<wbr>DOT_<wbr>PRODUCT_<wbr>INPUT_<wbr>4x8BIT_<wbr>KHR</code>
+        may be set to indicate support for dot product built-in functions and,
+        when SPIR-V is supported, SPIR-V instructions that take four-component
+        of 8-bit elements as input are supported.
+        <code>CL_DEVICE_<wbr>INTEGER_<wbr>DOT_<wbr>PRODUCT_<wbr>INPUT_<wbr>4x8BIT_<wbr>KHR</code> must be set when
+        version 2.0 or higher of the <code>cl_khr_<wbr>integer_<wbr>dot_<wbr>product</code> extension
+        is supported.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>INTEGER_<wbr>DOT_<wbr>PRODUCT_<wbr>ACCELERATION_<wbr>PROPERTIES_<wbr>8BIT</code></p>
+<p class="tableblock"><a href="https://www.khronos.org/registry/OpenCL/specs/unified/html/OpenCL_API.html#unified-spec" target="_blank" rel="noopener">missing before</a> version 3.1.</p>
+<p class="tableblock">or</p>
+<p class="tableblock"><code>CL_DEVICE_<wbr>INTEGER_<wbr>DOT_<wbr>PRODUCT_<wbr>ACCELERATION_<wbr>PROPERTIES_<wbr>8BIT_<wbr>KHR</code></p>
+<p class="tableblock">provided by the <code>cl_khr_integer_dot_product</code> extension.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cl_device_<wbr>integer_<wbr>dot_<wbr>product_<wbr>acceleration_<wbr>properties</code></p>
+<p class="tableblock">or <code>cl_device_<wbr>integer_<wbr>dot_<wbr>product_<wbr>acceleration_<wbr>properties_<wbr>khr</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns a structure describing the exact 8-bit dot product
+        combinations that are <a href="https://www.khronos.org/registry/OpenCL/specs/unified/html/OpenCL_API.html#integer-dot-product-acceleration-properties" target="_blank" rel="noopener">accelerated</a> on the device.
+        Each member is <code>CL_TRUE</code> if the combination it corresponds to is
+        accelerated, <code>CL_FALSE</code> otherwise.</p>
+<p class="tableblock">        <code>CL_DEVICE_<wbr>INTEGER_<wbr>DOT_<wbr>PRODUCT_<wbr>ACCELERATION_<wbr>PROPERTIES_<wbr>8BIT_<wbr>KHR</code> is
+        missing before version 2.0 of the <code>cl_khr_<wbr>integer_<wbr>dot_<wbr>product</code>
+        extension.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>INTEGER_<wbr>DOT_<wbr>PRODUCT_<wbr>ACCELERATION_<wbr>PROPERTIES_<wbr>4x8BIT_<wbr>PACKED</code></p>
+<p class="tableblock"><a href="https://www.khronos.org/registry/OpenCL/specs/unified/html/OpenCL_API.html#unified-spec" target="_blank" rel="noopener">missing before</a> version 3.1.</p>
+<p class="tableblock">or</p>
+<p class="tableblock"><code>CL_DEVICE_<wbr>INTEGER_<wbr>DOT_<wbr>PRODUCT_<wbr>ACCELERATION_<wbr>PROPERTIES_<wbr>4x8BIT_<wbr>PACKED_<wbr>KHR</code></p>
+<p class="tableblock">provided by the <code>cl_khr_integer_dot_product</code> extension.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cl_device_<wbr>integer_<wbr>dot_<wbr>product_<wbr>acceleration_<wbr>properties</code></p>
+<p class="tableblock">or <code>cl_device_<wbr>integer_<wbr>dot_<wbr>product_<wbr>acceleration_<wbr>properties_<wbr>khr</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns a structure describing the exact 4x8-bit packed dot product
+        combinations that are <a href="https://www.khronos.org/registry/OpenCL/specs/unified/html/OpenCL_API.html#integer-dot-product-acceleration-properties" target="_blank" rel="noopener">accelerated</a> on the device.
+        Each member is <code>CL_TRUE</code> if the combination it corresponds to is
+        accelerated, <code>CL_FALSE</code> otherwise.</p>
+<p class="tableblock">        <code>CL_DEVICE_<wbr>INTEGER_<wbr>DOT_<wbr>PRODUCT_<wbr>ACCELERATION_<wbr>PROPERTIES_<wbr>4x8BIT_<wbr>PACKED_<wbr>KHR</code> is
+        missing before version 2.0 of the <code>cl_khr_<wbr>integer_<wbr>dot_<wbr>product</code>
+        extension.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>SPIRV_<wbr>EXTENDED_<wbr>INSTRUCTION_<wbr>SETS</code></p>
+<p class="tableblock"><a href="https://www.khronos.org/registry/OpenCL/specs/unified/html/OpenCL_API.html#unified-spec" target="_blank" rel="noopener">missing before</a> version 3.1.</p>
+<p class="tableblock">or</p>
+<p class="tableblock"><code>CL_DEVICE_<wbr>SPIRV_<wbr>EXTENDED_<wbr>INSTRUCTION_<wbr>SETS_<wbr>KHR</code></p>
+<p class="tableblock">provided by the <code>cl_khr_spirv_queries</code> extension.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">const <code>char</code>*[]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns an array of null-terminated strings, where each string describes
+        a SPIR-V extended instruction set that is supported by the device.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>SPIRV_<wbr>EXTENSIONS</code></p>
+<p class="tableblock"><a href="https://www.khronos.org/registry/OpenCL/specs/unified/html/OpenCL_API.html#unified-spec" target="_blank" rel="noopener">missing before</a> version 3.1.</p>
+<p class="tableblock">or</p>
+<p class="tableblock"><code>CL_DEVICE_<wbr>SPIRV_<wbr>EXTENSIONS_<wbr>KHR</code></p>
+<p class="tableblock">provided by the <code>cl_khr_spirv_queries</code> extension.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">const <code>char</code>*[]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns an array of null-terminated strings, where each string describes
+        a SPIR-V extension that is supported by the device.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>SPIRV_<wbr>CAPABILITIES</code></p>
+<p class="tableblock"><a href="https://www.khronos.org/registry/OpenCL/specs/unified/html/OpenCL_API.html#unified-spec" target="_blank" rel="noopener">missing before</a> version 3.1.</p>
+<p class="tableblock">or</p>
+<p class="tableblock"><code>CL_DEVICE_<wbr>SPIRV_<wbr>CAPABILITIES_<wbr>KHR</code></p>
+<p class="tableblock">provided by the <code>cl_khr_spirv_queries</code> extension.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cl_uint</code>[]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns an array of SPIR-V token values, where each value describes a
+        SPIR-V capability that is supported by the device.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>COMMAND_<wbr>BUFFER_<wbr>CAPABILITIES_<wbr>KHR</code></p>
+<p class="tableblock">provided by the <code>cl_khr_command_buffer</code> extension.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cl_device_<wbr>command_<wbr>buffer_<wbr>capabilities_<wbr>khr</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Describes device command-buffer capabilities, encoded as bits in a bitfield.
+        Supported capabilities are:</p>
+<p class="tableblock">        <code>CL_COMMAND_<wbr>BUFFER_<wbr>CAPABILITY_<wbr>KERNEL_<wbr>PRINTF_<wbr>KHR</code> Device
+        supports the ability to record commands that execute kernels which
+        contain printf calls.</p>
+<p class="tableblock">provided by the <code>cl_khr_command_buffer</code> extension.</p>
+<p class="tableblock">        <code>CL_COMMAND_<wbr>BUFFER_<wbr>CAPABILITY_<wbr>DEVICE_<wbr>SIDE_<wbr>ENQUEUE_<wbr>KHR</code> Device
+        supports the ability to record commands that execute kernels which
+        contain device-side kernel-enqueue calls.</p>
+<p class="tableblock">provided by the <code>cl_khr_command_buffer</code> extension.</p>
+<p class="tableblock">        <code>CL_COMMAND_<wbr>BUFFER_<wbr>CAPABILITY_<wbr>SIMULTANEOUS_<wbr>USE_<wbr>KHR</code> Device
+        supports enqueueing command-buffers with a <a href="https://www.khronos.org/registry/OpenCL/specs/unified/html/OpenCL_API.html#simultaneous-use" target="_blank" rel="noopener">simultaneous use</a> usage pattern.</p>
+<p class="tableblock">provided by the <code>cl_khr_command_buffer_mutable_dispatch</code> extension.</p>
+<p class="tableblock">        <code>CL_COMMAND_<wbr>BUFFER_<wbr>CAPABILITY_<wbr>MULTIPLE_<wbr>QUEUE_<wbr>KHR</code> Device
+        supports the ability to record commands to more than one
+        command-queue associated with <em>device</em> in a single command-buffer.</p>
+<p class="tableblock">provided by the <code>cl_khr_command_buffer_multi_device</code> extension.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>COMMAND_<wbr>BUFFER_<wbr>REQUIRED_<wbr>QUEUE_<wbr>PROPERTIES_<wbr>KHR</code></p>
+<p class="tableblock">provided by the <code>cl_khr_command_buffer</code> extension.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cl_command_<wbr>queue_<wbr>properties</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Bitmask of the minimum properties with which a command-queue must be created
+        to allow a command-buffer to be executed on it.
+        It is valid for a command-queue to be created with extra properties
+        in addition to this base requirement and still be compatible with
+        command-buffer execution.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>COMMAND_<wbr>BUFFER_<wbr>SUPPORTED_<wbr>QUEUE_<wbr>PROPERTIES_<wbr>KHR</code></p>
+<p class="tableblock">provided by the <code>cl_khr_command_buffer</code> extension.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cl_command_<wbr>queue_<wbr>properties</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Bitmask of the supported properties with which a command-queue may be
+        created to allow a command-buffer to be executed on it. It is invalid
+        for a command-queue to be created with a property not reported and
+        still be compatible with command-buffer execution.</p>
+<p class="tableblock">        The mandated minimum capability is: <code>CL_QUEUE_<wbr>PROFILING_<wbr>ENABLE</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>COMMAND_<wbr>BUFFER_<wbr>NUM_<wbr>SYNC_<wbr>DEVICES_<wbr>KHR</code></p>
+<p class="tableblock">provided by the <code>cl_khr_command_buffer_multi_device</code> extension.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cl_uint</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Return the number of root devices listed in
+      <code>CL_DEVICE_<wbr>COMMAND_<wbr>BUFFER_<wbr>SYNC_<wbr>DEVICES_<wbr>KHR</code> that <em>device</em> can use
+      device-side synchronization with.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>COMMAND_<wbr>BUFFER_<wbr>SYNC_<wbr>DEVICES_<wbr>KHR</code></p>
+<p class="tableblock">provided by the <code>cl_khr_command_buffer_multi_device</code> extension.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cl_device_<wbr>id</code>[]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Return the list of root devices <em>device</em> can use device-side
+      synchronization with.
+      A device should list itself only if it has native support for
+      synchronizing commands.
+      Sub-devices are not listed to avoid non-deterministic results as
+      sub-devices are created.
+      Instead if a root device is listed, then any of its partitioned
+      sub-devices can also be natively synchronized with.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>MUTABLE_<wbr>DISPATCH_<wbr>CAPABILITIES_<wbr>KHR</code></p>
+<p class="tableblock">provided by the <code>cl_khr_command_buffer_mutable_dispatch</code> extension.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cl_mutable_<wbr>dispatch_<wbr>fields_<wbr>khr</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Describes device mutable-dispatch capabilities, encoded as bits in a
+      bitfield.
+      Supported capabilities are:</p>
+<p class="tableblock">      <code>CL_MUTABLE_<wbr>DISPATCH_<wbr>GLOBAL_<wbr>OFFSET_<wbr>KHR</code> - Device supports the
+      ability to modify the <em>global_work_offset</em> of kernel execution after
+      command recording.</p>
+<p class="tableblock">provided by the <code>cl_khr_command_buffer_mutable_dispatch</code> extension.</p>
+<p class="tableblock">      <code>CL_MUTABLE_<wbr>DISPATCH_<wbr>GLOBAL_<wbr>SIZE_<wbr>KHR</code> - Device supports the
+      ability to modify the <em>global_work_size</em> of kernel execution after
+      command recording.</p>
+<p class="tableblock">provided by the <code>cl_khr_command_buffer_mutable_dispatch</code> extension.</p>
+<p class="tableblock">      <code>CL_MUTABLE_<wbr>DISPATCH_<wbr>LOCAL_<wbr>SIZE_<wbr>KHR</code> - Device supports the
+      ability to modify the <em>local_work_size</em> of kernel execution after
+      command recording.</p>
+<p class="tableblock">provided by the <code>cl_khr_command_buffer_mutable_dispatch</code> extension.</p>
+<p class="tableblock">      <code>CL_MUTABLE_<wbr>DISPATCH_<wbr>ARGUMENTS_<wbr>KHR</code> - Device supports the
+      ability to modify arguments set on a kernel after command recording.</p>
+<p class="tableblock">provided by the <code>cl_khr_command_buffer_mutable_dispatch</code> extension.</p>
+<p class="tableblock">      <code>CL_MUTABLE_<wbr>DISPATCH_<wbr>EXEC_<wbr>INFO_<wbr>KHR</code> - Device supports the
+      ability to modify execution information set on a kernel after command
+      recording.</p>
+<p class="tableblock">provided by the <code>cl_khr_command_buffer_mutable_dispatch</code> extension.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>EXTERNAL_<wbr>MEMORY_<wbr>IMPORT_<wbr>HANDLE_<wbr>TYPES_<wbr>KHR</code></p>
+<p class="tableblock">provided by the <code>cl_khr_external_memory</code> extension.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cl_external_<wbr>memory_<wbr>handle_<wbr>type_<wbr>khr</code>[]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the list of importable external memory handle types
+        supported by <em>device</em>.</p>
+<p class="tableblock">        Must return a non-empty list of external memory handle types for at
+        least one of the devices in the platform.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>EXTERNAL_<wbr>MEMORY_<wbr>IMPORT_<wbr>ASSUME_<wbr>LINEAR_<wbr>IMAGES_<wbr>HANDLE_<wbr>TYPES_<wbr>KHR</code></p>
+<p class="tableblock">provided by the <code>cl_khr_external_memory</code> extension.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cl_external_<wbr>memory_<wbr>handle_<wbr>type_<wbr>khr</code>[]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the list of importable external memory handle types
+        supported by <em>device</em>, that are assumed to apply linear layout to
+        imported images when no other tiling information is provided.</p>
+<p class="tableblock">        This list contains a subset of
+        <code>CL_DEVICE_<wbr>EXTERNAL_<wbr>MEMORY_<wbr>IMPORT_<wbr>HANDLE_<wbr>TYPES_<wbr>KHR</code>.
+        The returned list may be empty.</p>
+<p class="tableblock">        External memory handle types not in
+        <code>CL_DEVICE_<wbr>EXTERNAL_<wbr>MEMORY_<wbr>IMPORT_<wbr>ASSUME_<wbr>LINEAR_<wbr>IMAGES_<wbr>HANDLE_<wbr>TYPES_<wbr>KHR</code>
+        may have any memory layout.
+        The layout interpretation of images imported with these handle types
+        is implementation defined.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>HALF_<wbr>FP_<wbr>CONFIG</code></p>
+<p class="tableblock">provided by the <code>cl_khr_fp16</code> extension.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cl_device_<wbr>fp_<wbr>config</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Describes half-precision floating-point capability of the OpenCL
+        device.
+        This is a bit-field that describes one or more of the following
+        values:</p>
+<p class="tableblock">        <code>CL_FP_<wbr>DENORM</code> - denorms are supported<br>
+        <code>CL_FP_<wbr>INF_<wbr>NAN</code> - INF and NaNs are supported<br>
+        <code>CL_FP_<wbr>ROUND_<wbr>TO_<wbr>NEAREST</code> - round to nearest even rounding mode
+        supported<br>
+        <code>CL_FP_<wbr>ROUND_<wbr>TO_<wbr>ZERO</code> - round to zero rounding mode supported<br>
+        <code>CL_FP_<wbr>ROUND_<wbr>TO_<wbr>INF</code> - round to positive and negative infinity
+        rounding modes supported<br>
+        <code>CL_FP_<wbr>FMA</code> - the fma kernel builtin is implemented using
+        hardware-accelerated fused multiply-add as defined in IEEE754-2008.<br>
+        <code>CL_FP_<wbr>SOFT_<wbr>FLOAT</code> - Basic floating-point operations (such as
+        addition, subtraction, multiplication) are implemented in software</p>
+<p class="tableblock">        If half-precision is supported by the device, then the minimum
+        half-precision floating-point capability is either:</p>
+<p class="tableblock">        <code>CL_FP_<wbr>ROUND_<wbr>TO_<wbr>ZERO</code></p>
+<p class="tableblock">        or</p>
+<p class="tableblock">        <code>CL_FP_<wbr>ROUND_<wbr>TO_<wbr>NEAREST</code> |<br>
+        <code>CL_FP_<wbr>INF_<wbr>NAN</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>KERNEL_<wbr>CLOCK_<wbr>CAPABILITIES_<wbr>KHR</code></p>
+<p class="tableblock">provided by the <code>cl_khr_kernel_clock</code> extension.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cl_device_<wbr>kernel_<wbr>clock_<wbr>capabilities_<wbr>khr</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the kernel clock capabilities of the device.<br></p>
+<p class="tableblock">        <code>CL_DEVICE_<wbr>KERNEL_<wbr>CLOCK_<wbr>SCOPE_<wbr>DEVICE_<wbr>KHR</code> is set when kernels are
+        allowed to call the <code>clock_read_device</code> and <code>clock_read_hilo_device</code>
+        OpenCL-C functions.</p>
+<p class="tableblock">        <code>CL_DEVICE_<wbr>KERNEL_<wbr>CLOCK_<wbr>SCOPE_<wbr>WORK_<wbr>GROUP_<wbr>KHR</code> is set when kernels
+        are allowed to call the <code>clock_read_work_group</code> and
+        <code>clock_read_hilo_work_group</code> OpenCL-C functions.</p>
+<p class="tableblock">        <code>CL_DEVICE_<wbr>KERNEL_<wbr>CLOCK_<wbr>SCOPE_<wbr>SUB_<wbr>GROUP_<wbr>KHR</code> is set when kernels
+        are allowed to call the <code>clock_read_sub_group</code> and
+        <code>clock_read_hilo_sub_group</code> OpenCL-C functions.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>PCI_<wbr>BUS_<wbr>INFO_<wbr>KHR</code></p>
+<p class="tableblock">provided by the <code>cl_khr_pci_bus_info</code> extension.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cl_device_<wbr>pci_<wbr>bus_<wbr>info_<wbr>khr</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns PCI bus information for the device.</p>
+<p class="tableblock">      The PCI bus information is returned as a single structure that
+      includes the PCI bus domain, the PCI bus identifier, the PCI device
+      identifier, and the PCI device function identifier.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>SEMAPHORE_<wbr>TYPES_<wbr>KHR</code></p>
+<p class="tableblock">provided by the <code>cl_khr_semaphore</code> extension.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cl_semaphore_<wbr>type_<wbr>khr</code>[]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the list of the semaphore types supported by <em>device</em>.</p>
+<p class="tableblock">        Must return a non-empty list for at least one of the devices in the
+        platform, meeting the minimum requirements described for
+        <code>cl_semaphore_<wbr>type_<wbr>khr</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>SEMAPHORE_<wbr>IMPORT_<wbr>HANDLE_<wbr>TYPES_<wbr>KHR</code></p>
+<p class="tableblock">provided by the <code>cl_khr_external_semaphore</code> extension.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cl_external_<wbr>semaphore_<wbr>handle_<wbr>type_<wbr>khr</code>[]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the list of importable external semaphore handle types
+      supported by <em>device</em>.</p>
+<p class="tableblock">      This size of this query may be 0 indicating that the device does not
+      support importing semaphores.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>SEMAPHORE_<wbr>EXPORT_<wbr>HANDLE_<wbr>TYPES_<wbr>KHR</code></p>
+<p class="tableblock">provided by the <code>cl_khr_external_semaphore</code> extension.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cl_external_<wbr>semaphore_<wbr>handle_<wbr>type_<wbr>khr</code>[]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the list of exportable external semaphore handle types
+      supported by <em>device</em>.</p>
+<p class="tableblock">      This size of this query may be 0 indicating that the device does not
+      support exporting semaphores.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>SPIR_<wbr>VERSIONS</code></p>
+<p class="tableblock">provided by the <code>cl_khr_spir</code> extension.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>char</code>[]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A space separated list of SPIR versions supported by the device.</p>
+<p class="tableblock">      For example, returning <code>"1.2"</code> in this query implies that SPIR version
+      1.2 is supported by the implementation.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>MAX_<wbr>NAMED_<wbr>BARRIER_<wbr>COUNT_<wbr>KHR</code></p>
+<p class="tableblock">provided by the <code>cl_khr_subgroup_named_barrier</code> extension.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cl_uint</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Maximum number of named barriers in a work-group for any given
+      kernel-instance running on the device.
+      The minimum value is 8.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>TERMINATE_<wbr>CAPABILITY_<wbr>KHR</code></p>
+<p class="tableblock">provided by the <code>cl_khr_terminate_context</code> extension.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cl_device_<wbr>terminate_<wbr>capability_<wbr>khr</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Describes the termination capability of the OpenCL device.
+      This is a bit-field, where the following values are currently
+      supported:</p>
+<p class="tableblock">      <code>CL_DEVICE_<wbr>TERMINATE_<wbr>CAPABILITY_<wbr>CONTEXT_<wbr>KHR</code> - Indicates that
+      context termination is supported.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>CXX_<wbr>FOR_<wbr>OPENCL_<wbr>NUMERIC_<wbr>VERSION_<wbr>EXT</code></p>
+<p class="tableblock">provided by the <code>cl_ext_cxx_for_opencl</code> extension.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cl_version</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the version of the C++ for OpenCL language supported by the
+      device compiler.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>OpenCL 3.0 or newer devices must report the following feature macros via
+<code>CL_DEVICE_<wbr>OPENCL_<wbr>C_<wbr>FEATURES</code> when the corresponding bit is set in the bitfield
+returned for <code>CL_DEVICE_<wbr>INTEGER_<wbr>DOT_<wbr>PRODUCT_<wbr>CAPABILITIES</code>
+or <code>CL_DEVICE_<wbr>INTEGER_<wbr>DOT_<wbr>PRODUCT_<wbr>CAPABILITIES_<wbr>KHR</code>:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Feature Bit</th>
+<th class="tableblock halign-left valign-top">Feature Macro</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>INTEGER_<wbr>DOT_<wbr>PRODUCT_<wbr>INPUT_<wbr>4x8BIT_<wbr>PACKED</code></p>
+<p class="tableblock">or <code>CL_DEVICE_<wbr>INTEGER_<wbr>DOT_<wbr>PRODUCT_<wbr>INPUT_<wbr>4x8BIT_<wbr>PACKED_<wbr>KHR</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>__opencl_c_<wbr>integer_<wbr>dot_<wbr>product_<wbr>input_<wbr>4x8bit_<wbr>packed</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>INTEGER_<wbr>DOT_<wbr>PRODUCT_<wbr>INPUT_<wbr>4x8BIT</code></p>
+<p class="tableblock">or <code>CL_DEVICE_<wbr>INTEGER_<wbr>DOT_<wbr>PRODUCT_<wbr>INPUT_<wbr>4x8BIT_<wbr>KHR</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>__opencl_c_<wbr>integer_<wbr>dot_<wbr>product_<wbr>input_<wbr>4x8bit</code></p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>OpenCL 3.0 devices must report the following feature macros via
+<code>CL_DEVICE_<wbr>OPENCL_<wbr>C_<wbr>FEATURES</code> when the corresponding bit is set in the bitfield
+returned for <code>CL_DEVICE_<wbr>KERNEL_<wbr>CLOCK_<wbr>CAPABILITIES_<wbr>KHR</code>:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Feature Bit</th>
+<th class="tableblock halign-left valign-top">Feature Macro</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>KERNEL_<wbr>CLOCK_<wbr>SCOPE_<wbr>DEVICE_<wbr>KHR</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>__opencl_c_<wbr>kernel_<wbr>clock_<wbr>scope_<wbr>device</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>KERNEL_<wbr>CLOCK_<wbr>SCOPE_<wbr>WORK_<wbr>GROUP_<wbr>KHR</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>__opencl_c_<wbr>kernel_<wbr>clock_<wbr>scope_<wbr>work_<wbr>group</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CL_DEVICE_<wbr>KERNEL_<wbr>CLOCK_<wbr>SCOPE_<wbr>SUB_<wbr>GROUP_<wbr>KHR</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>__opencl_c_<wbr>kernel_<wbr>clock_<wbr>scope_<wbr>sub_<wbr>group</code></p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>One of the two queries <code>CL_DEVICE_<wbr>SEMAPHORE_<wbr>IMPORT_<wbr>HANDLE_<wbr>TYPES_<wbr>KHR</code> and
+<code>CL_DEVICE_<wbr>SEMAPHORE_<wbr>EXPORT_<wbr>HANDLE_<wbr>TYPES_<wbr>KHR</code> must return a non-empty list
+indicating support for at least one of the valid semaphore handle types
+either for import, for export, or both.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="title">Note</div>
+<div class="paragraph">
+<p>While <code>CL_DEVICE_<wbr>UUID_<wbr>KHR</code> is specified to remain consistent across driver
+versions and system reboots, it is not intended to be usable as a
+serializable persistent identifier for a device.
+It may change when a device is physically added to, removed from, or moved
+to a different connector in a system while that system is powered down.
+Further, there is no reasonable way to verify with conformance testing that
+a given device retains the same UUID in a given system across all driver
+versions supported in that system.
+While implementations should make every effort to report consistent device
+UUIDs across driver versions, applications should avoid relying on the
+persistence of this value for uses other than identifying compatible devices
+for external object sharing purposes.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p><strong>clGetDeviceInfo</strong> returns <code>CL_SUCCESS</code> if the function is executed
+successfully.
+Otherwise, it returns one of the following errors:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>CL_INVALID_<wbr>DEVICE</code></p>
+<div class="ulist">
+<ul>
+<li>
+<p>if <em>device</em> is not a valid device</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><code>CL_INVALID_<wbr>VALUE</code></p>
+<div class="ulist">
+<ul>
+<li>
+<p>if <em>param_name</em> is not one of the supported values</p>
+</li>
+<li>
+<p>if the size in bytes specified by <em>param_value_size</em> is less than the size of
+the return type specified in the <a href="https://www.khronos.org/registry/OpenCL/specs/unified/html/OpenCL_API.html#device-queries-table" target="_blank" rel="noopener">Device Queries</a>
+table and <em>param_value</em> is not <code>NULL</code></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><code>CL_OUT_<wbr>OF_<wbr>RESOURCES</code></p>
+<div class="ulist">
+<ul>
+<li>
+<p>if there is a failure to allocate resources required by the OpenCL
+implementation on the device</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><code>CL_OUT_<wbr>OF_<wbr>HOST_<wbr>MEMORY</code></p>
+<div class="ulist">
+<ul>
+<li>
+<p>if there is a failure to allocate resources required by the OpenCL
+implementation on the host</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_see_also"><a class="anchor" href="#_see_also"></a>See Also</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="CL_VERSION_1_0.html">CL_VERSION_1_0</a>, <a href="cl_device_id.html">cl_device_id</a>, <a href="cl_device_info.html">cl_device_info</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_document_notes"><a class="anchor" href="#_document_notes"></a>Document Notes</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>For more information, see the <a href="https://www.khronos.org/registry/OpenCL/specs/unified/html/OpenCL_API.html#clGetDeviceInfo" target="_blank" rel="noopener">OpenCL Specification</a></p>
+</div>
+<div class="paragraph">
+<p>This page is extracted from the OpenCL Specification.
+Fixes and changes should be made to the Specification, not directly.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_copyright"><a class="anchor" href="#_copyright"></a>Copyright</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Copyright 2014-2026 The Khronos Group Inc.</p>
+</div>
+<div class="paragraph">
+<p>SPDX-License-Identifier: CC-BY-4.0</p>
+</div>
+</div>
+</div>
+</div>
+<div id="footnotes">
+<hr>
+<div class="footnote" id="_footnotedef_1">
+<a href="#_footnoteref_1">1</a>. OpenCL adopters must report a valid vendor ID for their implementation. If there is no valid PCI vendor ID defined for the physical device, implementations must obtain a Khronos vendor ID. This is a unique identifier greater than the largest PCI vendor ID (<code>0x10000</code>) and is representable by a <code>cl_uint</code>. Khronos vendor IDs are synchronized across APIs by utilizing Vulkan&#8217;s vk.xml as the central Khronos vendor ID registry. An ID must be reserved here prior to use in OpenCL, regardless of whether a vendor implements Vulkan. Only once the ID has been allotted may it be exposed to OpenCL by proposing a merge request against cl.xml, in the <code>main</code> branch of the OpenCL-Docs project. The merge must define a new enumerant by adding an <code>&lt;enum&gt;</code> tag to the <code>cl_khronos_<wbr>vendor_<wbr>id</code> <code>&lt;enums&gt;</code> tag, with the <code>&lt;value&gt;</code> attribute set as the acquired Khronos vendor ID. The <code>&lt;name&gt;</code> attribute must identify the vendor/adopter, and be of the form <code>CL_KHRONOS_VENDOR_ID_&lt;vendor&gt;</code>.
+</div>
+<div class="footnote" id="_footnotedef_2">
+<a href="#_footnoteref_2">2</a>. A kernel that uses an image argument with the write_only or read_write image qualifier may result in additional read_only images resources being created internally by an implementation. The internally created read_only image resources will count against the max supported read image arguments given by <code>CL_DEVICE_<wbr>MAX_<wbr>READ_<wbr>IMAGE_<wbr>ARGS</code>. Enqueuing a kernel that requires more images than the implementation can support will result in a <code>CL_OUT_<wbr>OF_<wbr>RESOURCES</code> error being returned.
+</div>
+<div class="footnote" id="_footnotedef_3">
+<a href="#_footnoteref_3">3</a>. The optional rounding modes should be included as a device capability only if it is supported natively. All explicit conversion functions with specific rounding modes must still operate correctly.
+</div>
+<div class="footnote" id="_footnotedef_4">
+<a href="#_footnoteref_4">4</a>. When the query for <code>CL_DEVICE_<wbr>HOST_<wbr>UNIFIED_<wbr>MEMORY</code> is <code>CL_TRUE</code>, allocating OpenCL memory will likely reduce the amount of host memory available to the system. Likewise, allocating host memory will likely reduce the amount of memory available to OpenCL. If the memory described by <code>CL_DEVICE_<wbr>GLOBAL_<wbr>MEM_<wbr>SIZE</code> is primarily host memory, such as for CPUs, integrated GPUs, and other devices with a relatively small amount of dedicated device memory, then the device should return <code>CL_TRUE</code> for <code>CL_DEVICE_<wbr>HOST_<wbr>UNIFIED_<wbr>MEMORY</code>.
+</div>
+<div class="footnote" id="_footnotedef_5">
+<a href="#_footnoteref_5">5</a>. The reference count returned should be considered immediately stale. It is unsuitable for general use in applications. This feature is provided for identifying memory leaks.
+</div>
+<div class="footnote" id="_footnotedef_6">
+<a href="#_footnoteref_6">6</a>. Note that this flag does not provide meaning for atomic memory operations, but only for atomic fence operations in certain circumstances, refer to the Memory Scope section of the OpenCL C specification.
+</div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js?config=TeX-MML-AM_HTMLorMML"></script>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a60951bdfcf4fa44',t:'MTc5NTcwMDU3Ng=='};var l=window.parent.location,o;try{o=new URL(l.origin).origin}catch(e){try{o=new URL(new URL(l.href).origin).origin}catch(e){o=''}}var u='/cdn-cgi/challenge-platform/scripts/jsd/main.js?ray=a60951bdfcf4fa44',a=document.createElement('script');a.src=o?new URL(u,o).href:u;document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

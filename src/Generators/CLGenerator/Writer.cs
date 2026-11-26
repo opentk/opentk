@@ -726,16 +726,21 @@ namespace CLGenerator
             writer.Write($"<b>[entry point: <c>{function.EntryPoint}</c>]</b><br/>");
             writer.WriteLine($" {documentation.Purpose} </summary>");
 
-            for (int i = 0; i < documentation.Parameters.Length; i++)
+            for (int i = 0; i < function.Parameters.Count; i++)
             {
-                ParameterDocumentation parameterDoc = documentation.Parameters[i];
+                // Because the CL refpages can list multiple function in the same doc page
+                // we need to lookup the parameters we actually want the description of.
+                // - Noggin_bops 2026-11-267
                 Parameter parameter = function.Parameters[i];
-
-                // We use the parameter name here, if the documentation uses another name
-                // we've already warned about this, and using the name the C# documentation
-                // system expects reduces a lot of the warnings that are generated.
-                // - Noggin_bops 2025-08-08
-                writer.WriteLine($"/// <param name=\"{NameMangler.MaybeRemoveStart(parameter.Name, "@")}\">{parameterDoc.Description}</param>");
+                ParameterDocumentation? parameterDoc = documentation.Parameters.FirstOrDefault(p => p!.ParameterName == parameter.Name, null);
+                if (parameterDoc != null)
+                {
+                    writer.WriteLine($"/// <param name=\"{NameMangler.MaybeRemoveStart(parameter.Name, "@")}\">{NameMangler.XmlEscapeMultiLine(parameterDoc.Description)}</param>");
+                }
+                else
+                {
+                    Logger.Warning($"Function {function.EntryPoint} doesn't have documentation for parameter '{parameter.OriginalName}'");
+                }
             }
 
             if (documentation.RefPagesLinks.Count > 0)

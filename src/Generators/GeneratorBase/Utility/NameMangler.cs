@@ -350,7 +350,12 @@ namespace GeneratorBase.Utility
         public static string XmlEscapeCharacters(string? str)
         {
             StringBuilder sb = new StringBuilder(str);
+            XmlEscapeCharacters(sb);
+            return sb.ToString();
+        }
 
+        private static void XmlEscapeCharacters(StringBuilder sb)
+        {
             // We don't want to replace all of the & we are going to add
             // so replace that first
             // - Noggin_bops 2023-01-26
@@ -360,7 +365,14 @@ namespace GeneratorBase.Utility
             sb.Replace("'", "&apos;");
             sb.Replace("<", "&lt;");
             sb.Replace(">", "&gt;");
+        }
 
+        public static string XmlEscapeMultiLine(string? str)
+        {
+            StringBuilder sb = new StringBuilder(str);
+            XmlEscapeCharacters(sb);
+            sb.Replace("\r\n", "<br/>");
+            sb.Replace("\n", "<br/>");
             return sb.ToString();
         }
     }
