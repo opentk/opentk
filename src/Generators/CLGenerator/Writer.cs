@@ -271,6 +271,19 @@ namespace CLGenerator
             writer.Flush();
         }
 
+        private static bool FunctionParametersContainsFnptr(List<Parameter> parameters)
+        {
+            foreach (var parameter in parameters)
+            {
+                if (parameter.StrongType is CSFunctionPointer)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         private static void WriteNativeFunction(IndentedTextWriter writer, Function function, bool postfixName, FunctionDocumentation? documentation, string apiName)
         {
             GetNativeFunctionSignature(function, postfixName, swapTypesForUnderlyingType: false,
@@ -283,9 +296,29 @@ namespace CLGenerator
 
             string entryPoint = function.EntryPoint;
 
+            bool crefWouldContainFnptr = FunctionParametersContainsFnptr(function.Parameters);
+
+            if (crefWouldContainFnptr)
+            {
+                // Fixme: disable warning.
+                writer.WriteLine($"#pragma warning disable CS1572 // XML comment has a param tag, but there is no parameter by that name");
+            }
+
             if (documentation != null)
             {
                 WriteDocumentation(writer, function, documentation);
+            }
+
+            if (crefWouldContainFnptr)
+            {
+                // Crefs can't encode function pointer types which means we can't reference functions with function pointer parameters
+                // in <inheritdoc> tags for overloads. To work around this we create a private parameterless "_doc" function that contains
+                // the actual documentation so that we can reference that for the overloads and get documentation for overloads.
+                // - Noggin_bops 2026-11-26
+                writer.WriteLine($"private static {function.StrongReturnType!.ToCSString()} {name}_doc() {{ return default; }}");
+                writer.WriteLine($"#pragma warning restore CS1572 // XML comment has a param tag, but there is no parameter by that name");
+                writer.WriteLine();
+                writer.WriteLine($"/// <inheritdoc cref=\"{name}_doc()\"/>");
             }
 
             if (handleAbiDifferenceForTypesafeHandles)
@@ -370,7 +403,19 @@ namespace CLGenerator
                 nativeFunctionName += "_";
             }
 
-            writer.WriteLine($"/// <inheritdoc cref=\"{nativeFunctionName}({parameterTypes})\"/>");
+            bool crefWouldContainFnptr = FunctionParametersContainsFnptr(overload.NativeFunction.Parameters);
+            if (crefWouldContainFnptr)
+            {
+                // Crefs can't encode function pointer types which means we can't reference functions with function pointer parameters
+                // in <inheritdoc> tags for overloads. To work around this we create a private parameterless "_doc" function that contains
+                // the actual documentation so that we can reference that for the overloads and get documentation for overloads.
+                // - Noggin_bops 2026-11-26
+                writer.WriteLine($"/// <inheritdoc cref=\"{nativeFunctionName}_doc()\"/>");
+            }
+            else
+            {
+                writer.WriteLine($"/// <inheritdoc cref=\"{nativeFunctionName}({parameterTypes})\"/>");
+            }
 
             string parameterString = string.Join(", ", overload.InputParameters.Select(p => $"{p.StrongType!.ToCSString()} {p.Name}"));
 
@@ -473,6 +518,7 @@ namespace CLGenerator
 
                         if (exceptedNames.Contains(@struct.Name) == false)
                         {
+                            Logger.Warning($"Struct {@struct.Name} doesn't have any documentation.");
                             // FIXME: For now no structs have documentation...
                             //Debug.Assert(false);
                         }
@@ -511,6 +557,9 @@ namespace CLGenerator
                 writer.WriteLine($"[StructLayout(LayoutKind.Explicit)]");
             }
 
+            // FIXME: We want to properly capitalize the struct name, but then all of the references to this struct type will be wrong...
+            // So we need to do it somewhere else...
+            // - Noggin_bops 2026-11-27
             writer.WriteLine($"public unsafe struct {@struct.Name}");
             using (writer.CsScope())
             {
@@ -732,10 +781,10 @@ namespace CLGenerator
                 // we need to lookup the parameters we actually want the description of.
                 // - Noggin_bops 2026-11-267
                 Parameter parameter = function.Parameters[i];
-                ParameterDocumentation? parameterDoc = documentation.Parameters.FirstOrDefault(p => p!.ParameterName == parameter.Name, null);
+                ParameterDocumentation? parameterDoc = documentation.Parameters.FirstOrDefault(p => p!.ParameterName == parameter.OriginalName, null);
                 if (parameterDoc != null)
                 {
-                    writer.WriteLine($"/// <param name=\"{NameMangler.MaybeRemoveStart(parameter.Name, "@")}\">{NameMangler.XmlEscapeMultiLine(parameterDoc.Description)}</param>");
+                    writer.WriteLine($"/// <param name=\"{NameMangler.MaybeRemoveStart(parameter.Name, "@")}\">{parameterDoc.Description}</param>");
                 }
                 else
                 {

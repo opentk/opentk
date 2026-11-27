@@ -3609,6 +3609,7 @@ namespace OpenTK.Compute2.OpenCL
         /// <remarks>[originally: CL_DEVICE_TYPE_ALL]</remarks>
         DeviceTypeAll = 4294967295,
     }
+    ///<summary>Used in <see cref="CL.INTEL.GetAcceleratorInfoINTEL" /></summary>
     public enum AcceleratorInfoIntel : uint
     {
         /// <summary><b>[requires: cl_intel_accelerator]</b> </summary>
@@ -3624,12 +3625,14 @@ namespace OpenTK.Compute2.OpenCL
         /// <remarks>[originally: CL_ACCELERATOR_TYPE_INTEL]</remarks>
         AcceleratorTypeIntel = 16531,
     }
+    ///<summary>Used in <see cref="CL.INTEL.CreateAcceleratorINTEL" /></summary>
     public enum AcceleratorTypeIntel : uint
     {
         /// <summary><b>[requires: cl_intel_motion_estimation]</b> </summary>
         /// <remarks>[originally: CL_ACCELERATOR_TYPE_MOTION_ESTIMATION_INTEL]</remarks>
         AcceleratorTypeMotionEstimationIntel = 0,
     }
+    ///<summary>Used in <see cref="CL.CreateSampler" /></summary>
     public enum AddressingMode : uint
     {
         /// <summary><b>[requires: v1.0]</b> </summary>
@@ -3669,6 +3672,7 @@ namespace OpenTK.Compute2.OpenCL
         /// <remarks>[originally: CL_AFFINITY_DOMAIN_NEXT_FISSIONABLE_EXT]</remarks>
         AffinityDomainNextFissionableExt = 256,
     }
+    ///<summary>Used in <see cref="CL.CreateSampler" />, <see cref="CL.EnqueueMapBuffer" />, <see cref="CL.EnqueueMapImage" />, ...</summary>
     public enum Bool : uint
     {
         /// <summary><b>[requires: v1.0]</b> </summary>
@@ -3684,6 +3688,7 @@ namespace OpenTK.Compute2.OpenCL
         /// <remarks>[originally: CL_TRUE]</remarks>
         True = 1,
     }
+    ///<summary>Used in <see cref="CL.CreateSubBuffer" /></summary>
     public enum BufferCreateType : uint
     {
         /// <summary><b>[requires: v1.1]</b> </summary>
@@ -3883,6 +3888,7 @@ namespace OpenTK.Compute2.OpenCL
         /// <remarks>[originally: CL_COMMAND_BUFFER_DEVICE_SIDE_SYNC_KHR]</remarks>
         CommandBufferDeviceSideSyncKhr = 4,
     }
+    ///<summary>Used in <see cref="CL.KHR.GetCommandBufferInfoKHR" /></summary>
     public enum CommandBufferInfoKhr : uint
     {
         /// <summary><b>[requires: cl_khr_command_buffer]</b> </summary>
@@ -4007,6 +4013,7 @@ namespace OpenTK.Compute2.OpenCL
         /// <remarks>[originally: CL_QUEUE_CAPABILITY_KERNEL_INTEL]</remarks>
         QueueCapabilityKernelIntel = 67108864,
     }
+    ///<summary>Used in <see cref="CL.GetCommandQueueInfo" /></summary>
     public enum CommandQueueInfo : uint
     {
         /// <summary><b>[requires: v1.0]</b> </summary>
@@ -4043,6 +4050,7 @@ namespace OpenTK.Compute2.OpenCL
         /// <remarks>[originally: CL_QUEUE_INDEX_INTEL]</remarks>
         QueueIndexIntel = 16781,
     }
+    ///<summary>Used in <see cref="CL.CreateCommandQueue" />, <see cref="CL.SetCommandQueueProperty" /></summary>
     [Flags]
     public enum CommandQueueProperties : ulong
     {
@@ -4272,6 +4280,7 @@ namespace OpenTK.Compute2.OpenCL
         /// <remarks>[originally: CL_COMMAND_WRITE_HOST_PIPE_INTEL]</remarks>
         CommandWriteHostPipeIntel = 16917,
     }
+    ///<summary>Used in <see cref="CL.GetContextInfo" /></summary>
     public enum ContextInfo : uint
     {
         /// <summary><b>[requires: v1.0]</b> </summary>
@@ -4385,6 +4394,7 @@ namespace OpenTK.Compute2.OpenCL
         /// <remarks>[originally: CL_CONTEXT_ENHANCED_EVENT_EXECUTION_STATUS_IMG]</remarks>
         ContextEnhancedEventExecutionStatusImg = 2,
     }
+    ///<summary>Used in <see cref="CL.KHR.GetDeviceIDsFromD3D10KHR" /></summary>
     public enum D3D10DeviceSetKhr : uint
     {
         /// <summary><b>[requires: cl_khr_d3d10_sharing]</b> </summary>
@@ -4394,6 +4404,7 @@ namespace OpenTK.Compute2.OpenCL
         /// <remarks>[originally: CL_ALL_DEVICES_FOR_D3D10_KHR]</remarks>
         AllDevicesForD3D10Khr = 16403,
     }
+    ///<summary>Used in <see cref="CL.KHR.GetDeviceIDsFromD3D10KHR" /></summary>
     public enum D3D10DeviceSourceKhr : uint
     {
         /// <summary><b>[requires: cl_khr_d3d10_sharing]</b> </summary>
@@ -4403,6 +4414,7 @@ namespace OpenTK.Compute2.OpenCL
         /// <remarks>[originally: CL_D3D10_DXGI_ADAPTER_KHR]</remarks>
         D3D10DxgiAdapterKhr = 16401,
     }
+    ///<summary>Used in <see cref="CL.KHR.GetDeviceIDsFromD3D11KHR" /></summary>
     public enum D3D11DeviceSetKhr : uint
     {
         /// <summary><b>[requires: cl_khr_d3d11_sharing]</b> </summary>
@@ -4412,6 +4424,7 @@ namespace OpenTK.Compute2.OpenCL
         /// <remarks>[originally: CL_ALL_DEVICES_FOR_D3D11_KHR]</remarks>
         AllDevicesForD3D11Khr = 16412,
     }
+    ///<summary>Used in <see cref="CL.KHR.GetDeviceIDsFromD3D11KHR" /></summary>
     public enum D3D11DeviceSourceKhr : uint
     {
         /// <summary><b>[requires: cl_khr_d3d11_sharing]</b> </summary>
@@ -4577,6 +4590,7 @@ namespace OpenTK.Compute2.OpenCL
         /// <remarks>[originally: CL_FP_CORRECTLY_ROUNDED_DIVIDE_SQRT]</remarks>
         FpCorrectlyRoundedDivideSqrt = 128,
     }
+    ///<summary>Used in <see cref="CL.GetDeviceInfo" /></summary>
     public enum DeviceInfo : uint
     {
         /// <summary><b>[requires: v1.0]</b> </summary>
@@ -5436,6 +5450,7 @@ namespace OpenTK.Compute2.OpenCL
         /// <remarks>[originally: CL_DEVICE_TERMINATE_CAPABILITY_CONTEXT_KHR]</remarks>
         DeviceTerminateCapabilityContextKhr = 1,
     }
+    ///<summary>Used in <see cref="CL.CreateContextFromType" />, <see cref="CL.GetDeviceIDs" /></summary>
     [Flags]
     public enum DeviceType : ulong
     {
@@ -5490,6 +5505,7 @@ namespace OpenTK.Compute2.OpenCL
         /// <remarks>[originally: CL_CONTEXT_DIAGNOSTICS_LEVEL_ALL_INTEL]</remarks>
         ContextDiagnosticsLevelAllIntel = 255,
     }
+    ///<summary>Used in <see cref="CL.INTEL.GetDeviceIDsFromDX9INTEL" /></summary>
     public enum Dx9DeviceSetIntel : uint
     {
         /// <summary><b>[requires: cl_intel_dx9_media_sharing]</b> </summary>
@@ -5499,6 +5515,7 @@ namespace OpenTK.Compute2.OpenCL
         /// <remarks>[originally: CL_ALL_DEVICES_FOR_DX9_INTEL]</remarks>
         AllDevicesForDx9Intel = 16421,
     }
+    ///<summary>Used in <see cref="CL.INTEL.GetDeviceIDsFromDX9INTEL" /></summary>
     public enum Dx9DeviceSourceIntel : uint
     {
         /// <summary><b>[requires: cl_intel_dx9_media_sharing]</b> </summary>
@@ -5511,6 +5528,7 @@ namespace OpenTK.Compute2.OpenCL
         /// <remarks>[originally: CL_DXVA_DEVICE_INTEL]</remarks>
         DxvaDeviceIntel = 16497,
     }
+    ///<summary>Used in <see cref="CL.KHR.GetDeviceIDsFromDX9MediaAdapterKHR" /></summary>
     public enum Dx9MediaAdapterSetKhr : uint
     {
         /// <summary><b>[requires: cl_khr_dx9_media_sharing]</b> </summary>
@@ -5520,6 +5538,7 @@ namespace OpenTK.Compute2.OpenCL
         /// <remarks>[originally: CL_ALL_DEVICES_FOR_DX9_MEDIA_ADAPTER_KHR]</remarks>
         AllDevicesForDx9MediaAdapterKhr = 8228,
     }
+    ///<summary>Used in <see cref="CL.KHR.CreateFromDX9MediaSurfaceKHR" /></summary>
     public enum Dx9MediaAdapterTypeKhr : uint
     {
         /// <summary><b>[requires: cl_khr_dx9_media_sharing]</b> </summary>
@@ -5859,6 +5878,7 @@ namespace OpenTK.Compute2.OpenCL
         /// <remarks>[originally: CL_DEVICE_NOT_FOUND]</remarks>
         DeviceNotFound = -1,
     }
+    ///<summary>Used in <see cref="CL.GetEventInfo" /></summary>
     public enum EventInfo : uint
     {
         /// <summary><b>[requires: v1.0]</b> </summary>
@@ -5901,6 +5921,7 @@ namespace OpenTK.Compute2.OpenCL
         /// <remarks>[originally: CL_EXTERNAL_MEMORY_HANDLE_ANDROID_HARDWARE_BUFFER_KHR]</remarks>
         ExternalMemoryHandleAndroidHardwareBufferKhr = 8304,
     }
+    ///<summary>Used in <see cref="CL.KHR.GetSemaphoreHandleForTypeKHR" /></summary>
     public enum ExternalSemaphoreHandleTypeKhr : uint
     {
         /// <summary><b>[requires: cl_khr_external_semaphore_opaque_fd]</b> </summary>
@@ -5922,6 +5943,7 @@ namespace OpenTK.Compute2.OpenCL
         /// <remarks>[originally: CL_SEMAPHORE_HANDLE_OPAQUE_WIN32_NAME_KHR]</remarks>
         SemaphoreHandleOpaqueWin32NameKhr = 8296,
     }
+    ///<summary>Used in <see cref="CL.CreateSampler" /></summary>
     public enum FilterMode : uint
     {
         /// <summary><b>[requires: v1.0]</b> </summary>
@@ -5931,6 +5953,7 @@ namespace OpenTK.Compute2.OpenCL
         /// <remarks>[originally: CL_FILTER_LINEAR]</remarks>
         FilterLinear = 4417,
     }
+    ///<summary>Used in <see cref="CL.KHR.GetGLContextInfoKHR" /></summary>
     public enum GlContextInfo : uint
     {
         /// <summary><b>[requires: cl_khr_gl_sharing]</b> </summary>
@@ -5967,6 +5990,7 @@ namespace OpenTK.Compute2.OpenCL
         /// <remarks>[originally: CL_GL_OBJECT_TEXTURE_BUFFER]</remarks>
         GlObjectTextureBuffer = 8209,
     }
+    ///<summary>Used in <see cref="CL.KHR.GetGLTextureInfo" /></summary>
     public enum GlTextureInfo : uint
     {
         /// <summary><b>[requires: cl_khr_gl_sharing]</b> </summary>
@@ -5979,6 +6003,7 @@ namespace OpenTK.Compute2.OpenCL
         /// <remarks>[originally: CL_GL_NUM_SAMPLES]</remarks>
         GlNumSamples = 8210,
     }
+    ///<summary>Used in <see cref="CL.LOADER.GetICDLoaderInfoOCLICD" /></summary>
     public enum IcdlInfo : uint
     {
         /// <summary><b>[requires: cl_loader_info]</b> </summary>
@@ -5994,6 +6019,7 @@ namespace OpenTK.Compute2.OpenCL
         /// <remarks>[originally: CL_ICDL_VENDOR]</remarks>
         IcdlVendor = 4,
     }
+    ///<summary>Used in <see cref="CL.GetImageInfo" /></summary>
     public enum ImageInfo : uint
     {
         /// <summary><b>[requires: v1.0]</b> </summary>
@@ -6048,6 +6074,7 @@ namespace OpenTK.Compute2.OpenCL
         /// <remarks>[originally: CL_EGL_YUV_PLANE_INTEL]</remarks>
         EglYuvPlaneIntel = 16647,
     }
+    ///<summary>Used in <see cref="CL.QCOM.GetDeviceImageInfoQCOM" /></summary>
     public enum ImagePitchInfoQcom : uint
     {
         /// <summary><b>[requires: v1.0]</b> </summary>
@@ -6063,6 +6090,7 @@ namespace OpenTK.Compute2.OpenCL
         /// <remarks>[originally: CL_IMAGE_SLICE_ALIGNMENT_QCOM]</remarks>
         ImageSliceAlignmentQcom = 16547,
     }
+    ///<summary>Used in <see cref="CL.EXT.GetImageRequirementsInfoEXT" /></summary>
     public enum ImageRequirementsInfoExt : uint
     {
         /// <summary><b>[requires: cl_ext_image_requirements_info]</b> </summary>
@@ -6150,6 +6178,7 @@ namespace OpenTK.Compute2.OpenCL
         /// <remarks>[originally: CL_KERNEL_ARG_ADDRESS_PRIVATE]</remarks>
         KernelArgAddressPrivate = 4510,
     }
+    ///<summary>Used in <see cref="CL.GetKernelArgInfo" /></summary>
     public enum KernelArgInfo : uint
     {
         /// <summary><b>[requires: v1.2]</b> </summary>
@@ -6187,6 +6216,7 @@ namespace OpenTK.Compute2.OpenCL
         /// <remarks>[originally: CL_KERNEL_ARG_TYPE_PIPE]</remarks>
         KernelArgTypePipe = 8,
     }
+    ///<summary>Used in <see cref="CL.SetKernelExecInfo" /></summary>
     public enum KernelExecInfo : uint
     {
         /// <summary><b>[requires: v2.0]</b> </summary>
@@ -6235,6 +6265,7 @@ namespace OpenTK.Compute2.OpenCL
         /// <remarks>[originally: CL_KERNEL_EXEC_INFO_DEVICE_PTRS_EXT]</remarks>
         KernelExecInfoDevicePtrsExt = 20482,
     }
+    ///<summary>Used in <see cref="CL.ARM.SetKernelExecInfoARM" /></summary>
     public enum KernelExecInfoArm : uint
     {
         /// <summary><b>[requires: cl_arm_shared_virtual_memory]</b> </summary>
@@ -6244,6 +6275,7 @@ namespace OpenTK.Compute2.OpenCL
         /// <remarks>[originally: CL_KERNEL_EXEC_INFO_SVM_FINE_GRAIN_SYSTEM_ARM]</remarks>
         KernelExecInfoSvmFineGrainSystemArm = 16569,
     }
+    ///<summary>Used in <see cref="CL.GetKernelInfo" /></summary>
     public enum KernelInfo : uint
     {
         /// <summary><b>[requires: v1.0]</b> </summary>
@@ -6268,6 +6300,7 @@ namespace OpenTK.Compute2.OpenCL
         /// <remarks>[originally: CL_KERNEL_MAX_WARP_COUNT_ARM]</remarks>
         KernelMaxWarpCountArm = 16873,
     }
+    ///<summary>Used in <see cref="CL.GetKernelSubGroupInfo" />, <see cref="CL.KHR.GetKernelSubGroupInfoKHR" /></summary>
     public enum KernelSubGroupInfo : uint
     {
         /// <summary><b>[requires: v2.1]</b> </summary>
@@ -6298,6 +6331,7 @@ namespace OpenTK.Compute2.OpenCL
         /// <remarks>[originally: CL_KERNEL_COMPILE_SUB_GROUP_SIZE_INTEL]</remarks>
         KernelCompileSubGroupSizeIntel = 16650,
     }
+    ///<summary>Used in <see cref="CL.GetKernelWorkGroupInfo" /></summary>
     public enum KernelWorkGroupInfo : uint
     {
         /// <summary><b>[requires: v1.0]</b> </summary>
@@ -6334,6 +6368,7 @@ namespace OpenTK.Compute2.OpenCL
         /// <remarks>[originally: CL_KHRONOS_VENDOR_ID_POCL]</remarks>
         KhronosVendorIdPocl = 65542,
     }
+    ///<summary>Used in <see cref="CL.LOADER.GetLayerInfo" /></summary>
     public enum LayerInfo : uint
     {
         /// <summary><b>[requires: cl_loader_layers]</b> </summary>
@@ -6343,6 +6378,7 @@ namespace OpenTK.Compute2.OpenCL
         /// <remarks>[originally: CL_LAYER_NAME]</remarks>
         LayerName = 16961,
     }
+    ///<summary>Used in <see cref="CL.EnqueueMapBuffer" />, <see cref="CL.EnqueueMapImage" />, <see cref="CL.EnqueueSVMMap" />, ...</summary>
     [Flags]
     public enum MapFlags : ulong
     {
@@ -6409,6 +6445,7 @@ namespace OpenTK.Compute2.OpenCL
         /// <remarks>[originally: CL_MEM_ALLOC_DEVICE_INTEL]</remarks>
         MemAllocDeviceIntel = 16797,
     }
+    ///<summary>Used in <see cref="CL.CreateBuffer" />, <see cref="CL.CreateBufferWithProperties" />, <see cref="CL.CreateImage" />, ...</summary>
     [Flags]
     public enum MemFlags : ulong
     {
@@ -6476,6 +6513,7 @@ namespace OpenTK.Compute2.OpenCL
         /// <remarks>[originally: CL_MEM_PROTECTED_ALLOC_ARM]</remarks>
         MemProtectedAllocArm = 68719476736,
     }
+    ///<summary>Used in <see cref="CL.GetMemObjectInfo" /></summary>
     public enum MemInfo : uint
     {
         /// <summary><b>[requires: v1.0]</b> </summary>
@@ -6536,6 +6574,7 @@ namespace OpenTK.Compute2.OpenCL
         /// <remarks>[originally: CL_MEM_DEVICE_ADDRESS_EXT]</remarks>
         MemDeviceAddressExt = 20481,
     }
+    ///<summary>Used in <see cref="CL.EnqueueMigrateMemObjects" />, <see cref="CL.EnqueueSVMMigrateMem" />, <see cref="CL.INTEL.EnqueueMigrateMemINTEL" /></summary>
     [Flags]
     public enum MemMigrationFlags : ulong
     {
@@ -6549,6 +6588,7 @@ namespace OpenTK.Compute2.OpenCL
         /// <remarks>[originally: CL_MIGRATE_MEM_OBJECT_CONTENT_UNDEFINED]</remarks>
         MigrateMemObjectContentUndefined = 2,
     }
+    ///<summary>Used in <see cref="CL.GetSupportedImageFormats" />, <see cref="CL.INTEL.GetSupportedD3D10TextureFormatsINTEL" />, <see cref="CL.INTEL.GetSupportedD3D11TextureFormatsINTEL" />, ...</summary>
     public enum MemObjectType : uint
     {
         /// <summary><b>[requires: v1.0]</b> </summary>
@@ -6603,6 +6643,7 @@ namespace OpenTK.Compute2.OpenCL
         /// <remarks>[originally: CL_MEM_CHANNEL_INTEL]</remarks>
         MemChannelIntel = 16915,
     }
+    ///<summary>Used in <see cref="CL.IMG.EnqueueGenerateMipmapIMG" /></summary>
     public enum MipmapFilterModeImg : uint
     {
         /// <summary><b>[requires: cl_img_generate_mipmap]</b> </summary>
@@ -6612,6 +6653,7 @@ namespace OpenTK.Compute2.OpenCL
         /// <remarks>[originally: CL_MIPMAP_FILTER_BOX_IMG]</remarks>
         MipmapFilterBoxImg = 1,
     }
+    ///<summary>Used in <see cref="CL.KHR.GetMutableCommandInfoKHR" /></summary>
     public enum MutableCommandInfoKhr : uint
     {
         /// <summary><b>[requires: cl_khr_command_buffer_mutable_dispatch]</b> </summary>
@@ -6668,6 +6710,7 @@ namespace OpenTK.Compute2.OpenCL
         /// <remarks>[originally: CL_MUTABLE_DISPATCH_EXEC_INFO_KHR]</remarks>
         MutableDispatchExecInfoKhr = 16,
     }
+    ///<summary>Used in <see cref="CL.QCOM.SetPerfHintQCOM" /></summary>
     public enum PerfHintQcom : uint
     {
         /// <summary><b>[requires: cl_qcom_perf_hint]</b> </summary>
@@ -6680,6 +6723,7 @@ namespace OpenTK.Compute2.OpenCL
         /// <remarks>[originally: CL_PERF_HINT_LOW_QCOM]</remarks>
         PerfHintLowQcom = 16581,
     }
+    ///<summary>Used in <see cref="CL.GetPipeInfo" /></summary>
     public enum PipeInfo : uint
     {
         /// <summary><b>[requires: v2.0]</b> </summary>
@@ -6705,6 +6749,7 @@ namespace OpenTK.Compute2.OpenCL
         /// <remarks>[originally: CL_COMMAND_BUFFER_PLATFORM_AUTOMATIC_REMAP_KHR]</remarks>
         CommandBufferPlatformAutomaticRemapKhr = 4,
     }
+    ///<summary>Used in <see cref="CL.GetPlatformInfo" /></summary>
     public enum PlatformInfo : uint
     {
         /// <summary><b>[requires: v1.0]</b> </summary>
@@ -6762,6 +6807,7 @@ namespace OpenTK.Compute2.OpenCL
         /// <remarks>[originally: CL_PLATFORM_EXTERNAL_MEMORY_IMPORT_HANDLE_TYPES_KHR]</remarks>
         PlatformExternalMemoryImportHandleTypesKhr = 8260,
     }
+    ///<summary>Used in <see cref="CL.GetEventProfilingInfo" /></summary>
     public enum ProfilingInfo : uint
     {
         /// <summary><b>[requires: v1.0]</b> </summary>
@@ -6798,6 +6844,7 @@ namespace OpenTK.Compute2.OpenCL
         /// <remarks>[originally: CL_PROGRAM_BINARY_TYPE_INTERMEDIATE]</remarks>
         ProgramBinaryTypeIntermediate = 16609,
     }
+    ///<summary>Used in <see cref="CL.GetProgramBuildInfo" /></summary>
     public enum ProgramBuildInfo : uint
     {
         /// <summary><b>[requires: v1.0]</b> </summary>
@@ -6816,6 +6863,7 @@ namespace OpenTK.Compute2.OpenCL
         /// <remarks>[originally: CL_PROGRAM_BUILD_GLOBAL_VARIABLE_TOTAL_SIZE]</remarks>
         ProgramBuildGlobalVariableTotalSize = 4485,
     }
+    ///<summary>Used in <see cref="CL.GetProgramInfo" /></summary>
     public enum ProgramInfo : uint
     {
         /// <summary><b>[requires: v1.0]</b> </summary>
@@ -6914,6 +6962,7 @@ namespace OpenTK.Compute2.OpenCL
         /// <remarks>[originally: CL_QUEUE_THROTTLE_LOW_KHR]</remarks>
         QueueThrottleLowKhr = 4,
     }
+    ///<summary>Used in <see cref="CL.GetSamplerInfo" /></summary>
     public enum SamplerInfo : uint
     {
         /// <summary><b>[requires: v1.0]</b> </summary>
@@ -6953,6 +7002,7 @@ namespace OpenTK.Compute2.OpenCL
         /// <remarks>[originally: CL_SAMPLER_PROPERTIES]</remarks>
         SamplerProperties = 4440,
     }
+    ///<summary>Used in <see cref="CL.KHR.GetSemaphoreInfoKHR" /></summary>
     public enum SemaphoreInfoKhr : uint
     {
         /// <summary><b>[requires: cl_khr_semaphore]</b> </summary>
@@ -7032,6 +7082,7 @@ namespace OpenTK.Compute2.OpenCL
         /// <remarks>[originally: CL_SVM_ALLOC_EXTERNAL_MEMORY_DMA_BUF_IMG]</remarks>
         SvmAllocExternalMemoryDmaBufImg = 16929,
     }
+    ///<summary>Used in <see cref="CL.KHR.GetSVMSuggestedTypeIndexKHR" />, <see cref="CL.KHR.GetSVMSuggestedTypeIndexKHR" /></summary>
     [Flags]
     public enum SvmCapabilitiesKhr : ulong
     {
@@ -7081,6 +7132,7 @@ namespace OpenTK.Compute2.OpenCL
         /// <remarks>[originally: CL_SVM_CAPABILITY_INDIRECT_ACCESS_KHR]</remarks>
         SvmCapabilityIndirectAccessKhr = 16384,
     }
+    ///<summary>Used in <see cref="CL.KHR.GetSVMPointerInfoKHR" /></summary>
     public enum SvmPointerInfoKhr : uint
     {
         /// <summary><b>[requires: cl_khr_unified_svm]</b> </summary>
@@ -7120,6 +7172,7 @@ namespace OpenTK.Compute2.OpenCL
         /// <remarks>[originally: CL_MEM_TYPE_SHARED_INTEL]</remarks>
         MemTypeSharedIntel = 16793,
     }
+    ///<summary>Used in <see cref="CL.INTEL.GetDeviceIDsFromVA_APIMediaAdapterINTEL" /></summary>
     public enum VaApiDeviceSetIntel : uint
     {
         /// <summary><b>[requires: cl_intel_va_api_media_sharing]</b> </summary>
@@ -7129,6 +7182,7 @@ namespace OpenTK.Compute2.OpenCL
         /// <remarks>[originally: CL_ALL_DEVICES_FOR_VA_API_INTEL]</remarks>
         AllDevicesForVaApiIntel = 16534,
     }
+    ///<summary>Used in <see cref="CL.INTEL.GetDeviceIDsFromVA_APIMediaAdapterINTEL" /></summary>
     public enum VaApiDeviceSourceIntel : uint
     {
         /// <summary><b>[requires: cl_intel_va_api_media_sharing]</b> </summary>

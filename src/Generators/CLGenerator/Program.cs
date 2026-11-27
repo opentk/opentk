@@ -140,6 +140,32 @@ namespace CLGenerator
                             enumType.StrongUnderlyingType = CSPrimitive.Int(primitive.Constant);
                     }
                 }
+
+                // Because we don't have enum information at the start of the parse we instead need to patch this information here
+                // when we can actually find out which parameters reference enum types. This might be the "better" solution in the
+                // long run anyway...
+                // - Noggin_bops 2026-11-27
+                foreach (var vendorFunctions in @namespace.VendorFunctions)
+                {
+                    foreach (var overloadedFunction in vendorFunctions.Functions)
+                    {
+                        foreach (var parameter in overloadedFunction.NativeFunction.Parameters)
+                        {
+                            if (parameter.StrongType is CSEnum @enum)
+                            {
+                                EnumType? type = @namespace.Enums.Find(e => e.OriginalName == parameter.Type);
+                                if (type != null)
+                                {
+                                    type.FunctionsUsingEnumGroup.Add((vendorFunctions.Vendor, overloadedFunction.NativeFunction));
+                                }
+                                else
+                                {
+                                    Logger.Warning($"Could not find enum type for enum type '{parameter.Type}' which is the type of the '{parameter.OriginalName}' parameter to the function '{overloadedFunction.NativeFunction.Name}'");
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
     }

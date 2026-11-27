@@ -10,7 +10,7 @@ namespace OpenTK.Compute2.OpenCL
 {
     public static unsafe partial class CL
     {
-        /// <inheritdoc cref="BuildProgram(IntPtr, uint, IntPtr*, byte*, delegate* unmanaged[Cdecl]<IntPtr, void*, void>, void*)"/>
+        /// <inheritdoc cref="BuildProgram_doc()"/>
         public static unsafe int BuildProgram(IntPtr program, uint num_devices, Span<IntPtr> device_list, string options, delegate* unmanaged[Cdecl]<IntPtr, void*, void> pfn_notify, IntPtr user_data)
         {
             int returnValue;
@@ -23,7 +23,7 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="BuildProgram(IntPtr, uint, IntPtr*, byte*, delegate* unmanaged[Cdecl]<IntPtr, void*, void>, void*)"/>
+        /// <inheritdoc cref="BuildProgram_doc()"/>
         public static unsafe int BuildProgram(IntPtr program, uint num_devices, IntPtr[] device_list, string options, delegate* unmanaged[Cdecl]<IntPtr, void*, void> pfn_notify, IntPtr user_data)
         {
             int returnValue;
@@ -36,7 +36,7 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="BuildProgram(IntPtr, uint, IntPtr*, byte*, delegate* unmanaged[Cdecl]<IntPtr, void*, void>, void*)"/>
+        /// <inheritdoc cref="BuildProgram_doc()"/>
         public static unsafe int BuildProgram(IntPtr program, uint num_devices, ref IntPtr device_list, string options, delegate* unmanaged[Cdecl]<IntPtr, void*, void> pfn_notify, IntPtr user_data)
         {
             int returnValue;
@@ -49,7 +49,7 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="BuildProgram(IntPtr, uint, IntPtr*, byte*, delegate* unmanaged[Cdecl]<IntPtr, void*, void>, void*)"/>
+        /// <inheritdoc cref="BuildProgram_doc()"/>
         public static unsafe int BuildProgram<T1>(IntPtr program, uint num_devices, Span<IntPtr> device_list, string options, delegate* unmanaged[Cdecl]<IntPtr, void*, void> pfn_notify, Span<T1> user_data)
             where T1 : unmanaged
         {
@@ -65,7 +65,7 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="BuildProgram(IntPtr, uint, IntPtr*, byte*, delegate* unmanaged[Cdecl]<IntPtr, void*, void>, void*)"/>
+        /// <inheritdoc cref="BuildProgram_doc()"/>
         public static unsafe int BuildProgram<T1>(IntPtr program, uint num_devices, IntPtr[] device_list, string options, delegate* unmanaged[Cdecl]<IntPtr, void*, void> pfn_notify, T1[] user_data)
             where T1 : unmanaged
         {
@@ -81,7 +81,7 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="BuildProgram(IntPtr, uint, IntPtr*, byte*, delegate* unmanaged[Cdecl]<IntPtr, void*, void>, void*)"/>
+        /// <inheritdoc cref="BuildProgram_doc()"/>
         public static unsafe int BuildProgram<T1>(IntPtr program, uint num_devices, ref IntPtr device_list, string options, delegate* unmanaged[Cdecl]<IntPtr, void*, void> pfn_notify, ref T1 user_data)
             where T1 : unmanaged
         {
@@ -125,7 +125,7 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="CompileProgram(IntPtr, uint, IntPtr*, byte*, uint, IntPtr*, byte**, delegate* unmanaged[Cdecl]<IntPtr, void*, void>, void*)"/>
+        /// <inheritdoc cref="CompileProgram_doc()"/>
         public static unsafe int CompileProgram(IntPtr program, uint num_devices, Span<IntPtr> device_list, string options, uint num_input_headers, Span<IntPtr> input_headers, string[] header_include_names, delegate* unmanaged[Cdecl]<IntPtr, void*, void> pfn_notify, IntPtr user_data)
         {
             int returnValue;
@@ -143,7 +143,7 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="CompileProgram(IntPtr, uint, IntPtr*, byte*, uint, IntPtr*, byte**, delegate* unmanaged[Cdecl]<IntPtr, void*, void>, void*)"/>
+        /// <inheritdoc cref="CompileProgram_doc()"/>
         public static unsafe int CompileProgram(IntPtr program, uint num_devices, IntPtr[] device_list, string options, uint num_input_headers, IntPtr[] input_headers, string[] header_include_names, delegate* unmanaged[Cdecl]<IntPtr, void*, void> pfn_notify, IntPtr user_data)
         {
             int returnValue;
@@ -161,7 +161,7 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="CompileProgram(IntPtr, uint, IntPtr*, byte*, uint, IntPtr*, byte**, delegate* unmanaged[Cdecl]<IntPtr, void*, void>, void*)"/>
+        /// <inheritdoc cref="CompileProgram_doc()"/>
         public static unsafe int CompileProgram(IntPtr program, uint num_devices, ref IntPtr device_list, string options, uint num_input_headers, ref IntPtr input_headers, string[] header_include_names, delegate* unmanaged[Cdecl]<IntPtr, void*, void> pfn_notify, IntPtr user_data)
         {
             int returnValue;
@@ -177,7 +177,7 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="CompileProgram(IntPtr, uint, IntPtr*, byte*, uint, IntPtr*, byte**, delegate* unmanaged[Cdecl]<IntPtr, void*, void>, void*)"/>
+        /// <inheritdoc cref="CompileProgram_doc()"/>
         public static unsafe int CompileProgram<T1>(IntPtr program, uint num_devices, Span<IntPtr> device_list, string options, uint num_input_headers, Span<IntPtr> input_headers, string[] header_include_names, delegate* unmanaged[Cdecl]<IntPtr, void*, void> pfn_notify, Span<T1> user_data)
             where T1 : unmanaged
         {
@@ -198,7 +198,7 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="CompileProgram(IntPtr, uint, IntPtr*, byte*, uint, IntPtr*, byte**, delegate* unmanaged[Cdecl]<IntPtr, void*, void>, void*)"/>
+        /// <inheritdoc cref="CompileProgram_doc()"/>
         public static unsafe int CompileProgram<T1>(IntPtr program, uint num_devices, IntPtr[] device_list, string options, uint num_input_headers, IntPtr[] input_headers, string[] header_include_names, delegate* unmanaged[Cdecl]<IntPtr, void*, void> pfn_notify, T1[] user_data)
             where T1 : unmanaged
         {
@@ -219,7 +219,7 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="CompileProgram(IntPtr, uint, IntPtr*, byte*, uint, IntPtr*, byte**, delegate* unmanaged[Cdecl]<IntPtr, void*, void>, void*)"/>
+        /// <inheritdoc cref="CompileProgram_doc()"/>
         public static unsafe int CompileProgram<T1>(IntPtr program, uint num_devices, ref IntPtr device_list, string options, uint num_input_headers, ref IntPtr input_headers, string[] header_include_names, delegate* unmanaged[Cdecl]<IntPtr, void*, void> pfn_notify, ref T1 user_data)
             where T1 : unmanaged
         {
@@ -463,7 +463,7 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="CreateContext(IntPtr*, uint, IntPtr*, delegate* unmanaged[Cdecl]<byte*, void*, nuint, void*, void>, void*, int*)"/>
+        /// <inheritdoc cref="CreateContext_doc()"/>
         public static unsafe IntPtr CreateContext(Span<IntPtr> properties, uint num_devices, Span<IntPtr> devices, delegate* unmanaged[Cdecl]<byte*, void*, nuint, void*, void> pfn_notify, IntPtr user_data, Span<int> errcode_ret)
         {
             IntPtr returnValue;
@@ -480,7 +480,7 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="CreateContext(IntPtr*, uint, IntPtr*, delegate* unmanaged[Cdecl]<byte*, void*, nuint, void*, void>, void*, int*)"/>
+        /// <inheritdoc cref="CreateContext_doc()"/>
         public static unsafe IntPtr CreateContext(IntPtr[] properties, uint num_devices, IntPtr[] devices, delegate* unmanaged[Cdecl]<byte*, void*, nuint, void*, void> pfn_notify, IntPtr user_data, int[] errcode_ret)
         {
             IntPtr returnValue;
@@ -497,7 +497,7 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="CreateContext(IntPtr*, uint, IntPtr*, delegate* unmanaged[Cdecl]<byte*, void*, nuint, void*, void>, void*, int*)"/>
+        /// <inheritdoc cref="CreateContext_doc()"/>
         public static unsafe IntPtr CreateContext(ref IntPtr properties, uint num_devices, ref IntPtr devices, delegate* unmanaged[Cdecl]<byte*, void*, nuint, void*, void> pfn_notify, IntPtr user_data, ref int errcode_ret)
         {
             IntPtr returnValue;
@@ -510,7 +510,7 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="CreateContext(IntPtr*, uint, IntPtr*, delegate* unmanaged[Cdecl]<byte*, void*, nuint, void*, void>, void*, int*)"/>
+        /// <inheritdoc cref="CreateContext_doc()"/>
         public static unsafe IntPtr CreateContext<T1>(Span<IntPtr> properties, uint num_devices, Span<IntPtr> devices, delegate* unmanaged[Cdecl]<byte*, void*, nuint, void*, void> pfn_notify, Span<T1> user_data, Span<int> errcode_ret)
             where T1 : unmanaged
         {
@@ -530,7 +530,7 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="CreateContext(IntPtr*, uint, IntPtr*, delegate* unmanaged[Cdecl]<byte*, void*, nuint, void*, void>, void*, int*)"/>
+        /// <inheritdoc cref="CreateContext_doc()"/>
         public static unsafe IntPtr CreateContext<T1>(IntPtr[] properties, uint num_devices, IntPtr[] devices, delegate* unmanaged[Cdecl]<byte*, void*, nuint, void*, void> pfn_notify, T1[] user_data, int[] errcode_ret)
             where T1 : unmanaged
         {
@@ -550,7 +550,7 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="CreateContext(IntPtr*, uint, IntPtr*, delegate* unmanaged[Cdecl]<byte*, void*, nuint, void*, void>, void*, int*)"/>
+        /// <inheritdoc cref="CreateContext_doc()"/>
         public static unsafe IntPtr CreateContext<T1>(ref IntPtr properties, uint num_devices, ref IntPtr devices, delegate* unmanaged[Cdecl]<byte*, void*, nuint, void*, void> pfn_notify, ref T1 user_data, ref int errcode_ret)
             where T1 : unmanaged
         {
@@ -564,7 +564,7 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="CreateContextFromType(IntPtr*, DeviceType, delegate* unmanaged[Cdecl]<byte*, void*, nuint, void*, void>, void*, int*)"/>
+        /// <inheritdoc cref="CreateContextFromType_doc()"/>
         public static unsafe IntPtr CreateContextFromType(Span<IntPtr> properties, DeviceType device_type, delegate* unmanaged[Cdecl]<byte*, void*, nuint, void*, void> pfn_notify, IntPtr user_data, Span<int> errcode_ret)
         {
             IntPtr returnValue;
@@ -578,7 +578,7 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="CreateContextFromType(IntPtr*, DeviceType, delegate* unmanaged[Cdecl]<byte*, void*, nuint, void*, void>, void*, int*)"/>
+        /// <inheritdoc cref="CreateContextFromType_doc()"/>
         public static unsafe IntPtr CreateContextFromType(IntPtr[] properties, DeviceType device_type, delegate* unmanaged[Cdecl]<byte*, void*, nuint, void*, void> pfn_notify, IntPtr user_data, int[] errcode_ret)
         {
             IntPtr returnValue;
@@ -592,7 +592,7 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="CreateContextFromType(IntPtr*, DeviceType, delegate* unmanaged[Cdecl]<byte*, void*, nuint, void*, void>, void*, int*)"/>
+        /// <inheritdoc cref="CreateContextFromType_doc()"/>
         public static unsafe IntPtr CreateContextFromType(ref IntPtr properties, DeviceType device_type, delegate* unmanaged[Cdecl]<byte*, void*, nuint, void*, void> pfn_notify, IntPtr user_data, ref int errcode_ret)
         {
             IntPtr returnValue;
@@ -604,7 +604,7 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="CreateContextFromType(IntPtr*, DeviceType, delegate* unmanaged[Cdecl]<byte*, void*, nuint, void*, void>, void*, int*)"/>
+        /// <inheritdoc cref="CreateContextFromType_doc()"/>
         public static unsafe IntPtr CreateContextFromType<T1>(Span<IntPtr> properties, DeviceType device_type, delegate* unmanaged[Cdecl]<byte*, void*, nuint, void*, void> pfn_notify, Span<T1> user_data, Span<int> errcode_ret)
             where T1 : unmanaged
         {
@@ -621,7 +621,7 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="CreateContextFromType(IntPtr*, DeviceType, delegate* unmanaged[Cdecl]<byte*, void*, nuint, void*, void>, void*, int*)"/>
+        /// <inheritdoc cref="CreateContextFromType_doc()"/>
         public static unsafe IntPtr CreateContextFromType<T1>(IntPtr[] properties, DeviceType device_type, delegate* unmanaged[Cdecl]<byte*, void*, nuint, void*, void> pfn_notify, T1[] user_data, int[] errcode_ret)
             where T1 : unmanaged
         {
@@ -638,7 +638,7 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="CreateContextFromType(IntPtr*, DeviceType, delegate* unmanaged[Cdecl]<byte*, void*, nuint, void*, void>, void*, int*)"/>
+        /// <inheritdoc cref="CreateContextFromType_doc()"/>
         public static unsafe IntPtr CreateContextFromType<T1>(ref IntPtr properties, DeviceType device_type, delegate* unmanaged[Cdecl]<byte*, void*, nuint, void*, void> pfn_notify, ref T1 user_data, ref int errcode_ret)
             where T1 : unmanaged
         {
@@ -2302,7 +2302,7 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="EnqueueNativeKernel(IntPtr, delegate* unmanaged[Cdecl]<void*, void>, void*, nuint, uint, IntPtr*, void**, uint, IntPtr*, IntPtr*)"/>
+        /// <inheritdoc cref="EnqueueNativeKernel_doc()"/>
         public static unsafe int EnqueueNativeKernel(IntPtr command_queue, delegate* unmanaged[Cdecl]<void*, void> user_func, IntPtr args, nuint cb_args, uint num_mem_objects, Span<IntPtr> mem_list, void** args_mem_loc, uint num_events_in_wait_list, Span<IntPtr> event_wait_list, Span<IntPtr> @event)
         {
             int returnValue;
@@ -2319,7 +2319,7 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="EnqueueNativeKernel(IntPtr, delegate* unmanaged[Cdecl]<void*, void>, void*, nuint, uint, IntPtr*, void**, uint, IntPtr*, IntPtr*)"/>
+        /// <inheritdoc cref="EnqueueNativeKernel_doc()"/>
         public static unsafe int EnqueueNativeKernel(IntPtr command_queue, delegate* unmanaged[Cdecl]<void*, void> user_func, IntPtr args, nuint cb_args, uint num_mem_objects, IntPtr[] mem_list, void** args_mem_loc, uint num_events_in_wait_list, IntPtr[] event_wait_list, IntPtr[] @event)
         {
             int returnValue;
@@ -2336,7 +2336,7 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="EnqueueNativeKernel(IntPtr, delegate* unmanaged[Cdecl]<void*, void>, void*, nuint, uint, IntPtr*, void**, uint, IntPtr*, IntPtr*)"/>
+        /// <inheritdoc cref="EnqueueNativeKernel_doc()"/>
         public static unsafe int EnqueueNativeKernel(IntPtr command_queue, delegate* unmanaged[Cdecl]<void*, void> user_func, IntPtr args, nuint cb_args, uint num_mem_objects, ref IntPtr mem_list, void** args_mem_loc, uint num_events_in_wait_list, ref IntPtr event_wait_list, ref IntPtr @event)
         {
             int returnValue;
@@ -2349,7 +2349,7 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="EnqueueNativeKernel(IntPtr, delegate* unmanaged[Cdecl]<void*, void>, void*, nuint, uint, IntPtr*, void**, uint, IntPtr*, IntPtr*)"/>
+        /// <inheritdoc cref="EnqueueNativeKernel_doc()"/>
         public static unsafe int EnqueueNativeKernel<T1>(IntPtr command_queue, delegate* unmanaged[Cdecl]<void*, void> user_func, Span<T1> args, nuint cb_args, uint num_mem_objects, Span<IntPtr> mem_list, void** args_mem_loc, uint num_events_in_wait_list, Span<IntPtr> event_wait_list, Span<IntPtr> @event)
             where T1 : unmanaged
         {
@@ -2369,7 +2369,7 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="EnqueueNativeKernel(IntPtr, delegate* unmanaged[Cdecl]<void*, void>, void*, nuint, uint, IntPtr*, void**, uint, IntPtr*, IntPtr*)"/>
+        /// <inheritdoc cref="EnqueueNativeKernel_doc()"/>
         public static unsafe int EnqueueNativeKernel<T1>(IntPtr command_queue, delegate* unmanaged[Cdecl]<void*, void> user_func, T1[] args, nuint cb_args, uint num_mem_objects, IntPtr[] mem_list, void** args_mem_loc, uint num_events_in_wait_list, IntPtr[] event_wait_list, IntPtr[] @event)
             where T1 : unmanaged
         {
@@ -2389,7 +2389,7 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="EnqueueNativeKernel(IntPtr, delegate* unmanaged[Cdecl]<void*, void>, void*, nuint, uint, IntPtr*, void**, uint, IntPtr*, IntPtr*)"/>
+        /// <inheritdoc cref="EnqueueNativeKernel_doc()"/>
         public static unsafe int EnqueueNativeKernel<T1>(IntPtr command_queue, delegate* unmanaged[Cdecl]<void*, void> user_func, ref T1 args, nuint cb_args, uint num_mem_objects, ref IntPtr mem_list, void** args_mem_loc, uint num_events_in_wait_list, ref IntPtr event_wait_list, ref IntPtr @event)
             where T1 : unmanaged
         {
@@ -2792,7 +2792,7 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="EnqueueSVMFree(IntPtr, uint, void**, delegate* unmanaged[Cdecl]<IntPtr, uint, void**, void*, void>, void*, uint, IntPtr*, IntPtr*)"/>
+        /// <inheritdoc cref="EnqueueSVMFree_doc()"/>
         public static unsafe int EnqueueSVMFree(IntPtr command_queue, uint num_svm_pointers, void** svm_pointers, delegate* unmanaged[Cdecl]<IntPtr, uint, void**, void*, void> pfn_free_func, IntPtr user_data, uint num_events_in_wait_list, Span<IntPtr> event_wait_list, Span<IntPtr> @event)
         {
             int returnValue;
@@ -2806,7 +2806,7 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="EnqueueSVMFree(IntPtr, uint, void**, delegate* unmanaged[Cdecl]<IntPtr, uint, void**, void*, void>, void*, uint, IntPtr*, IntPtr*)"/>
+        /// <inheritdoc cref="EnqueueSVMFree_doc()"/>
         public static unsafe int EnqueueSVMFree(IntPtr command_queue, uint num_svm_pointers, void** svm_pointers, delegate* unmanaged[Cdecl]<IntPtr, uint, void**, void*, void> pfn_free_func, IntPtr user_data, uint num_events_in_wait_list, IntPtr[] event_wait_list, IntPtr[] @event)
         {
             int returnValue;
@@ -2820,7 +2820,7 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="EnqueueSVMFree(IntPtr, uint, void**, delegate* unmanaged[Cdecl]<IntPtr, uint, void**, void*, void>, void*, uint, IntPtr*, IntPtr*)"/>
+        /// <inheritdoc cref="EnqueueSVMFree_doc()"/>
         public static unsafe int EnqueueSVMFree(IntPtr command_queue, uint num_svm_pointers, void** svm_pointers, delegate* unmanaged[Cdecl]<IntPtr, uint, void**, void*, void> pfn_free_func, IntPtr user_data, uint num_events_in_wait_list, ref IntPtr event_wait_list, ref IntPtr @event)
         {
             int returnValue;
@@ -2832,7 +2832,7 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="EnqueueSVMFree(IntPtr, uint, void**, delegate* unmanaged[Cdecl]<IntPtr, uint, void**, void*, void>, void*, uint, IntPtr*, IntPtr*)"/>
+        /// <inheritdoc cref="EnqueueSVMFree_doc()"/>
         public static unsafe int EnqueueSVMFree<T1>(IntPtr command_queue, uint num_svm_pointers, void** svm_pointers, delegate* unmanaged[Cdecl]<IntPtr, uint, void**, void*, void> pfn_free_func, Span<T1> user_data, uint num_events_in_wait_list, Span<IntPtr> event_wait_list, Span<IntPtr> @event)
             where T1 : unmanaged
         {
@@ -2849,7 +2849,7 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="EnqueueSVMFree(IntPtr, uint, void**, delegate* unmanaged[Cdecl]<IntPtr, uint, void**, void*, void>, void*, uint, IntPtr*, IntPtr*)"/>
+        /// <inheritdoc cref="EnqueueSVMFree_doc()"/>
         public static unsafe int EnqueueSVMFree<T1>(IntPtr command_queue, uint num_svm_pointers, void** svm_pointers, delegate* unmanaged[Cdecl]<IntPtr, uint, void**, void*, void> pfn_free_func, T1[] user_data, uint num_events_in_wait_list, IntPtr[] event_wait_list, IntPtr[] @event)
             where T1 : unmanaged
         {
@@ -2866,7 +2866,7 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="EnqueueSVMFree(IntPtr, uint, void**, delegate* unmanaged[Cdecl]<IntPtr, uint, void**, void*, void>, void*, uint, IntPtr*, IntPtr*)"/>
+        /// <inheritdoc cref="EnqueueSVMFree_doc()"/>
         public static unsafe int EnqueueSVMFree<T1>(IntPtr command_queue, uint num_svm_pointers, void** svm_pointers, delegate* unmanaged[Cdecl]<IntPtr, uint, void**, void*, void> pfn_free_func, ref T1 user_data, uint num_events_in_wait_list, ref IntPtr event_wait_list, ref IntPtr @event)
             where T1 : unmanaged
         {
@@ -5203,7 +5203,7 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="LinkProgram(IntPtr, uint, IntPtr*, byte*, uint, IntPtr*, delegate* unmanaged[Cdecl]<IntPtr, void*, void>, void*, int*)"/>
+        /// <inheritdoc cref="LinkProgram_doc()"/>
         public static unsafe IntPtr LinkProgram(IntPtr context, uint num_devices, Span<IntPtr> device_list, string options, uint num_input_programs, Span<IntPtr> input_programs, delegate* unmanaged[Cdecl]<IntPtr, void*, void> pfn_notify, IntPtr user_data, Span<int> errcode_ret)
         {
             IntPtr returnValue;
@@ -5222,7 +5222,7 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="LinkProgram(IntPtr, uint, IntPtr*, byte*, uint, IntPtr*, delegate* unmanaged[Cdecl]<IntPtr, void*, void>, void*, int*)"/>
+        /// <inheritdoc cref="LinkProgram_doc()"/>
         public static unsafe IntPtr LinkProgram(IntPtr context, uint num_devices, IntPtr[] device_list, string options, uint num_input_programs, IntPtr[] input_programs, delegate* unmanaged[Cdecl]<IntPtr, void*, void> pfn_notify, IntPtr user_data, int[] errcode_ret)
         {
             IntPtr returnValue;
@@ -5241,7 +5241,7 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="LinkProgram(IntPtr, uint, IntPtr*, byte*, uint, IntPtr*, delegate* unmanaged[Cdecl]<IntPtr, void*, void>, void*, int*)"/>
+        /// <inheritdoc cref="LinkProgram_doc()"/>
         public static unsafe IntPtr LinkProgram(IntPtr context, uint num_devices, ref IntPtr device_list, string options, uint num_input_programs, ref IntPtr input_programs, delegate* unmanaged[Cdecl]<IntPtr, void*, void> pfn_notify, IntPtr user_data, ref int errcode_ret)
         {
             IntPtr returnValue;
@@ -5256,7 +5256,7 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="LinkProgram(IntPtr, uint, IntPtr*, byte*, uint, IntPtr*, delegate* unmanaged[Cdecl]<IntPtr, void*, void>, void*, int*)"/>
+        /// <inheritdoc cref="LinkProgram_doc()"/>
         public static unsafe IntPtr LinkProgram<T1>(IntPtr context, uint num_devices, Span<IntPtr> device_list, string options, uint num_input_programs, Span<IntPtr> input_programs, delegate* unmanaged[Cdecl]<IntPtr, void*, void> pfn_notify, Span<T1> user_data, Span<int> errcode_ret)
             where T1 : unmanaged
         {
@@ -5278,7 +5278,7 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="LinkProgram(IntPtr, uint, IntPtr*, byte*, uint, IntPtr*, delegate* unmanaged[Cdecl]<IntPtr, void*, void>, void*, int*)"/>
+        /// <inheritdoc cref="LinkProgram_doc()"/>
         public static unsafe IntPtr LinkProgram<T1>(IntPtr context, uint num_devices, IntPtr[] device_list, string options, uint num_input_programs, IntPtr[] input_programs, delegate* unmanaged[Cdecl]<IntPtr, void*, void> pfn_notify, T1[] user_data, int[] errcode_ret)
             where T1 : unmanaged
         {
@@ -5300,7 +5300,7 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="LinkProgram(IntPtr, uint, IntPtr*, byte*, uint, IntPtr*, delegate* unmanaged[Cdecl]<IntPtr, void*, void>, void*, int*)"/>
+        /// <inheritdoc cref="LinkProgram_doc()"/>
         public static unsafe IntPtr LinkProgram<T1>(IntPtr context, uint num_devices, ref IntPtr device_list, string options, uint num_input_programs, ref IntPtr input_programs, delegate* unmanaged[Cdecl]<IntPtr, void*, void> pfn_notify, ref T1 user_data, ref int errcode_ret)
             where T1 : unmanaged
         {
@@ -5346,7 +5346,7 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="SetContextDestructorCallback(IntPtr, delegate* unmanaged[Cdecl]<IntPtr, void*, void>, void*)"/>
+        /// <inheritdoc cref="SetContextDestructorCallback_doc()"/>
         public static unsafe int SetContextDestructorCallback(IntPtr context, delegate* unmanaged[Cdecl]<IntPtr, void*, void> pfn_notify, IntPtr user_data)
         {
             int returnValue;
@@ -5354,7 +5354,7 @@ namespace OpenTK.Compute2.OpenCL
             returnValue = SetContextDestructorCallback(context, pfn_notify, user_data_vptr);
             return returnValue;
         }
-        /// <inheritdoc cref="SetContextDestructorCallback(IntPtr, delegate* unmanaged[Cdecl]<IntPtr, void*, void>, void*)"/>
+        /// <inheritdoc cref="SetContextDestructorCallback_doc()"/>
         public static unsafe int SetContextDestructorCallback<T1>(IntPtr context, delegate* unmanaged[Cdecl]<IntPtr, void*, void> pfn_notify, Span<T1> user_data)
             where T1 : unmanaged
         {
@@ -5365,7 +5365,7 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="SetContextDestructorCallback(IntPtr, delegate* unmanaged[Cdecl]<IntPtr, void*, void>, void*)"/>
+        /// <inheritdoc cref="SetContextDestructorCallback_doc()"/>
         public static unsafe int SetContextDestructorCallback<T1>(IntPtr context, delegate* unmanaged[Cdecl]<IntPtr, void*, void> pfn_notify, T1[] user_data)
             where T1 : unmanaged
         {
@@ -5376,7 +5376,7 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="SetContextDestructorCallback(IntPtr, delegate* unmanaged[Cdecl]<IntPtr, void*, void>, void*)"/>
+        /// <inheritdoc cref="SetContextDestructorCallback_doc()"/>
         public static unsafe int SetContextDestructorCallback<T1>(IntPtr context, delegate* unmanaged[Cdecl]<IntPtr, void*, void> pfn_notify, ref T1 user_data)
             where T1 : unmanaged
         {
@@ -5387,7 +5387,7 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="SetEventCallback(IntPtr, int, delegate* unmanaged[Cdecl]<IntPtr, int, void*, void>, void*)"/>
+        /// <inheritdoc cref="SetEventCallback_doc()"/>
         public static unsafe int SetEventCallback(IntPtr @event, int command_exec_callback_type, delegate* unmanaged[Cdecl]<IntPtr, int, void*, void> pfn_notify, IntPtr user_data)
         {
             int returnValue;
@@ -5395,7 +5395,7 @@ namespace OpenTK.Compute2.OpenCL
             returnValue = SetEventCallback(@event, command_exec_callback_type, pfn_notify, user_data_vptr);
             return returnValue;
         }
-        /// <inheritdoc cref="SetEventCallback(IntPtr, int, delegate* unmanaged[Cdecl]<IntPtr, int, void*, void>, void*)"/>
+        /// <inheritdoc cref="SetEventCallback_doc()"/>
         public static unsafe int SetEventCallback<T1>(IntPtr @event, int command_exec_callback_type, delegate* unmanaged[Cdecl]<IntPtr, int, void*, void> pfn_notify, Span<T1> user_data)
             where T1 : unmanaged
         {
@@ -5406,7 +5406,7 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="SetEventCallback(IntPtr, int, delegate* unmanaged[Cdecl]<IntPtr, int, void*, void>, void*)"/>
+        /// <inheritdoc cref="SetEventCallback_doc()"/>
         public static unsafe int SetEventCallback<T1>(IntPtr @event, int command_exec_callback_type, delegate* unmanaged[Cdecl]<IntPtr, int, void*, void> pfn_notify, T1[] user_data)
             where T1 : unmanaged
         {
@@ -5417,7 +5417,7 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="SetEventCallback(IntPtr, int, delegate* unmanaged[Cdecl]<IntPtr, int, void*, void>, void*)"/>
+        /// <inheritdoc cref="SetEventCallback_doc()"/>
         public static unsafe int SetEventCallback<T1>(IntPtr @event, int command_exec_callback_type, delegate* unmanaged[Cdecl]<IntPtr, int, void*, void> pfn_notify, ref T1 user_data)
             where T1 : unmanaged
         {
@@ -5551,7 +5551,7 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="SetMemObjectDestructorCallback(IntPtr, delegate* unmanaged[Cdecl]<IntPtr, void*, void>, void*)"/>
+        /// <inheritdoc cref="SetMemObjectDestructorCallback_doc()"/>
         public static unsafe int SetMemObjectDestructorCallback(IntPtr memobj, delegate* unmanaged[Cdecl]<IntPtr, void*, void> pfn_notify, IntPtr user_data)
         {
             int returnValue;
@@ -5559,7 +5559,7 @@ namespace OpenTK.Compute2.OpenCL
             returnValue = SetMemObjectDestructorCallback(memobj, pfn_notify, user_data_vptr);
             return returnValue;
         }
-        /// <inheritdoc cref="SetMemObjectDestructorCallback(IntPtr, delegate* unmanaged[Cdecl]<IntPtr, void*, void>, void*)"/>
+        /// <inheritdoc cref="SetMemObjectDestructorCallback_doc()"/>
         public static unsafe int SetMemObjectDestructorCallback<T1>(IntPtr memobj, delegate* unmanaged[Cdecl]<IntPtr, void*, void> pfn_notify, Span<T1> user_data)
             where T1 : unmanaged
         {
@@ -5570,7 +5570,7 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="SetMemObjectDestructorCallback(IntPtr, delegate* unmanaged[Cdecl]<IntPtr, void*, void>, void*)"/>
+        /// <inheritdoc cref="SetMemObjectDestructorCallback_doc()"/>
         public static unsafe int SetMemObjectDestructorCallback<T1>(IntPtr memobj, delegate* unmanaged[Cdecl]<IntPtr, void*, void> pfn_notify, T1[] user_data)
             where T1 : unmanaged
         {
@@ -5581,7 +5581,7 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="SetMemObjectDestructorCallback(IntPtr, delegate* unmanaged[Cdecl]<IntPtr, void*, void>, void*)"/>
+        /// <inheritdoc cref="SetMemObjectDestructorCallback_doc()"/>
         public static unsafe int SetMemObjectDestructorCallback<T1>(IntPtr memobj, delegate* unmanaged[Cdecl]<IntPtr, void*, void> pfn_notify, ref T1 user_data)
             where T1 : unmanaged
         {
@@ -5592,7 +5592,7 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="SetProgramReleaseCallback(IntPtr, delegate* unmanaged[Cdecl]<IntPtr, void*, void>, void*)"/>
+        /// <inheritdoc cref="SetProgramReleaseCallback_doc()"/>
         public static unsafe int SetProgramReleaseCallback(IntPtr program, delegate* unmanaged[Cdecl]<IntPtr, void*, void> pfn_notify, IntPtr user_data)
         {
             int returnValue;
@@ -5600,7 +5600,7 @@ namespace OpenTK.Compute2.OpenCL
             returnValue = SetProgramReleaseCallback(program, pfn_notify, user_data_vptr);
             return returnValue;
         }
-        /// <inheritdoc cref="SetProgramReleaseCallback(IntPtr, delegate* unmanaged[Cdecl]<IntPtr, void*, void>, void*)"/>
+        /// <inheritdoc cref="SetProgramReleaseCallback_doc()"/>
         public static unsafe int SetProgramReleaseCallback<T1>(IntPtr program, delegate* unmanaged[Cdecl]<IntPtr, void*, void> pfn_notify, Span<T1> user_data)
             where T1 : unmanaged
         {
@@ -5611,7 +5611,7 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="SetProgramReleaseCallback(IntPtr, delegate* unmanaged[Cdecl]<IntPtr, void*, void>, void*)"/>
+        /// <inheritdoc cref="SetProgramReleaseCallback_doc()"/>
         public static unsafe int SetProgramReleaseCallback<T1>(IntPtr program, delegate* unmanaged[Cdecl]<IntPtr, void*, void> pfn_notify, T1[] user_data)
             where T1 : unmanaged
         {
@@ -5622,7 +5622,7 @@ namespace OpenTK.Compute2.OpenCL
             }
             return returnValue;
         }
-        /// <inheritdoc cref="SetProgramReleaseCallback(IntPtr, delegate* unmanaged[Cdecl]<IntPtr, void*, void>, void*)"/>
+        /// <inheritdoc cref="SetProgramReleaseCallback_doc()"/>
         public static unsafe int SetProgramReleaseCallback<T1>(IntPtr program, delegate* unmanaged[Cdecl]<IntPtr, void*, void> pfn_notify, ref T1 user_data)
             where T1 : unmanaged
         {
@@ -5895,7 +5895,7 @@ namespace OpenTK.Compute2.OpenCL
                     Marshal.FreeCoTaskMem((IntPtr)errstr_ptr);
                 }
             }
-            /// <inheritdoc cref="SetMemObjectDestructorAPPLE(IntPtr, delegate* unmanaged[Cdecl]<IntPtr, void*, void>, void*)"/>
+            /// <inheritdoc cref="SetMemObjectDestructorAPPLE_doc()"/>
             public static unsafe int SetMemObjectDestructorAPPLE(IntPtr memobj, delegate* unmanaged[Cdecl]<IntPtr, void*, void> pfn_notify, IntPtr user_data)
             {
                 int returnValue;
@@ -5903,7 +5903,7 @@ namespace OpenTK.Compute2.OpenCL
                 returnValue = SetMemObjectDestructorAPPLE(memobj, pfn_notify, user_data_vptr);
                 return returnValue;
             }
-            /// <inheritdoc cref="SetMemObjectDestructorAPPLE(IntPtr, delegate* unmanaged[Cdecl]<IntPtr, void*, void>, void*)"/>
+            /// <inheritdoc cref="SetMemObjectDestructorAPPLE_doc()"/>
             public static unsafe int SetMemObjectDestructorAPPLE<T1>(IntPtr memobj, delegate* unmanaged[Cdecl]<IntPtr, void*, void> pfn_notify, Span<T1> user_data)
                 where T1 : unmanaged
             {
@@ -5914,7 +5914,7 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="SetMemObjectDestructorAPPLE(IntPtr, delegate* unmanaged[Cdecl]<IntPtr, void*, void>, void*)"/>
+            /// <inheritdoc cref="SetMemObjectDestructorAPPLE_doc()"/>
             public static unsafe int SetMemObjectDestructorAPPLE<T1>(IntPtr memobj, delegate* unmanaged[Cdecl]<IntPtr, void*, void> pfn_notify, T1[] user_data)
                 where T1 : unmanaged
             {
@@ -5925,7 +5925,7 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="SetMemObjectDestructorAPPLE(IntPtr, delegate* unmanaged[Cdecl]<IntPtr, void*, void>, void*)"/>
+            /// <inheritdoc cref="SetMemObjectDestructorAPPLE_doc()"/>
             public static unsafe int SetMemObjectDestructorAPPLE<T1>(IntPtr memobj, delegate* unmanaged[Cdecl]<IntPtr, void*, void> pfn_notify, ref T1 user_data)
                 where T1 : unmanaged
             {
@@ -5939,7 +5939,7 @@ namespace OpenTK.Compute2.OpenCL
         }
         public static unsafe partial class ARM
         {
-            /// <inheritdoc cref="EnqueueSVMFreeARM(IntPtr, uint, void**, delegate* unmanaged[Cdecl]<IntPtr, uint, void**, void*, void>, void*, uint, IntPtr*, IntPtr*)"/>
+            /// <inheritdoc cref="EnqueueSVMFreeARM_doc()"/>
             public static unsafe int EnqueueSVMFreeARM(IntPtr command_queue, uint num_svm_pointers, void** svm_pointers, delegate* unmanaged[Cdecl]<IntPtr, uint, void**, void*, void> pfn_free_func, IntPtr user_data, uint num_events_in_wait_list, Span<IntPtr> event_wait_list, Span<IntPtr> @event)
             {
                 int returnValue;
@@ -5953,7 +5953,7 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="EnqueueSVMFreeARM(IntPtr, uint, void**, delegate* unmanaged[Cdecl]<IntPtr, uint, void**, void*, void>, void*, uint, IntPtr*, IntPtr*)"/>
+            /// <inheritdoc cref="EnqueueSVMFreeARM_doc()"/>
             public static unsafe int EnqueueSVMFreeARM(IntPtr command_queue, uint num_svm_pointers, void** svm_pointers, delegate* unmanaged[Cdecl]<IntPtr, uint, void**, void*, void> pfn_free_func, IntPtr user_data, uint num_events_in_wait_list, IntPtr[] event_wait_list, IntPtr[] @event)
             {
                 int returnValue;
@@ -5967,7 +5967,7 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="EnqueueSVMFreeARM(IntPtr, uint, void**, delegate* unmanaged[Cdecl]<IntPtr, uint, void**, void*, void>, void*, uint, IntPtr*, IntPtr*)"/>
+            /// <inheritdoc cref="EnqueueSVMFreeARM_doc()"/>
             public static unsafe int EnqueueSVMFreeARM(IntPtr command_queue, uint num_svm_pointers, void** svm_pointers, delegate* unmanaged[Cdecl]<IntPtr, uint, void**, void*, void> pfn_free_func, IntPtr user_data, uint num_events_in_wait_list, ref IntPtr event_wait_list, ref IntPtr @event)
             {
                 int returnValue;
@@ -5979,7 +5979,7 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="EnqueueSVMFreeARM(IntPtr, uint, void**, delegate* unmanaged[Cdecl]<IntPtr, uint, void**, void*, void>, void*, uint, IntPtr*, IntPtr*)"/>
+            /// <inheritdoc cref="EnqueueSVMFreeARM_doc()"/>
             public static unsafe int EnqueueSVMFreeARM<T1>(IntPtr command_queue, uint num_svm_pointers, void** svm_pointers, delegate* unmanaged[Cdecl]<IntPtr, uint, void**, void*, void> pfn_free_func, Span<T1> user_data, uint num_events_in_wait_list, Span<IntPtr> event_wait_list, Span<IntPtr> @event)
                 where T1 : unmanaged
             {
@@ -5996,7 +5996,7 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="EnqueueSVMFreeARM(IntPtr, uint, void**, delegate* unmanaged[Cdecl]<IntPtr, uint, void**, void*, void>, void*, uint, IntPtr*, IntPtr*)"/>
+            /// <inheritdoc cref="EnqueueSVMFreeARM_doc()"/>
             public static unsafe int EnqueueSVMFreeARM<T1>(IntPtr command_queue, uint num_svm_pointers, void** svm_pointers, delegate* unmanaged[Cdecl]<IntPtr, uint, void**, void*, void> pfn_free_func, T1[] user_data, uint num_events_in_wait_list, IntPtr[] event_wait_list, IntPtr[] @event)
                 where T1 : unmanaged
             {
@@ -6013,7 +6013,7 @@ namespace OpenTK.Compute2.OpenCL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="EnqueueSVMFreeARM(IntPtr, uint, void**, delegate* unmanaged[Cdecl]<IntPtr, uint, void**, void*, void>, void*, uint, IntPtr*, IntPtr*)"/>
+            /// <inheritdoc cref="EnqueueSVMFreeARM_doc()"/>
             public static unsafe int EnqueueSVMFreeARM<T1>(IntPtr command_queue, uint num_svm_pointers, void** svm_pointers, delegate* unmanaged[Cdecl]<IntPtr, uint, void**, void*, void> pfn_free_func, ref T1 user_data, uint num_events_in_wait_list, ref IntPtr event_wait_list, ref IntPtr @event)
                 where T1 : unmanaged
             {

@@ -367,12 +367,20 @@ namespace GeneratorBase.Utility
             sb.Replace(">", "&gt;");
         }
 
-        public static string XmlEscapeMultiLine(string? str)
+        public static string XmlEscapeMultiLine(string? str, bool insertBR)
         {
             StringBuilder sb = new StringBuilder(str);
             XmlEscapeCharacters(sb);
-            sb.Replace("\r\n", "<br/>");
-            sb.Replace("\n", "<br/>");
+            if (insertBR)
+            {
+                sb.Replace("\r\n", "<br/>");
+                sb.Replace("\n", "<br/>");
+            }
+            else
+            {
+                sb.Replace("\r\n", " ");
+                sb.Replace("\n", " ");
+            }
             return sb.ToString();
         }
     }
