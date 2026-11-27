@@ -36,7 +36,7 @@ namespace ALGenerator
 
     internal static class Reader
     {
-        private static readonly string TempDirectory = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? "", "..", "..", "..", "SpecificationFiles");
+        private static readonly string SpecificationFilesDirectory = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? "", "..", "..", "..", "SpecificationFiles");
 
         private static FileStream ReadFileFromGithub(string url, string filePath)
         {
@@ -51,9 +51,9 @@ namespace ALGenerator
             else
             {
                 Logger.Info($"Didn't find cache file for {fileName}, downloading from {url}. (looked for {fileName} in this directory: {Path.GetFullPath(filePath)})");
-                if (!Directory.Exists(TempDirectory))
+                if (!Directory.Exists(SpecificationFilesDirectory))
                 {
-                    Directory.CreateDirectory(TempDirectory);
+                    Directory.CreateDirectory(SpecificationFilesDirectory);
                 }
                 stream = CreateCache(url, filePath);
             }
@@ -64,7 +64,7 @@ namespace ALGenerator
         internal static FileStream ReadALSpecFromGithub()
         {
             string url = "https://raw.githubusercontent.com/NogginBops/OpenAL-EXT-Repository/refs/heads/xml-spec/xml/al.xml";
-            string filePath = Path.Combine(TempDirectory, "al.xml");
+            string filePath = Path.Combine(SpecificationFilesDirectory, "al.xml");
 
             return ReadFileFromGithub(url, filePath);
         }
@@ -72,7 +72,7 @@ namespace ALGenerator
         internal static FileStream ReadALCSpecFromGithub()
         {
             string url = "https://raw.githubusercontent.com/NogginBops/OpenAL-EXT-Repository/refs/heads/xml-spec/xml/alc.xml";
-            string filePath = Path.Combine(TempDirectory, "alc.xml");
+            string filePath = Path.Combine(SpecificationFilesDirectory, "alc.xml");
 
             return ReadFileFromGithub(url, filePath);
         }
@@ -80,7 +80,7 @@ namespace ALGenerator
         internal static FileStream ReadEFXPresetsSpecFromGithub()
         {
             string url = "https://raw.githubusercontent.com/NogginBops/OpenAL-EXT-Repository/refs/heads/xml-spec/xml/efx_presets.xml";
-            string filePath = Path.Combine(TempDirectory, "efx_presets.xml");
+            string filePath = Path.Combine(SpecificationFilesDirectory, "efx_presets.xml");
 
             return ReadFileFromGithub(url, filePath);
         }
@@ -88,7 +88,7 @@ namespace ALGenerator
         internal static FileStream ReadALSOFTSpecFromGithub()
         {
             string url = "https://raw.githubusercontent.com/kcat/openal-soft/refs/heads/master/registry/xml/al.xml";
-            string filePath = Path.Combine(TempDirectory, "al_soft.xml");
+            string filePath = Path.Combine(SpecificationFilesDirectory, "al_soft.xml");
 
             return ReadFileFromGithub(url, filePath);
         }

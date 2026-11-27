@@ -37,7 +37,7 @@ namespace VkGenerator
 
     public static class Reader
     {
-        private static readonly string TempDirectory = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? "", "..", "..", "..", "SpecificationFiles");
+        private static readonly string SpecificationFilesDirectory = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? "", "..", "..", "..", "SpecificationFiles");
 
         private static FileStream ReadFileFromGithub(string url, string filePath)
         {
@@ -52,9 +52,9 @@ namespace VkGenerator
             else
             {
                 Logger.Info($"Didn't find cache file for {fileName}, downloading from {url}. (looked for {fileName} in this directory: {Path.GetFullPath(filePath)})");
-                if (!Directory.Exists(TempDirectory))
+                if (!Directory.Exists(SpecificationFilesDirectory))
                 {
-                    Directory.CreateDirectory(TempDirectory);
+                    Directory.CreateDirectory(SpecificationFilesDirectory);
                 }
                 stream = CreateCache(url, filePath);
             }
@@ -65,7 +65,7 @@ namespace VkGenerator
         public static FileStream ReadVKSpecFromGithub()
         {
             string url = "https://raw.githubusercontent.com/KhronosGroup/Vulkan-Docs/main/xml/vk.xml";
-            string filePath = Path.Combine(TempDirectory, "vk.xml");
+            string filePath = Path.Combine(SpecificationFilesDirectory, "vk.xml");
 
             return ReadFileFromGithub(url, filePath);
         }
@@ -73,7 +73,7 @@ namespace VkGenerator
         public static FileStream ReadVKVideoSpecFromGithub()
         {
             string url = "https://raw.githubusercontent.com/KhronosGroup/Vulkan-Docs/main/xml/video.xml";
-            string filePath = Path.Combine(TempDirectory, "video.xml");
+            string filePath = Path.Combine(SpecificationFilesDirectory, "video.xml");
 
             return ReadFileFromGithub(url, filePath);
         }

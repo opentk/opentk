@@ -12,6 +12,8 @@ namespace GeneratorBase.Utility
         public List<string> ExtensionPrefixes { get; init; }
         public HashSet<string> ExtensionsWithoutPrefixes { get; init; }
         public string FunctionPrefix { get; init; }
+        public List<string> EnumGroupPrefixes { get; init; }
+        public bool MangleUnderscoresInEnumGroupNames { get; init; }
         public List<string> EnumPrefixes { get; init; }
         public HashSet<string> FunctionsWithoutPrefix { get; init; }
         public HashSet<string> EnumsWithoutPrefix { get; init; }
@@ -26,6 +28,7 @@ namespace GeneratorBase.Utility
             ExtensionPrefixes = [];
             ExtensionsWithoutPrefixes = [];
             FunctionPrefix = "";
+            EnumGroupPrefixes = [];
             EnumPrefixes = [];
             FunctionsWithoutPrefix = [];
             EnumsWithoutPrefix = [];
@@ -155,6 +158,19 @@ namespace GeneratorBase.Utility
                 return translated;
             }
 
+            foreach (var prefix in Settings.EnumGroupPrefixes)
+            {
+                if (name.StartsWith(prefix))
+                {
+                    name = name[prefix.Length..];
+                    if (Settings.MangleUnderscoresInEnumGroupNames)
+                    {
+                        name = MangleCapsUnderscoreName(name);
+                    }
+                    return name;
+                }
+            }
+
             return name;
         }
 
@@ -219,7 +235,6 @@ namespace GeneratorBase.Utility
             return MangleCapsUnderscoreName(name);
         }
 
-        // FIXME: Add support for keeping abbreviations capitalized.
         private string MangleCapsUnderscoreName(string name)
         {
             var stringBuilder = new StringBuilder(name.Length);
@@ -335,7 +350,12 @@ namespace GeneratorBase.Utility
         public static string XmlEscapeCharacters(string? str)
         {
             StringBuilder sb = new StringBuilder(str);
+            XmlEscapeCharacters(sb);
+            return sb.ToString();
+        }
 
+        private static void XmlEscapeCharacters(StringBuilder sb)
+        {
             // We don't want to replace all of the & we are going to add
             // so replace that first
             // - Noggin_bops 2023-01-26
@@ -345,7 +365,22 @@ namespace GeneratorBase.Utility
             sb.Replace("'", "&apos;");
             sb.Replace("<", "&lt;");
             sb.Replace(">", "&gt;");
+        }
 
+        public static string XmlEscapeMultiLine(string? str, bool insertBR)
+        {
+            StringBuilder sb = new StringBuilder(str);
+            XmlEscapeCharacters(sb);
+            if (insertBR)
+            {
+                sb.Replace("\r\n", "<br/>");
+                sb.Replace("\n", "<br/>");
+            }
+            else
+            {
+                sb.Replace("\r\n", " ");
+                sb.Replace("\n", " ");
+            }
             return sb.ToString();
         }
     }
